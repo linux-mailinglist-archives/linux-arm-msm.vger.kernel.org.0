@@ -2,31 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B32C5730748
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 20:19:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0A02730792
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 20:47:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231499AbjFNSTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 14:19:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50058 "EHLO
+        id S231438AbjFNSrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 14:47:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231539AbjFNSTA (ORCPT
+        with ESMTP id S231225AbjFNSrG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 14:19:00 -0400
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6C941FF5;
-        Wed, 14 Jun 2023 11:18:54 -0700 (PDT)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1q9V51-0002TJ-Ri; Wed, 14 Jun 2023 20:18:51 +0200
-Message-ID: <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info>
-Date:   Wed, 14 Jun 2023 20:18:51 +0200
+        Wed, 14 Jun 2023 14:47:06 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10BCED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 11:47:04 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-98276e2a4bbso123011566b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 11:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686768423; x=1689360423;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/2dmijlndEPPYs5IElMJtslUllIfqF2D+1pCU/iVRps=;
+        b=RYB/dfvGhjvnwSjdBgId9QXaGPAml67loM9d/fKuSNJGk/pke4Id3mL8bttl7LJ2rt
+         asd0STpv2pxsQmmhLRwvoESTFQd7HCS+WFQgrpYwtGBFJ98SH9ZWb5Fv/IgZ0ftmT0+3
+         QNCxGhNExMqqLfP8mfkRrNO1FR0Yd+4NVi1vm20ADoOhpAhPOb4PHocDWTOyHfYsHWQS
+         UC7GFLZLZKx92SOiJ34UMAiRyGt8Iwras9MOBKmDaDC0PXHXkJXg9Ds68St81OIwN+DR
+         /0PFa/IO5ubVynX/tfN9DjCcbYX11n5s5tnyQGRR7kvEgOSTLynq7j+80zPDkTi91iNr
+         C2Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686768423; x=1689360423;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/2dmijlndEPPYs5IElMJtslUllIfqF2D+1pCU/iVRps=;
+        b=eqTqmy2MX5YrMxPpEEA0FpOsS+dxHqUrx1qSJJm30RSNP+MK1gSWE+WrZf3U+Pea+0
+         vrCZ32vsS1M0Ss6gLvKaMo7dMASpAO7wfDuHm3N+FeiP66GULRcyJ4Zl0XxD5NqaK806
+         jTkRM+m1X10INP8p8UBTJfJyeYcQjs04tDMTGd/OFlG55cPH6dUctcykHgEaqOmuoD78
+         J5xZ37D/4EjKeSL9H3fh9qQI8ndfL/JIgZ/cj11iSKV2qf0C8Olce3IIGvcvOVo1YGDu
+         VlByDhBiP0dhBsSqd6BfzLvhpyQwKSpgeYxmIjTDODK7KVV+fQeFra6vKp2j3rq4Aro8
+         aElQ==
+X-Gm-Message-State: AC+VfDwh/JFg0wdqm88Hm4EGxTvts/sxeQE5m56vVgiM8IN4xj029dxc
+        MW8fv7X/Z9IE+UtPBBpfo6bQ1g==
+X-Google-Smtp-Source: ACHHUZ6QGzBwXZPm7LGg97zkIBeIUyBNwZ3vpxzJcuCyRyUliDdiMyVINRNKkhdi4RE0ju7HAKTnSw==
+X-Received: by 2002:a17:907:6e10:b0:974:5ce6:f9ff with SMTP id sd16-20020a1709076e1000b009745ce6f9ffmr17870176ejc.32.1686768423459;
+        Wed, 14 Jun 2023 11:47:03 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id e26-20020a170906045a00b0096fc35ca733sm8258831eja.41.2023.06.14.11.47.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 11:47:02 -0700 (PDT)
+Message-ID: <0f6c9dcb-b7f6-fff9-6bed-f4585ea8e487@linaro.org>
+Date:   Wed, 14 Jun 2023 20:47:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
+ Thunderbird/102.12.0
 Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes
  up
-Content-Language: en-US, de-DE
-To:     Amit Pundir <amit.pundir@linaro.org>,
+Content-Language: en-US
+To:     Linux regressions mailing list <regressions@lists.linux.dev>,
+        Amit Pundir <amit.pundir@linaro.org>,
         Mark Brown <broonie@kernel.org>,
         Doug Anderson <dianders@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -36,21 +69,18 @@ To:     Amit Pundir <amit.pundir@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Caleb Connolly <caleb.connolly@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-Cc:     regressions <regressions@lists.linux.dev>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         dt <devicetree@vger.kernel.org>,
         lkml <linux-kernel@vger.kernel.org>
 References: <20230602161246.1855448-1-amit.pundir@linaro.org>
-From:   "Linux regression tracking (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-In-Reply-To: <20230602161246.1855448-1-amit.pundir@linaro.org>
+ <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1686766734;563ab592;
-X-HE-SMSGID: 1q9V51-0002TJ-Ri
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,91 +88,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02.06.23 18:12, Amit Pundir wrote:
-> Move lvs1 and lvs2 regulator nodes up in the rpmh-regulators
-> list to workaround a boot regression uncovered by the upstream
-> commit ad44ac082fdf ("regulator: qcom-rpmh: Revert "regulator:
-> qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"").
+On 14/06/2023 20:18, Linux regression tracking (Thorsten Leemhuis) wrote:
+> On 02.06.23 18:12, Amit Pundir wrote:
+>> Move lvs1 and lvs2 regulator nodes up in the rpmh-regulators
+>> list to workaround a boot regression uncovered by the upstream
+>> commit ad44ac082fdf ("regulator: qcom-rpmh: Revert "regulator:
+>> qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"").
+>>
+>> Without this fix DB845c fail to boot at times because one of the
+>> lvs1 or lvs2 regulators fail to turn ON in time.
 > 
-> Without this fix DB845c fail to boot at times because one of the
-> lvs1 or lvs2 regulators fail to turn ON in time.
-
-/me waves friendly
-
-FWIW, as it's not obvious: this...
-
-> Link: https://lore.kernel.org/all/CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com/
-
-...is a report about a regression. One that we could still solve before
-6.4 is out. One I'll likely will point Linus to, unless a fix comes into
-sight.
-
-When I noticed the reluctant replies to this patch I earlier today asked
-in the thread with the report what the plan forward was:
-https://lore.kernel.org/all/CAD%3DFV%3DV-h4EUKHCM9UivsFHRsJPY5sAiwXV3a1hUX9DUMkkxdg@mail.gmail.com/
-
-Dough there replied:
-
-```
-Of the two proposals made (the revert vs. the reordering of the dts),
-the reordering of the dts seems better. It only affects the one buggy
-board (rather than preventing us to move to async probe for everyone)
-and it also has a chance of actually fixing something (changing the
-order that regulators probe in rpmh-regulator might legitimately work
-around the problem). That being said, just like the revert the dts
-reordering is still just papering over the problem and is fragile /
-not guaranteed to work forever.
-```
-
-Papering over obviously is not good, but has anyone a better idea to fix
-this? Or is "not fixing" for some reason an viable option here?
-
-Ciao, Thorsten
-
-> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 24 +++++++++++-----------
->  1 file changed, 12 insertions(+), 12 deletions(-)
+> /me waves friendly
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index e14fe9bbb386..df2fde9063dc 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -301,6 +301,18 @@ regulators-0 {
->  		vdd-l26-supply = <&vreg_s3a_1p35>;
->  		vin-lvs-1-2-supply = <&vreg_s4a_1p8>;
->  
-> +		vreg_lvs1a_1p8: lvs1 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-always-on;
-> +		};
-> +
-> +		vreg_lvs2a_1p8: lvs2 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-always-on;
-> +		};
-> +
->  		vreg_s3a_1p35: smps3 {
->  			regulator-min-microvolt = <1352000>;
->  			regulator-max-microvolt = <1352000>;
-> @@ -381,18 +393,6 @@ vreg_l26a_1p2: ldo26 {
->  			regulator-max-microvolt = <1200000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
-> -
-> -		vreg_lvs1a_1p8: lvs1 {
-> -			regulator-min-microvolt = <1800000>;
-> -			regulator-max-microvolt = <1800000>;
-> -			regulator-always-on;
-> -		};
-> -
-> -		vreg_lvs2a_1p8: lvs2 {
-> -			regulator-min-microvolt = <1800000>;
-> -			regulator-max-microvolt = <1800000>;
-> -			regulator-always-on;
-> -		};
->  	};
->  
->  	regulators-1 {
+> FWIW, as it's not obvious: this...
+> 
+>> Link: https://lore.kernel.org/all/CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com/
+> 
+> ...is a report about a regression. One that we could still solve before
+> 6.4 is out. One I'll likely will point Linus to, unless a fix comes into
+> sight.
+> 
+> When I noticed the reluctant replies to this patch I earlier today asked
+> in the thread with the report what the plan forward was:
+> https://lore.kernel.org/all/CAD%3DFV%3DV-h4EUKHCM9UivsFHRsJPY5sAiwXV3a1hUX9DUMkkxdg@mail.gmail.com/
+> 
+> Dough there replied:
+> 
+> ```
+> Of the two proposals made (the revert vs. the reordering of the dts),
+> the reordering of the dts seems better. It only affects the one buggy
+> board (rather than preventing us to move to async probe for everyone)
+> and it also has a chance of actually fixing something (changing the
+> order that regulators probe in rpmh-regulator might legitimately work
+> around the problem). That being said, just like the revert the dts
+> reordering is still just papering over the problem and is fragile /
+> not guaranteed to work forever.
+> ```
+> 
+> Papering over obviously is not good, but has anyone a better idea to fix
+> this? Or is "not fixing" for some reason an viable option here?
+> 
+
+I understand there is a regression, although kernel is not mainline
+(hash df7443a96851 is unknown) and the only solutions were papering the
+problem. Reverting commit is a temporary workaround. Moving nodes in DTS
+is not acceptable because it hides actual problem and only solves this
+one particular observed problem, while actual issue is still there. It
+would be nice to be able to reproduce it on real mainline with normal
+operating system (not AOSP) - with ramdiks/without/whatever. So far no
+one did it, right?
+
+Best regards,
+Krzysztof
+
