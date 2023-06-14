@@ -2,118 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFA9C730396
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 17:21:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9BF7303CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 17:27:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343702AbjFNPVQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 11:21:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59436 "EHLO
+        id S235344AbjFNP05 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 11:26:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343705AbjFNPVP (ORCPT
+        with ESMTP id S245669AbjFNP0b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 11:21:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C29C5;
-        Wed, 14 Jun 2023 08:21:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CACFD63A36;
-        Wed, 14 Jun 2023 15:21:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAC5C433C8;
-        Wed, 14 Jun 2023 15:21:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686756073;
-        bh=8YsXKUXaEWCUoIrtqUUwU4kG3YB5yIZs9T+odfm5bLo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qqSdCzUlAis9bugdmCSIkRmGN7RIr/2eCjqEZWMss/YKvu0k1/oQ4ZzV93bCYnVCq
-         YzDEDO+2CjU4Jp+T2mPkRlL4G6i2GSRsfIZCB6fUmgkgL+hL8PIWjaqpLglX5/MmYn
-         11B+t2kYm0V8tNMvuDgA15hoa/c7oSTTi16j54Y97HbRgILCSr4It3u07B5TRrGsjv
-         B0pNIVKTs/ZMOfkC7HPhbdhvwh7Moa58yciHSaVUp2jPg960zAXLdnvuQwzMVO1YSy
-         ZJ9ZMHMK8RfoPFHwibI4jwtEwdJYvCim0loenTx9C+jW+LiiePJO/WhKZrpalthcYN
-         Firh4obe83YTg==
-Date:   Wed, 14 Jun 2023 08:24:35 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Sarannya S <quic_sarannya@quicinc.com>, quic_bjorande@quicinc.com,
-        swboyd@chromium.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>
-Subject: Re: [PATCH V7 1/3] rpmsg: core: Add signal API support
-Message-ID: <20230614152435.2quoctx6ouvw4ous@ripper>
-References: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
- <1682160127-18103-2-git-send-email-quic_sarannya@quicinc.com>
- <c44d8942-83e5-01ec-491b-bac1fb27de99@foss.st.com>
+        Wed, 14 Jun 2023 11:26:31 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF1EC7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 08:26:28 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f6283d0d84so8887200e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 08:26:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686756387; x=1689348387;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=92mIxsQvBN8TZS+YqhaldRnovf6ozQjfSRPX9m0dYpY=;
+        b=b9Mkr038yztj4c4dERrWyKcwL9VJp0PJM6YsrheoRmdIElr2vmMvWzHnq1bqoO/6El
+         0qn0o9acJp+w6xWMUBC0gUGXShbsNRPA8stD51OykbiCGzNH788fLChJJBVw6Z7I+yMM
+         09EEL1+dPu+ULC4MXtBh85MLYPfBlWgY3fqpxHba2w/WOInjmpHSgXgbwMh4Mqq4RXje
+         6yT2h0K3N7UOx753q1PE+Ls2GAx+IA+1YBqx+I45u2CFWhl1gujNFjuKr+xxe8jEx+9l
+         f4jjAsWAm7RBpwz7cosVhL+GIW5V+KHrDOWwYOXClOcLbEWcWNbmnm4eck8JFOseilAV
+         GihQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686756387; x=1689348387;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=92mIxsQvBN8TZS+YqhaldRnovf6ozQjfSRPX9m0dYpY=;
+        b=X+QgjsNNRf6/bFLPP7rUy2NPeycnHt3NXFKPSabxNjraZfaLgnA5WI8zU1pVt4LaL1
+         A7n13otZKYQF81ymDApmZ5D+Ph7LCGaT3/jMDXZ0AWiMk4PLSQKSvWRdgyoNF7SnP1fE
+         0xG/APNt9VzyvDG2ElAGaK86qtpxoEDLhz090ni17dI5eSBjChCqNSxcdjUmGD9ySUOT
+         ClNoMIfT191YoelgHJYTtd9V2juiN0zTQn7VxEwSo8ZAeqTpITVDt5QLnVERzNIiTzyi
+         4SoSk2ngbHbQE9BzpGc4PzVO8YdocZejCOX06Dzf8MQMvo1VUzRnsZEk3bFIRfQvuIGk
+         BdJQ==
+X-Gm-Message-State: AC+VfDzJRuWpXshxuL6zktwHcm6WJ/259jBMgdSNEneasntEU76HsxxV
+        sV46SoFF7Yl1TwSNrZnxopJvAg==
+X-Google-Smtp-Source: ACHHUZ5ubYgIup+awmClFwEVsdd4l7PLoKZ5G2u9Vf5goru8fW5r3UqNPHnZl+US08P3eb9Mkq8vtQ==
+X-Received: by 2002:a19:430e:0:b0:4f3:a051:58d7 with SMTP id q14-20020a19430e000000b004f3a05158d7mr7508081lfa.49.1686756387005;
+        Wed, 14 Jun 2023 08:26:27 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id d2-20020ac25ec2000000b004f24e797c55sm2173418lfq.25.2023.06.14.08.26.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 08:26:26 -0700 (PDT)
+Message-ID: <b28771f0-cb05-4ec2-5c11-249a302525b5@linaro.org>
+Date:   Wed, 14 Jun 2023 17:26:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c44d8942-83e5-01ec-491b-bac1fb27de99@foss.st.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v4 1/2] arm64: dts: qcom: sc8280xp: Add GPU related nodes
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+        johan@kernel.org, mani@kernel.org,
+        Steev Klimaszewski <steev@kali.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <20230614142204.2675653-1-quic_bjorande@quicinc.com>
+ <20230614142204.2675653-2-quic_bjorande@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230614142204.2675653-2-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 02:49:29PM +0200, Arnaud POULIQUEN wrote:
-> Hello,
+On 14.06.2023 16:22, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> On 4/22/23 12:42, Sarannya S wrote:
-> > From: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> > 
-> > Some transports like Glink support the state notifications between
-> > clients using flow control signals similar to serial protocol signals.
-> > Local glink client drivers can send and receive flow control status
-> > to glink clients running on remote processors.
-> > 
-> > Add APIs to support sending and receiving of flow control status by
-> > rpmsg clients.
-> > 
-> > Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> > Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
-> > ---
-> >  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
-> >  drivers/rpmsg/rpmsg_internal.h |  2 ++
-> >  include/linux/rpmsg.h          | 15 +++++++++++++++
-> >  3 files changed, 38 insertions(+)
-> > 
-> > diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> > index a2207c0..e8bbe05 100644
-> > --- a/drivers/rpmsg/rpmsg_core.c
-> > +++ b/drivers/rpmsg/rpmsg_core.c
-> > @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
-> >  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
-> >  
-> >  /**
-> > + * rpmsg_set_flow_control() - sets/clears serial flow control signals
-> > + * @ept:	the rpmsg endpoint
-> > + * @enable:	pause/resume incoming data flow	
-> > + * @dst:	destination address of the endpoint
-> > + *
-> > + * Return: 0 on success and an appropriate error value on failure.
-> > + */
-> > +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
-> > +{
-> > +	if (WARN_ON(!ept))
-> > +		return -EINVAL;
-> > +	if (!ept->ops->set_flow_control)
-> > +		return -ENXIO;
+> Add Adreno SMMU, GPU clock controller, GMU and GPU nodes for the
+> SC8280XP.
 > 
-> Here we return an error if the backend does not implement the ops.
-> But the set_flow_control ops is optional.
-> Should we return 0 instead with a debug message?
+> Tested-by: Steev Klimaszewski <steev@kali.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  arch/arm64/boot/dts/qcom/sa8540p.dtsi  |   8 ++
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 175 +++++++++++++++++++++++++
+>  2 files changed, 183 insertions(+)
 > 
-
-It seems reasonable to allow the software to react to the absence of
-flow control support, so a debug message wouldn't help.
-
-But advertising that more explicitly by returning something like
-EOPNOTSUPP seems better.
-
-Regards,
-Bjorn
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p.dtsi b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+> index 4a990fda8fc3..bacbdec56281 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
+> @@ -167,6 +167,14 @@ opp-2592000000 {
+>  	};
+>  };
+>  
+> +&gpucc {
+> +	status = "disabled";
+> +};
+> +
+> +&gpu_smmu {
+> +	status = "disabled";
+> +};
+> +
+>  &pcie2a {
+>  	compatible = "qcom,pcie-sa8540p";
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 6b1bb203b1d1..ac0596dfdbc4 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -6,6 +6,7 @@
+>  
+>  #include <dt-bindings/clock/qcom,dispcc-sc8280xp.h>
+>  #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
+> +#include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
+>  #include <dt-bindings/interconnect/qcom,osm-l3.h>
+> @@ -2341,6 +2342,180 @@ tcsr: syscon@1fc0000 {
+>  			reg = <0x0 0x01fc0000 0x0 0x30000>;
+>  		};
+>  
+> +		gpu: gpu@3d00000 {
+> +			compatible = "qcom,adreno-690.0", "qcom,adreno";
+> +
+> +			reg = <0 0x03d00000 0 0x40000>,
+> +			      <0 0x03d9e000 0 0x1000>,
+> +			      <0 0x03d61000 0 0x800>;
+> +			reg-names = "kgsl_3d0_reg_memory",
+> +				    "cx_mem",
+> +				    "cx_dbgc";
+> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+> +			iommus = <&gpu_smmu 0 0xc00>, <&gpu_smmu 1 0xc00>;
+> +			operating-points-v2 = <&gpu_opp_table>;
+> +
+> +			qcom,gmu = <&gmu>;
+> +			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
+> +			interconnect-names = "gfx-mem";
+> +			#cooling-cells = <2>;
+> +
+> +			status = "disabled";
+> +
+> +			gpu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-270000000 {
+> +					opp-hz = /bits/ 64 <270000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+> +					opp-peak-kBps = <451000>;
+> +				};
+> +
+> +				opp-410000000 {
+> +					opp-hz = /bits/ 64 <410000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+> +					opp-peak-kBps = <1555000>;
+> +				};
+> +
+> +				opp-500000000 {
+> +					opp-hz = /bits/ 64 <500000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+> +					opp-peak-kBps = <1555000>;
+> +				};
+> +
+> +				opp-547000000 {
+> +					opp-hz = /bits/ 64 <547000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
+> +					opp-peak-kBps = <1555000>;
+> +				};
+> +
+> +				opp-606000000 {
+> +					opp-hz = /bits/ 64 <606000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+> +					opp-peak-kBps = <2736000>;
+> +				};
+> +
+> +				opp-640000000 {
+> +					opp-hz = /bits/ 64 <640000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+> +					opp-peak-kBps = <2736000>;
+> +				};
+> +
+> +				opp-655000000 {
+> +					opp-hz = /bits/ 64 <655000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+> +					opp-peak-kBps = <2736000>;
+> +				};
+> +
+> +				opp-690000000 {
+> +					opp-hz = /bits/ 64 <690000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+> +					opp-peak-kBps = <2736000>;
+> +				};
+> +			};
+> +		};
+> +
+> +		gmu: gmu@3d6a000 {
+> +			compatible = "qcom,adreno-gmu-690.0", "qcom,adreno-gmu";
+> +			reg = <0 0x03d6a000 0 0x34000>,
+> +			      <0 0x03de0000 0 0x10000>,
+> +			      <0 0x0b290000 0 0x10000>;
+> +			reg-names = "gmu", "rscc", "gmu_pdc";
+> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hfi", "gmu";
+> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
+> +				 <&gpucc GPU_CC_CXO_CLK>,
+> +				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +				 <&gpucc GPU_CC_AHB_CLK>,
+> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
+> +			clock-names = "gmu",
+> +				      "cxo",
+> +				      "axi",
+> +				      "memnoc",
+> +				      "ahb",
+> +				      "hub",
+> +				      "smmu_vote";
+> +			power-domains = <&gpucc GPU_CC_CX_GDSC>,
+> +					<&gpucc GPU_CC_GX_GDSC>;
+> +			power-domain-names = "cx",
+> +					     "gx";
+> +			iommus = <&gpu_smmu 5 0xc00>;
+> +			operating-points-v2 = <&gmu_opp_table>;
+> +
+> +			gmu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-200000000 {
+> +					opp-hz = /bits/ 64 <200000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+> +				};
+> +
+> +				opp-500000000 {
+> +					opp-hz = /bits/ 64 <500000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+> +				};
+> +			};
+> +		};
+> +
+> +		gpucc: clock-controller@3d90000 {
+> +			compatible = "qcom,sc8280xp-gpucc";
+> +			reg = <0 0x03d90000 0 0x9000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+> +			clock-names = "bi_tcxo",
+> +				      "gcc_gpu_gpll0_clk_src",
+> +				      "gcc_gpu_gpll0_div_clk_src";
+> +
+> +			power-domains = <&rpmhpd SC8280XP_GFX>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		gpu_smmu: iommu@3da0000 {
+> +			compatible = "qcom,sc8280xp-smmu-500", "qcom,adreno-smmu",
+> +				     "qcom,smmu-500", "arm,mmu-500";
+> +			reg = <0 0x03da0000 0 0x20000>;
+> +			#iommu-cells = <2>;
+> +			#global-interrupts = <2>;
+> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
+> +				 <&gpucc GPU_CC_AHB_CLK>,
+> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
+> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
+> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
+> +			clock-names = "gcc_gpu_memnoc_gfx_clk",
+> +				      "gcc_gpu_snoc_dvm_gfx_clk",
+> +				      "gpu_cc_ahb_clk",
+> +				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
+> +				      "gpu_cc_cx_gmu_clk",
+> +				      "gpu_cc_hub_cx_int_clk",
+> +				      "gpu_cc_hub_aon_clk";
+> +
+> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
+> +			dma-coherent;
+> +		};
+> +
+>  		usb_0_hsphy: phy@88e5000 {
+>  			compatible = "qcom,sc8280xp-usb-hs-phy",
+>  				     "qcom,usb-snps-hs-5nm-phy";
