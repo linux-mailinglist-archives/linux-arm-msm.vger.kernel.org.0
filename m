@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B78072FA70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 12:22:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C291072FA7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 12:23:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243637AbjFNKWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 06:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35436 "EHLO
+        id S243729AbjFNKXH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 06:23:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243331AbjFNKWn (ORCPT
+        with ESMTP id S243599AbjFNKWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 06:22:43 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D8D81BD2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 03:22:30 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b1a3fa2cd2so6681331fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 03:22:29 -0700 (PDT)
+        Wed, 14 Jun 2023 06:22:44 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB7651FDA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 03:22:31 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b1a6a8e851so6948521fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 03:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686738148; x=1689330148;
+        d=linaro.org; s=google; t=1686738150; x=1689330150;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tznUKYMNGUVufVQqnleYMuCU9FFyTKNRAjeP7Rsq2rU=;
-        b=Xdy82ohDJDubZkVT03B8Lbrd+ANj+fWIVm4kwZ0JZdhdodVhgr+dafRbpAuzh3zsbY
-         VH8a1mx9PcYO7R2AV7Uz4jlz0UkffifGiB03WUBTObb3hTDTpYTy3iG38NqNXBLoCd6S
-         qzx5at6bIIIe8HRa7mef4n8mvFXcA/ZDodNdtzzQrDglhPrnJiVWSVYt4MWhGliXeT4S
-         +JlefTWcuPqIiRFRtev5wThz9iIeKwdNzSWN1ma2BJfJR+2KSVHWy7tv6C3TIaoB1EMp
-         1DOecXNH8ApMnuG9vffn5eADQgiNMeldkBeg6Vne3c6ReiiQo54dhhDIMFRYdqnrSBIH
-         8NYw==
+        bh=NMeAB8NggavhtPAodbQxMMfHHg0eK6NS0qxA7bar34M=;
+        b=u7mg0gl6T6dvzGaemnNPkVmeKUtqKffHc5fJTjY9zitQcuLWW9qMRypervzcza/N/6
+         6IXTg+vkMNRIn7C76UEOBtJYTR5qdhRs2NKMWNbAFsJ1rdrrp4qG7Rp+pV6dF9GZzpNc
+         0TmSBZpOH6E56Zvxmj4yHWlidJxnKV+FUVAstG8yRKRPoyvM3wPSkX5AazfLmX7J9aeH
+         wDT4cTD34tBxbhExMvb+a3mBzeK8CZs6kssjPdQ9H4gHDydTEhpymB8A0O9Cm0owFfDv
+         01qmYQJXRtkB7dDdi5HbU1D6NlGZcfe6MxqfWAR+j9RKP4eaH8kJfUA9JKOjwSwo+AgO
+         QopA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686738148; x=1689330148;
+        d=1e100.net; s=20221208; t=1686738150; x=1689330150;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tznUKYMNGUVufVQqnleYMuCU9FFyTKNRAjeP7Rsq2rU=;
-        b=O6n0w3hIdnBY4jBDZaLXxF4dovaTqUxdV4JvjnQeTgl5hCB7mRC9oZgPoUX5rMGxcz
-         hUHaT6BuxLtTzMiVSclgDMUfYR8PImMQEEBH4rkX9xRNUA4VyCdjSDdhnmPHykJ35Yg1
-         xLa76SSJc2njv9bqwwqLzm4JZzHJAm3FIdRz0bEjVQm2AhzPXsNTpMXbLyoNQZpVr4MJ
-         EBYHJ4KBxv8sZPLzHBl4vRp90F3nZZNuyWVrkWOqZBCSJXCcNFoxdaA7NVbOgYmZjQaH
-         n8Y2eROHcdtuNQp+mpq2r0R80B86yfA6JVHHrrd0NQWfOBzynwp9zjfY1Crlb3CupcvP
-         KdUQ==
-X-Gm-Message-State: AC+VfDww9G8DL+HxgoXKUoqaJvreMu5BavyyNFPjStYfVA4ujS1GNEy1
-        IayOkouduE+TBiIOU7nHyIed9w==
-X-Google-Smtp-Source: ACHHUZ5Kkm0HtcszG9xhJK4da0bGiELT4wgNxMniwLnMhBAE14Mz8PEzUg+pTrpchNtiGDY5bzlVkg==
-X-Received: by 2002:a2e:9784:0:b0:2ad:8380:770d with SMTP id y4-20020a2e9784000000b002ad8380770dmr6514901lji.21.1686738148360;
-        Wed, 14 Jun 2023 03:22:28 -0700 (PDT)
+        bh=NMeAB8NggavhtPAodbQxMMfHHg0eK6NS0qxA7bar34M=;
+        b=N8ywOYMPtp7yASTmhaS0D/2fltm1m1bqCz1l9e3Yc1UTYwFMZEEyz2n4EYAk2UDZ/6
+         XU8mZEPX4R9WQ5ERB7EhBqWinspW4r5/6WmmACXRCp3xUB/716t76LKqkLMZMx/YdnAT
+         mUch3Vyz6MvVqnkT7j3AniX4ErKpXNnrz56PgNKvUVDloLHrj0FKYITCdJMj7KFKQRA7
+         rOVR1Ol9Hc6xua+kBgjR3wryebEnrnYgtPcLz9hboorE8gvAj4UorTGb77AasqL9Rmf9
+         iqM7t2x2Ce1t+oRXqoYSmTYa/PZlkZt64sfOI0vgKaTr4JVeWlqXhq2i9zxIkaUMr6cH
+         pUMA==
+X-Gm-Message-State: AC+VfDwIY4R9y1czMnwhp+WiFpV6X8pJeRGcWl7uQJLb0IKeekqVDQwu
+        ZuJp6ys4uuYfSfYuO5iUspWukw==
+X-Google-Smtp-Source: ACHHUZ4WaeoyumQuMN8UGyOwnQwg9TqbJFYoJWE7H7Rj1LJIQ3rCUhoEUwLDazFrgET/Xsm86Qg07Q==
+X-Received: by 2002:a2e:9846:0:b0:2b1:ac82:296 with SMTP id e6-20020a2e9846000000b002b1ac820296mr6623077ljj.34.1686738149872;
+        Wed, 14 Jun 2023 03:22:29 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id m2-20020a2eb6c2000000b002b20d8f270asm2520057ljo.74.2023.06.14.03.22.27
+        by smtp.gmail.com with ESMTPSA id m2-20020a2eb6c2000000b002b20d8f270asm2520057ljo.74.2023.06.14.03.22.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 03:22:28 -0700 (PDT)
+        Wed, 14 Jun 2023 03:22:29 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 14 Jun 2023 12:22:19 +0200
-Subject: [PATCH v5 08/22] interconnect: qcom: smd-rpm: Add rpmcc handling
- skeleton code
+Date:   Wed, 14 Jun 2023 12:22:20 +0200
+Subject: [PATCH v5 09/22] interconnect: qcom: Add missing headers in
+ icc-rpm.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230526-topic-smd_icc-v5-8-eeaa09d0082e@linaro.org>
+Message-Id: <20230526-topic-smd_icc-v5-9-eeaa09d0082e@linaro.org>
 References: <20230526-topic-smd_icc-v5-0-eeaa09d0082e@linaro.org>
 In-Reply-To: <20230526-topic-smd_icc-v5-0-eeaa09d0082e@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -74,123 +74,48 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686738135; l=3224;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686738135; l=801;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=o4L7cQzLORJ+ozHEwT+lr8CvspibuRjlWs1YqX2mbng=;
- b=Ak/0TZAGFcfewU2zztSvVpLThAYHkY2Lc7fdBqphnIQuz1YptTD1A3M+Uf7UQNU2Xd8Dxw7Qk
- siq4suj3+dWCRVxEMTkyDL1w+KNME3k0+7GIuKoICo58Fs/0QIKZaI1
+ bh=/wElQJQGA2PmNr9/Z6eDTmsxdX4r+DV0cr/U6e1eUwQ=;
+ b=ev/C4jG/PswbyAbtaZxNLmYPCT+12tzwDzErWPQHJUNWaM+3+H4vwU4KEfI8Kee0W64fqQlhP
+ defP+GNlfwUBSnXQxy/8bGZkNchl14q+ju8kUD1oQszoS2kM4erOuT0
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce qcom_icc_rpm_set_bus_rate() in preparation for handling RPM
-clock resources within the interconnect framework. This lets us greatly
-simplify all of the code handling, as setting the rate comes down to:
+Currently the header does not provide all the required dependencies.
+Fix it.
 
-u32 rate_khz = max(clk.sleep_rate, clk.active_rate, clk_a.active_rate)
-write_to_rpm(clock.description, rate_khz);
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/interconnect/qcom/icc-rpm.h | 15 +++++++++++++++
- drivers/interconnect/qcom/smd-rpm.c | 21 +++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+ drivers/interconnect/qcom/icc-rpm.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-index 9ec90e13bfbd..d857fb1efb75 100644
+index d857fb1efb75..0355e0250ccc 100644
 --- a/drivers/interconnect/qcom/icc-rpm.h
 +++ b/drivers/interconnect/qcom/icc-rpm.h
-@@ -22,6 +22,18 @@ enum qcom_icc_type {
- 	QCOM_ICC_QNOC,
- };
+@@ -6,6 +6,8 @@
+ #ifndef __DRIVERS_INTERCONNECT_QCOM_ICC_RPM_H
+ #define __DRIVERS_INTERCONNECT_QCOM_ICC_RPM_H
  
-+/**
-+ * struct rpm_clk_resource - RPM bus clock resource
-+ * @resource_type: RPM resource type of the clock resource
-+ * @clock_id: index of the clock resource of a specific resource type
-+ * @branch: whether the resource represents a branch clock
-+*/
-+struct rpm_clk_resource {
-+	u32 resource_type;
-+	u32 clock_id;
-+	bool branch;
-+};
-+
- #define NUM_BUS_CLKS	2
++#include <linux/interconnect-provider.h>
++#include <linux/platform_device.h>
+ #include <linux/soc/qcom/smd-rpm.h>
  
- /**
-@@ -47,6 +59,7 @@ struct qcom_icc_provider {
- 	unsigned int qos_offset;
- 	u64 bus_clk_rate[NUM_BUS_CLKS];
- 	struct clk_bulk_data bus_clks[NUM_BUS_CLKS];
-+	const struct rpm_clk_resource *bus_clk_desc;
- 	struct clk_bulk_data *intf_clks;
- 	bool keep_alive;
- 	bool is_on;
-@@ -104,6 +117,7 @@ struct qcom_icc_desc {
- 	struct qcom_icc_node * const *nodes;
- 	size_t num_nodes;
- 	const char * const *bus_clocks;
-+	const struct rpm_clk_resource *bus_clk_desc;
- 	const char * const *intf_clocks;
- 	size_t num_intf_clocks;
- 	bool keep_alive;
-@@ -125,5 +139,6 @@ int qnoc_remove(struct platform_device *pdev);
- 
- bool qcom_icc_rpm_smd_available(void);
- int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val);
-+int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, int rsc_type, u32 rate);
- 
- #endif
-diff --git a/drivers/interconnect/qcom/smd-rpm.c b/drivers/interconnect/qcom/smd-rpm.c
-index b0183262ba66..b06374340eeb 100644
---- a/drivers/interconnect/qcom/smd-rpm.c
-+++ b/drivers/interconnect/qcom/smd-rpm.c
-@@ -16,6 +16,7 @@
- #include "icc-rpm.h"
- 
- #define RPM_KEY_BW		0x00007762
-+#define QCOM_RPM_SMD_KEY_RATE	0x007a484b
- 
- static struct qcom_smd_rpm *icc_smd_rpm;
- 
-@@ -44,6 +45,26 @@ int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val)
- }
- EXPORT_SYMBOL_GPL(qcom_icc_rpm_smd_send);
- 
-+int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, int rsc_type, u32 rate)
-+{
-+	struct clk_smd_rpm_req req = {
-+		.key = cpu_to_le32(QCOM_RPM_SMD_KEY_RATE),
-+		.nbytes = cpu_to_le32(sizeof(u32)),
-+	};
-+
-+	/* Branch clocks are only on/off */
-+	if (clk->branch)
-+		rate = !!rate;
-+
-+	req.value = cpu_to_le32(rate);
-+	return qcom_rpm_smd_write(icc_smd_rpm,
-+				  rsc_type,
-+				  clk->resource_type,
-+				  clk->clock_id,
-+				  &req, sizeof(req));
-+}
-+EXPORT_SYMBOL_GPL(qcom_icc_rpm_set_bus_rate);
-+
- static int qcom_icc_rpm_smd_remove(struct platform_device *pdev)
- {
- 	icc_smd_rpm = NULL;
+ #include <dt-bindings/interconnect/qcom,icc.h>
 
 -- 
 2.41.0
