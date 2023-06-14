@@ -2,113 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 903267303F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 17:37:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2BA7303FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 17:38:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244106AbjFNPhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 11:37:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40250 "EHLO
+        id S229848AbjFNPiX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 11:38:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235947AbjFNPhJ (ORCPT
+        with ESMTP id S235947AbjFNPiT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 11:37:09 -0400
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F6FC7;
-        Wed, 14 Jun 2023 08:37:06 -0700 (PDT)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1q9SYQ-0005oK-Ao; Wed, 14 Jun 2023 17:37:02 +0200
-Message-ID: <84110995-a99b-8b5a-cd34-8430866eb9b1@leemhuis.info>
-Date:   Wed, 14 Jun 2023 17:37:01 +0200
+        Wed, 14 Jun 2023 11:38:19 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F123A123;
+        Wed, 14 Jun 2023 08:38:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 85D9B643DA;
+        Wed, 14 Jun 2023 15:38:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD32C433C8;
+        Wed, 14 Jun 2023 15:38:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686757097;
+        bh=xPsZfZMXejY7kb0kn7Ws5xGYfQGwc+dwRrlGM9Khnfc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YccOMKqouS1zlk/hKjfl6CkEmKWbWGOTqiEYcijXCM5QzpGjxk971Lrv47HQnUXQ8
+         4fQtS3iJ/gL9acmbIDF/LWD1ebHDF/Sr7zDXkcIWtkh4tIUrZFbI2XWgJdQrbHtsHY
+         huN/R4w6XQmiN+pzmSEI4TVMyuVCXnwZQcvBM1HEW7xisH8ewgZ4VvaLTMGYr1RuLF
+         NmfG7mmyLcoZX5zeubDq2/MMUq61u3JXbXaW7J2b65dnAUJCGuuvWArfVSgxyxzkP0
+         oJ7buPnAn1vyO0/8Ikmcw2of2RcfAlYVGTeS9Qv6RqEMcH+m/wmgzHrro4pTQYmZX1
+         c8SNQX4GlupSA==
+Date:   Wed, 14 Jun 2023 08:41:40 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Sarannya S <quic_sarannya@quicinc.com>
+Cc:     quic_bjorande@quicinc.com, arnaud.pouliquen@foss.st.com,
+        swboyd@chromium.org, quic_clew@quicinc.com,
+        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>
+Subject: Re: [PATCH V7 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL
+ support
+Message-ID: <20230614154140.4ebqtkaccha2rmqp@ripper>
+References: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
+ <1682160127-18103-4-git-send-email-quic_sarannya@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Subject: Re: [PATCH] regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use
- PROBE_FORCE_SYNCHRONOUS"
-Content-Language: en-US, de-DE
-To:     Doug Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Linux kernel regressions list <regressions@lists.linux.dev>
-References: <CAMi1Hd05z8uBotO4vs7Ropmt7W2gSA__tTu_=X1t0mze7bXrhg@mail.gmail.com>
- <CAD=FV=VSFDe445WEVTHXxU1WS_HGUV5jR5E8_Vgd4eyhn3rHyA@mail.gmail.com>
- <CAMi1Hd28FJUjB8A-9YF7xpKOzSyNWXX3qung4aDjpLBhOvw_eA@mail.gmail.com>
- <CAD=FV=W13L0H88G1gt8qRnXfpV-_7E9QfHufN_a23_B1bb=aww@mail.gmail.com>
- <CAMi1Hd1WCtNvNaY_kVMx5F8T0nMVHvsjk9LsSETCMWWQyaq_Vw@mail.gmail.com>
- <CAD=FV=W5Y_SHp0y2MEs8d1k255bm_PXdRYEmYei+g79pjnzYuA@mail.gmail.com>
- <CAMi1Hd2OeL940r7jq0=Z_oxE8MYVioy0YnJXQC_5e0vJONd2sQ@mail.gmail.com>
- <1bc79c48-7cba-476d-9a7e-5754a88fcdae@sirena.org.uk>
- <CAMi1Hd2BLB6H3QRLB5svRTkGoXaUeEsakNsmfCOjbDBcCEeqkA@mail.gmail.com>
- <CAD=FV=UKyjRNZG-ED2meUAR9aXdco+AbUTHiKixTzjCkaJbjTg@mail.gmail.com>
- <bb5c828a-b8c5-40a0-9b67-44e73abcbef0@sirena.org.uk>
- <CAD=FV=UXOse+yRUmZBUOkfpWXPRKBw2R-+BVzPGcuwwFV_VqQw@mail.gmail.com>
-From:   "Linux regression tracking (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-In-Reply-To: <CAD=FV=UXOse+yRUmZBUOkfpWXPRKBw2R-+BVzPGcuwwFV_VqQw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1686757026;ca67c72f;
-X-HE-SMSGID: 1q9SYQ-0005oK-Ao
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1682160127-18103-4-git-send-email-quic_sarannya@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi, Thorsten here, the Linux kernel's regression tracker.
-
-On 07.06.23 15:47, Doug Anderson wrote:
+On Sat, Apr 22, 2023 at 04:12:07PM +0530, Sarannya S wrote:
+> From: Chris Lew <quic_clew@quicinc.com>
 > 
-> On Wed, Jun 7, 2023 at 6:18 AM Mark Brown <broonie@kernel.org> wrote:
->>
->> On Tue, Jun 06, 2023 at 04:29:29PM -0700, Doug Anderson wrote:
->>
->>> 2. Try adding some delays to some of the regulators with
->>> "regulator-enable-ramp-delay" and/or "regulator-settling-time-us".
->>> Without a scope, it'll be tricky to figure out exactly which
->>> regulators might need delays, but you could at least confirm if the
->>> "overkill" approach of having all the regulators have some delay
->>> helps... I guess you could also try putting a big delay for "ldo26".
->>> If that works, you could try moving it up (again using a bisect style
->>> approach) to see where the delay matters?
->>
->> This is information which should be in the datasheets for the part.
+> Add RPMSG_GET_OUTGOING_FLOWCONTROL and RPMSG_SET_INCOMING_FLOWCONTROL
+> IOCTL support for rpmsg char device nodes to get/set the low level
+> transport signals.
 > 
-> I was thinking more of something board-specific, not part specific. In
-> theory with RPMH this is also all supposed to be abstracted out into
-> the firmware code that sets up RPMH which magically takes care of
-> things like this, but it certainly could be wrong.
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+> ---
+>  drivers/rpmsg/rpmsg_char.c | 49 ++++++++++++++++++++++++++++++++++++++++------
+>  include/uapi/linux/rpmsg.h | 11 ++++++++++-
+>  2 files changed, 53 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+> index a271fce..d50908f 100644
+> --- a/drivers/rpmsg/rpmsg_char.c
+> +++ b/drivers/rpmsg/rpmsg_char.c
+> @@ -23,6 +23,7 @@
+>  #include <linux/rpmsg.h>
+>  #include <linux/skbuff.h>
+>  #include <linux/slab.h>
+> +#include <linux/termios.h>
+>  #include <linux/uaccess.h>
+>  #include <uapi/linux/rpmsg.h>
+>  
+> @@ -68,6 +69,8 @@ struct rpmsg_eptdev {
+>  	struct sk_buff_head queue;
+>  	wait_queue_head_t readq;
+>  
+> +	bool remote_flow;
 
-/me waves friendly
+I was about to agree with Arnaud, that this needs to be defaulted to
+true. But the flag means "has the remote asked for flow to be limited".
 
-That afaics was the last mail in this thread about a regression caused
-by ad44ac082fd ("regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use
-PROBE_FORCE_SYNCHRONOUS"") from Doug; Amit's attempt to patch it (
-https://lore.kernel.org/lkml/20230602161246.1855448-1-amit.pundir@linaro.org/
-) also wasn't welcomed. Just like his earlier revert attempt
-(https://lore.kernel.org/lkml/20230515145323.1693044-1-amit.pundir@linaro.org/
-).
+As such, the name of this variable is misleading. Please rename it
+"remote_flow_restricted" or something like that.
 
-Does this mean this regression won't be addressed before 6.4 is
-released? Or was there some progress and I just missed it? What should I
-tell Linus in my next report?
+And please update the kerneldoc for this struct.
 
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-If I did something stupid, please tell me, as explained on that page.
+Regards,
+Bjorn
 
-#regzbot poke
+> +	bool remote_flow_updated;
+>  };
+>  
+>  int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+> @@ -116,6 +119,18 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+>  	return 0;
+>  }
+>  
+> +static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
+> +{
+> +	struct rpmsg_eptdev *eptdev = priv;
+> +
+> +	eptdev->remote_flow = enable;
+> +	eptdev->remote_flow_updated = true;
+> +
+> +	wake_up_interruptible(&eptdev->readq);
+> +
+> +	return 0;
+> +}
+> +
+>  static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  {
+>  	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
+> @@ -152,6 +167,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  		return -EINVAL;
+>  	}
+>  
+> +	ept->flow_cb = rpmsg_ept_flow_cb;
+>  	eptdev->ept = ept;
+>  	filp->private_data = eptdev;
+>  	mutex_unlock(&eptdev->ept_lock);
+> @@ -172,6 +188,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
+>  		eptdev->ept = NULL;
+>  	}
+>  	mutex_unlock(&eptdev->ept_lock);
+> +	eptdev->remote_flow_updated = false;
+>  
+>  	/* Discard all SKBs */
+>  	skb_queue_purge(&eptdev->queue);
+> @@ -285,6 +302,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
+>  	if (!skb_queue_empty(&eptdev->queue))
+>  		mask |= EPOLLIN | EPOLLRDNORM;
+>  
+> +	if (eptdev->remote_flow_updated)
+> +		mask |= EPOLLPRI;
+> +
+>  	mutex_lock(&eptdev->ept_lock);
+>  	mask |= rpmsg_poll(eptdev->ept, filp, wait);
+>  	mutex_unlock(&eptdev->ept_lock);
+> @@ -297,14 +317,31 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+>  {
+>  	struct rpmsg_eptdev *eptdev = fp->private_data;
+>  
+> -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
+> -		return -EINVAL;
+> +	bool set;
+> +	int ret;
+>  
+> -	/* Don't allow to destroy a default endpoint. */
+> -	if (eptdev->default_ept)
+> -		return -EINVAL;
+> +	switch (cmd) {
+> +	case RPMSG_GET_OUTGOING_FLOWCONTROL:
+> +		eptdev->remote_flow_updated = false;
+> +		ret = put_user(eptdev->remote_flow, (int __user *)arg);
+> +		break;
+> +	case RPMSG_SET_INCOMING_FLOWCONTROL:
+> +		set = !!arg;
+> +		ret = rpmsg_set_flow_control(eptdev->ept, set, eptdev->chinfo.dst);
+> +		break;
+> +	case RPMSG_DESTROY_EPT_IOCTL:
+> +		/* Don't allow to destroy a default endpoint. */
+> +		if (eptdev->default_ept) {
+> +			ret = -EINVAL;
+> +			break;
+> +		}
+> +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +		break;
+> +	default:
+> +		ret = -EINVAL;
+> +	}
+>  
+> -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +	return ret;
+>  }
+>  
+>  static const struct file_operations rpmsg_eptdev_fops = {
+> diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
+> index 1637e68..c955e27 100644
+> --- a/include/uapi/linux/rpmsg.h
+> +++ b/include/uapi/linux/rpmsg.h
+> @@ -10,7 +10,6 @@
+>  #include <linux/types.h>
+>  
+>  #define RPMSG_ADDR_ANY		0xFFFFFFFF
+> -
+>  /**
+>   * struct rpmsg_endpoint_info - endpoint info representation
+>   * @name: name of service
+> @@ -43,4 +42,14 @@ struct rpmsg_endpoint_info {
+>   */
+>  #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
+>  
+> +/**
+> + * Set the flow control for the remote rpmsg char device.
+> + */
+> +#define RPMSG_GET_OUTGOING_FLOWCONTROL _IOW(0xb5, 0x5, struct rpmsg_endpoint_info)
+> +
+> +/**
+> + * Set the flow control for the local rpmsg char device.
+> + */
+> +#define RPMSG_SET_INCOMING_FLOWCONTROL _IOW(0xb5, 0x6, struct rpmsg_endpoint_info)
+> +
+>  #endif
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
