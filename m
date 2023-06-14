@@ -2,88 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCC7672FDA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:58:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23D8872FDC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236343AbjFNL56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 07:57:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37938 "EHLO
+        id S235690AbjFNMCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:02:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234906AbjFNL54 (ORCPT
+        with ESMTP id S232831AbjFNMCD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 07:57:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF38AA7;
-        Wed, 14 Jun 2023 04:57:55 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35E71JX9014819;
-        Wed, 14 Jun 2023 11:57:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hS3H+3Aq2/7Xg25+al1ov7djT3yNbMlTalgJCAOotOc=;
- b=jHUn2OQuZPDwO0sqr9hyzNuA/nOakq05WoUkJfPxTUm0fBjGWB+8eHG6sM63M5bJhDo+
- CfUn3ht8KkgJ22ZjvWNzdn1vvlN4q4NuwIpwQ2S/z7hH+4hOxBpmu8zCKU10XBr4nOVJ
- 4WVZQ8idUtkk9scecZ7biB9wdoBp1hl/JDfMmhMp5aBotUfnnZyRYVEYRHV7vDrglvNo
- mG0VMjbaeuBzdktwpnnd5EtaRgjQzHYeXPfmHtp0G8iqMx+G16tdPmMxfbse/06+XppO
- RufUbErV64UDWJvOjbU09Ee6fewNXp6eK4hf/UUPiGWRCjZs2tN9D8IBomHYJGP7tTd9 pQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6nqh38q0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 11:57:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EBvpm5014707
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 11:57:51 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 14 Jun
- 2023 04:57:45 -0700
-Message-ID: <65fd51f1-56d9-7b7b-7757-229cbb65051d@quicinc.com>
-Date:   Wed, 14 Jun 2023 17:27:41 +0530
+        Wed, 14 Jun 2023 08:02:03 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639CC92
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:02:02 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f766777605so839556e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686744120; x=1689336120;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=APFMvQ7ODanIJV/49mozRJR24EjLchmIY1aNYth0n0A=;
+        b=cTE7StskKa1gOaN7Q4vGHXf7JziI+921scTA1Z61XuufieMoN+Trr9ZQ3pSAeRV9kQ
+         fuWWvXmT8uxLNssEsSF0r6cJQE5YwKJX79SJAahFrtogD0kzcxNFvshgApQn1+He74TY
+         NBAUeTr/VEIAq2IJ4OBAPpm1ijZIYWLtssBGvtnRXUyALHFQWAtwqQBw8z2NHDUe193U
+         XAzCGOun/DCYIp2+uZ79CwN6kthVUm9oNNBZOyRoxkO6A/KFszlfmyfYpWDIlHsWjJGB
+         qm6iE1owS5MD7z8NHdozhaCLxjreKzzcr3HB7murAFsjKmevtaYAxo4hRkA1lsmj4YHZ
+         B41w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686744120; x=1689336120;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=APFMvQ7ODanIJV/49mozRJR24EjLchmIY1aNYth0n0A=;
+        b=G8o+wO8dsJr2OvPE9+VNrqPhxHvZC4fKXs/MCZnQwShd5G7MWxWVcscCg4zoUtSXnW
+         s51Kohqla4/IZ8WzHJ0T0cYLSCdYn1Oa0ta/PGh5+GjfHxMxKzeESriN7bfCkrp992eN
+         h6C1sr3K6SOmeDJB9d7vqepNRsUbFEWnXtCXsSflCidSr6NPegpcnu5cX9rjv8uL4XiN
+         PlmjPbTia714rexHtip7lgE9aF18UKbkPC+nmlNMDTP0GwvUZwXVT53S83DEQngRZBt8
+         s4GnjnDEH0E8iQje+AHuKGj+VPSWAfW+g8/sp56M9GkVJfLlWB4JP7wfgAsROAucYDUd
+         vDWw==
+X-Gm-Message-State: AC+VfDxf5c3LrmouQ+YUDNPeNzDemz7l6fs0TfcHFknbf7EYDoKAW4XJ
+        pelt0M53PowlElOaIantHpXReQ==
+X-Google-Smtp-Source: ACHHUZ4rNTYSmY8dJMj9rW18QV3jmWIGNjGK3rX385cmsN6Bsiry3yG0eLvhyGVb2+zuGkVHDiUiCQ==
+X-Received: by 2002:ac2:4d9b:0:b0:4f3:a61d:19d2 with SMTP id g27-20020ac24d9b000000b004f3a61d19d2mr7414911lfe.36.1686744120599;
+        Wed, 14 Jun 2023 05:02:00 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id f2-20020ac251a2000000b004f62229b6c1sm2099072lfk.252.2023.06.14.05.01.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 05:01:59 -0700 (PDT)
+Message-ID: <f4fb042c-1458-6077-3c49-8cc02638b27c@linaro.org>
+Date:   Wed, 14 Jun 2023 15:01:59 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V4 0/4] Add camera clock controller support for SM8550
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Satya Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230609115058.9059-1-quic_jkona@quicinc.com>
- <88b41c0f-e515-ce94-e4fd-befbeef53781@linaro.org>
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <88b41c0f-e515-ce94-e4fd-befbeef53781@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/3] drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN feature flag
+ for DPU >= 5.0
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, quic_abhinavk@quicinc.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+ <20230525-add-widebus-support-v1-1-c7069f2efca1@quicinc.com>
+ <wpjxrnhbcanbc5iatxnff25yrrdfrtmgb24sgwyo457dz2oyjz@e2docpcb6337>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <wpjxrnhbcanbc5iatxnff25yrrdfrtmgb24sgwyo457dz2oyjz@e2docpcb6337>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uD70rnrtJ2NoboKK43Y3rEd16aVgRzkH
-X-Proofpoint-ORIG-GUID: uD70rnrtJ2NoboKK43Y3rEd16aVgRzkH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-14_07,2023-06-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0
- suspectscore=0 mlxscore=0 priorityscore=1501 impostorscore=0 spamscore=0
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306140102
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,39 +82,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/9/2023 6:24 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 9.06.2023 13:50, Jagadeesh Kona wrote:
->> Add bindings, driver and devicetree node for camera clock controller on
->> SM8550.
+On 14/06/2023 14:42, Marijn Suijten wrote:
+> On 2023-06-13 18:57:11, Jessica Zhang wrote:
+>> DPU 5.x+ supports a databus widen mode that allows more data to be sent
+>> per pclk. Enable this feature flag on all relevant chipsets.
 >>
->> Jagadeesh Kona (4):
->>    dt-bindings: clock: qcom: Add SM8550 camera clock controller
->>    clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550
->>    clk: qcom: camcc-sm8550: Add support for qdss, sleep and xo clocks
->>    arm64: dts: qcom: sm8550: Add camera clock controller
-> What's the final verdict on RINGOSC_L etc.?
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 ++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
+>>   2 files changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> index 36ba3f58dcdf..0be7bf0bfc41 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> @@ -103,7 +103,8 @@
+>>   	(BIT(DPU_INTF_INPUT_CTRL) | \
+>>   	 BIT(DPU_INTF_TE) | \
+>>   	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
+>> -	 BIT(DPU_DATA_HCTL_EN))
+>> +	 BIT(DPU_DATA_HCTL_EN) | \
+>> +	 BIT(DPU_INTF_DATABUS_WIDEN))
 > 
-> Konrad
+> This doesn't work.  DPU 5.0.0 is SM8150, which has DSI 6G 2.3.  In the
+> last patch for DSI you state and enable widebus for DSI 6G 2.5+ only,
+> meaning DPU and DSI are now desynced, and the output is completely
+> corrupted.
+> 
+> Is the bound in dsi_host wrong, or do DPU and DSI need to communicate
+> when widebus will be enabled, based on DPU && DSI supporting it?
 
-We would like to pass RINGOSC_CAL_L field directly in config->l value 
-itself and reuse existing code rather than adding a separate function 
-for lucid ole pll configure.
+I'd prefer to follow the second approach, as we did for DP. DPU asks the 
+actual video output driver if widebus is to be enabled.
 
-Thanks,
-Jagadeesh
-
+> 
+> - Marijn
+> 
+>>   #define INTF_SC7280_MASK (INTF_SC7180_MASK | BIT(DPU_INTF_DATA_COMPRESS))
+>>   
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> index b860784ade72..b9939e00f5e0 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> @@ -182,6 +182,7 @@ enum {
+>>    *                                  than video timing
+>>    * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
+>>    * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS register
+>> + * @DPU_INTF_DATABUS_WIDEN          INTF block has DATABUS_WIDEN register
+>>    * @DPU_INTF_MAX
+>>    */
+>>   enum {
+>> @@ -190,6 +191,7 @@ enum {
+>>   	DPU_DATA_HCTL_EN,
+>>   	DPU_INTF_STATUS_SUPPORTED,
+>>   	DPU_INTF_DATA_COMPRESS,
+>> +	DPU_INTF_DATABUS_WIDEN,
+>>   	DPU_INTF_MAX
+>>   };
+>>   
 >>
->>   .../bindings/clock/qcom,sm8450-camcc.yaml     |    8 +-
->>   arch/arm64/boot/dts/qcom/sm8550.dtsi          |   15 +
->>   drivers/clk/qcom/Kconfig                      |    7 +
->>   drivers/clk/qcom/Makefile                     |    1 +
->>   drivers/clk/qcom/camcc-sm8550.c               | 3585 +++++++++++++++++
->>   include/dt-bindings/clock/qcom,sm8550-camcc.h |  187 +
->>   6 files changed, 3801 insertions(+), 2 deletions(-)
->>   create mode 100644 drivers/clk/qcom/camcc-sm8550.c
->>   create mode 100644 include/dt-bindings/clock/qcom,sm8550-camcc.h
+>> -- 
+>> 2.40.1
 >>
+
+-- 
+With best wishes
+Dmitry
+
