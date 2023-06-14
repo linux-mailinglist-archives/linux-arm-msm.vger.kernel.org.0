@@ -2,150 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33421730477
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:01:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E94C73045D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:00:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245311AbjFNQBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 12:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54526 "EHLO
+        id S237462AbjFNQAT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 12:00:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245229AbjFNQBq (ORCPT
+        with ESMTP id S237326AbjFNQAS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 12:01:46 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0809E2962
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 09:01:23 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-510d6b939bfso11631355a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 09:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686758481; x=1689350481;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RNbgQbNKkSZCTur4DZ3YDNCz53Me32F/+LyHmSO9PDw=;
-        b=TY7E7JVzNdnEZf822votxXCkJPx0W5Dhm/mKMXOqJXr5OZun1oMYeERzgzhwrZEM0E
-         BXWRBBCX0+5C3qapJkwUHmcpOIVEMBYGv5T3gFiKAG/GrfGkx6HHcQxtWGpgNf/ylnSb
-         onU6YlCl2v5sUncjaNPXNR/4Qlx21KBklII06xb5pBSR3Hfsw+yx0mSKCBaUJL9L1ur4
-         0vQqMI+dQkmw3JDaW7a0uQybn4KqVs+cf+x8fYSOFAQH0mHqtIQm4ZW4Bd7sXekCRTKY
-         +u59fY+KmW85ZIqjzf6vMxLib+tvx1p5XwV8gfqFbzLXq8DVlmMZtyienAaVzwrnTMNZ
-         ZFVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686758481; x=1689350481;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RNbgQbNKkSZCTur4DZ3YDNCz53Me32F/+LyHmSO9PDw=;
-        b=KL72hIa6W5HSXcDTslqc6HsUhaFRAaPxvS7rmPzJGMHsUJTQOMvgOuCFNXaiU1SoOW
-         HtCS+voOAl0uihhzJLhDxGllu0+cAFx/0h4gD1NKI+t3ayPYCbsXjPV3a45uViFXw7s2
-         JMtxIOQEz7asSh/MAj9WDpNP/wtgok2sxnhF6DzlWp3EVO/L39AFP2PoXATl+SxVPlmQ
-         uGt8OKF9fDPOMHoKxaQQ2HX5fx5btSWmWHKkdiSd4/jpmUx8eZBYefP3zgAT3rqsUK2L
-         2eu8Kqw0OOXiRDfWJxs3WTp0Ct8fgOLAVnJal6p9jP/vTgBk559JxBLCbcRJrXF3FhsF
-         SZhQ==
-X-Gm-Message-State: AC+VfDz5aBUE0N76J0Id0qon5uk12ssYEsXG4tvD+TVqVDZw2yxlPtJ2
-        HrXUuFSlqQeI/mhpPow8ChZ+vQ==
-X-Google-Smtp-Source: ACHHUZ5I77n4d7gtcpBZBcck4x02BeFRGaX7ZYoHtLBFpQnH4wU3604D/gjE4prMV6tzDiPQyis0aQ==
-X-Received: by 2002:a17:906:d54b:b0:978:94b1:25ac with SMTP id cr11-20020a170906d54b00b0097894b125acmr19410499ejc.40.1686758480656;
-        Wed, 14 Jun 2023 09:01:20 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id o26-20020a1709062e9a00b009823d630ca8sm2489771eji.216.2023.06.14.09.01.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 09:01:20 -0700 (PDT)
-Message-ID: <5c750c6a-a0f8-c6f7-64fe-716da434d819@linaro.org>
-Date:   Wed, 14 Jun 2023 18:01:16 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 01/18] dt-bindings: opp: opp-v2-kryo-cpu: support Qualcomm
- Krait SoCs
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Wed, 14 Jun 2023 12:00:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 833B11FC8;
+        Wed, 14 Jun 2023 09:00:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DD00C63FB4;
+        Wed, 14 Jun 2023 16:00:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0954C433C9;
+        Wed, 14 Jun 2023 16:00:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686758415;
+        bh=d2ZKiMNfxVleUTrZsfi2NstNs14jaMzV1BVxwQu2lls=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=bcJRued0xFQ23sb9smUesPf18PNs8zkg+fQkue8GUc1Gje3HxUmjHQc9yj/KaXrO7
+         jfSL7RE/jCnG/hvwRfNHmI6njQlNS9ju8+/tRy6BvGSzKjZ4vDAjzYgTu+tCCesiHl
+         03D0zX8BOjCW3PcBfu7eEwkAiaWkzYaUszGWaWE4Rq+CxuVTD6SFdJLRNeBVgkN/Uw
+         IocxE+DhLTVuNlSgw3hzMOBhr/ff79gyyEiAOEl8fUdrhUpVbWi6FdOwHHqiFNyfRP
+         CzJyTYYe/pdmneTUv+sJg5Zf8bawDAPkrQc0IAmathVgRhNTtbVUxJdEudofP/u1/c
+         QlnM+iupLkeeQ==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>
-References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
- <20230612053922.3284394-2-dmitry.baryshkov@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230612053922.3284394-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH] arm64: dts: qcom: qrb4210-rb2: Enable on-board buttons
+Date:   Wed, 14 Jun 2023 09:03:32 -0700
+Message-Id: <168675861182.1453524.9338443444158479247.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230613-topic-rb2_-v1-1-696cd7dbda28@linaro.org>
+References: <20230613-topic-rb2_-v1-1-696cd7dbda28@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2023 07:39, Dmitry Baryshkov wrote:
-> Exted the opp-v2-kryo-cpu.yaml to support defining OPP tables for the
-> previous generation of Qualcomm CPUs, 32-bit Krait-based platforms.
+On Tue, 13 Jun 2023 20:09:00 +0200, Konrad Dybcio wrote:
+> Enable the PMIC GPIO- and RESIN-connected buttons on the board.
 > 
-> It makes no sense to use 'operating-points-v2-kryo-cpu' compatibility
-> node for the Krait cores. Add support for the Krait-specific
-> 'operating-points-v2-krait-cpu' compatibility string and the relevant
-> opp-microvolt subclasses properties.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/opp/opp-v2-kryo-cpu.yaml      | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-> index bbbad31ae4ca..93ec778bf333 100644
-> --- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-> +++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-> @@ -26,7 +26,9 @@ description: |
->  
->  properties:
->    compatible:
-> -    const: operating-points-v2-kryo-cpu
-> +    enum:
-> +      - operating-points-v2-krait-cpu
-> +      - operating-points-v2-kryo-cpu
->  
->    nvmem-cells:
->      description: |
-> @@ -63,14 +65,15 @@ patternProperties:
->            5:  MSM8996SG, speedbin 1
->            6:  MSM8996SG, speedbin 2
->            7-31:  unused
-> -        enum: [0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
-> -               0x9, 0xd, 0xe, 0xf,
-> -               0x10, 0x20, 0x30, 0x70]
 
-Why?
+Applied, thanks!
 
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-
-You are changing the type. No. It should be fixed instead (enum applies
-to items).
-
->  
->        clock-latency-ns: true
->  
->        required-opps: true
->  
-> +    patternProperties:
-> +      '^opp-microvolt-speed[0-9]+-pvs[0-9]+$': true
-
-I don't think it is a common property, so it needs description and
-specific type. Specifically "pvs[0-9]" something entirely new.
-
-
+[1/1] arm64: dts: qcom: qrb4210-rb2: Enable on-board buttons
+      commit: d34654f54ebad11263cf7c411d8c60cd8941e2d4
 
 Best regards,
-Krzysztof
-
+-- 
+Bjorn Andersson <andersson@kernel.org>
