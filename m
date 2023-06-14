@@ -2,115 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3D7972F5B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 09:14:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A880C72F5CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 09:17:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243089AbjFNHOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 03:14:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36788 "EHLO
+        id S235142AbjFNHRG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 03:17:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242198AbjFNHOE (ORCPT
+        with ESMTP id S243456AbjFNHQ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 03:14:04 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0909498
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:14:03 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f6283d0d84so8048813e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:14:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686726841; x=1689318841;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wXKHed6+j3YBrrxp8AhQhFGlVOHvFUCBH9GPXEoaEzo=;
-        b=ZGmuxDkhsAalBig4v1AtxqfenTa9oHltsyUnycHLWUoEv/eCk7scpXtexHXjYEPFTB
-         I5kXHlSPrqYz+33urIOC+twEm1kzgyg8jbonYStoPSjf4qCu6uca4RfIxCGTnH7cDpKA
-         DAbGrnDmtaFUuMZYZErjWVDcBikPAFJM+kUso3aFafgqCt6bwxcV5MeuibqNO0+Jq8BW
-         4GjtwvDpW2Xol7UI/lL71HZyR+tqFhHC8Y7ZdfAp4cyHeoYeLdXDCTNX3YLFrpfIeqb1
-         K+a6tbjLw3ZZPR1fwAHNk4OGupAWnjHpACivT8IFDkz7V7MieEvPvnLw1aUCPfbRQLPE
-         EcVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686726841; x=1689318841;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wXKHed6+j3YBrrxp8AhQhFGlVOHvFUCBH9GPXEoaEzo=;
-        b=UUxxxaUn75dEj4tT2M8rmhdzUs+vnulJqxkavPQiP1V7Srf3bSHl3Ji0baCiznxZH1
-         iM6yNvSO06KeYq2y2REBMOeJGtMYezawAv1dj+fl3kuR7Ki8xaDnxUV+Vlchpjtmn83N
-         W+iWyEYar2E3W+OwYseoJU7vcUYXxbT1XdiBLiYIdm8LZyX3uIpcwpo6QciTjwkY603/
-         kAZ6voep2GjKkDhkYatAXm0SUfaYPPCZ6/iWWfLJB2iVsQfJMwH9OBU+d74aPTsHem75
-         dI2PMNrEbL7VVRe2KyuRj12QIuYFnJ4aNZ+vr0AToOlXM71ebm6wqjfrHk09nWL4yAL+
-         DyrA==
-X-Gm-Message-State: AC+VfDwE0B8edSYzh7gkwTOI7igqBOwl8E4CSjl510Oe+9ohqGgy5iza
-        NELBboJ7bXVipWokMuEq6mZsfA==
-X-Google-Smtp-Source: ACHHUZ6UUVEg8GBaPlHMq9L3Im2SMaz+Jvnddpr22VGirb893Y/RtH/cprjUAq6IjFSaN5o14+X86g==
-X-Received: by 2002:a19:6611:0:b0:4f4:b783:8556 with SMTP id a17-20020a196611000000b004f4b7838556mr6082949lfc.66.1686726840952;
-        Wed, 14 Jun 2023 00:14:00 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id v4-20020a056402184400b00515c8024cb9sm7510329edy.55.2023.06.14.00.13.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 00:14:00 -0700 (PDT)
-Message-ID: <03b672b5-46f6-5df5-e0c6-050886cea311@linaro.org>
-Date:   Wed, 14 Jun 2023 09:13:57 +0200
+        Wed, 14 Jun 2023 03:16:26 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B3E1FDB;
+        Wed, 14 Jun 2023 00:16:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686726977; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=mdTkdsPTRusY1VP3SYlgfwbZRAW7aMB4DfTJI7NQHCoQsaJ5MUirrDfB1n4d2lDl1n
+    FLsIvHO+nTVkJT05N3ckrBbeUDhEHNgTFR04JhFr7nDcW6gZ5q1DyLFJ2SLjQgyv4nps
+    DkEpRWckYoWZ4wuIqS6MCrdjKdT2UdHoAaCSKeLSS3KOYTqqYaU2R7c1r0ES7kMus1lA
+    u3L4T6jMtTy0MmEG9fWhG4OUND2qavWx4yZHnLfMWFW0ub878UgeFKSyq4SkrUR5btG2
+    WTR8T69e2s5FM+/SdqcmVbGTU9yaNXxx0fD5tAfAaD9B4HldFc8b9207EAcgvwKPAsF7
+    Jieg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686726977;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=i8YC6tp8nBn/Qy4GjguWpkkfo/DEZjrAMvoC2diYw24=;
+    b=OajH/yExRE7qXRfaCs3mzZcv2X0IY3SoBrWo+1zh6fSLC6plLmY42AsHePbZvdU6gr
+    dRR9PwKnd5NPKhDCN1AOF97AYDEJWvtC7n45PMHyIijPG9eXHclY4ODkmEmfDGfaym6K
+    a100uKCPeQRvJoOMjaxR+LWL7ig+fTjyCvnL/ExZDYKaw+WPHy2A9tZeDnx0NUV2ijmK
+    vSnu1RM08mTIb3jPHGa3zigS6GirzZa5Cuk76WsrkKJFieGjkPWiTGsKetF15bv/gcvs
+    Y+OcJDBB8BYcJuwKG0xTgasqDBfLQk8AiNbSportXglU1GGSP4eILAIDLejBlyuz75n+
+    o5CQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686726977;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=i8YC6tp8nBn/Qy4GjguWpkkfo/DEZjrAMvoC2diYw24=;
+    b=itVWlsD6wwY339UaD3QnyoWjU0Px20tsaYvBDKtz61XjbRL+8Z7oscsNt1xNFH1l8C
+    CSKGQ/nUiQiB4rIk/LRKrAiMgh/1gBzBXM+TnnHsXEg6PwSqK0OxbW5Wlnsvpsi6bEvq
+    0dMy5gI+uDxqxkVDrHSe7chbfxxpZFsqNJCcdr6xtqdSvn0W+0PikHcSayazquvWLlbS
+    8TR+nStPLDstVtTmYNU88V+r8LYBian+eO7k0umQspVk65Pg/PriwYKROHeYC4k7OcUs
+    bsi6w+0y5GBDoBNvJp+U8IqGpSpoH871hasM9SEcObW+jyujXXcvvzx3IS1NllJOVigk
+    zLvQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686726977;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=i8YC6tp8nBn/Qy4GjguWpkkfo/DEZjrAMvoC2diYw24=;
+    b=kn/agUoirTdA84+Kx1/UQGhuc4D0Avp4DsBmxviWo3ypdtwBo9Ut13vYVP57++ayKq
+    iZv/ecbkPPtAKZdGKZAw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4xxmw=="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
+    with ESMTPSA id Z82ec2z5E7GHb2b
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 14 Jun 2023 09:16:17 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/8] arm64: dts: qcom: msm8939: Rework regulator
+ constraints
+Date:   Wed, 14 Jun 2023 09:15:58 +0200
+Message-Id: <20230530-msm8939-regulators-v1-0-a3c3ac833567@gerhold.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 04/26] arm64: defconfig: enable the SerDes PHY for
- Qualcomm DWMAC
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>
-Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>
-References: <20230612092355.87937-1-brgl@bgdev.pl>
- <20230612092355.87937-5-brgl@bgdev.pl>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230612092355.87937-5-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAC5piWQC/x2NQQqDMBAAvyJ77kI0to39SukhJhtdiLHs1iKIf
+ 2/ocQaGOUBJmBQezQFCX1ZeS4X20kCYfZkIOVaGznTWXK3BRRc32AGFpi37zyqKMd5s69w9pT5
+ ADUevhKP4Euaali3nKt9Ciff/6fk6zx/rEFGHeQAAAA==
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2023 11:23, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Enable the SGMII/SerDes PHY driver. This module is required to enable
-> ethernet on sa8775p platforms.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
+Rework the regulator constraints for the MSM8939 device trees to be 
+closer to reality. There are several mistakes in there, some of them 
+taken over directly from Qualcomm's vendor kernel. Fortunately, none of 
+the mistakes is absolutely critical because it turns out that the RPM 
+firmware also validates the voltages and silently clamps the requests 
+to a proper range. Still, this behavior should be clearly represented 
+in the device tree rather than pretending to apply the wrong voltages.
 
+Apply the same changes as previously for MSM8916 [1] and move the 
+voltages for the standard components in the SoC to the shared 
+msm8916-pm8939.dtsi. With this only the actual board-specific 
+regulators are described in the board DT.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+[1]: https://lore.kernel.org/linux-arm-msm/20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net/
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Stephan Gerhold (8):
+      arm64: dts: qcom: msm8939-pm8916: Add missing pm8916_codec supplies
+      arm64: dts: qcom: msm8939: Disable lpass_codec by default
+      arm64: dts: qcom: msm8939-sony-tulip: Fix l10-l12 regulator voltages
+      arm64: dts: qcom: msm8939-sony-tulip: Allow disabling pm8916_l6
+      arm64: dts: qcom: msm8939: Fix regulator constraints
+      arm64: dts: qcom: msm8939-pm8916: Clarify purpose
+      arm64: dts: qcom: msm8939: Define regulator constraints next to usage
+      arm64: dts: qcom: msm8939-pm8916: Mark always-on regulators
+
+ arch/arm64/boot/dts/qcom/apq8039-t2.dts            | 102 +-----------------
+ arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi       | 119 +++++++++++++++++----
+ .../dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts  |  99 -----------------
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              |   1 +
+ 4 files changed, 104 insertions(+), 217 deletions(-)
+---
+base-commit: 818e1fca81bfd773144d42f4fbe52b287235e8b4
+change-id: 20230530-msm8939-regulators-dd631887ff4c
 
 Best regards,
-Krzysztof
+-- 
+Stephan Gerhold <stephan@gerhold.net>
 
