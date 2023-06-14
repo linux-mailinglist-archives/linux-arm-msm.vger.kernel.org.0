@@ -2,98 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A01C472FFAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:13:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ECF272FFB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:14:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244293AbjFNNNK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 09:13:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34266 "EHLO
+        id S244920AbjFNNOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 09:14:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244797AbjFNNNJ (ORCPT
+        with ESMTP id S240303AbjFNNOM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 09:13:09 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75167211D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:12:41 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5186a157b85so4076490a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:12:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686748360; x=1689340360;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=S08ZeNXqQP5v9xLbtyoi47QEn3XexDdtBrQiOR2aUNA=;
-        b=ygCBTdm74mYQDFjGHmbNGWaXGRjkqN/cbCWdPpx4X4Iyx5ncVTd7OAfdRM48U3lzam
-         SsJtPLYc5grKSevCx1PV9R/x5EN7c6mJYKSz1ZddrjppC358eO5NWaHYhqvWNTWrStGj
-         49MiVylg8OoetBcwOMIHrhqJa29f7qpIaLh5RoS/blIzxXtWJnFrxdbPQ86VU6O81+ig
-         ZMDHISX4z96IIYxnEQ4iTr3tLFoCEmV6kMJdba0FJ7dyY7EUNq0mw8YzZNbbzDvLsJyw
-         qV83hH6m5h+ooxdSkg4UzP7t8YpaAYWhU+TpNJbpLJOaGFedvyXxHqVkwKkVbQ7InpWj
-         qXMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686748360; x=1689340360;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S08ZeNXqQP5v9xLbtyoi47QEn3XexDdtBrQiOR2aUNA=;
-        b=DMSM/YgvnW9zoACNUQZ3vJxZQoHGWzAtwHgCm83DdP2mPmd6ZzzRuNav+yFiVXEuZi
-         /KpgejC3FeRSwspo209K6pIre9nHKVEgAAXMjMtdlu/2d2ANSwTQDlqZMDtfJN4YVINk
-         XSUEpuxqcmk/6NqwPJ9LUJE1GA6ZYOtrprF+Z1oqWN8DjWChVkUR2+pv1uo2v1ovmy3j
-         1dNTa3YZdshaqyhZ5bpQwDrPzPPGZBv4dfdtDHP84xbyApvaRzPvPlkn0AkJ+sVKwUx9
-         LxD892B93E9244naDdth6n4xyAiwBnhHaXv0XjAH5lADTL9gCD49C/hwYAQOoiuHSt4Z
-         BhkA==
-X-Gm-Message-State: AC+VfDzkvWoOhpPnhIG72Nwq9as0GVSQwFMZz7jTVa4WVuIVjBk0dVTs
-        tS+F25AzKJd4OB4rnFo3U9/2XA==
-X-Google-Smtp-Source: ACHHUZ6GOuDAoa4gpksMPRaoojmdo3dq1uAiUbBSCfD19wFN0HT5b/iWp+S+vfOecTCo3rv7erOUMQ==
-X-Received: by 2002:a05:6402:1202:b0:518:9174:9b5f with SMTP id c2-20020a056402120200b0051891749b5fmr1685330edw.1.1686748359872;
-        Wed, 14 Jun 2023 06:12:39 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id m7-20020aa7d347000000b005149461b1e0sm7682925edr.25.2023.06.14.06.12.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 06:12:39 -0700 (PDT)
-Message-ID: <ed54c63d-3342-a566-e12c-2b0672e89200@linaro.org>
-Date:   Wed, 14 Jun 2023 15:12:37 +0200
+        Wed, 14 Jun 2023 09:14:12 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC22269A;
+        Wed, 14 Jun 2023 06:13:50 -0700 (PDT)
+Received: from [IPV6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2] (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id BF9966606F20;
+        Wed, 14 Jun 2023 14:13:47 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1686748428;
+        bh=K4WTi0JZ7NzreJtn6e/6oeiwkA8ObHQNkqYaWXGPEjc=;
+        h=Date:Subject:To:References:From:In-Reply-To:From;
+        b=moJB43tmRR3Wb0jBxt3y3HdKfsoko9VHoMjH60aEQvKudl12WyStjZImqLkSqXX36
+         Kucm92qM5YMyKkS+JCQWgZuqLLM1kMw+mLwhWjFC5F59O0nsSNLudU4jkdtWMeBojj
+         2sU91HWKD9B3oVkm1weJOVKwt+nk9IvfN+nLzKrutyCZan3cGkFwxCkf31aKRwGMCL
+         0SDZcyq33ssyOrywTKM8LRT1XMloROjmM3G4nCL301Y/V9V2KdmnEZ0wYF/aaJbLcM
+         cM0gFX90gzQVJzFh44XbnV9xSxkp3SiE8IxD2Lw3Km/hBB+DpaaDK7zAPH97WnnpRs
+         WDOx5dAy2H5WQ==
+Message-ID: <057386c7-a7cf-14cb-d564-1b30e79806f6@collabora.com>
+Date:   Wed, 14 Jun 2023 15:13:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 3/3] usb: typec: fsa4480: add support for Audio Accessory
- Mode
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8250-edo: Panel framebuffer is
+ 2.5k instead of 4k
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230614-topic-sm8550-upstream-type-c-audio-v1-0-15a92565146b@linaro.org>
- <20230614-topic-sm8550-upstream-type-c-audio-v1-3-15a92565146b@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230614-topic-sm8550-upstream-type-c-audio-v1-3-15a92565146b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230606211418.587676-1-marijn.suijten@somainline.org>
+ <974f68dc-b667-c9a7-94c4-1023ef271fab@linaro.org>
+ <a69ddadd-8d59-e784-ddce-16c83a7f13a6@collabora.com>
+ <kdu6apwgp7nu6mwqatufhxvnbunwodr4iu2uaqjacbjgbmmy5y@zh53imtpqfgs>
+ <8d91dfc0-f6c0-813f-de9c-1befdd0ccfdf@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <8d91dfc0-f6c0-813f-de9c-1befdd0ccfdf@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 15:10, Neil Armstrong wrote:
-> The FSA4480 Type-C switch supports switching the Audio R/L,
-> AGND and MIC signals to the USB-C DP/DM and SBU1/2 to support
-> the Audio Accessory Mode.
+Il 14/06/23 14:43, Konrad Dybcio ha scritto:
+> On 14.06.2023 14:40, Marijn Suijten wrote:
+>> On 2023-06-07 09:15:08, AngeloGioacchino Del Regno wrote:
+>>> Il 07/06/23 00:52, Konrad Dybcio ha scritto:
+>>>>
+>>>>
+>>>> On 6.06.2023 23:14, Marijn Suijten wrote:
+>>>>> The framebuffer configuration for edo pdx203, written in edo dtsi (which
+>>>>> is overwritten in pdx206 dts for its smaller panel) has to use a
+>>>>> 1096x2560 configuration as this is what the panel (and framebuffer area)
+>>>>> has been initialized to.  Downstream userspace also has access to (and
+>>>>> uses) this 2.5k mode by default, and only switches the panel to 4k when
+>>>>> requested.
+>>>>>
+>>>>> This is similar to commit be8de06dc397 ("arm64: dts: qcom:
+>>>>> sm8150-kumano: Panel framebuffer is 2.5k instead of 4k") which fixed the
+>>>>> same for the previous generation Sony platform.
+>>>>>
+>>>>> Fixes: 69cdb97ef652 ("arm64: dts: qcom: sm8250: Add support for SONY Xperia 1 II / 5 II (Edo platform)")
+>>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>>> ---
+>>>> And so I derped again.
+>>>>
+>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>
+>>> I would've liked more to see a commit saying "replace simple-framebuffer with xxxx"
+>>> (where xxxx is DSI panel, etc) but that will as well do for now... :-)
+>>
+>> Fwiw we could keep it around as MDSS "gracefully" takes over when it
+>> probes a little bit later with fbcon over DRM/KMS, and it sometimes
+>> helps reading what is up when something fails before or during MDSS
+>> probe.
+> I believe we should do this. Perhaps even add some early code to drm/msm
+> that'd read out the address (and other configuration) from the mdp hw and
+> set it up automagically.
 > 
-> The FSA4480 has an integrated Audio jack detection mechanism
-> to automatically mux the AGND, MIX and Sense to the correct
-> SBU lines to support 3 pole and both 4 pole TRRS pinouts.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+
+As far as I remember, some bootloaders are reading devicetrees to setup the display
+at boot with "continuous splash", that's why I would be for *replacing* the simple
+framebuffer with the mdss-dsi.
+
+Adding early code to drm/msm to read out the address and check the state of the HW
+before pushing an early framebuffer would be a definitive solution for that corner
+case. Good call, Konrad.
+
+Cheers,
+Angelo
+
+> Konrad
+>>
+>> - Marijn
+>>
+>>> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>>>
+>>>>
+>>>> Konrad
+>>>>>
+>>>>> Changes since v2:
+>>>>> - Rename griffin (copy-paste from related patch) to pdx203 in comment.
+>>>>>
+>>>>>    arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 7 ++++---
+>>>>>    1 file changed, 4 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+>>>>> index 3d22be747f042..8f867f841cb83 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+>>>>> @@ -54,9 +54,10 @@ chosen {
+>>>>>    		framebuffer: framebuffer@9c000000 {
+>>>>>    			compatible = "simple-framebuffer";
+>>>>>    			reg = <0 0x9c000000 0 0x2300000>;
+>>>>> -			width = <1644>;
+>>>>> -			height = <3840>;
+>>>>> -			stride = <(1644 * 4)>;
+>>>>> +			/* pdx203 BL initializes in 2.5k mode, not 4k */
+>>>>> +			width = <1096>;
+>>>>> +			height = <2560>;
+>>>>> +			stride = <(1096 * 4)>;
+>>>>>    			format = "a8r8g8b8";
+>>>>>    		};
+>>>>>    	};
+>>>
 
 
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
 
