@@ -2,96 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F59272FD3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:43:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1716E72FD6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:53:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244192AbjFNLny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 07:43:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56694 "EHLO
+        id S244300AbjFNLxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 07:53:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244193AbjFNLnv (ORCPT
+        with ESMTP id S244297AbjFNLw6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 07:43:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF641BE9;
-        Wed, 14 Jun 2023 04:43:47 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35E71JWv014819;
-        Wed, 14 Jun 2023 11:43:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=yV71osPptkCiJoMYF+jrbVqBdhkNFdN5n92WzBBjbGk=;
- b=o6VQiCRmMKaQefDL9YHdfRd429d3e/COJFZ2aE6BjsPmfhy6MT9AXUeIR9MRB8xmXoJQ
- sef7/Mg3tEqnTdzVu7uTiwjvU5o6sNmqcK6M5krgciRHXqj0rvLzETPQbFRZRepby5d7
- CPyCv+qW+IHJ0agwt7lGCD+Oiif2CiRFudkoWsOMbrBBjtxpMUzu5pJolCIdoG7o932J
- KX00EfupeC90QFXWMoOWkIV8KvmeUnwk1uMsLEH2p1RpfjMexpd+QqayqaeIrF+fVe/T
- au2JGqRvRiBQfczPLrEz4IF/BH8yR9WGBo6sZfGiuMw2vtjSxXn4fR4AF+JYgKXAACFx mA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6nqh3810-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 11:43:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EBhfjI031430
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 11:43:41 GMT
-Received: from [10.201.206.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 14 Jun
- 2023 04:43:32 -0700
-Message-ID: <04f5e3cb-d2f5-747c-1fd0-4b61d845e2c5@quicinc.com>
-Date:   Wed, 14 Jun 2023 17:13:27 +0530
+        Wed, 14 Jun 2023 07:52:58 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 960BF1BF3;
+        Wed, 14 Jun 2023 04:52:56 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 438CD21854;
+        Wed, 14 Jun 2023 11:52:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1686743575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=1ACAQe4eQYE40x3HpvzCeA0WZRx83yuDK0LqbucCXHU=;
+        b=atYTSelLioj1oTT5IPBBT4N3bg1AbZ3tOcqNMUMN4AyissB6x6OXBwN/ANqe6jwxp5aJmA
+        YOOEk5y9bYSOZ+in/nUfLpqhMOjXsddBjxyOLokL/JMNoTuZJAtyAdvNOhoELFkBKbjpT/
+        IWgeANNsWv4geDBw0ctnBHbXdNP1/DE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1686743575;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=1ACAQe4eQYE40x3HpvzCeA0WZRx83yuDK0LqbucCXHU=;
+        b=6lRJj0Lf3dINkbqGSf0gVVxqYZPryYtYpZx020YLArI2z16quUjsyu1K58qwNiu+NfOTb7
+        DIXOO7JJ8Md/5FDQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C2AF11391E;
+        Wed, 14 Jun 2023 11:52:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id P/GNLhaqiWTvJwAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Wed, 14 Jun 2023 11:52:54 +0000
+Message-ID: <28d339a4-c3a3-e1a4-1da2-59042428d786@suse.de>
+Date:   Wed, 14 Jun 2023 13:52:53 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH V2 01/13] dt-bindings: remoteproc: qcom: Add support for
- multipd model
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v5 02/13] fbdev: Add initializer macros for struct fb_ops
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kalle Valo <kvalo@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_eberman@quicinc.com>, <quic_mojha@quicinc.com>,
-        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
- <20230521222852.5740-2-quic_mmanikan@quicinc.com>
- <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
- <a1456f62-d0a7-d5ec-b379-db1b6035c89c@quicinc.com>
- <d187eafb-4a80-9479-d063-3a01b47d8efa@linaro.org>
- <feb0d11d-0930-d0b8-ab6e-cf477bbf114b@quicinc.com>
- <87edmoitu3.fsf@kernel.org>
- <0555c089-9d0d-7d19-9646-f0f9b8630d12@quicinc.com>
- <5f9cc367-eaa5-4c19-4e5e-7052b0259ccf@linaro.org>
-From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <5f9cc367-eaa5-4c19-4e5e-7052b0259ccf@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _njWu8l0VgoINk7ifDFZCof0oFFQDArf
-X-Proofpoint-ORIG-GUID: _njWu8l0VgoINk7ifDFZCof0oFFQDArf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-14_07,2023-06-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=711 bulkscore=0
- suspectscore=0 mlxscore=0 priorityscore=1501 impostorscore=0 spamscore=0
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306140100
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>,
+        daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, sam@ravnborg.org, suijingfeng@loongson.cn
+Cc:     linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230530150253.22758-1-tzimmermann@suse.de>
+ <20230530150253.22758-3-tzimmermann@suse.de>
+ <fc5157cc-6f23-a74f-efcc-66bd7e093de7@gmail.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <fc5157cc-6f23-a74f-efcc-66bd7e093de7@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------iQql70Vea1C4kMG6KF3BooR6"
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -100,86 +81,199 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------iQql70Vea1C4kMG6KF3BooR6
+Content-Type: multipart/mixed; boundary="------------r6QVpEGW1WeVo3vErBpHD1G8";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>,
+ daniel@ffwll.ch, airlied@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, javierm@redhat.com, sam@ravnborg.org,
+ suijingfeng@loongson.cn
+Cc: linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ intel-gfx@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org
+Message-ID: <28d339a4-c3a3-e1a4-1da2-59042428d786@suse.de>
+Subject: Re: [PATCH v5 02/13] fbdev: Add initializer macros for struct fb_ops
+References: <20230530150253.22758-1-tzimmermann@suse.de>
+ <20230530150253.22758-3-tzimmermann@suse.de>
+ <fc5157cc-6f23-a74f-efcc-66bd7e093de7@gmail.com>
+In-Reply-To: <fc5157cc-6f23-a74f-efcc-66bd7e093de7@gmail.com>
 
+--------------r6QVpEGW1WeVo3vErBpHD1G8
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-On 6/7/2023 1:57 PM, Krzysztof Kozlowski wrote:
-> On 07/06/2023 10:10, Manikanta Mylavarapu wrote:
->>
->>
->> On 6/6/2023 7:19 PM, Kalle Valo wrote:
->>> Manikanta Mylavarapu <quic_mmanikan@quicinc.com> writes:
->>>
->>>>>>>> +
->>>>>>>> +    properties:
->>>>>>>> +      compatible:
->>>>>>>> +        enum:
->>>>>>>> +          - qcom,ipq5018-wcss-ahb-mpd
->>>>>>>> +          - qcom,ipq9574-wcss-ahb-mpd
->>>>>>>> +          - qcom,ipq5018-wcss-pcie-mpd
->>>>>>>
->>>>>>> Keep rather alphabetical order (so both 5018 together).
->>>>>>>
->>>>>>> I also do not understand these at all. Why adding bus type to
->>>>>>> compatible? This rarely is allowed (unless it is PCIe controller within
->>>>>>> soc).
->>>>>>>
->>>>>> IPQ5018 SOC has in-built PCIE controller. Here QDSP6 will bring up
->>>>>> external(PCIE) and internal (AHB) wifi radio's. To separate AHB, PCIE
->>>>>> radio's properties, i have added bus type to compatible.
->>>>>
->>>>> It's the same device - WCSS - right? We do not create multiple nodes and
->>>>> compatibles for the same devices. Bus suffixes are almost never parts of
->>>>> compatibles.
->>>>
->>>>
->>>> No it's not the same device. WCSS on inside IPQ5018 and WCSS attached
->>>> via pcie to IPQ5018. Here QDSP6 managing both WCSS's.
->>>>
->>>> So for better clarity i will use attached SOC ID in compatible.
->>>> Below are the new compatible's.
->>>>
->>>> - qcom,ipq5018-wcss-mpd //IPQ5018 internal radio
->>>> - qcom,ipq9574-wcss-mpd	//IPQ9574 internal radio
->>>> - qcom,qcn6122-wcss-mpd //IPQ5018 attached radio
->>>
->>> What mandates that there's just one QCN6122 device attached to PCI?
->>> Assuming fixed PCI configurations like that makes me worried.
->>>
->>
->> IPQ5018 always has one internal radio, attached pcie radio's depends on
->> no of pcie ports. IPQ5018 has 2 pcie ports, so it supports max two
->> qcn6122 devices. One compatible (qcom,qcn6122-wcss-mpd) itself support's
->> number of pcie devices controlled by QDSP6.
-> 
-> So this is hot-pluggable (or at least board-pluggable), then should not
-> be a part of static DTS.
-> 
-> Some concepts of virtual-processes is anyway far away from hardware
-> description, thus does not fit into DTS. Adding now to the equation PCIe
-> with variable number of such processes, brings us even further.
-> 
-> This is not a DT property. Remember - DT describes hardware.
-> 
-> Best regards,
-> Krzysztof
-> 
+SGkNCg0KQW0gMTQuMDYuMjMgdW0gMTM6Mjkgc2NocmllYiBDaHJpc3RpYW4gS8O2bmlnOg0K
+PiANCj4gDQo+IEFtIDMwLjA1LjIzIHVtIDE3OjAyIHNjaHJpZWIgVGhvbWFzIFppbW1lcm1h
+bm46DQo+PiBGb3IgZnJhbWVidWZmZXJzIGluIEkvTyBhbmQgc3lzdGVtIG1lbW9yeSwgYWRk
+IG1hY3JvcyB0aGF0IHNldA0KPj4gc3RydWN0IGZiX29wcyB0byB0aGUgcmVzcGVjdGl2ZSBj
+YWxsYmFjayBmdW5jdGlvbnMuDQo+Pg0KPj4gRm9yIGRlZmVycmVkIEkvTywgYWRkIG1hY3Jv
+cyB0aGF0IGdlbmVyYXRlIGNhbGxiYWNrIGZ1bmN0aW9ucyB3aXRoDQo+PiBkYW1hZ2UgaGFu
+ZGxpbmcuIEFkZCBpbml0aWFsaXplciBtYWNyb3MgdGhhdCBzZXQgc3RydWN0IGZiX29wcyB0
+bw0KPj4gdGhlIGdlbmVyYXRlZCBjYWxsYmFja3MuDQo+Pg0KPj4gVGhlc2UgbWFjcm9zIGNh
+biByZW1vdmUgYSBsb3QgYm9pbGVycGxhdGUgY29kZSBmcm9tIGZiZGV2IGRyaXZlcnMuDQo+
+PiBUaGUgZHJpdmVycyBhcmUgc3VwcG9zZWQgdG8gdXNlIHRoZSBtYWNybyB0aGF0IGlzIHJl
+cXVpcmVkIGZvciBpdHMNCj4+IGZyYW1lYnVmZmVyLiBFYWNoIG1hY3JvIGlzIHNwbGl0IGlu
+dG8gc21hbGxlciBoZWxwZXJzLCBzbyB0aGF0DQo+PiBkcml2ZXJzIHdpdGggbm9uLXN0YW5k
+YXJkIGNhbGxiYWNrcyBjYW4gcGljayBhbmQgY3VzdG9taXplIGNhbGxiYWNrcw0KPj4gYXMg
+bmVlZGVkLiBUaGVyZSBhcmUgaW5kaXZpZHVhbCBoZWxwZXIgbWFjcm9zIGZvciByZWFkL3dy
+aXRlLCBtbWFwDQo+PiBhbmQgZHJhd2luZy4NCj4+DQo+PiB2NToNCj4+IMKgwqDCoMKgKiBm
+aXggd2hpdGVzcGFjZSBlcnJvcnMgKEppbmdmZW5nKQ0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6
+IFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPg0KPj4gUmV2aWV3ZWQt
+Ynk6IFNhbSBSYXZuYm9yZyA8c2FtQHJhdm5ib3JnLm9yZz4NCj4+IC0tLQ0KPj4gwqAgaW5j
+bHVkZS9saW51eC9mYi5oIHwgMTEyICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKw0KPj4gwqAgMSBmaWxlIGNoYW5nZWQsIDExMiBpbnNlcnRpb25zKCsp
+DQo+Pg0KPj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvbGludXgvZmIuaCBiL2luY2x1ZGUvbGlu
+dXgvZmIuaA0KPj4gaW5kZXggMmNmOGVmY2I5ZTMyLi5jZTY4MjNlMTU3ZTYgMTAwNjQ0DQo+
+PiAtLS0gYS9pbmNsdWRlL2xpbnV4L2ZiLmgNCj4+ICsrKyBiL2luY2x1ZGUvbGludXgvZmIu
+aA0KPj4gQEAgLTUzOCw5ICs1MzgsMzEgQEAgZXh0ZXJuIHNzaXplX3QgZmJfaW9fcmVhZChz
+dHJ1Y3QgZmJfaW5mbyAqaW5mbywgDQo+PiBjaGFyIF9fdXNlciAqYnVmLA0KPj4gwqAgZXh0
+ZXJuIHNzaXplX3QgZmJfaW9fd3JpdGUoc3RydWN0IGZiX2luZm8gKmluZm8sIGNvbnN0IGNo
+YXIgX191c2VyIA0KPj4gKmJ1ZiwNCj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIHNpemVfdCBjb3VudCwgbG9mZl90ICpwcG9zKTsNCj4+ICsvKg0KPj4gKyAqIEluaXRp
+YWxpemVzIHN0cnVjdCBmYl9vcHMgZm9yIGZyYW1lYnVmZmVycyBpbiBJL08gbWVtb3J5Lg0K
+Pj4gKyAqLw0KPj4gKw0KPj4gKyNkZWZpbmUgX19GQl9ERUZBVUxUX0lPX09QU19SRFdSIFwN
+Cj4+ICvCoMKgwqAgLmZiX3JlYWTCoMKgwqAgPSBmYl9pb19yZWFkLCBcDQo+PiArwqDCoMKg
+IC5mYl93cml0ZcKgwqDCoCA9IGZiX2lvX3dyaXRlDQo+PiArDQo+PiArI2RlZmluZSBfX0ZC
+X0RFRkFVTFRfSU9fT1BTX0RSQVcgXA0KPj4gK8KgwqDCoCAuZmJfZmlsbHJlY3TCoMKgwqAg
+PSBjZmJfZmlsbHJlY3QsIFwNCj4+ICvCoMKgwqAgLmZiX2NvcHlhcmVhwqDCoMKgID0gY2Zi
+X2NvcHlhcmVhLCBcDQo+PiArwqDCoMKgIC5mYl9pbWFnZWJsaXTCoMKgwqAgPSBjZmJfaW1h
+Z2VibGl0DQo+PiArDQo+PiArI2RlZmluZSBfX0ZCX0RFRkFVTFRfSU9fT1BTX01NQVAgXA0K
+Pj4gK8KgwqDCoCAuZmJfbW1hcMKgwqDCoCA9IE5VTEwgLy8gZGVmYXVsdCBpbXBsZW1lbnRh
+dGlvbg0KPiANCj4gLy8gc3R5bGUgY29tbWVudCBpbiBhIG1hY3JvPyBUaGF0J3MgdXN1YWxs
+eSBhIHZlcnkgYmFkIGlkZWEuDQoNCkkgdGhpbmsgSSBzZWUgaXQgbm93LiBUaGFua3MhIFRo
+YXQgc2hvdWxkIGRlbGV0ZSBhbnkgY29tbWFzIGF0IHRoZSBlbmQgDQpvZiB0aGUgbGluZS4g
+SSdsbCBzZW5kIG91dCBhbiB1cGRhdGUuIEl0IHdvcmtzIHNvIGZhciwgYXMgSSBvbmx5IHVz
+ZWQgDQp0aGF0IG1hY3JvIGluIHRoZSBjb3JyZWN0IHdheS4NCg0KQmVzdCByZWdhcmRzDQpU
+aG9tYXMNCg0KPiANCj4gQ2hyaXN0aWFuLg0KPiANCj4+ICsNCj4+ICsjZGVmaW5lIEZCX0RF
+RkFVTFRfSU9fT1BTIFwNCj4+ICvCoMKgwqAgX19GQl9ERUZBVUxUX0lPX09QU19SRFdSLCBc
+DQo+PiArwqDCoMKgIF9fRkJfREVGQVVMVF9JT19PUFNfRFJBVywgXA0KPj4gK8KgwqDCoCBf
+X0ZCX0RFRkFVTFRfSU9fT1BTX01NQVANCj4+ICsNCj4+IMKgIC8qDQo+PiDCoMKgICogRHJh
+d2luZyBvcGVyYXRpb25zIHdoZXJlIGZyYW1lYnVmZmVyIGlzIGluIHN5c3RlbSBSQU0NCj4+
+IMKgwqAgKi8NCj4+ICsNCj4+IMKgIGV4dGVybiB2b2lkIHN5c19maWxscmVjdChzdHJ1Y3Qg
+ZmJfaW5mbyAqaW5mbywgY29uc3Qgc3RydWN0IA0KPj4gZmJfZmlsbHJlY3QgKnJlY3QpOw0K
+Pj4gwqAgZXh0ZXJuIHZvaWQgc3lzX2NvcHlhcmVhKHN0cnVjdCBmYl9pbmZvICppbmZvLCBj
+b25zdCBzdHJ1Y3QgDQo+PiBmYl9jb3B5YXJlYSAqYXJlYSk7DQo+PiDCoCBleHRlcm4gdm9p
+ZCBzeXNfaW1hZ2VibGl0KHN0cnVjdCBmYl9pbmZvICppbmZvLCBjb25zdCBzdHJ1Y3QgDQo+
+PiBmYl9pbWFnZSAqaW1hZ2UpOw0KPj4gQEAgLTU0OSw2ICs1NzEsMjcgQEAgZXh0ZXJuIHNz
+aXplX3QgZmJfc3lzX3JlYWQoc3RydWN0IGZiX2luZm8gKmluZm8sIA0KPj4gY2hhciBfX3Vz
+ZXIgKmJ1ZiwNCj4+IMKgIGV4dGVybiBzc2l6ZV90IGZiX3N5c193cml0ZShzdHJ1Y3QgZmJf
+aW5mbyAqaW5mbywgY29uc3QgY2hhciBfX3VzZXIgDQo+PiAqYnVmLA0KPj4gwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBzaXplX3QgY291bnQsIGxvZmZfdCAqcHBvcyk7
+DQo+PiArLyoNCj4+ICsgKiBJbml0aWFsaXplcyBzdHJ1Y3QgZmJfb3BzIGZvciBmcmFtZWJ1
+ZmZlcnMgaW4gc3lzdGVtIG1lbW9yeS4NCj4+ICsgKi8NCj4+ICsNCj4+ICsjZGVmaW5lIF9f
+RkJfREVGQVVMVF9TWVNfT1BTX1JEV1IgXA0KPj4gK8KgwqDCoCAuZmJfcmVhZMKgwqDCoCA9
+IGZiX3N5c19yZWFkLCBcDQo+PiArwqDCoMKgIC5mYl93cml0ZcKgwqDCoCA9IGZiX3N5c193
+cml0ZQ0KPj4gKw0KPj4gKyNkZWZpbmUgX19GQl9ERUZBVUxUX1NZU19PUFNfRFJBVyBcDQo+
+PiArwqDCoMKgIC5mYl9maWxscmVjdMKgwqDCoCA9IHN5c19maWxscmVjdCwgXA0KPj4gK8Kg
+wqDCoCAuZmJfY29weWFyZWHCoMKgwqAgPSBzeXNfY29weWFyZWEsIFwNCj4+ICvCoMKgwqAg
+LmZiX2ltYWdlYmxpdMKgwqDCoCA9IHN5c19pbWFnZWJsaXQNCj4+ICsNCj4+ICsjZGVmaW5l
+IF9fRkJfREVGQVVMVF9TWVNfT1BTX01NQVAgXA0KPj4gK8KgwqDCoCAuZmJfbW1hcMKgwqDC
+oCA9IE5VTEwgLy8gZGVmYXVsdCBpbXBsZW1lbnRhdGlvbg0KPj4gKw0KPj4gKyNkZWZpbmUg
+RkJfREVGQVVMVF9TWVNfT1BTIFwNCj4+ICvCoMKgwqAgX19GQl9ERUZBVUxUX1NZU19PUFNf
+UkRXUiwgXA0KPj4gK8KgwqDCoCBfX0ZCX0RFRkFVTFRfU1lTX09QU19EUkFXLCBcDQo+PiAr
+wqDCoMKgIF9fRkJfREVGQVVMVF9TWVNfT1BTX01NQVANCj4+ICsNCj4+IMKgIC8qIGRyaXZl
+cnMvdmlkZW8vZmJtZW0uYyAqLw0KPj4gwqAgZXh0ZXJuIGludCByZWdpc3Rlcl9mcmFtZWJ1
+ZmZlcihzdHJ1Y3QgZmJfaW5mbyAqZmJfaW5mbyk7DQo+PiDCoCBleHRlcm4gdm9pZCB1bnJl
+Z2lzdGVyX2ZyYW1lYnVmZmVyKHN0cnVjdCBmYl9pbmZvICpmYl9pbmZvKTsNCj4+IEBAIC02
+MDQsNiArNjQ3LDc1IEBAIGV4dGVybiB2b2lkIGZiX2RlZmVycmVkX2lvX2NsZWFudXAoc3Ry
+dWN0IGZiX2luZm8gDQo+PiAqaW5mbyk7DQo+PiDCoCBleHRlcm4gaW50IGZiX2RlZmVycmVk
+X2lvX2ZzeW5jKHN0cnVjdCBmaWxlICpmaWxlLCBsb2ZmX3Qgc3RhcnQsDQo+PiDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGxvZmZfdCBlbmQsIGludCBkYXRhc3luYyk7
+DQo+PiArLyoNCj4+ICsgKiBHZW5lcmF0ZSBjYWxsYmFja3MgZm9yIGRlZmVycmVkIEkvTw0K
+Pj4gKyAqLw0KPj4gKw0KPj4gKyNkZWZpbmUgX19GQl9HRU5fREVGQVVMVF9ERUZFUlJFRF9P
+UFNfUkRXUihfX3ByZWZpeCwgX19kYW1hZ2VfcmFuZ2UsIA0KPj4gX19tb2RlKSBcDQo+PiAr
+wqDCoMKgIHN0YXRpYyBzc2l6ZV90IF9fcHJlZml4ICMjIF9kZWZpb19yZWFkKHN0cnVjdCBm
+Yl9pbmZvICppbmZvLCBjaGFyIA0KPj4gX191c2VyICpidWYsIFwNCj4+ICvCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHNpemVfdCBjb3Vu
+dCwgbG9mZl90ICpwcG9zKSBcDQo+PiArwqDCoMKgIHsgXA0KPj4gK8KgwqDCoMKgwqDCoMKg
+IHJldHVybiBmYl8gIyMgX19tb2RlICMjIF9yZWFkKGluZm8sIGJ1ZiwgY291bnQsIHBwb3Mp
+OyBcDQo+PiArwqDCoMKgIH0gXA0KPj4gK8KgwqDCoCBzdGF0aWMgc3NpemVfdCBfX3ByZWZp
+eCAjIyBfZGVmaW9fd3JpdGUoc3RydWN0IGZiX2luZm8gKmluZm8sIA0KPj4gY29uc3QgY2hh
+ciBfX3VzZXIgKmJ1ZiwgXA0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgc2l6ZV90IGNvdW50LCBsb2ZmX3QgKnBwb3MpIFwNCj4+ICvCoMKg
+wqAgeyBcDQo+PiArwqDCoMKgwqDCoMKgwqAgdW5zaWduZWQgbG9uZyBvZmZzZXQgPSAqcHBv
+czsgXA0KPj4gK8KgwqDCoMKgwqDCoMKgIHNzaXplX3QgcmV0ID0gZmJfICMjIF9fbW9kZSAj
+IyBfd3JpdGUoaW5mbywgYnVmLCBjb3VudCwgcHBvcyk7IFwNCj4+ICvCoMKgwqDCoMKgwqDC
+oCBpZiAocmV0ID4gMCkgXA0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgX19kYW1hZ2Vf
+cmFuZ2UoaW5mbywgb2Zmc2V0LCByZXQpOyBcDQo+PiArwqDCoMKgwqDCoMKgwqAgcmV0dXJu
+IHJldDsgXA0KPj4gK8KgwqDCoCB9DQo+PiArDQo+PiArI2RlZmluZSBfX0ZCX0dFTl9ERUZB
+VUxUX0RFRkVSUkVEX09QU19EUkFXKF9fcHJlZml4LCBfX2RhbWFnZV9hcmVhLCANCj4+IF9f
+bW9kZSkgXA0KPj4gK8KgwqDCoCBzdGF0aWMgdm9pZCBfX3ByZWZpeCAjIyBfZGVmaW9fZmls
+bHJlY3Qoc3RydWN0IGZiX2luZm8gKmluZm8sIFwNCj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNvbnN0IHN0cnVjdCBmYl9maWxscmVjdCAq
+cmVjdCkgXA0KPj4gK8KgwqDCoCB7IFwNCj4+ICvCoMKgwqDCoMKgwqDCoCBfX21vZGUgIyMg
+X2ZpbGxyZWN0KGluZm8sIHJlY3QpOyBcDQo+PiArwqDCoMKgwqDCoMKgwqAgX19kYW1hZ2Vf
+YXJlYShpbmZvLCByZWN0LT5keCwgcmVjdC0+ZHksIHJlY3QtPndpZHRoLCANCj4+IHJlY3Qt
+PmhlaWdodCk7IFwNCj4+ICvCoMKgwqAgfSBcDQo+PiArwqDCoMKgIHN0YXRpYyB2b2lkIF9f
+cHJlZml4ICMjIF9kZWZpb19jb3B5YXJlYShzdHJ1Y3QgZmJfaW5mbyAqaW5mbywgXA0KPj4g
+K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY29uc3Qg
+c3RydWN0IGZiX2NvcHlhcmVhICphcmVhKSBcDQo+PiArwqDCoMKgIHsgXA0KPj4gK8KgwqDC
+oMKgwqDCoMKgIF9fbW9kZSAjIyBfY29weWFyZWEoaW5mbywgYXJlYSk7IFwNCj4+ICvCoMKg
+wqDCoMKgwqDCoCBfX2RhbWFnZV9hcmVhKGluZm8sIGFyZWEtPmR4LCBhcmVhLT5keSwgYXJl
+YS0+d2lkdGgsIA0KPj4gYXJlYS0+aGVpZ2h0KTsgXA0KPj4gK8KgwqDCoCB9IFwNCj4+ICvC
+oMKgwqAgc3RhdGljIHZvaWQgX19wcmVmaXggIyMgX2RlZmlvX2ltYWdlYmxpdChzdHJ1Y3Qg
+ZmJfaW5mbyAqaW5mbywgXA0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCBjb25zdCBzdHJ1Y3QgZmJfaW1hZ2UgKmltYWdlKSBcDQo+PiAr
+wqDCoMKgIHsgXA0KPj4gK8KgwqDCoMKgwqDCoMKgIF9fbW9kZSAjIyBfaW1hZ2VibGl0KGlu
+Zm8sIGltYWdlKTsgXA0KPj4gK8KgwqDCoMKgwqDCoMKgIF9fZGFtYWdlX2FyZWEoaW5mbywg
+aW1hZ2UtPmR4LCBpbWFnZS0+ZHksIGltYWdlLT53aWR0aCwgDQo+PiBpbWFnZS0+aGVpZ2h0
+KTsgXA0KPj4gK8KgwqDCoCB9DQo+PiArDQo+PiArI2RlZmluZSBGQl9HRU5fREVGQVVMVF9E
+RUZFUlJFRF9JT19PUFMoX19wcmVmaXgsIF9fZGFtYWdlX3JhbmdlLCANCj4+IF9fZGFtYWdl
+X2FyZWEpIFwNCj4+ICvCoMKgwqAgX19GQl9HRU5fREVGQVVMVF9ERUZFUlJFRF9PUFNfUkRX
+UihfX3ByZWZpeCwgX19kYW1hZ2VfcmFuZ2UsIGlvKSBcDQo+PiArwqDCoMKgIF9fRkJfR0VO
+X0RFRkFVTFRfREVGRVJSRURfT1BTX0RSQVcoX19wcmVmaXgsIF9fZGFtYWdlX2FyZWEsIGNm
+YikNCj4+ICsNCj4+ICsjZGVmaW5lIEZCX0dFTl9ERUZBVUxUX0RFRkVSUkVEX1NZU19PUFMo
+X19wcmVmaXgsIF9fZGFtYWdlX3JhbmdlLCANCj4+IF9fZGFtYWdlX2FyZWEpIFwNCj4+ICvC
+oMKgwqAgX19GQl9HRU5fREVGQVVMVF9ERUZFUlJFRF9PUFNfUkRXUihfX3ByZWZpeCwgX19k
+YW1hZ2VfcmFuZ2UsIHN5cykgXA0KPj4gK8KgwqDCoCBfX0ZCX0dFTl9ERUZBVUxUX0RFRkVS
+UkVEX09QU19EUkFXKF9fcHJlZml4LCBfX2RhbWFnZV9hcmVhLCBzeXMpDQo+PiArDQo+PiAr
+LyoNCj4+ICsgKiBJbml0aWFsaXplcyBzdHJ1Y3QgZmJfb3BzIGZvciBkZWZlcnJlZCBJL08u
+DQo+PiArICovDQo+PiArDQo+PiArI2RlZmluZSBfX0ZCX0RFRkFVTFRfREVGRVJSRURfT1BT
+X1JEV1IoX19wcmVmaXgpIFwNCj4+ICvCoMKgwqAgLmZiX3JlYWTCoMKgwqAgPSBfX3ByZWZp
+eCAjIyBfZGVmaW9fcmVhZCwgXA0KPj4gK8KgwqDCoCAuZmJfd3JpdGXCoMKgwqAgPSBfX3By
+ZWZpeCAjIyBfZGVmaW9fd3JpdGUNCj4+ICsNCj4+ICsjZGVmaW5lIF9fRkJfREVGQVVMVF9E
+RUZFUlJFRF9PUFNfRFJBVyhfX3ByZWZpeCkgXA0KPj4gK8KgwqDCoCAuZmJfZmlsbHJlY3TC
+oMKgwqAgPSBfX3ByZWZpeCAjIyBfZGVmaW9fZmlsbHJlY3QsIFwNCj4+ICvCoMKgwqAgLmZi
+X2NvcHlhcmVhwqDCoMKgID0gX19wcmVmaXggIyMgX2RlZmlvX2NvcHlhcmVhLCBcDQo+PiAr
+wqDCoMKgIC5mYl9pbWFnZWJsaXTCoMKgwqAgPSBfX3ByZWZpeCAjIyBfZGVmaW9faW1hZ2Vi
+bGl0DQo+PiArDQo+PiArI2RlZmluZSBfX0ZCX0RFRkFVTFRfREVGRVJSRURfT1BTX01NQVAo
+X19wcmVmaXgpIFwNCj4+ICvCoMKgwqAgLmZiX21tYXDCoMKgwqAgPSBmYl9kZWZlcnJlZF9p
+b19tbWFwDQo+PiArDQo+PiArI2RlZmluZSBGQl9ERUZBVUxUX0RFRkVSUkVEX09QUyhfX3By
+ZWZpeCkgXA0KPj4gK8KgwqDCoCBfX0ZCX0RFRkFVTFRfREVGRVJSRURfT1BTX1JEV1IoX19w
+cmVmaXgpLCBcDQo+PiArwqDCoMKgIF9fRkJfREVGQVVMVF9ERUZFUlJFRF9PUFNfRFJBVyhf
+X3ByZWZpeCksIFwNCj4+ICvCoMKgwqAgX19GQl9ERUZBVUxUX0RFRkVSUkVEX09QU19NTUFQ
+KF9fcHJlZml4KQ0KPj4gKw0KPj4gwqAgc3RhdGljIGlubGluZSBib29sIGZiX2JlX21hdGgo
+c3RydWN0IGZiX2luZm8gKmluZm8pDQo+PiDCoCB7DQo+PiDCoCAjaWZkZWYgQ09ORklHX0ZC
+X0ZPUkVJR05fRU5ESUFODQo+IA0KDQotLSANClRob21hcyBaaW1tZXJtYW5uDQpHcmFwaGlj
+cyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdt
+YkgNCkZyYW5rZW5zdHJhc3NlIDE0NiwgOTA0NjEgTnVlcm5iZXJnLCBHZXJtYW55DQpHRjog
+SXZvIFRvdGV2LCBBbmRyZXcgTXllcnMsIEFuZHJldyBNY0RvbmFsZCwgQm91ZGllbiBNb2Vy
+bWFuDQpIUkIgMzY4MDkgKEFHIE51ZXJuYmVyZykNCg==
 
-In the multipd architecture based Socs, There is one Q6 DSP which runs 
-the OS/kernel and there are one or more instances of WCSS radios
-(It can be either internal or pcie attached).
-These WCSS cores are controlled by the Q6 (Q6 DSP brings wcss radios out 
-of reset/ shuts it down etc). Q6 forms the 'root Protection domain' and 
-the wcss radios are termed as the 'user protection domain'.
-The compatible's that is being added here are to manage the 'root 
-domain' and 'user domain'.
-Not sure if using the words 'pcie'/'ahb' made it confusing.
-So, 'qcom,ipq5018-q6-mpd' and 'qcom,ipq5018-wcss-mpd'.
+--------------r6QVpEGW1WeVo3vErBpHD1G8--
 
-There will be multiple instances of 'qcom,ipq5018-wcss-mpd' in DT based 
-on number of wcss radios connected on that board and only one instance 
-of 'qcom,ipq5018-q6-mpd'.
+--------------iQql70Vea1C4kMG6KF3BooR6
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-Is this approach ok ?
+-----BEGIN PGP SIGNATURE-----
 
-Thanks & Regards,
-Manikanta.
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmSJqhUFAwAAAAAACgkQlh/E3EQov+CH
+jg//ThpLgmcmHvJWg4eHkgx4y448E2dcNHieCv3xpMAv0GMXrXTUZRZomrfToh+X+SPjS5ZCP+Pe
+cTRNhPL7SohLPdmhV3Tp0ddikKnymp8ays+xsPPYHfvmbNPn0i2ElRDmepUqzwxXelH1iHJuTURw
+gFhm0/gVRtxeJcHnTG8hN7ELNpNHPGaT/tQh7wYNPgTDleXGZQSNe3AA+Y6E1cmo2/kuppMzCJ/6
+vCbq3b9LwUUd1lGJvVUk0t81AB6OFddR+whRivv5qKlLhRIjPM/IfE1lywFHXO6n3QUwj0NURjsy
+T+lSOIynkpJNKIVd9D9krNwDPWCQdCyfV0zswtT8KnOqPsHQYFnvAsN1rMUwd50Nc6ednk0hCyAQ
+OUMMPKCGKK0C0mMtnd7eA+0oXIttgvfFaaYxyKmFpmraK1BZhOpSPsIjrGrxekMaAwlxBEMPdmAR
+/61jmBjx0nkt2J5G79pioWUHodaRzkeXA9ny4HDQnxzPrv1fLOW5S9i6K0fiIUvYoj252S7vBrAl
+VMigqs74RL60aJ5Ema//+D/K48ZNSZ8tNTho5ZEQMFEHoCOEHhWOhU33/PbQfFxfiASyPbsEK3AY
+EF3nOjYmQiyvj/hjJxQeAP5OxzpN6KSYKZtY24YYXs8/pCMq1hGgP2mDd4Ty1HskA2AiH2GMN1hg
+/Hs=
+=MIVD
+-----END PGP SIGNATURE-----
+
+--------------iQql70Vea1C4kMG6KF3BooR6--
