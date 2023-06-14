@@ -2,151 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23D8872FDC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:02:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1475572FE03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:12:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235690AbjFNMCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:02:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
+        id S244524AbjFNMMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:12:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232831AbjFNMCD (ORCPT
+        with ESMTP id S244446AbjFNMMG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:02:03 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639CC92
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:02:02 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f766777605so839556e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:02:02 -0700 (PDT)
+        Wed, 14 Jun 2023 08:12:06 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7338B2688
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:11:55 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f7677a94d1so752571e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686744120; x=1689336120;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=APFMvQ7ODanIJV/49mozRJR24EjLchmIY1aNYth0n0A=;
-        b=cTE7StskKa1gOaN7Q4vGHXf7JziI+921scTA1Z61XuufieMoN+Trr9ZQ3pSAeRV9kQ
-         fuWWvXmT8uxLNssEsSF0r6cJQE5YwKJX79SJAahFrtogD0kzcxNFvshgApQn1+He74TY
-         NBAUeTr/VEIAq2IJ4OBAPpm1ijZIYWLtssBGvtnRXUyALHFQWAtwqQBw8z2NHDUe193U
-         XAzCGOun/DCYIp2+uZ79CwN6kthVUm9oNNBZOyRoxkO6A/KFszlfmyfYpWDIlHsWjJGB
-         qm6iE1owS5MD7z8NHdozhaCLxjreKzzcr3HB7murAFsjKmevtaYAxo4hRkA1lsmj4YHZ
-         B41w==
+        d=linaro.org; s=google; t=1686744713; x=1689336713;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tYyaAYoAiZPPWXaf4R2hKtCfO4zLm4oKoUYKWZFRm4I=;
+        b=hKiVZuklWK+NqGpONCdITyK0/G4UuFam+X7VxpnSUQOb0cSzVtuweZOSizin1aXpu5
+         YXqo3aoe5kakwvMHgsFLFOyznaBNV043AFcNXlw6/hfoI1oJysj+7Ru0908vxA7hVRb6
+         CwWV1MeCQlICGJAsHGEDk+6evbQsVJ8eTx/LNjxwRx7wYXJploSbcDecoKlZ8BzLlBSX
+         EdB5kHUro5ckRocl9aC1TDOo9pclvKc5s+Hd5wk3qgC8gDbQq70Hc1LMwr7jxoUQBVOI
+         OXQ/sNZYv4P922CHV4LvAdpnregUcbgz5HJjvsqEnscv85bfBfhBlntxlftMgdl+KYtQ
+         Fqhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686744120; x=1689336120;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=APFMvQ7ODanIJV/49mozRJR24EjLchmIY1aNYth0n0A=;
-        b=G8o+wO8dsJr2OvPE9+VNrqPhxHvZC4fKXs/MCZnQwShd5G7MWxWVcscCg4zoUtSXnW
-         s51Kohqla4/IZ8WzHJ0T0cYLSCdYn1Oa0ta/PGh5+GjfHxMxKzeESriN7bfCkrp992eN
-         h6C1sr3K6SOmeDJB9d7vqepNRsUbFEWnXtCXsSflCidSr6NPegpcnu5cX9rjv8uL4XiN
-         PlmjPbTia714rexHtip7lgE9aF18UKbkPC+nmlNMDTP0GwvUZwXVT53S83DEQngRZBt8
-         s4GnjnDEH0E8iQje+AHuKGj+VPSWAfW+g8/sp56M9GkVJfLlWB4JP7wfgAsROAucYDUd
-         vDWw==
-X-Gm-Message-State: AC+VfDxf5c3LrmouQ+YUDNPeNzDemz7l6fs0TfcHFknbf7EYDoKAW4XJ
-        pelt0M53PowlElOaIantHpXReQ==
-X-Google-Smtp-Source: ACHHUZ4rNTYSmY8dJMj9rW18QV3jmWIGNjGK3rX385cmsN6Bsiry3yG0eLvhyGVb2+zuGkVHDiUiCQ==
-X-Received: by 2002:ac2:4d9b:0:b0:4f3:a61d:19d2 with SMTP id g27-20020ac24d9b000000b004f3a61d19d2mr7414911lfe.36.1686744120599;
-        Wed, 14 Jun 2023 05:02:00 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id f2-20020ac251a2000000b004f62229b6c1sm2099072lfk.252.2023.06.14.05.01.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 05:01:59 -0700 (PDT)
-Message-ID: <f4fb042c-1458-6077-3c49-8cc02638b27c@linaro.org>
-Date:   Wed, 14 Jun 2023 15:01:59 +0300
+        d=1e100.net; s=20221208; t=1686744713; x=1689336713;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tYyaAYoAiZPPWXaf4R2hKtCfO4zLm4oKoUYKWZFRm4I=;
+        b=GfaUk/hkmZZAfrC2NIDhMzWn/+PF8ravxD6bPVAJUEWYzSaASzhaxyBq9qcosgeUIL
+         2Dwd6zvvH9ucCBiE+8blFVW4wSWEsq9RR56H3RS2VazN6jRBd0h2R2d6Jux4NQv1NXk0
+         YioMOmUpwPj9u+kZ189wggG5w6lcaWxbWhYUP2l2JReVbeFeO4SwoiCNhl0rsJvloxro
+         d+zs1QAhxFlGrCCn4WzwzpQ6FcA/hV7eZpaV2BYmteVBy/QTl+MdLFpsCvb25Eojft4k
+         zETsr5TvFpFl9P63aHJyGmXXBgh+amOuGC6Un9aB5t9ehf+pHmhGfbM0g/f8AfDpa3Gw
+         bZmQ==
+X-Gm-Message-State: AC+VfDw8nnOdKUoTXQmtbIpT2IlNl8XwuX0j4cabLBaPsInxMICFcEAX
+        RHtto7huvoBh1jRnS/xPVsJH8Q==
+X-Google-Smtp-Source: ACHHUZ5TJdH3ECSdMnlEzGFBheGVPe5ivU0D9N7rCttk2fTtA4W6zd7X4XTxVOxmzIVng9ufTPlKdA==
+X-Received: by 2002:a19:3814:0:b0:4f7:66cc:6c91 with SMTP id f20-20020a193814000000b004f766cc6c91mr788222lfa.51.1686744713522;
+        Wed, 14 Jun 2023 05:11:53 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id d2-20020ac25ec2000000b004f24e797c55sm2109793lfq.25.2023.06.14.05.11.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jun 2023 05:11:53 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/4] SM8250 Edo pins, keys & pmic
+Date:   Wed, 14 Jun 2023 14:11:45 +0200
+Message-Id: <20230614-topic-edo_pinsgpiopmic-v1-0-cf88a0bac26c@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/3] drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN feature flag
- for DPU >= 5.0
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, quic_abhinavk@quicinc.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-1-c7069f2efca1@quicinc.com>
- <wpjxrnhbcanbc5iatxnff25yrrdfrtmgb24sgwyo457dz2oyjz@e2docpcb6337>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <wpjxrnhbcanbc5iatxnff25yrrdfrtmgb24sgwyo457dz2oyjz@e2docpcb6337>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-B4-Tracking: v=1; b=H4sIAIGuiWQC/x2N0QrCMAwAf2Xk2cI6pYi/IiJtk26BmYZ2ijD27
+ wYf7+C4HTo1pg63YYdGH+5cxcCfBshLlJkcozFM43Qeg7+4rSpnR1ifytJn5aovE1iuCUPxKWA
+ Ci1Ps5FKLkhfL5b2uJrVR4e//dn8cxw+CUXvRfQAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686744712; l=924;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=i3s4AcQganFr5wJlg7d766aH6boKY+DUBCJzoCXf1wg=;
+ b=1eImbmQaN2fHFTLcnkmQCuifUuo822YJVIJvXrrG5+Z1vqkQCWWPHUxgDQMKbM6wZtRiGpqNu
+ yU4lBeB0+DLB3+OmSZyfOvZTVHnKNJQ9Fd7xfuy43j+qIHY+o3JoDRD
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 14:42, Marijn Suijten wrote:
-> On 2023-06-13 18:57:11, Jessica Zhang wrote:
->> DPU 5.x+ supports a databus widen mode that allows more data to be sent
->> per pclk. Enable this feature flag on all relevant chipsets.
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 ++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
->>   2 files changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index 36ba3f58dcdf..0be7bf0bfc41 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -103,7 +103,8 @@
->>   	(BIT(DPU_INTF_INPUT_CTRL) | \
->>   	 BIT(DPU_INTF_TE) | \
->>   	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
->> -	 BIT(DPU_DATA_HCTL_EN))
->> +	 BIT(DPU_DATA_HCTL_EN) | \
->> +	 BIT(DPU_INTF_DATABUS_WIDEN))
-> 
-> This doesn't work.  DPU 5.0.0 is SM8150, which has DSI 6G 2.3.  In the
-> last patch for DSI you state and enable widebus for DSI 6G 2.5+ only,
-> meaning DPU and DSI are now desynced, and the output is completely
-> corrupted.
-> 
-> Is the bound in dsi_host wrong, or do DPU and DSI need to communicate
-> when widebus will be enabled, based on DPU && DSI supporting it?
+This series brings fixes to the GPIO buttons, adds gpio-line-names and
+introduces the SLG51000 camera on Xperia Edo devices.
 
-I'd prefer to follow the second approach, as we did for DP. DPU asks the 
-actual video output driver if widebus is to be enabled.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (4):
+      arm64: dts: qcom: sm8250-edo: Add gpio line names for TLMM
+      arm64: dts: qcom: sm8250-edo: Add GPIO line names for PMIC GPIOs
+      arm64: dts: qcom: sm8250-pdx203: Configure SLG51000 PMIC
+      arm64: dts: qcom: sm8250-edo: Rectify gpio-keys
 
-> 
-> - Marijn
-> 
->>   #define INTF_SC7280_MASK (INTF_SC7180_MASK | BIT(DPU_INTF_DATA_COMPRESS))
->>   
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> index b860784ade72..b9939e00f5e0 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> @@ -182,6 +182,7 @@ enum {
->>    *                                  than video timing
->>    * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
->>    * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS register
->> + * @DPU_INTF_DATABUS_WIDEN          INTF block has DATABUS_WIDEN register
->>    * @DPU_INTF_MAX
->>    */
->>   enum {
->> @@ -190,6 +191,7 @@ enum {
->>   	DPU_DATA_HCTL_EN,
->>   	DPU_INTF_STATUS_SUPPORTED,
->>   	DPU_INTF_DATA_COMPRESS,
->> +	DPU_INTF_DATABUS_WIDEN,
->>   	DPU_INTF_MAX
->>   };
->>   
->>
->> -- 
->> 2.40.1
->>
+ .../dts/qcom/sm8250-sony-xperia-edo-pdx203.dts     | 364 +++++++++++++++++++++
+ .../dts/qcom/sm8250-sony-xperia-edo-pdx206.dts     | 243 ++++++++++++++
+ .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi      |  61 +++-
+ 3 files changed, 655 insertions(+), 13 deletions(-)
+---
+base-commit: b16049b21162bb649cdd8519642a35972b7910fe
+change-id: 20230614-topic-edo_pinsgpiopmic-df8bd6f1b6db
 
+Best regards,
 -- 
-With best wishes
-Dmitry
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
