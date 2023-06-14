@@ -2,75 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 680CF73008C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:50:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB1EE73009B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:51:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245161AbjFNNt6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 09:49:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54242 "EHLO
+        id S245203AbjFNNv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 09:51:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245156AbjFNNt4 (ORCPT
+        with ESMTP id S245245AbjFNNvZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 09:49:56 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD19180
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:49:53 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-98281bed6d8so58821566b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:49:53 -0700 (PDT)
+        Wed, 14 Jun 2023 09:51:25 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6012268B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:51:01 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f762b3227dso1394640e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1686750591; x=1689342591;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FILJiyQHr5q7+MBxGqKh2YR7IQjtgWRJYztSUT5XOE4=;
-        b=JKND40dTetSmvfX4bWRAib77G5F/txnMDmpCKOXxTxP7jVFpmBaS9mTJ9xpmzeBaZ2
-         nfAolQOAgP79n4Q+9gDVn+CWht0W0foOB4Cfm2aTNJJiP2JEKCuMQ/FWs8oXXov+IzVu
-         r5YJZoCVYRKY/CqOP9SNv+0H5NhN+f3P099HI=
+        d=linaro.org; s=google; t=1686750660; x=1689342660;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NOIXfmRnx769aI0E7UjcgziLzQIefiUm7yVyqk4c9T8=;
+        b=fOC0cvyssD5iXPh9inqQOD0HhXmOuMj+Aexa6IG6CxwMfxrtZn7kChdNBTM/U3nlnZ
+         5SX8/Oa15Cw4ipPsZa1tvR8xiOCcjZNhy2YN/+Cp89VFRdm8YP/MsVUVCM7cNoibQEsh
+         0Jfo2okHh8HSk4nlOaKZpDLX2EQ4PN3QsMxFC+jNUS/UznXM8t5dn3RiPNM4AwD4scxu
+         ac3tDX+Kx1dZUSnksjeL6hUFAWDSBttikTzUBDq/6zU3Pi/xnLTosSmsyH/tlfM2Ix4V
+         0ogKRBtnPJZ/vEtL+xZeit/7HPqWC98SwkUI/CFxf4a89/E8R0CvIByVf2WcvZ+S7anU
+         yd9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686750591; x=1689342591;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FILJiyQHr5q7+MBxGqKh2YR7IQjtgWRJYztSUT5XOE4=;
-        b=e77vJyh8kE/km2khzQzgCileDvV40yXw92aSZaQRwyftrcciugwZ6USWzz70ug4epL
-         Sg7YdL47IIsf/B25Nah3m5VEBRKZnu/6JmlIb1i6pyaD1eAexabZUze9/G+dNkd3qHI6
-         /IdZFxKCoEmfbEC6oMO7QkbEalOvQBfpGwdLNsCbM3haF7BXnS8Px6aPbdBHX2JNgI4e
-         Sr3pDpY53NLTNMO1tJWn9H74bbJwSdqSqYl8qRklw6e9Evxy4GC8mylAXAtg/+X+Eq39
-         Whrrc1QxrsYsGR97bKfX+CKgow6kae+ZXbnmqABrpJpNikATvvkch20UoH2F19yem9rY
-         hZtA==
-X-Gm-Message-State: AC+VfDz/E8nx1ABIlEjH4I3ex01FBTmq+1Zr5Y2mNWiDaVLEFNrlWz/Y
-        YZ9/4hIM4i6gAyQVjqavyZgCA9RMJp3nRdDwGAm3V8b9
-X-Google-Smtp-Source: ACHHUZ5bePoE5YGu1FRCjJ1Cv7imCH2i/MMA7qEK0BaYjoQifYo/8vn2dif9ziv4LtUX2bhWjcrx+g==
-X-Received: by 2002:a17:906:99c1:b0:973:ca9c:3e43 with SMTP id s1-20020a17090699c100b00973ca9c3e43mr17478112ejn.45.1686750591215;
-        Wed, 14 Jun 2023 06:49:51 -0700 (PDT)
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com. [209.85.208.50])
-        by smtp.gmail.com with ESMTPSA id a13-20020a170906684d00b0096f7500502csm8055641ejs.199.2023.06.14.06.49.50
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20221208; t=1686750660; x=1689342660;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NOIXfmRnx769aI0E7UjcgziLzQIefiUm7yVyqk4c9T8=;
+        b=hBrezvKb0xIPntB9IU4nyk7aYrLjz6229Eij26O6WWdUpcIyj0aA3XSk7TIihSvr3v
+         3H1gqE2HgqzDXhAqCzaeSQY9fnneiV9gWp+7PS3l6fz1w1ieuzwSMkSOIDPE5RjOsPv3
+         8MZHNODys12qKVrKuax+tJ/5Mgbg2cmWe/xbDCWQLYhtbxicbQYVYOoRCdfK2J9NQecW
+         gozkr44934ZG8MPVNDEpPN/AN+HFWRrPLmn1wb0iQJD70cFUWYhZSXuQytiU19DhO0lH
+         EQdRFIiwVlyS1AnBP5bA2/lvu8uBTaRS0jkDYEUjuZFNEB2x1joKpURiZIqxvVKGHIzm
+         rUFg==
+X-Gm-Message-State: AC+VfDwMYSolZD784PgsX7mxRD1wrI2Inahbhef3MLMiZfPkJifrdnrY
+        WN1ZSV1WZlrL/B/4ib1sxDIWEw==
+X-Google-Smtp-Source: ACHHUZ6WFpedESV5dgbMMh0G/LhPlKdm+KgjJs+wJiffzsuVP0ZkCW2LrXfAtW6X+bCkKGPOl6QP+Q==
+X-Received: by 2002:a19:4f46:0:b0:4f6:2368:3eca with SMTP id a6-20020a194f46000000b004f623683ecamr729172lfk.0.1686750659978;
+        Wed, 14 Jun 2023 06:50:59 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id w1-20020ac254a1000000b004f64409eef4sm2138775lfk.253.2023.06.14.06.50.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 06:49:50 -0700 (PDT)
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-516500163b2so8317a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:49:50 -0700 (PDT)
-X-Received: by 2002:a50:f61e:0:b0:514:92e4:ab9f with SMTP id
- c30-20020a50f61e000000b0051492e4ab9fmr85010edn.7.1686750590163; Wed, 14 Jun
- 2023 06:49:50 -0700 (PDT)
+        Wed, 14 Jun 2023 06:50:59 -0700 (PDT)
+Message-ID: <efe0b912-24d8-9617-ce6a-aca5dfba6910@linaro.org>
+Date:   Wed, 14 Jun 2023 15:50:57 +0200
 MIME-Version: 1.0
-References: <1686742087-30731-1-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1686742087-30731-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 14 Jun 2023 06:49:38 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=URVjgZtZ1Dyc521KTdAN1GJ700vAAJgUtvSA5UkhnTig@mail.gmail.com>
-Message-ID: <CAD=FV=URVjgZtZ1Dyc521KTdAN1GJ700vAAJgUtvSA5UkhnTig@mail.gmail.com>
-Subject: Re: [PATCH v2] soc: qcom: geni-se: Do not bother about enable/disable
- of interrupts in secondary sequencer
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH RFC] media: camss: Intepret OF graph connections more
+ sensibly
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230614-topic-camss_grpah-v1-1-5f4b516310fa@linaro.org>
+ <8f53da6d-76ec-a7e1-8308-b676930d224c@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <8f53da6d-76ec-a7e1-8308-b676930d224c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,31 +84,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 14.06.2023 15:48, Bryan O'Donoghue wrote:
+> On 14/06/2023 14:22, Konrad Dybcio wrote:
+>> Not all endpoints of camss have to be populated. In fact, most of the
+>> time they shouldn't be as n-th auxilliary cameras are usually ewaste.
+>>
+>> Don't fail probing the entire camss even even one endpoint is not
+>> linked and throw an error when none is found.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/media/platform/qcom/camss/camss.c | 7 +++----
+>>   1 file changed, 3 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+>> index 1ef26aea3eae..3aa03fbc94e2 100644
+>> --- a/drivers/media/platform/qcom/camss/camss.c
+>> +++ b/drivers/media/platform/qcom/camss/camss.c
+>> @@ -1084,9 +1084,8 @@ static int camss_of_parse_ports(struct camss *camss)
+>>             remote = of_graph_get_remote_port_parent(node);
+>>           if (!remote) {
+>> -            dev_err(dev, "Cannot get remote parent\n");
+>> -            ret = -EINVAL;
+>> -            goto err_cleanup;
+>> +            of_node_put(node);
+>> +            continue;
+>>           }
+>>             csd = v4l2_async_nf_add_fwnode(&camss->notifier,
+>> @@ -1105,7 +1104,7 @@ static int camss_of_parse_ports(struct camss *camss)
+>>           num_subdevs++;
+>>       }
+>>   -    return num_subdevs;
+>> +    return num_subdevs ? num_subdevs : -EINVAL;
+>>     err_cleanup:
+>>       of_node_put(node);
+>>
+>> ---
+>> base-commit: b16049b21162bb649cdd8519642a35972b7910fe
+>> change-id: 20230614-topic-camss_grpah-39f9a4f7420c
+>>
+>> Best regards,
+> 
+> Can you give an example of the DT that is causing this ?
+None upstream (8916 has a single port and 845c's sec camera has
+never been enabled), but it's easy to spot if you leave csiphy0_ep
+unoccupied and add something to csiphyN_ep for N>=1
 
-On Wed, Jun 14, 2023 at 4:28=E2=80=AFAM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> The select_fifo/dma_mode() functions in geni driver enable/disable
-> interrupts (secondary included) conditionally for non-uart modes, while
-> uart is supposed to manage this internally.
-> However, only uart uses secondary IRQs while spi, i2c do not care about
-> these at all making their enablement (or disablement) totally unnecessary
-> for these protos.
-> Similarly, select_gpi_mode() also does disable s_irq and its useless agai=
-n.
->
-> Drop enabling/disabling secondary IRQs.
-> This doesn't solve any observed problem but only gets rid of code pieces
-> that are not required.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Konrad
+> 
 > ---
-> v1 -> v2:
-> - apply similar changes to select_gpi_mode()
-> - modified commit message accordingly
-> ---
->  drivers/soc/qcom/qcom-geni-se.c | 28 ++++------------------------
->  1 file changed, 4 insertions(+), 24 deletions(-)
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> bod
