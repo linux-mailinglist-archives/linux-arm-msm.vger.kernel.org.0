@@ -2,79 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0711C72FC6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:30:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E14F72FC84
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:35:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241042AbjFNLaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 07:30:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46908 "EHLO
+        id S243381AbjFNLfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 07:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244052AbjFNL34 (ORCPT
+        with ESMTP id S244038AbjFNLfv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 07:29:56 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1074119B5;
-        Wed, 14 Jun 2023 04:29:54 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f62b552751so8371566e87.3;
-        Wed, 14 Jun 2023 04:29:53 -0700 (PDT)
+        Wed, 14 Jun 2023 07:35:51 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 453F91BC3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 04:35:49 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f649db9b25so8294241e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 04:35:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686742192; x=1689334192;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q/7I47zyCqB6kKEoO0RSLVUlfmCOuGYcUDxHa82mWc8=;
-        b=f7qA81G63kL7Kvv1mc76MrGbpAvnPJG5dDhl4IQVCOUQhqaPrE/2Jux3+5NiQITnGo
-         8az+lX8hBDP2LY3NkJ8wuuKOutddg3yfLO7How1xZAkUAq4gh6lT1hyvc61Df3tZDHs3
-         PkO+M5xrZ82jUmIOpHBw3ZrJ02cfz82/CD6E9fhpxlslpyEJ++1xouJxkbuBzhCTCS+Z
-         XG8Boj8bIDKp7yT3PWEPnK7qB5Ti1DEDnjURd55zedsM/sSoUcB61JIc64wMIGl/PElv
-         RSweyuEf38k/eZcG7lBGEY1T678aHf6mF1hh2TcobjkfCrTNnvXuufZg2UAsokIMJEN5
-         nZcw==
+        d=linaro.org; s=google; t=1686742547; x=1689334547;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=S8KZM/F5g0Sr267RV/S9m6olNEra+NdUFalrdFIdYQw=;
+        b=mpHyDAKVCq1eVhSWEhGnB0BOvkUh9SqUoWX5vqdFyz/08za/0Kry77C1uqoGt6Mooy
+         9cdAPXqJKe8/L+4dodWqztgVV2IOzBE6XqYvm+p5e7tFeCK9DFUoDLawsq/vnvCmoWdN
+         UJtC4eNOrDh77MSP6QpXHLKjcnxpRjzehupP5GExHoEW4XESXbalNUAD67Ayp+MOrOu8
+         WGu9B+dr+iC19o9jcU2tJtu0iOyQGDPWPXdVPP6KjufSvG5QAS+IapIugY7J0EOCtTqU
+         kpHCqZSq9dtd7wO7s6vlhljcPoceRoDTMKCeDVH9T+wdLUmySory2NoWxy916uMCH7GF
+         XXQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686742192; x=1689334192;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q/7I47zyCqB6kKEoO0RSLVUlfmCOuGYcUDxHa82mWc8=;
-        b=UWC9/7V7bf7PEd9sEhMGksDOkbwwWqHNh1FNiirs3pQ+l2FbmWeZRG2KDcvSb0JmBI
-         dM+hoMiLBxi3wQ5gC74s4UIHyuWBQ22NEgo2zOW+IC1N3+nExz/OY6b7gl2cwDDutXik
-         3FxO3SV3Wg0afAGDT91Jhi7vxVeqcA89BvRXZb02SLMLZ1AgnmaXl3XOQTIGOSr+Selh
-         lpyPeA2MpP/sCgIqHkttq8t4biAdlTolR88aLrPylZFY23sJyR03nWS+7JgrMgdT4pu9
-         4Wt/jB28IWiu4lC82bwf9sO+3m239CzcAz8923Zp51nVl2J2C4p2j+ABRF0pyL21ieOJ
-         ZJWg==
-X-Gm-Message-State: AC+VfDwmnU9+2IyZl9dgdUVFw45mH5/hmV4X46j4ojwJ+od4DTZbj+EV
-        UfN6h13Srwm5YZh2PpgEK4A=
-X-Google-Smtp-Source: ACHHUZ6EzDtFkY+01GLLd9j6A3HU2CY6mPIxp0m/umgreIXXTh/TmSXWLOjo+d1SdcdO9ZuMiwsqYg==
-X-Received: by 2002:ac2:5a0c:0:b0:4f6:2846:b1fb with SMTP id q12-20020ac25a0c000000b004f62846b1fbmr8196019lfn.18.1686742191915;
-        Wed, 14 Jun 2023 04:29:51 -0700 (PDT)
-Received: from ?IPV6:2a00:e180:15e4:4200:3c54:f73b:1892:7271? ([2a00:e180:15e4:4200:3c54:f73b:1892:7271])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c22d100b003f8044b3436sm16821017wmg.23.2023.06.14.04.29.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 04:29:51 -0700 (PDT)
-Message-ID: <fc5157cc-6f23-a74f-efcc-66bd7e093de7@gmail.com>
-Date:   Wed, 14 Jun 2023 13:29:49 +0200
+        d=1e100.net; s=20221208; t=1686742547; x=1689334547;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S8KZM/F5g0Sr267RV/S9m6olNEra+NdUFalrdFIdYQw=;
+        b=PjlqGR6gfIFOSywopyZN68u+VEwVWYF4THBKzt+lIX+lcqlc+ZyJbrgan8gANfaMZc
+         kuXe2XVVuR+1oEAIIUBs9EtNPubPi71BPTmcW9gd9jexRvS4xHggkjarzrTfDG3Iqa3/
+         6lF6ji3So9u5hsUjr92NIRfWgzXB3/Mqrmp9KZfvzwitJjRO6bQ2/BxhXK+J+VO6QS6J
+         NXBZWjx17eRxcbL8UltuREu+U9Oer27mxwi4kSYFQlSf6PAq40SRyhSsd1ZWf6WX3C71
+         Wwa1iun5n8PB7Z0JDf4NMY0L4FAOhXMVrDCA6etSSdCpbfI1JcfbvsD9CczfktB+nsDq
+         kSDg==
+X-Gm-Message-State: AC+VfDzEaWee2dQGmN5C7Qj9ZOxHHMD8h/m95X6QaJUD7pHSE/9yXJum
+        Pbn2uZZIGH+zjVvfeCuFrmyl7w==
+X-Google-Smtp-Source: ACHHUZ7KXLv9kmJ+cdzMkqHWV+lomjVVpBW3xt6ULmH9+l9wsJjlmE0rldrrUDIzcGYfb8RLzy9B2Q==
+X-Received: by 2002:a05:6512:32aa:b0:4f6:2e5c:de65 with SMTP id q10-20020a05651232aa00b004f62e5cde65mr7601565lfe.28.1686742547496;
+        Wed, 14 Jun 2023 04:35:47 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id x1-20020ac25dc1000000b004f64b8eee61sm2088406lfq.97.2023.06.14.04.35.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jun 2023 04:35:47 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/7] SM6350 GPU
+Date:   Wed, 14 Jun 2023 13:35:31 +0200
+Message-Id: <20230315-topic-lagoon_gpu-v2-0-afcdfb18bb13@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v5 02/13] fbdev: Add initializer macros for struct fb_ops
-Content-Language: en-US
-To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
-        airlied@gmail.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, javierm@redhat.com, sam@ravnborg.org,
-        suijingfeng@loongson.cn
-Cc:     linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230530150253.22758-1-tzimmermann@suse.de>
- <20230530150253.22758-3-tzimmermann@suse.de>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>
-In-Reply-To: <20230530150253.22758-3-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+X-B4-Tracking: v=1; b=H4sIAAOmiWQC/32NWwqDMBAAryL5bopG+6BfvUeRstmucSFkQ6LSI
+ t69qQfo5wwMs6pMiSmrW7WqRAtnllDAHCqFIwRHml+FlalNW7fNSU8SGbUHJxKeLs76igYsosU
+ zWVUyC5m0TRBwLGGYvS8yJhr4vX8efeGR8yTps2+X5mf/HJZG1xouHVrCjnDAu+cASY6SnOq3b
+ fsCrWAwX8YAAAA=
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686742545; l=1513;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Zj6EKpI9LyjJLvwEHwqcCLEiQUgWc1gxPnuUuffY2/g=;
+ b=REH0Yu7DJoufQBzafbTcHqja8hly3sLq7yU4EtTvyEhzgxq8NBvoWzl8NYb8tCbLsdhZ18DMC
+ w8tIAtoHF9HAmmKgKM7XJ15oATMACRjPgEMqkd9qG59bVTRgDlQOPWG
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,175 +94,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add all the required nodes for SM6350's A619 and fix up its GPUCC
+bindings.
 
+This has been ready for like 1.5y now, time to finally merge it as
+the display part will take some more time (due to the HW catalog rework).
 
-Am 30.05.23 um 17:02 schrieb Thomas Zimmermann:
-> For framebuffers in I/O and system memory, add macros that set
-> struct fb_ops to the respective callback functions.
->
-> For deferred I/O, add macros that generate callback functions with
-> damage handling. Add initializer macros that set struct fb_ops to
-> the generated callbacks.
->
-> These macros can remove a lot boilerplate code from fbdev drivers.
-> The drivers are supposed to use the macro that is required for its
-> framebuffer. Each macro is split into smaller helpers, so that
-> drivers with non-standard callbacks can pick and customize callbacks
-> as needed. There are individual helper macros for read/write, mmap
-> and drawing.
->
-> v5:
-> 	* fix whitespace errors (Jingfeng)
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-> ---
->   include/linux/fb.h | 112 +++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 112 insertions(+)
->
-> diff --git a/include/linux/fb.h b/include/linux/fb.h
-> index 2cf8efcb9e32..ce6823e157e6 100644
-> --- a/include/linux/fb.h
-> +++ b/include/linux/fb.h
-> @@ -538,9 +538,31 @@ extern ssize_t fb_io_read(struct fb_info *info, char __user *buf,
->   extern ssize_t fb_io_write(struct fb_info *info, const char __user *buf,
->   			   size_t count, loff_t *ppos);
->   
-> +/*
-> + * Initializes struct fb_ops for framebuffers in I/O memory.
-> + */
-> +
-> +#define __FB_DEFAULT_IO_OPS_RDWR \
-> +	.fb_read	= fb_io_read, \
-> +	.fb_write	= fb_io_write
-> +
-> +#define __FB_DEFAULT_IO_OPS_DRAW \
-> +	.fb_fillrect	= cfb_fillrect, \
-> +	.fb_copyarea	= cfb_copyarea, \
-> +	.fb_imageblit	= cfb_imageblit
-> +
-> +#define __FB_DEFAULT_IO_OPS_MMAP \
-> +	.fb_mmap	= NULL // default implementation
+Depends on (bindings, admittedly I could have organized it better):
+https://lore.kernel.org/linux-arm-msm/20230314-topic-nvmem_compats-v1-0-508100c17603@linaro.org/#t
 
-// style comment in a macro? That's usually a very bad idea.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- gpu_speed_bin@ -> gpu-speed-bin@ [3/5]
+- Order GPU nodes properly [4/5]
+- sort out the clock-names issue
+- throw in the dpu patch, as the driver part has been finally merged
+- pick up tags
+- Link to v1: https://lore.kernel.org/r/20230315-topic-lagoon_gpu-v1-0-a74cbec4ecfc@linaro.org
 
-Christian.
+---
+Konrad Dybcio (7):
+      clk: qcom: gpucc-sm6350: Introduce index-based clk lookup
+      clk: qcom: gpucc-sm6350: Fix clock source names
+      arm64: dts: qcom: sm6350: Add GPUCC node
+      arm64: dts: qcom: sm6350: Add QFPROM node
+      arm64: dts: qcom: sm6350: Add GPU nodes
+      arm64: dts: qcom: sm6350: Fix ZAP region
+      arm64: dts: qcom: sm6350: Add DPU1 nodes
 
-> +
-> +#define FB_DEFAULT_IO_OPS \
-> +	__FB_DEFAULT_IO_OPS_RDWR, \
-> +	__FB_DEFAULT_IO_OPS_DRAW, \
-> +	__FB_DEFAULT_IO_OPS_MMAP
-> +
->   /*
->    * Drawing operations where framebuffer is in system RAM
->    */
-> +
->   extern void sys_fillrect(struct fb_info *info, const struct fb_fillrect *rect);
->   extern void sys_copyarea(struct fb_info *info, const struct fb_copyarea *area);
->   extern void sys_imageblit(struct fb_info *info, const struct fb_image *image);
-> @@ -549,6 +571,27 @@ extern ssize_t fb_sys_read(struct fb_info *info, char __user *buf,
->   extern ssize_t fb_sys_write(struct fb_info *info, const char __user *buf,
->   			    size_t count, loff_t *ppos);
->   
-> +/*
-> + * Initializes struct fb_ops for framebuffers in system memory.
-> + */
-> +
-> +#define __FB_DEFAULT_SYS_OPS_RDWR \
-> +	.fb_read	= fb_sys_read, \
-> +	.fb_write	= fb_sys_write
-> +
-> +#define __FB_DEFAULT_SYS_OPS_DRAW \
-> +	.fb_fillrect	= sys_fillrect, \
-> +	.fb_copyarea	= sys_copyarea, \
-> +	.fb_imageblit	= sys_imageblit
-> +
-> +#define __FB_DEFAULT_SYS_OPS_MMAP \
-> +	.fb_mmap	= NULL // default implementation
-> +
-> +#define FB_DEFAULT_SYS_OPS \
-> +	__FB_DEFAULT_SYS_OPS_RDWR, \
-> +	__FB_DEFAULT_SYS_OPS_DRAW, \
-> +	__FB_DEFAULT_SYS_OPS_MMAP
-> +
->   /* drivers/video/fbmem.c */
->   extern int register_framebuffer(struct fb_info *fb_info);
->   extern void unregister_framebuffer(struct fb_info *fb_info);
-> @@ -604,6 +647,75 @@ extern void fb_deferred_io_cleanup(struct fb_info *info);
->   extern int fb_deferred_io_fsync(struct file *file, loff_t start,
->   				loff_t end, int datasync);
->   
-> +/*
-> + * Generate callbacks for deferred I/O
-> + */
-> +
-> +#define __FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, __mode) \
-> +	static ssize_t __prefix ## _defio_read(struct fb_info *info, char __user *buf, \
-> +					       size_t count, loff_t *ppos) \
-> +	{ \
-> +		return fb_ ## __mode ## _read(info, buf, count, ppos); \
-> +	} \
-> +	static ssize_t __prefix ## _defio_write(struct fb_info *info, const char __user *buf, \
-> +						size_t count, loff_t *ppos) \
-> +	{ \
-> +		unsigned long offset = *ppos; \
-> +		ssize_t ret = fb_ ## __mode ## _write(info, buf, count, ppos); \
-> +		if (ret > 0) \
-> +			__damage_range(info, offset, ret); \
-> +		return ret; \
-> +	}
-> +
-> +#define __FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, __mode) \
-> +	static void __prefix ## _defio_fillrect(struct fb_info *info, \
-> +						const struct fb_fillrect *rect) \
-> +	{ \
-> +		__mode ## _fillrect(info, rect); \
-> +		__damage_area(info, rect->dx, rect->dy, rect->width, rect->height); \
-> +	} \
-> +	static void __prefix ## _defio_copyarea(struct fb_info *info, \
-> +						const struct fb_copyarea *area) \
-> +	{ \
-> +		__mode ## _copyarea(info, area); \
-> +		__damage_area(info, area->dx, area->dy, area->width, area->height); \
-> +	} \
-> +	static void __prefix ## _defio_imageblit(struct fb_info *info, \
-> +						 const struct fb_image *image) \
-> +	{ \
-> +		__mode ## _imageblit(info, image); \
-> +		__damage_area(info, image->dx, image->dy, image->width, image->height); \
-> +	}
-> +
-> +#define FB_GEN_DEFAULT_DEFERRED_IO_OPS(__prefix, __damage_range, __damage_area) \
-> +	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, io) \
-> +	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, cfb)
-> +
-> +#define FB_GEN_DEFAULT_DEFERRED_SYS_OPS(__prefix, __damage_range, __damage_area) \
-> +	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
-> +	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
-> +
-> +/*
-> + * Initializes struct fb_ops for deferred I/O.
-> + */
-> +
-> +#define __FB_DEFAULT_DEFERRED_OPS_RDWR(__prefix) \
-> +	.fb_read	= __prefix ## _defio_read, \
-> +	.fb_write	= __prefix ## _defio_write
-> +
-> +#define __FB_DEFAULT_DEFERRED_OPS_DRAW(__prefix) \
-> +	.fb_fillrect	= __prefix ## _defio_fillrect, \
-> +	.fb_copyarea	= __prefix ## _defio_copyarea, \
-> +	.fb_imageblit	= __prefix ## _defio_imageblit
-> +
-> +#define __FB_DEFAULT_DEFERRED_OPS_MMAP(__prefix) \
-> +	.fb_mmap	= fb_deferred_io_mmap
-> +
-> +#define FB_DEFAULT_DEFERRED_OPS(__prefix) \
-> +	__FB_DEFAULT_DEFERRED_OPS_RDWR(__prefix), \
-> +	__FB_DEFAULT_DEFERRED_OPS_DRAW(__prefix), \
-> +	__FB_DEFAULT_DEFERRED_OPS_MMAP(__prefix)
-> +
->   static inline bool fb_be_math(struct fb_info *info)
->   {
->   #ifdef CONFIG_FB_FOREIGN_ENDIAN
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 394 ++++++++++++++++++++++++++++++++++-
+ drivers/clk/qcom/gpucc-sm6350.c      |  18 +-
+ 2 files changed, 402 insertions(+), 10 deletions(-)
+---
+base-commit: b16049b21162bb649cdd8519642a35972b7910fe
+change-id: 20230315-topic-lagoon_gpu-8c2abccbc6eb
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
