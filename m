@@ -2,65 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 880B572F802
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 10:40:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EA9272F82E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 10:45:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243629AbjFNIkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 04:40:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33284 "EHLO
+        id S243723AbjFNIpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 04:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235483AbjFNIkU (ORCPT
+        with ESMTP id S243640AbjFNIpl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 04:40:20 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBF091BC6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 01:40:18 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1q9M2n-0006Xo-A7; Wed, 14 Jun 2023 10:39:57 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1q9M2l-007JTu-5z; Wed, 14 Jun 2023 10:39:55 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1q9M2j-00E9QN-TW; Wed, 14 Jun 2023 10:39:53 +0200
-Date:   Wed, 14 Jun 2023 10:39:53 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Artur Weber <aweber.kernel@gmail.com>
-Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+        Wed, 14 Jun 2023 04:45:41 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29ABE1BF5;
+        Wed, 14 Jun 2023 01:45:40 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A5CA3630AB;
+        Wed, 14 Jun 2023 08:45:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7825CC433C0;
+        Wed, 14 Jun 2023 08:45:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686732339;
+        bh=qQp575q7upSiKDHMCgjnViWD03r4fcoKdsGOIiMbLyo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PYu2tsXCgZTHSl/7kVU8fayH3gm4kA8bGy0t+mJ5c/acK8WcNMM4eBaq+eeDmmRZ/
+         S9zV37LHUEiLlRM28cCcxso3HSUUmKmLFUhMr9JRP3JR98lBgLbItoraKmAHBYxLWn
+         Q4zM3TB8nleiCBdTrO8v4EKLZhS23OcevItHuZ6OuLJyhPmBzYku8ByHCzfs3tkOJk
+         ocJP2iB3foRn2YOFhmiK0zCzYwq00LPPmrEIWBf1mqjs0FRz7nGNAzgF9VGzSvdx9c
+         IZ2P4ydNOb8IRUMSXLzkfsh/up//Vm8debaNDOtyFFduxyj2k2ctMhJ9JRm4gTwBIR
+         dPkqwvvZ8YLcg==
+Date:   Wed, 14 Jun 2023 10:45:35 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Shuai Jiang <d202180596@hust.edu.cn>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Ivan T. Ivanov" <iivanov@mm-sol.com>,
+        Sricharan R <sricharan@codeaurora.org>,
+        Naveen Kaje <nkaje@codeaurora.org>,
+        Austin Christ <austinwc@codeaurora.org>,
+        hust-os-kernel-patches@googlegroups.com,
+        Andy Gross <agross@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: qup: Add missing unwind goto in qup_i2c_probe()
+Message-ID: <ZIl+L+KTMclMXMQd@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Shuai Jiang <d202180596@hust.edu.cn>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Helge Deller <deller@gmx.de>, dri-devel@lists.freedesktop.org,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-pwm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 2/4] video: backlight: lp855x: get PWM for PWM mode
- during probe
-Message-ID: <20230614083953.e4kkweddjz7wztby@pengutronix.de>
-References: <20230429104534.28943-1-aweber.kernel@gmail.com>
- <20230429104534.28943-3-aweber.kernel@gmail.com>
+        "Ivan T. Ivanov" <iivanov@mm-sol.com>,
+        Sricharan R <sricharan@codeaurora.org>,
+        Naveen Kaje <nkaje@codeaurora.org>,
+        Austin Christ <austinwc@codeaurora.org>,
+        hust-os-kernel-patches@googlegroups.com,
+        Andy Gross <agross@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230418135612.598-1-d202180596@hust.edu.cn>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ek7wuekooig4rg5c"
+        protocol="application/pgp-signature"; boundary="krO64uYAB+KZ7qEU"
 Content-Disposition: inline
-In-Reply-To: <20230429104534.28943-3-aweber.kernel@gmail.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <20230418135612.598-1-d202180596@hust.edu.cn>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -68,141 +78,47 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---ek7wuekooig4rg5c
-Content-Type: text/plain; charset=iso-8859-1
+--krO64uYAB+KZ7qEU
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Apr 29, 2023 at 12:45:32PM +0200, Artur Weber wrote:
-> Also deprecate the pwm-period DT property, as it is now redundant
-> (pwms property already contains period value).
+On Tue, Apr 18, 2023 at 09:56:12PM +0800, Shuai Jiang wrote:
+> Smatch Warns:
+> 	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
+> 	warn: missing unwind goto?
 >=20
-> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-> ---
->  drivers/video/backlight/lp855x_bl.c | 48 ++++++++++++++++-------------
->  1 file changed, 26 insertions(+), 22 deletions(-)
+> The goto label "fail_runtime" and "fail" will disable qup->pclk,=20
+> but here qup->pclk failed to obtain, in order to be consistent,=20
+> change the direct return to goto label "fail_dma".
 >=20
-> diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backligh=
-t/lp855x_bl.c
-> index 81012bf29baf..21eb4943ed56 100644
-> --- a/drivers/video/backlight/lp855x_bl.c
-> +++ b/drivers/video/backlight/lp855x_bl.c
-> @@ -218,23 +218,10 @@ static int lp855x_configure(struct lp855x *lp)
-> =20
->  static void lp855x_pwm_ctrl(struct lp855x *lp, int br, int max_br)
->  {
-> -	struct pwm_device *pwm;
->  	struct pwm_state state;
-> =20
-> -	/* request pwm device with the consumer name */
-> -	if (!lp->pwm) {
-> -		pwm =3D devm_pwm_get(lp->dev, lp->chipname);
-> -		if (IS_ERR(pwm))
-> -			return;
-> -
-> -		lp->pwm =3D pwm;
-> -
-> -		pwm_init_state(lp->pwm, &state);
-> -	} else {
-> -		pwm_get_state(lp->pwm, &state);
-> -	}
-> +	pwm_get_state(lp->pwm, &state);
+> Fixes: 10c5a8425968 ("i2c: qup: New bus driver for the Qualcomm QUP I2C c=
+ontroller")
+> Fixes: 515da746983b ("i2c: qup: add ACPI support")
+> Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
+> Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
 
-pwm_get_state returns an error code. Do you care if it fails? (You
-probably should.)
-> =20
-> -	state.period =3D lp->pdata->period_ns;
->  	state.duty_cycle =3D div_u64(br * state.period, max_br);
->  	state.enabled =3D state.duty_cycle;
-> =20
-> @@ -339,6 +326,7 @@ static int lp855x_parse_dt(struct lp855x *lp)
->  	of_property_read_string(node, "bl-name", &pdata->name);
->  	of_property_read_u8(node, "dev-ctrl", &pdata->device_control);
->  	of_property_read_u8(node, "init-brt", &pdata->initial_brightness);
-> +	/* Deprecated, specify period in pwms property instead */
->  	of_property_read_u32(node, "pwm-period", &pdata->period_ns);
-> =20
->  	/* Fill ROM platform data if defined */
-> @@ -399,6 +387,7 @@ static int lp855x_probe(struct i2c_client *cl)
->  	const struct i2c_device_id *id =3D i2c_client_get_device_id(cl);
->  	const struct acpi_device_id *acpi_id =3D NULL;
->  	struct device *dev =3D &cl->dev;
-> +	struct pwm_state pwmstate;
->  	struct lp855x *lp;
->  	int ret;
-> =20
-> @@ -457,11 +446,6 @@ static int lp855x_probe(struct i2c_client *cl)
->  		}
->  	}
-> =20
-> -	if (lp->pdata->period_ns > 0)
-> -		lp->mode =3D PWM_BASED;
-> -	else
-> -		lp->mode =3D REGISTER_BASED;
-> -
->  	lp->supply =3D devm_regulator_get(dev, "power");
->  	if (IS_ERR(lp->supply)) {
->  		if (PTR_ERR(lp->supply) =3D=3D -EPROBE_DEFER)
-> @@ -472,11 +456,31 @@ static int lp855x_probe(struct i2c_client *cl)
->  	lp->enable =3D devm_regulator_get_optional(dev, "enable");
->  	if (IS_ERR(lp->enable)) {
->  		ret =3D PTR_ERR(lp->enable);
-> -		if (ret =3D=3D -ENODEV) {
-> +		if (ret =3D=3D -ENODEV)
->  			lp->enable =3D NULL;
-> -		} else {
-> +		else
->  			return dev_err_probe(dev, ret, "getting enable regulator\n");
-> -		}
-> +	}
-> +
-> +	lp->pwm =3D devm_pwm_get(lp->dev, lp->chipname);
-> +	if (IS_ERR(lp->pwm)) {
-> +		ret =3D PTR_ERR(lp->pwm);
-> +		if (ret =3D=3D -ENODEV || ret =3D=3D -EINVAL)
+Applied to for-current, thanks! Thanks Andi, for the proper Fixes tag!
 
-Why would you ignore EINVAL?
 
-> +			lp->pwm =3D NULL;
-> +		else
-> +			return dev_err_probe(dev, ret, "getting PWM\n");
-> +
-> +		lp->mode =3D REGISTER_BASED;
-> +		dev_dbg(dev, "mode: register based\n");
-> +	} else {
-
-pwmstate could be declared here.
-
-> +		pwm_init_state(lp->pwm, &pwmstate);
-> +		/* Legacy platform data compatibility */
-> +		if (lp->pdata->period_ns > 0)
-> +			pwmstate.period =3D lp->pdata->period_ns;
-> +		pwm_apply_state(lp->pwm, &pwmstate);
-
-This is a change in behaviour. Before lp855x_probe() didn't modify the
-state the bootloader left the backlight in. Now you're disabling it (I
-think). Is this intended?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---ek7wuekooig4rg5c
+--krO64uYAB+KZ7qEU
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmSJfNkACgkQj4D7WH0S
-/k5BdAgAs/Rb0sNvnazKhyxx1/2B+8B8l05A3se8y+qIfYwQkuhUfSSbRq80AX6G
-E3LMnbhe/ZeJSNWsxC27KTQfq0549+UgOrKjn6C4XgHk2hXOHTddWHmYDdwXu2WP
-Xioakfi2oNQxtyyGpx/moi+RLXGkiENoMqdoVdoXv/s4xY9vYHGOh1y6wf24yODH
-qSmd4fhumjKaqhl60wyH8n9JJJP2RFf3qIvH1Y4f421I8mZNriOjdPoou4b8ra5t
-o/MjffWe9Jx6h4IWGnl3YWM2t2c9jNnFcEnEtQKnSRBnCtFJC30WfKdGQPuxYYvh
-LF47pzLCWDJQBbJYpKZ6u02A8AOQog==
-=ZFS9
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmSJfi8ACgkQFA3kzBSg
+KbbOQRAAjMg3E3JBbJtdqbztOeRNM3Vz6Wz6IG5McYtBwo1FQ1Eg5cllnx9KWpNX
+ucOIXhN2mM0ovJSNzKcD+Upkxg7hmQT/S6akdSholHZRG3yof6/j8sTYRzpeZbsE
+XXd0qW4L3tNhBB5cJZVH9xqFuOUUshORLZozTGWOEizVwuedqZsxpnLbQOr5EXnN
+WvZkuCIxB6M7rN2apyZLoAGOz+/AN42/mZy8vI0Gl8PeL7XtqYCIKw7nLgI0UU0c
+JYCUEaevpCYKkZOeZJLpqDN8uxlvFFSVYcs1Vcz+hq5RIRY4/KGvoUGZUw9/meKt
+Fs4gQ9kdZgULVEJw/UtGtSHQfRQ310Zd4GecAIzjVBfrKtzU0436v3FWXrRb/oE8
+6cIkr4D4gCDbAgLy0n+BcNAXeoAuW7l1+NuH4R/+XosFVPTK8BYUH6x6h1uJKsNR
+CAzCQTKgrnNb2WeAX1knQ7+EtrKyPm1Spb/T14dtwp4v3Ik4h5Z8JojAb9snCG68
+5gsFdLArpHLBIjC/GZ33R4p8EVHgY+5fBGUMKZ2w1VAjlwYQB8exp3hQ+dadGcow
+Q8U0iZaloJobkHy1lSoA+wZhRbsV2Rv46ow3vyafbnof0rpV9H873AkYP7njuuLK
+QR9mcJAD1LZ+H0UKadb5Q9gkYy4D0SzMD9bQ1vbKIbM0/gYxPTE=
+=VxEP
 -----END PGP SIGNATURE-----
 
---ek7wuekooig4rg5c--
+--krO64uYAB+KZ7qEU--
