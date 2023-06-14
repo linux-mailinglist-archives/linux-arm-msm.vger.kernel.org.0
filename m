@@ -2,131 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BF6D7304B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:16:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72E277304F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:32:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232550AbjFNQQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 12:16:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35258 "EHLO
+        id S234100AbjFNQcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 12:32:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230411AbjFNQP7 (ORCPT
+        with ESMTP id S234083AbjFNQcT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 12:15:59 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4C671FFF;
-        Wed, 14 Jun 2023 09:15:58 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EFGRid006379;
-        Wed, 14 Jun 2023 16:15:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type :
- content-transfer-encoding; s=qcppdkim1;
- bh=Cxu80qYLWBN6CGaM9a2GrYS5uFWXPH5qjpPWb0qWyWk=;
- b=ComPqdflkC/tVcHLZshoOE+t0MDAkUSB+Nrh452o3CNQZq0+kTtKh1sQbRTNomQJGmQ/
- 2RX/rs7l0AzlutwIdE8oAwjdOeQpACV0J3sTtKG9+aDtGcPoZOrMmpGaZiskMVFiau6K
- 9llkGNjNhr0WoTl4DAhvS/Tv/R+Cy6/8VJf19jWfL2om5zWtkgh9dschObIvQcKEfMtS
- 5KhFiJGq0hoVkZrCwxnScghXuDN+YkMTHSeHR25XpP4aHvCL0xLwslgZGEWwSOouU4r+
- F6YyONm5POqxLNSs7TbPYrNCJpWyVxRLtmabhIjnizgVVUYDBc31jJYVhZjolpD65wKO qA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7fae89n8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 16:15:47 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EGFkIZ030883
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 16:15:46 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 14 Jun 2023 09:15:45 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <christian.koenig@amd.com>, <sukrut.bellary@linux.com>,
-        <sumit.semwal@linaro.org>
-CC:     <ogabbay@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <linaro-mm-sig@lists.linaro.org>, <linux-media@vger.kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH] accel/qaic: Call DRM helper function to destroy prime GEM
-Date:   Wed, 14 Jun 2023 10:15:28 -0600
-Message-ID: <20230614161528.11710-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+        Wed, 14 Jun 2023 12:32:19 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE49C1A3;
+        Wed, 14 Jun 2023 09:32:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686760325; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=hOndUb/y7+FYDHND6o4HtEidA3dlWnXmPYHWSzGBZmfZNuyrjWA/iFHxlwhWwQaKYA
+    m91PrAgCyBehvxhx054ajMj5NAwwvJz95uvyBn1ckkm07wU2SewId1+UQXWtnGc+FH8H
+    XQsQxTi5F3uVZHnZgMbw38NKE8cfWXrOtz2ylCKHiVjsEvTBJK6fyQuDrK4gqHsGgpNT
+    e7so93vKVRRT/AkdfOwJ/uuu+pdLDdC4V3Ei1CLEhFCEK2IsuxcIu2zSLg+EGvZeaQwy
+    BHn4WnQK6owZV9WMZArXgkes4RFrgbu7CplxqyQTqtDAmzOUHVpRrKVQUz+RMiSE2N2h
+    O1mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686760325;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=+mbk/aoGF1cxafxQrmnrqQYLPhOg+LPpMWgeAsoqNFI=;
+    b=kggcKKMP0d8i7yIQJ5xhN+jERDpgM+uHPNl3jzsEost4iUru5ZsWXOTigUvIpJONio
+    rdvLpGu2CxDw3Po+xh9/5fTuWIjobutSlLknTlSNxPRyaANmv/RtwmN9K7GWYnfN/S0J
+    dphWIsnbeQ5Ri6i5MXZrlT7MJggVSteftZ+5Oy5WAH7Li52QVrj90daZ+asZGcsVzAZh
+    6WWLMb5/A30zWyLF2qnP+UDPCGLn/bVZGJX21V3qscn8kOF5fEq7hp5iWXGH/HrieU88
+    6oMyxcc1Ot3jXcGi0haZudDGkMK9NriYsd8ELYfbZXgzm3rbb1StNwkqAElVHKzhDdmU
+    R7/w==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686760325;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=+mbk/aoGF1cxafxQrmnrqQYLPhOg+LPpMWgeAsoqNFI=;
+    b=XPKiUm/adpLckW3woYucjEL9LfFv2cT8Dd+k7qYvyfBGPZL2ommNHujhYevDzmTTMp
+    bfp4bGK7Dfqmm1tnaemAcbh8oEWqRkYJuWSVSXbNhIdKHAH/EvJuIaLJSX7/Gwkw5sF2
+    eGtE2Cj2wj0aX2mv5dc1EvGvPeQYp/GxEQ8HxbOZcWEFGTNYeHAs5WPDGOpp7bTGPuM7
+    18WhRkUe+bH1mx1KJsdnwETRJvqhjMDxQ9bMtgSwK8aBGtGWDHoRHoXoUCN4aYVw3w3p
+    xqQJYW8Xfdo3mAJyoGYfUR4K/gUb97VAIi01ZBppXChjXw5Kw5iegkg4cYAk1kFmc+Wk
+    gOvw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686760325;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=+mbk/aoGF1cxafxQrmnrqQYLPhOg+LPpMWgeAsoqNFI=;
+    b=lrWDo+JUzK2svFuy1bKLyW4l735AvsuEmuDLQ2GWlAD5jUJrzFeQyTmRdg76QGpCQw
+    GPpE5JGWSk/45YoY95AA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4xxmw=="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
+    with ESMTPSA id D0d0a8z5EGW50U2
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 14 Jun 2023 18:32:05 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH v2 0/2] remoteproc: qcom: Use of_reserved_mem_lookup()
+Date:   Wed, 14 Jun 2023 18:31:53 +0200
+Message-Id: <20230529-rproc-of-rmem-v2-0-95e39b959585@gerhold.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _TxUpOz9a1M8vH5LZlHsuEqnI2pQAC2f
-X-Proofpoint-GUID: _TxUpOz9a1M8vH5LZlHsuEqnI2pQAC2f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-14_11,2023-06-14_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0
- impostorscore=0 suspectscore=0 phishscore=0 mlxscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306140142
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHnriWQC/3WNwQ6CMBBEf4Xs2TW0iIIn/8NwaGGhTaAlWyQaw
+ r+7cjeZy5vkzWyQiD0luGcbMK0++RgE9CmD1pkwEPpOGHSui7zUNfLMscXYI0804a2rC9VfJRc
+ CcaxJhJZNaJ1Y4TWOUs5MvX8fJ89G2Pm0RP4cn6v6tf/mV4UKS6uoqKoqN9Y8BmIXx+4caIFm3
+ /cvORgOh8EAAAA=
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Use of_reserved_mem_lookup() instead of of_address_to_resource() inside
+the Qualcomm remoteproc drivers. This has the advantage that it ensures
+that the referenced memory region was really reserved and is not e.g.
+status = "disabled".
 
-smatch warning:
-	drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
-		dereferencing freed memory 'obj->import_attach'
-
-obj->import_attach is detached and freed using dma_buf_detach().
-But used after free to decrease the dmabuf ref count using
-dma_buf_put().
-
-drm_prime_gem_destroy() handles this issue and performs the proper clean
-up instead of open coding it in the driver.
-
-Fixes: ff13be830333 ("accel/qaic: Add datapath")
-Reported-by: Sukrut Bellary <sukrut.bellary@linux.com>
-Closes: https://lore.kernel.org/all/20230610021200.377452-1-sukrut.bellary@linux.com/
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- drivers/accel/qaic/qaic_data.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Changes in v2:
+- Add missing check for rmem (Bjorn)
+- Add checks for rmem->size to ensure dynamic reserved memory was 
+  really allocated
+- Link to v1: https://lore.kernel.org/r/20230529-rproc-of-rmem-v1-1-5b1e38880aba@gerhold.net
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index e42c1f9ffff8..e9a1cb779b30 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -23,6 +23,7 @@
- #include <linux/wait.h>
- #include <drm/drm_file.h>
- #include <drm/drm_gem.h>
-+#include <drm/drm_prime.h>
- #include <drm/drm_print.h>
- #include <uapi/drm/qaic_accel.h>
- 
-@@ -616,8 +617,7 @@ static void qaic_free_object(struct drm_gem_object *obj)
- 
- 	if (obj->import_attach) {
- 		/* DMABUF/PRIME Path */
--		dma_buf_detach(obj->import_attach->dmabuf, obj->import_attach);
--		dma_buf_put(obj->import_attach->dmabuf);
-+		drm_prime_gem_destroy(obj, NULL);
- 	} else {
- 		/* Private buffer allocation path */
- 		qaic_free_sgt(bo->sgt);
+---
+Stephan Gerhold (2):
+      remoteproc: qcom: Handle reserved-memory allocation issues
+      remoteproc: qcom: Use of_reserved_mem_lookup()
+
+ drivers/remoteproc/qcom_q6v5_adsp.c | 24 ++++++++---------
+ drivers/remoteproc/qcom_q6v5_mss.c  | 35 +++++++++++++++----------
+ drivers/remoteproc/qcom_q6v5_pas.c  | 51 ++++++++++++++++++++-----------------
+ drivers/remoteproc/qcom_q6v5_wcss.c |  2 +-
+ drivers/remoteproc/qcom_wcnss.c     | 24 ++++++++---------
+ 5 files changed, 71 insertions(+), 65 deletions(-)
+---
+base-commit: 1ca04f21b204e99dd704146231adfb79ea2fb366
+change-id: 20230529-rproc-of-rmem-7d931f61f64e
+
+Best regards,
 -- 
-2.40.1
+Stephan Gerhold <stephan@gerhold.net>
 
