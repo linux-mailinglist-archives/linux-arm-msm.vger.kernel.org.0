@@ -2,93 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27CDE73046B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:00:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AB53730485
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:03:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245285AbjFNQAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 12:00:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52864 "EHLO
+        id S229955AbjFNQDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 12:03:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245076AbjFNQAX (ORCPT
+        with ESMTP id S230117AbjFNQDp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 12:00:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D69F2117;
-        Wed, 14 Jun 2023 09:00:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E9AB6441C;
-        Wed, 14 Jun 2023 16:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6511EC433C8;
-        Wed, 14 Jun 2023 16:00:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686758420;
-        bh=+GDOie9Y5yo7+W/LNlvEMtAgRoYKTZPL6eQTFkYQEAw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hzNHgCdTS6xkNGZHZecn8oCQ1hnOBMRgccEZuL1K56JWjWlhOBAa6PQSaJiIOHuXl
-         zLQ8eg+V85K52AvN+CRMz7YU1nxDE+zHBpm48PxZjT10O5RYnEkUvlC2F8eK2e2BJ9
-         RwAOUl/FH69+GPYOQYBlqJGMKZWI1a7Rt8U2FRDbW7tdAUNg05VuLQgi1vdBsfgF7k
-         8x2R/j3DnJmMKy3PGOgnxlymj5QPRduu0NMlG5g3q3xTqplImswMwU+t2GRpqKpIpi
-         pSSIFhNzMtvrRYyS+5i9CZlqBwUOu+oEs+bH9PLR+fYIyHOteP8tzElNrIGVpK8A+z
-         j4xzrV5Uq9bYA==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/8] arm64: dts: qcom: msm8939: Rework regulator constraints
-Date:   Wed, 14 Jun 2023 09:03:38 -0700
-Message-Id: <168675861182.1453524.2927753257641993379.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230530-msm8939-regulators-v1-0-a3c3ac833567@gerhold.net>
-References: <20230530-msm8939-regulators-v1-0-a3c3ac833567@gerhold.net>
+        Wed, 14 Jun 2023 12:03:45 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F80B1FE2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 09:03:42 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9827109c6e9so104245666b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 09:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686758621; x=1689350621;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xG7GTQgO4U8Gfa8/JEgViBYrjpOcl0FQHUgJrFGTTXc=;
+        b=k1+0L5TUKQU53uQEuEzjlsvSqT/pg54zgEsqYv7HuXf2ZldT4Gl15LDTFJx2yL1PAz
+         5PPt9zUiFaZo4QBBakwNfM30pbhOK6VVfMacmC7ofwWf4m6yeUFCvuaD19pxYmXFhEdw
+         biR7FVRhDdOjFwYjUATs5bBAzlJZNq0SkzXPIOq7wC9aaHrcdv6amlm8ZmPneOtY1C6b
+         C4USijDjnsHKJzoNY2sXkYxgDXR8Pw4s9EbKd8fBgNBx6wLGi4mKHmY9zeeoGJf7YnN0
+         4DtsGnX8iaXF8v5nh0YLQ7ExggPmAxCjUMjyZ/eBMUrAYJAtqUcKH7Fz0piVia2L7a+r
+         AQ8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686758621; x=1689350621;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xG7GTQgO4U8Gfa8/JEgViBYrjpOcl0FQHUgJrFGTTXc=;
+        b=f54eqkjS7jq7FtHMl4mI84Vx5n/IGL9423SxUrC8/V/Y9Vby/x6jyi1ZEdS9iTDZAi
+         FpB46Xyh70NU0YKBjSL7kybLovUX6vSHxrj1nRNlIsXMhqnbq238X2epfm+Hd/ItvTz6
+         UK2eFA4tzWUXQw6MFfbSJKMP7y8bcw7iIj521Hp70pZOTc+9tiUqWbbEfvP1+rVcFdFk
+         ZvHT9u/9+JL68t5gMF6O9/e91OT07Ni+MwdIgU6Bo593i1+t/rkV6p5gIw+AIY8YwWwg
+         xexnt92m1t/kHU+6D3hXpmgYy0cLwrLRA7qlT/F8Cd33QD44vowEaiDjXRxfM4NCZkSZ
+         vF+g==
+X-Gm-Message-State: AC+VfDyaa/U6AUrT9QMgSvtJ/KxKzXHt4kVrpHuuO/mthAuFseCyrHNc
+        eQCcjSWX14MMGRfPEOjVPJoXkQ==
+X-Google-Smtp-Source: ACHHUZ6lxHKaF2zktAGigxotv/T9i4Hf5It3hZSehrbftZ/cM4r3pQftAr3Gt0dpXOA5dcbB9EELAw==
+X-Received: by 2002:a17:907:d8f:b0:965:ff38:2fb3 with SMTP id go15-20020a1709070d8f00b00965ff382fb3mr14970141ejc.74.1686758621213;
+        Wed, 14 Jun 2023 09:03:41 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id gj15-20020a170906e10f00b0096f4c9ce526sm8244536ejb.225.2023.06.14.09.03.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 09:03:40 -0700 (PDT)
+Message-ID: <b30575b8-2e34-2757-9cae-ee5599ac13b5@linaro.org>
+Date:   Wed, 14 Jun 2023 18:03:38 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 02/18] dt-bindings: soc: qcom: merge qcom,saw2.txt into
+ qcom,spm.yaml
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+ <20230612053922.3284394-3-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230612053922.3284394-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 14 Jun 2023 09:15:58 +0200, Stephan Gerhold wrote:
-> Rework the regulator constraints for the MSM8939 device trees to be
-> closer to reality. There are several mistakes in there, some of them
-> taken over directly from Qualcomm's vendor kernel. Fortunately, none of
-> the mistakes is absolutely critical because it turns out that the RPM
-> firmware also validates the voltages and silently clamps the requests
-> to a proper range. Still, this behavior should be clearly represented
-> in the device tree rather than pretending to apply the wrong voltages.
+On 12/06/2023 07:39, Dmitry Baryshkov wrote:
+> The Qualcomm SPM / SAW2 device is described in two bindigns files:
+> arm/msm/qcom,saw2.txt and soc/qcom/qcom,spm.yaml. Merge the former into
+> the latter, adding detailed device node description. While we are at it,
+> also rename qcom,spm.yaml to qcom,saw2.yaml to follow the actual
+> compatible used for these devices.
 > 
-> [...]
 
-Applied, thanks!
-
-[1/8] arm64: dts: qcom: msm8939-pm8916: Add missing pm8916_codec supplies
-      commit: dce9254511d6c9ea0d5ed7e4f21e6206e2ca35ce
-[2/8] arm64: dts: qcom: msm8939: Disable lpass_codec by default
-      commit: 6002a78023cded6f02eac7c812b076046cab8060
-[3/8] arm64: dts: qcom: msm8939-sony-tulip: Fix l10-l12 regulator voltages
-      commit: 209aea1ad505519faf018b596e4fdca0d0569469
-[4/8] arm64: dts: qcom: msm8939-sony-tulip: Allow disabling pm8916_l6
-      commit: 8771308c91cefc072f36415cec0b802ee55b1d96
-[5/8] arm64: dts: qcom: msm8939: Fix regulator constraints
-      commit: 9187d555c4ba9544c7f117062d241aa085f59a06
-[6/8] arm64: dts: qcom: msm8939-pm8916: Clarify purpose
-      commit: 88028fa047fb72826dd206b51550be780777718c
-[7/8] arm64: dts: qcom: msm8939: Define regulator constraints next to usage
-      commit: 5cdab9a8c70c4d979909dd1bb6d1f3eacd9fa270
-[8/8] arm64: dts: qcom: msm8939-pm8916: Mark always-on regulators
-      commit: ecbfba694b5baf2b854689c63ef011e905810c59
+You also dropped "regulator" property. Please mention in the commit msg why.
 
 Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Krzysztof
+
