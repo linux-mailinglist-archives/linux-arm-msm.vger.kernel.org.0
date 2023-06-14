@@ -2,158 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ECF272FFB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:14:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C65672FFEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:22:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244920AbjFNNOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 09:14:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35230 "EHLO
+        id S244952AbjFNNWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 09:22:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240303AbjFNNOM (ORCPT
+        with ESMTP id S244934AbjFNNWh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 09:14:12 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC22269A;
-        Wed, 14 Jun 2023 06:13:50 -0700 (PDT)
-Received: from [IPV6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2] (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id BF9966606F20;
-        Wed, 14 Jun 2023 14:13:47 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1686748428;
-        bh=K4WTi0JZ7NzreJtn6e/6oeiwkA8ObHQNkqYaWXGPEjc=;
-        h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=moJB43tmRR3Wb0jBxt3y3HdKfsoko9VHoMjH60aEQvKudl12WyStjZImqLkSqXX36
-         Kucm92qM5YMyKkS+JCQWgZuqLLM1kMw+mLwhWjFC5F59O0nsSNLudU4jkdtWMeBojj
-         2sU91HWKD9B3oVkm1weJOVKwt+nk9IvfN+nLzKrutyCZan3cGkFwxCkf31aKRwGMCL
-         0SDZcyq33ssyOrywTKM8LRT1XMloROjmM3G4nCL301Y/V9V2KdmnEZ0wYF/aaJbLcM
-         cM0gFX90gzQVJzFh44XbnV9xSxkp3SiE8IxD2Lw3Km/hBB+DpaaDK7zAPH97WnnpRs
-         WDOx5dAy2H5WQ==
-Message-ID: <057386c7-a7cf-14cb-d564-1b30e79806f6@collabora.com>
-Date:   Wed, 14 Jun 2023 15:13:44 +0200
+        Wed, 14 Jun 2023 09:22:37 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C70D1FEB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:22:34 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b227fdda27so7994841fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:22:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686748952; x=1689340952;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QlYwaO+z+1HnbdYgK2cE/Bmko+PlgVBi2h8p1xbV4dk=;
+        b=A0kek7FKuJeZYXzX3n1cYwa0lvyoHTGrU2sLoPUBvMFQhUKHl+ImVQEENn1mCQVN3o
+         IHkOt9XCt+o3hxOogi/E52jhmHh/Yc555zAnTu9p80pPPI8ggKKvNcsvi6YAEbcF8ANp
+         spo32vjJ2soK5HBQlDGF2E9vA3aXyfqaust6T8dbViXEPMdbTrz6EDEkdQ4rtxgjT0HU
+         dFJR7RaYI3B9CYDAbvRNad4ej3vmg14uYRiHHCe9tv2BiF/rrUOva1Xmjxuc+y56orj+
+         Ehe6WLpNZkWxA1x0mYKGGu1E8iWty9xvP+Dvsnl7i8EBk5VGhY/MPanqBYTCMdO33l2a
+         yKfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686748952; x=1689340952;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QlYwaO+z+1HnbdYgK2cE/Bmko+PlgVBi2h8p1xbV4dk=;
+        b=YzSiq1qO1KMMYA2Xb1XMi1+v+DrulNjHjwyMISnkJsr6zYIA9Ii0zMd2QrAMSd6SHV
+         EeazpEoNU9u6hb5ogRQNxhrivGups1SXzuGvbJ1ReLAhwBI5K6MK60li3cd1FdyJihW/
+         y1quUHjKCKTwz3Jztf5zrK6wTVKhznUPMuqkVOnOrmANPguJnhVlwcZcr+f7QpT60gVX
+         kQujcDjdKr/dRbbwc56XKnz980uYmcdAq+j8w2tTEypo/wvPxSMery+Ql2I377wV5Gq7
+         HCBNsg4UU/JyXBwpI2HJfXEIQBYEgEwp1ngIjBD9rjqs+x66ONv6Dnibm1kWgzpgJKnG
+         FaHQ==
+X-Gm-Message-State: AC+VfDyicEwFHsF0kowcBBG+x6yCfRWfIvOLDi6rPHwQVFxhhC0hpEgz
+        VfH3+T0scB89xNFJm9N5YclA5w==
+X-Google-Smtp-Source: ACHHUZ5MceAYLzhvgNgAKOq/h4WDwcWJHeC43W14iWYg6QWmqKN3QoW2ZYC6I4uh2nzUT2WGjAk8VQ==
+X-Received: by 2002:a2e:86cf:0:b0:2a7:7493:9966 with SMTP id n15-20020a2e86cf000000b002a774939966mr638716ljj.24.1686748952498;
+        Wed, 14 Jun 2023 06:22:32 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id v2-20020a2ea442000000b002a7899eaf9csm2514681ljn.63.2023.06.14.06.22.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jun 2023 06:22:32 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Wed, 14 Jun 2023 15:22:25 +0200
+Subject: [PATCH RFC] media: camss: Intepret OF graph connections more
+ sensibly
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8250-edo: Panel framebuffer is
- 2.5k instead of 4k
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230614-topic-camss_grpah-v1-1-5f4b516310fa@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABC/iWQC/x2N0QrCMAwAf2Xk2UDXFWX+iohkNV0DsyvNFGHs3
+ w0+3sFxOyg3YYVrt0Pjj6isxaA/dRAzlZlRnsbgnR/cuQ+4rVUiRnqpPuZWKeMwppFCugTvIlg
+ 3kTJOjUrMVpb3spisjZN8/6Pb/Th+7YxuJHgAAAA=
+To:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230606211418.587676-1-marijn.suijten@somainline.org>
- <974f68dc-b667-c9a7-94c4-1023ef271fab@linaro.org>
- <a69ddadd-8d59-e784-ddce-16c83a7f13a6@collabora.com>
- <kdu6apwgp7nu6mwqatufhxvnbunwodr4iu2uaqjacbjgbmmy5y@zh53imtpqfgs>
- <8d91dfc0-f6c0-813f-de9c-1befdd0ccfdf@linaro.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <8d91dfc0-f6c0-813f-de9c-1befdd0ccfdf@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686748951; l=1403;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=EDgfg+lUIqJj9gfFzfZTgsOWNdY99vPNSeSuLOAWWhc=;
+ b=jkyOPuk8pdImD3MqXjm+SeuRsFXWWS724YWTgW7ygW9Qalf83r4qw133m+EbUOffvRW7YJkby
+ 7frUBnscmaxBx4+5REjaLG3URb8zBQQsoe6OZzzEQnxDwlxWuEsLhfH
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 14/06/23 14:43, Konrad Dybcio ha scritto:
-> On 14.06.2023 14:40, Marijn Suijten wrote:
->> On 2023-06-07 09:15:08, AngeloGioacchino Del Regno wrote:
->>> Il 07/06/23 00:52, Konrad Dybcio ha scritto:
->>>>
->>>>
->>>> On 6.06.2023 23:14, Marijn Suijten wrote:
->>>>> The framebuffer configuration for edo pdx203, written in edo dtsi (which
->>>>> is overwritten in pdx206 dts for its smaller panel) has to use a
->>>>> 1096x2560 configuration as this is what the panel (and framebuffer area)
->>>>> has been initialized to.  Downstream userspace also has access to (and
->>>>> uses) this 2.5k mode by default, and only switches the panel to 4k when
->>>>> requested.
->>>>>
->>>>> This is similar to commit be8de06dc397 ("arm64: dts: qcom:
->>>>> sm8150-kumano: Panel framebuffer is 2.5k instead of 4k") which fixed the
->>>>> same for the previous generation Sony platform.
->>>>>
->>>>> Fixes: 69cdb97ef652 ("arm64: dts: qcom: sm8250: Add support for SONY Xperia 1 II / 5 II (Edo platform)")
->>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>>> ---
->>>> And so I derped again.
->>>>
->>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>
->>> I would've liked more to see a commit saying "replace simple-framebuffer with xxxx"
->>> (where xxxx is DSI panel, etc) but that will as well do for now... :-)
->>
->> Fwiw we could keep it around as MDSS "gracefully" takes over when it
->> probes a little bit later with fbcon over DRM/KMS, and it sometimes
->> helps reading what is up when something fails before or during MDSS
->> probe.
-> I believe we should do this. Perhaps even add some early code to drm/msm
-> that'd read out the address (and other configuration) from the mdp hw and
-> set it up automagically.
-> 
+Not all endpoints of camss have to be populated. In fact, most of the
+time they shouldn't be as n-th auxilliary cameras are usually ewaste.
 
-As far as I remember, some bootloaders are reading devicetrees to setup the display
-at boot with "continuous splash", that's why I would be for *replacing* the simple
-framebuffer with the mdss-dsi.
+Don't fail probing the entire camss even even one endpoint is not
+linked and throw an error when none is found.
 
-Adding early code to drm/msm to read out the address and check the state of the HW
-before pushing an early framebuffer would be a definitive solution for that corner
-case. Good call, Konrad.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/media/platform/qcom/camss/camss.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-Cheers,
-Angelo
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 1ef26aea3eae..3aa03fbc94e2 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1084,9 +1084,8 @@ static int camss_of_parse_ports(struct camss *camss)
+ 
+ 		remote = of_graph_get_remote_port_parent(node);
+ 		if (!remote) {
+-			dev_err(dev, "Cannot get remote parent\n");
+-			ret = -EINVAL;
+-			goto err_cleanup;
++			of_node_put(node);
++			continue;
+ 		}
+ 
+ 		csd = v4l2_async_nf_add_fwnode(&camss->notifier,
+@@ -1105,7 +1104,7 @@ static int camss_of_parse_ports(struct camss *camss)
+ 		num_subdevs++;
+ 	}
+ 
+-	return num_subdevs;
++	return num_subdevs ? num_subdevs : -EINVAL;
+ 
+ err_cleanup:
+ 	of_node_put(node);
 
-> Konrad
->>
->> - Marijn
->>
->>> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
->>>
->>>>
->>>> Konrad
->>>>>
->>>>> Changes since v2:
->>>>> - Rename griffin (copy-paste from related patch) to pdx203 in comment.
->>>>>
->>>>>    arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 7 ++++---
->>>>>    1 file changed, 4 insertions(+), 3 deletions(-)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
->>>>> index 3d22be747f042..8f867f841cb83 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
->>>>> @@ -54,9 +54,10 @@ chosen {
->>>>>    		framebuffer: framebuffer@9c000000 {
->>>>>    			compatible = "simple-framebuffer";
->>>>>    			reg = <0 0x9c000000 0 0x2300000>;
->>>>> -			width = <1644>;
->>>>> -			height = <3840>;
->>>>> -			stride = <(1644 * 4)>;
->>>>> +			/* pdx203 BL initializes in 2.5k mode, not 4k */
->>>>> +			width = <1096>;
->>>>> +			height = <2560>;
->>>>> +			stride = <(1096 * 4)>;
->>>>>    			format = "a8r8g8b8";
->>>>>    		};
->>>>>    	};
->>>
+---
+base-commit: b16049b21162bb649cdd8519642a35972b7910fe
+change-id: 20230614-topic-camss_grpah-39f9a4f7420c
 
-
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
