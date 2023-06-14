@@ -2,173 +2,580 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFAAE72F70B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 09:56:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65FF272F7CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 10:27:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232918AbjFNH4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 03:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33794 "EHLO
+        id S243482AbjFNI1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 04:27:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229971AbjFNH4G (ORCPT
+        with ESMTP id S243488AbjFNI1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 03:56:06 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E88CD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:56:04 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f63ab1ac4aso8009310e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:56:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686729363; x=1689321363;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JJPISEmPBy/fFyKK4OdqlG5gkZtasSpnLqvR/QuZsrc=;
-        b=Z7GS1eKT8nO7TxFE5M0qMwLUz+EZv2zNcpHm3JpZ8188Zt3tGihoJ40UK/M/+P7P1Z
-         1yFkhvNp50dlLGoJWKQdCtY3bQAVdBOKB0tC/+UBZfCJe3XOGO9zUEhazVVS1Iar5ZLi
-         2qX/tjowOPZyaZynAzLAI1zvmABYP3Yoo7R1s8k97vYd6unI4pNI5gj3BtdRC44m5Y5p
-         0PW7/ypl/lVieTySySLFObOe70melVrKASD+UPl0H/bucy8XP2FJMZ5HcrbRxunTW2xC
-         abDHMJScDUZwW5ZpOM4kgN1I8LsIM6ACc+5tDujmhghznXjF99QWvWY2jl6QBfRDjxsN
-         31mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686729363; x=1689321363;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JJPISEmPBy/fFyKK4OdqlG5gkZtasSpnLqvR/QuZsrc=;
-        b=E79FA03z6UR4nhNEYtrrFbipsYnZqZrXJuRIFw2EGcDbJpsDCRso4nEUWUfoa/3W09
-         GH04XdkPsv6bFFATnOfzYv1X0A2sNAqbU82ByKdjLAEYO9fkUqY1ByOTvIc+//OXibiH
-         cA2WJHcwG+YKzWnpoVbIqfQZ8FqkizBuwysW3a7Q56Q4AvQra6XQXNag4J3mv5+Zta4X
-         lCfj//QCFN52BRrXf0o+8fsXbl0YVjAk0xBzHzhPrjjTwgk4y2Nee/z9xndx2XXjZ9RQ
-         MmcwDZ0lHmeSr1zNj+QXGe9XSyDJ6rvF+PEmpocKl42r3fR12bkT2YkvpYoLIWNE8HDb
-         /n0Q==
-X-Gm-Message-State: AC+VfDyCmhDntUX396gZb1INkQMgSgoNqnLjmGtdGkOdYz1IuFw7gBjQ
-        bsU+6sdRRAaq7x1+orHd1f72jg==
-X-Google-Smtp-Source: ACHHUZ6gQl+0Kjo3PkucyLQR6m9PDFEMbrbKq8jhGBsMoylSMxxqYFARW61e25BEd87a5AcAhO1Hzw==
-X-Received: by 2002:a19:5619:0:b0:4f3:8196:80cb with SMTP id k25-20020a195619000000b004f3819680cbmr6959270lfb.41.1686729363110;
-        Wed, 14 Jun 2023 00:56:03 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id x9-20020ac259c9000000b004f650b03391sm2013241lfn.91.2023.06.14.00.56.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 00:56:02 -0700 (PDT)
-Message-ID: <c74c9e0e-d059-f0e3-4350-03089c37131a@linaro.org>
-Date:   Wed, 14 Jun 2023 10:56:02 +0300
+        Wed, 14 Jun 2023 04:27:12 -0400
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A58111FCF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 01:26:55 -0700 (PDT)
+Received: from loongson.cn (unknown [10.20.42.43])
+        by gateway (Coremail) with SMTP id _____8DxzOrOeYlk8QgFAA--.10802S3;
+        Wed, 14 Jun 2023 16:26:54 +0800 (CST)
+Received: from [10.20.42.43] (unknown [10.20.42.43])
+        by localhost.localdomain (Coremail) with SMTP id AQAAf8DxK8rNeYlknGAaAA--.1289S3;
+        Wed, 14 Jun 2023 16:26:53 +0800 (CST)
+Message-ID: <9e3d9884-2e03-2728-563e-32cc91ace677@loongson.cn>
+Date:   Wed, 14 Jun 2023 16:26:53 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 2/3] drm/msm/dpu: Set DATABUS_WIDEN on command mode
- encoders
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-2-c7069f2efca1@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230525-add-widebus-support-v1-2-c7069f2efca1@quicinc.com>
+Subject: Re: [2/2] drm: Remove struct drm_driver.gem_prime_mmap
+Content-Language: en-US
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        sean@poorly.run
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org
+References: <20230613150441.17720-3-tzimmermann@suse.de>
+ <5fdbd4d3-76a1-c33b-fe0d-73f789b24168@loongson.cn>
+ <4c80635b-d692-d05d-9308-62466f05310c@loongson.cn>
+ <79bff97b-50e0-9d43-19c0-4dbb43305194@suse.de>
+From:   Sui Jingfeng <suijingfeng@loongson.cn>
+Organization: Loongson
+In-Reply-To: <79bff97b-50e0-9d43-19c0-4dbb43305194@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8DxK8rNeYlknGAaAA--.1289S3
+X-CM-SenderInfo: xvxlyxpqjiv03j6o00pqjv00gofq/
+X-Coremail-Antispam: 1Uk129KBj9fXoWfXw1fZw13tr13Cw17WFW5XFc_yoW5XF1xto
+        WSgw13J3WrXw1fK345A3ZrAF15Xw4DJwn7Cr48JrnxXFykJ3W2q3y7Jry7t3y5Jr1rCry7
+        Zw1UGr15CFy7Aa1fl-sFpf9Il3svdjkaLaAFLSUrUUUU0b8apTn2vfkv8UJUUUU8wcxFpf
+        9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+        UjIYCTnIWjp_UUUOn7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+        8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+        Y2AK021l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+        v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AK
+        xVWxJr0_GcWln4kS14v26r126r1DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
+        xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q
+        6rW5McIj6I8E87Iv67AKxVWxJVW8Jr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI4
+        8JMxk0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_JF0_Jw1l42xK82IYc2Ij64vI
+        r41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_JF0_Jw1lx2IqxVAqx4xG67
+        AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIY
+        rxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14
+        v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWxJVW8
+        Jr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU82jg7
+        UUUUU==
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 04:57, Jessica Zhang wrote:
-> Add a DPU INTF op to set the DATABUS_WIDEN register to enable the
-> databus-widen mode datapath.
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 12 ++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  3 +++
->   3 files changed, 18 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index b856c6286c85..124ba96bebda 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -70,6 +70,9 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->   
->   	if (intf_cfg.dsc != 0 && phys_enc->hw_intf->ops.enable_compression)
->   		phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
-> +
-> +	if (phys_enc->hw_intf->ops.enable_widebus)
-> +		phys_enc->hw_intf->ops.enable_widebus(phys_enc->hw_intf);
+Hi,
 
-No. Please provide a single function which takes necessary 
-configuration, including compression and wide_bus_enable.
+On 2023/6/14 13:34, Thomas Zimmermann wrote:
+> Hi
+>
+> Am 14.06.23 um 04:06 schrieb Sui Jingfeng:
+>>
+>> On 2023/6/14 01:27, Sui Jingfeng wrote:
+>>> Wow, so many drivers get nuked!
+>>>
+>>> On 2023/6/13 22:51, Thomas Zimmermann wrote:
+>>>> All drivers initialize this field with drm_gem_prime_mmap(). Call
+>>>> the function directly and remove the field. Simplifies the code and
+>>>> resolves a long-standing TODO item.
+>>>>
+>>>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>>>> Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+>>>
+>>>
+>>> I have tested this patch briefly with drm/amdgpu(RX560), Running 
+>>> glmark2, the rendered scene looks OK.
+>>>
+>>> But single driver is self-sharing.  I think I should test this more 
+>>> with multiple video card.
+>>>
+>> No need to test; it's equivalent to removing a wrapper.
+>
+> Yes, only msm hardware might be affected.
+>
+>>
+>> But new DRM (un-upstreamed) drivers cannot be compiled anymore with 
+>> this patch applied.
+>>
+>> This makes them all out-of-date or going to be outdated; this is 
+>> embarrassing!
+>
+> What do you mean by embarrassing? Simply rebase your driver onto the 
+> change and that's it. This happens regularly for out-of-tree drivers. 
+> But if such a driver would land before this patchset, I'd have to 
+> update the patchset instead.
+>
+Thanks for you told me this then.
 
-Also note, that we already have dpu_encoder_is_widebus_enabled() and the 
-rest of support code. Please stick to it too.
+I worry about what it will happen if two conflict patch got merged together.
 
->   }
->   
->   static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 5b0f6627e29b..03ba3a1c7a46 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -513,6 +513,15 @@ static void dpu_hw_intf_disable_autorefresh(struct dpu_hw_intf *intf,
->   
->   }
->   
-> +static void dpu_hw_intf_enable_widebus(struct dpu_hw_intf *ctx)
-> +{
-> +	u32 intf_cfg2 = DPU_REG_READ(&ctx->hw, INTF_CONFIG2);
-> +
-> +	intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
-> +
-> +	DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2);
-> +}
-> +
->   static void dpu_hw_intf_enable_compression(struct dpu_hw_intf *ctx)
->   {
->   	u32 intf_cfg2 = DPU_REG_READ(&ctx->hw, INTF_CONFIG2);
-> @@ -545,6 +554,9 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
->   
->   	if (cap & BIT(DPU_INTF_DATA_COMPRESS))
->   		ops->enable_compression = dpu_hw_intf_enable_compression;
-> +
-> +	if (cap & BIT(DPU_INTF_DATABUS_WIDEN))
-> +		ops->enable_widebus = dpu_hw_intf_enable_widebus;
+If my driver got merged, then one more driver will be nuked together. 
+Saving a lot of effort.
 
->   }
->   
->   struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 99e21c4137f9..64a17b99d3d1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -71,6 +71,7 @@ struct intf_status {
->    *                              Return: 0 on success, -ETIMEDOUT on timeout
->    * @vsync_sel:                  Select vsync signal for tear-effect configuration
->    * @enable_compression:         Enable data compression
-> + * @enable_widebus:             Enable widebus
->    */
->   struct dpu_hw_intf_ops {
->   	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
-> @@ -109,6 +110,8 @@ struct dpu_hw_intf_ops {
->   	void (*disable_autorefresh)(struct dpu_hw_intf *intf, uint32_t encoder_id, u16 vdisplay);
->   
->   	void (*enable_compression)(struct dpu_hw_intf *intf);
-> +
-> +	void (*enable_widebus)(struct dpu_hw_intf *intf);
->   };
->   
->   struct dpu_hw_intf {
-> 
 
+> Best regards
+> Thomas
+>
+>>
+>>>
+>>>> ---
+>>>>   Documentation/gpu/todo.rst                      |  9 ---------
+>>>>   drivers/accel/ivpu/ivpu_drv.c                   |  1 -
+>>>>   drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c         |  1 -
+>>>>   drivers/gpu/drm/drm_fbdev_dma.c                 |  6 +-----
+>>>>   drivers/gpu/drm/drm_prime.c                     | 14 ++------------
+>>>>   drivers/gpu/drm/etnaviv/etnaviv_drv.c           |  1 -
+>>>>   drivers/gpu/drm/exynos/exynos_drm_drv.c         |  1 -
+>>>>   drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c |  1 -
+>>>>   drivers/gpu/drm/lima/lima_drv.c                 |  1 -
+>>>>   drivers/gpu/drm/mediatek/mtk_drm_drv.c          |  1 -
+>>>>   drivers/gpu/drm/msm/msm_drv.c                   |  1 -
+>>>>   drivers/gpu/drm/msm/msm_drv.h                   |  1 -
+>>>>   drivers/gpu/drm/msm/msm_gem_prime.c             |  5 -----
+>>>>   drivers/gpu/drm/nouveau/nouveau_drm.c           |  1 -
+>>>>   drivers/gpu/drm/panfrost/panfrost_drv.c         |  1 -
+>>>>   drivers/gpu/drm/pl111/pl111_drv.c               |  1 -
+>>>>   drivers/gpu/drm/radeon/radeon_drv.c             |  1 -
+>>>>   drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c   |  1 -
+>>>>   drivers/gpu/drm/rockchip/rockchip_drm_drv.c     |  1 -
+>>>>   drivers/gpu/drm/v3d/v3d_drv.c                   |  1 -
+>>>>   drivers/gpu/drm/virtio/virtgpu_drv.c            |  1 -
+>>>>   drivers/gpu/drm/xen/xen_drm_front.c             |  1 -
+>>>>   include/drm/drm_drv.h                           | 14 --------------
+>>>>   include/drm/drm_gem_dma_helper.h                |  6 ++----
+>>>>   include/drm/drm_gem_shmem_helper.h              |  1 -
+>>>>   include/drm/drm_gem_vram_helper.h               |  1 -
+>>>>   26 files changed, 5 insertions(+), 69 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
+>>>> index 68bdafa0284f5..ca1efad8c89c3 100644
+>>>> --- a/Documentation/gpu/todo.rst
+>>>> +++ b/Documentation/gpu/todo.rst
+>>>> @@ -319,15 +319,6 @@ Contact: Daniel Vetter, Noralf Tronnes
+>>>>     Level: Advanced
+>>>>   -struct drm_gem_object_funcs
+>>>> ----------------------------
+>>>> -
+>>>> -GEM objects can now have a function table instead of having the 
+>>>> callbacks on the
+>>>> -DRM driver struct. This is now the preferred way. Callbacks in 
+>>>> drivers have been
+>>>> -converted, except for struct drm_driver.gem_prime_mmap.
+>>>> -
+>>>> -Level: Intermediate
+>>>> -
+>>>>   connector register/unregister fixes
+>>>>   -----------------------------------
+>>>>   diff --git a/drivers/accel/ivpu/ivpu_drv.c 
+>>>> b/drivers/accel/ivpu/ivpu_drv.c
+>>>> index 2df7643b843d5..9f2b9fdcc5498 100644
+>>>> --- a/drivers/accel/ivpu/ivpu_drv.c
+>>>> +++ b/drivers/accel/ivpu/ivpu_drv.c
+>>>> @@ -376,7 +376,6 @@ static const struct drm_driver driver = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import = ivpu_gem_prime_import,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>         .ioctls = ivpu_drm_ioctls,
+>>>>       .num_ioctls = ARRAY_SIZE(ivpu_drm_ioctls),
+>>>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c 
+>>>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>>>> index c9a41c997c6c7..7681f79f462eb 100644
+>>>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>>>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>>>> @@ -2809,7 +2809,6 @@ static const struct drm_driver 
+>>>> amdgpu_kms_driver = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import = amdgpu_gem_prime_import,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>         .name = DRIVER_NAME,
+>>>>       .desc = DRIVER_DESC,
+>>>> diff --git a/drivers/gpu/drm/drm_fbdev_dma.c 
+>>>> b/drivers/gpu/drm/drm_fbdev_dma.c
+>>>> index d86773fa8ab00..8217f1ddc0075 100644
+>>>> --- a/drivers/gpu/drm/drm_fbdev_dma.c
+>>>> +++ b/drivers/gpu/drm/drm_fbdev_dma.c
+>>>> @@ -54,12 +54,8 @@ static void drm_fbdev_dma_fb_destroy(struct 
+>>>> fb_info *info)
+>>>>   static int drm_fbdev_dma_fb_mmap(struct fb_info *info, struct 
+>>>> vm_area_struct *vma)
+>>>>   {
+>>>>       struct drm_fb_helper *fb_helper = info->par;
+>>>> -    struct drm_device *dev = fb_helper->dev;
+>>>> -
+>>>> -    if (drm_WARN_ON_ONCE(dev, 
+>>>> !fb_helper->dev->driver->gem_prime_mmap))
+>>>> -        return -ENODEV;
+>>>>   -    return 
+>>>> fb_helper->dev->driver->gem_prime_mmap(fb_helper->buffer->gem, vma);
+>>>> +    return drm_gem_prime_mmap(fb_helper->buffer->gem, vma);
+>>>>   }
+>>>>     static const struct fb_ops drm_fbdev_dma_fb_ops = {
+>>>> diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
+>>>> index d29dafce9bb0a..6bcf324ef81c9 100644
+>>>> --- a/drivers/gpu/drm/drm_prime.c
+>>>> +++ b/drivers/gpu/drm/drm_prime.c
+>>>> @@ -715,8 +715,6 @@ EXPORT_SYMBOL(drm_gem_dmabuf_vunmap);
+>>>>    * the same codepath that is used for regular GEM buffer mapping 
+>>>> on the DRM fd.
+>>>>    * The fake GEM offset is added to vma->vm_pgoff and 
+>>>> &drm_driver->fops->mmap is
+>>>>    * called to set up the mapping.
+>>>> - *
+>>>> - * Drivers can use this as their &drm_driver.gem_prime_mmap callback.
+>>>>    */
+>>>>   int drm_gem_prime_mmap(struct drm_gem_object *obj, struct 
+>>>> vm_area_struct *vma)
+>>>>   {
+>>>> @@ -772,25 +770,17 @@ EXPORT_SYMBOL(drm_gem_prime_mmap);
+>>>>    * @vma: virtual address range
+>>>>    *
+>>>>    * Provides memory mapping for the buffer. This can be used as the
+>>>> - * &dma_buf_ops.mmap callback. It just forwards to 
+>>>> &drm_driver.gem_prime_mmap,
+>>>> - * which should be set to drm_gem_prime_mmap().
+>>>> - *
+>>>> - * FIXME: There's really no point to this wrapper, drivers which 
+>>>> need anything
+>>>> - * else but drm_gem_prime_mmap can roll their own 
+>>>> &dma_buf_ops.mmap callback.
+>>>> + * &dma_buf_ops.mmap callback. It just forwards to 
+>>>> drm_gem_prime_mmap().
+>>>>    *
+>>>>    * Returns 0 on success or a negative error code on failure.
+>>>>    */
+>>>>   int drm_gem_dmabuf_mmap(struct dma_buf *dma_buf, struct 
+>>>> vm_area_struct *vma)
+>>>>   {
+>>>>       struct drm_gem_object *obj = dma_buf->priv;
+>>>> -    struct drm_device *dev = obj->dev;
+>>>>         dma_resv_assert_held(dma_buf->resv);
+>>>>   -    if (!dev->driver->gem_prime_mmap)
+>>>> -        return -ENOSYS;
+>>>> -
+>>>> -    return dev->driver->gem_prime_mmap(obj, vma);
+>>>> +    return drm_gem_prime_mmap(obj, vma);
+>>>>   }
+>>>>   EXPORT_SYMBOL(drm_gem_dmabuf_mmap);
+>>>>   diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c 
+>>>> b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+>>>> index 31a7f59ccb49e..00223a8749092 100644
+>>>> --- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+>>>> +++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+>>>> @@ -484,7 +484,6 @@ static const struct drm_driver 
+>>>> etnaviv_drm_driver = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = etnaviv_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap     = drm_gem_prime_mmap,
+>>>>   #ifdef CONFIG_DEBUG_FS
+>>>>       .debugfs_init       = etnaviv_debugfs_init,
+>>>>   #endif
+>>>> diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c 
+>>>> b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+>>>> index 6b73fb7a83c3c..c9e3c88fb329c 100644
+>>>> --- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
+>>>> +++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+>>>> @@ -113,7 +113,6 @@ static const struct drm_driver 
+>>>> exynos_drm_driver = {
+>>>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import    = exynos_drm_gem_prime_import,
+>>>>       .gem_prime_import_sg_table    = 
+>>>> exynos_drm_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>>>       .ioctls            = exynos_ioctls,
+>>>>       .num_ioctls        = ARRAY_SIZE(exynos_ioctls),
+>>>>       .fops            = &exynos_drm_driver_fops,
+>>>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c 
+>>>> b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>>>> index 0c4aa4d9b0a77..8a98fa276e8a9 100644
+>>>> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>>>> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>>>> @@ -63,7 +63,6 @@ static const struct drm_driver hibmc_driver = {
+>>>>       .debugfs_init        = drm_vram_mm_debugfs_init,
+>>>>       .dumb_create            = hibmc_dumb_create,
+>>>>       .dumb_map_offset        = drm_gem_ttm_dumb_map_offset,
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>>>   };
+>>>>     static int __maybe_unused hibmc_pm_suspend(struct device *dev)
+>>>> diff --git a/drivers/gpu/drm/lima/lima_drv.c 
+>>>> b/drivers/gpu/drm/lima/lima_drv.c
+>>>> index e8566211e9fa1..65c31dc38049a 100644
+>>>> --- a/drivers/gpu/drm/lima/lima_drv.c
+>>>> +++ b/drivers/gpu/drm/lima/lima_drv.c
+>>>> @@ -279,7 +279,6 @@ static const struct drm_driver lima_drm_driver = {
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = 
+>>>> drm_gem_shmem_prime_import_sg_table,
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>   };
+>>>>     struct lima_block_reader {
+>>>> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c 
+>>>> b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+>>>> index 6dcb4ba2466c0..5693bb8d29ce4 100644
+>>>> --- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+>>>> +++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+>>>> @@ -560,7 +560,6 @@ static const struct drm_driver mtk_drm_driver = {
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import = mtk_drm_gem_prime_import,
+>>>>       .gem_prime_import_sg_table = mtk_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>       .fops = &mtk_drm_fops,
+>>>>         .name = DRIVER_NAME,
+>>>> diff --git a/drivers/gpu/drm/msm/msm_drv.c 
+>>>> b/drivers/gpu/drm/msm/msm_drv.c
+>>>> index 891eff8433a9c..47efa3c4492c4 100644
+>>>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>>>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>>>> @@ -1089,7 +1089,6 @@ static const struct drm_driver msm_driver = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap     = msm_gem_prime_mmap,
+>>>>   #ifdef CONFIG_DEBUG_FS
+>>>>       .debugfs_init       = msm_debugfs_init,
+>>>>   #endif
+>>>> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
+>>>> b/drivers/gpu/drm/msm/msm_drv.h
+>>>> index e13a8cbd61c95..44c9e06f2dffa 100644
+>>>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>>>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>>>> @@ -282,7 +282,6 @@ unsigned long msm_gem_shrinker_shrink(struct 
+>>>> drm_device *dev, unsigned long nr_t
+>>>>   void msm_gem_shrinker_init(struct drm_device *dev);
+>>>>   void msm_gem_shrinker_cleanup(struct drm_device *dev);
+>>>>   -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct 
+>>>> vm_area_struct *vma);
+>>>>   struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object 
+>>>> *obj);
+>>>>   int msm_gem_prime_vmap(struct drm_gem_object *obj, struct 
+>>>> iosys_map *map);
+>>>>   void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct 
+>>>> iosys_map *map);
+>>>> diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c 
+>>>> b/drivers/gpu/drm/msm/msm_gem_prime.c
+>>>> index 2c846afe049e4..5f68e31a3e4e1 100644
+>>>> --- a/drivers/gpu/drm/msm/msm_gem_prime.c
+>>>> +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+>>>> @@ -11,11 +11,6 @@
+>>>>   #include "msm_drv.h"
+>>>>   #include "msm_gem.h"
+>>>>   -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct 
+>>>> vm_area_struct *vma)
+>>>> -{
+>>>> -    return drm_gem_prime_mmap(obj, vma);
+>>>> -}
+>>>> -
+>>>>   struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object 
+>>>> *obj)
+>>>>   {
+>>>>       struct msm_gem_object *msm_obj = to_msm_bo(obj);
+>>>> diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c 
+>>>> b/drivers/gpu/drm/nouveau/nouveau_drm.c
+>>>> index cc7c5b4a05fd8..4199b8294e6e8 100644
+>>>> --- a/drivers/gpu/drm/nouveau/nouveau_drm.c
+>>>> +++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+>>>> @@ -1237,7 +1237,6 @@ driver_stub = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = nouveau_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>         .dumb_create = nouveau_display_dumb_create,
+>>>>       .dumb_map_offset = drm_gem_ttm_dumb_map_offset,
+>>>> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c 
+>>>> b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>>>> index 19f8cff52e533..d2916bf435473 100644
+>>>> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
+>>>> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>>>> @@ -542,7 +542,6 @@ static const struct drm_driver 
+>>>> panfrost_drm_driver = {
+>>>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = panfrost_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>>>   };
+>>>>     static int panfrost_probe(struct platform_device *pdev)
+>>>> diff --git a/drivers/gpu/drm/pl111/pl111_drv.c 
+>>>> b/drivers/gpu/drm/pl111/pl111_drv.c
+>>>> index 43049c8028b21..c4b8357ea9996 100644
+>>>> --- a/drivers/gpu/drm/pl111/pl111_drv.c
+>>>> +++ b/drivers/gpu/drm/pl111/pl111_drv.c
+>>>> @@ -227,7 +227,6 @@ static const struct drm_driver pl111_drm_driver 
+>>>> = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = pl111_gem_import_sg_table,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>     #if defined(CONFIG_DEBUG_FS)
+>>>>       .debugfs_init = pl111_debugfs_init,
+>>>> diff --git a/drivers/gpu/drm/radeon/radeon_drv.c 
+>>>> b/drivers/gpu/drm/radeon/radeon_drv.c
+>>>> index e4374814f0ef6..cf1b960c4200c 100644
+>>>> --- a/drivers/gpu/drm/radeon/radeon_drv.c
+>>>> +++ b/drivers/gpu/drm/radeon/radeon_drv.c
+>>>> @@ -607,7 +607,6 @@ static const struct drm_driver kms_driver = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = radeon_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>         .name = DRIVER_NAME,
+>>>>       .desc = DRIVER_DESC,
+>>>> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c 
+>>>> b/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+>>>> index ed3ee3d15baec..4280ff5fa91f2 100644
+>>>> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+>>>> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+>>>> @@ -608,7 +608,6 @@ static const struct drm_driver rcar_du_driver = {
+>>>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = rcar_du_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>>>       .fops            = &rcar_du_fops,
+>>>>       .name            = "rcar-du",
+>>>>       .desc            = "Renesas R-Car Display Unit",
+>>>> diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c 
+>>>> b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+>>>> index c0ebfdf56a711..b8cf89f0cc566 100644
+>>>> --- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+>>>> +++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+>>>> @@ -227,7 +227,6 @@ static const struct drm_driver 
+>>>> rockchip_drm_driver = {
+>>>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table    = 
+>>>> rockchip_gem_prime_import_sg_table,
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>>>       .fops            = &rockchip_drm_driver_fops,
+>>>>       .name    = DRIVER_NAME,
+>>>>       .desc    = DRIVER_DESC,
+>>>> diff --git a/drivers/gpu/drm/v3d/v3d_drv.c 
+>>>> b/drivers/gpu/drm/v3d/v3d_drv.c
+>>>> index 71f9fdde24b41..845a36e36450d 100644
+>>>> --- a/drivers/gpu/drm/v3d/v3d_drv.c
+>>>> +++ b/drivers/gpu/drm/v3d/v3d_drv.c
+>>>> @@ -174,7 +174,6 @@ static const struct drm_driver v3d_drm_driver = {
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = v3d_prime_import_sg_table,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>         .ioctls = v3d_drm_ioctls,
+>>>>       .num_ioctls = ARRAY_SIZE(v3d_drm_ioctls),
+>>>> diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c 
+>>>> b/drivers/gpu/drm/virtio/virtgpu_drv.c
+>>>> index add075681e18f..91ace7a44f2a6 100644
+>>>> --- a/drivers/gpu/drm/virtio/virtgpu_drv.c
+>>>> +++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+>>>> @@ -188,7 +188,6 @@ static const struct drm_driver driver = {
+>>>>   #endif
+>>>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>>>       .gem_prime_import = virtgpu_gem_prime_import,
+>>>>       .gem_prime_import_sg_table = virtgpu_gem_prime_import_sg_table,
+>>>>   diff --git a/drivers/gpu/drm/xen/xen_drm_front.c 
+>>>> b/drivers/gpu/drm/xen/xen_drm_front.c
+>>>> index 90996c108146d..62c3c13b3a175 100644
+>>>> --- a/drivers/gpu/drm/xen/xen_drm_front.c
+>>>> +++ b/drivers/gpu/drm/xen/xen_drm_front.c
+>>>> @@ -477,7 +477,6 @@ static const struct drm_driver xen_drm_driver = {
+>>>>       .prime_handle_to_fd        = drm_gem_prime_handle_to_fd,
+>>>>       .prime_fd_to_handle        = drm_gem_prime_fd_to_handle,
+>>>>       .gem_prime_import_sg_table = xen_drm_front_gem_import_sg_table,
+>>>> -    .gem_prime_mmap            = drm_gem_prime_mmap,
+>>>>       .dumb_create               = xen_drm_drv_dumb_create,
+>>>>       .fops                      = &xen_drm_dev_fops,
+>>>>       .name                      = "xendrm-du",
+>>>> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
+>>>> index 89e2706cac561..870278ecd8ba9 100644
+>>>> --- a/include/drm/drm_drv.h
+>>>> +++ b/include/drm/drm_drv.h
+>>>> @@ -343,20 +343,6 @@ struct drm_driver {
+>>>>                   struct drm_device *dev,
+>>>>                   struct dma_buf_attachment *attach,
+>>>>                   struct sg_table *sgt);
+>>>> -    /**
+>>>> -     * @gem_prime_mmap:
+>>>> -     *
+>>>> -     * mmap hook for GEM drivers, used to implement dma-buf mmap 
+>>>> in the
+>>>> -     * PRIME helpers.
+>>>> -     *
+>>>> -     * This hook only exists for historical reasons. Drivers must use
+>>>> -     * drm_gem_prime_mmap() to implement it.
+>>>> -     *
+>>>> -     * FIXME: Convert all drivers to implement mmap in struct
+>>>> -     * &drm_gem_object_funcs and inline drm_gem_prime_mmap() into
+>>>> -     * its callers. This hook should be removed afterwards.
+>>>> -     */
+>>>> -    int (*gem_prime_mmap)(struct drm_gem_object *obj, struct 
+>>>> vm_area_struct *vma);
+>>>>         /**
+>>>>        * @dumb_create:
+>>>> diff --git a/include/drm/drm_gem_dma_helper.h 
+>>>> b/include/drm/drm_gem_dma_helper.h
+>>>> index 8a043235dad81..61da596780b64 100644
+>>>> --- a/include/drm/drm_gem_dma_helper.h
+>>>> +++ b/include/drm/drm_gem_dma_helper.h
+>>>> @@ -169,8 +169,7 @@ drm_gem_dma_prime_import_sg_table(struct 
+>>>> drm_device *dev,
+>>>>       .dumb_create        = (dumb_create_func), \
+>>>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd, \
+>>>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle, \
+>>>> -    .gem_prime_import_sg_table = drm_gem_dma_prime_import_sg_table, \
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap
+>>>> +    .gem_prime_import_sg_table = drm_gem_dma_prime_import_sg_table
+>>>>     /**
+>>>>    * DRM_GEM_DMA_DRIVER_OPS - DMA GEM driver operations
+>>>> @@ -207,8 +206,7 @@ drm_gem_dma_prime_import_sg_table(struct 
+>>>> drm_device *dev,
+>>>>       .dumb_create        = dumb_create_func, \
+>>>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd, \
+>>>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle, \
+>>>> -    .gem_prime_import_sg_table = 
+>>>> drm_gem_dma_prime_import_sg_table_vmap, \
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap
+>>>> +    .gem_prime_import_sg_table = 
+>>>> drm_gem_dma_prime_import_sg_table_vmap
+>>>>     /**
+>>>>    * DRM_GEM_DMA_DRIVER_OPS_VMAP - DMA GEM driver operations 
+>>>> ensuring a virtual
+>>>> diff --git a/include/drm/drm_gem_shmem_helper.h 
+>>>> b/include/drm/drm_gem_shmem_helper.h
+>>>> index 5994fed5e3278..46eb46e690630 100644
+>>>> --- a/include/drm/drm_gem_shmem_helper.h
+>>>> +++ b/include/drm/drm_gem_shmem_helper.h
+>>>> @@ -293,7 +293,6 @@ int drm_gem_shmem_dumb_create(struct drm_file 
+>>>> *file, struct drm_device *dev,
+>>>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd, \
+>>>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle, \
+>>>>       .gem_prime_import_sg_table = 
+>>>> drm_gem_shmem_prime_import_sg_table, \
+>>>> -    .gem_prime_mmap        = drm_gem_prime_mmap, \
+>>>>       .dumb_create        = drm_gem_shmem_dumb_create
+>>>>     #endif /* __DRM_GEM_SHMEM_HELPER_H__ */
+>>>> diff --git a/include/drm/drm_gem_vram_helper.h 
+>>>> b/include/drm/drm_gem_vram_helper.h
+>>>> index f4aab64411d82..6b265cb9f45a4 100644
+>>>> --- a/include/drm/drm_gem_vram_helper.h
+>>>> +++ b/include/drm/drm_gem_vram_helper.h
+>>>> @@ -160,7 +160,6 @@ void drm_gem_vram_simple_display_pipe_cleanup_fb(
+>>>>       .debugfs_init             = drm_vram_mm_debugfs_init, \
+>>>>       .dumb_create          = drm_gem_vram_driver_dumb_create, \
+>>>>       .dumb_map_offset      = drm_gem_ttm_dumb_map_offset, \
+>>>> -    .gem_prime_mmap          = drm_gem_prime_mmap, \
+>>>>       .prime_handle_to_fd      = drm_gem_prime_handle_to_fd, \
+>>>>       .prime_fd_to_handle      = drm_gem_prime_fd_to_handle
+>>>
+>
 -- 
-With best wishes
-Dmitry
+Jingfeng
 
