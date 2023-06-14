@@ -2,58 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5788C72F0A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 01:49:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2132272F245
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 03:57:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240997AbjFMXr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 19:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38570 "EHLO
+        id S241500AbjFNB5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 21:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239762AbjFMXrZ (ORCPT
+        with ESMTP id S239404AbjFNB5k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 19:47:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB39A1FCA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 16:46:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 933FA63C8D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 23:45:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B890C433CB;
-        Tue, 13 Jun 2023 23:45:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686699958;
-        bh=3gt4IXmigNvmNSWr6odmSbZUTjK0GB6h2JT4R4LoepE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Cv+SUwDFTKOUhN/aOMp2pKmjEBRTRDzn4iwPFMT8/gzh11ovyrmPomx8XSmFos7qP
-         s/ZiDMVoLgKkPDaSKQN3T1UliwGjt9H7dNL9umizMC/PTB7AHp10eW+mRv77toWbym
-         3Prj80Y6Fniln9WIZCWHIg9yiAT36NFPqQzDHXQOeadnI5gVyzGQFFk50s3ZPJk4o/
-         KkkQQkB66bqR9pVo4dh5xzzwm0bHBpe0jhe+VgS89mOnVzPEirzgXTNJ9x0PFU/T5A
-         vDcySnQagLGOtGkttIGGyhA4RYhw0aZxXil7XB5rfgiuMBmHv+YlMa2QrCL6pGQqMY
-         w0aINJpZ4angw==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Will Deacon <will@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v2 0/5] arm64: defconfig: build some essential Qualcomm platform drivers
-Date:   Tue, 13 Jun 2023 16:49:00 -0700
-Message-Id: <168670013502.1400697.2349736200474810083.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230601075650.1437184-1-vladimir.zapolskiy@linaro.org>
-References: <20230601075650.1437184-1-vladimir.zapolskiy@linaro.org>
+        Tue, 13 Jun 2023 21:57:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33EB9E79;
+        Tue, 13 Jun 2023 18:57:39 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35E1tvfC017191;
+        Wed, 14 Jun 2023 01:57:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=aB6qq9NAlAoe3i7ogsj2FwxbUnF/Z84IWK9KM6MeDQc=;
+ b=RvRb1IlEjePtIbOz7LESDmdNs3le9ZIX0t9+xKfR/2eAHnHDMtzBoRYaACSgK4pxmyDj
+ VcOlUWJBw7xinomf7zDP5RhalusNngUZLRXrkURq0KfSrUzMmv4l6JP5NaIyu+FUmVWQ
+ kohFNasZ2smj8iQ96R/U0B6pFv4xZC7mg7r2GX+ZTD0rrvZyg4kgfZPUYP/tjFJ6BvqN
+ 4HH7yt/mBYqKXibifBiLtVF9jw1m/yUx3coaUPvT+AqJZCcfGDuTlA2+H/3C7adQJ1hI
+ mtRf0H7IVab6qHXAHsD5GNVREAgjio4mi4hbMty7mGpxKb2daOj0pAZcc5wsMkeIv0G1 Uw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r71tvr707-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 01:57:31 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35E1vUlj030068
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 01:57:30 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 13 Jun 2023 18:57:30 -0700
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH 0/3] Add support for databus widen mode
+Date:   Tue, 13 Jun 2023 18:57:10 -0700
+Message-ID: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
+X-Mailer: b4 0.13-dev-c6835
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686707625; l=1659; i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id; bh=Yse1fODJx1zUr/BvNeAxSEDHdQVKnBYqwbDO7X9/hOE=; b=eEaCNrWNisgPCcT+qTo9wYkKBL1lj4GQFzahBU0SSUxvGv2XO/8U/4JuP9IFWftbenBm2dzTk ZC2yrySLhV+BzMwZL1rG+dgEll7pyrifyFbMzWWnYCGZDV7bOXY9dAM
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519; pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1Rozn0QoesLu5m3RuSCKXusycWHEtQc7
+X-Proofpoint-ORIG-GUID: 1Rozn0QoesLu5m3RuSCKXusycWHEtQc7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-13_24,2023-06-12_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 mlxlogscore=811 bulkscore=0 lowpriorityscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 adultscore=0 suspectscore=0 clxscore=1015
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306140012
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,31 +84,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 1 Jun 2023 10:56:45 +0300, Vladimir Zapolskiy wrote:
-> It's discovered that a kernel image for Qualcomm QCM2290/SM6115 built
-> from a defconfig misses a few important platform device drivers, the
-> changeset enables them.
-> 
-> Changes from v1 to v2:
-> - due to review comments changed building QCM2290 interconnect driver to
->   a kernel module and provided a better description in the commit message,
-> - added tags given by Konrad.
-> 
-> [...]
+DPU 5.x+ and DSI 6G 2.5.x+ support a databus-widen mode that allows for
+more compressed data to be transferred per pclk.
 
-Applied, thanks!
+This series adds support for enabling this feature for both DPU and DSI
+by doing the following:
 
-[1/5] arm64: defconfig: Build MSM power manager driver
-      commit: eac3e74cba6d5a7e1060ffb730c1071a0b4db7fa
-[2/5] arm64: defconfig: Build Global Clock Controller driver for QCM2290
-      commit: b128ec5d5df44a6d204f959d0325635bb0d995d0
-[3/5] arm64: defconfig: Build interconnect driver for QCM2290
-      commit: 39433f576758d955c7e4ff58e945540b1cddba98
-[4/5] arm64: defconfig: Build display clock controller driver for QCM2290
-      commit: f20575d6963da3ccc21a9cf54b04b869e88a8e18
-[5/5] arm64: defconfig: Build SM6115 display and GPU clock controller drivers
-      commit: a19a3dcb0d190254ded4ac1cabb0f402e4b7c8c4
+1. Add a DPU_INTF_DATABUS_WIDEN feature flag
+2. Add a DPU INTF op to set the DATABUS_WIDEN register
+3. Set the DATABUS_WIDEN register and do the proper hdisplay
+   calculations in DSI when applicable
+
+Note: This series will only enable the databus-widen mode for command
+mode as we are currently unable to validate it on video mode.
+
+Depends on: "Add DSC v1.2 Support for DSI" [1]
+
+[1] https://patchwork.freedesktop.org/series/117219/
+
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+---
+Jessica Zhang (3):
+      drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN feature flag for DPU >= 5.0
+      drm/msm/dpu: Set DATABUS_WIDEN on command mode encoders
+      drm/msm/dsi: Enable DATABUS_WIDEN for DSI command mode
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c       |  3 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h       |  2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 12 ++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  3 +++
+ drivers/gpu/drm/msm/dsi/dsi.xml.h                    |  1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                   | 19 ++++++++++++++++++-
+ 7 files changed, 41 insertions(+), 2 deletions(-)
+---
+base-commit: 1981c2c0c05f5d7fe4d4552d4f352cb46840e51e
+change-id: 20230525-add-widebus-support-f785546ee751
 
 Best regards,
 -- 
-Bjorn Andersson <andersson@kernel.org>
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
