@@ -2,78 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA13B72FB60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 12:41:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C80FD72FB65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 12:42:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233227AbjFNKli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 06:41:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50318 "EHLO
+        id S236048AbjFNKm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 06:42:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243375AbjFNKlU (ORCPT
+        with ESMTP id S241042AbjFNKmV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 06:41:20 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E14662103
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 03:41:15 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id F35693F5AD;
-        Wed, 14 Jun 2023 12:41:13 +0200 (CEST)
-Date:   Wed, 14 Jun 2023 12:41:12 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 1/2] drm/msm/dpu: drop SSPP register dumpers
-Message-ID: <lggetg6sqj5imqcntisfor3tsa32iaaiz7q5imocjbxgcmttt7@j2bzshxrzls2>
-References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
- <fihs3di7da5rnvx63n4ums65rer62nps2ber77rojrtwacrgih@3r3aeedfvdr2>
- <kb25ll3emyh6jymyewzpqjtzuw4jekfysruar5pvgxbp37glf2@wf2pqlnhh64m>
- <lsfofftdomumlm4w7nilkez26weckb3wd2rndrpqikwkxtfar4@ryjvbumfetlu>
+        Wed, 14 Jun 2023 06:42:21 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979B619BC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 03:42:18 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f762b3227dso1149772e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 03:42:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686739337; x=1689331337;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8BdObspS5BxkxC/OI6lX9UiNPUzQKnEU5QQRROfFatk=;
+        b=mrxLjq0NEPf/iAA9wsvTF32mf0Tmcym8O/wlI9GtFplFmwrA1XLaX2ltaF8gRtH7mX
+         Bx4Vd4UVWuZvlqZNDM+y0+8ehUisPxNgl77pE4h3nUUDwT3Jqi1GVimqddJ+4jbnj67B
+         BMKs28xfcepn+t4tiD0WsyoyEDLQIZKxeDSVvrBMfJhjzwg+bONbYJh9SVH1YwThMjO9
+         hJxnifBApj+bmQTo0Dnc/pOEvIUJiB+1KXlKRGjs03huSRNHVkU2mEZy0SvYjvHMrOXS
+         e21+QpT6u8xwAlyjIAUb87sD7Ei+td1dnwNjwXumdaj4Op+cdHYA3WNy+TXYIr7lcVzO
+         ma+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686739337; x=1689331337;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8BdObspS5BxkxC/OI6lX9UiNPUzQKnEU5QQRROfFatk=;
+        b=JrnO59gYC9HtYYRQUeVy5ATLr7vEZl74sYCTEKZNwxrBqiAPk9kvNDbPZuKWpWSeY/
+         e1Alubu3z0sjLq6Py9i7aXaneXKJnC5ACHCo3Wv/4DWsiqDOVlkvjfxzS0EzTACeG7Gh
+         UKCuLAuH+Fv2IYUGQOssPiNOAP+qAjk/rg7AV9Do0cFjx+w+y1K38Ph9/u+yTekpUjmx
+         rPC3yHqX/nhrnjC+Idq2qFMYLS8XAGXw73jL3Qd06DQ8VSrcdbXUE3VWTIM82ZrNZqP9
+         yzO4cu8exXbz6wZ5PqMNX1Xti4Hpob544TjZtTLWF21Zb0e1M6R7DmwuVLujFxXK5VO3
+         kWIA==
+X-Gm-Message-State: AC+VfDzzsrgchckrXguXiaYh/8A23iRgx4imusoXUGgc3pbuxUUgNnc4
+        mFgVHMRgb7wNx26vqZUsMRIw4w==
+X-Google-Smtp-Source: ACHHUZ7JPqaMDRJGSQGuc9HmVqm0CEsgMoUjGzFM21devLvWuyGM5l3Qy2RMfxGtr7CDrw83CzVvlQ==
+X-Received: by 2002:a05:6512:39d1:b0:4f3:7889:7603 with SMTP id k17-20020a05651239d100b004f378897603mr422659lfu.24.1686739336794;
+        Wed, 14 Jun 2023 03:42:16 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id v27-20020ac2561b000000b004f2391fe9a6sm36702lfd.266.2023.06.14.03.42.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 03:42:16 -0700 (PDT)
+Message-ID: <4dede8d5-e665-1cf4-ea27-b2ba99f820e2@linaro.org>
+Date:   Wed, 14 Jun 2023 12:42:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <lsfofftdomumlm4w7nilkez26weckb3wd2rndrpqikwkxtfar4@ryjvbumfetlu>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq9574: Enable WPS buttons
+Content-Language: en-US
+To:     Anusha Rao <quic_anusha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_poovendh@quicinc.com
+References: <20230614085040.22071-1-quic_anusha@quicinc.com>
+ <20230614085040.22071-3-quic_anusha@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230614085040.22071-3-quic_anusha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-14 12:39:13, Marijn Suijten wrote:
-<snip>
-> > > > -	/* add register dump support */
-> > > > -	dpu_debugfs_create_regset32("src_blk", 0400,
-> > > > -			debugfs_root,
-> > > > -			sblk->src_blk.base + cfg->base,
-> > > > -			sblk->src_blk.len,
-> > 
-> > Note that this fails to apply on top of
-> > https://lore.kernel.org/linux-arm-msm/20230429012353.2569481-2-dmitry.baryshkov@linaro.org/
+
+
+On 14.06.2023 10:50, Anusha Rao wrote:
+> Add support for wps buttons on GPIO 37.
 > 
-> Also noticing just now that this whole patch makes sblk unused:
-
-... thanks to rebasing on top of [1], which is now applied.
-
-[1]: https://lore.kernel.org/all/20230518222238.3815293-6-dmitry.baryshkov@linaro.org/
-
-- Marijn
-
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> ---
+>  .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 23 +++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 > 
-> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c: In function '_dpu_hw_sspp_init_debugfs':
-> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c:620:41: warning: unused variable 'sblk' [-Wunused-variable]
->   620 |         const struct dpu_sspp_sub_blks *sblk = cfg->sblk;
->       |                                         ^~~~
-> 
-> - Marijn
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> index 999902bc70bd..fd5326dc1773 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> @@ -8,6 +8,8 @@
+>  
+>  /dts-v1/;
+>  
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/input.h>
+>  #include "ipq9574.dtsi"
+>  
+>  / {
+> @@ -18,6 +20,20 @@
+>  	chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +		pinctrl-0 = <&gpio_keys_default>;
+> +		pinctrl-names = "default";
+> +
+> +		button-wps {
+> +			label = "wps";
+> +			linux,code = <KEY_WPS_BUTTON>;
+> +			gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+This line is unnecessary, it's set to 'key' by default. With that:
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> +			debounce-interval = <60>;
+> +		};
+> +	};
+>  };
+>  
+>  &blsp1_spi0 {
+> @@ -114,6 +130,13 @@
+>  		drive-strength = <8>;
+>  		bias-disable;
+>  	};
+> +
+> +	gpio_keys_default: gpio-keys-default-state {
+> +		pins = "gpio37";
+> +		function = "gpio";
+> +		drive-strength = <8>;
+> +		bias-pull-up;
+> +	};
+>  };
+>  
+>  &xo_board_clk {
