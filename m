@@ -2,51 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3B1C7309EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 23:41:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA2D5730A6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 00:10:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231852AbjFNVlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 17:41:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47640 "EHLO
+        id S233762AbjFNWKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 18:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234359AbjFNVls (ORCPT
+        with ESMTP id S229567AbjFNWKR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 17:41:48 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4954A2126
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 14:41:44 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D3EAF3F841;
-        Wed, 14 Jun 2023 23:41:42 +0200 (CEST)
-Date:   Wed, 14 Jun 2023 23:41:41 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [Freedreno] [PATCH 1/3] drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN
- feature flag for DPU >= 5.0
-Message-ID: <udz5ij7g74zgnnwqw2q65idzzmiszhnvfieerw7izikgvotnkp@5tboohkd4t6t>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-1-c7069f2efca1@quicinc.com>
- <wpjxrnhbcanbc5iatxnff25yrrdfrtmgb24sgwyo457dz2oyjz@e2docpcb6337>
- <f4fb042c-1458-6077-3c49-8cc02638b27c@linaro.org>
- <ycgei43x4kfmjk7g7gbeglehtiiinfbqmrjbdzcy56frxbtd2z@yk2f5kgrkbrt>
- <e23de804-060d-3278-5045-1ed03f0de80d@quicinc.com>
- <c5cfc132-effb-8269-ac5d-ed8c988d1a16@quicinc.com>
- <08b6aaf4-6edd-4f41-5d98-11ffc27e766e@quicinc.com>
+        Wed, 14 Jun 2023 18:10:17 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3058C1A1;
+        Wed, 14 Jun 2023 15:10:16 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35ELoFid020851;
+        Wed, 14 Jun 2023 22:10:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=nnWLQwiZkQ8s5CJTvwAtHE6CaPCsbe4R6Q/zstn1Luc=;
+ b=DZz5I+9VuXJWd7k/TkEHCTpNnPL4Wypx4h/Xq2vqIBngIrpz4gY96hFKFupz7Va4krlg
+ 2QPJBHhJnQXtDwUK7ZDZ1wtzq9D8Ry+R0llYF+0uSsPLNdoN99qwfBMv5p8CYjLj/3p9
+ /V+dtoWoIJ36492O9Rf8uM/QSKEwezvHFcbdoyYq/R35nO1dOUpYeoFpDPbIlUCuMIm4
+ 8Z/bKKADuD0f5SuVGc569xMX9mljdVu+QyxWpS8Cs/NdJUPQky0N6sACjddRnmehTOOO
+ YQfmXlSQbGXJp1ga/DjvuNYChq48aBZgYwfRFUPwYsnx1ppoaPveg0RwnMZuNDr10IGB TA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7auy1p69-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 22:10:09 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EM9iW3028192
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 22:09:45 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 14 Jun 2023 15:09:44 -0700
+Date:   Wed, 14 Jun 2023 15:09:43 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        <johan@kernel.org>, Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        <devicetree@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-kernel@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <mani@kernel.org>, Sean Paul <sean@poorly.run>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 0/3] drm/msm/adreno: GPU support on SC8280XP
+Message-ID: <20230614220943.GA2941091@hu-bjorande-lv.qualcomm.com>
+References: <20230523011522.65351-1-quic_bjorande@quicinc.com>
+ <168675861182.1453524.13825528487008901071.b4-ty@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <08b6aaf4-6edd-4f41-5d98-11ffc27e766e@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <168675861182.1453524.13825528487008901071.b4-ty@kernel.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: H2uwT20jcJRpnISyN6zyDC_T5LdqIC3a
+X-Proofpoint-GUID: H2uwT20jcJRpnISyN6zyDC_T5LdqIC3a
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-14_14,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 spamscore=0 impostorscore=0 mlxlogscore=999
+ adultscore=0 phishscore=0 suspectscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306140194
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -54,125 +82,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-14 13:39:57, Abhinav Kumar wrote:
-> On 6/14/2023 12:54 PM, Abhinav Kumar wrote:
-> > On 6/14/2023 12:35 PM, Abhinav Kumar wrote:
-> >> On 6/14/2023 5:23 AM, Marijn Suijten wrote:
-> >>> On 2023-06-14 15:01:59, Dmitry Baryshkov wrote:
-> >>>> On 14/06/2023 14:42, Marijn Suijten wrote:
-> >>>>> On 2023-06-13 18:57:11, Jessica Zhang wrote:
-> >>>>>> DPU 5.x+ supports a databus widen mode that allows more data to be 
-> >>>>>> sent
-> >>>>>> per pclk. Enable this feature flag on all relevant chipsets.
-> >>>>>>
-> >>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >>>>>> ---
-> >>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 ++-
-> >>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
-> >>>>>>    2 files changed, 4 insertions(+), 1 deletion(-)
-> >>>>>>
-> >>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
-> >>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>>>>> index 36ba3f58dcdf..0be7bf0bfc41 100644
-> >>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>>>>> @@ -103,7 +103,8 @@
-> >>>>>>        (BIT(DPU_INTF_INPUT_CTRL) | \
-> >>>>>>         BIT(DPU_INTF_TE) | \
-> >>>>>>         BIT(DPU_INTF_STATUS_SUPPORTED) | \
-> >>>>>> -     BIT(DPU_DATA_HCTL_EN))
-> >>>>>> +     BIT(DPU_DATA_HCTL_EN) | \
-> >>>>>> +     BIT(DPU_INTF_DATABUS_WIDEN))
-> >>>>>
-> >>>>> This doesn't work.  DPU 5.0.0 is SM8150, which has DSI 6G 2.3.  In the
-> >>>>> last patch for DSI you state and enable widebus for DSI 6G 2.5+ only,
-> >>>>> meaning DPU and DSI are now desynced, and the output is completely
-> >>>>> corrupted.
-> >>>
-> 
-> I looked at the internal docs and also this change. This change is 
-> incorrect because this will try to enable widebus for DPU >= 5.0 and DSI 
->  >= 2.5
-> 
-> That was not the intended right condition as thats not what the docs say.
-> 
-> We should enable for DPU >= 7.0 and DSI >= 2.5
-
-That makes more sense, DSI 2.5 is SM8350 which has DPU 7.0.
-
-> Is there any combination where this compatibility is broken? That would 
-> be the strange thing for me ( not DPU 5.0 and DSI 2.5 as that was incorrect)
-
-No clue if there are any interim SoCs...
-
-> Part of this confusion is because of catalog macro re-use again.
-
-Somewhat agreed.  SC7180 is a DPU 6.2 SoC, and for this mask to be used
-across DPU 5.x and above it should have been renamed to SM8150 and as
-suggested by Dmitry, have DPU_5_x_` as suffix.
-
-As I've asked many times before, we should inline these masks (not just
-the macros) (disclaimer: haven't reviewed if Dmitry's series actually
-does so!).
-
-> This series is a good candidate and infact I think we should only do 
-> core_revision based check on DPU and DSI to avoid bringing the catalog 
-> mess into this.
-> 
-> >>> Tested this on SM8350 which actually has DSI 2.5, and it is also
-> >>> corrupted with this series so something else on this series might be
-> >>> broken.
-> >>>
+On Wed, Jun 14, 2023 at 09:03:34AM -0700, Bjorn Andersson wrote:
+> On Mon, 22 May 2023 18:15:19 -0700, Bjorn Andersson wrote:
+> > This series introduces support for A690 in the DRM/MSM driver and
+> > enables it for the two SC8280XP laptops.
 > > 
-> > Missed this response. That seems strange.
-
-No worries.  But don't forget to look at the comments on patch 2/3
-either.  Some of it is a continuation of pclk scaling factor for DSC
-which discussion seems to have ceased on.
-
-> > This series was tested on SM8350 HDK with a command mode panel.
+> > Bjorn Andersson (3):
+> >   drm/msm/adreno: Add Adreno A690 support
+> >   arm64: dts: qcom: sc8280xp: Add GPU related nodes
+> >   arm64: dts: qcom: sc8280xp: Enable GPU related nodes
 > > 
-> > We will fix the DPU-DSI handshake and post a v2 but your issue needs 
-> > investigation in parallel.
-> > 
-> > So another bug to track that would be great.
-
-Will see if I can set that up for you!
-
-> >>>>> Is the bound in dsi_host wrong, or do DPU and DSI need to communicate
-> >>>>> when widebus will be enabled, based on DPU && DSI supporting it?
-> >>>>
-> >>>> I'd prefer to follow the second approach, as we did for DP. DPU asks 
-> >>>> the
-> >>>> actual video output driver if widebus is to be enabled.
-> >>>
-> >>
-> >> I was afraid of this. This series was made on an assumption that the 
-> >> DPU version of widebus and DSI version of widebus would be compatible 
-> >> but looks like already SM8150 is an outlier.
-
-Fwiw SM8250 would have been an outlier as well :)
-
-> >> Yes, I think we have to go with second approach.
-> >>
-> >> DPU queries DSI if it supports widebus and enables it.
-> >>
-> >> Thanks for your responses. We will post a v2.
-
-No hurry, btw.  As alluded to above, let's also look at the comments on
-patch 2/3 and discuss how this affects pclk.
-
-> >>> Doesn't it seem very strange that DPU 5.x+ comes with a widebus feature,
-> >>> but the DSI does not until two revisions later?  Or is this available on
-> >>> every interface, but only for a different (probably DP) encoder block?
-> >>>
-> >>
-> >> Yes its strange.
-> >>
+> > [...]
 > 
-> I have clarified this above. Its not strange but appeared strange 
-> because we were checking wrong conditions.
+> Applied, thanks!
+> 
+> [1/3] drm/msm/adreno: Add Adreno A690 support
+>       (no commit info)
+> [2/3] arm64: dts: qcom: sc8280xp: Add GPU related nodes
+>       commit: eec51ab2fd6f447a993c502364704d0cb5bc8cae
+> [3/3] arm64: dts: qcom: sc8280xp: Enable GPU related nodes
+>       commit: 598a06afca5a2ab4850ce9ff8146ec728cca570c
+> 
 
-Hehe :)
+Seems like I managed to confuse b4, only v4 of the DTS patches were
+merged, while Rob merged the driver change.
 
-- Marijn
+Regards,
+Bjorn
