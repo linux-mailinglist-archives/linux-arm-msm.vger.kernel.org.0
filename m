@@ -2,196 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3B1C730201
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 16:31:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B4FD730235
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 16:47:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244737AbjFNObb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 10:31:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54580 "EHLO
+        id S244713AbjFNOrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 10:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245618AbjFNOb3 (ORCPT
+        with ESMTP id S236347AbjFNOrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 10:31:29 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F99E2702;
-        Wed, 14 Jun 2023 07:30:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F407963DC9;
-        Wed, 14 Jun 2023 14:30:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA72C433C0;
-        Wed, 14 Jun 2023 14:30:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686753048;
-        bh=VtJq4UGcfl5mcVRLdauP9VIH6vKJDyyGyjdEx2UHTQw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XRvFwTX7GQ8NsNbAkO7iS4yREoL7M1X0b/YYiTIuRofnkm4q2Zu01DX5F7PPHqcB8
-         h9R+T1beRarpJUe51ikfbnvqEoRNR+7vlopp3gXfQ1TkFc1cSlktYpTufNwJanFwkI
-         bavI7yD2RfsLWyn35wucqnnlIzbhIyhz4V2tuifcGo1blh3/Nu9MVJHUq/ly0U/mGI
-         mahpvggisUWHDkL7eaTnAr8GfeTGoSAYZKlgrIzYVSVa7/fIGIZ7fkhyYozHwb7tSg
-         AjMrB2+3dgPhB5unmT8vbyXSR9VtHT3QubYHXrsxTRr/lLIDQ/qx+WTLoLxALBlj3w
-         83PQfxT/9NaOw==
-Date:   Wed, 14 Jun 2023 07:34:10 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
+        Wed, 14 Jun 2023 10:47:22 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35641FC4;
+        Wed, 14 Jun 2023 07:47:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686754037; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=PN5G6p9nT1I5K3QU/LnVRpP0YqTm2P7kBudunV8RoCPD553UiQ0PQZLXoCxzwYKDUp
+    R14+IYNnzQhZci3r3bJ/vfULD+b2V7YATO1v8eUz70hly5DJH3Oxs2oACAfdnDDmLIgh
+    vpwT9msnfRIg/xFyvfZ1LJMKeeXcDSGYVFerdQe5BzotyMjcD2Og3Fuj+nGBPxT0Pt3K
+    zs/jmRB5bo9s6HSwLWKsdbvABZbF7hCLKNdi+AIWBfzV//2lTngQE1JclQvVQb5RRWlX
+    K7BtXmk5FnCxEJOdpJcpV+GycSq/LOJMeaF1dIksWRA71lRTeOdZsaR5Sd9+ANJ55z6K
+    gNOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686754037;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=tvjm14jd1ncXpS8wy9Ap/UHaf91N1jU9h4aEC4kP+J4=;
+    b=Vj7Oh7Mi6yLaatmQWo67Urp/sQ8jWXKpB1ZJCQKBcXvE5ZDtsAGQEJeUIb1ka4vTHi
+    pwYYEVjtun/+QcGCdQ9yGBSfBZHtT+I/0WGO/H3xAGFTAEOzTI0CbVBszjFeY/d9TdXe
+    /XvQOrAEiXYdTOfSV3NJpDIOukArIHXcU8Rf7OGrKyN1YVrbOb2KysBQzT11Yz+BdYBn
+    hiMbe+Bi4LpJvw7Xmk893M9JMJuRQZb07TzT/a2rk2a+WOgXj4GptDNr9s1pUeN5P5LV
+    dn3ft1GNBS9LtKXKwMYXssBzYV+HSt18uoR3FXLH0G71xuvG4BgsMV7ZK9XIJ93WlE/u
+    BA5A==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686754037;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=tvjm14jd1ncXpS8wy9Ap/UHaf91N1jU9h4aEC4kP+J4=;
+    b=TgZMMO6H5aBIKTvEJM153rnqiIL8f16ImDmI0vyDlwynTHFovpmQx9Yv1pq9mM0Vnx
+    bVfQyIwic6FTXChJHj07Y4aY6FADHRHR7bez0ojx2uGgqNKM4UG3popUqZYguwMlfyrx
+    Plkp12fhZartMu2v6O2PNkI8a6I6tF1Z+Ilpl1JasnwhH0kdWrGulIp9hy2S797iMRtV
+    vuxUos4TbPdwBTLM+WYVHGrBg39WubKrPariwwneJriO3vhySgrpCrzXI+xlWRgVOuWn
+    fa3mg17eYijKqt7W+V6mtpLsXFamk5SwmTkBMovsUc4sQoTDri9FZx5eHsUMna22ls3J
+    RDig==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686754037;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=tvjm14jd1ncXpS8wy9Ap/UHaf91N1jU9h4aEC4kP+J4=;
+    b=VOuS6XTktD89w6yqG9lJcjgsHlYNQbOVuZ/2iy3LhayOz7yMO0nEL11HyiArIaawGH
+    hMXYT9I7UZXZ/2TVEyBw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA95nh"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
+    with ESMTPSA id D0d0a8z5EElG0FX
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 14 Jun 2023 16:47:16 +0200 (CEST)
+Date:   Wed, 14 Jun 2023 16:47:09 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v2] soc: qcom: icc-bwmon: Set default thresholds
- dynamically
-Message-ID: <20230614143410.fogdqnpygu7ng5jc@ripper>
-References: <20230610-topic-bwmon_opp-v2-1-0d25c1ce7dca@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 08/22] interconnect: qcom: smd-rpm: Add rpmcc handling
+ skeleton code
+Message-ID: <ZInS7WZ_-02iZiKp@gerhold.net>
+References: <20230526-topic-smd_icc-v5-0-eeaa09d0082e@linaro.org>
+ <20230526-topic-smd_icc-v5-8-eeaa09d0082e@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230610-topic-bwmon_opp-v2-1-0d25c1ce7dca@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230526-topic-smd_icc-v5-8-eeaa09d0082e@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 14, 2023 at 03:39:59PM +0200, Konrad Dybcio wrote:
-> Currently we use predefined initial threshold values. This works, but
-> does not really scale well with more and more SoCs gaining bwmon support,
-> as the necessary kickoff values may differ between platforms due to memory
-> type and/or controller setup.
-> All of the data we need for that is already provided in the device tree,
-> anyway.
+On Wed, Jun 14, 2023 at 12:22:19PM +0200, Konrad Dybcio wrote:
+> Introduce qcom_icc_rpm_set_bus_rate() in preparation for handling RPM
+> clock resources within the interconnect framework. This lets us greatly
+> simplify all of the code handling, as setting the rate comes down to:
 > 
-> Change the thresholds to:
-> * low = 0 (as we've been doing up until now)
-> * med = high = BW_MIN
-> 
-> Throughput going below the med threshold nudges bwmon into signaling
-> that we should slow down (e.g. if we inherited too high bandwidth
-> from the bootloader).
-> 
-> Throughput going above the high threshold nudges bwmon into signaling
-> that we should speed up so as not to choke the bus traffic due to
-> insufficient transfer rates.
-> 
-> F_MIN is a perfect initial value for both of these cases - if we go
-> above it (and there's a 99.99% chance it'll happen at boot time), we
-> should definitely make the memory go faster, whereas if we go below it,
-> we should slow down, no matter what performance state we were at before
-> (it's only possible for them to be >= FMIN).
-> 
-> This only changes the values programmed at probe time, as high and med
-> thresholds are updated at interrupt, also based on the OPP table from DT.
+> u32 rate_khz = max(clk.sleep_rate, clk.active_rate, clk_a.active_rate)
+> write_to_rpm(clock.description, rate_khz);
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-
-Regards,
-Bjorn
-
 > ---
-> Changes in v2:
-> - Drop now-merged dependency
-> - Drop div4 for the med value
-> - Better explain the reasoning in the commit message
-> - Link to v1: https://lore.kernel.org/r/20230610-topic-bwmon_opp-v1-1-65125d7493fc@linaro.org
-> ---
->  drivers/soc/qcom/icc-bwmon.c | 28 +++++++---------------------
->  1 file changed, 7 insertions(+), 21 deletions(-)
+>  drivers/interconnect/qcom/icc-rpm.h | 15 +++++++++++++++
+>  drivers/interconnect/qcom/smd-rpm.c | 21 +++++++++++++++++++++
+>  2 files changed, 36 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-> index 40068a285913..8daf0eb03279 100644
-> --- a/drivers/soc/qcom/icc-bwmon.c
-> +++ b/drivers/soc/qcom/icc-bwmon.c
-> @@ -165,9 +165,6 @@ enum bwmon_fields {
->  struct icc_bwmon_data {
->  	unsigned int sample_ms;
->  	unsigned int count_unit_kb; /* kbytes */
-> -	unsigned int default_highbw_kbps;
-> -	unsigned int default_medbw_kbps;
-> -	unsigned int default_lowbw_kbps;
->  	u8 zone1_thres_count;
->  	u8 zone3_thres_count;
->  	unsigned int quirks;
-> @@ -564,20 +561,21 @@ static void bwmon_set_threshold(struct icc_bwmon *bwmon,
->  static void bwmon_start(struct icc_bwmon *bwmon)
->  {
->  	const struct icc_bwmon_data *data = bwmon->data;
-> +	u32 bw_low = 0;
->  	int window;
+> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+> index 9ec90e13bfbd..d857fb1efb75 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.h
+> +++ b/drivers/interconnect/qcom/icc-rpm.h
+> @@ -22,6 +22,18 @@ enum qcom_icc_type {
+>  	QCOM_ICC_QNOC,
+>  };
 >  
-> +	/* No need to check for errors, as this must have succeeded before. */
-> +	dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_low, 0);
+> +/**
+> + * struct rpm_clk_resource - RPM bus clock resource
+> + * @resource_type: RPM resource type of the clock resource
+> + * @clock_id: index of the clock resource of a specific resource type
+> + * @branch: whether the resource represents a branch clock
+> +*/
+> +struct rpm_clk_resource {
+> +	u32 resource_type;
+> +	u32 clock_id;
+> +	bool branch;
+> +};
 > +
->  	bwmon_clear_counters(bwmon, true);
+>  #define NUM_BUS_CLKS	2
 >  
->  	window = mult_frac(bwmon->data->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
->  	/* Maximum sampling window: 0xffffff for v4 and 0xfffff for v5 */
->  	regmap_field_write(bwmon->regs[F_SAMPLE_WINDOW], window);
+>  /**
+> @@ -47,6 +59,7 @@ struct qcom_icc_provider {
+>  	unsigned int qos_offset;
+>  	u64 bus_clk_rate[NUM_BUS_CLKS];
+>  	struct clk_bulk_data bus_clks[NUM_BUS_CLKS];
+> +	const struct rpm_clk_resource *bus_clk_desc;
+>  	struct clk_bulk_data *intf_clks;
+>  	bool keep_alive;
+>  	bool is_on;
+> @@ -104,6 +117,7 @@ struct qcom_icc_desc {
+>  	struct qcom_icc_node * const *nodes;
+>  	size_t num_nodes;
+>  	const char * const *bus_clocks;
+> +	const struct rpm_clk_resource *bus_clk_desc;
+>  	const char * const *intf_clocks;
+>  	size_t num_intf_clocks;
+>  	bool keep_alive;
+> @@ -125,5 +139,6 @@ int qnoc_remove(struct platform_device *pdev);
 >  
-> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH],
-> -			    data->default_highbw_kbps);
-> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED],
-> -			    data->default_medbw_kbps);
-> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW],
-> -			    data->default_lowbw_kbps);
-> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH], bw_low);
-> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED], bw_low);
-> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW], 0);
+>  bool qcom_icc_rpm_smd_available(void);
+>  int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val);
+> +int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, int rsc_type, u32 rate);
 >  
->  	regmap_field_write(bwmon->regs[F_THRESHOLD_COUNT_ZONE0],
->  			   BWMON_THRESHOLD_COUNT_ZONE0_DEFAULT);
-> @@ -807,9 +805,6 @@ static int bwmon_remove(struct platform_device *pdev)
->  static const struct icc_bwmon_data msm8998_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 1024,
-> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
-> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_HAS_GLOBAL_IRQ,
-> @@ -822,9 +817,6 @@ static const struct icc_bwmon_data msm8998_bwmon_data = {
->  static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 64,
-> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
-> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_HAS_GLOBAL_IRQ,
-> @@ -835,9 +827,6 @@ static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->  static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 1024,
-> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
-> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.regmap_fields = sdm845_llcc_bwmon_reg_fields,
-> @@ -847,9 +836,6 @@ static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->  static const struct icc_bwmon_data sc7280_llcc_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 64,
-> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
-> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_NEEDS_FORCE_CLEAR,
-> 
-> ---
-> base-commit: b16049b21162bb649cdd8519642a35972b7910fe
-> change-id: 20230610-topic-bwmon_opp-f995bbdd18bd
-> 
-> Best regards,
-> -- 
-> Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
+>  #endif
+> diff --git a/drivers/interconnect/qcom/smd-rpm.c b/drivers/interconnect/qcom/smd-rpm.c
+> index b0183262ba66..b06374340eeb 100644
+> --- a/drivers/interconnect/qcom/smd-rpm.c
+> +++ b/drivers/interconnect/qcom/smd-rpm.c
+> @@ -16,6 +16,7 @@
+>  #include "icc-rpm.h"
+>  
+>  #define RPM_KEY_BW		0x00007762
+> +#define QCOM_RPM_SMD_KEY_RATE	0x007a484b
+>  
+>  static struct qcom_smd_rpm *icc_smd_rpm;
+>  
+> @@ -44,6 +45,26 @@ int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val)
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_icc_rpm_smd_send);
+>  
+> +int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, int rsc_type, u32 rate)
+> +{
+> +	struct clk_smd_rpm_req req = {
+> +		.key = cpu_to_le32(QCOM_RPM_SMD_KEY_RATE),
+> +		.nbytes = cpu_to_le32(sizeof(u32)),
+> +	};
+> +
+> +	/* Branch clocks are only on/off */
+> +	if (clk->branch)
+> +		rate = !!rate;
+> +
+> +	req.value = cpu_to_le32(rate);
+> +	return qcom_rpm_smd_write(icc_smd_rpm,
+> +				  rsc_type,
+> +				  clk->resource_type,
+
+Sorry to have more minor comments but as you can see here the resource
+type is taken from the rpm_clk_resource. The parameter that you are
+describing as "rsc_type" is actually the "ctx" in the other function. :')
+
+If you fix this feel free to add my:
+
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+
+Thanks,
+Stephan
