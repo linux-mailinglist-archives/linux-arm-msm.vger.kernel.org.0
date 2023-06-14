@@ -2,188 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FA16730A90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 00:28:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 927FE730AE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 00:44:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232672AbjFNW2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 18:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60292 "EHLO
+        id S231151AbjFNWoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 18:44:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231971AbjFNW2I (ORCPT
+        with ESMTP id S236965AbjFNWoI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 18:28:08 -0400
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B51A268B;
-        Wed, 14 Jun 2023 15:28:06 -0700 (PDT)
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-340a05c22deso4175085ab.1;
-        Wed, 14 Jun 2023 15:28:06 -0700 (PDT)
+        Wed, 14 Jun 2023 18:44:08 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 231152101
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:44:07 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f63006b4e3so9548100e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:44:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686782645; x=1689374645;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AC35kDbj6ySmemert7/iRfIceZyirU887BhY5EsoBY0=;
+        b=hXG52HqnIpdkGQuwJp2XG/WhHpGSW2X8YJ7wRGzqSbvDi5DogyuX5DYcdP7KZIldr9
+         DeU4ZRXJT+c8u0Z5DG3UEJMSU65yIOgCiTKuYdkY27vmolZPGHMjkoxWLUv/sdJeQ3uK
+         btYHk+vZm4kQeDWGC83FMN0TtDm2jWZqlwJW7DuKgYb7aOeF9iiQgCfRWGmZka/P2FDz
+         xC0eDuQgiz64HSNxquDOOynIKns/FJDzC/naJZPaZgpRQoxtjIjuxnBx9rB1vu6S86XR
+         QtCh6eiOw07pMTxwmWAqoy8a0/tQsYjq6u3K/5HvCELbEzE0WwhpWae5nUOCC7hTEU1/
+         oTgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686781685; x=1689373685;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yajQGWba7cBbv2yEGLzVuT0yMU8/vEnbzI0aW4uhFjs=;
-        b=U1uKIJucVTm+UDz1cFWgSNn2bnRV1gQ9LUB1Z0bMurhVIfe3WrpTga5ewJB8UnRdNX
-         rv3yCRe+kLWzxBXJIX+dUG9kO8xGYH/rPh5vA6p19iJ3osPNLnU8J7r+dND4rxTC+QJf
-         JfRTTExoJtK+TRJ0k04V0HUzfR2uQWVm5FvrpHTaK31rH06RYq0fFpE8eDBJJChEvDMy
-         ykS8pCYpysTAvWLFgFOHmgZg2ZpvYGUi7zJFytUT/TpH/FKASnZ2L/NUKNovw6xwmtOS
-         hMsEdd/n/GExj7RkcPCe3aLy3Vh3JUtM0La8GcSZYkH78U8PIDMPZGWRom/Mh1/Ypqa/
-         jgeg==
-X-Gm-Message-State: AC+VfDxtLpt1zckeeRdvBc9likQHSwOHArZzsYlOhav+W8ON0TNJqexU
-        ZBADIjFOZNABR9C4b6jdpQ==
-X-Google-Smtp-Source: ACHHUZ5YM/cTrc06AeRT+CeT2VeoTeDKlGPOdZ8xCjU5GY97ctXm6YigYxsxbe9HTrdCeC1hWwXauw==
-X-Received: by 2002:a92:cd0e:0:b0:340:a3b4:1bda with SMTP id z14-20020a92cd0e000000b00340a3b41bdamr2685802iln.2.1686781685590;
-        Wed, 14 Jun 2023 15:28:05 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id d13-20020a92d78d000000b0033b3348519bsm5668384iln.69.2023.06.14.15.28.03
+        d=1e100.net; s=20221208; t=1686782645; x=1689374645;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AC35kDbj6ySmemert7/iRfIceZyirU887BhY5EsoBY0=;
+        b=NLVSCtyDbVLT6d1V/dKtAkBmCMjdgsvw2kJsZJ1bisr6nZTsD5nyTRtgvpRUVg1HB/
+         mnyJPqlgTfAz4qf67YmqCX2gCPdKmiUrQIkZUXauzWx2nHUTuua4j2XdsH15Op94CT/P
+         BLkTzn2yq2CU3tDrhE/HjUPczB4W+rPYs3VmqZHEZVfTj8E4BXEX/iV9QdRWh4BMxLry
+         sib42rzjR03qVBFFk7jJTA2tcscb20Hkigb5a92hzg7egQkr8xgpPQMIn2YXI1dRdzab
+         s4YaX72UE3vSaDg9ay7mZecDe21rSA4x5cSJ+9kxsDDkKlCM5V/qd0cowi/pcQZJr6/Y
+         XFuA==
+X-Gm-Message-State: AC+VfDwjizKPK0YxYdAwN+WVMuOTU1tHl2U0yRsaQT0JprGJ6MPNGFMJ
+        jbt8NefD7EPwwag89i+FzYXMuQ==
+X-Google-Smtp-Source: ACHHUZ4dw/+61k2ZzEwroW2qmQVzfEyETzh2vxioPG+C1jcksXinkjZ6FbgE76zzqP9NLubv6XahYQ==
+X-Received: by 2002:a05:6512:68:b0:4f3:a99f:1ea7 with SMTP id i8-20020a056512006800b004f3a99f1ea7mr8129826lfo.55.1686782644756;
+        Wed, 14 Jun 2023 15:44:04 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id q2-20020ac24a62000000b004edd2dc9a09sm2295866lfp.258.2023.06.14.15.44.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 15:28:04 -0700 (PDT)
-Received: (nullmailer pid 2979093 invoked by uid 1000);
-        Wed, 14 Jun 2023 22:28:03 -0000
-Date:   Wed, 14 Jun 2023 16:28:03 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 1/4] dt-bindings: input: document Goodix Berlin
- Touchscreen IC
-Message-ID: <20230614222803.GA2974729-robh@kernel.org>
-References: <20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org>
- <20230606-topic-goodix-berlin-upstream-initial-v1-1-4a0741b8aefd@linaro.org>
+        Wed, 14 Jun 2023 15:44:03 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 1/2] drm/msm/dsi: dsi_host: drop unused clocks
+Date:   Thu, 15 Jun 2023 01:44:01 +0300
+Message-Id: <20230614224402.296825-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230606-topic-goodix-berlin-upstream-initial-v1-1-4a0741b8aefd@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 06, 2023 at 04:31:56PM +0200, Neil Armstrong wrote:
-> Document the Goodix GT9916 wich is part of the "Berlin" serie
+Several source clocks are not used anymore, so stop handling them.
 
-series
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 33 ------------------------------
+ 1 file changed, 33 deletions(-)
 
-> of Touchscreen controllers IC from Goodix.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../bindings/input/touchscreen/goodix-berlin.yaml  | 81 ++++++++++++++++++++++
->  1 file changed, 81 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/input/touchscreen/goodix-berlin.yaml b/Documentation/devicetree/bindings/input/touchscreen/goodix-berlin.yaml
-> new file mode 100644
-> index 000000000000..4c24a541e919
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/input/touchscreen/goodix-berlin.yaml
-> @@ -0,0 +1,81 @@
-> +# SPDX-License-Identifier: GPL-2.0
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index fb1d3a25765f..eaee621aa6c8 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -118,8 +118,6 @@ struct msm_dsi_host {
+ 	struct clk *byte_clk;
+ 	struct clk *esc_clk;
+ 	struct clk *pixel_clk;
+-	struct clk *byte_clk_src;
+-	struct clk *pixel_clk_src;
+ 	struct clk *byte_intf_clk;
+ 
+ 	unsigned long byte_clk_rate;
+@@ -129,8 +127,6 @@ struct msm_dsi_host {
+ 
+ 	/* DSI v2 specific clocks */
+ 	struct clk *src_clk;
+-	struct clk *esc_clk_src;
+-	struct clk *dsi_clk_src;
+ 
+ 	unsigned long src_clk_rate;
+ 
+@@ -267,21 +263,6 @@ int dsi_clk_init_v2(struct msm_dsi_host *msm_host)
+ 		return ret;
+ 	}
+ 
+-	msm_host->esc_clk_src = clk_get_parent(msm_host->esc_clk);
+-	if (!msm_host->esc_clk_src) {
+-		ret = -ENODEV;
+-		pr_err("%s: can't get esc clock parent. ret=%d\n",
+-			__func__, ret);
+-		return ret;
+-	}
+-
+-	msm_host->dsi_clk_src = clk_get_parent(msm_host->src_clk);
+-	if (!msm_host->dsi_clk_src) {
+-		ret = -ENODEV;
+-		pr_err("%s: can't get src clock parent. ret=%d\n",
+-			__func__, ret);
+-	}
+-
+ 	return ret;
+ }
+ 
+@@ -346,20 +327,6 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
+ 		goto exit;
+ 	}
+ 
+-	msm_host->byte_clk_src = clk_get_parent(msm_host->byte_clk);
+-	if (IS_ERR(msm_host->byte_clk_src)) {
+-		ret = PTR_ERR(msm_host->byte_clk_src);
+-		pr_err("%s: can't find byte_clk clock. ret=%d\n", __func__, ret);
+-		goto exit;
+-	}
+-
+-	msm_host->pixel_clk_src = clk_get_parent(msm_host->pixel_clk);
+-	if (IS_ERR(msm_host->pixel_clk_src)) {
+-		ret = PTR_ERR(msm_host->pixel_clk_src);
+-		pr_err("%s: can't find pixel_clk clock. ret=%d\n", __func__, ret);
+-		goto exit;
+-	}
+-
+ 	if (cfg_hnd->ops->clk_init_ver)
+ 		ret = cfg_hnd->ops->clk_init_ver(msm_host);
+ exit:
+-- 
+2.39.2
 
-Dual license
-
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/input/touchscreen/goodix-berlin.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Goodix Belin series touchscreen controller
-
-Berlin?
-
-> +
-> +maintainers:
-> +  - Neil Armstrong <neil.armstrong@linaro.org>
-
-Would be nice to have a description which includes that the device has 
-both I2C and SPI interfaces.
-
-> +
-> +allOf:
-> +  - $ref: touchscreen.yaml#
-
-SPI devices should include spi-peripheral-props.yaml
-
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - goodix,gt9916
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  reset-gpios:
-> +    maxItems: 1
-> +
-> +  avdd-supply:
-> +    description: Analog power supply regulator on AVDD pin
-> +
-> +  vddio-supply:
-> +    description: GPIO power supply regulator on VDDIO pin
-> +
-> +  spi-max-frequency: true
-> +  touchscreen-inverted-x: true
-> +  touchscreen-inverted-y: true
-> +  touchscreen-size-x: true
-> +  touchscreen-size-y: true
-> +  touchscreen-swapped-x-y: true
-> +
-> +additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    i2c {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      gt9916@5d {
-> +        compatible = "goodix,gt9916";
-> +        reg = <0x5d>;
-> +        interrupt-parent = <&gpio>;
-> +        interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
-> +        reset-gpios = <&gpio1 1 GPIO_ACTIVE_LOW>;
-> +      };
-> +    };
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    spi {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      num-cs = <1>;
-> +      cs-gpios = <&gpio 2 GPIO_ACTIVE_HIGH>;
-> +      gt9916@0 {
-> +        compatible = "goodix,gt9916";
-> +        reg = <0>;
-> +        interrupt-parent = <&gpio>;
-> +        interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
-> +        reset-gpios = <&gpio1 1 GPIO_ACTIVE_LOW>;
-> +      };
-> +    };
-> +
-> +...
-> 
-> -- 
-> 2.34.1
-> 
