@@ -2,76 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90CE172FF17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:51:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1BCA72FF8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:11:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244754AbjFNMvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:51:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50120 "EHLO
+        id S244826AbjFNNLL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 09:11:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236311AbjFNMvP (ORCPT
+        with ESMTP id S234047AbjFNNLK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:51:15 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF16819BC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:51:10 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f8cc042ea9so5358145e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:51:10 -0700 (PDT)
+        Wed, 14 Jun 2023 09:11:10 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3241FC8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:10:45 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f8c5d0b216so6354365e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686747069; x=1689339069;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yV/2JI5MFWLOIVVC3zz2EQ4UGoIgXAQIkr+NgrjDxXU=;
-        b=koSPBOI3Bjps7GEXrxMDmMrvwQ9bQtVavp8Z8AnXsQMH0dKj9/GzL0t0fYoba9UU88
-         umqehauoSZt7M4f8QEvNkAlEaw+qtyXprWdY+nnsqDacGJLih7sC2n07MRKnTmDA5FfY
-         d4Zm2P4CpDq+77I6g3sYO4sVKTmNey2QPrh80MirfVIQWIyJ+llw2NPDuCW9FxdHcPRR
-         wxqgp2o0FeP2ngJo3UGRU8bmdkgrPsguEMB0bsWRFAakzpXYDfsbZSrQGIH/WJRVO+57
-         ZAN7F2+aQw4+S7DZt1kPr6YZ4r7iE5phERe53O3KkdeI6Wb+3c9NDOeIN3+Ey+iHKD8j
-         vtRw==
+        d=linaro.org; s=google; t=1686748244; x=1689340244;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lFFq5j77sDn2InWKb0H1DVJGVQdpSHE0KLKPy8uowMk=;
+        b=FJWqvEB+liRvUSGg4suQJHRBt9zx2mU1PF+/o2NyeA57/W8dCmrOZlo1LE3Brw0XCo
+         VhpRoksN20oaVg31nkaB4qMBWOhIEWckA08RBhgFf9ZZPM7S7Ml6z6cTzGyME81wpKTb
+         ji0hzwD8tTITy3KTOdxrZ9niaWwG4/KQuM2+mvGEagVhgfL0EnrZLgQ3tOd9lqxbc2Pf
+         01et9vyvtXXLfwTY8L4wAnT/q6kVPuUojQXUsmpTUtu99iEkoZCBIO2eppPabOlskIiq
+         jtVubefgFAKO6i4AjpwccAcFIJ8lTjpyiyYEEf38tSo4jaHLvAkgUSnllaRsV4HQr9z4
+         Ry3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686747069; x=1689339069;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yV/2JI5MFWLOIVVC3zz2EQ4UGoIgXAQIkr+NgrjDxXU=;
-        b=Esn0rOz5YCh4fnRkF9GXNqV3+7y63n3FhEewt070Yj1gCqSK85eV8ayFte1a65noLv
-         2/EFjTfchEin/Mpit6vpgG4sCyX5OiTA0oGA+bTSF4ngIbnEpyCGtMVnRvlQymIhQoc+
-         VByAqeB2z/xXg3tDEmQV9edulN9QpJzy4bBmSgturnm8dTINIXMA0Fyj+I89Jlg5gkq2
-         6IU+zVxB8KBS8YjoOXR7zHBd+T6npeozQqRuQtLmpj1eGeYNZRiGsg1knwKTQ/YxhQFr
-         flkqwDxuXu4PLzxH1DLkVWWwd6OYJNDNrniz8XuDvK0qu0WKrUXZS+/Ifl2K1J1SBU63
-         voMA==
-X-Gm-Message-State: AC+VfDyPbhH415YE6i9rayeb/ybLo6UL/3EJWCMXhStj1IIWNMpVcBV5
-        XyBNhf28OEVI43So0a4H/rFEpA==
-X-Google-Smtp-Source: ACHHUZ4TBlkqigkZIhRP0eqsdiIl0p9vlo74LMJwxlnnYios2BrtxP9fM7jtR+laX6UF2XhuSTSBuw==
-X-Received: by 2002:a7b:c3ce:0:b0:3f8:c9a4:4998 with SMTP id t14-20020a7bc3ce000000b003f8c9a44998mr3327071wmj.28.1686747069206;
-        Wed, 14 Jun 2023 05:51:09 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s14-20020adfeb0e000000b0030ae53550f5sm18180780wrn.51.2023.06.14.05.51.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 05:51:08 -0700 (PDT)
-Message-ID: <71a05574-64f0-1f00-19a4-8962d84ccecf@linaro.org>
-Date:   Wed, 14 Jun 2023 13:51:08 +0100
+        d=1e100.net; s=20221208; t=1686748244; x=1689340244;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lFFq5j77sDn2InWKb0H1DVJGVQdpSHE0KLKPy8uowMk=;
+        b=LFSk0W9DuOZ302IniveglnWktvwqyZQUJ3QfmlNAejBVME37BV1mrv/7B//lYNIys8
+         /oqoaMRhPF6ThcXuZwTrAMTYEdnB9zF+NkNHZgE69oO9jZYYwxbXoFjcT9RQpf5NzfOr
+         cCs66/D76BkWT7denu6S1af7oxrO8EDVL02b3QapzB6EOcMrY4LW5MkHaMpAfLj35VNA
+         wl1/F7RN7No1rRjukgzI5iB/b4ai1uyQcu3ClQiIPNd/N8btMsFXs7RDNpl74LuowDAI
+         gJCRyyyJts5yT3H2/f5KcL2FyhCCz8q9tODw1y2FFDc7WCKdcnFTHOHyd4KtmopBX7oX
+         nlsQ==
+X-Gm-Message-State: AC+VfDw+ky0lhnDnnuo0bInIf1CAZUVijqUe7bT+ZFsLYA2drJIp7JNx
+        3pByx3nyVXrVEGF07AqAySyPNPB/dFz0s95FnhGVGw==
+X-Google-Smtp-Source: ACHHUZ5alFfG8bkCsfkBJRQwsTvwebl3lO/OS5tKLH5bUjG0lU/HSsioNKQfO6BDq8oFzTUSQrCDRA==
+X-Received: by 2002:a05:600c:219a:b0:3f1:9b85:e305 with SMTP id e26-20020a05600c219a00b003f19b85e305mr11087507wme.34.1686748243717;
+        Wed, 14 Jun 2023 06:10:43 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id a7-20020a05600c224700b003f60a9ccd34sm17548661wmm.37.2023.06.14.06.10.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jun 2023 06:10:43 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/3] typec: support Audio Accessory mode on FSA4480
+Date:   Wed, 14 Jun 2023 15:10:38 +0200
+Message-Id: <20230614-topic-sm8550-upstream-type-c-audio-v1-0-15a92565146b@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8939: Define regulator
- constraints next to usage
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230530-msm8939-regulators-v1-0-a3c3ac833567@gerhold.net>
- <20230530-msm8939-regulators-v1-7-a3c3ac833567@gerhold.net>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230530-msm8939-regulators-v1-7-a3c3ac833567@gerhold.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-B4-Tracking: v=1; b=H4sIAE68iWQC/x2Nyw7CIBAAf6Xh7CaAlqC/Ynqgy9Zu0gLhYTRN/
+ 13iceYwc4hCmamIx3CITG8uHEMHdRkEri68CNh3FlrqqzTqBjUmRii7HUcJLZWaye1Qv4kAwTX
+ PETSiX4xX1t6N6KHZFYI5u4BrT4W2bV2mTAt//ufndJ4/XqsNDIkAAAA=
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=925;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=XD/3mYEmJE71u+AKKnWBzHCv5TztrsBweX10e9VRWDI=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkibxR08aUD8m1Mxxj+6F/lLAZRVGISBn6Mf+fIMx/
+ IByvCimJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIm8UQAKCRB33NvayMhJ0VEmD/
+ 9WBazyfF+KO9M8JoyxbQ3scefX/4Je2YaRxVYUQox07p/1kKixwOlwnWK8eJ8ooC7cdd74YUn6YZ2q
+ yyfd7E0+IPGNzDFXYfQUKTxHFPC9YFWRuekr61GkPtqNC/6MbrOBlXdTwiaiJ31iKvraWtmMZAXFyV
+ Ku24eEtEW+53WbW+07ZDkcAZZxXuJEldjK59GlZkHxrN75CCEKsVaKR1WNVN/XWt4uqwcei2OuszZI
+ kAIufqkCmDiXrYOc2Gp4kVa0WYo+2jUFu+RRPg7NXCLvC8+DDBOKpRykdwz13xUyFckH71Z7OrD0Gs
+ kuotrcKO63NiuwXdk9zdUq4qCR707USgzTewP85IasH9+MfAvDywFa/AcedQUVLsosA0QOfLPPlsBN
+ 9cTMWn3t9ByXqq+ib9Ji8ymdyIQGCLV9xsfNaLJ7vcIdlCKpPyi/FnEL8IeKZn88VDB+if22PR/zuq
+ hpjq/leI1C726Pec6aUjodRmZs4JR2tp1aKMXSn1ZlkRFiywkl2aUURYclzlxfLVcV1386SM38uacY
+ 8hn+KCAbrZkDwSrZG6YMkQZV+8RjZw8jIRFzAylB0FtpFyGHINoxsTHNxhtJdexcjnHnlWmNsWU0X+
+ tSFjbBwl7dY8M3/MFP76yuzjiThT7vGxDVNG9Slr3Ad29i3vCoUKjFDbsORQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,48 +92,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 08:16, Stephan Gerhold wrote:
-> Right now each MSM8939 device has a huge block of regulator constraints
-> with allowed voltages for each regulator. For lack of better
-> documentation these voltages are often copied as-is from the vendor
-> device tree, without much extra thought.
-> 
-> Unfortunately, the voltages in the vendor device trees are often
-> misleading or even wrong, e.g. because:
-> 
->   - There is a large voltage range allowed and the actual voltage is
->     only set somewhere hidden in some messy vendor driver. This is often
->     the case for pm8916_{l14,l15,l16} because they have a broad range of
->     1.8-3.3V by default.
-> 
->   - The voltage is actually wrong but thanks to the voltage constraints
->     in the RPM firmware it still ends up applying the correct voltage.
-> 
-> To have proper regulator constraints it is important to review them in
-> context of the usage. The current setup in the MSM8939 device trees
-> makes this quite hard because each device duplicates the standard
-> voltages for components of the SoC and mixes those with minor
-> device-specific additions and dummy voltages for completely unused
-> regulators.
-> 
-> The actual usage of the regulators for the SoC components is in
-> msm8939-pm8916.dtsi, so it can and should also define the related
-> voltage constraints. These are not board-specific but defined in the
-> MSM8939/PM8916 specification. There is no documentation available for
-> MSM8939 but in practice it's almost identical to MSM8916.
-> 
-> Note that this commit does not make any functional change. All used
-> regulators still have the same regulator constraints as before. Unused
-> regulators do not have regulator constraints anymore because most of
-> these were too broad or even entirely wrong. They should be added back
-> with proper voltage constraints when there is an actual usage.
-> 
-> The same changes were already made for MSM8916 in commit b0a8f16ae4a0
-> ("arm64: dts: qcom: msm8916: Define regulator constraints next to usage").
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+This serie enables Audio Accessory mode support on the FSA4480
+USB Type-C Analog Audio Switch.
 
+In order to get the proper MUX state, also let's make UCSI
+call type_set_mode() on partner changes to propagate the
+Accessory and USB modes.
 
-It makes sense to replicate the 8916 change.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (3):
+      usb: typec: ucsi: call typec_set_mode on non-altmode partner change
+      usb: typec: fsa4480: rework mux & switch setup to handle more states
+      usb: typec: fsa4480: add support for Audio Accessory Mode
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ drivers/usb/typec/mux/fsa4480.c | 126 +++++++++++++++++++++++++++++-----------
+ drivers/usb/typec/ucsi/ucsi.c   |  17 ++++++
+ 2 files changed, 108 insertions(+), 35 deletions(-)
+---
+base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
+change-id: 20230614-topic-sm8550-upstream-type-c-audio-2ccdf6d18896
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
