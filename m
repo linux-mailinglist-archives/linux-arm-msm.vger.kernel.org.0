@@ -2,245 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9BF1730914
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 22:18:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98F57730919
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 22:19:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233333AbjFNUSl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 16:18:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49264 "EHLO
+        id S230298AbjFNUTd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 16:19:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236787AbjFNUSj (ORCPT
+        with ESMTP id S230186AbjFNUTc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 16:18:39 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A838211D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 13:18:37 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b3500a1f2bso8108791fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 13:18:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686773915; x=1689365915;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n3z4LksCb5ueTglC0JGeQEDUNVhjTTokwLYl+JChFA8=;
-        b=vDTbEIhSwCMFEKapNjV49THldsXX7vksRYltEL5iyE6zAL0oQx4MTo0RPZn6BJ8MSZ
-         Sl6d+GSF1y01QOBS3k9R6GkSqlnOEKIFGYUpgl8EdJ7N0LGOnqhP1tDxsl9TLojqkoZF
-         uW+mkbOjsNZnJOEzipz2oXR8SCgdyNk++8Hz+nVtR3WjN6b+BOcnSxV1PzHN2kbDsrS3
-         F1UzmqXZxZ1tWMNKfjtTQFeNb5AKvDtuMduSYlT+kaM22SVHYqi7oq3t64EDzW9enXNS
-         owM8yhtdjPdfFz+A46g0tRdf4jUgtHX3g+OkGjVxcO2S77Ix2QIgWuft2ATQeBqUiLWw
-         TALg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686773915; x=1689365915;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n3z4LksCb5ueTglC0JGeQEDUNVhjTTokwLYl+JChFA8=;
-        b=SgeLJZ9R1pel1yKMNGBPpFcY0FASFamlpcb261FoX3JqwOlrSNzyaN1DSlo4FRFF9a
-         U2ku0W6ayGOEG+6gewHczjp2+0NUIvz2EvePhUCIHI6aUzyAuSqyFXnfDeve38DMDKvI
-         pQ9Vs2wO984y2dkKAIdFOFbGdJnr3OGQerVxwkiazVrMkIpmQN1T4Wnmwx1SXb8drYcM
-         GV6yyuW/U9FuXbbtLM0vru72G5AdscR1MT69Ya9Z62gaurkhkiUvsuyQLglEr4J5L8vQ
-         6g5HKpxdUktZKRIdgUiK7Tv9FOM6xusfd0PGrAvU7g0QW8ykOHwPB9B/LE9enOFKkNTv
-         KmZg==
-X-Gm-Message-State: AC+VfDxIcIswBGlsjDrLcQcKZbG3jZOg4sTdFWr/kvOXtVu8djtLC7MK
-        0zD0y+ObiZwc9fW437eVB+QszQ==
-X-Google-Smtp-Source: ACHHUZ5sMkvfIdJJwZT2OQw2vgr5nn41GHBSNx10KZQJ/bfZWcCuhvBqnM/dNYLNbJRlYvOCO4q47A==
-X-Received: by 2002:a2e:9d19:0:b0:2b0:a4b1:df6 with SMTP id t25-20020a2e9d19000000b002b0a4b10df6mr6522791lji.49.1686773915411;
-        Wed, 14 Jun 2023 13:18:35 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id d21-20020a2eb055000000b002aeee2a093csm2714757ljl.59.2023.06.14.13.18.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 13:18:34 -0700 (PDT)
-Message-ID: <f19546be-54fd-00fb-293c-c228e0d6d5d3@linaro.org>
-Date:   Wed, 14 Jun 2023 23:18:34 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 00/18] ARM: qcom: apq8064: support CPU frequency scaling
-Content-Language: en-GB
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        Wed, 14 Jun 2023 16:19:32 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B342101;
+        Wed, 14 Jun 2023 13:19:31 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EKBJPG015758;
+        Wed, 14 Jun 2023 20:19:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=yPMyKREnlqdFDB9iGvYRFdtvqWofTa7Oea+u4TQq7RM=;
+ b=O51AlbJ2nUps96FvZIp+J50aU+Z8hnLlRMkDuKfRqYOfwgeEG2FP5eFyKCy6BxR1HT91
+ nUXyB94CiLKYODzlpeTqY9m/6e4sFdFfHlmslkPLRumg8pAOcBv50X6riF4APBUddDJ3
+ ClkJguMI3TL3ARQoxaZKA0fLV7JczOlws38dwn3YjXXorarx3PpTZRIoKVQlsGQsDsAI
+ 6ZkzHzjm6EgXjOYs1qCtolX/hFcNfv7U7yZjzUTZYEh4vJYEHBN4xYxes62AkKR2oVGx
+ Be7v137y0a6GbcL3StBr5HJLG8yc1x0ylLtl02lvVb3Cv8ChMqllyUUEQlN3eniTpY3w hQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7cka15xr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 20:19:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EKJK8l008634
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 20:19:20 GMT
+Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 14 Jun 2023 13:18:43 -0700
+Date:   Thu, 15 Jun 2023 01:48:40 +0530
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
- <6486dcef.050a0220.4c054.4c59@mx.google.com>
- <99a68056-a4c9-d475-9245-e0802ffe4c89@linaro.org>
- <64889725.5d0a0220.9f037.0597@mx.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <64889725.5d0a0220.9f037.0597@mx.google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH v8 18/18] drm/msm/a6xx: Add A610 speedbin support
+Message-ID: <ab2yzsjp65t53wp5nytjuc7eb74zklkb6i342bc5edhm45j3qm@kpyq52is7tde>
+References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
+ <20230223-topic-gmuwrapper-v8-18-69c68206609e@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230223-topic-gmuwrapper-v8-18-69c68206609e@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TCG2ArjwSVxKVDwtz6tEoOotRt9OEspn
+X-Proofpoint-ORIG-GUID: TCG2ArjwSVxKVDwtz6tEoOotRt9OEspn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-14_14,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ malwarescore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxlogscore=999 adultscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306140178
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/06/2023 19:19, Christian Marangi wrote:
-> On Mon, Jun 12, 2023 at 05:20:02PM +0300, Dmitry Baryshkov wrote:
->> On 11/06/2023 19:27, Christian Marangi wrote:
->>> On Mon, Jun 12, 2023 at 08:39:04AM +0300, Dmitry Baryshkov wrote:
->>>> Implement CPUFreq support for one of the oldest supported Qualcomm
->>>> platforms, APQ8064. Each core has independent power and frequency
->>>> control. Additionally the L2 cache is scaled to follow the CPU
->>>> frequencies (failure to do so results in strange semi-random crashes).
->>>
->>> Hi, can we talk, maybe in private about this interconnect-cpu thing?
->>
->> Hi, sure. Feel free to ping me on IRC (lumag) or via email. Or we can just
->> continue our discussion here, as it might be interesting to other people
->> too.
->>
+On Mon, May 29, 2023 at 03:52:37PM +0200, Konrad Dybcio wrote:
 > 
-> Don't know if here is the right place to discuss my concern and problem
-> with L2 scaling on ipq8064...
+> A610 is implemented on at least three SoCs: SM6115 (bengal), SM6125
+> (trinket) and SM6225 (khaje). Trinket does not support speed binning
+> (only a single SKU exists) and we don't yet support khaje upstream.
+> Hence, add a fuse mapping table for bengal to allow for per-chip
+> frequency limiting.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index d046af5f6de2..c304fa118cff 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -2098,6 +2098,30 @@ static bool a6xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+>  	return progress;
+>  }
+>  
+> +static u32 a610_get_speed_bin(u32 fuse)
+> +{
+> +	/*
+> +	 * There are (at least) three SoCs implementing A610: SM6125 (trinket),
+> +	 * SM6115 (bengal) and SM6225 (khaje). Trinket does not have speedbinning,
+> +	 * as only a single SKU exists and we don't support khaje upstream yet.
+> +	 * Hence, this matching table is only valid for bengal and can be easily
+> +	 * expanded if need be.
+> +	 */
+> +
+> +	if (fuse == 0)
+> +		return 0;
+> +	else if (fuse == 206)
+> +		return 1;
+> +	else if (fuse == 200)
+> +		return 2;
+> +	else if (fuse == 157)
+> +		return 3;
+> +	else if (fuse == 127)
+> +		return 4;
+> +
+> +	return UINT_MAX;
+> +}
+> +
+>  static u32 a618_get_speed_bin(u32 fuse)
+>  {
+>  	if (fuse == 0)
+> @@ -2195,6 +2219,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_gpu *adreno_gpu, u3
+>  {
+>  	u32 val = UINT_MAX;
+>  
+> +	if (adreno_is_a610(adreno_gpu))
+> +		val = a610_get_speed_bin(fuse);
+> +
 
-I think I will try segregating L2 data to l2-cache device node (I saw 
-your comment that it is not populated by default. I'll have to fix this).
+Didn't you update here to convert to 'else if' in one of the earlier
+patches??
 
-> 
->>> I see you follow the original implementation of the msm_bus where in
->>> practice with the use of the kbps the correct clock and voltage was set.
->>> (and this was also used to set the fabric clock from nominal to fast)
->>>
->>> On ipq806x and I assume other SoC there isn't always a 1:1 map of CPU
->>> freq and L2 freq. For example on ipq8064 we have max CPU freq of 1.4GHz
->>> and L2 freq of 1.2GHz, on ipq8065 we have CPU 1.7GHz and L2 of 1.4GHz.
->>
->> This is also the case for apq8064. The vendor kernel defines 15 frequencies
->> for L2 cache clock, but then for some reasons all PVS tables use just 3
->> entries from these 15.
->>
-> 
-> Eh who knows why they did this... Probably the hfpll was limited or they
-> notice no temp/power benefits were present with scaling with that much
-> of steps?
-> 
->>> (and even that is curious since I used the debug regs and the cxo
->>> crystal to measure the clock by hardware (yes i ported the very ancient
->>> clk-debug to modern kernel and it works and discovered all sort of
->>> things) the L2 (I assume due to climitation of the hfpll) actually can't
->>> never reach that frequency (1.4GHz in reality results to something like
->>> 1.2GHz from what I notice a stable clock is there only with frequency of
->>> max 1GHz))
->>
->> I would like to point you to https://github.com/andersson/debugcc/, which is
->> a userspace reimplementation of clk-debug. We'd appreciate your patches
->> there.
->>
-> 
-> Hi, I wasted some good time on the implementation but manage to make it
-> work and proposed a pr! I assume the thing can be reused for apq8064 if
-> someone ever wants to have fun with that.
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-Thanks a lot! Generally I think that debugcc is a very valuable 
-debugging tool and it should be getting more attention from the 
-community. With the chips newer than 8064 it is easy enough to add new 
-platform data.
-
+-Akhil.
+>  	if (adreno_is_a618(adreno_gpu))
+>  		val = a618_get_speed_bin(fuse);
+>  
 > 
->>> So my idea was to introduce a simple devfreq driver and use the PASSIVE
->>> governor where it was added the possibility to link to a CPU frequency
->>> and with interpolation select the L2 frequency (and voltage)
->>
->> I stumbled upon this idea, when I was working on the msm8996 and it's CBF
->> clock (CBF = interconnect between two core clusters). While it should be
->> possible to use DEVFREQ in simple cases (e.g. L2 clock >= max(CPU clock), if
->> possible). However real configurations are slightly harder.
->> E.g. for the purpose of this patchset, the relationship for apq8064 is the
->> following (in MHz):
->>
->>   CPU    L2
->>   384    384
->>   486    648
->>   594    648
->>   702    648
->> ....    ...
->> 1026    648
->> 1134   1134
->> ....   ....
->> 1512   1134
->> ....   ....
->>
->> It should be noted that msm8960 also used just three values for the L2 cache
->> frequencies. From what I can see, only msm8x60 made L2 freq tightly follow
->> the CPU frequency.
->>
+> -- 
+> 2.40.1
 > 
-> Happy to test and found a common path... With the merge of the cpu opp
-> and nvmem work, I was just about to send the L2 devfreq driver... And
-> also the fabric devfreq driver. But I wonder if I can use this
-> interconnect thing for the 2 task.
-> 
->>>   From some old comments in ancient qsdk code it was pointed out that due
->>> to a hw limitation the secondary cpu can't stay at a high clock if L2
->>> was at the idle clock. (no idea if this is specific to IPQ806x) So this
->>> might be a cause of your crash? (I also have random crash with L2
->>> scaling and we are planning to just force the L2 at max frequency)
->>
->> It might be related. It was more or less the same story with msm8996, which
->> was either 'maxcpus=2' or scaling the CBF clock.
->>
-> 
-> Might be a krait defect... and this is pretty bad...
-
-I don't know if it is a defect or just a misfeature. Anyway, we know 
-that L2 should be clocked high enough and we can cope with it.
-
-> 
->>> But sorry for all of this (maybe) useless info. I checked the other
->>> patch and I didn't understand how the different L2 frequency are
->>> declared and even the voltage. Is this something that will come later?
->>> I'm very interested in this implementation.
->>
->> The L2 frequency (<&kraitcc 4>) is converted into bandwidth vote, which then
->> goes into the OPP tables. But please also see the discussion started at the
->> patch 15.
->>
-> 
-> I didn't notice you were defining multiple supply, scaling the voltage
-> under the hood with that trick. It's not a bad idea but as pointed out
-> it might be problematic, since is seems krait is very sensible with L2
-> frequency and voltage so we should simulate the original implementation
-> as close as possible...
-
-It was my original intention,as the vendor kernel does it in the 
-vdd-mem, vdd-dig, vdd-core, L2-freq, core freq order. I did not expect 
-that voltages are scaled after BW casts. (this describes freq-increase 
-case, in case of decreasing frequency the order is inverted).
-
-> 
->>>
->>>>
->>>> Core voltage is controlled through the SAW2 devices, one for each core.
->>>> The L2 has two regulators, vdd-mem and vdd-dig.
->>>>
->>>> Depenency: [1] for interconnect-clk implementation
->>>>
->>>> https://lore.kernel.org/linux-arm-msm/20230512001334.2983048-3-dmitry.baryshkov@linaro.org/
->>>>
->>>
->>
->> -- 
->> With best wishes
->> Dmitry
->>
-> 
-
--- 
-With best wishes
-Dmitry
-
