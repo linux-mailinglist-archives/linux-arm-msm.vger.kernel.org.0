@@ -2,216 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 168BB72FF0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90CE172FF17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:51:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244733AbjFNMuB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:50:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49492 "EHLO
+        id S244754AbjFNMvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:51:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236221AbjFNMuA (ORCPT
+        with ESMTP id S236311AbjFNMvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:50:00 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2872610DA;
-        Wed, 14 Jun 2023 05:49:59 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EArW1T016790;
-        Wed, 14 Jun 2023 12:49:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=XER8pySDXzhBK61uLHUdK8y5WfDlkC0+ZleyTpc+Bg4=;
- b=hQuMDxJGrJSm8tQ43RbN3DFz45EG07q+iDhVWWEJdRTkRywTGfLtnAIGiozbaVSkYM8K
- NCKkrHDyjydnvOatwJlZVUQYOacNCDX3q/9Y+mUhRKN4vPWwhM/GcUmrn33o2vK7tXjb
- DoJr8A+SZ60nA7v5IAB9HoF/6KH0hqGqTJI6XNwMULXpoP8ca+m7CDRnpBjUQSGigtdU
- CIoK5xgzebbvQpebgVf3FHliMdV6gX8hcjd/gqm14hAPqWaI70Eopn2SjO+LT3WeFU1i
- ZKRo2C6s21MDZ7hmR9u4Wb0YsBuGfMfYu/CkvdrQzpvYvrcAWHW29mYhmZ9BskPA4AQy 7g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6s3wtsvu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 12:49:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35ECnfUi030594
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 12:49:41 GMT
-Received: from [10.201.206.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 14 Jun
- 2023 05:49:32 -0700
-Message-ID: <da987a5e-7f6c-34b4-3ac4-d0eb5e911888@quicinc.com>
-Date:   Wed, 14 Jun 2023 18:19:27 +0530
+        Wed, 14 Jun 2023 08:51:15 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF16819BC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:51:10 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f8cc042ea9so5358145e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:51:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686747069; x=1689339069;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yV/2JI5MFWLOIVVC3zz2EQ4UGoIgXAQIkr+NgrjDxXU=;
+        b=koSPBOI3Bjps7GEXrxMDmMrvwQ9bQtVavp8Z8AnXsQMH0dKj9/GzL0t0fYoba9UU88
+         umqehauoSZt7M4f8QEvNkAlEaw+qtyXprWdY+nnsqDacGJLih7sC2n07MRKnTmDA5FfY
+         d4Zm2P4CpDq+77I6g3sYO4sVKTmNey2QPrh80MirfVIQWIyJ+llw2NPDuCW9FxdHcPRR
+         wxqgp2o0FeP2ngJo3UGRU8bmdkgrPsguEMB0bsWRFAakzpXYDfsbZSrQGIH/WJRVO+57
+         ZAN7F2+aQw4+S7DZt1kPr6YZ4r7iE5phERe53O3KkdeI6Wb+3c9NDOeIN3+Ey+iHKD8j
+         vtRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686747069; x=1689339069;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yV/2JI5MFWLOIVVC3zz2EQ4UGoIgXAQIkr+NgrjDxXU=;
+        b=Esn0rOz5YCh4fnRkF9GXNqV3+7y63n3FhEewt070Yj1gCqSK85eV8ayFte1a65noLv
+         2/EFjTfchEin/Mpit6vpgG4sCyX5OiTA0oGA+bTSF4ngIbnEpyCGtMVnRvlQymIhQoc+
+         VByAqeB2z/xXg3tDEmQV9edulN9QpJzy4bBmSgturnm8dTINIXMA0Fyj+I89Jlg5gkq2
+         6IU+zVxB8KBS8YjoOXR7zHBd+T6npeozQqRuQtLmpj1eGeYNZRiGsg1knwKTQ/YxhQFr
+         flkqwDxuXu4PLzxH1DLkVWWwd6OYJNDNrniz8XuDvK0qu0WKrUXZS+/Ifl2K1J1SBU63
+         voMA==
+X-Gm-Message-State: AC+VfDyPbhH415YE6i9rayeb/ybLo6UL/3EJWCMXhStj1IIWNMpVcBV5
+        XyBNhf28OEVI43So0a4H/rFEpA==
+X-Google-Smtp-Source: ACHHUZ4TBlkqigkZIhRP0eqsdiIl0p9vlo74LMJwxlnnYios2BrtxP9fM7jtR+laX6UF2XhuSTSBuw==
+X-Received: by 2002:a7b:c3ce:0:b0:3f8:c9a4:4998 with SMTP id t14-20020a7bc3ce000000b003f8c9a44998mr3327071wmj.28.1686747069206;
+        Wed, 14 Jun 2023 05:51:09 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id s14-20020adfeb0e000000b0030ae53550f5sm18180780wrn.51.2023.06.14.05.51.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 05:51:08 -0700 (PDT)
+Message-ID: <71a05574-64f0-1f00-19a4-8962d84ccecf@linaro.org>
+Date:   Wed, 14 Jun 2023 13:51:08 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH V2 01/13] dt-bindings: remoteproc: qcom: Add support for
- multipd model
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8939: Define regulator
+ constraints next to usage
 Content-Language: en-US
-From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kalle Valo <kvalo@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_eberman@quicinc.com>, <quic_mojha@quicinc.com>,
-        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
- <20230521222852.5740-2-quic_mmanikan@quicinc.com>
- <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
- <a1456f62-d0a7-d5ec-b379-db1b6035c89c@quicinc.com>
- <d187eafb-4a80-9479-d063-3a01b47d8efa@linaro.org>
- <feb0d11d-0930-d0b8-ab6e-cf477bbf114b@quicinc.com>
- <87edmoitu3.fsf@kernel.org>
- <0555c089-9d0d-7d19-9646-f0f9b8630d12@quicinc.com>
- <5f9cc367-eaa5-4c19-4e5e-7052b0259ccf@linaro.org>
- <04f5e3cb-d2f5-747c-1fd0-4b61d845e2c5@quicinc.com>
-In-Reply-To: <04f5e3cb-d2f5-747c-1fd0-4b61d845e2c5@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FhPFExb1TjQwYftxjMgLslDRBsZZjAzC
-X-Proofpoint-GUID: FhPFExb1TjQwYftxjMgLslDRBsZZjAzC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-14_08,2023-06-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- adultscore=0 mlxscore=0 mlxlogscore=744 clxscore=1011 impostorscore=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306140110
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230530-msm8939-regulators-v1-0-a3c3ac833567@gerhold.net>
+ <20230530-msm8939-regulators-v1-7-a3c3ac833567@gerhold.net>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230530-msm8939-regulators-v1-7-a3c3ac833567@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/14/2023 5:13 PM, Manikanta Mylavarapu wrote:
+On 14/06/2023 08:16, Stephan Gerhold wrote:
+> Right now each MSM8939 device has a huge block of regulator constraints
+> with allowed voltages for each regulator. For lack of better
+> documentation these voltages are often copied as-is from the vendor
+> device tree, without much extra thought.
 > 
+> Unfortunately, the voltages in the vendor device trees are often
+> misleading or even wrong, e.g. because:
 > 
-> On 6/7/2023 1:57 PM, Krzysztof Kozlowski wrote:
->> On 07/06/2023 10:10, Manikanta Mylavarapu wrote:
->>>
->>>
->>> On 6/6/2023 7:19 PM, Kalle Valo wrote:
->>>> Manikanta Mylavarapu <quic_mmanikan@quicinc.com> writes:
->>>>
->>>>>>>>> +
->>>>>>>>> +    properties:
->>>>>>>>> +      compatible:
->>>>>>>>> +        enum:
->>>>>>>>> +          - qcom,ipq5018-wcss-ahb-mpd
->>>>>>>>> +          - qcom,ipq9574-wcss-ahb-mpd
->>>>>>>>> +          - qcom,ipq5018-wcss-pcie-mpd
->>>>>>>>
->>>>>>>> Keep rather alphabetical order (so both 5018 together).
->>>>>>>>
->>>>>>>> I also do not understand these at all. Why adding bus type to
->>>>>>>> compatible? This rarely is allowed (unless it is PCIe controller 
->>>>>>>> within
->>>>>>>> soc).
->>>>>>>>
->>>>>>> IPQ5018 SOC has in-built PCIE controller. Here QDSP6 will bring up
->>>>>>> external(PCIE) and internal (AHB) wifi radio's. To separate AHB, 
->>>>>>> PCIE
->>>>>>> radio's properties, i have added bus type to compatible.
->>>>>>
->>>>>> It's the same device - WCSS - right? We do not create multiple 
->>>>>> nodes and
->>>>>> compatibles for the same devices. Bus suffixes are almost never 
->>>>>> parts of
->>>>>> compatibles.
->>>>>
->>>>>
->>>>> No it's not the same device. WCSS on inside IPQ5018 and WCSS attached
->>>>> via pcie to IPQ5018. Here QDSP6 managing both WCSS's.
->>>>>
->>>>> So for better clarity i will use attached SOC ID in compatible.
->>>>> Below are the new compatible's.
->>>>>
->>>>> - qcom,ipq5018-wcss-mpd //IPQ5018 internal radio
->>>>> - qcom,ipq9574-wcss-mpd    //IPQ9574 internal radio
->>>>> - qcom,qcn6122-wcss-mpd //IPQ5018 attached radio
->>>>
->>>> What mandates that there's just one QCN6122 device attached to PCI?
->>>> Assuming fixed PCI configurations like that makes me worried.
->>>>
->>>
->>> IPQ5018 always has one internal radio, attached pcie radio's depends on
->>> no of pcie ports. IPQ5018 has 2 pcie ports, so it supports max two
->>> qcn6122 devices. One compatible (qcom,qcn6122-wcss-mpd) itself support's
->>> number of pcie devices controlled by QDSP6.
->>
->> So this is hot-pluggable (or at least board-pluggable), then should not
->> be a part of static DTS.
->>
->> Some concepts of virtual-processes is anyway far away from hardware
->> description, thus does not fit into DTS. Adding now to the equation PCIe
->> with variable number of such processes, brings us even further.
->>
->> This is not a DT property. Remember - DT describes hardware.
->>
->> Best regards,
->> Krzysztof
->>
+>   - There is a large voltage range allowed and the actual voltage is
+>     only set somewhere hidden in some messy vendor driver. This is often
+>     the case for pm8916_{l14,l15,l16} because they have a broad range of
+>     1.8-3.3V by default.
 > 
-> In the multipd architecture based Socs, There is one Q6 DSP which runs 
-> the OS/kernel and there are one or more instances of WCSS radios
-> (It can be either internal or pcie attached).
-> These WCSS cores are controlled by the Q6 (Q6 DSP brings wcss radios out 
-> of reset/ shuts it down etc). Q6 forms the 'root Protection domain' and 
-> the wcss radios are termed as the 'user protection domain'.
-> The compatible's that is being added here are to manage the 'root 
-> domain' and 'user domain'.
-> Not sure if using the words 'pcie'/'ahb' made it confusing.
-> So, 'qcom,ipq5018-q6-mpd' and 'qcom,ipq5018-wcss-mpd'.
+>   - The voltage is actually wrong but thanks to the voltage constraints
+>     in the RPM firmware it still ends up applying the correct voltage.
 > 
-> There will be multiple instances of 'qcom,ipq5018-wcss-mpd' in DT based 
-> on number of wcss radios connected on that board and only one instance 
-> of 'qcom,ipq5018-q6-mpd'.
+> To have proper regulator constraints it is important to review them in
+> context of the usage. The current setup in the MSM8939 device trees
+> makes this quite hard because each device duplicates the standard
+> voltages for components of the SoC and mixes those with minor
+> device-specific additions and dummy voltages for completely unused
+> regulators.
 > 
-> Is this approach ok ?
+> The actual usage of the regulators for the SoC components is in
+> msm8939-pm8916.dtsi, so it can and should also define the related
+> voltage constraints. These are not board-specific but defined in the
+> MSM8939/PM8916 specification. There is no documentation available for
+> MSM8939 but in practice it's almost identical to MSM8916.
 > 
-> Thanks & Regards,
-> Manikanta.
+> Note that this commit does not make any functional change. All used
+> regulators still have the same regulator constraints as before. Unused
+> regulators do not have regulator constraints anymore because most of
+> these were too broad or even entirely wrong. They should be added back
+> with proper voltage constraints when there is an actual usage.
+> 
+> The same changes were already made for MSM8916 in commit b0a8f16ae4a0
+> ("arm64: dts: qcom: msm8916: Define regulator constraints next to usage").
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
 
-I didn't aligned previous reply properly. Now i corrected it
-and re sending.
+It makes sense to replicate the 8916 change.
 
-In the multipd architecture based Socs, There is one Q6 DSP which
-runs the OS/kernel and there are one or more instances of WCSS radios
-(It can be either internal or pcie attached).
-These WCSS cores are controlled by the Q6 (Q6 DSP brings wcss radios
-out of reset/ shuts it down etc).
-Q6 forms the 'root Protection domain' and the wcss radios are termed
-as the 'user protection domain'. The compatible's that is being
-added here are to manage the 'root domain' and 'user domain'.
-Not sure if using the words 'pcie'/'ahb' made it confusing.
-So, 'qcom,ipq5018-q6-mpd' and 'qcom,ipq5018-wcss-mpd'.
-
-There will be multiple instances of 'qcom,ipq5018-wcss-mpd' in DT
-based on number of wcss radios connected on that board and only
-one instance of 'qcom,ipq5018-q6-mpd'.
-
-Is this approach ok ?
-
-Thanks & Regards,
-Manikanta.
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
