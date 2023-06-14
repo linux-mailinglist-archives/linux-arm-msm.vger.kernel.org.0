@@ -2,132 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B1D0730245
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 16:47:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 685567302A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 17:01:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235554AbjFNOr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 10:47:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35278 "EHLO
+        id S245719AbjFNPBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 11:01:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245275AbjFNOrl (ORCPT
+        with ESMTP id S245690AbjFNPBn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 10:47:41 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863A3107;
-        Wed, 14 Jun 2023 07:47:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 18FEF6431E;
-        Wed, 14 Jun 2023 14:47:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB20DC433C9;
-        Wed, 14 Jun 2023 14:47:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686754059;
-        bh=YBvoPI/IEVtbY5FNxrgQvaHMUweYY58AfZfxW/FUfzs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=e3LNvXuGGMNQtEoM1FFIbIMA86EOKQwXEt+3tALeKxbJwddDvByyh87z716lOdEGC
-         ay6V6UsAWKdIpfQeOHUTj6uRCRuxoBSQ/ETGAidKLmmAZaEKJNYu7cWBppubt22OZZ
-         qs7CsgD6eYxPn/6tp8A8zc/IMx9Wwqni4eq6r2HIflQzfEAn2bw6+gBVmE50N1J2VT
-         xdtONfXgAZr/MN4pOsv/pIk3cO5LxiMXaxi73cLALIFbTrJFx3D++N+lWZ75xNd4yO
-         zo3zVf4keiHIC1Lp+4V1UkRY9UGYRsboF0z0HH6nx3D0gBBtowUDJNQ1wU4JmuqIAX
-         iiI/VHltBNFtQ==
-Date:   Wed, 14 Jun 2023 07:51:00 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bartosz Golaszewski <brgl@bgdev.pl>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 24/26] arm64: dts: qcom: sa8775p-ride: enable the SerDes
- PHY
-Message-ID: <20230614145100.xgkme7or7k2i552d@ripper>
-References: <20230612092355.87937-1-brgl@bgdev.pl>
- <20230612092355.87937-25-brgl@bgdev.pl>
- <0a57a9ad-67ab-cf1a-9bb7-c645de833450@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0a57a9ad-67ab-cf1a-9bb7-c645de833450@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 14 Jun 2023 11:01:43 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C9E42955
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 08:01:23 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EENRkW004573;
+        Wed, 14 Jun 2023 15:01:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=D7h4WTI7zh5LbrNJiimtAOgkdxsPJrtlmjnmWuc9zzc=;
+ b=fQX+gVJe3KNmvBzumFqrB3EkyVO5UZ9WWCoNyFlvbV50vvGMxCYFEuJZV+w48mAuUK8v
+ pHoR/yIduRETM3KiLkqCbYFgW3jKx6Aux+SBSwnk0U1gVGvnpRWp4VJKhn4luk5nwykX
+ vXv0gmr7zi2M98xOJT7kGBGpzpVy+Rh+KCF9WD+/W/aeoGU/PBPEJanobdHjMmRmiVzA
+ Rcu3i7wXFa8OHBRSXWDRjUOji17rljYJnGswAfFIgvENP7NmLXL56X9KSkUCc5ZaU+4X
+ OXkJM0/BUQzKDYVWoOz1SEKHiHFyLisBFtxJnDoazmvCvw4HWUX4WbVdS2tMO/88FhIc 7g== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7auy0vd2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 15:01:19 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 35EF17qn018598;
+        Wed, 14 Jun 2023 15:01:07 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3r7271jay2-1;
+        Wed, 14 Jun 2023 15:01:07 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35EF178S018591;
+        Wed, 14 Jun 2023 15:01:07 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 35EF175w018589;
+        Wed, 14 Jun 2023 15:01:07 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id 9E7E03E04; Wed, 14 Jun 2023 20:31:06 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH RFC v1 0/3] PCI: EPC: Add support to wake up host from D3 states
+Date:   Wed, 14 Jun 2023 20:30:46 +0530
+Message-Id: <1686754850-29817-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1cAo1sQS7wI4a_JUjxpt2-oBvUyqtDk3
+X-Proofpoint-GUID: 1cAo1sQS7wI4a_JUjxpt2-oBvUyqtDk3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-14_10,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 mlxscore=0 mlxlogscore=431 adultscore=0 phishscore=0
+ suspectscore=0 malwarescore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306140131
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 09:02:23PM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 12.06.2023 11:23, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > 
-> > Enable the internal PHY on sa8775p-ride.
-> > 
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> ---
-> 
-> Bjorn, Krzysztof.. I was thinking whether we should even be disabling
-> such hardware by default..
-> 
+Here we propose this patch series to add support in PCI endpoint
+driver to wake up host from D3 states.
 
-I'm in favor of keeping the configuration as generic/common/simple as
-possible. So I like your suggestion.
+As endpoint cannot send any data/MSI when the device state is in
+D3cold or D3hot. Endpoint needs to bring the device back to D0
+to send any kind of data.
 
-Regards,
-Bjorn
+For this endpoint needs to send inband PME the device is in D3hot or
+toggle wake when the device is D3 cold.
 
-> Things that reside on the SoC and have no external dependencies could
-> be left enabled:
-> 
-> pros:
-> - less fluff
-> - we'd probably very quickly fix the missing PM calls
-> - possibly less fw_devlink woes if we fail to get rid of references to
->   the disabled component?
-> 
-> cons:
-> - boot times
-> - slightly more memory usage
-> 
-> Konrad
-> >  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> > index ab767cfa51ff..7754788ea775 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> > @@ -355,6 +355,10 @@ &qupv3_id_2 {
-> >  	status = "okay";
-> >  };
-> >  
-> > +&serdes_phy {
-> > +	status = "okay";
-> > +};
-> > +
-> >  &sleep_clk {
-> >  	clock-frequency = <32764>;
-> >  };
+Comments and suggestions are welcome.
+
+Krishna chaitanya chundru (3):
+  PCI: endpoint: Add wakeup host API to EPC core
+  pci: dwc: Add wakeup host op to pci_epc_ops
+  PCI: qcom: ep: Add wake up host op to dw_pcie_ep_ops
+
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 11 ++++++++
+ drivers/pci/controller/dwc/pcie-designware.h    |  2 ++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c       | 34 +++++++++++++++++++++++++
+ drivers/pci/endpoint/pci-epc-core.c             | 29 +++++++++++++++++++++
+ include/linux/pci-epc.h                         |  3 +++
+ 5 files changed, 79 insertions(+)
+
+-- 
+2.7.4
+
