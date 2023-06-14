@@ -2,81 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78B2872FE11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:12:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F42472FE1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:15:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244506AbjFNMMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:12:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48786 "EHLO
+        id S236253AbjFNMPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:15:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244507AbjFNMMO (ORCPT
+        with ESMTP id S244571AbjFNMOv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:12:14 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 848272111
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:12:01 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f6370ddd27so8466735e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:12:01 -0700 (PDT)
+        Wed, 14 Jun 2023 08:14:51 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50EC01FEE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:14:39 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-bad0c4f6f50so870385276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:14:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686744719; x=1689336719;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Su1O/8G+NEY/y9W3jeuKWn3I4SvZSn/9II7YQB1Uo7A=;
-        b=siUuglJ610MvCGUp2hN7/R+TnDrl5vFoKtttyUv0MV4pIkS5i1D6ZuClQiEV3+wPje
-         RSPamO3rZpFtWIh/R0RWaGocuM4uSHsmYOyXZbMsn7MZUi8NXuf/Ac5VxUzGfeflsnT+
-         irBM1PNQVn/9Lfk7Z13YtKe7YOW1Quo70d7VhrsH33VX9jUUe2so4gCJWXfjhFGIziv8
-         D0WYzfvIPR34BIePI1H04eWV5JEym83PDdyKszkk4jE+LIa31gTsnA5XVGUFjr2ONA3p
-         6iLnwh1uXV3n+1Cj/WHDiDL8+HbHpp7dLxtcd9AROPSv+hz6QfNbqxIk3ljQ0+Bul2ey
-         u4vQ==
+        d=linaro.org; s=google; t=1686744878; x=1689336878;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4byCaI3hLGi5X054xdozNmq02gRpZ7o7e5d0Whg0jp0=;
+        b=jhhpbZQ1sCqTcMAZj9YEqHDiWteGLGTnSpQzHIV/CotfoIERYaGiOT5/w3Pely4IDG
+         XcPKzi+Me0jR2oLPGsx8BzClEVBbHHRbA73ueCuLIZkdbUL+XjWCWus4QNF2Au1syRTD
+         L1Gzhu2GGcLYZOQW8d/QA+UqQ0PsHMhh/6cV1KC426G6Gj52vGn5Vw+zqnRgMOK/WRQh
+         Uhhhi6hf5H2gyvO0loXfS3i4AzMUZ1Pom6pr+lUkN6TG7dnb9G9yDag0j8toLT2aWGIT
+         oajnBULCGP5RMDQCeBJlTBHkg/0yc419WgUvm3WjL+F+5fK5vSj8zWTJCAVTSIDphNY2
+         9bOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686744719; x=1689336719;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Su1O/8G+NEY/y9W3jeuKWn3I4SvZSn/9II7YQB1Uo7A=;
-        b=I4BJZOT5rX9aExkrEqo5gxDj16D0mXX39qVNJ+CRaAAz1qY8T2FOXnCyvkpxdVhdV/
-         TrTCWGpIa7+Eu3p6xApZUfCWo8YcJ+gHnhcGcttWLqrN0il5tM87Vcke7HS7eTy3/S9L
-         ZbuH9z4xRcPRVmK9sf3zctTV27syccethOSD3c+GRt3lRZbDybtLOgLMyZXbJZ06VpGd
-         S8VusPqjRvMHJpzAccJ5nee5Kbf1ewtVotYzl+3krBHjoY2N3Y5iKPGHXencuAIHx3i7
-         r4RGZxdlAFJ+0ngeGVOATK/DayF/Ioh74SJBlS7TSs/CYoLkNCMiA5C7FnEuCGeOGZkq
-         YZNg==
-X-Gm-Message-State: AC+VfDzOMnM9M83xqzAKngwNvqEAmp9Bc0ISGzv77Y2JeKHqzBHRVztC
-        3Ny3Scq1xgxlZyc1gxtCgGks5g==
-X-Google-Smtp-Source: ACHHUZ7J2peoF6dOFwXHN4OL8HtvxmF58Nf+m8oQBd9LUKiNtAZyjDfLV5ROsb+BqcCFVJsxMsyMBA==
-X-Received: by 2002:a19:6402:0:b0:4f6:5068:3c11 with SMTP id y2-20020a196402000000b004f650683c11mr7269507lfb.40.1686744719772;
-        Wed, 14 Jun 2023 05:11:59 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id d2-20020ac25ec2000000b004f24e797c55sm2109793lfq.25.2023.06.14.05.11.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 05:11:59 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 14 Jun 2023 14:11:49 +0200
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8250-edo: Rectify gpio-keys
+        d=1e100.net; s=20221208; t=1686744878; x=1689336878;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4byCaI3hLGi5X054xdozNmq02gRpZ7o7e5d0Whg0jp0=;
+        b=j6m+1JoRWQTNOYyDbwrC4ctredIdXLuUtmsD4UeDDdCLXgqfS6G4Bv6R5RH0sSnKv+
+         J8hkWEsLFZy8UYzcHZHbdcqddScPMoAl954C6OKkiWGAe4nB8swZVQYfSTqse74p5Zb5
+         XQaZjJsKXbg3qPpf0/z14lDiZ+RIBHpYzZvrtffyZPu34B/rBDoPtbjQr7Q9/GIVZE3D
+         JViBAVbt0I2HXbvveGlNZepJPB84Y7dc/w3zR4zSm5IKzf18hG+87q70tvYQe8SsMsz9
+         pmNNvVQY/4i7F+cD7+GJLwRspVy+JLbAT2AkWeNaEeq1A05SVIT6/0o0HRuxHAim/yar
+         BYpg==
+X-Gm-Message-State: AC+VfDwmtmWJqUA6sLS7Iex303oS2tRR0wTPEdjJSltfIeECR43f9WF/
+        r2zvqeMAHX1Kp2+BAGUpPKQt9iDcOFeDijVpaOs8dg==
+X-Google-Smtp-Source: ACHHUZ6UKHyZY7NGQrQNB9I+73ebkiptVm7+GCwRYyTiaq5m9BNnvjsfgKgzX9XmpAwQzdvObVt4bNfhSbcV0AqLNh0=
+X-Received: by 2002:a25:341:0:b0:bad:3b62:a822 with SMTP id
+ 62-20020a250341000000b00bad3b62a822mr1878828ybd.16.1686744878136; Wed, 14 Jun
+ 2023 05:14:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230614-topic-edo_pinsgpiopmic-v1-4-cf88a0bac26c@linaro.org>
-References: <20230614-topic-edo_pinsgpiopmic-v1-0-cf88a0bac26c@linaro.org>
-In-Reply-To: <20230614-topic-edo_pinsgpiopmic-v1-0-cf88a0bac26c@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+References: <20230609115058.9059-1-quic_jkona@quicinc.com> <20230609115058.9059-3-quic_jkona@quicinc.com>
+ <CAA8EJpr-iKMzYP7HVQV8pzXbxzLvBaq38aovJ5Ffny18yXvJZg@mail.gmail.com> <6dc9f36a-f003-06eb-744c-0ebe645dfdf0@quicinc.com>
+In-Reply-To: <6dc9f36a-f003-06eb-744c-0ebe645dfdf0@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 14 Jun 2023 15:14:26 +0300
+Message-ID: <CAA8EJppY1Ff+zLF4PDxxTzpVj25VKCK9z+is_M0VaTi1iahbBw@mail.gmail.com>
+Subject: Re: [PATCH V4 2/4] clk: qcom: camcc-sm8550: Add camera clock
+ controller driver for SM8550
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686744712; l=3205;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=1zgJzi0lueLgpAeV9ifSlI/3hHdlL1ZQj1ZG7GOA1qs=;
- b=0fsvZEDoDfIjQTVta1gCstx2qgONUqi9iWUR47T413TXK47hK/Bvw7jvn84UhlZd/HL5Pc4Ji
- BgNf6SW979vBeMKxJCjg71GIdtDwdsymEb9e7dYrDqRudLkga/Kxd/D
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -87,117 +82,209 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set up the corresponding GPIOs properly and add the leftover hardware
-buttons to mark this piece of the puzzle complete.
+On Wed, 14 Jun 2023 at 14:55, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
+>
+>
+>
+> On 6/9/2023 9:52 PM, Dmitry Baryshkov wrote:
+> > On Fri, 9 Jun 2023 at 14:52, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
+> >>
+> >> Add support for the camera clock controller for camera clients to be
+> >> able to request for camcc clocks on SM8550 platform.
+> >>
+> >> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+> >> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> >> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> >> ---
+> >> Changes since V3:
+> >>   - No changes
+> >> Changes since V2:
+> >>   - No changes
+> >> Changes since V1:
+> >>   - Sorted the PLL names in proper order
+> >>   - Updated all PLL configurations to lower case hex
+> >>   - Reused evo ops instead of adding new ops for ole pll
+> >>   - Moved few clocks to separate patch to fix patch too long error
+> >>
+> >>   drivers/clk/qcom/Kconfig        |    7 +
+> >>   drivers/clk/qcom/Makefile       |    1 +
+> >>   drivers/clk/qcom/camcc-sm8550.c | 3405 +++++++++++++++++++++++++++++++
+> >>   3 files changed, 3413 insertions(+)
+> >>   create mode 100644 drivers/clk/qcom/camcc-sm8550.c
+> >>
+> >> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> >> index 9cd1f05d436b..85efed78dc9a 100644
+> >> --- a/drivers/clk/qcom/Kconfig
+> >> +++ b/drivers/clk/qcom/Kconfig
+> >> @@ -756,6 +756,13 @@ config SM_CAMCC_8450
+> >>            Support for the camera clock controller on SM8450 devices.
+> >>            Say Y if you want to support camera devices and camera functionality.
+> >>
+> >> +config SM_CAMCC_8550
+> >> +       tristate "SM8550 Camera Clock Controller"
+> >> +       select SM_GCC_8550
+> >> +       help
+> >> +         Support for the camera clock controller on SM8550 devices.
+> >> +         Say Y if you want to support camera devices and camera functionality.
+> >> +
+> >>   config SM_DISPCC_6115
+> >>          tristate "SM6115 Display Clock Controller"
+> >>          depends on ARM64 || COMPILE_TEST
+> >> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> >> index 75d035150118..97c8cefc2fd0 100644
+> >> --- a/drivers/clk/qcom/Makefile
+> >> +++ b/drivers/clk/qcom/Makefile
+> >> @@ -101,6 +101,7 @@ obj-$(CONFIG_SDX_GCC_75) += gcc-sdx75.o
+> >>   obj-$(CONFIG_SM_CAMCC_6350) += camcc-sm6350.o
+> >>   obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
+> >>   obj-$(CONFIG_SM_CAMCC_8450) += camcc-sm8450.o
+> >> +obj-$(CONFIG_SM_CAMCC_8550) += camcc-sm8550.o
+> >>   obj-$(CONFIG_SM_DISPCC_6115) += dispcc-sm6115.o
+> >>   obj-$(CONFIG_SM_DISPCC_6125) += dispcc-sm6125.o
+> >>   obj-$(CONFIG_SM_DISPCC_6350) += dispcc-sm6350.o
+> >> diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
+> >> new file mode 100644
+> >> index 000000000000..85f0c1e09b2b
+> >> --- /dev/null
+> >> +++ b/drivers/clk/qcom/camcc-sm8550.c
+> >> @@ -0,0 +1,3405 @@
+> >> +// SPDX-License-Identifier: GPL-2.0-only
+> >> +/*
+> >> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> >> + */
+> >> +
+> >> +#include <linux/clk-provider.h>
+> >> +#include <linux/module.h>
+> >> +#include <linux/of_device.h>
+> >> +#include <linux/pm_runtime.h>
+> >> +#include <linux/regmap.h>
+> >> +
+> >> +#include <dt-bindings/clock/qcom,sm8550-camcc.h>
+> >> +
+> >> +#include "clk-alpha-pll.h"
+> >> +#include "clk-branch.h"
+> >> +#include "clk-rcg.h"
+> >> +#include "clk-regmap.h"
+> >> +#include "common.h"
+> >> +#include "gdsc.h"
+> >> +#include "reset.h"
+> >> +
+> >> +enum {
+> >> +       DT_IFACE,
+> >> +       DT_BI_TCXO,
+> >> +};
+> >> +
+> >> +enum {
+> >> +       P_BI_TCXO,
+> >> +       P_CAM_CC_PLL0_OUT_EVEN,
+> >> +       P_CAM_CC_PLL0_OUT_MAIN,
+> >> +       P_CAM_CC_PLL0_OUT_ODD,
+> >> +       P_CAM_CC_PLL1_OUT_EVEN,
+> >> +       P_CAM_CC_PLL2_OUT_EVEN,
+> >> +       P_CAM_CC_PLL2_OUT_MAIN,
+> >> +       P_CAM_CC_PLL3_OUT_EVEN,
+> >> +       P_CAM_CC_PLL4_OUT_EVEN,
+> >> +       P_CAM_CC_PLL5_OUT_EVEN,
+> >> +       P_CAM_CC_PLL6_OUT_EVEN,
+> >> +       P_CAM_CC_PLL7_OUT_EVEN,
+> >> +       P_CAM_CC_PLL8_OUT_EVEN,
+> >> +       P_CAM_CC_PLL9_OUT_EVEN,
+> >> +       P_CAM_CC_PLL9_OUT_ODD,
+> >> +       P_CAM_CC_PLL10_OUT_EVEN,
+> >> +       P_CAM_CC_PLL11_OUT_EVEN,
+> >> +       P_CAM_CC_PLL12_OUT_EVEN,
+> >> +};
+> >> +
+> >> +static const struct pll_vco lucid_ole_vco[] = {
+> >> +       { 249600000, 2300000000, 0 },
+> >> +};
+> >> +
+> >> +static const struct pll_vco rivian_ole_vco[] = {
+> >> +       { 777000000, 1285000000, 0 },
+> >> +};
+> >> +
+> >> +static const struct alpha_pll_config cam_cc_pll0_config = {
+> >> +       /* .l includes RINGOSC_CAL_L_VAL, CAL_L_VAL, L_VAL fields */
+> >> +       .l = 0x4444003e,
+> >
+> > I'd still insist on not touching the config.l field semantics.
+> >
+>
+> We feel it is better to update config->l field and reuse existing code
+> than adding separate function for lucid ole pll configure.
 
-Fixes: 69cdb97ef652 ("arm64: dts: qcom: sm8250: Add support for SONY Xperia 1 II / 5 II (Edo platform)")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../dts/qcom/sm8250-sony-xperia-edo-pdx206.dts     | 10 ++++
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi      | 54 +++++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+As you probably got it, I'm not convinced that it is a better
+approach. You are feeding additional data in a single configuration
+field and passing constant data as variadic one.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-index ea4571bf4fbf..58a521046f5f 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-@@ -20,6 +20,8 @@ &framebuffer {
- };
- 
- &gpio_keys {
-+	pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
-+
- 	g-assist-key {
- 		label = "Google Assistant Key";
- 		linux,code = <KEY_LEFTMETA>;
-@@ -48,6 +50,14 @@ &pm8150_gpios {
- 			  "SP_ARI_PWR_ALARM",
- 			  "NC",
- 			  "NC"; /* GPIO_10 */
-+
-+	g_assist_n: g-assist-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
- };
- 
- &pm8150b_gpios {
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 9f9e7e9784fe..e55a94e5ff08 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -50,12 +50,26 @@ framebuffer: framebuffer@9c000000 {
- 	gpio_keys: gpio-keys {
- 		compatible = "gpio-keys";
- 
--		/*
--		 * Camera focus (light press) and camera snapshot (full press)
--		 * seem not to work properly.. Adding the former one stalls the CPU
--		 * and the latter kills the volume down key for whatever reason. In any
--		 * case, they are both on &pm8150b_gpios: camera focus(2), camera snapshot(1).
--		 */
-+		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
-+		pinctrl-names = "default";
-+
-+		key-camera-focus {
-+			label = "Camera Focus";
-+			linux,code = <KEY_CAMERA_FOCUS>;
-+			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
-+
-+		key-camera-snapshot {
-+			label = "Camera Snapshot";
-+			linux,code = <KEY_CAMERA>;
-+			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
- 
- 		key-vol-down {
- 			label = "Volume Down";
-@@ -543,6 +557,34 @@ &pcie2_phy {
- 	vdda-pll-supply = <&vreg_l9a_1p2>;
- };
- 
-+&pm8150_gpios {
-+	vol_down_n: vol-down-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pm8150b_gpios {
-+	snapshot_n: snapshot-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+
-+	focus_n: focus-n-state {
-+		pins = "gpio2";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
- &pon_pwrkey {
- 	status = "okay";
- };
+>
+> >> +       .alpha = 0x8000,
+> >> +       .config_ctl_val = 0x20485699,
+> >> +       .config_ctl_hi_val = 0x00182261,
+> >> +       .config_ctl_hi1_val = 0x82aa299c,
+> >> +       .test_ctl_val = 0x00000000,
+> >> +       .test_ctl_hi_val = 0x00000003,
+> >> +       .test_ctl_hi1_val = 0x00009000,
+> >> +       .test_ctl_hi2_val = 0x00000034,
+> >> +       .user_ctl_val = 0x00008400,
+> >> +       .user_ctl_hi_val = 0x00000005,
+> >> +};
+> >> +
+> >
+> > [skipped the rest, LGTM]
+> >
+> >> +
+> >> +static struct platform_driver cam_cc_sm8550_driver = {
+> >> +       .probe = cam_cc_sm8550_probe,
+> >> +       .driver = {
+> >> +               .name = "cam_cc-sm8550",
+> >> +               .of_match_table = cam_cc_sm8550_match_table,
+> >> +       },
+> >> +};
+> >> +
+> >> +static int __init cam_cc_sm8550_init(void)
+> >> +{
+> >> +       return platform_driver_register(&cam_cc_sm8550_driver);
+> >> +}
+> >> +subsys_initcall(cam_cc_sm8550_init);
+> >
+> > As it was pointed out, this driver is built as a module by default.
+> > Please perform the tesing and cleanup before sending the driver and
+> > use module_platform_driver.
+> >
+>
+> We want clock drivers to be probed early in the bootup to avoid any
+> probe deferrals of consumer drivers. If there is any scenario where
+> clock drivers are built statically into kernel, then subsys_initcall()
+> will ensure clock drivers are probed earlier. When built as module,
+> subsys_initcall() will fallback to module_init() which is same as
+> module_platform_driver().
+
+Consumer driver probe deferrals are nowadays significantly prevented
+by using devlink rather than depending on the initialisation level.
+And I think both GKI and defconfig build camcc as modules.
+
+>
+> Thanks,
+> Jagadeesh
+>
+> >> +
+> >> +static void __exit cam_cc_sm8550_exit(void)
+> >> +{
+> >> +       platform_driver_unregister(&cam_cc_sm8550_driver);
+> >> +}
+> >> +module_exit(cam_cc_sm8550_exit);
+> >> +
+> >> +MODULE_DESCRIPTION("QTI CAMCC SM8550 Driver");
+> >> +MODULE_LICENSE("GPL");
+> >> --
+> >> 2.40.1
+> >>
+> >
+> >
+
+
 
 -- 
-2.41.0
-
+With best wishes
+Dmitry
