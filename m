@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2511A72FC8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:35:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1DAB72FC8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:36:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236538AbjFNLf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 07:35:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49380 "EHLO
+        id S244069AbjFNLgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 07:36:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235683AbjFNLfy (ORCPT
+        with ESMTP id S244077AbjFNLf5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 07:35:54 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB21199B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 04:35:53 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f766777605so797045e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 04:35:53 -0700 (PDT)
+        Wed, 14 Jun 2023 07:35:57 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 096651BEC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 04:35:54 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f769c37d26so400549e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 04:35:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686742551; x=1689334551;
+        d=linaro.org; s=google; t=1686742553; x=1689334553;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qQ877MkpC4ehMBHierpFme4jBSlXee3tho/1k2lPnrc=;
-        b=uI93E48Udehbrc1xQ5FKCcryJu31IKfTe3ArGksSM8duqIQR2ZrmfLpdNQ+qIFOTz3
-         SncRrViURipzqRAPlpCfr0FC/92IC2vwjuwbLJW0jMVN4xS0uvzRZDdjiw3BWTRuunmD
-         74bsU98nNPnMyWJxVjcoiiUjAVYZX3Fjxw9pD9ouFNVvk7R2iXYvkBYUYUMnXvRsEQNy
-         Z2NMYKU4vWUsz3jOQB6+DLg9JUqt8JaSXmg/MiW7SpM1Eypph8+bYHzYLnjZ0DSE9HqF
-         E/P5NG1+ueIKjdibYHTm68Qn36j/UGY7i0FvcMaKNkYjnpwn9GUr4txXLSnYcnNMGN3e
-         Mv2A==
+        bh=PbHzuVw9djUb2dacqpTuChV+YchmANRy5455/F4AJp0=;
+        b=hEudXtbM1Xo4XzWv1z7MyF9xYSMji7u4xEYfRPu5GR0wTH9rs51Q9yuKQq35iwFxcj
+         73la0nxq5ikY9Y3UvLzihT386Lc6JUJnCndhTddBtiTZ8e5DP29IK8TadpedbH1tN4Ej
+         PtKxxbZiSTxH2+nKJLiByE1VyHrySrnAR8W0IgY9TTtkCQgHMwTYQhYAVPzVShVOx3Oi
+         8GkX6sE9mktM2Nv8zPs0zTNj/7oz3HUv6oJDofHjB9E8owHPTJQr09n7juaBxDX6PrF4
+         41V3c3zIp9cSp/ku/uYeV2Onu97dJ0rrCnJCTqmvFljBrdTQ8EgHh4tfAtgijSlKdwVy
+         37bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686742551; x=1689334551;
+        d=1e100.net; s=20221208; t=1686742553; x=1689334553;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qQ877MkpC4ehMBHierpFme4jBSlXee3tho/1k2lPnrc=;
-        b=c9mTr+EDHRdu1D25vgjUJlgbvTCeXx4Fnu5xs9dHkdqZps7mV+TRVkfkhe9dkFHNuq
-         K+lGrsBBhp7yNg6kg9CJ0ew7/OOcE0DGOD1wcM6pqdgNCQomv/VZLNPeVG0oe37munIP
-         tTMDAeXdw2lawJTm0LIm08XV+79EwZQUguX8HDmdB98MfgsbXlR8BxGySez0lnPYjgps
-         EF0Lfeu/W3xNg3Tm6W0hlbQB3M1JrdAUP+2/nFkKO1utZ3uS9WwrlhNcHLW9flXi7HxN
-         MgxOMgDVVBx7elv/7KfJXBq58eWMHmgCBwbVIk5odAJfT6HqQzIMdctVf58ELs2idRr5
-         OOug==
-X-Gm-Message-State: AC+VfDweh66zEpQpvJpYcLFxb2fKYfnMKY8GhFFEavvCfaSCyaaUPazi
-        JpTMOYoWZZdWzGX/BMaEgOM+FVi4IUbwVPT58Gw=
-X-Google-Smtp-Source: ACHHUZ60YXB+ZseJWIdpv6oeU1CgzUgucbhQDO4MpnIaed7403UQGhY/Ck461aIqR+24CTGdjBT+iw==
-X-Received: by 2002:a19:e344:0:b0:4f7:5d2d:337e with SMTP id c4-20020a19e344000000b004f75d2d337emr2291524lfk.15.1686742551189;
-        Wed, 14 Jun 2023 04:35:51 -0700 (PDT)
+        bh=PbHzuVw9djUb2dacqpTuChV+YchmANRy5455/F4AJp0=;
+        b=MsYkUOw8goGDrBkU1X4K35m2nJUXBfNYaiuolHw9isysRYl6TeXIt9WDi32O1Sgmf9
+         2nTDoG7GC1dtyED1auMIHCJeC+Oe+tcvhOjOQ50btMoLpOP+RIvipYollbiZsGF3RkVt
+         B+ovqn2TYO1kcgiA2gVnSj6jb8PeO4XlB3nr3w9i4yrAWianuA+VdjUzzIdixR2vYcYw
+         TvDaM1CdN1hDo3waCdFRA9z68DdLNFasZtIhWcC5ptjYApFUTN6+EtytFQv0JAgWWn6o
+         ypefnEBcPNcUC0MSl5k4Wt8aU8ewMR3TSH5Dbkp5AoOGUSvv/QuMSdHDm+IJXTwSbP6j
+         wh3w==
+X-Gm-Message-State: AC+VfDxirgG+eWqx5kS61pOtz3rqX63C7HrmVwGn/wXa7GR1MHakL2k+
+        Wf3pstyAe/Vo1ekPcc2S4sZJ8Q==
+X-Google-Smtp-Source: ACHHUZ4+vaLtAihNVuosK3H1gbrAOEACwkJ9nMi9/2tAJspUX+ZYen/zFcnjt7IZgjHS+iQNSeaCEw==
+X-Received: by 2002:a19:ab01:0:b0:4f1:3bd7:e53a with SMTP id u1-20020a19ab01000000b004f13bd7e53amr7569927lfe.49.1686742553068;
+        Wed, 14 Jun 2023 04:35:53 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id x1-20020ac25dc1000000b004f64b8eee61sm2088406lfq.97.2023.06.14.04.35.49
+        by smtp.gmail.com with ESMTPSA id x1-20020ac25dc1000000b004f64b8eee61sm2088406lfq.97.2023.06.14.04.35.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 04:35:50 -0700 (PDT)
+        Wed, 14 Jun 2023 04:35:52 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 14 Jun 2023 13:35:33 +0200
-Subject: [PATCH v2 2/7] clk: qcom: gpucc-sm6350: Fix clock source names
+Date:   Wed, 14 Jun 2023 13:35:34 +0200
+Subject: [PATCH v2 3/7] arm64: dts: qcom: sm6350: Add GPUCC node
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230315-topic-lagoon_gpu-v2-2-afcdfb18bb13@linaro.org>
+Message-Id: <20230315-topic-lagoon_gpu-v2-3-afcdfb18bb13@linaro.org>
 References: <20230315-topic-lagoon_gpu-v2-0-afcdfb18bb13@linaro.org>
 In-Reply-To: <20230315-topic-lagoon_gpu-v2-0-afcdfb18bb13@linaro.org>
 To:     Bjorn Andersson <andersson@kernel.org>,
@@ -73,57 +73,70 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686742545; l=1472;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686742545; l=1415;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Um2mvoH0hgq2pxMG9SLY6mhwWzANPWf1u6+3THUrEME=;
- b=2C90kfo8MN0j6VNDnSDnGoAxAhAtouxdKh8jKaNG5fneNrIb81w/UW4+kwXuSrKmvexCRr9cz
- 8duNdf3C0VPCiFGebaCghiTiKRhyqiQs/KLXoL4Y3Rso3YuoKiDg1TT
+ bh=gsjvRRutg0p4O5/y2LMtWAUeMOWVStHD9z6YTRu1r8w=;
+ b=ci/KzkaFWmBtpokctHZ0kQ1lRBx7DZqVYmrgzDc9/fI22dpniJyL96eFOt8B1wrTgBrY6DuQ4
+ TshDj9C0V5nDHLSxV12rpBEq6e+82I1p5hR0QeK08Hr8LJZx6qX4F1n
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-fw_name for GCC inputs didn't match the bindings. Fix it.
+From: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-Fixes: 013804a727a0 ("clk: qcom: Add GPU clock controller driver for SM6350")
+Add and configure a node for the GPU clock controller.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/gpucc-sm6350.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/clk/qcom/gpucc-sm6350.c b/drivers/clk/qcom/gpucc-sm6350.c
-index a9887d1f0ed7..0bcbba2a2943 100644
---- a/drivers/clk/qcom/gpucc-sm6350.c
-+++ b/drivers/clk/qcom/gpucc-sm6350.c
-@@ -132,8 +132,8 @@ static const struct clk_parent_data gpu_cc_parent_data_0[] = {
- 	{ .index = DT_BI_TCXO, .fw_name = "bi_tcxo" },
- 	{ .hw = &gpu_cc_pll0.clkr.hw },
- 	{ .hw = &gpu_cc_pll1.clkr.hw },
--	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk" },
--	{ .index = DT_GPLL0_OUT_MAIN_DIV, .fw_name = "gcc_gpu_gpll0_div_clk" },
-+	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk_src" },
-+	{ .index = DT_GPLL0_OUT_MAIN_DIV, .fw_name = "gcc_gpu_gpll0_div_clk_src" },
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 30e77010aed5..fd35810bcfb5 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -5,6 +5,7 @@
+  */
  
- static const struct parent_map gpu_cc_parent_map_1[] = {
-@@ -151,7 +151,7 @@ static const struct clk_parent_data gpu_cc_parent_data_1[] = {
- 	{ .hw = &gpu_cc_pll0.clkr.hw },
- 	{ .hw = &gpu_cc_pll1.clkr.hw },
- 	{ .hw = &gpu_cc_pll1.clkr.hw },
--	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk" },
-+	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk_src" },
- };
+ #include <dt-bindings/clock/qcom,gcc-sm6350.h>
++#include <dt-bindings/clock/qcom,gpucc-sm6350.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,sm6350-camcc.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
+@@ -1308,6 +1309,20 @@ compute-cb@5 {
+ 			};
+ 		};
  
- static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
++		gpucc: clock-controller@3d90000 {
++			compatible = "qcom,sm6350-gpucc";
++			reg = <0 0x03d90000 0 0x9000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc GCC_GPU_GPLL0_CLK>,
++				 <&gcc GCC_GPU_GPLL0_DIV_CLK>;
++			clock-names = "bi_tcxo",
++				      "gcc_gpu_gpll0_clk_src",
++				      "gcc_gpu_gpll0_div_clk_src";
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
+ 		mpss: remoteproc@4080000 {
+ 			compatible = "qcom,sm6350-mpss-pas";
+ 			reg = <0x0 0x04080000 0x0 0x4040>;
 
 -- 
 2.41.0
