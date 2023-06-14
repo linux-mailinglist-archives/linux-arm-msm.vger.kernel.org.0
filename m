@@ -2,82 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CE4872FEE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:43:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E175D72FF05
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:48:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244673AbjFNMnQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:43:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45548 "EHLO
+        id S244727AbjFNMsw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:48:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244659AbjFNMnP (ORCPT
+        with ESMTP id S244710AbjFNMsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:43:15 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552B2E62
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:43:13 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b3424edd5fso8641651fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:43:13 -0700 (PDT)
+        Wed, 14 Jun 2023 08:48:51 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E800198
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:48:50 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-30ae95c4e75so6628623f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686746591; x=1689338591;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1686746929; x=1689338929;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xr1V+LWyB4E+pek0N0wXhqnpk/YR1ub+Or3UrIkXcKI=;
-        b=PGxMzcjVZYyTBmQOF9zIRR0zm+DlJgLIlP9J0TWHajoDvdi0hI0JmUEWi7thCwJVrC
-         Q4K5+vhUdx49saBKXzfUrqGF8ujAsUAAie/VNrKdgtIrS6qga1jaM7Xyk6pDXUNT0yOf
-         HyH7B8hmCLYmvRkxrA50SR6QS2dqi1fdvcHA02dMMnTBwJDyh2ynq5GZNfVaiRSAexN6
-         NSa0h51Aa0Hpt07UiGJeQclXIC0AEaDio3FEzZlgbByyAccQneXReeXYU+l26moMhO7K
-         uokJwOH9mKG66m08DRTtmqykJFWYkh9PncTjgWci07j8iDWqNjCH4ukigoJstCABVk3k
-         5DSw==
+        bh=tWn2ul/ieVtMNMtJF2WtOiK5BLVE++NXvHhAy0ozK1s=;
+        b=BBmXo1oU/lRnhp8XbmGYXALe8y08qNC2vl2nZSucshg1C7s62UDPmQ/SWpiUdMxydC
+         gGlQYQgeLC/hidRiO6PXUKHXzSlm17sgDDYpkZs5JzkkNryu4h5aEv6nqncoVUFt4jfE
+         UWo3Imfn+7wP7ttA5rLuzoHxjcASgpfNSeSf1mtfuOfGy+XD7PgCct/HK+HPmLmLABug
+         wU+8g9kfoRvwWNLZG7vvE5JIHDkcaJe992YLWYmE98pvR+blTSMlD2gw0R6wlaXgOCMK
+         x+qWPvRDN9LrseJQQd6/JBalqFtn6qsnViOwrjNdIIH1w1CFRHpqFxbEXeXH19kRGqr4
+         FrNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686746591; x=1689338591;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20221208; t=1686746929; x=1689338929;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xr1V+LWyB4E+pek0N0wXhqnpk/YR1ub+Or3UrIkXcKI=;
-        b=VI1CPAoDd3IaZ9PKOD0RDCnkKINwrgloMQelof5gqCvNyUoUDnlDQ/yzbfo1Ens4s+
-         I4fadG8D7Xvg0KgPjpNG9j3DMl71dgju2+o5y0gQOfPAhO6YSa7LYKSANAaPrMR3V/IM
-         WFW2c3isFAT2m23jIkp8t9xJ7XTuCWfdYdBjfAoHhEm2vvOizTPp1AT62X6IReO1kqh4
-         aCOIR8n5BaWnRaVOBbQRJcNSgr6wHrbDXT7iKa1tncSOE3gj1XLpE8r7hfyFXLT3eXG1
-         BK6XVrzNj9a7JXt5DneiVTGQNCNk+wjO9rGX2PGd5k6UHof0iKzW2YESVt8nYpA7Dm+p
-         1NfA==
-X-Gm-Message-State: AC+VfDz9yscKU5eWMEc3jnp0ZekvrijuQtzbeVrdVxqBTjlc9JbTHlx6
-        hafPwz7vek1aF63v6g87dPz/js9MP+Ix2hmInxM=
-X-Google-Smtp-Source: ACHHUZ5S2yiBeIt59h0C1TIhl4JhTlqn2abkd9/fXxKTCTRgVVrD7qbazgxRVkXsPdlmcRQj8Y5GJw==
-X-Received: by 2002:a2e:990d:0:b0:2af:bf0d:e1c8 with SMTP id v13-20020a2e990d000000b002afbf0de1c8mr6882838lji.12.1686746591578;
-        Wed, 14 Jun 2023 05:43:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id h8-20020a2e3a08000000b002b200d9838bsm2480460lja.104.2023.06.14.05.43.10
+        bh=tWn2ul/ieVtMNMtJF2WtOiK5BLVE++NXvHhAy0ozK1s=;
+        b=LjbX1fm+DQlbg/r192W/pii66mgm+OlCGQi351vLy4c6+N503MX4ODQVy7ulxTFWRB
+         PtNmYlUhPF+ZO8SKipZor7jx8XNype5AchPS4/V/lzOBB1ensIuq7FrnF+AXlp8vnbPd
+         sNGFD1nCt6hw8N0a0fS35TaZFhcXNpRU+3RBwHFVVcOS3Qs7exMV7Of1ng+CgDOyuwSc
+         ShcCPmbeilP6DJfyRnR2jkiDlOwlmqGbsqpPLYZaB17GX1dD4odM6V8vDoNagHRbJ4ax
+         4Zt1WWQWPSOby7vBTJ0/dLr9DHKTMjcH/MexJ18TqXoDFGN5PwfgVOH7F8TfFBf/f6GU
+         J4UA==
+X-Gm-Message-State: AC+VfDxM7vCzwHWAXEGOrRmPc2DoreN63LjSXq9OFK+yuuTKPAtCmScs
+        vO2oQqheoYskyULCfzOgroNloQ==
+X-Google-Smtp-Source: ACHHUZ6G4geiqOgniRSeVj1eP+kmuDRfBNxlkVWrP4zAsJE/JNw2eWu2clIu8ZQXbjX5TOfCBvtnEw==
+X-Received: by 2002:a5d:4c4f:0:b0:309:49e6:d1af with SMTP id n15-20020a5d4c4f000000b0030949e6d1afmr10455204wrt.2.1686746928789;
+        Wed, 14 Jun 2023 05:48:48 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id v13-20020adfebcd000000b00309382eb047sm18303481wrn.112.2023.06.14.05.48.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 05:43:11 -0700 (PDT)
-Message-ID: <8d91dfc0-f6c0-813f-de9c-1befdd0ccfdf@linaro.org>
-Date:   Wed, 14 Jun 2023 14:43:09 +0200
+        Wed, 14 Jun 2023 05:48:48 -0700 (PDT)
+Message-ID: <694a8e47-b478-7ca3-006b-b0972bf7e0a6@linaro.org>
+Date:   Wed, 14 Jun 2023 13:48:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8250-edo: Panel framebuffer is
- 2.5k instead of 4k
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 5/8] arm64: dts: qcom: msm8939: Fix regulator constraints
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230606211418.587676-1-marijn.suijten@somainline.org>
- <974f68dc-b667-c9a7-94c4-1023ef271fab@linaro.org>
- <a69ddadd-8d59-e784-ddce-16c83a7f13a6@collabora.com>
- <kdu6apwgp7nu6mwqatufhxvnbunwodr4iu2uaqjacbjgbmmy5y@zh53imtpqfgs>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <kdu6apwgp7nu6mwqatufhxvnbunwodr4iu2uaqjacbjgbmmy5y@zh53imtpqfgs>
-Content-Type: text/plain; charset=UTF-8
+        linux-kernel@vger.kernel.org, Benjamin Li <benl@squareup.com>
+References: <20230530-msm8939-regulators-v1-0-a3c3ac833567@gerhold.net>
+ <20230530-msm8939-regulators-v1-5-a3c3ac833567@gerhold.net>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230530-msm8939-regulators-v1-5-a3c3ac833567@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -89,72 +79,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.06.2023 14:40, Marijn Suijten wrote:
-> On 2023-06-07 09:15:08, AngeloGioacchino Del Regno wrote:
->> Il 07/06/23 00:52, Konrad Dybcio ha scritto:
->>>
->>>
->>> On 6.06.2023 23:14, Marijn Suijten wrote:
->>>> The framebuffer configuration for edo pdx203, written in edo dtsi (which
->>>> is overwritten in pdx206 dts for its smaller panel) has to use a
->>>> 1096x2560 configuration as this is what the panel (and framebuffer area)
->>>> has been initialized to.  Downstream userspace also has access to (and
->>>> uses) this 2.5k mode by default, and only switches the panel to 4k when
->>>> requested.
->>>>
->>>> This is similar to commit be8de06dc397 ("arm64: dts: qcom:
->>>> sm8150-kumano: Panel framebuffer is 2.5k instead of 4k") which fixed the
->>>> same for the previous generation Sony platform.
->>>>
->>>> Fixes: 69cdb97ef652 ("arm64: dts: qcom: sm8250: Add support for SONY Xperia 1 II / 5 II (Edo platform)")
->>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>> ---
->>> And so I derped again.
->>>
->>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>
->> I would've liked more to see a commit saying "replace simple-framebuffer with xxxx"
->> (where xxxx is DSI panel, etc) but that will as well do for now... :-)
+On 14/06/2023 08:16, Stephan Gerhold wrote:
+> The regulator constraints for the MSM8939 devices were originally taken
+> from Qualcomm's msm-3.10 vendor device tree (for lack of better
+> documentation). Unfortunately it turns out that Qualcomm's voltages are
+> slightly off as well and do not match the voltage constraints applied
+> by the RPM firmware.
 > 
-> Fwiw we could keep it around as MDSS "gracefully" takes over when it
-> probes a little bit later with fbcon over DRM/KMS, and it sometimes
-> helps reading what is up when something fails before or during MDSS
-> probe.
-I believe we should do this. Perhaps even add some early code to drm/msm
-that'd read out the address (and other configuration) from the mdp hw and
-set it up automagically.
+> This means that we sometimes request a specific voltage but the RPM
+> firmware actually applies a much lower or higher voltage. This is
+> particularly critical for pm8916_l11 which is used as SD card VMMC
+> regulator: The SD card can choose a voltage from the current range of
+> 1.8 - 2.95V. If it chooses to run at 1.8V we pretend that this is fine
+> but the RPM firmware will still silently end up configuring 2.95V.
+> This can be easily reproduced with a multimeter or by checking the
+> SPMI hardware registers of the regulator.
+> 
+> Apply the same change as for MSM8916 in commit 355750828c55 ("arm64:
+> dts: qcom: msm8916: Fix regulator constraints") and make the voltages
+> match the actual "specified range" in the PM8916 Device Specification
+> which is enforced by the RPM firmware.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-Konrad
-> 
-> - Marijn
-> 
->> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
->>
->>>
->>> Konrad
->>>>
->>>> Changes since v2:
->>>> - Rename griffin (copy-paste from related patch) to pdx203 in comment.
->>>>
->>>>   arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 7 ++++---
->>>>   1 file changed, 4 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
->>>> index 3d22be747f042..8f867f841cb83 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
->>>> @@ -54,9 +54,10 @@ chosen {
->>>>   		framebuffer: framebuffer@9c000000 {
->>>>   			compatible = "simple-framebuffer";
->>>>   			reg = <0 0x9c000000 0 0x2300000>;
->>>> -			width = <1644>;
->>>> -			height = <3840>;
->>>> -			stride = <(1644 * 4)>;
->>>> +			/* pdx203 BL initializes in 2.5k mode, not 4k */
->>>> +			width = <1096>;
->>>> +			height = <2560>;
->>>> +			stride = <(1096 * 4)>;
->>>>   			format = "a8r8g8b8";
->>>>   		};
->>>>   	};
->>
+Hrmm.
+
+I recently found in the schematic the following table.
+
+Supply | Default V | Range V     | Rated I | Default On
+L1       1.2875      0.375-1.525   250       N
+L2       1.2         0.375.1.525   600       Y
+L3       1.15        0.375-1.525   350       Y
+L4       2.05        1.75-3.337    250       N
+L5       1.8         1.75-3.337    200       Y
+L6       1.8         1.75-3.337    150       Y
+L7       1.8         1.75-3.337    110       Y
+L8       2.9         1.75-3.337    400       Y
+L9       3.3         1.75-3.337    600       N
+L10      2.8         1.75-3.337    150       N
+L11      2.95        1.75-3.337    600       Y
+L12      2.95        1.75-3.337    50        Y
+L13      3.075       1.75-3.337    50        Y
+L14      1.8         1.75-3.337    55        N
+L15      1.8         1.75-3.337    55        N
+L16      1.8         1.75-3.337    55        N
+L17      2.85        1.75-3.337    450       N
+L18      2.7         1.75-3.337    150       N
+
+So let me see.
+
+L8 2.9 = true
+L11 2.95 = true
+
+S3 just says 1v3 but, I take your word for it on the multi-meter 
+measurement.
+
+S4 says 2v1
+
+This patch looks fine
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
