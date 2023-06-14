@@ -2,82 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1289F72F514
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 08:45:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B87272F5A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 09:13:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234661AbjFNGpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 02:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51866 "EHLO
+        id S243143AbjFNHNn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 03:13:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233721AbjFNGpM (ORCPT
+        with ESMTP id S229796AbjFNHNl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 02:45:12 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 012B91A3;
-        Tue, 13 Jun 2023 23:45:10 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35E4GfjX011094;
-        Wed, 14 Jun 2023 06:45:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Jr5jIEmZwqk5/vqIbzjrfUS9+c47/9L9q13IlgbuhxI=;
- b=QDuJKcQvEg3++mOt83KenN3UHuvhVZ1+jxwRcN8/GRRDZ/d7yUFP1MLP+Nk2eG4iwp0A
- Tq4jLXOm96J5MOAKEpqmt+oXO1EF/Gy6Rt6e6ic5fHT/69O54FONmzlEwLIymrJ2+tkm
- LnAiFJQzwgBO+UC7zOGobxhWJtO3nY7be13VazhrlM0/5WVxIO2XOQRh+UmF5FFVUEJW
- XVZP+tdpZMzc6rZbP+w8RnRTbo/UbwsK1rr/RFe2gXg7TE7RKIiANQZGyPdUrxEdkVly
- EcsQ46N6eeat14vpyYyO6VhvQhYvlDRRpL75GTlrPfRV0A91eE8Ve4XcD9bdUrG/iC29 NQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6t0bst3p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 06:45:07 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35E6j71O020146
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 06:45:07 GMT
-Received: from [10.217.198.86] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 13 Jun
- 2023 23:45:04 -0700
-Message-ID: <0b66dc99-7c88-f980-b91c-ac5d1f1301b3@quicinc.com>
-Date:   Wed, 14 Jun 2023 12:15:01 +0530
+        Wed, 14 Jun 2023 03:13:41 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798891BC9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:13:40 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-5196a728d90so85661a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:13:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686726819; x=1689318819;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=esjhB6FNbC1EpA195+AAnAhSVw66W/f4eIwLMazyni8=;
+        b=Qdmt9FtZE9pDCTgj2b/5u43jUbAH+QGW34yMXH8ELwLQaPlaOaQqFvONc/VLmRbzzv
+         mbRB1WjOKYWr8ChYE+wGsye+zvj3Rf9QG6GUf3YAjax+r/sPr5KbZwES2CQslsL5cGd8
+         Dsi+K0uIjfSK7N5dwOF7yy6uGJKEXyQChR6wWtjFdHbXJbMcP+ewflU2MLR7VNZev3yn
+         nkwayUyejXjvlCwFVASsYYy/vZ2qSPjvVmdf9wzQqSMgmquEGMOEjdY845CoGc6imcY6
+         jnaY2CgDyYrSZtePupztTtufCgdstxTql2RDns+378YujR/unp8diGu43Beq+wsCZj9t
+         eM0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686726819; x=1689318819;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=esjhB6FNbC1EpA195+AAnAhSVw66W/f4eIwLMazyni8=;
+        b=fiOyhRdYCtZl/Zfm4gDrxyhZvEdxC0YfJJMPzdF2FcwAu9H5p+Ic96XA4wuB4+eg58
+         kwHkJ7JKAHif/u0cKAYnunQjTvkWor2f/FCxbSGRvsc8p5Op3exOlhPMvZpXCg+IdfNw
+         YYe38mjXCGRhNcpYNNYG+lv3PM/E7GWM5sghiMo5NlBrvywkaQRyAKvAo9MBFufQOUNe
+         UZQ4TMVLJ5TeDKaYelGG2jlTNfNVE1ahgNxfZpJrV6/Sj8rkqE8PX5QoMO7z2A9TrfQj
+         NhlV7XXGjWIskv7fUgfg6Sqor1Q8SMhask8pGEl6wepH3QubVA6wOyRS2hlGa6BArjhX
+         rrxA==
+X-Gm-Message-State: AC+VfDzXE7IfFbalmXj0Ryz32ZD1GoKdqQW0aRBCFNWSk1bmr07AR24C
+        19EB+ARee5H6ra9hckFQ9CVS6g==
+X-Google-Smtp-Source: ACHHUZ74GqZI5n7DD7l+seK7RspzJy2be50nrAxgF0QALAzfeJz/QPWtgJwKx1qQM3opxU4IOBMSyQ==
+X-Received: by 2002:aa7:d9c1:0:b0:518:6e09:425c with SMTP id v1-20020aa7d9c1000000b005186e09425cmr3395161eds.9.1686726818958;
+        Wed, 14 Jun 2023 00:13:38 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id v26-20020aa7dbda000000b0050cc4461fc5sm7296614edt.92.2023.06.14.00.13.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 00:13:38 -0700 (PDT)
+Message-ID: <f5b5438a-48ce-8151-cfaf-09b4c5965c97@linaro.org>
+Date:   Wed, 14 Jun 2023 09:13:35 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-From:   Tushar Nimkar <quic_tnimkar@quicinc.com>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: idle-states: Add
- idle-state-disabled property
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-CC:     <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_lsrao@quicinc.com>,
-        <quic_mkshah@quicinc.com>, <devicetree@vger.kernel.org>
-References: <20230608085544.16211-1-quic_tnimkar@quicinc.com>
- <20230608085544.16211-2-quic_tnimkar@quicinc.com>
- <9ae34dcc-0022-8097-7c86-8b11811ac2e1@kernel.org>
+Subject: Re: [PATCH 02/26] dt-bindings: phy: describe the Qualcomm SGMII PHY
 Content-Language: en-US
-In-Reply-To: <9ae34dcc-0022-8097-7c86-8b11811ac2e1@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bartosz Golaszewski <brgl@bgdev.pl>, Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>
+Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230612092355.87937-1-brgl@bgdev.pl>
+ <20230612092355.87937-3-brgl@bgdev.pl>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230612092355.87937-3-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7Wvuk5GCLUBVFRb4f7y2Olehcr3iZHwi
-X-Proofpoint-ORIG-GUID: 7Wvuk5GCLUBVFRb4f7y2Olehcr3iZHwi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-14_02,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- priorityscore=1501 clxscore=1011 mlxlogscore=892 spamscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
- phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306140057
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,48 +95,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Krzysztof for reviewing,
+On 12/06/2023 11:23, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Describe the SGMII/SerDes PHY present on the sa8775p platforms.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-On 6/9/2023 6:44 PM, Krzysztof Kozlowski wrote:
-> On 08/06/2023 10:55, Tushar Nimkar wrote:
->> This change adds idle-state-disabled property using which certain or all
-> 
-> Please do not use "This commit/patch", but imperative mood. See longer
-> explanation here:
-> https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
-> 
-Sure, will update in next version.
->> idle-states can be kept disabled during boot-up. Once boot-up is completed
->> same can be enabled using below command.
->>
-> 
-> I don't understand and you did not explain here, why this is useful and
-> why this is needed.
-> 
-I will update commit text to why this is useful in new version.
->> echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
-> 
-> 
->>
->> Cc: devicetree@vger.kernel.org
->> Signed-off-by: Tushar Nimkar <quic_tnimkar@quicinc.com>
-> 
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC.  It might happen, that command when run on an older
-> kernel, gives you outdated entries.  Therefore please be sure you base
-> your patches on recent Linux kernel.
-> 
-Yes, In new version will take care.
->> ---
 
->> +          echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
-> 
-> This is Linux specific command, so does not fit the bindings.
-Will remove in new version.
-> 
-> Best regards,
-> Krzysztof
-> 
+> +properties:
+> +  compatible:
+> +    const: qcom,sa8775p-dwmac-sgmii-phy
+> +
+> +  reg:
+> +    items:
+> +      - description: serdes
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    const: sgmi_ref
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +additionalProperties: false
 
-Thanks,
-Tushar
+Please put it after required: block.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - "#phy-cells"
+> +  - clocks
+> +  - clock-names
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+> +    serdes_phy: phy@8901000 {
+> +        compatible = "qcom,sa8775p-dwmac-sgmii-phy";
+> +        reg = <0x08901000 0xe10>;
+> +        clocks = <&gcc GCC_SGMI_CLKREF_EN>;
+> +        clock-names = "sgmi_ref";
+> +        #phy-cells = <0>;
+> +        status = "disabled";
+
+Drop the status.
+
+With above:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+> +    };
+
+Best regards,
+Krzysztof
+
