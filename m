@@ -2,200 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C35972FC56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:27:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DC9E72FC61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 13:28:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243918AbjFNL1X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 07:27:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
+        id S244010AbjFNL2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 07:28:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243898AbjFNL1V (ORCPT
+        with ESMTP id S243967AbjFNL2W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 07:27:21 -0400
+        Wed, 14 Jun 2023 07:28:22 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9111BE8;
-        Wed, 14 Jun 2023 04:27:18 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EBRB0d031193;
-        Wed, 14 Jun 2023 11:27:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kkZNys5Fb+Cp3QOxi+B+IruG1qBTaH5is3prwH98gJM=;
- b=hT8BlI8aMjeqFke76YtxCrBOQdn5hnMTFMdHIqEJqKJAYAWyzrtCMR20kI2jAfIaxESm
- iXnuRMqeTUnm3hfs8bnOXW+HmPaG5Xzlv6+P/BoBgsGEw4pRDQPSht8yXvqagKG2PzW/
- 7Sd96lmKaO8RshWpapWvM9c1AJ5ky1N9hmIGlyRhWxaQM4Y1ypHxcZxyy9hvYRg/OAjO
- bu7aejauSBPs40MCSp/raOSsLEXiqrQeXMPZf92ILm5MJPXR1bOjITa7momVvtmKUCzl
- yDGNGScYEbGPeeYsit3ceQleSF29+M933GT82Z7ZHB9UASNKeBTtHZc21RmNIsLTOCu8 fg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r78c78pts-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 966B11BE9;
+        Wed, 14 Jun 2023 04:28:18 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EBLDKh002031;
+        Wed, 14 Jun 2023 11:28:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=tBDdYFBw2QSwTa8jz5kx4XAg6O/UYTxpL/gTvAvEcqY=;
+ b=kkEyTziu4026yiz0GTsn2ryU+qYoz5h1NuKHDnNRxB3qYbZD9ZaA2pPmRql5E5dMCbKJ
+ h0EMtR0ZK2c+UDVt4XHl4jKg3gqbH6w5F+oQyIeyNTWQr1FxaYwAfTIbEXFQRpMlzLvc
+ 8y3RvgvNNddT5h8X+hEEQl1FPCIF1Cbn26haRMHczb4YQlYgKnx62udQ3joqfZbIeVa/
+ Zyifdgot43U+mA71tOsryRXGmHa6sAySEAnHnFf7yEVCukS19aKcZvqtw+H9cwglUdMU
+ N/5LPXLMzxCatSJbrKAyLiUewMa3pNNJ3eSypR8F7IvzdqTJokddnYD79TSgHjn4NF/u yQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7cka00bb-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 11:27:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EBRAOL024277
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 11:27:10 GMT
-Received: from [10.218.15.57] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 14 Jun
- 2023 04:27:06 -0700
-Message-ID: <5ad2ea54-cb81-436b-296a-b3cc850c8c38@quicinc.com>
-Date:   Wed, 14 Jun 2023 16:57:02 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] soc: qcom: geni-se: Do not bother about enable/disable of
- interrupts in secondary sequencer for non-uart modes
-Content-Language: en-CA
-To:     Doug Anderson <dianders@chromium.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
-        <mka@chromium.org>, <swboyd@chromium.org>,
-        <quic_vtanuku@quicinc.com>
-References: <1685729609-26871-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=Uy=ELwg2jhtFSrpndw-GxUO=0NTKotNymi3sqwG=ggnQ@mail.gmail.com>
- <af4c131a-b97d-a8e8-957d-77c31d3c816a@quicinc.com>
- <02dabcc8-2340-2188-f6a8-51513b147e7c@quicinc.com>
- <CAD=FV=WwcpyvMem08rOXrBMUWW_7ADgfGZGEnEFDky+96pSdpQ@mail.gmail.com>
- <39b5a025-d678-57d4-9e97-432ee1763186@quicinc.com>
- <CAD=FV=Wwj=1Pt9vaWTABi2GDXS4qGV-5RvSbZuGJdgWXRh_OyA@mail.gmail.com>
+        Wed, 14 Jun 2023 11:28:14 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 35EBSASB017409;
+        Wed, 14 Jun 2023 11:28:11 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3r7271hrex-1;
+        Wed, 14 Jun 2023 11:28:10 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35EBSAJ8017403;
+        Wed, 14 Jun 2023 11:28:10 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 35EBSAA1017402;
+        Wed, 14 Jun 2023 11:28:10 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id 622404BD2; Wed, 14 Jun 2023 16:58:09 +0530 (+0530)
 From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <CAD=FV=Wwj=1Pt9vaWTABi2GDXS4qGV-5RvSbZuGJdgWXRh_OyA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: [PATCH v2] soc: qcom: geni-se: Do not bother about enable/disable of interrupts in secondary sequencer
+Date:   Wed, 14 Jun 2023 16:58:07 +0530
+Message-Id: <1686742087-30731-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uFHUtcO8uGONBJWzC9Rj-mqNcWrFEQqK
-X-Proofpoint-ORIG-GUID: uFHUtcO8uGONBJWzC9Rj-mqNcWrFEQqK
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -7HLvOpGYe_NcvAPym6_lTyh3OV10Xve
+X-Proofpoint-ORIG-GUID: -7HLvOpGYe_NcvAPym6_lTyh3OV10Xve
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-06-14_07,2023-06-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_spam policy=outbound score=99 priorityscore=1501
- impostorscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=99 spamscore=99
- suspectscore=0 clxscore=1015 adultscore=0 phishscore=0 bulkscore=0
- mlxlogscore=-188 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ malwarescore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxlogscore=400 adultscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2305260000 definitions=main-2306140098
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The select_fifo/dma_mode() functions in geni driver enable/disable
+interrupts (secondary included) conditionally for non-uart modes, while
+uart is supposed to manage this internally.
+However, only uart uses secondary IRQs while spi, i2c do not care about
+these at all making their enablement (or disablement) totally unnecessary
+for these protos.
+Similarly, select_gpi_mode() also does disable s_irq and its useless again.
 
+Drop enabling/disabling secondary IRQs.
+This doesn't solve any observed problem but only gets rid of code pieces
+that are not required.
 
-On 6/14/2023 12:44 AM, Doug Anderson wrote:
-> Hi,
->
-> On Tue, Jun 13, 2023 at 11:24 AM Vijaya Krishna Nivarthi
-> <quic_vnivarth@quicinc.com> wrote:
->> Hi,
->>
->>
->> On 6/13/2023 11:27 PM, Doug Anderson wrote:
->>> Hi,
->>>
->>> On Tue, Jun 13, 2023 at 9:07 AM Vijaya Krishna Nivarthi
->>> <quic_vnivarth@quicinc.com> wrote:
->>>> Hi,
->>>>
->>>>
->>>> On 6/12/2023 7:09 PM, Vijaya Krishna Nivarthi wrote:
->>>>> Hi,
->>>>>
->>>>> Thank you very much for the review...
->>>>>
->>>>>
->>>>> On 6/7/2023 9:41 PM, Doug Anderson wrote:
->>>>>> Hi,
->>>>>>
->>>>>> On Fri, Jun 2, 2023 at 11:13 AM Vijaya Krishna Nivarthi
->>>>>> <quic_vnivarth@quicinc.com> wrote:
->>>>>>> The select_fifo/dma_mode() functions in geni driver enable/disable
->>>>>>> interrupts (secondary included) conditionally for non-uart modes, while
->>>>>>> uart is supposed to manage this internally.
->>>>>>> However, only uart uses secondary IRQs while spi, i2c do not care about
->>>>>>> these at all making their enablement (or disablement) totally
->>>>>>> unnecessary
->>>>>>> for these protos.
->>>>>>>
->>>>>>> Drop enabling/disabling secondary IRQs for non-uart modes.
->>>>>>> This doesn't solve any observed problem but only gets rid of code
->>>>>>> pieces
->>>>>>> that are not required.
->>>>>>>
->>>>>>> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
->>>>>>> ---
->>>>>>>     drivers/soc/qcom/qcom-geni-se.c | 24 ++++--------------------
->>>>>>>     1 file changed, 4 insertions(+), 20 deletions(-)
->>>>>> This seems like a nice cleanup to me. It's still odd that the general
->>>>>> code has a special case for UART, but I guess the alternative is to
->>>>>> duplicate the exact same logic for both the i2c and SPI drivers. I
->>>>>> won't insist on that, though I wouldn't be opposed to it either.
->>>>>>
->>>>>> I guess one comment, though: should we also remove the code that
->>>>>> messes with "SE_GENI_S_IRQ_EN" in geni_se_select_gpi_mode()?
->>>>> Right now we have gpi-dma mode support for i2c and spi but not for uart.
->>>>>
->>>>> Even when gpi-dma support is added, uart driver's interrupt handler
->>>>> would not be invoked so I believe it would be safe to drop that code
->>>>> from geni_se_select_gpi_mode() too.
->>>>>
->>>>> I will post v2 dropping same after some more lookup.
->>>> Looking at this once again, I am more inclined towards leaving alone
->>>> gpi_mode() for now.
->>>>
->>>> It probably needs cleanup but we want to take that up at a later time.
->>>>
->>>> Meanwhile its not causing much harm as we don't switch modes dynamically
->>>> for gpi case, so we are not losing much time there reading from and
->>>> writing to registers.
->>>>
->>>> Please let know your thoughts.
->>> It's not really about the time needed for the extra register writes,
->>> but just someone trying to understand the code who might be trying to
->>> figure out what bits are relevant. The bits related to the secondary
->>> sequencer's interrupts don't do anything useful when we're using the
->>> controller for i2c/spi, so why not delete them?
->>
->> Agreed the s_irqs are not useful for spi/i2c but Right now I am not
->> really sure how uart + gsi mode is going to look like.
->>
->> So how about we move the part that messes with s_irq in gpi_mode() into
->> a *if(proto == GENI_SE_UART)* conditional?
->>
->> Understand we are adding to weirdness but Would that be ok for now?
-> For the non-GPI DMA path and for the PIO path we don't touch the
-> "S_IRQ" for UART either (we don't touch any IRQs for the UART). ...so
-> it doesn't seem right to be tweaking with the S_IRQ for UART. I would
-> say delete it and if/when the UART needs GPI mode then we can figure
-> out what to do.
->
-> I'd actually wonder if GPI will ever be implemented for UART anyway.
-> The whole idea of GPI is to allow sharing a port between more than one
-> user. Each user could submit a "transaction" and they'd get the port
-> for the duration of that transaction. After the transaction was done
-> then another user would be able to grab the port. Typically UART isn't
-> used like this. I'm not saying that it couldn't be done, but just
-> saying that it would be a pretty non-standard way of using a UART...
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+---
+v1 -> v2:
+- apply similar changes to select_gpi_mode()
+- modified commit message accordingly
+---
+ drivers/soc/qcom/qcom-geni-se.c | 28 ++++------------------------
+ 1 file changed, 4 insertions(+), 24 deletions(-)
 
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index dd50a25..ba78876 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -281,27 +281,14 @@ static void geni_se_select_fifo_mode(struct geni_se *se)
+ 
+ 	geni_se_irq_clear(se);
+ 
+-	/*
+-	 * The RX path for the UART is asynchronous and so needs more
+-	 * complex logic for enabling / disabling its interrupts.
+-	 *
+-	 * Specific notes:
+-	 * - The done and TX-related interrupts are managed manually.
+-	 * - We don't RX from the main sequencer (we use the secondary) so
+-	 *   we don't need the RX-related interrupts enabled in the main
+-	 *   sequencer for UART.
+-	 */
++	/* UART driver manages enabling / disabling interrupts internally */
+ 	if (proto != GENI_SE_UART) {
++		/* Non-UART use only primary sequencer so dont bother about S_IRQ */
+ 		val_old = val = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
+ 		val |= M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN;
+ 		val |= M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN;
+ 		if (val != val_old)
+ 			writel_relaxed(val, se->base + SE_GENI_M_IRQ_EN);
+-
+-		val_old = val = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
+-		val |= S_CMD_DONE_EN;
+-		if (val != val_old)
+-			writel_relaxed(val, se->base + SE_GENI_S_IRQ_EN);
+ 	}
+ 
+ 	val_old = val = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
+@@ -317,17 +304,14 @@ static void geni_se_select_dma_mode(struct geni_se *se)
+ 
+ 	geni_se_irq_clear(se);
+ 
++	/* UART driver manages enabling / disabling interrupts internally */
+ 	if (proto != GENI_SE_UART) {
++		/* Non-UART use only primary sequencer so dont bother about S_IRQ */
+ 		val_old = val = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
+ 		val &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN);
+ 		val &= ~(M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN);
+ 		if (val != val_old)
+ 			writel_relaxed(val, se->base + SE_GENI_M_IRQ_EN);
+-
+-		val_old = val = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
+-		val &= ~S_CMD_DONE_EN;
+-		if (val != val_old)
+-			writel_relaxed(val, se->base + SE_GENI_S_IRQ_EN);
+ 	}
+ 
+ 	val_old = val = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
+@@ -344,10 +328,6 @@ static void geni_se_select_gpi_mode(struct geni_se *se)
+ 
+ 	writel(0, se->base + SE_IRQ_EN);
+ 
+-	val = readl(se->base + SE_GENI_S_IRQ_EN);
+-	val &= ~S_CMD_DONE_EN;
+-	writel(val, se->base + SE_GENI_S_IRQ_EN);
+-
+ 	val = readl(se->base + SE_GENI_M_IRQ_EN);
+ 	val &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN |
+ 		 M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN);
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
-Agreed on both.
-
-Uploading v2 dropping from gpi_mode()
-
-Thank you.
-
--Vijay/
-
-
->
-> -Doug
