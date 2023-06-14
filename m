@@ -2,95 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 196A072FE74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:24:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77B3572FE89
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:26:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244519AbjFNMXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:23:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57806 "EHLO
+        id S236343AbjFNMZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:25:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244602AbjFNMXl (ORCPT
+        with ESMTP id S244577AbjFNMZ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:23:41 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D81B19BC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:23:40 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 57B7D3F403;
-        Wed, 14 Jun 2023 14:23:38 +0200 (CEST)
-Date:   Wed, 14 Jun 2023 14:23:36 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, quic_abhinavk@quicinc.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN feature flag
- for DPU >= 5.0
-Message-ID: <ycgei43x4kfmjk7g7gbeglehtiiinfbqmrjbdzcy56frxbtd2z@yk2f5kgrkbrt>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-1-c7069f2efca1@quicinc.com>
- <wpjxrnhbcanbc5iatxnff25yrrdfrtmgb24sgwyo457dz2oyjz@e2docpcb6337>
- <f4fb042c-1458-6077-3c49-8cc02638b27c@linaro.org>
+        Wed, 14 Jun 2023 08:25:29 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38AD01FD7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:25:28 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-311099fac92so615062f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:25:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686745526; x=1689337526;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6iG5vTOdWzF2uLO8FkovF7ShHOsamQjYeEGdvdvyCPc=;
+        b=D5VWS3vk0HgW8LDAcGE7BQZKTJtIFTU2fyJhZFJzB2fyCfLBt1e7mvFizFfdPvkjuA
+         sYkB86TEHdehY5mu38+NmNxcWnjtEHUU3bA5VB1sVl8iiAV3ETpl4mk1kOrLq1yrBKW/
+         QQYqOfV7ULhEGyk90oNvgan6ePjNzLPa+gax189cAGgjHe6LAky2ajemkNFgaZXJemd7
+         1O3HlJ0fTzXGMdrJjxGVqN+vb/V3ZHrauj3SDBmFi9IU4e5fvI6YhoVc4rBajLFl8QdN
+         G0OOu1SYxNkAnsGgBTEuXVfKmZnBvt9VDkpFapWcHn8UZOxuUQS5MVefYywfxOpxtEhm
+         RJbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686745526; x=1689337526;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6iG5vTOdWzF2uLO8FkovF7ShHOsamQjYeEGdvdvyCPc=;
+        b=eIWTRMohHJFYqcNp22x13bi45806Y+eCKU8qqTP2iyWH3++Dwa3NWQqFJi1Uy32nFi
+         uGNLRBnrRHhl8Owg5EMc9CCfaReC+F5T+J5hsxRsReC9PMkGSoPvF3IKkEBJTUwo3fLi
+         zYSpebNhSWCbnmCqnl3paQc0tBc2cswrXzbeUJWUblDKGv4WySEnUj+GBU2xCq1ZgTFL
+         fVeLYB3kT+QYHQg8+xk2IH7aKlEx5TeJd4g2Mi5T26h56uil8DXEc5isY3VCh3Vt/JtO
+         QHbg5i2OB4DBAm1vcLnFEWOrKtmaFpE2REqRy3B5tsnpvaTGudPE1S1vzGswD396Qfhv
+         4Bkg==
+X-Gm-Message-State: AC+VfDxiDZgiZi3zajsq6hlrntLA4+o0ARD8L5yPLSNumNmhVkk66H9q
+        +NwTMiRplsI0HsBQ6MdYXIi5j+USh8rCa87niAa1Hg==
+X-Google-Smtp-Source: ACHHUZ4b1hlq4+ngmHH2dYvVKpDzL+96FL9kDu7anUXdRx9Z9DD4wc+TS6V9DMBamdmIZyFXLQWJlw==
+X-Received: by 2002:adf:e406:0:b0:307:9702:dfc8 with SMTP id g6-20020adfe406000000b003079702dfc8mr8934737wrm.48.1686745526648;
+        Wed, 14 Jun 2023 05:25:26 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id i4-20020a5d5584000000b0030fc576633dsm7421237wrv.16.2023.06.14.05.25.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 05:25:26 -0700 (PDT)
+Message-ID: <ce4a3201-3d42-b6fe-9e1a-63ea74588531@linaro.org>
+Date:   Wed, 14 Jun 2023 13:25:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f4fb042c-1458-6077-3c49-8cc02638b27c@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/8] arm64: dts: qcom: msm8939: Disable lpass_codec by
+ default
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230530-msm8939-regulators-v1-0-a3c3ac833567@gerhold.net>
+ <20230530-msm8939-regulators-v1-2-a3c3ac833567@gerhold.net>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230530-msm8939-regulators-v1-2-a3c3ac833567@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-14 15:01:59, Dmitry Baryshkov wrote:
-> On 14/06/2023 14:42, Marijn Suijten wrote:
-> > On 2023-06-13 18:57:11, Jessica Zhang wrote:
-> >> DPU 5.x+ supports a databus widen mode that allows more data to be sent
-> >> per pclk. Enable this feature flag on all relevant chipsets.
-> >>
-> >> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 ++-
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
-> >>   2 files changed, 4 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> index 36ba3f58dcdf..0be7bf0bfc41 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> @@ -103,7 +103,8 @@
-> >>   	(BIT(DPU_INTF_INPUT_CTRL) | \
-> >>   	 BIT(DPU_INTF_TE) | \
-> >>   	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
-> >> -	 BIT(DPU_DATA_HCTL_EN))
-> >> +	 BIT(DPU_DATA_HCTL_EN) | \
-> >> +	 BIT(DPU_INTF_DATABUS_WIDEN))
-> > 
-> > This doesn't work.  DPU 5.0.0 is SM8150, which has DSI 6G 2.3.  In the
-> > last patch for DSI you state and enable widebus for DSI 6G 2.5+ only,
-> > meaning DPU and DSI are now desynced, and the output is completely
-> > corrupted.
-
-Tested this on SM8350 which actually has DSI 2.5, and it is also
-corrupted with this series so something else on this series might be
-broken.
-
-> > Is the bound in dsi_host wrong, or do DPU and DSI need to communicate
-> > when widebus will be enabled, based on DPU && DSI supporting it?
+On 14/06/2023 08:16, Stephan Gerhold wrote:
+> Update for recent changes to msm8916.dtsi in commit a5cf21b14666
+> ("arm64: dts: qcom: msm8916: Disable audio codecs by default") and
+> make lpass_codec disabled by default for devices that are not using
+> the audio codec functionality inside MSM8939.
 > 
-> I'd prefer to follow the second approach, as we did for DP. DPU asks the 
-> actual video output driver if widebus is to be enabled.
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>   arch/arm64/boot/dts/qcom/apq8039-t2.dts | 4 ++++
+>   arch/arm64/boot/dts/qcom/msm8939.dtsi   | 1 +
+>   2 files changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2.dts b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+> index 2a39216ceef5..c8442242137a 100644
+> --- a/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+> +++ b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+> @@ -135,6 +135,10 @@ &lpass {
+>   	status = "okay";
+>   };
+>   
+> +&lpass_codec {
+> +	status = "okay";
+> +};
+> +
+>   &mdss {
+>   	status = "okay";
+>   };
+> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> index 3c1505b69a6b..895cafc11480 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> @@ -1608,6 +1608,7 @@ lpass_codec: audio-codec@771c000 {
+>   				 <&gcc GCC_CODEC_DIGCODEC_CLK>;
+>   			clock-names = "ahbix-clk", "mclk";
+>   			#sound-dai-cells = <1>;
+> +			status = "disabled";
+>   		};
+>   
+>   		sdhc_1: mmc@7824900 {
+> 
 
-Doesn't it seem very strange that DPU 5.x+ comes with a widebus feature,
-but the DSI does not until two revisions later?  Or is this available on
-every interface, but only for a different (probably DP) encoder block?
-
-- Marijn
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
