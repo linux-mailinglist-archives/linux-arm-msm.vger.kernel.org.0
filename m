@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F79072FF93
+	by mail.lfdr.de (Postfix) with ESMTP id B591C72FF95
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 15:11:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244858AbjFNNLO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 09:11:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60678 "EHLO
+        id S244865AbjFNNLP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 09:11:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244847AbjFNNLM (ORCPT
+        with ESMTP id S244816AbjFNNLO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 09:11:12 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0160268A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:10:46 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3f8d0d68530so7953205e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:10:46 -0700 (PDT)
+        Wed, 14 Jun 2023 09:11:14 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00CCC2690
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:10:47 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f8c74af64fso5904485e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 06:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686748245; x=1689340245;
+        d=linaro.org; s=google; t=1686748246; x=1689340246;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6ryHJYj8SuHK1Fpj/7T+/dhtmp5a7mPpMgbt52XOOoY=;
-        b=yHbrEfRM/nMoPaU6NJkYzVxOGVz7j/pY3q+K9Ga56ay0Bl/tIVeFPzUmwnBYqcmGbi
-         ItyMTegESrBhrcMvn6nFPEXd1mbnkazEvxRKz3QNJkJbRe+nqv8ve30swTrXEGbXu41C
-         nWIql+TaSFhsZIUYBkhy5sb6WRAhvilmUbd5Dg3aGSu/SvmbWDfV5qvyZhzswV8arNml
-         2X4WOpmxYVoNKdGd7VmurpUGXIR1gVoGfBRHMQid/u++KnIC1PE5D1UcziXclrgfNebG
-         8r9zfkS5K6axx8ErhcoW5KbpqzthyOhTFoO0O9fwtmtE0Rlk8+d4JM2InX4ltj4nAf40
-         PEXQ==
+        bh=dRzG+HV9GN4lfJMfWqgxlfRDbNNuf4h9SVoZ/Ln+yfM=;
+        b=Abt84zPG1mZC7LoNsgyS/gG+GrkwXO5EYd4Oyn762VvhrHxIk7SUotb1Ogslm71/I0
+         ATLqAshTF7CDjww/zykZLRHWnCj5rVshi7dDPRp92TZaM2Qyo2G7LNyl1p4v8IEHyiX2
+         4hBA/wC9ZdQMuN3UwYfRU6lia70FeBwcj2aYgPZFeAg0hzZKDsn/v6obhqLNPHbS0U2G
+         WxH0CSDpjPE/pkJtBxJngH8RqGQn8GBq6Sg5uXbDShG/HU/mPaL6ORWMAzK3BvOyNtGM
+         hnm43phqzmWoRJbDZA40KxAx0N0kFXSOk+QGK8QwlJeNLyKLvufe3lgs5TB+HRHv6fOM
+         me5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686748245; x=1689340245;
+        d=1e100.net; s=20221208; t=1686748246; x=1689340246;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6ryHJYj8SuHK1Fpj/7T+/dhtmp5a7mPpMgbt52XOOoY=;
-        b=Sxm50UBa0+RgggV/4FwEKpRiSYc2vbBlsTVr6wpMjqlycIYtTtptDxkNGdpLJzrq3n
-         Va4kUJgdS2Qb/p16P9I5b00Nuf8A9OvVw1D+K3aaJ94dAOafg/CWNK9dCKlK70F/SoTq
-         Bh0CfaCGVrjUU6tiW3IWtVRivh4rHBZ1mwqr7OT+b4nyGWG5olF9vgAvKmEKuR+hn9lP
-         rAtBChaWIyGYscyq1zEYuIJfyGsUGV8jFu54XO8Qk895JiPvMM5yvJgeKqAJTkC7YSwQ
-         yjND06bVbtACXZGpf/C1nQA6CXTXb8hcDXE3XkBYBEBr30gObvbY/VU3SRjdaBxjURx1
-         cP5w==
-X-Gm-Message-State: AC+VfDzPyY2rfK+c3HzWF/+NoovIQE0upLTe1gwOOpY0hWTx32Dxh5f2
-        HgU+YQwbXHLSgN0pxba/e+wyK7z2O6/js+eWrJzv9w==
-X-Google-Smtp-Source: ACHHUZ4LPZs0WrsTGUtJ6EUJ+pfuunak8jjNQdc5Zq6hLEf93D82dKWEQpYf8GODfNMyFlQAbFSmlA==
-X-Received: by 2002:a7b:c4da:0:b0:3f7:f90c:4978 with SMTP id g26-20020a7bc4da000000b003f7f90c4978mr11817404wmk.21.1686748245323;
-        Wed, 14 Jun 2023 06:10:45 -0700 (PDT)
+        bh=dRzG+HV9GN4lfJMfWqgxlfRDbNNuf4h9SVoZ/Ln+yfM=;
+        b=JdBkqVtWwo99I627C5b15HlVtltnCEyiT/4Jc7xHNb9sqGHqDQbYrGIXpX4rZ1lvsp
+         aZabwp/4pd9JQ4W7T1Pm64u4HaKPGD0Td80A0bfQ//16EwMv21EtG/djNOI3AzPmMhH7
+         6YMCM3AGi+NcgO8DIILIKLAm06gIXukedrsOI9Q6c9TDVZQjij6u+RsACjGiOD5bfFrL
+         kb5ezRCtiQ3Q+9SKFgiJlSOC9uJ9Of5iuOXbNLFzWcZKt7NKHDHkmgVBTP8FfG6S4b28
+         DQ6sD/Omr71oA+Pt+Jthai/sMB4v4U7DdprTp5VMQAy9ISq3xG/1gHesBpkZXTr+P/px
+         kUKA==
+X-Gm-Message-State: AC+VfDztm0CswaSwTHZbhvaP8cqsl5uGek37dlws+5WB0TwfFrCK82ZB
+        0dV3V44Cfft1TQSCTRMs4H2jXaUQo4X2zm4Gxf3JdQ==
+X-Google-Smtp-Source: ACHHUZ7j42D1SG7rrT1Cld1gmzJEwnGxajVFXglzCpGYyHpVVCce1ptErw8HFvkeJ3zahOIhanxkOQ==
+X-Received: by 2002:a7b:ce88:0:b0:3f7:34dc:ed0d with SMTP id q8-20020a7bce88000000b003f734dced0dmr11048944wmj.25.1686748246152;
+        Wed, 14 Jun 2023 06:10:46 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id a7-20020a05600c224700b003f60a9ccd34sm17548661wmm.37.2023.06.14.06.10.44
+        by smtp.gmail.com with ESMTPSA id a7-20020a05600c224700b003f60a9ccd34sm17548661wmm.37.2023.06.14.06.10.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 06:10:44 -0700 (PDT)
+        Wed, 14 Jun 2023 06:10:45 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 14 Jun 2023 15:10:40 +0200
-Subject: [PATCH 2/3] usb: typec: fsa4480: rework mux & switch setup to
- handle more states
+Date:   Wed, 14 Jun 2023 15:10:41 +0200
+Subject: [PATCH 3/3] usb: typec: fsa4480: add support for Audio Accessory
+ Mode
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230614-topic-sm8550-upstream-type-c-audio-v1-2-15a92565146b@linaro.org>
+Message-Id: <20230614-topic-sm8550-upstream-type-c-audio-v1-3-15a92565146b@linaro.org>
 References: <20230614-topic-sm8550-upstream-type-c-audio-v1-0-15a92565146b@linaro.org>
 In-Reply-To: <20230614-topic-sm8550-upstream-type-c-audio-v1-0-15a92565146b@linaro.org>
 To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
@@ -67,20 +67,20 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5398;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2308;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=QarI/JISSj/rhGR4VdIVmKxfvzqx9rkOwDJ/2WosLjU=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkibxSHRni5b6A/0yaMrWRH2dqpShK1pJn0rgEcOaT
- 7bUY38aJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIm8UgAKCRB33NvayMhJ0a/LEA
- DMo3j2DaCaw6ioaGzRmATCzZpwL0rEoHVw3mZ+qCiMPZ//lDkDnEKEnk8F0anWD5q26d/OJduz2N5F
- ATUMVRFKD/oAs5D5WYMx3PBBuQ2P6QT93X/Our/Eb9lx3QQuGKC+nskR+Sd7poyIYXqUMV5gjCRH97
- v/2cG+lTWHbtgdfsdNJtOuRAQio0lB+YZrs+DiF+SzPwGXl0VKQ3OGR1lv046xB99QUPxwKqz9bBjG
- xHiokT5rIl7qTBCFN3Kx52v3AafnLQg3uXbV1DqIrl+wf6QRFtSBHmaUAiSA1MoaodRQHs+UFy8ZpM
- 7yHcB30Re63woYtcvXEtrM9BbdAIb5Jua/D2nZjmd6cyJXbyF8kSWrSE5MeijblLohNQJeTbLrbnQY
- vWedOihhOKvJJexBMt7tYlIAnN2SEnj2l4nsleJ21QFsoORg+imp7NKu5TmX6129v33n7vhIi7lOdd
- 46W+oYclJzsX/vIUzsW4hItnmxlrU2PejCBtiJSF54bM6AxX06vIOu5LkuwIgoFoemCDq5DlqNgYkV
- FS1OswD+Xc0WNPcqB6+eHzsj+oaBmDdxlRHmw2VoUqZsMi9FuGEmlol6jCP6utJcZ1smvh+2E9QUFP
- 2KCzzpo1b5uHRKUt9BBRTM0J/z2maX7XdCpXQeMxJ/DeHvclGQz0nI9nOkqQ==
+ bh=AmK9tGuhBzHU6OgDlD+wPAdxUZOMyPGmnDLrHwn/j/c=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkibxSO3IckWWolI0nLUXzFCyCRUwuqC71q47oYIZ3
+ SH4yGcyJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIm8UgAKCRB33NvayMhJ0fUBD/
+ 4+WAQp8FuGaqCALfEFyB70ECb1yhUyo7bs4XJUARqa3sklwtH4oeb2nhWCJvcQKHKX510tvXmGMfmn
+ ZNVpF7o9zHgYbSu9ICVa7CiROfCeNzYZ0BJR4dk1Lp9ua307BnoB57leUyaCR/QhacygzrGsJBoK2y
+ 4sWwdIXHXSVF1SXFFel2eHWuFuOCPBlx2g+nsF9iW/Jvwe4FNsoJLLMfq37u/j4BkkG91aDJ/L724x
+ NMNJLZYuGhrtVWi1TW0qy2PTdgp3t1GLGdTlTPZEWqaB8ifSla4zbHALA/t7WyvXa2cs+4S6VO60nB
+ cVCtBUxRdYaczIE4E4XMH60AXVanHmqk2leErKRG6UO4zYhFjKgaCrMIlJXTPuF7gi92ZEE/t9FeZT
+ 6OqrFwf/fxCcM5U5cZgyjTsYY0e7hbcGcT7Lkj+8XKGX9lyTNBLOnxOxzlGZB2wmri08aM2CjlOQvl
+ TcpgOsruioWe++bQIhSwv0x28FDyMtsbTUr/OmwRx9uzCaHbVhLMY6pen4sSpaWnWaPDUFkznkAVWo
+ ZNczyznmecSJdCkR2x5g54u2z5Avlhp1u0nf8XyXyZf4fOr3zkGL7QQhY32mZQ64dmxGE4/2FeANT9
+ 0g2KeO/o8bPb61OlVA70idWgqBCFcDqfU56csnUWRMvgBjIJjE8WBftgUNtA==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -93,191 +93,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to handle the Audio Accessory mode, refactor the mux
-and switch setup in a single function.
+The FSA4480 Type-C switch supports switching the Audio R/L,
+AGND and MIC signals to the USB-C DP/DM and SBU1/2 to support
+the Audio Accessory Mode.
 
-The refactor will help add new states and make the process
-simpler to understand.
+The FSA4480 has an integrated Audio jack detection mechanism
+to automatically mux the AGND, MIX and Sense to the correct
+SBU lines to support 3 pole and both 4 pole TRRS pinouts.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/usb/typec/mux/fsa4480.c | 111 +++++++++++++++++++++++++++-------------
- 1 file changed, 75 insertions(+), 36 deletions(-)
+ drivers/usb/typec/mux/fsa4480.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/drivers/usb/typec/mux/fsa4480.c b/drivers/usb/typec/mux/fsa4480.c
-index d6495e533e58..b2913594a58f 100644
+index b2913594a58f..45f5683b7d81 100644
 --- a/drivers/usb/typec/mux/fsa4480.c
 +++ b/drivers/usb/typec/mux/fsa4480.c
-@@ -46,8 +46,11 @@ struct fsa4480 {
+@@ -25,15 +25,24 @@
+ #define FSA4480_DELAY_L_MIC	0x0e
+ #define FSA4480_DELAY_L_SENSE	0x0f
+ #define FSA4480_DELAY_L_AGND	0x10
++#define FSA4480_FUNCTION_ENABLE	0x12
+ #define FSA4480_RESET		0x1e
+ #define FSA4480_MAX_REGISTER	0x1f
  
- 	struct regmap *regmap;
+ #define FSA4480_ENABLE_DEVICE	BIT(7)
+ #define FSA4480_ENABLE_SBU	GENMASK(6, 5)
+ #define FSA4480_ENABLE_USB	GENMASK(4, 3)
++#define FSA4480_ENABLE_SENSE	BIT(2)
++#define FSA4480_ENABLE_MIC	BIT(1)
++#define FSA4480_ENABLE_AGND	BIT(0)
  
-+	enum typec_orientation orientation;
-+	unsigned long mode;
-+	unsigned int svid;
+ #define FSA4480_SEL_SBU_REVERSE	GENMASK(6, 5)
+ #define FSA4480_SEL_USB		GENMASK(4, 3)
++#define FSA4480_SEL_SENSE	BIT(2)
++#define FSA4480_SEL_MIC		BIT(1)
++#define FSA4480_SEL_AGND	BIT(0)
 +
- 	u8 cur_enable;
--	u8 cur_select;
- };
++#define FSA4480_ENABLE_AUTO_JACK_DETECT	BIT(0)
  
- static const struct regmap_config fsa4480_regmap_config = {
-@@ -58,19 +61,42 @@ static const struct regmap_config fsa4480_regmap_config = {
- 	.disable_locking = true,
- };
+ struct fsa4480 {
+ 	struct i2c_client *client;
+@@ -95,6 +104,9 @@ static int fsa4480_set(struct fsa4480 *fsa)
+ 		default:
+ 			return -EOPNOTSUPP;
+ 		}
++	} else if (fsa->mode == TYPEC_MODE_AUDIO) {
++		/* Audio Accessory Mode, setup to auto Jack Detection */
++		enable |= FSA4480_ENABLE_USB | FSA4480_ENABLE_AGND;
+ 	} else
+ 		return -EOPNOTSUPP;
  
--static int fsa4480_switch_set(struct typec_switch_dev *sw,
--			      enum typec_orientation orientation)
-+static int fsa4480_set(struct fsa4480 *fsa)
- {
--	struct fsa4480 *fsa = typec_switch_get_drvdata(sw);
--	u8 new_sel;
--
--	mutex_lock(&fsa->lock);
--	new_sel = FSA4480_SEL_USB;
--	if (orientation == TYPEC_ORIENTATION_REVERSE)
--		new_sel |= FSA4480_SEL_SBU_REVERSE;
--
--	if (new_sel == fsa->cur_select)
--		goto out_unlock;
-+	bool reverse = (fsa->orientation == TYPEC_ORIENTATION_REVERSE);
-+	u8 enable = FSA4480_ENABLE_DEVICE;
-+	u8 sel = 0;
+@@ -110,6 +122,11 @@ static int fsa4480_set(struct fsa4480 *fsa)
+ 	regmap_write(fsa->regmap, FSA4480_SWITCH_SELECT, sel);
+ 	regmap_write(fsa->regmap, FSA4480_SWITCH_ENABLE, enable);
+ 
++	/* Start AUDIO JACK DETECTION to setup MIC, AGND & Sense muxes */
++	if (enable & FSA4480_ENABLE_AGND)
++		regmap_write(fsa->regmap, FSA4480_FUNCTION_ENABLE,
++			     FSA4480_ENABLE_AUTO_JACK_DETECT);
 +
-+	/* USB Mode */
-+	if (fsa->mode < TYPEC_STATE_MODAL ||
-+	    (!fsa->svid && (fsa->mode == TYPEC_MODE_USB2 ||
-+			    fsa->mode == TYPEC_MODE_USB3))) {
-+		enable |= FSA4480_ENABLE_USB;
-+		sel = FSA4480_SEL_USB;
-+	} else if (fsa->svid) {
-+		switch (fsa->mode) {
-+		/* DP Only */
-+		case TYPEC_DP_STATE_C:
-+		case TYPEC_DP_STATE_E:
-+			enable |= FSA4480_ENABLE_SBU;
-+			if (reverse)
-+				sel = FSA4480_SEL_SBU_REVERSE;
-+			break;
-+
-+		/* DP + USB */
-+		case TYPEC_DP_STATE_D:
-+		case TYPEC_DP_STATE_F:
-+			enable |= FSA4480_ENABLE_USB | FSA4480_ENABLE_SBU;
-+			sel = FSA4480_SEL_USB;
-+			if (reverse)
-+				sel |= FSA4480_SEL_SBU_REVERSE;
-+			break;
-+
-+		default:
-+			return -EOPNOTSUPP;
-+		}
-+	} else
-+		return -EOPNOTSUPP;
- 
- 	if (fsa->cur_enable & FSA4480_ENABLE_SBU) {
- 		/* Disable SBU output while re-configuring the switch */
-@@ -81,48 +107,59 @@ static int fsa4480_switch_set(struct typec_switch_dev *sw,
- 		usleep_range(35, 1000);
- 	}
- 
--	regmap_write(fsa->regmap, FSA4480_SWITCH_SELECT, new_sel);
--	fsa->cur_select = new_sel;
--
--	if (fsa->cur_enable & FSA4480_ENABLE_SBU) {
--		regmap_write(fsa->regmap, FSA4480_SWITCH_ENABLE, fsa->cur_enable);
-+	regmap_write(fsa->regmap, FSA4480_SWITCH_SELECT, sel);
-+	regmap_write(fsa->regmap, FSA4480_SWITCH_ENABLE, enable);
- 
-+	if (enable & FSA4480_ENABLE_SBU) {
+ 	if (enable & FSA4480_ENABLE_SBU) {
  		/* 15us to allow the SBU switch to turn on again */
  		usleep_range(15, 1000);
- 	}
- 
--out_unlock:
--	mutex_unlock(&fsa->lock);
-+	fsa->cur_enable = enable;
- 
- 	return 0;
- }
- 
-+static int fsa4480_switch_set(struct typec_switch_dev *sw,
-+			      enum typec_orientation orientation)
-+{
-+	struct fsa4480 *fsa = typec_switch_get_drvdata(sw);
-+	int ret = 0;
-+
-+	mutex_lock(&fsa->lock);
-+
-+	if (fsa->orientation != orientation) {
-+		fsa->orientation = orientation;
-+
-+		ret = fsa4480_set(fsa);
-+	}
-+
-+	mutex_unlock(&fsa->lock);
-+
-+	return ret;
-+}
-+
- static int fsa4480_mux_set(struct typec_mux_dev *mux, struct typec_mux_state *state)
- {
- 	struct fsa4480 *fsa = typec_mux_get_drvdata(mux);
--	u8 new_enable;
-+	int ret = 0;
- 
- 	mutex_lock(&fsa->lock);
- 
--	new_enable = FSA4480_ENABLE_DEVICE | FSA4480_ENABLE_USB;
--	if (state->mode >= TYPEC_DP_STATE_A)
--		new_enable |= FSA4480_ENABLE_SBU;
-+	if (fsa->mode != state->mode) {
-+		fsa->mode = state->mode;
- 
--	if (new_enable == fsa->cur_enable)
--		goto out_unlock;
-+		if (state->alt)
-+			fsa->svid = state->alt->svid;
-+		else
-+			fsa->svid = 0; // No SVID
- 
--	regmap_write(fsa->regmap, FSA4480_SWITCH_ENABLE, new_enable);
--	fsa->cur_enable = new_enable;
--
--	if (new_enable & FSA4480_ENABLE_SBU) {
--		/* 15us to allow the SBU switch to turn off */
--		usleep_range(15, 1000);
-+		ret = fsa4480_set(fsa);
- 	}
- 
--out_unlock:
- 	mutex_unlock(&fsa->lock);
- 
--	return 0;
-+	return ret;
- }
- 
- static int fsa4480_probe(struct i2c_client *client)
-@@ -143,8 +180,10 @@ static int fsa4480_probe(struct i2c_client *client)
- 	if (IS_ERR(fsa->regmap))
- 		return dev_err_probe(dev, PTR_ERR(fsa->regmap), "failed to initialize regmap\n");
- 
-+	/* Safe mode */
- 	fsa->cur_enable = FSA4480_ENABLE_DEVICE | FSA4480_ENABLE_USB;
--	fsa->cur_select = FSA4480_SEL_USB;
-+	fsa->mode = TYPEC_STATE_SAFE;
-+	fsa->orientation = TYPEC_ORIENTATION_NONE;
- 
- 	/* set default settings */
- 	regmap_write(fsa->regmap, FSA4480_SLOW_L, 0x00);
-@@ -156,7 +195,7 @@ static int fsa4480_probe(struct i2c_client *client)
- 	regmap_write(fsa->regmap, FSA4480_DELAY_L_MIC, 0x00);
- 	regmap_write(fsa->regmap, FSA4480_DELAY_L_SENSE, 0x00);
- 	regmap_write(fsa->regmap, FSA4480_DELAY_L_AGND, 0x09);
--	regmap_write(fsa->regmap, FSA4480_SWITCH_SELECT, fsa->cur_select);
-+	regmap_write(fsa->regmap, FSA4480_SWITCH_SELECT, FSA4480_SEL_USB);
- 	regmap_write(fsa->regmap, FSA4480_SWITCH_ENABLE, fsa->cur_enable);
- 
- 	sw_desc.drvdata = fsa;
 
 -- 
 2.34.1
