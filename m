@@ -2,171 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8A447308F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 22:11:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C00A2730909
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 22:16:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231975AbjFNULZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 16:11:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45396 "EHLO
+        id S236422AbjFNUQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 16:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236185AbjFNULT (ORCPT
+        with ESMTP id S233833AbjFNUQH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 16:11:19 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BBB92103
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 13:11:17 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b1c30a1653so16331281fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 13:11:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686773475; x=1689365475;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=POY0ce7wWbwfbzD7JE6CSS9GHiPnt327xrkIS29uLi8=;
-        b=jORvPwymCYV5GjMtAC9SjTWv11dPTRLUEfaKnWn9iU5Ynaz2mF3qkCf769+oBfRLi9
-         OVht5oqqxk+k++5MKfqyIaS4R1shrZr3fCkCdnSZUMxmthUyj6GziH1FFr/oGcdE0Tyz
-         +15D77IhxIp1cFW0wNWB9c1b6zAhl1/Mi8FrNTKafl2XwRYf+lcjc2ihqdkdF9ZkAl7r
-         xTcvuvvS1sQ4K0paPJnkDURGLDUvW7ZLLcuRpJ8W3B8DhVGx15e9UBr7LphGeUd60XFT
-         IdcvYV7/tzrU1ge3B2NrAqrndjgoMmCtBL7xUhLNZ/TryRzfhzVQ08vFta0KNym10Aiz
-         Zn3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686773475; x=1689365475;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=POY0ce7wWbwfbzD7JE6CSS9GHiPnt327xrkIS29uLi8=;
-        b=jzJY5lHqA6E8FuYcYTP/5fxr3Zcs9DTwbId9wesQLA7iXdpuPYmgLebqmt27qf6R57
-         9d/xFOPrNPgPT6rHMVWuygeaZsmrVhGC72AQrX5M8DWMnAc1GpJczJ0fb3NYdAmgNVM3
-         6SabmpmhmHAy1Xkj4HnWw5+oxpGNIpVNwFqHX1KYfES0Ot3Qa4tXwMNGjMHVrdbmE4ju
-         ZRp3+EneCo266+MAvPbHeyusDIV8OnJ9SSh2PgGCSxkZ/dMIe8iachyisi265eVzNmcW
-         n8ZXJ/BX2p7r4+CP24j18TCL3gbP3uCUcneuKoH4MWLiJph6k7Sg91JlUz7MSmAQwmHu
-         PFCA==
-X-Gm-Message-State: AC+VfDyauoRlcBPHVdJ8ydk1BJwXK9WVvjukxM2ClpFQDmUvOpda8PoU
-        AzlrBcIUSFKe/kA8l/gOaJoKoA==
-X-Google-Smtp-Source: ACHHUZ7lux0NZKiXoqw6xpxgceYsRJYfelW/Q3xaVMgdjmssULE780vQO2/2t2SlpUASJd7IHLBtCw==
-X-Received: by 2002:a19:e345:0:b0:4f4:c973:c97d with SMTP id c5-20020a19e345000000b004f4c973c97dmr8552770lfk.25.1686773475433;
-        Wed, 14 Jun 2023 13:11:15 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id h25-20020a197019000000b004f80f03d990sm76844lfc.259.2023.06.14.13.11.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 13:11:14 -0700 (PDT)
-Message-ID: <678a3750-0a89-aedf-b5cf-e68da003f4a0@linaro.org>
-Date:   Wed, 14 Jun 2023 23:11:14 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 01/18] dt-bindings: opp: opp-v2-kryo-cpu: support Qualcomm
- Krait SoCs
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Wed, 14 Jun 2023 16:16:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CCECDC;
+        Wed, 14 Jun 2023 13:16:06 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EJiksd025685;
+        Wed, 14 Jun 2023 20:15:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=0v0hiAtFb6JcdivZuJLRZlGtX7dJm82zMnQi6DelwmU=;
+ b=jZCZHLrVoNlphs1oRXZ0n6daoOUAE6MrBY5AdAgMNlf7uCcAPqgsedqgsl7uDujwPKdk
+ VK4LqO4ZwSMFYhCOLa9QBeZjTSTwgjkkFvegP3yiAqnZ81lE9NPG76U+dC2Hh4o0NX3u
+ DF39CVGNy0yV52sLmtr+p6lOSREfyUCrAsNQbPB2Vh/QKS6PdAJD2lwf46IajmibJ6uW
+ wxMLPuAbFAvg7N8zdfNu8Gi1/OEFHSWZEOFlxtMtyorRcRJn9L7sEy2aEuLUdwwXJdkD
+ kDobr72f41MkirYZQibkAO/wI8tkG88BynFRYinagFeY0vDVtgJvoUn6qrkrGvMKgvHr Bg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r79dfsnhw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 20:15:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EKFsTv005215
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 20:15:55 GMT
+Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 14 Jun 2023 13:15:15 -0700
+Date:   Thu, 15 Jun 2023 01:45:11 +0530
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>
-References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
- <20230612053922.3284394-2-dmitry.baryshkov@linaro.org>
- <5c750c6a-a0f8-c6f7-64fe-716da434d819@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <5c750c6a-a0f8-c6f7-64fe-716da434d819@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH v8 17/18] drm/msm/a6xx: Add A619_holi speedbin support
+Message-ID: <kdnjx5djbohaesploldfqxntzvdsb3ntc3f3nja23hnpwvqp3z@a662zzhj6p7z>
+References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
+ <20230223-topic-gmuwrapper-v8-17-69c68206609e@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230223-topic-gmuwrapper-v8-17-69c68206609e@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YWzesRBz_gypsA66rNMESuwnPURK3mPD
+X-Proofpoint-ORIG-GUID: YWzesRBz_gypsA66rNMESuwnPURK3mPD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-14_14,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ mlxscore=0 suspectscore=0 mlxlogscore=999 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306140178
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 19:01, Krzysztof Kozlowski wrote:
-> On 12/06/2023 07:39, Dmitry Baryshkov wrote:
->> Exted the opp-v2-kryo-cpu.yaml to support defining OPP tables for the
->> previous generation of Qualcomm CPUs, 32-bit Krait-based platforms.
->>
->> It makes no sense to use 'operating-points-v2-kryo-cpu' compatibility
->> node for the Krait cores. Add support for the Krait-specific
->> 'operating-points-v2-krait-cpu' compatibility string and the relevant
->> opp-microvolt subclasses properties.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../devicetree/bindings/opp/opp-v2-kryo-cpu.yaml      | 11 +++++++----
->>   1 file changed, 7 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
->> index bbbad31ae4ca..93ec778bf333 100644
->> --- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
->> +++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
->> @@ -26,7 +26,9 @@ description: |
->>   
->>   properties:
->>     compatible:
->> -    const: operating-points-v2-kryo-cpu
->> +    enum:
->> +      - operating-points-v2-krait-cpu
->> +      - operating-points-v2-kryo-cpu
->>   
->>     nvmem-cells:
->>       description: |
->> @@ -63,14 +65,15 @@ patternProperties:
->>             5:  MSM8996SG, speedbin 1
->>             6:  MSM8996SG, speedbin 2
->>             7-31:  unused
->> -        enum: [0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
->> -               0x9, 0xd, 0xe, 0xf,
->> -               0x10, 0x20, 0x30, 0x70]
+On Mon, May 29, 2023 at 03:52:36PM +0200, Konrad Dybcio wrote:
 > 
-> Why?
+> A619_holi is implemented on at least two SoCs: SM4350 (holi) and SM6375
+> (blair). This is what seems to be a first occurrence of this happening,
+> but it's easy to overcome by guarding the SoC-specific fuse values with
+> of_machine_is_compatible(). Do just that to enable frequency limiting
+> on these SoCs.
 > 
->> +        $ref: /schemas/types.yaml#/definitions/uint32
-> 
-> You are changing the type. No. It should be fixed instead (enum applies
-> to items).
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Currenlty this bindings are only usable for msm8996/msm8996pro. As such 
-we listed opp-supported-hw values that are applicable to this platform. 
-This series adds support for apq8064 platform, which will add new items 
-to this enum. I think it is not very sensible to list all of them here.
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-However granted there is already a good enough base type definition, I 
-think it would be better to drop the $ref, drop the enum, add ': true' 
-(is it necessary if we have a description already?) and expand 
-documentation.
-
+-Akhil
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 31 +++++++++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
 > 
->>   
->>         clock-latency-ns: true
->>   
->>         required-opps: true
->>   
->> +    patternProperties:
->> +      '^opp-microvolt-speed[0-9]+-pvs[0-9]+$': true
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index ca4ffa44097e..d046af5f6de2 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -2110,6 +2110,34 @@ static u32 a618_get_speed_bin(u32 fuse)
+>  	return UINT_MAX;
+>  }
+>  
+> +static u32 a619_holi_get_speed_bin(u32 fuse)
+> +{
+> +	/*
+> +	 * There are (at least) two SoCs implementing A619_holi: SM4350 (holi)
+> +	 * and SM6375 (blair). Limit the fuse matching to the corresponding
+> +	 * SoC to prevent bogus frequency setting (as improbable as it may be,
+> +	 * given unexpected fuse values are.. unexpected! But still possible.)
+> +	 */
+> +
+> +	if (fuse == 0)
+> +		return 0;
+> +
+> +	if (of_machine_is_compatible("qcom,sm4350")) {
+> +		if (fuse == 138)
+> +			return 1;
+> +		else if (fuse == 92)
+> +			return 2;
+> +	} else if (of_machine_is_compatible("qcom,sm6375")) {
+> +		if (fuse == 190)
+> +			return 1;
+> +		else if (fuse == 177)
+> +			return 2;
+> +	} else
+> +		pr_warn("Unknown SoC implementing A619_holi!\n");
+> +
+> +	return UINT_MAX;
+> +}
+> +
+>  static u32 a619_get_speed_bin(u32 fuse)
+>  {
+>  	if (fuse == 0)
+> @@ -2170,6 +2198,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_gpu *adreno_gpu, u3
+>  	if (adreno_is_a618(adreno_gpu))
+>  		val = a618_get_speed_bin(fuse);
+>  
+> +	else if (adreno_is_a619_holi(adreno_gpu))
+> +		val = a619_holi_get_speed_bin(fuse);
+> +
+>  	else if (adreno_is_a619(adreno_gpu))
+>  		val = a619_get_speed_bin(fuse);
+>  
 > 
-> I don't think it is a common property, so it needs description and
-> specific type. Specifically "pvs[0-9]" something entirely new.
-
-Ack.
-
+> -- 
+> 2.40.1
 > 
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
-
--- 
-With best wishes
-Dmitry
-
