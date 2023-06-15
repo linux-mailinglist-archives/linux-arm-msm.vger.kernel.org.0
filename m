@@ -2,90 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45969731E56
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 18:51:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C62A731EE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 19:26:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238166AbjFOQvs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 12:51:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49388 "EHLO
+        id S236693AbjFOR0W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 13:26:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236658AbjFOQvO (ORCPT
+        with ESMTP id S238697AbjFOR0V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 12:51:14 -0400
-Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [85.215.255.102])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DA12978;
-        Thu, 15 Jun 2023 09:51:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1686847859; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=C2MFh3Nl8ySHEwkt+v9B/pLF1JcBLKtutcWC9OiPC/bCibrN5lkkkTzp49/4SykZBs
-    KgyUgbw4Z4ph4LTyJ7jlD2696Vh8H5ZGLBqQyi1aTh6+74gCZQ1bNKUVTLIxNaAKpf7x
-    fiIQUsOWukCzLnnLbdvw2qtBYYuwb2y7vR2Aq1L7doo37Jv1MReNRp3FP49GCEzBGz3t
-    xIcyLZRVXXCQWPdnviIVN4Y+ErZ8+yYyxIOeScMhNIsYNy/zk4AVwKALZT1Z3WOwbjgy
-    5xQzh7m+WdDqE4EounwbhT9RjKNaGE96UwKcbVQa6LaGTvKvnB5IyzeKZ9Ve4w9pizCZ
-    ZOJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686847859;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=HZV9aVwyvKPAu680AA1+pBj60E1yrRK6tgCJfx+g4+I=;
-    b=fZUfb8AQnoOE0tkl35f7Ar+JSvF1pBm2x6IMPCIbJttTFxLtFt6JdaTiSBJjc13SBf
-    Wza2FHcCa5PHfTKs6EvmPp8X3as3ACbY9YGyvjb+f+5u3A8kRCOGEqc046p7iosD4A6z
-    xH3OqTs47mV1G+cSt6/BbPvuDI2HmZfwpPlcN38+cD8p+7iW5F9ET07FzpKx/DYGPB11
-    4ox3n4JqZYxfKFKK5q2SgkaiGD5QOPDFMBDsfmb9q1uYOxlvkGxrnPTqJxOAC2Ekpa9N
-    /9SzqsTEwdjwGt+62BZbaPgnx4q1JtaMVt1NBGJAHY8BKELtXbC1evtuDwz8VmypzmIx
-    VFDw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo03
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686847859;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=HZV9aVwyvKPAu680AA1+pBj60E1yrRK6tgCJfx+g4+I=;
-    b=gcWZ53fNE/QS2POK0QH3S/bL2YfH7Wsdpv0atmEE5oOp4/fYpK6dmqB/zW6bxobkZk
-    vUoYB1nfBZT0HqkyF6tza8zRibywJoYmqNj/ezDuAsfwTuuW1HtXlvmlEQFmsKH1OXP/
-    UqBMlwQZFQSPobzkVKZXleQp8zgqHmde25ZCQyvGqXXXerRIIAKDB1tmviNOfTWxsORJ
-    jL/htI0ijf/EjKvFFs2tSozJAdOe+rX82fUAQ0iKkl8/uDkIno+IyzDk5HDOtchr5ysg
-    rMygKwDMZDZjGBmW5mltnx2OD9GiM/X1WYKbRSQn/W7DIrAg9QpPQU9fGRucpRQm7/MS
-    0qlg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686847859;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=HZV9aVwyvKPAu680AA1+pBj60E1yrRK6tgCJfx+g4+I=;
-    b=fwOIT1RYgqTGXoPQNDvu8mELjjgHM3iBnqixt3m6Qsjl5vmOtq2ENGwS0m4lH4RW6n
-    JX2LvHf8b8QrKf4HtsCA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOf59w=="
-Received: from [192.168.244.3]
-    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
-    with ESMTPSA id D0d0a8z5FGox42o
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 15 Jun 2023 18:50:59 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Thu, 15 Jun 2023 18:50:46 +0200
-Subject: [PATCH v3 13/13] ARM: dts: qcom: apq8064: Drop redundant /smd node
+        Thu, 15 Jun 2023 13:26:21 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 876C92711
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 10:26:18 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f841b7a697so1700083e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 10:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686849976; x=1689441976;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9OD9CfNGG0ljVkHjUXzx71k7VdGMyNrkhpyVNqChErc=;
+        b=h1U7GUovXKBg8zOEwjAYNdcM+iamFEnF2AyGLYAtv4n1zNv+cXvGW4SnGRRNtqB5Dd
+         Mzpx/Z5vt/uZMY9kzIpw4tAAjqv3yDu7ohjM5GPCBy6Bn0BCJmgB4ytYJW9GxzZajY9t
+         +6kzNwwnYWMbOo1fkF3HDFp/e+s21JbsafUQ1uBkIkT6LBc9ZCqNHax6mAwtlba0WANj
+         CepmoZvfbLDiPiDRm3AhY/iZkpGSrDx3QInDHk3e2U0CCJc72ryVN7mjoNPde3aKTIQi
+         j9BpvivNlZ52lnTTWCsQ/MHiCBVsdUFBe3SJLJeCrhi168MnZAaFhQJLGQniG/tYye44
+         SZEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686849976; x=1689441976;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9OD9CfNGG0ljVkHjUXzx71k7VdGMyNrkhpyVNqChErc=;
+        b=WdIJPcVz71oX4nEa7pN1oqlqp/02ubzjM6vmoFcq0WHJlmYPegYCgDud3NfLT7Rdrm
+         HWTot7hF5nmiawht3e4hrMevxVmaA542+PjNjfGSIfpY6Hqhdy0mAm1kDHusVSaiBGkV
+         mVXMgpT5wt+esO5bfUZy0VhpdmYVdFwF+hgj9T5OXtrSuV/qRHGAphY5fxX9+8iaUK2f
+         2TxxkNrIaTpxGtI/8YHljF6SekGRo2Vn/fXsjxWN79sKbL0Shy80WNqVg3HmICHmeUO2
+         pgWBHPBIq51DZjy2tNpD0vPo5z2MvtOMH8+BQijhKbj5sAxKFDXu4WiZhYWCvqmOtj5t
+         EsMA==
+X-Gm-Message-State: AC+VfDwjJYveFg41/XzbTJ4jSS7KRL918xfHquBrcxAfwojOT+ZEVKGQ
+        N3HpUCNiTXmr333eHuAHx/1rUYaZtajupFiju24=
+X-Google-Smtp-Source: ACHHUZ6FWxB2G5sI0gRE4Ywc1DSB6zpSrGXY6CITo1W5RCOByENa7dVFWNEcmGMX7f/bgXCe2Er8nw==
+X-Received: by 2002:a05:6512:54e:b0:4f7:69c8:44ff with SMTP id h14-20020a056512054e00b004f769c844ffmr3217394lfl.2.1686849976301;
+        Thu, 15 Jun 2023 10:26:16 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id q28-20020ac25a1c000000b004f3b4d17114sm2645328lfn.144.2023.06.15.10.26.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 10:26:15 -0700 (PDT)
+Message-ID: <5377c938-10df-20ce-2bdb-dad41e472041@linaro.org>
+Date:   Thu, 15 Jun 2023 19:26:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-rpm-rproc-v3-13-a07dcdefd918@gerhold.net>
-References: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
-In-Reply-To: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-db845c: Mark cont splash
+ memory region as reserved
+Content-Language: en-US
+To:     Amit Pundir <amit.pundir@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230615142711.2994811-1-amit.pundir@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230615142711.2994811-1-amit.pundir@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,75 +84,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The "smd-edge"s for remote processors are typically specified below the
-remoteproc nodes. For some reason apq8064 also has them all listed in a
-top-level /smd node, disabled by default. None of the boards enable them.
+On 15.06.2023 16:27, Amit Pundir wrote:
+> Adding a reserved memory region for the framebuffer memory
+> (the splash memory region set up by the bootloader).
+> 
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> ---
+> v2: Updated commit message.
+> 
+> There was some dicussion on v1 but it didn't go anywhere,
+> https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u.
+> The general consensus is that this memory should be freed and be
+> made resuable but that (releasing this piece of memory) has been
+> tried before and it is not trivial to return the reserved memory
+> node to the system RAM pool in this case.
+> 
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> index e14fe9bbb386..10a06ee8e262 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> @@ -101,6 +101,14 @@ hdmi_con: endpoint {
+>  		};
+>  	};
+>  
+> +	reserved-memory {
+> +		/* Cont splash region set up by the bootloader */
+> +		cont_splash_mem: framebuffer@9d400000 {
+> +			reg = <0x0 0x9d400000 0x0 0x2400000>;
+> +			no-map;
+> +		};
+> +	};
+&mdss {
+	memory-region = <&cont_splash_mem>;
+};
 
-Right now apq8064 only has support for WCNSS/riva, but there the
-smd-edge is already defined with the same interrupt etc below the
-riva-pil node.
+?
 
-Drop these redundant definitions since the /smd top-level node is now
-deprecated.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm/boot/dts/qcom-apq8064.dtsi | 40 -------------------------------------
- 1 file changed, 40 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index d2289205ff81..e0adf237fc5c 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -226,46 +226,6 @@ smem {
- 		hwlocks = <&sfpb_mutex 3>;
- 	};
- 
--	smd {
--		compatible = "qcom,smd";
--
--		modem-edge {
--			interrupts = <0 37 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&l2cc 8 3>;
--			qcom,smd-edge = <0>;
--
--			status = "disabled";
--		};
--
--		q6-edge {
--			interrupts = <0 90 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&l2cc 8 15>;
--			qcom,smd-edge = <1>;
--
--			status = "disabled";
--		};
--
--		dsps-edge {
--			interrupts = <0 138 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&sps_sic_non_secure 0x4080 0>;
--			qcom,smd-edge = <3>;
--
--			status = "disabled";
--		};
--
--		riva-edge {
--			interrupts = <0 198 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&l2cc 8 25>;
--			qcom,smd-edge = <6>;
--
--			status = "disabled";
--		};
--	};
--
- 	smsm {
- 		compatible = "qcom,smsm";
- 
-
--- 
-2.40.1
-
+Konrad
+> +
+>  	lt9611_1v8: lt9611-vdd18-regulator {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "LT9611_1V8";
