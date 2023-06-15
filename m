@@ -2,214 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2FB273203E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 21:04:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D2777320AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 22:12:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjFOTEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 15:04:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49188 "EHLO
+        id S229665AbjFOUMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 16:12:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjFOTEW (ORCPT
+        with ESMTP id S234048AbjFOUMD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 15:04:22 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A706D2137;
-        Thu, 15 Jun 2023 12:04:19 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 49E191FB;
-        Thu, 15 Jun 2023 12:05:03 -0700 (PDT)
-Received: from [10.57.85.251] (unknown [10.57.85.251])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C1DFC3F663;
-        Thu, 15 Jun 2023 12:04:16 -0700 (PDT)
-Message-ID: <34c7c65f-e09f-fa55-c1b9-de08d71a1ac7@arm.com>
-Date:   Thu, 15 Jun 2023 20:04:10 +0100
+        Thu, 15 Jun 2023 16:12:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A55432D4E;
+        Thu, 15 Jun 2023 13:11:47 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35FJu9tT031635;
+        Thu, 15 Jun 2023 20:11:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=kIRTN6UrVIS2yHQZ2vEzLvG3wl4ylStlzjDH/RNZQ8o=;
+ b=aujoH7/UAhnbayh8QlSM/7fj3tBYoBIEdZLoiZ5gNls1L2pdIx6I4UAesS81N1Mkq7/n
+ uDA5JXR5PZd0aC12tw4CPLM9tESbbrxpqZHyFjpoD3qcSzJctBIC75TR0a9lu9UAXvmf
+ ZKwGH8ot3IcHAzCwZ4bATi1wg2SLdwgNOv2T+wrqN+en0szHDBdZL81tqOJNBCTh5nF8
+ tbFWN8rmw4XBBFJyeHqdOnZqPvW2HjsZYl/UPU8QoqOKFekJO7uAODSfWqWDatDybRjs
+ c82+QbrvxhCJBhXN3ARwhM8Y3ogSbrxziy/iTXgkBlBSpg9GP8V+ULwIsZehJMljdo/3 AA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7p4qaj20-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 20:11:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35FKBXLc002978
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 20:11:33 GMT
+Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 15 Jun 2023 13:11:28 -0700
+Date:   Fri, 16 Jun 2023 01:41:25 +0530
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH v8 07/18] drm/msm/a6xx: Add a helper for
+ software-resetting the GPU
+Message-ID: <rd4mte26n22xlgx5umerpgr66b4wfi7mdm6ovszafyinrg3q4c@g227oj3nh2vc>
+References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
+ <20230223-topic-gmuwrapper-v8-7-69c68206609e@linaro.org>
+ <jplt5g5xuphbnci73pdtaxd63fguxtgtp4c37kc7ehavzrjbau@kamshezxnvgy>
+ <001d7571-5e9f-4f60-f6d0-35806a3e51c5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] Revert "Revert "Revert "arm64: dma: Drop cache
- invalidation from arch_dma_prep_coherent()"""
-Content-Language: en-GB
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Will Deacon <will@kernel.org>, andersson@kernel.org,
-        amit.pundir@linaro.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@somainline.org, Sibi Sankar <quic_sibis@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        sumit.semwal@linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Marc Zyngier <maz@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20230614165904.1.I279773c37e2c1ed8fbb622ca6d1397aea0023526@changeid>
- <36565295-ebaa-2a66-3389-ba5eb714ab34@arm.com>
- <CAD=FV=W7HXYRJ7RUeVH0hQ7KjYtEvNABCi-F4iN_wRO6uuC34w@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <CAD=FV=W7HXYRJ7RUeVH0hQ7KjYtEvNABCi-F4iN_wRO6uuC34w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <001d7571-5e9f-4f60-f6d0-35806a3e51c5@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PiBZfZ9M9EfnFAoxAGTWvrdGWLXTpbNJ
+X-Proofpoint-ORIG-GUID: PiBZfZ9M9EfnFAoxAGTWvrdGWLXTpbNJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-15_15,2023-06-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306150173
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-15 18:42, Doug Anderson wrote:
-> Hi,
+On Thu, Jun 15, 2023 at 12:34:06PM +0200, Konrad Dybcio wrote:
 > 
-> On Thu, Jun 15, 2023 at 3:13 AM Robin Murphy <robin.murphy@arm.com> wrote:
->>
->> On 2023-06-15 00:59, Douglas Anderson wrote:
->>> This reverts commit 7bd6680b47fa4cd53ee1047693c09825e212a6f5.
->>>
->>> When booting a sc7180-trogdor based device on mainline, I see errors
->>> that look like this:
->>>
->>>    qcom_scm firmware:scm: Assign memory protection call failed -22
->>>    qcom_rmtfs_mem 94600000.memory: assign memory failed
->>>    qcom_rmtfs_mem: probe of 94600000.memory failed with error -22
->>>
->>> The device still boots OK, but WiFi doesn't work.
->>>
->>> The failure only seems to happen when
->>> CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y. When I don't have that set then
->>> everything is peachy. Presumably something about the extra
->>> initialization disagrees with the change to drop cache invalidation.
->>
->> AFAICS init_on_alloc essentially just adds __GFP_ZERO to the page
->> allocation.
+> On 6.06.2023 19:18, Akhil P Oommen wrote:
+> > On Mon, May 29, 2023 at 03:52:26PM +0200, Konrad Dybcio wrote:
+> >>
+> >> Introduce a6xx_gpu_sw_reset() in preparation for adding GMU wrapper
+> >> GPUs and reuse it in a6xx_gmu_force_off().
+> >>
+> >> This helper, contrary to the original usage in GMU code paths, adds
+> >> a write memory barrier which together with the necessary delay should
+> >> ensure that the reset is never deasserted too quickly due to e.g. OoO
+> >> execution going crazy.
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> >>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  3 +--
+> >>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++++++
+> >>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
+> >>  3 files changed, 13 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> >> index b86be123ecd0..5ba8cba69383 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> >> @@ -899,8 +899,7 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
+> >>  	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
+> >>  
+> >>  	/* Reset GPU core blocks */
+> >> -	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
+> >> -	udelay(100);
+> >> +	a6xx_gpu_sw_reset(gpu, true);
+> >>  }
+> >>  
+> >>  static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> index e3ac3f045665..083ccb5bcb4e 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> @@ -1634,6 +1634,17 @@ void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_
+> >>  	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
+> >>  }
+> >>  
+> >> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert)
+> >> +{
+> >> +	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, assert);
+> >> +	/* Add a barrier to avoid bad surprises */
+> > Can you please make this comment a bit more clear? Highlight that we
+> > should ensure the register is posted at hw before polling.
+> > 
+> > I think this barrier is required only during assert.
+> Generally it should not be strictly required at all, but I'm thinking
+> that it'd be good to keep it in both cases, so that:
 > 
-> Right, but it does so without `__GFP_ZERO` getting into the page
-> flags. That means that this removal of "__GFP_ZERO" in
-> dma_direct_alloc() doesn't actually remove the zeroing when
-> CONFIG_INIT_ON_ALLOC_DEFAULT_ON IS USED:
+> if (assert)
+> 	we don't keep writing things to the GPU if it's in reset
+> else
+> 	we don't start writing things to the GPU becomes it comes
+> 	out of reset
 > 
->    /* we always manually zero the memory once we are done */
->    page = __dma_direct_alloc_pages(dev, size, gfp & ~__GFP_ZERO, true);
-> 
-> 
->> This should make no difference to a DMA allocation given
->> that dma_alloc_attrs explicitly zeros its allocation anyway. However...
->> for the non-coherent case, the DMA API's memset will be done through the
->> non-cacheable remap, while __GFP_ZERO can leave behind cached zeros for
->> the linear map alias. Thus what I assume must be happening here is that
->> "DMA" from the firmware is still making cacheable accesses to the buffer
->> and getting those zeros instead of whatever actual data which was
->> subsequently written non-cacheably direct to RAM. So either the firmware
->> still needs fixing to make non-cacheable accesses, or the SCM driver
->> needs to correctly describe it as coherent.
-> 
-> I'm a little confused, but that's pretty normal for me. :-P Looking at
-> the SCM driver, I see it doing the allocation in qcom_scm_assign_mem()
-> as:
-> 
->    dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
-> 
-> Isn't that the SCM driver describing it as coherent?
+> Also, if you squint hard enough at the commit message, you'll notice
+> I intended for this so only be a wmb, but for some reason generalized
+> it.. Perhaps that's another thing I should fix!
+> for v9..
 
-The name of the API means that the *buffer* is coherent, i.e. both the 
-device and CPU can access it at any time without needing any special 
-synchronisation. How that is achieved depends on the device - if it is 
-capable of snooping caches (i.e. marked as "dma-coherent" in DT) then 
-that coherency is provided by hardware and the allocator doesn't need to 
-do anything special; otherwise, it achieves coherency by making the CPU 
-accesses non-cacheable.
+wmb() doesn't provide any ordering guarantee with the delay loop.
+A common practice is to just read back the same register before
+the loop because a readl followed by delay() is guaranteed to be ordered.
 
-> I guess the reason that the SCM driver is doing this is that it's
-> passing a chunk of memory to the firmware but it passes it to firmware
-> via a _physical_ address, not a virtual one. I guess this makes sense
-> to do when passing a chunk of memory to firmware since you wouldn't
-> want to pass the kernel's virtual address there...
-
-Correct.
-
-> Presumably the fact that the firmware gets a physical address means
-> that the firmware needs to map this address somehow itself. I can try
-> to dig up what the firmware is doing if needed (what attributes it
-> uses to map), but I guess the hope is that it shouldn't matter.
-
-It absolutely matters. Linux has been told (by DT) that this device does 
-not snoop caches, and therefore is acting on that information by using 
-the non-cacheable remap. There is nothing inherently wrong with that, 
-even when the "device" is actually firmware running on the same CPU - 
-EL3 could well run with the MMU off, or just make a point of not 
-accessing Non-Secure memory with cacheable attributes to avoid 
-side-channels. However if in this case the SCM firmware *is* using 
-cacheable attributes, as the symptoms would suggest, then either the 
-firmware or the DT is wrong, and there is nothing Linux can do to 
-completely fix that.
-
-> As
-> long as the kernel can guarantee that the contents that it needs have
-> been flushed out to memory then I think we're supposed to be good,
-> right?
-
-Right, and that's what the cache clean does. What Linux *cannot* 
-guarantee is that said contents don't subsequently get pulled back into 
-a cache in a manner which would break coherency if anyone was actually 
-looking at the cache rather than RAM.
-
-> In any case, I dumped a stack crawl to try to show the path where the
-> init happens, since there are lots of conditionals. I see this:
+-Akhil.
 > 
->   kernel_init_pages+0x68/0x6c
->   post_alloc_hook+0x40/0x90
->   prep_new_page+0x34/0x68
->   get_page_from_freelist+0x894/0xe64
->   __alloc_pages+0x12c/0xd24
->   __dma_direct_alloc_pages+0x9c/0x170
->   dma_direct_alloc+0x254/0x4bc
->   dma_alloc_attrs+0xe4/0x1e4
->   qcom_scm_assign_mem+0xb0/0x258
-> 
-> 
-> So looking at dma_direct_alloc(), I guess:
-> 
-> 1. We call __dma_direct_alloc_pages() to allocate the page. We try to
-> turn off __GFP_ZERO but CONFIG_INIT_ON_ALLOC_DEFAULT_ON overrides us.
-> 
-> 2. As part of __dma_direct_alloc_pages(), we use the existing
-> (cachable) mapping of the page and write zeros.
-> 
-> 3. The "remap" variable is set for arm64 so we call
-> arch_dma_prep_coherent(). That used to do a "clean and invalidate" but
-> now does just a "clean" and that's what broke me.
-> 
-> 
-> Talking out of my rear end, I guess the issue here might be that it
-> _does_ matter how the firmware maps this memory because it has to
-> match how the kernel has it mapped because if you map the same
-> physical memory twice then the attributes need to match. Maybe the old
-> "invalidate" just worked around this issue?
-
-See the comment that the revert brings back - indeed it makes it less 
-likely, but it's still possible that, say, the qcom_scm_assign_mem() 
-thread gets preempted by an interrupt after dma_alloc_coherent() 
-invalidates but before the buffer is completely written, and some access 
-to an adjacent page during that period causes incomplete data to be 
-prefetched back into the cache, and you're back to square one.
-
-If Linux were actually expecting to get data back from the firmware, 
-that would likely be even more broken (presuming it would use cacheable 
-writes without a subsequent cache clean, given the implication that it's 
-already doing cacheable reads without any maintenance of its own).
-
-> If this wild guessing is
-> correct, maybe a more correct solution would be to simply unmap the
-> memory from the kernel before passing the physical address to the
-> firmware, if that's possible...
-
-Having now looked at the SCM driver, TBH it doesn't make an awful lot of 
-sense for it to be using dma_alloc_coherent() there anyway - it's not 
-using it as a coherent buffer, it's doing a one-off unidirectional 
-transfer of a relatively small amount of data in a manner which seems to 
-be exactly the usage model for the streaming DMA API. And I think using 
-the latter would happen to mitigate this problem too - with streaming 
-DMA you'd put the dma_map_page() call *after* all the buffer data has 
-been written, right before the SMC call, so even with a coherency 
-mismatch there would essentially be no opportunity for the caches to get 
-out of sync.
-
-Thanks,
-Robin.
+> Konrad
+> > 
+> > -Akhil.
+> >> +	mb();
+> >> +
+> >> +	/* The reset line needs to be asserted for at least 100 us */
+> >> +	if (assert)
+> >> +		udelay(100);
+> >> +}
+> >> +
+> >>  static int a6xx_pm_resume(struct msm_gpu *gpu)
+> >>  {
+> >>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> >> index 9580def06d45..aa70390ee1c6 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> >> @@ -89,5 +89,6 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu);
+> >>  int a6xx_gpu_state_put(struct msm_gpu_state *state);
+> >>  
+> >>  void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
+> >> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
+> >>  
+> >>  #endif /* __A6XX_GPU_H__ */
+> >>
+> >> -- 
+> >> 2.40.1
+> >>
