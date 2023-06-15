@@ -2,255 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C54E5731247
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:35:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79D86731262
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:38:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244583AbjFOIel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 04:34:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56574 "EHLO
+        id S243853AbjFOIia (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 04:38:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244544AbjFOIea (ORCPT
+        with ESMTP id S237966AbjFOIi1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 04:34:30 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0154E2125
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:34:28 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b4420a8c44so9100661fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:34:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686818066; x=1689410066;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nf2LhhVsoVo8G/Q+39tVp5ZYmVz8VwbPVAt1Vy+crpk=;
-        b=OESo0GBOKbdnIkneHjQMHRkwskNYusAWooXNfVOQapJOx0VzKOqrA0qvdZVf5WZb2L
-         9t0USv+KzaROc4uX39mOh+6Pv/cv3pmtfXmVER8v4s70ANZZny36JC9QFqfgTNNtS+Pq
-         bayvnrCQYvgbzKakud07/llkkuJv075mtZ7YbfPK/X+0XKwavF59vLwI6SPgKiq6Wov1
-         rPFeRwf+DEIg9NhSnWBta2MurvsCX33WgRV5FjeSC2FQuO1y0KH+AIYbj0hihtO4k1mt
-         PjfRvNfWqmj6AlFjulzcx2AyarzyhaHM/Zz3QoKdNGBeNMuYnkWtCQug/+eY8HCxyePb
-         YNcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686818066; x=1689410066;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nf2LhhVsoVo8G/Q+39tVp5ZYmVz8VwbPVAt1Vy+crpk=;
-        b=ICSAlttZ1lUI5a0HgXUiJPLQhw7dDFjR/VCktMxXVQAp2Z5/kYWjMdXLolpCJ3xxEX
-         CD3R2oS9jE4lwI6GUoh2B8fDxmgnxyneOAT8xa5yGFyeoME4SbRtIRbsTcEavckR0q8N
-         gtD2yuSb+RNoihZVuMTYQmgUHfyCef0ZGuTDolXny9SYeLoVd/ztz++XsSaBeI2GXXUH
-         nSuuvfZrcg1VW6Jh/jBFmNrZuez98OP8+Fx46SogR6h3vTHxwNk2ojhVz+a8/FNiT0V4
-         B+dN3KLVH9R98Kp/4wFuQR+lDOBvt98Dhyx+9ifWP2JsSVd59YKFTpauEuEbpn0Apou+
-         8M5g==
-X-Gm-Message-State: AC+VfDzjv0XiTdyZf1PKlhU1RO/lk6xb/Gj9GiAvziervjR0YkJgJehr
-        Y6eKGOiEy+p6ExZVY2YdaD4Fqg==
-X-Google-Smtp-Source: ACHHUZ7WUAsy7QYAEnK/mZq/FceTzpINri+7JBkZwG5PZV3Kr8seauwAt9jjcLyg4fE9Zu2z00foaw==
-X-Received: by 2002:a2e:3a05:0:b0:2ad:8c4c:4459 with SMTP id h5-20020a2e3a05000000b002ad8c4c4459mr7952216lja.50.1686818066372;
-        Thu, 15 Jun 2023 01:34:26 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id a19-20020a2eb173000000b002ad92dff470sm2971209ljm.134.2023.06.15.01.34.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 01:34:25 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: msm8996: rename labels for HDMI nodes
-Date:   Thu, 15 Jun 2023 11:34:22 +0300
-Message-Id: <20230615083422.350297-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230615083422.350297-1-dmitry.baryshkov@linaro.org>
-References: <20230615083422.350297-1-dmitry.baryshkov@linaro.org>
+        Thu, 15 Jun 2023 04:38:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A3C1FF9;
+        Thu, 15 Jun 2023 01:38:26 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F8bwct004498;
+        Thu, 15 Jun 2023 08:38:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=JOVReWYgp4mslzJesoiZdVQJcoj3RCwTIfRIcLjnaFw=;
+ b=AdLA/qI3jSK3D76F6xIniVB63F+D7pWYqpoFtSZELYTKk2DoPP2uvBgYip4ZYlYmCNHz
+ WTWZIjR8zA+dHY7CbHABSAGz2ahUbt/aDHiPLy5JwKfXh5PyaEeey4KwkL9MvGi0rty/
+ rABK5tu3OHtGfZTfxHq2OzPqettf7QW/uC23dba2b5o8FNaqjWCUmOtjGLFnD5lqrUJc
+ E//NORVFpJ17En7Be2tfnbQbLevK8Ml+zOAvItWSeRWcPRKL6pXpIZEKrcaPSNhtDtqY
+ AL4Ymczb6H3DdWVY66XpwHGVrLOsmaQouTFeSrumQMODroSU1HNcwjI0a963tvF1Jc/1 Fg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7va2gd6v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 08:38:01 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35F8c0IL025490
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 08:38:00 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 15 Jun 2023 01:37:49 -0700
+Date:   Thu, 15 Jun 2023 14:07:45 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <rafal@milecki.pl>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.org>, <quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH 9/9] arm64: defconfig: Enable QCOM M31 USB phy driver
+Message-ID: <20230615083744.GB9973@varda-linux.qualcomm.com>
+References: <cover.1686126439.git.quic_varada@quicinc.com>
+ <55f51785b36b9725fe5283a58230aee4e89b4d6f.1686126439.git.quic_varada@quicinc.com>
+ <21bfe86f-8257-d0ff-883b-bbe451d8f77b@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <21bfe86f-8257-d0ff-883b-bbe451d8f77b@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WuvZapCsfPSz5iUrxf8InvxK0I-vISEu
+X-Proofpoint-ORIG-GUID: WuvZapCsfPSz5iUrxf8InvxK0I-vISEu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-15_05,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=257
+ priorityscore=1501 mlxscore=0 impostorscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306150072
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In board files MDSS and HDMI nodes do not come next to each other,
-because labels for HDMI nodes do not have the common mdss_ prefix.
+On Wed, Jun 07, 2023 at 08:36:21PM +0200, Krzysztof Kozlowski wrote:
+> On 07/06/2023 12:56, Varadarajan Narayanan wrote:
+> > Enable QCOM M31 USB phy driver present in IPQ5332
+>
+> What is "QCOM"? If acronym, extend. IPQ5332 - provide full name, so
+> "Qualcomm IPQ....".
 
-Follow the DSI example and enable such grouping by changing the prefix
-for HDMI labels to mdss_hdmi_*.
+Will remove 'QCOM'.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts  | 40 ++++++++++----------
- arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts |  6 +--
- arch/arm64/boot/dts/qcom/msm8996-mtp.dts     |  4 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 12 +++---
- 4 files changed, 31 insertions(+), 31 deletions(-)
+Thanks
+Varada
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index b599909c4463..39170c18c693 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -208,25 +208,6 @@ &gpu {
- 	status = "okay";
- };
- 
--&hdmi {
--	status = "okay";
--
--	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
--	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
--
--	core-vdda-supply = <&vreg_l12a_1p8>;
--	core-vcc-supply = <&vreg_s4a_1p8>;
--};
--
--&hdmi_phy {
--	status = "okay";
--
--	vddio-supply = <&vreg_l12a_1p8>;
--	vcca-supply = <&vreg_l28a_0p925>;
--	#phy-cells = <0>;
--};
--
- &hsusb_phy1 {
- 	status = "okay";
- 
-@@ -251,6 +232,25 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_hdmi {
-+	status = "okay";
-+
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
-+	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
-+
-+	core-vdda-supply = <&vreg_l12a_1p8>;
-+	core-vcc-supply = <&vreg_s4a_1p8>;
-+};
-+
-+&mdss_hdmi_phy {
-+	status = "okay";
-+
-+	vddio-supply = <&vreg_l12a_1p8>;
-+	vcca-supply = <&vreg_l28a_0p925>;
-+	#phy-cells = <0>;
-+};
-+
- &mmcc {
- 	vdd-gfx-supply = <&vdd_gfx>;
- };
-@@ -1054,7 +1054,7 @@ platform {
- 		};
- 
- 		codec {
--			sound-dai = <&hdmi 0>;
-+			sound-dai = <&mdss_hdmi 0>;
- 		};
- 	};
- 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-index ed2e2f6c6775..ac6471d1db1f 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-@@ -92,15 +92,15 @@ &gpu {
- 	status = "okay";
- };
- 
--&hdmi {
-+&mdss {
- 	status = "okay";
- };
- 
--&hdmi_phy {
-+&mdss_hdmi {
- 	status = "okay";
- };
- 
--&mdss {
-+&mdss_hdmi_phy {
- 	status = "okay";
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-index 596ad4c896f5..495d45a16e63 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-@@ -24,10 +24,10 @@ &blsp2_uart2 {
- 	status = "okay";
- };
- 
--&hdmi {
-+&mdss_hdmi {
- 	status = "okay";
- };
- 
--&hdmi_phy {
-+&mdss_hdmi_phy {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 3855366ca89f..40ac0a784a4a 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -895,7 +895,7 @@ mmcc: clock-controller@8c0000 {
- 				 <&mdss_dsi0_phy 0>,
- 				 <&mdss_dsi1_phy 1>,
- 				 <&mdss_dsi1_phy 0>,
--				 <&hdmi_phy>;
-+				 <&mdss_hdmi_phy>;
- 			clock-names = "xo",
- 				      "gpll0",
- 				      "gcc_mmss_noc_cfg_ahb_clk",
-@@ -980,7 +980,7 @@ ports {
- 					port@0 {
- 						reg = <0>;
- 						mdp5_intf3_out: endpoint {
--							remote-endpoint = <&hdmi_in>;
-+							remote-endpoint = <&mdss_hdmi_in>;
- 						};
- 					};
- 
-@@ -1136,7 +1136,7 @@ mdss_dsi1_phy: phy@996400 {
- 				status = "disabled";
- 			};
- 
--			hdmi: hdmi-tx@9a0000 {
-+			mdss_hdmi: hdmi-tx@9a0000 {
- 				compatible = "qcom,hdmi-tx-8996";
- 				reg =	<0x009a0000 0x50c>,
- 					<0x00070000 0x6158>,
-@@ -1160,7 +1160,7 @@ hdmi: hdmi-tx@9a0000 {
- 					"alt_iface",
- 					"extp";
- 
--				phys = <&hdmi_phy>;
-+				phys = <&mdss_hdmi_phy>;
- 				#sound-dai-cells = <1>;
- 
- 				status = "disabled";
-@@ -1171,14 +1171,14 @@ ports {
- 
- 					port@0 {
- 						reg = <0>;
--						hdmi_in: endpoint {
-+						mdss_hdmi_in: endpoint {
- 							remote-endpoint = <&mdp5_intf3_out>;
- 						};
- 					};
- 				};
- 			};
- 
--			hdmi_phy: phy@9a0600 {
-+			mdss_hdmi_phy: phy@9a0600 {
- 				#phy-cells = <0>;
- 				compatible = "qcom,hdmi-phy-8996";
- 				reg = <0x009a0600 0x1c4>,
--- 
-2.39.2
-
+> Best regards,
+> Krzysztof
+>
