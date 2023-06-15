@@ -2,59 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5B5973161E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:06:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D20CB731660
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:21:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343605AbjFOLGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 07:06:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36196 "EHLO
+        id S234125AbjFOLVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 07:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343648AbjFOLGQ (ORCPT
+        with ESMTP id S239118AbjFOLVf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 07:06:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56FF42976;
-        Thu, 15 Jun 2023 04:06:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DC8FE6299E;
-        Thu, 15 Jun 2023 11:06:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BACC433CC;
-        Thu, 15 Jun 2023 11:06:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686827166;
-        bh=EzK3/0FxLXQ2Eumtuqysipl2SLIHr3Bh2lrMfgp6YLE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JAtmhWqF87jqZR2KtFKIaiSpAGyaj3lFjS9H2d4R9h5cMKLunUn3539SymxFyASg/
-         hWRytr/+MS15+g3QoNcBhGCu6oYNhJbYyz54E0kZ0TcNbSdzTNpFEb741Qgkqv/LT7
-         iNu7Ex3VrqjKuWIy8SBRgXsh/BJZtCjnjGkdKuSyA8yPbg4LVBL3JN+O7W/+kz0IqS
-         GRHYbTy2eMOoRIbRoTeUErLy5rJvluCKHW6MryUam8sys9/CteN/4Bf0MRj+EFkwil
-         11ea2kRKQtTO2+RDewKxh31jmKudEGkqGhiZkzMp7VBrCTSxRJZeUh/U/6QCmXYsIj
-         FybNqIV4rEiLQ==
-Date:   Thu, 15 Jun 2023 12:06:00 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 15 Jun 2023 07:21:35 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E92E2707
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:21:33 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9788faaca2dso274668466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:21:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686828092; x=1689420092;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pV+y4rT5kQxU13ZWSN4RWCUCARBYQF07f0m1RJyvFAA=;
+        b=IYrdVZiFOin/Wd7Rq+fWzaFW8RkZmF77MVOWUyexrf5yAWVi/4t3qWhafp4WvJ7bBW
+         SNevCE1Y3tT2+0BhvmNfKlzPDUjiL5rN1hxXFId7zs+QYeEpEiWDM/jK/U4G7nV1AOHd
+         yd5ENhr7xtnUQ4IXHcEFL9/yKj1CEyJGmHHm99eRQiUXBbj//q0iubqSg2yyduYiHJPH
+         V6bN0ywpis86GsfdZBD9NPEQmI6yNj6cgnJar0cGlFh3PLbngNcIxld7j3lSL9zgrTEy
+         SaZSDRGZ28HdP5U//Il3ob3mhcmNqfiJR363hb3LyF468QnC778+uqWB0G+JjbPTW+Zw
+         Kpzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686828092; x=1689420092;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pV+y4rT5kQxU13ZWSN4RWCUCARBYQF07f0m1RJyvFAA=;
+        b=lr/Hpb+hffpvP/Zg5N5cmhs9tCMe1g4fJCGeD6UGAKtlKDgqDf/++NrYkTeS3aPCO4
+         3OqQmk2YHRkSp+GkgWYxhQjR0OVaB+kw8t9cZUjOlgl1APYCl6XvkjBpi/onhSZeiRjf
+         6BhvWVJ4QxjtE10Xxgr9ugzAH9VTvWx6Z/Rk7/6hBVaiQmQXRcyDloAtNvwuzAVLv8CC
+         QUT6VBFtZXrv2dndhJtEP57/cNL3Uvo2wciIl6GRwdYtMTYovI1IdCDjLFhzhL+IZIEm
+         rq/cuvO9nswwCalc62ubqn6eiRrD6h2gtugyIQA9zhPTjSrD9QQH0PETl8ZftGcq/Mi4
+         ODSQ==
+X-Gm-Message-State: AC+VfDyxS7OrGbN9vPiar2+XZMCDsa+3rCt5mGqY1LjVyKh/VJ6s1TYi
+        6isfZMpi82QYy3UItW7xcn0jcA==
+X-Google-Smtp-Source: ACHHUZ59wFGqjNj2za4uofAV4ZCkscTF4ivQVEtbL+YESxcp9a2mKdimrRkPO/jFfPGpw/lip2Ym5A==
+X-Received: by 2002:a17:906:7943:b0:982:4df6:6017 with SMTP id l3-20020a170906794300b009824df66017mr5926980ejo.77.1686828092062;
+        Thu, 15 Jun 2023 04:21:32 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id a13-20020a170906684d00b009828dac8425sm1286289ejs.105.2023.06.15.04.21.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 04:21:31 -0700 (PDT)
+Message-ID: <8e9b62f3-d8c6-fea4-738b-c502f7167131@linaro.org>
+Date:   Thu, 15 Jun 2023 13:21:29 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 2/2] ASoC: codecs: wsa884x: Add WSA884x family of
+ speakers
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Carpenter <error27@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] spi: spi-geni-qcom: correctly handle -EPROBE_DEFER from
- dma_request_chan()
-Message-ID: <5383f9ba-0659-4642-9e58-0e33a2df6b53@sirena.org.uk>
-References: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v1-1-6da9bf2db4a4@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="NUz4BNeQxYNXFVmx"
-Content-Disposition: inline
-In-Reply-To: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v1-1-6da9bf2db4a4@linaro.org>
-X-Cookie: You are false data.
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Cc:     Patrick Lai <quic_plai@quicinc.com>
+References: <20230612095716.118631-1-krzysztof.kozlowski@linaro.org>
+ <20230612095716.118631-2-krzysztof.kozlowski@linaro.org>
+ <493895cc-378a-d908-372b-0a873cc0800e@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <493895cc-378a-d908-372b-0a873cc0800e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,36 +90,298 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 12/06/2023 12:18, Srinivas Kandagatla wrote:
+> Thanks Krzyztof,
+> 
+> few minor nits below.
 
---NUz4BNeQxYNXFVmx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Please trim unrelated context - it's easy to miss a comment between huge
+quoted text.
 
-On Thu, Jun 15, 2023 at 11:23:17AM +0200, Neil Armstrong wrote:
+>> +
+>> +static const char * const wsa884x_dev_mode_text[] = {
+>> +	"Speaker", "Receiver"
+>> +};
+>> +
+>> +enum wsa884x_variant {
+>> +	WSA8840 = 0x0,
+>> +	WSA8845 = 0x5,
+>> +	WSA8845H = 0xc,
+> A proper defines for this makes more sense than a enum.
 
->  			dev_dbg(mas->dev, "Using GPI DMA mode for SPI\n");
->  			break;
-> -		}
-> +		} else if (ret == -EPROBE_DEFER)
-> +			goto out_pm;
->  		/*
->  		 * in case of failure to get gpi dma channel, we can still do the
+OK. I will also put the define next to respective register define.
 
-Both sides of an if statement should have braces if one side does.
+> 
 
---NUz4BNeQxYNXFVmx
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+O_REG(2000), },
+>> +	{ WSA884X_ANA_WO_CTL_1, 0x00 },
+>> +	{ WSA884X_OTP_REG_38, 0x00 },
+>> +	{ WSA884X_OTP_REG_40, 0x8 << WSA884X_OTP_REG_40_ISENSE_RESCAL_SHIFT },
+> 
+> FIELD macros?
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSK8JcACgkQJNaLcl1U
-h9BZjgf/WCjAWC4bGBYIoMu7kx+lAtJrQh7G4Ejt1KOhX8EHlPrIMDcYq8ASiSjk
-Q+fHrQrZhSBTJxKPiMmOJzKpKO2GjUZ2dmmEXIl9P+rRWT6JHe6pkl2VO6zJUOTn
-6K4iDIUtvzkp5V/geONAdcy25HqK742sZmTBfrHNNwwV83PRkg2DEedAZ+CfcNxz
-i94+FdLlXT+/wa/sr+tceW205yI2op+pn4xbCEOok7HjAuFeH3edzcugy49Vo1a1
-KW8VQwkjqp4qKSwq21ZXxXgdYos9YPHuw5dqINRSYneuuWANoCJ7m21FJz//OfbY
-eAYl9skY+YIQ+9v4sCtqdS3E5/CrZg==
-=oZO4
------END PGP SIGNATURE-----
+Ack.
 
---NUz4BNeQxYNXFVmx--
+>> +};
+>> +
+>> +static void wsa884x_set_gain_parameters(struct wsa884x_priv *wsa884x)
+>> +{
+>> +	struct regmap *regmap = wsa884x->regmap;
+>> +	unsigned int min_gain, igain, vgain, comp_offset;
+>> +
+>> +	/*
+>> +	 * Downstream sets gain parameters customized per boards per use-case.
+>> +	 * Choose here some sane values matching knowon users, like QRD8550
+>> +	 * board:.
+>> +	 *
+>> +	 * Values match here downstream:
+>> +	 * For WSA884X_RECEIVER - G_7P5_DB system gain
+>> +	 * For WSA884X_SPEAKER - G_21_DB system gain
+>> +	 */
+>> +	if (wsa884x->dev_mode == WSA884X_RECEIVER) {
+>> +		comp_offset = COMP_OFFSET4;
+>> +		min_gain = G_M6_DB;
+>> +		igain = ISENSE_18_DB;
+>> +		vgain = VSENSE_M12_DB;
+>> +	} else {
+>> +		/* WSA884X_SPEAKER */
+>> +		comp_offset = COMP_OFFSET0;
+>> +		min_gain = G_0_DB;
+>> +		igain = ISENSE_12_DB;
+>> +		vgain = VSENSE_M24_DB;
+>> +	}
+>> +
+>> +	regmap_update_bits(regmap, WSA884X_ISENSE2,
+>> +			   WSA884X_ISENSE2_ISENSE_GAIN_CTL_MASK,
+>> +			   igain << WSA884X_ISENSE2_ISENSE_GAIN_CTL_SHIFT);
+>> +	regmap_update_bits(regmap, WSA884X_VSENSE1,
+>> +			   WSA884X_VSENSE1_GAIN_VSENSE_FE_MASK,
+>> +			   vgain << WSA884X_VSENSE1_GAIN_VSENSE_FE_SHIFT);
+>> +	regmap_update_bits(regmap, WSA884X_GAIN_RAMPING_MIN,
+>> +			   WSA884X_GAIN_RAMPING_MIN_MIN_GAIN_MASK,
+>> +			   min_gain << WSA884X_GAIN_RAMPING_MIN_MIN_GAIN_SHIFT);
+>> +
+>> +	if (wsa884x->port_enable[WSA884X_PORT_COMP]) {
+>> +		regmap_update_bits(regmap, WSA884X_DRE_CTL_0,
+>> +				   WSA884X_DRE_CTL_0_OFFSET_MASK,
+>> +				   comp_offset);
+>> +
+>> +		regmap_update_bits(regmap, WSA884X_DRE_CTL_1,
+>> +				   WSA884X_DRE_CTL_1_CSR_GAIN_EN_MASK,
+>> +				   0x0);
+>> +	} else {
+>> +		regmap_update_bits(regmap, WSA884X_DRE_CTL_1,
+>> +				   WSA884X_DRE_CTL_1_CSR_GAIN_EN_MASK,
+>> +				   0x1);
+>> +	}
+>> +}
+>> +
+>> +static void wsa884x_init(struct wsa884x_priv *wsa884x)
+>> +{
+>> +	unsigned int wo_ctl_0;
+>> +	unsigned int variant = 0;
+>> +
+>> +	if (!regmap_read(wsa884x->regmap, WSA884X_OTP_REG_0, &variant))
+>> +		wsa884x->variant = variant & WSA884X_OTP_REG_0_ID_MASK;
+>> +
+>> +	regmap_multi_reg_write(wsa884x->regmap, wsa884x_reg_init,
+>> +			       ARRAY_SIZE(wsa884x_reg_init));
+>> +
+>> +	wo_ctl_0 = 0xc;
+>> +	wo_ctl_0 |= WSA884X_ANA_WO_CTL_0_MODE_SPEAKER << WSA884X_ANA_WO_CTL_0_MODE_SHIFT;
+> FIELD helpers?
+> 
+
+ack
+
+>> +	/* Assume that compander is enabled by default unless it is haptics sku */
+>> +	if (wsa884x->variant == WSA8845H)
+>> +		wo_ctl_0 |= WSA884X_ANA_WO_CTL_0_PA_AUX_18_DB << WSA884X_ANA_WO_CTL_0_PA_AUX_SHIFT;
+>> +	else
+>> +		wo_ctl_0 |= WSA884X_ANA_WO_CTL_0_PA_AUX_0_DB << WSA884X_ANA_WO_CTL_0_PA_AUX_SHIFT;
+> new line
+
+It's write of previous created/computed value, so it's unusual to split
+these with new line.
+
+> 
+>> +	regmap_write(wsa884x->regmap, WSA884X_ANA_WO_CTL_0, wo_ctl_0);
+>> +
+>> +	wsa884x_set_gain_parameters(wsa884x);
+>> +
+>> +	wsa884x->hw_init = false;
+>> +}
+>> +
+>> +static int wsa884x_update_status(struct sdw_slave *slave,
+>> +				 enum sdw_slave_status status)
+>> +{
+>> +	struct wsa884x_priv *wsa884x = dev_get_drvdata(&slave->dev);
+>> +	int ret;
+>> +
+>> +	if (status == SDW_SLAVE_UNATTACHED)
+> 
+> should we not put the regmap in to cache state when device is un-attached?
+
+Makes sense. I checked few other drivers and I did not see such pattern,
+but it seems reasonable.
+
+> 
+>> +		wsa884x->hw_init = false;
+>> +
+>> +	if (wsa884x->hw_init || status != SDW_SLAVE_ATTACHED)
+>> +		return 0;
+>> +
+>> +	regcache_cache_only(wsa884x->regmap, false);
+>> +	ret = regcache_sync(wsa884x->regmap);
+>> +	if (ret < 0) {
+>> +		dev_err(&slave->dev, "Cannot sync regmap cache\n");
+>> +		return ret;
+>> +	}
+>> +
+>> +	wsa884x_init(wsa884x);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int wsa884x_port_prep(struct sdw_slave *slave,
+>> +			     struct sdw_prepare_ch *prepare_ch,
+>> +			     enum sdw_port_prep_ops state)
+>> +{
+>> +	struct wsa884x_priv *wsa884x = dev_get_drvdata(&slave->dev);
+>> +
+>> +	if (state == SDW_OPS_PORT_POST_PREP)
+>> +		wsa884x->port_prepared[prepare_ch->num - 1] = true;
+>> +	else
+>> +		wsa884x->port_prepared[prepare_ch->num - 1] = false;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct sdw_slave_ops wsa884x_slave_ops = {
+>> +	.update_status = wsa884x_update_status,
+>> +	.port_prep = wsa884x_port_prep,
+>> +};
+>> +
+>> +static int wsa884x_dev_mode_get(struct snd_kcontrol *kcontrol,
+>> +				struct snd_ctl_elem_value *ucontrol)
+>> +{
+>> +	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+>> +	struct wsa884x_priv *wsa884x = snd_soc_component_get_drvdata(component);
+>> +
+>> +	ucontrol->value.enumerated.item[0] = wsa884x->dev_mode;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int wsa884x_dev_mode_put(struct snd_kcontrol *kcontrol,
+>> +				struct snd_ctl_elem_value *ucontrol)
+>> +{
+>> +	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+>> +	struct wsa884x_priv *wsa884x = snd_soc_component_get_drvdata(component);
+>> +
+>> +	if (wsa884x->dev_mode == ucontrol->value.enumerated.item[0])
+>> +		return 0;
+>> +
+>> +	wsa884x->dev_mode = ucontrol->value.enumerated.item[0];
+>> +
+>> +	return 1;
+>> +}
+>> +
+>> +static int wsa884x_get_swr_port(struct snd_kcontrol *kcontrol,
+>> +				struct snd_ctl_elem_value *ucontrol)
+>> +{
+>> +	struct snd_soc_component *comp = snd_soc_kcontrol_component(kcontrol);
+>> +	struct wsa884x_priv *wsa884x = snd_soc_component_get_drvdata(comp);
+>> +	struct soc_mixer_control *mixer = (struct soc_mixer_control *)kcontrol->private_value;
+>> +	int portidx = mixer->reg;
+>> +
+>> +	ucontrol->value.integer.value[0] = wsa884x->port_enable[portidx];
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int wsa884x_set_swr_port(struct snd_kcontrol *kcontrol,
+>> +				struct snd_ctl_elem_value *ucontrol)
+>> +{
+>> +	struct snd_soc_component *comp = snd_soc_kcontrol_component(kcontrol);
+>> +	struct wsa884x_priv *wsa884x = snd_soc_component_get_drvdata(comp);
+>> +	struct soc_mixer_control *mixer = (struct soc_mixer_control *)kcontrol->private_value;
+>> +	int portidx = mixer->reg;
+>> +
+>> +	if (ucontrol->value.integer.value[0]) {
+>> +		if (wsa884x->port_enable[portidx])
+>> +			return 0;
+>> +
+>> +		wsa884x->port_enable[portidx] = true;
+>> +	} else {
+>> +		if (!wsa884x->port_enable[portidx])
+>> +			return 0;
+>> +
+>> +		wsa884x->port_enable[portidx] = false;
+>> +	}
+>> +
+>> +	return 1;
+>> +}
+>> +
+>> +static int wsa884x_codec_probe(struct snd_soc_component *comp)
+>> +{
+>> +	struct wsa884x_priv *wsa884x = snd_soc_component_get_drvdata(comp);
+>> +
+>> +	snd_soc_component_init_regmap(comp, wsa884x->regmap);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void wsa884x_spkr_post_pmu(struct snd_soc_component *component,
+>> +				  struct wsa884x_priv *wsa884x)
+>> +{
+>> +	unsigned int curr_limit, curr_ovrd_en;
+>> +
+>> +	wsa884x_set_gain_parameters(wsa884x);
+>> +	if (wsa884x->dev_mode == WSA884X_RECEIVER) {
+>> +		snd_soc_component_write_field(component, WSA884X_DRE_CTL_0,
+>> +					      WSA884X_DRE_CTL_0_PROG_DELAY_MASK, 0x3);
+>> +		snd_soc_component_write_field(component, WSA884X_CDC_PATH_MODE,
+>> +					      WSA884X_CDC_PATH_MODE_RXD_MODE_MASK,
+>> +					      0x1);
+>> +		snd_soc_component_write_field(component, WSA884X_PWM_CLK_CTL,
+>> +					      WSA884X_PWM_CLK_CTL_PWM_CLK_FREQ_SEL_MASK,
+>> +					      0x1);
+>> +	} else {
+>> +		/* WSA884X_SPEAKER */
+>> +		snd_soc_component_write_field(component, WSA884X_DRE_CTL_0,
+>> +					      WSA884X_DRE_CTL_0_PROG_DELAY_MASK, 0xf);
+>> +	}
+>> +
+>> +	if (wsa884x->port_enable[WSA884X_PORT_PBR]) {
+>> +		curr_ovrd_en = 0x0;
+>> +		curr_limit = 0x15;
+> 
+> Can we define these hardcoded values?
+
+I don't know their meaning.
+
+> 
+>> +	} else {
+>> +		curr_ovrd_en = 0x1;
+>> +		if (wsa884x->dev_mode == WSA884X_RECEIVER)
+>> +			curr_limit = 0x9;
+>> +		else
+>> +			curr_limit = 0x15;
+>> +	}
+>> +	snd_soc_component_update_bits(component, WSA884X_CURRENT_LIMIT,
+>> +				      WSA884X_CURRENT_LIMIT_CURRENT_LIMIT_OVRD_EN_MASK,
+>> +				      curr_ovrd_en);
+>> +	snd_soc_component_update_bits(component, WSA884X_CURRENT_LIMIT,
+>> +				      WSA884X_CURRENT_LIMIT_CURRENT_LIMIT_MASK,
+>> +				      curr_limit << WSA884X_CURRENT_LIMIT_CURRENT_LIMIT_SHIFT);
+> 
+> field apis should make this bit cleaner.
+
+ack
+
+
+Best regards,
+Krzysztof
+
