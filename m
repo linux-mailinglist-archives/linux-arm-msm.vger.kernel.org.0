@@ -2,122 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B84937314F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:13:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F39A973150B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:17:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241972AbjFOKNh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 06:13:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34198 "EHLO
+        id S240912AbjFOKRY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 06:17:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239841AbjFOKNh (ORCPT
+        with ESMTP id S240382AbjFOKRW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 06:13:37 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9E9E12710;
-        Thu, 15 Jun 2023 03:13:35 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 87FDC1FB;
-        Thu, 15 Jun 2023 03:14:19 -0700 (PDT)
-Received: from [10.57.85.251] (unknown [10.57.85.251])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DABFA3F71E;
-        Thu, 15 Jun 2023 03:13:32 -0700 (PDT)
-Message-ID: <36565295-ebaa-2a66-3389-ba5eb714ab34@arm.com>
-Date:   Thu, 15 Jun 2023 11:13:27 +0100
+        Thu, 15 Jun 2023 06:17:22 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 897BEED
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:17:20 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f61b45ee0dso10302542e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:17:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686824239; x=1689416239;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2VrkMso6gSzSG+XS+vDDk4F97yS4RBvowjqFaI7E2vg=;
+        b=lFCG8OVwrXZfc2r+DuTaZta5qrr5aKjP9qp3I7Af60jPV5Zs8aGyAg23iIIOtMX6em
+         1oMsb6LnatM7muokbqrSQfJolYKeCFgrOCO0lgTzB7tgZftHc7Pk4Ef3LcG+vOtY8tVT
+         jsBvY0Xxm/BeshihIC4/3VK5jtg6XOzZZY92SBlWi/FYMSgBVXZ+Xr/s7/HORWFL2oE9
+         hZj2wQElM+PFbhLC+vk5s90Sj8EaGIRYhwgxn5sI+pES9xlg0WTKG3rcIvuyTTdBdh5w
+         cS4sUzSH0klZ0ytYF5RByUn/HU6gH8+YQToyJI4r0wPO+n1s6mJtllsy1Yd4lV5PYLjq
+         qlaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686824239; x=1689416239;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2VrkMso6gSzSG+XS+vDDk4F97yS4RBvowjqFaI7E2vg=;
+        b=TALMWl72mQlRdrmG1u8BQ31gaPAYr0yYGAUN0rQ+IvpIAXYRy+CLQzvJ2fdtpfkh9w
+         AqpQfWiZrDk892ft7lzhu87tp24fyHhDqgLWbC6MlDZXZLVhYK4kMCYplYMdePy+HEeM
+         fWz+DBvpXnz+vpCJlONG5vmPkClyXeQdjvJzoIgcvz+mApzhqXaPf0jqWKkuPS78eSwM
+         jLisSDCc8fcEvLQeTzApOyjBJI6hKFMJQtCRBjQlrh5PxxzVhLVJD248ArlY04RpaFV1
+         xZ4Hf0hmjNgupRTKZp7qxM+ZOsTlspmDzUi/X9W126IHkOS0TayaJwlcz1ZPluVEvcRr
+         OH8Q==
+X-Gm-Message-State: AC+VfDyhU8DJ0PYPMTMZjiSTsMhpsabcQ0psk75iN25mTEsjLo+uAUIg
+        XUirNbmr40IdEmxxNjAruyQr9w==
+X-Google-Smtp-Source: ACHHUZ5lzsyAA1o0LiPPDL3xlSM2j3ov9rzuDZ//SwNmj5QBrOYfKbAmu+BpH8v0thDXRV9AvtQznw==
+X-Received: by 2002:a19:da12:0:b0:4f7:4098:9905 with SMTP id r18-20020a19da12000000b004f740989905mr8220883lfg.65.1686824238738;
+        Thu, 15 Jun 2023 03:17:18 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id y12-20020a19750c000000b004ef92c6e645sm2100795lfe.263.2023.06.15.03.17.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 03:17:18 -0700 (PDT)
+Message-ID: <c60a0278-dc45-3e6d-e925-902cafb68d0a@linaro.org>
+Date:   Thu, 15 Jun 2023 13:17:17 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] Revert "Revert "Revert "arm64: dma: Drop cache
- invalidation from arch_dma_prep_coherent()"""
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dp: Free resources after unregistering them
 Content-Language: en-GB
-To:     Douglas Anderson <dianders@chromium.org>,
-        Will Deacon <will@kernel.org>
-Cc:     andersson@kernel.org, amit.pundir@linaro.org,
-        linux-arm-msm@vger.kernel.org, konrad.dybcio@somainline.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        sumit.semwal@linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Marc Zyngier <maz@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20230614165904.1.I279773c37e2c1ed8fbb622ca6d1397aea0023526@changeid>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20230614165904.1.I279773c37e2c1ed8fbb622ca6d1397aea0023526@changeid>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230612220259.1884381-1-quic_bjorande@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230612220259.1884381-1-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-15 00:59, Douglas Anderson wrote:
-> This reverts commit 7bd6680b47fa4cd53ee1047693c09825e212a6f5.
+On 13/06/2023 01:02, Bjorn Andersson wrote:
+> The DP component's unbind operation walks through the submodules to
+> unregister and clean things up. But if the unbind happens because the DP
+> controller itself is being removed, all the memory for those submodules
+> has just been freed.
 > 
-> When booting a sc7180-trogdor based device on mainline, I see errors
-> that look like this:
+> Change the order of these operations to avoid the many use-after-free
+> that otherwise happens in this code path.
 > 
->   qcom_scm firmware:scm: Assign memory protection call failed -22
->   qcom_rmtfs_mem 94600000.memory: assign memory failed
->   qcom_rmtfs_mem: probe of 94600000.memory failed with error -22
-> 
-> The device still boots OK, but WiFi doesn't work.
-> 
-> The failure only seems to happen when
-> CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y. When I don't have that set then
-> everything is peachy. Presumably something about the extra
-> initialization disagrees with the change to drop cache invalidation.
-
-AFAICS init_on_alloc essentially just adds __GFP_ZERO to the page 
-allocation. This should make no difference to a DMA allocation given 
-that dma_alloc_attrs explicitly zeros its allocation anyway. However... 
-for the non-coherent case, the DMA API's memset will be done through the 
-non-cacheable remap, while __GFP_ZERO can leave behind cached zeros for 
-the linear map alias. Thus what I assume must be happening here is that 
-"DMA" from the firmware is still making cacheable accesses to the buffer 
-and getting those zeros instead of whatever actual data which was 
-subsequently written non-cacheably direct to RAM. So either the firmware 
-still needs fixing to make non-cacheable accesses, or the SCM driver 
-needs to correctly describe it as coherent.
-
-Thanks,
-Robin.
-
-> Fixes: 7bd6680b47fa ("Revert "Revert "arm64: dma: Drop cache invalidation from arch_dma_prep_coherent()""")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->   arch/arm64/mm/dma-mapping.c | 17 ++++++++++++++++-
->   1 file changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/mm/dma-mapping.c b/arch/arm64/mm/dma-mapping.c
-> index 3cb101e8cb29..5240f6acad64 100644
-> --- a/arch/arm64/mm/dma-mapping.c
-> +++ b/arch/arm64/mm/dma-mapping.c
-> @@ -36,7 +36,22 @@ void arch_dma_prep_coherent(struct page *page, size_t size)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index bbb0550a022b..ebc84b8fddf8 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1337,9 +1337,9 @@ static int dp_display_remove(struct platform_device *pdev)
 >   {
->   	unsigned long start = (unsigned long)page_address(page);
+>   	struct dp_display_private *dp = dev_get_dp_display_private(&pdev->dev);
 >   
-> -	dcache_clean_poc(start, start + size);
-> +	/*
-> +	 * The architecture only requires a clean to the PoC here in order to
-> +	 * meet the requirements of the DMA API. However, some vendors (i.e.
-> +	 * Qualcomm) abuse the DMA API for transferring buffers from the
-> +	 * non-secure to the secure world, resetting the system if a non-secure
-> +	 * access shows up after the buffer has been transferred:
-> +	 *
-> +	 * https://lore.kernel.org/r/20221114110329.68413-1-manivannan.sadhasivam@linaro.org
-> +	 *
-> +	 * Using clean+invalidate appears to make this issue less likely, but
-> +	 * the drivers themselves still need fixing as the CPU could issue a
-> +	 * speculative read from the buffer via the linear mapping irrespective
-> +	 * of the cache maintenance we use. Once the drivers are fixed, we can
-> +	 * relax this to a clean operation.
-> +	 */
-> +	dcache_clean_inval_poc(start, start + size);
->   }
+> +	component_del(&pdev->dev, &dp_display_comp_ops);
+>   	dp_display_deinit_sub_modules(dp);
 >   
->   #ifdef CONFIG_IOMMU_DMA
+> -	component_del(&pdev->dev, &dp_display_comp_ops);
+>   	platform_set_drvdata(pdev, NULL);
+
+This matches more or less the order in dp_display_probe().
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+A note for the possible followup: the driver initializes DP debugfs from 
+dpu_kms (ugh) by calling msm_dp_debugfs_init() -> dp_debug_get(). I 
+think that dp_debug_put() in dp_display_deinit_sub_modules() does not 
+look correct.
+
+>   
+>   	return 0;
+
+-- 
+With best wishes
+Dmitry
+
