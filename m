@@ -2,132 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DBEE731FE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 20:20:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2FB273203E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 21:04:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbjFOSUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 14:20:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37742 "EHLO
+        id S229661AbjFOTEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 15:04:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjFOSUq (ORCPT
+        with ESMTP id S229503AbjFOTEW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 14:20:46 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 693D11BF8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 11:20:45 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f845060481so1294953e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 11:20:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686853243; x=1689445243;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L86ku+7+LZQwdB7LY2vEzyd00L4TaNLzuqM/PGY++fA=;
-        b=arTUyMobZK0/1k5hhhUhyJT2jUNGhSGsNAcNWzGam6h3yvKOLLF9B6nFrb2tM3Tmlr
-         EudvbD1uHXsiZXGdaIy7mLb6GaJOqiamXP84/gtVzonNxNcVcwHRbopHPKB5Br+HPIho
-         gd+Xr+VAfxHPoZQylbhX1Z5XtbV3NwBooyPZ0o/c9i4hxvGOv1d1szjJ0Z+q278peJoB
-         MvnsiKMzcY3Nq4amJvcsyQAZtTY3f4LqJVhjZTF9OLRH//j625LClyOgoUXtp1HH8SqK
-         At/CS2hxE3jI9A8VX8zIvHC29Njea6523hyBJRUYivUOYY40nC0p3UeyC4ogXm32ZlNg
-         gF/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686853243; x=1689445243;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L86ku+7+LZQwdB7LY2vEzyd00L4TaNLzuqM/PGY++fA=;
-        b=UvsgkKVRBcDA9NimBue5liTEMdjh5ua+pV6cBGCHutYfPGSNjjPttp1GmhpHNCg5VJ
-         4XvSmo2EO2/SW4ixq5+WxtLZmV24u93Krb4RHMyaBKplfs+36anH6Pr3cacy7mD/xhSg
-         ErDblTZN+zIE5DImHJGl8L4XHjqIZDeVP/r+i1xSkbHlHCXIysr9XOYgMoVtkeeYWyDw
-         xzuD7ecfr8YFX431/eVWIkTFpZET9SZKw7EFEnKHNO/BBBXyW8DMqH5EwPALsdiv5U51
-         rZRFiIjEOgsxSv1aTd3majfS1toiRUeOXOUzfB2bNkhKHadTBN8rxvUX1ZlRLBjoG9fH
-         0srQ==
-X-Gm-Message-State: AC+VfDzezVvuxgUDjsF7haDzvrQo7aQZLxD1FsWNYeUPZHaruDnNeMF9
-        iV9vOqRtKOezdTNU4LK7iUAqGQ==
-X-Google-Smtp-Source: ACHHUZ402ziYL5TvXfixIJ4Rjk5NUObRoP16/IYruQqcuIlOd4fwWY+IubMf34Q80/dG580p0yGxmQ==
-X-Received: by 2002:a19:ca58:0:b0:4f4:b592:74ab with SMTP id h24-20020a19ca58000000b004f4b59274abmr8857833lfj.62.1686853243607;
-        Thu, 15 Jun 2023 11:20:43 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id v27-20020a056512049b00b004f74160c9cesm1806292lfq.130.2023.06.15.11.20.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 11:20:43 -0700 (PDT)
-Message-ID: <866f1f66-8845-2453-ab9c-d125e23ae758@linaro.org>
-Date:   Thu, 15 Jun 2023 20:20:41 +0200
+        Thu, 15 Jun 2023 15:04:22 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A706D2137;
+        Thu, 15 Jun 2023 12:04:19 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 49E191FB;
+        Thu, 15 Jun 2023 12:05:03 -0700 (PDT)
+Received: from [10.57.85.251] (unknown [10.57.85.251])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C1DFC3F663;
+        Thu, 15 Jun 2023 12:04:16 -0700 (PDT)
+Message-ID: <34c7c65f-e09f-fa55-c1b9-de08d71a1ac7@arm.com>
+Date:   Thu, 15 Jun 2023 20:04:10 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2] ARM: dts: qcom: msm8974: correct qfprom node size
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <andy.gross@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
-References: <20230130-msm8974-qfprom-v2-1-3839cf41d9ee@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230130-msm8974-qfprom-v2-1-3839cf41d9ee@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] Revert "Revert "Revert "arm64: dma: Drop cache
+ invalidation from arch_dma_prep_coherent()"""
+Content-Language: en-GB
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Will Deacon <will@kernel.org>, andersson@kernel.org,
+        amit.pundir@linaro.org, linux-arm-msm@vger.kernel.org,
+        konrad.dybcio@somainline.org, Sibi Sankar <quic_sibis@quicinc.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        sumit.semwal@linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marc Zyngier <maz@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20230614165904.1.I279773c37e2c1ed8fbb622ca6d1397aea0023526@changeid>
+ <36565295-ebaa-2a66-3389-ba5eb714ab34@arm.com>
+ <CAD=FV=W7HXYRJ7RUeVH0hQ7KjYtEvNABCi-F4iN_wRO6uuC34w@mail.gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <CAD=FV=W7HXYRJ7RUeVH0hQ7KjYtEvNABCi-F4iN_wRO6uuC34w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.06.2023 20:17, Luca Weiss wrote:
-> From: Craig Tatlor <ctatlor97@gmail.com>
+On 2023-06-15 18:42, Doug Anderson wrote:
+> Hi,
 > 
-> The qfprom actually has size 0x3000, so adjust the reg.
+> On Thu, Jun 15, 2023 at 3:13 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>>
+>> On 2023-06-15 00:59, Douglas Anderson wrote:
+>>> This reverts commit 7bd6680b47fa4cd53ee1047693c09825e212a6f5.
+>>>
+>>> When booting a sc7180-trogdor based device on mainline, I see errors
+>>> that look like this:
+>>>
+>>>    qcom_scm firmware:scm: Assign memory protection call failed -22
+>>>    qcom_rmtfs_mem 94600000.memory: assign memory failed
+>>>    qcom_rmtfs_mem: probe of 94600000.memory failed with error -22
+>>>
+>>> The device still boots OK, but WiFi doesn't work.
+>>>
+>>> The failure only seems to happen when
+>>> CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y. When I don't have that set then
+>>> everything is peachy. Presumably something about the extra
+>>> initialization disagrees with the change to drop cache invalidation.
+>>
+>> AFAICS init_on_alloc essentially just adds __GFP_ZERO to the page
+>> allocation.
 > 
-> Note that the non-ECC-corrected qfprom can be found at 0xfc4b8000
-> (-0x4000). The current reg points to the ECC-corrected qfprom block
-> which should have equivalent values at all offsets compared to the
-> non-corrected version.
+> Right, but it does so without `__GFP_ZERO` getting into the page
+> flags. That means that this removal of "__GFP_ZERO" in
+> dma_direct_alloc() doesn't actually remove the zeroing when
+> CONFIG_INIT_ON_ALLOC_DEFAULT_ON IS USED:
 > 
-> [luca@z3ntu.xyz: extract to standalone patch and adjust for review
-> comments]
+>    /* we always manually zero the memory once we are done */
+>    page = __dma_direct_alloc_pages(dev, size, gfp & ~__GFP_ZERO, true);
 > 
-> Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and qfprom nodes")
-> Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-Not sure of the actual size of the region, maybe Bjorn can help..
+> 
+>> This should make no difference to a DMA allocation given
+>> that dma_alloc_attrs explicitly zeros its allocation anyway. However...
+>> for the non-coherent case, the DMA API's memset will be done through the
+>> non-cacheable remap, while __GFP_ZERO can leave behind cached zeros for
+>> the linear map alias. Thus what I assume must be happening here is that
+>> "DMA" from the firmware is still making cacheable accesses to the buffer
+>> and getting those zeros instead of whatever actual data which was
+>> subsequently written non-cacheably direct to RAM. So either the firmware
+>> still needs fixing to make non-cacheable accesses, or the SCM driver
+>> needs to correctly describe it as coherent.
+> 
+> I'm a little confused, but that's pretty normal for me. :-P Looking at
+> the SCM driver, I see it doing the allocation in qcom_scm_assign_mem()
+> as:
+> 
+>    dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
+> 
+> Isn't that the SCM driver describing it as coherent?
 
-Downstream 3.10 suggests 0x60F0, 0x20F0 after adjusting for the ECC offset
+The name of the API means that the *buffer* is coherent, i.e. both the 
+device and CPU can access it at any time without needing any special 
+synchronisation. How that is achieved depends on the device - if it is 
+capable of snooping caches (i.e. marked as "dma-coherent" in DT) then 
+that coherency is provided by hardware and the allocator doesn't need to 
+do anything special; otherwise, it achieves coherency by making the CPU 
+accesses non-cacheable.
 
-Konrad
-> Changes in v2:
-> - Keep base offset but expand reg from 0x1000 to 0x3000 (Konrad)
-> - Link to v1: https://lore.kernel.org/r/20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3ntu.xyz
-> ---
->  arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> I guess the reason that the SCM driver is doing this is that it's
+> passing a chunk of memory to the firmware but it passes it to firmware
+> via a _physical_ address, not a virtual one. I guess this makes sense
+> to do when passing a chunk of memory to firmware since you wouldn't
+> want to pass the kernel's virtual address there...
+
+Correct.
+
+> Presumably the fact that the firmware gets a physical address means
+> that the firmware needs to map this address somehow itself. I can try
+> to dig up what the firmware is doing if needed (what attributes it
+> uses to map), but I guess the hope is that it shouldn't matter.
+
+It absolutely matters. Linux has been told (by DT) that this device does 
+not snoop caches, and therefore is acting on that information by using 
+the non-cacheable remap. There is nothing inherently wrong with that, 
+even when the "device" is actually firmware running on the same CPU - 
+EL3 could well run with the MMU off, or just make a point of not 
+accessing Non-Secure memory with cacheable attributes to avoid 
+side-channels. However if in this case the SCM firmware *is* using 
+cacheable attributes, as the symptoms would suggest, then either the 
+firmware or the DT is wrong, and there is nothing Linux can do to 
+completely fix that.
+
+> As
+> long as the kernel can guarantee that the contents that it needs have
+> been flushed out to memory then I think we're supposed to be good,
+> right?
+
+Right, and that's what the cache clean does. What Linux *cannot* 
+guarantee is that said contents don't subsequently get pulled back into 
+a cache in a manner which would break coherency if anyone was actually 
+looking at the cache rather than RAM.
+
+> In any case, I dumped a stack crawl to try to show the path where the
+> init happens, since there are lots of conditionals. I see this:
 > 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> index 7ed0d925a4e9..3156fe25967f 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> @@ -1194,7 +1194,7 @@ restart@fc4ab000 {
->  
->  		qfprom: qfprom@fc4bc000 {
->  			compatible = "qcom,msm8974-qfprom", "qcom,qfprom";
-> -			reg = <0xfc4bc000 0x1000>;
-> +			reg = <0xfc4bc000 0x3000>;
->  			#address-cells = <1>;
->  			#size-cells = <1>;
->  
+>   kernel_init_pages+0x68/0x6c
+>   post_alloc_hook+0x40/0x90
+>   prep_new_page+0x34/0x68
+>   get_page_from_freelist+0x894/0xe64
+>   __alloc_pages+0x12c/0xd24
+>   __dma_direct_alloc_pages+0x9c/0x170
+>   dma_direct_alloc+0x254/0x4bc
+>   dma_alloc_attrs+0xe4/0x1e4
+>   qcom_scm_assign_mem+0xb0/0x258
 > 
-> ---
-> base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
-> change-id: 20230130-msm8974-qfprom-619c0e8f26eb
 > 
-> Best regards,
+> So looking at dma_direct_alloc(), I guess:
+> 
+> 1. We call __dma_direct_alloc_pages() to allocate the page. We try to
+> turn off __GFP_ZERO but CONFIG_INIT_ON_ALLOC_DEFAULT_ON overrides us.
+> 
+> 2. As part of __dma_direct_alloc_pages(), we use the existing
+> (cachable) mapping of the page and write zeros.
+> 
+> 3. The "remap" variable is set for arm64 so we call
+> arch_dma_prep_coherent(). That used to do a "clean and invalidate" but
+> now does just a "clean" and that's what broke me.
+> 
+> 
+> Talking out of my rear end, I guess the issue here might be that it
+> _does_ matter how the firmware maps this memory because it has to
+> match how the kernel has it mapped because if you map the same
+> physical memory twice then the attributes need to match. Maybe the old
+> "invalidate" just worked around this issue?
+
+See the comment that the revert brings back - indeed it makes it less 
+likely, but it's still possible that, say, the qcom_scm_assign_mem() 
+thread gets preempted by an interrupt after dma_alloc_coherent() 
+invalidates but before the buffer is completely written, and some access 
+to an adjacent page during that period causes incomplete data to be 
+prefetched back into the cache, and you're back to square one.
+
+If Linux were actually expecting to get data back from the firmware, 
+that would likely be even more broken (presuming it would use cacheable 
+writes without a subsequent cache clean, given the implication that it's 
+already doing cacheable reads without any maintenance of its own).
+
+> If this wild guessing is
+> correct, maybe a more correct solution would be to simply unmap the
+> memory from the kernel before passing the physical address to the
+> firmware, if that's possible...
+
+Having now looked at the SCM driver, TBH it doesn't make an awful lot of 
+sense for it to be using dma_alloc_coherent() there anyway - it's not 
+using it as a coherent buffer, it's doing a one-off unidirectional 
+transfer of a relatively small amount of data in a manner which seems to 
+be exactly the usage model for the streaming DMA API. And I think using 
+the latter would happen to mitigate this problem too - with streaming 
+DMA you'd put the dma_map_page() call *after* all the buffer data has 
+been written, right before the SMC call, so even with a coherency 
+mismatch there would essentially be no opportunity for the caches to get 
+out of sync.
+
+Thanks,
+Robin.
