@@ -2,53 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC771730C31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 02:28:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEBBB730C58
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 02:48:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230186AbjFOA2N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 20:28:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53520 "EHLO
+        id S232940AbjFOAsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 20:48:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjFOA2N (ORCPT
+        with ESMTP id S229453AbjFOAsK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 20:28:13 -0400
+        Wed, 14 Jun 2023 20:48:10 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 395F3268A;
-        Wed, 14 Jun 2023 17:28:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 975FF1BC9;
+        Wed, 14 Jun 2023 17:48:09 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C512463A6C;
-        Thu, 15 Jun 2023 00:28:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DDDC433C8;
-        Thu, 15 Jun 2023 00:28:11 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2A9CF61F4F;
+        Thu, 15 Jun 2023 00:48:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A82DC433C0;
+        Thu, 15 Jun 2023 00:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686788891;
-        bh=XaltGBrfhglFbHY3ssTTjmpnwDD40AZoGcQsyArt+K0=;
+        s=k20201202; t=1686790088;
+        bh=ljTHxAt2/H9b6qwb5RfqtZnhtJZN2CPWpT6t2q4z+44=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=PJqStyRIv9SMNSfgk1rsrgtw6kU92JWbqqwwV4OPd+PIUgkzH9hsoTHjEX0cjvjS6
-         G+nH222bmJChSzvXTdsbNeGzn3iwk/FGMW3W8AerGXXaJ6bHFgQhLVC0BzepKEYb0q
-         E9LDO9mD9Ok47vmkoZV2COvyVahocmXo1akA3PSGh1ZR0MekB2h/fzuxGAJtaDhrMM
-         LeuzRLNDdb1D6tjziJm1WvDKosfL2vQ6fA8RQf3duZgk2yRnw5LxtrhzKjYXxJSjGy
-         q7YSa1qC+kSEDS623HCp4iP+xukbu2iVfIvTNl2LGeyiRCQxgM+Gdm3fTI57QwsBL5
-         ivUzAHyJWn6gA==
-Message-ID: <d251be3e02b2fe28357c884e39fe7601.sboyd@kernel.org>
+        b=L10bqQ2XIuTNsKR/DVIaAOmKRB34mM779Gb5ukrZ/YtRbXXOzWwwEyxvAnbDVf8Cl
+         V5jHQGhiqRCUw3qNbJa1QCoU4e8Ks050IjZYaywOEXfqdzFBFWRa9tDzsGr4Cayzd1
+         W+TszLJXjmiRJUIFmowq9MNMxuN2anui4gnkHZ8vqtdWB6U4E0Yl3hNn1+q5ciqk/z
+         +AiLHvblE9HxILjr+10y93R2M8853VZziuQt2FLcTDnPy0ALahEabJy0AAVMLIRLJm
+         hGrfjUe776bD17fxL9EuQyQV9e0+BKSkT/+rbFPDK54riiT6YYabTL3sFIBLE1PB+5
+         RsHk4IWAogE2Q==
+Message-ID: <e2afd4bde3e85db358d50553a60a744f.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <64749bf4.5d0a0220.325c0.64b5@mx.google.com>
-References: <20230427150717.20860-1-ansuelsmth@gmail.com> <20230427150717.20860-3-ansuelsmth@gmail.com> <82072c2b-8483-6fb6-a9d1-c9882825c9cb@linaro.org> <6473e34c.df0a0220.33a79.6c95@mx.google.com> <4afbcdd0-a11c-4826-d669-2ffc9488a8b6@linaro.org> <64749bf4.5d0a0220.325c0.64b5@mx.google.com>
-Subject: Re: [PATCH v4 2/3] clk: qcom: clk-rcg2: add support for rcg2 freq multi ops
+In-Reply-To: <20230526-topic-smd_icc-v6-18-263283111e66@linaro.org>
+References: <20230526-topic-smd_icc-v6-0-263283111e66@linaro.org> <20230526-topic-smd_icc-v6-18-263283111e66@linaro.org>
+Subject: Re: [PATCH v6 18/22] clk: qcom: smd-rpm: Separate out interconnect bus clocks
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Christian Marangi <ansuelsmth@gmail.com>,
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 14 Jun 2023 17:28:08 -0700
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 14 Jun 2023 17:48:06 -0700
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
@@ -60,32 +68,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Christian Marangi (2023-05-29 05:34:57)
-> On Mon, May 29, 2023 at 02:12:23PM +0200, Konrad Dybcio wrote:
-> > On 28.05.2023 14:37, Christian Marangi wrote:
-> > > On Sat, May 27, 2023 at 06:11:16PM +0200, Konrad Dybcio wrote:
-> > >> On 27.04.2023 17:07, Christian Marangi wrote:
-> > >>> +  * Force the first conf if we can't find a correct config.
-> > >>> +  */
-> > >>> + if (unlikely(i =3D=3D f->num_confs))
-> > >>> +         best_conf =3D f->confs;
-> > >> Is that a supported scenario or would it be a device driver / clock
-> > >> driver error?
-> > >>
-> > >=20
-> > > It's to handle case for the 2 continue in the loop and arriving in a
-> > > situation where best_conf was never set?
-> > >=20
-> > > Should we return a warning and an ERR_PTR? Idea was to provide a best
-> > > effort selection.
-> > Hm.. I'm not sure what's the expected behavior here.. Stephen?
-> >=20
+Quoting Konrad Dybcio (2023-06-14 11:04:37)
+> The interconnect bus clocks are now handled within the ICC framework.
+> They still however need to get a kickstart *before* we call
+> clk_smd_rpm_enable_scaling(), or RPM will assume that they should all
+> be running at 0 kHz and the system will inevitably die.
 >=20
-> I have this implementation rady, if you want I can send this revision
-> and discuss that in v5 directly. It's WARN and returning -EINVAL.
+> Separate them out to ensure such a kickstart can still take place.
+>=20
+> As a happy accident, the file got smaller:
+>=20
+> Total: Before=3D41951, After=3D41555, chg -0.94%
+>=20
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/clk/qcom/clk-smd-rpm.c | 278 +++++++++++++++++------------------=
+------
+>  1 file changed, 115 insertions(+), 163 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rp=
+m.c
+> index 6e7f0438e8b8..0d1d97659d59 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -498,13 +506,69 @@ DEFINE_CLK_SMD_RPM_XO_BUFFER(div_clk1, 11, 19200000=
+);
+>  DEFINE_CLK_SMD_RPM_XO_BUFFER(div_clk2, 12, 19200000);
+>  DEFINE_CLK_SMD_RPM_XO_BUFFER(div_clk3, 13, 19200000);
+> =20
+> +static struct clk_smd_rpm *bimc_pcnoc_icc_clks[] =3D {
 
-I'd only have a WARN if you never expect to hit that case. Otherwise, it
-should return -EINVAL and not warn. At a quick glance it sounds like
-some sort of rounding policy, so just make sure the
-round_rate/determine_rate implementation agrees with what set_rate()
-will do and it should be good.
+Can these be const arrays?
+
+> +       &clk_smd_rpm_bimc_clk,
+> +       &clk_smd_rpm_bus_0_pcnoc_clk,
+> +};
+> +
+[...]
+> @@ -1332,6 +1275,15 @@ static int rpm_smd_clk_probe(struct platform_devic=
+e *pdev)
+>                         goto err;
+>         }
+> =20
+> +       for (i =3D 0; i < desc->num_icc_clks; i++) {
+> +               if (!desc->icc_clks[i])
+> +                       continue;
+> +
+> +               ret =3D clk_smd_rpm_handoff(desc->icc_clks[i]);
+
+This API can probably take a const struct clk_smd_rpm pointer as well.
