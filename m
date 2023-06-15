@@ -2,75 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FC09731C08
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 16:59:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F886731C22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 17:04:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241244AbjFOO7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 10:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40704 "EHLO
+        id S1344005AbjFOPD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 11:03:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344812AbjFOO64 (ORCPT
+        with ESMTP id S241397AbjFOPD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 10:58:56 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187842D43
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 07:58:53 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f6370ddd27so10703287e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 07:58:53 -0700 (PDT)
+        Thu, 15 Jun 2023 11:03:57 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A8F2954
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 08:03:54 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-519274f7b05so2462838a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 08:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686841131; x=1689433131;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1686841433; x=1689433433;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Uft+CVcyQtvxjPemL6r4Oh7qCEnxqfPWZRaOgMtD3t8=;
-        b=b3WfLv+Lup6DOzdHe6Srfh5BAIcCWkvoc2mcUHk0r60aOiS6EdMlX867mXgJXqWLQ6
-         k1JJVDc++3yUZ8iXTutAiMLLJhpAi1qBDYxvOGYM2aBBd/H4lSJp3Sbox+zMjzUqA9Af
-         KO3cZx9U39Bl5YxppN6kl8+Qx32cHhmVuhEfTXkgdP8UhDJj8clisCDarAhOSa0pk1Xw
-         zlgAxuxt2wEM20wCjzL/958QAm9+yPyJhVCaNGCJsdomIVROfAaey7GPZxJhIqRh94sj
-         2sI/9wwlZ0F0/ejs8vjm5GjhG6XkKU0uLAe+jVrqZs2RrWycJVp0LoLkEWBUZNInOuRr
-         5RHQ==
+        bh=eIUpajJMAwy418rKJ0IS2AVHFSQd4ioT0N5sYn1HKsw=;
+        b=wws0s9sOWqH78J4plEK0DMSfmIMz8q2C9ZREkC6aOXahiUCgU8AWMEkvl6lbDYeSK7
+         eXNR6CyQV92qJBS7fc80NpWJQvQQ4RHPxj9stCPpP4j05icTIEX+/hmVWJ7LtIzXp+ii
+         ayAVGK4DpdCrA4dIfKDgYxBo6NYoNDNAs1hehzecj4r21Os5pVUMet3Q0XmOUxTe7sHX
+         B0DfHmbTelULDqsF71tPtoT6eng4lzk4VbPNMe6K6SzLnG9NzcyUbze4ITphhSZGJiyO
+         O9eSrcJ1SKREydlubgotCbhtffGpIM1I8mZcNNozQeg0Vgii8DHI+idas3vqYVLj+H7e
+         9aPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686841131; x=1689433131;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20221208; t=1686841433; x=1689433433;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uft+CVcyQtvxjPemL6r4Oh7qCEnxqfPWZRaOgMtD3t8=;
-        b=jQr0nCegiBtcp1XSwIW2erDwguYZtY3SAVIWIn0/Em4TTE1ynf/iFABiHho8sDOCy7
-         kkL/kp17lWkJOJpj3c9bAR115lJuF5XLIFh4Mk82B7mfTbGCPeuaeVAH2h1NMm10UUiB
-         dUi0PXcLKG19Qo4PvP2QqjV71Iqe5YN2RRezs/GISVXdnGQLGtY6l8zltIEmfxRAyLpq
-         r2qsHd9mFE/PBZUwRi1lI1XS/jbP54SlwNdpFK7dSDbnKJhLdNKR7j5Xpj1D6BAwsvto
-         jkoCnLaa11PrMZ4kuGJp9UpETYi8lJNV/Cux41oe0HZDZPQYN3mqUFQhyRlv+o7UTIig
-         gSzw==
-X-Gm-Message-State: AC+VfDzLTsVcZ+ioyH9IRQiMpcfsFfUAcRyrrqQ5KIFhVkfyji1L0wfu
-        i93zYB0HlCCSPdIwTYHXQgK2KA==
-X-Google-Smtp-Source: ACHHUZ6Wq8XrZsTRpYQDYV7g30Miws2XrVRZhDeCyISNAUewWWsY494u23i/SZrxY4QmWtbZF+UUng==
-X-Received: by 2002:a19:e019:0:b0:4f3:ac64:84d9 with SMTP id x25-20020a19e019000000b004f3ac6484d9mr11836666lfg.20.1686841131255;
-        Thu, 15 Jun 2023 07:58:51 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id p3-20020ac246c3000000b004f004c0498esm2604065lfo.71.2023.06.15.07.58.50
+        bh=eIUpajJMAwy418rKJ0IS2AVHFSQd4ioT0N5sYn1HKsw=;
+        b=JC6aKaYoGWS/ZPBtgoFoDP0r4xraf67Y0Wys4zvH2ypNVz4csNzHvJyOUl3mogwTEl
+         Zc7EFpn/GIr4EUt4RXBVmVbZkmS33hqjYTWOarECfgIU1LS/dS2KmCutBKC0GXeeWbIA
+         EtQ+GrP0S/+bN+eWoT7Y+HwXbHYtIYmYddC0FNI+seWJo3NjLaEP0QxGmRN20ovfBgap
+         88nftO+/vy0LCaZLW9MLAMHCeBAxumpT58slzElFuZdskYScL+vfIgSjbHtfr5yDvR9p
+         EC+noqcuFQDyy/UgDR9YXyBUDvdimCVsy3gAlAwJKAzsykif7t9bQIQJ+OWY8Lk/Nb3V
+         IXZw==
+X-Gm-Message-State: AC+VfDyVBPKaQ9915f9zhRMVTEfsW3nCnFuiZIvBvy4LVy6itf7m544s
+        08N+cTHA8/C3QzpxfWuEGwH5dg==
+X-Google-Smtp-Source: ACHHUZ6UigF9ABwn0KpL8yQoTI2XH8/yDAVJunEkqw2JSKsJu7OxuMw9LdBImSR5X/l1r3Csk7A3Xw==
+X-Received: by 2002:a17:907:97d3:b0:982:8de1:aad9 with SMTP id js19-20020a17090797d300b009828de1aad9mr2803224ejc.64.1686841433126;
+        Thu, 15 Jun 2023 08:03:53 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id g19-20020a17090613d300b0097889c33582sm9530851ejc.215.2023.06.15.08.03.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 07:58:50 -0700 (PDT)
-Message-ID: <8a4f8af5-c181-6e30-bfb5-be25f77a51a0@linaro.org>
-Date:   Thu, 15 Jun 2023 16:58:49 +0200
+        Thu, 15 Jun 2023 08:03:52 -0700 (PDT)
+Message-ID: <0ec6c988-d678-c96c-a7a2-af38e6701404@linaro.org>
+Date:   Thu, 15 Jun 2023 17:03:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V2 2/2] arm64: dts: qcom: ipq9574: enable GPIO based LEDs
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes
+ up
 Content-Language: en-US
-To:     Sridharan S N <quic_sridsn@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230615145311.2776-1-quic_sridsn@quicinc.com>
- <20230615145311.2776-3-quic_sridsn@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230615145311.2776-3-quic_sridsn@quicinc.com>
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Linux regressions mailing list <regressions@lists.linux.dev>,
+        Mark Brown <broonie@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230602161246.1855448-1-amit.pundir@linaro.org>
+ <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info>
+ <0f6c9dcb-b7f6-fff9-6bed-f4585ea8e487@linaro.org>
+ <CAMi1Hd3Cv1i06NhpY6Jqu7OvMpOdzTj6nTEMJNWLrMwMLsugZA@mail.gmail.com>
+ <CAMi1Hd0=KV7k82ARadF45nqX+Cv6zPLCxfDvOyAPeXiFd8jpVA@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAMi1Hd0=KV7k82ARadF45nqX+Cv6zPLCxfDvOyAPeXiFd8jpVA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,55 +91,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.06.2023 16:53, Sridharan S N wrote:
-> Add support for wlan-2g LED on GPIO 64.
+On 15/06/2023 15:47, Amit Pundir wrote:
+> On Thu, 15 Jun 2023 at 00:38, Amit Pundir <amit.pundir@linaro.org> wrote:
+>>
+>> On Thu, 15 Jun 2023 at 00:17, Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>
+>>> On 14/06/2023 20:18, Linux regression tracking (Thorsten Leemhuis) wrote:
+>>>> On 02.06.23 18:12, Amit Pundir wrote:
+>>>>> Move lvs1 and lvs2 regulator nodes up in the rpmh-regulators
+>>>>> list to workaround a boot regression uncovered by the upstream
+>>>>> commit ad44ac082fdf ("regulator: qcom-rpmh: Revert "regulator:
+>>>>> qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"").
+>>>>>
+>>>>> Without this fix DB845c fail to boot at times because one of the
+>>>>> lvs1 or lvs2 regulators fail to turn ON in time.
+>>>>
+>>>> /me waves friendly
+>>>>
+>>>> FWIW, as it's not obvious: this...
+>>>>
+>>>>> Link: https://lore.kernel.org/all/CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com/
+>>>>
+>>>> ...is a report about a regression. One that we could still solve before
+>>>> 6.4 is out. One I'll likely will point Linus to, unless a fix comes into
+>>>> sight.
+>>>>
+>>>> When I noticed the reluctant replies to this patch I earlier today asked
+>>>> in the thread with the report what the plan forward was:
+>>>> https://lore.kernel.org/all/CAD%3DFV%3DV-h4EUKHCM9UivsFHRsJPY5sAiwXV3a1hUX9DUMkkxdg@mail.gmail.com/
+>>>>
+>>>> Dough there replied:
+>>>>
+>>>> ```
+>>>> Of the two proposals made (the revert vs. the reordering of the dts),
+>>>> the reordering of the dts seems better. It only affects the one buggy
+>>>> board (rather than preventing us to move to async probe for everyone)
+>>>> and it also has a chance of actually fixing something (changing the
+>>>> order that regulators probe in rpmh-regulator might legitimately work
+>>>> around the problem). That being said, just like the revert the dts
+>>>> reordering is still just papering over the problem and is fragile /
+>>>> not guaranteed to work forever.
+>>>> ```
+>>>>
+>>>> Papering over obviously is not good, but has anyone a better idea to fix
+>>>> this? Or is "not fixing" for some reason an viable option here?
+>>>>
+>>>
+>>> I understand there is a regression, although kernel is not mainline
+>>> (hash df7443a96851 is unknown) and the only solutions were papering the
+>>> problem. Reverting commit is a temporary workaround. Moving nodes in DTS
+>>> is not acceptable because it hides actual problem and only solves this
+>>> one particular observed problem, while actual issue is still there. It
+>>> would be nice to be able to reproduce it on real mainline with normal
+>>> operating system (not AOSP) - with ramdiks/without/whatever. So far no
+>>> one did it, right?
+>>
+>> No, I did not try non-AOSP system yet. I'll try it tomorrow, if that
+>> helps. With mainline hash.
 > 
-> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
-> ---
-Same comments as on patch 1.
+> Hi, here is the crash report on db845c running vanilla v6.4-rc6 with a
+> debian build https://bugs.linaro.org/attachment.cgi?id=1142
+> 
+> And fwiw here is the db845c crash log with AOSP running vanilla
+> v6.4-rc6 https://bugs.linaro.org/attachment.cgi?id=1141
+> 
+> Regards,
+> Amit Pundir
+> 
+> PS: rootfs in this bug report doesn't matter much because I'm loading
+> all the kernel modules from a ramdisk and in the case of a crash the
+> UFS doesn't probe anyway.
 
-Konrad
-> Changes in V2:
-> 	- Updated commit message 
-> 
->  .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 20 +++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> index fd5326dc1773..25424cecd834 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> @@ -34,6 +34,18 @@
->  			debounce-interval = <60>;
->  		};
->  	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		led-0 {
-> +			gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-> +			linux,default-trigger = "phy0tx";
-> +			default-state = "off";
-> +		};
-> +	};
->  };
->  
->  &blsp1_spi0 {
-> @@ -137,6 +149,14 @@
->  		drive-strength = <8>;
->  		bias-pull-up;
->  	};
-> +
-> +	gpio_leds_default: gpio-leds-default-state {
-> +		pins = "gpio64";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
->  };
->  
->  &xo_board_clk {
+I just tried current next with defconfig (I could not find your config,
+neither here, nor in your previous mail thread nor in bugzilla). Also
+with REGULATOR_QCOM_RPMH as module.
+
+I tried also v6.4-rc6 - also defconfig with default and module
+REGULATOR_QCOM_RPMH.
+
+All the cases work on my RB3 - no warnings reported.
+
+If you do not use defconfig, then in all reports please mention the
+differences (the best) or at least attach it.
+
+
+
+Best regards,
+Krzysztof
+
