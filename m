@@ -2,128 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD903731683
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:29:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43F8B73168D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:31:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239274AbjFOL3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 07:29:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48430 "EHLO
+        id S244542AbjFOLbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 07:31:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239015AbjFOL3a (ORCPT
+        with ESMTP id S245084AbjFOLbb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 07:29:30 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAAD8268C;
-        Thu, 15 Jun 2023 04:29:29 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f8c65020dfso19007395e9.2;
-        Thu, 15 Jun 2023 04:29:29 -0700 (PDT)
+        Thu, 15 Jun 2023 07:31:31 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCC12710
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:30 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b1b06af50eso25805101fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686828568; x=1689420568;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cLMoHRQkNaVEJbS7Ev0Yvn4A21A5U5fl8EoeJfa1evM=;
-        b=Yv73hjsA1PHoQjwh0SsiNTpMlq5QMrgH+ucTTQ/1umRZrbHvX22JoOHVuTJuNLbrqj
-         T2vWpV4Ql+QoWdNJqa8JK6rG80PvZZr80XIAg49x1i8wIErCOb9tKAN1gn96fHA3vrS2
-         qs8ZHcBbeTX7odc4cMhnK/jf0v0V/I/Ujn2Z7qfVaQxkHo0AxCzkbbfAip4Zs9hyZ7tj
-         7yIpudhrLL3XTK/axjjYFGbIV/XXrcDOo5oUlYEem8Uf+tqzJ5+mpoZ9SaAxh5webClz
-         3rHMw6HUNUNvXDBK8EYkTl9G/axO0ipwCDHwaBfctT7bXOiLCsQHG4lH55qUTqs+xEiK
-         pHIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686828568; x=1689420568;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1686828688; x=1689420688;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cLMoHRQkNaVEJbS7Ev0Yvn4A21A5U5fl8EoeJfa1evM=;
-        b=afuvhfh8GvL/qzIa7JFLBOml6YQPKExYYD2wPEeIJA5BPDnoC8O9qLX/0aP2FgC0gu
-         bqRsCgcasSGdnMyTHF8QDOFofZdOK4F2wKYVTfNVHpuW7twPUjSyD1k18mGfncTNRU2E
-         5QPjepYZl61qGPzXBILNsLAHZO7Yul2CWpjn9apWcqZlcogc03GXniQNDTcgGkXF7pTs
-         Nvo2mUYU4nZAZDF/AZ7wdPfGY0jd6abW0g5KLdREJwLG8KmlD8W1/hTEHAg5RXu0Buot
-         BYPplgQy0dJhs8fMbCJMbBP/3GF1dETPuxoMHeVGPsQnA2eJ/ivQTdZHmOpp5fV5+ffb
-         70iA==
-X-Gm-Message-State: AC+VfDwF5q9gUxVvbPyNKdlEv0RUiOVIxKQ5GS+G2fkAXWkQm6YAKdhY
-        PjPmFlufSW7eRuBaG9W1di1f6rNiFjc=
-X-Google-Smtp-Source: ACHHUZ58KwgDXTDG6pMkF9+44DVif+hPHlagF+7zOsU6Ghm0GF/2b1zRlRePitJfpW2ZKw7zaRiwoA==
-X-Received: by 2002:a05:600c:2144:b0:3f7:5e07:ea54 with SMTP id v4-20020a05600c214400b003f75e07ea54mr14233392wml.13.1686828567565;
-        Thu, 15 Jun 2023 04:29:27 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-93-173.ip49.fastwebnet.it. [93.34.93.173])
-        by smtp.gmail.com with ESMTPSA id p17-20020a1c7411000000b003f7e4639aabsm20220093wmc.10.2023.06.15.04.29.26
+        bh=e40W025fGlyFZ6vbS7Ked1F1cVNFU/7QwbFD14aLFE0=;
+        b=aZ1dgoWOAzw6+ndlGgXRJr5Q2d6b+HaXXL3amtujOQVHYUMr4kZX/ftwKA2h7pS/nS
+         YjHq3QBSXgO3uw2TEjznxl9r+vNBiGNuv0P2g7Ll7MBjjH6lzaCQJ9FVj9fQLvTrWg7S
+         TnF0kL89hFtuV9JqHaJJcKfhn4lJ64z5W24YFG+4cpVr30qvyXLpUB6frTp4pqqKn/yT
+         wPCV+VrppV9bMN9Gt3d3cxICGyHMqRplbxUvwzgWwmWRJkCY//K71MDFxa8nqdZ1oWzg
+         FVmL6avzf4qJH3WxTgIpstb96I0YnVU0oelEjIu7Gk/1WLrPx/YHJigQhW8EqW0efvva
+         miHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686828688; x=1689420688;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e40W025fGlyFZ6vbS7Ked1F1cVNFU/7QwbFD14aLFE0=;
+        b=QbUHel4HO0u9ZEjw8TRf/TaQNbPirbZfkMyC0D8QcQbFd7qQEA4609u0dfshcQZ/NE
+         5xXfiAAtkQZMIjuo61hCXb9bx3gga5VmD9Nu6oOaqUSsPsolDTKW0Wc7GgjTxhkqZgXo
+         02q1ZviLweaBg2a1KF27ZGoyjWhq6tEvAaFZAYol5hd+qUlZGFsLSujy0EXTFDNE4TsB
+         YDMrpqhi/MwzqfY6xmfXoaRtVSBztrJ3F3lZEDFl5tlcdXAnlBbM4xGWjjk7vnGF8ff5
+         J/7q1OvdHQy5aQn8B+K5g/RN9krsc/aix8A/6Dl5xGbkZ0hY51/ljy05Lwe2ppVXY+d7
+         mwIQ==
+X-Gm-Message-State: AC+VfDxtGl67prQjZKcKOmY5tohpp3EtyTSBb8ul3zha6UFG2bLdRji8
+        uHODvLMyRxrg8+jAstxtQiPD4A==
+X-Google-Smtp-Source: ACHHUZ4+CoEubc9a0pwP+plqW87Gnde1h5kz7Nyk8WNw40KCefSourZBUvGxIorUMAuqTSez5dAtjA==
+X-Received: by 2002:a2e:9942:0:b0:2b1:b7bc:c64a with SMTP id r2-20020a2e9942000000b002b1b7bcc64amr8672970ljj.41.1686828688425;
+        Thu, 15 Jun 2023 04:31:28 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id y12-20020a2e320c000000b002b345f71039sm860525ljy.36.2023.06.15.04.31.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 04:29:26 -0700 (PDT)
-Message-ID: <648af616.1c0a0220.f8289.b7a9@mx.google.com>
-X-Google-Original-Message-ID: <ZIr2FGIXzvMD1PWg@Ansuel-xps.>
-Date:   Thu, 15 Jun 2023 13:29:24 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 15 Jun 2023 04:31:27 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] clk: qcom: clk-rcg2: add support for rcg2 freq
- multi ops
-References: <20230427150717.20860-1-ansuelsmth@gmail.com>
- <20230427150717.20860-3-ansuelsmth@gmail.com>
- <82072c2b-8483-6fb6-a9d1-c9882825c9cb@linaro.org>
- <6473e34c.df0a0220.33a79.6c95@mx.google.com>
- <4afbcdd0-a11c-4826-d669-2ffc9488a8b6@linaro.org>
- <64749bf4.5d0a0220.325c0.64b5@mx.google.com>
- <d251be3e02b2fe28357c884e39fe7601.sboyd@kernel.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Yongqin Liu <yongqin.liu@linaro.org>
+Subject: Re: [PATCH 1/2] drm/msm/dpu: do not enable color-management if DSPPs are not available
+Date:   Thu, 15 Jun 2023 14:31:18 +0300
+Message-Id: <168682860388.384026.128437075326886928.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+References: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d251be3e02b2fe28357c884e39fe7601.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 14, 2023 at 05:28:08PM -0700, Stephen Boyd wrote:
-> Quoting Christian Marangi (2023-05-29 05:34:57)
-> > On Mon, May 29, 2023 at 02:12:23PM +0200, Konrad Dybcio wrote:
-> > > On 28.05.2023 14:37, Christian Marangi wrote:
-> > > > On Sat, May 27, 2023 at 06:11:16PM +0200, Konrad Dybcio wrote:
-> > > >> On 27.04.2023 17:07, Christian Marangi wrote:
-> > > >>> +  * Force the first conf if we can't find a correct config.
-> > > >>> +  */
-> > > >>> + if (unlikely(i == f->num_confs))
-> > > >>> +         best_conf = f->confs;
-> > > >> Is that a supported scenario or would it be a device driver / clock
-> > > >> driver error?
-> > > >>
-> > > > 
-> > > > It's to handle case for the 2 continue in the loop and arriving in a
-> > > > situation where best_conf was never set?
-> > > > 
-> > > > Should we return a warning and an ERR_PTR? Idea was to provide a best
-> > > > effort selection.
-> > > Hm.. I'm not sure what's the expected behavior here.. Stephen?
-> > > 
-> > 
-> > I have this implementation rady, if you want I can send this revision
-> > and discuss that in v5 directly. It's WARN and returning -EINVAL.
+
+On Mon, 12 Jun 2023 21:25:33 +0300, Dmitry Baryshkov wrote:
+> We can not support color management without DSPP blocks being provided
+> in the HW catalog. Do not enable color management for CRTCs if num_dspps
+> is 0.
 > 
-> I'd only have a WARN if you never expect to hit that case. Otherwise, it
-> should return -EINVAL and not warn. At a quick glance it sounds like
-> some sort of rounding policy, so just make sure the
-> round_rate/determine_rate implementation agrees with what set_rate()
-> will do and it should be good.
+> 
 
-Hi, in theory the WAN path should never happen, as it means no parent
-for the clk are present. So I guess with your logic printing a WARN is
-correct.
+Applied, thanks!
 
-About the rounding policy this is more or less problematic, it's a
-CLOSEST policy, so not a CEIL or FLOOR one. The determine_rate apply the
-very same selection logic of set_rate so also that should be good.
+[1/2] drm/msm/dpu: do not enable color-management if DSPPs are not available
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/3bcfc7b90465
+[2/2] drm/msm/dpu/catalog: define DSPP blocks found on sdm845
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/c72375172194
 
-I sent v5 some time ago with the concern here addressed so if you have
-time it would be good if you can check that.
-
+Best regards,
 -- 
-	Ansuel
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
