@@ -2,208 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78C9F732174
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 23:18:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2FE7321A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 23:26:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbjFOVSR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 17:18:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60416 "EHLO
+        id S229632AbjFOV02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 17:26:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbjFOVSQ (ORCPT
+        with ESMTP id S229734AbjFOV0W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 17:18:16 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D31042960;
-        Thu, 15 Jun 2023 14:18:14 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35FKxPW5028162;
-        Thu, 15 Jun 2023 21:18:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=HcRlgerHm4BuBMUBcx/cr+KzgxacLDuQaHvFXbRGX+M=;
- b=bVybtEwlSK5YX7+QRb1bkx9Zvx28v7NW4ZxcFQ71tmSEdQRFfarYIHSuFEdYIAqDajwK
- SmGDdS0AHqt3kH7222v+CHw5PC16grtad6AV5xIDEbX5KH9/d/eKUM9U/suRygSLO12C
- kT6PpU0v7WiKtdaxiCcXwzQKqxUYwHLZf837vT45rBJviGcXSzOcM5SyR9G5WZtrTbVr
- 0baK6Pf977ptFaXYd9naE01KEgloyKEIeY6hzhWRAM2IqMH9RPspLjVBezTRqvy6K5Mk
- pJ0tKca/gNMjT7Dad9ukoAEbnXIu93mDkFMsreIRBXX2Pj1bnD0WuY1uWxBHRnt17rSM 6g== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r89dw038r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 21:18:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35FLI1Ml019107
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 21:18:01 GMT
-Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 15 Jun 2023 14:17:56 -0700
-Date:   Fri, 16 Jun 2023 02:47:53 +0530
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Subject: Re: [PATCH v8 07/18] drm/msm/a6xx: Add a helper for
- software-resetting the GPU
-Message-ID: <iayrosqwgsxw7f3fx5eoqreglnx6ckwlrtmelfc4xl4gunpmbr@46rpcgl6nkoh>
-References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
- <20230223-topic-gmuwrapper-v8-7-69c68206609e@linaro.org>
- <jplt5g5xuphbnci73pdtaxd63fguxtgtp4c37kc7ehavzrjbau@kamshezxnvgy>
- <001d7571-5e9f-4f60-f6d0-35806a3e51c5@linaro.org>
- <rd4mte26n22xlgx5umerpgr66b4wfi7mdm6ovszafyinrg3q4c@g227oj3nh2vc>
- <e0141f93-b3d8-cc3e-7b2d-32618351ba10@linaro.org>
+        Thu, 15 Jun 2023 17:26:22 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E6B52D73
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 14:26:17 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-982b1a18daeso138518166b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 14:26:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686864376; x=1689456376;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aDc//YuFtaRzUGzoigOUfnlePn6bsnGkSi4GnqCGPOI=;
+        b=Q+ndHP4r4HVJ3u8v3TCAG+frLji7WtcnSfr01vaPVut7K4QRzIGrbGmnTOXQIuDrHD
+         s1gP6fhHNfMTFYb7Lc3Je8+9Lyfwq47ffhicQjABo2ukXCd7mvGowbv+eqt/leaduiTV
+         JvpOlRtVhhQdl2Vh/YhrtVsLuDzFW4CJqoCADl9shRVm6hQuDLgIjTGBGHPYi4bIxdjz
+         Chgs+zjH6d/Rog4rQwcEze+grM+3KtqPI4V3ubIeVdDqJdo3cSLL/Q7NGri6kTQGi58W
+         5w74gv8z/oVjAJHIzXFXwq7uUV48vzmwCQzSU2x6Yrb4ZHOdEkyY865bxmEWhJdxhls/
+         htKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686864376; x=1689456376;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aDc//YuFtaRzUGzoigOUfnlePn6bsnGkSi4GnqCGPOI=;
+        b=B9Lh25JSIhnBWvV+ZRvcoOGBlDHv0rzIF9Z0TQj6E8SisM7ON31AiB4i1g1N2VlmxV
+         pcxNGm5vC16rGZPWNsrVPrqw8PiUtK97ANjAoCyyDQsX0tF1eD2VZ/LdjvUiyp8/PNu5
+         nDy5+Y/mil4Vvd6bVlYl30re2isbYAOHVJnkaElshyo9U4TdurMIwJA+gH1nApz+Px9n
+         qBOiuLgoLj3LNHVHeIZytQAVPzhq5j7H8xnHFW1nqq0G9Cldp4IvZeqHWvJE61jVsj/y
+         LttjZ0A1t06BWUwUzoSFpGeAocdcns8YM6IlF5fAqMUhgD0Ikc6MGf3MGgXgU7cGRxiO
+         JoYg==
+X-Gm-Message-State: AC+VfDy8uyoLza0KttYoEo62aGSvi5A5NmoN5R8/hHxgnSuYcdGHzDbJ
+        yLFx5wNu1fkx7kRKq1M7UZV8dTALf3lWUosPXg0=
+X-Google-Smtp-Source: ACHHUZ7wayRGqgUZ8/2y8R0hUAIBjq0zVpTBo4zliveDHPzeqzsSY8uHKSZ1PQ4en2Koy8S8lgiS9A==
+X-Received: by 2002:a17:906:6a06:b0:94e:e97b:c65 with SMTP id qw6-20020a1709066a0600b0094ee97b0c65mr202766ejc.60.1686864375885;
+        Thu, 15 Jun 2023 14:26:15 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id e10-20020a170906044a00b009845c187bdcsm244451eja.137.2023.06.15.14.26.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 14:26:15 -0700 (PDT)
+Message-ID: <3364339a-908d-7ab6-7d62-a05ab8e67739@linaro.org>
+Date:   Thu, 15 Jun 2023 23:26:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <e0141f93-b3d8-cc3e-7b2d-32618351ba10@linaro.org>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YfWn7U_EkUMbzoF88__VQMKspnQr0ouP
-X-Proofpoint-ORIG-GUID: YfWn7U_EkUMbzoF88__VQMKspnQr0ouP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-15_16,2023-06-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 mlxscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306150183
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] soc: qcom: icc-bwmon: Don't ignore return values of
+ regmap functions
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230615-topic-bwmonretval-v1-1-223bd048ebf7@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230615-topic-bwmonretval-v1-1-223bd048ebf7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 15, 2023 at 10:59:23PM +0200, Konrad Dybcio wrote:
+On 15/06/2023 23:12, Konrad Dybcio wrote:
+> As it turns out, not all regmap accesses succeed. Not knowing this is
+> particularly suboptimal when there's a breaking change to the regmap
+> APIs. Monitor the return values of regmap_ calls and propagate errors,
+> should any occur.
 > 
-> On 15.06.2023 22:11, Akhil P Oommen wrote:
-> > On Thu, Jun 15, 2023 at 12:34:06PM +0200, Konrad Dybcio wrote:
-> >>
-> >> On 6.06.2023 19:18, Akhil P Oommen wrote:
-> >>> On Mon, May 29, 2023 at 03:52:26PM +0200, Konrad Dybcio wrote:
-> >>>>
-> >>>> Introduce a6xx_gpu_sw_reset() in preparation for adding GMU wrapper
-> >>>> GPUs and reuse it in a6xx_gmu_force_off().
-> >>>>
-> >>>> This helper, contrary to the original usage in GMU code paths, adds
-> >>>> a write memory barrier which together with the necessary delay should
-> >>>> ensure that the reset is never deasserted too quickly due to e.g. OoO
-> >>>> execution going crazy.
-> >>>>
-> >>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>>> ---
-> >>>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  3 +--
-> >>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++++++
-> >>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
-> >>>>  3 files changed, 13 insertions(+), 2 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> >>>> index b86be123ecd0..5ba8cba69383 100644
-> >>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> >>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> >>>> @@ -899,8 +899,7 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
-> >>>>  	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
-> >>>>  
-> >>>>  	/* Reset GPU core blocks */
-> >>>> -	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
-> >>>> -	udelay(100);
-> >>>> +	a6xx_gpu_sw_reset(gpu, true);
-> >>>>  }
-> >>>>  
-> >>>>  static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
-> >>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >>>> index e3ac3f045665..083ccb5bcb4e 100644
-> >>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >>>> @@ -1634,6 +1634,17 @@ void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_
-> >>>>  	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
-> >>>>  }
-> >>>>  
-> >>>> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert)
-> >>>> +{
-> >>>> +	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, assert);
-> >>>> +	/* Add a barrier to avoid bad surprises */
-> >>> Can you please make this comment a bit more clear? Highlight that we
-> >>> should ensure the register is posted at hw before polling.
-> >>>
-> >>> I think this barrier is required only during assert.
-> >> Generally it should not be strictly required at all, but I'm thinking
-> >> that it'd be good to keep it in both cases, so that:
-> >>
-> >> if (assert)
-> >> 	we don't keep writing things to the GPU if it's in reset
-> >> else
-> >> 	we don't start writing things to the GPU becomes it comes
-> >> 	out of reset
-> >>
-> >> Also, if you squint hard enough at the commit message, you'll notice
-> >> I intended for this so only be a wmb, but for some reason generalized
-> >> it.. Perhaps that's another thing I should fix!
-> >> for v9..
-> > 
-> > wmb() doesn't provide any ordering guarantee with the delay loop.
-> Hm, fair.. I'm still not as fluent with memory access knowledge as I'd
-> like to be..
+> To keep any level of readability in bwmon_enable(), add some comments
+> to separate the logical blocks.
 > 
-> > A common practice is to just read back the same register before
-> > the loop because a readl followed by delay() is guaranteed to be ordered.
-> So, how should I proceed? Keep the r/w barrier, or add a readback and
-> a tiiiny (perhaps even using ndelay instead of udelay?) delay on de-assert?
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-readback + delay (similar value as downstream). This path is exercised
-rarely.
+Nice coincidence, I just had some talks with a friend about uselessness
+(IMHO) of regmap MMIO return status checks.
 
--Akhil.
+Sorry, for me most of this makes the code difficult to read for no gain.
+Errors are not real. This is some artificial problem. Solving it makes
+code less maintainable.
 
-> 
-> Konrad
-> > 
-> > -Akhil.
-> >>
-> >> Konrad
-> >>>
-> >>> -Akhil.
-> >>>> +	mb();
-> >>>> +
-> >>>> +	/* The reset line needs to be asserted for at least 100 us */
-> >>>> +	if (assert)
-> >>>> +		udelay(100);
-> >>>> +}
-> >>>> +
-> >>>>  static int a6xx_pm_resume(struct msm_gpu *gpu)
-> >>>>  {
-> >>>>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> >>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> >>>> index 9580def06d45..aa70390ee1c6 100644
-> >>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> >>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> >>>> @@ -89,5 +89,6 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu);
-> >>>>  int a6xx_gpu_state_put(struct msm_gpu_state *state);
-> >>>>  
-> >>>>  void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
-> >>>> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
-> >>>>  
-> >>>>  #endif /* __A6XX_GPU_H__ */
-> >>>>
-> >>>> -- 
-> >>>> 2.40.1
-> >>>>
+If we used here readl/writel, you would not add any checks, right? Then
+don't add for regmap mmio.
+
+Best regards,
+Krzysztof
+
