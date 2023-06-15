@@ -2,87 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EB44731575
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:35:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4395673159A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238946AbjFOKf2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 06:35:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44660 "EHLO
+        id S238240AbjFOKk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 06:40:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245543AbjFOKed (ORCPT
+        with ESMTP id S230267AbjFOKk1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 06:34:33 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277972946
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:34:11 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f655293a38so9888315e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:34:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686825249; x=1689417249;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G8QVs6IFYYIXBUDr6PLIM4vaEwCL0Jet3wwAQMko+hY=;
-        b=TYyKQmV+8Q/wxVs6R4Uml9i+kL0onsHJpSQ0m6cvTbJwiGniH59jYx9ptbp1qn4JTJ
-         dLawg1a0MgiGEVc5U/pvgihrz4Ze+rTI0ZlsTa7Mej+zmR77v7uW4E72/Ti47A0W/r9S
-         lKzZP6PjJcb5gDqRq0hFSZQ02CkRPOMOkzACI5/YxwoXOoiY3EkjqkFU1MNzkwgCKadN
-         gc1UUlvAdKDSD/npgg5kYy6Y2lsmSxgijCaDxu9Q6vbXuB/2JorDHOovJsw3q7uwJd20
-         RwgPz6wh+5aW7CU9r6MhABb1/4jZdcPwMUZFnmLESeBBAz2X9xk2Y+CXmldi+T/w0lnS
-         GfTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686825249; x=1689417249;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G8QVs6IFYYIXBUDr6PLIM4vaEwCL0Jet3wwAQMko+hY=;
-        b=BkUNRE19EHarGS3ulvDz4JDW2tDmr3wbb4xJjR1CDx7iMovUQdDO2XMDiQxCHs8N5z
-         UKZjkcZEotlJbCaj1Nj1lKGy0FBsZLTpfA5O3RWX5Yt2GzCQpGtVfi8aBvNAiKscmYsP
-         NHA6aedX5oPireS1GPsuWSrD9gIeNwPcg6SKZKeaOTB2mWyBCAKXnpzrKfV9mVkZ8TNA
-         WTiBcvoNkFGi3x29VsgcZ5IanGT+NcWaT++x5D+RBp5Xw7jy3xzpOxv/T0Ldg4CLhXzO
-         PyG92Gu+y1UEhGGPWTucdqM5MUUZVnU3s8yvMGKy9+09b/vf7AVni1Nw4lC3G1h7bvw4
-         GsjA==
-X-Gm-Message-State: AC+VfDzY7qVVUlSDfn4yoRoRGDHHP+Pt4Z2crJpS5XhpxEg5f252PxUT
-        x6xNO/kBFFZzQpeWlqDqeMRNZA==
-X-Google-Smtp-Source: ACHHUZ7yhIVM9232hKYltYGexXTGAQbYM4uGSl7gtvYnnnoTX1sxq98NzXEeEFBv5qIChyCAh3VCcQ==
-X-Received: by 2002:a19:651a:0:b0:4f7:69a9:b882 with SMTP id z26-20020a19651a000000b004f769a9b882mr2538888lfb.3.1686825249292;
-        Thu, 15 Jun 2023 03:34:09 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id u26-20020ac243da000000b004f4d5003e8dsm2505864lfl.7.2023.06.15.03.34.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 03:34:08 -0700 (PDT)
-Message-ID: <001d7571-5e9f-4f60-f6d0-35806a3e51c5@linaro.org>
-Date:   Thu, 15 Jun 2023 12:34:06 +0200
+        Thu, 15 Jun 2023 06:40:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E311BC;
+        Thu, 15 Jun 2023 03:40:26 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F8OFOo011795;
+        Thu, 15 Jun 2023 10:40:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LCt/rIXPlxanZd5pKhWoDG446lq8JxYaukGa99b5h5s=;
+ b=m0wvGMd9iKW7eZmA8PLbgGlTlav8Gx2JcxKkW+5jdAVYs1Ki3IFEnj76kasI/qZCFnCm
+ UdMFp/g6BXJkwjQmpTWz2vGpq1onRWOpigN/UjmNl4+UYHCZqx2kBiSbf8YqowHSUk/X
+ xulOtyIIr9i4TuVGA51t45jT1dpqlDdZxxrDiLQpbSZdphzIuCmo9B2CXv/zdejwvgZl
+ G+0E4xmO3ddzsfnrji8OidQ5AIYr/xY1R6dDYO4EM3M5ReVMPUZGnD3s1MVmjpJBCM1s
+ 2AnP5kVhn1yOJf80ogy34zpHwDNOL44KGiwnQyEiZDUbu/UfYrWfC+ZhGqEfZekTvpKk 5Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7p4q98w4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 10:40:22 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35FAeLjk023293
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 10:40:21 GMT
+Received: from [10.201.162.56] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 15 Jun
+ 2023 03:40:17 -0700
+Message-ID: <d6b07470-983b-fd50-6b88-239ab0607e39@quicinc.com>
+Date:   Thu, 15 Jun 2023 16:10:13 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v8 07/18] drm/msm/a6xx: Add a helper for
- software-resetting the GPU
+Subject: Re: [PATCH] remoteproc: qcom: Add NOTIFY_FATAL event type to SSR
+ subdevice
 Content-Language: en-US
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
- <20230223-topic-gmuwrapper-v8-7-69c68206609e@linaro.org>
- <jplt5g5xuphbnci73pdtaxd63fguxtgtp4c37kc7ehavzrjbau@kamshezxnvgy>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <jplt5g5xuphbnci73pdtaxd63fguxtgtp4c37kc7ehavzrjbau@kamshezxnvgy>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+From:   Vignesh Viswanathan <quic_viswanat@quicinc.com>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_devipriy@quicinc.com>,
+        <quic_sjaganat@quicinc.com>
+References: <20230503062146.3891-1-quic_viswanat@quicinc.com>
+ <f7a0c15d-a7d7-c2ed-875d-c8c24ebf0dab@quicinc.com>
+ <cfe32c1c-6d9b-1c74-c7d1-6597591edf77@quicinc.com>
+ <3687b420-0993-7f76-7116-114b1784de05@quicinc.com>
+In-Reply-To: <3687b420-0993-7f76-7116-114b1784de05@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8k9NpQ5_kOXyVf9M5QtO24vzoenWaz9F
+X-Proofpoint-ORIG-GUID: 8k9NpQ5_kOXyVf9M5QtO24vzoenWaz9F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-15_07,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306150091
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,93 +87,276 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.06.2023 19:18, Akhil P Oommen wrote:
-> On Mon, May 29, 2023 at 03:52:26PM +0200, Konrad Dybcio wrote:
->>
->> Introduce a6xx_gpu_sw_reset() in preparation for adding GMU wrapper
->> GPUs and reuse it in a6xx_gmu_force_off().
->>
->> This helper, contrary to the original usage in GMU code paths, adds
->> a write memory barrier which together with the necessary delay should
->> ensure that the reset is never deasserted too quickly due to e.g. OoO
->> execution going crazy.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  3 +--
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++++++
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
->>  3 files changed, 13 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index b86be123ecd0..5ba8cba69383 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> @@ -899,8 +899,7 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
->>  	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
->>  
->>  	/* Reset GPU core blocks */
->> -	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
->> -	udelay(100);
->> +	a6xx_gpu_sw_reset(gpu, true);
->>  }
->>  
->>  static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index e3ac3f045665..083ccb5bcb4e 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -1634,6 +1634,17 @@ void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_
->>  	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
->>  }
->>  
->> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert)
->> +{
->> +	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, assert);
->> +	/* Add a barrier to avoid bad surprises */
-> Can you please make this comment a bit more clear? Highlight that we
-> should ensure the register is posted at hw before polling.
+
+
+On 5/29/2023 9:27 AM, Vignesh Viswanathan wrote:
+> Gentle Reminder.
 > 
-> I think this barrier is required only during assert.
-Generally it should not be strictly required at all, but I'm thinking
-that it'd be good to keep it in both cases, so that:
-
-if (assert)
-	we don't keep writing things to the GPU if it's in reset
-else
-	we don't start writing things to the GPU becomes it comes
-	out of reset
-
-Also, if you squint hard enough at the commit message, you'll notice
-I intended for this so only be a wmb, but for some reason generalized
-it.. Perhaps that's another thing I should fix!
-for v9..
-
-Konrad
-> 
-> -Akhil.
->> +	mb();
->> +
->> +	/* The reset line needs to be asserted for at least 100 us */
->> +	if (assert)
->> +		udelay(100);
->> +}
->> +
->>  static int a6xx_pm_resume(struct msm_gpu *gpu)
->>  {
->>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->> index 9580def06d45..aa70390ee1c6 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->> @@ -89,5 +89,6 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu);
->>  int a6xx_gpu_state_put(struct msm_gpu_state *state);
->>  
->>  void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
->> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
->>  
->>  #endif /* __A6XX_GPU_H__ */
+> On 5/22/2023 3:03 PM, Mukesh Ojha wrote:
 >>
->> -- 
->> 2.40.1
 >>
+>> On 5/3/2023 4:56 PM, Mukesh Ojha wrote:
+>>>
+>>>
+>>> On 5/3/2023 11:51 AM, Vignesh Viswanathan wrote:
+>>>> Currently the SSR subdevice notifies the client driver on crash of the
+>>>> rproc from the recovery workqueue using the BEFORE_SHUTDOWN event.
+>>>> However the client driver might be interested to know that the device
+>>>> has crashed immediately to pause any further transactions with the
+>>>> rproc. This calls for an event to be sent to the driver in the IRQ
+>>>> context as soon as the rproc crashes.
+>>>>
+>>>> Add NOTIFY_FATAL event to SSR subdevice to atomically notify rproc has
+>>>> crashed to the client driver.
+>>>>
+>>>> Validated the event in IPQ9574 and IPQ5332 by forcing the rproc to 
+>>>> crash
+>>>> and ensuring the registered notifier function receives the notification
+>>>> in IRQ context.
+>>>
+>>> This was one of valid use case we encounter in android, We have some 
+>>> other way of doing the same thing without core kernel change with
+>>> something called early notifiers.
+>>>
+>>> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/7583d24de337aa1bf7c375a7da706af9b995b9a1#a840754ebb0e24e88adbf48177e1abd0830b72d2
+>>>
+>>> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/257de41c63a5a51a081cc7887cdaa4a46e4d1744
+>>>
+>>> But good to address this if possible.
+>>
+>> Ack the idea of early notifier;
+>> But here, atomic does not guarantees it to be atomic.
+>>
+>> Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>
+>> -- Mukesh
+>>
+Gentle Reminder!
+
+Thanks,
+Vignesh
+
+>>
+>>>
+>>> -Mukesh
+>>>>
+>>>> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+>>>> ---
+>>>>   drivers/remoteproc/qcom_common.c      | 60 
+>>>> +++++++++++++++++++++++++++
+>>>>   drivers/remoteproc/remoteproc_core.c  | 12 ++++++
+>>>>   include/linux/remoteproc.h            |  3 ++
+>>>>   include/linux/remoteproc/qcom_rproc.h | 17 ++++++++
+>>>>   4 files changed, 92 insertions(+)
+>>>>
+>>>> diff --git a/drivers/remoteproc/qcom_common.c 
+>>>> b/drivers/remoteproc/qcom_common.c
+>>>> index a0d4238492e9..76542229aeb6 100644
+>>>> --- a/drivers/remoteproc/qcom_common.c
+>>>> +++ b/drivers/remoteproc/qcom_common.c
+>>>> @@ -84,6 +84,7 @@ struct minidump_global_toc {
+>>>>   struct qcom_ssr_subsystem {
+>>>>       const char *name;
+>>>>       struct srcu_notifier_head notifier_list;
+>>>> +    struct atomic_notifier_head atomic_notifier_list;
+>>>>       struct list_head list;
+>>>>   };
+>>>> @@ -366,6 +367,7 @@ static struct qcom_ssr_subsystem 
+>>>> *qcom_ssr_get_subsys(const char *name)
+>>>>       }
+>>>>       info->name = kstrdup_const(name, GFP_KERNEL);
+>>>>       srcu_init_notifier_head(&info->notifier_list);
+>>>> +    ATOMIC_INIT_NOTIFIER_HEAD(&info->atomic_notifier_list);
+>>>>       /* Add to global notification list */
+>>>>       list_add_tail(&info->list, &qcom_ssr_subsystem_list);
+>>>> @@ -417,6 +419,51 @@ int qcom_unregister_ssr_notifier(void *notify, 
+>>>> struct notifier_block *nb)
+>>>>   }
+>>>>   EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
+>>>> +/**
+>>>> + * qcom_register_ssr_atomic_notifier() - register SSR Atomic 
+>>>> notification
+>>>> + *                     handler
+>>>> + * @name:    Subsystem's SSR name
+>>>> + * @nb:    notifier_block to be invoked upon subsystem's state change
+>>>> + *
+>>>> + * This registers the @nb notifier block as part the atomic notifier
+>>>> + * chain for a remoteproc associated with @name. The notifier 
+>>>> block's callback
+>>>> + * will be invoked when the remote processor crashes in atomic 
+>>>> context before
+>>>> + * the recovery process is queued.
+>>>> + *
+>>>> + * Return: a subsystem cookie on success, ERR_PTR on failure.
+>>>> + */
+>>>> +void *qcom_register_ssr_atomic_notifier(const char *name,
+>>>> +                    struct notifier_block *nb)
+>>>> +{
+>>>> +    struct qcom_ssr_subsystem *info;
+>>>> +
+>>>> +    info = qcom_ssr_get_subsys(name);
+>>>> +    if (IS_ERR(info))
+>>>> +        return info;
+>>>> +
+>>>> +    atomic_notifier_chain_register(&info->atomic_notifier_list, nb);
+>>>> +
+>>>> +    return &info->atomic_notifier_list;
+>>>> +}
+>>>> +EXPORT_SYMBOL_GPL(qcom_register_ssr_atomic_notifier);
+>>>> +
+>>>> +/**
+>>>> + * qcom_unregister_ssr_atomic_notifier() - unregister SSR Atomic 
+>>>> notification
+>>>> + *                       handler
+>>>> + * @notify:    subsystem cookie returned from 
+>>>> qcom_register_ssr_notifier
+>>>> + * @nb:        notifier_block to unregister
+>>>> + *
+>>>> + * This function will unregister the notifier from the atomic notifier
+>>>> + * chain.
+>>>> + *
+>>>> + * Return: 0 on success, %ENOENT otherwise.
+>>>> + */
+>>>> +int qcom_unregister_ssr_atomic_notifier(void *notify, struct 
+>>>> notifier_block *nb)
+>>>> +{
+>>>> +    return atomic_notifier_chain_unregister(notify, nb);
+>>>> +}
+>>>> +EXPORT_SYMBOL_GPL(qcom_unregister_ssr_atomic_notifier);
+>>>> +
+>>>>   static int ssr_notify_prepare(struct rproc_subdev *subdev)
+>>>>   {
+>>>>       struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+>>>> @@ -467,6 +514,18 @@ static void ssr_notify_unprepare(struct 
+>>>> rproc_subdev *subdev)
+>>>>                    QCOM_SSR_AFTER_SHUTDOWN, &data);
+>>>>   }
+>>>> +static void ssr_notify_crash(struct rproc_subdev *subdev)
+>>>> +{
+>>>> +    struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+>>>> +    struct qcom_ssr_notify_data data = {
+>>>> +        .name = ssr->info->name,
+>>>> +        .crashed = true,
+>>>> +    };
+>>>> +
+>>>> +    atomic_notifier_call_chain(&ssr->info->atomic_notifier_list,
+>>>> +                   QCOM_SSR_NOTIFY_CRASH, &data);
+>>>> +}
+>>>> +
+>>>>   /**
+>>>>    * qcom_add_ssr_subdev() - register subdevice as restart 
+>>>> notification source
+>>>>    * @rproc:    rproc handle
+>>>> @@ -493,6 +552,7 @@ void qcom_add_ssr_subdev(struct rproc *rproc, 
+>>>> struct qcom_rproc_ssr *ssr,
+>>>>       ssr->subdev.start = ssr_notify_start;
+>>>>       ssr->subdev.stop = ssr_notify_stop;
+>>>>       ssr->subdev.unprepare = ssr_notify_unprepare;
+>>>> +    ssr->subdev.notify_crash = ssr_notify_crash;
+>>>>       rproc_add_subdev(rproc, &ssr->subdev);
+>>>>   }
+>>>> diff --git a/drivers/remoteproc/remoteproc_core.c 
+>>>> b/drivers/remoteproc/remoteproc_core.c
+>>>> index 695cce218e8c..3de0ece158ea 100644
+>>>> --- a/drivers/remoteproc/remoteproc_core.c
+>>>> +++ b/drivers/remoteproc/remoteproc_core.c
+>>>> @@ -1139,6 +1139,16 @@ static void rproc_unprepare_subdevices(struct 
+>>>> rproc *rproc)
+>>>>       }
+>>>>   }
+>>>> +static void rproc_notify_crash_subdevices(struct rproc *rproc)
+>>>> +{
+>>>> +    struct rproc_subdev *subdev;
+>>>> +
+>>>> +    list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
+>>>> +        if (subdev->notify_crash)
+>>>> +            subdev->notify_crash(subdev);
+>>>> +    }
+>>>> +}
+>>>> +
+>>>>   /**
+>>>>    * rproc_alloc_registered_carveouts() - allocate all carveouts 
+>>>> registered
+>>>>    * in the list
+>>>> @@ -2687,6 +2697,8 @@ void rproc_report_crash(struct rproc *rproc, 
+>>>> enum rproc_crash_type type)
+>>>>       dev_err(&rproc->dev, "crash detected in %s: type %s\n",
+>>>>           rproc->name, rproc_crash_to_string(type));
+>>>> +    rproc_notify_crash_subdevices(rproc);
+>>>> +
+>>>>       queue_work(rproc_recovery_wq, &rproc->crash_handler);
+>>>>   }
+>>>>   EXPORT_SYMBOL(rproc_report_crash);
+>>>> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+>>>> index fe8978eb69f1..f3c0e0103e81 100644
+>>>> --- a/include/linux/remoteproc.h
+>>>> +++ b/include/linux/remoteproc.h
+>>>> @@ -596,6 +596,8 @@ struct rproc {
+>>>>    * @stop: stop function, called before the rproc is stopped; the 
+>>>> @crashed
+>>>>    *        parameter indicates if this originates from a recovery
+>>>>    * @unprepare: unprepare function, called after the rproc has been 
+>>>> stopped
+>>>> + * @notify_crash: notify_crash function, called in atomic context 
+>>>> to notify
+>>>> + *          rproc has crashed and recovery is about to start
+>>>>    */
+>>>>   struct rproc_subdev {
+>>>>       struct list_head node;
+>>>> @@ -604,6 +606,7 @@ struct rproc_subdev {
+>>>>       int (*start)(struct rproc_subdev *subdev);
+>>>>       void (*stop)(struct rproc_subdev *subdev, bool crashed);
+>>>>       void (*unprepare)(struct rproc_subdev *subdev);
+>>>> +    void (*notify_crash)(struct rproc_subdev *subdev);
+>>>>   };
+>>>>   /* we currently support only two vrings per rvdev */
+>>>> diff --git a/include/linux/remoteproc/qcom_rproc.h 
+>>>> b/include/linux/remoteproc/qcom_rproc.h
+>>>> index 82b211518136..f3d06900f297 100644
+>>>> --- a/include/linux/remoteproc/qcom_rproc.h
+>>>> +++ b/include/linux/remoteproc/qcom_rproc.h
+>>>> @@ -11,12 +11,14 @@ struct notifier_block;
+>>>>    * @QCOM_SSR_AFTER_POWERUP:    Remoteproc is running (start stage)
+>>>>    * @QCOM_SSR_BEFORE_SHUTDOWN:    Remoteproc crashed or shutting 
+>>>> down (stop stage)
+>>>>    * @QCOM_SSR_AFTER_SHUTDOWN:    Remoteproc is down (unprepare stage)
+>>>> + * @QCOM_SSR_NOTIFY_CRASH:    Remoteproc crashed
+>>>>    */
+>>>>   enum qcom_ssr_notify_type {
+>>>>       QCOM_SSR_BEFORE_POWERUP,
+>>>>       QCOM_SSR_AFTER_POWERUP,
+>>>>       QCOM_SSR_BEFORE_SHUTDOWN,
+>>>>       QCOM_SSR_AFTER_SHUTDOWN,
+>>>> +    QCOM_SSR_NOTIFY_CRASH,
+>>>>   };
+>>>>   struct qcom_ssr_notify_data {
+>>>> @@ -29,6 +31,10 @@ struct qcom_ssr_notify_data {
+>>>>   void *qcom_register_ssr_notifier(const char *name, struct 
+>>>> notifier_block *nb);
+>>>>   int qcom_unregister_ssr_notifier(void *notify, struct 
+>>>> notifier_block *nb);
+>>>> +void *qcom_register_ssr_atomic_notifier(const char *name,
+>>>> +                    struct notifier_block *nb);
+>>>> +int qcom_unregister_ssr_atomic_notifier(void *notify,
+>>>> +                    struct notifier_block *nb);
+>>>>   #else
+>>>>   static inline void *qcom_register_ssr_notifier(const char *name,
+>>>> @@ -43,6 +49,17 @@ static inline int 
+>>>> qcom_unregister_ssr_notifier(void *notify,
+>>>>       return 0;
+>>>>   }
+>>>> +static inline void *qcom_register_ssr_atomic_notifier(const char 
+>>>> *name,
+>>>> +                              struct notifier_block *nb)
+>>>> +{
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>> +static inline int qcom_unregister_ssr_atomic_notifier(void *notify,
+>>>> +                              struct notifier_block *nb)
+>>>> +{
+>>>> +    return 0;
+>>>> +}
+>>>>   #endif
+>>>>   #endif
+>>>
