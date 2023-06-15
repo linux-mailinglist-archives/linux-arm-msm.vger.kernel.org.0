@@ -2,63 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D0507311E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:17:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E04F27311F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:20:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbjFOIRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 04:17:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48520 "EHLO
+        id S239206AbjFOIUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 04:20:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjFOIRf (ORCPT
+        with ESMTP id S244424AbjFOITq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 04:17:35 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E61381BF8;
-        Thu, 15 Jun 2023 01:17:33 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D0A611FB;
-        Thu, 15 Jun 2023 01:18:17 -0700 (PDT)
-Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id C48DB3F71E;
-        Thu, 15 Jun 2023 01:17:29 -0700 (PDT)
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-To:     Konrad Dybcio <konradybcio@gmail.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        James Clark <james.clark@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Leo Yan <leo.yan@linaro.org>, Jonathan Corbet <corbet@lwn.net>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Hao Zhang <quic_hazha@quicinc.com>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-doc@vger.kernel.org, coresight@lists.linaro.org,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>
-Subject: Re: [PATCH v6 0/3] Add support to configure Coresight Dummy subunit
-Date:   Thu, 15 Jun 2023 09:16:38 +0100
-Message-Id: <168681694253.417491.1580155663436908350.b4-ty@arm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230602084149.40031-1-quic_hazha@quicinc.com>
-References: <20230602084149.40031-1-quic_hazha@quicinc.com>
+        Thu, 15 Jun 2023 04:19:46 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E78270F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:19:44 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-bc49318aa64so1441132276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:19:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686817184; x=1689409184;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kPYb8xZ11ehlA8iHgxMBfKPx2ZdrMHP8TOi5kQI8lnU=;
+        b=ve02OQgvrgACzdGnixmSDsHQ/NVgFVgm+6gUgTFb4oKsHmoTL5G1a+wpvd3PrWTAuX
+         KfmwEz2o59mBkWAmxIaZXJur6yCRQbuHNFSdFaHlpbnBaw68ZRnQQOkt9zeMKyxOWOzb
+         EGBATHN0yhT05iFZPnIPOYxcAC21rLdedpsukcAeoK5CQ0Rv4nwmXrONe+M/Gx5ybODq
+         p1cksF7WAp0vL1aCwovPUEZ55JKlSN9XV8dJRffmlqWsth481T60lorRW5eO1DnT9ZQC
+         ruYia8NVX3GD0+hy24prv+NzjL6pJdB48yoH8GdTjZbjzf9VX+ts5mNtjI0D5KVs6M4B
+         yQ1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686817184; x=1689409184;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kPYb8xZ11ehlA8iHgxMBfKPx2ZdrMHP8TOi5kQI8lnU=;
+        b=ak5WGDh4ERFfDHDFo3QbFM/T4u42G5iX6ThpgXlfROZx82GpB4WwU3+nF467TAbspg
+         HmlIEMVyjkuCXPl2lDoRY4U04/mx2dt4BmgZFsKtiLRzx+5tSYk4Bpqa01e674Uaw+EP
+         NOtmUWhDioqjuPFGItvb9r6b+UxHpU1SdeYi2snQ1LpILkhKXiJyRsLRM7NsnCgN2W7Z
+         2UYdbFI+vnEAL8MnmkJRrKPTs8r5/PBMKQzFyudHM3mi0RNAoHFqReiOVyN82cu0LS9h
+         vOX0Dy6+3DxRjLNXpBCQKirtVby43oVnDyce01ucA1NsmB5i+Sw5pBloKdUMhh2k/wrB
+         5dQA==
+X-Gm-Message-State: AC+VfDzb5tCzqUDql0ABpj8T/dVvtdR0QPnJLVHc5jyxGnkS1kakorZn
+        mCcMnYxmB+BEPQQMXhI5AuPjHLABZ3hA2xfHVPWJjg==
+X-Google-Smtp-Source: ACHHUZ6nx0i1AynMMBvmCyAARW8jRU1qGF7FkJs/G0+hdRK8KJRnbpWL7kWhQ6x5JnKoCtgDMbZjSTXXbn1nogRypaE=
+X-Received: by 2002:a25:6b47:0:b0:ba8:2009:ccbb with SMTP id
+ o7-20020a256b47000000b00ba82009ccbbmr3956394ybm.46.1686817184042; Thu, 15 Jun
+ 2023 01:19:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20230615-topic-8996hdmi-v1-1-39584bfd68d2@linaro.org>
+In-Reply-To: <20230615-topic-8996hdmi-v1-1-39584bfd68d2@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 15 Jun 2023 11:19:33 +0300
+Message-ID: <CAA8EJpqKNPRngiYHbXxR4MBv-V53-nmyS2t652sV_cXN49DGaQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Fix HDMI node
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,25 +73,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 2 Jun 2023 16:41:46 +0800, Hao Zhang wrote:
-> Introduction of Coresight Dummy subunit
-> The Coresight Dummy subunit is for Coresight Dummy component, there are
-> some specific Coresight devices that HLOS don't have permission to access.
-> Such as some TPDMs, they would be configured in NON-HLOS side, but it's
-> necessary to build Coresight path for it to debug. So there need driver to
-> register dummy devices as Coresight devices.
-> 
-> [...]
+On Thu, 15 Jun 2023 at 11:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> A recent commit messed up the node name and compatibles. Fix it.
+>
+> Fixes: f43b6dc7d56e ("arm64: dts: qcom: msm8996: rename labels for HDMI nodes")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Applied, thanks!
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[1/3] Coresight: Add coresight dummy driver
-      commit: 9d3ba0b6c056918355cf36094d6ed63cdd01a2ab
-[2/3] dt-bindings: arm: Add support for Coresight dummy trace
-      commit: 5911ff4559e45532c1f67257c5731b5e13f5e7a3
-[3/3] Documentation: trace: Add documentation for Coresight Dummy Trace
-      commit: 3b79104f80036231a40ba5d15c3e329985029a0f
+I should use regexps more carefully.
 
-Best regards,
+
 -- 
-Suzuki K Poulose <suzuki.poulose@arm.com>
+With best wishes
+Dmitry
