@@ -2,261 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BF0D7312AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:50:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 324957312AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:50:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234656AbjFOIuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 04:50:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37120 "EHLO
+        id S240354AbjFOIuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 04:50:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244824AbjFOIst (ORCPT
+        with ESMTP id S245455AbjFOIth (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 04:48:49 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CE7213B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:48:16 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b3424edd5fso23467421fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:48:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686818894; x=1689410894;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mBJWWNfx3xej/MJ3DqUPuNzPsz1tH1F7iu3ScckwPzM=;
-        b=iC/ceWUTSNdszGI7cJGxkGh8wT4APpus7ow8/++6qNhYXVgynN/3pWLN3Gt8ho+b/U
-         r11rzuow4OAW0nhOQFscgGe+aYQYtL72CluJ0sOxpfMJRS6q49XzRMGqVLaCdA7ezWuo
-         3V8CI92jbRjOg257TwXeIFLA8PAaCLuH+nHIThA8Dd89r596j1UkPiHHFUIINptMENeN
-         ft+i4++imFj4FxF+b0cCY0y6WlPF3xgsiZa7ohwU3HaLOc04A1k7o3uw61JKPB11alDw
-         RzGGkZxPgxMQk2SKbiU/+7E78GvonVSui5M8jDzXITtXvIfaRLbgeRfWqoIAdJneycpx
-         ILxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686818894; x=1689410894;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mBJWWNfx3xej/MJ3DqUPuNzPsz1tH1F7iu3ScckwPzM=;
-        b=kEveDaOg7ZJ04yzIP8iJtoV0eukhcl6kEtrZN+tqMA40lgMrMgFTAXdiM1zMBhG2Sx
-         UIV+gZwqTnwzvpgh7RxVtVRcPLQ+P6SsT72ENkb7Q2J2ac0ClY3s4QOaZLMTqlt18ovR
-         ZC4sk/RSjXV+TbA4Tp3qlkzv66R2MAr6nxYJ+cN9OD6CXUZbF/Jbc+0Unwf4OpC02pY9
-         hjWJ3VJ44MzRZrrwdRlT4Uo0Sd41diwwJfr85S0q5OZu5GBbxfgw3uii1PhLlvDycmbL
-         4toeWEzDXUOKo15OgoSUkioc8BGM1IWX5T6Y1SroCTSbDH4C/o3YDmMA51KPmZEt+g7H
-         HEfA==
-X-Gm-Message-State: AC+VfDwx3UwhCocc1yHQJ/hwSyy8T7Lwx32UfaEwzey2pD6y0C58s1Lc
-        UMt8Jq1GHraIUSNGJacKxbsC/Ew2z5sY646584s=
-X-Google-Smtp-Source: ACHHUZ5JPVIhZ8cN1+ebbTISVtTjMskh1PISNVgpTsV2facOjMi7jCVYOGlRLPRc49gANtzP6wxFKA==
-X-Received: by 2002:a2e:7203:0:b0:2aa:cb6c:d0dc with SMTP id n3-20020a2e7203000000b002aacb6cd0dcmr8322293ljc.29.1686818894438;
-        Thu, 15 Jun 2023 01:48:14 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id w18-20020a2e9bd2000000b002a8a5afb87csm2990597ljj.20.2023.06.15.01.48.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 01:48:14 -0700 (PDT)
-Message-ID: <383b6e03-c8f1-09ba-b6f4-da310ce5abe0@linaro.org>
-Date:   Thu, 15 Jun 2023 10:48:12 +0200
+        Thu, 15 Jun 2023 04:49:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963912D57;
+        Thu, 15 Jun 2023 01:49:19 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F8bwdZ004498;
+        Thu, 15 Jun 2023 08:49:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=y8GbwR3Om8ATjvtpQuV6B+xsxm6V6zShZPUc3AEsx/0=;
+ b=ohsugmcvsoKHZLHDuJMdM/VHOxC0364Nn/IInd5h7/Tx2UAMK+OYj9TzLPPG4fvWz4Cr
+ dLScST46kOPSfj0QaPdrRlP9xvuLRU0H6e8V5ds32o8ApOI3vyLYlS7nZs4npQeAonhv
+ 9j4jPZCVTL+UfEB+GgzXe+cVhSX2pW/EqE4ULybRcXdV1VDBDQouCZF3GNHIs8bTKmve
+ X2jXwy/6CIQP6dzKCaJfW3uQYAjgpJmLZAmTb7mKWl/QFVdFaMQ9eu17iNk8FeEEf2yo
+ ml7gCRyHNsJ+8OYKeXIkJncEsiVi82EfwWM9fUHJ6VkldMwcJdr3w2VMrLd5Jec0Znmu Qg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7va2gej2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 08:49:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35F8n3F0027583
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 08:49:03 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 15 Jun 2023 01:48:58 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: ipq9574: Use assigned-clock-rates for QUP I2C core clks
+Date:   Thu, 15 Jun 2023 14:18:41 +0530
+Message-ID: <20230615084841.12375-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8996: rename labels for HDMI
- nodes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230615083422.350297-1-dmitry.baryshkov@linaro.org>
- <20230615083422.350297-3-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230615083422.350297-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XmG6i7Yb4grH_fWgidg7fU2DYSE2N6Xy
+X-Proofpoint-ORIG-GUID: XmG6i7Yb4grH_fWgidg7fU2DYSE2N6Xy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-15_05,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=769
+ priorityscore=1501 mlxscore=0 impostorscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1011 phishscore=0 malwarescore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306150075
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.06.2023 10:34, Dmitry Baryshkov wrote:
-> In board files MDSS and HDMI nodes do not come next to each other,
-> because labels for HDMI nodes do not have the common mdss_ prefix.
-> 
-> Follow the DSI example and enable such grouping by changing the prefix
-> for HDMI labels to mdss_hdmi_*.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Use assigned-clock-rates property for configuring the QUP I2C core clocks
+to operate at nominal frequency.
 
-Konrad
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dts  | 40 ++++++++++----------
->  arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts |  6 +--
->  arch/arm64/boot/dts/qcom/msm8996-mtp.dts     |  4 +-
->  arch/arm64/boot/dts/qcom/msm8996.dtsi        | 12 +++---
->  4 files changed, 31 insertions(+), 31 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> index b599909c4463..39170c18c693 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> @@ -208,25 +208,6 @@ &gpu {
->  	status = "okay";
->  };
->  
-> -&hdmi {
-> -	status = "okay";
-> -
-> -	pinctrl-names = "default", "sleep";
-> -	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
-> -	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
-> -
-> -	core-vdda-supply = <&vreg_l12a_1p8>;
-> -	core-vcc-supply = <&vreg_s4a_1p8>;
-> -};
-> -
-> -&hdmi_phy {
-> -	status = "okay";
-> -
-> -	vddio-supply = <&vreg_l12a_1p8>;
-> -	vcca-supply = <&vreg_l28a_0p925>;
-> -	#phy-cells = <0>;
-> -};
-> -
->  &hsusb_phy1 {
->  	status = "okay";
->  
-> @@ -251,6 +232,25 @@ &mdss {
->  	status = "okay";
->  };
->  
-> +&mdss_hdmi {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
-> +	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
-> +
-> +	core-vdda-supply = <&vreg_l12a_1p8>;
-> +	core-vcc-supply = <&vreg_s4a_1p8>;
-> +};
-> +
-> +&mdss_hdmi_phy {
-> +	status = "okay";
-> +
-> +	vddio-supply = <&vreg_l12a_1p8>;
-> +	vcca-supply = <&vreg_l28a_0p925>;
-> +	#phy-cells = <0>;
-> +};
-> +
->  &mmcc {
->  	vdd-gfx-supply = <&vdd_gfx>;
->  };
-> @@ -1054,7 +1054,7 @@ platform {
->  		};
->  
->  		codec {
-> -			sound-dai = <&hdmi 0>;
-> +			sound-dai = <&mdss_hdmi 0>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> index ed2e2f6c6775..ac6471d1db1f 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> @@ -92,15 +92,15 @@ &gpu {
->  	status = "okay";
->  };
->  
-> -&hdmi {
-> +&mdss {
->  	status = "okay";
->  };
->  
-> -&hdmi_phy {
-> +&mdss_hdmi {
->  	status = "okay";
->  };
->  
-> -&mdss {
-> +&mdss_hdmi_phy {
->  	status = "okay";
->  };
->  
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> index 596ad4c896f5..495d45a16e63 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> @@ -24,10 +24,10 @@ &blsp2_uart2 {
->  	status = "okay";
->  };
->  
-> -&hdmi {
-> +&mdss_hdmi {
->  	status = "okay";
->  };
->  
-> -&hdmi_phy {
-> +&mdss_hdmi_phy {
->  	status = "okay";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 3855366ca89f..40ac0a784a4a 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -895,7 +895,7 @@ mmcc: clock-controller@8c0000 {
->  				 <&mdss_dsi0_phy 0>,
->  				 <&mdss_dsi1_phy 1>,
->  				 <&mdss_dsi1_phy 0>,
-> -				 <&hdmi_phy>;
-> +				 <&mdss_hdmi_phy>;
->  			clock-names = "xo",
->  				      "gpll0",
->  				      "gcc_mmss_noc_cfg_ahb_clk",
-> @@ -980,7 +980,7 @@ ports {
->  					port@0 {
->  						reg = <0>;
->  						mdp5_intf3_out: endpoint {
-> -							remote-endpoint = <&hdmi_in>;
-> +							remote-endpoint = <&mdss_hdmi_in>;
->  						};
->  					};
->  
-> @@ -1136,7 +1136,7 @@ mdss_dsi1_phy: phy@996400 {
->  				status = "disabled";
->  			};
->  
-> -			hdmi: hdmi-tx@9a0000 {
-> +			mdss_hdmi: hdmi-tx@9a0000 {
->  				compatible = "qcom,hdmi-tx-8996";
->  				reg =	<0x009a0000 0x50c>,
->  					<0x00070000 0x6158>,
-> @@ -1160,7 +1160,7 @@ hdmi: hdmi-tx@9a0000 {
->  					"alt_iface",
->  					"extp";
->  
-> -				phys = <&hdmi_phy>;
-> +				phys = <&mdss_hdmi_phy>;
->  				#sound-dai-cells = <1>;
->  
->  				status = "disabled";
-> @@ -1171,14 +1171,14 @@ ports {
->  
->  					port@0 {
->  						reg = <0>;
-> -						hdmi_in: endpoint {
-> +						mdss_hdmi_in: endpoint {
->  							remote-endpoint = <&mdp5_intf3_out>;
->  						};
->  					};
->  				};
->  			};
->  
-> -			hdmi_phy: phy@9a0600 {
-> +			mdss_hdmi_phy: phy@9a0600 {
->  				#phy-cells = <0>;
->  				compatible = "qcom,hdmi-phy-8996";
->  				reg = <0x009a0600 0x1c4>,
+Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+index 0baeb10bbdae..78bf7f9c455a 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -361,6 +361,8 @@
+ 			clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>,
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			assigned-clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>;
++			assigned-clock-rates = <50000000>;
+ 			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
+ 			dma-names = "tx", "rx";
+ 			status = "disabled";
+@@ -389,6 +391,8 @@
+ 			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			assigned-clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>;
++			assigned-clock-rates = <50000000>;
+ 			dmas = <&blsp_dma 16>, <&blsp_dma 17>;
+ 			dma-names = "tx", "rx";
+ 			status = "disabled";
+@@ -417,6 +421,8 @@
+ 			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			assigned-clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>;
++			assigned-clock-rates = <50000000>;
+ 			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
+ 			dma-names = "tx", "rx";
+ 			status = "disabled";
+@@ -446,6 +452,8 @@
+ 			clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>,
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			assigned-clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>;
++			assigned-clock-rates = <50000000>;
+ 			dmas = <&blsp_dma 20>, <&blsp_dma 21>;
+ 			dma-names = "tx", "rx";
+ 			status = "disabled";
+-- 
+2.17.1
+
