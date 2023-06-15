@@ -2,98 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDEBB731BCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 16:51:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA556731BD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 16:53:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344755AbjFOOvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 10:51:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35326 "EHLO
+        id S239318AbjFOOxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 10:53:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344731AbjFOOvv (ORCPT
+        with ESMTP id S240594AbjFOOxm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 10:51:51 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A26A2962;
-        Thu, 15 Jun 2023 07:51:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 92DC66267B;
-        Thu, 15 Jun 2023 14:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C47EC433C8;
-        Thu, 15 Jun 2023 14:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686840707;
-        bh=35IP0qnBgRimZZwP/gdFMBYC6RjVrtz/V/Ojd+z4dNs=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=lhvvoeomcJXsSNNPQzcw26So9kTQAKyrUIah7vPX6Vd7qwiEBWDbnoILQ7odPtHAF
-         EoVWZKPU/gzRQa7Bmz0EHCR97OoTXMMUL3pcRz0YzDbx9WgkhaSIEIa7U3BTP/4R0f
-         1AJsE2vTYNkBdM1ZxLfV581DRCCnE3ZdGeLxCjHf7zQnYhG4NBpIF9Z7vn+RTtDKne
-         pBoYLBMJzwLYrVHGZKimIa4DI94uzWrAoshuSm8lfhrBX5Gxpc+OwvzajYOWbO3A2I
-         YQak09dza+dhpiYc/8S+PEikq0n3eh56o5fbjbSRPDiZWGIUfspLkswNbfxtQA4IwY
-         uFqaLVceRfT0A==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dan Carpenter <error27@gmail.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v2-1-670c3d9e8c9c@linaro.org>
-References: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v2-1-670c3d9e8c9c@linaro.org>
-Subject: Re: [PATCH v2] spi: spi-geni-qcom: correctly handle -EPROBE_DEFER
- from dma_request_chan()
-Message-Id: <168684070419.561998.2376284587741517242.b4-ty@kernel.org>
-Date:   Thu, 15 Jun 2023 15:51:44 +0100
+        Thu, 15 Jun 2023 10:53:42 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB2E273C;
+        Thu, 15 Jun 2023 07:53:41 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35FDKJcv010023;
+        Thu, 15 Jun 2023 14:53:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=q12RqkX9baaNHZAd4DYdV5niDP8gQiJlME2tcgWQPek=;
+ b=fNFwQ92/bCeJdeRoAAHzg/KTvT872pxMJkB3KTLJCe1e5WESBPk0q3ssQid98Z5l53qU
+ DYzFBC/PqkmAnXx4XzLzpsozZwqksqva6bt2aQxswbbW0JTXC3m/plkicJACcP2BMSOc
+ VVJxsEaEvxfdLjm02CsjrztFhgIFEilvjuKXfLKqCrviFVSQepwatXYOcO76bOxdWBV/
+ U8l2ZpG2BwcSp9cf52nt1EGFQqbL0XHqSkihs9O6tr08DpAEjGG6lQ2PfRvQRHxLIpfx
+ 46BNLEtSxf0G1BLrm0c1wlcSmBV6xLQ9zTHD8anPmcXmvGJdtwTngtjdpmSo7cj+PVwl ZQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7ebtayr9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 14:53:37 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35FEraNJ025283
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 14:53:36 GMT
+Received: from sridsn-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 15 Jun 2023 07:53:33 -0700
+From:   Sridharan S N <quic_sridsn@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Sridharan S N <quic_sridsn@quicinc.com>
+Subject: [PATCH V2 0/2] Add support for GPIO based leds and buttons on IPQ5332/9574 devices
+Date:   Thu, 15 Jun 2023 20:23:09 +0530
+Message-ID: <20230615145311.2776-1-quic_sridsn@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-c6835
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qd1QL6DI8ZEdwGMukg7xJGBuAaOoIADQ
+X-Proofpoint-ORIG-GUID: qd1QL6DI8ZEdwGMukg7xJGBuAaOoIADQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-15_11,2023-06-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ mlxscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=689 impostorscore=0
+ phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306150129
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 15 Jun 2023 14:51:45 +0200, Neil Armstrong wrote:
-> Now spi_geni_grab_gpi_chan() errors are correctly reported, the
-> -EPROBE_DEFER error should be returned from probe in case the
-> GPI dma driver is built as module and/or not probed yet.
-> 
-> 
+Add support for wlan-2g led and wps button available on IPQ5332 and
+IPQ9574
 
-Applied to
+Sridharan S N (2):
+  arm64: dts: qcom: ipq5332: enable GPIO based LEDs and Buttons
+  arm64: dts: qcom: ipq9574: enable GPIO based LEDs
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+ .../boot/dts/qcom/ipq5332-rdp-common.dtsi     | 39 +++++++++++++++++++
+ .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 20 ++++++++++
+ 2 files changed, 59 insertions(+)
 
-Thanks!
-
-[1/1] spi: spi-geni-qcom: correctly handle -EPROBE_DEFER from dma_request_chan()
-      commit: 9d7054fb3ac2e8d252aae1268f20623f244e644f
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.17.1
 
