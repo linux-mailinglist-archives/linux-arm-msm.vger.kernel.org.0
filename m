@@ -2,90 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5D0F731F88
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 19:55:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5D50731FE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 20:18:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229770AbjFORzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 13:55:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54152 "EHLO
+        id S229812AbjFOSSH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 14:18:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234708AbjFORyv (ORCPT
+        with ESMTP id S229734AbjFOSSG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 13:54:51 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD1262700;
-        Thu, 15 Jun 2023 10:54:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6687D60BB5;
-        Thu, 15 Jun 2023 17:54:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25FDC433C8;
-        Thu, 15 Jun 2023 17:54:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686851689;
-        bh=E095E2E+VR+02jy+1Q8NMseLgVQlZJG8SbBWQl50WwA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=E7FR2dghDPxJlV4F0bxJPGW1SrmbIn1uJ4woSz22XNREnGOm+aYCoUz707nKCNWmU
-         qKb6/ab+k5Urr63smCYYaFRhN7aDI6k9g11/Mk8JnsP7Ua8C9cZBXeRXfgWGpfPhX2
-         zzG4UTqTwkMHWgjCl0mYiIQ9GN2/aAcIswTIZtq2e+Y2QOMPlG5DkhMsjmGwzjLdj2
-         CH+df8Dp1v96usEm7yiPdfeF4h4kF8+mDy0kGuzfhhNwFHOD2unxXW0ZI9rqwsWmsj
-         W+3Lt3wfRuUpGQMHJEE9h9yQxAFtLWZU3ub0Kb7/eFVFG7S49V0YFtpNgre1QNUpwS
-         wJ1xmGO+RYo/g==
-Date:   Thu, 15 Jun 2023 18:54:43 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Praveen Talari <quic_ptalari@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-        quic_vnivarth@quicinc.com, quic_arandive@quicinc.com
-Subject: Re: [PATCH v2 0/3] spi-geni-qcom: Add SPI SLAVE mode support for
-Message-ID: <7cbb220e-997f-4de5-97c8-2a2b3a9185f6@sirena.org.uk>
-References: <20230615070706.18322-1-quic_ptalari@quicinc.com>
+        Thu, 15 Jun 2023 14:18:06 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 142BB1BF8;
+        Thu, 15 Jun 2023 11:18:05 -0700 (PDT)
+Received: from [192.168.178.23] (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 01090CE6AF;
+        Thu, 15 Jun 2023 18:17:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1686853053; bh=ugMipXK+nPc+Xd0ZaX7mPO2A2Ca+rG1kX4NQoi4EwMU=;
+        h=From:Date:Subject:To:Cc;
+        b=Uj8RyxvN70jrrEHAuk2KK9V0OuGn6s831dQ0WoGRgG8wRr/lS6QBvWx+fC77B5oE4
+         S7s6BSOSNTvThYvB8Idbbz6XYUieym7uL/Elki7k6/LLmZ2nORFl6NDQigh0hVhHeK
+         YDzPYoqbGdFIg8gLdL2xOTGr7TcHO7DYE2og5w1M=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Date:   Thu, 15 Jun 2023 20:17:12 +0200
+Subject: [PATCH v2] ARM: dts: qcom: msm8974: correct qfprom node size
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="iZkYj92B089URvNK"
-Content-Disposition: inline
-In-Reply-To: <20230615070706.18322-1-quic_ptalari@quicinc.com>
-X-Cookie: You are false data.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230130-msm8974-qfprom-v2-1-3839cf41d9ee@z3ntu.xyz>
+X-B4-Tracking: v=1; b=H4sIAKdVi2QC/3WOOQ6DMBREr4Jc5yMvYUuVe0QUxvkOLjDGBsQi7
+ h6DlDLlG83TzE4CeoOBPJKdeJxNML2NwG8JUa20HwTzjkw45YIyQaELXVkVdxi0830HOasUxVL
+ zHBsSpUYGhMZLq9pTG1Ts/JQ8ZekKyk3a43CWnUdtlmv9VUduTRh7v15nZnamf3dnBgyqIpOSY
+ oa0FM9N2HFKl3Uj9XEcX5LdFmbZAAAA
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <andy.gross@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1457; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=CEB4c/s6J/pZAcxWuRvn233hJFsOJA018x2AsQ+Iqjw=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBki1W60QkmzyTC110njYohlKqolQLQCLjeMCCui
+ Z8scKBL2yWJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZItVugAKCRBy2EO4nU3X
+ VhmOEADR5SRR416eXnGqX21q7pqrOIjGCMkg+sG82eO0rF/W/c5xD6Zh3n2Rw+/MNZDxBbOGDxI
+ fhdNVfdWPeDSySSGJWhJlu+jWeA7VI1rp/5Poy4wwq617qSatFhnfT/wuj1+GdnHM+XQ+qlq0s3
+ uj7GUOxEwufePdMFhW1es2caQqCH/jhlNL9e2ArscNK68KwEZyrsrjXjkHuZuEW3u0UYMTvlJDS
+ WNDbfZiNLm/gnxBlh2Kpuuhs9HriBSDWF2599eRoWMWx+cRayV4a7TkC8AeIyBhlcAIQwD5Mn1I
+ ZYPN4x8CQ8A9umfN7c5+Aj/KRZc6CmFGAxcwL8W9RSP0Fkp1MvgqQ7b7Jro2WSWh4xgJgvEytDy
+ kODWBFDE4AyhrgNFHLcS+vYtN35iXoYkj5KGW2PlnNDV84MINWT1f5EKOxMdcJinrTG6r3S1HLC
+ EUmn3qFA3nwobuIxiEZJzGMtZYuXXYYDTPaHngzUgknaWXGaR0+YvS+HBbAXCTgO7tBvQvB/u/A
+ yZ5TbEHDZMB4yeyLWsLNnklADTSIXifXGyuClvbqeLTd5RGq6KWEXE1wVd5sWrDUXH12iyPnjLw
+ hlEEqQHbhuI3K0aN3Mi1BKeKfgbQ6wrARFkchmPdoujiYpoITe3oLmTiu1XcAeA+66KmeNkNOUt
+ VEYYLnQcpk6g3nA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Craig Tatlor <ctatlor97@gmail.com>
 
---iZkYj92B089URvNK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The qfprom actually has size 0x3000, so adjust the reg.
 
-On Thu, Jun 15, 2023 at 12:37:03PM +0530, Praveen Talari wrote:
-> This series adds spi slave mode functionality to geni based Qupv3.
-> The common header file contains spi slave related registers and masks.
+Note that the non-ECC-corrected qfprom can be found at 0xfc4b8000
+(-0x4000). The current reg points to the ECC-corrected qfprom block
+which should have equivalent values at all offsets compared to the
+non-corrected version.
 
-The more modern terminology here is device mode, pleaae prefer to use
-that where possible.
+[luca@z3ntu.xyz: extract to standalone patch and adjust for review
+comments]
 
---iZkYj92B089URvNK
-Content-Type: application/pgp-signature; name="signature.asc"
+Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and qfprom nodes")
+Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Changes in v2:
+- Keep base offset but expand reg from 0x1000 to 0x3000 (Konrad)
+- Link to v1: https://lore.kernel.org/r/20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3ntu.xyz
+---
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 7ed0d925a4e9..3156fe25967f 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -1194,7 +1194,7 @@ restart@fc4ab000 {
+ 
+ 		qfprom: qfprom@fc4bc000 {
+ 			compatible = "qcom,msm8974-qfprom", "qcom,qfprom";
+-			reg = <0xfc4bc000 0x1000>;
++			reg = <0xfc4bc000 0x3000>;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSLUGIACgkQJNaLcl1U
-h9CXwAf9FCQdRel9BXQRnVWzWs9p3Ipyttl0Iri3279Nsy2RoQM+i95fGPm0JtbT
-2jF19FPHusIbBSzfdHy51SX+c55NctHGAgdktodikBBHl2ZpXPFJG3/Hp4VG3/ty
-rE0pRx/BqEwf8A6qwrBzwtqquC1SKLzwVJmk32NacbJOSE1M8dg6npEUsqNuIz2i
-SKQRc4p7/U4iIieRDekYdu4ryQmAAYgLAPYP6tHjbhIhch3p+17yt2ZAmxk08A8w
-ztl4bxpT4dVYYGDNtajIKMuHOHtQW9FdJoa855YvP+YEt5OggpTkydR3nMOshMQm
-ELhSw+prkU337rx7xybjJ4S+Zysveg==
-=UEjY
------END PGP SIGNATURE-----
+---
+base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
+change-id: 20230130-msm8974-qfprom-619c0e8f26eb
 
---iZkYj92B089URvNK--
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
