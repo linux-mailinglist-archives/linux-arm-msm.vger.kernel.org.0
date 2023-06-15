@@ -2,204 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 073947318B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 14:16:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE7297318F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 14:26:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344896AbjFOMQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 08:16:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57924 "EHLO
+        id S230128AbjFOM0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 08:26:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344827AbjFOMPz (ORCPT
+        with ESMTP id S1344724AbjFOMZ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 08:15:55 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D422944
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:15:05 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f7deee339dso1591178e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:15:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686831303; x=1689423303;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ehfVzvQExF8A0HC8WC/ILIhv/WTmHbal1y8W4TeN1es=;
-        b=Wu7sz9no4+E8WobBYLCTxrRQ/ms5cwOJWlPzNtXwqHQMxzmBf5xhIkwHh6m0zZ747E
-         Xd8rdNa2gg+7ZwyKASQElj9GxfdetYldiyx+OqRdXH02wPTOy8aPbQW4+Uk80h2jUH4O
-         1+qye4b806eH5haBuO/GcTONTvg/RUyUfVowUuLIqaRUA4+z4YouDS4U4UAn8WrBlqxT
-         UhKIyOyvnt2b3hS2nx8L1ASe+qeIQGGv25SN/2Qstdr5ZNnoiRgaPs87RWveDl591nAT
-         PjCryBJlEXlDJmLud0L8AWDCywY0Mo3IsceqcK4BzuFY9zkl+TXGnaQFVggc4Gw+QotL
-         +vbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686831303; x=1689423303;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ehfVzvQExF8A0HC8WC/ILIhv/WTmHbal1y8W4TeN1es=;
-        b=R42zWa7tUPrnBvW/8FmZt41lc/QDniRRAgSKtCzddQjBT9idWqgqtawOqAYnn5Oqp5
-         jMmvtw4vYZda3aoSyqbDJs8BVk5MejbT27AiWHmpPtiBVrUD4QDj9fWQ0txhkMc/YZPs
-         XI3/jLm+2xoO3PwvRu5/RSoepK76UWtnAIC5MZr6Ft7z9+ulRYAyZzVlmFudPmt/T2Bx
-         Bzf+ioFlH/gslHW+MgUI5eQQDefuTejvKGC6nZSxxA5bDJnUK/RETZX6Q0gNL3WqG2pz
-         hB6jT0iJBjtqWjAVinkpGq3/J/TZCynXlLDXOt3PnDNOh1/kcoNEhuI/P6jDGFn58PQc
-         xkLw==
-X-Gm-Message-State: AC+VfDz8uuPeQusK6WSGEnCqkX+YhH+NkxnqWfDEI8NhEuRg7Y0wKUMb
-        UsDt5hUoRULHaQY9dv3xFOFw4w==
-X-Google-Smtp-Source: ACHHUZ501jOXOdbI2vCoh9Z+8k50wxBJblPlQxddMcmLJtJFW3AHRsWBrNj0ZJXAqwZBC0Y5jwcrWQ==
-X-Received: by 2002:a05:6512:44b:b0:4f2:6817:2379 with SMTP id y11-20020a056512044b00b004f268172379mr9064077lfk.23.1686831303698;
-        Thu, 15 Jun 2023 05:15:03 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:2ad4:65a7:d9f3:a64e])
-        by smtp.gmail.com with ESMTPSA id k17-20020a5d4291000000b003047ea78b42sm20918012wrq.43.2023.06.15.05.15.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 05:15:03 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 15 Jun 2023 08:25:59 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFB92D58
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:25:40 -0700 (PDT)
+Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 4F5AF3FB06;
+        Thu, 15 Jun 2023 14:25:37 +0200 (CEST)
+Date:   Thu, 15 Jun 2023 14:25:35 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>
-Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v2 23/23] arm64: dts: qcom: sa8775p-ride: enable ethernet0
-Date:   Thu, 15 Jun 2023 14:14:19 +0200
-Message-Id: <20230615121419.175862-24-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230615121419.175862-1-brgl@bgdev.pl>
-References: <20230615121419.175862-1-brgl@bgdev.pl>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 0/6] Add DSC v1.2 Support for DSI
+Message-ID: <m4q4atgpxgl765ct432bqn6apw5z2hjouplawhckxd6s2sf4y5@nkfz72etdjah>
+References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
+ <168682860387.384026.9115594076193676039.b4-ty@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <168682860387.384026.9115594076193676039.b4-ty@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 2023-06-15 14:31:26, Dmitry Baryshkov wrote:
+> 
+> On Fri, 09 Jun 2023 15:57:12 -0700, Jessica Zhang wrote:
+> > This is a series of changes for DSI to enable command mode support
+> > for DSC v1.2.
+> > 
+> > This includes:
+> > 
+> > 1) Rounding up `hdisplay / 3` in dsc_timing_setup()
+> > 2) Adjusting pclk_rate to account for compression
+> > 3) Fixing incorrect uses of slice_count in DSI DSC calculations
+> > 4) Setting the DATA_COMPRESS bit when DSC is enabled
+> > 
+> > [...]
+> 
+> Applied, thanks!
+> 
+> [1/6] msm/drm/dsi: Round up DSC hdisplay calculation
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/21bf617110ba
+> [2/6] drm/msm/dsi: Reduce pclk rate for compression
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/7c9e4a554d4a
+> [3/6] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature flag for DPU >= 7.0
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/22598cfc94bb
+> [4/6] drm/msm/dpu: Set DATA_COMPRESS on command mode for DCE/DSC 1.2
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/1642b5803473
+> [5/6] drm/msm/dsi: Remove incorrect references to slice_count
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/155fa3a91d64
+> 
+> Note, patch 6 is skipped for now
 
-Enable the first 1Gb ethernet port on sa8775p-ride development board.
+Note that we also haven't finished discussions on where the ratio in
+patch 2/6 comes from and how that should be outlined in patch 6.
+Related to the widebus patches which affect the ratio as well.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 88 +++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index bf90f825ff67..b2aa16037707 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -261,6 +261,94 @@ vreg_l8e: ldo8 {
- 	};
- };
- 
-+&ethernet0 {
-+	phy-mode = "sgmii";
-+	phy-handle = <&sgmii_phy>;
-+
-+	pinctrl-0 = <&ethernet0_default>;
-+	pinctrl-names = "default";
-+
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+	snps,ps-speed = <1000>;
-+
-+	status = "okay";
-+
-+	mdio {
-+		compatible = "snps,dwmac-mdio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <11000>;
-+		reset-post-delay-us = <70000>;
-+
-+		sgmii_phy: phy@8 {
-+			reg = <0x8>;
-+			device_type = "ethernet-phy";
-+		};
-+	};
-+
-+	mtl_rx_setup: rx-queues-config {
-+		snps,rx-queues-to-use = <4>;
-+		snps,rx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x0>;
-+			snps,route-up;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x1>;
-+			snps,route-ptp;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x2>;
-+			snps,route-avcp;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x3>;
-+			snps,priority = <0xc>;
-+		};
-+	};
-+
-+	mtl_tx_setup: tx-queues-config {
-+		snps,tx-queues-to-use = <4>;
-+		snps,tx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+	};
-+};
-+
- &i2c11 {
- 	clock-frequency = <400000>;
- 	pinctrl-0 = <&qup_i2c11_default>;
--- 
-2.39.2
-
+- Marijn
