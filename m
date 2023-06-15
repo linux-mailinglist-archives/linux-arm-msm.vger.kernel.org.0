@@ -2,111 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13E7073125C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51C277312A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:50:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239220AbjFOIiL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 04:38:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
+        id S244121AbjFOIuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 04:50:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237380AbjFOIiK (ORCPT
+        with ESMTP id S245018AbjFOIsc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 04:38:10 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 042E21FFF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:38:08 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-51a270e4d57so519200a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:38:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686818286; x=1689410286;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bTnONamiWI78G9kUPlocf8m4LdwDUY7gVx5tClnqFK4=;
-        b=MREZxTbfuV54pYz1RaDjFOtGb+ttRwS1Syl6YbhS8vPvKWa9fivV4OGflJSiaN4vAe
-         iq+BJttG+xGc3Yssj0IusaIIJ3MMog0KRJoJ8fXzF0g/pSzq5kaHFqwau0Lygbz8rUB4
-         QqF+UhYI+G8SwsxUJEe3wd2AKcj8FmF67yCtQOQ+hr8FlXAGEHb85+Xos2UaLon1o8NQ
-         uRO/YQzyonRZKOTERBd+PsDCk3XXelwOufQNoCoj51y7OqSrz1wGAZe7p6eAt16WjJZo
-         4Ln/hCI78DkSG2q2fqRIsVovFR8T8hMIr6keXD9B9XzO+LemdX3EEZSeoHdsvgj4bij3
-         IiKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686818286; x=1689410286;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bTnONamiWI78G9kUPlocf8m4LdwDUY7gVx5tClnqFK4=;
-        b=g4N/b71HTGIpxJZB4wrNJUJ4tRlOPC7t9joaHusJS6U8DvsNA3X5II85wuVpUy25cx
-         BvYN2yhA/aHJUHyBDnOpXlrgLKh+n523w8Q8hLxh3qMj0h9OAZoH5LoWYEZg3TxGyPUb
-         /g/CZm7gfThxG0rAEdv5FkUP8LXxQwoBvHrgBRReISnUOOCtzf2+gdURL5brr5YFKla3
-         NVVSkQIvsjfUAo122VPkRBcxuwSnagBO/tTkASGJ53G2qqP+jx+yXYpVGM1mPuw9cflk
-         //IbWYMgSNLERJklLxdV29H1x55E382YYVm8gxO5xhG7EwVDPLpJs0n9lKlJ+S8Nzmh+
-         4o3g==
-X-Gm-Message-State: AC+VfDyj/focPmWUO8U33tvCbB67ni8HFDpML/Jj5L8A73/ElaoFuUEa
-        MoUvb1nwKxnQm58jVE8FZONfKQ==
-X-Google-Smtp-Source: ACHHUZ46W2BILCCTozrhqHTaCBXCLZyuSFXyw+aYUXP6Q2C3uhcA+0fx3GAwzBzhVK41U14a0WogqQ==
-X-Received: by 2002:a05:6402:1518:b0:51a:263c:ae54 with SMTP id f24-20020a056402151800b0051a263cae54mr849701edw.33.1686818286530;
-        Thu, 15 Jun 2023 01:38:06 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id b20-20020a05640202d400b005182df57885sm6383999edx.19.2023.06.15.01.38.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 01:38:06 -0700 (PDT)
-Message-ID: <d35e2f57-f3b1-415a-f74b-84c928c38fb7@linaro.org>
-Date:   Thu, 15 Jun 2023 10:38:03 +0200
+        Thu, 15 Jun 2023 04:48:32 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1697A2D6D;
+        Thu, 15 Jun 2023 01:47:44 -0700 (PDT)
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F6Zuum016146;
+        Thu, 15 Jun 2023 10:47:36 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=2Uw0OO2d1PspJCO4EJYYYgI2JrkAhJ2sdxcuh6mFlpM=;
+ b=xVhhHeGQk1l7ea79uw+yuhQ39SZI4WchooY3/cPP3xFjGN11KZFtl5B2mrsJT17TbKUR
+ f8AxrLwehKRpHX962cLr7dPjY4Maf1nEhKaa9et2RAk0pO6MHKdZUJ2THHbUuDqMbX13
+ enx87+NiOynbQebC7D874lgHe01VUvCbJl/T0ER5o2of+EOa90i8ut1ddOfE/8MxujkP
+ +buyV31H7D95FBblYNWlPxWqYxHdLKYwLVcbabYeTEGcMayVKwCBK+hPDQ8i9UpeSod0
+ LWysLZG/ObVHsv4PayIaIb+J1v86Lb0j6+o1kpunQx1HQ82uV4ak+nVIUM7oBfsOPcI4 +w== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3r7wgx169a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 10:47:36 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 0FB9810004B;
+        Thu, 15 Jun 2023 10:47:31 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 079F721862A;
+        Thu, 15 Jun 2023 10:47:31 +0200 (CEST)
+Received: from [10.201.21.9] (10.201.21.9) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Thu, 15 Jun
+ 2023 10:47:30 +0200
+Message-ID: <f95a6dbe-f774-7778-9cd8-aba0677b9413@foss.st.com>
+Date:   Thu, 15 Jun 2023 10:47:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v4 1/3] dt-bindings: PCI: qcom: ep: Add interconnects path
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V7 1/3] rpmsg: core: Add signal API support
 Content-Language: en-US
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        manivannan.sadhasivam@linaro.org
-Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-pci@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1686752666-13426-1-git-send-email-quic_krichai@quicinc.com>
- <1686752666-13426-2-git-send-email-quic_krichai@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1686752666-13426-2-git-send-email-quic_krichai@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Sarannya S <quic_sarannya@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>
+References: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
+ <1682160127-18103-2-git-send-email-quic_sarannya@quicinc.com>
+ <c44d8942-83e5-01ec-491b-bac1fb27de99@foss.st.com>
+ <20230614152435.2quoctx6ouvw4ous@ripper>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Organization: STMicroelectronics
+In-Reply-To: <20230614152435.2quoctx6ouvw4ous@ripper>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.201.21.9]
+X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-15_05,2023-06-14_02,2023-05-22_02
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 16:24, Krishna chaitanya chundru wrote:
-> Some platforms may not boot if a device driver doesn't
-> initialize the interconnect path. Mostly it is handled
-> by the bootloader but we have starting to see cases
-> where bootloader simply ignores them.
+Hi,
+
+On 6/14/23 17:24, Bjorn Andersson wrote:
+> On Mon, Apr 24, 2023 at 02:49:29PM +0200, Arnaud POULIQUEN wrote:
+>> Hello,
+>>
+>> On 4/22/23 12:42, Sarannya S wrote:
+>>> From: Deepak Kumar Singh <quic_deesin@quicinc.com>
+>>>
+>>> Some transports like Glink support the state notifications between
+>>> clients using flow control signals similar to serial protocol signals.
+>>> Local glink client drivers can send and receive flow control status
+>>> to glink clients running on remote processors.
+>>>
+>>> Add APIs to support sending and receiving of flow control status by
+>>> rpmsg clients.
+>>>
+>>> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+>>> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+>>> ---
+>>>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
+>>>  drivers/rpmsg/rpmsg_internal.h |  2 ++
+>>>  include/linux/rpmsg.h          | 15 +++++++++++++++
+>>>  3 files changed, 38 insertions(+)
+>>>
+>>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+>>> index a2207c0..e8bbe05 100644
+>>> --- a/drivers/rpmsg/rpmsg_core.c
+>>> +++ b/drivers/rpmsg/rpmsg_core.c
+>>> @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+>>>  
+>>>  /**
+>>> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
+>>> + * @ept:	the rpmsg endpoint
+>>> + * @enable:	pause/resume incoming data flow	
+>>> + * @dst:	destination address of the endpoint
+>>> + *
+>>> + * Return: 0 on success and an appropriate error value on failure.
+>>> + */
+>>> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
+>>> +{
+>>> +	if (WARN_ON(!ept))
+>>> +		return -EINVAL;
+>>> +	if (!ept->ops->set_flow_control)
+>>> +		return -ENXIO;
+>>
+>> Here we return an error if the backend does not implement the ops.
+>> But the set_flow_control ops is optional.
+>> Should we return 0 instead with a debug message?
+>>
 > 
-> Add the "pcie-mem" interconnect path as a required property
-> to the bindings.
+> It seems reasonable to allow the software to react to the absence of
+> flow control support, so a debug message wouldn't help.
 > 
+> But advertising that more explicitly by returning something like
+> EOPNOTSUPP seems better.
 
-I did not receive third patch in the series, so I hope you corrected all
-DTS in the linux-next (sdx55, sdx65).
+Right, this seems more reliable.
 
+Thanks,
+Arnaud
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+> 
+> Regards,
+> Bjorn
