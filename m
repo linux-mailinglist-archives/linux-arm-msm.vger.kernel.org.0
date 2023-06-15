@@ -2,64 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABBE5731DF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 18:38:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5C37731E00
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 18:42:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232875AbjFOQil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 12:38:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40508 "EHLO
+        id S235645AbjFOQmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 12:42:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjFOQik (ORCPT
+        with ESMTP id S234795AbjFOQls (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 12:38:40 -0400
+        Thu, 15 Jun 2023 12:41:48 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFECFE69;
-        Thu, 15 Jun 2023 09:38:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC49126B6;
+        Thu, 15 Jun 2023 09:41:47 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 549D361999;
-        Thu, 15 Jun 2023 16:38:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A5EC433C8;
-        Thu, 15 Jun 2023 16:38:37 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 512D561F13;
+        Thu, 15 Jun 2023 16:41:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0243CC433C0;
+        Thu, 15 Jun 2023 16:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686847118;
-        bh=F22bVWQutuqXY4+tXA/ymZHSWuT7v9Xwt1AL5BPn/Ug=;
+        s=k20201202; t=1686847306;
+        bh=zpqZV7qKWaYVN1SN8K2/7XS2tI9XhoNZ6+FwQdXJYeQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TgMX6Ci6I/OTSdrWAA8xWQSNewYLAz7PSAhLvL3XEzyiVsdb+fa57gAMuSUwJ+VEi
-         D8peYgh/500K9tDptketizD2OyA11Z9hhQs6EfhuUskeux0oqWl1R+mCVtTf1/81+v
-         WtdrbmquTupacBXtvNEhXwID/vFmAChiMbU0Rd9+1KgutYzZej0tuI5WzYw2H6i9In
-         hUnf6QzByudzLsdKs41jDQEcyW2DSllNSYGdAsXV6+gMhklsyGScmJxqcOZc49zGMt
-         429G5Mod+R821/wtV1v4dEzJH3zLalqcpx+xvhGYorAq+EMGOoQMFmMzKLHwX5UXZT
-         aOuOAZMjJ/hMQ==
-Date:   Thu, 15 Jun 2023 09:41:58 -0700
+        b=nyUl+wQN394xAOxbMzIIggaasbVy6GEeHTeBXYY5JtdtuNTyET8h/4lnMT1rITN8A
+         tppk0O8ic4w10FXqNjf1s3+j2NrS0GerHgqqyq43fgJQxPyscLqswRdIFNb7IAEqbj
+         /CbJooEWJGZhwOkDamnMXqaw7jqPBZGO+qs+kYThK/sWynhyirHFPBbauDyuHKN/qz
+         iHw884Opy6BFi0Iz+CMXiqjLdBC7FBkZlXFRCTdmLi0FhEFfWOp9xyvraUl3PHQfj5
+         i8NSkMU+aL4TeG81/flLI+RzxPJF0CXfI6SPA4fHtanqj3NriAtbVBvpihAf8E+6YO
+         eeS5f3A4yJAxA==
+Date:   Thu, 15 Jun 2023 09:45:07 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Artur Weber <aweber.kernel@gmail.com>, Lee Jones <lee@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Jingoo Han <jingoohan1@gmail.com>, linux-tegra@vger.kernel.org,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-pwm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-leds@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Helge Deller <deller@gmx.de>,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/4] video: backlight: lp855x: modernize
- bindings
-Message-ID: <20230615164158.6tpsd766mqx3o7y4@ripper>
-References: <20230519180728.2281-1-aweber.kernel@gmail.com>
- <168669542896.1315701.6764382551599027707.b4-ty@kernel.org>
+To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Sarannya S <quic_sarannya@quicinc.com>, swboyd@chromium.org,
+        quic_clew@quicinc.com, mathieu.poirier@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>
+Subject: Re: [PATCH V7 1/3] rpmsg: core: Add signal API support
+Message-ID: <20230615164507.mu7fd22poamjth7p@ripper>
+References: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
+ <1682160127-18103-2-git-send-email-quic_sarannya@quicinc.com>
+ <20230614155453.dywcrntfjddxojfv@ripper>
+ <6e51d6d8-cd3a-b0f2-c044-6282749aae89@foss.st.com>
+ <20230615145039.GA3256591@hu-bjorande-lv.qualcomm.com>
+ <4d89950d-0376-e355-c70b-d054776e83d4@foss.st.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <168669542896.1315701.6764382551599027707.b4-ty@kernel.org>
+In-Reply-To: <4d89950d-0376-e355-c70b-d054776e83d4@foss.st.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -70,33 +64,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 03:30:10PM -0700, Bjorn Andersson wrote:
-> On Fri, 19 May 2023 20:07:24 +0200, Artur Weber wrote:
-> > Convert TI LP855X backlight controller bindings from TXT to YAML and,
-> > while we're at it, rework some of the code related to PWM handling.
-> > Also correct existing DTS files to avoid introducing new dtb_check
-> > errors.
+On Thu, Jun 15, 2023 at 06:19:37PM +0200, Arnaud POULIQUEN wrote:
+> 
+> 
+> On 6/15/23 16:50, Bjorn Andersson wrote:
+> > On Thu, Jun 15, 2023 at 11:01:14AM +0200, Arnaud POULIQUEN wrote:
+> >>
+> >>
+> >> On 6/14/23 17:54, Bjorn Andersson wrote:
+> >>> On Sat, Apr 22, 2023 at 04:12:05PM +0530, Sarannya S wrote:
+> >>>> From: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> >>>>
+> >>>> Some transports like Glink support the state notifications between
+> >>>> clients using flow control signals similar to serial protocol signals.
+> >>>> Local glink client drivers can send and receive flow control status
+> >>>> to glink clients running on remote processors.
+> >>>>
+> >>>> Add APIs to support sending and receiving of flow control status by
+> >>>> rpmsg clients.
+> >>>>
+> >>>> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> >>>> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+> >>>> ---
+> >>>>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
+> >>>>  drivers/rpmsg/rpmsg_internal.h |  2 ++
+> >>>>  include/linux/rpmsg.h          | 15 +++++++++++++++
+> >>>>  3 files changed, 38 insertions(+)
+> >>>>
+> >>>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> >>>> index a2207c0..e8bbe05 100644
+> >>>> --- a/drivers/rpmsg/rpmsg_core.c
+> >>>> +++ b/drivers/rpmsg/rpmsg_core.c
+> >>>> @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+> >>>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+> >>>>  
+> >>>>  /**
+> >>>> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
+> >>>> + * @ept:	the rpmsg endpoint
+> >>>> + * @enable:	pause/resume incoming data flow	
+> >>>
+> >>> As shown in the discussion, it's still not clear what true/false means.
+> >>> Also, let's try to clarify that it's a request for the other side to do
+> >>> something:
+> >>>
+> >>> * rpmsg_set_flow_control() - request remote to pause/resume transmission
+> >>> * ...
+> >>> * @enable: flow restricted
+> >>> * ...
+> >>>
+> >>>
+> >>> PS. There's a stray space at the end of the line.
+> >>
+> >> The notion of flow restricted seems to me also ambiguous. It does
+> >> not specify if the stream is limited in term of bandwidth or stopped.
+> >>
+> >> What about using XON/XOFF as specified in software flow control[1]
+> >>
+> >> XOFF	Pause transmission
+> >> XON	Resume transmission
+> >>
+> >> or simply pause/resume definitions
+> >>
 > > 
-> > Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+> > I agree, that's still ambiguous.
 > > 
-> > [...]
+> > I was concerned about expressing it such that the reader would assume
+> > that calling this means there will be no more data coming, but there
+> > might be things in the queues etc. Expressing it in terms of the state
+> > of transmission is clearer.
+> > 
+> > 
+> > /*
+> >  * rpmsg_set_flow_control() - request remote to pause/resume transmission
+> >  ...
+> >  * @enable: Pause transmission
+> >  ...
+> >  */
+> > 
+> > Does that sound okay and clear to you?
 > 
-> Applied, thanks!
-> 
-> [4/4] arm64: dts: adapt to LP855X bindings changes
->       commit: ebdcfc8c42c2b9d5ca1b27d8ee558eefb3e904d8
-> 
+> Much better! I still have a nitpicking point :)
+> What about replacing @enable variable by @pause to align the variable with the
+> usage?
+>  /*
+>   * rpmsg_set_flow_control() - request remote to pause/resume transmission
+>   ...
+>   * @pause: set to 1 to pause transmission, to 0 to resume the transmission
 
-Sorry, that was not for me to pick up. So I've dropped this change
-again.
+It's a boolean, so I think with your name change suggestion, together
+with the function description, it should be clear enough what the two
+states (true/false) means.
 
-Please note that all other changes to the affected file is prefixed
-"arm64: tegra:". Following this is a good idea, and would have helped me
-not accidentally pick this change.
+* @pause: Pause transmission
 
-Regards,
+Thanks,
 Bjorn
-
-> Best regards,
-> -- 
-> Bjorn Andersson <andersson@kernel.org>
