@@ -2,213 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32350730FEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 08:54:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AEFE731011
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 09:05:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244393AbjFOGym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 02:54:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56676 "EHLO
+        id S242904AbjFOHFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 03:05:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243947AbjFOGyN (ORCPT
+        with ESMTP id S233813AbjFOHFX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 02:54:13 -0400
+        Thu, 15 Jun 2023 03:05:23 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45BC530C7;
-        Wed, 14 Jun 2023 23:53:32 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F4oQPC020257;
-        Thu, 15 Jun 2023 06:53:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=UEMwmEG9njOUsvy3AzL1HhgZC0gazs7PPtx1MYKTqzQ=;
- b=fQpDVHBmXTRH4HuGki6vvYaBYtcYdPeF2iHKEFddqGRluLGq/xBnyCIDrjIp3dD9AYZW
- jU5ohQ1of1zMJ6JDQ0DkZ6pYH8OjsuIqPoYYEDBC+DeKF3BLnUXlty64fsufLI4YFB+x
- ibHa+hBEN3ISIIsWAN7/lnL648olcDu34gSpKiHG3vhA0fsPISbxGNHx/e+jiUDUIMHE
- frCu3UGxyATMvBNfGblXYQoBoXzRoh+IhQQcEdjXiEXobHyg1W42+kZ5zR56JQZkRM1D
- mSCG3PC2cpZK6mvV8Id+IRMbLJVtIueD2cuBLeafw6acDGwBrCc1IIMpoEiMgFYdF2jl UA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7u8c89yg-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3733DDF;
+        Thu, 15 Jun 2023 00:05:22 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F6gnTu013251;
+        Thu, 15 Jun 2023 07:05:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=o1XjIHqTHkGP1XrVMkoJrsPBw9FCpVkiki/z38yx75U=;
+ b=YuJF/rL1I3gMJhsXQ/zLrQy8/ng8VUoxqHKk5NHF3G3GqAoNKZ2ic39Amp0pDbTz2zBO
+ ZtYJD5f0rYiKnHNsojxHiGQ/F+Qx5+kkLj38GnZDnvaZyUm9MLTtjkeu4VGWbhG4FbPc
+ kdCu+gGNbLGc2BRYk/4jihseXJ50LJajwys0VManC5CUfLo6mQS+8oaFIhnf8ZYGjjy7
+ MrVCDjlHffD2AC81grZFebFkqjm0kOCJJ3xZa442Svk3EZEbLc88G+irEIGp++kbVUP2
+ ujR3n+NRVcZAJBgSnGv3f6j8yHJ/q63ckkwShc9gzX52RxqS/GFeWdlS1vMC7/8GOzpq Hw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7p4q8r3y-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 06:53:00 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35F6r0kI014633
+        Thu, 15 Jun 2023 07:05:18 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35F75IBG023128
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 06:53:00 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 14 Jun 2023 23:52:50 -0700
-Date:   Thu, 15 Jun 2023 12:22:41 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
-        <nfraprado@collabora.com>, <broonie@kernel.org>,
-        <rafal@milecki.pl>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.org>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH 7/9] arm64: dts: qcom: ipq5332: Add USB related nodes
-Message-ID: <20230615065240.GI22186@varda-linux.qualcomm.com>
-References: <cover.1686126439.git.quic_varada@quicinc.com>
- <1b48e737aa14f5b5539cbf04d473182121d5b1ad.1686126439.git.quic_varada@quicinc.com>
- <ff8c76e4-fb6c-106d-eae3-45edc06b0c0b@linaro.org>
+        Thu, 15 Jun 2023 07:05:18 GMT
+Received: from [10.110.8.184] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 15 Jun
+ 2023 00:05:14 -0700
+Message-ID: <66f3bedf-5181-09da-c945-5cc8b8dda381@quicinc.com>
+Date:   Thu, 15 Jun 2023 12:35:11 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ff8c76e4-fb6c-106d-eae3-45edc06b0c0b@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 2/2] spi: spi-geni-qcom: Add SPI SLAVE mode support for
+ GENI based QuPv3
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
+        <quic_vnivarth@quicinc.com>, <quic_arandive@quicinc.com>
+References: <20230613065229.5619-1-quic_ptalari@quicinc.com>
+ <20230613065229.5619-3-quic_ptalari@quicinc.com>
+ <d39df510-c0d0-97c2-4a35-e28829ddd761@linaro.org>
+Content-Language: en-US
+From:   Praveen Talari <quic_ptalari@quicinc.com>
+In-Reply-To: <d39df510-c0d0-97c2-4a35-e28829ddd761@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5-zxQWYjHaNUlXgZztrkg-8-PrkiKNZT
-X-Proofpoint-GUID: 5-zxQWYjHaNUlXgZztrkg-8-PrkiKNZT
+X-Proofpoint-GUID: MIiSJ1bIXD8GlJxwmMDZHqvtFwUjYsCP
+X-Proofpoint-ORIG-GUID: MIiSJ1bIXD8GlJxwmMDZHqvtFwUjYsCP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-06-15_04,2023-06-14_02,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
- phishscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 spamscore=0
- mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306150056
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306150058
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 07, 2023 at 08:24:04PM +0200, Konrad Dybcio wrote:
+Hi
+
+Thank you for review.
+
+On 6/13/2023 5:57 PM, Konrad Dybcio wrote:
 >
+> On 13.06.2023 08:52, Praveen Talari wrote:
+>> Add SPI SLAVE mode support for GENI based QuPv3.
+>>
+> Copying the commit title in the commit message is a bit lackluster for
+> adding new functionality.
+Modified commit message
+>> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+>> ---
+>>   drivers/spi/spi-geni-qcom.c | 55 +++++++++++++++++++++++++++++++++----
+>>   1 file changed, 49 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+>> index 206cc04bb1ed..2e3ae29e79e0 100644
+>> --- a/drivers/spi/spi-geni-qcom.c
+>> +++ b/drivers/spi/spi-geni-qcom.c
+>> @@ -12,6 +12,7 @@
+>>   #include <linux/platform_device.h>
+>>   #include <linux/pm_opp.h>
+>>   #include <linux/pm_runtime.h>
+>> +#include <linux/property.h>
+>>   #include <linux/soc/qcom/geni-se.h>
+>>   #include <linux/spi/spi.h>
+>>   #include <linux/spinlock.h>
+>> @@ -52,6 +53,9 @@
+>>   #define SPI_CS_CLK_DELAY_MSK		GENMASK(19, 10)
+>>   #define SPI_CS_CLK_DELAY_SHFT		10
+>>   
+>> +#define SE_SPI_SLAVE_EN				(0x2BC)
+>> +#define SPI_SLAVE_EN				BIT(0)
+>> +
+>>   /* M_CMD OP codes for SPI */
+>>   #define SPI_TX_ONLY		1
+>>   #define SPI_RX_ONLY		2
+>> @@ -99,6 +103,24 @@ struct spi_geni_master {
+>>   	int cur_xfer_mode;
+>>   };
+>>   
+>> +static struct spi_master *get_spi_master(struct device *dev)
+>> +{
+>> +	struct platform_device *pdev = to_platform_device(dev);
+>> +	struct spi_master *spi = platform_get_drvdata(pdev);
+>> +
+>> +	return spi;
+>> +}
+>> +
+>> +static void spi_slv_setup(struct spi_geni_master *mas)
+>> +{
+>> +	struct geni_se *se = &mas->se;
+>> +
+>> +	writel(SPI_SLAVE_EN, se->base + SE_SPI_SLAVE_EN);
+>> +	writel(GENI_IO_MUX_0_EN, se->base + GENI_OUTPUT_CTRL);
+>> +	writel(START_TRIGGER, se->base + SE_GENI_CFG_SEQ_START);
+>> +	dev_info(mas->dev, "spi slave setup done\n");
+> dev_dbg
+changed to dev_dbg
 >
-> On 7.06.2023 12:56, Varadarajan Narayanan wrote:
-> > Add USB phy and controller nodes
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 55 +++++++++++++++++++++++++++++++++++
-> >  1 file changed, 55 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> > index c2d6cc65..3183357 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> > @@ -383,6 +383,61 @@
-> >  				status = "disabled";
-> >  			};
-> >  		};
-> > +
-> > +		usb_0_m31phy: hs_m31phy@7b000 {
-> > +			compatible = "qcom,ipq5332-m31-usb-hsphy";
-> > +			reg = <0x0007b000 0x12C>,
-> random uppercase hex
-
-Ok.
-
-> > +			      <0x08af8800 0x400>;
-> > +			reg-names = "m31usb_phy_base",
-> > +				    "qscratch_base";
-> > +			phy_type= "utmi";
-> Missing space before '='
-
-Ok.
-
-> > +
-> > +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-> > +			reset-names = "usb2_phy_reset";
-> > +
-> > +			status = "okay";
-> If you're only defining the node, it's enabled by default
+>> +}
+>> +
+>>   static int get_spi_clk_cfg(unsigned int speed_hz,
+>>   			struct spi_geni_master *mas,
+>>   			unsigned int *clk_idx,
+>> @@ -140,12 +162,18 @@ static void handle_se_timeout(struct spi_master *spi,
+>>   	const struct spi_transfer *xfer;
+>>   
+>>   	spin_lock_irq(&mas->lock);
+>> -	reinit_completion(&mas->cancel_done);
+>>   	if (mas->cur_xfer_mode == GENI_SE_FIFO)
+>>   		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+>>   
+>>   	xfer = mas->cur_xfer;
+>>   	mas->cur_xfer = NULL;
+>> +
+>> +	if (spi->slave) {
+>> +		spin_unlock_irq(&mas->lock);
+>> +		goto unmap_if_dma;
+>> +	}
+>> +
+>> +	reinit_completion(&mas->cancel_done);
+> Moving reiniting cancel_done after possibly writing the register
+> for both mas/slv cases sounds like a separate change - is it
+> necessary?
+there will be a chance of double reinit for slave because of goto 
+statement. Hence moved to down.
 >
-> In this case, you'd probably want to disable it by default.
-
-Ok.
-
-> > +		};
-> > +
-> > +		usb2: usb2@8a00000 {
-> > +			compatible = "qcom,ipq5332-dwc3", "qcom,dwc3";
-> > +			#address-cells = <1>;
-> > +			#size-cells = <1>;
-> > +			ranges;
-> Please push these 3 properties to the end
+>>   	geni_se_cancel_m_cmd(se);
+>>   	spin_unlock_irq(&mas->lock);
+>>   
+>> @@ -541,6 +569,8 @@ static bool geni_can_dma(struct spi_controller *ctlr,
+>>   
+>>   	if (mas->cur_xfer_mode == GENI_GPI_DMA)
+>>   		return true;
+>> +	if (ctlr->slave)
+>> +		return true;
+> Regardless of the xfer mode?
+we always operates spi slave in dma mode and added code comments
 >
-> And add status = "disabled" below them.
-
-Ok.
-
-> > +
-> > +			reg = <0x08af8800 0x100>;
-> > +
-> > +			clocks = <&gcc GCC_USB0_MASTER_CLK>,
-> > +				<&gcc GCC_SNOC_USB_CLK>,
-> > +				<&gcc GCC_USB0_SLEEP_CLK>,
-> > +				<&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> > +
-> Please remove this newline.
+>>   
+>>   	len = get_xfer_len_in_words(xfer, mas);
+>>   	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
+>> @@ -619,6 +649,7 @@ static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
+>>   
+>>   static int spi_geni_init(struct spi_geni_master *mas)
+>>   {
+>> +	struct spi_master *spi = get_spi_master(mas->dev);
+>>   	struct geni_se *se = &mas->se;
+>>   	unsigned int proto, major, minor, ver;
+>>   	u32 spi_tx_cfg, fifo_disable;
+>> @@ -627,7 +658,14 @@ static int spi_geni_init(struct spi_geni_master *mas)
+>>   	pm_runtime_get_sync(mas->dev);
+>>   
+>>   	proto = geni_se_read_proto(se);
+>> -	if (proto != GENI_SE_SPI) {
+>> +
+>> +	if (spi->slave) {
+>> +		if (proto != GENI_SE_SPI_SLAVE) {
+>> +			dev_err(mas->dev, "Invalid proto %d\n", proto);
+>> +			goto out_pm;
+>> +		}
+>> +		spi_slv_setup(mas);
+>> +	} else if (proto != GENI_SE_SPI) {
+>>   		dev_err(mas->dev, "Invalid proto %d\n", proto);
+>>   		goto out_pm;
+>>   	}
+>> @@ -677,9 +715,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
+>>   	}
+>>   
+>>   	/* We always control CS manually */
+>> -	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+>> -	spi_tx_cfg &= ~CS_TOGGLE;
+>> -	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+>> +	if (!spi->slave) {
+>> +		spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+>> +		spi_tx_cfg &= ~CS_TOGGLE;
+>> +		writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+>> +	}
+>>   
+>>   out_pm:
+>>   	pm_runtime_put(mas->dev);
+>> @@ -1072,6 +1112,9 @@ static int spi_geni_probe(struct platform_device *pdev)
+>>   	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
+>>   	pm_runtime_enable(dev);
+>>   
+>> +	if (device_property_read_bool(&pdev->dev, "qcom,slv-ctrl"))
+>> +		spi->slave = true;
+> Missing dt-bindings
+Added dt-binding file
 >
-> > +			clock-names = "core",
-> > +				"iface",
-> > +				"sleep",
-> > +				"mock_utmi";
-> Please align this, and all other similar lists.
-
-Ok.
-
-> > +
-> > +			interrupts-extended = <&intc GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>;
-> interrupts-extended is unnecessary with just a single interrupt
-> source.. you can make it `interrupts` and drop the GIC reference.
->
-> It would also be nice to push the interrupt properties below 'reg'.
-> We're working on documenting and automating checking the preferred
-> property order.
-
-Ok.
-
-> > +			interrupt-names = "pwr_event";
-> > +
-> > +			resets = <&gcc GCC_USB_BCR>;
-> > +
-> > +			qcom,select-utmi-as-pipe-clk;
-> > +
-> > +			usb2_0_dwc: usb@8a00000 {
-> > +				compatible = "snps,dwc3";
-> > +				reg = <0x08a00000 0xe000>;
-> > +				clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> > +				clock-names = "ref";
-> > +				interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-> > +				usb-phy = <&usb_0_m31phy>;
-> > +				tx-fifo-resize;
-> > +				snps,is-utmi-l1-suspend;
-> > +				snps,hird-threshold = /bits/ 8 <0x0>;
-> > +				snps,dis_u2_susphy_quirk;
-> > +				snps,dis_u3_susphy_quirk;
-> > +				snps,ref-clock-period-ns = <21>;
-> 1/21 is 0.0476..  that doesn't seem to correspond to the ref
-> clk frequency?
-
-dwc3_ref_clk_period() prefers ref clock's rate over ref-clock-period-ns.
-Since ref clock is available this is not used. Will remove this.
-
-Thanks
-Varada
-
 > Konrad
-> > +			};
-> > +		};
-> >  	};
-> >
-> >  	timer {
+>> +
+>>   	ret = geni_icc_get(&mas->se, NULL);
+>>   	if (ret)
+>>   		goto spi_geni_probe_runtime_disable;
+>> @@ -1092,7 +1135,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+>>   	 * for dma (gsi) mode, the gsi will set cs based on params passed in
+>>   	 * TRE
+>>   	 */
+>> -	if (mas->cur_xfer_mode == GENI_SE_FIFO)
+>> +	if (!spi->slave && mas->cur_xfer_mode == GENI_SE_FIFO)`
+>>   		spi->set_cs = spi_geni_set_cs;
+>>   
+>>   	ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
