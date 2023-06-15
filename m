@@ -2,190 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5904D730F4A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 08:26:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 283A2730F4F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 08:28:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237799AbjFOG0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 02:26:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44002 "EHLO
+        id S231130AbjFOG2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 02:28:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjFOG0v (ORCPT
+        with ESMTP id S229447AbjFOG2f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 02:26:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C96422690;
-        Wed, 14 Jun 2023 23:26:50 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F4KmFd017112;
-        Thu, 15 Jun 2023 06:26:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=Llx5aUWzuRsf3dJ/od1r447zlOZBOr9tAFIk/M9sTDQ=;
- b=aXywIXPJffsieon6Jd5XcAhSi3PqdZCldlf7P5QTbQ1pdQaQgeFUz63olWJGnOS7laWC
- 4lJeSaBNryFCz0ex4vr5yh1kg+6Xyo7TsoZ8TVF/9JzZVA7F+sJ5PZ8AJ88EKRJQ/pp3
- xLn3SDF/ghYFzzMo1J5BCVrf2KIrthfYkjcWxAPIf1cj/pmOgAX59gSYgS++8y6n2IaU
- RMA9mRxS88y9pTUXYSsW5bFt+MRQhwuBveyCR41V5rsvF+0uUJeqxtNNB5rm/sVRBmLN
- T/ZZfbMxTcuXuqt9TpSZ0esDPK3ywUo3AD85n0eEj1w5Xm8NFJFF8QgW7P/11Gkj+LOc GA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r78c7apq3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 06:26:24 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35F6QNkJ021789
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 06:26:23 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 14 Jun 2023 23:26:09 -0700
-Date:   Thu, 15 Jun 2023 11:56:03 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
-        <nfraprado@collabora.com>, <broonie@kernel.org>,
-        <rafal@milecki.pl>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.org>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH 7/9] arm64: dts: qcom: ipq5332: Add USB related nodes
-Message-ID: <20230615062603.GH22186@varda-linux.qualcomm.com>
-References: <cover.1686126439.git.quic_varada@quicinc.com>
- <1b48e737aa14f5b5539cbf04d473182121d5b1ad.1686126439.git.quic_varada@quicinc.com>
- <8e21fef3-5ae4-673a-dce2-4ebf1dd0eb66@linaro.org>
+        Thu, 15 Jun 2023 02:28:35 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79945C7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 23:28:34 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-bd0a359ca35so1410715276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 23:28:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686810513; x=1689402513;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sl1LNkel2Jey/Q+VPNL7my6PAtZgOtyvxavcL0DTR4Y=;
+        b=EygD5j0QlxcIGYupF35Vj1wtDKts5LDzLPDn5WDh9l6m+UlHM6cmB6bRcxjiCKro51
+         RjdJaQiEUB+EdJjCtnhRvEVxyI7ClH6pEzI9YOxrfaAsNLDwj16sdqYxsUnDV99H4aaU
+         ZJyZ6sFGAfNt0y1ekhXQNFZjigYPyD8mL0hZxZzxBkD2NBmAA1d1gm3As1xZKv42fxbv
+         XnsOea/gFF7t+hy0RLiIbG9bwvuxHAgANu9ORtUe4jly0fsQQAIDc6IQQjgwvGBrKVVH
+         qwaRPT35uNgdZN3aoMBr9Ys7C+0FBm3hV3MnQunimazRPsRle2qTonvW1gcNdzlNRJtC
+         XouQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686810513; x=1689402513;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sl1LNkel2Jey/Q+VPNL7my6PAtZgOtyvxavcL0DTR4Y=;
+        b=VaVxUsoQ7XQYaimzSfYp1LVijcBU+OSPNLGZVd8kODsYX0VlcCiZ2+k7CPsUXEutDL
+         ZGQhNgJZUMjAqEpDe4xkM6VqzhvrDM86rSXXhRyrEV2Ti6QTWtIbjzoKltOl0URiPfpB
+         V+I5jquH8QndPiabw3nbM/5AIY9jqngisEtNPXUdoUoa9DBVbdDiUEqjalQwR5B8x5+m
+         AMI2Iy5xWczmUTXDjOTnuXG+uDgNd435z9+DYhNQqoGnXV0VG7sfvK5TngEK1pN6nv7F
+         exXPqfzUzIByxAoJC/cCfBa0zz+UG2uTJsrCx5oUzfTrjePzxvhMi/iRI9mbakcPAa2r
+         6IJA==
+X-Gm-Message-State: AC+VfDxJ2L6VuCDVTfB67OVZ5FnmRXYG+h3VPD0rUxcKO/ylytyPQUqi
+        nlEpuDiDr+kMlueI14i666kTruWGiWbqB0e0hGztqQ==
+X-Google-Smtp-Source: ACHHUZ5QQ7NM8OdLRY2rhKKn0eJJKrToeLatwb0wJspABwcTXVGkWpuDYwEgYMm7GhA+ErIn3CcSdu5DqMV6YDMP9G8=
+X-Received: by 2002:a25:2601:0:b0:b9e:712f:4a17 with SMTP id
+ m1-20020a252601000000b00b9e712f4a17mr3583179ybm.6.1686810513685; Wed, 14 Jun
+ 2023 23:28:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <8e21fef3-5ae4-673a-dce2-4ebf1dd0eb66@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eteCNZMKAjnIX2uwp5kaCbgI_zSdUDrF
-X-Proofpoint-ORIG-GUID: eteCNZMKAjnIX2uwp5kaCbgI_zSdUDrF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-15_03,2023-06-14_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0 spamscore=0
- suspectscore=0 clxscore=1015 adultscore=0 phishscore=0 bulkscore=0
- mlxlogscore=814 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306150053
+References: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+From:   Yongqin Liu <yongqin.liu@linaro.org>
+Date:   Thu, 15 Jun 2023 14:28:22 +0800
+Message-ID: <CAMSo37UVzFyigaTvKjxV-4Gvit8H4n8DtwC=2PYWGTr6L555Rg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/dpu: do not enable color-management if DSPPs
+ are not available
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 07, 2023 at 02:23:20PM +0300, Dmitry Baryshkov wrote:
-> On 07/06/2023 13:56, Varadarajan Narayanan wrote:
-> >Add USB phy and controller nodes
-> >
-> >Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >---
-> >  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 55 +++++++++++++++++++++++++++++++++++
-> >  1 file changed, 55 insertions(+)
-> >
-> >diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> >index c2d6cc65..3183357 100644
-> >--- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> >+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> >@@ -383,6 +383,61 @@
-> >  				status = "disabled";
-> >  			};
-> >  		};
-> >+
-> >+		usb_0_m31phy: hs_m31phy@7b000 {
-> >+			compatible = "qcom,ipq5332-m31-usb-hsphy";
-> >+			reg = <0x0007b000 0x12C>,
-> >+			      <0x08af8800 0x400>;
-> >+			reg-names = "m31usb_phy_base",
-> >+				    "qscratch_base";
-> >+			phy_type= "utmi";
-> >+
-> >+			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-> >+			reset-names = "usb2_phy_reset";
-> >+
-> >+			status = "okay";
-> >+		};
-> >+
-> >+		usb2: usb2@8a00000 {
-> >+			compatible = "qcom,ipq5332-dwc3", "qcom,dwc3";
-> >+			#address-cells = <1>;
-> >+			#size-cells = <1>;
-> >+			ranges;
-> >+
-> >+			reg = <0x08af8800 0x100>;
-> >+
-> >+			clocks = <&gcc GCC_USB0_MASTER_CLK>,
-> >+				<&gcc GCC_SNOC_USB_CLK>,
-> >+				<&gcc GCC_USB0_SLEEP_CLK>,
-> >+				<&gcc GCC_USB0_MOCK_UTMI_CLK>;
+On Tue, 13 Jun 2023 at 02:25, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Please indent these values.
-
-Ok.
-
-> >+
-> >+			clock-names = "core",
-> >+				"iface",
-> >+				"sleep",
-> >+				"mock_utmi";
+> We can not support color management without DSPP blocks being provided
+> in the HW catalog. Do not enable color management for CRTCs if num_dspps
+> is 0.
 >
-> Please indent these values.
+> Fixes: 4259ff7ae509 ("drm/msm/dpu: add support for pcc color block in dpu driver")
+> Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 
-Ok.
+Thanks for this fix!
+With it applied to the ACK android-mainline branch,
+the "dpu error" problem reported here:
+    https://lore.kernel.org/lkml/CAMSo37VmhB1-PUp1qu8gaxOXtu98eEYmWd71FOai+cwLb-JvSg@mail.gmail.com/
+is not reproduced.
 
-> >+
-> >+			interrupts-extended = <&intc GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>;
+Tested-by: Yongqin Liu <yongqin.liu@linaro.org>
+
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 6e684a7b49a1..1edf2b6b0a26 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -1463,6 +1463,8 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
+>  struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+>                                 struct drm_plane *cursor)
+>  {
+> +       struct msm_drm_private *priv = dev->dev_private;
+> +       struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>         struct drm_crtc *crtc = NULL;
+>         struct dpu_crtc *dpu_crtc = NULL;
+>         int i, ret;
+> @@ -1494,7 +1496,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
 >
-> No PHY IRQs?
-
-Will add.
-
-
-Thanks
-Varada
-
-> >+			interrupt-names = "pwr_event";
-> >+
-> >+			resets = <&gcc GCC_USB_BCR>;
-> >+
-> >+			qcom,select-utmi-as-pipe-clk;
-> >+
-> >+			usb2_0_dwc: usb@8a00000 {
-> >+				compatible = "snps,dwc3";
-> >+				reg = <0x08a00000 0xe000>;
-> >+				clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> >+				clock-names = "ref";
-> >+				interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-> >+				usb-phy = <&usb_0_m31phy>;
-> >+				tx-fifo-resize;
-> >+				snps,is-utmi-l1-suspend;
-> >+				snps,hird-threshold = /bits/ 8 <0x0>;
-> >+				snps,dis_u2_susphy_quirk;
-> >+				snps,dis_u3_susphy_quirk;
-> >+				snps,ref-clock-period-ns = <21>;
-> >+			};
-> >+		};
-> >  	};
-> >  	timer {
+>         drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
 >
+> -       drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+> +       if (dpu_kms->catalog->dspp_count)
+> +               drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+>
+>         /* save user friendly CRTC name for later */
+>         snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
 > --
-> With best wishes
-> Dmitry
+> 2.39.2
 >
+
+-- 
+Best Regards,
+Yongqin Liu
+---------------------------------------------------------------
+#mailing list
+linaro-android@lists.linaro.org
+http://lists.linaro.org/mailman/listinfo/linaro-android
