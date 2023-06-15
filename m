@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43F8B73168D
+	by mail.lfdr.de (Postfix) with ESMTP id AFDF073168E
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:31:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244542AbjFOLbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 07:31:32 -0400
+        id S245338AbjFOLbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 07:31:33 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245084AbjFOLbb (ORCPT
+        with ESMTP id S244933AbjFOLbc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 07:31:31 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCC12710
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:30 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b1b06af50eso25805101fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:30 -0700 (PDT)
+        Thu, 15 Jun 2023 07:31:32 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382AB272B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:31 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so10225108e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686828688; x=1689420688;
+        d=linaro.org; s=google; t=1686828689; x=1689420689;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e40W025fGlyFZ6vbS7Ked1F1cVNFU/7QwbFD14aLFE0=;
-        b=aZ1dgoWOAzw6+ndlGgXRJr5Q2d6b+HaXXL3amtujOQVHYUMr4kZX/ftwKA2h7pS/nS
-         YjHq3QBSXgO3uw2TEjznxl9r+vNBiGNuv0P2g7Ll7MBjjH6lzaCQJ9FVj9fQLvTrWg7S
-         TnF0kL89hFtuV9JqHaJJcKfhn4lJ64z5W24YFG+4cpVr30qvyXLpUB6frTp4pqqKn/yT
-         wPCV+VrppV9bMN9Gt3d3cxICGyHMqRplbxUvwzgWwmWRJkCY//K71MDFxa8nqdZ1oWzg
-         FVmL6avzf4qJH3WxTgIpstb96I0YnVU0oelEjIu7Gk/1WLrPx/YHJigQhW8EqW0efvva
-         miHw==
+        bh=vbafB7CFldn/fkM2UpPUe2mkTVmTH3y0rkj38+8JLV0=;
+        b=NC8aQtqVZ0za+j3+jkuyqg7gpl2clA4y9LK7dbY9kjM+DyapLMNII2U32RFEHfDJ/X
+         kko7WS/r5bTt0pxMKt9WLMGrdPCalB50BLQqNxmcqzofAF9idKkzwTKhsdrrSOtVqoMO
+         wJpcYXOp/Ix4mqZaX2OXQmFuKj++2wCHcMBxHNP3f9eHMhDcb4Ie/ZlzukLUgT8lNZAe
+         LXPGGpemSWQp2GaiN3Gxk0GIk6oXWgfMt3lNSGXDJyiD2E+YHWlNFc4QjGE6Q0YMs5YE
+         TXHjDGDBDZT/o+0pjo85pgikbNPsFeCEOvly1cqIgVqbgDQ7p2umYTCekkXbvsD+j7Hn
+         XylA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686828688; x=1689420688;
+        d=1e100.net; s=20221208; t=1686828689; x=1689420689;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=e40W025fGlyFZ6vbS7Ked1F1cVNFU/7QwbFD14aLFE0=;
-        b=QbUHel4HO0u9ZEjw8TRf/TaQNbPirbZfkMyC0D8QcQbFd7qQEA4609u0dfshcQZ/NE
-         5xXfiAAtkQZMIjuo61hCXb9bx3gga5VmD9Nu6oOaqUSsPsolDTKW0Wc7GgjTxhkqZgXo
-         02q1ZviLweaBg2a1KF27ZGoyjWhq6tEvAaFZAYol5hd+qUlZGFsLSujy0EXTFDNE4TsB
-         YDMrpqhi/MwzqfY6xmfXoaRtVSBztrJ3F3lZEDFl5tlcdXAnlBbM4xGWjjk7vnGF8ff5
-         J/7q1OvdHQy5aQn8B+K5g/RN9krsc/aix8A/6Dl5xGbkZ0hY51/ljy05Lwe2ppVXY+d7
-         mwIQ==
-X-Gm-Message-State: AC+VfDxtGl67prQjZKcKOmY5tohpp3EtyTSBb8ul3zha6UFG2bLdRji8
-        uHODvLMyRxrg8+jAstxtQiPD4A==
-X-Google-Smtp-Source: ACHHUZ4+CoEubc9a0pwP+plqW87Gnde1h5kz7Nyk8WNw40KCefSourZBUvGxIorUMAuqTSez5dAtjA==
-X-Received: by 2002:a2e:9942:0:b0:2b1:b7bc:c64a with SMTP id r2-20020a2e9942000000b002b1b7bcc64amr8672970ljj.41.1686828688425;
-        Thu, 15 Jun 2023 04:31:28 -0700 (PDT)
+        bh=vbafB7CFldn/fkM2UpPUe2mkTVmTH3y0rkj38+8JLV0=;
+        b=HrD5VsWazoUIaQoYOp2j5zRsjfHLxhI5O7PLIC2hBdlX+b58fFRA0vKrLc8ADXST0A
+         S5fb1ImQCHDP7CXAube/A5hKy7G3HkZFaVt0BXZw9uYmYeTQQLW84Epq1W1/yNuTkkH1
+         XWBS3gbJperEhqLbwBWA20jT0YnWy5CmI228cstRdx/kwKzBAGb/sebDw7aHZWTe9jKJ
+         09psbLqwWSwY1HnZ80QW2z1nrSn8Ddd0A+pTn9YnXSCSubYfdXKl69nPelkPouAg59qv
+         2KR0BgiddbqDMqMe2lJEe/ok+EWjkyGwo7E3jVubA/Xh6AXfN9URiqOJIjpLic9qf2Hw
+         k88A==
+X-Gm-Message-State: AC+VfDwRk1PFlqA946L1uNi06KWEnLIAmVK/4Oc3fylNZx9gCrLG0+Iz
+        zbQWrE+LuSBL/YvJ2RLED+RD/w==
+X-Google-Smtp-Source: ACHHUZ5VYzmsikxsafYP0OLAIPuaP+UraK9xdVPdzYUjKg3TB7t20IZE8MTlcxjTp6aoA7d4uljNAA==
+X-Received: by 2002:a2e:8ec8:0:b0:2b3:4acd:8477 with SMTP id e8-20020a2e8ec8000000b002b34acd8477mr3465408ljl.10.1686828689510;
+        Thu, 15 Jun 2023 04:31:29 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id y12-20020a2e320c000000b002b345f71039sm860525ljy.36.2023.06.15.04.31.27
+        by smtp.gmail.com with ESMTPSA id y12-20020a2e320c000000b002b345f71039sm860525ljy.36.2023.06.15.04.31.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 04:31:27 -0700 (PDT)
+        Thu, 15 Jun 2023 04:31:28 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,14 +60,13 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Yongqin Liu <yongqin.liu@linaro.org>
-Subject: Re: [PATCH 1/2] drm/msm/dpu: do not enable color-management if DSPPs are not available
-Date:   Thu, 15 Jun 2023 14:31:18 +0300
-Message-Id: <168682860388.384026.128437075326886928.b4-ty@linaro.org>
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/2] drm/msm/dsi: dsi_host: drop unused clocks
+Date:   Thu, 15 Jun 2023 14:31:19 +0300
+Message-Id: <168682860382.384026.8056760292129315346.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
-References: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230614224402.296825-1-dmitry.baryshkov@linaro.org>
+References: <20230614224402.296825-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -82,19 +81,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 12 Jun 2023 21:25:33 +0300, Dmitry Baryshkov wrote:
-> We can not support color management without DSPP blocks being provided
-> in the HW catalog. Do not enable color management for CRTCs if num_dspps
-> is 0.
+On Thu, 15 Jun 2023 01:44:01 +0300, Dmitry Baryshkov wrote:
+> Several source clocks are not used anymore, so stop handling them.
 > 
 > 
 
 Applied, thanks!
 
-[1/2] drm/msm/dpu: do not enable color-management if DSPPs are not available
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/3bcfc7b90465
-[2/2] drm/msm/dpu/catalog: define DSPP blocks found on sdm845
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/c72375172194
+[1/2] drm/msm/dsi: dsi_host: drop unused clocks
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/2d1ae9a5ae51
+[2/2] drm/msm/dsi: split dsi_ctrl_config() function
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/518269541298
 
 Best regards,
 -- 
