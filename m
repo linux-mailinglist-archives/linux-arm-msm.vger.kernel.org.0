@@ -2,84 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4395673159A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E0B07315A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:44:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238240AbjFOKk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 06:40:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49390 "EHLO
+        id S237768AbjFOKoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 06:44:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230267AbjFOKk1 (ORCPT
+        with ESMTP id S234125AbjFOKoL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 06:40:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E311BC;
-        Thu, 15 Jun 2023 03:40:26 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35F8OFOo011795;
-        Thu, 15 Jun 2023 10:40:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LCt/rIXPlxanZd5pKhWoDG446lq8JxYaukGa99b5h5s=;
- b=m0wvGMd9iKW7eZmA8PLbgGlTlav8Gx2JcxKkW+5jdAVYs1Ki3IFEnj76kasI/qZCFnCm
- UdMFp/g6BXJkwjQmpTWz2vGpq1onRWOpigN/UjmNl4+UYHCZqx2kBiSbf8YqowHSUk/X
- xulOtyIIr9i4TuVGA51t45jT1dpqlDdZxxrDiLQpbSZdphzIuCmo9B2CXv/zdejwvgZl
- G+0E4xmO3ddzsfnrji8OidQ5AIYr/xY1R6dDYO4EM3M5ReVMPUZGnD3s1MVmjpJBCM1s
- 2AnP5kVhn1yOJf80ogy34zpHwDNOL44KGiwnQyEiZDUbu/UfYrWfC+ZhGqEfZekTvpKk 5Q== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7p4q98w4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 10:40:22 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35FAeLjk023293
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Jun 2023 10:40:21 GMT
-Received: from [10.201.162.56] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 15 Jun
- 2023 03:40:17 -0700
-Message-ID: <d6b07470-983b-fd50-6b88-239ab0607e39@quicinc.com>
-Date:   Thu, 15 Jun 2023 16:10:13 +0530
+        Thu, 15 Jun 2023 06:44:11 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948DE1FE4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:44:10 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-307d58b3efbso5631719f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:44:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686825849; x=1689417849;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=IoxQThv70ZvlSNBsWXuuYR7HwAqAcGVXH7L/19+7jfE=;
+        b=QPrvKx9E6EDGWiSGzBLYkQ5EHqmaxkyw709RU63hEVRbo0huaFtlUQzKfXuspyxWDt
+         YIBwCx97Vt9gB2KwsMYRaL/F+KzyMAiNs+ywvAw9+nK67eUBB1lmtd9CqMt4hVUKNbVb
+         h4PkfOJ6Zs3DBLN/yYaac1S80W2Cd7++2xkr0y9AgNsyPEGrQAIWzXqJRq2Re4NVc4CK
+         revinKPQxbIphOPmAbkldUqjLZxlEZ6ikGWn0+sOdKhSbAoH5Xxfc8eDwTIUgo+QSHX6
+         HTK9w/tdLBpxwJ5WmoFPTFzfeWYgiLE2pf/GNHblNIbqeuCgJzL1hK4EHOkJSjdOXoVc
+         PkdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686825849; x=1689417849;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IoxQThv70ZvlSNBsWXuuYR7HwAqAcGVXH7L/19+7jfE=;
+        b=HYNPHqLPc50a2t5Ks3ie+2JSjsojYA8flni3lEg5H/pxaz25vUk9WsZgXOFo6mtUZm
+         2lGylw6wzsINO3mjjXMsPFlPM0xofWRcKJod29uJlURGxz8+5lwX+3qGMy2fsymo7ufT
+         Y8pjGS7qSUGUBO/NXYKRwoHLU7iACRWzR/PP0QZD/cRCl6i5LzojqlHZy6okHkfOZ4UB
+         B7hVnSbbgWqWzWYImOBzEbZfjV8rRBuXKeveYj+Pxv2sSmbNFwVbohTNiOfAXoDWKiQp
+         K0HLz54vCqmkpjFH1z8HYpHrn3AqWPaFYOYXGNQwe3Vi6HkatE1eDrEhqc4UAho3lHNq
+         KGxw==
+X-Gm-Message-State: AC+VfDznIhsRpug5WO6G/akDcbA3ThnObNx0SzjbxmBTvZUTdrkA6wyU
+        2F+VikW6nahnVs9Q/xBD10rZqg==
+X-Google-Smtp-Source: ACHHUZ4kHCqQIeo4tRWR53xzL/JhFOyxaqYbFqchZgUhjTM/pxl2fvRZiZbvwnIr1c1aZZyONONk5w==
+X-Received: by 2002:a5d:664d:0:b0:311:ac3:909f with SMTP id f13-20020a5d664d000000b003110ac3909fmr2922714wrw.56.1686825849041;
+        Thu, 15 Jun 2023 03:44:09 -0700 (PDT)
+Received: from [192.168.0.94] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id i17-20020a5d6311000000b0030fae360f14sm15281381wru.68.2023.06.15.03.44.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 03:44:08 -0700 (PDT)
+Message-ID: <c3f59fb4-4dd8-f27a-d3f5-b1870006a75c@linaro.org>
+Date:   Thu, 15 Jun 2023 11:44:06 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] remoteproc: qcom: Add NOTIFY_FATAL event type to SSR
- subdevice
-Content-Language: en-US
-From:   Vignesh Viswanathan <quic_viswanat@quicinc.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <quic_sjaganat@quicinc.com>
-References: <20230503062146.3891-1-quic_viswanat@quicinc.com>
- <f7a0c15d-a7d7-c2ed-875d-c8c24ebf0dab@quicinc.com>
- <cfe32c1c-6d9b-1c74-c7d1-6597591edf77@quicinc.com>
- <3687b420-0993-7f76-7116-114b1784de05@quicinc.com>
-In-Reply-To: <3687b420-0993-7f76-7116-114b1784de05@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8k9NpQ5_kOXyVf9M5QtO24vzoenWaz9F
-X-Proofpoint-ORIG-GUID: 8k9NpQ5_kOXyVf9M5QtO24vzoenWaz9F
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-15_07,2023-06-14_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- priorityscore=1501 adultscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
- mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306150091
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 1/2] remoteproc: qcom: Handle reserved-memory
+ allocation issues
+Content-Language: en-GB, en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230529-rproc-of-rmem-v2-0-95e39b959585@gerhold.net>
+ <20230529-rproc-of-rmem-v2-1-95e39b959585@gerhold.net>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Organization: Linaro
+In-Reply-To: <20230529-rproc-of-rmem-v2-1-95e39b959585@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,274 +85,67 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/29/2023 9:27 AM, Vignesh Viswanathan wrote:
-> Gentle Reminder.
+On 6/14/23 17:31, Stephan Gerhold wrote:
+> If Linux fails to allocate the dynamic reserved memory specified in the
+> device tree, the size of the reserved_mem will be 0. Add a check for
+> this to avoid using an invalid reservation.
 > 
-> On 5/22/2023 3:03 PM, Mukesh Ojha wrote:
->>
->>
->> On 5/3/2023 4:56 PM, Mukesh Ojha wrote:
->>>
->>>
->>> On 5/3/2023 11:51 AM, Vignesh Viswanathan wrote:
->>>> Currently the SSR subdevice notifies the client driver on crash of the
->>>> rproc from the recovery workqueue using the BEFORE_SHUTDOWN event.
->>>> However the client driver might be interested to know that the device
->>>> has crashed immediately to pause any further transactions with the
->>>> rproc. This calls for an event to be sent to the driver in the IRQ
->>>> context as soon as the rproc crashes.
->>>>
->>>> Add NOTIFY_FATAL event to SSR subdevice to atomically notify rproc has
->>>> crashed to the client driver.
->>>>
->>>> Validated the event in IPQ9574 and IPQ5332 by forcing the rproc to 
->>>> crash
->>>> and ensuring the registered notifier function receives the notification
->>>> in IRQ context.
->>>
->>> This was one of valid use case we encounter in android, We have some 
->>> other way of doing the same thing without core kernel change with
->>> something called early notifiers.
->>>
->>> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/7583d24de337aa1bf7c375a7da706af9b995b9a1#a840754ebb0e24e88adbf48177e1abd0830b72d2
->>>
->>> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/257de41c63a5a51a081cc7887cdaa4a46e4d1744
->>>
->>> But good to address this if possible.
->>
->> Ack the idea of early notifier;
->> But here, atomic does not guarantees it to be atomic.
->>
->> Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>
->> -- Mukesh
->>
-Gentle Reminder!
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-Thanks,
-Vignesh
+Other uses of of_reserved_mem_lookup() also have unchecked uses of rmem 
+[1], or check different things [2].
 
->>
->>>
->>> -Mukesh
->>>>
->>>> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
->>>> ---
->>>>   drivers/remoteproc/qcom_common.c      | 60 
->>>> +++++++++++++++++++++++++++
->>>>   drivers/remoteproc/remoteproc_core.c  | 12 ++++++
->>>>   include/linux/remoteproc.h            |  3 ++
->>>>   include/linux/remoteproc/qcom_rproc.h | 17 ++++++++
->>>>   4 files changed, 92 insertions(+)
->>>>
->>>> diff --git a/drivers/remoteproc/qcom_common.c 
->>>> b/drivers/remoteproc/qcom_common.c
->>>> index a0d4238492e9..76542229aeb6 100644
->>>> --- a/drivers/remoteproc/qcom_common.c
->>>> +++ b/drivers/remoteproc/qcom_common.c
->>>> @@ -84,6 +84,7 @@ struct minidump_global_toc {
->>>>   struct qcom_ssr_subsystem {
->>>>       const char *name;
->>>>       struct srcu_notifier_head notifier_list;
->>>> +    struct atomic_notifier_head atomic_notifier_list;
->>>>       struct list_head list;
->>>>   };
->>>> @@ -366,6 +367,7 @@ static struct qcom_ssr_subsystem 
->>>> *qcom_ssr_get_subsys(const char *name)
->>>>       }
->>>>       info->name = kstrdup_const(name, GFP_KERNEL);
->>>>       srcu_init_notifier_head(&info->notifier_list);
->>>> +    ATOMIC_INIT_NOTIFIER_HEAD(&info->atomic_notifier_list);
->>>>       /* Add to global notification list */
->>>>       list_add_tail(&info->list, &qcom_ssr_subsystem_list);
->>>> @@ -417,6 +419,51 @@ int qcom_unregister_ssr_notifier(void *notify, 
->>>> struct notifier_block *nb)
->>>>   }
->>>>   EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
->>>> +/**
->>>> + * qcom_register_ssr_atomic_notifier() - register SSR Atomic 
->>>> notification
->>>> + *                     handler
->>>> + * @name:    Subsystem's SSR name
->>>> + * @nb:    notifier_block to be invoked upon subsystem's state change
->>>> + *
->>>> + * This registers the @nb notifier block as part the atomic notifier
->>>> + * chain for a remoteproc associated with @name. The notifier 
->>>> block's callback
->>>> + * will be invoked when the remote processor crashes in atomic 
->>>> context before
->>>> + * the recovery process is queued.
->>>> + *
->>>> + * Return: a subsystem cookie on success, ERR_PTR on failure.
->>>> + */
->>>> +void *qcom_register_ssr_atomic_notifier(const char *name,
->>>> +                    struct notifier_block *nb)
->>>> +{
->>>> +    struct qcom_ssr_subsystem *info;
->>>> +
->>>> +    info = qcom_ssr_get_subsys(name);
->>>> +    if (IS_ERR(info))
->>>> +        return info;
->>>> +
->>>> +    atomic_notifier_chain_register(&info->atomic_notifier_list, nb);
->>>> +
->>>> +    return &info->atomic_notifier_list;
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(qcom_register_ssr_atomic_notifier);
->>>> +
->>>> +/**
->>>> + * qcom_unregister_ssr_atomic_notifier() - unregister SSR Atomic 
->>>> notification
->>>> + *                       handler
->>>> + * @notify:    subsystem cookie returned from 
->>>> qcom_register_ssr_notifier
->>>> + * @nb:        notifier_block to unregister
->>>> + *
->>>> + * This function will unregister the notifier from the atomic notifier
->>>> + * chain.
->>>> + *
->>>> + * Return: 0 on success, %ENOENT otherwise.
->>>> + */
->>>> +int qcom_unregister_ssr_atomic_notifier(void *notify, struct 
->>>> notifier_block *nb)
->>>> +{
->>>> +    return atomic_notifier_chain_unregister(notify, nb);
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(qcom_unregister_ssr_atomic_notifier);
->>>> +
->>>>   static int ssr_notify_prepare(struct rproc_subdev *subdev)
->>>>   {
->>>>       struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->>>> @@ -467,6 +514,18 @@ static void ssr_notify_unprepare(struct 
->>>> rproc_subdev *subdev)
->>>>                    QCOM_SSR_AFTER_SHUTDOWN, &data);
->>>>   }
->>>> +static void ssr_notify_crash(struct rproc_subdev *subdev)
->>>> +{
->>>> +    struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->>>> +    struct qcom_ssr_notify_data data = {
->>>> +        .name = ssr->info->name,
->>>> +        .crashed = true,
->>>> +    };
->>>> +
->>>> +    atomic_notifier_call_chain(&ssr->info->atomic_notifier_list,
->>>> +                   QCOM_SSR_NOTIFY_CRASH, &data);
->>>> +}
->>>> +
->>>>   /**
->>>>    * qcom_add_ssr_subdev() - register subdevice as restart 
->>>> notification source
->>>>    * @rproc:    rproc handle
->>>> @@ -493,6 +552,7 @@ void qcom_add_ssr_subdev(struct rproc *rproc, 
->>>> struct qcom_rproc_ssr *ssr,
->>>>       ssr->subdev.start = ssr_notify_start;
->>>>       ssr->subdev.stop = ssr_notify_stop;
->>>>       ssr->subdev.unprepare = ssr_notify_unprepare;
->>>> +    ssr->subdev.notify_crash = ssr_notify_crash;
->>>>       rproc_add_subdev(rproc, &ssr->subdev);
->>>>   }
->>>> diff --git a/drivers/remoteproc/remoteproc_core.c 
->>>> b/drivers/remoteproc/remoteproc_core.c
->>>> index 695cce218e8c..3de0ece158ea 100644
->>>> --- a/drivers/remoteproc/remoteproc_core.c
->>>> +++ b/drivers/remoteproc/remoteproc_core.c
->>>> @@ -1139,6 +1139,16 @@ static void rproc_unprepare_subdevices(struct 
->>>> rproc *rproc)
->>>>       }
->>>>   }
->>>> +static void rproc_notify_crash_subdevices(struct rproc *rproc)
->>>> +{
->>>> +    struct rproc_subdev *subdev;
->>>> +
->>>> +    list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
->>>> +        if (subdev->notify_crash)
->>>> +            subdev->notify_crash(subdev);
->>>> +    }
->>>> +}
->>>> +
->>>>   /**
->>>>    * rproc_alloc_registered_carveouts() - allocate all carveouts 
->>>> registered
->>>>    * in the list
->>>> @@ -2687,6 +2697,8 @@ void rproc_report_crash(struct rproc *rproc, 
->>>> enum rproc_crash_type type)
->>>>       dev_err(&rproc->dev, "crash detected in %s: type %s\n",
->>>>           rproc->name, rproc_crash_to_string(type));
->>>> +    rproc_notify_crash_subdevices(rproc);
->>>> +
->>>>       queue_work(rproc_recovery_wq, &rproc->crash_handler);
->>>>   }
->>>>   EXPORT_SYMBOL(rproc_report_crash);
->>>> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
->>>> index fe8978eb69f1..f3c0e0103e81 100644
->>>> --- a/include/linux/remoteproc.h
->>>> +++ b/include/linux/remoteproc.h
->>>> @@ -596,6 +596,8 @@ struct rproc {
->>>>    * @stop: stop function, called before the rproc is stopped; the 
->>>> @crashed
->>>>    *        parameter indicates if this originates from a recovery
->>>>    * @unprepare: unprepare function, called after the rproc has been 
->>>> stopped
->>>> + * @notify_crash: notify_crash function, called in atomic context 
->>>> to notify
->>>> + *          rproc has crashed and recovery is about to start
->>>>    */
->>>>   struct rproc_subdev {
->>>>       struct list_head node;
->>>> @@ -604,6 +606,7 @@ struct rproc_subdev {
->>>>       int (*start)(struct rproc_subdev *subdev);
->>>>       void (*stop)(struct rproc_subdev *subdev, bool crashed);
->>>>       void (*unprepare)(struct rproc_subdev *subdev);
->>>> +    void (*notify_crash)(struct rproc_subdev *subdev);
->>>>   };
->>>>   /* we currently support only two vrings per rvdev */
->>>> diff --git a/include/linux/remoteproc/qcom_rproc.h 
->>>> b/include/linux/remoteproc/qcom_rproc.h
->>>> index 82b211518136..f3d06900f297 100644
->>>> --- a/include/linux/remoteproc/qcom_rproc.h
->>>> +++ b/include/linux/remoteproc/qcom_rproc.h
->>>> @@ -11,12 +11,14 @@ struct notifier_block;
->>>>    * @QCOM_SSR_AFTER_POWERUP:    Remoteproc is running (start stage)
->>>>    * @QCOM_SSR_BEFORE_SHUTDOWN:    Remoteproc crashed or shutting 
->>>> down (stop stage)
->>>>    * @QCOM_SSR_AFTER_SHUTDOWN:    Remoteproc is down (unprepare stage)
->>>> + * @QCOM_SSR_NOTIFY_CRASH:    Remoteproc crashed
->>>>    */
->>>>   enum qcom_ssr_notify_type {
->>>>       QCOM_SSR_BEFORE_POWERUP,
->>>>       QCOM_SSR_AFTER_POWERUP,
->>>>       QCOM_SSR_BEFORE_SHUTDOWN,
->>>>       QCOM_SSR_AFTER_SHUTDOWN,
->>>> +    QCOM_SSR_NOTIFY_CRASH,
->>>>   };
->>>>   struct qcom_ssr_notify_data {
->>>> @@ -29,6 +31,10 @@ struct qcom_ssr_notify_data {
->>>>   void *qcom_register_ssr_notifier(const char *name, struct 
->>>> notifier_block *nb);
->>>>   int qcom_unregister_ssr_notifier(void *notify, struct 
->>>> notifier_block *nb);
->>>> +void *qcom_register_ssr_atomic_notifier(const char *name,
->>>> +                    struct notifier_block *nb);
->>>> +int qcom_unregister_ssr_atomic_notifier(void *notify,
->>>> +                    struct notifier_block *nb);
->>>>   #else
->>>>   static inline void *qcom_register_ssr_notifier(const char *name,
->>>> @@ -43,6 +49,17 @@ static inline int 
->>>> qcom_unregister_ssr_notifier(void *notify,
->>>>       return 0;
->>>>   }
->>>> +static inline void *qcom_register_ssr_atomic_notifier(const char 
->>>> *name,
->>>> +                              struct notifier_block *nb)
->>>> +{
->>>> +    return 0;
->>>> +}
->>>> +
->>>> +static inline int qcom_unregister_ssr_atomic_notifier(void *notify,
->>>> +                              struct notifier_block *nb)
->>>> +{
->>>> +    return 0;
->>>> +}
->>>>   #endif
->>>>   #endif
->>>
+Does it make sense to put this check in the function itself?
+
+I can't think of any obvious scenarios where it makes sense to 
+differentiate between rmem being NULL vs having a size of zero at the 
+time where a driver is fetching it.
+
+As Bjorn described in the rmtfs patch, the memory allocation is 
+essentially ignored, wouldn't it be better to print an error and 
+invalidate the rmem in [3]?
+
+[1]: 
+https://elixir.bootlin.com/linux/v6.4-rc6/source/drivers/net/ethernet/mediatek/mtk_wed.c#L818
+[2]: 
+https://elixir.bootlin.com/linux/v6.4-rc6/source/drivers/remoteproc/rcar_rproc.c#L71
+[3]: 
+https://elixir.bootlin.com/linux/v6.4-rc6/source/drivers/of/of_reserved_mem.c#L276
+
+// Caleb (they/them)
+> ---
+> New patch in v2, I wasn't aware of this until Bjorn posted a similar
+> patch for rmtfs:
+> https://lore.kernel.org/linux-arm-msm/20230530233643.4044823-4-quic_bjorande@quicinc.com/
+> ---
+>   drivers/remoteproc/qcom_q6v5_mss.c  | 2 +-
+>   drivers/remoteproc/qcom_q6v5_wcss.c | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 70bffc9f33f6..a35ab6e860f3 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -1932,7 +1932,7 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+>   		return 0;
+>   
+>   	rmem = of_reserved_mem_lookup(node);
+> -	if (!rmem) {
+> +	if (!rmem || !rmem->size) {
+>   		dev_err(qproc->dev, "unable to resolve metadata region\n");
+>   		return -EINVAL;
+>   	}
+> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+> index b437044aa126..9edab9d60c21 100644
+> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+> @@ -882,7 +882,7 @@ static int q6v5_alloc_memory_region(struct q6v5_wcss *wcss)
+>   		rmem = of_reserved_mem_lookup(node);
+>   	of_node_put(node);
+>   
+> -	if (!rmem) {
+> +	if (!rmem || !rmem->size) {
+>   		dev_err(dev, "unable to acquire memory-region\n");
+>   		return -EINVAL;
+>   	}
+> 
