@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89F83731690
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:31:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CF8C731691
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:31:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245363AbjFOLbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 07:31:34 -0400
+        id S244933AbjFOLbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 07:31:36 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244888AbjFOLbd (ORCPT
+        with ESMTP id S245084AbjFOLbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 07:31:33 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC40271F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:32 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b35109e934so18370671fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:31 -0700 (PDT)
+        Thu, 15 Jun 2023 07:31:34 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E966272E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:33 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b1acd41ad2so25734601fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686828690; x=1689420690;
+        d=linaro.org; s=google; t=1686828691; x=1689420691;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NEH34TZYFNlcgXLePl0rUEbgPVtd5P4NQ5yQ1rh0Ycs=;
-        b=wPLej/DcXFmA7QyhANWlKW7XEHFm4RxK5csM8/Wxyo2gaFDJDzEtOLH/7FcUdjhuFl
-         HjxgoLRttLDvBl9PDyPA4A3deeUw9TnrULc186HFhuudq2hSmNBPunPx1rjFA/gWFPxi
-         6fkmPA6ces7a4Jf087biEp4cyt5ZJRP1UomrXpyxLjaPlaNtCWcwRMbQwOsCk16iCeFH
-         zRvbxxIiz6MuOwV3tasE6Nlh9kT35kprdAqg+3mFkUS+Ry0h7Xy928Rj1OyXRKcNeLTh
-         101oWFMYs8yP7VtA+sDWpHpfqaqTYbUB4tueHAs8ZnY5xEe5zW42svVCXpl0qHtDP7Lv
-         NicQ==
+        bh=+R28EYMi3DlJmTBU7U1geaSX05Z1OjPxPWagMOu3k88=;
+        b=TE1/Xp39sVTPGA1LLhCwGizAzjrW93eQzCiuBneFqQvMKNu5G1jQtEeluJMahEk71O
+         gZdlWKafsKY4CX6/a4mZTx2qGDDS1T0ffl/eD3SM0E/sso2nhDRFnrY3R1Pym80o3wyQ
+         RD6PYBUHIq5AIXPsFRS9QAwcxz7mrNevjrlLTkGqteFu6xI8hWgBmTG5ul+U7ZctLxmP
+         5tQTE0KbhB4OPLmF4duSsLfveaGx7Dm53YpN+DnswzDKaA/lICJEiuz771xwuwrw9olp
+         jE3UbraVGbKHZTAc2XYuWu7WRJ0POVtydVPhmMWu/IX9GMbMQlqZifldCOr/0tJbPPxO
+         nuZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686828690; x=1689420690;
+        d=1e100.net; s=20221208; t=1686828691; x=1689420691;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NEH34TZYFNlcgXLePl0rUEbgPVtd5P4NQ5yQ1rh0Ycs=;
-        b=fC2L9iu38O3j4De+A3TiZkNV4LM9vXh2iGZTEzw8OOIroeOQpf3JM4wsAFRFM1f+rz
-         SxtovFPWAd9rPnl56pjosGVufAYTjVSvDnas+WGjgvMuED6zYqiGQUvRlW2TDSYIBDlO
-         LDRCIlUsdnCEWqrIuhkMpr2/8mWUW11AowtmE4FJMrVzcC4YMXyE9RS0ZI6mROdNSNVN
-         24cahUIPtGEaUsfMeJFM2ILaiBdkVMf1QuVvC2M6WX4de4kcVCyjvrV+xNWmddn3qEOC
-         nNtQRnvB8CpC5z33vENMU4GQj+q3kEAaY3WyPiWrjJvtf7vxKDJ5LA64RuDkYiZLf7hH
-         33Pw==
-X-Gm-Message-State: AC+VfDxo/VeUO6tA0c8/+rWEDG1cgQmkQpoqaWjMXMAT0kAOEevYOCWi
-        HuGyaTgQLbHV68UVuFk9Gap3tA==
-X-Google-Smtp-Source: ACHHUZ5gOziE7LMMkWYZY0KDLUukoRZuf8MqOClCFeDYczkZvamTgwDM/zUUN35yU2xAfqg1R9IlEg==
-X-Received: by 2002:a2e:6a09:0:b0:2b1:c039:e977 with SMTP id f9-20020a2e6a09000000b002b1c039e977mr7678787ljc.16.1686828690424;
-        Thu, 15 Jun 2023 04:31:30 -0700 (PDT)
+        bh=+R28EYMi3DlJmTBU7U1geaSX05Z1OjPxPWagMOu3k88=;
+        b=CrDVcT/jgGSwVmd+vbZLKZgW5GpoOoa5nBbaYIW3zXLD2eKnHKY6K2Vw3YyfFV36a/
+         OFDAsGbu+ZgqEGx+QP2ygPD87Ag65isM29YIwTEf0dgkq8wzmVKb7ENYq5PNJOJeWhGr
+         VukOhJA+HBI3Oa/7TaWRIIN1Im8L/Qhbij+ymNs5Okc0fQ0/M/XvVHxWktaFl7huaJ+k
+         6UOepcIz2Bq2jxy790aslVeDTK5TAFCgaEi7NXyYV/o0QrKteXlKkm8G1Y6RFMbAaLKQ
+         ZqZnKxGP1n165GXprAoWfvCvV7H3JXzZK2eqg4qzwW1RPXpm4ogS6UD6GF442y0lznGT
+         Tv2g==
+X-Gm-Message-State: AC+VfDxoHVJQblKCSNt9EUBj47IgQXLRE7vNyD7bkD3vb0JvUny+GFT8
+        Zc8TZ8W3PhXNRiVphbnaYKnvrsdkFwWuiHtkJ14=
+X-Google-Smtp-Source: ACHHUZ4SWQ0MBhu3MEQ55/IpB7XEmUn0DFpajcifAL+IgjEtUcqUI1UprpO7jJFGAxBjf69hp5OpxA==
+X-Received: by 2002:a2e:a316:0:b0:2b4:48dc:4fad with SMTP id l22-20020a2ea316000000b002b448dc4fadmr668100lje.5.1686828691621;
+        Thu, 15 Jun 2023 04:31:31 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id y12-20020a2e320c000000b002b345f71039sm860525ljy.36.2023.06.15.04.31.29
+        by smtp.gmail.com with ESMTPSA id y12-20020a2e320c000000b002b345f71039sm860525ljy.36.2023.06.15.04.31.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 04:31:29 -0700 (PDT)
+        Thu, 15 Jun 2023 04:31:30 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,15 +60,13 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Degdag Mohamed <degdagmohamed@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
-Date:   Thu, 15 Jun 2023 14:31:20 +0300
-Message-Id: <168682860386.384026.12795500183060045026.b4-ty@linaro.org>
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/adreno: make adreno_is_a690()'s argument const
+Date:   Thu, 15 Jun 2023 14:31:21 +0300
+Message-Id: <168682860389.384026.3598956001805387481.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230612182527.3345786-1-dmitry.baryshkov@linaro.org>
+References: <20230612182527.3345786-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -83,20 +81,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 12 Jun 2023 06:16:15 +0300, Dmitry Baryshkov wrote:
-> Since commit 93e81e38e197 ("drm/fb_helper: Minimize damage-helper
-> overhead") the drm_fb_helper_funcs::fb_dirty helper is required for
-> proper dirty/damage processing. The drm/msm driver requires that to
-> function to let CMD panels to work. Use simplified version of
-> drm_fbdev_generic_helper_fb_dirty() to fix support for CMD mode panels.
+On Mon, 12 Jun 2023 21:25:27 +0300, Dmitry Baryshkov wrote:
+> Change adreno_is_a690() prototype to accept the const struct adreno_gpu
+> pointer instead of a non-const one. This fixes the following warning:
 > 
+> In file included from drivers/gpu/drm/msm/msm_drv.c:33:
+> drivers/gpu/drm/msm/adreno/adreno_gpu.h: In function ‘adreno_is_a660_family’:
+> drivers/gpu/drm/msm/adreno/adreno_gpu.h:303:54: warning: passing argument 1 of ‘adreno_is_a690’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+>   303 |         return adreno_is_a660(gpu) || adreno_is_a690(gpu) || adreno_is_7c3(gpu);
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] drm/msm: provide fb_dirty implemenation
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/fda520976ef4
+[1/1] drm/msm/adreno: make adreno_is_a690()'s argument const
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/b263325b4f34
 
 Best regards,
 -- 
