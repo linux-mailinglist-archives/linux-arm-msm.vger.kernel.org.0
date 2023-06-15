@@ -2,155 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A727731BF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 16:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A27731C00
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 16:59:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344102AbjFOO6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 10:58:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40206 "EHLO
+        id S240305AbjFOO66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 10:58:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241397AbjFOO63 (ORCPT
+        with ESMTP id S1344302AbjFOO6p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 10:58:29 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE99273C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 07:58:27 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f849605df4so257436e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 07:58:27 -0700 (PDT)
+        Thu, 15 Jun 2023 10:58:45 -0400
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77E1C2959;
+        Thu, 15 Jun 2023 07:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686841106; x=1689433106;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VJ9ynKBRnWmDpkb98fhevLev870/kjy50alhP9fsq/8=;
-        b=udcHcbZhpLbzXdMvbpPKX5Xp/FN3Xvs0oSAAUSCa2El4Qhrn+BjtGT2QR8ZcoxpiPg
-         CCXBtdCXmjtYVBLJ4D7qNJw3fCo6NUf4ojRq0On6vOwYScaUKstfoP7VILA2zESIREiA
-         UAeGY1/bNizxXNmwVF2sL2Mz9+sKB/wmlkvdodoKSeXDqM8PIdYE8LM+u23G9hhsqCuW
-         8TOXU3qfGdQFuQxpF0iM3f5rVil5G2dIsq/T6cZ/F0+NTce22V6tKNXg79ew6SqMzPzQ
-         NjGLu5L6H3JrbgoEQg1KQQ09yjrZvigU6pdTzF19nMDqW7jldtLzQD3AUTcvUgv4QbZr
-         9anA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686841106; x=1689433106;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VJ9ynKBRnWmDpkb98fhevLev870/kjy50alhP9fsq/8=;
-        b=DhI1HjeJxBI0RAV9hVyrzRQtPKxDvA2Y8R3Zr0yoeefLQ0EMP4DOd5QgAwEiobxDAR
-         4RupU/qwnYRFAX7HegrykgTgVfoHRf3sobHZkQiMROjSbSABg4MRwZJ+8cMiFOG2WQT7
-         YoCLO/KU/6u9bu6hsyGksGm+OKSvaNah6ArbP/Tx7jqYMD2IrZSI7L6MvkWDPSUKvxfL
-         k2Ph8d8co91luW4X4FZs+m2sQ9A9V+AzhPnqjb0PaeDmGIinn024PNYbGGLFbLBYnTlQ
-         ZLTaf5gf72BtP/MUQbu5N1q6NQrfRqHN0AcXkZ0UTwxlPhfVDXxAeb7wJeu7kqkJ0/pM
-         hinQ==
-X-Gm-Message-State: AC+VfDzSRV10Yje4lb7e8qxdmjOwYjidtyA8HcjTygRBqFEjK1niOIo1
-        UgLs92cU1nzxpR84zEbEFdLTBQ==
-X-Google-Smtp-Source: ACHHUZ5QvTrGP83jsEwEryF0zv/zZgROBqTbmaovAyshVnwrrjiq7pHgtoBXpUXCvBYRem+liKUVAw==
-X-Received: by 2002:a19:da01:0:b0:4f6:198d:2afc with SMTP id r1-20020a19da01000000b004f6198d2afcmr5638158lfg.37.1686841106003;
-        Thu, 15 Jun 2023 07:58:26 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id t12-20020ac2548c000000b004eb4074f40fsm2596751lfk.241.2023.06.15.07.58.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 07:58:25 -0700 (PDT)
-Message-ID: <db9a6c19-f28d-ce5e-fd47-04eda6da5a91@linaro.org>
-Date:   Thu, 15 Jun 2023 16:58:24 +0200
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1686841121; x=1718377121;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=zgfCGkjFE32Qyv+c8tjvbMyhW7/rTfwjuyV/vvuXDWE=;
+  b=M24yxVr82HDQ5H0j2LDd3i71i+Kr5wDyyC8YsrG795wztQUWFAdZZZXE
+   CxIhNFbm6jq8NstPShIHph+irQ/9d2aAxSjvvEevjdcrF2EEw8Lv7ypbl
+   /cwR/gs5aeQZoZCFs/6O+FVtHevmr+WGyutaTrjlP327fV2GJ58TQrF25
+   DojntEd5g8c/CrEz4vyY1sz8yZBYY/KqmJbEgbBKDlq4YwyZN1umzk1Tn
+   t+e+bH+VK0bV3cAopVNM+8VwXK24f8l8see7VCXDsT87+VvKKE9AM5YZg
+   pphI2mBZ95g4QQd58iJnYEMFQpqqxPIkDz/FKico7ImlMWF8Y0IMpknoe
+   g==;
+X-IronPort-AV: E=Sophos;i="6.00,245,1681164000"; 
+   d="scan'208";a="31453606"
+Received: from vtuxmail01.tq-net.de ([10.115.0.20])
+  by mx1.tq-group.com with ESMTP; 15 Jun 2023 16:58:38 +0200
+Received: from steina-w.tq-net.de (unknown [10.123.53.21])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id 307A8280084;
+        Thu, 15 Jun 2023 16:58:38 +0200 (CEST)
+From:   Alexander Stein <alexander.stein@ew.tq-group.com>
+To:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        =?UTF-8?q?Beno=C3=AEt=20Cousson?= <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>
+Cc:     Alexander Stein <alexander.stein@ew.tq-group.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+Subject: [PATCH v2 1/3] dt-bindings: extcon-usb-gpio: convert to DT schema format
+Date:   Thu, 15 Jun 2023 16:58:36 +0200
+Message-Id: <20230615145838.1526919-1-alexander.stein@ew.tq-group.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V2 1/2] arm64: dts: qcom: ipq5332: enable GPIO based LEDs
- and Buttons
-Content-Language: en-US
-To:     Sridharan S N <quic_sridsn@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230615145311.2776-1-quic_sridsn@quicinc.com>
- <20230615145311.2776-2-quic_sridsn@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230615145311.2776-2-quic_sridsn@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.06.2023 16:53, Sridharan S N wrote:
-> Add support for wlan-2g LED on GPIO 36 and wps buttons on GPIO 35.
-> 
-> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
-> ---
-This patch references a file that does not exist in -next and does
-not state any dependency on other patches. With the hundreds of
-emails flowing in daily, it's impossible to keep track of it.
+Convert the binding to DT schema format. Change the GPIO properties to new
+naming convention using -gpios as well.
 
-For the patch contents, lgtm.
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+---
+Changes in v2:
+* Mark extcon-usb-gpio as deprecated
+* Fix YAML format
+* Fix example node
+* Remove unneeded consumer node in example
 
-Konrad
-> Changes in V2:
-> 	- Updated commit message
-> 
->  .../boot/dts/qcom/ipq5332-rdp-common.dtsi     | 39 +++++++++++++++++++
->  1 file changed, 39 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
-> index 97dc0e5c15f0..a8671a4ac2e4 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
-> @@ -19,6 +19,31 @@
->  	chosen {
->  		stdout-path = "serial0";
->  	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +		pinctrl-names = "default";
-> +
-> +		button-wps {
-> +			label = "wps";
-> +			linux,code = <KEY_WPS_BUTTON>;
-> +			gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <60>;
-> +		};
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		led-0 {
-> +			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
-> +			linux,default-trigger = "phy0tx";
-> +			default-state = "off";
-> +		};
-> +	};
->  };
->  
->  &blsp1_i2c1 {
-> @@ -52,6 +77,20 @@
->  /* PINCTRL */
->  
->  &tlmm {
-> +	gpio_keys_default: gpio-keys-default-state {
-> +		pins = "gpio35";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	gpio_leds_default: gpio-leds-default-state {
-> +		pins = "gpio36";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-down;
-> +	};
-> +
->  	i2c_1_pins: i2c-1-state {
->  		pins = "gpio29", "gpio30";
->  		function = "blsp1_i2c0";
+ .../bindings/extcon/extcon-usb-gpio.txt       | 21 --------
+ .../bindings/extcon/extcon-usb-gpio.yaml      | 51 +++++++++++++++++++
+ 2 files changed, 51 insertions(+), 21 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/extcon/extcon-usb-gpio.txt
+ create mode 100644 Documentation/devicetree/bindings/extcon/extcon-usb-gpio.yaml
+
+diff --git a/Documentation/devicetree/bindings/extcon/extcon-usb-gpio.txt b/Documentation/devicetree/bindings/extcon/extcon-usb-gpio.txt
+deleted file mode 100644
+index dfc14f71e81fb..0000000000000
+--- a/Documentation/devicetree/bindings/extcon/extcon-usb-gpio.txt
++++ /dev/null
+@@ -1,21 +0,0 @@
+-USB GPIO Extcon device
+-
+-This is a virtual device used to generate USB cable states from the USB ID pin
+-connected to a GPIO pin.
+-
+-Required properties:
+-- compatible: Should be "linux,extcon-usb-gpio"
+-
+-Either one of id-gpio or vbus-gpio must be present. Both can be present as well.
+-- id-gpio: gpio for USB ID pin. See gpio binding.
+-- vbus-gpio: gpio for USB VBUS pin.
+-
+-Example: Examples of extcon-usb-gpio node in dra7-evm.dts as listed below:
+-	extcon_usb1 {
+-		compatible = "linux,extcon-usb-gpio";
+-		id-gpio = <&gpio6 1 GPIO_ACTIVE_HIGH>;
+-	}
+-
+-	&omap_dwc3_1 {
+-		extcon = <&extcon_usb1>;
+-	};
+diff --git a/Documentation/devicetree/bindings/extcon/extcon-usb-gpio.yaml b/Documentation/devicetree/bindings/extcon/extcon-usb-gpio.yaml
+new file mode 100644
+index 0000000000000..136f865b87816
+--- /dev/null
++++ b/Documentation/devicetree/bindings/extcon/extcon-usb-gpio.yaml
+@@ -0,0 +1,51 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/extcon/extcon-usb-gpio.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: USB GPIO Extcon device
++
++maintainers:
++  - Alexander Stein <alexander.stein@ew.tq-group.com>
++
++description:
++  This is a virtual device used to generate USB cable states from the
++  USB ID pin connected to a GPIO pin.
++  Deprecated, use USB connector node instead.
++
++deprecated: true
++
++properties:
++  compatible:
++    const: linux,extcon-usb-gpio
++
++  id-gpios:
++    description: An input gpio for USB ID pin.
++    maxItems: 1
++
++  vbus-gpios:
++    description: An input gpio for USB VBus pin, used to detect presence of
++      VBUS 5V.
++    maxItems: 1
++
++required:
++  - compatible
++
++anyOf:
++  - required:
++      - id-gpios
++  - required:
++      - vbus-gpios
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    extcon-usb1 {
++      compatible = "linux,extcon-usb-gpio";
++      id-gpios = <&gpio6 1 GPIO_ACTIVE_HIGH>;
++      vbus-gpios = <&gpio6 2 GPIO_ACTIVE_HIGH>;
++    };
+-- 
+2.34.1
+
