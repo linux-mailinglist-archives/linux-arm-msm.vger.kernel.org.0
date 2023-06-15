@@ -2,86 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA46C7314CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:05:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 433F57314F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 12:12:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245445AbjFOKE7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 06:04:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56950 "EHLO
+        id S241252AbjFOKMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 06:12:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243843AbjFOKE6 (ORCPT
+        with ESMTP id S230130AbjFOKM3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 06:04:58 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42436270F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:04:57 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f642a24568so10260239e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:04:57 -0700 (PDT)
+        Thu, 15 Jun 2023 06:12:29 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31A1C271C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:12:27 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-30fa23e106bso4795200f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 03:12:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686823495; x=1689415495;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=w71Feb6Cuie6QHDgJApc5h5mlpn+n4W2328NsDSJrHk=;
-        b=w7TTtIbqEwS+lO03AQCyTZ5gF/Zk2bZU2d0IgH14c/dJh3aJhel2YjHeRnE99bfCc7
-         gt8DDhA6rK7TfyPkezRHrTqEDfryeY/spojWe0gahCOlH4RZe2kGHZDVECu3UJGAMD6t
-         g+iy2RVZIGYkV/ehonSR7qe/F2Gq+ySQ0R2eMK1MSSVKHB8gcqA2yKZjOS0KMIbYh2qk
-         00HhN77UmJ4pa3JDmC9DN+fttYMKw7+l1kowRYJCoqpD/FheLebFnNMsdbicsjo3kZSK
-         DyyqPs0UuBCMEUNghkg+P62eRLb0sQqIG7AtKIFiK3NMuRYHlRG4G+wJ5ikewXsxj/nf
-         FGvg==
+        d=linaro.org; s=google; t=1686823945; x=1689415945;
+        h=content-transfer-encoding:in-reply-to:subject:organization
+         :references:cc:to:content-language:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zz9EX+Ta4PloLk34RJ2hnXK/x9oTdPVOw0dFQbZy70I=;
+        b=frDkKppf7lZoIiLPcx/27B7RgHBKXqgtzlP/rh77BLFE3SROa9LxxSjX0hYVsi93Eh
+         pihQ2Zb5eyq7gMv33tbGJsRj+Qug3TvDMAJx+xdvCazTNVcRub4Ku3T2MqOG/t9CJ4VA
+         BGlhoRaR5ctRw9tEmpJZ2DsMImtcr2nxcf6TtacCV71di92Q2LJrLGygNFVjKwT2SuCf
+         2AMISPslSoznjAM6va9T7YngkUzSBuU6lJUPjNsasWZUiKvG6RFDdYYIxyDVbOOE86f0
+         VowdSZaUy1Yp2rGYAOwJLEtpaJ+JYGdGN0MqOMnuQxxPUpY4ckofRlcherP+O8FWZeYw
+         Vy1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686823495; x=1689415495;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w71Feb6Cuie6QHDgJApc5h5mlpn+n4W2328NsDSJrHk=;
-        b=L4+88RaQJVkYxqIF91OyFC/cOotmUDU6BSHNowvQC3EYcE+Sm3pkT1fkaKHGKiLZq2
-         wlhTxi0eSZ6ZnJQwZdY8XpmOcipFDkhzY6n7Jlktyqbu1LC/YRjFX/wQ4xIDU6QXJ03a
-         kqcnTee7UOnenb91h7XYGeuCnWydra5kjMJH7ynw3N3JMHzH2eydNlekqDwBK+2uEhwt
-         4n3Op5PcqHbJ5OYoZsUu/mcNbRiHTJlEIastAfDZdHv1I55UtFyTMrFrT8nP00ZW2Sq6
-         w/wPTBXpejbt5etyF2AxdHeiA69rOsaBwBdQY9oT+su2gjcwHLr+/qlBEAgLuKH3iK2l
-         P9hA==
-X-Gm-Message-State: AC+VfDw/v2+6lBkjE7/W1VJb9hEBj9egQEAceLLsx3pMVrdMpTUTFzcr
-        cgsg7trjODBiJ1QrAI2P6wOy7A==
-X-Google-Smtp-Source: ACHHUZ5UBxMW0AQyojgBT4IQQWC20Ws7BKhekIK2zj1FC1TIWAJeA5VveEU90Ngd+06SYgJerxRUHg==
-X-Received: by 2002:a19:3819:0:b0:4f7:457e:a457 with SMTP id f25-20020a193819000000b004f7457ea457mr6316363lfa.53.1686823495457;
-        Thu, 15 Jun 2023 03:04:55 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id x27-20020ac259db000000b004f612780b75sm2520269lfn.49.2023.06.15.03.04.54
+        d=1e100.net; s=20221208; t=1686823945; x=1689415945;
+        h=content-transfer-encoding:in-reply-to:subject:organization
+         :references:cc:to:content-language:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zz9EX+Ta4PloLk34RJ2hnXK/x9oTdPVOw0dFQbZy70I=;
+        b=EYYbqo2+wwObrHF0lQbNzq/50X3dju3tMq3aETgu8fMs5E9lUlGun/y7jJlBCSRIBt
+         /MLOyXdWR0X3w9ipAVjQAxmORZ5fHkBARx16mzCXOm+RP07xwj2SBi/sB179sDw036AA
+         ZLBk9ZC4wzY4GY7PdlF0LQNB7XCRcFDxW4y6+Ry/flz9dWdmGxeuVwmCSQc2hZqvslM7
+         d35vVKOLdVEizVCz/JSradAXameYqy8XKXlP3dJieciabiZKRSKdxvWOiZNv72T4kELG
+         hlUcdZ9IkNBG8wOpsWsIZMWwj8zMuxnRfwAZvNb5vLLy6RVqfgysXye7AqJUX+blemSM
+         OqzQ==
+X-Gm-Message-State: AC+VfDz5WijIcwsSw4qRMsT8rE4nJv8F1NE/35/ZnJyzmdXNvE1fWnYs
+        MCMXTL6tejWlS3ujtgMsd6pn8Q==
+X-Google-Smtp-Source: ACHHUZ6cP3h9pbkk+CWbJrI5Giw2RTOJdpJN7rRK57+WSwcGuPKNLwcuav9AADz+5ttsuona8PGN8g==
+X-Received: by 2002:a5d:6442:0:b0:311:d35:e23f with SMTP id d2-20020a5d6442000000b003110d35e23fmr2990366wrw.27.1686823945596;
+        Thu, 15 Jun 2023 03:12:25 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:f60a:f5e3:7ae:6745? ([2a01:e0a:982:cbb0:f60a:f5e3:7ae:6745])
+        by smtp.gmail.com with ESMTPSA id f11-20020a5d50cb000000b0030fb828511csm13974283wrt.100.2023.06.15.03.12.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 03:04:55 -0700 (PDT)
-Message-ID: <f0261f2a-76d9-fcbf-2a3e-edae14f77604@linaro.org>
-Date:   Thu, 15 Jun 2023 12:04:53 +0200
+        Thu, 15 Jun 2023 03:12:25 -0700 (PDT)
+Message-ID: <44ebcc5e-d424-0e5f-1384-19397a0c36ae@linaro.org>
+Date:   Thu, 15 Jun 2023 12:12:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v8 18/18] drm/msm/a6xx: Add A610 speedbin support
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
 Content-Language: en-US
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
- <20230223-topic-gmuwrapper-v8-18-69c68206609e@linaro.org>
- <ab2yzsjp65t53wp5nytjuc7eb74zklkb6i342bc5edhm45j3qm@kpyq52is7tde>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ab2yzsjp65t53wp5nytjuc7eb74zklkb6i342bc5edhm45j3qm@kpyq52is7tde>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Bjorn Andersson <andersson@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230601-topic-sm8x50-upstream-redriver-v3-0-988c560e2195@linaro.org>
+ <20230601-topic-sm8x50-upstream-redriver-v3-2-988c560e2195@linaro.org>
+ <2023061514-wager-iphone-cf71@gregkh>
+Organization: Linaro Developer Services
+Subject: Re: [PATCH v3 2/2] usb: typec: add support for the nb7vpq904m Type-C
+ Linear Redriver
+In-Reply-To: <2023061514-wager-iphone-cf71@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,77 +90,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.06.2023 22:18, Akhil P Oommen wrote:
-> On Mon, May 29, 2023 at 03:52:37PM +0200, Konrad Dybcio wrote:
+On 15/06/2023 11:47, Greg Kroah-Hartman wrote:
+> On Tue, Jun 13, 2023 at 04:50:08PM +0200, neil.armstrong@linaro.org wrote:
+>> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >>
->> A610 is implemented on at least three SoCs: SM6115 (bengal), SM6125
->> (trinket) and SM6225 (khaje). Trinket does not support speed binning
->> (only a single SKU exists) and we don't yet support khaje upstream.
->> Hence, add a fuse mapping table for bengal to allow for per-chip
->> frequency limiting.
+>> Add support for the ON Semiconductor NB7VPQ904M Type-C USB SuperSpeed
+>> and DisplayPort ALT Mode Linear Redriver chip found on some devices
+>> with a Type-C port.
 >>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> The redriver compensates ultra High-Speeed DisplayPort and USB
+>> Super Speed signal integrity losses mainly due to PCB & transmission
+>> cables.
+>>
+>> The redriver doesn't support SuperSpeed lines swapping, but
+>> can support Type-C SBU lines swapping.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 27 +++++++++++++++++++++++++++
->>  1 file changed, 27 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index d046af5f6de2..c304fa118cff 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -2098,6 +2098,30 @@ static bool a6xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->>  	return progress;
->>  }
->>  
->> +static u32 a610_get_speed_bin(u32 fuse)
->> +{
->> +	/*
->> +	 * There are (at least) three SoCs implementing A610: SM6125 (trinket),
->> +	 * SM6115 (bengal) and SM6225 (khaje). Trinket does not have speedbinning,
->> +	 * as only a single SKU exists and we don't support khaje upstream yet.
->> +	 * Hence, this matching table is only valid for bengal and can be easily
->> +	 * expanded if need be.
->> +	 */
->> +
->> +	if (fuse == 0)
->> +		return 0;
->> +	else if (fuse == 206)
->> +		return 1;
->> +	else if (fuse == 200)
->> +		return 2;
->> +	else if (fuse == 157)
->> +		return 3;
->> +	else if (fuse == 127)
->> +		return 4;
->> +
->> +	return UINT_MAX;
->> +}
->> +
->>  static u32 a618_get_speed_bin(u32 fuse)
->>  {
->>  	if (fuse == 0)
->> @@ -2195,6 +2219,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_gpu *adreno_gpu, u3
->>  {
->>  	u32 val = UINT_MAX;
->>  
->> +	if (adreno_is_a610(adreno_gpu))
->> +		val = a610_get_speed_bin(fuse);
->> +
+>>   drivers/usb/typec/mux/Kconfig      |   8 +
+>>   drivers/usb/typec/mux/Makefile     |   1 +
+>>   drivers/usb/typec/mux/nb7vpq904m.c | 529 +++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 538 insertions(+)
 > 
-> Didn't you update here to convert to 'else if' in one of the earlier
-> patches??
-Right, missed this one!
+> I get the following build error on my system with this applied:
+> 
+>    CC [M]  drivers/usb/typec/mux/nb7vpq904m.o
+> drivers/usb/typec/mux/nb7vpq904m.c: In function ‘nb7vpq904m_register_bridge’:
+> drivers/usb/typec/mux/nb7vpq904m.c:327:20: error: ‘struct drm_bridge’ has no member named ‘of_node’
+>    327 |         nb7->bridge.of_node = nb7->client->dev.of_node;
+>        |                    ^
+> 
+> 
+> What went wrong?
 
-Konrad
+DRM bridge attach should be protected by #ifdef CONFIG_OF aswell, I'll send a v4 with such fix.
+
+Thanks for the report,
+Neil
 > 
-> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> thanks,
 > 
-> -Akhil.
->>  	if (adreno_is_a618(adreno_gpu))
->>  		val = a618_get_speed_bin(fuse);
->>  
->>
->> -- 
->> 2.40.1
->>
+> greg k-h
+
