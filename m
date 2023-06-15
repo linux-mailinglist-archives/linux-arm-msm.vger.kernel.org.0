@@ -2,60 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14DEB731931
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 14:50:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80D85731939
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 14:51:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244119AbjFOMuh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 08:50:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48434 "EHLO
+        id S240189AbjFOMvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 08:51:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239033AbjFOMug (ORCPT
+        with ESMTP id S238684AbjFOMvv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 08:50:36 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D40A2126;
-        Thu, 15 Jun 2023 05:50:35 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CCA23625F0;
-        Thu, 15 Jun 2023 12:50:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA46C433C8;
-        Thu, 15 Jun 2023 12:50:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1686833434;
-        bh=9C0lIysBzhK2NDkLZ8zuWOZP34c6lCF4sNn1JWvzNkc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Yh4oUiVoqClwbgiExl0clwXIAhBdc+EGfyc1pP8k5YyWihS/NjiHOyXPKOW1APa+0
-         jO7L1bcu4ev6Hr9gPCVFxpMPK0L2ECM7+HUo1gVyMTWF669az9mbhAE+ACBvJochTz
-         zhZVopAKEqBqa96MZ0tFFhKfstjFskNC9/t1nZQU=
-Date:   Thu, 15 Jun 2023 14:50:31 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V23 2/3] misc: dcc: Add driver support for Data Capture
- and Compare unit(DCC)
-Message-ID: <2023061515-unbuckled-consonant-e207@gregkh>
-References: <cover.1683265984.git.quic_schowdhu@quicinc.com>
- <2259ab0348282349e88905ea99bcb4aa815d941f.1683265984.git.quic_schowdhu@quicinc.com>
- <2023061542-reformed-unholy-10a3@gregkh>
- <cc9750f3-c85c-be7f-e63c-0fcf4eb160f0@quicinc.com>
+        Thu, 15 Jun 2023 08:51:51 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F471269D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:51:49 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f8d258f203so15961215e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686833507; x=1689425507;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pYJRLhJE4BnkxztSK7kLLVvhbfeHX+zQ18aXvSE//Mk=;
+        b=FlAnmp40K3oTJ1IUAyOBngrA3PiAh+TkWNWfUpd2rbFeWMtY3/A3bq/DwjhZ3/X0u8
+         GWEwuQPjChk+3WnpI7YhKHYmDYp5peNUykjt1yYLPW7IOdaqWJmPm4hXhNp1So2/PuSt
+         VXKakPFuRInShzS5xj2CuIQRYe7DUAEn3OkZTMg5oAMuSJju/kAK/AUr6j04eaOVxvY2
+         z6WZ4+PYPVoVUS/pQbTQiCUQMM9kp/PRRBmLFvyNUey/fWBDPbDnzKCaeku0Ibvkq+dA
+         CDSRwtQtMB2KTGBUs7qbqvVLHA+oj1gy0u4Ultu3lqbnPsIP7i6yw4afwFaX5f+TJiQ5
+         /raw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686833507; x=1689425507;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pYJRLhJE4BnkxztSK7kLLVvhbfeHX+zQ18aXvSE//Mk=;
+        b=RzRWDCsgIbhlqBZNg/Z/dqT1t7Xfl2oCIYZlbNTAADlgGJo+PYUp3mfy/5DI92s/kV
+         c3SNea8WsHxnTCpuRrgLoBax8jtqrXI30Y+Jf20Tn5I5a+Aaxvq0WAqzRZWmjQd7HL3o
+         m4eIW4Kwt2Vh57BTYfYKOpGs6FwuGamXQm3d6QWL7lyHI1WqrNGLbsGYMvVlY4pmO2EH
+         6KLHFMj+Omr8UMIvXJo9pFpjSqTDtqQ76NtDbm5+DeZXPMiQ1yrBiGSrhxeV8vt1upbN
+         ky0Th3YVri+ekEB6Z6L/dICn5e4qQYmPpg6XhYjgN2BG94LVX474E8vacFkpFtyQ40Po
+         SoLw==
+X-Gm-Message-State: AC+VfDx4zSH8GHNmZllqqJ4+96A8dXxV3Tny6KKxTStFZX5Nf6KhvW/c
+        lYDtQoKZIvb6nbrzOHkB2zvZXQ==
+X-Google-Smtp-Source: ACHHUZ7fDZNQOH0mI2GK6cVBnr76IWQmxXOL4V/h1hnDdDkqhPrwBPALCL7rb+85tXil+uM3OHOWng==
+X-Received: by 2002:a1c:750a:0:b0:3f7:5d:4a06 with SMTP id o10-20020a1c750a000000b003f7005d4a06mr12053858wmc.1.1686833507644;
+        Thu, 15 Jun 2023 05:51:47 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id l15-20020adff48f000000b003078cd719ffsm20968662wro.95.2023.06.15.05.51.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jun 2023 05:51:47 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Thu, 15 Jun 2023 14:51:45 +0200
+Subject: [PATCH v2] spi: spi-geni-qcom: correctly handle -EPROBE_DEFER from
+ dma_request_chan()
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cc9750f3-c85c-be7f-e63c-0fcf4eb160f0@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v2-1-670c3d9e8c9c@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGAJi2QC/52OQQ6CMBBFr0K6dgwgoLjyHobFtAwwCbR1CkRDu
+ LuVI7h8P/nv/00FEqag7smmhFYO7GyE/JQoM6DtCbiNrPI0v6RVVsLsPBsI060sU1h8mIVwgo7
+ fEDxDT5bhZdwEXpwmqLG+Gl3pkrBS0akxEGhBa4Zotcs4xtALxf5x4tlEHjjMTj7HpzX7pf/Or
+ xlkULVY6y5vdYHFY2SL4s5OetXs+/4FmeeJAwABAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Dan Carpenter <error27@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1401;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=33BJA58rmJ1iVUNBM3K7fDzrmpBXHsLW49qR9cG18TA=;
+ b=owEBbAKT/ZANAwAKAXfc29rIyEnRAcsmYgBkiwlinikvfoSVmG6jc9PFWVS4J6MwJUKiOnCx2S08
+ 78qHlICJAjIEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIsJYgAKCRB33NvayMhJ0TFiD/
+ iISPz42k3ObVR4hBJ1YtfvRMOxHEs7dAzOH+8df8z6ZODNdR5WGT6RZ5cUU8nJt1i7QoYu57vSmC1f
+ gQxZsZCsyTBKQzjS+NhzFXKHJtKISt+jp+ZB65ppMSFraQnYkQawfGfP7gbXRV9wpaH3UK4fRLsI4j
+ 5ofO8jwrZDWD6bFw7mqVMjhfebzbXqcdPQX2xZI1+f7D7Mxi8TtZvB7vvfyVzpqKLhd8coftcJrYoy
+ h4fYo9RZtxdjqDSqKSoP2pf/DIU75lqZ6RsxgT1m01Tn0f8+/v7mBBgEiK/3W2W346d+mxU1F0en1z
+ x9bCydQ9uOwcycNzeO1LK2fLEAJZc+QJ7ta9QBGOAY4ODph5DIDBlldTD+pidtZCSXEnD5PrYdiYx8
+ n0tt1pdvz/Rxjq7dLEq9kIr2dpdgctbY/1xaRwRkNG6arJQL0dzu6VOSxvmlXDLNojcErxmSafCbqj
+ sAqO6PKoxgk8g8cRbeYDEwqLxPRBAwzKohbP1w+oE2gMdThw3K7YHiWZlbllmd4d/oycUsmr8nVf4x
+ pMTUDQI/1AIzcOiUNuPXrqo4+8sxka/Tp5XeYwLXmJ6kWX8qCsKLTTIIh+uYrb1KIvQdB6OgKSE/OJ
+ x5zdERBJ9vjpaenm250J1bjbj8wwbuBS6q91elzJ2qVlOhBeZNPMvWw95A
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,82 +96,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 15, 2023 at 06:13:53PM +0530, Souradeep Chowdhury wrote:
-> 
-> 
-> On 6/15/2023 4:03 PM, Greg Kroah-Hartman wrote:
-> > On Thu, May 04, 2023 at 11:36:22PM -0700, Souradeep Chowdhury wrote:
-> > > +/**
-> > > + * struct dcc_config_entry - configuration information related to each dcc instruction
-> > > + * @base:                    Base address of the register to be configured in dcc
-> > 
-> > Why is this a u32 and not a bigger size?
-> 
-> Currently only 32 bit register addresses are supported for DCC
-> configuration.
-> 
-> > 
-> > > + * @offset:                  Offset to the base address to be configured in dcc
-> > > + * @len:                     Length of the address in words to be configured in dcc
-> > 
-> > What is a "word" here, 16 bits?
-> 
-> Each word is 4 bytes(32 bits)
+Now spi_geni_grab_gpi_chan() errors are correctly reported, the
+-EPROBE_DEFER error should be returned from probe in case the
+GPI dma driver is built as module and/or not probed yet.
 
-See, I guess wrong, you should say what this is :)
+Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
+Fixes: 6532582c353f ("spi: spi-geni-qcom: fix error handling in spi_geni_grab_gpi_chan()")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- added braces to second side of the if statement
+- Link to v1: https://lore.kernel.org/r/20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v1-1-6da9bf2db4a4@linaro.org
+---
+ drivers/spi/spi-geni-qcom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> > > + * @loop_cnt:                The number of times to loop on the register address in case
-> > > +				of loop instructions
-> > > + * @write_val:               The value to be written on the register address in case of
-> > > +				write instructions
-> > > + * @mask:                    Mask corresponding to the value to be written in case of
-> > > +				write instructions
-> > > + * @apb_bus:                 Type of bus to be used for the instruction, can be either
-> > > +				'apb' or 'ahb'
-> > 
-> > How can a bool be either "apb" or "ahb"?
-> 
-> 1 stands for apb and 0 for ahb. Will update the same here.
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 206cc04bb1ed..26ce959d98df 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -661,6 +661,8 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 			geni_se_select_mode(se, GENI_GPI_DMA);
+ 			dev_dbg(mas->dev, "Using GPI DMA mode for SPI\n");
+ 			break;
++		} else if (ret == -EPROBE_DEFER) {
++			goto out_pm;
+ 		}
+ 		/*
+ 		 * in case of failure to get gpi dma channel, we can still do the
 
-Why not have an enum?  Will there ever be another "bus"?
+---
+base-commit: 925294c9aa184801cc0a451b69a18dd0fe7d847d
+change-id: 20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-9a97cb6b5ea6
 
-> > > +static ssize_t ready_read(struct file *filp, char __user *userbuf,
-> > > +			  size_t count, loff_t *ppos)
-> > > +{
-> > > +	int ret = 0;
-> > > +	char *buf;
-> > > +	struct dcc_drvdata *drvdata = filp->private_data;
-> > > +
-> > > +	mutex_lock(&drvdata->mutex);
-> > > +
-> > > +	if (!is_dcc_enabled(drvdata)) {
-> > > +		ret = -EINVAL;
-> > > +		goto out_unlock;
-> > > +	}
-> > > +
-> > > +	if (!FIELD_GET(BIT(1), readl(drvdata->base + dcc_status(drvdata->mem_map_ver))))
-> > > +		buf = "Y\n";
-> > > +	else
-> > > +		buf = "N\n";
-> > > +out_unlock:
-> > > +	mutex_unlock(&drvdata->mutex);
-> > > +
-> > > +	if (ret < 0)
-> > > +		return -EINVAL;
-> > > +	else
-> > 
-> > You do the "lock, get a value, unlock, do something with the value"
-> > thing a bunch, but what prevents the value from changing after the lock
-> > happens?  So why is the lock needed at all?
-> 
-> The lock is used to prevent concurrent accesses of the drv_data when
-> scripts are being run from userspace.
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
-How would that matter?  The state can change instantly after the lock is
-given up, and then the returned value is now incorrect.  So no need for
-a lock at all as you really aren't "protecting" anything, or am I
-missing something else?
-
-thanks,
-
-greg k-h
