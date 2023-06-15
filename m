@@ -2,77 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 843CF7312AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:50:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E25247312BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:52:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239191AbjFOIuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 04:50:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37758 "EHLO
+        id S245160AbjFOIwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 04:52:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245398AbjFOIt1 (ORCPT
+        with ESMTP id S245381AbjFOIvy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 04:49:27 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B84032D47
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:48:52 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f841b7a697so847016e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:48:52 -0700 (PDT)
+        Thu, 15 Jun 2023 04:51:54 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87B530C5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:51:33 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so10149260e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:51:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686818931; x=1689410931;
+        d=linaro.org; s=google; t=1686819092; x=1689411092;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=i9RJcABEiqajm9VBwozxve8SX5lbpsVso0TV0ojwUBo=;
-        b=SxbBKTBRtao5kvylhzMo4LLcFiyJBC8GGFvggpw8pZ9KYa7Z2291haSPLTtnBcPgb/
-         uI2gcUDRC2SHPHmP4mb+IsLSo8xZnCn8lFiCAgsn+xtadcxHg7R9ZhgQhv1Z3AMkA3KX
-         Vg2FNxvB/nCkwO6NpB/4tp/lVZsl9lumeMX7zP+rOIB7NTQPnYhwHmnVpisAoskHf5Jz
-         Aux4NeNG3NoKltD6nVuTXIpHlAoTGg7pp4rxRi47nh4jsOo6sI0mQc5KodJU12LrHiiZ
-         KmLbfA2CS7UmkcB5PXqArHozH146jUEa9OWbmxxidRVaug/jXYwJ4l322R/GyfXoiO7A
-         RGKg==
+        bh=jVja41/1k/ct/J3rnto5ByFGnWpi0ILkB3E5zOeFBKU=;
+        b=iAWk4RQm/nxvDzdZ6BD1eYHh5RQ8zwCHUi68UWG/naj28Crt/P7s58xDdOASbWXTPZ
+         cVP5W/iUktOPovnVxR5ddwuvimo5hIu4AMBjNwCRCF374U1Iu+EOysMuBYLE7woajviv
+         VN9j1TPCrKFrU5i9AXczIZodH0FlvNiIAPPgU4pIRFHOXSPwsa11zx7s8NHo6Sfzc1wo
+         hQccz3XUBitZEbvnTVVlyOQsTlH6EFLIMRswpg8/EKm2HonYQm2F9P2fhsZR+6vI8aPF
+         a1Eihgi7WFzDxZq9nzR7b4raJ3m6hFTCdDhc4xsrVhpSKp6DY3d0W68x4VsRWiab+yhp
+         fy0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686818931; x=1689410931;
+        d=1e100.net; s=20221208; t=1686819092; x=1689411092;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i9RJcABEiqajm9VBwozxve8SX5lbpsVso0TV0ojwUBo=;
-        b=RI77ZVBZGU1Q3Uwzbdw+/HDH4DOLbEXKLK+xR5/E0OI3Gakjgmn2Wd1UYYLkVlNp37
-         ZdY/pZLKRGoFaoV75sR0AIIkXZvCwsLDdBJ3EYrBFSRdaGf1KQO/PYPzr6BAyUJGD+ty
-         raTL5x6wtMQYA/TEzufwFLVCl0SQePeiphrmyzDbyBAgTkWxEHRxDACD5mx/edrQLLyD
-         kwJLQkotk9baJoAxLh1jA6M2kSEsVpgGOJ1MdlE4xZ0r0OMO+4Otms7ku0Plg12Dephn
-         R24cmEOvfJqAL23oRHB2ecyzkTWxJpU1t8GHgN9p2JcuxDKNTuMZQOvFufohOeZNVlvw
-         Mm6A==
-X-Gm-Message-State: AC+VfDxZ63zy2lFhTE287PhsdoJDCxBGADd8hu6AaKmCMwPBVALbOpQd
-        x3kufxe+2DkLgJDZ3iATO9VcN57TbWmkU4wx+Wc=
-X-Google-Smtp-Source: ACHHUZ7VDdM4Xjh/drtknXKeZ53Z7X7RZ+yBhHDUNKAVGxGX3ZDAgHBLH/FRg7s/emy5325fRv30kA==
-X-Received: by 2002:a19:e04a:0:b0:4f3:ab1b:f765 with SMTP id g10-20020a19e04a000000b004f3ab1bf765mr8901693lfj.18.1686818930950;
-        Thu, 15 Jun 2023 01:48:50 -0700 (PDT)
+        bh=jVja41/1k/ct/J3rnto5ByFGnWpi0ILkB3E5zOeFBKU=;
+        b=hBubixcfWqLTjY/T4CUNg/X2jtT3TN/rXNs1XCRvSDc54uUG5fWFhVdGRFjQzRGyc/
+         LH+iLyXf2CPMQPJ0omvqEyffbuBXBDt6rb1/az79YfPRJSIXXHRQTNa9phqxmMXKr0Ku
+         VICMvVgd4pYF3//4HSWKR0y1dQRYGFm+2uzslpgdWc0BfDtXkwVMlQ3tnZEEA+T+Ucae
+         Cr3yTdRU5NStwv8boS+741mOgY3jjiB8NYax9e73sRvJEiFBjx17Onn3pPjQLwbt+qMy
+         wVrphGCycB7KeJ9N995pz9eLzTBa2/EPfKDil96t40mPI1KvJIXVpNDk5BubMPtOVpLf
+         Qfag==
+X-Gm-Message-State: AC+VfDycryrxWyL8njAqnTv5x2oohrQglxTVyoU1bAuOA+hxiNunq0Tl
+        mMf/97kgkNcN6j3AeQIx/GJv9g==
+X-Google-Smtp-Source: ACHHUZ7VHe2WrV++iaUJtNovs1B4ZmW49QMq+JKj0mOzn5qWPGwqx0f19GlyA24CPao4Vcyy3UWVhA==
+X-Received: by 2002:a05:6512:619:b0:4f7:6b5f:e43b with SMTP id b25-20020a056512061900b004f76b5fe43bmr1890198lfe.18.1686819092039;
+        Thu, 15 Jun 2023 01:51:32 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id p9-20020ac246c9000000b004f3880f900dsm2466499lfo.196.2023.06.15.01.48.50
+        by smtp.gmail.com with ESMTPSA id m14-20020a19520e000000b004eb12329053sm2480580lfb.256.2023.06.15.01.51.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 01:48:50 -0700 (PDT)
-Message-ID: <823af258-81a2-266b-010a-afdaddffb7e3@linaro.org>
-Date:   Thu, 15 Jun 2023 10:48:49 +0200
+        Thu, 15 Jun 2023 01:51:31 -0700 (PDT)
+Message-ID: <1ab63d4b-6358-ce08-818a-b5751f88cdde@linaro.org>
+Date:   Thu, 15 Jun 2023 10:51:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH 1/2] Revert "arm64: dts: qcom: msm8996: rename labels for
- HDMI nodes"
+Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Use assigned-clock-rates for
+ QUP I2C core clks
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230615083422.350297-1-dmitry.baryshkov@linaro.org>
- <20230615083422.350297-2-dmitry.baryshkov@linaro.org>
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com
+References: <20230615084841.12375-1-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230615083422.350297-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230615084841.12375-1-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,231 +80,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.06.2023 10:34, Dmitry Baryshkov wrote:
-> The commit f43b6dc7d56e ("arm64: dts: qcom: msm8996: rename labels for
-> HDMI nodes") is broken, it changes all the HDMI node names,
-> compatible strings instead of changing just node aliases. Revert the
-> commit in order to land a proper clean version.
+On 15.06.2023 10:48, Devi Priya wrote:
+> Use assigned-clock-rates property for configuring the QUP I2C core clocks
+> to operate at nominal frequency.
 > 
-> Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Fixes: f43b6dc7d56e ("arm64: dts: qcom: msm8996: rename labels for HDMI nodes")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+There's probably some logic behind this, and it almost sounds like
+it'd be fitting to introduce an OPP table for I2C hosts, especially
+given the voltage requirements.
 
 Konrad
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dts  | 50 ++++++++++----------
->  arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts |  6 +--
->  arch/arm64/boot/dts/qcom/msm8996-mtp.dts     |  4 +-
->  arch/arm64/boot/dts/qcom/msm8996.dtsi        | 16 +++----
->  4 files changed, 38 insertions(+), 38 deletions(-)
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> index 537547b97459..b599909c4463 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> @@ -208,6 +208,25 @@ &gpu {
->  	status = "okay";
->  };
->  
-> +&hdmi {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
-> +	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
-> +
-> +	core-vdda-supply = <&vreg_l12a_1p8>;
-> +	core-vcc-supply = <&vreg_s4a_1p8>;
-> +};
-> +
-> +&hdmi_phy {
-> +	status = "okay";
-> +
-> +	vddio-supply = <&vreg_l12a_1p8>;
-> +	vcca-supply = <&vreg_l28a_0p925>;
-> +	#phy-cells = <0>;
-> +};
-> +
->  &hsusb_phy1 {
->  	status = "okay";
->  
-> @@ -232,25 +251,6 @@ &mdss {
->  	status = "okay";
->  };
->  
-> -&mdss_hdmi {
-> -	status = "okay";
-> -
-> -	pinctrl-names = "default", "sleep";
-> -	pinctrl-0 = <&mdss_hdmi_hpd_active &mdss_hdmi_ddc_active>;
-> -	pinctrl-1 = <&mdss_hdmi_hpd_suspend &mdss_hdmi_ddc_suspend>;
-> -
-> -	core-vdda-supply = <&vreg_l12a_1p8>;
-> -	core-vcc-supply = <&vreg_s4a_1p8>;
-> -};
-> -
-> -&mdss_hdmi_phy {
-> -	status = "okay";
-> -
-> -	vddio-supply = <&vreg_l12a_1p8>;
-> -	vcca-supply = <&vreg_l28a_0p925>;
-> -	#phy-cells = <0>;
-> -};
-> -
->  &mmcc {
->  	vdd-gfx-supply = <&vdd_gfx>;
->  };
-> @@ -433,28 +433,28 @@ sdc2_cd_off: sdc2-cd-off-state {
->  		drive-strength = <2>;
->  	};
->  
-> -	mdss_hdmi_hpd_active: mdss_hdmi-hpd-active-state {
-> +	hdmi_hpd_active: hdmi-hpd-active-state {
->  		pins = "gpio34";
->  		function = "hdmi_hot";
->  		bias-pull-down;
->  		drive-strength = <16>;
->  	};
->  
-> -	mdss_hdmi_hpd_suspend: mdss_hdmi-hpd-suspend-state {
-> +	hdmi_hpd_suspend: hdmi-hpd-suspend-state {
->  		pins = "gpio34";
->  		function = "hdmi_hot";
->  		bias-pull-down;
->  		drive-strength = <2>;
->  	};
->  
-> -	mdss_hdmi_ddc_active: mdss_hdmi-ddc-active-state {
-> +	hdmi_ddc_active: hdmi-ddc-active-state {
->  		pins = "gpio32", "gpio33";
->  		function = "hdmi_ddc";
->  		drive-strength = <2>;
->  		bias-pull-up;
->  	};
->  
-> -	mdss_hdmi_ddc_suspend: mdss_hdmi-ddc-suspend-state {
-> +	hdmi_ddc_suspend: hdmi-ddc-suspend-state {
->  		pins = "gpio32", "gpio33";
->  		function = "hdmi_ddc";
->  		drive-strength = <2>;
-> @@ -1043,7 +1043,7 @@ cpu {
->  		};
->  	};
->  
-> -	mdss_hdmi-dai-link {
-> +	hdmi-dai-link {
->  		link-name = "HDMI";
->  		cpu {
->  			sound-dai = <&q6afedai HDMI_RX>;
-> @@ -1054,7 +1054,7 @@ platform {
->  		};
->  
->  		codec {
-> -			sound-dai = <&mdss_hdmi 0>;
-> +			sound-dai = <&hdmi 0>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> index ac6471d1db1f..ed2e2f6c6775 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> @@ -92,15 +92,15 @@ &gpu {
->  	status = "okay";
->  };
->  
-> -&mdss {
-> +&hdmi {
->  	status = "okay";
->  };
->  
-> -&mdss_hdmi {
-> +&hdmi_phy {
->  	status = "okay";
->  };
->  
-> -&mdss_hdmi_phy {
-> +&mdss {
->  	status = "okay";
->  };
->  
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> index 495d45a16e63..596ad4c896f5 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> @@ -24,10 +24,10 @@ &blsp2_uart2 {
->  	status = "okay";
->  };
->  
-> -&mdss_hdmi {
-> +&hdmi {
->  	status = "okay";
->  };
->  
-> -&mdss_hdmi_phy {
-> +&hdmi_phy {
->  	status = "okay";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 0cb2d4f08c3a..3855366ca89f 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -895,7 +895,7 @@ mmcc: clock-controller@8c0000 {
->  				 <&mdss_dsi0_phy 0>,
->  				 <&mdss_dsi1_phy 1>,
->  				 <&mdss_dsi1_phy 0>,
-> -				 <&mdss_hdmi_phy>;
-> +				 <&hdmi_phy>;
->  			clock-names = "xo",
->  				      "gpll0",
->  				      "gcc_mmss_noc_cfg_ahb_clk",
-> @@ -980,7 +980,7 @@ ports {
->  					port@0 {
->  						reg = <0>;
->  						mdp5_intf3_out: endpoint {
-> -							remote-endpoint = <&mdss_hdmi_in>;
-> +							remote-endpoint = <&hdmi_in>;
->  						};
->  					};
->  
-> @@ -1136,8 +1136,8 @@ mdss_dsi1_phy: phy@996400 {
->  				status = "disabled";
->  			};
->  
-> -			mdss_hdmi: mdss_hdmi-tx@9a0000 {
-> -				compatible = "qcom,mdss_hdmi-tx-8996";
-> +			hdmi: hdmi-tx@9a0000 {
-> +				compatible = "qcom,hdmi-tx-8996";
->  				reg =	<0x009a0000 0x50c>,
->  					<0x00070000 0x6158>,
->  					<0x009e0000 0xfff>;
-> @@ -1160,7 +1160,7 @@ mdss_hdmi: mdss_hdmi-tx@9a0000 {
->  					"alt_iface",
->  					"extp";
->  
-> -				phys = <&mdss_hdmi_phy>;
-> +				phys = <&hdmi_phy>;
->  				#sound-dai-cells = <1>;
->  
->  				status = "disabled";
-> @@ -1171,16 +1171,16 @@ ports {
->  
->  					port@0 {
->  						reg = <0>;
-> -						mdss_hdmi_in: endpoint {
-> +						hdmi_in: endpoint {
->  							remote-endpoint = <&mdp5_intf3_out>;
->  						};
->  					};
->  				};
->  			};
->  
-> -			mdss_hdmi_phy: phy@9a0600 {
-> +			hdmi_phy: phy@9a0600 {
->  				#phy-cells = <0>;
-> -				compatible = "qcom,mdss_hdmi-phy-8996";
-> +				compatible = "qcom,hdmi-phy-8996";
->  				reg = <0x009a0600 0x1c4>,
->  				      <0x009a0a00 0x124>,
->  				      <0x009a0c00 0x124>,
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 0baeb10bbdae..78bf7f9c455a 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -361,6 +361,8 @@
+>  			clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>,
+>  				 <&gcc GCC_BLSP1_AHB_CLK>;
+>  			clock-names = "core", "iface";
+> +			assigned-clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>;
+> +			assigned-clock-rates = <50000000>;
+>  			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
+>  			dma-names = "tx", "rx";
+>  			status = "disabled";
+> @@ -389,6 +391,8 @@
+>  			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
+>  				 <&gcc GCC_BLSP1_AHB_CLK>;
+>  			clock-names = "core", "iface";
+> +			assigned-clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>;
+> +			assigned-clock-rates = <50000000>;
+>  			dmas = <&blsp_dma 16>, <&blsp_dma 17>;
+>  			dma-names = "tx", "rx";
+>  			status = "disabled";
+> @@ -417,6 +421,8 @@
+>  			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
+>  				 <&gcc GCC_BLSP1_AHB_CLK>;
+>  			clock-names = "core", "iface";
+> +			assigned-clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>;
+> +			assigned-clock-rates = <50000000>;
+>  			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
+>  			dma-names = "tx", "rx";
+>  			status = "disabled";
+> @@ -446,6 +452,8 @@
+>  			clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>,
+>  				 <&gcc GCC_BLSP1_AHB_CLK>;
+>  			clock-names = "core", "iface";
+> +			assigned-clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>;
+> +			assigned-clock-rates = <50000000>;
+>  			dmas = <&blsp_dma 20>, <&blsp_dma 21>;
+>  			dma-names = "tx", "rx";
+>  			status = "disabled";
