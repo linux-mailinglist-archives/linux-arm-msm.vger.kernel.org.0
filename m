@@ -2,93 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80D85731939
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 14:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93D5B73194A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 14:56:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240189AbjFOMvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 08:51:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49520 "EHLO
+        id S244542AbjFOM4F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 08:56:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238684AbjFOMvv (ORCPT
+        with ESMTP id S240731AbjFOMzz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 08:51:51 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F471269D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:51:49 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f8d258f203so15961215e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:51:49 -0700 (PDT)
+        Thu, 15 Jun 2023 08:55:55 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB1F2688
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:55:53 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f619c2ba18so9965458e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 05:55:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686833507; x=1689425507;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pYJRLhJE4BnkxztSK7kLLVvhbfeHX+zQ18aXvSE//Mk=;
-        b=FlAnmp40K3oTJ1IUAyOBngrA3PiAh+TkWNWfUpd2rbFeWMtY3/A3bq/DwjhZ3/X0u8
-         GWEwuQPjChk+3WnpI7YhKHYmDYp5peNUykjt1yYLPW7IOdaqWJmPm4hXhNp1So2/PuSt
-         VXKakPFuRInShzS5xj2CuIQRYe7DUAEn3OkZTMg5oAMuSJju/kAK/AUr6j04eaOVxvY2
-         z6WZ4+PYPVoVUS/pQbTQiCUQMM9kp/PRRBmLFvyNUey/fWBDPbDnzKCaeku0Ibvkq+dA
-         CDSRwtQtMB2KTGBUs7qbqvVLHA+oj1gy0u4Ultu3lqbnPsIP7i6yw4afwFaX5f+TJiQ5
-         /raw==
+        d=linaro.org; s=google; t=1686833751; x=1689425751;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hr+C4HV3ypYhMAH5p+tz4TJXh2rByBSODsfmyqqfM3o=;
+        b=Ix+HXY8lKizE+F/v9G5aOrSdAwCUUPO3rC5F22k4R8aUIph0mG19vve1xPug+9DdRb
+         EhVfImlBBTz3KHcBCs/FVDcF4s18euAZMEXNNGWJaZdTYVPo7GAwKezYf000qbO4P5IJ
+         /nIpu0ZHAqYiqYbsKwbtR1R3OpX8r0Hth+2c2RSA/sepTHT+LABrrk3FFL44W/CEquEs
+         nZTyeZSTdy9PoWlYB5PUWppt0pgx/iXJvPhOW4+8eqBEcjjCHqX4++5PsCFOo3G2FxLp
+         PamKcUhhjm8AhIUuMqpr+gyCFZlqkl3SmIQr2lI2eG5mEH4oqpnltkTtHCuyStR4sRVU
+         A7+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686833507; x=1689425507;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pYJRLhJE4BnkxztSK7kLLVvhbfeHX+zQ18aXvSE//Mk=;
-        b=RzRWDCsgIbhlqBZNg/Z/dqT1t7Xfl2oCIYZlbNTAADlgGJo+PYUp3mfy/5DI92s/kV
-         c3SNea8WsHxnTCpuRrgLoBax8jtqrXI30Y+Jf20Tn5I5a+Aaxvq0WAqzRZWmjQd7HL3o
-         m4eIW4Kwt2Vh57BTYfYKOpGs6FwuGamXQm3d6QWL7lyHI1WqrNGLbsGYMvVlY4pmO2EH
-         6KLHFMj+Omr8UMIvXJo9pFpjSqTDtqQ76NtDbm5+DeZXPMiQ1yrBiGSrhxeV8vt1upbN
-         ky0Th3YVri+ekEB6Z6L/dICn5e4qQYmPpg6XhYjgN2BG94LVX474E8vacFkpFtyQ40Po
-         SoLw==
-X-Gm-Message-State: AC+VfDx4zSH8GHNmZllqqJ4+96A8dXxV3Tny6KKxTStFZX5Nf6KhvW/c
-        lYDtQoKZIvb6nbrzOHkB2zvZXQ==
-X-Google-Smtp-Source: ACHHUZ7fDZNQOH0mI2GK6cVBnr76IWQmxXOL4V/h1hnDdDkqhPrwBPALCL7rb+85tXil+uM3OHOWng==
-X-Received: by 2002:a1c:750a:0:b0:3f7:5d:4a06 with SMTP id o10-20020a1c750a000000b003f7005d4a06mr12053858wmc.1.1686833507644;
-        Thu, 15 Jun 2023 05:51:47 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id l15-20020adff48f000000b003078cd719ffsm20968662wro.95.2023.06.15.05.51.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 05:51:47 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 15 Jun 2023 14:51:45 +0200
-Subject: [PATCH v2] spi: spi-geni-qcom: correctly handle -EPROBE_DEFER from
- dma_request_chan()
+        d=1e100.net; s=20221208; t=1686833751; x=1689425751;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hr+C4HV3ypYhMAH5p+tz4TJXh2rByBSODsfmyqqfM3o=;
+        b=J/rjVyH3yEsOAwJm9CQLm4LhKcADpoY2MeVhnjEjmzuLn4sN0kd+bb7CtyEeOR79aM
+         u3XYE2wJc/Q9Z4cpPMN6k2AsMYUDkv9OmbrOVVggXoLYIDaRcZvuq55VFoMqU+q58xN9
+         JJTacso9o+VPUY65f9yKrVZ70rYq9Dp5UR1I3OIfW+4qoWW2pt12qQa3n1AMCuTJYurF
+         JcCeM4OnBBAh9gT1xnLMauQaMZbyEYV4Y8ifJ7UPhBbwYnYcoQOxFdWT4wJxO3biORU3
+         fLUP7/lH5o80875YsIXD0DdWRgPC0gaUEVNzcw14B9SVxviyRW7oVEz0WRkxf6x6b/sR
+         Wjiw==
+X-Gm-Message-State: AC+VfDwEJ/PdGAXq5uEo5vr3bujQJjQG/G3kmBzRmz+5alWf2uF3wgiA
+        GEEt2a5Qi6zsSDmvIGfSvojY8g==
+X-Google-Smtp-Source: ACHHUZ5r5g0/EdaBgh3ItbXCv7EHaR9YYHxAHfFr/UG529fhS2cSFA7JJ0Qe09gXlXkN1fN/RsAUhg==
+X-Received: by 2002:a19:da12:0:b0:4f7:669f:7da8 with SMTP id r18-20020a19da12000000b004f7669f7da8mr3474493lfg.7.1686833751155;
+        Thu, 15 Jun 2023 05:55:51 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id c26-20020a19761a000000b004f14ea05895sm2550319lff.213.2023.06.15.05.55.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 05:55:50 -0700 (PDT)
+Message-ID: <1d1756c6-b79f-7f8f-2f00-6fcb3657295a@linaro.org>
+Date:   Thu, 15 Jun 2023 14:55:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [v10 2/6] clk: qcom: Add Global Clock controller (GCC) driver for
+ IPQ5018
+Content-Language: en-US
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, ulf.hansson@linaro.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        robimarko@gmail.com, krzysztof.kozlowski@linaro.org,
+        andy.shevchenko@gmail.com
+References: <20230615090638.1771245-1-quic_srichara@quicinc.com>
+ <20230615090638.1771245-3-quic_srichara@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230615090638.1771245-3-quic_srichara@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v2-1-670c3d9e8c9c@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAGAJi2QC/52OQQ6CMBBFr0K6dgwgoLjyHobFtAwwCbR1CkRDu
- LuVI7h8P/nv/00FEqag7smmhFYO7GyE/JQoM6DtCbiNrPI0v6RVVsLsPBsI060sU1h8mIVwgo7
- fEDxDT5bhZdwEXpwmqLG+Gl3pkrBS0akxEGhBa4Zotcs4xtALxf5x4tlEHjjMTj7HpzX7pf/Or
- xlkULVY6y5vdYHFY2SL4s5OetXs+/4FmeeJAwABAAA=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Dan Carpenter <error27@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1401;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=33BJA58rmJ1iVUNBM3K7fDzrmpBXHsLW49qR9cG18TA=;
- b=owEBbAKT/ZANAwAKAXfc29rIyEnRAcsmYgBkiwlinikvfoSVmG6jc9PFWVS4J6MwJUKiOnCx2S08
- 78qHlICJAjIEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIsJYgAKCRB33NvayMhJ0TFiD/
- iISPz42k3ObVR4hBJ1YtfvRMOxHEs7dAzOH+8df8z6ZODNdR5WGT6RZ5cUU8nJt1i7QoYu57vSmC1f
- gQxZsZCsyTBKQzjS+NhzFXKHJtKISt+jp+ZB65ppMSFraQnYkQawfGfP7gbXRV9wpaH3UK4fRLsI4j
- 5ofO8jwrZDWD6bFw7mqVMjhfebzbXqcdPQX2xZI1+f7D7Mxi8TtZvB7vvfyVzpqKLhd8coftcJrYoy
- h4fYo9RZtxdjqDSqKSoP2pf/DIU75lqZ6RsxgT1m01Tn0f8+/v7mBBgEiK/3W2W346d+mxU1F0en1z
- x9bCydQ9uOwcycNzeO1LK2fLEAJZc+QJ7ta9QBGOAY4ODph5DIDBlldTD+pidtZCSXEnD5PrYdiYx8
- n0tt1pdvz/Rxjq7dLEq9kIr2dpdgctbY/1xaRwRkNG6arJQL0dzu6VOSxvmlXDLNojcErxmSafCbqj
- sAqO6PKoxgk8g8cRbeYDEwqLxPRBAwzKohbP1w+oE2gMdThw3K7YHiWZlbllmd4d/oycUsmr8nVf4x
- pMTUDQI/1AIzcOiUNuPXrqo4+8sxka/Tp5XeYwLXmJ6kWX8qCsKLTTIIh+uYrb1KIvQdB6OgKSE/OJ
- x5zdERBJ9vjpaenm250J1bjbj8wwbuBS6q91elzJ2qVlOhBeZNPMvWw95A
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,40 +84,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now spi_geni_grab_gpi_chan() errors are correctly reported, the
--EPROBE_DEFER error should be returned from probe in case the
-GPI dma driver is built as module and/or not probed yet.
+On 15.06.2023 11:06, Sricharan Ramabadhran wrote:
+> Add support for the global clock controller found on IPQ5018
+> based devices.
+> 
+> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Co-developed-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> ---
 
-Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
-Fixes: 6532582c353f ("spi: spi-geni-qcom: fix error handling in spi_geni_grab_gpi_chan()")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-Changes in v2:
-- added braces to second side of the if statement
-- Link to v1: https://lore.kernel.org/r/20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v1-1-6da9bf2db4a4@linaro.org
----
- drivers/spi/spi-geni-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+> +
+> +static const struct freq_tbl ftbl_apss_axi_clk_src[] = {
+> +	F(400000000, P_GPLL0, 2, 0, 0),
+> +	{ }
+> +};
+This is weirdly far away from its use.
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 206cc04bb1ed..26ce959d98df 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -661,6 +661,8 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 			geni_se_select_mode(se, GENI_GPI_DMA);
- 			dev_dbg(mas->dev, "Using GPI DMA mode for SPI\n");
- 			break;
-+		} else if (ret == -EPROBE_DEFER) {
-+			goto out_pm;
- 		}
- 		/*
- 		 * in case of failure to get gpi dma channel, we can still do the
+With that fixed:
 
----
-base-commit: 925294c9aa184801cc0a451b69a18dd0fe7d847d
-change-id: 20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-9a97cb6b5ea6
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+Konrad
