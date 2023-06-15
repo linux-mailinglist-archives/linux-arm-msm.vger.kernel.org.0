@@ -2,88 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F886731C22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 17:04:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1EE7731C35
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 17:12:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344005AbjFOPD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 11:03:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44174 "EHLO
+        id S1344680AbjFOPMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 11:12:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241397AbjFOPD5 (ORCPT
+        with ESMTP id S1345020AbjFOPMM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 11:03:57 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A8F2954
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 08:03:54 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-519274f7b05so2462838a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 08:03:54 -0700 (PDT)
+        Thu, 15 Jun 2023 11:12:12 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D732120
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 08:12:10 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f8d176396bso19292035e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 08:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686841433; x=1689433433;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eIUpajJMAwy418rKJ0IS2AVHFSQd4ioT0N5sYn1HKsw=;
-        b=wws0s9sOWqH78J4plEK0DMSfmIMz8q2C9ZREkC6aOXahiUCgU8AWMEkvl6lbDYeSK7
-         eXNR6CyQV92qJBS7fc80NpWJQvQQ4RHPxj9stCPpP4j05icTIEX+/hmVWJ7LtIzXp+ii
-         ayAVGK4DpdCrA4dIfKDgYxBo6NYoNDNAs1hehzecj4r21Os5pVUMet3Q0XmOUxTe7sHX
-         B0DfHmbTelULDqsF71tPtoT6eng4lzk4VbPNMe6K6SzLnG9NzcyUbze4ITphhSZGJiyO
-         O9eSrcJ1SKREydlubgotCbhtffGpIM1I8mZcNNozQeg0Vgii8DHI+idas3vqYVLj+H7e
-         9aPg==
+        d=linaro.org; s=google; t=1686841929; x=1689433929;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nZ87BWNtcPkV4Gczivg6cLrPcAb7LiiC1vsS1lqxHKE=;
+        b=bEJEQmLPNS6jv1pDiwq9Swd5neLMqJKvqBKPHRhrtuQFrygutLLqbGVNaHRw05DNEa
+         l9sUxm3zITfUTim6c6mfRW3aDciMwjdkgGrMy7GEiQuxjsinCZljWM79htVcpuDdqIOO
+         WWXJTvLwvistu8A312DH5sd2Gyk1Ox8cY59d1/5bcFlt3ladr3JauT3MLrao3AiG0CLJ
+         8UQZOPX6IhmHNWAOn6OIHmQKHt8gftlk1QjLkY3Af/Uo7UmaE/XzsmfmIp0etGLJtqMd
+         W9O6zqApzPUjLe3Z4KEU7sdEO03f8LLk3fagtKHbDZnKBQ5gLHuBcrUImn3khxWTZzWL
+         GyIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686841433; x=1689433433;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eIUpajJMAwy418rKJ0IS2AVHFSQd4ioT0N5sYn1HKsw=;
-        b=JC6aKaYoGWS/ZPBtgoFoDP0r4xraf67Y0Wys4zvH2ypNVz4csNzHvJyOUl3mogwTEl
-         Zc7EFpn/GIr4EUt4RXBVmVbZkmS33hqjYTWOarECfgIU1LS/dS2KmCutBKC0GXeeWbIA
-         EtQ+GrP0S/+bN+eWoT7Y+HwXbHYtIYmYddC0FNI+seWJo3NjLaEP0QxGmRN20ovfBgap
-         88nftO+/vy0LCaZLW9MLAMHCeBAxumpT58slzElFuZdskYScL+vfIgSjbHtfr5yDvR9p
-         EC+noqcuFQDyy/UgDR9YXyBUDvdimCVsy3gAlAwJKAzsykif7t9bQIQJ+OWY8Lk/Nb3V
-         IXZw==
-X-Gm-Message-State: AC+VfDyVBPKaQ9915f9zhRMVTEfsW3nCnFuiZIvBvy4LVy6itf7m544s
-        08N+cTHA8/C3QzpxfWuEGwH5dg==
-X-Google-Smtp-Source: ACHHUZ6UigF9ABwn0KpL8yQoTI2XH8/yDAVJunEkqw2JSKsJu7OxuMw9LdBImSR5X/l1r3Csk7A3Xw==
-X-Received: by 2002:a17:907:97d3:b0:982:8de1:aad9 with SMTP id js19-20020a17090797d300b009828de1aad9mr2803224ejc.64.1686841433126;
-        Thu, 15 Jun 2023 08:03:53 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id g19-20020a17090613d300b0097889c33582sm9530851ejc.215.2023.06.15.08.03.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 08:03:52 -0700 (PDT)
-Message-ID: <0ec6c988-d678-c96c-a7a2-af38e6701404@linaro.org>
-Date:   Thu, 15 Jun 2023 17:03:49 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes
- up
-Content-Language: en-US
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Linux regressions mailing list <regressions@lists.linux.dev>,
-        Mark Brown <broonie@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
+        d=1e100.net; s=20221208; t=1686841929; x=1689433929;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nZ87BWNtcPkV4Gczivg6cLrPcAb7LiiC1vsS1lqxHKE=;
+        b=CcrclpP2dJxBueu0Je7cO6MIKe8iFEHlSAyo/R1gp1DKbWqDjgn4NEpTE1LHjtf7nm
+         /l269CJAo1BGMHGjTYfQwzcSZI2eKvKto0YUhErz1cFnFUfWfeGqMTtUng8YlmcA7Y/k
+         hbJQINvQXaTFCXG5hqk79dYu73dPU8ohn5Qd59GLZPJC5Mxqb+xtnSqxTtehh4MhXUrk
+         pE8+NumUQlhHMXZxgzs05UvzZ+f5trTURsP9y4UvLz1JMewbaMf9LWRzM2TxquWUAVh0
+         1kmVXN0Nv8JQcQuYfyOgDNI7jKTexfCo0JCKHce+LnmMvsRRWDsIxHe7+DJNJBV7+U3o
+         c1nw==
+X-Gm-Message-State: AC+VfDxCXr3RZ0PBUgfHWzYOL74cgY57lwdCZt1OzPX69lF1CkOdmymp
+        i/KfPew2VLsN/pUWMy+9JoisaA==
+X-Google-Smtp-Source: ACHHUZ5B65DF9SMw60tWVyffZ3UXoFkEt7gq3lAqCTZijt/HrXFu6D2r++Kqq74iar8TLy2Twe1c+Q==
+X-Received: by 2002:a1c:7713:0:b0:3f6:2a6:e2c with SMTP id t19-20020a1c7713000000b003f602a60e2cmr13461411wmi.9.1686841928922;
+        Thu, 15 Jun 2023 08:12:08 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id t25-20020a1c7719000000b003f7eeec829asm20792006wmi.10.2023.06.15.08.12.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jun 2023 08:12:07 -0700 (PDT)
+Date:   Thu, 15 Jun 2023 18:12:03 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>, tools@linux.kernel.org,
+        kernel-janitors@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-References: <20230602161246.1855448-1-amit.pundir@linaro.org>
- <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info>
- <0f6c9dcb-b7f6-fff9-6bed-f4585ea8e487@linaro.org>
- <CAMi1Hd3Cv1i06NhpY6Jqu7OvMpOdzTj6nTEMJNWLrMwMLsugZA@mail.gmail.com>
- <CAMi1Hd0=KV7k82ARadF45nqX+Cv6zPLCxfDvOyAPeXiFd8jpVA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAMi1Hd0=KV7k82ARadF45nqX+Cv6zPLCxfDvOyAPeXiFd8jpVA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Dan Carpenter <error27@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, smatch@vger.kernel.org,
+        Jonathan Corbet <corbet@lwn.net>
+Subject: Re: [PATCH] spi: spi-geni-qcom: correctly handle -EPROBE_DEFER from
+ dma_request_chan()
+Message-ID: <b82b8041-7bc5-433c-98bc-4ac6fcf5ae9d@kadam.mountain>
+References: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v1-1-6da9bf2db4a4@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v1-1-6da9bf2db4a4@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,92 +79,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/06/2023 15:47, Amit Pundir wrote:
-> On Thu, 15 Jun 2023 at 00:38, Amit Pundir <amit.pundir@linaro.org> wrote:
->>
->> On Thu, 15 Jun 2023 at 00:17, Krzysztof Kozlowski
->> <krzysztof.kozlowski@linaro.org> wrote:
->>>
->>> On 14/06/2023 20:18, Linux regression tracking (Thorsten Leemhuis) wrote:
->>>> On 02.06.23 18:12, Amit Pundir wrote:
->>>>> Move lvs1 and lvs2 regulator nodes up in the rpmh-regulators
->>>>> list to workaround a boot regression uncovered by the upstream
->>>>> commit ad44ac082fdf ("regulator: qcom-rpmh: Revert "regulator:
->>>>> qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"").
->>>>>
->>>>> Without this fix DB845c fail to boot at times because one of the
->>>>> lvs1 or lvs2 regulators fail to turn ON in time.
->>>>
->>>> /me waves friendly
->>>>
->>>> FWIW, as it's not obvious: this...
->>>>
->>>>> Link: https://lore.kernel.org/all/CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com/
->>>>
->>>> ...is a report about a regression. One that we could still solve before
->>>> 6.4 is out. One I'll likely will point Linus to, unless a fix comes into
->>>> sight.
->>>>
->>>> When I noticed the reluctant replies to this patch I earlier today asked
->>>> in the thread with the report what the plan forward was:
->>>> https://lore.kernel.org/all/CAD%3DFV%3DV-h4EUKHCM9UivsFHRsJPY5sAiwXV3a1hUX9DUMkkxdg@mail.gmail.com/
->>>>
->>>> Dough there replied:
->>>>
->>>> ```
->>>> Of the two proposals made (the revert vs. the reordering of the dts),
->>>> the reordering of the dts seems better. It only affects the one buggy
->>>> board (rather than preventing us to move to async probe for everyone)
->>>> and it also has a chance of actually fixing something (changing the
->>>> order that regulators probe in rpmh-regulator might legitimately work
->>>> around the problem). That being said, just like the revert the dts
->>>> reordering is still just papering over the problem and is fragile /
->>>> not guaranteed to work forever.
->>>> ```
->>>>
->>>> Papering over obviously is not good, but has anyone a better idea to fix
->>>> this? Or is "not fixing" for some reason an viable option here?
->>>>
->>>
->>> I understand there is a regression, although kernel is not mainline
->>> (hash df7443a96851 is unknown) and the only solutions were papering the
->>> problem. Reverting commit is a temporary workaround. Moving nodes in DTS
->>> is not acceptable because it hides actual problem and only solves this
->>> one particular observed problem, while actual issue is still there. It
->>> would be nice to be able to reproduce it on real mainline with normal
->>> operating system (not AOSP) - with ramdiks/without/whatever. So far no
->>> one did it, right?
->>
->> No, I did not try non-AOSP system yet. I'll try it tomorrow, if that
->> helps. With mainline hash.
+Added the kernel-janitors mailing list to the CC.
+
+On Thu, Jun 15, 2023 at 11:23:17AM +0200, Neil Armstrong wrote:
+> Now spi_geni_grab_gpi_chan() errors are correctly reported, the
+> -EPROBE_DEFER error should be returned from probe in case the
+> GPI dma driver is built as module and/or not probed yet.
 > 
-> Hi, here is the crash report on db845c running vanilla v6.4-rc6 with a
-> debian build https://bugs.linaro.org/attachment.cgi?id=1142
-> 
-> And fwiw here is the db845c crash log with AOSP running vanilla
-> v6.4-rc6 https://bugs.linaro.org/attachment.cgi?id=1141
-> 
-> Regards,
-> Amit Pundir
-> 
-> PS: rootfs in this bug report doesn't matter much because I'm loading
-> all the kernel modules from a ramdisk and in the case of a crash the
-> UFS doesn't probe anyway.
+> Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
+> Fixes: 6532582c353f ("spi: spi-geni-qcom: fix error handling in spi_geni_grab_gpi_chan()")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-I just tried current next with defconfig (I could not find your config,
-neither here, nor in your previous mail thread nor in bugzilla). Also
-with REGULATOR_QCOM_RPMH as module.
+In olden days the kernel janitors list used to have a TODO list of
+random tasks that a newbie could take on.  People loved the idea of a
+TODO list but no one ever maintained it so in practice it was useless
+after the first year.  I've create a new KTODO tag so we can
+automatically create KTODO lists.  The idea is you write a one line
+summary that starts with KTODO and the subsystem prefix like so:
 
-I tried also v6.4-rc6 - also defconfig with default and module
-REGULATOR_QCOM_RPMH.
+KTODO: static analysis: Ensure that -EPROBE_DEFER is always propogated
 
-All the cases work on my RB3 - no warnings reported.
+Then people can use lei[1] to search for the tag and get the latest
+TODO list.  Here is the command to search for all the KTODO items added
+in the last six months.
 
-If you do not use defconfig, then in all reports please mention the
-differences (the best) or at least attach it.
+lei q https://lore.kernel.org/all/ -o ~/Mail/KTODO --dedupe=mid 'KTODO AND rt:6.month.ago..'
 
+The KTODO entry should have a short summary.  People can download thread
+for more context if they want.  Here is the short summary:
 
+The -EPROBE_DEFER error code is special and needs to propogated to the
+callers.  If you have code like:
 
-Best regards,
-Krzysztof
+	err = returns_eprobe_defer();
+	if (err)
+		return -EINVAL;
+
+Then that is a bug because it's returning -EINVAL instead return err;
+Use static analysis to prevent this.
+
+regards,
+dan carpenter
+
+[1] https://lpc.events/event/11/contributions/983/attachments/759/1421/Doing%20more%20with%20lore%20and%20b4.pdf
 
