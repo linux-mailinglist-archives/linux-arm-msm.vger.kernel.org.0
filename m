@@ -2,71 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92D9573210B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 22:43:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EB6973213A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 22:59:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbjFOUmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 16:42:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49550 "EHLO
+        id S230176AbjFOU73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 16:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbjFOUmm (ORCPT
+        with ESMTP id S229530AbjFOU72 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 16:42:42 -0400
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 698AB26AA;
-        Thu, 15 Jun 2023 13:42:41 -0700 (PDT)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 3EDE01C0E6E; Thu, 15 Jun 2023 22:42:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-        t=1686861760;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=sjDjIO+xVPdB2U4CUF59ZcGqZm415CEp3vEdF4Dd6AA=;
-        b=To1hFLR68iHFCiNEJuVjWt1QN2HSG9YhX9UaZczrDUhp01iFANyJG64cTxUgWPjoiWLgWs
-        7q1KVqJUh5dk+oBlbivldybAH0KFiw8rdW3Ctp0FCp/gw19lV/zzNLv1FEEh70abrWuRDD
-        0DZ8+kfE6KhM5RXjLZFkJDy1eBhT9yY=
-Date:   Thu, 15 Jun 2023 22:42:30 +0200
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org, stephan@gerhold.net
-Subject: Re: [PATCH v7 5/5] arm64: dts: qcom: Add msm8939 Sony Xperia M4 Aqua
-Message-ID: <20230615204230.GB1119@bug>
-References: <20230223153655.262783-1-bryan.odonoghue@linaro.org>
- <20230223153655.262783-6-bryan.odonoghue@linaro.org>
+        Thu, 15 Jun 2023 16:59:28 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCF51720
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 13:59:27 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so11159335e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 13:59:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686862765; x=1689454765;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=niAlZljWXW/H63Y0SMOkpmVWJA4JXQOx/GZYVfHqRhM=;
+        b=IZAfsnAPCywJPU6vGov8IiuC6/OwaScJ9/lcwgZmfIQ+t81KTiG8qIrf4Q9J7ow31a
+         e0/BFZWJP4J1T5ji4OH0hSYdtWRyQls3po7+NhWcz4xvyi2YiVoG4Bion7fMqLczexeE
+         ggZ9o0NHQdd3oltkh5+eoV8OM4Y1YAaYUpslFx4qZEbmD3pTEjp24Oe0FC/7Dv0pblL3
+         lIX/ZO5eIxg7cHAp8QHOXm49JYcRqb8iSFLsnw7nm0v7XbE/qbJ97zdoMqPAowpz9f3U
+         TfgSxGaXXkY5OzOKfevkEBnWgvh3lTDbYP35Fzg9i9vLq7hX1lvXYLO8EAmWKhUcteOC
+         zWJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686862765; x=1689454765;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=niAlZljWXW/H63Y0SMOkpmVWJA4JXQOx/GZYVfHqRhM=;
+        b=b+jnYPYqrjv7HM0t6oSqGeusJ4qp65yQFtl7BpJ1KPNrG/EG28d7hyMpfLV0jSk+CK
+         qU1T3HwRIO6fcLkxE+0LO/c2Aht0D/LkUtwC4rCAp/KG1Cr35kzCYaEiMmIiG0eRuiop
+         gZaVCaZNObCCZaE04rKEFGRP2hv5DjUDgyzAGMfdur1F88ajlFOGwjUakw2H8XEHGWeJ
+         St0gsutOaLLqr+gYFCDL6ZeCvilqFdxOjbQJsyvWRmTo7BccbiIYbwVmq1CMS6TB5Uri
+         JI/dFWrtT1h8l3wHQWNgPKhxDivAQh1ZJgrUMz+y+yD4AfdtnIE82eG0+kxPgYdDz9w2
+         xmRQ==
+X-Gm-Message-State: AC+VfDw1Qgq94cJOCe8YnibQxuTXZqVTpzwBt2uLnQz/F4HQtzk2L8Dc
+        KVjTXZCPgh5N2KbjahVLdEBqFA==
+X-Google-Smtp-Source: ACHHUZ5iut2/IQev9V/2oWiVW8z3ctcktYp59vG5CrqEkxtz2aEQV7PRsrNmDdJcBnuil92PLjjKQQ==
+X-Received: by 2002:a19:d611:0:b0:4f7:434b:70b4 with SMTP id n17-20020a19d611000000b004f7434b70b4mr7568688lfg.41.1686862765535;
+        Thu, 15 Jun 2023 13:59:25 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id c26-20020ac244ba000000b004ec8b638115sm2700798lfm.193.2023.06.15.13.59.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 13:59:25 -0700 (PDT)
+Message-ID: <e0141f93-b3d8-cc3e-7b2d-32618351ba10@linaro.org>
+Date:   Thu, 15 Jun 2023 22:59:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230223153655.262783-6-bryan.odonoghue@linaro.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v8 07/18] drm/msm/a6xx: Add a helper for
+ software-resetting the GPU
+Content-Language: en-US
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
+ <20230223-topic-gmuwrapper-v8-7-69c68206609e@linaro.org>
+ <jplt5g5xuphbnci73pdtaxd63fguxtgtp4c37kc7ehavzrjbau@kamshezxnvgy>
+ <001d7571-5e9f-4f60-f6d0-35806a3e51c5@linaro.org>
+ <rd4mte26n22xlgx5umerpgr66b4wfi7mdm6ovszafyinrg3q4c@g227oj3nh2vc>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <rd4mte26n22xlgx5umerpgr66b4wfi7mdm6ovszafyinrg3q4c@g227oj3nh2vc>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 2023-02-23 15:36:55, Bryan O'Donoghue wrote:
-> Add a basic booting DTS for the Sony Xperia M4 Aqua aka "tulip".
+On 15.06.2023 22:11, Akhil P Oommen wrote:
+> On Thu, Jun 15, 2023 at 12:34:06PM +0200, Konrad Dybcio wrote:
+>>
+>> On 6.06.2023 19:18, Akhil P Oommen wrote:
+>>> On Mon, May 29, 2023 at 03:52:26PM +0200, Konrad Dybcio wrote:
+>>>>
+>>>> Introduce a6xx_gpu_sw_reset() in preparation for adding GMU wrapper
+>>>> GPUs and reuse it in a6xx_gmu_force_off().
+>>>>
+>>>> This helper, contrary to the original usage in GMU code paths, adds
+>>>> a write memory barrier which together with the necessary delay should
+>>>> ensure that the reset is never deasserted too quickly due to e.g. OoO
+>>>> execution going crazy.
+>>>>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> ---
+>>>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  3 +--
+>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++++++
+>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
+>>>>  3 files changed, 13 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>>>> index b86be123ecd0..5ba8cba69383 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>>>> @@ -899,8 +899,7 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
+>>>>  	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
+>>>>  
+>>>>  	/* Reset GPU core blocks */
+>>>> -	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
+>>>> -	udelay(100);
+>>>> +	a6xx_gpu_sw_reset(gpu, true);
+>>>>  }
+>>>>  
+>>>>  static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> index e3ac3f045665..083ccb5bcb4e 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> @@ -1634,6 +1634,17 @@ void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_
+>>>>  	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
+>>>>  }
+>>>>  
+>>>> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert)
+>>>> +{
+>>>> +	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, assert);
+>>>> +	/* Add a barrier to avoid bad surprises */
+>>> Can you please make this comment a bit more clear? Highlight that we
+>>> should ensure the register is posted at hw before polling.
+>>>
+>>> I think this barrier is required only during assert.
+>> Generally it should not be strictly required at all, but I'm thinking
+>> that it'd be good to keep it in both cases, so that:
+>>
+>> if (assert)
+>> 	we don't keep writing things to the GPU if it's in reset
+>> else
+>> 	we don't start writing things to the GPU becomes it comes
+>> 	out of reset
+>>
+>> Also, if you squint hard enough at the commit message, you'll notice
+>> I intended for this so only be a wmb, but for some reason generalized
+>> it.. Perhaps that's another thing I should fix!
+>> for v9..
 > 
-> Tulip is paired with:
-> 
-> - wcn3660
-> - smb1360 battery charger
-> - 720p Truly NT35521 Panel
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> wmb() doesn't provide any ordering guarantee with the delay loop.
+Hm, fair.. I'm still not as fluent with memory access knowledge as I'd
+like to be..
 
-Congrats on getting this to work. Please Cc: phone-devel@vger for phone related stuff.
+> A common practice is to just read back the same register before
+> the loop because a readl followed by delay() is guaranteed to be ordered.
+So, how should I proceed? Keep the r/w barrier, or add a readback and
+a tiiiny (perhaps even using ndelay instead of udelay?) delay on de-assert?
 
-Thanks,
-									Pavel
+Konrad
+> 
+> -Akhil.
+>>
+>> Konrad
+>>>
+>>> -Akhil.
+>>>> +	mb();
+>>>> +
+>>>> +	/* The reset line needs to be asserted for at least 100 us */
+>>>> +	if (assert)
+>>>> +		udelay(100);
+>>>> +}
+>>>> +
+>>>>  static int a6xx_pm_resume(struct msm_gpu *gpu)
+>>>>  {
+>>>>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+>>>> index 9580def06d45..aa70390ee1c6 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+>>>> @@ -89,5 +89,6 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu);
+>>>>  int a6xx_gpu_state_put(struct msm_gpu_state *state);
+>>>>  
+>>>>  void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
+>>>> +void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
+>>>>  
+>>>>  #endif /* __A6XX_GPU_H__ */
+>>>>
+>>>> -- 
+>>>> 2.40.1
+>>>>
