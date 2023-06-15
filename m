@@ -2,118 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB8C7731B4E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 16:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB87D731B53
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 16:28:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345040AbjFOO1W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 10:27:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51078 "EHLO
+        id S1343926AbjFOO2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 10:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344488AbjFOO1U (ORCPT
+        with ESMTP id S239243AbjFOO2a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 10:27:20 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AED52707
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 07:27:18 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-66643830ab3so1893747b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 07:27:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686839238; x=1689431238;
-        h=content-transfer-encoding:author:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fx/MdSHrygrfEupx7fTJALuFQUBdMezRza5vPp79ZkY=;
-        b=cRJMxBwFjT6tpqn0cHuWuzLwWGZ6XxpeFtiKltWubxfumAn3MQknDaIO2bpeJviJIP
-         Myxw86vLE/iHzzEOvzOl6ZbjsFvVCOCc141lF0pa1y+tQoXVfO9Ru0ausAvlueYeT7vO
-         151VMNn28Pu8ppWqauTvZbyhYmWT05ybgn9UY7HXZ+H8YIjhRLxyjjS+mrP2sq5n+Jvv
-         LkN9xtjoVF4HHJpYoaE4DnyORPj6xUKufyatUXQs+kT2slLhO9LxcFVhHBAQPOz6QsdM
-         ROdTv7Am2hbUJ32IX8jnbLeYD8GCkky1KmScdkWxtuFfhs3sds20bNS+0sx1UQPbLUbU
-         vrew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686839238; x=1689431238;
-        h=content-transfer-encoding:author:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fx/MdSHrygrfEupx7fTJALuFQUBdMezRza5vPp79ZkY=;
-        b=YjztEbD4TBKqymywt/EJ+J2BYHrocDpjPq7kwvGdcll7VinCCeC42KjK+O57x9nos1
-         eoYELzQLT+cacVZ34N+IqjA4W7AOZ4kVGd/DZK3ALyfU7c+jZKOQUqHpj1yEhL+fZjfQ
-         k6uIJ5EfSQZJk2Z+aFCi63n5fY90TpLdvgoSglk//UnFZDMt03jixzqvLPixXp/tdS8H
-         VjzjlifgicGYc4rhbWR64PQQrKPKcBVFxthNQvyJv9H0nldV7EJ61RrrsvM/li5LrrbJ
-         nK55HVFWpaDJIlu1s5km8F62hkGJGXq0yKoZG/Q1fdlXq3GrzueVmt6cv94MxjDDc/6g
-         vcog==
-X-Gm-Message-State: AC+VfDzBANDHYJW0VZlsjH/+jxkEsaZaGHXVIMENcA4JJd8REs6OV7/Q
-        FH0a16/LWt8yDTq9unLZWIfF8A==
-X-Google-Smtp-Source: ACHHUZ6cBthXcPeaMlmqQaMPOJfo1WlbQqotxd59hdZakq6AXsSziHWknx0+CFlx/FoZf2AvGjjFBg==
-X-Received: by 2002:a05:6a20:7d94:b0:10b:8221:3348 with SMTP id v20-20020a056a207d9400b0010b82213348mr6100156pzj.50.1686839237796;
-        Thu, 15 Jun 2023 07:27:17 -0700 (PDT)
-Received: from localhost.localdomain ([49.207.50.231])
-        by smtp.gmail.com with ESMTPSA id y9-20020a655a09000000b005287a0560c9sm11931577pgs.1.2023.06.15.07.27.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 07:27:17 -0700 (PDT)
-From:   Amit Pundir <amit.pundir@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory region as reserved
-Date:   Thu, 15 Jun 2023 19:57:11 +0530
-Message-Id: <20230615142711.2994811-1-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Thu, 15 Jun 2023 10:28:30 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE112705;
+        Thu, 15 Jun 2023 07:28:29 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35FBTGGf005820;
+        Thu, 15 Jun 2023 14:28:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=1rxvs9IvQbcofrpJP4sfdCXfBJWjSx5T7rYSff8TNkU=;
+ b=F37FtbJQ4afda1LEdNAVjwMZkoC7rUOLDg1j3oExGXi+0oC03issb1k9yBi/U03b/J5V
+ DAZ2nXfjshtK+hENoO3st+F6Nta5FT0hx/am7vXIwY6/9FNT+Na12DxZhrVSofv/IkUi
+ Dq8lLw71paL4Vk0FpKYaYw0v5yezNLNq0SwEFLo0pXZYgQ1km44K409CUUcLLLnIzjpR
+ K6Oz6+DrGy3/7nECQ0csGFQbu+QdQEku43lpPKf8fQOuGf4GcgMeNwGJ1DJvRR3m2bEd
+ attiNOJfzq3txgd/rXQRv6+BMNIMIpjYao8BbwiBWfnPIPrXUhC/q6hlE+em6uUbE0Ay FA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r81t3gddu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 14:28:26 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35FESPCI027423
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Jun 2023 14:28:25 GMT
+Received: from sridsn-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 15 Jun 2023 07:28:21 -0700
+From:   Sridharan S N <quic_sridsn@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Sridharan S N <quic_sridsn@quicinc.com>
+Subject: [PATCH V3 0/2] Add support for GPIO based leds and buttons on IPQ5332/9574 devices
+Date:   Thu, 15 Jun 2023 19:58:01 +0530
+Message-ID: <20230615142803.26975-1-quic_sridsn@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Author: Amit Pundir <amit.pundir@linaro.org>
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PIBZuoDltBTVAQza2ip36DB2Eh8cUp_R
+X-Proofpoint-ORIG-GUID: PIBZuoDltBTVAQza2ip36DB2Eh8cUp_R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-15_10,2023-06-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=557 phishscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306150126
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding a reserved memory region for the framebuffer memory
-(the splash memory region set up by the bootloader).
+Add support for wlan-2g led and wps button available on IPQ5332 and
+IPQ9574
 
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
-v2: Updated commit message.
+Changes since V1:
+	- Updated patch series title. Mentioned platform in
+	  series title
 
-There was some dicussion on v1 but it didn't go anywhere,
-https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u.
-The general consensus is that this memory should be freed and be
-made resuable but that (releasing this piece of memory) has been
-tried before and it is not trivial to return the reserved memory
-node to the system RAM pool in this case.
+Sridharan S N (2):
+  arm64: dts: qcom: ipq5332: enable GPIO based LEDs and Buttons
+  arm64: dts: qcom: ipq9574: enable GPIO based LEDs
 
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../boot/dts/qcom/ipq5332-rdp-common.dtsi     | 39 +++++++++++++++++++
+ .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 20 ++++++++++
+ 2 files changed, 59 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index e14fe9bbb386..10a06ee8e262 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -101,6 +101,14 @@ hdmi_con: endpoint {
- 		};
- 	};
- 
-+	reserved-memory {
-+		/* Cont splash region set up by the bootloader */
-+		cont_splash_mem: framebuffer@9d400000 {
-+			reg = <0x0 0x9d400000 0x0 0x2400000>;
-+			no-map;
-+		};
-+	};
-+
- 	lt9611_1v8: lt9611-vdd18-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "LT9611_1V8";
 -- 
-2.25.1
+2.17.1
 
