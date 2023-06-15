@@ -2,175 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0B437311C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:09:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2090A7311D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 10:12:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244222AbjFOIJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 04:09:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45298 "EHLO
+        id S238236AbjFOIMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 04:12:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239368AbjFOIJZ (ORCPT
+        with ESMTP id S239529AbjFOIMl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 04:09:25 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A97F1A1;
-        Thu, 15 Jun 2023 01:09:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1686816558; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=CM7X1acMlB9WU8dvRzsFaeuR+Zxu4lSplpwEgbSpugUa9RAg2qqohuAnJAoqe8ZAhF
-    6pPANXYTQH9flPD4cWTmMgVPfXT83mP1DUIZgqMqTyGvYptaP5EMXyktTqJkUKwrHkog
-    K+D33JWQkJmx+bwHHWXgoDQ98IvEMkso2v0y3VpwchWop/OoT9ZzRbLwFGYdu02vTTGV
-    ywdG5X7y6IPwO3v6poPLO+NHEmdfpuHJKZPiGIrmpdkIl4fjaAh9jyyc06sfATA7XWTz
-    GtDXf/iMgnZBYUAFacExRV/40+NfkfiSGMUwL5R74oyBPy0TqAgrbFpSPPD4A5/Se6rF
-    SMvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686816558;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=fHWWafcLE6QbxDZMj4uI+BLupiwN2GnJnfQh/hNxH3w=;
-    b=EilZDXPgL9RnXrs4Q7bb79kSb+2Y9saXgDc5xqj6kXL0/7zFSLob8W7rcyJPmZCLbJ
-    KJ9CyeBMGPwN4WaydiABVLlViwq5cXGIdPn+su4Lw1wuI/diBmcx1dF6PLKtzLd86aut
-    ZGD5A2nLamYb56Pwmv2WjTGX255u6Oyu1QuRQKggUGDdgzdfxB08r8wVPyrsnFx1qBQ1
-    ipHmc2bYGUbhDCByXlA27mjFFS9hzKRKx3cuvuk9VRxMm+6chG/Up64Na14bOu+nteiP
-    mji12lqb8bzyZOZqdmtlrBy3xabd8hVduUgSYQOltkQXa87cKBJ5LCjn6Z5fKvbgzl0D
-    6yzQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686816558;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=fHWWafcLE6QbxDZMj4uI+BLupiwN2GnJnfQh/hNxH3w=;
-    b=fYekLnWK/msIk09f0xVngrxb/OzQleVapVWg8qySgcFjEdgLF919n2Apkg3Upqa450
-    o/h2jP/g2cyoLffYtEllyfHjHhTmSI5RS9/7RUalT3wK9xxt2/hDKvSF8ddLzEw7aChx
-    CICeaH1+kkxzvKjmXk9DxDwtIUDFhCUocCLBWUS00/hi+vZr1T/UuRLAdzlpiMvntFzD
-    n9lyltZarnb2oZLE1mLKIoAY8lYsdqCVhD9RARrQF8X4dPUCreMQWh5Dnr5RRGvCLEI5
-    rGn0MQ5zkKIyGV+m02w5VcrAKo3PBUavQ1ifEQkasdblhLttKJVyHyMX+7CWRcCeYBU7
-    P+uQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686816558;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=fHWWafcLE6QbxDZMj4uI+BLupiwN2GnJnfQh/hNxH3w=;
-    b=8W/5Wst501Ovg8dERHZTLgFkDKd47TFrLgU6DVM53Ic/bnegN1+Mlaw9glGzNOUn2m
-    YV7Z6Evh/7EWHjGD8wCQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA9J/h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
-    with ESMTPSA id D0d0a8z5F89H1vN
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 15 Jun 2023 10:09:17 +0200 (CEST)
-Date:   Thu, 15 Jun 2023 10:09:11 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Ajay Kumar <ajaykumar.rs@samsung.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Joel Selvaraj <jo@jsfamily.in>
-Subject: Re: [PATCH] drm/panel: move some dsi commands from unprepare to
- disable
-Message-ID: <ZIrHJwm2-ghSUHL0@gerhold.net>
-References: <20230613-panel-dsi-disable-v1-1-5e454e409fa8@linaro.org>
- <ZIjayn8nVy-ejThH@gerhold.net>
- <CACRpkdZ7a3aARMs3iBbBavF_0AkPOPs3fH8e6CrZYo7Ybr6m_A@mail.gmail.com>
- <4f78b601-6e6e-2274-3174-87c62d7cfcd5@linaro.org>
+        Thu, 15 Jun 2023 04:12:41 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D2AC2710
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:12:35 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b1b06af50eso22936411fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 01:12:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686816753; x=1689408753;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jXHAHxT0fSFKwPz8USPdRUjyOKNtgSSj4cu2Ek48kiU=;
+        b=FsXr00BzaUu6FoM8vbXU5zz6kDx18Gl1FZnk/y2K3UL0Ns6x8g4tHH0hhK8XjlnQ2G
+         1IjWRyb4ugk0KhL9Vk3Yo+HFuxQxeIsid42oNzFh6Sa+WJZQKsWUoyna/MB977DRbfS5
+         zb2x4L7w/uM4Gf1UK6DwBu1cjWHSMhvwZnshKeWdiRcdyvKlZPki0DBxFbnkZp8Vc5et
+         Swgm8deIcJp+vtuknr/AR7bm34gdyEjTBMo27Cjc6SKlckTPBC5lPfprgYnMlnW0HwJO
+         0IDxSYZUMf/boygaehaTpHoifhS8wYzkReMqmh6nFZZgPXTujJqdHTkyDjlppuJsk1dB
+         wGMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686816753; x=1689408753;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jXHAHxT0fSFKwPz8USPdRUjyOKNtgSSj4cu2Ek48kiU=;
+        b=LNEff0xe66Q57+4qKPoDc8pglgJU4msSxRyXxEZ4jbqCDJngqM9IH3wEsb7L4DubFv
+         yxwdseKBKZq/Am6pIvOGzKE1l99rwsQEa1ZrNrAxNBNKAKFsyaWhuuMxhiRAV5wV5bea
+         fxLRJLr5j5ql9dvFvwIHb1dmpv49jBaH6QD4TYWt7TCrGdOPlrUWOTxojMDJ3SXDlqBw
+         gnrlLnxx4kgfHfFpXXGttM8XrHT892m50FWtPnmEwScd/eOuoSqCjzNgXlnxPz9qp9PL
+         Q6La5TE39cv2UZD/uFejD7C4+yyjIaE8vr6Q291ahQ83k+3th5XE17ZOLWYPt+EUJmV4
+         sFeA==
+X-Gm-Message-State: AC+VfDzsWn5UboNB7rD9z5QLSHJba/EskDH2TbHskgXAHHpsIjTaXJiJ
+        mDkA3LIO7q2kRcIWtpruxX4+3Q==
+X-Google-Smtp-Source: ACHHUZ7JViREJp0GaNcUM5T5EotUUtT5SqOTBmGhByu0POE2CgRtnw6zT8PSXaWmbQ5btWJS4KuQug==
+X-Received: by 2002:a2e:98c7:0:b0:2b3:3791:da84 with SMTP id s7-20020a2e98c7000000b002b33791da84mr4624975ljj.18.1686816753585;
+        Thu, 15 Jun 2023 01:12:33 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id n23-20020a2e86d7000000b002ac78893a9csm2967788ljj.72.2023.06.15.01.12.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jun 2023 01:12:33 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Thu, 15 Jun 2023 10:12:32 +0200
+Subject: [PATCH] arm64: dts: qcom: msm8996: Fix HDMI node
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4f78b601-6e6e-2274-3174-87c62d7cfcd5@linaro.org>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230615-topic-8996hdmi-v1-1-39584bfd68d2@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAO/HimQC/x2NywqDMBAAf0X23IWYYND+Sukhj7VZ0CiJiiD+u
+ 0uPMzDMBZUKU4V3c0GhgysvWaB9NRCSyz9CjsKglTbKth1uy8oB+2GwKc6MnVajV8ZHYwNI5F0
+ l9MXlkCTL+zSJXAuNfP4vn+99P196FEF1AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686816752; l=1335;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=B0zAEhAOtxhBKwa6WdeY39jiC9OWe6ZFvix/v/r5+8g=;
+ b=k6zheu77ykuYvYHutzF8ykADAoZ1HN7rlbDGznP0DYTtmlQG6mnnqeugNjELuA5dXJp4ZVfyt
+ MMbRy6zr2pMCqVshRidNQOitZewId0z4YWPiu5Y8cGQFJgoxkzEYOE1
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 15, 2023 at 09:49:27AM +0200, Neil Armstrong wrote:
-> On 14/06/2023 22:58, Linus Walleij wrote:
-> > On Tue, Jun 13, 2023 at 11:08 PM Stephan Gerhold <stephan@gerhold.net> wrote:
-> > 
-> > > I'm still quite confused about what exactly is supposed to be in
-> > > (un)prepare and what in enable/disable. I've seen some related
-> > > discussion every now and then but it's still quite inconsistent across
-> > > different panel drivers... Can someone clarify this?
-> > 
-> > It is somewhat clarified in commit 45527d435c5e39b6eec4aa0065a562e7cf05d503
-> > that added the callbacks:
-> > 
-> > Author: Ajay Kumar <ajaykumar.rs@samsung.com>
-> > Date:   Fri Jul 18 02:13:48 2014 +0530
-> > 
-> >      drm/panel: add .prepare() and .unprepare() functions
-> > 
-> >      Panels often require an initialization sequence that consists of three
-> >      steps: a) powering up the panel, b) starting transmission of video data
-> >      and c) enabling the panel (e.g. turn on backlight). This is usually
-> >      necessary to avoid visual glitches at the beginning of video data
-> >      transmission.
-> > 
-> >      Similarly, the shutdown sequence is typically done in three steps as
-> >      well: a) disable the panel (e.g. turn off backlight), b) cease video
-> >      data transmission and c) power down the panel.
-> > 
-> >      Currently drivers can only implement .enable() and .disable() functions,
-> >      which is not enough to implement the above sequences. This commit adds a
-> >      second pair of functions, .prepare() and .unprepare() to allow more
-> >      fine-grained control over when the above steps are performed.
-> > 
-> >      Signed-off-by: Ajay Kumar <ajaykumar.rs@samsung.com>
-> >      [treding: rewrite changelog, add kerneldoc]
-> >      Signed-off-by: Thierry Reding <treding@nvidia.com>
-> > 
-> > My interpretation is that .enable/.disable is for enabling/disabling
-> > backlight and well, make things show up on the display, and that
-> > happens quickly.
-> > 
-> > prepare/unprepare is for everything else setting up/tearing down
-> > the data transmission pipeline.
-> > 
-> > In the clock subsystem the enable/disable could be called in fastpath
-> > and prepare/unprepare only from slowpath so e.g an IRQ handler
-> > can gate a simple gated clock. This semantic seems to have nothing
-> > to do with the display semantic. :/
-> 
-> It had to do, .prepare is called when the DSI link is at LP11 state
-> before it has switched to the VIDEO mode, and .unprepare is the
-> reverse when VIDEO mode has been disabled and before the DSI link
-> is totally disabled.
-> 
-> https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c#L938
-> 
-> then
-> 
-> https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c#L855
-> 
-> but Doug has started changing this starting with MSM DSI driver, leading to
-> current panel drivers not working anymore with the current DSI init mode
-> and requires setting pre_enable_prev_first for only some DSI hosts
-> who switched out of set_mode().
-> 
+A recent commit messed up the node name and compatibles. Fix it.
 
-Hm, do I understand you correctly that setting
-bridge->pre_enable_prev_first / panel->prepare_prev_first should work as
-an alternative to $subject patch, at least for the MSM DSI driver? With
-it DSI commands should be possible to be sent in .unprepare()?
+Fixes: f43b6dc7d56e ("arm64: dts: qcom: msm8996: rename labels for HDMI nodes")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Thanks,
-Stephan
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 0cb2d4f08c3a..40ac0a784a4a 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1136,8 +1136,8 @@ mdss_dsi1_phy: phy@996400 {
+ 				status = "disabled";
+ 			};
+ 
+-			mdss_hdmi: mdss_hdmi-tx@9a0000 {
+-				compatible = "qcom,mdss_hdmi-tx-8996";
++			mdss_hdmi: hdmi-tx@9a0000 {
++				compatible = "qcom,hdmi-tx-8996";
+ 				reg =	<0x009a0000 0x50c>,
+ 					<0x00070000 0x6158>,
+ 					<0x009e0000 0xfff>;
+@@ -1180,7 +1180,7 @@ mdss_hdmi_in: endpoint {
+ 
+ 			mdss_hdmi_phy: phy@9a0600 {
+ 				#phy-cells = <0>;
+-				compatible = "qcom,mdss_hdmi-phy-8996";
++				compatible = "qcom,hdmi-phy-8996";
+ 				reg = <0x009a0600 0x1c4>,
+ 				      <0x009a0a00 0x124>,
+ 				      <0x009a0c00 0x124>,
+
+---
+base-commit: 925294c9aa184801cc0a451b69a18dd0fe7d847d
+change-id: 20230615-topic-8996hdmi-520fb03bd36c
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
