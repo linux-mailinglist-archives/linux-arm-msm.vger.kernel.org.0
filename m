@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E025F731E69
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 18:52:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D87B731E5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 18:51:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238317AbjFOQwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 12:52:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49208 "EHLO
+        id S229714AbjFOQvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 12:51:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237463AbjFOQvP (ORCPT
+        with ESMTP id S237432AbjFOQvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 15 Jun 2023 12:51:15 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.80])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E72C2D43;
-        Thu, 15 Jun 2023 09:51:08 -0700 (PDT)
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.82])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8372D45;
+        Thu, 15 Jun 2023 09:51:09 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; t=1686847856; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=d3zPtsVTgD5hyhwoqPWohda0jXCYjzNRYMKluicmWVR1TwPEu7Fq2N9+sKnOuvCbRF
-    gwNm4j06rcJ5wNJt9g8A46epgsKNnfEkCt7pGRPMBSpJ/EsOSe0q33Xj2gI6zte/++bz
-    SlLinn8FSifsgMwCT3xEuJfpCFPLuONPtrEi31/UU76OaIsArOTrs4HBZGCeYaSo5BDH
-    uknULAa32I7b1V14w3IH+NPpe2Wkw3YWS5bOvYONs7ihOQa/QVN1zz/fBgmIQvK5tD0f
-    S7JZD6ON+PgBlql/QzNaPQ4Avi+0P7q7L/VWdcuizaHa49igAfPt0Qr6wqYPWEdBWCe4
-    Pzcg==
+    b=OYnkWFMUf+7i2X4XQ2dNmwIMlqLRCnQqtCxCYNxczyBOJic2pfhdkqNjgMtgocUGsB
+    Yp8FXznppIaVfWoxLsGAvdRe+w60i5k+LIOt+l7CK/4S2bnyA8mE3ucvLGi+07TPQWdv
+    GAgf0y4C5AbcqP2tDP2Vj+vIaNvx6tm+xVADb2s6CvcKq4NklHKxZVRJNd66aDvELZyg
+    qq+IkKwBsnbV2jYn4Ee2H9B05d5pdVK/eEh8LXn1/LHousgt1AA71YRHHt5YGplLLBmt
+    Q3y5kkH7cI9bgFb7TyzYik9QRX084FG9RG3eki+ExNf2kxdisA42sOJvgnqyz8ISMlyE
+    9B0A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686847856;
     s=strato-dkim-0002; d=strato.com;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=HwHhKZChtnT5QeLJ51MFqhGAkBh98wtO5B8+zILKtRo=;
-    b=YEmOnax6A7URthJUd29To6B+zNhkZgMYYYVUCoKnyEOYrAgan+5UG2gMbNfHTilJUk
-    NJ+O6s5bGZIci14B1c+Azhi0lN7/dnc5j6mylC4jOivXJDYFlf7H9aMcfdf2X6mZsQL8
-    3t5vx000QPr7zbuc+ocOCKuJCZxZJ5/1MoiwuVpqyUxzfcWVB+EQJEzMpK4tPFIeTt8+
-    oehEfsFCb00b7zlgZLhkgBsgdq6awFoj/8kniCiqEZVfi95nssY3LguUQCmdU7EVTzye
-    8Iwu9Bz5D/caljT8QFGN4yvGOyoMMo6/h3YCmcgcYnZD8eapMh9y/cukYupfmxcgxsa4
-    5RVA==
+    bh=e3uST5fLGOUnGwSt4p0Biiiiiw75/Lg6PSk0roxV6pQ=;
+    b=XIf9zo/ePoqBILUcV8XMOz/WoXR+UnojFBBvyeHVEjcjx0njR2UR1RhJsor86h80cc
+    JcpJHHa73MemtwYQbjtBXf1ji0/9Td7jf3HRxE5MNfLrKN9Y27UohAVRP2pGI6QfRBp6
+    brCWhLJAe/xUixEcdhNLqz9k01czvbuMBXakCk+zbYJD0D9TmH7pXXTZqOWiW0ID/dEF
+    4j9I1LyD1XDfUUqX9365SnJFMnHfK7B66Za6055M74eN27QP9WM3g2W6cCCqDL3zLEdY
+    jOUSwbbzwTMoYGVNZurAlTQrsOidtMHuXvs0eg9sDt/iN1oh0oCtpGaz/LtcyikLrHCB
+    xPiA==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
@@ -42,35 +42,35 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686847856;
     s=strato-dkim-0002; d=gerhold.net;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=HwHhKZChtnT5QeLJ51MFqhGAkBh98wtO5B8+zILKtRo=;
-    b=d+mIGCIqadkj2FGOHiSdFwtdTQIsGbKU1kbHty7QFv6iqJRqMRzPZGSyRW8AofQyy9
-    KsZwrx6EVLojFvoxb9/xSfBjrzK2n/nAl0sRfyNmNjyhf4pwDxGOWUYF4jm6V/YWCmko
-    xzc2Jw6Qpd3+F5MFlbVT30qbLDeF4FX+fMvqUfzD/9KPqBGtTn1fEfMHu5EgsjWroO7y
-    fEefv3hMi8DD9h8rMN4qFV1IPK7reCvJgoWOSQcj1HP3BKscW1Vhh0ZOcZFUREhENX5R
-    nsYlGC5ZZ2wkBYcUAuCCnJ/lf+pxapiH/vkCQxTjVujd6tmeS5VDVJyIScvc04xegT8i
-    lIfA==
+    bh=e3uST5fLGOUnGwSt4p0Biiiiiw75/Lg6PSk0roxV6pQ=;
+    b=g2oGJXqqpjdrZyL44VtX3CKm8zLZoxvP0pXbyCMZcoeLW/K4ExYIGwkj9TLcgw2x5G
+    t6L95uLX9XEHdvdfG6VNhTTMgVdd2YlMgcKWDH2MVTQgfxkxDZXbhMAI5it5d/8sR4ji
+    eG0Zwv1+jKbZpkdr/RlgN2xAkmED+3HFEnujFAvJ/ma1MnF64BUwCE928B9pczPpd3fo
+    bcn2ArIjvOp/OhIiqjuwzf1lDzdQaFv4QnztqC2nIUIO4YD09LoFy4DiPGFVUn5hUmJ7
+    SybG5tUXuk9HmT18NUTayBg9/E56UJX9Jg0VlbuYE02yyvBN8j6lJbz+aNDjcLZxMrk+
+    zu+g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686847856;
     s=strato-dkim-0003; d=gerhold.net;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=HwHhKZChtnT5QeLJ51MFqhGAkBh98wtO5B8+zILKtRo=;
-    b=5cSU+ysyKfiZpn+t/RszEh5hAqVQrstwj7SWvLSff1RhJo+YBH5v0qIsYXk3sq6eAg
-    dQdwBZIARPTBM9FnLRAg==
+    bh=e3uST5fLGOUnGwSt4p0Biiiiiw75/Lg6PSk0roxV6pQ=;
+    b=BMwdx7q/33kCd/fAH+bctrNNpccJHiC5IHiANOMjqH0E+a/7tc0SsmOvyR/gAFLBbF
+    UpJhxqlapbDZ+qB5lhAA==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOf59w=="
 Received: from [192.168.244.3]
     by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
-    with ESMTPSA id D0d0a8z5FGot42f
+    with ESMTPSA id D0d0a8z5FGou42g
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Thu, 15 Jun 2023 18:50:55 +0200 (CEST)
+    Thu, 15 Jun 2023 18:50:56 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Thu, 15 Jun 2023 18:50:37 +0200
-Subject: [PATCH v3 04/13] soc: qcom: smd-rpm: Match rpmsg channel instead
- of compatible
+Date:   Thu, 15 Jun 2023 18:50:38 +0200
+Subject: [PATCH v3 05/13] dt-bindings: remoteproc: glink-rpm-edge: Use
+ "glink-edge" as node name
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-rpm-rproc-v3-4-a07dcdefd918@gerhold.net>
+Message-Id: <20230531-rpm-rproc-v3-5-a07dcdefd918@gerhold.net>
 References: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
 In-Reply-To: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
 To:     Bjorn Andersson <andersson@kernel.org>
@@ -94,84 +94,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is an ever growing list of compatibles in the smd-rpm.c driver.
-A fallback compatible would help here but would still require keeping
-the current list around for backwards compatibility.
+Semantically glink-edge and glink-rpm-edge are similar: Both describe
+the communication channels to a remote processor. The RPM glink-edge is
+a special case that needs slightly different properties but otherwise
+it is used exactly the same.
 
-As an alternative, let's switch the driver to match the rpmsg_device_id
-instead, which is always "rpm_requests" on all platforms. Add a check
-to ensure that there is a device tree node defined for the device since
-otherwise the of_platform_populate() call will operate on the root node (/).
+To improve consistency use the same "glink-edge" node name also for
+glink-rpm-edge. Drop the $nodename from qcom,glink-edge.yaml to avoid
+matching the wrong schema. qcom,glink-edge.yaml is always referenced
+explicitly from other schemas. This will already ensure that the nodes
+are being checked, so it's not necessary to bind to all nodes named
+"glink-edge".
 
-Similar approaches with matching rpmsg_device_id are already used in
-qcom_sysmon, qcom_glink_ssr, qrtr, and rpmsg_wwan_ctrl.
-
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM6375 (G-Link)
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- drivers/soc/qcom/smd-rpm.c | 35 +++++++++--------------------------
- 1 file changed, 9 insertions(+), 26 deletions(-)
+ Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml     | 3 ---
+ Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml | 2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
-index 0c1aa809cc4e..13d8c52330d0 100644
---- a/drivers/soc/qcom/smd-rpm.c
-+++ b/drivers/soc/qcom/smd-rpm.c
-@@ -199,6 +199,9 @@ static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
- 	struct qcom_smd_rpm *rpm;
- 	int ret;
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
+index 7b43ad3daa56..e78a89c9ec41 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
+@@ -14,9 +14,6 @@ description:
+   related to the remote processor.
  
-+	if (!rpdev->dev.of_node)
-+		return -EINVAL;
-+
- 	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
- 	if (!rpm)
- 		return -ENOMEM;
-@@ -230,38 +233,18 @@ static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
- 	of_platform_depopulate(&rpdev->dev);
- }
+ properties:
+-  $nodename:
+-    const: glink-edge
+-
+   apr:
+     $ref: /schemas/soc/qcom/qcom,apr.yaml#
+     required:
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
+index f5a044e20c4e..884158bccd50 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
+@@ -84,7 +84,7 @@ examples:
+   - |
+     #include <dt-bindings/interrupt-controller/arm-gic.h>
  
--static const struct of_device_id qcom_smd_rpm_of_match[] = {
--	{ .compatible = "qcom,rpm-apq8084" },
--	{ .compatible = "qcom,rpm-ipq6018" },
--	{ .compatible = "qcom,rpm-ipq9574" },
--	{ .compatible = "qcom,rpm-msm8226" },
--	{ .compatible = "qcom,rpm-msm8909" },
--	{ .compatible = "qcom,rpm-msm8916" },
--	{ .compatible = "qcom,rpm-msm8936" },
--	{ .compatible = "qcom,rpm-msm8953" },
--	{ .compatible = "qcom,rpm-msm8974" },
--	{ .compatible = "qcom,rpm-msm8976" },
--	{ .compatible = "qcom,rpm-msm8994" },
--	{ .compatible = "qcom,rpm-msm8996" },
--	{ .compatible = "qcom,rpm-msm8998" },
--	{ .compatible = "qcom,rpm-sdm660" },
--	{ .compatible = "qcom,rpm-sm6115" },
--	{ .compatible = "qcom,rpm-sm6125" },
--	{ .compatible = "qcom,rpm-sm6375" },
--	{ .compatible = "qcom,rpm-qcm2290" },
--	{ .compatible = "qcom,rpm-qcs404" },
--	{}
-+static const struct rpmsg_device_id qcom_smd_rpm_id_table[] = {
-+	{ .name = "rpm_requests", },
-+	{ /* sentinel */ }
- };
--MODULE_DEVICE_TABLE(of, qcom_smd_rpm_of_match);
-+MODULE_DEVICE_TABLE(rpmsg, qcom_smd_rpm_id_table);
- 
- static struct rpmsg_driver qcom_smd_rpm_driver = {
- 	.probe = qcom_smd_rpm_probe,
- 	.remove = qcom_smd_rpm_remove,
- 	.callback = qcom_smd_rpm_callback,
--	.drv  = {
--		.name  = "qcom_smd_rpm",
--		.of_match_table = qcom_smd_rpm_of_match,
--	},
-+	.id_table = qcom_smd_rpm_id_table,
-+	.drv.name = "qcom_smd_rpm",
- };
- 
- static int __init qcom_smd_rpm_init(void)
+-    rpm-glink {
++    glink-edge {
+         compatible = "qcom,glink-rpm";
+         interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+         mboxes = <&apcs_glb 0>;
 
 -- 
 2.40.1
