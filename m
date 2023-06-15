@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5544B731E3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 18:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 912D4731E49
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 18:51:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232599AbjFOQvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 12:51:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49244 "EHLO
+        id S237848AbjFOQvb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 12:51:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233096AbjFOQvH (ORCPT
+        with ESMTP id S235017AbjFOQvK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 12:51:07 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38AB2711;
-        Thu, 15 Jun 2023 09:51:02 -0700 (PDT)
+        Thu, 15 Jun 2023 12:51:10 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.82])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738F5295A;
+        Thu, 15 Jun 2023 09:51:07 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; t=1686847855; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=WDbX3UjNykRvCfTs3QEREQrRGt2ad7TESIiDF4r83+4tJ7WbjK92+3DDSyAzxWHP43
-    1YiCuEOW6S16cWK1fQWER6y+1hqsXOju1rrv4Eq378KsWesELScgSWQxWw8tQ8LxkSxm
-    hinnhACmhge/RszCkD4bp13gDOlcEKjvGaM9QLNW58ffLXVOBfZElmM7BfNTBdw52Nvi
-    icMML5gMtCZw3iveERGsWsTBiRPN3jaJSTc8/8tEePjQ9O+tRYI5EtuoT7yRmZrWxxMz
-    /jdLpZ9lldQyB0mVnJ8lqaBTb1G0rAyzMI6XZ1aF83tVTGZSylZfNfiEJCqO12vK6inl
-    0+kw==
+    b=mhFWwgg9/K2CIRT6uPEyI/Blj3vXcLCeqxqfGYsIHLKWWkck0Hv8rGOqGE4A9uYsua
+    EGMfWhJ2mjjVluRb++X/Jl7lxJc71HmzSH5dMl46brXJY0yrmuKAhA+PaQNSh3cXfe2g
+    tpa9El2mWcsOUvmOHNnyL1PK/io+3S9nG52Nne0Z51+jJsQwvGINAo6ABl8lyhhYD+hj
+    o+k+KxPaTMVtMTKnCAMQlo5wp7IDqD0qPgbANgNaAs2m6KECkczTb4wgYO0tUrZNbr2i
+    lInWzNNZeSOmpv3JmT1zN+kvnx1vUt5I6TpPxxoPOSoqCGC/zSNS/9gKG0JPKAWGMS9N
+    5B7w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686847855;
     s=strato-dkim-0002; d=strato.com;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=oE3ou2mgJ08zgiqHPDSR6aNlOJa/SmAfuDKO8qDHnb8=;
-    b=c9aS5sWmCuPtCgsAr94zqSy4IkYOQKxc8AhG884H8eMWTov/XrseR+SDgjmARxtgwv
-    pRoMfEpIEKWXwTyXp8sNKzV1oYYfPO3SjDNhfcW7CWQiLcdjuIDuYgClGaHFk4Rni8Tc
-    Wt/XQ4OH/p2Hou9RA+gNWkf2RJhTnxMwDH+LH/RzxzSdFy1FpIVNimp4H8zJ0da3sF2E
-    n9voqgzZs2gkvtOwTw5nJcyozT0f9vi7tlNe8Fhv+p+pEvSIDRp/T9rGyIkMAEldCL0F
-    qDMkY0T8OR29Qwk5gSYismGDtObpOxQ7KVLETSg3oW48Ix9oyvTmc7rmjkQXPbF42/3V
-    qWYw==
+    bh=zIP6Ad+n6GtTcdAN99toMZU1nMdvUwM/xKmNfiwoI/o=;
+    b=ZazKYoS4pIUqBgp5SgGIdGwx2dBU7fB0AmtPw0rGaCRrV7NNeS+1ybe99+qN3WQRiy
+    dVZVM+BLsRfqmc4s704B/nLjr6BM+4if7LlDuffWUZsnjuY/ItybtfxhhGJ9fdeQyUqL
+    gdzWpdTYYKI4WQ41DR9EeyAsIxEyjSJT/qQ2FS94eqZ7qmR69xn0R5CKMVLVrt646Dpu
+    wDn8oj3MdwN/scdrmxbrJogSK22nON79m/pD23mPuN+jMKqLVxi5SLW2mGAraJt5hzzr
+    kDZbc8pkqDqWlFnqiBEtPhSHL8GGuysGGPF478HTgcZbw2QEpBACy7pcfBoQxFmdIPpJ
+    B1rQ==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
@@ -42,34 +42,35 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686847855;
     s=strato-dkim-0002; d=gerhold.net;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=oE3ou2mgJ08zgiqHPDSR6aNlOJa/SmAfuDKO8qDHnb8=;
-    b=KoF3nvwob+IDTEwiktH3boiJsv8Rgj+NCM8psKe3WmelB6tl8vXiKTlqQoibSb6I16
-    SCHzhtFCpBwNj59hVf/ux2u/QnMGvX+IZSkxvQeKcIK1Ypf+EWbRqPswb8gV6L7AgxUr
-    Y/0rSV+AeYCO7iBS5zKtvi8mEieBxxemgBKwNpphgindHD8F7u/0Dw4tmQxDf4ytWYLp
-    vJBvw8eir1PzPmsCY9BNMzmswC5V6zohpOiUtpopzTahBEiZJn5dfE8l8fQTN1GNocCK
-    Ipq539PP/Pa3+kFYpOLEY91aBX0iyv1OB9OXaFUT+OC/pjcLDGeH/B06qbM4GP7AgtFR
-    HDkQ==
+    bh=zIP6Ad+n6GtTcdAN99toMZU1nMdvUwM/xKmNfiwoI/o=;
+    b=HPtSrxzp37SnCjw6mSC5MPNEwdiABkiYSiu7RyYJD3Hfp4ztm3+Hn3CoAgz/ow+tb6
+    JfeZm7OnEKCWk+CgkGCcrUf8EWU8tsB5vL6TzblScS5yG9KP43Xf7BDImgiQyn8sK/sy
+    AXgNmq0Qlr2hvjyJ9QTtM5vknX3fHKaWceFAxro4Zsnt6wx5HRyYMheojCRcLPxSaQpo
+    1B/isZV+lCgIuEO6VcQqVf85SGCJOHEjeJW0UqS4PN05mELD+TwnanbKVxwY0az4272p
+    q3ux3gFcYiN6cIVViuMXnuxy6V7WtSAydkxAMwvcoNqI6QiKJfIY3ZQ1yMGSd9AM7AVn
+    Qd8w==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686847855;
     s=strato-dkim-0003; d=gerhold.net;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=oE3ou2mgJ08zgiqHPDSR6aNlOJa/SmAfuDKO8qDHnb8=;
-    b=6p7uVftFzAhJr6+g2iZs52N6bA++vC4kYuzMzupD0zjiSp5/lhoEas2ce6xmX0KEYE
-    6dojV3kU2iFfVeYMONCQ==
+    bh=zIP6Ad+n6GtTcdAN99toMZU1nMdvUwM/xKmNfiwoI/o=;
+    b=NZYz6twwo+WsmWVDiBV5rVckt0IBVNvQtTPrxC9DPP1OdhySDYoxND09AkfjPJpOwP
+    CBzLxlCYr2ppCYEb70Dg==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOf59w=="
 Received: from [192.168.244.3]
     by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
-    with ESMTPSA id D0d0a8z5FGos42c
+    with ESMTPSA id D0d0a8z5FGot42d
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Thu, 15 Jun 2023 18:50:54 +0200 (CEST)
+    Thu, 15 Jun 2023 18:50:55 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Thu, 15 Jun 2023 18:50:34 +0200
-Subject: [PATCH v3 01/13] dt-bindings soc: qcom: smd-rpm: Fix sort order
+Date:   Thu, 15 Jun 2023 18:50:35 +0200
+Subject: [PATCH v3 02/13] dt-bindings: soc: qcom: smd-rpm: Add MSM8909 to
+ qcom,smd-channels
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-rpm-rproc-v3-1-a07dcdefd918@gerhold.net>
+Message-Id: <20230531-rpm-rproc-v3-2-a07dcdefd918@gerhold.net>
 References: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
 In-Reply-To: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
 To:     Bjorn Andersson <andersson@kernel.org>
@@ -94,44 +95,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some of the enum entries are not properly ordered, fix that.
+MSM8909 is using qcom,smd-channels but is missing in the list, add it
+there as well.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 709d473dd5e1 ("dt-bindings: soc: qcom: smd-rpm: Add MSM8909")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-index 65c02a7fef80..fe814b991559 100644
+index fe814b991559..78822315edeb 100644
 --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
 +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-@@ -44,12 +44,12 @@ properties:
-       - qcom,rpm-msm8994
-       - qcom,rpm-msm8996
-       - qcom,rpm-msm8998
-+      - qcom,rpm-qcm2290
-+      - qcom,rpm-qcs404
-       - qcom,rpm-sdm660
-       - qcom,rpm-sm6115
-       - qcom,rpm-sm6125
-       - qcom,rpm-sm6375
--      - qcom,rpm-qcm2290
--      - qcom,rpm-qcs404
- 
-   clock-controller:
-     $ref: /schemas/clock/qcom,rpmcc.yaml#
-@@ -84,9 +84,9 @@ if:
+@@ -82,6 +82,7 @@ if:
+         enum:
+           - qcom,rpm-apq8084
            - qcom,rpm-msm8226
++          - qcom,rpm-msm8909
            - qcom,rpm-msm8916
            - qcom,rpm-msm8936
-+          - qcom,rpm-msm8953
-           - qcom,rpm-msm8974
-           - qcom,rpm-msm8976
--          - qcom,rpm-msm8953
-           - qcom,rpm-msm8994
- then:
-   properties:
+           - qcom,rpm-msm8953
 
 -- 
 2.40.1
