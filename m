@@ -2,72 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7FD9731697
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:31:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA86473169B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 13:31:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245638AbjFOLbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 07:31:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49668 "EHLO
+        id S1343632AbjFOLbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 07:31:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245084AbjFOLbj (ORCPT
+        with ESMTP id S245751AbjFOLbk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 07:31:39 -0400
+        Thu, 15 Jun 2023 07:31:40 -0400
 Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAEF270E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:37 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b1acd41ad2so25735671fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35F52716
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:38 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b34e133f5aso22053851fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 04:31:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686828696; x=1689420696;
+        d=linaro.org; s=google; t=1686828697; x=1689420697;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+HIhvOoQ0TWNFRCD6jSrp6XPbshCV+o8gS0gvm0cA9c=;
-        b=codcU07VH/1l08yBIe8moRDqekQ+qa9MA24meplrjB/GfjiERlvYVyBtjKgqtGTcSm
-         VINdEP3TNkQnD9GbpHjYkEiITOCr/EbeGdP2Mm+wassaHN5acrruRQFAVkMF4I0qmwBD
-         d2PFSC7IRgnox6FKWApbOQbFYetb9QuMYt1jHgXN4OOVtppIAsyyefh0YgWDekvLngVY
-         UUX0o7ZHBzhMqIod1PN5WmAYwr0XlzjJss1yLK71gHsSORVvLD3fMB3w8okLT9PL7+pS
-         KOHDWis+GoihcNcIdSKhnpM3k8odHTEvpJ9GzwOkCNH7GCMIMQAYGBCEWQw/PaCFpkOh
-         F6xw==
+        bh=iagvrTdJe16mbe43XCaGjCeX1Svdet6EWcsi0Mlbfo0=;
+        b=C1G5NDiXspEzy5EQjsjez+uLoXWTbf1yhJfnfn5dw2nFfd7vBXpmy74ehzhi2gVWO0
+         98BA54WhJ6FJm5DDQ0XhB8jkpmXBh0ABSt+sBLjEnLVb88t7lkoqn0ZycBe3DOXs8TBc
+         Ezyff4QbewIrBte/SFLoA9fKc7m2p/X8k9i/KE/caEz9NN4kDvxahKkiybJN+8ZangzP
+         VkFJNg0xUKAhA2ZEva6jLrkemxDXhe0a4IPVV0jIXYbZKFvSGnJk+O0fwTG3NuOC5m0p
+         XjZFWWLSO8+d6tmRyNIzvOhN04zCvgRxHd8UDT3B8XakDsB3WR1xO57QE5JmQLIxnZa7
+         RL3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686828696; x=1689420696;
+        d=1e100.net; s=20221208; t=1686828697; x=1689420697;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+HIhvOoQ0TWNFRCD6jSrp6XPbshCV+o8gS0gvm0cA9c=;
-        b=ko9Wz1SwO/O75B9yjGxEuFAgFFrBnZ3zDCvge27zXG211YU9rTFy22kJ1Jq9b6O1C2
-         27o9Z+Hqd/R75lhwnWa0wpOZMLSIt5K+ooXpBVvaqKgFzunajuvDKEn69hw6i5d3fgft
-         xIoiLXxAaFS3WkiaZW1fKVLOSmpXOWBFBwFwupsRb0EhjrwMHS5Pi/ArieMeBlb8EvXK
-         8NtRTs7sDWwAaAtSApVgYf0wGpgpChpPmckhW9Wtm6TggzTx7/JGBjX3kjspICckOvnA
-         QqZ/HgIIcpMRNM5sWer/rof0ObzEAo0LscmcaHHA4Q5cGbCBFE6NvqYCKFpf+sLsnWvK
-         JQdQ==
-X-Gm-Message-State: AC+VfDygXHkCnwidALRsdcSmPFRfpzkFi4vid/bfjrUraccqBme8nPO3
-        xWmUU7jEePUQboVJGP4mDv/4lg==
-X-Google-Smtp-Source: ACHHUZ7SSADcaAPRP5KYn2CMl2Rq1NcPT9lS6upii8Us8pO9C2lbr1tZ4cZdHrkss8uyf21GnV3qJQ==
-X-Received: by 2002:a2e:95d2:0:b0:2b1:daca:676f with SMTP id y18-20020a2e95d2000000b002b1daca676fmr8191322ljh.36.1686828695949;
-        Thu, 15 Jun 2023 04:31:35 -0700 (PDT)
+        bh=iagvrTdJe16mbe43XCaGjCeX1Svdet6EWcsi0Mlbfo0=;
+        b=j3oOC9Fpq+wwHYxN6gO9v2rXqzEO8upbpA8p+z1wwF45424uMSY8CyE7O2dMc386BQ
+         X1cgvgWMV3zTs6DgEnFPK4UyWLFnWQT0vUjTxVM2S6qDzB9Ucc54M7d3Da+JSrOVcTWm
+         rqZJN5Kg4vIE/dKMQ4fRlAGA1UPo9TNuQWDHh/TOI1npvGZvumNBVIeCIAKH3aQBoGrA
+         dHvolq0923XFpbjlNOOXkNLxxmj1hjeESmn5QEe3YwaliClmN2waZNtrUMLZ5+nZFjFk
+         fvOJFELNfGNxLACa/jhTpUb1FayUnJFxo9wUXjVOHjynlojLEaPWZR+04AvcTl3fRcZt
+         m51Q==
+X-Gm-Message-State: AC+VfDzkfDCI9V9WWgF4rTJarjTn6umYZBIMWh59Rr6d33TrPUE7igZn
+        2PQtBkXbYJBSLur2YKmpbJ4esA==
+X-Google-Smtp-Source: ACHHUZ4Y0HPzWzh+M9sKVmQVFCAQ3f0hHOdfTS1SY7SsZK1b1Ui9Pb4I1jOd1s4VTLjtxaN/by9/4Q==
+X-Received: by 2002:a2e:9e86:0:b0:2b3:2f9b:7c9d with SMTP id f6-20020a2e9e86000000b002b32f9b7c9dmr6606616ljk.28.1686828697221;
+        Thu, 15 Jun 2023 04:31:37 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id y12-20020a2e320c000000b002b345f71039sm860525ljy.36.2023.06.15.04.31.34
+        by smtp.gmail.com with ESMTPSA id y12-20020a2e320c000000b002b345f71039sm860525ljy.36.2023.06.15.04.31.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jun 2023 04:31:34 -0700 (PDT)
+        Thu, 15 Jun 2023 04:31:36 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     freedreno@lists.freedesktop.org,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
+To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v14 0/9] Introduce MSM-specific DSC helpers
-Date:   Thu, 15 Jun 2023 14:31:25 +0300
-Message-Id: <168682860388.384026.1953512234094498484.b4-ty@linaro.org>
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 0/6] Add DSC v1.2 Support for DSI
+Date:   Thu, 15 Jun 2023 14:31:26 +0300
+Message-Id: <168682860387.384026.9115594076193676039.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v14-0-bafc7be95691@quicinc.com>
-References: <20230329-rfc-msm-dsc-helper-v14-0-bafc7be95691@quicinc.com>
+In-Reply-To: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
+References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -82,38 +80,33 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 24 May 2023 10:45:13 -0700, Jessica Zhang wrote:
-> There are some overlap in calculations for MSM-specific DSC variables
-> between DP and DSI. In addition, the calculations for initial_scale_value
-> and det_thresh_flatness that are defined within the DSC 1.2 specifications,
-> but aren't yet included in drm_dsc_helper.c.
+On Fri, 09 Jun 2023 15:57:12 -0700, Jessica Zhang wrote:
+> This is a series of changes for DSI to enable command mode support
+> for DSC v1.2.
 > 
-> This series moves these calculations to a shared msm_dsc_helper.c file and
-> defines drm_dsc_helper methods for initial_scale_value and
-> det_thresh_flatness.
+> This includes:
+> 
+> 1) Rounding up `hdisplay / 3` in dsc_timing_setup()
+> 2) Adjusting pclk_rate to account for compression
+> 3) Fixing incorrect uses of slice_count in DSI DSC calculations
+> 4) Setting the DATA_COMPRESS bit when DSC is enabled
 > 
 > [...]
 
 Applied, thanks!
 
-[1/9] drm/display/dsc: Add flatness and initial scale value calculations
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/7df1ed6ddf3d
-[2/9] drm/display/dsc: add helper to set semi-const parameters
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/e871a70d8ccd
-[3/9] drm/display/dsc: Add drm_dsc_get_bpp_int helper
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/688583281241
-[4/9] drm/msm/dsi: use DRM DSC helpers for DSC setup
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/49fd30a7153b
-[5/9] drm/msm: Add MSM-specific DSC helper methods
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/b50f06f83e0e
-[6/9] drm/msm/dpu: Use fixed DRM DSC helper for det_thresh_flatness
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/44346191a210
-[7/9] drm/msm/dpu: Fix slice_last_group_size calculation
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/c223059e6f83
-[8/9] drm/msm/dsi: Use MSM and DRM DSC helper methods
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/ed1498f77419
-[9/9] drm/msm/dsi: update hdisplay calculation for dsi_timing_setup
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/149419396a92
+[1/6] msm/drm/dsi: Round up DSC hdisplay calculation
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/21bf617110ba
+[2/6] drm/msm/dsi: Reduce pclk rate for compression
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/7c9e4a554d4a
+[3/6] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature flag for DPU >= 7.0
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/22598cfc94bb
+[4/6] drm/msm/dpu: Set DATA_COMPRESS on command mode for DCE/DSC 1.2
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/1642b5803473
+[5/6] drm/msm/dsi: Remove incorrect references to slice_count
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/155fa3a91d64
+
+Note, patch 6 is skipped for now
 
 Best regards,
 -- 
