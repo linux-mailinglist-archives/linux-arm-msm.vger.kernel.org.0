@@ -2,91 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72EB473114E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 09:50:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14D5A73115A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 09:50:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244920AbjFOHu0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jun 2023 03:50:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33570 "EHLO
+        id S245197AbjFOHup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jun 2023 03:50:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245243AbjFOHte (ORCPT
+        with ESMTP id S245341AbjFOHuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jun 2023 03:49:34 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DFF7C7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 00:49:30 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b1a86cdec6so22830721fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 00:49:30 -0700 (PDT)
+        Thu, 15 Jun 2023 03:50:06 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3652721
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 00:50:03 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f762b3227dso624308e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 00:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686815369; x=1689407369;
-        h=content-transfer-encoding:in-reply-to:subject:organization
-         :references:cc:to:content-language:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QNKCE55T6mCVWh0FRxlA50uEkLG4q1p0SmHMNDIDUZg=;
-        b=toCxsgNt9AI6vRpcwhHSwe4vgnbjIV/b3WQI4G66Iv0I9yOOseXmOtv2qvqIJwIWnM
-         t1Q9sjUqneFtprgj7aafn2irnSoCCB0/LEY5hgS8bvcXBIWHhnPsr6NS2udg9sx97iqe
-         JqzOYSqDpdomMB5gSHxoQAFBHrar6453rbnREFIj+tLQv0y6ZOMlvIWnuGovGDgBdwyC
-         msmW2SBNpk2LEta/esXY91d4/Lpe2uD+amr9dP1qaHB0UqSkMAB2eoFlR0J1GYJAh3da
-         u0ISL1ggJAbpOQwT4KGZyWq++jb5noaIB/INvGgFxZee0NndlDFqnkZ7TpCYmgS6436S
-         +sIQ==
+        d=linaro.org; s=google; t=1686815402; x=1689407402;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J2qg/OhTZMxFrneoAf57EQq0qnVlyXa5i01t43MlX9w=;
+        b=e4u3NTu/pqU31uuPTG/eKpW/QMItHv1uBLmHN+OELfnX1s9Mil6RX5ENuCEd+YZnhG
+         7OUhGO22mHvfSKxtVEmzTjhrKYa2shwfgLFcP1F1bsr57fY9WXdGpU8PEa1qmV+/UOso
+         rmHHLXWa5BrPA+jFwFbHBl9kFvdSv6dsJlBQlBRHU5F/6UNHerM+drMF9Bn8JUFM6n8n
+         d88djVnlSmR10vM+lao15yr875PzITrl+A8BRXhuhvPs/ko0IXtMGODa7qTaaMkjRSEM
+         utKbYzRpfW42pN4JgTL7b4NDD/62ayF+SVwxOQrq4dNQFDCEldZ2/Wf7Z2pkHZgSLy5e
+         WoyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686815369; x=1689407369;
-        h=content-transfer-encoding:in-reply-to:subject:organization
-         :references:cc:to:content-language:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QNKCE55T6mCVWh0FRxlA50uEkLG4q1p0SmHMNDIDUZg=;
-        b=Ys+Qpd+BSEt0qRXkVKijhtuzfFNw89CsXedwkHHwiAOGL2fx2VEewjnyZKnIfzTbum
-         6AM7Tbj9APcUEMsnsantE/N8xUzaLDoV+j7rJDjszXfGLXXHhdrnJPFPuGiNK6lWJUAt
-         IPbimKOV7TSRSPaO4uYnuHZE6AEf6l44uDQOZkJNcyLOwjPasKZcxfBWxgPomHWL1Yo3
-         ZQ8WKIeUP3DOLRvis1sTZZKujx64M+pRz1KLofsC/yKFp/mxnztBTbCvevJRdokkPLxW
-         po6O0r8LyrjUKQv7aZUwJgKgfEcxncZ1qIcBqeETMXwh1W9QEvgMRgBXoo0FjoiHV0E3
-         rWVw==
-X-Gm-Message-State: AC+VfDxEsibGSWe3h28M8KZx4qqIAemDWEPEdaLEQNAgk8vZrs+FCsuj
-        er4DJ/64fjM9jbN/aA8j5zZ2fw==
-X-Google-Smtp-Source: ACHHUZ5ZMREpLufLNiD+ZfTU5cEP6//hr16tWKbMuH22rsMYZ59spNvayYRGJjaWbMCuckPUGDrJ2g==
-X-Received: by 2002:a19:8c49:0:b0:4f6:2495:31ef with SMTP id i9-20020a198c49000000b004f6249531efmr8226145lfj.22.1686815368684;
-        Thu, 15 Jun 2023 00:49:28 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:f60a:f5e3:7ae:6745? ([2a01:e0a:982:cbb0:f60a:f5e3:7ae:6745])
-        by smtp.gmail.com with ESMTPSA id g9-20020a7bc4c9000000b003f7f249e7dfsm19908075wmk.4.2023.06.15.00.49.27
+        d=1e100.net; s=20221208; t=1686815402; x=1689407402;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=J2qg/OhTZMxFrneoAf57EQq0qnVlyXa5i01t43MlX9w=;
+        b=apn2rLPbBlBJD5a2+oeeKQd1ReA0j49i3rkx8FZWn8S3yhFFE5BQxCZrvBKweN+sn9
+         nuBSLiOmcchYQnQq3WQ1/qVaPQMja0fR+ljHsXMISBDm2NND0tthHatXwdOrNE3FSIOA
+         IIrhCysCP38vgz3FwGN6iU0YhiUfwD6ldrfVfeCFRShMwxVkdRxKx29O6JUjs9Jn57SB
+         kFeHnvuv+ATs1YJwaWRPBqy+kqcdgqKxhehQ0G/kjvovtfBCHAccOvtk1qcYeQm0qM7o
+         H6DaQivgxTqqd3tzHqVQ3Q8AVlU3K4rEcWvXfxcnvNuKF1cXmRiA/5p0QN54a91J5GNq
+         W9FA==
+X-Gm-Message-State: AC+VfDxKIKF2fWwN44nNNqPNHVx9aRG/tY5y3U8tuiwecgmR3+d0jVZz
+        Pv9LT1SK2jx5qeuu2FYNypkRjw==
+X-Google-Smtp-Source: ACHHUZ7U+ZUkuF8q6VsyYsmqbxyJo+bKxv0x5R1kei09Xwyk3EU60144Jc9nNsH0GhPbxK3PfwyqiQ==
+X-Received: by 2002:a19:9118:0:b0:4f2:147b:7ee with SMTP id t24-20020a199118000000b004f2147b07eemr1305042lfd.20.1686815401899;
+        Thu, 15 Jun 2023 00:50:01 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id p20-20020a19f014000000b004f749b64bbcsm1243348lfc.69.2023.06.15.00.50.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 00:49:28 -0700 (PDT)
-Message-ID: <4f78b601-6e6e-2274-3174-87c62d7cfcd5@linaro.org>
-Date:   Thu, 15 Jun 2023 09:49:27 +0200
+        Thu, 15 Jun 2023 00:50:01 -0700 (PDT)
+Message-ID: <825f06c1-cf87-c0e3-a9fc-f4ec0edaa0f8@linaro.org>
+Date:   Thu, 15 Jun 2023 09:49:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
 Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Ajay Kumar <ajaykumar.rs@samsung.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Joel Selvaraj <jo@jsfamily.in>
-References: <20230613-panel-dsi-disable-v1-1-5e454e409fa8@linaro.org>
- <ZIjayn8nVy-ejThH@gerhold.net>
- <CACRpkdZ7a3aARMs3iBbBavF_0AkPOPs3fH8e6CrZYo7Ybr6m_A@mail.gmail.com>
-Organization: Linaro Developer Services
-Subject: Re: [PATCH] drm/panel: move some dsi commands from unprepare to
- disable
-In-Reply-To: <CACRpkdZ7a3aARMs3iBbBavF_0AkPOPs3fH8e6CrZYo7Ybr6m_A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230526-topic-smd_icc-v6-0-263283111e66@linaro.org>
+ <20230526-topic-smd_icc-v6-18-263283111e66@linaro.org>
+ <e2afd4bde3e85db358d50553a60a744f.sboyd@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v6 18/22] clk: qcom: smd-rpm: Separate out interconnect
+ bus clocks
+In-Reply-To: <e2afd4bde3e85db358d50553a60a744f.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,77 +88,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 22:58, Linus Walleij wrote:
-> On Tue, Jun 13, 2023 at 11:08 PM Stephan Gerhold <stephan@gerhold.net> wrote:
+On 15.06.2023 02:48, Stephen Boyd wrote:
+> Quoting Konrad Dybcio (2023-06-14 11:04:37)
+>> The interconnect bus clocks are now handled within the ICC framework.
+>> They still however need to get a kickstart *before* we call
+>> clk_smd_rpm_enable_scaling(), or RPM will assume that they should all
+>> be running at 0 kHz and the system will inevitably die.
+>>
+>> Separate them out to ensure such a kickstart can still take place.
+>>
+>> As a happy accident, the file got smaller:
+>>
+>> Total: Before=41951, After=41555, chg -0.94%
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  drivers/clk/qcom/clk-smd-rpm.c | 278 +++++++++++++++++------------------------
+>>  1 file changed, 115 insertions(+), 163 deletions(-)
+>>
+>> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+>> index 6e7f0438e8b8..0d1d97659d59 100644
+>> --- a/drivers/clk/qcom/clk-smd-rpm.c
+>> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+>> @@ -498,13 +506,69 @@ DEFINE_CLK_SMD_RPM_XO_BUFFER(div_clk1, 11, 19200000);
+>>  DEFINE_CLK_SMD_RPM_XO_BUFFER(div_clk2, 12, 19200000);
+>>  DEFINE_CLK_SMD_RPM_XO_BUFFER(div_clk3, 13, 19200000);
+>>  
+>> +static struct clk_smd_rpm *bimc_pcnoc_icc_clks[] = {
 > 
->> I'm still quite confused about what exactly is supposed to be in
->> (un)prepare and what in enable/disable. I've seen some related
->> discussion every now and then but it's still quite inconsistent across
->> different panel drivers... Can someone clarify this?
-> 
-> It is somewhat clarified in commit 45527d435c5e39b6eec4aa0065a562e7cf05d503
-> that added the callbacks:
-> 
-> Author: Ajay Kumar <ajaykumar.rs@samsung.com>
-> Date:   Fri Jul 18 02:13:48 2014 +0530
-> 
->      drm/panel: add .prepare() and .unprepare() functions
-> 
->      Panels often require an initialization sequence that consists of three
->      steps: a) powering up the panel, b) starting transmission of video data
->      and c) enabling the panel (e.g. turn on backlight). This is usually
->      necessary to avoid visual glitches at the beginning of video data
->      transmission.
-> 
->      Similarly, the shutdown sequence is typically done in three steps as
->      well: a) disable the panel (e.g. turn off backlight), b) cease video
->      data transmission and c) power down the panel.
-> 
->      Currently drivers can only implement .enable() and .disable() functions,
->      which is not enough to implement the above sequences. This commit adds a
->      second pair of functions, .prepare() and .unprepare() to allow more
->      fine-grained control over when the above steps are performed.
-> 
->      Signed-off-by: Ajay Kumar <ajaykumar.rs@samsung.com>
->      [treding: rewrite changelog, add kerneldoc]
->      Signed-off-by: Thierry Reding <treding@nvidia.com>
-> 
-> My interpretation is that .enable/.disable is for enabling/disabling
-> backlight and well, make things show up on the display, and that
-> happens quickly.
-> 
-> prepare/unprepare is for everything else setting up/tearing down
-> the data transmission pipeline.
-> 
-> In the clock subsystem the enable/disable could be called in fastpath
-> and prepare/unprepare only from slowpath so e.g an IRQ handler
-> can gate a simple gated clock. This semantic seems to have nothing
-> to do with the display semantic. :/
-
-It had to do, .prepare is called when the DSI link is at LP11 state
-before it has switched to the VIDEO mode, and .unprepare is the
-reverse when VIDEO mode has been disabled and before the DSI link
-is totally disabled.
-
-https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c#L938
-
-then
-
-https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c#L855
-
-but Doug has started changing this starting with MSM DSI driver, leading to
-current panel drivers not working anymore with the current DSI init mode
-and requires setting pre_enable_prev_first for only some DSI hosts
-who switched out of set_mode().
-
-The DSI init model doesn't fit at all with the atomic bridge model and
-some DSI controllers doesn't support the same features like the allwinner
-DSI controller not support sending LP commands when in HS video mode
-for example.
-
-Neil
+> Can these be const arrays?
+Sorta, look below.
 
 > 
-> Yours,
-> Linus Walleij
+>> +       &clk_smd_rpm_bimc_clk,
+>> +       &clk_smd_rpm_bus_0_pcnoc_clk,
+>> +};
+>> +
+> [...]
+>> @@ -1332,6 +1275,15 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
+>>                         goto err;
+>>         }
+>>  
+>> +       for (i = 0; i < desc->num_icc_clks; i++) {
+>> +               if (!desc->icc_clks[i])
+>> +                       continue;
+>> +
+>> +               ret = clk_smd_rpm_handoff(desc->icc_clks[i]);
+> 
+> This API can probably take a const struct clk_smd_rpm pointer as well.
+It would be great, but ideally we want to set r->enabled in that func
+for !bus clocks (for unused clk cleanup). I could probably introduce a
+separate function for the icc clocks that takes const.
 
+Konrad
