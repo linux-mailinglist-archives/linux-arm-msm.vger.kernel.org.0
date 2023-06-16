@@ -2,188 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 018DB732942
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 09:51:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66C0D73298D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 10:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234426AbjFPHvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 03:51:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44196 "EHLO
+        id S244578AbjFPILG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 04:11:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230318AbjFPHvI (ORCPT
+        with ESMTP id S243554AbjFPILF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 03:51:08 -0400
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025AC1FC3;
-        Fri, 16 Jun 2023 00:51:03 -0700 (PDT)
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35G6Caw4029463;
-        Fri, 16 Jun 2023 09:50:31 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=urauJacVUNG8muiUJtZCcVbTigmq8+/WZEuTP+wxZgY=;
- b=6eMf+wUEuj+XX/rTmLMoh/OyZlzek60fq9B3hoafxgLxYJf7EsC1Hv2CtiYxrYUk+AE2
- ZruXp6JHnRRrVSsXXATinvYNJjfVIvH39g3684afmJfAsj63Gih9a9gox+e2F384pUh4
- lE3hYokFSNEPDMHYzdszm6Lh2hTw0oIqImrvTzvUjG8xM8Wx3uHqHbg84FnkBfc5rtns
- hmeL9U/EvmAU6uWhMsC2RZnRzpW93IhRXQa55RMWF6dpqmbbqp43T1cBOIdet/sE32gF
- 4GjIibbj5mgSCX6YMGeQNThWhgWD75SBKwCQJ6Qa3t/iXknTl/7654DdHzXoIAy4bP6i JA== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3r8j92gjrj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Jun 2023 09:50:31 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 3E94010002A;
-        Fri, 16 Jun 2023 09:50:26 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 36590217B9C;
-        Fri, 16 Jun 2023 09:50:26 +0200 (CEST)
-Received: from [10.201.21.9] (10.201.21.9) by SHFDAG1NODE2.st.com
- (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Fri, 16 Jun
- 2023 09:50:25 +0200
-Message-ID: <5db6f583-d906-d314-42ef-02f837b40310@foss.st.com>
-Date:   Fri, 16 Jun 2023 09:50:24 +0200
+        Fri, 16 Jun 2023 04:11:05 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE912965
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 01:11:03 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-982acf0a4d2so50701966b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 01:11:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686903062; x=1689495062;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q+nb5C/fzCmkNH4tFkgENtFMDkmGCOR2QUSuKVrANoM=;
+        b=a2Mlb03zrr9JJo0Q+0A43GCTfWHuVRjCiS/gF7JyjDz88V4vbA0ia7lc9aFr+zYAHP
+         mjZnYFtMIAX7sTsI8nHAhX3q4+3tc8qfOgLpnZ5uKhQN9Jkq1eEQioOZ1VTLmszIuQAC
+         5hyXUj7UplGMDJtzrRggEETAHM3bbWJ6ppB3SbWH13IHZxy9I71Sc3EWKKwH2eUxukg4
+         0Qe1Xp900MGM5mJ573ZkonCWD9YDBkcLMkkDq8ezH38qSJAHTrJtPNP78nKBiPYRyySw
+         vSxPwvarRlNopMoccbz9uYqn4ihPdbAiqcaMvIPPjlCa0d3eBD0qcyFU1QVrRPoGYrt9
+         a89w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686903062; x=1689495062;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q+nb5C/fzCmkNH4tFkgENtFMDkmGCOR2QUSuKVrANoM=;
+        b=CjB8ZIjFfDgp+6Z+SIzM9TwrYbSSsh1nTeJsKBqtNZkRYihIABU0pRw4BcQNu+09ju
+         BxNB0ikRHzJNl8pshtaUXvklwtVzPH0BED8tc1Okaj8ccsro0bdF8yuHP7U6F8c+J/Zo
+         b6eXSgytsyBgt9uWwjf0vgjnva6o4LMRpKQQ3BxmiLLRKEHw3JnCrcUYJKA5LcgbAXmp
+         mqE4Rb2Cfttl8NDLrUHqWC2xWkaWWcx2yZYqiA2l9bxOyPl8Xa1zBkyy++Z6e7s3RXkS
+         zfAp6Mt1Qtp+dHpOP+3RaKLxWOpbA9BRKefCPHI2iLxPla5NWZAaCdFH0ayaWBSD8zSl
+         HP9g==
+X-Gm-Message-State: AC+VfDxaMgnueKzx/aM/FRslMZ1cndNx/XJ0CK8cYWqNA4QnugTvvko0
+        bHxtqcG9/7cHqSAAWREG759KUSIDjnTDme/dheQ=
+X-Google-Smtp-Source: ACHHUZ6DK25zXtnnsSAW02R2ilsBGImwvgHJkzYxnvXxZVHh9u1UxrheNHyrTDscWNmMYQ0v4zqmVw==
+X-Received: by 2002:a17:907:928b:b0:973:cc48:f19c with SMTP id bw11-20020a170907928b00b00973cc48f19cmr1002834ejc.56.1686903062144;
+        Fri, 16 Jun 2023 01:11:02 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id s24-20020a1709060c1800b00969f25b96basm10347260ejf.204.2023.06.16.01.11.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jun 2023 01:11:01 -0700 (PDT)
+Message-ID: <de774e98-0ae1-28b4-c0e1-6dc79905498f@linaro.org>
+Date:   Fri, 16 Jun 2023 10:10:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V7 1/3] rpmsg: core: Add signal API support
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: qcom,bwmon: Document
+ SC7180 BWMONs
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Sarannya S <quic_sarannya@quicinc.com>, <swboyd@chromium.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>
-References: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
- <1682160127-18103-2-git-send-email-quic_sarannya@quicinc.com>
- <20230614155453.dywcrntfjddxojfv@ripper>
- <6e51d6d8-cd3a-b0f2-c044-6282749aae89@foss.st.com>
- <20230615145039.GA3256591@hu-bjorande-lv.qualcomm.com>
- <4d89950d-0376-e355-c70b-d054776e83d4@foss.st.com>
- <20230615164507.mu7fd22poamjth7p@ripper>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Organization: STMicroelectronics
-In-Reply-To: <20230615164507.mu7fd22poamjth7p@ripper>
-Content-Type: text/plain; charset="UTF-8"
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230616-topic-sc7180_bwmons-v1-0-4ddb96f9a6cd@linaro.org>
+ <20230616-topic-sc7180_bwmons-v1-1-4ddb96f9a6cd@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230616-topic-sc7180_bwmons-v1-1-4ddb96f9a6cd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.201.21.9]
-X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE2.st.com
- (10.75.129.70)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-16_04,2023-06-15_01,2023-05-22_02
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/15/23 18:45, Bjorn Andersson wrote:
-> On Thu, Jun 15, 2023 at 06:19:37PM +0200, Arnaud POULIQUEN wrote:
->>
->>
->> On 6/15/23 16:50, Bjorn Andersson wrote:
->>> On Thu, Jun 15, 2023 at 11:01:14AM +0200, Arnaud POULIQUEN wrote:
->>>>
->>>>
->>>> On 6/14/23 17:54, Bjorn Andersson wrote:
->>>>> On Sat, Apr 22, 2023 at 04:12:05PM +0530, Sarannya S wrote:
->>>>>> From: Deepak Kumar Singh <quic_deesin@quicinc.com>
->>>>>>
->>>>>> Some transports like Glink support the state notifications between
->>>>>> clients using flow control signals similar to serial protocol signals.
->>>>>> Local glink client drivers can send and receive flow control status
->>>>>> to glink clients running on remote processors.
->>>>>>
->>>>>> Add APIs to support sending and receiving of flow control status by
->>>>>> rpmsg clients.
->>>>>>
->>>>>> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
->>>>>> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
->>>>>> ---
->>>>>>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
->>>>>>  drivers/rpmsg/rpmsg_internal.h |  2 ++
->>>>>>  include/linux/rpmsg.h          | 15 +++++++++++++++
->>>>>>  3 files changed, 38 insertions(+)
->>>>>>
->>>>>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
->>>>>> index a2207c0..e8bbe05 100644
->>>>>> --- a/drivers/rpmsg/rpmsg_core.c
->>>>>> +++ b/drivers/rpmsg/rpmsg_core.c
->>>>>> @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>>>>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->>>>>>  
->>>>>>  /**
->>>>>> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
->>>>>> + * @ept:	the rpmsg endpoint
->>>>>> + * @enable:	pause/resume incoming data flow	
->>>>>
->>>>> As shown in the discussion, it's still not clear what true/false means.
->>>>> Also, let's try to clarify that it's a request for the other side to do
->>>>> something:
->>>>>
->>>>> * rpmsg_set_flow_control() - request remote to pause/resume transmission
->>>>> * ...
->>>>> * @enable: flow restricted
->>>>> * ...
->>>>>
->>>>>
->>>>> PS. There's a stray space at the end of the line.
->>>>
->>>> The notion of flow restricted seems to me also ambiguous. It does
->>>> not specify if the stream is limited in term of bandwidth or stopped.
->>>>
->>>> What about using XON/XOFF as specified in software flow control[1]
->>>>
->>>> XOFF	Pause transmission
->>>> XON	Resume transmission
->>>>
->>>> or simply pause/resume definitions
->>>>
->>>
->>> I agree, that's still ambiguous.
->>>
->>> I was concerned about expressing it such that the reader would assume
->>> that calling this means there will be no more data coming, but there
->>> might be things in the queues etc. Expressing it in terms of the state
->>> of transmission is clearer.
->>>
->>>
->>> /*
->>>  * rpmsg_set_flow_control() - request remote to pause/resume transmission
->>>  ...
->>>  * @enable: Pause transmission
->>>  ...
->>>  */
->>>
->>> Does that sound okay and clear to you?
->>
->> Much better! I still have a nitpicking point :)
->> What about replacing @enable variable by @pause to align the variable with the
->> usage?
->>  /*
->>   * rpmsg_set_flow_control() - request remote to pause/resume transmission
->>   ...
->>   * @pause: set to 1 to pause transmission, to 0 to resume the transmission
+On 16/06/2023 01:46, Konrad Dybcio wrote:
+> SC7180 - just like SC7280 - has a BWMONv4 for CPU-LLCC and a BWMONv5
+> for DDR-LLCC paths. Document them.
 > 
-> It's a boolean, so I think with your name change suggestion, together
-> with the function description, it should be clear enough what the two
-> states (true/false) means.
-> 
-> * @pause: Pause transmission
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
 
-Ok for me
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks,
-Arnaud
+Best regards,
+Krzysztof
 
-> 
-> Thanks,
-> Bjorn
