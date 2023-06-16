@@ -2,136 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B42F733CBB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 01:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90B39733CEB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 01:33:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232460AbjFPXFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 19:05:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41410 "EHLO
+        id S1345517AbjFPXdq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 19:33:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229950AbjFPXFt (ORCPT
+        with ESMTP id S245002AbjFPXdq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 19:05:49 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170B43A8B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:05:48 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4A955213B4;
-        Sat, 17 Jun 2023 01:05:46 +0200 (CEST)
-Date:   Sat, 17 Jun 2023 01:05:44 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 00/19] drm/msm/dpu: another catalog rework
-Message-ID: <rr3kwr3gdrek2ly25j6ja4echf2k7s5zbcllgoge5t3e3lyufz@ewysafbh4hpj>
-References: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
+        Fri, 16 Jun 2023 19:33:46 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7406435A6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:33:43 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b4544200dcso18065211fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:33:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686958421; x=1689550421;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YfePwsPEiksir752A0V39sm1MCUeFvKJlSE9qmBhmvg=;
+        b=adw3al64rzfyQK3VZCZ3t1CLbjFVA7OEFI0TGi8pGpbe2F8+bZ3eIxZRgzl4CZz29m
+         zC3pC3qvmKqsP5H1aIEmVQJG4j0c6mQpaFDU7QDzkc/HLrPkFPTXS0dtFHBKTJDTZ3ir
+         bqb+4csLCv/0idOOI9++kqrjBHgsJ/+ZUkjsz/00gdOGfFwwLPPnw62JB6qrfK0apTKo
+         +0gFpZOvX8IBFX+axjLVK4QlhRP0pzT9M32lqYfpNqi5zRG3+YP9fqepnMzoziNmZ+Mh
+         CEnKIXtZCZqc+ZxIy1bxv7UJo0Rl3aH7i0lZGh6Gx6Oo8QyNrFHG/9MAWxmf3FfToSCE
+         OfOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686958421; x=1689550421;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YfePwsPEiksir752A0V39sm1MCUeFvKJlSE9qmBhmvg=;
+        b=AtK3A0mN+jsgvVjp/NcXQQzXyJdZEmxVbNyHl/Rr/JBSOLyeSP/H07SJQKDUCQaNbQ
+         fNTtv0amPn2yafy0Zc95pwre/QPv9bcxvEujynz2fueCZTJFyjOW+zrQZG4uKxlLymBv
+         b+Vk2GsWh1aYGxDjSkdE2TRUwWbTn/aeoPliYD1wqN/oVRLvxd7b0XeBbv4cRe2uyTVI
+         N+n+7v25TkVBquSrJN2Jc+9lzfGlxREO1jpCfGGY+Lqe8y8X2TGtMD8Y2ZBYXdyNxmuF
+         Hfw7vsa63DlSn878KoiRsFKZB8x18rtWtgeYzOXnbOGwF33OLajp2+t56fjjKEbxzbHj
+         2hNw==
+X-Gm-Message-State: AC+VfDzFATZWu/C9sZoc42HFoVgxrvwC0wuBMrHydB6MItDWmd9BkHCl
+        1u61dOkjjOD/mstvWg4h8T69WQ==
+X-Google-Smtp-Source: ACHHUZ4MnC8Pu7PtacLtYbKgADdswVF1x1aWXzUKnMMyGac55pcm4YFsUoJgvGykho5ay+StRH47yw==
+X-Received: by 2002:a2e:9e44:0:b0:2b3:4cff:60ce with SMTP id g4-20020a2e9e44000000b002b34cff60cemr2765983ljk.0.1686958421207;
+        Fri, 16 Jun 2023 16:33:41 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id g5-20020a2eb0c5000000b002b447b154a4sm1025607ljl.121.2023.06.16.16.33.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jun 2023 16:33:40 -0700 (PDT)
+Message-ID: <11c3eb6c-823d-9688-ec53-e05c7bb557c5@linaro.org>
+Date:   Sat, 17 Jun 2023 01:33:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v8 10/11] arm64: dts: qcom: sm8350: Add Crypto Engine
+ support
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        vladimir.zapolskiy@linaro.org, rfoss@kernel.org,
+        neil.armstrong@linaro.org, djakov@kernel.org, stephan@gerhold.net,
+        Anders Roxell <anders.roxell@linaro.org>,
+        Linux Kernel Functional Testing <lkft@linaro.org>
+References: <20230526192210.3146896-1-bhupesh.sharma@linaro.org>
+ <20230526192210.3146896-11-bhupesh.sharma@linaro.org>
+ <d239ad07-fbdd-16fa-3555-5bcf33c67059@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <d239ad07-fbdd-16fa-3555-5bcf33c67059@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-16 13:02:58, Dmitry Baryshkov wrote:
-> Having a macro with 10 arguments doesn't seem like a good idea. It makes
-> it inherently harder to compare the actual structure values. Also this
-> leads to adding macros covering varieties of the block.
+On 16.06.2023 19:36, Krzysztof Kozlowski wrote:
+> On 26/05/2023 21:22, Bhupesh Sharma wrote:
+>> Add crypto engine (CE) and CE BAM related nodes and definitions to
+>> 'sm8350.dtsi'.
+>>
+>> Tested-by: Anders Roxell <anders.roxell@linaro.org>
+>> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+>> Co-developed-by and Signed-off-by: Robert Foss <rfoss@kernel.org>
+>> [Bhupesh: Switch to '#interconnect-cells = <2>', available since commit 4f287e31ff5f]
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
 > 
-> As it was previously discussed, inline all foo_BLK macros in order to
-> ease performing changes to the catalog data.
+> #regzbot introduced: f1040a7fe8f069d2259ab3dab9190210005ceb33
+> #regzbot title: HDK8350 silently crashes early on boot
 > 
-> Major part of the conversion was performed using vim script found at
-> [1]. Then some manual cleanups were applied, like dropping fields set to
-> 0.
-> 
-> Dependencies: msm-next-lumag.
-> 
-> Changes since v2:
->  - Rebased on top of msm-next-lumag
->  - Fixed MSM_DP/DSI_CONTROLLER_n usage in sm6350 and sm6375 catalog data
->    (Abhinav, Marijn).
-> 
-> Changes since v1:
->  - Rebased on top of msm-next
->  - Dropped dependency on interrupt rework
-> 
-> [1] https://pastebin.ubuntu.com/p/26cdW5VpYB/
-> [2] https://patchwork.freedesktop.org/patch/542142/?series=119220&rev=1
-> 
-> Dmitry Baryshkov (19):
->   drm/msm: enumerate DSI interfaces
->   drm/msm/dpu: always use MSM_DP/DSI_CONTROLLER_n
->   drm/msm/dpu: simplify peer LM handling
->   drm/msm/dpu: drop dpu_mdss_cfg::mdp_count field
->   drm/msm/dpu: drop enum dpu_mdp and MDP_TOP value
->   drm/msm/dpu: expand .clk_ctrls definitions
->   drm/msm/dpu: drop zero features from dpu_mdp_cfg data
->   drm/msm/dpu: drop zero features from dpu_ctl_cfg data
->   drm/msm/dpu: correct indentation for CTL definitions
->   drm/msm/dpu: inline SSPP_BLK macros
->   drm/msm/dpu: inline DSPP_BLK macros
->   drm/msm/dpu: inline LM_BLK macros
->   drm/msm/dpu: inline DSC_BLK and DSC_BLK_1_2 macros
->   drm/msm/dpu: inline MERGE_3D_BLK macros
->   drm/msm/dpu: inline various PP_BLK_* macros
->   drm/msm/dpu: inline WB_BLK macros
->   drm/msm/dpu: inline INTF_BLK and INTF_BLK_DSI_TE macros
+> Hi, this landed in the next but unfortunately it causes silent crash
+> (and reboot) of HDK8350. Reverting this commit helps.
+Downstream also references the following SIDs:
 
-Not sure if I'm ready to manually review all the inline patches before
-the weekend, so for now this should do:
+iommus = <&apps_smmu 0x592 0>,
+	 <&apps_smmu 0x598 0>,
+	 <&apps_smmu 0x599 0>,
+	 <&apps_smmu 0x59F 0>;
 
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
-(On SM8350 and SDM845 for now)
+that might be the culprit
 
-That is, after fixing the cfg-not-assigned regression in patch 4 where
-mdp_count is dropped.
-
-- Marijn
-
->   drm/msm/dpu: drop empty features mask MERGE_3D_SM8150_MASK
->   drm/msm/dpu: drop empty features mask INTF_SDM845_MASK
+Konrad
 > 
->  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   | 329 ++++++++----
->  .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    | 348 +++++++++----
->  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    | 411 ++++++++++-----
->  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   | 448 +++++++++++-----
->  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    | 430 +++++++++++-----
->  .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    | 184 +++++--
->  .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  88 +++-
->  .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    | 188 ++++---
->  .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  88 +++-
->  .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |  95 +++-
->  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    | 418 ++++++++++-----
->  .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    | 244 ++++++---
->  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  | 484 +++++++++++++-----
->  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    | 445 +++++++++++-----
->  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    | 467 ++++++++++++-----
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 130 -----
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   5 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   5 -
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    |  34 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |   7 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  34 +-
->  drivers/gpu/drm/msm/msm_drv.h                 |   8 +-
->  23 files changed, 3320 insertions(+), 1572 deletions(-)
+> Log is more or less like:
 > 
-> -- 
-> 2.39.2
+> [    1.359340] Bluetooth: HCI UART driver ver 2.3
+> [    1.363929] Bluetooth: HCI UART protocol H4 registered
+> [    1.369243] Bluetooth: HCI UART protocol LL registered
+> [    1.374639] Bluetooth: HCI UART protocol Broadcom registered
+> [    1.380476] Bluetooth: HCI UART protocol QCA registered
+> [    1.385868] Bluetooth: HCI UART protocol Marvell registered
+> [    1.391623] usbcore: registered new interface driver btusb
+> [    1.397273] ghes_edac: GHES probing device list is empty
+> [    1.400305] sdhci: Secure Digital Host Controller Interface driver
+> [    1.412124] sdhci: Copyright(c) Pierre Ossman
+> [    1.417494] Synopsys Designware Multimedia Card Interface Driver
+> [    1.424823] sdhci-pltfm: SDHCI platform and OF driver helper
+> [    1.433783] ledtrig-cpu: registered to indicate activity on CPUs
+> [    1.442236] usbcore: registered new interface driver usbhid
+> [    1.447982] usbhid: USB HID core driver
+> [    1.457065] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7
+> counters available
+> [    1.473760] NET: Registered PF_PACKET protocol family
+> [    1.479044] 9pnet: Installing 9P2000 support
+> [    1.483491] Key type dns_resolver registered
+> [    1.496583] registered taskstats version 1
+> [    1.500951] Loading compiled-in X.509 certificates
+> [    1.519456] platform 18200000.rsc:regulators-0: Fixed dependency
+> cycle(s) with /soc@0/rsc@18200000/regulators-0/smps11
+> [    1.530916] platform 18200000.rsc:regulators-1: Fixed dependency
+> cycle(s) with /soc@0/rsc@18200000/regulators-0/smps12
+> [    1.541906] platform 18200000.rsc:regulators-1: Fixed dependency
+> cycle(s) with /soc@0/rsc@18200000/regulators-1/bob
+> [    1.552625] platform 18200000.rsc:regulators-1: Fixed dependency
+> cycle(s) with /soc@0/rsc@18200000/regulators-1/smps1
+> [    1.563730] vreg_s10b_1p8: Setting 1800000-1800000uV
+> [    1.564861] vreg_s1c_1p86: Setting 1856000-1880000uV
+> [    1.569411] vreg_s11b_0p95: Setting 952000-952000uV
+> [    1.574304] vreg_bob: Setting 3008000-3960000uV
+> [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
+> Optional Info
+> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
+> S - IMAGE_VARIANT_STRING=SocLahainaLAA
+> S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
+> S - Boot Interface: UFS
+> S - Secure Boot: Off
+> 
+> defconfig with builtin INTERCONNECT_QCOM_SM8350 and several other options.
+> 
+> Can it be that some dependency is missing in linux-next or Bjorn's tree?
+> Shall we revert it?
+> 
+> Best regards,
+> Krzysztof
 > 
