@@ -2,350 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CADB7733635
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 18:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3B1473364C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 18:41:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345363AbjFPQfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 12:35:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56738 "EHLO
+        id S230502AbjFPQlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 12:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345651AbjFPQfk (ORCPT
+        with ESMTP id S1345234AbjFPQlj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 12:35:40 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 404CB35BF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 09:35:19 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-570002c9b38so10761997b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 09:35:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686933318; x=1689525318;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=95K85Wvdh9q9MCQWGezcUebBGPAYCwompOtePat6Pqc=;
-        b=CnArW6dWlMMd1C+foAPeWAYn5BHkaXmFyOnsHEmHjNxrL9H5Aql413nkP+ciNs1Cov
-         Xo9OkZjaOnGhrrihsuHKxbcwtqsTGTl2LI2Z3XjXj5nrlLg0QyAWt/jQl47G1Ms9xOgW
-         NEg32rvJSSVTKc16nsbBauLbXguCPEdDQS5ltrp6kudt3iF9IUkok+HAkC8wXJ9qbmo+
-         C8HRpNNdl49ZC/7MQaMdoGAdtYfoNvrvDUWKzkwyho/26eRkE/C10FR6SBO/xt4zGiNN
-         7Zfq19o0pVFXHqFUQyVG958q1uLfB7PYCNuxFyNymnJRULeGVUR2O0bMGIn367n/U8fC
-         2PLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686933318; x=1689525318;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=95K85Wvdh9q9MCQWGezcUebBGPAYCwompOtePat6Pqc=;
-        b=Jir7ehbdDADkZhWaczFNSqS968MDqUPdUiePmQ4Qa4CmX+MrMUMCa3sTa/etQc1n+x
-         91nLUY23mnJLuss6ns7dwhA5/d0FmJEbcnMg7Mzln12airiExs+tz0nRHvdAPrbmDLoH
-         fcXXlnvkk1sWbj39DzfccifKNQl6+28GxhmR9h/bNQJOcEOlI2ExJwHxbNEEk++q6CZU
-         +zKcE1v/rGLCqpCJAOhJGNcitnhBj+85q9tDiTXiLZrIcLEWdlHtNcYX7BfRKU6yP3Y5
-         k8ToagMIL0r36fpsRXFjoEMi6CuEg5RyT6NFjb4KTiKkCLu9Z1U8TApIzypUJP4h7wcC
-         CIVA==
-X-Gm-Message-State: AC+VfDwnRFuAVcZfJI1R2Rh7LZK+E25C1KigEQTqNazA/dvyOUey97Nb
-        0lVyUSLqYk99U65/wqH6Rk4vFg==
-X-Google-Smtp-Source: ACHHUZ5DH5BHNW8jEYHCr+oiEMGCdzAYaBvnBhc/V9soij5JdmJIy22OP/T8+doDz9SxXJR16i7Vpw==
-X-Received: by 2002:a0d:c001:0:b0:570:6d74:21d5 with SMTP id b1-20020a0dc001000000b005706d7421d5mr1503676ywd.13.1686933318207;
-        Fri, 16 Jun 2023 09:35:18 -0700 (PDT)
-Received: from [172.22.22.28] ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id u126-20020a814784000000b005708076b851sm38135ywa.43.2023.06.16.09.35.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 09:35:17 -0700 (PDT)
-Message-ID: <92b81475-66c0-0d81-a9df-71b53fff2ac7@linaro.org>
-Date:   Fri, 16 Jun 2023 11:35:15 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v14 00/25] Drivers for Gunyah hypervisor
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Fri, 16 Jun 2023 12:41:39 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 765E626BA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 09:41:37 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qACVe-0007RG-0w; Fri, 16 Jun 2023 18:41:14 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qACVb-007rTD-Jq; Fri, 16 Jun 2023 18:41:11 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qACVb-00EopP-1G; Fri, 16 Jun 2023 18:41:11 +0200
+Date:   Fri, 16 Jun 2023 18:41:10 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Artur Weber <aweber.kernel@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>
+Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230613172054.3959700-1-quic_eberman@quicinc.com>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20230613172054.3959700-1-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Helge Deller <deller@gmx.de>, dri-devel@lists.freedesktop.org,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-pwm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 2/4] video: backlight: lp855x: get PWM for PWM mode
+ during probe
+Message-ID: <20230616164110.euw6n7mmubmav63l@pengutronix.de>
+References: <20230429104534.28943-1-aweber.kernel@gmail.com>
+ <20230429104534.28943-3-aweber.kernel@gmail.com>
+ <20230614083953.e4kkweddjz7wztby@pengutronix.de>
+ <23f9f004-3e20-67b0-bddc-ab9700968c53@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4mqeubzcqronq6sk"
+Content-Disposition: inline
+In-Reply-To: <23f9f004-3e20-67b0-bddc-ab9700968c53@gmail.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/13/23 12:20 PM, Elliot Berman wrote:
-> Gunyah is a Type-1 hypervisor independent of any
-> high-level OS kernel, and runs in a higher CPU privilege level. It does
-> not depend on any lower-privileged OS kernel/code for its core
-> functionality. This increases its security and can support a much smaller
-> trusted computing base than a Type-2 hypervisor.
 
-I believe I have marked "Reviewed-by" on this entire series
-now.  If I'm mistaken about that, or if you make a change
-that you think warrants me taking another look, please call
-that to my attention.
+--4mqeubzcqronq6sk
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for being very responsive to my review comments.  My
-greatest hope is that we've prevented some bugs from getting
-accepted, but I also hope you have found my feedback helpful.
+Hello,
 
-					-Alex
+On Fri, Jun 16, 2023 at 05:29:08PM +0200, Artur Weber wrote:
+> On 14/06/2023 10:39, Uwe Kleine-K=F6nig wrote:
+> > On Sat, Apr 29, 2023 at 12:45:32PM +0200, Artur Weber wrote:
+> >> Also deprecate the pwm-period DT property, as it is now redundant
+> >> (pwms property already contains period value).
+> >>
+> >> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+> >> ---
+> >>  drivers/video/backlight/lp855x_bl.c | 48 ++++++++++++++++-------------
+> >>  1 file changed, 26 insertions(+), 22 deletions(-)
+> >>
+> >> diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backl=
+ight/lp855x_bl.c
+> >> index 81012bf29baf..21eb4943ed56 100644
+> >> --- a/drivers/video/backlight/lp855x_bl.c
+> >> +++ b/drivers/video/backlight/lp855x_bl.c
+> >> ...
+> >> @@ -472,11 +456,31 @@ static int lp855x_probe(struct i2c_client *cl)
+> >>  	lp->enable =3D devm_regulator_get_optional(dev, "enable");
+> >>  	if (IS_ERR(lp->enable)) {
+> >>  		ret =3D PTR_ERR(lp->enable);
+> >> -		if (ret =3D=3D -ENODEV) {
+> >> +		if (ret =3D=3D -ENODEV)
+> >>  			lp->enable =3D NULL;
+> >> -		} else {
+> >> +		else
+> >>  			return dev_err_probe(dev, ret, "getting enable regulator\n");
+> >> -		}
+> >> +	}
+> >> +
+> >> +	lp->pwm =3D devm_pwm_get(lp->dev, lp->chipname);
+> >> +	if (IS_ERR(lp->pwm)) {
+> >> +		ret =3D PTR_ERR(lp->pwm);
+> >> +		if (ret =3D=3D -ENODEV || ret =3D=3D -EINVAL)
+> >=20
+> > Why would you ignore EINVAL?
+>=20
+> EINVAL is returned when the pwms property is not found in the DT node
+> for the backlight. Not sure if there's a better way of separately
+> detecting whether it's present (especially when taking into
+> consideration non-DT platforms that might use the driver). Would be nice
+> to have something like devm_regulator_get_optional but for PWMs...
 
-> Gunyah is an open source hypervisor. The source repo is available at
-> https://github.com/quic/gunyah-hypervisor.
-> 
-> The diagram below shows the architecture.
-> 
-> ::
-> 
->           VM A                    VM B
->       +-----+ +-----+  | +-----+ +-----+ +-----+
->       |     | |     |  | |     | |     | |     |
->   EL0 | APP | | APP |  | | APP | | APP | | APP |
->       |     | |     |  | |     | |     | |     |
->       +-----+ +-----+  | +-----+ +-----+ +-----+
->   ---------------------|-------------------------
->       +--------------+ | +----------------------+
->       |              | | |                      |
->   EL1 | Linux Kernel | | |Linux kernel/Other OS |   ...
->       |              | | |                      |
->       +--------------+ | +----------------------+
->   --------hvc/smc------|------hvc/smc------------
->       +----------------------------------------+
->       |                                        |
->   EL2 |            Gunyah Hypervisor           |
->       |                                        |
->       +----------------------------------------+
-> 
-> Gunyah provides these following features.
-> 
-> - Threads and Scheduling: The scheduler schedules virtual CPUs (VCPUs) on
-> physical CPUs and enables time-sharing of the CPUs.
-> - Memory Management: Gunyah tracks memory ownership and use of all memory
-> under its control. Memory partitioning between VMs is a fundamental
-> security feature.
-> - Interrupt Virtualization: All interrupts are handled in the hypervisor
-> and routed to the assigned VM.
-> - Inter-VM Communication: There are several different mechanisms provided
-> for communicating between VMs.
-> - Device Virtualization: Para-virtualization of devices is supported using
-> inter-VM communication. Low level system features and devices such as
-> interrupt controllers are supported with emulation where required.
-> 
-> This series adds the basic framework for detecting that Linux is running
-> under Gunyah as a virtual machine, communication with the Gunyah Resource
-> Manager, and a sample virtual machine manager capable of launching virtual machines.
-> 
-> The series relies on two other patches posted separately:
->   - https://lore.kernel.org/all/20230213181832.3489174-1-quic_eberman@quicinc.com/
->   - https://lore.kernel.org/all/20230213232537.2040976-2-quic_eberman@quicinc.com/
-> 
-> 
-> Changes in v14:
->   - Coding/cosmetic tweaks suggested by Alex
->   - Mark IRQs as wake-up capable
-> 
-> Changes in v13: https://lore.kernel.org/all/20230509204801.2824351-1-quic_eberman@quicinc.com/
->   - Tweaks to message queue driver to address race condition between IRQ and mailbox registration
->   - Allow removal of VM functions by function-specific comparison -- specifically to allow
->     removing irqfd by label only and not requiring original FD to be provided.
-> 
-> Changes in v12: https://lore.kernel.org/all/20230424231558.70911-1-quic_eberman@quicinc.com/
->   - Stylistic/cosmetic tweaks suggested by Alex
->   - Remove patch "virt: gunyah: Identify hypervisor version" and squash the
->     check that we're running under a reasonable Gunyah hypervisor into RM driver
->   - Refactor platform hooks into a separate module per suggestion from Srini
->   - GFP_KERNEL_ACCOUNT and account_locked_vm() for page pinning
->   - enum-ify related constants
-> 
-> Changes in v11: https://lore.kernel.org/all/20230304010632.2127470-1-quic_eberman@quicinc.com/
->   - Rename struct gh_vm_dtb_config:gpa -> guest_phys_addr & overflow checks for this
->   - More docstrings throughout
->   - Make resp_buf and resp_buf_size optional
->   - Replace deprecated idr with xarray
->   - Refconting on misc device instead of RM's platform device
->   - Renaming variables, structs, etc. from gunyah_ -> gh_
->   - Drop removal of user mem regions
->   - Drop mem_lend functionality; to converge with restricted_memfd later
-> 
-> Changes in v10: https://lore.kernel.org/all/20230214211229.3239350-1-quic_eberman@quicinc.com/
->   - Fix bisectability (end result of series is same, --fixups applied to wrong commits)
->   - Convert GH_ERROR_* and GH_RM_ERROR_* to enums
->   - Correct race condition between allocating/freeing user memory
->   - Replace offsetof with struct_size
->   - Series-wide renaming of functions to be more consistent
->   - VM shutdown & restart support added in vCPU and VM Manager patches
->   - Convert VM function name (string) to type (number)
->   - Convert VM function argument to value (which could be a pointer) to remove memory wastage for arguments
->   - Remove defensive checks of hypervisor correctness
->   - Clean ups to ioeventfd as suggested by Srivatsa
-> 
-> Changes in v9: https://lore.kernel.org/all/20230120224627.4053418-1-quic_eberman@quicinc.com/
->   - Refactor Gunyah API flags to be exposed as feature flags at kernel level
->   - Move mbox client cleanup into gunyah_msgq_remove()
->   - Simplify gh_rm_call return value and response payload
->   - Missing clean-up/error handling/little endian fixes as suggested by Srivatsa and Alex in v8 series
-> 
-> Changes in v8: https://lore.kernel.org/all/20221219225850.2397345-1-quic_eberman@quicinc.com/
->   - Treat VM manager as a library of RM
->   - Add patches 21-28 as RFC to support proxy-scheduled vCPUs and necessary bits to support virtio
->     from Gunyah userspace
-> 
-> Changes in v7: https://lore.kernel.org/all/20221121140009.2353512-1-quic_eberman@quicinc.com/
->   - Refactor to remove gunyah RM bus
->   - Refactor allow multiple RM device instances
->   - Bump UAPI to start at 0x0
->   - Refactor QCOM SCM's platform hooks to allow CONFIG_QCOM_SCM=Y/CONFIG_GUNYAH=M combinations
-> 
-> Changes in v6: https://lore.kernel.org/all/20221026185846.3983888-1-quic_eberman@quicinc.com/
->   - *Replace gunyah-console with gunyah VM Manager*
->   - Move include/asm-generic/gunyah.h into include/linux/gunyah.h
->   - s/gunyah_msgq/gh_msgq/
->   - Minor tweaks and documentation tidying based on comments from Jiri, Greg, Arnd, Dmitry, and Bagas.
-> 
-> Changes in v5: https://lore.kernel.org/all/20221011000840.289033-1-quic_eberman@quicinc.com/
->   - Dropped sysfs nodes
->   - Switch from aux bus to Gunyah RM bus for the subdevices
->   - Cleaning up RM console
-> 
-> Changes in v4: https://lore.kernel.org/all/20220928195633.2348848-1-quic_eberman@quicinc.com/
->   - Tidied up documentation throughout based on questions/feedback received
->   - Switched message queue implementation to use mailboxes
->   - Renamed "gunyah_device" as "gunyah_resource"
-> 
-> Changes in v3: https://lore.kernel.org/all/20220811214107.1074343-1-quic_eberman@quicinc.com/
->   - /Maintained/Supported/ in MAINTAINERS
->   - Tidied up documentation throughout based on questions/feedback received
->   - Moved hypercalls into arch/arm64/gunyah/; following hyper-v's implementation
->   - Drop opaque typedefs
->   - Move sysfs nodes under /sys/hypervisor/gunyah/
->   - Moved Gunyah console driver to drivers/tty/
->   - Reworked gh_device design to drop the Gunyah bus.
-> 
-> Changes in v2: https://lore.kernel.org/all/20220801211240.597859-1-quic_eberman@quicinc.com/
->   - DT bindings clean up
->   - Switch hypercalls to follow SMCCC
-> 
-> v1: https://lore.kernel.org/all/20220223233729.1571114-1-quic_eberman@quicinc.com/
-> 
-> Elliot Berman (25):
->    docs: gunyah: Introduce Gunyah Hypervisor
->    dt-bindings: Add binding for gunyah hypervisor
->    gunyah: Common types and error codes for Gunyah hypercalls
->    virt: gunyah: Add hypercalls to identify Gunyah
->    virt: gunyah: msgq: Add hypercalls to send and receive messages
->    mailbox: Add Gunyah message queue mailbox
->    gunyah: rsc_mgr: Add resource manager RPC core
->    gunyah: rsc_mgr: Add VM lifecycle RPC
->    gunyah: vm_mgr: Introduce basic VM Manager
->    gunyah: rsc_mgr: Add RPC for sharing memory
->    gunyah: vm_mgr: Add/remove user memory regions
->    gunyah: vm_mgr: Add ioctls to support basic non-proxy VM boot
->    samples: Add sample userspace Gunyah VM Manager
->    gunyah: rsc_mgr: Add platform ops on mem_lend/mem_reclaim
->    virt: gunyah: Add Qualcomm Gunyah platform ops
->    docs: gunyah: Document Gunyah VM Manager
->    virt: gunyah: Translate gh_rm_hyp_resource into gunyah_resource
->    gunyah: vm_mgr: Add framework for VM Functions
->    virt: gunyah: Add resource tickets
->    virt: gunyah: Add IO handlers
->    virt: gunyah: Add proxy-scheduled vCPUs
->    virt: gunyah: Add hypercalls for sending doorbell
->    virt: gunyah: Add irqfd interface
->    virt: gunyah: Add ioeventfd
->    MAINTAINERS: Add Gunyah hypervisor drivers section
-> 
->   .../bindings/firmware/gunyah-hypervisor.yaml  |  82 ++
->   .../userspace-api/ioctl/ioctl-number.rst      |   1 +
->   Documentation/virt/gunyah/index.rst           | 114 +++
->   Documentation/virt/gunyah/message-queue.rst   |  71 ++
->   Documentation/virt/gunyah/vm-manager.rst      | 143 +++
->   Documentation/virt/index.rst                  |   1 +
->   MAINTAINERS                                   |  13 +
->   arch/arm64/Kbuild                             |   1 +
->   arch/arm64/gunyah/Makefile                    |   3 +
->   arch/arm64/gunyah/gunyah_hypercall.c          | 142 +++
->   arch/arm64/include/asm/gunyah.h               |  24 +
->   drivers/mailbox/Makefile                      |   2 +
->   drivers/mailbox/gunyah-msgq.c                 | 219 +++++
->   drivers/virt/Kconfig                          |   2 +
->   drivers/virt/Makefile                         |   1 +
->   drivers/virt/gunyah/Kconfig                   |  59 ++
->   drivers/virt/gunyah/Makefile                  |  11 +
->   drivers/virt/gunyah/gunyah_ioeventfd.c        | 130 +++
->   drivers/virt/gunyah/gunyah_irqfd.c            | 180 ++++
->   drivers/virt/gunyah/gunyah_platform_hooks.c   |  80 ++
->   drivers/virt/gunyah/gunyah_qcom.c             | 153 +++
->   drivers/virt/gunyah/gunyah_vcpu.c             | 470 +++++++++
->   drivers/virt/gunyah/rsc_mgr.c                 | 909 ++++++++++++++++++
->   drivers/virt/gunyah/rsc_mgr.h                 |  19 +
->   drivers/virt/gunyah/rsc_mgr_rpc.c             | 500 ++++++++++
->   drivers/virt/gunyah/vm_mgr.c                  | 791 +++++++++++++++
->   drivers/virt/gunyah/vm_mgr.h                  |  70 ++
->   drivers/virt/gunyah/vm_mgr_mm.c               | 252 +++++
->   include/linux/gunyah.h                        | 207 ++++
->   include/linux/gunyah_rsc_mgr.h                | 162 ++++
->   include/linux/gunyah_vm_mgr.h                 | 153 +++
->   include/uapi/linux/gunyah.h                   | 293 ++++++
->   samples/Kconfig                               |  10 +
->   samples/Makefile                              |   1 +
->   samples/gunyah/.gitignore                     |   2 +
->   samples/gunyah/Makefile                       |   6 +
->   samples/gunyah/gunyah_vmm.c                   | 266 +++++
->   samples/gunyah/sample_vm.dts                  |  68 ++
->   38 files changed, 5611 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
->   create mode 100644 Documentation/virt/gunyah/index.rst
->   create mode 100644 Documentation/virt/gunyah/message-queue.rst
->   create mode 100644 Documentation/virt/gunyah/vm-manager.rst
->   create mode 100644 arch/arm64/gunyah/Makefile
->   create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
->   create mode 100644 arch/arm64/include/asm/gunyah.h
->   create mode 100644 drivers/mailbox/gunyah-msgq.c
->   create mode 100644 drivers/virt/gunyah/Kconfig
->   create mode 100644 drivers/virt/gunyah/Makefile
->   create mode 100644 drivers/virt/gunyah/gunyah_ioeventfd.c
->   create mode 100644 drivers/virt/gunyah/gunyah_irqfd.c
->   create mode 100644 drivers/virt/gunyah/gunyah_platform_hooks.c
->   create mode 100644 drivers/virt/gunyah/gunyah_qcom.c
->   create mode 100644 drivers/virt/gunyah/gunyah_vcpu.c
->   create mode 100644 drivers/virt/gunyah/rsc_mgr.c
->   create mode 100644 drivers/virt/gunyah/rsc_mgr.h
->   create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
->   create mode 100644 drivers/virt/gunyah/vm_mgr.c
->   create mode 100644 drivers/virt/gunyah/vm_mgr.h
->   create mode 100644 drivers/virt/gunyah/vm_mgr_mm.c
->   create mode 100644 include/linux/gunyah.h
->   create mode 100644 include/linux/gunyah_rsc_mgr.h
->   create mode 100644 include/linux/gunyah_vm_mgr.h
->   create mode 100644 include/uapi/linux/gunyah.h
->   create mode 100644 samples/gunyah/.gitignore
->   create mode 100644 samples/gunyah/Makefile
->   create mode 100644 samples/gunyah/gunyah_vmm.c
->   create mode 100644 samples/gunyah/sample_vm.dts
-> 
-> 
-> base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
+Ah, that is because of_pwm_get() calls of_property_match_string(np,
+"pwm-names", con_id) which returns -EINVAL if there is no pwm-names
+property. This is different for clocks. I wonder if pwm should adapt
+accordingly? Thierry?
 
+> Still, someone who's setting up the driver could check the debug
+> messages to see if the backlight was set up in PWM mode or register mode.
+>=20
+> > ...
+> >> +		pwm_init_state(lp->pwm, &pwmstate);
+> >> +		/* Legacy platform data compatibility */
+> >> +		if (lp->pdata->period_ns > 0)
+> >> +			pwmstate.period =3D lp->pdata->period_ns;
+> >> +		pwm_apply_state(lp->pwm, &pwmstate);
+> >=20
+> > This is a change in behaviour. Before lp855x_probe() didn't modify the
+> > state the bootloader left the backlight in. Now you're disabling it (I
+> > think). Is this intended?
+>=20
+> I didn't really consider the implication of this in this way, as on the
+> device I was testing this on (Exynos4212-based tablet) the PWM state
+> would get reset during PWM chip initialization in the kernel anyways,
+
+Which chip driver is in use here? That's a patch opportunity.
+
+> meaning that the state from the bootloader would be lost regardless of
+> this change. Either way, there's no guarantee that this would be the
+> same on other devices, though I'd assume that in most cases it's not
+> noticeable anyways as brightness is usually set somewhere in userspace
+> (or even earlier, in the driver, if the init-brt property is set).
+> Nonetheless, that's an oversight on my part.
+>=20
+> As for the reasoning for this change in behavior - the previous behavior
+> was to silently fail if, while setting the brightness, the PWM could not
+
+This sounds wrong.
+
+> be set up. This seemed rather confusing to me (I encountered this while
+> I was initially working on the tablet, I added a "pwm" property instead
+> of "pwms" and was wondering why the backlight didn't work...)
+>=20
+> Of course, that could be fixed by adding error detection in the
+> brightness set function, but since I was already working on it, it made
+> more sense to me for the PWM to be set up during the probing process,
+> given that this way we could 1. warn about errors early, and 2. catch
+> deferred probes and defer the backlight's probe if we're still waiting
+> for the PWM. That's why it's done the way it is in this patch.
+>=20
+> If this is undesired behavior, let me know and I'll submit another patch
+> to revert it.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--4mqeubzcqronq6sk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmSMkKYACgkQj4D7WH0S
+/k5aIgf/SKGaRvfH39P++n5jjD+2vTiF6VAra1GFSjVbAemXWn/xObeuAuXttlyq
+CE+cFGFp+1eFFOLONWN81+8U63juiEjRTcL9N5WKbvZp8M4Pd5UkT416BdpWwS7L
+I95v5E6qX4+Khs9cm1j7VzR3u388P+I2RVJVQdW/PMZqVmgroxJDunEjCP5doSFf
+ZdWVdbFE2ouPLTk+iphxV3XDjNyFREESRjP9IVK7qu/GE1l6e6NGUNkw0yWySot/
+JvnVTvEMx8xv1AbKAHIRa1QtyXaUpx4C2k6GR9evEVRnHH1JB5G9TtuxKXsrU1lo
+Zgdg1fCGFoWkoczbrHsYFpyUXw2V2g==
+=eNSY
+-----END PGP SIGNATURE-----
+
+--4mqeubzcqronq6sk--
