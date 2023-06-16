@@ -2,149 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 662EF733491
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 17:18:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 290FC7334A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 17:24:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345956AbjFPPSm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 11:18:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41474 "EHLO
+        id S245688AbjFPPYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 11:24:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345927AbjFPPS1 (ORCPT
+        with ESMTP id S230368AbjFPPYH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 11:18:27 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1D4E3590
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:18:25 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-666a228d244so756748b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:18:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1686928705; x=1689520705;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VIqsH2Iv+JcyNkylOi9qtvbVK2jAXhmRaUsdt3ONyh4=;
-        b=GpPAIZitPXFRSuOZt2/v1lUUx6zLZ+8adsfg0EcyOH/0Zb2pls1gvbR0yXhpS2nQ1a
-         udqKcrhHiCVT91HKPEz/QAZXyFMGjBypbLotzvurvYwRmhTXSWW3LGdCQpSqQeFArnhE
-         XS9LKJvRnA+C8924skamWh5ZKpxdrCWSQLz04=
+        Fri, 16 Jun 2023 11:24:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033EB2948
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:23:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686929001;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=lA4WetjOkBjPwCImnk3E1z+blRFlganosEwAAK5HqlQ=;
+        b=dB1l6AhXDFPUlEJq2xEfid5BbEArSxOaRSHzQ1u75kzebIfKY4rNDHq0fJIgldwamQViqV
+        qTMhNa0qBi8Bz1xHPvOHjSK4zz+EMDlGYgH7kkTt/n2+HjsXT3HTXFKNskQPD3+zRp4YDX
+        Hc5Qoe/XBKQi4zoMcU7DJhz5VwCyyNE=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-530-yWvsfEBRNFiBEopIhJdL9w-1; Fri, 16 Jun 2023 11:23:19 -0400
+X-MC-Unique: yWvsfEBRNFiBEopIhJdL9w-1
+Received: by mail-yw1-f200.google.com with SMTP id 00721157ae682-57008cbc58aso10398227b3.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:23:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686928705; x=1689520705;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1686928999; x=1689520999;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VIqsH2Iv+JcyNkylOi9qtvbVK2jAXhmRaUsdt3ONyh4=;
-        b=JsFtMXfMxoioRyOzq4uWAHiZRwaJzGDyCZPw2f0Gd2u4DejM749XhlcU6vVUdKDxtZ
-         MZAZg5SIuR04EaNDNh26LUUDEUA2B0ETcLqRMeLhIqy7urVjGozKFgmv1UgzasM75pog
-         JAfI+Fyq1rnYpIkAaVisAIrLvklBYJkK8LFKoYE+xWHBz0clYWAPyfsud6f6cSXVKCH9
-         1cYXCw2F0xcyQ0N4FBcj7mBdjN55arkdSaWEFhXrg/nzYe4gBO5eRtYyueVrn3U1R1Hx
-         bSYvgTL3CeSYyaQrqQgrPgGaNBdLO/Xhg1LVZfQwZISFt0jOL9BJdQINFyatwygATjmi
-         hy3g==
-X-Gm-Message-State: AC+VfDzrJcXa6Ob+1u7R7hJSqHS3IQ0bViOmVV9rLB5KXco1oEfZPHdj
-        Vr0+FNlMG+zTG4In+D4SfS6hspfaV9yv5aHPHXRm2hrG
-X-Google-Smtp-Source: ACHHUZ4kiLB93/ITh5JfoMue+NcL7jHg5BRy3O4ysBFELCyhx65drmzzRSsbFhR7aX1DfB3Ku3E6ag==
-X-Received: by 2002:a05:6a20:158a:b0:114:7637:3451 with SMTP id h10-20020a056a20158a00b0011476373451mr2561868pzj.37.1686928705404;
-        Fri, 16 Jun 2023 08:18:25 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:3cfa:2bcd:1a5:27ce])
-        by smtp.gmail.com with ESMTPSA id a12-20020aa780cc000000b0063d24fcc2besm4593656pfn.125.2023.06.16.08.18.23
+        bh=lA4WetjOkBjPwCImnk3E1z+blRFlganosEwAAK5HqlQ=;
+        b=jPYNmKjh6YhJE2jS9aYPROrlr2TeO+o9IlXPrs8BXbflH0pbmhudfSqtisPaCPI6xz
+         dAzh5d5hYkX32n5DaOta2BIRw1r9yXPfGBXYjdkyrAykIbfciNEi3/I3KbOza7ABHqXF
+         cXloUcl8aL7On/r9E9k5sXRKSlvfXLkv+2xkKgq2L23zbzipsdSxSLQhezK7jZ6xELsg
+         miP7s4xU3dJJAoFPzxLgRbx1Hspd19kelGtBh/mK/FpWnRXGMsQgClTYswvxMFkNOJCP
+         CJn2wSWl6i+XFUnHodxtMZ+1f2BLWCPSjqn+m0cEyClRggamy+g1sPsnp8WxN3nC17zu
+         Nlqg==
+X-Gm-Message-State: AC+VfDyDNKMYjJr5Y9TthIinU6Th7Np5EKq/SZNmefrZvbH3gC+JKODn
+        QK4l6TsC1JKLiH0dNzVM1A+I1JBDbd6RNi1ax6QHI4hkW9RLSGPB0wUA1xINlNypYSv7fFjnz+W
+        Bb8D5Gy/KbUz6pwMJzWi2FUeGCA==
+X-Received: by 2002:a0d:dc01:0:b0:55a:18e2:cdf9 with SMTP id f1-20020a0ddc01000000b0055a18e2cdf9mr2220631ywe.49.1686928999392;
+        Fri, 16 Jun 2023 08:23:19 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ7NOTCKCTI0yyuQ0+PMG4jd1bn9GV0P6GZZ962o5J8zX2cgNyFC6rRy/x9Cnu6fAalYWPOdIw==
+X-Received: by 2002:a0d:dc01:0:b0:55a:18e2:cdf9 with SMTP id f1-20020a0ddc01000000b0055a18e2cdf9mr2220605ywe.49.1686928999136;
+        Fri, 16 Jun 2023 08:23:19 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id t66-20020a0dd145000000b0056d2dd6c5bcsm3164519ywd.89.2023.06.16.08.23.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jun 2023 08:18:24 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     andersson@kernel.org
-Cc:     amit.pundir@linaro.org, Will Deacon <will@kernel.org>,
-        sumit.semwal@linaro.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@somainline.org, linux-arm-kernel@lists.infradead.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Nikita Travkin <nikita@trvn.ru>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sc7280: Mark SCM as dma-coherent for chrome devices
-Date:   Fri, 16 Jun 2023 08:14:41 -0700
-Message-ID: <20230616081440.v2.4.I21dc14a63327bf81c6bb58fe8ed91dbdc9849ee2@changeid>
-X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
-In-Reply-To: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
-References: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
+        Fri, 16 Jun 2023 08:23:18 -0700 (PDT)
+Date:   Fri, 16 Jun 2023 11:23:16 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Juerg Haefliger <juerg.haefliger@canonical.com>
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
+        konrad.dybcio@linaro.org, quic_akhilpo@quicinc.com,
+        ribalda@chromium.org, joel@joelfernandes.org
+Subject: Re: [PATCH] drm/msm/adreno: Update MODULE_FIRMWARE macros
+Message-ID: <ZIx+ZHXTRGe3j4sh@brian-x1>
+References: <20230616122815.1037425-1-juerg.haefliger@canonical.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230616122815.1037425-1-juerg.haefliger@canonical.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Just like for sc7180 devices using the Chrome bootflow (AKA trogdor
-and IDP), sc7280 devices using the Chrome bootflow also need their
-firmware marked dma-coherent. On sc7280 this wasn't causing WiFi to
-fail to startup, since WiFi works differently there. However, on
-sc7280 devices we were still getting the message at bootup after
-commit 7bd6680b47fa ("Revert "Revert "arm64: dma: Drop cache
-invalidation from arch_dma_prep_coherent()"""):
+Hi Juerg,
 
- qcom_scm firmware:scm: Assign memory protection call failed -22
- qcom_rmtfs_mem 9c900000.memory: assign memory failed
- qcom_rmtfs_mem: probe of 9c900000.memory failed with error -22
+On Fri, Jun 16, 2023 at 02:28:15PM +0200, Juerg Haefliger wrote:
+> Add missing MODULE_FIRMWARE macros and remove some for firmwares that
+> the driver no longer references.
+> 
+> Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 23 ++++++++++++++++++----
+>  1 file changed, 19 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 8cff86e9d35c..9f70d7c1a72a 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -364,17 +364,32 @@ MODULE_FIRMWARE("qcom/a330_pm4.fw");
+>  MODULE_FIRMWARE("qcom/a330_pfp.fw");
+>  MODULE_FIRMWARE("qcom/a420_pm4.fw");
+>  MODULE_FIRMWARE("qcom/a420_pfp.fw");
+> +MODULE_FIRMWARE("qcom/a506_zap.mdt");
+> +MODULE_FIRMWARE("qcom/a508_zap.mdt");
+> +MODULE_FIRMWARE("qcom/a512_zap.mdt");
+>  MODULE_FIRMWARE("qcom/a530_pm4.fw");
+>  MODULE_FIRMWARE("qcom/a530_pfp.fw");
+>  MODULE_FIRMWARE("qcom/a530v3_gpmu.fw2");
+>  MODULE_FIRMWARE("qcom/a530_zap.mdt");
+> -MODULE_FIRMWARE("qcom/a530_zap.b00");
+> -MODULE_FIRMWARE("qcom/a530_zap.b01");
+> -MODULE_FIRMWARE("qcom/a530_zap.b02");
+> +MODULE_FIRMWARE("qcom/a540_gpmu.fw2");
+> +MODULE_FIRMWARE("qcom/a540_zap.mdt");
+> +MODULE_FIRMWARE("qcom/a615_zap.mdt");
+>  MODULE_FIRMWARE("qcom/a619_gmu.bin");
+>  MODULE_FIRMWARE("qcom/a630_sqe.fw");
+>  MODULE_FIRMWARE("qcom/a630_gmu.bin");
+> -MODULE_FIRMWARE("qcom/a630_zap.mbn");
+> +MODULE_FIRMWARE("qcom/a630_zap.mdt");
+> +MODULE_FIRMWARE("qcom/a640_gmu.bin");
+> +MODULE_FIRMWARE("qcom/a640_zap.mdt");
+> +MODULE_FIRMWARE("qcom/a650_gmu.bin");
+> +MODULE_FIRMWARE("qcom/a650_sqe.fw");
+> +MODULE_FIRMWARE("qcom/a650_zap.mdt");
+> +MODULE_FIRMWARE("qcom/a660_gmu.bin");
+> +MODULE_FIRMWARE("qcom/a660_sqe.fw");
+> +MODULE_FIRMWARE("qcom/a660_zap.mdt");
+> +MODULE_FIRMWARE("qcom/leia_pfp_470.fw");
+> +MODULE_FIRMWARE("qcom/leia_pm4_470.fw");
+> +MODULE_FIRMWARE("qcom/yamato_pfp.fw");
+> +MODULE_FIRMWARE("qcom/yamato_pm4.fw");
 
-We should mark SCM properly just like we did for trogdor.
+You should rebase this on top of the latest -next since the a690 needs
+to be added as well.
 
-Fixes: 7bd6680b47fa ("Revert "Revert "arm64: dma: Drop cache invalidation from arch_dma_prep_coherent()""")
-Fixes: 7a1f4e7f740d ("arm64: dts: qcom: sc7280: Add basic dts/dtsi files for sc7280 soc")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-I marked this as "Fixes" for the patch that first added the SCM node
-to sc7280. Given all the reorganization of the files it wouldn't be
-all that easy to really backport it to there, but that should be
-OK. Things seemed to work fine before commit 7bd6680b47fa ("Revert
-"Revert "arm64: dma: Drop cache invalidation from
-arch_dma_prep_coherent()""") anyway.
-
-Changes in v2:
-- sc7280 patch new for v2.
-
- arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 5 +++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi               | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-index f562e4d2b655..2e1cd219fc18 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-@@ -79,6 +79,11 @@ &remoteproc_wpss {
- 	firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
- };
- 
-+&scm {
-+	/* TF-A firmware maps memory cached so mark dma-coherent to match. */
-+	dma-coherent;
-+};
-+
- &wifi {
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 2fd1d3c0eb34..36f0bb9b3cbb 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -656,7 +656,7 @@ memory@80000000 {
- 	};
- 
- 	firmware {
--		scm {
-+		scm: scm {
- 			compatible = "qcom,scm-sc7280", "qcom,scm";
- 		};
- 	};
--- 
-2.41.0.162.gfafddb0af9-goog
+Brian
 
