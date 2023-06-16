@@ -2,54 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 238A6733001
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48C27733091
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:58:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233657AbjFPLjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 07:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55892 "EHLO
+        id S232403AbjFPL6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 07:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229762AbjFPLjE (ORCPT
+        with ESMTP id S1345209AbjFPL57 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 07:39:04 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D0722295B;
-        Fri, 16 Jun 2023 04:39:03 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8854C1FB;
-        Fri, 16 Jun 2023 04:39:47 -0700 (PDT)
-Received: from [10.57.85.251] (unknown [10.57.85.251])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1EF193F5A1;
-        Fri, 16 Jun 2023 04:39:00 -0700 (PDT)
-Message-ID: <e9939011-cd7d-ab22-b271-f2e9d591576a@arm.com>
-Date:   Fri, 16 Jun 2023 12:38:56 +0100
+        Fri, 16 Jun 2023 07:57:59 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE10268B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:57:58 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9786fc23505so83818666b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:57:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686916677; x=1689508677;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aCcBymWVvFUYBpDZiz8yU1Vny7cOsw1jZWNc7ndk0g0=;
+        b=gqCyE0hmXsh5+SvPr4OtsUuNGaxP4q3VKwqLomoxeLqsyxVvM54E9sDqWkU7Bh1nJ1
+         Mzqu5MZLDqSPGBAQFRES9i88e7cqUWq6rnwxNXNL7tzsoi2f7mRzHtt2Gm+WzMzSR/Qh
+         cssftCLEP0z0dXLpUOSEog8oIUg3lBKoxv9LrW3+Sq8+zyzfo8n5twzwQrkonoMRcCe2
+         Ct9CrZ4L3ceZ5ReVNuxtBnJJmZQkhd9ltJBbHgzZaemGxAxeaoHPWQqPpNRF62TRAEft
+         bz9A1iWyo9/1VRN/1G5UC3rpjbV1w3tMVut/aeuWu8n3DiLa7AQQj3Ed59gUf88Hx2QT
+         //PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686916677; x=1689508677;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aCcBymWVvFUYBpDZiz8yU1Vny7cOsw1jZWNc7ndk0g0=;
+        b=P/R2XjEt/KeDZGSQUffk3ebRdn+Y75zdP+zfsqHQKd1P/dKJEtNt1x4fl5txauhsnV
+         1wAIcmKNbmfomUppXWku2AfMkPL8fxGbFxi8WztnEcC1A3NZKzfoKdGF9xju0buGYfC2
+         js37CRVz0PKUpJkmGAbTdSUsq1g41CSUEAHha0YSUrv5R7JgBgxaMjJ4wRhRaBYcG6Vi
+         SfP2zXsgAGI0IY1QTstiZzEcFJcq9RrBPnHK0BXYwiaAZL8NSmH0ufvyqTPtj8H7SCnk
+         N8BbTIHiXFh++/uOojDGuAC+z3jH5bnrHpnaApFJdhZmCrlRGORoyMxnQ4QJFVvNvibe
+         eZgg==
+X-Gm-Message-State: AC+VfDykE02fcO79HqR8XDu7rWR7Rn7GLEEKsZZB1eLJob3u17yM70nO
+        Of8hZ0iOi5YbB/P8q1xwBhlk5w==
+X-Google-Smtp-Source: ACHHUZ6vE3R7qCnh2PCNxWO4ZDi/LEFRqmkN2EuSjzOX5wnWLJIPzyKm2jXbyfA+JjRibTxAsX8UkA==
+X-Received: by 2002:a17:906:f1c3:b0:974:419d:7837 with SMTP id gx3-20020a170906f1c300b00974419d7837mr1304247ejb.34.1686916676767;
+        Fri, 16 Jun 2023 04:57:56 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id g19-20020a17090613d300b0097889c33582sm10723823ejc.215.2023.06.16.04.57.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jun 2023 04:57:56 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Patrick Lai <quic_plai@quicinc.com>
+Subject: [PATCH v4 1/2] ASoC: dt-bindings: qcom,wsa8840: Add WSA884x family of speakers
+Date:   Fri, 16 Jun 2023 13:57:50 +0200
+Message-Id: <20230616115751.392886-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] Revert "Revert "Revert "arm64: dma: Drop cache
- invalidation from arch_dma_prep_coherent()"""
-Content-Language: en-GB
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Will Deacon <will@kernel.org>, andersson@kernel.org,
-        amit.pundir@linaro.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@somainline.org, Sibi Sankar <quic_sibis@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        sumit.semwal@linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Marc Zyngier <maz@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20230614165904.1.I279773c37e2c1ed8fbb622ca6d1397aea0023526@changeid>
- <36565295-ebaa-2a66-3389-ba5eb714ab34@arm.com>
- <CAD=FV=W7HXYRJ7RUeVH0hQ7KjYtEvNABCi-F4iN_wRO6uuC34w@mail.gmail.com>
- <34c7c65f-e09f-fa55-c1b9-de08d71a1ac7@arm.com>
- <CAD=FV=UEx+71U5-WWL6c8vwqUg0Asceoz1aCd3YBub9-FcL61g@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <CAD=FV=UEx+71U5-WWL6c8vwqUg0Asceoz1aCd3YBub9-FcL61g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,70 +82,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-15 23:00, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Jun 15, 2023 at 12:04 PM Robin Murphy <robin.murphy@arm.com> wrote:
->>
->>> Presumably the fact that the firmware gets a physical address means
->>> that the firmware needs to map this address somehow itself. I can try
->>> to dig up what the firmware is doing if needed (what attributes it
->>> uses to map), but I guess the hope is that it shouldn't matter.
->>
->> It absolutely matters. Linux has been told (by DT) that this device does
->> not snoop caches, and therefore is acting on that information by using
->> the non-cacheable remap. There is nothing inherently wrong with that,
->> even when the "device" is actually firmware running on the same CPU -
->> EL3 could well run with the MMU off, or just make a point of not
->> accessing Non-Secure memory with cacheable attributes to avoid
->> side-channels. However if in this case the SCM firmware *is* using
->> cacheable attributes, as the symptoms would suggest, then either the
->> firmware or the DT is wrong, and there is nothing Linux can do to
->> completely fix that.
-> 
-> With help from minecrell on IRC, we've found that firmare _does_ map
-> it as cachable.
-> 
-> 
->>> If this wild guessing is
->>> correct, maybe a more correct solution would be to simply unmap the
->>> memory from the kernel before passing the physical address to the
->>> firmware, if that's possible...
->>
->> Having now looked at the SCM driver, TBH it doesn't make an awful lot of
->> sense for it to be using dma_alloc_coherent() there anyway - it's not
->> using it as a coherent buffer, it's doing a one-off unidirectional
->> transfer of a relatively small amount of data in a manner which seems to
->> be exactly the usage model for the streaming DMA API. And I think using
->> the latter would happen to mitigate this problem too - with streaming
->> DMA you'd put the dma_map_page() call *after* all the buffer data has
->> been written, right before the SMC call, so even with a coherency
->> mismatch there would essentially be no opportunity for the caches to get
->> out of sync.
-> 
-> Switching to the streaming API for this function _does_ work, but for
-> now I'm not going to make this switch and instead going to go with the
-> fix to add "dma-coherent" [1]. That seems like the more correct fix
-> instead of just a mitigation.
+Add binding for WSA8840/WSA8845/WSA8845H smart speaker amplifiers used
+in Qualcomm QRD8550 board with SM8550 SoC.
 
-Sure, if you're confident that it will *always* use cacheable attributes 
-for any shared-memory "DMA", that makes sense.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> If someone wants to switch the SCM
-> driver to the streaming APIs, that'd be cool too. On IRC, minecrell
-> pointed out that at least one function in this file,
-> qcom_scm_ice_set_key(), purposely didn't use the streaming APIs.
+---
 
-The joke there being that memzero_explicit() on the non-cacheable alias 
-means a cached copy of the key data could still be visible via the 
-linear map address after the buffer is freed - especially if one can 
-rely on TF-A having just pulled the whole lot into caches by reading it 
-through a read-write-allocate MT_MEMORY mapping. Security is hard :)
+Changes in v4:
+1. None.
 
-Thanks,
-Robin.
+Changes in v3:
+1. None.
 
-> 
-> [1] https://lore.kernel.org/r/20230615145253.1.Ic62daa649b47b656b313551d646c4de9a7da4bd4@changeid
-> 
-> -Doug
+Changes in v2:
+1. Correct compatible (sdw version 1 -> 2).
+
+Cc: Patrick Lai <quic_plai@quicinc.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+ .../bindings/sound/qcom,wsa8840.yaml          | 66 +++++++++++++++++++
+ 1 file changed, 66 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+new file mode 100644
+index 000000000000..e6723c9e312a
+--- /dev/null
++++ b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/sound/qcom,wsa8840.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm WSA8840/WSA8845/WSA8845H smart speaker amplifier
++
++maintainers:
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
++
++description:
++  WSA884X is a family of Qualcomm Aqstic smart speaker amplifiers using
++  SoundWire digital audio interface.
++
++allOf:
++  - $ref: dai-common.yaml#
++
++properties:
++  compatible:
++    const: sdw20217020400
++
++  reg:
++    maxItems: 1
++
++  powerdown-gpios:
++    description: Powerdown/Shutdown line to use (pin SD_N)
++    maxItems: 1
++
++  '#sound-dai-cells':
++    const: 0
++
++  vdd-1p8-supply: true
++  vdd-io-supply: true
++
++required:
++  - compatible
++  - reg
++  - powerdown-gpios
++  - '#sound-dai-cells'
++  - vdd-1p8-supply
++  - vdd-io-supply
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    soundwire-controller {
++        #address-cells = <2>;
++        #size-cells = <0>;
++
++        speaker@0,1 {
++            compatible = "sdw20217020400";
++            reg = <0 1>;
++            pinctrl-names = "default";
++            pinctrl-0 = <&spkr_2_sd_n_active>;
++            powerdown-gpios = <&lpass_tlmm 18 GPIO_ACTIVE_LOW>;
++            #sound-dai-cells = <0>;
++            sound-name-prefix = "SpkrRight";
++            vdd-1p8-supply = <&vreg_l15b_1p8>;
++            vdd-io-supply = <&vreg_l3g_1p2>;
++        };
++    };
+-- 
+2.34.1
+
