@@ -2,79 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98BE273372F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 19:10:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FF17733783
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 19:36:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345774AbjFPRK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 13:10:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51888 "EHLO
+        id S1343765AbjFPRg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 13:36:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232913AbjFPRK0 (ORCPT
+        with ESMTP id S232984AbjFPRgN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 13:10:26 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A891BE3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 10:10:25 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id 6a1803df08f44-62dee1b51f9so5323776d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 10:10:25 -0700 (PDT)
+        Fri, 16 Jun 2023 13:36:13 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6215C269E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 10:36:11 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-982a99fda0dso134670766b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 10:36:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686935424; x=1689527424;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=13Ub72LeNXocacDH8iq4dsRSC3PCfVbZC0BT5ktGknQ=;
-        b=K2++xF6Vx0ws0J6uj4X1wisvjM3l1xIveAWOl4e8+ZmaBcxl2KJFMRX1zv2Ry7JpzG
-         9+2RZsQY1ijumTVgctdxPIY1c0QMyWbastHlS0wIXF4T2df1S883+ivLHJbbO+WPr6/T
-         u1kl9G4+vq+KnRvA6kTpb+e9d26pE90sUOQjvp/OlBAy/CbbHrZ+KTRRPX2x2y3KzkWE
-         EpPedQJfPjWcRF5aRfx/5CIvpy1hNquop+wtUSRpk5oWBvzEX5lxD1xIBbQusErwtAq+
-         ns64wLHnszc2Q7Smw/uCWh1uRgT4y41L+S95OJXE15WYXJltPvllZ6SroP5bgIwTUPnL
-         LsVg==
+        d=linaro.org; s=google; t=1686936970; x=1689528970;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HD+KUO8gGiub5XefT2UWijfTQbimFI/ieVQFXgYHnZ4=;
+        b=NIELEaa4KLYPRap52X2bgsqLdJTLqA6KJIkQNUGj9ZlBpvwqH8/JGsYETTRHTWyzmy
+         cHcIKmsuMllSrpCdEAx/XyQeUDh2346XIMfy6z71kV/RN6FdHadMDEqnJ63isKkkv5x5
+         2gr4zCiQXyE9jzzCn2FfoVtv6wpTbJz2bQdUcEo8O4wDofRpNAuSdH8c5qP94/prQyJC
+         Zp5qSJfcTG7nPVY2n7LkPgcpQ8ifJ97fr498Muz80xnk1C8g2wA1Gx2KLrXogp2Oa5HB
+         4LjOo2F6WONKvqqWO56L8XY0UR+5hdbxwDiQIltlbkB4/Cwn8kwc4bqYV1rVPEggtuGY
+         HXWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686935424; x=1689527424;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=13Ub72LeNXocacDH8iq4dsRSC3PCfVbZC0BT5ktGknQ=;
-        b=hRA/JGHnq9o7MAxJmkSyOaQ6UM76IPUpOFJI6HHncWr6sp5Uz7dkQpNDN/P3wyq9qy
-         icYJiF6qn637AL9xVm51SdgnL59yhsnFMs5QHNvnDOmanwo7b57KNDgdMzu6ttnEhcM/
-         ykCU3QDXCf6cxzxznfc//phhZMpsXIfdKM5K30nanQtL+WhjoDxO9jRArE5jQR93eUBX
-         qLyEIPhi4Tz+JAS8MRpFFNtuH0nQ0eVjuOZuqPpNQS2UbeyQ4qvVUVA0GAgisJ1MnoBt
-         WW/rxrnqxdHDoITyvo+yM30LNbQ/GDX6dWD4osoQsZtOld+rHAl2qZpuPeGhzJPZ0QZr
-         DnTQ==
-X-Gm-Message-State: AC+VfDwxSjy0fhtpBwbn0jVthVZswNhoqYIR+40fsWankA3WIn2D/iq2
-        tx+NqwvzxNNhb5X/tE8eaWm2yKxnUf8405xXuW9uqA==
-X-Google-Smtp-Source: ACHHUZ6lpFZ09A9IHX3P4ygHt4+nMALCSy4x/x3LBageSe+7wXjEyTwO2TPHfFUg00vHZLl+yvNChqtDn2H/xoOW7GA=
-X-Received: by 2002:a05:6214:1c0a:b0:62d:ddeb:3770 with SMTP id
- u10-20020a0562141c0a00b0062dddeb3770mr8653889qvc.0.1686935424170; Fri, 16 Jun
- 2023 10:10:24 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686936970; x=1689528970;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HD+KUO8gGiub5XefT2UWijfTQbimFI/ieVQFXgYHnZ4=;
+        b=C+pF9NWYRLTNJs8hDl+KeAOFmTSxHFlcgY+SqSnwp5B+70ag4Jy0JMYHPATfdm8xq0
+         Mr/IUYMNdyUrT+kjhEI/cSxD0YTXdpThg6TL672jBeCM7Y442F5YIDtwFZlzoT0uCtqE
+         QL/f8XRB4MrxXrmn6+9vpZF0Mo73adMshWXHwutJtt6KmianEK+5LmL03yQWaCFubo7E
+         G0eC7hoDQIYv4G4543kpCJjxSSlDJAJnNQg7Xl+MgB6JAOoVhc4dc2bqvqGaLKafYMjc
+         wbglyt0qREMVYV2BiTe6GfKv1rlnNjlK+5RzjNMF75OqLteTmp+7QcKTDh0lQop68N3N
+         bv8w==
+X-Gm-Message-State: AC+VfDwY1QqSq/rFk+XaJw+J/WnrUh++qmCgI3RprpnBSWG0v1d1ntAI
+        nLa0Kx1VfgEU7q4FypDH0GUU9Q==
+X-Google-Smtp-Source: ACHHUZ7jQk/KIU+7R23RqyFTBEqCKwkT4bdNIjjTOmICI0KKAp5gNEFBVUctXvBtIoqNiZWl1MwoEQ==
+X-Received: by 2002:a17:907:7255:b0:987:1d27:61e4 with SMTP id ds21-20020a170907725500b009871d2761e4mr190425ejc.26.1686936969862;
+        Fri, 16 Jun 2023 10:36:09 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id k19-20020a170906129300b0097381fe7aaasm10959445ejb.180.2023.06.16.10.36.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jun 2023 10:36:09 -0700 (PDT)
+Message-ID: <d239ad07-fbdd-16fa-3555-5bcf33c67059@linaro.org>
+Date:   Fri, 16 Jun 2023 19:36:07 +0200
 MIME-Version: 1.0
-References: <20230602161246.1855448-1-amit.pundir@linaro.org>
- <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info> <0f6c9dcb-b7f6-fff9-6bed-f4585ea8e487@linaro.org>
- <CAMi1Hd3Cv1i06NhpY6Jqu7OvMpOdzTj6nTEMJNWLrMwMLsugZA@mail.gmail.com>
- <CAMi1Hd0=KV7k82ARadF45nqX+Cv6zPLCxfDvOyAPeXiFd8jpVA@mail.gmail.com>
- <0ec6c988-d678-c96c-a7a2-af38e6701404@linaro.org> <CAMi1Hd33_Ccxkf9C5_QBO3tvOZcGnYh+_CKcACUtoY2qAuOzRA@mail.gmail.com>
- <12d6b687-5e5a-bd7c-ff5c-007a74753edb@linaro.org>
-In-Reply-To: <12d6b687-5e5a-bd7c-ff5c-007a74753edb@linaro.org>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Fri, 16 Jun 2023 22:39:47 +0530
-Message-ID: <CAMi1Hd2H2aA6EYp5-46dWe0eu0_hAWUumoQbnk7WR0q9bhppog@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes up
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Linux regressions mailing list <regressions@lists.linux.dev>,
-        Mark Brown <broonie@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v8 10/11] arm64: dts: qcom: sm8350: Add Crypto Engine
+ support
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
+        rfoss@kernel.org, neil.armstrong@linaro.org, djakov@kernel.org,
+        stephan@gerhold.net, Anders Roxell <anders.roxell@linaro.org>,
+        Linux Kernel Functional Testing <lkft@linaro.org>
+References: <20230526192210.3146896-1-bhupesh.sharma@linaro.org>
+ <20230526192210.3146896-11-bhupesh.sharma@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230526192210.3146896-11-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,44 +83,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 26/05/2023 21:22, Bhupesh Sharma wrote:
+> Add crypto engine (CE) and CE BAM related nodes and definitions to
+> 'sm8350.dtsi'.
+> 
+> Tested-by: Anders Roxell <anders.roxell@linaro.org>
+> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> Co-developed-by and Signed-off-by: Robert Foss <rfoss@kernel.org>
+> [Bhupesh: Switch to '#interconnect-cells = <2>', available since commit 4f287e31ff5f]
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
 
-On Fri, 16 Jun 2023 at 13:57, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
->
-> So you have interconnect as module - this is not a supported setup. It
-> might work with if all the modules are loaded very early or might not.
-> Pinctrl is another driver which should be built-in.
->
-> With your defconfig I see regular issue - console and system dies
-> because of lack of interconnects, most likely. I don't see your WARNs -
-> I just see usual hang.
->
-> See:
-> https://lore.kernel.org/all/20221021032702.1340963-1-krzysztof.kozlowski@linaro.org/
->
-> If you want them to really be modules, then you need to fix all the
-> dependencies (SOFTDEP?), probe ordering glitches. It's not a problem of
-> DTS. Just because something can be built as module, does not mean it
-> will work. We don't test it, we don't work with them as modules.
+#regzbot introduced: f1040a7fe8f069d2259ab3dab9190210005ceb33
+#regzbot title: HDK8350 silently crashes early on boot
 
-I do somewhat agree with most of your arguments but not this one. If a
-driver doesn't work as a module then it shouldn't be allowed to build
-as a module. I took a quick look at the history of the interconnect
-driver and it is tristate from the beginning. And not converted to a
-modular build later-on like some of the other drivers to support GKI.
+Hi, this landed in the next but unfortunately it causes silent crash
+(and reboot) of HDK8350. Reverting this commit helps.
 
->
-> It's kind of the same as here:
-> https://lore.kernel.org/all/ac328b6a-a8e2-873d-4015-814cb4f5588e@canonical.com/
->
-> I understand that we might have here regression, if these were working
-> as modules, but I don't think we ever really committed to it. We can as
-> well make it non-module to solve the regression.
+Log is more or less like:
 
-Sure. But since v6.4 is around the corner, can we merge this
-workaround for now, while a proper fix is being worked upon.
+[    1.359340] Bluetooth: HCI UART driver ver 2.3
+[    1.363929] Bluetooth: HCI UART protocol H4 registered
+[    1.369243] Bluetooth: HCI UART protocol LL registered
+[    1.374639] Bluetooth: HCI UART protocol Broadcom registered
+[    1.380476] Bluetooth: HCI UART protocol QCA registered
+[    1.385868] Bluetooth: HCI UART protocol Marvell registered
+[    1.391623] usbcore: registered new interface driver btusb
+[    1.397273] ghes_edac: GHES probing device list is empty
+[    1.400305] sdhci: Secure Digital Host Controller Interface driver
+[    1.412124] sdhci: Copyright(c) Pierre Ossman
+[    1.417494] Synopsys Designware Multimedia Card Interface Driver
+[    1.424823] sdhci-pltfm: SDHCI platform and OF driver helper
+[    1.433783] ledtrig-cpu: registered to indicate activity on CPUs
+[    1.442236] usbcore: registered new interface driver usbhid
+[    1.447982] usbhid: USB HID core driver
+[    1.457065] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7
+counters available
+[    1.473760] NET: Registered PF_PACKET protocol family
+[    1.479044] 9pnet: Installing 9P2000 support
+[    1.483491] Key type dns_resolver registered
+[    1.496583] registered taskstats version 1
+[    1.500951] Loading compiled-in X.509 certificates
+[    1.519456] platform 18200000.rsc:regulators-0: Fixed dependency
+cycle(s) with /soc@0/rsc@18200000/regulators-0/smps11
+[    1.530916] platform 18200000.rsc:regulators-1: Fixed dependency
+cycle(s) with /soc@0/rsc@18200000/regulators-0/smps12
+[    1.541906] platform 18200000.rsc:regulators-1: Fixed dependency
+cycle(s) with /soc@0/rsc@18200000/regulators-1/bob
+[    1.552625] platform 18200000.rsc:regulators-1: Fixed dependency
+cycle(s) with /soc@0/rsc@18200000/regulators-1/smps1
+[    1.563730] vreg_s10b_1p8: Setting 1800000-1800000uV
+[    1.564861] vreg_s1c_1p86: Setting 1856000-1880000uV
+[    1.569411] vreg_s11b_0p95: Setting 952000-952000uV
+[    1.574304] vreg_bob: Setting 3008000-3960000uV
+[    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
+Optional Info
+Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
+S - IMAGE_VARIANT_STRING=SocLahainaLAA
+S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
+S - Boot Interface: UFS
+S - Secure Boot: Off
 
-Regards,
-Amit Pundir
+defconfig with builtin INTERCONNECT_QCOM_SM8350 and several other options.
+
+Can it be that some dependency is missing in linux-next or Bjorn's tree?
+Shall we revert it?
+
+Best regards,
+Krzysztof
+
