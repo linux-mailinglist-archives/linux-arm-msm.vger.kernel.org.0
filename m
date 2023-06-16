@@ -2,59 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CD88732ECD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:37:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DB64732F00
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:46:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345280AbjFPKhY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 06:37:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58256 "EHLO
+        id S1345394AbjFPKqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 06:46:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345377AbjFPKeu (ORCPT
+        with ESMTP id S1345873AbjFPKph (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 06:34:50 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E3D630F1;
-        Fri, 16 Jun 2023 03:28:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EAC38636D1;
-        Fri, 16 Jun 2023 10:28:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188A7C433C9;
-        Fri, 16 Jun 2023 10:28:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686911283;
-        bh=kFhzkGd95i1D4e3OhqkRKeyrJNwwBj0RlloZMpmVPV4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kpQ26WABEPLmA1niE11lJLP1lLEIDH2GkMFIOE2LAEj6vhu04J3Za5ZF+cBlL7Oe6
-         JP/7WpaR7CB3XgCdE/h826z5WFusoORLZYFjrWcMDOh1zHhvf++SRg8STHI8kvPAdz
-         d3IcpTTRr0I2EJ4vyNHLuhVZHPZ+g5dVHYX+VPeVLf7hdpUAiLmBEmnLvwIY2qvVjK
-         zKLkkj54lfgk6PooRG18YNrn37vidsmBudvkyYMmYH8unsBPrGjEgWbJ3ei+g4RKCs
-         i3FGPGQ+rbYrRhmoGoKsyrzODZyrm4Fjk228MWplMOQx8PnY47k+CIsCAAIpCZPJqH
-         ZG8i7hzYgIrcQ==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        agross@kernel.org, andersson@kernel.org,
-        yung-chuan.liao@linux.intel.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org
-Subject: [PATCH AUTOSEL 5.10 05/14] soundwire: qcom: add proper error paths in qcom_swrm_startup()
-Date:   Fri, 16 Jun 2023 06:27:42 -0400
-Message-Id: <20230616102753.673975-5-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230616102753.673975-1-sashal@kernel.org>
-References: <20230616102753.673975-1-sashal@kernel.org>
+        Fri, 16 Jun 2023 06:45:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD221131F8;
+        Fri, 16 Jun 2023 03:38:13 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35G9g8b5029333;
+        Fri, 16 Jun 2023 10:36:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=TiNH25i3b4SVV5Pb7GZe9FH60iyTKtljgRq+2ljwzCI=;
+ b=WtqFtZh4/ge8G6e/9MVREysg6ktay9t7AAlqnHVWpkhpMlZbQps+RS8ucnsUMDQDZ0Lc
+ LDU9LJM/fS54ilx85QzeGEZvx3luiJ9KJBveEfbQYt+ij+wCnA9fB+NEOFEPz1dkmJD9
+ EfB9duh7GCVAOzvcKHWwge9x32fI403/aaUEIP3ke6smDAnLzvsZpVcXp5AQatvpyWog
+ phxjSsQ+uwUjD/PomlkHA2AJxLPlU5lxN4BHJHIsERi/i+U6+T9vmuKmIYYysGr8uNuB
+ m6YnbcdisLF4rbZIOdlvBpDncqfocIPop87dUn59uD7uET+HxQYenJD3Scs2t0ka5CzR MA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r8axuh5n1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 16 Jun 2023 10:36:50 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35GAan5n020410
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 16 Jun 2023 10:36:49 GMT
+Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 16 Jun 2023 03:36:44 -0700
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+To:     <krzysztof.kozlowski+dt@linaro.org>, <swboyd@chromium.org>,
+        <andersson@kernel.org>, <broonie@kernel.org>, <agross@kernel.org>
+CC:     <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <konrad.dybcio@linaro.org>, <dianders@chromium.org>,
+        <judyhsiao@chromium.org>, <quic_visr@quicinc.com>,
+        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Subject: [RESEND v6 0/8] Add SC7280 audioreach device tree nodes
+Date:   Fri, 16 Jun 2023 16:05:26 +0530
+Message-ID: <20230616103534.4031331-1-quic_mohs@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.184
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mMGKZnWTTbq8oXw54v3GbD0XAVMGQjc7
+X-Proofpoint-GUID: mMGKZnWTTbq8oXw54v3GbD0XAVMGQjc7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-16_06,2023-06-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ mlxscore=0 suspectscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ priorityscore=1501 clxscore=1011 phishscore=0 lowpriorityscore=0
+ mlxlogscore=942 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306160095
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,61 +80,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Add SC7280 audioreach device tree nodes and extract audio specific
+dtsi nodes and add them in new file.
 
-[ Upstream commit 99e09b9c0ab43346c52f2787ca4e5c4b1798362e ]
+Changes Since v5:
+    -- Re-arrange the patch list, driver changes should come after binding.
+    -- Remove incorrect dai cells property in "Add sound node for crd-rev3 board" patch.
+    -- Remove newlines in "Add LPASS PIL node" patch.
+    -- Update the commit message in "Update VA/RX/TX macro clock nodes" patch.
+    -- Update the commit message in "Update lpass_tlmm node" patch.
+Changes Since v4:
+    -- Modify lpasscc clock controller node name.
+    -- Disable lpass_core node.
+    -- Modify Model name in sound node in "Add sound node for crd-rev3 board" patch.
+    -- Remove protection domain property in "Add LPASS PIL node".
+Changes Since v3:
+    -- Remove deleting digital codecs in crd-rev3 board specific dtsi and upadate them using phandle.
+    -- Update commit message in "Update lpass_tlmm node" patch.
+    -- Change the position of status property in LPASS PIL node.
+    -- Update commit message in "Add sound node" patch.
+Changes Since v2:
+    -- Remove Patch related to Add CGCR reset property.
+    -- Remove Patch related to Disable legacy path clock nodes.
+    -- Add dt-bindings for missing properties.
+    -- Change the order of nodes.
+    -- Move digictal codec macro nodes to root node from soc node.
+    -- Add adsp-pil-mode property in required clock nodes.
+Changes Since v1:
+    -- Move remoteproc node to soc dtsi file.
+    -- Add qcom, adsp-pil-mode reg property in lpasscc node.
+    -- Fix typo errors.
+    -- Remove redundant status properties.
 
-Reverse actions in qcom_swrm_startup() error paths to avoid leaking
-stream memory and keeping runtime PM unbalanced.
+Srinivasa Rao Mandadapu (8):
+  arm64: dts: qcom: sc7280: Modify lpasscc node name
+  dt-bindings: remoteproc: qcom: sc7280-adsp-pil: Add missing properties
+  arm64: dts: qcom: sc7280: Extract audio nodes from common idp dtsi
+    file
+  arm64: dts: qcom: sc7280: Add sound node for crd-rev3 board
+  arm64: dts: qcom: sc7280: Add LPASS PIL node
+  arm64: dts: qcom: sc7280: Modify VA/RX/TX macro clock nodes for
+    audioreach solution
+  arm64: dts: qcom: sc7280: Modify LPASS_MCC reg region size in the
+    lpass_tlmm node
+  arm64: dts: qcom: sc7280: Add qcom,adsp-pil-mode property in clock
+    nodes
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230517163736.997553-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/soundwire/qcom.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ .../remoteproc/qcom,sc7280-adsp-pil.yaml      |  30 ++-
+ .../arm64/boot/dts/qcom/sc7280-audio-idp.dtsi | 131 +++++++++
+ arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts    |   1 +
+ .../sc7280-herobrine-audioreach-wcd9385.dtsi  | 253 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      | 122 ---------
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |   4 +-
+ 6 files changed, 413 insertions(+), 128 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index ac73258792e6c..68ec7fde48cba 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -643,8 +643,10 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
- 	int ret, i;
- 
- 	sruntime = sdw_alloc_stream(dai->name);
--	if (!sruntime)
--		return -ENOMEM;
-+	if (!sruntime) {
-+		ret = -ENOMEM;
-+		goto err_alloc;
-+	}
- 
- 	ctrl->sruntime[dai->id] = sruntime;
- 
-@@ -654,12 +656,19 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
- 		if (ret < 0 && ret != -ENOTSUPP) {
- 			dev_err(dai->dev, "Failed to set sdw stream on %s",
- 				codec_dai->name);
--			sdw_release_stream(sruntime);
--			return ret;
-+			goto err_set_stream;
- 		}
- 	}
- 
- 	return 0;
-+
-+err_set_stream:
-+	sdw_release_stream(sruntime);
-+err_alloc:
-+	pm_runtime_mark_last_busy(ctrl->dev);
-+	pm_runtime_put_autosuspend(ctrl->dev);
-+
-+	return ret;
- }
- 
- static void qcom_swrm_shutdown(struct snd_pcm_substream *substream,
 -- 
-2.39.2
+2.25.1
 
