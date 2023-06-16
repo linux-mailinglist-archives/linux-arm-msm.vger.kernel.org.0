@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55E6B732E0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE326732E50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:31:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344000AbjFPK3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 06:29:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50008 "EHLO
+        id S1344936AbjFPKbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 06:31:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344061AbjFPK2v (ORCPT
+        with ESMTP id S1345098AbjFPKa1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 06:28:51 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C292230FC;
-        Fri, 16 Jun 2023 03:26:47 -0700 (PDT)
+        Fri, 16 Jun 2023 06:30:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E454A4EE6;
+        Fri, 16 Jun 2023 03:27:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 43D306364D;
-        Fri, 16 Jun 2023 10:26:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770DBC433C0;
-        Fri, 16 Jun 2023 10:26:41 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BEC8F6364D;
+        Fri, 16 Jun 2023 10:27:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19CAC433C8;
+        Fri, 16 Jun 2023 10:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686911202;
-        bh=9gVndDDGD3GB5YZiZTn+lErzwx67qIfGPxOubXPSXPE=;
+        s=k20201202; t=1686911252;
+        bh=e0FqgMXuLmowGZmYZK4dy55udaFDEqsCTjD3af4rmvQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YeXUuc34FCH8NTyCplbJ7WXDhTemElK4rEKmxW3NRn7K5dSsDzWzWpR2DCGuPhAwi
-         EFy4HzjjBMTC7XLivNMWDG4auWgpjzw9esTCRAc/ZjQOnp4sw0Y2LDTIxoPmIPd/QF
-         G77UuXdiGDysSaU1sJa04RwQWYlWldcwJwLggyMXTNanK2b3hoXirL4HtMyb5fBhc1
-         4QeJIbxuONI7tl3O0DzHMuSa+cSszGJ4OOlR3zCQTx1QrpAIc/HFKbCG4PTbVRj6J1
-         0ZTsHbRjYqArEOoZqTlhlwrMzupdl8F1RTWEBqvxJwZoQ4kTe0f+E47NJWkFsJaOfb
-         I2XcGs+/IJ/OQ==
+        b=WRmD4bj0VFYlL4vJzZd0FhhvDurUMzJygdzdgn1cVRLpJfSXFnl8nMwwdrwDf+PZg
+         ZTt4Dl14MIJHYoYnO746QVTLrOUwVplHmg7eFaSeZ+QFXJ0VPLiw+NRZc0DTRf7u9T
+         8LWSs5bHHVU4FC/rcraU13ISnQz7K1BiexNdlUKEDw7jgg7Jk8y+3EtD4STq0Y91up
+         G+IhDRN5Am6lq7tCoqMEx6ye8mHhpDehk811DDDW4X+wzbBX3XZ8XLs62ygrESxHkl
+         ncd3O4HLdpqDGl9AN54mYA9FoWKmkB8qBseGVBiG1CC3EDRz1sbZUnXDhtetMNDXVf
+         YGaG8qyxljudQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -41,19 +41,19 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         agross@kernel.org, andersson@kernel.org,
         yung-chuan.liao@linux.intel.com, linux-arm-msm@vger.kernel.org,
         alsa-devel@alsa-project.org
-Subject: [PATCH AUTOSEL 6.1 09/26] soundwire: qcom: add proper error paths in qcom_swrm_startup()
-Date:   Fri, 16 Jun 2023 06:26:06 -0400
-Message-Id: <20230616102625.673454-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 06/16] soundwire: qcom: add proper error paths in qcom_swrm_startup()
+Date:   Fri, 16 Jun 2023 06:27:09 -0400
+Message-Id: <20230616102721.673775-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230616102625.673454-1-sashal@kernel.org>
-References: <20230616102625.673454-1-sashal@kernel.org>
+In-Reply-To: <20230616102721.673775-1-sashal@kernel.org>
+References: <20230616102721.673775-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.1.34
+X-stable-base: Linux 5.15.117
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,11 +79,11 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 21c50972047f5..b2eb3090f4b46 100644
+index 2ba0911f5d0cc..64b157f5f80db 100644
 --- a/drivers/soundwire/qcom.c
 +++ b/drivers/soundwire/qcom.c
-@@ -1090,8 +1090,10 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
- 	}
+@@ -1026,8 +1026,10 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
+ 	int ret, i;
  
  	sruntime = sdw_alloc_stream(dai->name);
 -	if (!sruntime)
@@ -95,7 +95,7 @@ index 21c50972047f5..b2eb3090f4b46 100644
  
  	ctrl->sruntime[dai->id] = sruntime;
  
-@@ -1101,12 +1103,19 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
+@@ -1037,12 +1039,19 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
  		if (ret < 0 && ret != -ENOTSUPP) {
  			dev_err(dai->dev, "Failed to set sdw stream on %s\n",
  				codec_dai->name);
