@@ -2,76 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3288B732FD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:29:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75534732FDB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:30:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230311AbjFPL3P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 07:29:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48000 "EHLO
+        id S235095AbjFPLae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 07:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbjFPL3O (ORCPT
+        with ESMTP id S241049AbjFPLab (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 07:29:14 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA8C11BD6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:29:12 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b445512846so7245191fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:29:12 -0700 (PDT)
+        Fri, 16 Jun 2023 07:30:31 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5572C296A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:30:29 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b3424edd5fso7627261fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:30:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686914951; x=1689506951;
+        d=linaro.org; s=google; t=1686915027; x=1689507027;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uPl/Cm9TUOIJAydXqu/DaBtxLQsqLO/czBac9wLWX/0=;
-        b=MuFnXiXNi4gk451FOYKezE9N/oK+j6bnAE5Vu7vXJ6sw14V5qVHQDl1yXoq9UmMBxO
-         3rX9ISyF8OHgdvjZ4mu9wA4sMianW8ZdW0Gos5GavFSc77y3xZMYS3oCenjXOSlgI0cg
-         J5bFDcufryPBluZKlszl9NMCjVn2rhBii2xQiRhWzooK6omvViMzxvuMQJ83DKxpDwo5
-         KV1nh6+0UZP2ZyDFb02uujrVtS8uVHC3XNlJFR7DDEDqsJca5XJseOhrJPBCWs+BtHEP
-         NbNQd6WjK3WF3ngRMJK5FA21T0IkFpnAtb67wS/MA6n5f/0cI6OcB1Rjh53DxCpTsxlV
-         ziSg==
+        bh=hWaj8V26e6AndVXAhP1UnOZRtCJHb24nNyQJnL1KfpQ=;
+        b=qsMcLbqWpaDKn5jJ3a7lh2l7ZEoQMihWU/D9Xl/C041+aVh8oEnvGGYPYeWgI//piH
+         8RKB9TSLG+GDqdw1aeL7PACdlLO5VCCDB8NLuLoXYEdPbZ4PEHZJdfVMrU0ZPbiqmCPx
+         VVQ15Kwq+qOIGF/AsyhY3pvyC1lFN4JqKcZuc7rkCxLRVEryb7uIJiyUtvBuGSw14hZ3
+         KqgKogpwOPt802SJKBQty6rmzQBRW1InBZSIkacyo/IjUeRjU+SR995A/qgHZ2heQYqp
+         mIQ5G6qeN0AlcwrWw9vGaDIdB0sLriKHrGiYMp8xxCMcztgfndwKHCBiWrGJj6Qq6CS+
+         Adig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686914951; x=1689506951;
+        d=1e100.net; s=20221208; t=1686915027; x=1689507027;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uPl/Cm9TUOIJAydXqu/DaBtxLQsqLO/czBac9wLWX/0=;
-        b=cxzcFQUN5+ZQymFuPdjYF96H63GUpVqd7FyqOBGT6Z++e6YuXkC8Ym/yBWkt1mU+TT
-         k/ODpzBBvnbkf6hzyvsztbeNXnoz8gkSzdZ89+f4NY2LNHSnG3kQSKdRKs/avnTRzEu1
-         UysVqwjv+09mvqC3pRBr0MM7runXS+rVdZXJaIJsLbvSv/DBd3RSk0ASHtTgs08KslbL
-         /MwlvemfqRWkSLtPuiuoQwVCs+P25O7DsMiWisbi7QMPC5FcM7buvg0HvLn6EB5M+WzI
-         EGRJYddzBHZ2U4Zm4rzljj92M9BzLDRA88JiQmGH1Q3Au1dUkKT3/nsRZwcWz6unKaYF
-         oOkQ==
-X-Gm-Message-State: AC+VfDyheGOexdrd5UemZ1vkF+mV9ylbkVguWXI07+lHeL89B9LA6clJ
-        /byLo9Hw0xDuUnuiIuAFqdFKtA==
-X-Google-Smtp-Source: ACHHUZ5GqF0WMOzAI6Q/BVK4J832e4ALlDR8lDuwXSJmIo5ZLqbT1NyvufaXxwDRquYbpj0l37hsoQ==
-X-Received: by 2002:a2e:3c16:0:b0:2b2:3a4:4ebe with SMTP id j22-20020a2e3c16000000b002b203a44ebemr1600689lja.48.1686914950883;
-        Fri, 16 Jun 2023 04:29:10 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id j3-20020a2e8503000000b002a8c1462ecbsm3575638lji.137.2023.06.16.04.29.09
+        bh=hWaj8V26e6AndVXAhP1UnOZRtCJHb24nNyQJnL1KfpQ=;
+        b=SEILeosax6DX/taKm+OLHOdCTxKeDZ9sp3iqsEKiLuWt344qEdwye4gI025KyDINWU
+         3bIK5wXFE8XtECfjt7eQs5q4iTTWt+LLK0Z7oenyjUaFB5K2EAgTFl/H3suEJ+VFHSGM
+         MnzjFyXbxWmiU821/Js/fFCGamJf/uhlAsYpNtokmTXlw8MJujokfFryWa4uSxcIjGaO
+         NHGuH0ncCLa5vqAxjGVavkn8fhNAqLQcCD6SyXMl7/pt1YUTgmMktZPSzuA2A8lNTVwe
+         0j0iRbND6uzRx26rjNJ4rKM5kaFUISwdHVhCng8+xv/QhzNRcr4eCwW41qAv8G43Ldow
+         zANg==
+X-Gm-Message-State: AC+VfDy6gNK9tLwSTISdcNOYCsyP34vv2o4qfoaWXpGiADeLFlAm11aU
+        QPImvchp1I/hQEhN6ZIWFS1GbQ==
+X-Google-Smtp-Source: ACHHUZ7fM7XuMr8WhrpLTJWyagGKaUPyrMK77XcC+7GWq+uy60ZRqPMZkECck0Zt0Hymekne24sv4w==
+X-Received: by 2002:a2e:9206:0:b0:2b0:259d:f670 with SMTP id k6-20020a2e9206000000b002b0259df670mr1487873ljg.4.1686915027509;
+        Fri, 16 Jun 2023 04:30:27 -0700 (PDT)
+Received: from [192.168.1.151] (85-76-68-127-nat.elisa-mobile.fi. [85.76.68.127])
+        by smtp.gmail.com with ESMTPSA id j6-20020a2eb706000000b002b34f9cfc7asm1072257ljo.90.2023.06.16.04.30.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 04:29:10 -0700 (PDT)
-Message-ID: <7d2e580e-1861-d22f-e67d-726a2a69043e@linaro.org>
-Date:   Fri, 16 Jun 2023 13:29:09 +0200
+        Fri, 16 Jun 2023 04:30:27 -0700 (PDT)
+Message-ID: <8d5870f8-e530-fa8f-444a-3d3ccf716d48@linaro.org>
+Date:   Fri, 16 Jun 2023 14:30:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [RESEND v6 6/8] arm64: dts: qcom: sc7280: Modify VA/RX/TX macro
- clock nodes for audioreach solution
-Content-Language: en-US
-To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-        krzysztof.kozlowski+dt@linaro.org, swboyd@chromium.org,
-        andersson@kernel.org, broonie@kernel.org, agross@kernel.org
-Cc:     robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, judyhsiao@chromium.org,
-        quic_visr@quicinc.com,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-References: <20230616103534.4031331-1-quic_mohs@quicinc.com>
- <20230616103534.4031331-7-quic_mohs@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230616103534.4031331-7-quic_mohs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 0/3] Add support for databus widen mode
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,83 +80,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.06.2023 12:35, Mohammad Rafi Shaik wrote:
-> From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+On 14/06/2023 04:57, Jessica Zhang wrote:
+> DPU 5.x+ and DSI 6G 2.5.x+ support a databus-widen mode that allows for
+> more compressed data to be transferred per pclk.
 > 
-> Modify VA, RX and TX macro and lpass_tlmm clock properties and
-> enable them. For audioreach solution mclk, npl and fsgen clocks
-> are enabled through the q6prm clock driver.
+> This series adds support for enabling this feature for both DPU and DSI
+> by doing the following:
 > 
-> Delete the power domain properties from VA, RX and TX macro,
-> for audioreach solution the macro, dcodec power domains enabled
-> through the q6prm clock driver.
+> 1. Add a DPU_INTF_DATABUS_WIDEN feature flag
+> 2. Add a DPU INTF op to set the DATABUS_WIDEN register
+> 3. Set the DATABUS_WIDEN register and do the proper hdisplay
+>     calculations in DSI when applicable
+
+As I was writing the documentation patch, another thought stroke me wrt 
+this patchset. Could you please add a check to DSI's mode_valid 
+disallowing all modes if DSI_BPP > 8 & !widebus. Technically this check 
+does not filter modes per se, but in my opinion ending up with empty 
+modes list would be a better user experience compared to having a list 
+of modes, from which none can be selected.
+
+And if we ever get dynamic mode/dsc_config setup, this would allow us to 
+filter unsupported modes via their DSC confiuration.
+
+Abhinav, I remember, that you told me that adding drm_dsc_config to drm 
+modes was forbidden already. However this looks like a valid reason to 
+maybe restart the discussion: we want to filter modes basing on the 
+corresponding DSC data rather than allowing the mode in mode_valid() and 
+then failing it in the atomic_check().
+
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Note: This series will only enable the databus-widen mode for command
+> mode as we are currently unable to validate it on video mode.
+> 
+> Depends on: "Add DSC v1.2 Support for DSI" [1]
+> 
+> [1] https://patchwork.freedesktop.org/series/117219/
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+Nit: there is no need to sign-off the cover letters.
+
 > ---
-Maybe sc7280-audioreach.dtsi containing all these changes that could be
-reused by others would be in order?
-
->  .../sc7280-herobrine-audioreach-wcd9385.dtsi  | 43 +++++++++++++++++++
->  1 file changed, 43 insertions(+)
+> Jessica Zhang (3):
+>        drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN feature flag for DPU >= 5.0
+>        drm/msm/dpu: Set DATABUS_WIDEN on command mode encoders
+>        drm/msm/dsi: Enable DATABUS_WIDEN for DSI command mode
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> index 9daea1b25656..c02ca393378f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> @@ -196,3 +196,46 @@ q6prmcc: clock-controller {
->  		};
->  	};
->  };
-> +
-> +&lpass_rx_macro {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-Surely they shouldn't cause issues, even if the vote would be
-superfluous? They are still powered by these power domains, I'd assume?
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c       |  3 ++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h       |  2 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 12 ++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  3 +++
+>   drivers/gpu/drm/msm/dsi/dsi.xml.h                    |  1 +
+>   drivers/gpu/drm/msm/dsi/dsi_host.c                   | 19 ++++++++++++++++++-
+>   7 files changed, 41 insertions(+), 2 deletions(-)
+> ---
+> base-commit: 1981c2c0c05f5d7fe4d4552d4f352cb46840e51e
+> change-id: 20230525-add-widebus-support-f785546ee751
+> 
+> Best regards,
 
-> +	clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_CLK_ID_TX_CORE_NPL_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&lpass_va_macro>;
-> +	clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
-The drivers use clk_get with name-based lookup.. you should be able to
-simply extend the list in the common DTSI. Please test that on both
-audioreach and the other thing though.
+-- 
+With best wishes
+Dmitry
 
-Konrad
-
-> +
-> +	status = "okay";
-> +};
-> +
-> +&lpass_tlmm {
-> +	clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +	clock-names = "core", "audio";
-> +};
-> +
-> +&lpass_tx_macro {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +	clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_CLK_ID_TX_CORE_NPL_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&lpass_va_macro>;
-> +	clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&lpass_va_macro {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +	clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +		 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +	clock-names = "mclk", "macro", "dcodec";
-> +
-> +	status = "okay";
-> +};
