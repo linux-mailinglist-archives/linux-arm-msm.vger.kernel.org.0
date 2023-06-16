@@ -2,122 +2,623 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F39F5732FAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:20:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2D15732FB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:21:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343968AbjFPLUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 07:20:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40474 "EHLO
+        id S1345615AbjFPLVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 07:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345692AbjFPLUO (ORCPT
+        with ESMTP id S1345620AbjFPLU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 07:20:14 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABA62103
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:20:13 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f84d70bf96so791345e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:20:13 -0700 (PDT)
+        Fri, 16 Jun 2023 07:20:59 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1A026B3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:20:53 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f8467e39cfso733237e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686914412; x=1689506412;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1686914451; x=1689506451;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eFIQ3Myqtm7sii87UwaNck4C4nWaVTmZTLsGYbc8xfY=;
-        b=p5H768eOWhFiOXeo6YbLCcquIQBlj47ACO+rY67miqdpxnlJ/IqFHaenn+VNH3bKxk
-         nAo1kZHye8yRm5jo8tedjoS+cDE6OIu5t7X7qkoUvcBLEDJ5bbaClnJ7yJhlJ+ancDlo
-         CvKwrW4C/4bniWBE8O6S425Ujcrdr68Tn+vN4hsFV3cx2/IanLGjv0rzVyufU3lJz9iY
-         98MboibzXtqqbmyy+60kIfQozAVrhZ/8wkYzs7zQIuMf+/U5Z/JZ/+o9G5ojtiolC75C
-         ja6Grpklor/J9D6Kx88XHcjUwDjp0ZGffaUmrkClb2F7QKvSkhohcrQZ4HhG//zfmeCX
-         Pjiw==
+        bh=icnc4DU56Bdc6gNDYDrtx1pgjHBzn5Ne/3FDPr3RAy4=;
+        b=sRhnhgXZd9GiyG2XAhESzi/q3SGA8UqnwwQV0DQ0htjjgXog1OQfwkac/c9oeaj4Kr
+         VvadcpUtlscVQnQaadho9Rfayl3UT9yULDhnXXvfGrgEQJrBeBTymvLDodAR86D0FCDI
+         VMAAH/E9Hl1MxkNbQRwULhctcHbDCxpouUjhmG+xNBlfWjuictxibxFnwh0fI/2QGNU1
+         q18UMDYbTveX0W/lxPfx/92oUIOP+UE/zfxZOGKpAakZxsKOXIPNIkHkXiTzs1snmQoS
+         wUVgCjQZ+EHevy6f3QLy++GXTLrGsKaWpsFmcoDKzjflku6JnudQS1ffbcoLTYq+zkIA
+         dTqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686914412; x=1689506412;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1686914451; x=1689506451;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eFIQ3Myqtm7sii87UwaNck4C4nWaVTmZTLsGYbc8xfY=;
-        b=hfeZeOw4HYFbRGXGmnHtBqXNlmmquKUnuLKLBSVRTbSXMzzNWqUp/XFYwTaCk9UHjl
-         xEFWFYxiBIXKLmi5coTH4LPpWpkKCujLVZkMJQBjIUdCXdSSA2X1mYY66lhConnLUiZ4
-         nmCXxaStd02gJ3+8MJt2hmy+1KaxFw9Mx7iIod9NZpFcdo/MJiI/cEd2uklS89BBcrYr
-         caTJq/VDpWkJOnBrPcJfBy4i025R6tTPU9moMgvLdUvksTLnsU4adaqk6xCYax4JA/v+
-         uhNykpFYxY95o53Pp5GPG5vYEHcc76ucKy+uLLjGe2jYK74IPK8DeeDucwkRuub8DoCm
-         2LsA==
-X-Gm-Message-State: AC+VfDxk8mEGCb++q3haId8DPJgkgM5NZIkTPmueHyJfY2cdxdeT44LN
-        3SyziP1iNSgyNX4RUUIi4QqZ7Q==
-X-Google-Smtp-Source: ACHHUZ7arutSzdgQGQWvBda4JAsatKQdrakXgRwiAuDBAmmGtyVaUMmsXXnbB/R3wE+6l6bVkzeDxw==
-X-Received: by 2002:a05:6512:2247:b0:4f7:6350:6bee with SMTP id i7-20020a056512224700b004f763506beemr3039168lfu.16.1686914411779;
-        Fri, 16 Jun 2023 04:20:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id v27-20020ac2561b000000b004f2391fe9a6sm950194lfd.266.2023.06.16.04.20.10
+        bh=icnc4DU56Bdc6gNDYDrtx1pgjHBzn5Ne/3FDPr3RAy4=;
+        b=UygWuCCat2BxsScIZFJvO3cFLSy/U+V/afVKLdGc3CGTXxc3EXO0rzvsOGgKVmODvQ
+         SDl1+DpPBvBni/zS+4gW9hRO33vwWeRO3oJ9stJj2scJCznRmDaQXzIbEqJm3ZiM+FPk
+         kAzktSjpUqDuKifq1bXMskm9IippTPM/mPPr2lod6exmieFfCJ0qaodu11OskxmeKCOZ
+         9aQ21KvOjsjbQK8d2IZoCUDxWAWMaGAm5Z6OiEoQfGn0aMEJoclROOv9AaSW9ZrHrEUB
+         TEOUG/YKclJqqElXUb/wK9+xDLnOJhlYK+O+vbYMhTMB1pTSBJz6uOSFoLfVjLHOFRH9
+         tA9w==
+X-Gm-Message-State: AC+VfDyfGEZ5u+ziOLbBNI5mqAOyKaGGiyEOYDMzACEWEOlHZT2WpZsk
+        Y5W+hBym4LF0VqJ+lRk/gakzTg==
+X-Google-Smtp-Source: ACHHUZ5+pv7zNHxqgJksW4EazVqb4Ed1zaooh6XdntDsFdjQkye6+9c3hxnW6NxTnxdqjbjp4F1gzQ==
+X-Received: by 2002:a19:d609:0:b0:4f3:a71a:9e5f with SMTP id n9-20020a19d609000000b004f3a71a9e5fmr1186050lfg.65.1686914451184;
+        Fri, 16 Jun 2023 04:20:51 -0700 (PDT)
+Received: from [192.168.123.189] (85-76-70-198-nat.elisa-mobile.fi. [85.76.70.198])
+        by smtp.gmail.com with ESMTPSA id d24-20020ac25458000000b004f8424ed05esm712632lfn.63.2023.06.16.04.20.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 04:20:11 -0700 (PDT)
-Message-ID: <a5605da0-5b6a-cfeb-f095-bbf963551c08@linaro.org>
-Date:   Fri, 16 Jun 2023 13:20:09 +0200
+        Fri, 16 Jun 2023 04:20:50 -0700 (PDT)
+Message-ID: <acc8d1e4-e899-2ea4-947f-2bdcef7b7263@linaro.org>
+Date:   Fri, 16 Jun 2023 14:20:49 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Mark SCM as dma-coherent for
- trogdor
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     andersson@kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        konrad.dybcio@somainline.org, sumit.semwal@linaro.org,
-        Will Deacon <will@kernel.org>, amit.pundir@linaro.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-qdu1000: Update GCC clocks and add
+ support for GDSCs
+Content-Language: en-GB
+To:     Imran Shaik <quic_imrashai@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-References: <20230615145253.1.Ic62daa649b47b656b313551d646c4de9a7da4bd4@changeid>
- <ZIwKzozbXxhQHxma@gerhold.net>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZIwKzozbXxhQHxma@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Melody Olvera <quic_molvera@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230616104941.921555-1-quic_imrashai@quicinc.com>
+ <20230616104941.921555-3-quic_imrashai@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230616104941.921555-3-quic_imrashai@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.06.2023 09:10, Stephan Gerhold wrote:
-> On Thu, Jun 15, 2023 at 02:52:54PM -0700, Douglas Anderson wrote:
->> Trogdor devices use firmware backed by TF-A instead of Qualcomm's
->> normal TZ. On TF-A we end up mapping memory as cachable. Specifically,
->> you can see in Trogdor's TF-A code [1] in qti_sip_mem_assign() that we
->> call qti_mmap_add_dynamic_region() with MT_RO_DATA. This translates
->> down to MT_MEMORY instead of MT_NON_CACHEABLE or MT_DEVICE.
->>
->> **Apparently Qualcomm's normal TZ implementation maps the memory as
->> non-cachable.**
-> 
-> Are you sure about this? From the discussion in the chat the conclusion
-> was that we can check easily for TF-A, but we have absolutely no idea
-> what Qualcomm's firmware implementation does. It might be "broken" the
-> same way and we just have not noticed it yet.
-Nikita (+CC) was able to boot Venus (which uses that memory reservation
-call, I believe) on next-20230615 with a WP firmware, so it should be okay..
+On 16/06/2023 13:49, Imran Shaik wrote:
+> Update the GCC clocks and add support for GDSCs for QDU1000 and
+> QRU1000 SoCs. While at it, fix the PCIe pipe clock handling and
+> add support for v2 variant.
 
-Konrad
+Please split this into individual chunks instead of squashing everything 
+together. For each change please describe the logic behind the change in 
+the commit message. Please describe why, not what is changed.
+
 > 
-> I would perhaps just omit this sentence so we don't risk misleading
-> someone with information we're not sure about. :)
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+
+This doesn't look fully logical. Who is the author of the patch? If 
+there are two authors, please add Co-developed-by tag.
+
+> ---
+>   drivers/clk/qcom/gcc-qdu1000.c | 162 ++++++++++++++++++++++-----------
+>   1 file changed, 110 insertions(+), 52 deletions(-)
 > 
->>
->> Let's add the "dma-coherent" attribute to the SCM for trogdor.
->>
-> 
-> What about sc7280? I guess they use largely the same TF-A firmware?
-> 
-> Thanks,
-> Stephan
+> diff --git a/drivers/clk/qcom/gcc-qdu1000.c b/drivers/clk/qcom/gcc-qdu1000.c
+> index 5051769ad90c..5d8125c0eacc 100644
+> --- a/drivers/clk/qcom/gcc-qdu1000.c
+> +++ b/drivers/clk/qcom/gcc-qdu1000.c
+> @@ -1,6 +1,6 @@
+>   // SPDX-License-Identifier: GPL-2.0-only
+>   /*
+> - * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+>   #include <linux/clk-provider.h>
+> @@ -17,6 +17,7 @@
+>   #include "clk-regmap-divider.h"
+>   #include "clk-regmap-mux.h"
+>   #include "clk-regmap-phy-mux.h"
+> +#include "gdsc.h"
+>   #include "reset.h"
+>   
+>   enum {
+> @@ -370,16 +371,6 @@ static const struct clk_parent_data gcc_parent_data_6[] = {
+>   	{ .index = DT_TCXO_IDX },
+>   };
+>   
+> -static const struct parent_map gcc_parent_map_7[] = {
+> -	{ P_PCIE_0_PIPE_CLK, 0 },
+> -	{ P_BI_TCXO, 2 },
+> -};
+> -
+> -static const struct clk_parent_data gcc_parent_data_7[] = {
+> -	{ .index = DT_PCIE_0_PIPE_CLK_IDX },
+> -	{ .index = DT_TCXO_IDX },
+> -};
+> -
+>   static const struct parent_map gcc_parent_map_8[] = {
+>   	{ P_BI_TCXO, 0 },
+>   	{ P_GCC_GPLL0_OUT_MAIN, 1 },
+> @@ -439,16 +430,15 @@ static struct clk_regmap_mux gcc_pcie_0_phy_aux_clk_src = {
+>   	},
+>   };
+>   
+> -static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
+> +static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
+>   	.reg = 0x9d064,
+> -	.shift = 0,
+> -	.width = 2,
+> -	.parent_map = gcc_parent_map_7,
+>   	.clkr = {
+>   		.hw.init = &(const struct clk_init_data) {
+>   			.name = "gcc_pcie_0_pipe_clk_src",
+> -			.parent_data = gcc_parent_data_7,
+> -			.num_parents = ARRAY_SIZE(gcc_parent_data_7),
+> +			.parent_data = &(const struct clk_parent_data){
+> +				.index = DT_PCIE_0_PIPE_CLK_IDX,
+> +			},
+> +			.num_parents = 1,
+>   			.ops = &clk_regmap_phy_mux_ops,
+>   		},
+>   	},
+> @@ -485,7 +475,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_dma_clk_src = {
+>   		.name = "gcc_aggre_noc_ecpri_dma_clk_src",
+>   		.parent_data = gcc_parent_data_4,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -505,7 +495,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_gsi_clk_src = {
+>   		.name = "gcc_aggre_noc_ecpri_gsi_clk_src",
+>   		.parent_data = gcc_parent_data_5,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+
+This is probably some kind of NoC or NIU clock. If it is not to be 
+touched by Linux, the recent clk_rcg2_ro_ops patch looks promising here.
+
+>   	},
+>   };
+>   
+> @@ -524,7 +514,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
+>   		.name = "gcc_gp1_clk_src",
+>   		.parent_data = gcc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+
+But why? GP clocks are not shared.
+The 'why?' question applies to all such changes. As I wrote, please 
+split & describe the reason.
+
+>   	},
+>   };
+>   
+> @@ -538,7 +528,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
+>   		.name = "gcc_gp2_clk_src",
+>   		.parent_data = gcc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -552,7 +542,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
+>   		.name = "gcc_gp3_clk_src",
+>   		.parent_data = gcc_parent_data_1,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -571,7 +561,7 @@ static struct clk_rcg2 gcc_pcie_0_aux_clk_src = {
+>   		.name = "gcc_pcie_0_aux_clk_src",
+>   		.parent_data = gcc_parent_data_3,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -591,7 +581,7 @@ static struct clk_rcg2 gcc_pcie_0_phy_rchng_clk_src = {
+>   		.name = "gcc_pcie_0_phy_rchng_clk_src",
+>   		.parent_data = gcc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -610,7 +600,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
+>   		.name = "gcc_pdm2_clk_src",
+>   		.parent_data = gcc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -632,7 +622,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s0_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
+> @@ -648,7 +638,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s1_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
+> @@ -664,7 +654,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s2_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
+> @@ -680,7 +670,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s3_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
+> @@ -696,7 +686,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s4_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
+> @@ -717,7 +707,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s5_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
+> @@ -733,7 +723,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s6_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s6_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s6_clk_src = {
+> @@ -749,7 +739,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s7_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap0_s7_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap0_s7_clk_src = {
+> @@ -765,7 +755,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s0_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
+> @@ -781,7 +771,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s1_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
+> @@ -797,7 +787,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s2_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
+> @@ -813,7 +803,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s3_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
+> @@ -829,7 +819,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s4_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
+> @@ -845,7 +835,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s5_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
+> @@ -861,7 +851,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s6_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
+> @@ -877,7 +867,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
+>   	.name = "gcc_qupv3_wrap1_s7_clk_src",
+>   	.parent_data = gcc_parent_data_0,
+>   	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>   };
+>   
+>   static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
+> @@ -913,7 +903,7 @@ static struct clk_rcg2 gcc_sdcc5_apps_clk_src = {
+>   		.name = "gcc_sdcc5_apps_clk_src",
+>   		.parent_data = gcc_parent_data_8,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_8),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_floor_ops,
+>   	},
+>   };
+>   
+> @@ -932,7 +922,7 @@ static struct clk_rcg2 gcc_sdcc5_ice_core_clk_src = {
+>   		.name = "gcc_sdcc5_ice_core_clk_src",
+>   		.parent_data = gcc_parent_data_2,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_floor_ops,
+>   	},
+>   };
+>   
+> @@ -946,7 +936,7 @@ static struct clk_rcg2 gcc_sm_bus_xo_clk_src = {
+>   		.name = "gcc_sm_bus_xo_clk_src",
+>   		.parent_data = gcc_parent_data_2,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -965,7 +955,7 @@ static struct clk_rcg2 gcc_tsc_clk_src = {
+>   		.name = "gcc_tsc_clk_src",
+>   		.parent_data = gcc_parent_data_9,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -985,7 +975,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
+>   		.name = "gcc_usb30_prim_master_clk_src",
+>   		.parent_data = gcc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -999,7 +989,7 @@ static struct clk_rcg2 gcc_usb30_prim_mock_utmi_clk_src = {
+>   		.name = "gcc_usb30_prim_mock_utmi_clk_src",
+>   		.parent_data = gcc_parent_data_0,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -1013,7 +1003,7 @@ static struct clk_rcg2 gcc_usb3_prim_phy_aux_clk_src = {
+>   		.name = "gcc_usb3_prim_phy_aux_clk_src",
+>   		.parent_data = gcc_parent_data_3,
+>   		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>   	},
+>   };
+>   
+> @@ -1142,6 +1132,26 @@ static struct clk_branch gcc_ddrss_ecpri_dma_clk = {
+>   	},
+>   };
+>   
+> +static struct clk_branch gcc_ddrss_ecpri_gsi_clk = {
+> +	.halt_reg = 0x54298,
+> +	.halt_check = BRANCH_HALT_VOTED,
+> +	.hwcg_reg = 0x54298,
+> +	.hwcg_bit = 1,
+> +	.clkr = {
+> +		.enable_reg = 0x54298,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data) {
+> +			.name = "gcc_ddrss_ecpri_gsi_clk",
+> +			.parent_hws = (const struct clk_hw*[]) {
+> +				&gcc_aggre_noc_ecpri_gsi_clk_src.clkr.hw,
+> +			},
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_aon_ops,
+> +		},
+> +	},
+> +};
+> +
+>   static struct clk_branch gcc_ecpri_ahb_clk = {
+>   	.halt_reg = 0x3a008,
+>   	.halt_check = BRANCH_HALT_VOTED,
+> @@ -1458,14 +1468,13 @@ static struct clk_branch gcc_pcie_0_cfg_ahb_clk = {
+>   
+>   static struct clk_branch gcc_pcie_0_clkref_en = {
+>   	.halt_reg = 0x9c004,
+> -	.halt_bit = 31,
+
+Why?
+
+>   	.halt_check = BRANCH_HALT_ENABLE,
+>   	.clkr = {
+>   		.enable_reg = 0x9c004,
+>   		.enable_mask = BIT(0),
+>   		.hw.init = &(const struct clk_init_data) {
+>   			.name = "gcc_pcie_0_clkref_en",
+> -			.ops = &clk_branch_ops,
+> +			.ops = &clk_branch2_ops,
+
+Separate commit, Fixes tag.
+
+>   		},
+>   	},
+>   };
+> @@ -2285,14 +2294,13 @@ static struct clk_branch gcc_tsc_etu_clk = {
+>   
+>   static struct clk_branch gcc_usb2_clkref_en = {
+>   	.halt_reg = 0x9c008,
+> -	.halt_bit = 31,
+
+Why?
+
+>   	.halt_check = BRANCH_HALT_ENABLE,
+>   	.clkr = {
+>   		.enable_reg = 0x9c008,
+>   		.enable_mask = BIT(0),
+>   		.hw.init = &(const struct clk_init_data) {
+>   			.name = "gcc_usb2_clkref_en",
+> -			.ops = &clk_branch_ops,
+> +			.ops = &clk_branch2_ops,
+
+And here.
+
+>   		},
+>   	},
+>   };
+> @@ -2402,6 +2410,39 @@ static struct clk_branch gcc_usb3_prim_phy_pipe_clk = {
+>   	},
+>   };
+>   
+> +static struct gdsc pcie_0_gdsc = {
+> +	.gdscr = 0x9d004,
+> +	.en_rest_wait_val = 0x2,
+> +	.en_few_wait_val = 0x2,
+> +	.clk_dis_wait_val = 0xf,
+> +	.pd = {
+> +		.name = "gcc_pcie_0_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +};
+> +
+> +static struct gdsc pcie_0_phy_gdsc = {
+> +	.gdscr = 0x7c004,
+> +	.en_rest_wait_val = 0x2,
+> +	.en_few_wait_val = 0x2,
+> +	.clk_dis_wait_val = 0x2,
+> +	.pd = {
+> +		.name = "gcc_pcie_0_phy_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +};
+> +
+> +static struct gdsc usb30_prim_gdsc = {
+> +	.gdscr = 0x49004,
+> +	.en_rest_wait_val = 0x2,
+> +	.en_few_wait_val = 0x2,
+> +	.clk_dis_wait_val = 0xf,
+> +	.pd = {
+> +		.name = "gcc_usb30_prim_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +};
+> +
+>   static struct clk_regmap *gcc_qdu1000_clocks[] = {
+>   	[GCC_AGGRE_NOC_ECPRI_DMA_CLK] = &gcc_aggre_noc_ecpri_dma_clk.clkr,
+>   	[GCC_AGGRE_NOC_ECPRI_DMA_CLK_SRC] = &gcc_aggre_noc_ecpri_dma_clk_src.clkr,
+> @@ -2534,6 +2575,14 @@ static struct clk_regmap *gcc_qdu1000_clocks[] = {
+>   	[GCC_AGGRE_NOC_ECPRI_GSI_CLK] = &gcc_aggre_noc_ecpri_gsi_clk.clkr,
+>   	[GCC_PCIE_0_PHY_AUX_CLK_SRC] = &gcc_pcie_0_phy_aux_clk_src.clkr,
+>   	[GCC_PCIE_0_PIPE_CLK_SRC] = &gcc_pcie_0_pipe_clk_src.clkr,
+> +	[GCC_GPLL1_OUT_EVEN] = &gcc_gpll1_out_even.clkr,
+> +	[GCC_DDRSS_ECPRI_GSI_CLK] = NULL,
+> +};
+> +
+> +static struct gdsc *gcc_qdu1000_gdscs[] = {
+> +	[PCIE_0_GDSC] = &pcie_0_gdsc,
+> +	[PCIE_0_PHY_GDSC] = &pcie_0_phy_gdsc,
+> +	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
+>   };
+>   
+>   static const struct qcom_reset_map gcc_qdu1000_resets[] = {
+> @@ -2597,10 +2646,13 @@ static const struct qcom_cc_desc gcc_qdu1000_desc = {
+>   	.num_clks = ARRAY_SIZE(gcc_qdu1000_clocks),
+>   	.resets = gcc_qdu1000_resets,
+>   	.num_resets = ARRAY_SIZE(gcc_qdu1000_resets),
+> +	.gdscs = gcc_qdu1000_gdscs,
+> +	.num_gdscs = ARRAY_SIZE(gcc_qdu1000_gdscs),
+>   };
+>   
+>   static const struct of_device_id gcc_qdu1000_match_table[] = {
+>   	{ .compatible = "qcom,qdu1000-gcc" },
+> +	{ .compatible = "qcom,qdu1000-gcc-v2" },
+
+What is the actual hardware version being shipped in the end-user 
+devices? Generally we do support only the latest hw revision. If you 
+want to support v1 for some reason, please invert the logic here:
+make "qcom,qdu1000-gcc" be the latest and grates and provide a reason 
+for supporting v1 (via "qcom,qdu1000-gcc-v1").
+
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, gcc_qdu1000_match_table);
+> @@ -2617,6 +2669,12 @@ static int gcc_qdu1000_probe(struct platform_device *pdev)
+>   	/* Update FORCE_MEM_CORE_ON for gcc_pcie_0_mstr_axi_clk */
+>   	regmap_update_bits(regmap, 0x9d024, BIT(14), BIT(14));
+>   
+> +	if (of_device_is_compatible(pdev->dev.of_node, "qcom,qdu1000-gcc-v2")) {
+> +		gcc_qdu1000_clocks[GCC_DDRSS_ECPRI_GSI_CLK] = &gcc_ddrss_ecpri_gsi_clk.clkr;
+> +		gcc_pcie_0_clkref_en.halt_check = BRANCH_HALT_DELAY;
+> +		gcc_usb2_clkref_en.halt_check = BRANCH_HALT_DELAY;
+> +	}
+> +
+>   	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+>   				       ARRAY_SIZE(gcc_dfs_clocks));
+>   	if (ret)
+
+-- 
+With best wishes
+Dmitry
+
