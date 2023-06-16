@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2220E732C6C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 11:47:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D56CF732C72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 11:49:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231642AbjFPJqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 05:46:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58458 "EHLO
+        id S231904AbjFPJtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 05:49:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232025AbjFPJqA (ORCPT
+        with ESMTP id S229526AbjFPJtf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 05:46:00 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 181892962
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 02:45:59 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b203891b2cso5800241fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 02:45:59 -0700 (PDT)
+        Fri, 16 Jun 2023 05:49:35 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA131119
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 02:49:33 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f6195d2b3fso588004e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 02:49:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686908757; x=1689500757;
+        d=linaro.org; s=google; t=1686908972; x=1689500972;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kXLM4NFaLwOKoRpyf+vOO8vBgPE/jR4bTbtGmnUq/5c=;
-        b=En91242UsGlQP0bme45MubDUSzku9MUCw40vuwNsik+T6e79QMxSkB4l/nwuWmm1RV
-         aI227qqMhYRWKdMi6fUnUYody8QKUo6jTuFWBTW6SAPhfB6t5VsB1S5TdyTgYD5YSu0m
-         vz7TzvK4WPmZw3i+1KlUq0iLQ7ejidVKTrQvfoQ9ymbRIYCiAOGze4zxqONJc4Ycvjb1
-         l99AxYqJucrK2NEbU+0pkWAB6tmdHXGXbvf2D4kuDib9SKwSHbHXfykxyC+4Si7Gqs1r
-         8dtilI1mWouWnofeCLNk9GrDHuNmkfNpwBaiHbERo0uCExmtsW3WBXx16JGTv91v6ZH5
-         +EKw==
+        bh=UZF9KFxIZfNMlNnN4a5urW2y13NYb+j9w9JbZAccnI0=;
+        b=LfWXM+bRQRhDl55+u4QJwEWR5CJEukjUvCsWZAZFzHhp2yFtZl9WGm4OubFYJkZiXv
+         3lhGyX2bLcQIZny1ciEPpo4t9xxxrI6LbCIGfruPUopKQQyrJv+BLTQgJiTyLdIIXzLj
+         O0MZMtgBCvxbtU9Es+1ratCjaXLYRHzEzrunfJ+g3UoA1qhsWVPcO5GoxsVASmv9XwHb
+         4tBbcihqgNfxTVE9N4YxRZeQ+8403ctzR6BB+ukLpkJk/27tXH2x0f4rWgs8kPQ0J6hC
+         MXEu+XCEMuBM6czE1eGSW0gjMku5s/Jge2AmRAjHEQk236E8SOlwRWLOC0bL8Dv//K9s
+         zcAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686908757; x=1689500757;
+        d=1e100.net; s=20221208; t=1686908972; x=1689500972;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kXLM4NFaLwOKoRpyf+vOO8vBgPE/jR4bTbtGmnUq/5c=;
-        b=WzAbewUY3Bo1Dnl91i1RwRBYWhZdql0AQ1Y2A2xjclQDAOT9AIdY/bPG5BvwVVLhPs
-         KXfxw7Fry+pfPKqAeHPLhLLxoH/v0sgVWfiCXNqM5xXpd0IDzZ0tWT8y4V3vUoEjSgmx
-         eIAqdD5u1U08iR5/VhJ/WzVx1H354DqHxsv9Bxb5Olm6ClVcHK7PrtBWU1OOHtF7IRaj
-         c9Yj8RPomjK6/Gr/cmm+P4WaTSKBwE5mPuhKjtqy5R0YclYC0NECOGdyrNDoAJz+d7iM
-         FnjIohXeg2h6rGPb4FIp7QOgv8fOW5QUjMl2NrM0oEWvvdQD0/3r5o+ONpCmg9w9emPc
-         duCw==
-X-Gm-Message-State: AC+VfDwnT2I0w4nmMHJBHT6HfpEEHf0k3bmyunMm8GSqVYWAdQGkLx7l
-        vA7scXb1ISrmx1KlJMf3hFMUNA==
-X-Google-Smtp-Source: ACHHUZ6AJTxuGkVYzvPH0ELAab9b7fXx+ccjFNbrYYWva7GJsrsI7CMAvuq1Y7mmMyl2AgDfFEHfgg==
-X-Received: by 2002:a2e:95c2:0:b0:2ae:db65:2d01 with SMTP id y2-20020a2e95c2000000b002aedb652d01mr1371945ljh.23.1686908757350;
-        Fri, 16 Jun 2023 02:45:57 -0700 (PDT)
+        bh=UZF9KFxIZfNMlNnN4a5urW2y13NYb+j9w9JbZAccnI0=;
+        b=fV65yU1Wkn0NX7vkqYAYNqNVUL9cvEIERVjtkQp+8XdetcUCdwN4lqakDXyFHPHBPE
+         6X0Mw4sVzi0A/nf/B/1McKHM0G5BN/HINutWDNoUalnvD3WTHnABDTl/gYPxEJVDx9PV
+         CxpYFPfJ7lgZV6lOjz/jv+d+siUGwzYHOC11ofUtMvhOIEfOHi5vI06oHB8eRMiOTILN
+         8/6jId2kNrDuD5SrReoH1j1qOoSAWnRQXSgYPZs5iucMX9RYV/odekctAPzCAQpWpt3m
+         Evdth3WnXr/4mWuvT/t0WWhlEHu/BKV1G+btdgFnNYAcz4+tF4NtEcSvXl3CzDTWzjR8
+         sL1g==
+X-Gm-Message-State: AC+VfDzvd5CGinnH02bShJQ1W4JDfl/4f+Nh3NwF4nJ0S4Xp8bT9B3k0
+        PkZ/3aYsqeXVa7AazfWT/JFatg==
+X-Google-Smtp-Source: ACHHUZ6vKJ7mGdwajEVNIi/+OLER02kz5AF6qKLt13kQX+hdase2WXOCzr1xf/RqVopNxr3rMVXTKw==
+X-Received: by 2002:a05:6512:54a:b0:4f4:cacb:4b4b with SMTP id h10-20020a056512054a00b004f4cacb4b4bmr940977lfl.18.1686908971946;
+        Fri, 16 Jun 2023 02:49:31 -0700 (PDT)
 Received: from [192.168.1.151] (85-76-68-127-nat.elisa-mobile.fi. [85.76.68.127])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2ea305000000b002b1a7823548sm3562992lje.98.2023.06.16.02.45.56
+        by smtp.gmail.com with ESMTPSA id d15-20020ac2544f000000b004f858848fefsm65878lfn.177.2023.06.16.02.49.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 02:45:56 -0700 (PDT)
-Message-ID: <dcd7e7bf-ce9f-2862-c246-32b57f53afff@linaro.org>
-Date:   Fri, 16 Jun 2023 12:45:55 +0300
+        Fri, 16 Jun 2023 02:49:31 -0700 (PDT)
+Message-ID: <f954a89f-a0f9-c30d-385d-6149dc360c1f@linaro.org>
+Date:   Fri, 16 Jun 2023 12:49:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2 02/22] drm/msm/dpu: correct MERGE_3D length
+Subject: Re: [PATCH v2 03/22] drm/msm/dpu: remove unused INTF_NONE interfaces
 Content-Language: en-GB
 To:     Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -67,10 +67,10 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20230613001004.3426676-1-dmitry.baryshkov@linaro.org>
- <20230613001004.3426676-3-dmitry.baryshkov@linaro.org>
- <qjaeua65pboforhlqusbmiwgvhm5j5c7quijjm2n55ivki5wjv@cgip4znnt2sl>
+ <20230613001004.3426676-4-dmitry.baryshkov@linaro.org>
+ <6akejrsahbmrueanyhx5hdt5kipkm2fb4dylh4jzprfgzdbczk@x75wfsoza5ah>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <qjaeua65pboforhlqusbmiwgvhm5j5c7quijjm2n55ivki5wjv@cgip4znnt2sl>
+In-Reply-To: <6akejrsahbmrueanyhx5hdt5kipkm2fb4dylh4jzprfgzdbczk@x75wfsoza5ah>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,44 +83,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/06/2023 01:22, Marijn Suijten wrote:
-> On 2023-06-13 03:09:41, Dmitry Baryshkov wrote:
->> Each MERGE_3D block has just two registers. Correct the block length
->> accordingly.
->>
->> Fixes: 4369c93cf36b ("drm/msm/dpu: initial support for merge3D hardware block")
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 16/06/2023 01:26, Marijn Suijten wrote:
+> On 2023-06-13 03:09:42, Dmitry Baryshkov wrote:
+>> sm6115 and qcm2290 do not have INTF_0. Drop corresponding interface
+>> definitions.
 > 
-> Indeed, and that patch wasn't even introducing the register writes -
-> this only happened in commit 9ffd0e8569937 ("drm/msm/dpu: setup merge
-> modes in merge_3d block").
+> As Abhinav said, add sm6375.
+> 
+> If it wasn't for sc8280xp using INTF_NONE for fake MST, we could have
+> dropped INTF_NONE and the special-cases in dpu_hw_interrupts.c and
+> dpu_hw_intf.c entirely!  Is that your plan?
 
-Yep. Vendor dts declares merge 3d block length to be 0x100, which I 
-blindly copied.
+I have not thought about it yet. Generally I think INTF_NONE might still 
+be useful to document interfaces that we do not want to support for some 
+reason (e.g. MST or 8974/8084 eDP interfaces).
 
+> 
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
 > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 > 
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index 36ba3f58dcdf..0de507d4d7b7 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -508,7 +508,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
->>   #define MERGE_3D_BLK(_name, _id, _base) \
->>   	{\
->>   	.name = _name, .id = _id, \
->> -	.base = _base, .len = 0x100, \
->> +	.base = _base, .len = 0x8, \
->>   	.features = MERGE_3D_SM8150_MASK, \
->>   	.sblk = NULL \
->>   	}
->> -- 
->> 2.39.2
->>
 
 -- 
 With best wishes
