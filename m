@@ -2,315 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4885C733CF5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 01:36:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02CA8733D03
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 01:43:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232072AbjFPXgT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 19:36:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49074 "EHLO
+        id S234255AbjFPXnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 19:43:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232716AbjFPXgS (ORCPT
+        with ESMTP id S229627AbjFPXnb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 19:36:18 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F8543AB4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:36:12 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b466073e19so2996891fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686958570; x=1689550570;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K9LcqzytxsnlUCpwt3/0jckCNFrbRrdSG/YYwL4/gv8=;
-        b=RhgKhPTdOb8ZsmMtVqK2Ffp2oLXn9kpDbqsqaUfK/4EpWcwnV04VgLMRuxVc9FZAKQ
-         UXsUZN7+GCaqx7aE/xk8JMVIC1byuMu756IhDBmQtZ9pyE/4SUSQLxyFxaC8fC+UPMOb
-         lHo0PUUCaY4OU3n1WmPM58IybeX/67FciTwgiLfM3ifHrKhrkhgUZHCRNdQvdxjmZ7Fw
-         8PMKMVE53qvYt65n39pn9ntT0/U8yQNB4trtyrPU6hEeDwpR5I61WfIyq7zdYMWgdZY1
-         IYZIhacP+nGLHFDasvmec7NcUow/nnNUbEmH5JVPs5Yodr+p9JV+aV0X+735hRmqkOZL
-         1DhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686958570; x=1689550570;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K9LcqzytxsnlUCpwt3/0jckCNFrbRrdSG/YYwL4/gv8=;
-        b=A4YYxXKibK0eS/GEK+2DcNAweDkRXa4gAtWemgBcHvLs+9oB61tqgmLDInpVGGEG22
-         cKmsD3ZNVqpFWlJmapTXXGfeNj3+aS0XMcf1USHKRTv4CJIvirK5usNdkiGnVm355jEX
-         3xBe4txfYtnLfAMYXjYcqDOySx4isbHQf0HQjl2GnOMnmlt5Xa9215Qm6m1tr/Sw+Gb2
-         lewwG0cdXxd3m+tQ5j9X0gyNy0oViF78n6WHJmVwoHGRufGliIQAeT04q5QT/DXsN4d2
-         sCwSwso51EbdanTZOmeQhO+gLdbShEAwTNdLToMcV40L/7cr6zQGVHGo8pc1/2KtQN86
-         TNLw==
-X-Gm-Message-State: AC+VfDyeHULmVgM+V389OXI5rhktPyiX7FrytC9iJXaK7yS3Ik8L+AiY
-        xJe1nNFovSAJttms9DTmqEqp3A==
-X-Google-Smtp-Source: ACHHUZ7009qU1X7H4xrmyzb1e+yJRfRakNSwtJ6dStPKQfkGCKbWuCMKUBC5gR3qI/PauabDsv0JSw==
-X-Received: by 2002:a2e:93c1:0:b0:2ac:7d78:3465 with SMTP id p1-20020a2e93c1000000b002ac7d783465mr2482619ljh.15.1686958570294;
-        Fri, 16 Jun 2023 16:36:10 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id m19-20020a2e97d3000000b002b31feab8f9sm3012560ljj.100.2023.06.16.16.36.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 16:36:09 -0700 (PDT)
-Message-ID: <835bc0c9-0218-80e3-f64f-bd4116ad02e8@linaro.org>
-Date:   Sat, 17 Jun 2023 01:36:08 +0200
+        Fri, 16 Jun 2023 19:43:31 -0400
+Received: from sonic304-23.consmr.mail.ir2.yahoo.com (sonic304-23.consmr.mail.ir2.yahoo.com [77.238.179.148])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1C8E26B3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:43:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1686959008; bh=KHptyEX2xsFZL+j88dnXHyUe4p3sh5ko9681QkeWbuI=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=RPnLuCpzbtlKK37vRsdZrzwQ7+AFw+ReYmfz5I8WNbr9WTjoFIwHoyNgq9sheDineLm5CIvc/Jvo9K5l8ZJlFbPoMQZkFQ6cZEUXIvI1+oTel9JTLLvOmI5nCwjTFpIbdnV3K/RYQ9dHkmrtzncdEQcIaGOqmkL41IxCmf+dfKqj5j68jdt9rTs/AObkc3oMDoXsSUuTpp6e/9LWVPXNQuOYztCM+ESqyMKlkSzh2X4Kayz9cBZoEXhARFFRixOpfZmSDVxTEaKSnKY5w27QbdhVhzLjOghDb2qmdgZDpB2ecdtQbTBbaPdIO0qGnuw3UNQpYFnjxCzrUVBPkfxIHg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1686959008; bh=u36nD8DK6VJYWCg9SV9eCoc5jm4KgzdxzuMPbtALCoR=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=jYpBbu38meAXNvAG9Tvze2HUj3JHynNN2QR4VQPPtY6k3BjBd/Kpro4WZjP3RfeW3hwfXPhlQLR+TO0BWdgeQ1so7q6xMXAtaiJ4HTV9KtQHH161zosWDUezBG8+aEC04OBE/vYlwaYjg55iC/IwtWrvFSefr9F/XSGcIeD/egPj7lXyIsyPVOP4dNQ/cA1VxH6jxxKqC0JXAIZctCr/KgNL9RYjnHzStovEQST+XpQ7JQjgMRf7oalsdmlCo0MteMsuKS8wbHfydLb9IoQ9Ur/cfO6RqHcJD3YQv3+yl+L2XM8KeaO06pSexJ4QtTE1Tn6dj6RKkAhf44aO/XhIXg==
+X-YMail-OSG: XW4b4rgVM1mt62u.7floGH_4Kc.IcQVTnXVOppQWC7n_Iz2L7EQm1rF4FQswjIv
+ B8yxxmC6uea0H9J7C2pauWrblZK2sGFzs3VLkH7p4s0d4iHpE6h5CYx2RvxbrooNPEbMQJaH4JwZ
+ J4d7DABH.Vee0e29iRu8yj6OBxBq74nxmX2q.5M2r5Tl7bb9vNtHgBylRTCrZLm3FHkLVQrV8u1Y
+ r7OLrOelw6LM2HvmciElfqi0t_qsAbL8haP0Q7DIRyN_brEYsU76uVZDml4XeAP5xIn8otMWIhQB
+ .qsYjvNDfSefaL4sYe7Ap_6QRwF43dbugOVMn3ql3Vzht10NPdF6IyRHF1WtaZSClCpWnn6UqsGG
+ iGdSzOwXgNU9GqteohmwICGkyCTJ8Ti7cJ6AybpX0ImN29efLiX3uVmiLSFejxXbybhXxNjtKBbL
+ 64FQeHqoA0ntMDWRKa5eOGbKU4rNKsedaazdAJb.veBepRtyd2HyJxUhG2PduSqtQB9_EQcYERnU
+ N.gQ7zQUrXpTZ9v2Rsqi8zkTbPRHIGz9_LoWP5JeyGJQdcyBwgexDIUPixAk6FlhccvcRxT9vzge
+ 8l2TiCJFg4.6.mxZ43YKMAFLaIYHtpu7fNEfvhrCLJ47Kj1wluW3oFRBG3xihLk7p7nWBc2uVOJp
+ SJvWXfeGtHjXfWUordL.P8a6OB.DwBxCNv0W9rYZ_tQlcraEjyICgcatkBKgo5S.3TMyEkb2j3od
+ xRpzgMOX26zd449E82aVY67w9fJOgL_i.syQ7EEgl.Gq3PHhpQB6j5PJmn4xeoPg7PAMpyBwPb26
+ LNyBkVFtZL1gFpDP3c0Pt322mhlQwCLOxWEBs_FWkQUaMQ0yA1uQm1_WSwkBZnj473VVH75ZHvkb
+ k4qNozZatsK.ZILvNy4Zyd0cQXzOdo_LvTqUGQ2MkPr34BsZcnMR0UcZEioC1JlUDO4RV6v8X.mC
+ nUr2ZmxBxJxjh1obQjjatZPwGEyAgY9Y3xpvNt_fey6IPt.cNtzlfFDTGfW82ZzCULWW74ZLIsFE
+ LU0ZP3ZLKlArSyowTZttnWbA_lNOFgEBg4h9DIhBuG3g4Spogu1QVANGsdHsaO_4qT9A_jo1A_r1
+ yDxC0gqyHjeeI1_3xXSDgE2N5a1uqF0FhgOoQYZHoUHxXc28MhBO.iyTOTdyE_QbNfTk1CPFrM9X
+ vFaYiEFqryOAAdshhkohWOYL5GCV8.z4phabILLkgrnK4oQXMOxRkLWyspMB3ujGfLUltRtS_sKO
+ zYf8XoKx8K2HEnX_SFmIHwtONYWBJwxGFf0MnuASLjmhdjCqw0hDT0soRGjzpTK.BIFoDnlYyhgV
+ 0r2bAUImChHxUWWdEm05uxXXOAL9mcdVdv0QEKP4pmlUJ8OroxtiEQvslZX3_mHarPLR85f5nFAz
+ aiVeSJQJTD2JDbXN2bxNwkaCUwoepWudXpEwL_eaN4ad2O2ZRSxS3WOu0K3vp3OHrOvqVWtdan6d
+ m9zxtzlkYK7QceBAdZfQmpAuKRbTyBOGm2cWi_ZLME0Na2YtfnGP98UFZOG5cPhwq34TP3CDd8g2
+ 5wWl9QYnKmawa7GKSc0Fhm_yBJz7dbmRMdmlo2pZJIIP6gFvPU6JYnSpFkcqMVm4yyZL6cO0rwrr
+ e.TpYCK2vmZ.FW0tkmr3h6Oe2634o6VC9tAqvzcYDw_O8C6nBsTQ89xSvoZyeWzhXOoMojdySQ7T
+ yLFSIXFzYtW85iGbJHuD0OQqw0LAtkYyjINcy4GCSFYsnPLFHqaAd_vUZUXStT852LwTAjlCPrLV
+ .k8Op8rzteaPgAgBKMtVpWDMCXV5IsBMIR3ESEcixpla.AQ6PivPnLJm9nVA_9knaORqH.Ej0m6N
+ RKpZXruGmHde_rP4KNi_TK7Gpp_U.5IgMvRb1uVn6arBzDDJ1sr0ScrKaDCzHiVkcx_KIIN2Drnc
+ W0HbIDJMC07mSPCHQBSHao28Vb2xv4E5U7GPWMHz9e7G91XSodmQ.iwErt0UMFKxrtNYKCYwc0uv
+ W7jIbP3NiO0mN2X3Pl6FnPc7LpnjuJ8a4N..lnssATLxuNZvoIuYS1cimIdX5lMq_KnHQVmQ.l4A
+ ggqPrNLIvXJ7yPcBi6r0xCz4LJrZ8EjKS3K.Mqcn6n4s12.LoHRBFSHa0uup9UHU918bdj.TQ9q.
+ rbSQpWQLFl_Ulo4_Mi.eAURRiGy9QkmGzMzwfayULEvC73dFOErf6KaE.HKyG3jmk6cUs6PKtifb
+ 6KVGamdVmlbwvw0SImgzUiF3zUDLIICXiCzGLcsEt2WVSlLluOgug3TJJgWF8yY5ZocUA2XiMsDl
+ s_iepXLFAbT2yokkdDypMuZOr_yrDUwlWfIkGFls-
+X-Sonic-MF: <jahau@rocketmail.com>
+X-Sonic-ID: a67a19a1-1c3c-4ec4-977e-cd0e4aa19324
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic304.consmr.mail.ir2.yahoo.com with HTTP; Fri, 16 Jun 2023 23:43:28 +0000
+Received: by hermes--production-ir2-7867f454fc-8nkq6 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 5636cffc5e4b0771cd0c200ffdd51601;
+          Fri, 16 Jun 2023 23:43:23 +0000 (UTC)
+From:   Jakob Hauser <jahau@rocketmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Raymond Hackley <raymondhackley@protonmail.com>,
+        Henrik Grimler <henrik@grimler.se>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Jakob Hauser <jahau@rocketmail.com>
+Subject: [PATCH] arm64: dts: qcom: msm8916-samsung-serranove: Add RT5033 PMIC with charger
+Date:   Sat, 17 Jun 2023 01:42:52 +0200
+Message-Id: <20230616234252.37022-1-jahau@rocketmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
- TLMM
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230616185742.2250452-1-krzysztof.kozlowski@linaro.org>
- <20230616185742.2250452-2-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230616185742.2250452-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+References: <20230616234252.37022-1-jahau.ref@rocketmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.06.2023 20:57, Krzysztof Kozlowski wrote:
-> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
-> driver is similar to SM8450 LPASS pin controller, with difference in one
-> new pin (gpio14).
-8250*
+For the regulators, apply the same settings as in the downstream
+devicetree [1], including the "regulator-always-on" for the SAFE_LDO.
+For the voltage of SAFE_LDO, however, there is only one voltage of 4.9 V
+available in the mainline driver [2][3].
 
-8450 has a whole lot more!
+The values of the battery data evolve from following sources:
+- precharge current: 450 mA corresponds to the default value of the chip. It
+  doesn't get changed by the downstream Android driver. Therefore let's stick
+  to this value.
+- constant charge current: The 1000 mA are taken from the downstream devicetree
+  of the serranove battery. It's not easy to spot. The value is in the line
+  "input_current_limit" [4]. The rows are according to the power supply type,
+  the 4th value stands for "main supply" [5]. That's the value used by the
+  Android driver when a charging cable is plugged into the device.
+- charge termination current: In the downstream devicetree of the battery
+  that's the line "full_check_current_1st", which contains the 150 mA [6].
+- precharge voltage: This one doesn't get set in the downstream Android driver.
+  The chip's default is 2.8 V. That seemed too low to have a notable effect of
+  handling the battery gentle. The chosen value of 3.5 V is a bit arbitrary
+  and possibly rather high. As the device is already several years old and
+  therefore most batteries too, a value on the safe side seems reasonable.
+- constant charge voltage: The value of 4.35 V is set in the line
+  "chg_float_voltage" of the downstream battery devicetree [7].
 
-The 8250 in fact does look almost identical.. Perhaps in this case it
-would be sane to combine the two?
+The "connector" sub-node in the extcon node, the "battery" node in the
+general section and the line "power-supplies" in the fuel-gauge node result
+from the way of implementation documented in the dt-bindings of
+rt5033-charger [8] and mfd rt5033 [9].
 
-Konrad
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/pinctrl/qcom/Kconfig                  |  10 ++
->  drivers/pinctrl/qcom/Makefile                 |   1 +
->  .../pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c   | 167 ++++++++++++++++++
->  3 files changed, 178 insertions(+)
->  create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
-> 
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-> index 634c75336983..9c43bc05c447 100644
-> --- a/drivers/pinctrl/qcom/Kconfig
-> +++ b/drivers/pinctrl/qcom/Kconfig
-> @@ -77,6 +77,16 @@ config PINCTRL_SM8250_LPASS_LPI
->  	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
->  	  (Low Power Island) found on the Qualcomm Technologies Inc SM8250 platform.
->  
-> +config PINCTRL_SM3550_LPASS_LPI
-> +	tristate "Qualcomm Technologies Inc SM8350 LPASS LPI pin controller driver"
-> +	depends on ARM64 || COMPILE_TEST
-> +	depends on PINCTRL_LPASS_LPI
-> +	help
-> +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-> +	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-> +	  (Low Power Island) found on the Qualcomm Technologies Inc SM8350
-> +	  platform.
-> +
->  config PINCTRL_SM8450_LPASS_LPI
->  	tristate "Qualcomm Technologies Inc SM8450 LPASS LPI pin controller driver"
->  	depends on ARM64 || COMPILE_TEST
-> diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-> index 426ddbf35f32..76ffcfbffc8e 100644
-> --- a/drivers/pinctrl/qcom/Makefile
-> +++ b/drivers/pinctrl/qcom/Makefile
-> @@ -52,6 +52,7 @@ obj-$(CONFIG_PINCTRL_SM8150) += pinctrl-sm8150.o
->  obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
->  obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
->  obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
-> +obj-$(CONFIG_PINCTRL_SM8350_LPASS_LPI) += pinctrl-sm8350-lpass-lpi.o
->  obj-$(CONFIG_PINCTRL_SM8450) += pinctrl-sm8450.o
->  obj-$(CONFIG_PINCTRL_SM8450_LPASS_LPI) += pinctrl-sm8450-lpass-lpi.o
->  obj-$(CONFIG_PINCTRL_SM8550) += pinctrl-sm8550.o
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
-> new file mode 100644
-> index 000000000000..23cce59d1a95
-> --- /dev/null
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
-> @@ -0,0 +1,167 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 20202-2023 Linaro Ltd.
-> + */
-> +
-> +#include <linux/gpio/driver.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +
-> +#include "pinctrl-lpass-lpi.h"
-> +
-> +enum lpass_lpi_functions {
-> +	LPI_MUX_dmic1_clk,
-> +	LPI_MUX_dmic1_data,
-> +	LPI_MUX_dmic2_clk,
-> +	LPI_MUX_dmic2_data,
-> +	LPI_MUX_dmic3_clk,
-> +	LPI_MUX_dmic3_data,
-> +	LPI_MUX_i2s1_clk,
-> +	LPI_MUX_i2s1_data,
-> +	LPI_MUX_i2s1_ws,
-> +	LPI_MUX_i2s2_clk,
-> +	LPI_MUX_i2s2_data,
-> +	LPI_MUX_i2s2_ws,
-> +	LPI_MUX_qua_mi2s_data,
-> +	LPI_MUX_qua_mi2s_sclk,
-> +	LPI_MUX_qua_mi2s_ws,
-> +	LPI_MUX_swr_rx_clk,
-> +	LPI_MUX_swr_rx_data,
-> +	LPI_MUX_swr_tx_clk,
-> +	LPI_MUX_swr_tx_data,
-> +	LPI_MUX_swr_tx_data2,
-> +	LPI_MUX_wsa_swr_clk,
-> +	LPI_MUX_wsa_swr_data,
-> +	LPI_MUX_gpio,
-> +	LPI_MUX__,
-> +};
-> +
-> +static int gpio0_pins[] = { 0 };
-> +static int gpio1_pins[] = { 1 };
-> +static int gpio2_pins[] = { 2 };
-> +static int gpio3_pins[] = { 3 };
-> +static int gpio4_pins[] = { 4 };
-> +static int gpio5_pins[] = { 5 };
-> +static int gpio6_pins[] = { 6 };
-> +static int gpio7_pins[] = { 7 };
-> +static int gpio8_pins[] = { 8 };
-> +static int gpio9_pins[] = { 9 };
-> +static int gpio10_pins[] = { 10 };
-> +static int gpio11_pins[] = { 11 };
-> +static int gpio12_pins[] = { 12 };
-> +static int gpio13_pins[] = { 13 };
-> +static int gpio14_pins[] = { 14 };
-> +
-> +static const struct pinctrl_pin_desc sm8350_lpi_pins[] = {
-> +	PINCTRL_PIN(0, "gpio0"),
-> +	PINCTRL_PIN(1, "gpio1"),
-> +	PINCTRL_PIN(2, "gpio2"),
-> +	PINCTRL_PIN(3, "gpio3"),
-> +	PINCTRL_PIN(4, "gpio4"),
-> +	PINCTRL_PIN(5, "gpio5"),
-> +	PINCTRL_PIN(6, "gpio6"),
-> +	PINCTRL_PIN(7, "gpio7"),
-> +	PINCTRL_PIN(8, "gpio8"),
-> +	PINCTRL_PIN(9, "gpio9"),
-> +	PINCTRL_PIN(10, "gpio10"),
-> +	PINCTRL_PIN(11, "gpio11"),
-> +	PINCTRL_PIN(12, "gpio12"),
-> +	PINCTRL_PIN(13, "gpio13"),
-> +	PINCTRL_PIN(14, "gpio14"),
-> +};
-> +
-> +static const char * const swr_tx_clk_groups[] = { "gpio0" };
-> +static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
-> +static const char * const swr_rx_clk_groups[] = { "gpio3" };
-> +static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-> +static const char * const dmic1_clk_groups[] = { "gpio6" };
-> +static const char * const dmic1_data_groups[] = { "gpio7" };
-> +static const char * const dmic2_clk_groups[] = { "gpio8" };
-> +static const char * const dmic2_data_groups[] = { "gpio9" };
-> +static const char * const i2s2_clk_groups[] = { "gpio10" };
-> +static const char * const i2s2_ws_groups[] = { "gpio11" };
-> +static const char * const dmic3_clk_groups[] = { "gpio12" };
-> +static const char * const dmic3_data_groups[] = { "gpio13" };
-> +static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-> +static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-> +static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
-> +static const char * const i2s1_clk_groups[] = { "gpio6" };
-> +static const char * const i2s1_ws_groups[] = { "gpio7" };
-> +static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-> +static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-> +static const char * const wsa_swr_data_groups[] = { "gpio11" };
-> +static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
-> +
-> +static const struct lpi_pingroup sm8350_groups[] = {
-> +	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-> +	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-> +	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(5, 12, swr_tx_data, swr_rx_data, _, _),
-> +	LPI_PINGROUP(6, LPI_NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-> +	LPI_PINGROUP(7, LPI_NO_SLEW, dmic1_data, i2s1_ws, _, _),
-> +	LPI_PINGROUP(8, LPI_NO_SLEW, dmic2_clk, i2s1_data, _, _),
-> +	LPI_PINGROUP(9, LPI_NO_SLEW, dmic2_data, i2s1_data, _, _),
-> +	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-> +	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-> +	LPI_PINGROUP(12, LPI_NO_SLEW, dmic3_clk, i2s2_data, _, _),
-> +	LPI_PINGROUP(13, LPI_NO_SLEW, dmic3_data, i2s2_data, _, _),
-> +	LPI_PINGROUP(14, 6, swr_rx_data, _, _, _),
-> +};
-> +
-> +static const struct lpi_function sm8350_functions[] = {
-> +	LPI_FUNCTION(dmic1_clk),
-> +	LPI_FUNCTION(dmic1_data),
-> +	LPI_FUNCTION(dmic2_clk),
-> +	LPI_FUNCTION(dmic2_data),
-> +	LPI_FUNCTION(dmic3_clk),
-> +	LPI_FUNCTION(dmic3_data),
-> +	LPI_FUNCTION(i2s1_clk),
-> +	LPI_FUNCTION(i2s1_data),
-> +	LPI_FUNCTION(i2s1_ws),
-> +	LPI_FUNCTION(i2s2_clk),
-> +	LPI_FUNCTION(i2s2_data),
-> +	LPI_FUNCTION(i2s2_ws),
-> +	LPI_FUNCTION(qua_mi2s_data),
-> +	LPI_FUNCTION(qua_mi2s_sclk),
-> +	LPI_FUNCTION(qua_mi2s_ws),
-> +	LPI_FUNCTION(swr_rx_clk),
-> +	LPI_FUNCTION(swr_rx_data),
-> +	LPI_FUNCTION(swr_tx_clk),
-> +	LPI_FUNCTION(swr_tx_data),
-> +	LPI_FUNCTION(wsa_swr_clk),
-> +	LPI_FUNCTION(wsa_swr_data),
-> +};
-> +
-> +static const struct lpi_pinctrl_variant_data sm8350_lpi_data = {
-> +	.pins = sm8350_lpi_pins,
-> +	.npins = ARRAY_SIZE(sm8350_lpi_pins),
-> +	.groups = sm8350_groups,
-> +	.ngroups = ARRAY_SIZE(sm8350_groups),
-> +	.functions = sm8350_functions,
-> +	.nfunctions = ARRAY_SIZE(sm8350_functions),
-> +};
-> +
-> +static const struct of_device_id lpi_pinctrl_of_match[] = {
-> +	{
-> +	       .compatible = "qcom,sm8350-lpass-lpi-pinctrl",
-> +	       .data = &sm8350_lpi_data,
-> +	},
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-> +
-> +static struct platform_driver lpi_pinctrl_driver = {
-> +	.driver = {
-> +		   .name = "qcom-sm8350-lpass-lpi-pinctrl",
-> +		   .of_match_table = lpi_pinctrl_of_match,
-> +	},
-> +	.probe = lpi_pinctrl_probe,
-> +	.remove = lpi_pinctrl_remove,
-> +};
-> +
-> +module_platform_driver(lpi_pinctrl_driver);
-> +MODULE_DESCRIPTION("QTI SM8350 LPI GPIO pin control driver");
-> +MODULE_LICENSE("GPL");
+[1] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-eur-r03.dtsi#L135-L181
+[2] https://github.com/torvalds/linux/blob/v6.3/include/linux/mfd/rt5033-private.h#L211-L212
+[3] https://github.com/torvalds/linux/blob/v6.3/drivers/regulator/rt5033-regulator.c#L83
+[4] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L100
+[5] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/include/linux/power_supply.h#L173-L177
+[6] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L102
+[7] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L95
+[8] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/power/supply/richtek,rt5033-charger.yaml?h=next-20230616
+[9] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/mfd/richtek,rt5033.yaml?h=next-20230616
+
+Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
+---
+The patch is based on linux-next "next-20230616".
+
+The driver rt5033-charger was just recently added to linux-next.
+
+ .../dts/qcom/msm8916-samsung-serranove.dts    | 67 ++++++++++++++++++-
+ 1 file changed, 66 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+index 15dc246e84e2..2114d26548db 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+@@ -142,6 +142,12 @@ muic: extcon@14 {
+ 
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&muic_irq_default>;
++
++			usb_con: connector {
++				compatible = "usb-b-connector";
++				label = "micro-USB";
++				type = "micro";
++			};
+ 		};
+ 	};
+ 
+@@ -199,6 +205,15 @@ nfc@2b {
+ 			pinctrl-0 = <&nfc_default>;
+ 		};
+ 	};
++
++	battery: battery {
++		compatible = "simple-battery";
++		precharge-current-microamp = <450000>;
++		constant-charge-current-max-microamp = <1000000>;
++		charge-term-current-microamp = <150000>;
++		precharge-upper-limit-microvolt = <3500000>;
++		constant-charge-voltage-max-microvolt = <4350000>;
++	};
+ };
+ 
+ &blsp_i2c2 {
+@@ -228,7 +243,7 @@ magnetometer@2e {
+ &blsp_i2c4 {
+ 	status = "okay";
+ 
+-	battery@35 {
++	fuel-gauge@35 {
+ 		compatible = "richtek,rt5033-battery";
+ 		reg = <0x35>;
+ 
+@@ -237,6 +252,8 @@ battery@35 {
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&fg_alert_default>;
++
++		power-supplies = <&rt5033_charger>;
+ 	};
+ };
+ 
+@@ -261,6 +278,46 @@ touchscreen@20 {
+ 	};
+ };
+ 
++&blsp_i2c6 {
++	status = "okay";
++
++	pmic@34 {
++		compatible = "richtek,rt5033";
++		reg = <0x34>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <62 IRQ_TYPE_EDGE_FALLING>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&pmic_int_default>;
++
++		regulators {
++			safe_ldo_reg: SAFE_LDO {
++				regulator-name = "SAFE_LDO";
++				regulator-min-microvolt = <4900000>;
++				regulator-max-microvolt = <4900000>;
++				regulator-always-on;
++			};
++			ldo_reg: LDO {
++				regulator-name = "LDO";
++				regulator-min-microvolt = <2800000>;
++				regulator-max-microvolt = <2800000>;
++			};
++			buck_reg: BUCK {
++				regulator-name = "BUCK";
++				regulator-min-microvolt = <1200000>;
++				regulator-max-microvolt = <1200000>;
++			};
++		};
++
++		rt5033_charger: charger {
++			compatible = "richtek,rt5033-charger";
++			monitored-battery = <&battery>;
++			richtek,usb-connector = <&usb_con>;
++		};
++	};
++};
++
+ &blsp_uart2 {
+ 	status = "okay";
+ };
+@@ -387,6 +444,14 @@ nfc_i2c_default: nfc-i2c-default-state {
+ 		bias-disable;
+ 	};
+ 
++	pmic_int_default: pmic-int-default-state {
++		pins = "gpio62";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	tkey_default: tkey-default-state {
+ 		pins = "gpio98";
+ 		function = "gpio";
+-- 
+2.39.2
+
