@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D43B3732CC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:03:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7EE2732CC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:04:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230016AbjFPKDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 06:03:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36376 "EHLO
+        id S232664AbjFPKEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 06:04:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232488AbjFPKDy (ORCPT
+        with ESMTP id S232488AbjFPKEA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 06:03:54 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B402137
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 03:03:52 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f6283d0d84so622419e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 03:03:52 -0700 (PDT)
+        Fri, 16 Jun 2023 06:04:00 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D71F8194
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 03:03:58 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f6170b1486so774693e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 03:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686909831; x=1689501831;
+        d=linaro.org; s=google; t=1686909837; x=1689501837;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/SYLfmYB9gzad0jsypq85u4pnYtC7EcypQoat8evP4c=;
-        b=IyH+Euc7GU78f1W+jtcSN1CisFfHTqOxfmlOyVK5+paAN5PvmohsItTzB4pqJcaMiw
-         LU6LQp6vvhLo2LThgzhqRsY2/R+6l+Hyw3IMlAAQIikYgTM7A+lk7uyo0JQVSCjYL+IJ
-         OgDgjsRqQvnnF6wKvUuq+1IzaQEc2t7X4r8V5rv6HbnIpxIpuotPO75DNqfn+h4rtJiJ
-         rcxACbpu0nOGbQc64f/Y3RUomsDSQelgV52thuC2LYybeJdCyUJVSrTiOLye7KsNGN4M
-         sFEsb1bPQPTLlXvqGtTycADUJ0+fMqDtHWDOW/l0pjE5IwSgQbNoL+tYS28cDERQ1yfW
-         nJpA==
+        bh=0Z6dm2XLnqrBhq2Tt8Kc44vvonw+W/q8cr8K+n2c5Go=;
+        b=ER+1mSQoN+LrCoHIhIDwWOWDvhN4sKfYCGwbqa9BX5FNdOVf1yD0qdeGDrfLdpTr3n
+         e7VAGjKpt25MbHuH7IhAZut6r+qZRgxcwsFyIaO9g5J5l6MlXGdC8RV1ctpxCsOEhh51
+         rKzEbZYJ+O7YzTVTE8IcE9Dv7a+mly+EG4M6JtYk8VpsqqHTarpxGChTzwn2ogjErpA2
+         vsVLr5V9Wi9U5BwOkUJribtg+fQmCPqeMOhoNOXnB56uRC0qcG8FdM0+VRvVqw9Lc29a
+         95SERoJmN4lXTfCFFn/sTo1byTVjtd2h2w+GoMHf5P0Ph/xAtpDKd4vjSP6vHyJL4pgZ
+         8CLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686909831; x=1689501831;
+        d=1e100.net; s=20221208; t=1686909837; x=1689501837;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/SYLfmYB9gzad0jsypq85u4pnYtC7EcypQoat8evP4c=;
-        b=QfoV3GwH+X/OxP/YYqgUdfcTHx0fp6MjZ8GoHxfOonP9ThCipMQqfNdEM5fJmzMmMT
-         WWTUkU4gQepgNDUkXsXbIlso6lOH2xlgO2X8R//LJO7dLhYhq+GdKFZcx8YddwHzi/OG
-         px7gPd05VkBMwGuhLoe4Hl5ll73B8PJaxN88JV6beZVFGvQutkVDedEdQyuAQo3+YT+m
-         jZnFlWJkTOCaQA4ct/RwfBDAyhZU+Yfz53cMECfqkZfaCuNtzocA24eS39duoj+3kzTH
-         15QJ8QeA6kHAr7KCU5Y2SrZ0+KOX9TE07VKl/h2ImEof3ZQaxziwS0zA8R1LUHF5P+R7
-         I1dA==
-X-Gm-Message-State: AC+VfDy3ZBuhs3peYMt4O5vrvVSxLQaN9/3UbIL7vlq8/7bybHyWXj+Y
-        jrw7JHPwrNT/Gl8zrTIocrwoLw==
-X-Google-Smtp-Source: ACHHUZ4luGyxq4WqhViTuMOcRXx2PYrGGlUga0wdNNT/tyItFRbFWTnKmZ1N4WlzxkjHNbZrKipQyg==
-X-Received: by 2002:a05:6512:68:b0:4f7:4098:9905 with SMTP id i8-20020a056512006800b004f740989905mr902936lfo.65.1686909830900;
-        Fri, 16 Jun 2023 03:03:50 -0700 (PDT)
+        bh=0Z6dm2XLnqrBhq2Tt8Kc44vvonw+W/q8cr8K+n2c5Go=;
+        b=QAWJN1EQk2ixcJLbymbFt6xPem3mnSFr3rwzCw51qPOTpSvcHx3d8ySU8PISofEQmL
+         whNGYTBRbmeBW3OlUEumO73LIV2MD4EpMiPQykKMpa5LvTWvHI97OvhqeCAlV69Yae/H
+         0W5GOzH+o9O6SLiP+1OV4T+7deGE3GdLvlpnMB5SwyT5QcC0Lwa2HL1dF48sZLjITy5a
+         9WbXQHGR8sM7eJWekq9OihKMOXczJeEukyQFRdOSPJBbwlRdHe+EH5MwICIIB+mmOjkX
+         pTtiVvPt8SQi7loUnKVt2wybZUyhNmPOkTmDE72bAFADx6bHseykChT2oWkuMMxqmjcN
+         a8PA==
+X-Gm-Message-State: AC+VfDyQgBN1TscfsnjoEiOuKbQ3Ej26yzJ9Q0XAJzOZDajhV7HHLx3w
+        WZl15dFMvkOiBzXMSVjAWxSfKA==
+X-Google-Smtp-Source: ACHHUZ6da952EzINTP+fYB2k6K8jCZOEu52m6Dxh5mtwiNhlNZH+IAkQkxj5M1wAUmGERapImilFfw==
+X-Received: by 2002:a05:6512:2247:b0:4f7:6350:6bee with SMTP id i7-20020a056512224700b004f763506beemr2915542lfu.16.1686909837209;
+        Fri, 16 Jun 2023 03:03:57 -0700 (PDT)
 Received: from eriador.lan (85-76-68-127-nat.elisa-mobile.fi. [85.76.68.127])
-        by smtp.gmail.com with ESMTPSA id r12-20020ac24d0c000000b004f4ce9c9338sm2967423lfi.283.2023.06.16.03.03.46
+        by smtp.gmail.com with ESMTPSA id r12-20020ac24d0c000000b004f4ce9c9338sm2967423lfi.283.2023.06.16.03.03.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jun 2023 03:03:50 -0700 (PDT)
+        Fri, 16 Jun 2023 03:03:56 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v3 07/19] drm/msm/dpu: drop zero features from dpu_mdp_cfg data
-Date:   Fri, 16 Jun 2023 13:03:05 +0300
-Message-Id: <20230616100317.500687-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 08/19] drm/msm/dpu: drop zero features from dpu_ctl_cfg data
+Date:   Fri, 16 Jun 2023 13:03:06 +0300
+Message-Id: <20230616100317.500687-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
 References: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
@@ -78,103 +78,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop useless zero assignments to the dpu_mdp_cfg::features field.
+Drop useless zero assignments to the dpu_ctl_cfg::features field.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h  | 1 -
- 7 files changed, 7 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 3 ---
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 3 ---
+ 2 files changed, 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index ab1820f1ac54..e321cc0a80ee 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -28,7 +28,6 @@ static const struct dpu_ubwc_cfg sm8250_ubwc_cfg = {
- static const struct dpu_mdp_cfg sm8250_mdp = {
- 	.name = "top_0",
- 	.base = 0x0, .len = 0x494,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+index 757ac648a692..e0cc1ce3f3e2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+@@ -54,7 +54,6 @@ static const struct dpu_ctl_cfg msm8998_ctl[] = {
+ 	{
+ 	.name = "ctl_1", .id = CTL_1,
+ 	.base = 0x1200, .len = 0x94,
 -	.features = 0,
- 	.clk_ctrls = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
- 		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-index 2df9a00728c0..1919ee487e68 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-@@ -25,7 +25,6 @@ static const struct dpu_ubwc_cfg sc7180_ubwc_cfg = {
- static const struct dpu_mdp_cfg sc7180_mdp = {
- 	.name = "top_0",
- 	.base = 0x0, .len = 0x494,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
+ 	},
+ 	{
+@@ -66,13 +65,11 @@ static const struct dpu_ctl_cfg msm8998_ctl[] = {
+ 	{
+ 	.name = "ctl_3", .id = CTL_3,
+ 	.base = 0x1600, .len = 0x94,
 -	.features = 0,
- 	.clk_ctrls = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
- 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-index 1982654e74a0..0252fe9590e7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-@@ -26,7 +26,6 @@ static const struct dpu_ubwc_cfg sm6115_ubwc_cfg = {
- static const struct dpu_mdp_cfg sm6115_mdp = {
- 	.name = "top_0",
- 	.base = 0x0, .len = 0x494,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
+ 	},
+ 	{
+ 	.name = "ctl_4", .id = CTL_4,
+ 	.base = 0x1800, .len = 0x94,
 -	.features = 0,
- 	.clk_ctrls = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
- 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-index ac237c3197cf..3c2083760294 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-@@ -28,7 +28,6 @@ static const struct dpu_ubwc_cfg sm6350_ubwc_cfg = {
- static const struct dpu_mdp_cfg sm6350_mdp = {
- 	.name = "top_0",
- 	.base = 0x0, .len = 0x494,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 13),
+ 	},
+ };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+index 9fb8ef21c7f0..f52e1fa27e2c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+@@ -58,19 +58,16 @@ static const struct dpu_ctl_cfg sdm845_ctl[] = {
+ 	{
+ 	.name = "ctl_2", .id = CTL_2,
+ 	.base = 0x1400, .len = 0xe4,
 -	.features = 0,
- 	.clk_ctrls = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
- 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-index 24c4536e7981..54cc6ad8ee36 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-@@ -23,7 +23,6 @@ static const struct dpu_ubwc_cfg qcm2290_ubwc_cfg = {
- static const struct dpu_mdp_cfg qcm2290_mdp = {
- 	.name = "top_0",
- 	.base = 0x0, .len = 0x494,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
+ 	},
+ 	{
+ 	.name = "ctl_3", .id = CTL_3,
+ 	.base = 0x1600, .len = 0xe4,
 -	.features = 0,
- 	.clk_ctrls = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
- 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-index 099b74be3fd2..f0f6f2d801b4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-@@ -27,7 +27,6 @@ static const struct dpu_ubwc_cfg sm6375_ubwc_cfg = {
- static const struct dpu_mdp_cfg sm6375_mdp = {
- 	.name = "top_0",
- 	.base = 0x0, .len = 0x494,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
+ 	},
+ 	{
+ 	.name = "ctl_4", .id = CTL_4,
+ 	.base = 0x1800, .len = 0xe4,
 -	.features = 0,
- 	.clk_ctrls = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
- 		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index 7db3a6969189..318bed612da5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -27,7 +27,6 @@ static const struct dpu_ubwc_cfg sm8350_ubwc_cfg = {
- static const struct dpu_mdp_cfg sm8350_mdp = {
- 	.name = "top_0",
- 	.base = 0x0, .len = 0x494,
--	.features = 0,
- 	.clk_ctrls = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
- 		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 13),
+ 	},
+ };
 -- 
 2.39.2
 
