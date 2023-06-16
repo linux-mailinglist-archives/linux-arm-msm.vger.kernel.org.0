@@ -2,73 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75534732FDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:30:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71679732FDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 13:31:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235095AbjFPLae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 07:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49296 "EHLO
+        id S241187AbjFPLbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 07:31:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241049AbjFPLab (ORCPT
+        with ESMTP id S244879AbjFPLbD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 07:30:31 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5572C296A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:30:29 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b3424edd5fso7627261fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:30:29 -0700 (PDT)
+        Fri, 16 Jun 2023 07:31:03 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAB8D1FF5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:31:00 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f84d70bf96so802600e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 04:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686915027; x=1689507027;
+        d=linaro.org; s=google; t=1686915059; x=1689507059;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hWaj8V26e6AndVXAhP1UnOZRtCJHb24nNyQJnL1KfpQ=;
-        b=qsMcLbqWpaDKn5jJ3a7lh2l7ZEoQMihWU/D9Xl/C041+aVh8oEnvGGYPYeWgI//piH
-         8RKB9TSLG+GDqdw1aeL7PACdlLO5VCCDB8NLuLoXYEdPbZ4PEHZJdfVMrU0ZPbiqmCPx
-         VVQ15Kwq+qOIGF/AsyhY3pvyC1lFN4JqKcZuc7rkCxLRVEryb7uIJiyUtvBuGSw14hZ3
-         KqgKogpwOPt802SJKBQty6rmzQBRW1InBZSIkacyo/IjUeRjU+SR995A/qgHZ2heQYqp
-         mIQ5G6qeN0AlcwrWw9vGaDIdB0sLriKHrGiYMp8xxCMcztgfndwKHCBiWrGJj6Qq6CS+
-         Adig==
+        bh=//Qu3hiEpe4TLJdaTFZDC48BNT7ERszPyV1zXJ0yHKg=;
+        b=uxWtNsJwvZ7HF7KxfcW0YjH/M8cblUzouedbDzOZ5eXHgUJpgNiTjRXoU+hUgqwemw
+         jMoXOC8uFFVPzAofHyzci7EJgyYLj7JkLdhns5WCD7/vfpyb+ZwP8jGhtGfL8Salic0M
+         RP5YzhDCeGvQlDSNNEseyl+Swwja0XAemWdMwlmEWFM0ey1RETRNQbkP/pjKHwZOVqWl
+         6atqNG1hzyWuyfCCrUqs7cRFnnc1wmbTpnmyQhAYXVqUXSboQW1lXnnqXRSH4oCQE6tX
+         DNxSaGmd+/CsSwyF/nwX0tv7pKjJeIqYPoGtLiZvj6JmdbY+VrGBQRR7VEcAqF/ViLc3
+         dtzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686915027; x=1689507027;
+        d=1e100.net; s=20221208; t=1686915059; x=1689507059;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hWaj8V26e6AndVXAhP1UnOZRtCJHb24nNyQJnL1KfpQ=;
-        b=SEILeosax6DX/taKm+OLHOdCTxKeDZ9sp3iqsEKiLuWt344qEdwye4gI025KyDINWU
-         3bIK5wXFE8XtECfjt7eQs5q4iTTWt+LLK0Z7oenyjUaFB5K2EAgTFl/H3suEJ+VFHSGM
-         MnzjFyXbxWmiU821/Js/fFCGamJf/uhlAsYpNtokmTXlw8MJujokfFryWa4uSxcIjGaO
-         NHGuH0ncCLa5vqAxjGVavkn8fhNAqLQcCD6SyXMl7/pt1YUTgmMktZPSzuA2A8lNTVwe
-         0j0iRbND6uzRx26rjNJ4rKM5kaFUISwdHVhCng8+xv/QhzNRcr4eCwW41qAv8G43Ldow
-         zANg==
-X-Gm-Message-State: AC+VfDy6gNK9tLwSTISdcNOYCsyP34vv2o4qfoaWXpGiADeLFlAm11aU
-        QPImvchp1I/hQEhN6ZIWFS1GbQ==
-X-Google-Smtp-Source: ACHHUZ7fM7XuMr8WhrpLTJWyagGKaUPyrMK77XcC+7GWq+uy60ZRqPMZkECck0Zt0Hymekne24sv4w==
-X-Received: by 2002:a2e:9206:0:b0:2b0:259d:f670 with SMTP id k6-20020a2e9206000000b002b0259df670mr1487873ljg.4.1686915027509;
-        Fri, 16 Jun 2023 04:30:27 -0700 (PDT)
-Received: from [192.168.1.151] (85-76-68-127-nat.elisa-mobile.fi. [85.76.68.127])
-        by smtp.gmail.com with ESMTPSA id j6-20020a2eb706000000b002b34f9cfc7asm1072257ljo.90.2023.06.16.04.30.22
+        bh=//Qu3hiEpe4TLJdaTFZDC48BNT7ERszPyV1zXJ0yHKg=;
+        b=I6ZeVvBq3r1kdMFCfOH2HpJvZh1HUr3SCG0SjdbkFg1etg46f27qxyT8H263wUqjOH
+         sa/ekG4EJHcM7+V3fBdq8+35VX0V7ohSVDsq5o+0RsOqNEVLnHoygiHtORA4VBOBv6gJ
+         3VT8uz4GPDn7Pbv6mQ+ZGUISuXNsY0fKBToeEL//L/o88SLLiTR8NBGzUT3xDYnHQqRv
+         2RkWmvAvbeHHO7SnFWWiKKbM9MaHRO0St0e9hazJFpaS/mCmDO1MRlF7MrKM45A2cyde
+         Qhjq4QEkcfVoXjtNZhYeNqG8pU8gHlF0Pl4Z70+RzlcwOif8CuV7LOtKGcaGKhsGrH8Y
+         oyOw==
+X-Gm-Message-State: AC+VfDxXvnuQej4qPbVpWLovBISX/TrqOJpKt3N4utydgl3M9O99labI
+        JhdzjxQNn+gVhZi5sWPNP5XJcg==
+X-Google-Smtp-Source: ACHHUZ6xOEU9IxkNAKpDcdKP6bGtm30j0f0RiCE4/9TaVC12Vt+UWYvrK8C42wyXSoBUqZYplv9I7Q==
+X-Received: by 2002:a05:6512:52e:b0:4f6:3347:a044 with SMTP id o14-20020a056512052e00b004f63347a044mr660271lfc.26.1686915059114;
+        Fri, 16 Jun 2023 04:30:59 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id v27-20020ac2561b000000b004f2391fe9a6sm954063lfd.266.2023.06.16.04.30.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 04:30:27 -0700 (PDT)
-Message-ID: <8d5870f8-e530-fa8f-444a-3d3ccf716d48@linaro.org>
-Date:   Fri, 16 Jun 2023 14:30:20 +0300
+        Fri, 16 Jun 2023 04:30:58 -0700 (PDT)
+Message-ID: <6a0a9fe7-d08e-4d1d-0085-f854f95c390f@linaro.org>
+Date:   Fri, 16 Jun 2023 13:30:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 0/3] Add support for databus widen mode
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/102.11.2
+Subject: Re: [RESEND v6 7/8] arm64: dts: qcom: sc7280: Modify LPASS_MCC reg
+ region size in the lpass_tlmm node
+Content-Language: en-US
+To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+        krzysztof.kozlowski+dt@linaro.org, swboyd@chromium.org,
+        andersson@kernel.org, broonie@kernel.org, agross@kernel.org
+Cc:     robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, judyhsiao@chromium.org,
+        quic_visr@quicinc.com,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+References: <20230616103534.4031331-1-quic_mohs@quicinc.com>
+ <20230616103534.4031331-8-quic_mohs@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230616103534.4031331-8-quic_mohs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -80,67 +83,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 04:57, Jessica Zhang wrote:
-> DPU 5.x+ and DSI 6G 2.5.x+ support a databus-widen mode that allows for
-> more compressed data to be transferred per pclk.
+On 16.06.2023 12:35, Mohammad Rafi Shaik wrote:
+> From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > 
-> This series adds support for enabling this feature for both DPU and DSI
-> by doing the following:
+> Modify LPASS_MCC register region size in "lpass_tlmm" node.
+> The pincntl driver requires access until slew-rate register region
+> and remaining register region related to the lpass_efuse register
+> is not required in pincntl driver as lpass_efuse register region is
+> required in adsp remoteproc driver.
 > 
-> 1. Add a DPU_INTF_DATABUS_WIDEN feature flag
-> 2. Add a DPU INTF op to set the DATABUS_WIDEN register
-> 3. Set the DATABUS_WIDEN register and do the proper hdisplay
->     calculations in DSI when applicable
-
-As I was writing the documentation patch, another thought stroke me wrt 
-this patchset. Could you please add a check to DSI's mode_valid 
-disallowing all modes if DSI_BPP > 8 & !widebus. Technically this check 
-does not filter modes per se, but in my opinion ending up with empty 
-modes list would be a better user experience compared to having a list 
-of modes, from which none can be selected.
-
-And if we ever get dynamic mode/dsc_config setup, this would allow us to 
-filter unsupported modes via their DSC confiuration.
-
-Abhinav, I remember, that you told me that adding drm_dsc_config to drm 
-modes was forbidden already. However this looks like a valid reason to 
-maybe restart the discussion: we want to filter modes basing on the 
-corresponding DSC data rather than allowing the mode in mode_valid() and 
-then failing it in the atomic_check().
-
-> 
-> Note: This series will only enable the databus-widen mode for command
-> mode as we are currently unable to validate it on video mode.
-> 
-> Depends on: "Add DSC v1.2 Support for DSI" [1]
-> 
-> [1] https://patchwork.freedesktop.org/series/117219/
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-
-Nit: there is no need to sign-off the cover letters.
-
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
-> Jessica Zhang (3):
->        drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN feature flag for DPU >= 5.0
->        drm/msm/dpu: Set DATABUS_WIDEN on command mode encoders
->        drm/msm/dsi: Enable DATABUS_WIDEN for DSI command mode
-> 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c       |  3 ++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h       |  2 ++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 12 ++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  3 +++
->   drivers/gpu/drm/msm/dsi/dsi.xml.h                    |  1 +
->   drivers/gpu/drm/msm/dsi/dsi_host.c                   | 19 ++++++++++++++++++-
->   7 files changed, 41 insertions(+), 2 deletions(-)
-> ---
-> base-commit: 1981c2c0c05f5d7fe4d4552d4f352cb46840e51e
-> change-id: 20230525-add-widebus-support-f785546ee751
-> 
-> Best regards,
+Fixes tag?
 
--- 
-With best wishes
-Dmitry
-
+Konrad
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 36f9edabb9d7..ec38f2feb9bf 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2509,7 +2509,7 @@ lpass_ag_noc: interconnect@3c40000 {
+>  		lpass_tlmm: pinctrl@33c0000 {
+>  			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
+>  			reg = <0 0x033c0000 0x0 0x20000>,
+> -				<0 0x03550000 0x0 0x10000>;
+> +				<0 0x03550000 0x0 0xa100>;
+>  			qcom,adsp-bypass-mode;
+>  			gpio-controller;
+>  			#gpio-cells = <2>;
