@@ -2,169 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AE18732647
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 06:42:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF59B7326A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 07:31:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230015AbjFPEm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 00:42:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54110 "EHLO
+        id S232708AbjFPFbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 01:31:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229906AbjFPEmy (ORCPT
+        with ESMTP id S230378AbjFPFbf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 00:42:54 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1942D5E;
-        Thu, 15 Jun 2023 21:42:53 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35G3ZROX022462;
-        Fri, 16 Jun 2023 04:42:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BAXd2yjk8OcvSytsAMg0FjZeyy7emml9cZq/OfUk3xU=;
- b=FO7Yehd13Yyyzrz7I7RKsGP3rTFyPQuDpAcoZgBgdR857+nSusucsXcXLBam0Y9eeZ3j
- YvtX1J+s2IB0OJo4dJDAHHgQpCT8VdIVaBsh2p3fHCWgMUAwMrbcrOiNK2C1kLRUUpIP
- 0pm48O7EWbVbtk1Hs2bQ6i1qbfUdSNHE3zoRTpV2EYgSg6P8BL9eSoYG+rHWWAgkok9t
- Hg/UF1IHgpwkhLDeCTk2kEQKoeUyh2wRrahFm5pEh86soi8jn+D1MQAFA3zeL79JBwKv
- gSPl6fm3KxL8RfavqedLM8T75Zltn7U/edwXLhPdQgeaSXsJMHAscYmQDy7ddg4KhwU/ Bw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r81t3hu56-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Jun 2023 04:42:50 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35G4gnxP008574
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Jun 2023 04:42:49 GMT
-Received: from [10.201.206.212] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 15 Jun
- 2023 21:42:46 -0700
-Message-ID: <5f8298d5-3379-924e-6c27-a9f54af4bf09@quicinc.com>
-Date:   Fri, 16 Jun 2023 10:12:43 +0530
+        Fri, 16 Jun 2023 01:31:35 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E4E2943;
+        Thu, 15 Jun 2023 22:31:33 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id 58B3A40901;
+        Fri, 16 Jun 2023 10:31:28 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1686893489; bh=W3BlNMaiG3cHQL4Ng0ytzSXIonyV1hxmRIBmdcXY2DA=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=43O0re6ckxF+pQP5jc8kmicy2CjfzN4Fztdb4MQIovS2GMHHP8RD0DnSF5ofvMito
+         +IoGeQLlyTHvVsZULfGobaaTH4nJ1uUP/wcMUSbtHYkZyYI20779H8OVPHSBWiaTDq
+         sY4nLro8MukesWGvHnLi+vtRdvufQShqqaiNVNNc0JUQi758R4M5WCk+/njE5d6qnE
+         wYsX7iBx6KEo6pYa3PVzesoYOIOrbSkUdpyx/LSc2JLc3hJl30CT/8Hnln37YEqw5H
+         9VDr5IDYReVyTTRRn8CCVeP98XqMaKjmNj3YulIF3gnUGAYDIBBk+vHXnpVNFAsoLS
+         K8sesLLznxnUQ==
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V2 1/2] arm64: dts: qcom: ipq5332: enable GPIO based LEDs
- and Buttons
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230615145311.2776-1-quic_sridsn@quicinc.com>
- <20230615145311.2776-2-quic_sridsn@quicinc.com>
- <db9a6c19-f28d-ce5e-fd47-04eda6da5a91@linaro.org>
-From:   Sridharan S N <quic_sridsn@quicinc.com>
-In-Reply-To: <db9a6c19-f28d-ce5e-fd47-04eda6da5a91@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RidZNmwa99SJG_NH6RoiKvtgv0ezNiQ1
-X-Proofpoint-ORIG-GUID: RidZNmwa99SJG_NH6RoiKvtgv0ezNiQ1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-16_02,2023-06-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=991 phishscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306160043
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Date:   Fri, 16 Jun 2023 10:31:26 +0500
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] media: venus: core: Set up secure memory ranges for
+ SC7180
+In-Reply-To: <20230616-topic-sc7180_venus_lawp-v1-1-15a8f44d474e@linaro.org>
+References: <20230616-topic-sc7180_venus_lawp-v1-1-15a8f44d474e@linaro.org>
+Message-ID: <8adfa758ba13e70a3cd28a9c8a45738f@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Konrad Dybcio писал(а) 16.06.2023 04:36:
+> Not all SC7180 devices ship with ChromeOS firmware. WoA devices use
+> Android-like TZ, which uses PAS for image authentication. That requires
+> the predefined virtual address ranges to be passed via scm calls.
+> Define them to enable Venus on non-CrOS SC7180 devices.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-On 6/15/2023 8:28 PM, Konrad Dybcio wrote:
-> On 15.06.2023 16:53, Sridharan S N wrote:
->> Add support for wlan-2g LED on GPIO 36 and wps buttons on GPIO 35.
->>
->> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
->> ---
-> This patch references a file that does not exist in -next and does
-> not state any dependency on other patches. With the hundreds of
-> emails flowing in daily, it's impossible to keep track of it.
->
-> For the patch contents, lgtm.
->
-> Konrad
+This does indeed bring up the venus for me now. Thanks! 
 
-will mention dependency in V4
+Tested-by: Nikita Travkin <nikita@trvn.ru> # Aspire 1
 
-Regards,
-
-Sridharan S N
-
->> Changes in V2:
->> 	- Updated commit message
->>
->>   .../boot/dts/qcom/ipq5332-rdp-common.dtsi     | 39 +++++++++++++++++++
->>   1 file changed, 39 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
->> index 97dc0e5c15f0..a8671a4ac2e4 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
->> @@ -19,6 +19,31 @@
->>   	chosen {
->>   		stdout-path = "serial0";
->>   	};
->> +
->> +	gpio-keys {
->> +		compatible = "gpio-keys";
->> +		pinctrl-0 = <&gpio_keys_default>;
->> +		pinctrl-names = "default";
->> +
->> +		button-wps {
->> +			label = "wps";
->> +			linux,code = <KEY_WPS_BUTTON>;
->> +			gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
->> +			debounce-interval = <60>;
->> +		};
->> +	};
->> +
->> +	leds {
->> +		compatible = "gpio-leds";
->> +		pinctrl-0 = <&gpio_leds_default>;
->> +		pinctrl-names = "default";
->> +
->> +		led-0 {
->> +			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
->> +			linux,default-trigger = "phy0tx";
->> +			default-state = "off";
->> +		};
->> +	};
->>   };
->>   
->>   &blsp1_i2c1 {
->> @@ -52,6 +77,20 @@
->>   /* PINCTRL */
->>   
->>   &tlmm {
->> +	gpio_keys_default: gpio-keys-default-state {
->> +		pins = "gpio35";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		bias-pull-up;
->> +	};
->> +
->> +	gpio_leds_default: gpio-leds-default-state {
->> +		pins = "gpio36";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		bias-pull-down;
->> +	};
->> +
->>   	i2c_1_pins: i2c-1-state {
->>   		pins = "gpio29", "gpio30";
->>   		function = "blsp1_i2c0";
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 2ae867cb4c48..bee1b4c98060 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -760,6 +760,10 @@ static const struct venus_resources sc7180_res = {
+>  	.vmem_size = 0,
+>  	.vmem_addr = 0,
+>  	.dma_mask = 0xe0000000 - 1,
+> +	.cp_start = 0,
+> +	.cp_size = 0x70800000,
+> +	.cp_nonpixel_start = 0x1000000,
+> +	.cp_nonpixel_size = 0x24800000,
+>  	.fwname = "qcom/venus-5.4/venus.mdt",
+>  };
+>  
+> 
+> ---
+> base-commit: 925294c9aa184801cc0a451b69a18dd0fe7d847d
+> change-id: 20230616-topic-sc7180_venus_lawp-965e5fd18c7a
+> 
+> Best regards,
