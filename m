@@ -2,119 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 472B47326E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 07:56:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26F7B7327DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 08:51:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240797AbjFPF4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 01:56:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43636 "EHLO
+        id S233847AbjFPGvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 02:51:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240784AbjFPF4g (ORCPT
+        with ESMTP id S230171AbjFPGvb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 01:56:36 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BFB52D50;
-        Thu, 15 Jun 2023 22:56:31 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35G5FkcU024268;
-        Fri, 16 Jun 2023 05:56:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+9HBRmd5eI7voSotvO83qQ9bZ7jS8TilhDrz5QR9rxs=;
- b=NYzUjzP+8405lrtCK5MbUGAbE4wtv4XjjGPX7mZ7UZ08C+hnKLq8b1UkCXvBKNr9hIDo
- ApMYuvgriMoSG8r+bf06Az88TkPfH+ZXtsXNO4iBESENog1U8R3pCaFBW/lqT7UjV6/h
- kpP6bDC9QrbyQKAsLoTLGaJsOmBHmvBUGCpRmer4iNPfreD4nYM4/KiGS3EKrc4t1aKD
- 8KRd/F2VxhMwmOLVSQDqdqGjz54gC+XUxMw4s8JDrbb1Pt5Ec4pP++z+a44NrLQxtqey
- wILLM15WnnPgoprHaBi1bT2DlTiMjKouuSgLyzMpJ0K/HIdxpSwN5v/PdDw4hFtn4nER 3w== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r8g2y867x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Jun 2023 05:56:25 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35G5uPoc017983
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Jun 2023 05:56:25 GMT
-Received: from [10.216.51.142] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 15 Jun
- 2023 22:56:21 -0700
-Message-ID: <5820345a-4207-3b12-87eb-098bac4ef4e8@quicinc.com>
-Date:   Fri, 16 Jun 2023 11:26:18 +0530
+        Fri, 16 Jun 2023 02:51:31 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C54F2135
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 23:51:30 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-66682bd799fso386826b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jun 2023 23:51:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686898289; x=1689490289;
+        h=content-transfer-encoding:author:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2ePxkvXc3ez7RaG4t+b4SJYW3YfRAjragn1h3BVbXng=;
+        b=LChvz2X+hj7s7ldfSLBo7Q4o3S6V0QEojFzHeNlLz+mqu2QDAN/GVxiDDXl/LfisiA
+         kg71efrGUIs+OFuj08ikZmUEQsNloGlvdeNBuPqmISjpKmv4MQ0Adb7y3pRyoXunrXMb
+         HNdqaq+0oJ2i4khq1GDfSX1c96No+qa82HUnGPQ8LHDBvmTHRSk7SI6Ds/7hB8/ILfVo
+         cwE7zhQc21f3f1BvR3HBQv/JqrVSFt6WSEpvVjei3lIaL87rtK5oDwpM2Y/56c3CiAAI
+         q0PlaZRS2FqUTTeq680F/VbDdftvtK0VWM3XYRIvor5KGPYd2EzpEBunml0g6W5yiOLA
+         38qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686898289; x=1689490289;
+        h=content-transfer-encoding:author:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2ePxkvXc3ez7RaG4t+b4SJYW3YfRAjragn1h3BVbXng=;
+        b=I2++EW4RNcaa9+zbzCr4dAAGCFWoZ1432PV/zpM1C1FFe4keodksNCNJg4FQEOrPCK
+         SqBuYv2BeQYOppO4Amjl8UcEOJFLxhy4l+p7S7wJL/lY3Fk1PLOIMqadDVjIYaHvbBRO
+         8pI4iPMMrnmz+xfOpuk2YKpIQp2Q3YbTukLVbp7Ne2iqOyh+g6JaigDv3eATkyeo1Zfa
+         9CZIx15hbzBG05oXgIiVjw39p7e8soYIfRtnz4unsjlRVGN44dZgAakfPqYT/339FjU1
+         pE+Yad3IVv24aDGi4AlxdxivospNCUNzpLD79WO4bDt72BDn99gVoIAc+2Bkex4doI9Y
+         e61g==
+X-Gm-Message-State: AC+VfDxPMsr5S8PFgj2cLOIqtYgBkornH4OAxYJVbrymVI7kxz3Af23i
+        A5eEe2HniwGaIID2g8QgwdhB1w==
+X-Google-Smtp-Source: ACHHUZ7mCmhLo3bjUDLpe/NUKX2+e5MJLc4Sq+J15sSNEIdqea6uqjAlFw0cSjS14vTJZSKWMapqJQ==
+X-Received: by 2002:a05:6a21:3997:b0:111:2a64:83e7 with SMTP id ad23-20020a056a21399700b001112a6483e7mr1384962pzc.22.1686898289554;
+        Thu, 15 Jun 2023 23:51:29 -0700 (PDT)
+Received: from localhost.localdomain ([49.207.50.231])
+        by smtp.gmail.com with ESMTPSA id j11-20020a170902690b00b001b03842ab78sm15079395plk.89.2023.06.15.23.51.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jun 2023 23:51:28 -0700 (PDT)
+From:   Amit Pundir <amit.pundir@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Bryan Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory region as reserved
+Date:   Fri, 16 Jun 2023 12:21:23 +0530
+Message-Id: <20230616065123.3710734-1-amit.pundir@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 1/2] dt-bindings: arm: idle-states: Add
- idle-state-disabled property
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_lsrao@quicinc.com>,
-        <quic_mkshah@quicinc.com>, <devicetree@vger.kernel.org>
-References: <20230608085544.16211-1-quic_tnimkar@quicinc.com>
- <20230608085544.16211-2-quic_tnimkar@quicinc.com>
- <20230615085629.b2aaumhq7yqhs5lf@bogus>
-Content-Language: en-US
-From:   Tushar Nimkar <quic_tnimkar@quicinc.com>
-In-Reply-To: <20230615085629.b2aaumhq7yqhs5lf@bogus>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fLu7cBxhv2Rb6IwloqXpXoK0PdC4kvRr
-X-Proofpoint-GUID: fLu7cBxhv2Rb6IwloqXpXoK0PdC4kvRr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-16_02,2023-06-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- impostorscore=0 phishscore=0 clxscore=1011 mlxscore=0 bulkscore=0
- mlxlogscore=933 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306160052
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Author: Amit Pundir <amit.pundir@linaro.org>
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Adding a reserved memory region for the framebuffer memory
+(the splash memory region set up by the bootloader).
 
-Thanks for review Sundeep,
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+---
+v3: Point this reserved region to MDSS.
 
-On 6/15/2023 2:26 PM, Sudeep Holla wrote:
-> On Thu, Jun 08, 2023 at 02:25:42PM +0530, Tushar Nimkar wrote:
->> +      idle-state-disabled:
->> +        description: |
->> +          If present the idle state stays disabled. It can be enabled back from
->> +          shell using below command.
->> +          echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
->> +        type: boolean
->> +
-> 
-> This is clearly a policy and not a hardware or firmware feature to expose
-> in the device tree. So NACK, why can't you load it modules if you don't want
-> idle states in the boot.
-> 
-Attempt of making cpuidle governors to modular was rejected in past [2]
+v2: Updated commit message.
 
-[2] 
-https://lore.kernel.org/lkml/1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com/#t
+There was some dicussion on v1 but it didn't go anywhere,
+https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u.
+The general consensus is that this memory should be freed and be
+made resuable but that (releasing this piece of memory) has been
+tried before and it is not trivial to return the reserved memory
+node to the system RAM pool in this case.
 
-> It is same as choosing any default governor or performance states, will you
-> add those next ? It is simply policy not a feature/property to be exposed
-> in the device tree.
-> 
-> --
-> Regards,
-> Sudeep
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Thanks,
-Tushar
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index df2fde9063dc..503136eb9c06 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -101,6 +101,14 @@ hdmi_con: endpoint {
+ 		};
+ 	};
+ 
++	reserved-memory {
++		/* Cont splash region set up by the bootloader */
++		cont_splash_mem: framebuffer@9d400000 {
++			reg = <0x0 0x9d400000 0x0 0x2400000>;
++			no-map;
++		};
++	};
++
+ 	lt9611_1v8: lt9611-vdd18-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "LT9611_1V8";
+@@ -517,6 +525,7 @@ &i2c14 {
+ };
+ 
+ &mdss {
++	memory-region = <&cont_splash_mem>;
+ 	status = "okay";
+ };
+ 
+-- 
+2.25.1
+
