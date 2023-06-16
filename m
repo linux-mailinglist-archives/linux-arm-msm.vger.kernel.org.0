@@ -2,176 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15EB5732CDE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:04:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 647EA732D50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:19:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241336AbjFPKEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 06:04:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36500 "EHLO
+        id S1343763AbjFPKTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 06:19:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241493AbjFPKEk (ORCPT
+        with ESMTP id S1343509AbjFPKTT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 06:04:40 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5FDE2D69
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 03:04:38 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f8467e39cfso622326e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 03:04:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686909877; x=1689501877;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gUCljY54Ij62McPnq0z5nAUMfwrJa995R+QcNnilpzs=;
-        b=UH0dMSR8J1p5xJus1o/EO5bWsLeq4c9WEpd3X7prBwNQl0Engy1x/dnHAK6j07gYiq
-         HFCPs23UeCThmyjUOOE+ZmVMObYxZyNBYc6phYUJOsnmoPoiCMPuvu9oCQg2wPZ18kBc
-         S2YW3IAQKfghiWHGGDRvm17ti8BM8xLBEL6rMmlrY5AMX4wOJgvAzZkZaMsOuN9p2deX
-         42a+gqiiwmYEFDP5ZfVyMmtlgaQLs17H4FPWtwgtiuBN+ZERkfsSjCDOdP6/c3wqHzMG
-         QVNZzY/PVu8hOGxKLhExYKVIwZvUb2ixJe1GuVvr81P/WOcwa4yo0+6KNjMp5anbIICD
-         LU0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686909877; x=1689501877;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gUCljY54Ij62McPnq0z5nAUMfwrJa995R+QcNnilpzs=;
-        b=E42jROSbWOhcSpEnadV4iO+AYORouuT/wEoJe7sckPhlGQAtfjVM+qT26KgwtmpmgA
-         zZ9or1zDvAsCm69IwMreFTDdKJ7v1BU7fLeHDp3G8RM14fUMyVCjSDdx1YuoETzlntuA
-         SReGPFjnW7W7tR5/RqhmCRSSBjCDKJgn33L0UPWSdGyYNe9A1cgrr9ImHW3omx9NauYG
-         jHyHM3y6TFjNcQAcu2kgGVyD9AeEDuqbIeweLVJ+JCozCfJ95NJR7b4Kh2jza+J0KEN9
-         C34MNk6uMOhNBDml3vodiNqUkD9rJF4jgD4+Ru5+3u0ptFC5XMwnGWHCBlXqBYnw1LgM
-         Hhkg==
-X-Gm-Message-State: AC+VfDyiUltWcD1FhanulideDVAfRSGYNJvB8ZxR3GP7fl6EB7StL/TV
-        MSWE2Ts/+3p75a42zh8GFCq6TA==
-X-Google-Smtp-Source: ACHHUZ6evdJwuwSnA7+xNDznvom4QXiXTXlUa6azaqYVsuhHWzrfy04hW54mkrWDDnYVhS/DPgCg3Q==
-X-Received: by 2002:a19:5e02:0:b0:4f1:4cdc:ec03 with SMTP id s2-20020a195e02000000b004f14cdcec03mr959227lfb.18.1686909877014;
-        Fri, 16 Jun 2023 03:04:37 -0700 (PDT)
-Received: from eriador.lan (85-76-68-127-nat.elisa-mobile.fi. [85.76.68.127])
-        by smtp.gmail.com with ESMTPSA id r12-20020ac24d0c000000b004f4ce9c9338sm2967423lfi.283.2023.06.16.03.04.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jun 2023 03:04:36 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v3 19/19] drm/msm/dpu: drop empty features mask INTF_SDM845_MASK
-Date:   Fri, 16 Jun 2023 13:03:17 +0300
-Message-Id: <20230616100317.500687-20-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
-References: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
+        Fri, 16 Jun 2023 06:19:19 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC90830EB;
+        Fri, 16 Jun 2023 03:18:43 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35G9Oss6024993;
+        Fri, 16 Jun 2023 10:18:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=m8kPc9d9jNfYMEBZ5M2e7hd+7edRZABBkT3WcDYBIdU=;
+ b=G3DGAO9hY619zGD1xFB3izaJhOay19E81JB/Dw74bFhR13V6TPyVX2EcAgEGEWOa1Tgy
+ XDr9TlSOTSSjh0sz/ZCOK6N7tHN9HaNFdPxhVMadYIhZDKK/iLwGEylewsJV+oFIVApM
+ m/4KU8ZmiVXh2ou2ZnrgNAS2oT/8BY6iXsZ2CwNYZ78TTsMqKvof42y8vkyujaNlFjA7
+ UEbsP3Rs8ZJEN5+KDIYFqRSyI/uH0u6EJsjwxCAseGywyhAujlRs91LSxQ83oS6f5P5a
+ JLbgjVQfqwUPjz4Sh4JUPZvu498udzqYOiDmxB803Sq+YEVjHbF8LsLSQRVf/T7nsQw1 HQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r8n09g3my-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 16 Jun 2023 10:18:20 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35GAIIZd025395
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 16 Jun 2023 10:18:18 GMT
+Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 16 Jun 2023 03:18:10 -0700
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
+        <krzysztof.kozlowski@linaro.org>, <andy.shevchenko@gmail.com>,
+        <quic_srichara@quicinc.com>
+Subject: [v11 0/6] Add minimal boot support for IPQ5018
+Date:   Fri, 16 Jun 2023 15:47:43 +0530
+Message-ID: <20230616101749.2083974-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n9BIRPl3_X1BtaxgPYgMOaK0ttFNG2Qf
+X-Proofpoint-ORIG-GUID: n9BIRPl3_X1BtaxgPYgMOaK0ttFNG2Qf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-16_06,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ phishscore=0 mlxlogscore=867 spamscore=0 priorityscore=1501 malwarescore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306160092
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The INTF_SDM845_MASK features mask is zero. Drop it completely.
+The IPQ5018 is Qualcomm's 802.11ax SoC for Routers,
+Gateways and Access Points.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          | 2 --
- 3 files changed, 10 deletions(-)
+This series adds minimal board boot support for ipq5018-rdp432-c2 board.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index d78cedd35c01..060e6a49b2f9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -246,7 +246,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
- 		.base = 0x6a000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -256,7 +255,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -266,7 +264,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -276,7 +273,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x6b800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_HDMI,
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index de26f469ebb1..54d7475e1591 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -260,7 +260,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
- 		.base = 0x6a000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -270,7 +269,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -280,7 +278,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -290,7 +287,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x6b800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 4a18fc66a412..3efa22429e5f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -95,8 +95,6 @@
- 
- #define DSPP_SC7180_MASK BIT(DPU_DSPP_PCC)
- 
--#define INTF_SDM845_MASK (0)
--
- #define INTF_SC7180_MASK \
- 	(BIT(DPU_INTF_INPUT_CTRL) | \
- 	 BIT(DPU_INTF_TE) | \
+[v11]
+	Fixed patch 2/6 , just to move ftbl_apss_axi_clk_src to user
+	Picked up 'Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>'
+
+[v10]  Dropped patches 3,4 for pinctrl (was picked by Linus)
+       Fixed hex number style in patch 2 as per Konrad's comments.
+
+[v9]   Change only in patch 2/8
+	   Sorted the headers and cleaned the unwanted ones
+ 	   Added trailing comma for .parent_hws member
+	   Removed the hunk touching ipq5332 kconfig  (unintentionally)
+
+[v8]   Changed only in patch 4/8
+                Fixed Kconfig to add COMPILE_TEST and removed header of.h.
+                Instead using mod_devicetable.h. Added Linus reviewed-by
+
+[v7]   Fixed tz reserved region size in patch 7/8
+
+[v6]   Fixed patch [4/8] pinctrl driver for rebase issue.
+
+[v5]
+       Added Reviewed-by tags from Krzysztof Kozlowski.
+       Changed patch [6/8] with [1] since its already Acked
+       Rebased patch [4/8] on top of [2] and fixed other comments
+       Fixed commit log for patch [7/8]
+       Fixed comments for patch [2/8]
+
+[1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1678164097-13247-4-git-send-email-quic_mmanikan@quicinc.com/
+[2] https://lore.kernel.org/r/1683718725-14869-1-git-send-email-quic_rohiagar@quicinc.com
+
+[v4]
+       Fixed all comments for clocks, schema, dts
+       Added Reviewed-by tags.
+
+[v3]
+        Fixed all comments for clocks, schema fixes
+        Picked up Reviewed-by from Bjorn for pinctrl driver
+
+[v2]
+        Fixed all comments and rebased for TOT.
+
+Manikanta Mylavarapu (1):
+  dt-bindings: scm: Add compatible for IPQ5018
+
+Sricharan Ramabadhran (5):
+  dt-bindings: arm64: Add IPQ5018 clock and reset
+  clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018
+  dt-bindings: qcom: Add ipq5018 bindings
+  arm64: dts: Add ipq5018 SoC and rdp432-c2 board support
+  arm64: defconfig: Enable IPQ5018 SoC base configs
+
+ .../devicetree/bindings/arm/qcom.yaml         |    7 +
+ .../bindings/clock/qcom,ipq5018-gcc.yaml      |   63 +
+ .../bindings/firmware/qcom,scm.yaml           |    1 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |   72 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         |  250 ++
+ arch/arm64/configs/defconfig                  |    3 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-ipq5018.c                | 3724 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-ipq5018.h  |  183 +
+ include/dt-bindings/reset/qcom,gcc-ipq5018.h  |  122 +
+ 12 files changed, 4435 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq5018-gcc.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5018.dtsi
+ create mode 100644 drivers/clk/qcom/gcc-ipq5018.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq5018.h
+ create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq5018.h
+
 -- 
-2.39.2
+2.34.1
 
