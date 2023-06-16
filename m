@@ -2,108 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4425733CEF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 01:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4885C733CF5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 01:36:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232039AbjFPXeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 19:34:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
+        id S232072AbjFPXgT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 19:36:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345621AbjFPXeL (ORCPT
+        with ESMTP id S232716AbjFPXgS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 19:34:11 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A7B3AAD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:34:06 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f649db9b25so1830302e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:34:06 -0700 (PDT)
+        Fri, 16 Jun 2023 19:36:18 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F8543AB4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:36:12 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b466073e19so2996891fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 16:36:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686958445; x=1689550445;
+        d=linaro.org; s=google; t=1686958570; x=1689550570;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=thTv8orjTj3rjjXkddkM+NogwSthGgo/+4qcsYu5RUI=;
-        b=FmoL8wERgQkwYfwVf4kHsRx3CcODu6oAR5CeUDknYKkblcTnYzOAG9CfXEikSGhdOh
-         riTzGiE3l0YnC3aLbN6mvidnbBiTTMGR32Eabdiey4XcYgMcvH6D5BGNGMuglachqrAi
-         gRZgHYMclM1Jpwnz8MHpU89n47NtxXgBhzPoQKNBJKBDLcS9Z+PBuCRA0nRZH9sCrRNE
-         CNx70q5o8OFWKldie0zUxyX6YTZBzGJI8jlgjvbn65uhf1/UZnz5frIjrZj/OEO/m8SE
-         RoQm5LXylLkSeTxjJRAmsaksis0VezvygMxmlgAbOHGYhHDy8/gmkOtFQdz4y5buWZyB
-         Oh5Q==
+        bh=K9LcqzytxsnlUCpwt3/0jckCNFrbRrdSG/YYwL4/gv8=;
+        b=RhgKhPTdOb8ZsmMtVqK2Ffp2oLXn9kpDbqsqaUfK/4EpWcwnV04VgLMRuxVc9FZAKQ
+         UXsUZN7+GCaqx7aE/xk8JMVIC1byuMu756IhDBmQtZ9pyE/4SUSQLxyFxaC8fC+UPMOb
+         lHo0PUUCaY4OU3n1WmPM58IybeX/67FciTwgiLfM3ifHrKhrkhgUZHCRNdQvdxjmZ7Fw
+         8PMKMVE53qvYt65n39pn9ntT0/U8yQNB4trtyrPU6hEeDwpR5I61WfIyq7zdYMWgdZY1
+         IYZIhacP+nGLHFDasvmec7NcUow/nnNUbEmH5JVPs5Yodr+p9JV+aV0X+735hRmqkOZL
+         1DhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686958445; x=1689550445;
+        d=1e100.net; s=20221208; t=1686958570; x=1689550570;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=thTv8orjTj3rjjXkddkM+NogwSthGgo/+4qcsYu5RUI=;
-        b=SYhzG5TVWaOzTY+hh5cm7F7siryWUpLb+DDRSLMqd3QS35R0CwDDFq1BuLqx/y1HnK
-         nWWA/qAdthByHSEgJFD0U82aK4UQzxrBuqvy3gaUV9dMr5qiELSOnyURQlIO0TxuDBk0
-         B+BVnEb0QjupAhEHoehNrqISXr7JWfdrjqVzgJkUoDK5SsWKPPsyMCp3dnWsP+U4d/Kl
-         btfY3I8hAWl6g6r3S+pkHvJgEcN9S7q6tFqEry95pKirtQRDboejP4BpJI9x5cGsetml
-         bvZIGilOwuL/dwVQRm8+tN9x1b1SKRQRlZ6alTSEzaFZUHBChQT3xwEnWqODqhF317Ju
-         WPBA==
-X-Gm-Message-State: AC+VfDwAIAjj+7Iq725nj7iWXAlfMCqc1Yxdi9A3Ej6N7lGpbn4OyIvl
-        OroxWGmtBFLpPGyNkaFgczn82Q==
-X-Google-Smtp-Source: ACHHUZ57O35MzBG/45b0nqSMEzO2aDumAZsZrX+yQXAV33NfUTrv8wRsaolp8zlQZnQIOtJbKcBGAw==
-X-Received: by 2002:a19:6457:0:b0:4f8:5604:4b50 with SMTP id b23-20020a196457000000b004f856044b50mr2558256lfj.64.1686958444743;
-        Fri, 16 Jun 2023 16:34:04 -0700 (PDT)
+        bh=K9LcqzytxsnlUCpwt3/0jckCNFrbRrdSG/YYwL4/gv8=;
+        b=A4YYxXKibK0eS/GEK+2DcNAweDkRXa4gAtWemgBcHvLs+9oB61tqgmLDInpVGGEG22
+         cKmsD3ZNVqpFWlJmapTXXGfeNj3+aS0XMcf1USHKRTv4CJIvirK5usNdkiGnVm355jEX
+         3xBe4txfYtnLfAMYXjYcqDOySx4isbHQf0HQjl2GnOMnmlt5Xa9215Qm6m1tr/Sw+Gb2
+         lewwG0cdXxd3m+tQ5j9X0gyNy0oViF78n6WHJmVwoHGRufGliIQAeT04q5QT/DXsN4d2
+         sCwSwso51EbdanTZOmeQhO+gLdbShEAwTNdLToMcV40L/7cr6zQGVHGo8pc1/2KtQN86
+         TNLw==
+X-Gm-Message-State: AC+VfDyeHULmVgM+V389OXI5rhktPyiX7FrytC9iJXaK7yS3Ik8L+AiY
+        xJe1nNFovSAJttms9DTmqEqp3A==
+X-Google-Smtp-Source: ACHHUZ7009qU1X7H4xrmyzb1e+yJRfRakNSwtJ6dStPKQfkGCKbWuCMKUBC5gR3qI/PauabDsv0JSw==
+X-Received: by 2002:a2e:93c1:0:b0:2ac:7d78:3465 with SMTP id p1-20020a2e93c1000000b002ac7d783465mr2482619ljh.15.1686958570294;
+        Fri, 16 Jun 2023 16:36:10 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id p23-20020a19f017000000b004edc9da63bdsm708640lfc.160.2023.06.16.16.34.03
+        by smtp.gmail.com with ESMTPSA id m19-20020a2e97d3000000b002b31feab8f9sm3012560ljj.100.2023.06.16.16.36.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 16:34:04 -0700 (PDT)
-Message-ID: <2e1df73c-c23e-8ed0-f766-cd2accab02bb@linaro.org>
-Date:   Sat, 17 Jun 2023 01:34:03 +0200
+        Fri, 16 Jun 2023 16:36:09 -0700 (PDT)
+Message-ID: <835bc0c9-0218-80e3-f64f-bd4116ad02e8@linaro.org>
+Date:   Sat, 17 Jun 2023 01:36:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: correct crypto unit address
+Subject: Re: [PATCH 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
+ TLMM
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230616174955.1783652-1-krzysztof.kozlowski@linaro.org>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230616185742.2250452-1-krzysztof.kozlowski@linaro.org>
+ <20230616185742.2250452-2-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230616174955.1783652-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230616185742.2250452-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.06.2023 19:49, Krzysztof Kozlowski wrote:
-> Crypto node unit address should match reg.
-> 
-> Fixes: b92b0d2f7582 ("arm64: dts: qcom: sm8450: add crypto nodes")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 16.06.2023 20:57, Krzysztof Kozlowski wrote:
+> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
+> driver is similar to SM8450 LPASS pin controller, with difference in one
+> new pin (gpio14).
+8250*
+
+8450 has a whole lot more!
+
+The 8250 in fact does look almost identical.. Perhaps in this case it
+would be sane to combine the two?
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 5cd7296c7660..1c71c0a2cd81 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -4212,7 +4212,7 @@ cryptobam: dma-controller@1dc4000 {
->  				 <&apps_smmu 0x59f 0x0>;
->  		};
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  drivers/pinctrl/qcom/Kconfig                  |  10 ++
+>  drivers/pinctrl/qcom/Makefile                 |   1 +
+>  .../pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c   | 167 ++++++++++++++++++
+>  3 files changed, 178 insertions(+)
+>  create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
+> 
+> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+> index 634c75336983..9c43bc05c447 100644
+> --- a/drivers/pinctrl/qcom/Kconfig
+> +++ b/drivers/pinctrl/qcom/Kconfig
+> @@ -77,6 +77,16 @@ config PINCTRL_SM8250_LPASS_LPI
+>  	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+>  	  (Low Power Island) found on the Qualcomm Technologies Inc SM8250 platform.
 >  
-> -		crypto: crypto@1de0000 {
-> +		crypto: crypto@1dfa000 {
->  			compatible = "qcom,sm8450-qce", "qcom,sm8150-qce", "qcom,qce";
->  			reg = <0 0x01dfa000 0 0x6000>;
->  			dmas = <&cryptobam 4>, <&cryptobam 5>;
+> +config PINCTRL_SM3550_LPASS_LPI
+> +	tristate "Qualcomm Technologies Inc SM8350 LPASS LPI pin controller driver"
+> +	depends on ARM64 || COMPILE_TEST
+> +	depends on PINCTRL_LPASS_LPI
+> +	help
+> +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+> +	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+> +	  (Low Power Island) found on the Qualcomm Technologies Inc SM8350
+> +	  platform.
+> +
+>  config PINCTRL_SM8450_LPASS_LPI
+>  	tristate "Qualcomm Technologies Inc SM8450 LPASS LPI pin controller driver"
+>  	depends on ARM64 || COMPILE_TEST
+> diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
+> index 426ddbf35f32..76ffcfbffc8e 100644
+> --- a/drivers/pinctrl/qcom/Makefile
+> +++ b/drivers/pinctrl/qcom/Makefile
+> @@ -52,6 +52,7 @@ obj-$(CONFIG_PINCTRL_SM8150) += pinctrl-sm8150.o
+>  obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
+>  obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
+>  obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
+> +obj-$(CONFIG_PINCTRL_SM8350_LPASS_LPI) += pinctrl-sm8350-lpass-lpi.o
+>  obj-$(CONFIG_PINCTRL_SM8450) += pinctrl-sm8450.o
+>  obj-$(CONFIG_PINCTRL_SM8450_LPASS_LPI) += pinctrl-sm8450-lpass-lpi.o
+>  obj-$(CONFIG_PINCTRL_SM8550) += pinctrl-sm8550.o
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
+> new file mode 100644
+> index 000000000000..23cce59d1a95
+> --- /dev/null
+> +++ b/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
+> @@ -0,0 +1,167 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 20202-2023 Linaro Ltd.
+> + */
+> +
+> +#include <linux/gpio/driver.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +
+> +#include "pinctrl-lpass-lpi.h"
+> +
+> +enum lpass_lpi_functions {
+> +	LPI_MUX_dmic1_clk,
+> +	LPI_MUX_dmic1_data,
+> +	LPI_MUX_dmic2_clk,
+> +	LPI_MUX_dmic2_data,
+> +	LPI_MUX_dmic3_clk,
+> +	LPI_MUX_dmic3_data,
+> +	LPI_MUX_i2s1_clk,
+> +	LPI_MUX_i2s1_data,
+> +	LPI_MUX_i2s1_ws,
+> +	LPI_MUX_i2s2_clk,
+> +	LPI_MUX_i2s2_data,
+> +	LPI_MUX_i2s2_ws,
+> +	LPI_MUX_qua_mi2s_data,
+> +	LPI_MUX_qua_mi2s_sclk,
+> +	LPI_MUX_qua_mi2s_ws,
+> +	LPI_MUX_swr_rx_clk,
+> +	LPI_MUX_swr_rx_data,
+> +	LPI_MUX_swr_tx_clk,
+> +	LPI_MUX_swr_tx_data,
+> +	LPI_MUX_swr_tx_data2,
+> +	LPI_MUX_wsa_swr_clk,
+> +	LPI_MUX_wsa_swr_data,
+> +	LPI_MUX_gpio,
+> +	LPI_MUX__,
+> +};
+> +
+> +static int gpio0_pins[] = { 0 };
+> +static int gpio1_pins[] = { 1 };
+> +static int gpio2_pins[] = { 2 };
+> +static int gpio3_pins[] = { 3 };
+> +static int gpio4_pins[] = { 4 };
+> +static int gpio5_pins[] = { 5 };
+> +static int gpio6_pins[] = { 6 };
+> +static int gpio7_pins[] = { 7 };
+> +static int gpio8_pins[] = { 8 };
+> +static int gpio9_pins[] = { 9 };
+> +static int gpio10_pins[] = { 10 };
+> +static int gpio11_pins[] = { 11 };
+> +static int gpio12_pins[] = { 12 };
+> +static int gpio13_pins[] = { 13 };
+> +static int gpio14_pins[] = { 14 };
+> +
+> +static const struct pinctrl_pin_desc sm8350_lpi_pins[] = {
+> +	PINCTRL_PIN(0, "gpio0"),
+> +	PINCTRL_PIN(1, "gpio1"),
+> +	PINCTRL_PIN(2, "gpio2"),
+> +	PINCTRL_PIN(3, "gpio3"),
+> +	PINCTRL_PIN(4, "gpio4"),
+> +	PINCTRL_PIN(5, "gpio5"),
+> +	PINCTRL_PIN(6, "gpio6"),
+> +	PINCTRL_PIN(7, "gpio7"),
+> +	PINCTRL_PIN(8, "gpio8"),
+> +	PINCTRL_PIN(9, "gpio9"),
+> +	PINCTRL_PIN(10, "gpio10"),
+> +	PINCTRL_PIN(11, "gpio11"),
+> +	PINCTRL_PIN(12, "gpio12"),
+> +	PINCTRL_PIN(13, "gpio13"),
+> +	PINCTRL_PIN(14, "gpio14"),
+> +};
+> +
+> +static const char * const swr_tx_clk_groups[] = { "gpio0" };
+> +static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
+> +static const char * const swr_rx_clk_groups[] = { "gpio3" };
+> +static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
+> +static const char * const dmic1_clk_groups[] = { "gpio6" };
+> +static const char * const dmic1_data_groups[] = { "gpio7" };
+> +static const char * const dmic2_clk_groups[] = { "gpio8" };
+> +static const char * const dmic2_data_groups[] = { "gpio9" };
+> +static const char * const i2s2_clk_groups[] = { "gpio10" };
+> +static const char * const i2s2_ws_groups[] = { "gpio11" };
+> +static const char * const dmic3_clk_groups[] = { "gpio12" };
+> +static const char * const dmic3_data_groups[] = { "gpio13" };
+> +static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
+> +static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
+> +static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
+> +static const char * const i2s1_clk_groups[] = { "gpio6" };
+> +static const char * const i2s1_ws_groups[] = { "gpio7" };
+> +static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
+> +static const char * const wsa_swr_clk_groups[] = { "gpio10" };
+> +static const char * const wsa_swr_data_groups[] = { "gpio11" };
+> +static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
+> +
+> +static const struct lpi_pingroup sm8350_groups[] = {
+> +	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
+> +	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
+> +	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
+> +	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
+> +	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
+> +	LPI_PINGROUP(5, 12, swr_tx_data, swr_rx_data, _, _),
+> +	LPI_PINGROUP(6, LPI_NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
+> +	LPI_PINGROUP(7, LPI_NO_SLEW, dmic1_data, i2s1_ws, _, _),
+> +	LPI_PINGROUP(8, LPI_NO_SLEW, dmic2_clk, i2s1_data, _, _),
+> +	LPI_PINGROUP(9, LPI_NO_SLEW, dmic2_data, i2s1_data, _, _),
+> +	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
+> +	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
+> +	LPI_PINGROUP(12, LPI_NO_SLEW, dmic3_clk, i2s2_data, _, _),
+> +	LPI_PINGROUP(13, LPI_NO_SLEW, dmic3_data, i2s2_data, _, _),
+> +	LPI_PINGROUP(14, 6, swr_rx_data, _, _, _),
+> +};
+> +
+> +static const struct lpi_function sm8350_functions[] = {
+> +	LPI_FUNCTION(dmic1_clk),
+> +	LPI_FUNCTION(dmic1_data),
+> +	LPI_FUNCTION(dmic2_clk),
+> +	LPI_FUNCTION(dmic2_data),
+> +	LPI_FUNCTION(dmic3_clk),
+> +	LPI_FUNCTION(dmic3_data),
+> +	LPI_FUNCTION(i2s1_clk),
+> +	LPI_FUNCTION(i2s1_data),
+> +	LPI_FUNCTION(i2s1_ws),
+> +	LPI_FUNCTION(i2s2_clk),
+> +	LPI_FUNCTION(i2s2_data),
+> +	LPI_FUNCTION(i2s2_ws),
+> +	LPI_FUNCTION(qua_mi2s_data),
+> +	LPI_FUNCTION(qua_mi2s_sclk),
+> +	LPI_FUNCTION(qua_mi2s_ws),
+> +	LPI_FUNCTION(swr_rx_clk),
+> +	LPI_FUNCTION(swr_rx_data),
+> +	LPI_FUNCTION(swr_tx_clk),
+> +	LPI_FUNCTION(swr_tx_data),
+> +	LPI_FUNCTION(wsa_swr_clk),
+> +	LPI_FUNCTION(wsa_swr_data),
+> +};
+> +
+> +static const struct lpi_pinctrl_variant_data sm8350_lpi_data = {
+> +	.pins = sm8350_lpi_pins,
+> +	.npins = ARRAY_SIZE(sm8350_lpi_pins),
+> +	.groups = sm8350_groups,
+> +	.ngroups = ARRAY_SIZE(sm8350_groups),
+> +	.functions = sm8350_functions,
+> +	.nfunctions = ARRAY_SIZE(sm8350_functions),
+> +};
+> +
+> +static const struct of_device_id lpi_pinctrl_of_match[] = {
+> +	{
+> +	       .compatible = "qcom,sm8350-lpass-lpi-pinctrl",
+> +	       .data = &sm8350_lpi_data,
+> +	},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+> +
+> +static struct platform_driver lpi_pinctrl_driver = {
+> +	.driver = {
+> +		   .name = "qcom-sm8350-lpass-lpi-pinctrl",
+> +		   .of_match_table = lpi_pinctrl_of_match,
+> +	},
+> +	.probe = lpi_pinctrl_probe,
+> +	.remove = lpi_pinctrl_remove,
+> +};
+> +
+> +module_platform_driver(lpi_pinctrl_driver);
+> +MODULE_DESCRIPTION("QTI SM8350 LPI GPIO pin control driver");
+> +MODULE_LICENSE("GPL");
