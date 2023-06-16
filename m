@@ -2,127 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F087A73287A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 09:10:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 018DB732942
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 09:51:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243086AbjFPHKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 03:10:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53850 "EHLO
+        id S234426AbjFPHvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 03:51:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243614AbjFPHKZ (ORCPT
+        with ESMTP id S230318AbjFPHvI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 03:10:25 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72ACD2D60;
-        Fri, 16 Jun 2023 00:10:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1686899413; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=EmmwaDuL+oUewtzIiE4mMsN60386Wlm+mEhq6h17zDIg2lUIonHUkz4W8b9bhJlEHl
-    jRNalDQCa0AgZfZGCGNz770uh4t7eE53C3xv2croPeVbQPzRTL+yWyE80hln/nl+5zTu
-    +JAeeFOzxpRKwFTSo/1eei7SpJT1Jsi3lo0BjmX8Vb4lM1nrlB4H/jNpxJY204Pxrmir
-    mHoS41pWswarj1It+lcCcIAQPQqEYs438TRfHKu7ULn9mujP2Ua2m1zzkWRdN6qVTlxl
-    oLlR0PIkrhP2TnwZXi43jo/SFujCDZ98sQwToO3MnCNqcnfVWoorpIqnQSGX3HpUmDjd
-    SK+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686899413;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=6bj6OhpL8ADtbPRgjI8wj2KMXCzk6AQP6LCMNnLHMHI=;
-    b=ZQXj61qvRs3thiEvSzOJxIYl9zT7VH3Upws/0MouWvDYHKshYk57CGuyxc5hYCwwHW
-    pys3rYB/gKjErYJbysji3lN8v74anlueocXHjMmH5ryr5MNMwUrIFdT/6TTZmzs8T7lV
-    E9Ks77QIhFoDWAbRQZSDFalMAyQOe7uqXeqQRYkCUlJYzihdKEeCEYeacKmQt2YYWgaV
-    Mjq7YRLp+57R6MqY+GRMVXhjDP3C9O85/vGfsEHcuv/vRdLyFdKCfmtvHYiAnhU+JJLc
-    +a4pSP4fRl9qn+Ys0xSqn1xsXYNhAitC4UF6v/gZWMruyeS3kRbk31P87qF6D49xr+Xg
-    rFow==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686899413;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=6bj6OhpL8ADtbPRgjI8wj2KMXCzk6AQP6LCMNnLHMHI=;
-    b=pQW5HiJZ6tsJMvqqgpU2Lb5dO4oT1D1PEd6WtbQtz64mdgWEF2BL5zn3aNnm5LHYst
-    R8Z5e4dxQavNz7pa1GNf2Wv7AS6+MCwCGLHpfHbCaaBOhJ6GKWBib4z+hkNV9HZQLeJV
-    K7qityReSnN9VLChbzaeG79XdC/gY9X44qSMmN6rSFNogbr8ZyW+rSnFtOedlB3SQIVH
-    YK7OF2ygRm5oHm+hTPSDcPfU29wfTOa0gimCvFasQcRRknQMJKas7qXLS9bZNMg/Xv5z
-    bLmYrFHpuu6/9/4mhykgB7WMV2DgksGnoKIJTqcBnJdZ/Jxh2MG7DaBniUAGEwcG0zDk
-    SCLw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686899413;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=6bj6OhpL8ADtbPRgjI8wj2KMXCzk6AQP6LCMNnLHMHI=;
-    b=R93C0+jXkkK1vueO15Gd+JLVoJKNNsnakhYppOt7XTPMuRimALW+AHUu/w/eyookjW
-    Gi8haWBJK8OfVYZfPlCA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8pqP1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
-    with ESMTPSA id D0d0a8z5G7AC59W
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Fri, 16 Jun 2023 09:10:12 +0200 (CEST)
-Date:   Fri, 16 Jun 2023 09:10:06 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     andersson@kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        konrad.dybcio@somainline.org, sumit.semwal@linaro.org,
-        Will Deacon <will@kernel.org>, amit.pundir@linaro.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Mark SCM as dma-coherent for
- trogdor
-Message-ID: <ZIwKzozbXxhQHxma@gerhold.net>
-References: <20230615145253.1.Ic62daa649b47b656b313551d646c4de9a7da4bd4@changeid>
+        Fri, 16 Jun 2023 03:51:08 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025AC1FC3;
+        Fri, 16 Jun 2023 00:51:03 -0700 (PDT)
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35G6Caw4029463;
+        Fri, 16 Jun 2023 09:50:31 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=urauJacVUNG8muiUJtZCcVbTigmq8+/WZEuTP+wxZgY=;
+ b=6eMf+wUEuj+XX/rTmLMoh/OyZlzek60fq9B3hoafxgLxYJf7EsC1Hv2CtiYxrYUk+AE2
+ ZruXp6JHnRRrVSsXXATinvYNJjfVIvH39g3684afmJfAsj63Gih9a9gox+e2F384pUh4
+ lE3hYokFSNEPDMHYzdszm6Lh2hTw0oIqImrvTzvUjG8xM8Wx3uHqHbg84FnkBfc5rtns
+ hmeL9U/EvmAU6uWhMsC2RZnRzpW93IhRXQa55RMWF6dpqmbbqp43T1cBOIdet/sE32gF
+ 4GjIibbj5mgSCX6YMGeQNThWhgWD75SBKwCQJ6Qa3t/iXknTl/7654DdHzXoIAy4bP6i JA== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3r8j92gjrj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 16 Jun 2023 09:50:31 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 3E94010002A;
+        Fri, 16 Jun 2023 09:50:26 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 36590217B9C;
+        Fri, 16 Jun 2023 09:50:26 +0200 (CEST)
+Received: from [10.201.21.9] (10.201.21.9) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Fri, 16 Jun
+ 2023 09:50:25 +0200
+Message-ID: <5db6f583-d906-d314-42ef-02f837b40310@foss.st.com>
+Date:   Fri, 16 Jun 2023 09:50:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230615145253.1.Ic62daa649b47b656b313551d646c4de9a7da4bd4@changeid>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V7 1/3] rpmsg: core: Add signal API support
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Sarannya S <quic_sarannya@quicinc.com>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>
+References: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
+ <1682160127-18103-2-git-send-email-quic_sarannya@quicinc.com>
+ <20230614155453.dywcrntfjddxojfv@ripper>
+ <6e51d6d8-cd3a-b0f2-c044-6282749aae89@foss.st.com>
+ <20230615145039.GA3256591@hu-bjorande-lv.qualcomm.com>
+ <4d89950d-0376-e355-c70b-d054776e83d4@foss.st.com>
+ <20230615164507.mu7fd22poamjth7p@ripper>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Organization: STMicroelectronics
+In-Reply-To: <20230615164507.mu7fd22poamjth7p@ripper>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.201.21.9]
+X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-16_04,2023-06-15_01,2023-05-22_02
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 15, 2023 at 02:52:54PM -0700, Douglas Anderson wrote:
-> Trogdor devices use firmware backed by TF-A instead of Qualcomm's
-> normal TZ. On TF-A we end up mapping memory as cachable. Specifically,
-> you can see in Trogdor's TF-A code [1] in qti_sip_mem_assign() that we
-> call qti_mmap_add_dynamic_region() with MT_RO_DATA. This translates
-> down to MT_MEMORY instead of MT_NON_CACHEABLE or MT_DEVICE.
->
-> **Apparently Qualcomm's normal TZ implementation maps the memory as
-> non-cachable.**
 
-Are you sure about this? From the discussion in the chat the conclusion
-was that we can check easily for TF-A, but we have absolutely no idea
-what Qualcomm's firmware implementation does. It might be "broken" the
-same way and we just have not noticed it yet.
 
-I would perhaps just omit this sentence so we don't risk misleading
-someone with information we're not sure about. :)
-
+On 6/15/23 18:45, Bjorn Andersson wrote:
+> On Thu, Jun 15, 2023 at 06:19:37PM +0200, Arnaud POULIQUEN wrote:
+>>
+>>
+>> On 6/15/23 16:50, Bjorn Andersson wrote:
+>>> On Thu, Jun 15, 2023 at 11:01:14AM +0200, Arnaud POULIQUEN wrote:
+>>>>
+>>>>
+>>>> On 6/14/23 17:54, Bjorn Andersson wrote:
+>>>>> On Sat, Apr 22, 2023 at 04:12:05PM +0530, Sarannya S wrote:
+>>>>>> From: Deepak Kumar Singh <quic_deesin@quicinc.com>
+>>>>>>
+>>>>>> Some transports like Glink support the state notifications between
+>>>>>> clients using flow control signals similar to serial protocol signals.
+>>>>>> Local glink client drivers can send and receive flow control status
+>>>>>> to glink clients running on remote processors.
+>>>>>>
+>>>>>> Add APIs to support sending and receiving of flow control status by
+>>>>>> rpmsg clients.
+>>>>>>
+>>>>>> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+>>>>>> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+>>>>>> ---
+>>>>>>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
+>>>>>>  drivers/rpmsg/rpmsg_internal.h |  2 ++
+>>>>>>  include/linux/rpmsg.h          | 15 +++++++++++++++
+>>>>>>  3 files changed, 38 insertions(+)
+>>>>>>
+>>>>>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+>>>>>> index a2207c0..e8bbe05 100644
+>>>>>> --- a/drivers/rpmsg/rpmsg_core.c
+>>>>>> +++ b/drivers/rpmsg/rpmsg_core.c
+>>>>>> @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>>>>>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+>>>>>>  
+>>>>>>  /**
+>>>>>> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
+>>>>>> + * @ept:	the rpmsg endpoint
+>>>>>> + * @enable:	pause/resume incoming data flow	
+>>>>>
+>>>>> As shown in the discussion, it's still not clear what true/false means.
+>>>>> Also, let's try to clarify that it's a request for the other side to do
+>>>>> something:
+>>>>>
+>>>>> * rpmsg_set_flow_control() - request remote to pause/resume transmission
+>>>>> * ...
+>>>>> * @enable: flow restricted
+>>>>> * ...
+>>>>>
+>>>>>
+>>>>> PS. There's a stray space at the end of the line.
+>>>>
+>>>> The notion of flow restricted seems to me also ambiguous. It does
+>>>> not specify if the stream is limited in term of bandwidth or stopped.
+>>>>
+>>>> What about using XON/XOFF as specified in software flow control[1]
+>>>>
+>>>> XOFF	Pause transmission
+>>>> XON	Resume transmission
+>>>>
+>>>> or simply pause/resume definitions
+>>>>
+>>>
+>>> I agree, that's still ambiguous.
+>>>
+>>> I was concerned about expressing it such that the reader would assume
+>>> that calling this means there will be no more data coming, but there
+>>> might be things in the queues etc. Expressing it in terms of the state
+>>> of transmission is clearer.
+>>>
+>>>
+>>> /*
+>>>  * rpmsg_set_flow_control() - request remote to pause/resume transmission
+>>>  ...
+>>>  * @enable: Pause transmission
+>>>  ...
+>>>  */
+>>>
+>>> Does that sound okay and clear to you?
+>>
+>> Much better! I still have a nitpicking point :)
+>> What about replacing @enable variable by @pause to align the variable with the
+>> usage?
+>>  /*
+>>   * rpmsg_set_flow_control() - request remote to pause/resume transmission
+>>   ...
+>>   * @pause: set to 1 to pause transmission, to 0 to resume the transmission
 > 
-> Let's add the "dma-coherent" attribute to the SCM for trogdor.
+> It's a boolean, so I think with your name change suggestion, together
+> with the function description, it should be clear enough what the two
+> states (true/false) means.
 > 
+> * @pause: Pause transmission
 
-What about sc7280? I guess they use largely the same TF-A firmware?
+Ok for me
 
 Thanks,
-Stephan
+Arnaud
+
+> 
+> Thanks,
+> Bjorn
