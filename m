@@ -2,65 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3B1473364C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 18:41:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98BE273372F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 19:10:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230502AbjFPQlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 12:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
+        id S1345774AbjFPRK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 13:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345234AbjFPQlj (ORCPT
+        with ESMTP id S232913AbjFPRK0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 12:41:39 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 765E626BA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 09:41:37 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qACVe-0007RG-0w; Fri, 16 Jun 2023 18:41:14 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qACVb-007rTD-Jq; Fri, 16 Jun 2023 18:41:11 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qACVb-00EopP-1G; Fri, 16 Jun 2023 18:41:11 +0200
-Date:   Fri, 16 Jun 2023 18:41:10 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Artur Weber <aweber.kernel@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>
-Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Helge Deller <deller@gmx.de>, dri-devel@lists.freedesktop.org,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-pwm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 2/4] video: backlight: lp855x: get PWM for PWM mode
- during probe
-Message-ID: <20230616164110.euw6n7mmubmav63l@pengutronix.de>
-References: <20230429104534.28943-1-aweber.kernel@gmail.com>
- <20230429104534.28943-3-aweber.kernel@gmail.com>
- <20230614083953.e4kkweddjz7wztby@pengutronix.de>
- <23f9f004-3e20-67b0-bddc-ab9700968c53@gmail.com>
+        Fri, 16 Jun 2023 13:10:26 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A891BE3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 10:10:25 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id 6a1803df08f44-62dee1b51f9so5323776d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 10:10:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686935424; x=1689527424;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=13Ub72LeNXocacDH8iq4dsRSC3PCfVbZC0BT5ktGknQ=;
+        b=K2++xF6Vx0ws0J6uj4X1wisvjM3l1xIveAWOl4e8+ZmaBcxl2KJFMRX1zv2Ry7JpzG
+         9+2RZsQY1ijumTVgctdxPIY1c0QMyWbastHlS0wIXF4T2df1S883+ivLHJbbO+WPr6/T
+         u1kl9G4+vq+KnRvA6kTpb+e9d26pE90sUOQjvp/OlBAy/CbbHrZ+KTRRPX2x2y3KzkWE
+         EpPedQJfPjWcRF5aRfx/5CIvpy1hNquop+wtUSRpk5oWBvzEX5lxD1xIBbQusErwtAq+
+         ns64wLHnszc2Q7Smw/uCWh1uRgT4y41L+S95OJXE15WYXJltPvllZ6SroP5bgIwTUPnL
+         LsVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686935424; x=1689527424;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=13Ub72LeNXocacDH8iq4dsRSC3PCfVbZC0BT5ktGknQ=;
+        b=hRA/JGHnq9o7MAxJmkSyOaQ6UM76IPUpOFJI6HHncWr6sp5Uz7dkQpNDN/P3wyq9qy
+         icYJiF6qn637AL9xVm51SdgnL59yhsnFMs5QHNvnDOmanwo7b57KNDgdMzu6ttnEhcM/
+         ykCU3QDXCf6cxzxznfc//phhZMpsXIfdKM5K30nanQtL+WhjoDxO9jRArE5jQR93eUBX
+         qLyEIPhi4Tz+JAS8MRpFFNtuH0nQ0eVjuOZuqPpNQS2UbeyQ4qvVUVA0GAgisJ1MnoBt
+         WW/rxrnqxdHDoITyvo+yM30LNbQ/GDX6dWD4osoQsZtOld+rHAl2qZpuPeGhzJPZ0QZr
+         DnTQ==
+X-Gm-Message-State: AC+VfDwxSjy0fhtpBwbn0jVthVZswNhoqYIR+40fsWankA3WIn2D/iq2
+        tx+NqwvzxNNhb5X/tE8eaWm2yKxnUf8405xXuW9uqA==
+X-Google-Smtp-Source: ACHHUZ6lpFZ09A9IHX3P4ygHt4+nMALCSy4x/x3LBageSe+7wXjEyTwO2TPHfFUg00vHZLl+yvNChqtDn2H/xoOW7GA=
+X-Received: by 2002:a05:6214:1c0a:b0:62d:ddeb:3770 with SMTP id
+ u10-20020a0562141c0a00b0062dddeb3770mr8653889qvc.0.1686935424170; Fri, 16 Jun
+ 2023 10:10:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4mqeubzcqronq6sk"
-Content-Disposition: inline
-In-Reply-To: <23f9f004-3e20-67b0-bddc-ab9700968c53@gmail.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+References: <20230602161246.1855448-1-amit.pundir@linaro.org>
+ <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info> <0f6c9dcb-b7f6-fff9-6bed-f4585ea8e487@linaro.org>
+ <CAMi1Hd3Cv1i06NhpY6Jqu7OvMpOdzTj6nTEMJNWLrMwMLsugZA@mail.gmail.com>
+ <CAMi1Hd0=KV7k82ARadF45nqX+Cv6zPLCxfDvOyAPeXiFd8jpVA@mail.gmail.com>
+ <0ec6c988-d678-c96c-a7a2-af38e6701404@linaro.org> <CAMi1Hd33_Ccxkf9C5_QBO3tvOZcGnYh+_CKcACUtoY2qAuOzRA@mail.gmail.com>
+ <12d6b687-5e5a-bd7c-ff5c-007a74753edb@linaro.org>
+In-Reply-To: <12d6b687-5e5a-bd7c-ff5c-007a74753edb@linaro.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Fri, 16 Jun 2023 22:39:47 +0530
+Message-ID: <CAMi1Hd2H2aA6EYp5-46dWe0eu0_hAWUumoQbnk7WR0q9bhppog@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes up
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Linux regressions mailing list <regressions@lists.linux.dev>,
+        Mark Brown <broonie@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,128 +83,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
---4mqeubzcqronq6sk
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 16 Jun 2023 at 13:57, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+>
+> So you have interconnect as module - this is not a supported setup. It
+> might work with if all the modules are loaded very early or might not.
+> Pinctrl is another driver which should be built-in.
+>
+> With your defconfig I see regular issue - console and system dies
+> because of lack of interconnects, most likely. I don't see your WARNs -
+> I just see usual hang.
+>
+> See:
+> https://lore.kernel.org/all/20221021032702.1340963-1-krzysztof.kozlowski@linaro.org/
+>
+> If you want them to really be modules, then you need to fix all the
+> dependencies (SOFTDEP?), probe ordering glitches. It's not a problem of
+> DTS. Just because something can be built as module, does not mean it
+> will work. We don't test it, we don't work with them as modules.
 
-Hello,
+I do somewhat agree with most of your arguments but not this one. If a
+driver doesn't work as a module then it shouldn't be allowed to build
+as a module. I took a quick look at the history of the interconnect
+driver and it is tristate from the beginning. And not converted to a
+modular build later-on like some of the other drivers to support GKI.
 
-On Fri, Jun 16, 2023 at 05:29:08PM +0200, Artur Weber wrote:
-> On 14/06/2023 10:39, Uwe Kleine-K=F6nig wrote:
-> > On Sat, Apr 29, 2023 at 12:45:32PM +0200, Artur Weber wrote:
-> >> Also deprecate the pwm-period DT property, as it is now redundant
-> >> (pwms property already contains period value).
-> >>
-> >> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-> >> ---
-> >>  drivers/video/backlight/lp855x_bl.c | 48 ++++++++++++++++-------------
-> >>  1 file changed, 26 insertions(+), 22 deletions(-)
-> >>
-> >> diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backl=
-ight/lp855x_bl.c
-> >> index 81012bf29baf..21eb4943ed56 100644
-> >> --- a/drivers/video/backlight/lp855x_bl.c
-> >> +++ b/drivers/video/backlight/lp855x_bl.c
-> >> ...
-> >> @@ -472,11 +456,31 @@ static int lp855x_probe(struct i2c_client *cl)
-> >>  	lp->enable =3D devm_regulator_get_optional(dev, "enable");
-> >>  	if (IS_ERR(lp->enable)) {
-> >>  		ret =3D PTR_ERR(lp->enable);
-> >> -		if (ret =3D=3D -ENODEV) {
-> >> +		if (ret =3D=3D -ENODEV)
-> >>  			lp->enable =3D NULL;
-> >> -		} else {
-> >> +		else
-> >>  			return dev_err_probe(dev, ret, "getting enable regulator\n");
-> >> -		}
-> >> +	}
-> >> +
-> >> +	lp->pwm =3D devm_pwm_get(lp->dev, lp->chipname);
-> >> +	if (IS_ERR(lp->pwm)) {
-> >> +		ret =3D PTR_ERR(lp->pwm);
-> >> +		if (ret =3D=3D -ENODEV || ret =3D=3D -EINVAL)
-> >=20
-> > Why would you ignore EINVAL?
->=20
-> EINVAL is returned when the pwms property is not found in the DT node
-> for the backlight. Not sure if there's a better way of separately
-> detecting whether it's present (especially when taking into
-> consideration non-DT platforms that might use the driver). Would be nice
-> to have something like devm_regulator_get_optional but for PWMs...
+>
+> It's kind of the same as here:
+> https://lore.kernel.org/all/ac328b6a-a8e2-873d-4015-814cb4f5588e@canonical.com/
+>
+> I understand that we might have here regression, if these were working
+> as modules, but I don't think we ever really committed to it. We can as
+> well make it non-module to solve the regression.
 
-Ah, that is because of_pwm_get() calls of_property_match_string(np,
-"pwm-names", con_id) which returns -EINVAL if there is no pwm-names
-property. This is different for clocks. I wonder if pwm should adapt
-accordingly? Thierry?
+Sure. But since v6.4 is around the corner, can we merge this
+workaround for now, while a proper fix is being worked upon.
 
-> Still, someone who's setting up the driver could check the debug
-> messages to see if the backlight was set up in PWM mode or register mode.
->=20
-> > ...
-> >> +		pwm_init_state(lp->pwm, &pwmstate);
-> >> +		/* Legacy platform data compatibility */
-> >> +		if (lp->pdata->period_ns > 0)
-> >> +			pwmstate.period =3D lp->pdata->period_ns;
-> >> +		pwm_apply_state(lp->pwm, &pwmstate);
-> >=20
-> > This is a change in behaviour. Before lp855x_probe() didn't modify the
-> > state the bootloader left the backlight in. Now you're disabling it (I
-> > think). Is this intended?
->=20
-> I didn't really consider the implication of this in this way, as on the
-> device I was testing this on (Exynos4212-based tablet) the PWM state
-> would get reset during PWM chip initialization in the kernel anyways,
-
-Which chip driver is in use here? That's a patch opportunity.
-
-> meaning that the state from the bootloader would be lost regardless of
-> this change. Either way, there's no guarantee that this would be the
-> same on other devices, though I'd assume that in most cases it's not
-> noticeable anyways as brightness is usually set somewhere in userspace
-> (or even earlier, in the driver, if the init-brt property is set).
-> Nonetheless, that's an oversight on my part.
->=20
-> As for the reasoning for this change in behavior - the previous behavior
-> was to silently fail if, while setting the brightness, the PWM could not
-
-This sounds wrong.
-
-> be set up. This seemed rather confusing to me (I encountered this while
-> I was initially working on the tablet, I added a "pwm" property instead
-> of "pwms" and was wondering why the backlight didn't work...)
->=20
-> Of course, that could be fixed by adding error detection in the
-> brightness set function, but since I was already working on it, it made
-> more sense to me for the PWM to be set up during the probing process,
-> given that this way we could 1. warn about errors early, and 2. catch
-> deferred probes and defer the backlight's probe if we're still waiting
-> for the PWM. That's why it's done the way it is in this patch.
->=20
-> If this is undesired behavior, let me know and I'll submit another patch
-> to revert it.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---4mqeubzcqronq6sk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmSMkKYACgkQj4D7WH0S
-/k5aIgf/SKGaRvfH39P++n5jjD+2vTiF6VAra1GFSjVbAemXWn/xObeuAuXttlyq
-CE+cFGFp+1eFFOLONWN81+8U63juiEjRTcL9N5WKbvZp8M4Pd5UkT416BdpWwS7L
-I95v5E6qX4+Khs9cm1j7VzR3u388P+I2RVJVQdW/PMZqVmgroxJDunEjCP5doSFf
-ZdWVdbFE2ouPLTk+iphxV3XDjNyFREESRjP9IVK7qu/GE1l6e6NGUNkw0yWySot/
-JvnVTvEMx8xv1AbKAHIRa1QtyXaUpx4C2k6GR9evEVRnHH1JB5G9TtuxKXsrU1lo
-Zgdg1fCGFoWkoczbrHsYFpyUXw2V2g==
-=eNSY
------END PGP SIGNATURE-----
-
---4mqeubzcqronq6sk--
+Regards,
+Amit Pundir
