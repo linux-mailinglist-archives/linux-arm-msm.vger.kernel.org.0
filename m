@@ -2,50 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05F92732D81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:25:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D3AB732D9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 12:26:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244903AbjFPKZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 06:25:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49506 "EHLO
+        id S244566AbjFPK0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 06:26:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241493AbjFPKZ3 (ORCPT
+        with ESMTP id S1343847AbjFPKZn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 06:25:29 -0400
+        Fri, 16 Jun 2023 06:25:43 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D270AC;
-        Fri, 16 Jun 2023 03:25:28 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F2330C7;
+        Fri, 16 Jun 2023 03:25:40 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F14A0634C5;
-        Fri, 16 Jun 2023 10:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2E2C433D9;
-        Fri, 16 Jun 2023 10:25:25 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7354F63541;
+        Fri, 16 Jun 2023 10:25:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F086C433C0;
+        Fri, 16 Jun 2023 10:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686911127;
-        bh=QOrQZst8tv3kUGiApkN9jYV5mSZ1qKp1Gc8Rvo4qTZM=;
+        s=k20201202; t=1686911138;
+        bh=NYh87GvRtAtdkGxE6uWmS8R93ymrl698MOMei6NKI38=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=dZ846p1GuQnGqTLnNm8l+8XxG/vv/RCT/pn0Bh8A2xXhcKcscksgJCTrcot7NQR4I
-         7+4b5sexVBWcQrjXWGGwxU26nVcJo+cMVXFBQB+hIEPQhFKTIn55bmaXtuYW4d+2Vh
-         9Vgoepmtx9plSG1oxmI9d3/T9vVuIPZR6L+diujXnwvzk6nbSZF1X/xIrKrkxjhOwp
-         0f4ytRIpmD3YRptlU2eLvlMqJoslSAnYfHBbxN9Qysx66//7SQkBysgLQw/xC7GZd/
-         clPQWKxkvLIKJwt4CgrOM33Bl3VNdl+AKTbmUzO54lr399FpC8MIoNy7TVjJDEIzLl
-         6qRIa49W0hNHA==
+        b=Vlid0DnO9cec31MCNjgpBOkatqxn0v8I04vNpFlz5zhi1EseQXmm/+LLp1i88AWju
+         klup646BA0vaLnwfo658Q6LWHFLCFWxPPEHs72J9jLGvgK19du+KzyaYd5L05fq/u0
+         e4DtEEwNxADwa7MGNWTrBwB7Zif+d0KOgrF3SSl0aO2iT3T5HTRc9sE7RJa/x3FkhF
+         V9dYzkiVJG/puJ1vDAUt3drj6a2+2U6NUyDks4QcodsMkRGuugTrDmNadvJKFK3WcB
+         VutUIeiJM4W59esKgM0h52hxDQtLwnxKeivuS9pvNVndBASFV3xzi+OQJty8d7YNB7
+         BBkcNJljomoDg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.3 03/30] arm64: dts: qcom: sc7280-qcard: drop incorrect dai-cells from WCD938x SDW
-Date:   Fri, 16 Jun 2023 06:24:51 -0400
-Message-Id: <20230616102521.673087-3-sashal@kernel.org>
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        agross@kernel.org, andersson@kernel.org,
+        yung-chuan.liao@linux.intel.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org
+Subject: [PATCH AUTOSEL 6.3 09/30] soundwire: qcom: add proper error paths in qcom_swrm_startup()
+Date:   Fri, 16 Jun 2023 06:24:57 -0400
+Message-Id: <20230616102521.673087-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230616102521.673087-1-sashal@kernel.org>
 References: <20230616102521.673087-1-sashal@kernel.org>
@@ -66,43 +64,59 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 16bd455d0897d1b8b7a9aee2ed51d75b14a34563 ]
+[ Upstream commit 99e09b9c0ab43346c52f2787ca4e5c4b1798362e ]
 
-The WCD938x audio codec Soundwire interface part is not a DAI and does
-not allow sound-dai-cells:
-
-  sc7280-herobrine-crd.dtb: codec@0,4: '#sound-dai-cells' does not match any of the regexes: 'pinctrl-[0-9]+'
+Reverse actions in qcom_swrm_startup() error paths to avoid leaking
+stream memory and keeping runtime PM unbalanced.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230220095401.64196-2-krzysztof.kozlowski@linaro.org
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230517163736.997553-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/soundwire/qcom.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-index 88204f794ccb7..1080d701d45a2 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-@@ -419,7 +419,6 @@ &swr0 {
- 	wcd_rx: codec@0,4 {
- 		compatible = "sdw20217010d00";
- 		reg = <0 4>;
--		#sound-dai-cells = <1>;
- 		qcom,rx-port-mapping = <1 2 3 4 5>;
- 	};
- };
-@@ -428,7 +427,6 @@ &swr1 {
- 	wcd_tx: codec@0,3 {
- 		compatible = "sdw20217010d00";
- 		reg = <0 3>;
--		#sound-dai-cells = <1>;
- 		qcom,tx-port-mapping = <1 2 3 4>;
- 	};
- };
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 30575ed20947e..0dcdbd4e1ec3a 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -1098,8 +1098,10 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
+ 	}
+ 
+ 	sruntime = sdw_alloc_stream(dai->name);
+-	if (!sruntime)
+-		return -ENOMEM;
++	if (!sruntime) {
++		ret = -ENOMEM;
++		goto err_alloc;
++	}
+ 
+ 	ctrl->sruntime[dai->id] = sruntime;
+ 
+@@ -1109,12 +1111,19 @@ static int qcom_swrm_startup(struct snd_pcm_substream *substream,
+ 		if (ret < 0 && ret != -ENOTSUPP) {
+ 			dev_err(dai->dev, "Failed to set sdw stream on %s\n",
+ 				codec_dai->name);
+-			sdw_release_stream(sruntime);
+-			return ret;
++			goto err_set_stream;
+ 		}
+ 	}
+ 
+ 	return 0;
++
++err_set_stream:
++	sdw_release_stream(sruntime);
++err_alloc:
++	pm_runtime_mark_last_busy(ctrl->dev);
++	pm_runtime_put_autosuspend(ctrl->dev);
++
++	return ret;
+ }
+ 
+ static void qcom_swrm_shutdown(struct snd_pcm_substream *substream,
 -- 
 2.39.2
 
