@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61AF373348A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 17:18:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E8A973348C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jun 2023 17:18:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345918AbjFPPSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 11:18:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
+        id S1345924AbjFPPS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 11:18:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232085AbjFPPSW (ORCPT
+        with ESMTP id S1345917AbjFPPSZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 11:18:22 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A67530FF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:18:21 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-666ac5b63beso758169b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:18:21 -0700 (PDT)
+        Fri, 16 Jun 2023 11:18:25 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C096C358E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:18:23 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-666aa1b79a3so775319b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 08:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1686928701; x=1689520701;
+        d=chromium.org; s=google; t=1686928703; x=1689520703;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=C5Nhe0vFqRJeb1rQZmWBqjIq4WANx09DJJT4hbC9des=;
-        b=QwpecvflqoGMWutvgaPcnPls7DoObDDt0d0vjpKsZE6NG1fUoWbpGIAIbISWoE12o9
-         Hls8pUslxLD0pUrP38RxhYHlsV2zpEWl+Sff4pDuzEc6iMzkP9epITtxGOCV6uGHqKYH
-         wpa74oTP7DJWe/n7NZp3wgbzqYdIg9kCTuHro=
+        bh=4bzr12EWQk1Ia1QIrIwm9/FyosBVEjDXlJSMbab2hS4=;
+        b=LUUemacRAYGTnOP8agRg8L7wFh3FfgjT5qcwrPkVa2r7X32BpPmPLJs+wZcR7Cuj1d
+         LRkHyFDtzuJGJ1WRqyRW1P+Sg8ebz6yvixHJPDQeiDczvn7dK6E3rVErs+O41nJNWW8l
+         w5XzPugEJUYOu7KbDIOLAkAKN92EWh4EMk6iE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686928701; x=1689520701;
+        d=1e100.net; s=20221208; t=1686928703; x=1689520703;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=C5Nhe0vFqRJeb1rQZmWBqjIq4WANx09DJJT4hbC9des=;
-        b=C3LKJMgKc+bC2aMMP+IDho2/3A1iIMBwn8eh51gTOc/oa0Gw+AlNsghCwtvqc5FHUI
-         q96PmxoCfCQsQFFcjYt5aDKWcA7Z9LyT4qKoPEvuS+4aK3VKerkRSZfv5xcnGZy1NFoZ
-         FQQbqNtU2Aq/lz8bX7Exp3VI8ZrGhzHbFATX5GUbs8FPpzaAeXiIadFoQfnLNwDzs3LG
-         q56eUvPLFd3QwlJifizz8d1hKpDvGSRPuRE0eQGntqlvg6NczuDukDrOzG8+tUoUD2NG
-         LvpKZrea7si+4rnZiBYVVBkJtjLPq9XxB5MqAVUGRy6c7MSvK/cFI/0FtcDpgxmqu++i
-         LC/Q==
-X-Gm-Message-State: AC+VfDxfx2R9Pl8SzztrONz05m1uZTr5RGajTNcZutw+iI4oPc3nZ7sk
-        Zn7K7nepg2bdYA5nuQ7pnBM0wQ==
-X-Google-Smtp-Source: ACHHUZ5kULJgYYKPVBKzjr2NKrXoKtFUZad8SKsKaJsNvvuqBIOeHlOBYw+g/i2luJy6VuTljO125Q==
-X-Received: by 2002:a05:6a00:1392:b0:651:3e9d:2a05 with SMTP id t18-20020a056a00139200b006513e9d2a05mr2713555pfg.19.1686928700957;
-        Fri, 16 Jun 2023 08:18:20 -0700 (PDT)
+        bh=4bzr12EWQk1Ia1QIrIwm9/FyosBVEjDXlJSMbab2hS4=;
+        b=XpR+nNrUIQSC2UzdiU0av//BZL1sRjyrzSHcCjEmLAJ4Vo+SOur4iRe5ZhmdYuvLS3
+         9nyrCUAvFZOOTig+9g8DViQrtshe7v40Nma+KXnuqU69zwcNR6+veoNHszRuS9vB7VLZ
+         ItknLj4O+HfEqdgvvBB2lR2xdMlQhHYX6LvPYXZ0/pikIgmpFORQBt1/BMAxpxALY30P
+         5snvlaQIwZhvitSwIszm6L/qcazpHzIuqmDywhJ7453ZjkhB15EhvJVzyEZYafBGK2iW
+         EXGCvr7H34UmBEDyj9E8DHAH5CnHbdnExmKo1Cc9XudwRieA1zSB45mWLRWmDwmjo5U2
+         Cpeg==
+X-Gm-Message-State: AC+VfDyyeZU2eXGaQZ3zxgg/Wo/jHH1S0krn1qGR6nrXARPdMXr+P7uG
+        uPjcCj0hhlvHCCO5lLjHYIHREA==
+X-Google-Smtp-Source: ACHHUZ6q/PKHT/Y8LJI0/Lhl1x89/ervnctEFB9g0IQqT1NdRVzz9jh8vZkPG/Uu4lHnWKRC4m93Hw==
+X-Received: by 2002:a05:6a00:995:b0:664:2f24:5578 with SMTP id u21-20020a056a00099500b006642f245578mr2788544pfg.13.1686928703185;
+        Fri, 16 Jun 2023 08:18:23 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:3cfa:2bcd:1a5:27ce])
-        by smtp.gmail.com with ESMTPSA id a12-20020aa780cc000000b0063d24fcc2besm4593656pfn.125.2023.06.16.08.18.19
+        by smtp.gmail.com with ESMTPSA id a12-20020aa780cc000000b0063d24fcc2besm4593656pfn.125.2023.06.16.08.18.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jun 2023 08:18:20 -0700 (PDT)
+        Fri, 16 Jun 2023 08:18:22 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     andersson@kernel.org
 Cc:     amit.pundir@linaro.org, Will Deacon <will@kernel.org>,
@@ -58,17 +58,17 @@ Cc:     amit.pundir@linaro.org, Will Deacon <will@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Sibi Sankar <quic_sibis@quicinc.com>,
         Douglas Anderson <dianders@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
         cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/4] arm64: dts: qcom: sc7180: Mark SCM as dma-coherent for IDP
-Date:   Fri, 16 Jun 2023 08:14:39 -0700
-Message-ID: <20230616081440.v2.2.I3c17d546d553378aa8a0c68c3fe04bccea7cba17@changeid>
+Subject: [PATCH v2 3/4] arm64: dts: qcom: sc7180: Mark SCM as dma-coherent for trogdor
+Date:   Fri, 16 Jun 2023 08:14:40 -0700
+Message-ID: <20230616081440.v2.3.Ic62daa649b47b656b313551d646c4de9a7da4bd4@changeid>
 X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
 In-Reply-To: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
 References: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
@@ -84,47 +84,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-sc7180-idp is, for most intents and purposes, a trogdor device.
-Specifically, sc7180-idp is designed to run the same style of firmware
-as trogdor devices. This can be seen from the fact that IDP has the
-same "Reserved memory changes" in its device tree that trogdor has.
+Trogdor devices use firmware backed by TF-A instead of Qualcomm's
+normal TZ. On TF-A we end up mapping memory as cacheable.
+Specifically, you can see in Trogdor's TF-A code [1] in
+qti_sip_mem_assign() that we call qti_mmap_add_dynamic_region() with
+MT_RO_DATA. This translates down to MT_MEMORY instead of
+MT_NON_CACHEABLE or MT_DEVICE. Apparently Qualcomm's normal TZ
+implementation maps the memory as non-cacheable.
 
-Recently it was realized that we need to mark SCM as dma-coherent to
-match what trogdor's style of firmware (based on TF-A) does [1]. That
-means we need this dma-coherent tag on IDP as well.
+Let's add the "dma-coherent" attribute to the SCM for trogdor.
 
-Without this, on newer versions of Linux, specifically those with
-commit 7bd6680b47fa ("Revert "Revert "arm64: dma: Drop cache
-invalidation from arch_dma_prep_coherent()"""), WiFi will fail to
-work. At bootup you'll see:
+Adding "dma-coherent" like this fixes WiFi on sc7180-trogdor
+devices. WiFi was broken as of commit 7bd6680b47fa ("Revert "Revert
+"arm64: dma: Drop cache invalidation from
+arch_dma_prep_coherent()"""). Specifically at bootup we'd get:
 
-  qcom_scm firmware:scm: Assign memory protection call failed -22
-  qcom_rmtfs_mem 94600000.memory: assign memory failed
-  qcom_rmtfs_mem: probe of 94600000.memory failed with error -22
+ qcom_scm firmware:scm: Assign memory protection call failed -22
+ qcom_rmtfs_mem 94600000.memory: assign memory failed
+ qcom_rmtfs_mem: probe of 94600000.memory failed with error -22
 
-[1] https://lore.kernel.org/r/20230615145253.1.Ic62daa649b47b656b313551d646c4de9a7da4bd4@changeid
+From discussion on the mailing lists [2] and over IRC [3], it was
+determined that we should always have been tagging the SCM as
+dma-coherent on trogdor but that the old "invalidate" happened to make
+things work most of the time. Tagging it properly like this is a much
+more robust solution.
+
+[1] https://chromium.googlesource.com/chromiumos/third_party/arm-trusted-firmware/+/refs/heads/firmware-trogdor-13577.B/plat/qti/common/src/qti_syscall.c
+[2] https://lore.kernel.org/r/20230614165904.1.I279773c37e2c1ed8fbb622ca6d1397aea0023526@changeid
+[3] https://oftc.irclog.whitequark.org/linux-msm/2023-06-15
 
 Fixes: 7bd6680b47fa ("Revert "Revert "arm64: dma: Drop cache invalidation from arch_dma_prep_coherent()""")
-Fixes: f5ab220d162c ("arm64: dts: qcom: sc7180: Add remoteproc enablers")
+Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
-I realized that this needed to be in IDP as well and that the IDP
-patch actually needed to come _before_ the trogdor one given the order
-that things landed upstream. I still left most of the description of
-the problem in the trogdor patch, though. Hopefully that's OK.
 
 Changes in v2:
-- sc7180-IDP patch added for v2.
+- Add comment in dts.
+- Moved scm node out of pinctrl section to the proper place.
 
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 5 +++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 9f052270e090..299ef5dc225a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -393,6 +393,11 @@ &remoteproc_mpss {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index ca6920de7ea8..1472e7f10831 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -892,6 +892,11 @@ &remoteproc_mpss {
  	qcom,spare-regs = <&tcsr_regs_2 0xb3e4>;
  };
  
@@ -136,19 +142,6 @@ index 9f052270e090..299ef5dc225a 100644
  &sdhc_1 {
  	status = "okay";
  
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index f479cab8ab45..a65be760d1a7 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -369,7 +369,7 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
- 	};
- 
- 	firmware {
--		scm {
-+		scm: scm {
- 			compatible = "qcom,scm-sc7180", "qcom,scm";
- 		};
- 	};
 -- 
 2.41.0.162.gfafddb0af9-goog
 
