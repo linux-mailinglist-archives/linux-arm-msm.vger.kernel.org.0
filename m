@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29F8E733D5A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 02:48:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A030733F0E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 09:15:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229852AbjFQAsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 20:48:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37444 "EHLO
+        id S233921AbjFQHPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 03:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjFQAsh (ORCPT
+        with ESMTP id S231423AbjFQHPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 20:48:37 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 657D23AA5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:48:36 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f766777605so1845800e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:48:36 -0700 (PDT)
+        Sat, 17 Jun 2023 03:15:54 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273922688
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 00:15:53 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-986864cfe5dso216059066b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 00:15:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686962914; x=1689554914;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1686986151; x=1689578151;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NTLsCOm+x4ZvrOFSB6ytsH0DzFh1BKzhychb27x+ZCk=;
-        b=gBqvFFGhi2k1Y4mtAueB4OnvmeneTr3asfVLlhXV/KoukoBpKC/5fJRBWHcdTBqK8i
-         xmjTgyEMajixAz7m3A9906HEGtDrMt3nHnXAHkUb2vfOS5b7IxIVvdzjutDP2wNRf+t9
-         Pl2PbEvPwAhbeqtPjmYXgOuuP9nstKUX758l4KrWiDTHOyCU5VamLZ68KyuXKRlT9E7F
-         phHrRmz5JxT7DwjZcogBgziaJ+1vsOBXwfdw0IxAJF1HddL7yYWGQNAbqzUN3x7exU+k
-         EYyW1vacLbLv5RJYukAX/lBXxWjz66LB6ZtHhMLSFt6u65cqH2VSFKQ88nUwHBzUp9ur
-         vtkg==
+        bh=DncxBWQlcUNpstw3Uyqlpb1LlZypTxxD12g/hHvOzGg=;
+        b=usmhpaEw3Au+u5l4p88p0tzi7rBdur4h7/4BSAv/vKf4stAq6YID+vZD+0HazLjd+D
+         2QoqkUYvXt6OObrisr8IhlK0rcdvVWOCgobynsAlFif8RnLRopiLQtXtb/jaaZuleGd5
+         Q4fV6ynClFUUMKWCveoUGJhj3tf8zl1B6RRnzMuoiZtAMPbbJC6bVSlxIhUNoIdxKZEC
+         ji76lxFBmMia7R71uyiv1+bvB1jgjQWC76rbMPHBO+ReMzg8Oi5ngt8qDYYVZpJGCF1t
+         dlQhyq3dg+OubbPXBa67J/sIYT09TzdZ2BwAkAa07g6IAFWU3xzcUUJw+IlNfVa5ZyvY
+         aNVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686962914; x=1689554914;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1686986151; x=1689578151;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NTLsCOm+x4ZvrOFSB6ytsH0DzFh1BKzhychb27x+ZCk=;
-        b=IXvH2E1FH5gOK5Uug6SmhgOj6kDj+36lQTYkvtr5mECzByaNdi4VRlGI+WrX8YpGjq
-         MiSZxJoUYRHQG0OqOMeubwMnto0T/KITF81Av5xy7oyLNpaY9OxRhusmE4LoqgnSWua7
-         5CGqS5yj8bSlzuv+kBHIQfTgWCrb7DruL7QTBZkXIfje2MfsfrxsgehJiCeRlMJQPTk1
-         KbdN7o8q9W+pyQZnLM5mQfAmimb9LuLUBus89lwFs12rlgHUw+Kmk7gmAr11jCdhxlIu
-         cXkadPrE9rv99RBhdj2HZNf3fWOvwftaqctJY4oOHYdIjpegUxXa/+ikh0sALasU35Ba
-         rN4A==
-X-Gm-Message-State: AC+VfDzF/N5/TAySo/LJrRtojwZvZCgQgY9lrez1RAMir731lkcNb9IQ
-        VWFtwisDLdPq7iV4aTfXgmJF6A==
-X-Google-Smtp-Source: ACHHUZ6AYKV84W3IFZwyIjWK1ncKT0jMqQXhv6X4F4THuR6X7HIaPQniEwqZSsmfjSwnRF1a8MKUNQ==
-X-Received: by 2002:a19:f201:0:b0:4f4:dd51:aec7 with SMTP id q1-20020a19f201000000b004f4dd51aec7mr2028052lfh.54.1686962914329;
-        Fri, 16 Jun 2023 17:48:34 -0700 (PDT)
-Received: from [192.168.1.212] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d15-20020ac2544f000000b004f858848fefsm348826lfn.177.2023.06.16.17.48.33
+        bh=DncxBWQlcUNpstw3Uyqlpb1LlZypTxxD12g/hHvOzGg=;
+        b=CVv94Gl0Z1KCXNZpqqV4sX0YFkAWATkKoFVfPu6bSyMHHZjOElgR5JCp/6WESCKCwO
+         MAJ4xRTpr8vZBt/svX8cs/mWmVvYI8Xd+UuCx4vFlYKIz+Y8nuTK4sumaQals3fgHfgv
+         CJII6OYrwPqQRfF9/7G6OQmHSKzJ9He1JEl1XnjF5c4HUONq4SSkMJGPoAVp9eothlbt
+         wmMA0+lKSrl9ZqvCfY636UNdEZsInlo+mMFbhqUZaSSa/Onlw8ne4xZ5d8Z9+bs0gPpl
+         Kuk69bV/cn8j1OjO8vhB9s1+v0YtBjBxi0hNkPVk6HJF47/hOGn6dmTlC47ovt8kJRgI
+         DPlQ==
+X-Gm-Message-State: AC+VfDydXkNHLeRIbrVomnHAAfu+KJVMtLvGoFOF834XNUe4BDmEfPTt
+        XYbnHbJR9myeaFB1cYuzU8p5UQ==
+X-Google-Smtp-Source: ACHHUZ7/jJE3fjrBXvzZKqNsxyzq7Um/rwbMXpWiWfxwRf6F9pBJ/5MEXt8jFSfbW6NgzWNeepqWAA==
+X-Received: by 2002:a17:907:72ce:b0:96f:a412:8b03 with SMTP id du14-20020a17090772ce00b0096fa4128b03mr4071741ejc.5.1686986151441;
+        Sat, 17 Jun 2023 00:15:51 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id x10-20020a1709060eea00b009745edfb7cbsm11620540eji.45.2023.06.17.00.15.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 17:48:33 -0700 (PDT)
-Message-ID: <227c2ba0-cfb2-cd88-6506-895e8735d221@linaro.org>
-Date:   Sat, 17 Jun 2023 03:48:33 +0300
+        Sat, 17 Jun 2023 00:15:51 -0700 (PDT)
+Message-ID: <cefbb542-e9c3-8e4f-a3fa-542414ab8dc0@linaro.org>
+Date:   Sat, 17 Jun 2023 09:15:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 17/19] drm/msm/dpu: inline INTF_BLK and INTF_BLK_DSI_TE
- macros
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
+ TLMM
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
- <20230616100317.500687-18-dmitry.baryshkov@linaro.org>
- <vpuwgjbgfau6fwn3etg3hyoo44yn4n4xo7hzbe3kfir4ih2tgp@rmutsfjobrub>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <vpuwgjbgfau6fwn3etg3hyoo44yn4n4xo7hzbe3kfir4ih2tgp@rmutsfjobrub>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230616185742.2250452-1-krzysztof.kozlowski@linaro.org>
+ <20230616185742.2250452-2-krzysztof.kozlowski@linaro.org>
+ <835bc0c9-0218-80e3-f64f-bd4116ad02e8@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <835bc0c9-0218-80e3-f64f-bd4116ad02e8@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -84,24 +88,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/06/2023 01:12, Marijn Suijten wrote:
-> On 2023-06-16 13:03:15, Dmitry Baryshkov wrote:
->> To simplify making changes to the hardware block definitions, expand
->> corresponding macros. This way making all the changes are more obvious
->> and visible in the source files.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 17/06/2023 01:36, Konrad Dybcio wrote:
+> On 16.06.2023 20:57, Krzysztof Kozlowski wrote:
+>> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
+>> driver is similar to SM8450 LPASS pin controller, with difference in one
+>> new pin (gpio14).
+> 8250*
 > 
-> Looks good but I am not sure how much it is worth to review this (versus
-> checking your script and rerunning it to see if I get the same results),
-> considering that there are quite some conflicts with your interrupt
-> rework.  In what order to you intend to land that?
+> 8450 has a whole lot more!
+> 
+> The 8250 in fact does look almost identical.. Perhaps in this case it
+> would be sane to combine the two?
 
-As I wrote, this series goes in first. Initially I designed them the 
-other way, but intr rework depends on DPU revision changes, while this 
-one doesn't have such dependencies.
+It meant to be 8250 as I copied that one. I'll fix it.
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
