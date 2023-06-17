@@ -2,455 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65297733D18
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 02:01:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96B50733D2A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 02:30:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232039AbjFQAA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 20:00:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55882 "EHLO
+        id S229924AbjFQAaA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 20:30:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233662AbjFQAA5 (ORCPT
+        with ESMTP id S229493AbjFQA37 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 20:00:57 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72FBA30EF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:00:54 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f640e48bc3so1843742e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686960053; x=1689552053;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W3KWVeHmsHPIaRZA6DLr0joW7Ttav+PaqmaoaMCes3k=;
-        b=Fr0YFsTnFYpZr2E6woSTSacK+xGPXui0A8DNyQZGfB51pPpU1dv679Yqiik1+Mp2ms
-         AknaszaOVklCNwMrU3js2EURxkTM6x3XvCay9wVJh17pDhMr0WttgAphHJBYmiquCzbr
-         0OpF9rVsG/V4aakdyotWQiNqgrmdEMtmAqHhm+bjis4Jl1X1gj9t2rnk93JRJStkXN7i
-         FWJeoiTrW0VAIZz8aw2O2/NaT8rluHZd6+slkgvjSI80tkXwBtVSFdwztdLHrhls+URp
-         QBvL4+SgkHUXHcYyzdGB4bLGNB5WJoj8wpR4fiMgWJ12xIPob+sKMoTTRSwkoOXJOxmU
-         RhAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686960053; x=1689552053;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W3KWVeHmsHPIaRZA6DLr0joW7Ttav+PaqmaoaMCes3k=;
-        b=VmuvbK1axm6GJOlxbBM4D64fudByaAJw1xPH1mFWRDBqKFGIgQo6jjHvwEiRV4Cx3n
-         Tevr8s4mGBelIKpMZED980PIAXgMM8x0NA7qzhtnCCpvMVVI40slcUeosc2SsLixWQKx
-         PFuL06D6NO6kzG9aTT4e57/e3kUahCj/uIMz24Ghe6ipZeytof8to9u+DQw0VEzlFe/F
-         6EGAMJogPOR31TdSZtKq2Hc07qGCNGskoV9DySgM1MQlXArrYEEJ0xBTU23TIEn51u5c
-         P45k5aX23k3vpDYETexlkB8aSueXiZc2xdjdsyJw7TsL1y5u+B5o8JVlnlvRmUV/Y+Bu
-         So/g==
-X-Gm-Message-State: AC+VfDzXJjPukZaiRK1dEcKW+r1eLCtPw8hfhTEwvi2sdqieSa314LLx
-        45A+7fCo6hu4PCAM5yn2Y7rBIA==
-X-Google-Smtp-Source: ACHHUZ6VIkLSjzCxdHpJRh/DtsIbyfdxALlas9PDHHZfTsJPGHvn+jB/qypqfMhEsiVOUWjQZj9N8g==
-X-Received: by 2002:a05:6512:290:b0:4f6:1504:f93c with SMTP id j16-20020a056512029000b004f61504f93cmr2518520lfp.66.1686960052552;
-        Fri, 16 Jun 2023 17:00:52 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id t12-20020ac2548c000000b004f60e0ecc78sm3202487lfk.239.2023.06.16.17.00.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 17:00:52 -0700 (PDT)
-Message-ID: <68e64a35-9705-6565-3b5c-5de38419aba8@linaro.org>
-Date:   Sat, 17 Jun 2023 02:00:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [Freedreno] [PATCH v8 10/18] drm/msm/a6xx: Introduce GMU wrapper
- support
-Content-Language: en-US
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Fri, 16 Jun 2023 20:29:59 -0400
+Received: from sonic309-26.consmr.mail.ir2.yahoo.com (sonic309-26.consmr.mail.ir2.yahoo.com [77.238.179.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9B03A89
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1686961796; bh=3ubr12IgCaxiPc2P8P9TgUxEmc8Jyb9OzmeOqzumtgk=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=M4Updjdi/OxKbtaffuNH0NEQsq2dfOH3jBxf+nDZMVzh3GGJus6BAo3PD4VGUzZIUsk8dzhmumQpsthkSMFgIUySZQ5Oy10wQLb8Yc64GNPKWqLyb3FyHZBohgi9PPHHw0Qslg/1cyt6yMr4LJTlPBAtxFKra17viSo27OMYMLRXrv+O+uK6l5y8TqjKKQlag63Gto1MaOGiCutsj4B/SRs5l/QuLRFqSVxZXLjR2GBrE7ThuV8aHw/fXAP6oKhAe852cPzciit/kHMNnGoH6XnktlCLzfgqugCyYXTy0HvfdWbuXV0rks3EF1r3HNoIudujY0wGtfWkgYTUoR79xQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1686961796; bh=MH5EA0KMdDcFFmZklUynEhNEW+WykT6rpUiuQIMgOS9=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=HyAHiozHGMTZDiDgduuyEbzkitm2Ac+++dCwWPUySoSvCjgqeCWqJ7ZHZNw5/mzhuxpqfEr0/W/nD91+2bxlHyfJ9aUScOBVCn6yzU4ncMkSsIXmWOv1Bd3NNG5ccS5SphMf3eXmbix7E77MFIj6df2L8b+QipOJcF0WbmUd6/oRwAyebU6UoT9H2hYu8hfag32aIgabZuy1q4sIC7XUThBk/8iPx9iqtaPjFt/omRjDSRYukJybQ5Y10Q4lqcC459egjUMJ+T/01WBsEZWvoRK/JCp3bv0/puqr7G+be+JnDR0zScccGSMEaYhcY33iv/YRfnhKaje5uZ2EwCIsMg==
+X-YMail-OSG: mN13q3sVM1keDcvr7VW0xFSaD4WqKY.6_NqMnAy7IeEb54cIHb0m.w826wvgL6R
+ S7PW.GFHt16fIeBCoKFLlY6WkLKNqSVSls1AtZL.1ZnghE7B3Jf0pqUHOIFEM0RFYToddOdduNzs
+ Y9e1A0jenAGXyYPLFiMx0JKphCjhUGWqaQf__4i6WWJeWolVafO8ugECPjWPqn7WWs6FgZrUHBP3
+ T0xemv8oyCHc4IHeYQD6p0W75JpnLjxVxUUSAYIXXbM4v_sFIxoD2WIRgNcndmSjj_tpTHEt1yFe
+ 3qTILi9zWmNzHlKv7bFCsc32oXsKAdemCl9HZdCLyL4cO9r0culLLLH58JU5YdGcmgvWDU0n.ksS
+ VQT9VHI_QLoqc_dQ9_j0ZYCMo8r5iTzRa92JMfewl420rlMkdTMvaG3HPUmNtXem0sa7U7KlDocO
+ 789gAmrLeSav_RIlOMoOOyi4ncf2JUoefj3XKfuNU_WvlxuTpjJusVlTjLy__5K5Dlj_4VY62NDO
+ otQgW4KZwig8BnOFt07mCEumsJd52EF4Lw_OBpHeXULKvNqVkjMSHCwLqv9YUTsdLqD09BJ6oyq2
+ oI.GZ1Vn.LYoJ0Cc8RIemsvmTJr_X1lFzAHzhdXzTazfBi6NGYcCogOTu9Yyt4SfGeVeqwq0lvXS
+ kZnpQGeBoJSVv4ROtfwwMneeKFFNQ2avayUcreJjl7jyXZuq4O1qKeoK7CLUpvGGgK9Myo3Q1AUQ
+ f0w.Ye.ZZ1CRH2i9zVEShFgwZaGpUFmEyfeIXNTg5NWu8_fqN0GEFO85aAuZVyseRC2aOX7ljF0y
+ rA6Dte_363jC5kVMbOfM5YjAGBwmDg3YRcr9RFvd_6QQQpv.jvCdj_Ac1TIHcB31ixbeniojQc5p
+ 6K.3yg_.JCSpQ5sN8SYCDPgSjkD1hUWnNm7Wa0FE3anb2DvYNMB84_AGT2aKLpYim2tjjsM28HO7
+ JoyAWz1RsU6uCHjfUEwrFuh_fx3F8eZR3avAqhPTaSEK3oaz.Y4pB_ERI5vOcQDBnW7w7nn3N7Ft
+ 3ZjGi.I6sBNBQqnNUQ58fYrZqfW8rq5KVNL9jMOt7kVuFRcvcMFhVkMBBUST38WWeMVw2IcfeTit
+ MEoz3THhM18sLKjjmt4rZ6XfengcOP0rgRpIi5umgOCsZ.LGaYHNAh_Bf5CV21yT6_F4qQUbDrca
+ EpdqNJbO0umP07rDQEQ9vwMtNDcoyZy0rn0jkineORZSASP0DRscThl3YcG_XD3ggJZKKcqti3fn
+ 9_rE5EOjUCmHhdNQQsRF1lIMTtm0j6B0LDu6ZPzRH4ENCNlq_a7zq0XCU8cFoGUoOWs7bTpeak4g
+ N7Whj.bO5bzaVGSfRZeR.INgOr5gMbrzYjoeRdGlPHUbrKuB_dswbQiSee5Pk5Zb3fBaY3WtkK8e
+ p4oGIPJjzuCAjPv55hAdxb4LM0ljSzZB0CPf9yJYEm5fRRnmiWwt7kz_j7LJVnrK.L5h_.C2lwBi
+ HW.i.q4dEBwdLU.4oyBhiWSFM7gK.etrQSJ3OisJSFQI3jo090uUKNrgqRPUvWhrxHQ5c8SXU10w
+ osiEStVZZ6LKa99ptOVV3zmGkJx.WD1q2E7v3UYdXcf7z3tBxqJHr7vOoqgxXO1sTcWywwofBbV_
+ .UMwN0Ebn9NdwwwFYBGx7bj943zhF60lQqXfuBXgaPUqNpWdFJEFUnp8Pxov7Yb9BrNUMPR666rc
+ l8V2cpj2qJ_WxKN99Q4624oRStpoiomYIDCnxLdr6Zwb.fIuqDQPI3ZBrlGpYHVOWXZGdA3Aqj.b
+ Y00ZpYqdCKYV.VpHuMin7ALSwdGJvFZowiZ0F6O_tC3nZSR.TtrSvztPjHVGjJWrTy0Kxobw1ENy
+ uGYoYnO30Wifu5gJailc2gnxphEU.KWwooJApGRIsHd3MOMXmF3ayJN5H1_qJ0orTOoBemH_QQxw
+ ydMAzwLghF3Jnfp5VUWkCHXBzTM.CtAc_6WLINbF6ooZpPlLiw_S_kjME3bqZKLvCczWk7pRIacw
+ R.tbp2Jc0rPmE2doXZzPqkmLOs8XH2Etllup7xDxkLZ2YZU8NjtN7FX9SbY0ckmpk2nMtJTNXByT
+ vqUZ4g5tWiiFhgR5tgDjOcGxDMO9zFRZHWSB9rPwOhkvPoOHdkZ8FCov0VVLFQL1GSiZkQDjCTi5
+ _M8fd_zA1LttfTOi6ewcSahLBX3t7hbbHYuOav_tMi6hj.qrNoq2WhplOrsWBzgExJMgf8Fisej4
+ p5ZGUCBwbE3GthfHETSSN7hGfE1KqH3vsejcU8ocTyLAw2tIKtrQuooSC1WAul65N_KAhXiV51ZI
+ n5GvVQ1Mc5gXWXMUIfQVZNiGRkgDJ0Qi1Yh2OAQ_r.L1Abg--
+X-Sonic-MF: <jahau@rocketmail.com>
+X-Sonic-ID: affb121a-d648-453f-a0ed-9ac74f21d891
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.ir2.yahoo.com with HTTP; Sat, 17 Jun 2023 00:29:56 +0000
+Received: by hermes--production-ir2-7867f454fc-8nkq6 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID e11accc94c1b3a6c23a5a72d5ce29def;
+          Sat, 17 Jun 2023 00:29:54 +0000 (UTC)
+From:   Jakob Hauser <jahau@rocketmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>
-References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
- <20230223-topic-gmuwrapper-v8-10-69c68206609e@linaro.org>
- <2vr72w4tslxxumzphtuwgkcnbfjrtmw2j4qak2cukcabchadlg@spjbqoa7v4lr>
- <c5396101-ad5b-afdd-d6d7-1a2efa3b9bf7@linaro.org>
- <z5imqaxyumc5pyk4ijumjby4tswfmnjsnedeekonx5tymhwsfi@h5dk3pl2zawf>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <z5imqaxyumc5pyk4ijumjby4tswfmnjsnedeekonx5tymhwsfi@h5dk3pl2zawf>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Raymond Hackley <raymondhackley@protonmail.com>,
+        Henrik Grimler <henrik@grimler.se>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Jakob Hauser <jahau@rocketmail.com>
+Subject: [PATCH RESEND] arm64: dts: qcom: msm8916-samsung-serranove: Add RT5033 PMIC with charger
+Date:   Sat, 17 Jun 2023 02:29:34 +0200
+Message-Id: <20230617002934.39408-1-jahau@rocketmail.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+References: <20230617002934.39408-1-jahau.ref@rocketmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.06.2023 19:54, Akhil P Oommen wrote:
-> On Thu, Jun 15, 2023 at 11:43:04PM +0200, Konrad Dybcio wrote:
->>
->> On 10.06.2023 00:06, Akhil P Oommen wrote:
->>> On Mon, May 29, 2023 at 03:52:29PM +0200, Konrad Dybcio wrote:
->>>>
->>>> Some (particularly SMD_RPM, a.k.a non-RPMh) SoCs implement A6XX GPUs
->>>> but don't implement the associated GMUs. This is due to the fact that
->>>> the GMU directly pokes at RPMh. Sadly, this means we have to take care
->>>> of enabling & scaling power rails, clocks and bandwidth ourselves.
->>>>
->>>> Reuse existing Adreno-common code and modify the deeply-GMU-infused
->>>> A6XX code to facilitate these GPUs. This involves if-ing out lots
->>>> of GMU callbacks and introducing a new type of GMU - GMU wrapper (it's
->>>> the actual name that Qualcomm uses in their downstream kernels).
->>>>
->>>> This is essentially a register region which is convenient to model
->>>> as a device. We'll use it for managing the GDSCs. The register
->>>> layout matches the actual GMU_CX/GX regions on the "real GMU" devices
->>>> and lets us reuse quite a bit of gmu_read/write/rmw calls.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
-[...]
+For the regulators, apply the same settings as in the downstream
+devicetree [1], including the "regulator-always-on" for the SAFE_LDO.
+For the voltage of SAFE_LDO, however, there is only one voltage of 4.9 V
+available in the mainline driver [2][3].
 
->>>> +
->>>> +	ret = clk_bulk_prepare_enable(gpu->nr_clocks, gpu->grp_clks);
->>>> +	if (ret)
->>>> +		goto err_bulk_clk;
->>>> +
->>>> +	/* If anything goes south, tear the GPU down piece by piece.. */
->>>> +	if (ret) {
->>>> +err_bulk_clk:
->>>
->>> Goto jump directly to another block looks odd to me. Why do you need this label
->>> anyway?
->> If clk_bulk_prepare_enable() fails, trying to proceed will hang the
->> platform with unclocked accesses. We need to unwind everything that
->> has been done up until that point, in reverse order.
-> 
-> I missed this response from you earlier.
-> 
-> But you are checking for 'ret' twice here. You will end up here even
-> if you don't jump! So "if (ret) goto err_bulk_clk;" looks
-> unnecessary.
-> 
-> -Akhil.
-Ohhh right, silly mistake on my part ;)
+The values of the battery data evolve from following sources:
+- precharge current: 450 mA corresponds to the default value of the chip. It
+  doesn't get changed by the downstream Android driver. Therefore let's stick
+  to this value.
+- constant charge current: The 1000 mA are taken from the downstream devicetree
+  of the serranove battery. It's not easy to spot. The value is in the line
+  "input_current_limit" [4]. The rows are according to the power supply type,
+  the 4th value stands for "main supply" [5]. That's the value used by the
+  Android driver when a charging cable is plugged into the device.
+- charge termination current: In the downstream devicetree of the battery
+  that's the line "full_check_current_1st", which contains the 150 mA [6].
+- precharge voltage: This one doesn't get set in the downstream Android driver.
+  The chip's default is 2.8 V. That seemed too low to have a notable effect of
+  handling the battery gentle. The chosen value of 3.5 V is a bit arbitrary
+  and possibly rather high. As the device is already several years old and
+  therefore most batteries too, a value on the safe side seems reasonable.
+- constant charge voltage: The value of 4.35 V is set in the line
+  "chg_float_voltage" of the downstream battery devicetree [7].
 
-I already sent out a v9 since.. Please check it out and if you
-have any further comments, I'll fix this, and if not.. Perhaps I
-could fix it in an incremental patch if that revision is gtg?
+The "connector" sub-node in the extcon node, the "battery" node in the
+general section and the line "power-supplies" in the fuel-gauge node result
+from the way of implementation documented in the dt-bindings of
+rt5033-charger [8] and mfd rt5033 [9].
 
-Konrad
-> 
->>
->>>
->>>> +		pm_runtime_put(gmu->gxpd);
->>>> +		pm_runtime_put(gmu->dev);
->>>> +		dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
->>>> +	}
->>>> +err_set_opp:
->>>
->>> Generally, it is better to name the label based on what you do here. For
->>> eg: "unlock_lock:".
->> That seems to be a mixed bag all throughout the kernel, I've seen many
->> usages of err_(what went wrong)
->>
->>>
->>> Also, this function is small enough that it is better to return directly
->>> in case of error. I think that would be more readable.
->> Not really, adding the necessary cleanup steps in `if (ret)`
->> blocks would roughly double the function's size.
->>
->>>
->>>> +	mutex_unlock(&a6xx_gpu->gmu.lock);
->>>> +
->>>> +	if (!ret)
->>>> +		msm_devfreq_resume(gpu);
->>>> +
->>>> +	return ret;
->>>> +}
->>>> +
->>>> +static int a6xx_gmu_pm_suspend(struct msm_gpu *gpu)
->>>>  {
->>>>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>>  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> @@ -1720,7 +1799,40 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
->>>>  	return 0;
->>>>  }
->>>>  
->>>> -static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->>>> +static int a6xx_pm_suspend(struct msm_gpu *gpu)
->>>> +{
->>>> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
->>>> +	int i;
->>>> +
->>>> +	trace_msm_gpu_suspend(0);
->>>> +
->>>> +	msm_devfreq_suspend(gpu);
->>>> +
->>>> +	mutex_lock(&a6xx_gpu->gmu.lock);
->>>
->>> Again, is this initialized somewhere?
->>>
->>>> +
->>>> +	/* Drain the outstanding traffic on memory buses */
->>>> +	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
->>>> +
->>>> +	clk_bulk_disable_unprepare(gpu->nr_clocks, gpu->grp_clks);
->>>> +
->>>> +	pm_runtime_put_sync(gmu->gxpd);
->>>> +	dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
->>>> +	pm_runtime_put_sync(gmu->dev);
->>>> +
->>>> +	mutex_unlock(&a6xx_gpu->gmu.lock);
->>>> +
->>>> +	if (a6xx_gpu->shadow_bo)
->>>> +		for (i = 0; i < gpu->nr_rings; i++)
->>>> +			a6xx_gpu->shadow[i] = 0;
->>>> +
->>>> +	gpu->suspend_count++;
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static int a6xx_gmu_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->>>>  {
->>>>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>>  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> @@ -1739,6 +1851,12 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->>>>  	return 0;
->>>>  }
->>>>  
->>>> +static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->>>> +{
->>>> +	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER);
->>>> +	return 0;
->>>> +}
->>>> +
->>>>  static struct msm_ringbuffer *a6xx_active_ring(struct msm_gpu *gpu)
->>>>  {
->>>>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> @@ -2004,8 +2122,8 @@ static const struct adreno_gpu_funcs funcs = {
->>>>  		.set_param = adreno_set_param,
->>>>  		.hw_init = a6xx_hw_init,
->>>>  		.ucode_load = a6xx_ucode_load,
->>>> -		.pm_suspend = a6xx_pm_suspend,
->>>> -		.pm_resume = a6xx_pm_resume,
->>>> +		.pm_suspend = a6xx_gmu_pm_suspend,
->>>> +		.pm_resume = a6xx_gmu_pm_resume,
->>>>  		.recover = a6xx_recover,
->>>>  		.submit = a6xx_submit,
->>>>  		.active_ring = a6xx_active_ring,
->>>> @@ -2020,6 +2138,35 @@ static const struct adreno_gpu_funcs funcs = {
->>>>  #if defined(CONFIG_DRM_MSM_GPU_STATE)
->>>>  		.gpu_state_get = a6xx_gpu_state_get,
->>>>  		.gpu_state_put = a6xx_gpu_state_put,
->>>> +#endif
->>>> +		.create_address_space = a6xx_create_address_space,
->>>> +		.create_private_address_space = a6xx_create_private_address_space,
->>>> +		.get_rptr = a6xx_get_rptr,
->>>> +		.progress = a6xx_progress,
->>>> +	},
->>>> +	.get_timestamp = a6xx_gmu_get_timestamp,
->>>> +};
->>>> +
->>>> +static const struct adreno_gpu_funcs funcs_gmuwrapper = {
->>>> +	.base = {
->>>> +		.get_param = adreno_get_param,
->>>> +		.set_param = adreno_set_param,
->>>> +		.hw_init = a6xx_hw_init,
->>>> +		.ucode_load = a6xx_ucode_load,
->>>> +		.pm_suspend = a6xx_pm_suspend,
->>>> +		.pm_resume = a6xx_pm_resume,
->>>> +		.recover = a6xx_recover,
->>>> +		.submit = a6xx_submit,
->>>> +		.active_ring = a6xx_active_ring,
->>>> +		.irq = a6xx_irq,
->>>> +		.destroy = a6xx_destroy,
->>>> +#if defined(CONFIG_DRM_MSM_GPU_STATE)
->>>> +		.show = a6xx_show,
->>>> +#endif
->>>> +		.gpu_busy = a6xx_gpu_busy,
->>>> +#if defined(CONFIG_DRM_MSM_GPU_STATE)
->>>> +		.gpu_state_get = a6xx_gpu_state_get,
->>>> +		.gpu_state_put = a6xx_gpu_state_put,
->>>>  #endif
->>>>  		.create_address_space = a6xx_create_address_space,
->>>>  		.create_private_address_space = a6xx_create_private_address_space,
->>>> @@ -2050,15 +2197,31 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>>>  
->>>>  	adreno_gpu->registers = NULL;
->>>>  
->>>> +	/* Check if there is a GMU phandle and set it up */
->>>> +	node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
->>>> +	/* FIXME: How do we gracefully handle this? */
->>>> +	BUG_ON(!node);
->>>> +
->>>> +	adreno_gpu->gmu_is_wrapper = of_device_is_compatible(node, "qcom,adreno-gmu-wrapper");
->>>> +
->>>>  	/*
->>>>  	 * We need to know the platform type before calling into adreno_gpu_init
->>>>  	 * so that the hw_apriv flag can be correctly set. Snoop into the info
->>>>  	 * and grab the revision number
->>>>  	 */
->>>>  	info = adreno_info(config->rev);
->>>> -
->>>> -	if (info && (info->revn == 650 || info->revn == 660 ||
->>>> -			adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), info->rev)))
->>>> +	if (!info)
->>>> +		return ERR_PTR(-EINVAL);
->>>> +
->>>> +	/* Assign these early so that we can use the is_aXYZ helpers */
->>>> +	/* Numeric revision IDs (e.g. 630) */
->>>> +	adreno_gpu->revn = info->revn;
->>>> +	/* New-style ADRENO_REV()-only */
->>>> +	adreno_gpu->rev = info->rev;
->>>> +	/* Quirk data */
->>>> +	adreno_gpu->info = info;
->>>> +
->>>> +	if (adreno_is_a650(adreno_gpu) || adreno_is_a660_family(adreno_gpu))
->>>>  		adreno_gpu->base.hw_apriv = true;
->>>>  
->>>>  	a6xx_llc_slices_init(pdev, a6xx_gpu);
->>>> @@ -2069,7 +2232,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>>>  		return ERR_PTR(ret);
->>>>  	}
->>>>  
->>>> -	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
->>>> +	if (adreno_has_gmu_wrapper(adreno_gpu))
->>>> +		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_gmuwrapper, 1);
->>>> +	else
->>>> +		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
->>>>  	if (ret) {
->>>>  		a6xx_destroy(&(a6xx_gpu->base.base));
->>>>  		return ERR_PTR(ret);
->>>> @@ -2082,13 +2248,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>>>  	if (adreno_is_a618(adreno_gpu) || adreno_is_7c3(adreno_gpu))
->>>>  		priv->gpu_clamp_to_idle = true;
->>>>  
->>>> -	/* Check if there is a GMU phandle and set it up */
->>>> -	node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
->>>> -
->>>> -	/* FIXME: How do we gracefully handle this? */
->>>> -	BUG_ON(!node);
->>>> -
->>>> -	ret = a6xx_gmu_init(a6xx_gpu, node);
->>>> +	if (adreno_has_gmu_wrapper(adreno_gpu))
->>>> +		ret = a6xx_gmu_wrapper_init(a6xx_gpu, node);
->>>> +	else
->>>> +		ret = a6xx_gmu_init(a6xx_gpu, node);
->>>>  	of_node_put(node);
->>>>  	if (ret) {
->>>>  		a6xx_destroy(&(a6xx_gpu->base.base));
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>> index aa70390ee1c6..c788b06e72da 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>> @@ -76,6 +76,7 @@ int a6xx_gmu_set_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state);
->>>>  void a6xx_gmu_clear_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state);
->>>>  
->>>>  int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
->>>> +int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
->>>>  void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu);
->>>>  
->>>>  void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
->>>> index 30ecdff363e7..4e5d650578c6 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
->>>> @@ -1041,16 +1041,18 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
->>>>  	/* Get the generic state from the adreno core */
->>>>  	adreno_gpu_state_get(gpu, &a6xx_state->base);
->>>>  
->>>> -	a6xx_get_gmu_registers(gpu, a6xx_state);
->>>> +	if (!adreno_has_gmu_wrapper(adreno_gpu)) {
->>>> +		a6xx_get_gmu_registers(gpu, a6xx_state);
->>>>  
->>>> -	a6xx_state->gmu_log = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.log);
->>>> -	a6xx_state->gmu_hfi = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.hfi);
->>>> -	a6xx_state->gmu_debug = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.debug);
->>>> +		a6xx_state->gmu_log = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.log);
->>>> +		a6xx_state->gmu_hfi = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.hfi);
->>>> +		a6xx_state->gmu_debug = a6xx_snapshot_gmu_bo(a6xx_state, &a6xx_gpu->gmu.debug);
->>>>  /
->>>> -	a6xx_snapshot_gmu_hfi_history(gpu, a6xx_state);
->>>> +		a6xx_snapshot_gmu_hfi_history(gpu, a6xx_state);
->>>> +	}
->>>>  
->>>>  	/* If GX isn't on the rest of the data isn't going to be accessible */
->>>> -	if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
->>>> +	if (!adreno_has_gmu_wrapper(adreno_gpu) && !a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
->>>>  		return &a6xx_state->base;
->>>>  
->>>>  	/* Get the banks of indexed registers */
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> index 6934cee07d42..5c5901d65950 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> @@ -528,6 +528,10 @@ int adreno_load_fw(struct adreno_gpu *adreno_gpu)
->>>>  		if (!adreno_gpu->info->fw[i])
->>>>  			continue;
->>>>  
->>>> +		/* Skip loading GMU firwmare with GMU Wrapper */
->>>> +		if (adreno_has_gmu_wrapper(adreno_gpu) && i == ADRENO_FW_GMU)
->>>> +			continue;
->>>> +
->>>>  		/* Skip if the firmware has already been loaded */
->>>>  		if (adreno_gpu->fw[i])
->>>>  			continue;
->>>> @@ -1074,8 +1078,8 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>>>  	u32 speedbin;
->>>>  	int ret;
->>>>  
->>>> -	/* Only handle the core clock when GMU is not in use */
->>>> -	if (config->rev.core < 6) {
->>>> +	/* Only handle the core clock when GMU is not in use (or is absent). */
->>>> +	if (adreno_has_gmu_wrapper(adreno_gpu) || config->rev.core < 6) {
->>>>  		/*
->>>>  		 * This can only be done before devm_pm_opp_of_add_table(), or
->>>>  		 * dev_pm_opp_set_config() will WARN_ON()
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> index f62612a5c70f..ee5352bc5329 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> @@ -115,6 +115,7 @@ struct adreno_gpu {
->>>>  	 * code (a3xx_gpu.c) and stored in this common location.
->>>>  	 */
->>>>  	const unsigned int *reg_offsets;
->>>> +	bool gmu_is_wrapper;
->>>>  };
->>>>  #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
->>>>  
->>>> @@ -145,6 +146,11 @@ struct adreno_platform_config {
->>>>  
->>>>  bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2);
->>>>  
->>>> +static inline bool adreno_has_gmu_wrapper(struct adreno_gpu *gpu)
->>>> +{
->>>> +	return gpu->gmu_is_wrapper;
->>>> +}
->>>> +
->>>>  static inline bool adreno_is_a2xx(struct adreno_gpu *gpu)
->>>>  {
->>>>  	return (gpu->revn < 300);
->>>>
->>>> -- 
->>>> 2.40.1
->>>>
->>>
->>> I am still not fully onboard with the idea of gmu_wrapper node in devicetree.
->>> Aside from that, I don't see any other issue. Please check the few comments I left.
->> Thanks for your review!
->>
->> Konrad
->>>
->>> -Akhil.
->>>
+[1] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-eur-r03.dtsi#L135-L181
+[2] https://github.com/torvalds/linux/blob/v6.3/include/linux/mfd/rt5033-private.h#L211-L212
+[3] https://github.com/torvalds/linux/blob/v6.3/drivers/regulator/rt5033-regulator.c#L83
+[4] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L100
+[5] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/include/linux/power_supply.h#L173-L177
+[6] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L102
+[7] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L95
+[8] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/power/supply/richtek,rt5033-charger.yaml?h=next-20230616
+[9] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/mfd/richtek,rt5033.yaml?h=next-20230616
+
+Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
+---
+The patch is based on linux-next "next-20230616".
+
+The driver rt5033-charger was just recently added to linux-next.
+
+RESEND because I used an outdated e-mail address of Bjorn before.
+
+ .../dts/qcom/msm8916-samsung-serranove.dts    | 67 ++++++++++++++++++-
+ 1 file changed, 66 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+index 15dc246e84e2..2114d26548db 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+@@ -142,6 +142,12 @@ muic: extcon@14 {
+ 
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&muic_irq_default>;
++
++			usb_con: connector {
++				compatible = "usb-b-connector";
++				label = "micro-USB";
++				type = "micro";
++			};
+ 		};
+ 	};
+ 
+@@ -199,6 +205,15 @@ nfc@2b {
+ 			pinctrl-0 = <&nfc_default>;
+ 		};
+ 	};
++
++	battery: battery {
++		compatible = "simple-battery";
++		precharge-current-microamp = <450000>;
++		constant-charge-current-max-microamp = <1000000>;
++		charge-term-current-microamp = <150000>;
++		precharge-upper-limit-microvolt = <3500000>;
++		constant-charge-voltage-max-microvolt = <4350000>;
++	};
+ };
+ 
+ &blsp_i2c2 {
+@@ -228,7 +243,7 @@ magnetometer@2e {
+ &blsp_i2c4 {
+ 	status = "okay";
+ 
+-	battery@35 {
++	fuel-gauge@35 {
+ 		compatible = "richtek,rt5033-battery";
+ 		reg = <0x35>;
+ 
+@@ -237,6 +252,8 @@ battery@35 {
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&fg_alert_default>;
++
++		power-supplies = <&rt5033_charger>;
+ 	};
+ };
+ 
+@@ -261,6 +278,46 @@ touchscreen@20 {
+ 	};
+ };
+ 
++&blsp_i2c6 {
++	status = "okay";
++
++	pmic@34 {
++		compatible = "richtek,rt5033";
++		reg = <0x34>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <62 IRQ_TYPE_EDGE_FALLING>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&pmic_int_default>;
++
++		regulators {
++			safe_ldo_reg: SAFE_LDO {
++				regulator-name = "SAFE_LDO";
++				regulator-min-microvolt = <4900000>;
++				regulator-max-microvolt = <4900000>;
++				regulator-always-on;
++			};
++			ldo_reg: LDO {
++				regulator-name = "LDO";
++				regulator-min-microvolt = <2800000>;
++				regulator-max-microvolt = <2800000>;
++			};
++			buck_reg: BUCK {
++				regulator-name = "BUCK";
++				regulator-min-microvolt = <1200000>;
++				regulator-max-microvolt = <1200000>;
++			};
++		};
++
++		rt5033_charger: charger {
++			compatible = "richtek,rt5033-charger";
++			monitored-battery = <&battery>;
++			richtek,usb-connector = <&usb_con>;
++		};
++	};
++};
++
+ &blsp_uart2 {
+ 	status = "okay";
+ };
+@@ -387,6 +444,14 @@ nfc_i2c_default: nfc-i2c-default-state {
+ 		bias-disable;
+ 	};
+ 
++	pmic_int_default: pmic-int-default-state {
++		pins = "gpio62";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	tkey_default: tkey-default-state {
+ 		pins = "gpio98";
+ 		function = "gpio";
+-- 
+2.39.2
+
