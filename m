@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23FCD733D40
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 02:39:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D94B3733D43
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 02:44:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232118AbjFQAjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 20:39:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35336 "EHLO
+        id S229950AbjFQAoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 20:44:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232695AbjFQAjm (ORCPT
+        with ESMTP id S229667AbjFQAoE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 20:39:42 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63FA3AA2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:39:40 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f76a223ca5so1863456e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:39:40 -0700 (PDT)
+        Fri, 16 Jun 2023 20:44:04 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778C63A9B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:44:02 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b466066950so3766821fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686962379; x=1689554379;
+        d=linaro.org; s=google; t=1686962641; x=1689554641;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VC2x4FJWSiZrLeCPn46ZG1+j93fJD7lUVKQDEFrK0FA=;
-        b=CBIBfEyqNRpOh8YrirE2e7k4+/aIWs/4d6wDAcQtVY19CbM8oworR0RVksJuIQtqzN
-         EZ7yeci1b/eTQPWh2FqXrBR8kBv4mtSj1AxXF/TiSd2EEp0ax7uZawwIL7sX+jqEE4PW
-         quCEQajT2NT9ijtIOfKjPauWHExP38VcdP72CYk/5aJ2BfmcqdNLl4O5FjBqFfP2jl7d
-         mII0PVC3Y4azN6yk3LGlmDRLRFrU21A9Zk186KqOQ3pqEzCui+NbuZBnZdObOEMP6mBs
-         4pl7gd8USmwQ4p84hf+ZGyH6e15sNFT+KyrJ91xKR2Az97zV+w16ajcDZj8Io4kCz5Z0
-         q/5Q==
+        bh=9mU9/r2NP5pdyOYwI4LQnZTUP7KdrI2cN021yOGtwio=;
+        b=o3hkf4LmU9suujKu2ERmn6Gh1FpoCEhilDqUtyCUr9uFhBcl7CEtu9FlHhBfl6c9xZ
+         Fl9kN2K80JY7VpuHcpAnOmrmMD2BZuaCVMUfrNLYQb3zsVbtFDfLV/X4GDksMlFpcjub
+         OEhM91WO/H4xixVW4NXx1DPRWE6fEbNE/WjR1Y9Hw5GbWoGEg+c5Bfpk715gjvBTTqic
+         7A+qYqjDAK+/5OR/qSY6H+uVqqWZgLOKVeZ9TEG5mY08vLLeaGjr2zJPQnvt8BFA3zJf
+         e8/VUrcJKxuuRc15A5difpTpVfe+83IwPSsY+4BPe6thRD6HlQd7V4Bi92/ilt2vbymt
+         ZsaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686962379; x=1689554379;
+        d=1e100.net; s=20221208; t=1686962641; x=1689554641;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VC2x4FJWSiZrLeCPn46ZG1+j93fJD7lUVKQDEFrK0FA=;
-        b=Hy8Ioqmvnji0n2M2nLj44VouAC9vqUTHHWff36X10r5ZbzVrUK9NsK1xIhxFDl3vXf
-         QN/rPOv6PT8Rrpx8TOcMupXq3FhLzObi1TaGtiOIJvqH/Mt4GYG47BzENGffx4IxAKbI
-         yngvQbmz+vX51seguYiY6FZDEpRPqX4LPPZ3vdCajFXU8vhMjPKxZmUk1SRvN5/Ft7Xu
-         LlwKbkeYndJvohoNBAUePv2cZkBIzJXny3i0ihcz0MOrVEKDmuUUp9Ifudn0cRokCyvb
-         lfAx/8HFHCZqnEsPy7c05IUC3XTbCReAZHuGoZZXT9sI4jvE9smldAM+I2SNInC51/kA
-         PUeQ==
-X-Gm-Message-State: AC+VfDwqra2pGBMRuztOMH2WRR885jQOdtUzsfzbpgEd8PNWBdtbPP5U
-        KKmU1CFujvZhnvL5lWNWtO5qFg==
-X-Google-Smtp-Source: ACHHUZ7Rqa/PqaXfrw0QXF7elEEIGNbjqMM5XZ4t0rgfP0fN+WchgFBHQwaELP42bBuRNIzAuYiVgA==
-X-Received: by 2002:a19:e301:0:b0:4f6:2b21:ece1 with SMTP id a1-20020a19e301000000b004f62b21ece1mr2279923lfh.43.1686962379181;
-        Fri, 16 Jun 2023 17:39:39 -0700 (PDT)
+        bh=9mU9/r2NP5pdyOYwI4LQnZTUP7KdrI2cN021yOGtwio=;
+        b=Q7OAv1IMQeePfBi703xvIQTMtyjpAKV5WHa0nSOlApBc3+5rgYgz5/K4IU1lYGusv9
+         hd7k3aq5oo/6XXx78eLR3PXsD4HzsjFlaf8vwbT4fGhPNy0tCVNkK5UXRT/f6Xv09YTW
+         yKeLgfGMOhS1ZnCamRwfzwxj0zh0NY57S8ItLLm5CpPn+2ocL7sbxKrKhgNENExiUPbb
+         JkVu/ujOwvOCWnu92OCO2CNQ17fYiGRvQe9AdqiACqF0fW0M/SEAjDr8mfV3puldEyi4
+         PGH9dQ30Zlbd+5UDHFtNdl8ZqRPl2AqJw4lur+1Wusg9AQjQTD6YYTvJwiyJJ0OC5Ghq
+         VNGA==
+X-Gm-Message-State: AC+VfDyFaIG1Ga5zAOpXbT3vDUeIu3jpiIyjpUnV0tZb+08ewVI2Lj3Q
+        IxOtub3/iAWaxmIY5ZkdJ8e5ATTNlIvyr7YC8+jMZg==
+X-Google-Smtp-Source: ACHHUZ4/NJzvy9Ymi1RNhlhOYdBvrKxBA5Ui0VN9jETqQpt1BUY1v2MlEH0NcxHdO2ACnkRNIFfmnw==
+X-Received: by 2002:a05:6512:3125:b0:4f8:5864:3cb5 with SMTP id p5-20020a056512312500b004f858643cb5mr2067503lfd.13.1686962640709;
+        Fri, 16 Jun 2023 17:44:00 -0700 (PDT)
 Received: from [192.168.1.212] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id m16-20020ac24250000000b004f4cabba7ebsm3212342lfl.199.2023.06.16.17.39.38
+        by smtp.gmail.com with ESMTPSA id q16-20020ac25290000000b004f85cf6416asm147300lfm.118.2023.06.16.17.43.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 17:39:38 -0700 (PDT)
-Message-ID: <eb73ceac-4a9d-8bc0-226d-3359e547d5a0@linaro.org>
-Date:   Sat, 17 Jun 2023 03:39:37 +0300
+        Fri, 16 Jun 2023 17:44:00 -0700 (PDT)
+Message-ID: <6c91dfd9-50b1-7196-9191-c7dbf1ec4ed2@linaro.org>
+Date:   Sat, 17 Jun 2023 03:43:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v3 02/19] drm/msm/dpu: always use MSM_DP/DSI_CONTROLLER_n
+Subject: Re: [PATCH] drm/msm/adreno: Update MODULE_FIRMWARE macros
 Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
- <20230616100317.500687-3-dmitry.baryshkov@linaro.org>
- <b6junzecn74xvb5gk3tg7d442now2jw336czqcxn2uuup6cowu@w6ghvte6ivo3>
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Juerg Haefliger <juerg.haefliger@canonical.com>
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        airlied@gmail.com, daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
+        konrad.dybcio@linaro.org, ribalda@chromium.org,
+        joel@joelfernandes.org
+References: <20230616122815.1037425-1-juerg.haefliger@canonical.com>
+ <yl7qxypdzlzwmmp3b43vz5xo6jxey4zcpdxurcvfzujxrawz36@lneajulwoy4k>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <b6junzecn74xvb5gk3tg7d442now2jw336czqcxn2uuup6cowu@w6ghvte6ivo3>
+In-Reply-To: <yl7qxypdzlzwmmp3b43vz5xo6jxey4zcpdxurcvfzujxrawz36@lneajulwoy4k>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,40 +81,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/06/2023 01:03, Marijn Suijten wrote:
-> On 2023-06-16 13:03:00, Dmitry Baryshkov wrote:
-> <snip>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->> index 8da424eaee6a..8fa9d83a539d 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->> @@ -169,11 +169,11 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
->>   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
->> -	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, 0, 24, INTF_SC7280_MASK,
->> +	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7280_MASK,
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
->>   			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
+On 16/06/2023 18:55, Akhil P Oommen wrote:
+> On Fri, Jun 16, 2023 at 02:28:15PM +0200, Juerg Haefliger wrote:
+>>
+>> Add missing MODULE_FIRMWARE macros and remove some for firmwares that
+>> the driver no longer references.
+>>
+>> Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/adreno_device.c | 23 ++++++++++++++++++----
+>>   1 file changed, 19 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> index 8cff86e9d35c..9f70d7c1a72a 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> @@ -364,17 +364,32 @@ MODULE_FIRMWARE("qcom/a330_pm4.fw");
+>>   MODULE_FIRMWARE("qcom/a330_pfp.fw");
+>>   MODULE_FIRMWARE("qcom/a420_pm4.fw");
+>>   MODULE_FIRMWARE("qcom/a420_pfp.fw");
+>> +MODULE_FIRMWARE("qcom/a506_zap.mdt");
+>> +MODULE_FIRMWARE("qcom/a508_zap.mdt");
+>> +MODULE_FIRMWARE("qcom/a512_zap.mdt");
+>>   MODULE_FIRMWARE("qcom/a530_pm4.fw");
+>>   MODULE_FIRMWARE("qcom/a530_pfp.fw");
+>>   MODULE_FIRMWARE("qcom/a530v3_gpmu.fw2");
+>>   MODULE_FIRMWARE("qcom/a530_zap.mdt");
+>> -MODULE_FIRMWARE("qcom/a530_zap.b00");
+>> -MODULE_FIRMWARE("qcom/a530_zap.b01");
+>> -MODULE_FIRMWARE("qcom/a530_zap.b02");
+> Why are these not required when "qcom/a530_zap.mdt" is present?
 > 
-> This doesn't apply cleanly on top of your interupt rework series: do you
-> still intend to land that?
+> mdt & b0* binaries are different partitions of the same secure
+> firmware. Even though we specify only the .mdt file here, the PIL driver
+> will load the *.b0* file automatically. OTOH, "*.mbn" is a standalone
+> unified binary format.
+> 
+> If the requirement is to ensure that all necessary firmwares are part of
+> your distribution, you should include the *.b0* files too here.
 
-Yes, but most likely after this series. If everything goes well, I want 
-to land this series, DSI DSC docs and last minute fixes to 6.5, 
-everything else goes into 6.6 (as its review was not started).
+I'd say, we should drop all zap files from this list. Linux-firmware 
+does not provide files with such names. The zap file name depends on the 
+SoC and the platform name.
+
+Juerg, could you please split the patch into two parts:
+- pfp/pm4/sqe firmware names (which can be merged pretty quickly, as 
+there is no controversy) and zap files changes (after we finish 
+discussion in this thread).
 
 > 
->> -	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x2c4, INTF_DSI, 1, 24, INTF_SC7280_MASK,
->> +	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x2c4, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7280_MASK,
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
->>   			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
+> -Akhil
 > 
-> <snip, same for the other catalogs>
-> 
-> - Marijn
+>> +MODULE_FIRMWARE("qcom/a540_gpmu.fw2");
+>> +MODULE_FIRMWARE("qcom/a540_zap.mdt");
+>> +MODULE_FIRMWARE("qcom/a615_zap.mdt");
+>>   MODULE_FIRMWARE("qcom/a619_gmu.bin");
+>>   MODULE_FIRMWARE("qcom/a630_sqe.fw");
+>>   MODULE_FIRMWARE("qcom/a630_gmu.bin");
+>> -MODULE_FIRMWARE("qcom/a630_zap.mbn");
+>> +MODULE_FIRMWARE("qcom/a630_zap.mdt");
+>> +MODULE_FIRMWARE("qcom/a640_gmu.bin");
+>> +MODULE_FIRMWARE("qcom/a640_zap.mdt");
+>> +MODULE_FIRMWARE("qcom/a650_gmu.bin");
+>> +MODULE_FIRMWARE("qcom/a650_sqe.fw");
+>> +MODULE_FIRMWARE("qcom/a650_zap.mdt");
+>> +MODULE_FIRMWARE("qcom/a660_gmu.bin");
+>> +MODULE_FIRMWARE("qcom/a660_sqe.fw");
+>> +MODULE_FIRMWARE("qcom/a660_zap.mdt");
+>> +MODULE_FIRMWARE("qcom/leia_pfp_470.fw");
+>> +MODULE_FIRMWARE("qcom/leia_pm4_470.fw");
+>> +MODULE_FIRMWARE("qcom/yamato_pfp.fw");
+>> +MODULE_FIRMWARE("qcom/yamato_pm4.fw");
+>>   
+>>   static inline bool _rev_match(uint8_t entry, uint8_t id)
+>>   {
+>> -- 
+>> 2.37.2
+>>
 
 -- 
 With best wishes
