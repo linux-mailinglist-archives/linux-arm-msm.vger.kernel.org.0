@@ -2,35 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46B927342F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 20:14:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 163E5734301
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 20:25:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345775AbjFQSOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 14:14:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43138 "EHLO
+        id S232828AbjFQSZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 14:25:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjFQSOw (ORCPT
+        with ESMTP id S229821AbjFQSZ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 14:14:52 -0400
+        Sat, 17 Jun 2023 14:25:28 -0400
 Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAE4D1BC9;
-        Sat, 17 Jun 2023 11:14:48 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7FC81988;
+        Sat, 17 Jun 2023 11:25:27 -0700 (PDT)
 Received: from authenticated-user (box.trvn.ru [194.87.146.52])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 830CE403BF;
-        Sat, 17 Jun 2023 23:14:45 +0500 (+05)
+        by box.trvn.ru (Postfix) with ESMTPSA id C80E1403BF;
+        Sat, 17 Jun 2023 23:25:23 +0500 (+05)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1687025685; bh=bXvOEqjNtGU0blHiRWmamyy/+/Nx8cAiMiBZhK4j2Q4=;
+        t=1687026325; bh=NVr5zqTY1mDtHMB78oPRbydthVKLtEeaG30EM0hMmOI=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=2YyVVXMwL4tWNL5ThDmaUx78P2sFl4Ffe4xYxRaOC2t2hqCvHTY8iRAQKHH1zoChi
-         sjtobAo/9gBw+XQhx6t4qpRNLR0WdOVdVRunHDtFixGTCL9DaLrAlhVGOHfWLq8DAp
-         UEpt+T5o5KbF9hCl2QQcTfVyuxyZjD6xAIBFYBBUYDKDOQTDYQvut6iFFu8rI+7xiP
-         n8E4PaFtACPFEHil9ikkt84pDDBmSACM2aWeld4Fhv6Gn4B0x1ujY2xUHAjQeijO15
-         n/Ijt6IebcVrSozjZeM4MN98ZFjG4HLmRpM3xuP158Jukk18eP5MCSpzbHUwq3n5Dn
-         IJhjDKm5qToTg==
+        b=kbwrF+wCekEYweVgQp3Ra4I4bpNl6JBIlxp53BktyjKApgqTjnm4D+zeYW2G8zoPa
+         vTVrNGow9zSXolQsWoRvRYTZDVwq33LbSwAN4NhSZgIzCM4vAoXf8Eoqi/Y3q+4UvE
+         q1JUBYb5MGdt6kxUUObXZ/Vglp/fsXQAm66TeT/7ZiW5Nw8/WN//TypmPQJqMRtMRN
+         /4DB2ESs8x8YJ0DjIAmjDWEoDIlA2+/OqI3jCHqKh2Mzld5jxi/xmsH+1OU/ADLj9n
+         clnF0S7F9TbY4OZlQgbYwV5Jx67XdeFpbqY51GYYrcWkTKGFmTcMID/BzOLFTKYDJX
+         5rSYAGCJycvdw==
 MIME-Version: 1.0
-Date:   Sat, 17 Jun 2023 23:14:43 +0500
+Date:   Sat, 17 Jun 2023 23:25:17 +0500
 From:   Nikita Travkin <nikita@trvn.ru>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -43,12 +43,11 @@ Cc:     Andy Gross <agross@kernel.org>,
         Stephan Gerhold <stephan@gerhold.net>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/15] arm64: dts: qcom: msm8916-l8150: correct light
- sensor VDDIO supply
-In-Reply-To: <20230617171541.286957-2-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 01/15] arm64: dts: qcom: msm8916-gt5: drop incorrect
+ accelerometer interrupt-names
+In-Reply-To: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
 References: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
- <20230617171541.286957-2-krzysztof.kozlowski@linaro.org>
-Message-ID: <7f1f9053cbd84dbc8aa060b6b191a497@trvn.ru>
+Message-ID: <5ee33fb02f4e411d21aaf356230dd496@trvn.ru>
 X-Sender: nikita@trvn.ru
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,31 +62,29 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Krzysztof Kozlowski писал(а) 17.06.2023 22:15:
-> liteon,ltr559 light sensor takes VDDIO, not VIO, supply:
+> st,lis2hh12 accelerometer binding does not allow interrupt-names:
 > 
->   msm8916-longcheer-l8150.dtb: light-sensor@23: 'vio-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
+>   msm8916-samsung-gt58.dtb: accelerometer@1d: 'interrupt-names' does not match any of the regexes: 'pinctrl-[0-9]+'
 > 
-> Fixes: 3016af34ef8d ("arm64: dts: qcom: msm8916-longcheer-l8150: Add light and proximity sensor")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Oops, thanks for noticing!
+This indeed seems redundant... Thanks!
 
 Reviewed-by: Nikita Travkin <nikita@trvn.ru>
 
 > ---
->  arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-> index 97262b8519b3..3892ad4f639a 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-> @@ -165,7 +165,7 @@ light-sensor@23 {
->  		pinctrl-0 = <&light_int_default>;
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
+> index 7943bb619116..54d648972d35 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
+> @@ -101,7 +101,6 @@ accelerometer@1d {
 >  
->  		vdd-supply = <&pm8916_l17>;
-> -		vio-supply = <&pm8916_l6>;
-> +		vddio-supply = <&pm8916_l6>;
->  	};
+>  		interrupt-parent = <&tlmm>;
+>  		interrupts = <115 IRQ_TYPE_LEVEL_HIGH>;
+> -		interrupt-names = "INT1";
 >  
->  	gyroscope@68 {
+>  		st,drdy-int-pin = <1>;
+>  		mount-matrix = "0", "1", "0",
