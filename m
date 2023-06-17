@@ -2,250 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96B50733D2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 02:30:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AA63733D32
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 02:35:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229924AbjFQAaA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jun 2023 20:30:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59998 "EHLO
+        id S1345955AbjFQAfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jun 2023 20:35:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjFQA37 (ORCPT
+        with ESMTP id S1345726AbjFQAfq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jun 2023 20:29:59 -0400
-Received: from sonic309-26.consmr.mail.ir2.yahoo.com (sonic309-26.consmr.mail.ir2.yahoo.com [77.238.179.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9B03A89
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:29:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1686961796; bh=3ubr12IgCaxiPc2P8P9TgUxEmc8Jyb9OzmeOqzumtgk=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=M4Updjdi/OxKbtaffuNH0NEQsq2dfOH3jBxf+nDZMVzh3GGJus6BAo3PD4VGUzZIUsk8dzhmumQpsthkSMFgIUySZQ5Oy10wQLb8Yc64GNPKWqLyb3FyHZBohgi9PPHHw0Qslg/1cyt6yMr4LJTlPBAtxFKra17viSo27OMYMLRXrv+O+uK6l5y8TqjKKQlag63Gto1MaOGiCutsj4B/SRs5l/QuLRFqSVxZXLjR2GBrE7ThuV8aHw/fXAP6oKhAe852cPzciit/kHMNnGoH6XnktlCLzfgqugCyYXTy0HvfdWbuXV0rks3EF1r3HNoIudujY0wGtfWkgYTUoR79xQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1686961796; bh=MH5EA0KMdDcFFmZklUynEhNEW+WykT6rpUiuQIMgOS9=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=HyAHiozHGMTZDiDgduuyEbzkitm2Ac+++dCwWPUySoSvCjgqeCWqJ7ZHZNw5/mzhuxpqfEr0/W/nD91+2bxlHyfJ9aUScOBVCn6yzU4ncMkSsIXmWOv1Bd3NNG5ccS5SphMf3eXmbix7E77MFIj6df2L8b+QipOJcF0WbmUd6/oRwAyebU6UoT9H2hYu8hfag32aIgabZuy1q4sIC7XUThBk/8iPx9iqtaPjFt/omRjDSRYukJybQ5Y10Q4lqcC459egjUMJ+T/01WBsEZWvoRK/JCp3bv0/puqr7G+be+JnDR0zScccGSMEaYhcY33iv/YRfnhKaje5uZ2EwCIsMg==
-X-YMail-OSG: mN13q3sVM1keDcvr7VW0xFSaD4WqKY.6_NqMnAy7IeEb54cIHb0m.w826wvgL6R
- S7PW.GFHt16fIeBCoKFLlY6WkLKNqSVSls1AtZL.1ZnghE7B3Jf0pqUHOIFEM0RFYToddOdduNzs
- Y9e1A0jenAGXyYPLFiMx0JKphCjhUGWqaQf__4i6WWJeWolVafO8ugECPjWPqn7WWs6FgZrUHBP3
- T0xemv8oyCHc4IHeYQD6p0W75JpnLjxVxUUSAYIXXbM4v_sFIxoD2WIRgNcndmSjj_tpTHEt1yFe
- 3qTILi9zWmNzHlKv7bFCsc32oXsKAdemCl9HZdCLyL4cO9r0culLLLH58JU5YdGcmgvWDU0n.ksS
- VQT9VHI_QLoqc_dQ9_j0ZYCMo8r5iTzRa92JMfewl420rlMkdTMvaG3HPUmNtXem0sa7U7KlDocO
- 789gAmrLeSav_RIlOMoOOyi4ncf2JUoefj3XKfuNU_WvlxuTpjJusVlTjLy__5K5Dlj_4VY62NDO
- otQgW4KZwig8BnOFt07mCEumsJd52EF4Lw_OBpHeXULKvNqVkjMSHCwLqv9YUTsdLqD09BJ6oyq2
- oI.GZ1Vn.LYoJ0Cc8RIemsvmTJr_X1lFzAHzhdXzTazfBi6NGYcCogOTu9Yyt4SfGeVeqwq0lvXS
- kZnpQGeBoJSVv4ROtfwwMneeKFFNQ2avayUcreJjl7jyXZuq4O1qKeoK7CLUpvGGgK9Myo3Q1AUQ
- f0w.Ye.ZZ1CRH2i9zVEShFgwZaGpUFmEyfeIXNTg5NWu8_fqN0GEFO85aAuZVyseRC2aOX7ljF0y
- rA6Dte_363jC5kVMbOfM5YjAGBwmDg3YRcr9RFvd_6QQQpv.jvCdj_Ac1TIHcB31ixbeniojQc5p
- 6K.3yg_.JCSpQ5sN8SYCDPgSjkD1hUWnNm7Wa0FE3anb2DvYNMB84_AGT2aKLpYim2tjjsM28HO7
- JoyAWz1RsU6uCHjfUEwrFuh_fx3F8eZR3avAqhPTaSEK3oaz.Y4pB_ERI5vOcQDBnW7w7nn3N7Ft
- 3ZjGi.I6sBNBQqnNUQ58fYrZqfW8rq5KVNL9jMOt7kVuFRcvcMFhVkMBBUST38WWeMVw2IcfeTit
- MEoz3THhM18sLKjjmt4rZ6XfengcOP0rgRpIi5umgOCsZ.LGaYHNAh_Bf5CV21yT6_F4qQUbDrca
- EpdqNJbO0umP07rDQEQ9vwMtNDcoyZy0rn0jkineORZSASP0DRscThl3YcG_XD3ggJZKKcqti3fn
- 9_rE5EOjUCmHhdNQQsRF1lIMTtm0j6B0LDu6ZPzRH4ENCNlq_a7zq0XCU8cFoGUoOWs7bTpeak4g
- N7Whj.bO5bzaVGSfRZeR.INgOr5gMbrzYjoeRdGlPHUbrKuB_dswbQiSee5Pk5Zb3fBaY3WtkK8e
- p4oGIPJjzuCAjPv55hAdxb4LM0ljSzZB0CPf9yJYEm5fRRnmiWwt7kz_j7LJVnrK.L5h_.C2lwBi
- HW.i.q4dEBwdLU.4oyBhiWSFM7gK.etrQSJ3OisJSFQI3jo090uUKNrgqRPUvWhrxHQ5c8SXU10w
- osiEStVZZ6LKa99ptOVV3zmGkJx.WD1q2E7v3UYdXcf7z3tBxqJHr7vOoqgxXO1sTcWywwofBbV_
- .UMwN0Ebn9NdwwwFYBGx7bj943zhF60lQqXfuBXgaPUqNpWdFJEFUnp8Pxov7Yb9BrNUMPR666rc
- l8V2cpj2qJ_WxKN99Q4624oRStpoiomYIDCnxLdr6Zwb.fIuqDQPI3ZBrlGpYHVOWXZGdA3Aqj.b
- Y00ZpYqdCKYV.VpHuMin7ALSwdGJvFZowiZ0F6O_tC3nZSR.TtrSvztPjHVGjJWrTy0Kxobw1ENy
- uGYoYnO30Wifu5gJailc2gnxphEU.KWwooJApGRIsHd3MOMXmF3ayJN5H1_qJ0orTOoBemH_QQxw
- ydMAzwLghF3Jnfp5VUWkCHXBzTM.CtAc_6WLINbF6ooZpPlLiw_S_kjME3bqZKLvCczWk7pRIacw
- R.tbp2Jc0rPmE2doXZzPqkmLOs8XH2Etllup7xDxkLZ2YZU8NjtN7FX9SbY0ckmpk2nMtJTNXByT
- vqUZ4g5tWiiFhgR5tgDjOcGxDMO9zFRZHWSB9rPwOhkvPoOHdkZ8FCov0VVLFQL1GSiZkQDjCTi5
- _M8fd_zA1LttfTOi6ewcSahLBX3t7hbbHYuOav_tMi6hj.qrNoq2WhplOrsWBzgExJMgf8Fisej4
- p5ZGUCBwbE3GthfHETSSN7hGfE1KqH3vsejcU8ocTyLAw2tIKtrQuooSC1WAul65N_KAhXiV51ZI
- n5GvVQ1Mc5gXWXMUIfQVZNiGRkgDJ0Qi1Yh2OAQ_r.L1Abg--
-X-Sonic-MF: <jahau@rocketmail.com>
-X-Sonic-ID: affb121a-d648-453f-a0ed-9ac74f21d891
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.ir2.yahoo.com with HTTP; Sat, 17 Jun 2023 00:29:56 +0000
-Received: by hermes--production-ir2-7867f454fc-8nkq6 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID e11accc94c1b3a6c23a5a72d5ce29def;
-          Sat, 17 Jun 2023 00:29:54 +0000 (UTC)
-From:   Jakob Hauser <jahau@rocketmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Raymond Hackley <raymondhackley@protonmail.com>,
-        Henrik Grimler <henrik@grimler.se>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Jakob Hauser <jahau@rocketmail.com>
-Subject: [PATCH RESEND] arm64: dts: qcom: msm8916-samsung-serranove: Add RT5033 PMIC with charger
-Date:   Sat, 17 Jun 2023 02:29:34 +0200
-Message-Id: <20230617002934.39408-1-jahau@rocketmail.com>
-X-Mailer: git-send-email 2.39.2
+        Fri, 16 Jun 2023 20:35:46 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0673C3A9F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:35:45 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f76a223ca5so1860607e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jun 2023 17:35:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686962143; x=1689554143;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a2TH6omPv0iR522UdJK1kb0tXN035zPLb4qVh0Ld1XM=;
+        b=XBgu0GGV5zx3DH/PFgGeauOi9aSUFK2FRC13k3AMP8+X/P12cZk+wm6YoMhVKOBCR5
+         5s2oIUc37wMUFAsOPg1G8vB/2pf84dufOEBSmakgTTy8dkWjVg2/OSLMG8SsZkoufsoc
+         E4qDbX/caGJnc4f0pHKvJflpJNCMeyBuKWMuu85xmBFBQgWjJgwXwnwyNIcckds+wFI+
+         Kk83MMtzte6Bph/LkYyE9+jzkr0rBAGV0Kn3pin2BP1vlvXg+E7aREHDz1Gc1oo+CXZ2
+         ID6Yqs0ORZNjBPGAT96zAUZXfVMW3NN2RUKG2RxIPh1kMa0nfWSEyKUkLrM1XsQRmZj4
+         xe+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686962143; x=1689554143;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a2TH6omPv0iR522UdJK1kb0tXN035zPLb4qVh0Ld1XM=;
+        b=LJUX/3wHNNjcZ0jCYxdqXNjAwbhDm4DZxHOlmvaEP8hANzEgWN2Jf1UkozyNTTjvm7
+         8gPOadzLVNmfDRvB7N6vFS0neUuxr7PPYTsO2hK1Y+LxXuG/TVfVAQY1zGgb9c5E2Ic4
+         ANpndOAOSOtbgtNus/CVsr597oSAy8XnpT9yNWRKFUELjNFyo8ZYi/vt3YZbTwa+PJH1
+         aCoMASLSqYaOrDXJTY9iCAQVAQilaQSheiH1xTZ7p6osyeTul8Tr+A14KMCK/RnKnl1X
+         s3+d1+Gt022GRtILF3KYwsWowUhp5IU6vyOZT4+P1IKMBTjJp7lGd92GMIapVZ7YiDjN
+         ol3Q==
+X-Gm-Message-State: AC+VfDy6XGnjeyK+nHyGzfqAqU3IL5hy6B+bHoazSOawQEgbPOkVNFn5
+        ljr4yedwrXwHojVUpD0+qCSfvw==
+X-Google-Smtp-Source: ACHHUZ7EGZ2ATBREBepfd/b8cQfB8NRUTbMYq7wOnNB6H7VrGl6KhtWaW23waE97DghoMPtMS0sdRQ==
+X-Received: by 2002:a19:e01e:0:b0:4f8:4348:e000 with SMTP id x30-20020a19e01e000000b004f84348e000mr2530942lfg.13.1686962143229;
+        Fri, 16 Jun 2023 17:35:43 -0700 (PDT)
+Received: from [192.168.1.212] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y18-20020ac255b2000000b004eb12850c40sm3223810lfg.14.2023.06.16.17.35.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jun 2023 17:35:42 -0700 (PDT)
+Message-ID: <81a5e241-ec82-7414-8752-4ce3cb084959@linaro.org>
+Date:   Sat, 17 Jun 2023 03:35:42 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/3] drm/msm/dpu: Set DATABUS_WIDEN on command mode
+ encoders
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+ <20230525-add-widebus-support-v1-2-c7069f2efca1@quicinc.com>
+ <c74c9e0e-d059-f0e3-4350-03089c37131a@linaro.org>
+ <cce68370-3fd9-4c9a-258e-af0d5d057fda@quicinc.com>
+ <n2c5qlujxhbbj2aqlgj7fetzoteood5h4hmbwt4mapi77xlvmt@bpourzaideti>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <n2c5qlujxhbbj2aqlgj7fetzoteood5h4hmbwt4mapi77xlvmt@bpourzaideti>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-References: <20230617002934.39408-1-jahau.ref@rocketmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For the regulators, apply the same settings as in the downstream
-devicetree [1], including the "regulator-always-on" for the SAFE_LDO.
-For the voltage of SAFE_LDO, however, there is only one voltage of 4.9 V
-available in the mainline driver [2][3].
+On 17/06/2023 00:54, Marijn Suijten wrote:
+> On 2023-06-16 14:18:39, Abhinav Kumar wrote:
+>>
+>>
+>> On 6/14/2023 12:56 AM, Dmitry Baryshkov wrote:
+>>> On 14/06/2023 04:57, Jessica Zhang wrote:
+>>>> Add a DPU INTF op to set the DATABUS_WIDEN register to enable the
+>>>> databus-widen mode datapath.
+>>>>
+>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 12 ++++++++++++
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  3 +++
+>>>>    3 files changed, 18 insertions(+)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>>> index b856c6286c85..124ba96bebda 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>>> @@ -70,6 +70,9 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+>>>>        if (intf_cfg.dsc != 0 && phys_enc->hw_intf->ops.enable_compression)
+>>>>            phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
+>>>> +
+>>>> +    if (phys_enc->hw_intf->ops.enable_widebus)
+>>>> +        phys_enc->hw_intf->ops.enable_widebus(phys_enc->hw_intf);
+>>>
+>>> No. Please provide a single function which takes necessary
+>>> configuration, including compression and wide_bus_enable.
+>>>
+>>
+>> There are two ways to look at this. Your point is coming from the
+>> perspective that its programming the same register but just a different
+>> bit. But that will also make it a bit confusing.
 
-The values of the battery data evolve from following sources:
-- precharge current: 450 mA corresponds to the default value of the chip. It
-  doesn't get changed by the downstream Android driver. Therefore let's stick
-  to this value.
-- constant charge current: The 1000 mA are taken from the downstream devicetree
-  of the serranove battery. It's not easy to spot. The value is in the line
-  "input_current_limit" [4]. The rows are according to the power supply type,
-  the 4th value stands for "main supply" [5]. That's the value used by the
-  Android driver when a charging cable is plugged into the device.
-- charge termination current: In the downstream devicetree of the battery
-  that's the line "full_check_current_1st", which contains the 150 mA [6].
-- precharge voltage: This one doesn't get set in the downstream Android driver.
-  The chip's default is 2.8 V. That seemed too low to have a notable effect of
-  handling the battery gentle. The chosen value of 3.5 V is a bit arbitrary
-  and possibly rather high. As the device is already several years old and
-  therefore most batteries too, a value on the safe side seems reasonable.
-- constant charge voltage: The value of 4.35 V is set in the line
-  "chg_float_voltage" of the downstream battery devicetree [7].
+My point is to have a high-level function that configures the INTF for 
+the CMD mode. This way it can take a structure with necessary 
+configuration bits.
 
-The "connector" sub-node in the extcon node, the "battery" node in the
-general section and the line "power-supplies" in the fuel-gauge node result
-from the way of implementation documented in the dt-bindings of
-rt5033-charger [8] and mfd rt5033 [9].
+>>
+>> So lets say the function is called intf_cfg2_xxx(..., bool widebus, bool
+>> data_compress)
+>>
+>> Now for the caller who wants to just enable widebus this will be
+>>
+>> intf_cfg2_xxx(....., true, false)
+>>
+>> if we want to do both
+>>
+>> intf_cfg2_xxx(...., true, true)
+>>
+>> the last one where we want to do just data_compress(highly unlikely and
+>> not recommended)
+>>
+>> intf_cfg2_xxx(...., false, true)
+>>
+>> Now someone looking at the code will have to go and find out what each
+>> bool is.
+>>
+>> Whereas with separate ops, its kind of implicit.
+> 
+> That's why you never pass bools as function argument (edge-case if it is
+> the only argument, and its meaning becomes clear from the function
+> name).  Use enumerations anywhere else.
+> 
+> - Marijn
+> 
+>>
+>> For that reason, I dont think this patch is bad at all.
 
-[1] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-eur-r03.dtsi#L135-L181
-[2] https://github.com/torvalds/linux/blob/v6.3/include/linux/mfd/rt5033-private.h#L211-L212
-[3] https://github.com/torvalds/linux/blob/v6.3/drivers/regulator/rt5033-regulator.c#L83
-[4] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L100
-[5] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/include/linux/power_supply.h#L173-L177
-[6] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L102
-[7] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L95
-[8] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/power/supply/richtek,rt5033-charger.yaml?h=next-20230616
-[9] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/mfd/richtek,rt5033.yaml?h=next-20230616
-
-Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
----
-The patch is based on linux-next "next-20230616".
-
-The driver rt5033-charger was just recently added to linux-next.
-
-RESEND because I used an outdated e-mail address of Bjorn before.
-
- .../dts/qcom/msm8916-samsung-serranove.dts    | 67 ++++++++++++++++++-
- 1 file changed, 66 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-index 15dc246e84e2..2114d26548db 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-@@ -142,6 +142,12 @@ muic: extcon@14 {
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&muic_irq_default>;
-+
-+			usb_con: connector {
-+				compatible = "usb-b-connector";
-+				label = "micro-USB";
-+				type = "micro";
-+			};
- 		};
- 	};
- 
-@@ -199,6 +205,15 @@ nfc@2b {
- 			pinctrl-0 = <&nfc_default>;
- 		};
- 	};
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+		precharge-current-microamp = <450000>;
-+		constant-charge-current-max-microamp = <1000000>;
-+		charge-term-current-microamp = <150000>;
-+		precharge-upper-limit-microvolt = <3500000>;
-+		constant-charge-voltage-max-microvolt = <4350000>;
-+	};
- };
- 
- &blsp_i2c2 {
-@@ -228,7 +243,7 @@ magnetometer@2e {
- &blsp_i2c4 {
- 	status = "okay";
- 
--	battery@35 {
-+	fuel-gauge@35 {
- 		compatible = "richtek,rt5033-battery";
- 		reg = <0x35>;
- 
-@@ -237,6 +252,8 @@ battery@35 {
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&fg_alert_default>;
-+
-+		power-supplies = <&rt5033_charger>;
- 	};
- };
- 
-@@ -261,6 +278,46 @@ touchscreen@20 {
- 	};
- };
- 
-+&blsp_i2c6 {
-+	status = "okay";
-+
-+	pmic@34 {
-+		compatible = "richtek,rt5033";
-+		reg = <0x34>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <62 IRQ_TYPE_EDGE_FALLING>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&pmic_int_default>;
-+
-+		regulators {
-+			safe_ldo_reg: SAFE_LDO {
-+				regulator-name = "SAFE_LDO";
-+				regulator-min-microvolt = <4900000>;
-+				regulator-max-microvolt = <4900000>;
-+				regulator-always-on;
-+			};
-+			ldo_reg: LDO {
-+				regulator-name = "LDO";
-+				regulator-min-microvolt = <2800000>;
-+				regulator-max-microvolt = <2800000>;
-+			};
-+			buck_reg: BUCK {
-+				regulator-name = "BUCK";
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <1200000>;
-+			};
-+		};
-+
-+		rt5033_charger: charger {
-+			compatible = "richtek,rt5033-charger";
-+			monitored-battery = <&battery>;
-+			richtek,usb-connector = <&usb_con>;
-+		};
-+	};
-+};
-+
- &blsp_uart2 {
- 	status = "okay";
- };
-@@ -387,6 +444,14 @@ nfc_i2c_default: nfc-i2c-default-state {
- 		bias-disable;
- 	};
- 
-+	pmic_int_default: pmic-int-default-state {
-+		pins = "gpio62";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	tkey_default: tkey-default-state {
- 		pins = "gpio98";
- 		function = "gpio";
 -- 
-2.39.2
+With best wishes
+Dmitry
 
