@@ -2,58 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 163E5734301
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 20:25:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B4AD73434E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 21:24:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232828AbjFQSZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 14:25:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45544 "EHLO
+        id S232373AbjFQTYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 15:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbjFQSZ2 (ORCPT
+        with ESMTP id S231984AbjFQTY3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 14:25:28 -0400
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7FC81988;
-        Sat, 17 Jun 2023 11:25:27 -0700 (PDT)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id C80E1403BF;
-        Sat, 17 Jun 2023 23:25:23 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1687026325; bh=NVr5zqTY1mDtHMB78oPRbydthVKLtEeaG30EM0hMmOI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=kbwrF+wCekEYweVgQp3Ra4I4bpNl6JBIlxp53BktyjKApgqTjnm4D+zeYW2G8zoPa
-         vTVrNGow9zSXolQsWoRvRYTZDVwq33LbSwAN4NhSZgIzCM4vAoXf8Eoqi/Y3q+4UvE
-         q1JUBYb5MGdt6kxUUObXZ/Vglp/fsXQAm66TeT/7ZiW5Nw8/WN//TypmPQJqMRtMRN
-         /4DB2ESs8x8YJ0DjIAmjDWEoDIlA2+/OqI3jCHqKh2Mzld5jxi/xmsH+1OU/ADLj9n
-         clnF0S7F9TbY4OZlQgbYwV5Jx67XdeFpbqY51GYYrcWkTKGFmTcMID/BzOLFTKYDJX
-         5rSYAGCJycvdw==
+        Sat, 17 Jun 2023 15:24:29 -0400
+Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C554A1BD6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 12:24:26 -0700 (PDT)
+Received: by mail-ua1-x932.google.com with SMTP id a1e0cc1a2514c-786e637f06dso669438241.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 12:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687029866; x=1689621866;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CAVqTNFm1Ko/hSDeJVRLXQ4E4KG1rIEAdrc8bWfuH9M=;
+        b=lVG2S5Xx6tFg0dg4z6KHuNJpv5zw9bfbJORZYuLnU4hzhlKRIQMYa9+jW4VwKMjoaO
+         qVXcYgejWNww7bCA45NVLUicUCOag7vOWx4axAvC3r0pbruDxES/YNnjXI+QwZwW1mTv
+         SyH7G8xa0wD/g0OuGWAkTmKwifbZPSjh5IRffYshgeUS6lM7tjjCo3SAYf8O+aYKxVvL
+         VWyQ4j75TLZdCGdAUClkkdPqJkoHzx5InuSk/W/qrJa5VCwGhmGMI9uxpmnqryyjnbMr
+         +v2lv4iKCLbN3Y/76bFeU+uf6QlEzv4E0yMkRS1fPH3BRxvk/4aWxSrJrRQQHYBoHFmX
+         cQqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687029866; x=1689621866;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CAVqTNFm1Ko/hSDeJVRLXQ4E4KG1rIEAdrc8bWfuH9M=;
+        b=RIOSfIX+6pUxezZXKFQ7e5qRxd3PW7i1bT9383HpVYT+XOvp7+0y7G/2d+Z/bvFM8S
+         n10BqRbt5dof3shZivymDDcQda1YJhw8i1BTQbyb3pbiv9He65aZ/Ao2SYA2HYtJjcXm
+         hzsAOBTF/n+RfQK7owVZtrMBB8P9lpQM8fdFZCVufzf4JFsFavxaVSOTO+2Z5IeeXteO
+         x3EPq+XT3QXl2ngRlCTyxV9yg/uO0dBp20+oW50kgEAgw67OjrNlGOmu18eSA9oxFjFK
+         NaWkLadoMzKdkQw4ZWQUeozC5i09SaIXeQLm0IWLbHTOHea28QsUfgGu0MFk1+mAVK9q
+         ltKA==
+X-Gm-Message-State: AC+VfDwBtfk6PYCz1SrC8GV/MN5G5IxPxQFkZFj2ZjjEHr9gP0P+bv5l
+        pdZgu83ybnLVw0GqKmEqYwe91ecnQOcddYRUTcaDfw==
+X-Google-Smtp-Source: ACHHUZ6T2y5qSbWChreVWtXuHv0D3Y2Yra3f3svS/wTGHSpGOvnjNQZNnXYhK2mtJC9tcD4ulS5TUIribjNZnkuC8nQ=
+X-Received: by 2002:a67:fbd8:0:b0:43f:57c5:3eca with SMTP id
+ o24-20020a67fbd8000000b0043f57c53ecamr824940vsr.35.1687029865896; Sat, 17 Jun
+ 2023 12:24:25 -0700 (PDT)
 MIME-Version: 1.0
-Date:   Sat, 17 Jun 2023 23:25:17 +0500
-From:   Nikita Travkin <nikita@trvn.ru>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <20230615121419.175862-1-brgl@bgdev.pl> <20230617001644.4e093326@kernel.org>
+In-Reply-To: <20230617001644.4e093326@kernel.org>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Sat, 17 Jun 2023 21:24:15 +0200
+Message-ID: <CAMRc=Mcr=40aoXVcu2NDzz9C+GTPF-3WkyS=GEd-sQJTA9RftA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/23] arm64: qcom: sa8775p-ride: enable the first
+ ethernet port
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Stephan Gerhold <stephan@gerhold.net>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/15] arm64: dts: qcom: msm8916-gt5: drop incorrect
- accelerometer interrupt-names
-In-Reply-To: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
-References: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
-Message-ID: <5ee33fb02f4e411d21aaf356230dd496@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,30 +88,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Krzysztof Kozlowski писал(а) 17.06.2023 22:15:
-> st,lis2hh12 accelerometer binding does not allow interrupt-names:
-> 
->   msm8916-samsung-gt58.dtb: accelerometer@1d: 'interrupt-names' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Sat, Jun 17, 2023 at 9:16=E2=80=AFAM Jakub Kicinski <kuba@kernel.org> wr=
+ote:
+>
+> On Thu, 15 Jun 2023 14:13:56 +0200 Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > There are three ethernet ports on sa8775p-ride. This series contains ch=
+anges
+> > required to enable one of the two 1Gb ports (the third one is 10Gb). We=
+ need
+> > to add a new driver for the internal SerDes PHY, introduce several exte=
+nsions
+> > to the MAC driver (while at it: tweak coding style a bit etc.) and fina=
+lly
+> > add the relevant DT nodes.
+>
+> Did I already ask you how do you envision this getting merged?
+> You have patches here for at least 3 different trees it seems.
+> Can you post the stmmac driver changes + bindings as a separate series?
+>
 
-This indeed seems redundant... Thanks!
+Sure, now that bindings got reviewed, I will resend the patches
+separately. Them going through different trees won't break the build.
 
-Reviewed-by: Nikita Travkin <nikita@trvn.ru>
+> >  drivers/phy/qualcomm/phy-qcom-sgmii-eth.c     | 451 ++++++++++++++++++
+>
+> Noob question - what's the distinction between drivers/phy and
+> drivers/net/phy (or actually perhaps drivers/net/pcs in this case)?
 
-> ---
->  arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
-> index 7943bb619116..54d648972d35 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
-> @@ -101,7 +101,6 @@ accelerometer@1d {
->  
->  		interrupt-parent = <&tlmm>;
->  		interrupts = <115 IRQ_TYPE_LEVEL_HIGH>;
-> -		interrupt-names = "INT1";
->  
->  		st,drdy-int-pin = <1>;
->  		mount-matrix = "0", "1", "0",
+Not sure, but it seems that most drivers in the latter are MDIO while
+those in drivers/phy are all kinds of PHYs (USB, UFS, etc.).
+
+Bart
