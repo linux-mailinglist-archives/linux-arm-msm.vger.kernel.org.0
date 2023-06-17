@@ -2,122 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B4AD73434E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 21:24:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 850417343BC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 22:41:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232373AbjFQTYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 15:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
+        id S237782AbjFQUlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 16:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231984AbjFQTY3 (ORCPT
+        with ESMTP id S235044AbjFQUl0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 15:24:29 -0400
-Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C554A1BD6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 12:24:26 -0700 (PDT)
-Received: by mail-ua1-x932.google.com with SMTP id a1e0cc1a2514c-786e637f06dso669438241.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 12:24:26 -0700 (PDT)
+        Sat, 17 Jun 2023 16:41:26 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ACD2E72
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 13:41:25 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-987341238aeso175157866b.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 13:41:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687029866; x=1689621866;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CAVqTNFm1Ko/hSDeJVRLXQ4E4KG1rIEAdrc8bWfuH9M=;
-        b=lVG2S5Xx6tFg0dg4z6KHuNJpv5zw9bfbJORZYuLnU4hzhlKRIQMYa9+jW4VwKMjoaO
-         qVXcYgejWNww7bCA45NVLUicUCOag7vOWx4axAvC3r0pbruDxES/YNnjXI+QwZwW1mTv
-         SyH7G8xa0wD/g0OuGWAkTmKwifbZPSjh5IRffYshgeUS6lM7tjjCo3SAYf8O+aYKxVvL
-         VWyQ4j75TLZdCGdAUClkkdPqJkoHzx5InuSk/W/qrJa5VCwGhmGMI9uxpmnqryyjnbMr
-         +v2lv4iKCLbN3Y/76bFeU+uf6QlEzv4E0yMkRS1fPH3BRxvk/4aWxSrJrRQQHYBoHFmX
-         cQqg==
+        d=linaro.org; s=google; t=1687034484; x=1689626484;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l4vgBQIdezab+uv8qKX62YxsEkskvdgwPbAcwg7/AX8=;
+        b=jh0IDKMzx58PthW4kACF8YpXD+TGBvd3q0tJhF5gO3RvOSgXE7HkDQyyk7ZkRKukff
+         DhJKdlQa8CZQRSpxBeZzAOnjNopKoQkzGd4w/PNe6j/v5/I5jknDYrfS7ejMWEAAcYF9
+         lMRsquqzDarHg3IMS3wcoJZnulOz8z/7Cwt46TNAZyWMYeFZ62E0WYaVpaYWCi6jUdDj
+         JF2/9cT/6bCq4StxUlmrHJPZNMmhbTd97eguN8mdTixTUDT99lP+VYFZW8tt3FX+XnZ9
+         GjieT2r+lJPDTEDnfIbXGSKVdqXZoGTSZoe4Yhu4K6FvU2S5ZkBkBsISAGwN0ukywSjF
+         qquQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687029866; x=1689621866;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CAVqTNFm1Ko/hSDeJVRLXQ4E4KG1rIEAdrc8bWfuH9M=;
-        b=RIOSfIX+6pUxezZXKFQ7e5qRxd3PW7i1bT9383HpVYT+XOvp7+0y7G/2d+Z/bvFM8S
-         n10BqRbt5dof3shZivymDDcQda1YJhw8i1BTQbyb3pbiv9He65aZ/Ao2SYA2HYtJjcXm
-         hzsAOBTF/n+RfQK7owVZtrMBB8P9lpQM8fdFZCVufzf4JFsFavxaVSOTO+2Z5IeeXteO
-         x3EPq+XT3QXl2ngRlCTyxV9yg/uO0dBp20+oW50kgEAgw67OjrNlGOmu18eSA9oxFjFK
-         NaWkLadoMzKdkQw4ZWQUeozC5i09SaIXeQLm0IWLbHTOHea28QsUfgGu0MFk1+mAVK9q
-         ltKA==
-X-Gm-Message-State: AC+VfDwBtfk6PYCz1SrC8GV/MN5G5IxPxQFkZFj2ZjjEHr9gP0P+bv5l
-        pdZgu83ybnLVw0GqKmEqYwe91ecnQOcddYRUTcaDfw==
-X-Google-Smtp-Source: ACHHUZ6T2y5qSbWChreVWtXuHv0D3Y2Yra3f3svS/wTGHSpGOvnjNQZNnXYhK2mtJC9tcD4ulS5TUIribjNZnkuC8nQ=
-X-Received: by 2002:a67:fbd8:0:b0:43f:57c5:3eca with SMTP id
- o24-20020a67fbd8000000b0043f57c53ecamr824940vsr.35.1687029865896; Sat, 17 Jun
- 2023 12:24:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230615121419.175862-1-brgl@bgdev.pl> <20230617001644.4e093326@kernel.org>
-In-Reply-To: <20230617001644.4e093326@kernel.org>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Sat, 17 Jun 2023 21:24:15 +0200
-Message-ID: <CAMRc=Mcr=40aoXVcu2NDzz9C+GTPF-3WkyS=GEd-sQJTA9RftA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/23] arm64: qcom: sa8775p-ride: enable the first
- ethernet port
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1687034484; x=1689626484;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l4vgBQIdezab+uv8qKX62YxsEkskvdgwPbAcwg7/AX8=;
+        b=iv8YmWpvdIXwXtg1+eGNaPPaqhVGTFTMaA17rssIntHgjiNZGvFXOQ+US1XFs1ytnA
+         Z4I2c29oQCSgdeiv/Ox6M2w6J8mbDIOLV0+zyLbztux5cTcmqpZvhr16A+owXzoetKeC
+         4G+1io1WVJZBsdc6xpCNFr/N8vx2zurqkUkhX3M1AAeGx6RLVnSxLYFVRRc+G5osl/sG
+         9JUE+cEHFh2h/AL6DV4MaUyi5F2Bh0AFMNrwxOEzIULe8UwUiHwiFu7q28M2hfcIjkfp
+         HF7oUKtMzYb5bq7Tgi6yhTGVKkagVrH6uS7ppCQyTOkQ0D35D5rbZMyMlsTOR1u6/Vq1
+         9SHQ==
+X-Gm-Message-State: AC+VfDzkbAWHUNLZU2BglXTG9IcQXAW1WIycIE4X+9q2O3T9kDyPyDxe
+        ofbzCzi9o0FjLZf3le6ZbyYeCg==
+X-Google-Smtp-Source: ACHHUZ4l/VAynlLGat76XroIqRsYR6P0DP3wBd8BenejvZVtmo8JIzHkblXP2J/HbCKAH8jgey7sDQ==
+X-Received: by 2002:a17:906:4fd1:b0:973:ff8d:2a46 with SMTP id i17-20020a1709064fd100b00973ff8d2a46mr5776689ejw.3.1687034483837;
+        Sat, 17 Jun 2023 13:41:23 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id qn18-20020a170907211200b00982c33ea394sm3349203ejb.97.2023.06.17.13.41.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Jun 2023 13:41:23 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] arm64: dts: qcom: sm8150: Fix OSM L3 interconnect cells
+Date:   Sat, 17 Jun 2023 22:41:16 +0200
+Message-Id: <20230617204118.61959-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 17, 2023 at 9:16=E2=80=AFAM Jakub Kicinski <kuba@kernel.org> wr=
-ote:
->
-> On Thu, 15 Jun 2023 14:13:56 +0200 Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > There are three ethernet ports on sa8775p-ride. This series contains ch=
-anges
-> > required to enable one of the two 1Gb ports (the third one is 10Gb). We=
- need
-> > to add a new driver for the internal SerDes PHY, introduce several exte=
-nsions
-> > to the MAC driver (while at it: tweak coding style a bit etc.) and fina=
-lly
-> > add the relevant DT nodes.
->
-> Did I already ask you how do you envision this getting merged?
-> You have patches here for at least 3 different trees it seems.
-> Can you post the stmmac driver changes + bindings as a separate series?
->
+Qualcomm Operating State Manager (OSM) L3 Interconnect does not take
+path (third) argument.  This was introduced by commit 97c289026c62
+("arm64: dts: qcom: sm8150: Use 2 interconnect cells") which probably
+wanted to use 2 cells only for RPMh interconnects.
 
-Sure, now that bindings got reviewed, I will resend the patches
-separately. Them going through different trees won't break the build.
+  sm8150-microsoft-surface-duo.dtb: interconnect@18321000: #interconnect-cells:0:0: 1 was expected
 
-> >  drivers/phy/qualcomm/phy-qcom-sgmii-eth.c     | 451 ++++++++++++++++++
->
-> Noob question - what's the distinction between drivers/phy and
-> drivers/net/phy (or actually perhaps drivers/net/pcs in this case)?
+Fixes: 97c289026c62 ("arm64: dts: qcom: sm8150: Use 2 interconnect cells")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-Not sure, but it seems that most drivers in the latter are MDIO while
-those in drivers/phy are all kinds of PHYs (USB, UFS, etc.).
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 18c822abdb88..b46e55bb8bde 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -56,7 +56,7 @@ CPU0: cpu@0 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD0>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -85,7 +85,7 @@ CPU1: cpu@100 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD1>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -109,7 +109,7 @@ CPU2: cpu@200 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD2>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -133,7 +133,7 @@ CPU3: cpu@300 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD3>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -157,7 +157,7 @@ CPU4: cpu@400 {
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD4>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -181,7 +181,7 @@ CPU5: cpu@500 {
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD5>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -205,7 +205,7 @@ CPU6: cpu@600 {
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD6>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -229,7 +229,7 @@ CPU7: cpu@700 {
+ 			qcom,freq-domain = <&cpufreq_hw 2>;
+ 			operating-points-v2 = <&cpu7_opp_table>;
+ 			interconnects = <&gem_noc MASTER_AMPSS_M0 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&osm_l3 MASTER_OSM_L3_APPS 0 &osm_l3 SLAVE_OSM_L3 0>;
++					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&CPU_PD7>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -4342,7 +4342,7 @@ osm_l3: interconnect@18321000 {
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
+ 			clock-names = "xo", "alternate";
+ 
+-			#interconnect-cells = <2>;
++			#interconnect-cells = <1>;
+ 		};
+ 
+ 		cpufreq_hw: cpufreq@18323000 {
+-- 
+2.34.1
 
-Bart
