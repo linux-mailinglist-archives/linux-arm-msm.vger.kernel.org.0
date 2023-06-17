@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEABE733F6E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 10:05:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DC7A733FBC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 10:48:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232118AbjFQIFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 04:05:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55452 "EHLO
+        id S232856AbjFQIsw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 04:48:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346290AbjFQIF2 (ORCPT
+        with ESMTP id S233241AbjFQIsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 04:05:28 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC2F2D44
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 01:05:18 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-987accb4349so40221566b.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 01:05:18 -0700 (PDT)
+        Sat, 17 Jun 2023 04:48:51 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F951FEC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 01:48:46 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-985b04c46caso244253566b.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 01:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686989117; x=1689581117;
+        d=linaro.org; s=google; t=1686991725; x=1689583725;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xxp1rn5hr+h9i5CaSCoSMQfGudBpVIHRUp4VzBJuSvc=;
-        b=JnNWThApOs1c+QHy+rxQAxoWpul4bmzp8MCbxpakMq8fTUDzGCHNa7a3z5G/duP6kB
-         jTv86bXYZeOJU2Ucy/3TdGyEII19qAfCv6PyL2z2TyuE0VIHNlcRt8FWZ+UeXDfRiyOL
-         kwilDJsdyQSGwvxi6S2IHFzYI30orRM+LdOC0l5ElCP23sbjzbAIR3mpw5o45RF8V3MZ
-         nGFqK0c+ouKQxulGayoQ3QJnlF/yY9AKfM6iYqbCgM6zRI/z2rfb14a+HfTx4KP3IfcY
-         lk8SxnFRZaypg8fCmdnFUqkMXAyDdvbZUKdg5+L0vEFTWArjbcltDWfP0Fuxe/EYw7FK
-         Heyw==
+        bh=9v9IMhMYANhGUwezLEP1LlL4XT7NdaZ2AILcbGscvfs=;
+        b=f7b42c9PMsOBSkpJ9BbkAwiJsfDUkyVlZ+S2LGTmtnk6tvWWjubyHvGU8ecZu3PFT1
+         ApXo/v+Fl6S3V+ooOvBsn256Cv49dnEKkb072m4AuIavr8BWkheII2u6lx0s3ccSFAma
+         zM5k3myH9oM9k2luWy//WuZQZZ+ai5bpgGC6GYyVwqIXPX8Ypsz6WkCufOVTeFtbq3UI
+         HHLwW8EAk7R/hkqnNgtXIz+vLMqVyTVy9KfjexhVtTG5bDAwh5D1be3NqMRRfFS6JMgJ
+         Ffx5Hyb6uVS4Mzojv2NrMbt83IzXNmdbgXErrtsI7Gd2E3cmaux63uScJlPRY0tLcYVj
+         jUgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686989117; x=1689581117;
+        d=1e100.net; s=20221208; t=1686991725; x=1689583725;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xxp1rn5hr+h9i5CaSCoSMQfGudBpVIHRUp4VzBJuSvc=;
-        b=HYJXOM4yNPL046O+gSGm5T6Ttzv2ZtQ6/uwD/q576PJRWE5Wjlmqn8sQEwdxcAi05P
-         VUsRPegSmijTRyvCJRIo+TZffhrP1h0K629VlwRMzJEBOcE/hCSAm1qhQxmiRa9c4Q30
-         PZfxFb8wdZb4Ix65+BwbHeY7IZTo2/vPVxSzIPhHZrwKHLPCyPO5GWqM97UNPV1zp5Dj
-         ifG0XcSdhvtIYZB70EnUSRuP4Pyw5JM07IJqip4J7hCWfU4AVCd84t4imw9DMAykvHFw
-         jIXn6zT00YXNVN962zOIjwJnZ1R4LK1zZZJ4mHPM0bXM6/B0JU6HbvQMUugPyBPwtNAE
-         r1Sg==
-X-Gm-Message-State: AC+VfDyC9EAEPyavPCgAkbL2AgWr3GesM3GiWHyXgduorUVS/bfF3QBH
-        ScGhKucZAWxNZ5fJ+KnYrZPG4g==
-X-Google-Smtp-Source: ACHHUZ7fzVWC4mhfliHqEDlzKPRaPGVXyC+HO8O3hGv23dOoVZW7qwbG1HBrzyGlqbPOtTI0vuXcFQ==
-X-Received: by 2002:a17:906:9b91:b0:982:227e:1a16 with SMTP id dd17-20020a1709069b9100b00982227e1a16mr4453886ejc.13.1686989116772;
-        Sat, 17 Jun 2023 01:05:16 -0700 (PDT)
+        bh=9v9IMhMYANhGUwezLEP1LlL4XT7NdaZ2AILcbGscvfs=;
+        b=ONfap1xMPSnxfRzE1qKVy+3C90DBvQMRlPTetUckbdAlifHSPTo2ngF+iLZQXefZK2
+         3IVw76K/2mFA8T9uXbgYTyvmsFpqjImeZuGjdEq8jpaVjKISQxtdKBz2REG8SMaEjbXq
+         1L1jcEBPLXZYeh85z0GCtgPAtPzM9bDOOTe045Fr5puIDgduCajyoCjyLhi8VSnBWAEZ
+         QvKDUpFr6MJOPTAg5RHS4KBry5VZ8x0qEDGEs+9wkKmDGjPEHeQBbfrPv1iIE4kAnSl3
+         R2sf8W/3YKusYm/My3PVomY7F1FgG864N0jHjfb+PudETo9KBD6ySRiWB8Naf89Xx/NY
+         sSFw==
+X-Gm-Message-State: AC+VfDx7gvwzyx/2hkqOBuRLi9XYcAhTdwsicPTeNzgMpuGiD63Nxiow
+        Tnue1emPfuIEh5e2PW5IsU4spQ==
+X-Google-Smtp-Source: ACHHUZ7Kpo4IrOBQWBZ6pUx87P+qfVIKZIR9we2zLQmk/Rued5SQQmn3eIdab16cMTZ1bsaToXLkLw==
+X-Received: by 2002:a17:906:da87:b0:982:870f:9e8f with SMTP id xh7-20020a170906da8700b00982870f9e8fmr3843576ejb.62.1686991725276;
+        Sat, 17 Jun 2023 01:48:45 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id lo11-20020a170906fa0b00b009784915c660sm11812986ejb.136.2023.06.17.01.05.15
+        by smtp.gmail.com with ESMTPSA id c21-20020a170906341500b00985bdb7dd5fsm1965918ejb.201.2023.06.17.01.48.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Jun 2023 01:05:16 -0700 (PDT)
-Message-ID: <d2641843-3c00-2b38-709b-0f418328d525@linaro.org>
-Date:   Sat, 17 Jun 2023 10:05:14 +0200
+        Sat, 17 Jun 2023 01:48:44 -0700 (PDT)
+Message-ID: <aca54f67-cc09-ff4f-93ca-6973d153db2c@linaro.org>
+Date:   Sat, 17 Jun 2023 10:48:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v3 06/13] dt-bindings: remoteproc: Add Qualcomm RPM
- processor/subsystem
+Subject: Re: [PATCH 2/9] dt-bindings: phy: qcom,m31: Document qcom,m31 USB phy
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
- <20230531-rpm-rproc-v3-6-a07dcdefd918@gerhold.net>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
+        will@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        p.zabel@pengutronix.de, arnd@arndb.de, geert+renesas@glider.be,
+        neil.armstrong@linaro.org, nfraprado@collabora.com,
+        broonie@kernel.org, rafal@milecki.pl, quic_srichara@quicinc.com,
+        quic_varada@quicinc.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-clk@vger.kernel.org
+References: <cover.1686126439.git.quic_varada@quicinc.com>
+ <14f60578e2935c0844537eab162af3afa52ffe39.1686126439.git.quic_varada@quicinc.com>
+ <98960024-7dbc-91a3-75de-90b529637916@linaro.org>
+ <20230615052746.GB22186@varda-linux.qualcomm.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230531-rpm-rproc-v3-6-a07dcdefd918@gerhold.net>
+In-Reply-To: <20230615052746.GB22186@varda-linux.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,18 +89,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/06/2023 18:50, Stephan Gerhold wrote:
-> On Qualcomm platforms, most subsystems (e.g. audio/modem DSP) are
-> described as remote processors in the device tree, with a dedicated
-> node where properties and services related to them can be described.
+On 15/06/2023 07:27, Varadarajan Narayanan wrote:
+>>> +          - enum:
+>>> +              - qcom,m31-usb-hsphy
+>>
+>> I am confused what's this. If m31 is coming from some IP block provider,
+>> then you are using wrong vendor prefix.
+>> https://www.m31tech.com/download_file/M31_USB.pdf
+>>
+>>
+>>> +              - qcom,ipq5332-m31-usb-hsphy
+>>
+>> This confuses me even more. IPQ m31?
 > 
-> The Resource Power Manager (RPM) is also such a subsystem, with a
-> remote processor that is running a special firmware. Unfortunately,
-> the RPM never got a dedicated node representing it properly in the
-> device tree. Most of the RPM services are described below a top-level
-> /smd or /rpm-glink node.
+> Will change this to m31,usb-hsphy and m31,ipq5332-usb-hsphy respectively.
+> Will that be acceptable?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+m31,ipq5332 seems wrong, as m31 did not create ipq5332. Does the m31
+device have some name/version/model? If it is not really known, then I
+would just propose to go with qcom,ipq5332-usb-hsphy.
+
+Skip generic compatible ("usb-hsphy") entirely.
+
+And then we have... existing bindings qcom,usb-hs-phy.yaml. Don't create
+something similar with difference in the hyphen. Just use device
+specific compatible thus device specific filename.
+
+> 
+>>> +
+>>> +  reg:
+>>> +    description:
+>>> +      Offset and length of the M31 PHY register set
+>>
+>> Drop description, obvious.
+> 
+> Ok.
+> 
+>>> +    maxItems: 2
+>>> +
+>>> +  reg-names:
+>>> +    items:
+>>> +      - const: m31usb_phy_base
+>>> +      - const: qscratch_base
+>>
+>> Drop "_base" from both.
+> 
+> Ok. Will drop qscratch_base. This is in the controller space.
+> Should not come here.
+
+Then drop reg-names entirely.
+
+> 
+>>> +
+>>> +  phy_type:
+>>> +    oneOf:
+>>> +      - items:
+>>> +          - enum:
+>>> +              - utmi
+>>> +              - ulpi
+>>
+>> This does not belong to phy, but to USB node.
+> 
+> This is used by the driver to set a bit during phy init. Hence
+> have it as a replication of the USB node's entry. If this is not
+> permissible, is there some way to get this from the USB node,
+> or any other alternative mechanism?
+
+Shouldn't USB controller choose what type of PHY type it wants?
+
+> 
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
+>>> +    hs_m31phy_0: hs_m31phy@5b00 {
+>>
+>> Node names should be generic. See also explanation and list of examples
+>> in DT specification:
+>> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>>
+>> Also, no underscores in node names.
+> 
+> Will change this as usbphy0:hs_m31phy@7b000
+
+This does not solve my comments. I did not write "label" but "node name".
 
 Best regards,
 Krzysztof
