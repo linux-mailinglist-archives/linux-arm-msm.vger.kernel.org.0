@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EBD773426F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 19:16:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73AB473426D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 19:16:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235451AbjFQRQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 13:16:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53760 "EHLO
+        id S237139AbjFQRQB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 13:16:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235436AbjFQRPy (ORCPT
+        with ESMTP id S235937AbjFQRPz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 13:15:54 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2CC21BDF
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 10:15:51 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-982a88ca610so261696866b.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 10:15:51 -0700 (PDT)
+        Sat, 17 Jun 2023 13:15:55 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8001319BD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 10:15:53 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51a426e4f4bso1752836a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 10:15:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687022150; x=1689614150;
+        d=linaro.org; s=google; t=1687022152; x=1689614152;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MT2V6V7pjeRtWQ2ArGgc6CKhR6L6FYJOXQ1d2V4JyVg=;
-        b=qM8Y7/l9FTnxPLGnP1WBffQ5RMenMnfqIrxtxybudeC7J+pKPDtm3SnzysPSAypDKI
-         IaGfzFxYJIlJUNg7uZGdpyxB9JcqQ08tztsvUV9BHGDtfKyGX4o9AEI6wsW67meulNaE
-         oAYYk+dLYcmuWrEEwiNkPZDZEBOIYxbRddyIl2Voy+KWT6q8M736wTDkkoun6pQ29VIB
-         u3AQSnEJL/uS0+pCZsaOslgsvI1yzdtXSllOb89qzqKn3AdUX/UOh140jVtCD9iAhjm+
-         LKMEbCXh7P4eRZVtO8kso+xybCATn5oHuCI5VkmPqtrKjb8z/ANdCMBoqb3tUuubncbI
-         5fQw==
+        bh=E3fL/vuoxoElzgTRhXtbCs3GCepR+1nYd4/v099vO00=;
+        b=fO7E1yvm6C6AVVsqvNP3hNPlXaDzXghu2IIQcQekRyL0tGJqNwo2GEkfVtS9VS/jsF
+         scbg0EJ6XDuzw0vxjMtd+9I0TcbUXnOJi0tFtuQ34ZpEd8W99RrZo3PmNsCY+LqWibDP
+         uFNXUXuoEyprVy8MjLJlyPez9Ik+f/+jsC2ifkj013GBANbNQTJN9KlKaJI4faWFG6Aw
+         WMnDfIRVkYQBqLZ8mrJn1dv3HX6+SYKBSk84BdrBaAqXGv9hB8IS2+15VR1ap6WXlFun
+         VXhai1Q+Nk6WWtz2i7MMhLg63mYKqnW4W3spi1uQJYFPPMgGDq0gCCgPrm2Vlsj1PmZA
+         XmRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687022150; x=1689614150;
+        d=1e100.net; s=20221208; t=1687022152; x=1689614152;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MT2V6V7pjeRtWQ2ArGgc6CKhR6L6FYJOXQ1d2V4JyVg=;
-        b=XwrHDzI28eKEhIiI1r7tTaKaD+PiJ/Z8aWvTNC4wd3CHF7h/gGpLH1xWt0PuEBeff9
-         FJoVuU6JcvYpXRs7U5/hyRyJ07Cp47DIVPGGZvoUPAY1PgZHE4v5MBMuFGzDUFf+9q/+
-         BAxGbGgGTu3i8zX7ciHkK8NePNCdt8zQNMfvjjwsXAxnZO72KBp0fVEBEP5Bmcr1XoT6
-         K+2UcmVENGlW+p9e/YGGm0x/P9ttYjdu/80yJ1CRI+46V+u+rPHBzOKQf7LKZVHN2hYF
-         zgIwRJMWPzvQg17bx6H9/6ql7oZyXfa5VCSeI6BzzhNs7iZfvOp6GrRDAep+DgtYOszj
-         dI2w==
-X-Gm-Message-State: AC+VfDx/0vtpqFLSvYaK5mXKWKXUE1n0N2RHprHibjW7d8c1pubNg4A/
-        hoRNIk96niAipGUWLkJIuhN1ag==
-X-Google-Smtp-Source: ACHHUZ4t/PzWdQt0PFtynGVm/glocMc4HXNygJXwCS5NOMi25o4Vj2WFmtfXJ2ZucHxrkYMCMSTDfw==
-X-Received: by 2002:a17:906:e211:b0:977:d048:ff9c with SMTP id gf17-20020a170906e21100b00977d048ff9cmr4223023ejb.31.1687022150465;
-        Sat, 17 Jun 2023 10:15:50 -0700 (PDT)
+        bh=E3fL/vuoxoElzgTRhXtbCs3GCepR+1nYd4/v099vO00=;
+        b=RbBDgYkxAhw67f1qvdQfcuakQ6HjPtvqGvTO4zhomQUl/m8b5WAzLIxJueS8o9A3IW
+         FQJ80CGzfxntdnZMpBqkLoL/d5U9/HYepODvfGl0sPV4k2MUwc+3cwnKZCZx+9Ncxkhi
+         WtkWHDmCDp2mDg0q3Swy30wKXL95CWym72NTFV1yyVyWnZer9+OIDL444OjZ7ziyLM+3
+         GhzldR964UJ/rC/p7E+mA7X/Psl30E4KWp8K1pa6KpUBI+yUL38EDRPCvFRQeBAGxwow
+         7PhBT4sZJQvVYPr6ZcCnKxRpMfkNtdnO9CkRrFYfIoHZNWlZyeLjCiaFYtTt2fCJpROD
+         m4qQ==
+X-Gm-Message-State: AC+VfDzdadVoh2ctwKLBHlhm5u/HFWQUap/cBjeXbKMDmfqqviXOPdUI
+        1HZkd/GlPK940GDCYw3q2zae3w==
+X-Google-Smtp-Source: ACHHUZ76KoZBR5N/28FWOVQCRubGGgyJQ241dqNESbpsJ1moZOt8Z6mx6Qcn2B0vRdtAB6skWQilCg==
+X-Received: by 2002:a17:907:16a2:b0:982:4abc:97d6 with SMTP id hc34-20020a17090716a200b009824abc97d6mr5288572ejc.4.1687022151941;
+        Sat, 17 Jun 2023 10:15:51 -0700 (PDT)
 Received: from krzk-bin.. ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id os5-20020a170906af6500b009829dc0f2a0sm3841897ejb.111.2023.06.17.10.15.49
+        by smtp.gmail.com with ESMTPSA id os5-20020a170906af6500b009829dc0f2a0sm3841897ejb.111.2023.06.17.10.15.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jun 2023 10:15:50 -0700 (PDT)
+        Sat, 17 Jun 2023 10:15:51 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,9 +63,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 05/15] arm64: dts: qcom: msm8939: drop incorrect smp2p Hexagon properties
-Date:   Sat, 17 Jun 2023 19:15:31 +0200
-Message-Id: <20230617171541.286957-5-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 06/15] arm64: dts: qcom: msm8996-xiaomi: drop label from I2C
+Date:   Sat, 17 Jun 2023 19:15:32 +0200
+Message-Id: <20230617171541.286957-6-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
 References: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
@@ -81,28 +81,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The children of qcom,smp2p do not need address/size-cells:
+I2C controller bindings do not allow label property:
 
-  msm8939-sony-xperia-kanuti-tulip.dtb: smp2p-hexagon: slave-kernel: '#address-cells', '#size-cells' do not match any of the regexes: 'pinctrl-[0-9]+'
+  msm8996-xiaomi-gemini.dtb: i2c@75b6000: Unevaluated properties are not allowed ('label' was unexpected)
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8939.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index 895cafc11480..05d8abbbc840 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -386,8 +386,6 @@ hexagon_smp2p_in: slave-kernel {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+index 47f55c7311e9..8c2d6e9e851b 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+@@ -187,7 +187,6 @@ &adsp_pil {
  
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
--			#address-cells = <0>;
--			#size-cells = <0>;
- 		};
- 	};
+ &blsp2_i2c2 {
+ 	status = "okay";
+-	label = "NFC_I2C";
+ 	clock-frequency = <400000>;
  
+ 	nfc: pn548@28 {
+@@ -208,7 +207,6 @@ nfc: pn548@28 {
+ 
+ &blsp2_i2c3 {
+ 	status = "okay";
+-	label = "TYPEC_I2C";
+ 
+ 	typec: tusb320l@47 {
+ 		compatible = "ti,tusb320l";
+@@ -220,7 +218,7 @@ typec: tusb320l@47 {
+ 
+ &blsp2_i2c6 {
+ 	status = "okay";
+-	label = "MSM_TS_I2C";
++	/* MSM_TS */
+ };
+ 
+ &blsp1_uart2 {
 -- 
 2.34.1
 
