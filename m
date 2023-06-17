@@ -2,81 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B3B6734055
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 12:45:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC3C973407A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 13:18:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236003AbjFQKpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 06:45:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60922 "EHLO
+        id S235183AbjFQLSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 07:18:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235192AbjFQKnU (ORCPT
+        with ESMTP id S233712AbjFQLST (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 06:43:20 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2826110DD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 03:43:19 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51a324beca6so2315339a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 03:43:19 -0700 (PDT)
+        Sat, 17 Jun 2023 07:18:19 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DACD199
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 04:18:14 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9741caaf9d4so231235366b.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 04:18:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686998597; x=1689590597;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SXehPHfp4hD58zuOBHpI3CN7ZUjU79jauVD9+CTL9CU=;
-        b=v/5eAneTfiOB6RtTochY284msjQvoPq6a4pZgXDJuLXT70Wi1NKtsfoCOmebDSRwGw
-         9xwMFYw4JDSFzzDLdiKFaEYKaP55sLzzpy3DX2rd8eYhzL0NEXLCB+EJ99YzNwlky3kW
-         ngmYmxg/RuPQdw0kWxG4SYpQ66dUDsKoc9LH4dgJPsPznX59YNwWz/Hdi9ldxMcOgYQy
-         ehjmkv1au49VmSREY6VLfRRBQEYdhQE90/u7DHHUUK2CPpma2YYRpiTRSmdasEj5AUGk
-         VIYTlu8VXoibu9ti6g97DJCOEKI5J2DV7MGgu80iGu83kc8h803oJFu1IZRUpBC3I5Q3
-         I3ww==
+        d=linaro.org; s=google; t=1687000693; x=1689592693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OWAbg6BOF2nzE2I56RfPp2+x9gJUvp4uCgmjbp/7H+A=;
+        b=ARHmcEYC3adamnFDzjiuas+r/2hjAFU+HZRxNGinwYAqs5goOO/wZ2gRxJYiHD5TAb
+         HY9vO9cMRCGJjPW1+87zDuCvdwm+nsy0qNW3VaJz2x15ddiRTZRCpmXtYQJ5VPCGbJmB
+         3e3c0W9/eM+if1olKzXMSwyEE7OHpjtj19r90TgORX5ohkfzspkTx/dO5GLwYsGR60B7
+         s16rW+e9KDenBwiJ2ize1K31oBrQw5eGhmqZHaQbEbKc7FgaABcDweWLTNUz3drqih35
+         E2kwTtUCgJy/SSAWD5+bPWUrufEqpjTG+hNJf9J/w6SAHO23YWpgdxaA3R2Sjv2vzOaC
+         n7Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686998597; x=1689590597;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXehPHfp4hD58zuOBHpI3CN7ZUjU79jauVD9+CTL9CU=;
-        b=RKwP5eklpo0YaHKZbMyoaz7WXTKI1NYmHIA0W+7drMvbDZ5dHG/eBOEoCZffW/xfjr
-         RqiEogi8GN/ymiLiKWFdcMgp+xbP5I7N86KaHb2tC10lcxoGHDJd3dnk/c+zXdA5Ty84
-         HJ01ZsexjqTqhMrVoUpgfWgvn5XiMzPBUy1BexeHQW4xfWlvkkSbI6yk8NyhzdvqZCSf
-         KvwWk7AOAexPiqw8DCEXfgl8mTvE/GHfqwRIJPvDEoDhNmzql3P8+JPFRwLxn+Mtr87C
-         xeir57tkBFbFiRwd8UkcrGZq0ti8A8eL4HMO6HlV57p6dTahkfTvD998AcSMgI5oZqzn
-         6Mkg==
-X-Gm-Message-State: AC+VfDzZzzn/Ca3stRQk5891jSfysuJ5P1bRnMnvNmSKUSWNQ/ADcAWh
-        bsC0K0fGh0KFeKYSKwbAmfGYlw==
-X-Google-Smtp-Source: ACHHUZ5mNmonmeX1pj58nQ8JJHbgPkGUtqFcLoO43kCROLgIVGLDO/BjBAkgHRjsjF0V8RgZ50iQ9w==
-X-Received: by 2002:a17:907:16a6:b0:978:66bd:d771 with SMTP id hc38-20020a17090716a600b0097866bdd771mr5423085ejc.55.1686998597567;
-        Sat, 17 Jun 2023 03:43:17 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id z20-20020a1709064e1400b009745eddf997sm11789464eju.198.2023.06.17.03.43.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Jun 2023 03:43:16 -0700 (PDT)
-Message-ID: <168b28ba-cc37-84a1-2b1f-a045525b50a1@linaro.org>
-Date:   Sat, 17 Jun 2023 12:43:14 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [RESEND PATCH 1/3] dt-bindings: remoteproc: qcom,pas: correct
- memory-region constraints
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-References: <20230331092125.44885-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20221208; t=1687000693; x=1689592693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OWAbg6BOF2nzE2I56RfPp2+x9gJUvp4uCgmjbp/7H+A=;
+        b=VK9RoN/UO23dOksuNtJ97ZzgREmUgX9rJOrxY7TOYzpZzwlEgKzyE5hdDB+A1BOvCD
+         TdTiG6p3JwgN14d8Aumj/YBMVb0pLumER8YQlNNLz5iEOF31pjfPnDfZ//nGsyYehU/U
+         VpWsVuJST/yUYikCFUOw8Wa50icYcGXQ4532lAN8m9PZaDz3INmuNmCSKBESoUstME7b
+         DCJgjfzL8Fijg4e7xKo44jpTmXCyfKQn7o93tDlHM7/zRI/By95IVkouOmmvdMsV650z
+         UvDkps/TVAllZrnP0ayyHvA+Q7ejRLWF2iiQvVsQ8KV16Qq2SVKGsn+pyV7qE4bD5kUj
+         /v0A==
+X-Gm-Message-State: AC+VfDzrOS3FCgWOgmKfNCJnSl6VoGyTirT2KUhkbpUOHVnZ02OrTWZF
+        MUAWh1VKMhDKlirtFYzkwVe86Q==
+X-Google-Smtp-Source: ACHHUZ4qmMOhdxySg3FMwhU5HEqjuFWtlrAY047yKgdyCSe7/cq+Y9GrLJnX74LxW7X/nfZWhrczdQ==
+X-Received: by 2002:a17:906:4793:b0:978:8937:19ba with SMTP id cw19-20020a170906479300b00978893719bamr4293294ejc.44.1687000693382;
+        Sat, 17 Jun 2023 04:18:13 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id e17-20020a1709067e1100b00982cac5fbbbsm2653275ejr.62.2023.06.17.04.18.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Jun 2023 04:18:12 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230331092125.44885-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: pinctrl: qcom,sdx65-tlmm: add pcie_clkreq function
+Date:   Sat, 17 Jun 2023 13:18:09 +0200
+Message-Id: <20230617111809.129232-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,22 +77,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/03/2023 11:21, Krzysztof Kozlowski wrote:
-> Qualcomm PAS devices expect exactly one memory region, not many.  Also,
-> the memory-region is now defined in device specific binding, not in
-> qcom,pas-common.yaml, thus also require it in the same place.
-> 
-> Fixes: cee616c68846 ("dt-bindings: remoteproc: qcom: adsp: move memory-region and firmware-name out of pas-common")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> 
-> ---
+DTS and driver already support pcie_clkreq function for a pin.  Add it
+to fix dtbs_check warning:
 
-I sent it in March. Then on 31st of March I resent it. Almost three
-months ago.
+  qcom-sdx65-mtp.dtb: pinctrl@f100000: pcie-ep-clkreq-default-state: 'oneOf' conditional failed, one must be fixed:
+    'bias-disable', 'drive-strength', 'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+    'pcie_clkreq' is not one of ['blsp_uart1', 'blsp_spi1', ... 'gpio']
 
-Shall I resend it one more time? Any comments? Applying?
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
+index 2ef793ae4038..27319782d94b 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
+@@ -85,7 +85,7 @@ $defs:
+                 qdss_tracectl_a, dac_calib13, qdss_traceclk_a, dac_calib14,
+                 dac_calib15, hdmi_rcv, dac_calib16, hdmi_cec, pwr_modem,
+                 dac_calib17, hdmi_ddc, pwr_nav, dac_calib18, pwr_crypto,
+-                dac_calib19, hdmi_hot, dac_calib20, dac_calib21, pci_e0,
++                dac_calib19, hdmi_hot, dac_calib20, dac_calib21, pci_e0, pcie_clkreq,
+                 dac_calib22, dac_calib23, dac_calib24, tsif1_sync, dac_calib25,
+                 sd_write, tsif1_error, blsp_spi2, blsp_uart2, blsp_uim2,
+                 qdss_cti, blsp_i2c2, blsp_spi3, blsp_uart3, blsp_uim3, blsp_i2c3,
+-- 
+2.34.1
 
