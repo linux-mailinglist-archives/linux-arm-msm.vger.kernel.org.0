@@ -2,127 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD8B5733F2E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 09:28:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7431733F64
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 10:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346101AbjFQH22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 03:28:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46864 "EHLO
+        id S1346236AbjFQIFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jun 2023 04:05:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346107AbjFQH21 (ORCPT
+        with ESMTP id S1346277AbjFQIEu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 03:28:27 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 734DB2721
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 00:28:25 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-987f7045f9aso7736366b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 00:28:25 -0700 (PDT)
+        Sat, 17 Jun 2023 04:04:50 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8652A1A4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 01:04:45 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-519274f7b05so2158851a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jun 2023 01:04:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686986904; x=1689578904;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1686989084; x=1689581084;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tNOXDR8ammGfhSACaL8GR+6Nt9orr8dF7n6TFf183BI=;
-        b=qA+WvJ4hNQbyu/ACCtBfo8NrOiRUJJsOv2VOujI9VBUaTryLoSEHQ9Tuq9GNM9kw8b
-         pYWAVBmXglKYw10E5rOfOpKqY/QmJtvyB5GWFYmzaWj/mQZqii+aHgNv62HhXgvHius2
-         D7R4Ju0yD2qUzxwY9FY9zS7Z4W57zmIqnLMiKk6bM2JX85TrIeAwKJOrgskvantYq26u
-         dDqDQsTcIzeyl7fpmAEOq0NrSXfH1IX1xv6TLcn4nfewHcJYm74oZP/Rx5xgmLOa1ft3
-         FWFUrpsUZSmFOUe6YV9cwWvkL73ltimhmXShmLbL3mkkD1YmdpCqZYscRZn+1EoxDic7
-         95Rg==
+        bh=qJrsf2pwoMXl3PeH2n9Eu8zL86w1f8iDhqh4pji1Kuk=;
+        b=TWts4lPBT8wmpu8xEy/41MsKVIzbCajbsglH9p9R9Vu0ARwJfbqMpZ0mmceE6qYCIl
+         iMvOYfxplWhTK3W5PdRiXkuZt1/4wTrfQI3dAMxrz9RxGDLDNNOuC3amY5ULF4OvfiVy
+         nNFgI/NelFKPxTo860DYlZQm9vOyXAO/Q+AklHg5aYuJABxgVMPpWhDgTz8rnWaaSn16
+         Lar82GOunRuu3Pb4QQS/UZEZqVOSzSjFw83q9Zqu01hDBlaq300Xu+ByOhnkwRencpjL
+         imlF3HWljBUsO8xbZqsDZfhcVf+Lo6xPLkCk66CpjjUfIGSfKvb2/kaC0LkmANPLPyaa
+         RyiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686986904; x=1689578904;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1686989084; x=1689581084;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tNOXDR8ammGfhSACaL8GR+6Nt9orr8dF7n6TFf183BI=;
-        b=Hg+FPmPOLau8G4jjRVvqkzZ8dSpWI435kBU2XKtKcGAfRoqf/C1YBKthGqUMl6wWR9
-         wd+BlUfJrS8pgsp43EJi4kIU9z/QjeV8WuJIoGJSK+NEwYRO3+rf6HSLdNq4bLD5mEWw
-         ASYEIbL+3uIuOwYMqT7dseu2eKkweMB+VJpBtsFlkrNOPBLg1fXk3DS4HqTu929EJmP7
-         7dDv/P4GkxUwEuNgHdEWhBK53c7/ksIQbqTtjWuIKShZPtVlJgNgCUgLQBVCjI4GZ4SM
-         k3h9AUnqp8W3tvlFCCljVHli1ZqgPQhuKseYKio17TL6+Xho9ousemXLC7eR1WkA2Og9
-         BWhg==
-X-Gm-Message-State: AC+VfDwUaK2zi3BrgjXTZ3Zs4Cj7ZT7Jl9dkbKPSX+iWI7zfVXEcDoT1
-        Mb8vNlLnBsm9UFPbrwYhxTKlPtO5G0R3cgH4KYQ=
-X-Google-Smtp-Source: ACHHUZ64pqeOFhHo+B+O2squOClmtsXC2rT2z2VNvrH1Uhz5PU02jMg1G7EMy4k5dz26C/Vc342YkA==
-X-Received: by 2002:a17:907:3e27:b0:982:30e3:ddcb with SMTP id hp39-20020a1709073e2700b0098230e3ddcbmr5108273ejc.65.1686986903823;
-        Sat, 17 Jun 2023 00:28:23 -0700 (PDT)
+        bh=qJrsf2pwoMXl3PeH2n9Eu8zL86w1f8iDhqh4pji1Kuk=;
+        b=hJ5TIyeTCJ1UOKD5r5XGt3H5Q2I6H1x0C/bPXX7hAf42zzUZDcxbHXiZESHCVO9f7m
+         lZIoyoQvCW8Mmr//CAeUl9OJjJ9GNHZnwx62DSJlA0Lf4q7spr1NJbTh1xm6prytiMJZ
+         Q1Eo1ehjb7Stsj7PZvpQzsv9+NNYywHHp6OudZCub5IfNEA83g1/uO+hRL/f1qj6va2B
+         N64qYsOak4PkRjiC5/WGtd3XobNRw7SN0MOYzBKOtJHS5EIxRflaH8Q7pd0JeRfFaDQS
+         +VgXDMqHoqQEoU/U3ZdPYspkF2G94zsiB6NZm0uvcXMfPjggN3PuXj9F+ygrVzA6brR1
+         wAlg==
+X-Gm-Message-State: AC+VfDyg+YhBbNCmq2jKoan8TrLPuviOb4AQKcrZFbr6/IX0ZJMVt1Yp
+        X7tJea7j/oVCsUuLzdT8QhJ31A==
+X-Google-Smtp-Source: ACHHUZ7tfsqu+22+UNCW+G6AYFrV7goBkQ5VBIhB+LhrccM00EVCmocaQdT96lk/VxA3oP2U6Cofkg==
+X-Received: by 2002:a17:907:704:b0:974:e767:e1e7 with SMTP id xb4-20020a170907070400b00974e767e1e7mr3815136ejb.28.1686989084099;
+        Sat, 17 Jun 2023 01:04:44 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id a13-20020a170906684d00b009828dac8425sm3713144ejs.105.2023.06.17.00.28.22
+        by smtp.gmail.com with ESMTPSA id n25-20020a170906379900b00977cc473b41sm11917947ejc.142.2023.06.17.01.04.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Jun 2023 00:28:23 -0700 (PDT)
-Message-ID: <83807d70-c35c-6b66-e7f9-521bdfc6d1b4@linaro.org>
-Date:   Sat, 17 Jun 2023 09:28:21 +0200
+        Sat, 17 Jun 2023 01:04:43 -0700 (PDT)
+Message-ID: <f2c19379-4d1a-e5c4-1452-103dd693735b@linaro.org>
+Date:   Sat, 17 Jun 2023 10:04:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v8 10/11] arm64: dts: qcom: sm8350: Add Crypto Engine
- support
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        vladimir.zapolskiy@linaro.org, rfoss@kernel.org,
-        neil.armstrong@linaro.org, djakov@kernel.org, stephan@gerhold.net,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>
-References: <20230526192210.3146896-1-bhupesh.sharma@linaro.org>
- <20230526192210.3146896-11-bhupesh.sharma@linaro.org>
- <d239ad07-fbdd-16fa-3555-5bcf33c67059@linaro.org>
- <11c3eb6c-823d-9688-ec53-e05c7bb557c5@linaro.org>
+Subject: Re: [PATCH v3 05/13] dt-bindings: remoteproc: glink-rpm-edge: Use
+ "glink-edge" as node name
 Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
+References: <20230531-rpm-rproc-v3-0-a07dcdefd918@gerhold.net>
+ <20230531-rpm-rproc-v3-5-a07dcdefd918@gerhold.net>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <11c3eb6c-823d-9688-ec53-e05c7bb557c5@linaro.org>
+In-Reply-To: <20230531-rpm-rproc-v3-5-a07dcdefd918@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/06/2023 01:33, Konrad Dybcio wrote:
-> On 16.06.2023 19:36, Krzysztof Kozlowski wrote:
->> On 26/05/2023 21:22, Bhupesh Sharma wrote:
->>> Add crypto engine (CE) and CE BAM related nodes and definitions to
->>> 'sm8350.dtsi'.
->>>
->>> Tested-by: Anders Roxell <anders.roxell@linaro.org>
->>> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
->>> Co-developed-by and Signed-off-by: Robert Foss <rfoss@kernel.org>
->>> [Bhupesh: Switch to '#interconnect-cells = <2>', available since commit 4f287e31ff5f]
->>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> ---
->>
->> #regzbot introduced: f1040a7fe8f069d2259ab3dab9190210005ceb33
->> #regzbot title: HDK8350 silently crashes early on boot
->>
->> Hi, this landed in the next but unfortunately it causes silent crash
->> (and reboot) of HDK8350. Reverting this commit helps.
-> Downstream also references the following SIDs:
+On 15/06/2023 18:50, Stephan Gerhold wrote:
+> Semantically glink-edge and glink-rpm-edge are similar: Both describe
+> the communication channels to a remote processor. The RPM glink-edge is
+> a special case that needs slightly different properties but otherwise
+> it is used exactly the same.
 > 
-> iommus = <&apps_smmu 0x592 0>,
-> 	 <&apps_smmu 0x598 0>,
-> 	 <&apps_smmu 0x599 0>,
-> 	 <&apps_smmu 0x59F 0>;
+> To improve consistency use the same "glink-edge" node name also for
+> glink-rpm-edge. Drop the $nodename from qcom,glink-edge.yaml to avoid
+> matching the wrong schema. qcom,glink-edge.yaml is always referenced
+> explicitly from other schemas. This will already ensure that the nodes
+> are being checked, so it's not necessary to bind to all nodes named
+> "glink-edge".
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-I already tried iommus from downstream from:
-1. qcrypto node (0x584, 0x594)
-2. qcedev (0x586, 0x596)
-3. qcom_cedev_ns_cb (0x592, 0x598, 0x599, 0x59F), although with 0x0011
-last argument.
 
-Same results, but indeed iommu would be nice reason here.
-
-I also double checked the version of block (BAM DMA is v1.7.4) and other
-properties. When I disabled crypto but left BAM DMA, the result was the
-same, thus it is maybe the BAM who causes abort.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
