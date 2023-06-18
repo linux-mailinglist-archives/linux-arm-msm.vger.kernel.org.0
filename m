@@ -2,81 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D3AE7344FF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 07:56:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECFA0734522
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 08:48:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbjFRF4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Jun 2023 01:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43620 "EHLO
+        id S229470AbjFRGsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Jun 2023 02:48:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjFRF4G (ORCPT
+        with ESMTP id S229453AbjFRGsT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Jun 2023 01:56:06 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A184310D0;
-        Sat, 17 Jun 2023 22:56:04 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3090d3e9c92so2260807f8f.2;
-        Sat, 17 Jun 2023 22:56:04 -0700 (PDT)
+        Sun, 18 Jun 2023 02:48:19 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A76AFE5E;
+        Sat, 17 Jun 2023 23:48:18 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id 006d021491bc7-558cf19575dso1758107eaf.3;
+        Sat, 17 Jun 2023 23:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687067762; x=1689659762;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+NX5ZV664S/3sQaZAuC+xeosJghTMxUMI70alZxPa5Y=;
-        b=paCHA7pjmnWe/IxKblZOvVLJCQMFIcAb2uKzUfv6t5CZ3G1g9hXPWQ58MUXkuXmstv
-         O6R1T7qbyg22aeMnmfS9GKuJZkCptCgv8gl02U7bx3vOy2jTgX9WGMkbt+o0JvCUs+kW
-         bA+mts79t+1rkGlZnKT8v1xPOjTDI1mljmSht/lqTrAYza1MktBdvcCYHnJBJ3J90SAU
-         firfpBvpMPctU6fXBfPySyg6YIq2gUqqEkiphtZ3ZvVVDwpz2lqwWwcsITHzvTMXTJzj
-         W+8jF/PwHqlykUASb2AVCXVaYe1soMWghMN1QCjmmR0zFF3GU948sIjFP62ppXVd7WfZ
-         ffYw==
+        d=gmail.com; s=20221208; t=1687070898; x=1689662898;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LTo1KCmoI+3M46rfBk4X9GJE9+liBm16LyxJ6tR7Fxc=;
+        b=oY3btrBjo/LfqdGWh6E6EVUrJi/7vM+uTKPjlDUnBvX2yE07x4jZct56Gnl8WB81WN
+         QAzV0LxE5EC4KhkpeeCMC3juCYCBg4hUsuZrKS0R4yRB1l3Qb7Al5NntC1476q5LAF5V
+         GBm+aG4BRUwH8cuaareS5WOGMRyU47aHPjbDZnWPQkoh9Ju0+VxZEojK8B6FH5Vuqevk
+         bk6Pxl7fWmqFJphL7WoqHdVRsHQp4ooeAkKUYrA+7WLtxgObkQAzBkJLRNdFDhaq+JOA
+         aEs8yLFH8FgSaiodu9tPI0E7nPX9zboJTts9lnQY9W+bRqW12qNweuDq5vsPfGYuasDS
+         p9mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687067762; x=1689659762;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+NX5ZV664S/3sQaZAuC+xeosJghTMxUMI70alZxPa5Y=;
-        b=XTEPlWfZmGQJqteKwDhh3yd9fDvZKL6BlNYC7dZbN9tG3GPSZbyyL+aGJMyFtIGg4o
-         3RDNpWAteFnrXJ5yLDVcORZO2fKTjXjIEY5dt2bho042NxNGhvH2eCejxh9fK/yeXu9j
-         I01H5wQRVp4ClgIl0SmZBYjdNkJuhtOHuE8tHpokWKeTLTJM+HWpdq8wLTdABoY8ZZ2R
-         ojSHqojuEOwWfGfjKlmjAtPpGF1edcCjNngvqSCqEn8bGvSGiO/pukV5lDUrz1s3KeNB
-         1REGn6k22jzap3BCWqiWaleRlJLZKzlI9jMhcZAM5WNHtor2dixkhOQscSa1fqauB+q7
-         L0pQ==
-X-Gm-Message-State: AC+VfDydmw0oDciI9oFayGSNQis3NpHBTMGZICbezHJn5aXzMlHxxdAl
-        2gsRd3//jKXH7vav6MRsN24=
-X-Google-Smtp-Source: ACHHUZ6BOZ2LQ6J+Y8YIuDzGK/TfPStSIUARP0Kxc41zdevAjVxrE87pnYjBbRb1udZcUfffG4tAww==
-X-Received: by 2002:adf:f5c8:0:b0:307:9473:fe26 with SMTP id k8-20020adff5c8000000b003079473fe26mr4901839wrp.26.1687067762314;
-        Sat, 17 Jun 2023 22:56:02 -0700 (PDT)
-Received: from jernej-laptop.localnet (82-149-1-233.dynamic.telemach.net. [82.149.1.233])
-        by smtp.gmail.com with ESMTPSA id s14-20020a170906354e00b009888b71c368sm154616eja.152.2023.06.17.22.56.00
+        d=1e100.net; s=20221208; t=1687070898; x=1689662898;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LTo1KCmoI+3M46rfBk4X9GJE9+liBm16LyxJ6tR7Fxc=;
+        b=iMkkM4xD7W5J9RWlvCigTbRSwQb7cvc3zXPpS8LRP6JTtzjUeXiOtY+OeTbINrG07Y
+         4jKtHVbz2oRaKxI1EiLi5tR+e27T1fb+5viFxpQ9QkpaK5UE72oL+PZvv/04nrO3wVlU
+         ytwXgTiPVnKpFYOEh4+5wp2I3pYivNQ7I1klXVxPb5qBbqEdoMF1NDzHguLUeUdjBvw3
+         d9rePR4hyzcoRr/MGiQdqXfxxBJc9OwaICcngl8Lbk52cn64StRoLs0KvMZOiF+4hEui
+         NXLj9lhLkNYT70PhPt9QQG4EjjgpzJQLSrahptN0GzDqBwAdhZWkRqG0+plnebY6Cr62
+         N0ug==
+X-Gm-Message-State: AC+VfDzSjhVGLzNJ4g74ZAjygdsPegGKGZ+tYrff0yuv9T5MserEJuv6
+        FhMehRdbFsEs0shInjIGrSM=
+X-Google-Smtp-Source: ACHHUZ7VGsWXSPSZpioEsUzxOniWvUcGzZsx86ZogwaxQv95Qm4aWDEuaEYwcOcvyYSfsNbxe+o7iw==
+X-Received: by 2002:a05:6808:300f:b0:39a:bd0e:43d with SMTP id ay15-20020a056808300f00b0039abd0e043dmr10012266oib.36.1687070897840;
+        Sat, 17 Jun 2023 23:48:17 -0700 (PDT)
+Received: from ubuntu777.domain.name (36-228-68-11.dynamic-ip.hinet.net. [36.228.68.11])
+        by smtp.gmail.com with ESMTPSA id n6-20020a1709026a8600b001a0448731c2sm18217909plk.47.2023.06.17.23.48.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jun 2023 22:56:01 -0700 (PDT)
-From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
-To:     glaroque@baylibre.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, amitk@kernel.org, rui.zhang@intel.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, thara.gopinath@gmail.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        anarsoul@gmail.com, tiny.windzz@gmail.com, wens@csie.org,
-        samuel@sholland.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, edubezval@gmail.com, j-keerthy@ti.com,
-        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
-        bchihi@baylibre.com, niklas.soderlund+renesas@ragnatech.se,
-        wenst@chromium.org, Yangtao Li <frank.li@vivo.com>
-Cc:     linux-pm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, Yangtao Li <frank.li@vivo.com>
-Subject: Re: [PATCH v3 02/12] thermal/drivers/sun8i: remove redundant msg in
- sun8i_ths_register()
-Date:   Sun, 18 Jun 2023 07:55:59 +0200
-Message-ID: <2684470.mvXUDI8C0e@jernej-laptop>
-In-Reply-To: <20230613114904.15749-2-frank.li@vivo.com>
-References: <20230613114904.15749-1-frank.li@vivo.com>
- <20230613114904.15749-2-frank.li@vivo.com>
+        Sat, 17 Jun 2023 23:48:17 -0700 (PDT)
+From:   Min-Hua Chen <minhuadotchen@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Min-Hua Chen <minhuadotchen@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] remoteproc: qcom_q6v5_pas: make adsp_segment_dump static
+Date:   Sun, 18 Jun 2023 14:48:12 +0800
+Message-Id: <20230618064812.230265-1-minhuadotchen@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -87,38 +73,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dne torek, 13. junij 2023 ob 13:48:54 CEST je Yangtao Li napisal(a):
-> The upper-layer devm_thermal_add_hwmon_sysfs() function can directly
-> print error information.
-> 
-> Signed-off-by: Yangtao Li <frank.li@vivo.com>
+This patch fixes the following sparse warning:
 
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+drivers/remoteproc/qcom_q6v5_pas.c:108:6: sparse: warning: symbol
+'adsp_segment_dump' was not declared. Should it be static?
 
-Best regards,
-Jernej
+No functional change intended.
 
-> ---
->  drivers/thermal/sun8i_thermal.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
-> index 793ddce72132..066f9fed9b86 100644
-> --- a/drivers/thermal/sun8i_thermal.c
-> +++ b/drivers/thermal/sun8i_thermal.c
-> @@ -475,9 +475,7 @@ static int sun8i_ths_register(struct ths_device *tmdev)
->  		if (IS_ERR(tmdev->sensor[i].tzd))
->  			return PTR_ERR(tmdev->sensor[i].tzd);
->  
-> -		if (devm_thermal_add_hwmon_sysfs(tmdev->dev, tmdev->sensor[i].tzd))
-> -			dev_warn(tmdev->dev,
-> -				 "Failed to add hwmon sysfs attributes\n");
-> +		devm_thermal_add_hwmon_sysfs(tmdev->dev, tmdev->sensor[i].tzd);
->  	}
->  
->  	return 0;
-> 
+Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index e34d82b18a67..f77d11c91a75 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -105,7 +105,7 @@ struct qcom_adsp {
+ 	struct qcom_scm_pas_metadata dtb_pas_metadata;
+ };
+ 
+-void adsp_segment_dump(struct rproc *rproc, struct rproc_dump_segment *segment,
++static void adsp_segment_dump(struct rproc *rproc, struct rproc_dump_segment *segment,
+ 		       void *dest, size_t offset, size_t size)
+ {
+ 	struct qcom_adsp *adsp = rproc->priv;
+-- 
+2.34.1
 
