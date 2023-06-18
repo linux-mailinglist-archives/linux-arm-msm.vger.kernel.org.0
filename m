@@ -2,337 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BA9C734700
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 18:32:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CB5F734711
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 18:49:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbjFRQco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Jun 2023 12:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39056 "EHLO
+        id S229615AbjFRQt0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Jun 2023 12:49:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbjFRQcn (ORCPT
+        with ESMTP id S229524AbjFRQtZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Jun 2023 12:32:43 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E7688E
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 09:32:41 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qAvIE-0007iI-Ow; Sun, 18 Jun 2023 18:30:22 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qAvHk-008Jb7-8Z; Sun, 18 Jun 2023 18:29:52 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qAvHi-00FKRv-H8; Sun, 18 Jun 2023 18:29:50 +0200
-Date:   Sun, 18 Jun 2023 18:29:50 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Maxime Ripard <mripard@kernel.org>
-Cc:     Raymond Tan <raymond.tan@intel.com>,
-        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        dri-devel@lists.freedesktop.org,
-        Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Steven Price <steven.price@arm.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        linux-samsung-soc@vger.kernel.org, Robert Foss <rfoss@kernel.org>,
-        Karol Herbst <kherbst@redhat.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Danilo Krummrich <dakr@redhat.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-sunxi@lists.linux.dev, Rob Clark <robdclark@gmail.com>,
-        Rahul T R <r-ravikumar@ti.com>,
-        Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        etnaviv@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>,
-        Inki Dae <inki.dae@samsung.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Sean Paul <sean@poorly.run>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>,
-        kernel@pengutronix.de, Alex Deucher <alexander.deucher@amd.com>,
-        freedreno@lists.freedesktop.org,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Miaoqian Lin <linmq006@gmail.com>,
-        linux-aspeed@lists.ozlabs.org,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        John Stultz <jstultz@google.com>,
-        Mihail Atanassov <mihail.atanassov@arm.com>,
-        Liang He <windhl@126.com>,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        lima@lists.freedesktop.org, Chunyan Zhang <zhang.lyra@gmail.com>,
-        Alexey Brodkin <abrodkin@synopsys.com>,
-        Minghao Chi <chi.minghao@zte.com.cn>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        linux-mips@vger.kernel.org, Liu Ying <victor.liu@nxp.com>,
-        linux-arm-msm@vger.kernel.org,
-        Wang Jianzheng <wangjianzheng@vivo.com>,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Brian Starkey <brian.starkey@arm.com>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        Yuan Can <yuancan@huawei.com>, Stefan Agner <stefan@agner.ch>,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-tegra@vger.kernel.org,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Sam Ravnborg <sam@ravnborg.org>, Rob Herring <robh@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Mali DP Maintainers <malidp@foss.arm.com>,
-        Joel Stanley <joel@jms.id.au>, nouveau@lists.freedesktop.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Lyude Paul <lyude@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-        Guo Zhengkui <guozhengkui@vivo.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Alison Wang <alison.wang@nxp.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Deepak R Varma <drv@mailo.com>,
-        Karol Wachowski <karol.wachowski@linux.intel.com>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Yannick Fertre <yannick.fertre@foss.st.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Emma Anholt <emma@anholt.net>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Laura Nao <laura.nao@collabora.com>,
-        David Airlie <airlied@gmail.com>, Marek Vasut <marex@denx.de>,
-        linux-renesas-soc@vger.kernel.org,
-        Yongqin Liu <yongqin.liu@linaro.org>,
-        Jayshri Pawar <jpawar@cadence.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Russell King <linux@armlinux.org.uk>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Philippe Cornu <philippe.cornu@foss.st.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Melissa Wen <mwen@igalia.com>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Fabio Estevam <festevam@gmail.com>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Qiang Yu <yuq825@gmail.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Lucas Stach <l.stach@pengutronix.de>
-Subject: Re: patches dropped from drm-misc-next [Was: Re: [PATCH 00/53] drm:
- Convert to platform remove callback returning] void
-Message-ID: <20230618162950.6th2yo66baqay5mv@pengutronix.de>
-References: <20230507162616.1368908-1-u.kleine-koenig@pengutronix.de>
- <20230601154002.uv2wfatpb7b45duz@pengutronix.de>
- <CAD=FV=WvP--wJwBQtnSoW_xb57R1Wf9dH0XzWxe+NorczXfeAw@mail.gmail.com>
- <20230617161222.wy55pbomnrrlfy5u@pengutronix.de>
- <CAD=FV=U5gbMUNteyyFcTvHVBDWzfthM0aDirJC+yXGovDwMOBA@mail.gmail.com>
- <20230618123915.hmy66z7e532jhwgk@pengutronix.de>
- <jlq2xayh4dxfigfsh2fms2kt4hlrqcwxblffmqq7czbhqhhvz7@hsvol72f5i3y>
+        Sun, 18 Jun 2023 12:49:25 -0400
+Received: from sonic309-25.consmr.mail.ir2.yahoo.com (sonic309-25.consmr.mail.ir2.yahoo.com [77.238.179.83])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BBCE4E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 09:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1687106962; bh=1byxmKsuwVtHNKVjs0CfYPPIiLgXwsmmbrJRN3DT5sY=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=uha/SwH7I7rs/r5ZpEHymasRxI2NNC+1btE5cJbHnBVi/+2EP7LDhN4wP0wDJUYFZOHGiyqYc6KUZdGxbK/K5mHGpV0F5Op8ZtJI8ZAGhObL62malGYW6geWo/PDkaNG+bbZx5AixdS/ovGfmzqmzPLyac5wc/8HU47ZdWI6bRFyGu2FAmtdOxy+Zs18pBuCIB3ns2p/sxLaJI9ag/V6BGpq651v+Mdo5Mt8drysFdU2I6OIGYU0/6jEiLIUIkufSuDABDMOHHFDT5favNAZie9mABoyfHlT/MRyDTqRa4+qr2JkIAxUZsyjmSV3WR7UptRCAYk0k1y5Sie2SoaKkA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1687106962; bh=aJFsOPX7ARn/sObHD13lQRHiRpseUebdhxOsSCSQNu9=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=pnZ2jomD+qitYFiL0hkl3X6RthizvbE/SLUTXcJrhYl98NczZJKkXP2bQI9AHkdXsajDhiSPhjsTpHboF6vn+fdmACCYu9w2UGz/LDqZ6nb9z5FCLXaI13nX5BDu7uEIB6oRBBakArIL09jTJT16NJJNz4/T2nCeQkR2MhZqmM0DhM1B62TOzJd1CmhhRYskRyVTkPccRGNQPRNzJ1Rz58GN33Z8ZQOLJ79mEKObXjTyRCepkukeVHCK2OG/v3m7JuX1Uugj2ozeDjpTB5fzhhtQI/9RqdLe6mtSaW/y0vyIBmpsWssIa6/BD1irrJACUsSHr20N1X2YKExjn6fxcg==
+X-YMail-OSG: y1.8yFUVM1nNIPH0bembKj4.xSeiOLT4LwMSpl8Fo4EH0ZaQSwdfamb.Rx4slUh
+ 7baTXb1K7zM.3kQpzH8Ut2G1xug_uq4zseHmxx_kanDYG3syXd1cOAe1zyH779ysxCKV9YEnSW1l
+ FCGTHDUJPGzqh3qneYpBMye0SWkONmrU6C3NM3p.7PWscqnII.v7kzwtzsoSbVl6rKH3opYc4.Ol
+ Ohz_Xgaltk8D4Lo6ca8Ms4QLPF9scTKV.X03OZUFxAIsFopmBjXG6d1De88FtZ68aLOuhYsRcMMP
+ W6o01rAep6TzOWOYngW.u6xI_VES6dvwhkkFkWq8zduOGQkbcOoqB58Pyih9bmPYkA1igg1dneck
+ Eabn95qIKME_eoi1yTKOREO5HigP7Mt84bwGUNlJmoi1AYjWWqxIU9DC321_K8o4P.6IzBj1mJux
+ HG2aWh7eWwnl0gQY2yFmgZ36Bljt1CCsu_gMeES_cSmbukeRWhD.eApRt14XcXvxiX782ubfprf_
+ o9MTiiHmF6gMf5Ji23L7DuSuSOjDQW87703aR1sTlbkComoBFSkeGy3jNP7tx9Pazqg72MUv9T_A
+ 0O61VhZpoGjllLpcXmAyETtli1E415ZnH.bY_.RrS2B2v3GRU5vkMoSvk60pZ.abI6X1VGyL3oHg
+ TlOOnSG.fl1jdJWS7MsOfDHdDqOmtFvuxKV35CRMVC5pLscK6eiWVEw3fqxqlhlbLja8yAC_B1cx
+ _7i85Auca2KrGtsByuXX.0VUKb2a4EtJHvb5Fl49jfleS6skZLLRrpO77yNK35xSBjdfAebBmkcs
+ Z3oAvk6suwoUeTMxfKUCctfZlhcmsaV3KQCwuosh73jegIX4P6GqP0AKbreH.eYFrE154.FNQwxE
+ hBIgLNxlJSZmxfrCVoz1JZIPxrQJrkLb39vtXnCZNWQoPwV3WaEEcnsdFS_wJ_IGwoAONTT8fYnR
+ abm5fbjD.HHpj0mDbSmbFEtHu5VPSC51I8C_uwU7d.bYhTtcEOkW7w3luHruedxZUafW7LC.XvRD
+ CzDl34SGHnHONDEPffx7eUsK1hMZb1B.bWJC_OXwBj_r66M5ScCWHZ8ebwUfHR5AY26H_nx2.Mys
+ dirxSG69kKE8aBl0mybEDi.9g1yF9V2y9cXK1HrNWg5VYTZwAbW_XcYmpwZJem4sQgxti3jYFyxv
+ XS4JUypxm88YYDKOXGtBlvePamRdNN4hNpBJJzd3TJaml2gChrBHE0LFBDBY4yfj9nzKTBNzGxks
+ tRA8nkI.BL5InLQY_gceaK0BHF.QqxhWFNVod8EpDBYO5L5cbUqcoeY__sbHxu.meiZKhHUNVeE9
+ v1Btbe3aHDeY2Wu_aLTleBkcoJgyywzLazzK4QoptBHXrZbWGRFvckfa_F8Z4HlOYCJyCnKN7391
+ AgHfUWrH3cP6KyH51olSlCAchgSjqCl8a58pZ0cudm0EI4qTTdnRfFWL6FlIU1LqRcecGKr3ZitK
+ 0FrSEVnDqHAUz01DWkb0y8Xj6znxBorKK4K.LN7lZAk53NxixcfLm1yzwJw2oYi4HQfj.asZl16Y
+ FKFYkbv7ROyoeRRIDdzye7qX89TkptfquKr9aZDl6YHjxKNmhQqDixsD4iK30BO.4m574LOB.xmN
+ QkOq6RQGdy2mVEXQ1DXabbJuf7m4EYzs.IJ9hpdR6uOCmhquk.CPfXlKRmyIMCa2MT8fGs6.Cu1M
+ nIbdc2KXQLcuon2JxEacK7yi5Oi2vMP6fyNKimQIXeOu0U6IZkaB8wvDPZFlOZDg8VYS8QoFJlLP
+ uZSr9nszMXwNPb.rMU1DeJdCg0aJKeIo..GDT6rFsNbpy9p9h.GsEMENJ5oCHEe9JGL69xCPuTar
+ Ba0zlgJdJI7i5IxK1XIDz_ZGr.fQLHwhYg8HSaUuxN89hG1RVZPFuozz2BTOws9KmNhKsxngAc1F
+ HnF0UuNQ.sJwO_VOj4wEfSbL6mdCBXYXA1y38RryQhBdvQoKPS27J1rvW02EhffbqNK9ufmwEd.X
+ VvZ63ckWZLIVlShmNdOe6R2IcQrpsDJ4f2PrweVTLRcNHbWvtpzZrupUL2qlF0D1WR6zOUOJ8ALu
+ XUFhSZqpETKd_Fjt3YO5Z7TL6y1CjbofIEDyv.VkTyzckCVbipbv_f8NV6.o4ivr829cFn4G1jwC
+ bp3ZhyXiSlUV3Djteo2.RxciRbsFTTi4itNpdiBCPfFJ7Wi4JzSQQLctQ8Wir7_ooQwmqbYDJ6MW
+ 3KvS2_l8AhA5PjNJCM6JsP2PQrKddsvL1idKtjCKyyIFEu2KCBjTFknxeqrBOrxFnk2J7RMwubGz
+ 0KxZ7L7G_HTpsmQcak1kuLNTdp65MF03k
+X-Sonic-MF: <jahau@rocketmail.com>
+X-Sonic-ID: 0a8d3c80-63d9-43ac-ad23-34ea945a5cd7
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.ir2.yahoo.com with HTTP; Sun, 18 Jun 2023 16:49:22 +0000
+Received: by hermes--production-ir2-7867f454fc-z6m77 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 4eb4576de48997a989d0f23ab4fb0b6c;
+          Sun, 18 Jun 2023 16:49:18 +0000 (UTC)
+Message-ID: <ab3e475f-27ae-e718-60bd-cb22f5070942@rocketmail.com>
+Date:   Sun, 18 Jun 2023 18:49:16 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="56squ37ki3ucgp5d"
-Content-Disposition: inline
-In-Reply-To: <jlq2xayh4dxfigfsh2fms2kt4hlrqcwxblffmqq7czbhqhhvz7@hsvol72f5i3y>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH RESEND] arm64: dts: qcom: msm8916-samsung-serranove: Add
+ RT5033 PMIC with charger
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
+        Raymond Hackley <raymondhackley@protonmail.com>,
+        Henrik Grimler <henrik@grimler.se>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230617002934.39408-1-jahau.ref@rocketmail.com>
+ <20230617002934.39408-1-jahau@rocketmail.com> <ZI2_565RFDtR3Sa-@gerhold.net>
+Content-Language: en-US
+From:   Jakob Hauser <jahau@rocketmail.com>
+In-Reply-To: <ZI2_565RFDtR3Sa-@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Mailer: WebService/1.1.21557 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Stephan,
 
---56squ37ki3ucgp5d
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 17.06.23 16:15, Stephan Gerhold wrote:
+> On Sat, Jun 17, 2023 at 02:29:34AM +0200, Jakob Hauser wrote:
 
-Hello Maxime,
+...
 
-On Sun, Jun 18, 2023 at 04:32:55PM +0200, Maxime Ripard wrote:
-> On Sun, Jun 18, 2023 at 02:39:15PM +0200, Uwe Kleine-K=C3=B6nig wrote:
-> > On Sat, Jun 17, 2023 at 10:57:23AM -0700, Doug Anderson wrote:
-> > > On Sat, Jun 17, 2023 at 9:15=E2=80=AFAM Uwe Kleine-K=C3=B6nig
-> > > <u.kleine-koenig@pengutronix.de> wrote:
-> > > > Together with the patches that were applied later the topmost commit
-> > > > from this series is c2807ecb5290 ("drm/omap: Convert to platform re=
-move
-> > > > callback returning void"). This commit was part for the following n=
-ext
-> > > > tags:
-> > > >
-> > > >         $ git tag -l --contains c2807ecb5290
-> > > >         next-20230609
-> > > >         next-20230613
-> > > >         next-20230614
-> > > >         next-20230615
-> > > >
-> > > > However in next-20230616 they are missing. In next-20230616
-> > > > drm-misc/for-linux-next was cf683e8870bd4be0fd6b98639286700a3508866=
-0.
-> > > > Compared to c2807ecb5290 this adds 1149 patches but drops 37 (that =
-are
-> > > > also not included with a different commit id). The 37 patches dropp=
-ed
-> > > > are 13cdd12a9f934158f4ec817cf048fcb4384aa9dc..c2807ecb5290:
-> > > >
-> > > >         $ git shortlog -s 13cdd12a9f934158f4ec817cf048fcb4384aa9dc.=
-=2Ec2807ecb5290
-> > > >              1  Christophe JAILLET
-> > > >              2  Jessica Zhang
-> > > >              5  Karol Wachowski
-> > > >              1  Laura Nao
-> > > >             27  Uwe Kleine-K=C3=B6nig
-> > > >              1  Wang Jianzheng
-> > > >
-> > > >
-> > > > I guess this was done by mistake because nobody told me about dropp=
-ing
-> > > > my/these patches? Can c2807ecb5290 please be merged into drm-misc-n=
-ext
-> > > > again?
-> > >=20
-> > > Actually, it was probably a mistake that these patches got merged to
-> > > linuxnext during the 4 days that you noticed. However, your patches
-> > > aren't dropped and are still present in drm-misc-next.
-> > >=20
-> > > drm-misc has a bit of a unique model and it's documented fairly well =
-here:
-> > >=20
-> > > https://drm.pages.freedesktop.org/maintainer-tools/drm-misc.html
-> >=20
-> > Is there a flaw then in this unique model (or its implementation) when
-> > drm-misc/for-linux-next moves in a non-fast-forward manner? This isn't
-> > expected, is it?
->=20
-> There's no expectation afaik. Any tree merged in linux-next can be
-> rebased, drop a patch, amend one, etc. without any concern.
+>> +		regulators {
+>> +			safe_ldo_reg: SAFE_LDO {
+>> +				regulator-name = "SAFE_LDO";
+>> +				regulator-min-microvolt = <4900000>;
+>> +				regulator-max-microvolt = <4900000>;
+>> +				regulator-always-on;
+>> +			};
+>> +			ldo_reg: LDO {
+>> +				regulator-name = "LDO";
+>> +				regulator-min-microvolt = <2800000>;
+>> +				regulator-max-microvolt = <2800000>;
+>> +			};
+>> +			buck_reg: BUCK {
+>> +				regulator-name = "BUCK";
+>> +				regulator-min-microvolt = <1200000>;
+>> +				regulator-max-microvolt = <1200000>;
+>> +			};
+> 
+> The "regulator-name"s here don't really seem useful, since they're just
+> the same as the ones already declared in the driver. Can you drop them?
+> Alternatively you could assign more useful board-specific names, such as
+> the CAM_SENSOR_A2.8V that was used downstream.
+> 
+> Also, I think it would be slightly clearer to prefix the regulator
+> labels (safe_ldo_reg, ldo_reg etc) with rt5033_. Perhaps
+> "rt5033_ldo_reg" or "rt5033_reg_ldo"?
 
-I agree that there are no rules broken for a tree that is included in
-next and a maintainer is free to rewrite their tree independant of the
-tree being included in next.
+...
+About the "regulator-name"s I wasn't really aware. I don't have a strong 
+opinion on this.
 
-Still I think that shouldn't be used as an excuse. For me, if a
-maintainer puts some patch into next that's a statement saying
-(approximately) "I think this patch is fine and I intend to send it to
-Linus during the next merge window.". So my expectation is that if a
-patch is dropped again from next, there was a problem and it would be
-fair if the maintainer tells the author/submitter about this problem and
-that the patch was dropped.
+With the downstream names, it would look like this:
 
-So my concern is not about rule breaking, but about the strange signal
-that is sent to contributors by including their work in next for some
-time and then dropping it again without comment.
+regulators {
+	rt5033_reg_safe_ldo: SAFE_LDO {
+		regulator-name = "RT5033SafeLDO";
+		regulator-min-microvolt = <4900000>;
+		regulator-max-microvolt = <4900000>;
+		regulator-always-on;
+	};
+	rt5033_reg_ldo: LDO {
+		regulator-name = "CAM_SENSOR_A2.8V";
+		regulator-min-microvolt = <2800000>;
+		regulator-max-microvolt = <2800000>;
+	};
+	rt5033_reg_buck: BUCK {
+		regulator-name = "CAM_SENSOR_CORE_1.25V";
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+	};
 
-> It's also why linux-next is rebuilt entirely every day.
->=20
-> > > The key is that committers can commit to drm-misc-next _at any time_
-> > > regardless of the merge window. The drm-misc merge strategy makes this
-> > > OK. Specifically, when it's late in the linux cycle then drm-misc-next
-> > > is supposed to stop merging to linuxnext. Then, shortly after the
-> > > merge window closes, patches will start flowing again.
-> > >=20
-> > > So basically your patches are landed and should even keep the same git
-> > > hashes when they eventually make it to Linux. They just won't land for
-> > > another release cycle of Linux.
-> >=20
-> > OK, c2807ecb5290 is still included in drm-misc-next. So while I don't
-> > understand the whole model, the patches at least seem to be scheduled to
-> > go in during the next merge window.
->=20
-> It's not that complicated.
->=20
-> drm-misc-next is always open, and we start targeting release X + 2 when
-> X-rc6 is released.
->=20
-> This is due to Linus wanting all the commits sent as part of the PR in
-> linux-next for two weeks.
->=20
-> In order to converge towards (X + 1)-rc1 in linux-next, as soon as X-rc6
-> is released, we remove drm-misc-next from the linux-next branch. All the
-> patches in drm-misc-next that were targetting X + 1 are in drm/next by
-> then, so it's not a concern.
+Dropping them would look like this:
 
-So if I were a maintainer of drm-misc, I'd want that no commit from
-drm-misc-next migrates to next after -rc6.
+regulators {
+	rt5033_reg_safe_ldo: SAFE_LDO {
+		regulator-min-microvolt = <4900000>;
+		regulator-max-microvolt = <4900000>;
+		regulator-always-on;
+	};
+	rt5033_reg_ldo: LDO {
+		regulator-min-microvolt = <2800000>;
+		regulator-max-microvolt = <2800000>;
+	};
+	rt5033_reg_buck: BUCK {
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+	};
 
-Also note that the branch head in question (i.e. c2807ecb5290) was
-included in next-20230609, while v6.4-rc6 was tagged on Jun 11. So
-according to the rules you described c2807ecb5290 could have been
-qualified to go into v6.5-rc1?!
+I would rather drop them. The first name "RT5033SafeLDO" doesn't add 
+much information. The other two I'm not fully sure if they provide the 
+cam sensor only or if there might be other users as well. Also it add an 
+additional set of names. When dropping them, the generic names SAFE_LDO, 
+LDO and BUCK are taken from the rt5033-regulator driver.
 
-Best regards
-Uwe
+Unfortunately, I added the example in the dt-bindings with the generic 
+names. So this question might come up again when someone else adds 
+rt5033-regulators to another device.
 
+For the phandle labels I'd go for rt5033_reg_..., I already changed them 
+in the examples above.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=C3=B6nig         =
-   |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---56squ37ki3ucgp5d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmSPMP0ACgkQj4D7WH0S
-/k5slQf/QGa59eGA08Ft03sMAU0WPOe2pro9UKpdc0k/xBm24fC7BCSdOSlR7bXI
-Yk6FDfiYpZII3/lP8R+rQrHLhbqjpimjuGjXcKbGq60shljeQf3zOEMwL5Q4yUgD
-Rd/FHwMdOLAtsOPYEYABK+DXld46QIlTPcKncCp4HXgsTSP4hL68rUM1rBHehmwQ
-V9Au18gv810TLMbgaBZ32xzFXKId31Myw7Nya2Rhuv9iuardyCfKxfrh95WUVM2N
-iihFikVUtNTP0rOe0qJHF65A6l0wvexZ4OuL5fc3DZonv3/D6RNu5Jl/Tm4h2RgE
-EPFxcFKuIo9eFOU4Yvtn2yIKvB6YWQ==
-=ov7F
------END PGP SIGNATURE-----
-
---56squ37ki3ucgp5d--
+Kind regards,
+Jakob
