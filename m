@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF730734580
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 10:37:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F242F734584
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 10:39:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjFRIhF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Jun 2023 04:37:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37350 "EHLO
+        id S229677AbjFRIjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Jun 2023 04:39:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjFRIhE (ORCPT
+        with ESMTP id S229447AbjFRIjI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Jun 2023 04:37:04 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F8CF12F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:37:02 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-988689a5f44so43538766b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:37:02 -0700 (PDT)
+        Sun, 18 Jun 2023 04:39:08 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4D0810E3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:39:06 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9829a5ae978so382529566b.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687077421; x=1689669421;
+        d=linaro.org; s=google; t=1687077545; x=1689669545;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CqBu5wPBLSKpT6xKjTZPHEicExKCCi3BZO99th5vmu0=;
-        b=IfI28QAoO6Y19vMkOqSdshh/D7g51BT9PMVm9xXlg7mMo17+2bESmsKYK1I+u5OLB0
-         D0R4gNuEpTL6u1yDfAH7fKIOsBVZbhyf8oJtrmqSg4rkoyPwCRabJKDVMrgyCV5AK3xg
-         9wcXRyiPBHwjy4Tp616coNpDGxCe1xLvStRT46g6qtL6hGueMu0yjj1bUSVsperBa09t
-         NmJDXQvc3CPB5EVTx1/xraCuBi0P2wsxjD8XDJi9U40Pugpb00JwT5SkPy+p48VEYL6g
-         j2skJpK4AtNQiaYIGdul19ponWJc7BSXnvCWM8d0a42hOHuRk5U0WYd9duM+srSRSHyv
-         FnFg==
+        bh=9UyA3hve3xqw+sdsT5ZWCGTlCEA9xRySCIjO+MMCiLQ=;
+        b=gd6GWLW5N1St5Q4nYQfmRG9DQhWzeHHQldClzZTYzcuA4Cde5T0PZfHFRmhB+id7yQ
+         9RL79p/I5SxHRGJqElqmEr0NuYPweTTopI7bU0ECo2Gn14e5lYJzUqdMrXK4BNarUwea
+         3Mh3HlTogsKEIXhwIJJkEXiOzJP0WXCJc8uzyYZMCNtL47COxdHD1nbNTmvVfs7bxgQt
+         +69vCKkeCTS7/2yaBn3QX5cYVfXPexWlTOilqc8Cmf8Tt3y9HqM7g9OYRLOwLBMBanAw
+         OG7OFQEGwKos1m8HCp55hXkSu1PFzsSl2VeKL+qylKMsH48lcCRLiRZNCP5A0vY/zKRN
+         AV0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687077421; x=1689669421;
+        d=1e100.net; s=20221208; t=1687077545; x=1689669545;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CqBu5wPBLSKpT6xKjTZPHEicExKCCi3BZO99th5vmu0=;
-        b=BCdXVQi+aM34ND9S9TUj8YiNhhhdGSFpQbY9+gIHhYnFOD7W3OG8SDYuxtaRFrTMpq
-         sZkzI1XXgbJChOnMjtCE2CzTOf3aSqOzCHUbb3FOndYRrpOKP6ejUOuXCaf3ERug7wRE
-         KlAS6uCPYUSikafFBT67dk0YMeImSbkuXxP9UkM6jOWYlu7pRssmi9c0fH+b2sRO0nVP
-         WXUrGgG7OPGDH+iqZywM17k6FHQs0Yng6ocXUe4f3QoePp0Ph9SanW3WsD5KZhq8cA+r
-         Pgiop36bDA9NvFiPjl0YT9R+WoHHh5i6ouUklHg+tEMRXpZcbDzOgp4FEL1q/ZEvVVEY
-         eWaw==
-X-Gm-Message-State: AC+VfDzGjiIWc66oQ6QmiY5CDiwWiagXYEXu4tVDCKVVB9j/tB/WDHKw
-        e+jkCp2RAG6eBbjrgCIgm4N2Qw==
-X-Google-Smtp-Source: ACHHUZ6D8tZRpKg4w9Sff05q/wAII4JkK1iFtnAjdeEIIbbZN0hkWuSpiteTsfq+osyb55Q4+XZMJw==
-X-Received: by 2002:a17:907:1b09:b0:974:771e:6bf0 with SMTP id mp9-20020a1709071b0900b00974771e6bf0mr5372268ejc.56.1687077420866;
-        Sun, 18 Jun 2023 01:37:00 -0700 (PDT)
+        bh=9UyA3hve3xqw+sdsT5ZWCGTlCEA9xRySCIjO+MMCiLQ=;
+        b=l+zcGjtBbTxacKX5+FmHSFdLQIn+aYp++Kl2AdH8lWb7D9EZOhiYwIXcb2hTQbRHqU
+         VLOVgIGJ5T1A6wagNBCDRMt7YLtaENHuZkHCUnPEIiBqJhzmhbV9jkntEqZFb1iWMc8r
+         kejTpW5pXejLmr67U8vfm44g/pYGF3SUPUxYwk9gWGQFFiPD4zwWdqa3YoJUf+8oHE7v
+         kLXT4/fRaA5YYYhzyFF6LisESsLbS202d2xF8K6sM9MHmeHqDFnX7dzYhKv+7J+N1I+8
+         pZ9exUHyfjYbm+C9BkHWChHj82dqumx26yQS+Uyp1ZN4KppC9d7DLyqJjabjQT6I9mdR
+         xmOQ==
+X-Gm-Message-State: AC+VfDwH8UeK8fW2C1+63hvEUunBVEQdKSQlx8wUgaVCZGad7SVxUd08
+        7NgS8rvUjRHvgiIL2Az6Q1hR4Q==
+X-Google-Smtp-Source: ACHHUZ6IBsZP/mUu94tjlGbEtnaYcAMXUk02/bHR4PWeAdpbSzxJIHffQyZbJ/q1chW8yOrQbwGChQ==
+X-Received: by 2002:a17:907:7dab:b0:94e:8559:b5c5 with SMTP id oz43-20020a1709077dab00b0094e8559b5c5mr6878580ejc.64.1687077545201;
+        Sun, 18 Jun 2023 01:39:05 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id cd10-20020a170906b34a00b0098696189722sm2578047ejb.192.2023.06.18.01.36.58
+        by smtp.gmail.com with ESMTPSA id s14-20020a170906354e00b009888b71c368sm293900eja.152.2023.06.18.01.39.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Jun 2023 01:37:00 -0700 (PDT)
-Message-ID: <bfa97efc-cd3d-dee7-157f-02f2cd01ff46@linaro.org>
-Date:   Sun, 18 Jun 2023 10:36:58 +0200
+        Sun, 18 Jun 2023 01:39:04 -0700 (PDT)
+Message-ID: <27b85110-9eb8-84dc-17a9-908e312e2e22@linaro.org>
+Date:   Sun, 18 Jun 2023 10:39:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
@@ -90,27 +90,12 @@ On 26/05/2023 21:22, Bhupesh Sharma wrote:
 > 
 >   arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dtb:
 >     dma-controller@1dc4000: iommus: is too long
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Tested-by: Anders Roxell <anders.roxell@linaro.org>
-> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> index c663b6102f50..5636d38f712a 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> @@ -44,7 +44,7 @@ properties:
->  
->    iommus:
->      minItems: 1
-> -    maxItems: 4
-> +    maxItems: 5
 
-This needs at least 6 (sm8250).
+Also, please drop error message, because it is not true. The files do
+not have such device node, so you cannot have such warning.
+
+Please rewrite the commit msg to explain that certain devices, e.g.
+sm8250, use more iommus.
 
 Best regards,
 Krzysztof
