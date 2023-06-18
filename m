@@ -2,90 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96C9073459A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 10:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A3047345EA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 13:44:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbjFRIx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Jun 2023 04:53:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40126 "EHLO
+        id S229767AbjFRLov (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Jun 2023 07:44:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjFRIx5 (ORCPT
+        with ESMTP id S229512AbjFRLou (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Jun 2023 04:53:57 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A61ACDD
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:53:55 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9875c2d949eso225659466b.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:53:55 -0700 (PDT)
+        Sun, 18 Jun 2023 07:44:50 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06FBE5E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 04:44:48 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-978863fb00fso400891666b.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 04:44:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687078434; x=1689670434;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YOqV3rtDI0CEwXVVct5W5QTJ26AQRGV9DPKnHoyoIyQ=;
-        b=Zj+V58GInMfbtKYprzCSYWjBjv7MENDx3liQ1mLiiPKRVC0M87JHlg52gJlVfOKyIh
-         ZWa6SH3qB8nijzClxj1aD9iwcNqO8ar4GRB1gRd04tCMxTOASO4lZwGD+T3mbmb0BJG1
-         ZPHNtIX5xLZMNmYqAy1pFIsantKEsbI6WA1BV74JL6dWs6fFia2n5GpFiqifAS11ABFD
-         3JI+0FuSgBNyqDmUVbmZfjWKa7LGBkior3iAT1J795YWg1i8otdJtkpKE7xOVnnXROOD
-         yhcLJJi47PnyNTjLDAtBWTtW24DKuNUcod8sJq8Q9G2LJjN9IWFE/dKAUI4CWJv1HsaY
-         FY6A==
+        d=linaro.org; s=google; t=1687088687; x=1689680687;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=E2l62kT3eiLEXqJg8CxMuWY141wzPG/hn4e3QVCnoRo=;
+        b=whUyseXZjMZhBSfuawXlWU0LfE0rSHAdHQOKBNAIR+CrxT7m1V70RciIGp+YM6yHAO
+         6HBjvZg59OnFQ4FTYrhHWz5++OfJmZjh/N1fMrMG1FYn+jIlnvSs16EKkW38KUlxWgio
+         twb0wyP77TH8tW4/r30MLeOnFhuNQ9SbU2FJOTXg8m34sdv0HKH3NlW9bzL0L8rea+5X
+         7+SfIZjHdAkxwP9JjrWJeeUFZvoQhXWdST7kMH8kfsm8/k77iwPEhnpRzgTCMT+zKXOY
+         cPycoOoQ4QcAEbwMvox/Y1BPmrDkEgwXjUsIdQ+5Rs1r5HRxRTVYJ+6mzBdG0kstlCtA
+         ytVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687078434; x=1689670434;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YOqV3rtDI0CEwXVVct5W5QTJ26AQRGV9DPKnHoyoIyQ=;
-        b=H56fSEicZYZxSDXDjFpQ0+3Vcmt7KW0tLyHMK6xqUbG8/gmWpDUI2wQpbkkRi9E0s8
-         LLhsOZW+5nGXowNpusH6BEIpaXyJ5WRK8M5/VndkgmseiwFKNTAPp+7yC2sUQeUSnALj
-         qKs/Rui9QguSHFAHj8uFebLrHeA3ueFCDOerAtqjUEljuavc0+77CgUMNo9Ivk+zaOBF
-         85B5d1idms122eJg1A00wG+t0tU77wm9hyT2jyHhsC8ahPUTIMprA1Y3hIyDmmMrZ/2U
-         K/DneYeh2+03TjF6XDtw/g58gNsxDUJSSwun7pHUMrkV0TFS7iPia0BbnLmjIHy/cB5u
-         XHSQ==
-X-Gm-Message-State: AC+VfDxpjBIiIfppK9Sku+URHJmhSFmES9gOUBU3B6kNlutOsHJ+LDPh
-        Dhvhhz5+gXtrpiwU2iMfbVfqvw==
-X-Google-Smtp-Source: ACHHUZ5XJfX3/rCW8fWgqzmOnFENO/jS3uPJQ7JC93XERneKvBVIK4hcgep9HTEjZOoGKJW1VKUthQ==
-X-Received: by 2002:a17:907:a0c:b0:978:8e8c:1bcb with SMTP id bb12-20020a1709070a0c00b009788e8c1bcbmr6364791ejc.43.1687078434141;
-        Sun, 18 Jun 2023 01:53:54 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id w19-20020a1709064a1300b00988955f7b5esm152722eju.157.2023.06.18.01.53.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Jun 2023 01:53:53 -0700 (PDT)
-Message-ID: <4aadaf24-11f6-5cc1-4fbd-addbef4f891b@linaro.org>
-Date:   Sun, 18 Jun 2023 10:53:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v7 1/3] dt-bindings: ufs: qcom: Add ICE phandle
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1687088687; x=1689680687;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E2l62kT3eiLEXqJg8CxMuWY141wzPG/hn4e3QVCnoRo=;
+        b=FOEs5McZRz2k5XljJRM1mhZnvIRlEt98hBqESgjMTmOzWrjqbCG6wZUOLpZUDJGn2i
+         vtmXqDvLtImivucWAFhco/+nrxR7aGsoQ5gP+aIOjxU2h2ZZ4Mp5kTuC+CgLrbCbrQ58
+         +dWeTY/d9VsTpU5VA2kA9zLXOTXODLJgkjLk1ZU9rNucoolpLJwNYJXg7D1wJnYbCIAu
+         dAP3xT9/P2cYpwq/QS1d60K8Nhi63b8mQX/q7jCDRNtlmlA0sdLMQj8SSTbhXWXbwDao
+         V0VQ7nACfCxWPiR9uu/A+eYMiRX+aHS0qLsCEioiSbrhR4NKAM5m/N52gpSqmqw3rncJ
+         h4cA==
+X-Gm-Message-State: AC+VfDyzTNvlPAppHtdEbAnztyvG369JmsxttchrSNsZxu9cYisS1pta
+        Qaotzk9NvtSUlBIaIzrgTG4rKw==
+X-Google-Smtp-Source: ACHHUZ7OkwHwZ354uyf5KpKgxVBy17PLodEGLL3XG9b4tYp1rBqRcUayxXIOn5EkFUKTc1VIZ7I1Gw==
+X-Received: by 2002:a17:907:7e91:b0:973:cb21:8479 with SMTP id qb17-20020a1709077e9100b00973cb218479mr7048460ejc.70.1687088687234;
+        Sun, 18 Jun 2023 04:44:47 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id p4-20020a1709060dc400b0096f937b0d3esm13183854eji.3.2023.06.18.04.44.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Jun 2023 04:44:46 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-References: <20230408214041.533749-1-abel.vesa@linaro.org>
- <20230408214041.533749-2-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230408214041.533749-2-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/7] arm64: dts: qcom: sm8350-hdk: correct FSA4480 port
+Date:   Sun, 18 Jun 2023 13:44:36 +0200
+Message-Id: <20230618114442.140185-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -94,71 +78,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/04/2023 23:40, Abel Vesa wrote:
-> Starting with SM8550, the ICE will have its own devicetree node
-> so add the qcom,ice property to reference it.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> 
-> The v6 is here:
-> https://lore.kernel.org/all/20230407105029.2274111-3-abel.vesa@linaro.org/
-> 
-> Changes since v6:
->  * Dropped the minItems for both the qcom,ice and the reg in the
->    qcom,ice compatile subschema, like Krzysztof suggested
-> 
-> Changes since v5:
->  * dropped the sm8550 specific subschema and replaced it with one that
->    mutually excludes the qcom,ice vs both the ICE specific reg range
->    and the ICE clock
-> 
-> Changes since v4:
->  * Added check for sm8550 compatible w.r.t. qcom,ice in order to enforce
->    it while making sure none of the other platforms are allowed to use it
-> 
-> Changes since v3:
->  * dropped the "and drop core clock" part from subject line
-> 
-> Changes since v2:
->  * dropped all changes except the qcom,ice property
-> 
-> 
->  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 24 +++++++++++++++++++
->  1 file changed, 24 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index c5a06c048389..10d426ba1959 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -70,6 +70,10 @@ properties:
->    power-domains:
->      maxItems: 1
->  
-> +  qcom,ice:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: phandle to the Inline Crypto Engine node
-> +
->    reg:
->      minItems: 1
->      maxItems: 2
-> @@ -187,6 +191,26 @@ allOf:
->  
->      # TODO: define clock bindings for qcom,msm8994-ufshc
->  
-> +  - if:
-> +      properties:
-> +        qcom,ice:
+FSA4480 has only one port according to bindings:
 
-Un-reviewed. This is broken and was never tested. After applying this
-patch, I can see many new warnings in all DTBs (so it is easy to spot
-that it was not actually tested).
+  sm8350-hdk.dtb: typec-mux@42: 'port' is a required property
 
-Your probably meant here:
-  if:
-    required:
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+index b182f4cf06cc..95a2a42ccb9e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
++++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+@@ -349,16 +349,9 @@ typec-mux@42 {
+ 		mode-switch;
+ 		orientation-switch;
+ 
+-		ports {
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			port@0 {
+-				reg = <0>;
+-
+-				fsa4480_sbu_mux: endpoint {
+-					remote-endpoint = <&pmic_glink_sbu>;
+-				};
++		port {
++			fsa4480_sbu_mux: endpoint {
++				remote-endpoint = <&pmic_glink_sbu>;
+ 			};
+ 		};
+ 	};
+-- 
+2.34.1
 
