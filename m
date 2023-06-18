@@ -2,82 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA5B9734557
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 10:07:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF730734580
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 10:37:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbjFRIHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Jun 2023 04:07:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59948 "EHLO
+        id S229661AbjFRIhF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Jun 2023 04:37:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjFRIHy (ORCPT
+        with ESMTP id S229650AbjFRIhE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Jun 2023 04:07:54 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E29F7E70
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:07:52 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-98377c5d53eso329535766b.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:07:52 -0700 (PDT)
+        Sun, 18 Jun 2023 04:37:04 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F8CF12F
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:37:02 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-988689a5f44so43538766b.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jun 2023 01:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687075671; x=1689667671;
+        d=linaro.org; s=google; t=1687077421; x=1689669421;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=83Nn/kApjqMqR5Y+eBpYu2YO03PvXgyqsQgNeKs9ERs=;
-        b=qXmtLTMeaNyTrIbn+548Mj5DoAdBX6VKfAhSux/803cNvj1mkf2XeClqWtQ4Jnj1b9
-         f0Ivs4xK34vtrxttfs6gqB1TK0Q9BzmajrXk9XIGTnVHfswpvjq/9z4ZrYMYISdrIZVU
-         FKhojUr415St4/7Q8AObHIjWKyHWn35gNvrvOYvp9KIQ1e4jYmMgDTyhfT/QP1wVaog3
-         0AiI3GnRco+XeCijLZpRpV2R7hlGXhj07lN/LBiwItusdZwDRyYR7WTEoUukLsdaKWfI
-         9VZIAoAEVLjDx5QvuTUe188FAYMJCb5C7hrebKrH/EWICkmwtVBbmScXC0Gv9cm/ZjO9
-         VREg==
+        bh=CqBu5wPBLSKpT6xKjTZPHEicExKCCi3BZO99th5vmu0=;
+        b=IfI28QAoO6Y19vMkOqSdshh/D7g51BT9PMVm9xXlg7mMo17+2bESmsKYK1I+u5OLB0
+         D0R4gNuEpTL6u1yDfAH7fKIOsBVZbhyf8oJtrmqSg4rkoyPwCRabJKDVMrgyCV5AK3xg
+         9wcXRyiPBHwjy4Tp616coNpDGxCe1xLvStRT46g6qtL6hGueMu0yjj1bUSVsperBa09t
+         NmJDXQvc3CPB5EVTx1/xraCuBi0P2wsxjD8XDJi9U40Pugpb00JwT5SkPy+p48VEYL6g
+         j2skJpK4AtNQiaYIGdul19ponWJc7BSXnvCWM8d0a42hOHuRk5U0WYd9duM+srSRSHyv
+         FnFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687075671; x=1689667671;
+        d=1e100.net; s=20221208; t=1687077421; x=1689669421;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=83Nn/kApjqMqR5Y+eBpYu2YO03PvXgyqsQgNeKs9ERs=;
-        b=f4ID2AUsJg4PuDEVlKlpKQeOG750x3tXSfVB5cxN3s0hlIG/mgvLEbT9vqE8TI+e7Q
-         Sjjd0NPWM8vOhZEL8NDRBv8b5yYBr/CkXojpPw2WXdRrILGPehXDDNdKtgw538EfRyn7
-         vARpOpMPHyAmFz3riwecvgbZ9Bq7oHAjYdgYeDxvAZaRXhhz5Q+zwlMkidV7UjB7fz4X
-         gKCGLi7GNieqYstfM6eHuSWirSTDFK5QPp5Ms5SiIbIog8S+JLfpvHVISyQLCzapBZ8n
-         Utxtij1ndTfMS3FHNxpYs1y4/5Uj0xywL+hTeQXq678rKLvlFrogF3A6yf+Ye6kZT39V
-         jbNg==
-X-Gm-Message-State: AC+VfDwMjEz1IILzXEj6///apOoJvkzFochNP1K83RlQ0tk/TqSZzse3
-        aiAst8wPjmEwFd71VGgZ70xTJQ==
-X-Google-Smtp-Source: ACHHUZ75qpVXAxr5KwOMXF12+H05NwigsHfr8/BY8mshNmgxXsOq3XP/2PF1B3jSenJ7CMeKukh3nQ==
-X-Received: by 2002:a17:907:702:b0:982:be38:a5df with SMTP id xb2-20020a170907070200b00982be38a5dfmr5961054ejb.63.1687075671039;
-        Sun, 18 Jun 2023 01:07:51 -0700 (PDT)
+        bh=CqBu5wPBLSKpT6xKjTZPHEicExKCCi3BZO99th5vmu0=;
+        b=BCdXVQi+aM34ND9S9TUj8YiNhhhdGSFpQbY9+gIHhYnFOD7W3OG8SDYuxtaRFrTMpq
+         sZkzI1XXgbJChOnMjtCE2CzTOf3aSqOzCHUbb3FOndYRrpOKP6ejUOuXCaf3ERug7wRE
+         KlAS6uCPYUSikafFBT67dk0YMeImSbkuXxP9UkM6jOWYlu7pRssmi9c0fH+b2sRO0nVP
+         WXUrGgG7OPGDH+iqZywM17k6FHQs0Yng6ocXUe4f3QoePp0Ph9SanW3WsD5KZhq8cA+r
+         Pgiop36bDA9NvFiPjl0YT9R+WoHHh5i6ouUklHg+tEMRXpZcbDzOgp4FEL1q/ZEvVVEY
+         eWaw==
+X-Gm-Message-State: AC+VfDzGjiIWc66oQ6QmiY5CDiwWiagXYEXu4tVDCKVVB9j/tB/WDHKw
+        e+jkCp2RAG6eBbjrgCIgm4N2Qw==
+X-Google-Smtp-Source: ACHHUZ6D8tZRpKg4w9Sff05q/wAII4JkK1iFtnAjdeEIIbbZN0hkWuSpiteTsfq+osyb55Q4+XZMJw==
+X-Received: by 2002:a17:907:1b09:b0:974:771e:6bf0 with SMTP id mp9-20020a1709071b0900b00974771e6bf0mr5372268ejc.56.1687077420866;
+        Sun, 18 Jun 2023 01:37:00 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id e27-20020a170906249b00b0098654d3c270sm2815779ejb.52.2023.06.18.01.07.48
+        by smtp.gmail.com with ESMTPSA id cd10-20020a170906b34a00b0098696189722sm2578047ejb.192.2023.06.18.01.36.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Jun 2023 01:07:50 -0700 (PDT)
-Message-ID: <e89e574c-db6d-877b-462c-bb91cc9d9ff1@linaro.org>
-Date:   Sun, 18 Jun 2023 10:07:48 +0200
+        Sun, 18 Jun 2023 01:37:00 -0700 (PDT)
+Message-ID: <bfa97efc-cd3d-dee7-157f-02f2cd01ff46@linaro.org>
+Date:   Sun, 18 Jun 2023 10:36:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v2 1/4] dt-bindings: firmware: qcom,scm: Document that SCM
- can be dma-coherent
+Subject: Re: [PATCH v8 02/11] dt-bindings: dma: Increase iommu maxItems for
+ BAM DMA
 Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>, andersson@kernel.org
-Cc:     amit.pundir@linaro.org, Will Deacon <will@kernel.org>,
-        sumit.semwal@linaro.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@somainline.org, linux-arm-kernel@lists.infradead.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Nikita Travkin <nikita@trvn.ru>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
+        rfoss@kernel.org, neil.armstrong@linaro.org, djakov@kernel.org,
+        stephan@gerhold.net, Anders Roxell <anders.roxell@linaro.org>,
+        Linux Kernel Functional Testing <lkft@linaro.org>
+References: <20230526192210.3146896-1-bhupesh.sharma@linaro.org>
+ <20230526192210.3146896-3-bhupesh.sharma@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
+In-Reply-To: <20230526192210.3146896-3-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,19 +83,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/06/2023 17:14, Douglas Anderson wrote:
-> Trogdor devices use firmware backed by TF-A instead of Qualcomm's
-> normal TZ. On TF-A we end up mapping memory as cacheable. Specifically,
-> you can see in Trogdor's TF-A code [1] in qti_sip_mem_assign() that we
-> call qti_mmap_add_dynamic_region() with MT_RO_DATA. This translates
-> down to MT_MEMORY instead of MT_NON_CACHEABLE or MT_DEVICE.
+On 26/05/2023 21:22, Bhupesh Sharma wrote:
+> Since SM8450 BAM DMA engine supports five iommu entries,
+> increase the maxItems in the iommu property section, without
+> which 'dtbs_check' reports the following error:
 > 
-> Let's allow devices like trogdor to be described properly by allowing
-> "dma-coherent" in the SCM node.
+>   arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dtb:
+>     dma-controller@1dc4000: iommus: is too long
 > 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Tested-by: Anders Roxell <anders.roxell@linaro.org>
+> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> index c663b6102f50..5636d38f712a 100644
+> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> @@ -44,7 +44,7 @@ properties:
+>  
+>    iommus:
+>      minItems: 1
+> -    maxItems: 4
+> +    maxItems: 5
 
-2
+This needs at least 6 (sm8250).
 
 Best regards,
 Krzysztof
