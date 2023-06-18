@@ -2,127 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4F497343C7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jun 2023 22:42:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D3AE7344FF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jun 2023 07:56:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232531AbjFQUmf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jun 2023 16:42:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45332 "EHLO
+        id S229522AbjFRF4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Jun 2023 01:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233644AbjFQUmd (ORCPT
+        with ESMTP id S229456AbjFRF4G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jun 2023 16:42:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 603EA1717;
-        Sat, 17 Jun 2023 13:42:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D0CDE6130D;
-        Sat, 17 Jun 2023 20:42:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70350C433C8;
-        Sat, 17 Jun 2023 20:42:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687034532;
-        bh=WX/ny3bQSc/mSYEm1J1YzU7+UYxZ9RPhpjwAi58MXH4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MXVs55UrLapO907ehdg+amsoikUNM51FImBIRMT57u8WClBi6VnI4k3LFIt0docBw
-         xpmioIJbuGM5NBuzEsBmwTMD6Hmhi+dA8huMnn8vOgvhvMmO3PyM9WLAswHnCa5wQt
-         8ZqWWTckq1H5tkpqi8AiIRie83a7I/B6fYHEsf+9qWb1wfRr2iCixGziOaNJqto8H7
-         uf20rsugiFsAqBSBtsVur79sSxQwKpm6PcCGTNzL2W1hNIPIgVrR5L1E+XjpyWydks
-         qxfuOWcF3IxLQQBoyJz6IN2oFBoXkC5eo0TGOPHD08xszk4eMBGDed3K7YXUouK9jR
-         YnVTx8dSUtovQ==
-Date:   Sat, 17 Jun 2023 21:42:06 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sdx65-tlmm: add pcie_clkreq
- function
-Message-ID: <20230617-untimed-huskiness-fd212e6dca96@spud>
-References: <20230617111809.129232-1-krzysztof.kozlowski@linaro.org>
+        Sun, 18 Jun 2023 01:56:06 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A184310D0;
+        Sat, 17 Jun 2023 22:56:04 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3090d3e9c92so2260807f8f.2;
+        Sat, 17 Jun 2023 22:56:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687067762; x=1689659762;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+NX5ZV664S/3sQaZAuC+xeosJghTMxUMI70alZxPa5Y=;
+        b=paCHA7pjmnWe/IxKblZOvVLJCQMFIcAb2uKzUfv6t5CZ3G1g9hXPWQ58MUXkuXmstv
+         O6R1T7qbyg22aeMnmfS9GKuJZkCptCgv8gl02U7bx3vOy2jTgX9WGMkbt+o0JvCUs+kW
+         bA+mts79t+1rkGlZnKT8v1xPOjTDI1mljmSht/lqTrAYza1MktBdvcCYHnJBJ3J90SAU
+         firfpBvpMPctU6fXBfPySyg6YIq2gUqqEkiphtZ3ZvVVDwpz2lqwWwcsITHzvTMXTJzj
+         W+8jF/PwHqlykUASb2AVCXVaYe1soMWghMN1QCjmmR0zFF3GU948sIjFP62ppXVd7WfZ
+         ffYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687067762; x=1689659762;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+NX5ZV664S/3sQaZAuC+xeosJghTMxUMI70alZxPa5Y=;
+        b=XTEPlWfZmGQJqteKwDhh3yd9fDvZKL6BlNYC7dZbN9tG3GPSZbyyL+aGJMyFtIGg4o
+         3RDNpWAteFnrXJ5yLDVcORZO2fKTjXjIEY5dt2bho042NxNGhvH2eCejxh9fK/yeXu9j
+         I01H5wQRVp4ClgIl0SmZBYjdNkJuhtOHuE8tHpokWKeTLTJM+HWpdq8wLTdABoY8ZZ2R
+         ojSHqojuEOwWfGfjKlmjAtPpGF1edcCjNngvqSCqEn8bGvSGiO/pukV5lDUrz1s3KeNB
+         1REGn6k22jzap3BCWqiWaleRlJLZKzlI9jMhcZAM5WNHtor2dixkhOQscSa1fqauB+q7
+         L0pQ==
+X-Gm-Message-State: AC+VfDydmw0oDciI9oFayGSNQis3NpHBTMGZICbezHJn5aXzMlHxxdAl
+        2gsRd3//jKXH7vav6MRsN24=
+X-Google-Smtp-Source: ACHHUZ6BOZ2LQ6J+Y8YIuDzGK/TfPStSIUARP0Kxc41zdevAjVxrE87pnYjBbRb1udZcUfffG4tAww==
+X-Received: by 2002:adf:f5c8:0:b0:307:9473:fe26 with SMTP id k8-20020adff5c8000000b003079473fe26mr4901839wrp.26.1687067762314;
+        Sat, 17 Jun 2023 22:56:02 -0700 (PDT)
+Received: from jernej-laptop.localnet (82-149-1-233.dynamic.telemach.net. [82.149.1.233])
+        by smtp.gmail.com with ESMTPSA id s14-20020a170906354e00b009888b71c368sm154616eja.152.2023.06.17.22.56.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Jun 2023 22:56:01 -0700 (PDT)
+From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
+To:     glaroque@baylibre.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, amitk@kernel.org, rui.zhang@intel.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, thara.gopinath@gmail.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        anarsoul@gmail.com, tiny.windzz@gmail.com, wens@csie.org,
+        samuel@sholland.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, edubezval@gmail.com, j-keerthy@ti.com,
+        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+        bchihi@baylibre.com, niklas.soderlund+renesas@ragnatech.se,
+        wenst@chromium.org, Yangtao Li <frank.li@vivo.com>
+Cc:     linux-pm@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, Yangtao Li <frank.li@vivo.com>
+Subject: Re: [PATCH v3 02/12] thermal/drivers/sun8i: remove redundant msg in
+ sun8i_ths_register()
+Date:   Sun, 18 Jun 2023 07:55:59 +0200
+Message-ID: <2684470.mvXUDI8C0e@jernej-laptop>
+In-Reply-To: <20230613114904.15749-2-frank.li@vivo.com>
+References: <20230613114904.15749-1-frank.li@vivo.com>
+ <20230613114904.15749-2-frank.li@vivo.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="itG2DWeY27fGdIw0"
-Content-Disposition: inline
-In-Reply-To: <20230617111809.129232-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dne torek, 13. junij 2023 ob 13:48:54 CEST je Yangtao Li napisal(a):
+> The upper-layer devm_thermal_add_hwmon_sysfs() function can directly
+> print error information.
+> 
+> Signed-off-by: Yangtao Li <frank.li@vivo.com>
 
---itG2DWeY27fGdIw0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-On Sat, Jun 17, 2023 at 01:18:09PM +0200, Krzysztof Kozlowski wrote:
-> DTS and driver already support pcie_clkreq function for a pin.  Add it
-> to fix dtbs_check warning:
->=20
->   qcom-sdx65-mtp.dtb: pinctrl@f100000: pcie-ep-clkreq-default-state: 'one=
-Of' conditional failed, one must be fixed:
->     'bias-disable', 'drive-strength', 'function', 'pins' do not match any=
- of the regexes: '-pins$', 'pinctrl-[0-9]+'
->     'pcie_clkreq' is not one of ['blsp_uart1', 'blsp_spi1', ... 'gpio']
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-
-Cheers,
-Conor.
+Best regards,
+Jernej
 
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.ya=
-ml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-> index 2ef793ae4038..27319782d94b 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-> @@ -85,7 +85,7 @@ $defs:
->                  qdss_tracectl_a, dac_calib13, qdss_traceclk_a, dac_calib=
-14,
->                  dac_calib15, hdmi_rcv, dac_calib16, hdmi_cec, pwr_modem,
->                  dac_calib17, hdmi_ddc, pwr_nav, dac_calib18, pwr_crypto,
-> -                dac_calib19, hdmi_hot, dac_calib20, dac_calib21, pci_e0,
-> +                dac_calib19, hdmi_hot, dac_calib20, dac_calib21, pci_e0,=
- pcie_clkreq,
->                  dac_calib22, dac_calib23, dac_calib24, tsif1_sync, dac_c=
-alib25,
->                  sd_write, tsif1_error, blsp_spi2, blsp_uart2, blsp_uim2,
->                  qdss_cti, blsp_i2c2, blsp_spi3, blsp_uart3, blsp_uim3, b=
-lsp_i2c3,
-> --=20
-> 2.34.1
->=20
+>  drivers/thermal/sun8i_thermal.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
+> index 793ddce72132..066f9fed9b86 100644
+> --- a/drivers/thermal/sun8i_thermal.c
+> +++ b/drivers/thermal/sun8i_thermal.c
+> @@ -475,9 +475,7 @@ static int sun8i_ths_register(struct ths_device *tmdev)
+>  		if (IS_ERR(tmdev->sensor[i].tzd))
+>  			return PTR_ERR(tmdev->sensor[i].tzd);
+>  
+> -		if (devm_thermal_add_hwmon_sysfs(tmdev->dev, tmdev->sensor[i].tzd))
+> -			dev_warn(tmdev->dev,
+> -				 "Failed to add hwmon sysfs attributes\n");
+> +		devm_thermal_add_hwmon_sysfs(tmdev->dev, tmdev->sensor[i].tzd);
+>  	}
+>  
+>  	return 0;
+> 
 
---itG2DWeY27fGdIw0
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZI4angAKCRB4tDGHoIJi
-0g1gAQDv2kVJcPxiEhVhKgwUNwWJ7WdK+ExNYXrzNZTq/SemVgEAhdmDEE8h1h26
-TEL4XR+3KBwp/wYgJO0Ah1FoMCqT4g0=
-=UpIb
------END PGP SIGNATURE-----
 
---itG2DWeY27fGdIw0--
