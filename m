@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79D8A734D27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 10:08:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7B47734D22
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 10:08:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbjFSIIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 04:08:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49732 "EHLO
+        id S230218AbjFSIIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 04:08:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbjFSIHe (ORCPT
+        with ESMTP id S229837AbjFSIHe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 19 Jun 2023 04:07:34 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08DEBE4E
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0727EDB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:07:25 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b47354c658so14622181fa.1
         for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:07:24 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f904dcc1e2so20031415e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:07:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687162042; x=1689754042;
+        d=linaro.org; s=google; t=1687162043; x=1689754043;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MP6VTZjk1y8Y2ih01aMJpa2+5nrP0AATdY4kMDgB9U0=;
-        b=IgTp/VsPZH+WJfNfVEqfHxjC4+xyGGXvY1SiMmZhV358q8DZGi6OeNAGYfCB6koH56
-         gfVxRQVNnWExsqYFi26OXvcZi3Tzdd33nHIZdCtlXDhU3k68mP3h1GDLqNQXUrFolD82
-         ebUhEJFIuXyZUrOFL6f83p/72rEkAoOUGh/bXIHMvQziQ/fEZ2TDKaadrUqXCCgJ8RvE
-         /AcZZ5G9z35SP9/R79+LoveySM1UwhSXLTh+fIu2YSIv5bRpNLBbZr6mgjUOO5zgsOHh
-         WilOhjYshsBBaBS/cep5K5phpZVvepxKFAf9nYm9/2G52RijtnUOBv/zFQPzX6j+WwiW
-         ZidQ==
+        bh=EexqmhtANLi6ES9tRfPf7+kAJ9pZLmkSwbWekIJckOU=;
+        b=dyftOPPlVlvJsh/FgH+Ftvc+V1/toEOgrCBPBWBO0TfvZlQx1N86fQ9hZvN6N6ft7u
+         sdGeJWl4Iqg9Ws36vvbZCLMPqbUkZ7UBweyUq3NRDsaobKpHbBlae++Gr5qc18bgkUAB
+         6LT/n22JQLdpzJA6HdjXwWQvZnM4eQMFLrNX6gAtHmvYAp6I5eMT4BVi3axOFIaL4p+c
+         MqQ3bJBKL9r99G0l3LDu0ORtuejw8eTsbcIrjvyyk0YFws/2r3+tIqAcuY2rgH1pp6pI
+         g12NR6WuS3izP9myy/WEvWPjX+41B7Vr/Kz2rax8Iy9Kt9lq9JVk8Uyxyn1dFwhBrGJs
+         RJGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687162042; x=1689754042;
+        d=1e100.net; s=20221208; t=1687162043; x=1689754043;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MP6VTZjk1y8Y2ih01aMJpa2+5nrP0AATdY4kMDgB9U0=;
-        b=jZhU8dWzYcI0dG+IFus1tm6gZCprtYyxyThJfxpsiKHg4leZaKCQ0TEL5V8veCrzuZ
-         yOwaznOR9NetLxW+uQJ1An7HjaFQDhTDptciUAtHuBliGDPDWal0/c+33zdJs3KrEgNc
-         UTLJbOKewqMe3E5lY1ou01IpGtWaBH33KWuz4oUnNQAq5fQY8CKYVP7DR0nv7LnBv1kr
-         jsm1NNC0xWEVQRrDS0mvpKc/+xEiWdS+++wdXHxl8uQ1LOskMN3j9fWhXxeVdafuOaKS
-         UBjns5j4v7IPgidpYVVZsZ1moLvMwlKsKJP372R5fhRNIoXtPHwJq+WW58IwCYrr0iib
-         NZBg==
-X-Gm-Message-State: AC+VfDxB5dEv0mh/4TEdIHZ2LfpHc4AHKto4wbuQGaoPucqL4ppS2KjR
-        IJBadHOC2OH4PY4rtwtFH03/3w==
-X-Google-Smtp-Source: ACHHUZ5DMTJcCEm1RrgR+4GhliBr5oddAlLsSQ7T8osNEBMQHg/5e6RvBU26AZVq227jwYsUPlexpQ==
-X-Received: by 2002:a05:600c:ad9:b0:3f6:2ee:6993 with SMTP id c25-20020a05600c0ad900b003f602ee6993mr7460902wmr.4.1687162042427;
-        Mon, 19 Jun 2023 01:07:22 -0700 (PDT)
+        bh=EexqmhtANLi6ES9tRfPf7+kAJ9pZLmkSwbWekIJckOU=;
+        b=O0KsUxuq3WC+EC7LpGApHwoM4upLib2vVjD6OwBRa/M+xYvwz/Uj+O8rK7h/v0fjKC
+         kz4ANkkhal3+UGml67iJD9MOgwiLck/p3soxPWIKlvoCHjJRCfHOyGBT8ATA+uEMJROr
+         64SmPp30tcz9JQT0roj+cNGQ3N9NnBk9IwL9lIUljZJkNx4XJiKMd4K8JDVo3DAh3Iys
+         phNZOw7gadDLy3y9Wp6GKZy/7SojuD0mZzUEhqCwcTTq1D1NGnrRLp+xFhBIIpV7u+Gy
+         mJG16OIN4Mkdpm2mhE8m9ivJwRMeBPXevNCyYN7AMqffkISsroK/4/vzdo5Pdtx75YUe
+         ZtEA==
+X-Gm-Message-State: AC+VfDz8Po1PS+aR0RjxjLmHffEOnb157c+NSP5ej5Y3VbDRqhZy+dNc
+        dFcTtJZQtAKMgbo7CzT1cVUdtg==
+X-Google-Smtp-Source: ACHHUZ4NIsxkJM05hOTVJejZpX5Dqa9TKmwenHxJviLEWdZo5xU+XXtzRMzcT0x/mK4SSbOYUkvZgA==
+X-Received: by 2002:a2e:3508:0:b0:2b4:5b9c:a019 with SMTP id z8-20020a2e3508000000b002b45b9ca019mr4444167ljz.8.1687162043379;
+        Mon, 19 Jun 2023 01:07:23 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id m19-20020a7bca53000000b003f801c12c58sm9791158wml.43.2023.06.19.01.07.21
+        by smtp.gmail.com with ESMTPSA id m19-20020a7bca53000000b003f801c12c58sm9791158wml.43.2023.06.19.01.07.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 19 Jun 2023 01:07:22 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 19 Jun 2023 10:07:17 +0200
-Subject: [PATCH v5 5/6] arm64: dts: qcom: sm8550-mtp: add pmic glink
+Date:   Mon, 19 Jun 2023 10:07:18 +0200
+Subject: [PATCH v5 6/6] arm64: dts: qcom: sm8550-qrd: add pmic glink
  port/endpoints
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-topic-sm8550-upstream-type-c-v5-5-9221cd300903@linaro.org>
+Message-Id: <20230601-topic-sm8550-upstream-type-c-v5-6-9221cd300903@linaro.org>
 References: <20230601-topic-sm8550-upstream-type-c-v5-0-9221cd300903@linaro.org>
 In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v5-0-9221cd300903@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -70,25 +70,25 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2224;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2815;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=kFtRURsz1oeh0EtjW61UYq9kjQ/AFD5Aq+2wwk6Uat8=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkAy0yYCvKq6etkY5BxR/c26e6MJeGzz9gh/3ZUK6
- CmFwPbmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJAMtAAKCRB33NvayMhJ0Vp7D/
- 9OSGcTbcww+i/V+wtoTiAKYWoykxYcx7Qf+nrDEafYZUwIXNR5gGb6JWoxS7zOemt+XA1yS55tcypq
- 6hzrth6AMEguiKlo/3+QghPrC8sNXZr49SmE7riw032KhfJxLYrbdhKLnAVqC8XabTMjKvXh8UEj22
- lXLvYUc7thdhtd2UuqqvvkKkybd/8tOFKQkMJsO3Ac5U0/zVGHnwAksrxT7hmFh4OEmSdYsliayKrj
- W2YX3a7b14WRN3slbsL+dCEx1LcjsDbn9rARh6dQlnPAI4xoVjTJZntSHEfBc2tpW9UEZMS53mTMts
- bWYCy197m45pYllZj9gENS82h/wYHNuMLhotSPyjDvb7z9tb5N62wWlNw59r2Aq74Ggjae/oqTEImY
- Br77LAdOquJPOKIRdeFjxXlFg8IBoi7tnRW5rHbePpobhyQ5FezBEOlaSxkq/ROXkaGXwvHN7a3yuF
- dnq2ahJSjEY7Z55ub6CnpurBrY8DpPF5j8vstGVjj+pJ6jFAZMyacBo1ON5X3A+kRY9dza2Tf10hj6
- m312Y8NSLcPz16cDvb8m3JFtsiprLjbXoQFmsAYcS4U3KjGiPzasWC6MwgR+v6oMS5oHhfVbxAUEXS
- wX1mTnMUw0ccy6tA4CotVnCfuDjlgfxicfqFk0wHCzm2ic0EEKlQsfO5jP2w==
+ bh=nZ+RqvCicPSHIWr4vNG/sq0pcfvomc8+0/2iPG1Su3c=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkAy0a7fAGhPw4PfnjIOjpXYpqrzb+eP23WHL2CyY
+ YQzz+X6JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJAMtAAKCRB33NvayMhJ0b/mD/
+ 43suWirVfqNPZ1vPQt2U7ZHxdqAcAA8ZEyOEb9sY69a6sqj+CkWHzrGSRLovDDymO6BsxxD3W8vTS2
+ Yt8ly8YOkeZRNfejxU5xkLUTfsxRMPhy1pGLxH24w68y6a3WwwG8BtTnUnUbU5F1lRwpuHLDGrUv6b
+ AKDDAFsP2AvXJyrY6yrZxbMtY14VpWzGB/CN1Lzap9qNfGycVTyg4GMDSOiNTN/nxH0xzLtXBq8JI+
+ G2hjMd+DZ96mEW1ppW6pqzqLPDiKIujpZPo03GEQRDAVnrXkIc/fAd2CyXPTXomDu7eEYO7YAU8pyX
+ CBB0zdns0hhoyukeZ/q2cJt/JGoaR1UX5GLHRCfm+qCeLvwHBlb+/xvutnNi5mBIIKNUOiD6HUajgc
+ W8FaRxjXpD4IRmiHMf9THsL/YL5yZbSCmXRues007aVbZ0fa2hbVIDUoH4zNNiDyYxL9PSfJR4YSDV
+ 74/CO3yZ+R8K71VT0yAMo45AwnL+cR6/H/WsuA/sLniHyY4i6/M5gJz+HvfpyxcYSFOEkMeWE4r08k
+ 8ZLmjkaYL3Bo7FDy14blgS2HmYYt2up1N22ePYyyBuuZRLFH8gPKkpvhfqlDud8Oia8JJ6FjbYEHuQ
+ tFmKa5QERvjScJ0d7sCrwAVaXp8e6jNCv7KVahywXtWgN+m40n/lNEQH6Lmw==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -98,21 +98,24 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Add nodes to support Type-C USB/DP functionality.
 
+On this platform, a Type-C redriver is added to the
+SuperSpeed graph.
+
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 59 +++++++++++++++++++++++++++++++--
- 1 file changed, 57 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 91 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 89 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index ec86c5f38045..99375f1ceab6 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -80,7 +80,15 @@ port@1 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+index ec4feee6837d..efcc2559b3e1 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+@@ -97,7 +97,15 @@ port@1 {
  					reg = <1>;
  
  					pmic_glink_ss_in: endpoint {
 -						remote-endpoint = <&usb_1_dwc3_ss>;
-+						remote-endpoint = <&usb_dp_qmpphy_out>;
++						remote-endpoint = <&redriver_ss_out>;
 +					};
 +				};
 +
@@ -124,7 +127,7 @@ index ec86c5f38045..99375f1ceab6 100644
  					};
  				};
  			};
-@@ -500,6 +508,30 @@ vreg_l3g_1p2: ldo3 {
+@@ -517,6 +525,62 @@ vreg_l3g_1p2: ldo3 {
  	};
  };
  
@@ -134,6 +137,38 @@ index ec86c5f38045..99375f1ceab6 100644
 +
 +&i2c_hub_2 {
 +	status = "okay";
++
++	typec-retimer@1c {
++		compatible = "onnn,nb7vpq904m";
++		reg = <0x1c>;
++
++		vcc-supply = <&vreg_l15b_1p8>;
++
++		retimer-switch;
++		orientation-switch;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				redriver_ss_out: endpoint {
++					remote-endpoint = <&pmic_glink_ss_in>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				redriver_ss_in: endpoint {
++					data-lanes = <3 2 1 0>;
++					remote-endpoint = <&usb_dp_qmpphy_out>;
++				};
++			};
++		};
++	};
 +
 +	typec-mux@42 {
 +		compatible = "fcs,fsa4480";
@@ -152,10 +187,10 @@ index ec86c5f38045..99375f1ceab6 100644
 +	};
 +};
 +
- &lpass_tlmm {
- 	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
- 		pins = "gpio17";
-@@ -558,6 +590,15 @@ &mdss_dsi0_phy {
+ &gcc {
+ 	clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+ 		 <&pcie0_phy>,
+@@ -586,6 +650,15 @@ &mdss_dsi0_phy {
  	status = "okay";
  };
  
@@ -169,9 +204,9 @@ index ec86c5f38045..99375f1ceab6 100644
 +};
 +
  &pcie_1_phy_aux_clk {
- 	clock-frequency = <1000>;
+ 	status = "disabled";
  };
-@@ -781,7 +822,7 @@ &usb_1_dwc3_hs {
+@@ -842,7 +915,7 @@ &usb_1_dwc3_hs {
  };
  
  &usb_1_dwc3_ss {
@@ -180,9 +215,9 @@ index ec86c5f38045..99375f1ceab6 100644
  };
  
  &usb_1_hsphy {
-@@ -797,9 +838,23 @@ &usb_dp_qmpphy {
+@@ -858,9 +931,23 @@ &usb_dp_qmpphy {
  	vdda-phy-supply = <&vreg_l3e_1p2>;
- 	vdda-pll-supply = <&vreg_l3f_0p91>;
+ 	vdda-pll-supply = <&vreg_l3f_0p88>;
  
 +	orientation-switch;
 +
@@ -194,7 +229,7 @@ index ec86c5f38045..99375f1ceab6 100644
 +};
 +
 +&usb_dp_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss_in>;
++	remote-endpoint = <&redriver_ss_in>;
 +};
 +
 +&usb_dp_qmpphy_usb_ss_in {
