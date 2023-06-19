@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3A95734CEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 10:00:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1AB734CEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 10:00:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229456AbjFSH7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 03:59:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
+        id S229718AbjFSH7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 03:59:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbjFSH6s (ORCPT
+        with ESMTP id S229462AbjFSH6s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 19 Jun 2023 03:58:48 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32FC3E6B
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0850E7A
         for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 00:58:45 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f86d8a8fd4so1224197e87.3
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f904dcc1e2so19946915e9.3
         for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 00:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687161523; x=1689753523;
+        d=linaro.org; s=google; t=1687161524; x=1689753524;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JxiaZ5bIDFSAVarg8oaXEN/qLNFgPaQwTFic4uvWP48=;
-        b=fdhMWcKPI/BysjJK3t1/oNVe1QoWMSsgMkSMk/tSevIX9Q0V+Lw5/UNXzBHfozR4E2
-         M6Pto1XBRRxjv4VOVyHJkNZa98FacF2Ho/LuhQ5EO4ZlWQc+/l6ZyYWXBPE2SxEYESly
-         faI0CwPx2EAm6EQJxq07a9sY45zZLK8OcvMozcbOJH78OMKeGZth6Z5lGhcV47Y+9PlF
-         sfJhkb93FeuwYjTsISjjgRN/of9RMONZ8DCLBf70/rVUw3XAp2XoRIia4qpDl4AIwzu4
-         OPOIs8oxhS+4wdKdiDGOe5IdmKf0BUQ7bUWxw4Tw9UBV1fn+rtGaeIR9qbQmKloVsIgr
-         xQCg==
+        bh=Ey93zvDWmAyVYw5EBP9isEy9sNithaduekGNmQfFFGQ=;
+        b=N5icVU0PSF41RihqxzsAkvJ9RJVhig286Lb7vj26kCoHesAK1Tup3jpf9ect3qmoR1
+         omch3Az7GNXs8T5+w4fTifcol6nxcCfEIEYQ/2AEC65OqyrtHcf0xC+k6qyFf88FKC+1
+         6OuVzjOdw9JPZOodboRiHGYNr0fB02HDlqKBs8F0S2wS9sfBjxL2Ak/JY+y2wJwWCsD4
+         IPrH8xH5o7xRNWcQYmjBv1Fxsya5ktRlbPI5JQ//N5+GIMbHNeLBhuDz4f7M5AKfVGYo
+         CyyZ/C0ZI6RNxAhoMKO7X/9a97EczwfBhwEz71qjDKJk/k+3aOCZP1U8MhUgAo2UjHRT
+         7Mbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687161523; x=1689753523;
+        d=1e100.net; s=20221208; t=1687161524; x=1689753524;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JxiaZ5bIDFSAVarg8oaXEN/qLNFgPaQwTFic4uvWP48=;
-        b=fWcJ/Hc4n4WcFCs+H//p6sl2j4T6H8Br4pARMQhj3DjIj4G8g4gsAPiROtgDyEVMBT
-         6K72KGN7fRaMf5E0IN5ojvxCJrTlEgKnQ65+GPf/rxpKIeikab7S3jya8Girdfbuf+Xa
-         a31WjLdGHkOgXOZXRJHOLunUStzG3rIh72LJDsMj7orOrHfMKv28ENxirDx6btyzNs7U
-         tUHoVSJIf5UFt8TWqiR7dXOQeGhoJu34ObC9cQ/SSHj5AYkucjsZJNc4EWKtqxYrQgj8
-         HS60ssqp9H0i0RECVbwNR3aXAD1UrbKBxqxHxR9TctehFHDDFJhER20LcGQBWNERd/SE
-         enaA==
-X-Gm-Message-State: AC+VfDz3cEric41WMG7DNOmx5w6di2j/EUq/F8nrsgrZhIAMY4UH/Sv3
-        Or4Cqhv+4SfhTERoTUqDaJHAQw==
-X-Google-Smtp-Source: ACHHUZ7VYJpIyM8Ryk/6TpF4D0noBm4da3QdpLqJMyyHSLsUxCBvbZYwh1WoKnmCP6PvSGucfman1g==
-X-Received: by 2002:a19:8c17:0:b0:4f4:dbcc:54da with SMTP id o23-20020a198c17000000b004f4dbcc54damr4449516lfd.27.1687161523405;
-        Mon, 19 Jun 2023 00:58:43 -0700 (PDT)
+        bh=Ey93zvDWmAyVYw5EBP9isEy9sNithaduekGNmQfFFGQ=;
+        b=JZkf75trK68Tqcc4TGJEL65+rcx17RYCPC2TiQ+4/FvS0VSU3gk8LfVc3Qfj2x9ggo
+         TtoZD3XegwpeMjCAIJERwISdFQByNhGFA828Nk5Og06mGKG+YysxgYuxho2bJTeIuj30
+         2JkAxKae5E/cmXMISkx8Pv+vpZVnocb3QVqudq2Vi9f7N6/+p/5DDnEitOA8JdLB4PX/
+         pWNR09Hg0hjoA8gcj+VJAG7ctkIzkgcaA+X/keH7p8/vNEBXvd/CufSUJPY+aK47M6mB
+         JRUxWWsx5qxVYW62dQ1hSt+Zi+Adloliqmo/cuiOGMdkRHFUtlODHyaIcf5mL3ihCczm
+         bOQA==
+X-Gm-Message-State: AC+VfDw1qc+UWFEWeNlhsXX6sK4VXqbPewGePiLOavM8uc+oDO8MGKfT
+        r4WsdvIs8bPE8PieLskN9qJNSGe+eAExYWVqoPdvMw==
+X-Google-Smtp-Source: ACHHUZ7swazqpjf4YIvGKwWPr0yHd4Tdgftum7sW7Y7htMVgRNeSAnWx/NLSyUX7Qgm4kDqLk+sozQ==
+X-Received: by 2002:a7b:ca4c:0:b0:3f9:b30f:a013 with SMTP id m12-20020a7bca4c000000b003f9b30fa013mr562627wml.6.1687161524273;
+        Mon, 19 Jun 2023 00:58:44 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id v5-20020a05600c214500b003f7f87ba116sm7091491wml.19.2023.06.19.00.58.42
+        by smtp.gmail.com with ESMTPSA id v5-20020a05600c214500b003f7f87ba116sm7091491wml.19.2023.06.19.00.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 19 Jun 2023 00:58:43 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 19 Jun 2023 09:58:20 +0200
-Subject: [PATCH v4 5/6] arm64: dts: qcom: sm8550-mtp: add pmic glink
+Date:   Mon, 19 Jun 2023 09:58:21 +0200
+Subject: [PATCH v4 6/6] arm64: dts: qcom: sm8550-qrd: add pmic glink
  port/endpoints
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-topic-sm8550-upstream-type-c-v4-5-eb2ae960b8dc@linaro.org>
+Message-Id: <20230601-topic-sm8550-upstream-type-c-v4-6-eb2ae960b8dc@linaro.org>
 References: <20230601-topic-sm8550-upstream-type-c-v4-0-eb2ae960b8dc@linaro.org>
 In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v4-0-eb2ae960b8dc@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -70,20 +70,20 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2324;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2915;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=FVFzX5TzmJ4Q7uHGdGJK2tcC9JAQWYVr5nuVEVM2G0I=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkAqsMTClWtaDTK6xS68LNcZEMLxdrgJrOatp2QrP
- WtAW9T6JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJAKrAAKCRB33NvayMhJ0SdZD/
- 9Qhpgnqpse59lGgwGuO7LwPDLuL12O/X3T9A90+oKGQ2OlD7yiQAlqwJVL/0s/kAf87SQ/5H44LJve
- pHjyh3fqIuW5DanLQVzcHf1pYRj1UuVlLWdcBCTzFb7rGxHc3YwigpFsQ/zmcWeAYD9hDQbj7U46Im
- SjPJZ4sA9LrmPWKjJgU4lNg9w2a3+KPF9cgKMSvXOh1AtgNArxRGofhADBQfd3vX3gtgOjANFFyiLO
- A3ksDJQNUGVwsibYTXv6ij9jgu3/D1vOZ9TiPiw6u7H4X7buxnPV/DMMlFzhjlrYE0JKeNL+vLT3SP
- EIg6aVIZ8ewBUHmQ1Fi8lNUoZH8vEnMUdmFDTtnGQ/fF1yE/z2gHbvNfJcEFbhvbaFqyET9dBSHurO
- YrxNwQ14Ww6lHNtgy/g0kWp6agZuT4W3UOqJhtkjSNP52GW0OuHchdDkTF7p5E36HmDrVoOsvCBYxc
- KuuWdB5EB2aBFGDR2AKNX6e9peGNM/hszMBSKg4zsbcogE8+mVlhy7TSKI4ddM2dwfJH15sRgEmCSY
- KayIhIoPmo3mBaQa07es9NhdurcBUB+OBgjARIPEk0Hhm2sD6Y5Vtwhm5+tIu5Mz7x0sCM+H2xbjyG
- ey/YVp0dacNNrqKmu8Z1SOjujsjHQ0hP/8XTRm/fj3lZiVFpko5HW40oCyYA==
+ bh=nQ57g+TpUs6IW4Huo12DlEfzkTqpyQ3GQ6hDouNNOss=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkAqtdlOdpbWirg2zesObhYva7aodzC+nAqudDdI9
+ M17NY4mJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJAKrQAKCRB33NvayMhJ0YERD/
+ wJYC4PyTvN17OJNLolK8sGa5KwXiqRlXHYAcxX1z9FA3NVObnZw4smeyEjUAVu8SKJF0r71oP/Hu1i
+ t3H3+htr6aIbUz15JOpP2tvzzuqxjgE2iP4jJ7tDAVYf6mCcFbvXNBd9aQrLgnCUrG3BX/BDetGqxg
+ htBEKMNyQJXQg4mREQkwLMBRXQBAbkGe9DLyqKFpZiZCVEn+EIdd8zgGnJ4mUW6bHVLJQWnsVWA2ke
+ 3RiWsF3Q9y2NHn/anpWYm+oTUnivMQzdshhKN23HeUyaBd0APVQjJZlGwPgMkp8LZsGpYgUSTv8xom
+ c5Ale+Mm1WCkrf4Cs6cTxr/jl+JswJTLZxmeS+GEMO45eDjr/VZZFFhUPsYNsQb+vn6J86lOsySatk
+ oMOXKyAeL5GKX6FhV1pobWbhEiFYzYts6hNHkkdwTTbmD5uDbLlyV4FZ8e6X3KqgTBPXj58By3PQ4p
+ PHzMEGT4Pl6Beo12LUwrAWNn5ahXfm9eYEMvo5AiSUW10nse6KrGUv/2ZlWaYf9hNoqFFupchK263y
+ /ndErnE6m/+a8bczYksbC1H+8VYUzlfl0MyQcHzig1Ea3EVh5yb9et9XZDH72RlO3MciK5cNl9VquC
+ xmvbynXPFUYjGH5Ykw+8ZcFZ2EwvlaD4TwHeD9BcmcSNfG2ycLqEfIjLR3kw==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -98,21 +98,24 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Add nodes to support Type-C USB/DP functionality.
 
+On this platform, a Type-C redriver is added to the
+SuperSpeed graph.
+
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 66 ++++++++++++++++++++++++++++++++-
- 1 file changed, 64 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 98 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 96 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index ec86c5f38045..67e0a2d2042c 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -80,7 +80,15 @@ port@1 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+index ec4feee6837d..c921ecccd322 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+@@ -97,7 +97,15 @@ port@1 {
  					reg = <1>;
  
  					pmic_glink_ss_in: endpoint {
 -						remote-endpoint = <&usb_1_dwc3_ss>;
-+						remote-endpoint = <&usb_dp_qmpphy_out>;
++						remote-endpoint = <&redriver_ss_out>;
 +					};
 +				};
 +
@@ -124,7 +127,7 @@ index ec86c5f38045..67e0a2d2042c 100644
  					};
  				};
  			};
-@@ -500,6 +508,37 @@ vreg_l3g_1p2: ldo3 {
+@@ -517,6 +525,69 @@ vreg_l3g_1p2: ldo3 {
  	};
  };
  
@@ -134,6 +137,38 @@ index ec86c5f38045..67e0a2d2042c 100644
 +
 +&i2c_hub_2 {
 +	status = "okay";
++
++	typec-retimer@1c {
++		compatible = "onnn,nb7vpq904m";
++		reg = <0x1c>;
++
++		vcc-supply = <&vreg_l15b_1p8>;
++
++		retimer-switch;
++		orientation-switch;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				redriver_ss_out: endpoint {
++					remote-endpoint = <&pmic_glink_ss_in>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				redriver_ss_in: endpoint {
++					data-lanes = <3 2 1 0>;
++					remote-endpoint = <&usb_dp_qmpphy_out>;
++				};
++			};
++		};
++	};
 +
 +	typec-mux@42 {
 +		compatible = "fcs,fsa4480";
@@ -159,10 +194,10 @@ index ec86c5f38045..67e0a2d2042c 100644
 +	};
 +};
 +
- &lpass_tlmm {
- 	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
- 		pins = "gpio17";
-@@ -558,6 +597,15 @@ &mdss_dsi0_phy {
+ &gcc {
+ 	clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+ 		 <&pcie0_phy>,
+@@ -586,6 +657,15 @@ &mdss_dsi0_phy {
  	status = "okay";
  };
  
@@ -176,9 +211,9 @@ index ec86c5f38045..67e0a2d2042c 100644
 +};
 +
  &pcie_1_phy_aux_clk {
- 	clock-frequency = <1000>;
+ 	status = "disabled";
  };
-@@ -781,7 +829,7 @@ &usb_1_dwc3_hs {
+@@ -842,7 +922,7 @@ &usb_1_dwc3_hs {
  };
  
  &usb_1_dwc3_ss {
@@ -187,9 +222,9 @@ index ec86c5f38045..67e0a2d2042c 100644
  };
  
  &usb_1_hsphy {
-@@ -797,9 +845,23 @@ &usb_dp_qmpphy {
+@@ -858,9 +938,23 @@ &usb_dp_qmpphy {
  	vdda-phy-supply = <&vreg_l3e_1p2>;
- 	vdda-pll-supply = <&vreg_l3f_0p91>;
+ 	vdda-pll-supply = <&vreg_l3f_0p88>;
  
 +	orientation-switch;
 +
@@ -201,7 +236,7 @@ index ec86c5f38045..67e0a2d2042c 100644
 +};
 +
 +&usb_dp_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss_in>;
++	remote-endpoint = <&redriver_ss_in>;
 +};
 +
 +&usb_dp_qmpphy_usb_ss_in {
