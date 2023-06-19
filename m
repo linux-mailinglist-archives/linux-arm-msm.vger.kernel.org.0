@@ -2,82 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17397735C17
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:19:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6BCD735C57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:45:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232233AbjFSQTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 12:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36136 "EHLO
+        id S232138AbjFSQo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 12:44:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232117AbjFSQTE (ORCPT
+        with ESMTP id S232323AbjFSQo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 12:19:04 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC39E73
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:19:00 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f762b3227dso4394931e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:19:00 -0700 (PDT)
+        Mon, 19 Jun 2023 12:44:26 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCCC5E60
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:44:24 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f7deee339dso4405557e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:44:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687191539; x=1689783539;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NeMEcI4+yKDWLM0Xoh1q+uyo2M+zCM82XkXiL0IHChQ=;
-        b=ERW7c9xDG11GsK8JfvPDwgUNzimXYc7k+0n+cwTtPkx+e/eN0Mc4b7g36HaVVsUT+2
-         ZwcynuPACuf5rZr2c+/pXN9FyIhLZ7U8CFeaslkmnjVpcy0SHCuaxcDOGMISALDUdcRL
-         sPUNNeCvRlt7d3PUcwA6sVCvxjfL/E6pOx8hYTSgmje7gyKTVGGVtFt5Kpy7t5owt/bg
-         t6Hnm1z6KXcDTrz5bMOr+avoiyHZ8umjH68N60bfHlmapbzIsPHF0194rN665irS50v1
-         NUxZWnvzBtSBADz4Wuae4ug52F/Of06tqhh1niZWQ+4ytTuWWnqj5KfMue7ScIQbiSjt
-         KLZw==
+        d=linaro.org; s=google; t=1687193063; x=1689785063;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hk3+XLzwvUhnac+YdwTL34Deb6BoH9HZb6xFXJBKUGM=;
+        b=TBZG7v7If7o/5pSou59M0mIZP5qeoKj+Nh+mbYavYalVGusJMKNk7Tc4+mD14X24Rl
+         gB144EyGtNJUDAbx2Dsov95atHXw81pvbEShQTNGjnhskR2lKGiuqaeviwqtAJPxFxGi
+         6TKUdnGIRwDL3EvyiH+nKoOZF6HOKPUD7UBcqhZZwCYoEbNaXQpF2F3L5kNEIy07hvmT
+         Bf+Yg6MqCVGqiv4GzptJG4WS51vdxd7vEkjMKfcH8M3tVFUY9UcLWx8ITARFmsGVYGI3
+         PyjSn1jqOfeTL1hel2r5maJzPRuz2fUJO6S0O4I9IjQYrQJuddFvVaOnwf51mPVSYooa
+         9srw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687191539; x=1689783539;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NeMEcI4+yKDWLM0Xoh1q+uyo2M+zCM82XkXiL0IHChQ=;
-        b=XrmwsSHkZrwiFwtVB0XZbe/ksZX5wQsxco+9xnRGGzMlCMQ7kxij8pdt84CnYXYy6N
-         uQPmgXyFBCy3WKPf9/GpCwAWy+yI7PnkuaioXQ1L5bFAwh35/HeWnpZQPAuuTJrtnVJU
-         myw0a0WDZpzkgPLTAqTXBqlKplvf+YNUyNHRiMQL+13jlL09vPJaNkLF/bVcHOWWqLH6
-         HRPnH+Bpxfjw7VI2914NG6gH0HJ3ot9Jhmu1vBcMSbNJFP2n9lj++1nKdbu1mAQrKGiy
-         t5ijEu7SbDs+4YFRE3wFs7nBvultDlMUT2ZVgIiSts9JBY/kq95jKFu07XxwZXchyaUC
-         Q3Fw==
-X-Gm-Message-State: AC+VfDw/W/L8SFWY9Lz2acN66gFo0OXRj80wdr7DtREuUOsf1ZZcunOk
-        N/xXpP1NjYXDD8NbkWA8/jYU8A==
-X-Google-Smtp-Source: ACHHUZ6iNnONLcUHaRD6LwY1bDzyrM6RE9wksQs+lZAEVUHBzQ3Teny0MCjBD4PNxgZlft0/pI5ggg==
-X-Received: by 2002:a19:5f5d:0:b0:4f8:5e62:b94b with SMTP id a29-20020a195f5d000000b004f85e62b94bmr1804453lfj.9.1687191539015;
-        Mon, 19 Jun 2023 09:18:59 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687193063; x=1689785063;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hk3+XLzwvUhnac+YdwTL34Deb6BoH9HZb6xFXJBKUGM=;
+        b=ixXFepBrn74KFXdud69aj4yLIbzZyzuuJzEOzEZh8hlsiWRi+ObveGavvL/CNiAbNB
+         e1+mD/kV2iq4VlsCR3aziYw9LAZDMokdTpuYfTtVwdITvUA2Op9I+lNkRGAuKI3kpjYI
+         ZAcep2aTAqaKx4XQJKwLNhnsINyB1yVE1I0BskwOMrd+DAXDwhHte4XbzTy65Tm18NHq
+         okufRfe8LhY/GHOTsjVFgei8dw64Iy8u76m4wLvMWg76NAEw/NxqYtoMtHqXXdJ1gUsH
+         aJfRYIJaY5fYNZIFqQSXPwMgLb6sFhQKfEDLfBAWcd4kKt9SVkmXGtBno0Pd/uZEqYUo
+         rWUQ==
+X-Gm-Message-State: AC+VfDwHugMZES97DPziJfKf7YJsklZT+h4znD5jM6YB34KqBs7jsb++
+        genvSOzE94W+eACmJoCZaI9Rxg==
+X-Google-Smtp-Source: ACHHUZ43YVyyMvpV79hwaPfXJTAxmlC/6e/OWjQ1pc/ydVIDwICbEz1/Yu+VrbtJj+Npcj/Fmg5R2Q==
+X-Received: by 2002:a19:e016:0:b0:4f8:5886:1868 with SMTP id x22-20020a19e016000000b004f858861868mr4674410lfg.24.1687193063082;
+        Mon, 19 Jun 2023 09:44:23 -0700 (PDT)
 Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id c11-20020ac2530b000000b004b4cbc942a3sm4332824lfh.127.2023.06.19.09.18.57
+        by smtp.gmail.com with ESMTPSA id d9-20020ac24c89000000b004f849605be7sm1774293lfl.292.2023.06.19.09.44.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 09:18:58 -0700 (PDT)
+        Mon, 19 Jun 2023 09:44:22 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 19 Jun 2023 18:18:55 +0200
-Subject: [PATCH RFT RFC 3/3] arm64: dts: qcom: sc8280xp: Fix up idle state
- periods
+Subject: [PATCH v3 0/6] Adreno QoL changes
+Date:   Mon, 19 Jun 2023 18:44:20 +0200
+Message-Id: <20230517-topic-a7xx_prep-v3-0-a3ce3725385b@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230619-topic-sc8280xp-idle-v1-3-35a8b98451d0@linaro.org>
-References: <20230619-topic-sc8280xp-idle-v1-0-35a8b98451d0@linaro.org>
-In-Reply-To: <20230619-topic-sc8280xp-idle-v1-0-35a8b98451d0@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOWFkGQC/4WNQQ6CMBREr2K6tqZ8hFpX3sMY81taaEJa0iLBE
+ O7uh50L43ImM+8tLNvkbWbXw8KSnXz2MVAojwdmOgyt5b6hzEBAKapC8jEO3nCU8/wckh24vEi
+ slZGNcI7RS2O2XCcMpqNfePU9lbR0ft419wflzucxpvdunYqt/S2YCi64RFWfHVilDNx6HzDFU
+ 0wt22AT/AEAASqtGkTQYJz4Aqzr+gGkors4BQEAAA==
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191534; l=1802;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687193061; l=1497;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=mq7mfTgr9ZtvOEPLMaimjrbNtQBLNamSOSbjgI89DqQ=;
- b=5zkt0CsawhYgMHbQ+uC07azdfetKN9uRQNsiWgI4WMR5ahWeGTk+03QDZRCGWFHV2YpGTc64b
- bDozYqakncYDn33+Klx7kP0OU9HayubPhGh42pPDLv++NgW8eB+lqCg
+ bh=fU7IOvGFZT+jtDrFsHSlPtEO+e2x+lA6EVgMfmK5BgE=;
+ b=UBAMGsIGb0WZMAKEbrHuoXl8s1shs2X+HNxHtR5cntD9grU6aO3tDG/rzyE3s2Ad67Wy68QFc
+ nhLhLOplWgZDaveJw0ANYhBIme+xR984zvUcx/LroWMxZSBcJ3WxeZu
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,58 +88,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some of the values were wrong, which may have painted a wrong picture
-to the scheduler. Fix it.
+This series brings some niceties in preparation for A7xx introduction.
 
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+It should be fully independent of the GMU wrapper series.
+
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Changes in v3:
+- Pull more definitions from mesa
+- Decode CP_PROTECT_CNTL bitfields
+- Rebase on next-20230619
+- Link to v2: https://lore.kernel.org/r/20230517-topic-a7xx_prep-v2-0-5b9daa2b2cf0@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index b8f2ec9477f5..d7894465a0d2 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -277,9 +277,9 @@ LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
- 				compatible = "arm,idle-state";
- 				idle-state-name = "little-rail-power-collapse";
- 				arm,psci-suspend-param = <0x40000004>;
--				entry-latency-us = <355>;
--				exit-latency-us = <909>;
--				min-residency-us = <3934>;
-+				entry-latency-us = <702>;
-+				exit-latency-us = <915>;
-+				min-residency-us = <4001>;
- 				local-timer-stop;
- 			};
- 
-@@ -297,9 +297,9 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
- 				compatible = "arm,idle-state";
- 				idle-state-name = "big-rail-power-collapse";
- 				arm,psci-suspend-param = <0x40000004>;
--				entry-latency-us = <241>;
--				exit-latency-us = <1461>;
--				min-residency-us = <4488>;
-+				entry-latency-us = <526>;
-+				exit-latency-us = <1854>;
-+				min-residency-us = <5555>;
- 				local-timer-stop;
- 			};
- 		};
-@@ -324,9 +324,9 @@ CLUSTER_SLEEP_CX_OFF: cluster-sleep-1 {
- 			CLUSTER_SLEEP_APSS_OFF: cluster-sleep-2 {
- 				compatible = "domain-idle-state";
- 				arm,psci-suspend-param = <0x4100c344>;
--				entry-latency-us = <3263>;
-+				entry-latency-us = <3638>;
- 				exit-latency-us = <6562>;
--				min-residency-us = <9987>;
-+				min-residency-us = <9826>;
- 			};
- 		};
- 	};
+Changes in v2:
+- Drop switching to using the GMU_AO counter in timestamp
+- Add a definition for REG_A6XX_GMU_AHB_FENCE_STATUS_CLR, may be subbed
+  with a register sync after mesa MR22901
+- Link to v1: https://lore.kernel.org/r/20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org
 
+---
+Konrad Dybcio (6):
+      drm/msm/a6xx: Add some missing header definitions
+      drm/msm/a6xx: Use descriptive bitfield names for CP_PROTECT_CNTL
+      drm/msm/a6xx: Skip empty protection ranges entries
+      drm/msm/a6xx: Ensure clean GMU state in a6xx_gmu_fw_start
+      drm/msm/a6xx: Improve GMU force shutdown sequence
+      drm/msm/a6xx: Fix up GMU region reservations
+
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c     | 21 +++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h |  2 ++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 14 ++++++++++----
+ 3 files changed, 29 insertions(+), 8 deletions(-)
+---
+base-commit: 47045630bc409ce6606d97b790895210dd1d517d
+change-id: 20230517-topic-a7xx_prep-787a69c7d0ff
+
+Best regards,
 -- 
-2.41.0
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
