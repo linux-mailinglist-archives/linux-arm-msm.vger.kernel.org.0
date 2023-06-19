@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98AAF735EFB
+	by mail.lfdr.de (Postfix) with ESMTP id E4670735EFC
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 23:25:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbjFSVZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229699AbjFSVZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 19 Jun 2023 17:25:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50676 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbjFSVZ0 (ORCPT
+        with ESMTP id S229733AbjFSVZ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 19 Jun 2023 17:25:26 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29615E63
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:25:24 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f849605df4so5161609e87.3
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0758BE64
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:25:25 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f762b3227dso4735352e87.1
         for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687209922; x=1689801922;
+        d=linaro.org; s=google; t=1687209923; x=1689801923;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QjDFEbxttb5xRNr0jnFgG4xxTynP1QNATj916+mY2Ao=;
-        b=UHydkq6eU395qKO51k5rYYRgRlmcAilUPd0b566PKzhTzHnk66yPjQ5rIf682dW3bS
-         86SkdW3s+1RDPt/1OtqcZEFIP5aUcYnOY1nfL9HEj+KTPqj0KeFdggdpsPThEgs42EIE
-         IiFp3Gzs+bF2+Q8Dn7UGOV5joD3fMcWDzRWLaedvODZhETKzOUseye8j0uhJtFHJwna6
-         XQSRQkXPMEdvaCG/imjC8yJfqpFKgfMAaZY/zFGZ83AR8k7JBggyLKsaPj0bXIxLHlPy
-         V6/TkrXgK3eP8BhTrAw+IhsCc6aI2OUjDhdunBoqDgFiqHACSGkrmRCpRsj8eO4rJr5k
-         YwKQ==
+        bh=XZQCZKCJwgSJDNx3vlr5xX6AVwLhQhbriBwtbUznuaY=;
+        b=rDRdEljQt3o6bvC24ftBSpZ686wSJeseRnWNZusC89miYSY3RV5ZG96kzMnsAlGOS7
+         P+kxsGNd6CRlOYSAws3+JdebHcT33ZqBXVWXLc4EZL6dOHhhgfFKYLn9SEdeGGdHcLPe
+         K8QBJLRd8DXXqP9LtnEFA2EYLPS2PvMAOnvFDtbABKH0+h2PSTy8cKOlTfzHErgNH67z
+         m1ytMvRBdAhyZ/WYU02mRoNqLfFkg+43sS7Mf8Ry33rszijexgxBjtvMWBtT2QtyVdAL
+         HoSa5D6utItKnggpieR5+nbeP4V1DGvK1Rg67f9pFVVTZ8PsYJuODKM4r/BQ1nZzl3LV
+         ZD0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687209922; x=1689801922;
+        d=1e100.net; s=20221208; t=1687209923; x=1689801923;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QjDFEbxttb5xRNr0jnFgG4xxTynP1QNATj916+mY2Ao=;
-        b=MaIKW7Qb3/6VCvvTvhqWlyokKt7LOp/9o+PuoHt0MumsCuU9LUa+kd5gVm364lB11E
-         eZHlpSdMs8vzryp2MHNFI2HBv8m7f4ctgEZTwQFkFxhNM+cB9iU4VDIvRkYCal2+dXQh
-         fEePd6Rz/27O9ugVNbM1SULqkqO1FFLKjFUAkeakM+G4NUwyZRoAbh+plNvBIyeeMZbr
-         3PCWRvCJf0Mu44ExMkm9cv4Nc5juGw4ZP/aItFTJXAqHziDehyHRfwkU5jAu2meniinW
-         zsmMh6YDiXdwcG2mUelRtlMNQb0DhuF/+g+aDCXVo3IEUxITTjuDLMuDuTzXt8Pp2MRH
-         D8zA==
-X-Gm-Message-State: AC+VfDzlbFmED31wLYeokByyGWsrcHEZ+olfLSimX3ivf3haNdgvxy4y
-        nNSsDxOsQW25JA03OMZZUihTIw==
-X-Google-Smtp-Source: ACHHUZ7T4h/UBsSTJ9OvODe51pFP6OmCARrYMtzyzdswbxk+uz9HrW+SgSSCeMC+cWkQon/i+aXEbg==
-X-Received: by 2002:a19:8c49:0:b0:4f8:6e6e:4100 with SMTP id i9-20020a198c49000000b004f86e6e4100mr2651337lfj.52.1687209922468;
-        Mon, 19 Jun 2023 14:25:22 -0700 (PDT)
+        bh=XZQCZKCJwgSJDNx3vlr5xX6AVwLhQhbriBwtbUznuaY=;
+        b=kgfXpvnXlSpjsmZ+4rFKj98if5RBf2jm+j0FcVzWFbeKHHjv3BzV0g4KmcZEgMcYqh
+         kBcrad52MU9EI6o9oR9SqPJdZkGXaNqsXgdSED50v+0uxFxa0FEKQLrgm7684ToGJ5qn
+         c49tM+AaIFkcoHeJXbVtlwvFVERDAz9D6hvaFrJ1YYXNIZ4m8oYF34g5Nvi/bfgVXxzF
+         GK1riyZhgLbVg7QxktkMC23seyNzg68zjrQh8NZjVHNDbScu/I87gQ9ae3Ua1cFi+V9f
+         DyhOfJKDvzu+ucjrP9enS01+EJ6WYAUm9F8rcAD2x9IAJTImNEAXicp1yHuiS2wPkgkR
+         x7+w==
+X-Gm-Message-State: AC+VfDxtdnHA3RwTGQzcgajD+8d+rkdmSIa/DJ3K5oavQAGw67rv/pyx
+        JhNaThuRwP3hU3JShccoXLpVFw==
+X-Google-Smtp-Source: ACHHUZ67fRWE9UNxJlUrpD4P+sI844RD1YA0PgrZ9Xl8tYytVs+eMxF4132KVXODkxSj5FJGsfj3GA==
+X-Received: by 2002:a05:6512:604:b0:4f8:6722:2724 with SMTP id b4-20020a056512060400b004f867222724mr2144796lfe.0.1687209923325;
+        Mon, 19 Jun 2023 14:25:23 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j12-20020ac253ac000000b004f611dd9935sm84864lfh.152.2023.06.19.14.25.21
+        by smtp.gmail.com with ESMTPSA id j12-20020ac253ac000000b004f611dd9935sm84864lfh.152.2023.06.19.14.25.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 14:25:21 -0700 (PDT)
+        Mon, 19 Jun 2023 14:25:22 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -60,9 +60,9 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v4 02/19] drm/msm/dpu: always use MSM_DP/DSI_CONTROLLER_n
-Date:   Tue, 20 Jun 2023 00:25:02 +0300
-Message-Id: <20230619212519.875673-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 03/19] drm/msm/dpu: simplify peer LM handling
+Date:   Tue, 20 Jun 2023 00:25:03 +0300
+Message-Id: <20230619212519.875673-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
 References: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
@@ -78,303 +78,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In several catalog entries we did not use existing MSM_DP_CONTROLLER_n
-constants. Fill them in. Also use freshly defined MSM_DSI_CONTROLLER_n
-for DSI interfaces.
+For each LM there is at max 1 peer LM which can be driven by the same
+CTL, so there no need to have a mask instead of just an ID of the peer
+LM.
 
 Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 6 +++---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 8 ++++----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 8 ++++----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 8 ++++----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h  | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h   | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 4 ++--
- 15 files changed, 32 insertions(+), 32 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  4 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 34 +++++++------------
+ 3 files changed, 15 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index 7d0d0e74c3b0..be0514bf27ec 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -139,13 +139,13 @@ static const struct dpu_dspp_cfg msm8998_dspp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 0de507d4d7b7..30fb5b1f3966 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -394,7 +394,7 @@ static const struct dpu_sspp_sub_blks qcm2290_dma_sblk_0 = _DMA_SBLK("8", 1);
+ 	.features = _fmask, \
+ 	.sblk = _sblk, \
+ 	.pingpong = _pp, \
+-	.lm_pair_mask = (1 << _lmpair), \
++	.lm_pair = _lmpair, \
+ 	.dspp = _dspp \
+ 	}
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index b860784ade72..b07caa4b867e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -554,14 +554,14 @@ struct dpu_sspp_cfg {
+  * @features           bit mask identifying sub-blocks/features
+  * @sblk:              LM Sub-blocks information
+  * @pingpong:          ID of connected PingPong, PINGPONG_NONE if unsupported
+- * @lm_pair_mask:      Bitmask of LMs that can be controlled by same CTL
++ * @lm_pair:           ID of LM that can be controlled by same CTL
+  */
+ struct dpu_lm_cfg {
+ 	DPU_HW_BLK_INFO;
+ 	const struct dpu_lm_sub_blks *sblk;
+ 	u32 pingpong;
+ 	u32 dspp;
+-	unsigned long lm_pair_mask;
++	unsigned long lm_pair;
  };
  
- static const struct dpu_intf_cfg msm8998_intf[] = {
--	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, 0, 21, INTF_SDM845_MASK,
-+	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 21, INTF_SDM845_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x280, INTF_DSI, 0, 21, INTF_SDM845_MASK,
-+	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x280, INTF_DSI, MSM_DSI_CONTROLLER_0, 21, INTF_SDM845_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27)),
--	INTF_BLK("intf_2", INTF_2, 0x6b000, 0x280, INTF_DSI, 1, 21, INTF_SDM845_MASK,
-+	INTF_BLK("intf_2", INTF_2, 0x6b000, 0x280, INTF_DSI, MSM_DSI_CONTROLLER_1, 21, INTF_SDM845_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29)),
- 	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_HDMI, 0, 21, INTF_SDM845_MASK,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index b6098141bb9b..b33472625fcb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -143,16 +143,16 @@ static const struct dpu_dsc_cfg sdm845_dsc[] = {
- };
+ /**
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index 471842bbb950..e333f4eeafc1 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -253,28 +253,19 @@ static bool _dpu_rm_needs_split_display(const struct msm_display_topology *top)
+ }
  
- static const struct dpu_intf_cfg sdm845_intf[] = {
--	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, 0, 24, INTF_SDM845_MASK,
-+	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SDM845_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x280, INTF_DSI, 0, 24, INTF_SDM845_MASK,
-+	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x280, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SDM845_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27)),
--	INTF_BLK("intf_2", INTF_2, 0x6b000, 0x280, INTF_DSI, 1, 24, INTF_SDM845_MASK,
-+	INTF_BLK("intf_2", INTF_2, 0x6b000, 0x280, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SDM845_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29)),
--	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_DP, 1, 24, INTF_SDM845_MASK,
-+	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SDM845_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-index b5f751354267..64ed10da1b73 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-@@ -162,18 +162,18 @@ static const struct dpu_dsc_cfg sm8150_dsc[] = {
- };
+ /**
+- * _dpu_rm_check_lm_peer - check if a mixer is a peer of the primary
++ * _dpu_rm_get_lm_peer - get the id of a mixer which is a peer of the primary
+  * @rm: dpu resource manager handle
+  * @primary_idx: index of primary mixer in rm->mixer_blks[]
+- * @peer_idx: index of other mixer in rm->mixer_blks[]
+- * Return: true if rm->mixer_blks[peer_idx] is a peer of
+- *          rm->mixer_blks[primary_idx]
+  */
+-static bool _dpu_rm_check_lm_peer(struct dpu_rm *rm, int primary_idx,
+-		int peer_idx)
++static int _dpu_rm_get_lm_peer(struct dpu_rm *rm, int primary_idx)
+ {
+ 	const struct dpu_lm_cfg *prim_lm_cfg;
+-	const struct dpu_lm_cfg *peer_cfg;
  
- static const struct dpu_intf_cfg sm8150_intf[] = {
--	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2bc, INTF_DSI, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2bc, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
--	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x6b000, 0x2bc, INTF_DSI, 1, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x6b000, 0x2bc, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
- 			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
--	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_DP, 1, 24, INTF_SC7180_MASK,
-+	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-index 8ed2b263c5ea..6ae1f6f67ec8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-@@ -166,11 +166,11 @@ static const struct dpu_intf_cfg sc8180x_intf[] = {
- 	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2bc, INTF_DSI, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2bc, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
--	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x6b000, 0x2bc, INTF_DSI, 1, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x6b000, 0x2bc, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
- 			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index daebd2170041..48c97e9f8a45 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -163,18 +163,18 @@ static const struct dpu_dsc_cfg sm8250_dsc[] = {
- };
+ 	prim_lm_cfg = to_dpu_hw_mixer(rm->mixer_blks[primary_idx])->cap;
+-	peer_cfg = to_dpu_hw_mixer(rm->mixer_blks[peer_idx])->cap;
  
- static const struct dpu_intf_cfg sm8250_intf[] = {
--	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
--	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x6b000, 0x2c0, INTF_DSI, 1, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x6b000, 0x2c0, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
- 			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
--	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_DP, 1, 24, INTF_SC7180_MASK,
-+	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-index 67566b07195a..00366f7fe969 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-@@ -92,7 +92,7 @@ static const struct dpu_intf_cfg sc7180_intf[] = {
- 	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-index 031fc8dae3c6..8688f09dd560 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-@@ -66,7 +66,7 @@ static const struct dpu_pingpong_cfg sm6115_pp[] = {
- };
+-	if (!test_bit(peer_cfg->id, &prim_lm_cfg->lm_pair_mask)) {
+-		DPU_DEBUG("lm %d not peer of lm %d\n", peer_cfg->id,
+-				peer_cfg->id);
+-		return false;
+-	}
+-	return true;
++	if (prim_lm_cfg->lm_pair >= LM_0 && prim_lm_cfg->lm_pair < LM_MAX)
++		return prim_lm_cfg->lm_pair - LM_0;
++	return -EINVAL;
+ }
  
- static const struct dpu_intf_cfg sm6115_intf[] = {
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-index 06eba23b0236..2bb2346d27a0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-@@ -102,10 +102,10 @@ static const struct dpu_dsc_cfg sm6350_dsc[] = {
- };
+ /**
+@@ -351,7 +342,7 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+ 	int lm_idx[MAX_BLOCKS];
+ 	int pp_idx[MAX_BLOCKS];
+ 	int dspp_idx[MAX_BLOCKS] = {0};
+-	int i, j, lm_count = 0;
++	int i, lm_count = 0;
  
- static const struct dpu_intf_cfg sm6350_intf[] = {
--	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, 0, 35, INTF_SC7180_MASK,
-+	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 35, INTF_SC7180_MASK,
- 		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 35, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, MSM_DSI_CONTROLLER_0, 35, INTF_SC7180_MASK,
- 		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 		DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-index f2808098af39..d106ff28372d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-@@ -63,7 +63,7 @@ static const struct dpu_pingpong_cfg qcm2290_pp[] = {
- };
+ 	if (!reqs->topology.num_lm) {
+ 		DPU_ERROR("invalid number of lm: %d\n", reqs->topology.num_lm);
+@@ -376,16 +367,15 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+ 		++lm_count;
  
- static const struct dpu_intf_cfg qcm2290_intf[] = {
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-index 241fa6746674..842ea5bcbe16 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-@@ -71,7 +71,7 @@ static const struct dpu_dsc_cfg sm6375_dsc[] = {
- };
+ 		/* Valid primary mixer found, find matching peers */
+-		for (j = i + 1; j < ARRAY_SIZE(rm->mixer_blks) &&
+-				lm_count < reqs->topology.num_lm; j++) {
+-			if (!rm->mixer_blks[j])
++		if (lm_count < reqs->topology.num_lm) {
++			int j = _dpu_rm_get_lm_peer(rm, i);
++
++			/* ignore the peer if there is an error or if the peer was already processed */
++			if (j < 0 || j < i)
+ 				continue;
  
- static const struct dpu_intf_cfg sm6375_intf[] = {
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 24, INTF_SC7180_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7180_MASK,
- 		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 		DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index 8da424eaee6a..8fa9d83a539d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -169,11 +169,11 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
- 	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, 0, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
--	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x2c4, INTF_DSI, 1, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x2c4, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
- 			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 900fee410e11..2862c64bbc3e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -116,7 +116,7 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
- 	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, 0, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index f6ce6b090f71..520b210e8c0c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -161,11 +161,11 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
- 	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
--	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
- 			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 8d13c369213c..b782603642f4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -177,11 +177,11 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
- 	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
--	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
- 			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index f17b9a7fee85..025a149bab97 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -181,11 +181,11 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
- 	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
--	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, MSM_DSI_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
- 			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
--	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
-+	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, MSM_DSI_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
- 			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
+-			if (!_dpu_rm_check_lm_peer(rm, i, j)) {
+-				DPU_DEBUG("lm %d not peer of lm %d\n", LM_0 + j,
+-						LM_0 + i);
++			if (!rm->mixer_blks[j])
+ 				continue;
+-			}
+ 
+ 			if (!_dpu_rm_check_lm_and_get_connected_blks(rm,
+ 					global_state, enc_id, j,
 -- 
 2.39.2
 
