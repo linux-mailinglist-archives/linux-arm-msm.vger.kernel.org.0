@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BAB8735BFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7C8B735BFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:14:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231964AbjFSQN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 12:13:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33362 "EHLO
+        id S232177AbjFSQN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 12:13:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232055AbjFSQN0 (ORCPT
+        with ESMTP id S232159AbjFSQN1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 12:13:26 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1070E1AB
+        Mon, 19 Jun 2023 12:13:27 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED90A1B4
         for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:13:25 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b46d4e1b0aso28721311fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:13:24 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b46bfa66d2so29012611fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:13:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687191203; x=1689783203;
+        d=linaro.org; s=google; t=1687191204; x=1689783204;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Zb5V9XwfVFSIHpQhT+fVgcE2qaopeXD6dDII5Ksk8SI=;
-        b=bB+j6bXK9bzttVUO3aefwzMtLgjoTbl5bcAV4jZtwnCEe2+zNabdgA508a+8J/V5iN
-         6WwrXRM6DNCHdS8upXURZenKQvT4G2G7GkrGs1LvPaNEra+8q+aTF532jXrfbIHkyFio
-         nCuwS3Xcd+iTVWw8JQ6bnMxjsfQqJqsUn2JyfbD3aBidw/FeMKVLFl8CLSqjKfMGgGdy
-         I7uapsi2rn1XMLJPut+m8TD3jAFDRMsIofCXBQMveozk5eEe+YOnR+H2uy+13ZGJ+Nxc
-         zc/ZXmlHVtKkOBfIYEC5f540LKyvhx8Tb2UIzs4xex7fTpVD8oRZl5OkEaHZYLZWWvMm
-         10XA==
+        bh=hmgYvNinjU/fT+erZeLft1aKLnZsg+oPmLA3CULSbeM=;
+        b=PTEHzxVjoT1bF8b5NSp4p68xB+MVPrSsJJUY0khQid3MBOQ+0J/+/PjP5ztIJnoEte
+         wnFd+gMhlzHN05KizStYKFgY0/J+neM+FabraUyIE4grK0b2Xy36NcJEcfAiw/eidaTL
+         lBbCMzwMCHodFXALMzlUfFHUad8nkzCyoihpPCx6ZhelQM7cijXatQVr4/BNAib/4/zt
+         EVBHsyAyofZh9OiQNOounIyW6aW5CrPCYY1bdmTzYy2IrpZSC51i0Todnq/bli6Xw9mS
+         6D3ZYv9axSfxuK0o7pZQ2IxZZBVV5cteCUXqmOSQPNYe7B847ZjptQGNcfhNtWYSarSo
+         LpcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687191203; x=1689783203;
+        d=1e100.net; s=20221208; t=1687191204; x=1689783204;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Zb5V9XwfVFSIHpQhT+fVgcE2qaopeXD6dDII5Ksk8SI=;
-        b=HIQEItHASLGkE8dPRMKEb2twH3wHDjDkXjdsfdAJAFQGxW0T+bXFftby2R3Oj0D0eF
-         vFKHe7Tyee3mtocEA0pdTzQlCuMWjNKdQUX8gL4ZwT68rnmEehZghULguUojL4w5QdZE
-         bKtK9Jra2DG9lgqAM6OWpRPa1ijmAp0VA/GxC6JxJ93smjBynXfwcnENbXE1TCIA9mbh
-         KEjYs3rNrITRtzJZ16hJzg9vClMPf/QQ9w3tFLKeY5Mzxb4hyVVDwIemm4Q/dhvFyWf9
-         GrYsQGTTh7c8gMTsuRci+E3TtZyHzAyvSUWZ4RfJzQ2uYf0ngTVaYF4Eqk/yIJ+2sQyw
-         uk4Q==
-X-Gm-Message-State: AC+VfDwTDfFFTP5BjU5K/o30Ly6IaBqJEWQ+lwZyrpnW8P9rMfvS2WK3
-        yyKvnI6fnlYTymCFZqIIUfp+Qg==
-X-Google-Smtp-Source: ACHHUZ7P7sjednE2bGKLN2y9DXYmXl1NUfMgakQ31M8U+TKMrIDoMuESw8gMix1UVjbnSDPaMddkQw==
-X-Received: by 2002:a2e:8842:0:b0:2b4:6b64:6855 with SMTP id z2-20020a2e8842000000b002b46b646855mr3283513ljj.24.1687191203246;
-        Mon, 19 Jun 2023 09:13:23 -0700 (PDT)
+        bh=hmgYvNinjU/fT+erZeLft1aKLnZsg+oPmLA3CULSbeM=;
+        b=H7n/eXagxDzL26qX/Ho8Ie/UmZz/qO4c7zgBbiTYpIZBIXHaCmV9YY/bbNRjqVIcqc
+         TxccpIBl12bt96i2QHYUVz8R0nD5rDrza7JryLEtGZyDjagiEsFnJgkrX9E2hHL+oy+P
+         fFR2FWHezYfOmUb5fk0D0dC7X0lT2u2Rt4TzJ0Xy3+UAw6td0x+aon83iT8tqMsjEpnP
+         CUDqDh0JoveHD3Xf2HVuHbGFicFX2NTZ8fKBCG71jXAoWRROzZtZtShUBA1KERCd44s4
+         F1/gcqrQ1z8rVCI12Pvmajy7e1vYt9AlEqyPjHbjjzTNeGP/AIvTpgCXNgMuShVPYLzn
+         H5RQ==
+X-Gm-Message-State: AC+VfDwGUHNQZYbgeGpAz2O9flHKSx6/BtfwqiF6vpGAfAK7CGY6KSqv
+        5uugRda0qcA/KWhxjBScpcD13A==
+X-Google-Smtp-Source: ACHHUZ5FVyfJK40+gm5ktlujj/AXdHiYmbvKw0KBnc6dK1hlmNuaf+P6ZagFHzrzYXyq0LyYIyYb4A==
+X-Received: by 2002:a2e:960d:0:b0:2ad:d291:72e1 with SMTP id v13-20020a2e960d000000b002add29172e1mr6611945ljh.18.1687191204336;
+        Mon, 19 Jun 2023 09:13:24 -0700 (PDT)
 Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id x20-20020a2e7c14000000b002b471efb253sm1011714ljc.46.2023.06.19.09.13.22
+        by smtp.gmail.com with ESMTPSA id x20-20020a2e7c14000000b002b471efb253sm1011714ljc.46.2023.06.19.09.13.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 09:13:22 -0700 (PDT)
+        Mon, 19 Jun 2023 09:13:24 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 19 Jun 2023 18:13:17 +0200
-Subject: [PATCH 1/2] clk: qcom: gpucc-sc8280xp: Add runtime PM
+Date:   Mon, 19 Jun 2023 18:13:18 +0200
+Subject: [PATCH 2/2] clk: qcom: gcc-sc8280xp: Add runtime PM
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230619-topic-sc8280xp-clk-rpm-v1-1-1e5e1064cdb2@linaro.org>
+Message-Id: <20230619-topic-sc8280xp-clk-rpm-v1-2-1e5e1064cdb2@linaro.org>
 References: <20230619-topic-sc8280xp-clk-rpm-v1-0-1e5e1064cdb2@linaro.org>
 In-Reply-To: <20230619-topic-sc8280xp-clk-rpm-v1-0-1e5e1064cdb2@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -68,16 +68,16 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191201; l=1937;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191201; l=1628;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=5Q+uIon8TwEZ6cJYHo5zacahpsGk7QSU+uGdUpH/moA=;
- b=f3JFlxvNLVIGIfQGPanhZfCO1xDNeRNXyVkclN0YBwa4r94CwWeP7+9B5deZSpgSsP0FlNyUo
- T7Oirv/CVT/Cfb8Ff/akhzHaU2Dn6Ab3fgZJNA/CP8AsDl0nURfl9Ty
+ bh=iLOsinGTJtv8sPDkEM7a2zWDxDnO0K1p+yOFG6UU878=;
+ b=7gTXtpfYHcJ+0pwGRH82J2GexETpGG26Gyb/o04zQKY9qD5wnd1s78SdNgclCurw05CB4RlMi
+ lEdx/i0XRbsDjfQmEAqtdOzVf3WwIQRHifziP649VUBKp7lkQLL5FK5
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,34 +85,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GPU_CC block on SC8280XP is powered by the GFX rail. We need to
-ensure that it's enabled to prevent unwanted power collapse.
+The GCC block on SC8280XP is powered by the CX rail. We need to ensure
+that it's enabled to prevent unwanted power collapse.
 
 Enable runtime PM to keep the power flowing only when necessary.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/gpucc-sc8280xp.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-sc8280xp.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sc8280xp.c b/drivers/clk/qcom/gpucc-sc8280xp.c
-index ea1e9505c335..8e147ee294ee 100644
---- a/drivers/clk/qcom/gpucc-sc8280xp.c
-+++ b/drivers/clk/qcom/gpucc-sc8280xp.c
-@@ -7,6 +7,7 @@
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index 04a99dbaa57e..b90c71637814 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -9,6 +9,7 @@
  #include <linux/kernel.h>
  #include <linux/module.h>
- #include <linux/platform_device.h>
+ #include <linux/of_device.h>
 +#include <linux/pm_runtime.h>
+ #include <linux/of.h>
  #include <linux/regmap.h>
  
- #include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
-@@ -424,10 +425,21 @@ static struct qcom_cc_desc gpu_cc_sc8280xp_desc = {
- static int gpu_cc_sc8280xp_probe(struct platform_device *pdev)
- {
+@@ -7421,9 +7422,19 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
  	struct regmap *regmap;
-+	int ret;
-+
+ 	int ret;
+ 
 +	ret = devm_pm_runtime_enable(&pdev->dev);
 +	if (ret)
 +		return ret;
@@ -120,28 +118,28 @@ index ea1e9505c335..8e147ee294ee 100644
 +	ret = pm_runtime_resume_and_get(&pdev->dev);
 +	if (ret)
 +		return ret;
- 
- 	regmap = qcom_cc_map(pdev, &gpu_cc_sc8280xp_desc);
++
+ 	regmap = qcom_cc_map(pdev, &gcc_sc8280xp_desc);
 -	if (IS_ERR(regmap))
 +	if (IS_ERR(regmap)) {
 +		pm_runtime_put(&pdev->dev);
  		return PTR_ERR(regmap);
 +	}
  
- 	clk_lucid_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
- 	clk_lucid_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
-@@ -439,7 +451,10 @@ static int gpu_cc_sc8280xp_probe(struct platform_device *pdev)
- 	regmap_update_bits(regmap, 0x1170, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x109c, BIT(0), BIT(0));
+ 	/*
+ 	 * Keep the clocks always-ON
+@@ -7445,7 +7456,10 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
  
--	return qcom_cc_really_probe(pdev, &gpu_cc_sc8280xp_desc, regmap);
-+	ret = qcom_cc_really_probe(pdev, &gpu_cc_sc8280xp_desc, regmap);
+-	return qcom_cc_really_probe(pdev, &gcc_sc8280xp_desc, regmap);
++	ret = qcom_cc_really_probe(pdev, &gcc_sc8280xp_desc, regmap);
 +	pm_runtime_put(&pdev->dev);
 +
 +	return ret;
  }
  
- static const struct of_device_id gpu_cc_sc8280xp_match_table[] = {
+ static const struct of_device_id gcc_sc8280xp_match_table[] = {
 
 -- 
 2.41.0
