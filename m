@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B370735831
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 15:13:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB1AE735835
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 15:14:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231233AbjFSNNx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 09:13:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
+        id S229994AbjFSNOk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 09:14:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231574AbjFSNNj (ORCPT
+        with ESMTP id S230116AbjFSNOj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 09:13:39 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF49E7E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:13:26 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b470330145so21232951fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:13:26 -0700 (PDT)
+        Mon, 19 Jun 2023 09:14:39 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFAB2E77
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:14:33 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f640e48bc3so4293707e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687180405; x=1689772405;
+        d=linaro.org; s=google; t=1687180472; x=1689772472;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yUCyn43Ba05/wUTOfOtOC0PNLhyt9DVE36oTpy8FhmQ=;
-        b=GSgSqHAeUeq4yP1hrxDx/jdZ19hRgodHecxJnEL1tomeV8PoZWM97/WPmxMn+bAtih
-         m3AAO2zg/F3NnYk9gJsmCYcj2CgD7StPi6jD4yCs7Dhdbx6OXOdLEHwIdMul1tLYEuDu
-         +7bzTOEHmMyNJI+xKjgpxMkphW6SYj5fn0humBCqFARjsT91t1mb2DVl4MeImsy6eqUK
-         qp0kRvsh6tEGiiGcASFCmRh6njWsWWXEIvTtLzVh4q6VPsi0Yfq8oT8UeaSz6BgRkJHD
-         RRwFaS4R8FFfbkgur0rkYTx2YTwvO2Oscdj1yCE153vdUvG/UyaIBKODCFPMRrrgTWRN
-         FDZw==
+        bh=3V88tgTy2Oq43K7mSvVDSYb4+JWi1+bC1S0A+SLW2xU=;
+        b=Id23VFiBlm2EjAN3qHakK844pf1Kk3dzIdn1MWkMZr68cQt+r4adwE8Lr1ReoOQrfU
+         1B0FE/6/99t1yFY+YIGBIQJuCJ12WW35D/6PdsYYx+S2dnUUtaiUR5/KXj4l0zDdyYja
+         MONv0yQ6UL+xOG6wXDtfMmk2rqikTmOuumpjK+5LNKPMeEdGeY6hbnu4ayTuCkeViIWO
+         XOqn/IsAxgYeuhtIeys9oMa0K+BL73qHjvSdeViLkqw6DFNgrjanwsZt0/6e6IhSnBKe
+         ptjg3GF+Ww6BPTNi+oi5AJyUDDpd1vYe9pgHZBrqzcNJxdaJ9/MorUmk43eFUHpfcE/y
+         2J6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687180405; x=1689772405;
+        d=1e100.net; s=20221208; t=1687180472; x=1689772472;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yUCyn43Ba05/wUTOfOtOC0PNLhyt9DVE36oTpy8FhmQ=;
-        b=BoopQPpQV2rS76teZoCR5W1XtVJCOmJvhR91B4XGpV98UfKFLGz8pRhaeadWU7JF9v
-         kyuH1cONik5rdqpoHezydVgM8jz49F5klgTwHl/tNqxLpuEuegikOEx7pGm5NRODirkI
-         JbHxaL6wI6oCZMZr2zjebWXkq42nKOmQs3xFzJ58e6dmFGK9QldPn8R7eNhe46L1qr4y
-         dD6urT9c34GoNX8k/sv+Br/j0pKOa9Z0NR5odanWaxZ2+La4MKs9MUA4X7d6AwKvwGSk
-         9iFXyTdmWGOtcwL3iJVPpbqIPhRf1jP6P8wjWo7DZCqvXzlUSvQQic39jPJiJVIPNM0U
-         o7Hw==
-X-Gm-Message-State: AC+VfDzXIMLQD9HJ7LEsxw2QlDX/pQdyMS442PErl+E23brr+UbYVcHM
-        q31HBHD34aqTw/U1iihp1FzCGA==
-X-Google-Smtp-Source: ACHHUZ4QmAXqKKYI0X6pS123LITWyxHMwUQiADRiJtPSdqleIp0mfmhlbA2qwnxHC6FBbbgptq8bcQ==
-X-Received: by 2002:a2e:9808:0:b0:2b4:4a0b:8fb8 with SMTP id a8-20020a2e9808000000b002b44a0b8fb8mr5529604ljj.53.1687180404749;
-        Mon, 19 Jun 2023 06:13:24 -0700 (PDT)
+        bh=3V88tgTy2Oq43K7mSvVDSYb4+JWi1+bC1S0A+SLW2xU=;
+        b=f3Rr6UBZ3rkDNTN1Yu6BojKqdLLFDhfiST35OqbPVIQV2FTeIkWz0stnvghfVHViQC
+         nxzFxG6G9T4fQh1/N13O8/oq5TkmD6ZLSdlt0bYEz41qj7rmdYy8+kkYPzHm8Td64K1g
+         hPCGcJhLx6C8NBdRcsL0E4GQ7/RUMvNL//ihAc91ERZMU227AvDw8uxmlSHJOjdDZiQr
+         Tp6n6ZfsCs4wNt7J77PhebKVeuewdaZDGrg/6JDQAKWlxPBOV90xyo4pszw1lWZYrfbe
+         C1MU0g4muLqrjfdroj+0QmyCR6aEEaGeYW4HD+9MuREIr+n0ESsQe1YmiA48qHq+4qGl
+         lkNA==
+X-Gm-Message-State: AC+VfDwDAPT7q1QZFICYE0UkDf+HRmtGmefo28dyYg7vOXuuZKhscaxk
+        zXOQ5fXK+xMBQD4eidZMM5Tisg==
+X-Google-Smtp-Source: ACHHUZ7TeuRP+EVScfPBYu5Ftyhevg7WgW0GnXpvi29cpx4NtmHdYr9gS1d/4BybmzRFQoqmq0Npyw==
+X-Received: by 2002:a19:6d12:0:b0:4f5:a181:97b8 with SMTP id i18-20020a196d12000000b004f5a18197b8mr4577942lfc.25.1687180472154;
+        Mon, 19 Jun 2023 06:14:32 -0700 (PDT)
 Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id d8-20020a2e9288000000b002b247680950sm4758983ljh.131.2023.06.19.06.13.23
+        by smtp.gmail.com with ESMTPSA id s7-20020ac25fa7000000b004f37b88eacfsm960609lfe.187.2023.06.19.06.14.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jun 2023 06:13:24 -0700 (PDT)
-Message-ID: <43f57911-15bc-072e-fc41-bbb55c99c5fc@linaro.org>
-Date:   Mon, 19 Jun 2023 15:13:23 +0200
+        Mon, 19 Jun 2023 06:14:31 -0700 (PDT)
+Message-ID: <29f6fb78-c122-2b71-61b8-2dc9aa27ad1d@linaro.org>
+Date:   Mon, 19 Jun 2023 15:14:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 08/15] arm64: dts: qcom: sc7180-aspire1: use generic ADC
- channel node names
+Subject: Re: [PATCH 09/15] arm64: dts: qcom: sc7280-crd: add dummy Bluetooth
+ VDDIO supply
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -68,16 +68,17 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Nikita Travkin <nikita@trvn.ru>,
         Stephan Gerhold <stephan@gerhold.net>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>
 References: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
- <20230617171541.286957-8-krzysztof.kozlowski@linaro.org>
+ <20230617171541.286957-9-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230617171541.286957-8-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230617171541.286957-9-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,41 +87,50 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 17.06.2023 19:15, Krzysztof Kozlowski wrote:
-> ADC channel node names were changed to require generic 'channel'.  The
-> user-visible part is defined via label.
+> Bluetooth requires VDDIO supply.  Due to lack of schematics provide
+> something dummy to satisfy `dtbs_check`:
 > 
->   sc7180-acer-aspire1.dtb: adc@3100: 'charger-thermistor@4f', 'thermistor@4e' do not match any of the regexes: '^channel@[0-9a-f]+$', 'pinctrl-[0-9]+'
+>   sc7280-crd-r3.dtb: bluetooth: 'vddio-supply' is a required property
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+For this:
+
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
++CC Doug to perhaps fix this properly (though I think we should have got
+it through the cros list anyway)
+
 Konrad
->  arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-> index b637b4270f88..dbb48934d499 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-> @@ -314,16 +314,18 @@ &mdss_dsi0_phy {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> index afae7f46b050..b1aa5b0ee95c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> @@ -24,6 +24,13 @@ aliases {
+>  	chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+> +
+> +	bt_vddio: regulator-bt-vddio {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "bt-vddio";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +	};
 >  };
 >  
->  &pm6150_adc {
-> -	thermistor@4e {
-> +	channel@4e {
->  		reg = <ADC5_AMUX_THM2_100K_PU>;
->  		qcom,ratiometric;
->  		qcom,hw-settle-time = <200>;
-> +		label = "thermistor";
->  	};
->  
-> -	charger-thermistor@4f {
-> +	channel@4f {
->  		reg = <ADC5_AMUX_THM3_100K_PU>;
->  		qcom,ratiometric;
->  		qcom,hw-settle-time = <200>;
-> +		label = "charger_thermistor";
+>  &apps_rsc {
+> @@ -38,6 +45,10 @@ vreg_s1k_1p0: smps1 {
 >  	};
 >  };
 >  
+> +&bluetooth {
+> +	vddio-supply = <&bt_vddio>;
+> +};
+> +
+>  ap_tp_i2c: &i2c0 {
+>  	status = "okay";
+>  	clock-frequency = <400000>;
