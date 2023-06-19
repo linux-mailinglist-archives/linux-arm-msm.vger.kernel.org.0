@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79475735847
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 15:16:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D730B73584B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 15:16:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232043AbjFSNQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 09:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55516 "EHLO
+        id S231297AbjFSNQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 09:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231609AbjFSNPo (ORCPT
+        with ESMTP id S230053AbjFSNQd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 09:15:44 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E89199A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:15:33 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b4636bb22eso31980141fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:15:32 -0700 (PDT)
+        Mon, 19 Jun 2023 09:16:33 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1077B199
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:16:13 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b45a71c9caso41491951fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687180531; x=1689772531;
+        d=linaro.org; s=google; t=1687180568; x=1689772568;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SBO3iu9jfDiNa7LMgJxeNhsBFTZP/cc62vDSqJcSUqY=;
-        b=SPfB70Lb0paCTXk0ODmtZOJ+K/6K/Fwp4Qv1LRn4g/pJGyi7H/Fdw2K4Ryuo7rVEBJ
-         +ZPde3kTNRk+uZdINiF2/8g2zU32jcnqCMdIEGpqIMWQ6R5mcej0eHBan/Y9hVBiNyuR
-         k41IjGh3Qi+cMvQp2lFX04yg73dszezfQLxWa1a6y+3WM2GOIiGVjFq18F+H0V6rH4mt
-         iLLeMrQLzfwXNG1qK8Vhd+22Ip8rZjeH/Pwr0cjpPXTtUIxHkKjmG778QCm92xXuSdhg
-         PlYuqRMQw1J1zGhS9zs/N9R/gTcE/+mHCoHqtkRmKGCe+6yhdWsgJE3JlsIr0ogOUR6B
-         fT4Q==
+        bh=sM3CcPFP4F9FIEm4Nxl2/Ir6TV9n1Rj9wbe9m/rfRB4=;
+        b=C5wwai1SzyHLAKvLpHjBqHiKKm6Xsh5biXqHQo52GV8Vi8UqNe8y126fuestXCwnaB
+         ImqAQb8VzFDlWRhu4Jeu4mLdGZ3Vsu3XU+bvL/kBol4vwTRZjTvL4RuJz5DnDq3Ped/9
+         qnuyvkQUPpW0VSgUAXm01g7k+j0rij3p8+M0gNCnq0J2+3SzPF85s8G615dCCDr4m3b7
+         7baDr2m+sPT8LCAqh2QrrFhY+kJaInDoIHEazDiroCwDLcDLrqU8BUe1uX1TOnuBiu8e
+         vcEaIfgsrcAj3IrXJOH8jMbim65MsTGfI3c5L0mTJ6GGniNh2GtnS7c1sv+TDdv7/+a4
+         LxYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687180531; x=1689772531;
+        d=1e100.net; s=20221208; t=1687180568; x=1689772568;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SBO3iu9jfDiNa7LMgJxeNhsBFTZP/cc62vDSqJcSUqY=;
-        b=WsVp2wwTLNu8ZYVC/a9Odosc4bFPpsPvXlE6psJ5skDzIVDTJWrROh0aV892CpSXn+
-         p1OLnlNS70PU3G2jD2niTU/NQMz/FYGMyFXfQjsiXkLViPtbi/ry/jxqmaX0knkSezgS
-         5kPobFKGYAhhOaozPfmPLlMVd2Mh2+4XNGKun6XdTFn8yAxZFletoOHXmeCJAotas+ai
-         XCKXHTAVfGbdQmWtXCttTI+03/lH1nqK3gITxcuB3mKEJPl/Ia56y96k0hVR7H21ogvE
-         9kXr7Z21cVvXGKfqCKdzvEZvW+Q1WzIQtcb/U2c4p7LgdHP3DIiH/apEiouhzTEAT2S1
-         SUsg==
-X-Gm-Message-State: AC+VfDzfHglTlvewSQk8qMIRYDfaXYU3aypikto6+r2/2ariOvuEEb4n
-        ny5uCQI83DB9ze+T7Iob5EXsEA==
-X-Google-Smtp-Source: ACHHUZ7RFBcS6H5Xk7h1y7XdJSaySB6X+zOjjCLar4M07y0Y3EKdqNCWbSnt6k6oO8dT7nyiVD+4YA==
-X-Received: by 2002:a2e:b6d2:0:b0:2b4:7da2:bd5 with SMTP id m18-20020a2eb6d2000000b002b47da20bd5mr1252006ljo.34.1687180531268;
-        Mon, 19 Jun 2023 06:15:31 -0700 (PDT)
+        bh=sM3CcPFP4F9FIEm4Nxl2/Ir6TV9n1Rj9wbe9m/rfRB4=;
+        b=BxDSJRTSqumWI/YFLhpxxwRdbZkJ/SO7OLSPeUfcH2yRXuckPg4WVpaJv1ZTQjAh8K
+         dIq70SC6r6S2h1h4thY11jNu24lg+sPNI83WiqhMi7dlOvVzstv9N4SmH0rAR/1EWzmU
+         oKwvdM93HSDtmEDTwt+jul6Izcna4dRiBKYuQkFfsLAkqQKs3dxGnk4HqhCpmnqthH8s
+         FtLGFh8YyyQR6+/zkINX+w+MSABObdGZ9vO8p5wXdZXOMtBtDlkxL7i6uaVaxpGZpM2Y
+         0R/Oi53L1M6uyscuNMAjp5xhMdLtNmpW9z6FX+3tajuQgPiOFo7fO3hIbC+Qmn3abh3f
+         tipA==
+X-Gm-Message-State: AC+VfDzURHip/8wGPotkprAKx+/4g6xPyIpOjh742reMwmmTfxTWga66
+        XFJbrDtYF/1MyLnlONIVJdR7/w==
+X-Google-Smtp-Source: ACHHUZ6bxSvaL7N5L7pY/7PGaWewZkr+jl+V5AXuMGjWDiBywlhOyfzJuEOgLTooQfGQMb6PsRxV0Q==
+X-Received: by 2002:a2e:8746:0:b0:2b4:66bb:4f2d with SMTP id q6-20020a2e8746000000b002b466bb4f2dmr2954807ljj.19.1687180568604;
+        Mon, 19 Jun 2023 06:16:08 -0700 (PDT)
 Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id 15-20020a05651c008f00b002b47e824518sm341988ljq.76.2023.06.19.06.15.30
+        by smtp.gmail.com with ESMTPSA id n23-20020a2e86d7000000b002ac78893a9csm5181698ljj.72.2023.06.19.06.16.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jun 2023 06:15:30 -0700 (PDT)
-Message-ID: <bc741c41-d291-9876-e944-c37d67854aac@linaro.org>
-Date:   Mon, 19 Jun 2023 15:15:29 +0200
+        Mon, 19 Jun 2023 06:16:08 -0700 (PDT)
+Message-ID: <4c71208b-5621-2495-a5de-3622a44d05d4@linaro.org>
+Date:   Mon, 19 Jun 2023 15:16:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115-pro1x: fix incorrect
- gpio-key,wakeup
+Subject: Re: [RFT PATCH] arm64: dts: qcom: sdm850-c630: add missing panel
+ supply
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -64,15 +64,11 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Nikita Travkin <nikita@trvn.ru>,
-        Stephan Gerhold <stephan@gerhold.net>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
- <20230617171541.286957-15-krzysztof.kozlowski@linaro.org>
+        linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
+References: <20230617171512.286795-1-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230617171541.286957-15-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230617171512.286795-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,29 +82,58 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 17.06.2023 19:15, Krzysztof Kozlowski wrote:
-> Use 'wakeup-source' instead of 'gpio-key,wakeup' to indicate key can
-> wake-up the device:
+> Panel bindings (boe,nv133fhm-n61) require supply which here actually can
+> be turned on/off via GPIO control:
 > 
->   sm6115-fxtec-pro1x.dtb: gpio-keys: key-volume-up: Unevaluated properties are not allowed ('gpio-key,wakeup' was unexpected)
+>   sdm850-lenovo-yoga-c630.dtb: panel: 'power-supply' is a required property
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> Not tested on hardware
+> ---
++Steev
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 20 +++++++++++++++++++
+>  1 file changed, 20 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-> index 3ce9875e932c..9b70a87906dc 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-> @@ -44,7 +44,7 @@ key-volume-up {
->  			gpios = <&pm6125_gpios 5 GPIO_ACTIVE_LOW>;
->  			debounce-interval = <15>;
->  			linux,can-disable;
-> -			gpio-key,wakeup;
-> +			wakeup-source;
->  		};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> index cfbc4fc1eba9..3d871567cf81 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> @@ -87,6 +87,25 @@ sn65dsi86_refclk: sn65dsi86-refclk {
+>  		clock-frequency = <19200000>;
 >  	};
->  };
+>  
+> +	vph_pwr: regulator-vph-pwr {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +	};
+> +
+> +	vlcm_3v3: regulator-vlcm-3v3 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vlcm_3v3";
+> +
+> +		vin-supply = <&vph_pwr>;
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +	};
+> +
+>  	backlight: backlight {
+>  		compatible = "pwm-backlight";
+>  		pwms = <&sn65dsi86 1000000>;
+> @@ -419,6 +438,7 @@ aux-bus {
+>  			panel: panel {
+>  				compatible = "boe,nv133fhm-n61";
+>  				backlight = <&backlight>;
+> +				power-supply = <&vlcm_3v3>;
+>  
+>  				port {
+>  					panel_in_edp: endpoint {
