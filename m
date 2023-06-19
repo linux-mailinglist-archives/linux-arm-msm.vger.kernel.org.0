@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CFCA734CD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 09:58:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71040734CD5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 09:58:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbjFSH6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 03:58:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44422 "EHLO
+        id S230150AbjFSH6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 03:58:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbjFSH6p (ORCPT
+        with ESMTP id S229807AbjFSH6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 03:58:45 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3026DA7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 00:58:41 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f901f87195so13001635e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 00:58:41 -0700 (PDT)
+        Mon, 19 Jun 2023 03:58:46 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A2D2E61
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 00:58:42 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f85966b0f2so3299110e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 00:58:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687161519; x=1689753519;
+        d=linaro.org; s=google; t=1687161521; x=1689753521;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mLNlz/8+ewTofYujo4xBdn+VfsPe1NjsAkjdE+/T2lI=;
-        b=pB0+pPw6GNaxVT7QFpbj4FT2FZKJRsTvIP5KyL0jMYICJifcchN+QYyAZav5sAi60r
-         xa28o7lVTZxlYYKHCtSvMlERV/GxFWRJErtdiUR8WUbjKvJteYyqfQdsmtYH9JeEjG/D
-         4L82wG7JCVEP/6wXVlC6sV/iD2iPyzuxBmbCGKoYAjVVWpX2ZGgGXPHrEdUptkX8tqpm
-         j/F1BQFhcNisce7e2GBLyFIj2nvqutcOh/Ts8uOWxofEq3NQ3aXvYZ6PM2n5xGiJ0UPc
-         lzAl39bwNNwk/R0o/sQRjDNt6DnLwQ1eLLfjiymqubo9PFCXMoApQIyM0lO2/EFr0RCr
-         snag==
+        bh=8W4DDI67tlbAaFkIpRMuH4m4GXyLOYQLIt7UXn6qsRg=;
+        b=RQt3m4J4Da/tuK8Zr7xcxMZ4jMfOpQCtBBssjfPgcE2rfOPo+ipfSAbt0HMrZMx0Dv
+         tfuTOWC2gx2gH0VwvHBQ0PCHlGjEa+gdQAhvjec+iSUgRhuz6HwG9KGlVnEv7JNuWczL
+         nyjhzISwF5yVkzMvW7IkiGpZvnr3ywvE15XagXitmuAYYxzG9Cj+EF+l1J4nmu+oRC+k
+         gN3VtWaOlMj7xmNRhR14Y2IMxlM/ljL7yO+/wogm4/oamjuB5uK7u0qpq/7aFVov+O+Z
+         GY8UuQD0DvN0xMJcE5R6UiiQnSUQLufTlx47WglX3oHVFRe2nOZr9H+f1fEx9JrMYMgU
+         mxbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687161519; x=1689753519;
+        d=1e100.net; s=20221208; t=1687161521; x=1689753521;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mLNlz/8+ewTofYujo4xBdn+VfsPe1NjsAkjdE+/T2lI=;
-        b=EpTa6RMJYiOdEpKZmld4brOIJZlR44/oaLR0QZ3PgKtBTT/1Q5fRmZ3HtFXYTeIA+A
-         MdC+jlQ9aLeXlfX4fK5uxhKVkE6FosttNajRe1iUrXN8mhzue2D+oRG3CUQ+GtIDG3Oz
-         3XNqHM27MIRJhGbeMqQxnBircdngALtsydPmXkqzDsFzbqtyk6K32PwuTNtYueEPxACF
-         5ji1U4Uv9/Exc7yCH0TqyewCyPnwy2wlHLYuRONMlbgMykA8ueu9WYwrBC58TLeJs1zb
-         k5P1Mn+XqbqLDMaNL13jVNCNwg8BNTmj2DcnBwSrpw4wqd6uBQLZfbgYMJ/XjSiASyt0
-         I3vA==
-X-Gm-Message-State: AC+VfDzQkwv9F8LRkoTM0g7ljd0BBtGjokJ+DegBFzNjEcAWmhX57XwP
-        xYs1PG6i3GopphGdqGeWPickhg==
-X-Google-Smtp-Source: ACHHUZ5CIUXx8i3EvKxAlDZjqaknempYyjVv4Qn4kHi7PPXyOf8lxdn1zXygT2YvjcOqZFDcSeOYkg==
-X-Received: by 2002:a1c:cc07:0:b0:3f7:c92:57a0 with SMTP id h7-20020a1ccc07000000b003f70c9257a0mr7364730wmb.14.1687161519603;
-        Mon, 19 Jun 2023 00:58:39 -0700 (PDT)
+        bh=8W4DDI67tlbAaFkIpRMuH4m4GXyLOYQLIt7UXn6qsRg=;
+        b=R/KE99MLllndZV5jVOgj0GeoOY4efuG6nezD0rKSQF9iqL8w+ZjwhA2Ct6HpEsI/RN
+         Dqo87+68b3QcQEVSqaN4UumDGVdw8N8n58UEEdIEvARKRYBhVhU+KGadBRB3pkCC6sxY
+         fppxxEq3My768csxyAt3dmd4KBGDoNgUwj1dUorsFdoQIi4Ue5YeO82RCfQv5Wkz2jCi
+         gYPh2+9VR2u1qegsUEo90rw93dKJH4iR8BrA6aTgGkXgHby+tGuZmEeF2S73VEnytH2e
+         IYGq9WquJN0fR+5Ons2lTsnnylwAFIGAl6EhhBg+A/AlAdvSacxSPBFq9kiJSuwYuNSd
+         0gww==
+X-Gm-Message-State: AC+VfDxynGdgu2annDfUaUrw/b/offClcoYu0GvfLQWAVmbncLAcsjfq
+        3AVJOACBqBhY557gm+lFm3kbAA==
+X-Google-Smtp-Source: ACHHUZ7XGvKnV3yJAy5//KAzL08FM8XkI69KFiNDDy7AAxhwdpdQh8KKDUkpNE2XOzRdZACCyZ81EQ==
+X-Received: by 2002:a19:385a:0:b0:4f4:b38c:1f8a with SMTP id d26-20020a19385a000000b004f4b38c1f8amr3885028lfj.53.1687161520705;
+        Mon, 19 Jun 2023 00:58:40 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id v5-20020a05600c214500b003f7f87ba116sm7091491wml.19.2023.06.19.00.58.38
+        by smtp.gmail.com with ESMTPSA id v5-20020a05600c214500b003f7f87ba116sm7091491wml.19.2023.06.19.00.58.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 00:58:39 -0700 (PDT)
+        Mon, 19 Jun 2023 00:58:40 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 19 Jun 2023 09:58:16 +0200
-Subject: [PATCH v4 1/6] soc: qcom: pmic_glink_altmode: handle safe mode
- when disconnect
+Date:   Mon, 19 Jun 2023 09:58:17 +0200
+Subject: [PATCH v4 2/6] qcom: pmic_glink_altmode: add retimer-switch
+ support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-topic-sm8550-upstream-type-c-v4-1-eb2ae960b8dc@linaro.org>
+Message-Id: <20230601-topic-sm8550-upstream-type-c-v4-2-eb2ae960b8dc@linaro.org>
 References: <20230601-topic-sm8550-upstream-type-c-v4-0-eb2ae960b8dc@linaro.org>
 In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v4-0-eb2ae960b8dc@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -70,25 +70,25 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1767;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3944;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=gcoujHHWT0tH34VUiSmqNPPpiXV+hYxjsfgjgght78I=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkAqr6TLw9aFwcZW7H6nEuKXj9Qj+nwt5tNVwrZbq
- nJiIIViJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJAKqwAKCRB33NvayMhJ0WJVEA
- Chixi1u6NwTLKntyT0Q8vOdko8yj8f0r74AlAAGN1kGsUZRozzrLJztrLpqm7PjbB5E/1/6yEd3bvT
- K5uCI4N8Dv0MClu1HPxNTUWA/XOghgWEe2u2fbNfvfS+Wxe+4pkXDLCUTxUkwJjSLvds5ujIOvaIJ4
- 2nYka6OAPnCEj3tpxVARd8L4OMxvkIj4pMhmgE2EGLd1hmWyMu/Wh7e2RWRs7LxWLwsc8YHlMH1F7X
- D0PetsuUSdsRD20aEK9itjiqbgbd3I8VxScjRsSZlJfAoyChISnvuuFtAMmBN9kpuccUwegBQ2dLs1
- QfFwVKjNHjCOFAusmma+lYthc0hQOZYRSFtIiVmmxGv5BKXr9wVim9gFIFmjlYwRJZKaa6jfLj7JIw
- VIfcqJZJ5xTIVEy7z9zFSA+iLEqiSNq3AweHS2bQz5ChE2nfqHKO7D0AONXOVKJ0qWHdOmr91v3yLa
- F9nTi3JaCYUHhQRgqEeahMQlSuRSdJK66tk2WejEH6qAIjVOnCbKtxA6tQDvsdRWeBmf9iMHF/4Gmb
- Zp68ZhpjoFajguaNKcZZmgAxHI2H3F6McM6ZAEWM3+ts7k4X1ijA1T4DajJDNgA5aS4V5loyQUgCAl
- xqiwgu10Gfn4iCABk/oQBkzJrb/FFLO+Ff6I6FKpR+UkTBQQ42FoAUrJK57A==
+ bh=fCvaaaAL0Gx7Xnks6/BexPRt3VhZDwY4J3jOffW33Do=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkAqr+oPppKm8uZmmn0MEZmkNcfdKZZnK4rEpqr6u
+ NMCVHfuJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJAKqwAKCRB33NvayMhJ0YvwD/
+ 9DbP8N9jvpgqvOx0972X413z5tywwCs3FQ3i/fc7wn2PkjCzlo//ORWwH03fjmuzH17DbVmvB0vpJF
+ DEbjl03DdUHUaUwRdLSfVWb4Tu3kWkutrfcZ6q756aayzO8O/kr2Q1lxqESzuCh7eFJVgQagXPIUjj
+ 6crg87jFDwn3+yt7jxmWZVdFWkFF4MuGKVpTEdcZ1UwWO6zkpNoBuOte2w4Y037I/6W7FNfYMCRq3U
+ CvER9TwUUs8NXweEq58qcqDc+OdlqItqicrLPljSNof+q8FwreWh7ZOiwquRmLGZzRAQ5cuauILLqy
+ rHlMY3ur7fzcDjyzmt/bUJLE0zg2dtvgq87fPa10BN7585gnObYTLaqbfR3w+HGovlPSvaE1cLAyrY
+ RSP6v3UCLs0yh7P6ePxVcjK1i3fDaYKUEw2S1hX9ro67wwUX3isDWQzzYcPDodgR5LRPoYSWmAhezJ
+ 1AYqiU/nAoV7vQe4TB2kH+w0mEioRrSnvn3IetGXwfexobr6tAYNMtmIjE4pa1vncNn6IWHfG7Sb8I
+ G3lAfIbZS2zzThCHUpuM8ZJ5+TvaBBey3Q6eEnzGPCKBWq9ZUQGsbStC6ymRKp0ChesfHbtJmkZrOH
+ grV1SW15pN2mo6OjHz6kTu/fP5MZqDNLYHJx/s5aQzKN44q3IO9fuUUWuCEQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,52 +96,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some Qcom SoCs, the Altmode event mode is set to 0xff when
-the Type-C port is disconnected.
+Some boards have a retimer/redriver between the SuperSpeed
+PHY and the USB-C connector to compensates signal integrity
+losses mainly due to PCB & transmission cables.
 
-Handle this specific mode and translate it as the SAFE mode.
+Add support for an optional retimer-switch in the USB-C
+connector graph.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/soc/qcom/pmic_glink_altmode.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/pmic_glink_altmode.c | 43 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
 diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-index df48fbea4b68..007d308e2f15 100644
+index 007d308e2f15..41d732f5b647 100644
 --- a/drivers/soc/qcom/pmic_glink_altmode.c
 +++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -173,6 +173,20 @@ static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
- 		dev_err(altmode->dev, "failed to switch mux to USB\n");
+@@ -15,6 +15,7 @@
+ #include <linux/usb/typec_altmode.h>
+ #include <linux/usb/typec_dp.h>
+ #include <linux/usb/typec_mux.h>
++#include <linux/usb/typec_retimer.h>
+ 
+ #include <linux/soc/qcom/pmic_glink.h>
+ 
+@@ -68,6 +69,8 @@ struct pmic_glink_altmode_port {
+ 	struct typec_switch *typec_switch;
+ 	struct typec_mux *typec_mux;
+ 	struct typec_mux_state state;
++	struct typec_retimer *typec_retimer;
++	struct typec_retimer_state retimer_state;
+ 	struct typec_altmode dp_alt;
+ 
+ 	struct work_struct work;
+@@ -157,6 +160,14 @@ static void pmic_glink_altmode_enable_dp(struct pmic_glink_altmode *altmode,
+ 	ret = typec_mux_set(port->typec_mux, &port->state);
+ 	if (ret)
+ 		dev_err(altmode->dev, "failed to switch mux to DP\n");
++
++	port->retimer_state.alt = &port->dp_alt;
++	port->retimer_state.data = &dp_data;
++	port->retimer_state.mode = TYPEC_MODAL_STATE(mode);
++
++	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
++	if (ret)
++		dev_err(altmode->dev, "failed to setup retimer to DP\n");
  }
  
-+static void pmic_glink_altmode_safe(struct pmic_glink_altmode *altmode,
-+				    struct pmic_glink_altmode_port *port)
-+{
-+	int ret;
+ static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
+@@ -171,6 +182,14 @@ static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
+ 	ret = typec_mux_set(port->typec_mux, &port->state);
+ 	if (ret)
+ 		dev_err(altmode->dev, "failed to switch mux to USB\n");
 +
-+	port->state.alt = NULL;
-+	port->state.data = NULL;
-+	port->state.mode = TYPEC_STATE_SAFE;
++	port->retimer_state.alt = NULL;
++	port->retimer_state.data = NULL;
++	port->retimer_state.mode = TYPEC_STATE_USB;
 +
-+	ret = typec_mux_set(port->typec_mux, &port->state);
++	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
 +	if (ret)
-+		dev_err(altmode->dev, "failed to switch mux to safe mode\n");
++		dev_err(altmode->dev, "failed to setup retimer to USB\n");
+ }
+ 
+ static void pmic_glink_altmode_safe(struct pmic_glink_altmode *altmode,
+@@ -185,6 +204,14 @@ static void pmic_glink_altmode_safe(struct pmic_glink_altmode *altmode,
+ 	ret = typec_mux_set(port->typec_mux, &port->state);
+ 	if (ret)
+ 		dev_err(altmode->dev, "failed to switch mux to safe mode\n");
++
++	port->retimer_state.alt = NULL;
++	port->retimer_state.data = NULL;
++	port->retimer_state.mode = TYPEC_STATE_SAFE;
++
++	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
++	if (ret)
++		dev_err(altmode->dev, "failed to setup retimer to USB\n");
+ }
+ 
+ static void pmic_glink_altmode_worker(struct work_struct *work)
+@@ -347,6 +374,11 @@ static const struct drm_bridge_funcs pmic_glink_altmode_bridge_funcs = {
+ 	.attach = pmic_glink_altmode_attach,
+ };
+ 
++static void pmic_glink_altmode_put_retimer(void *data)
++{
++	typec_retimer_put(data);
 +}
 +
- static void pmic_glink_altmode_worker(struct work_struct *work)
+ static void pmic_glink_altmode_put_mux(void *data)
  {
- 	struct pmic_glink_altmode_port *alt_port = work_to_altmode_port(work);
-@@ -180,7 +194,9 @@ static void pmic_glink_altmode_worker(struct work_struct *work)
+ 	typec_mux_put(data);
+@@ -453,6 +485,17 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+ 		if (ret)
+ 			return ret;
  
- 	typec_switch_set(alt_port->typec_switch, alt_port->orientation);
- 
--	if (alt_port->svid == USB_TYPEC_DP_SID)
-+	if (alt_port->svid == USB_TYPEC_DP_SID && alt_port->mode == 0xff)
-+		pmic_glink_altmode_safe(altmode, alt_port);
-+	else if (alt_port->svid == USB_TYPEC_DP_SID)
- 		pmic_glink_altmode_enable_dp(altmode, alt_port, alt_port->mode,
- 					     alt_port->hpd_state, alt_port->hpd_irq);
- 	else
++		alt_port->typec_retimer = fwnode_typec_retimer_get(fwnode);
++		if (IS_ERR(alt_port->typec_retimer))
++			return dev_err_probe(dev, PTR_ERR(alt_port->typec_retimer),
++					     "failed to acquire retimer-switch for port: %d\n",
++					     port);
++
++		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_retimer,
++					       alt_port->typec_retimer);
++		if (ret)
++			return ret;
++
+ 		alt_port->typec_switch = fwnode_typec_switch_get(fwnode);
+ 		if (IS_ERR(alt_port->typec_switch))
+ 			return dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
 
 -- 
 2.34.1
