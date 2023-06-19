@@ -2,79 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92DC87356ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 14:32:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7690A735702
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 14:40:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230006AbjFSMcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 08:32:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52238 "EHLO
+        id S229683AbjFSMkx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 08:40:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjFSMcf (ORCPT
+        with ESMTP id S229636AbjFSMkx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 08:32:35 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E383D7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 05:32:34 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f64fb05a8aso4449793e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 05:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687177952; x=1689769952;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6kQXXt7p+guLFHPeMdd87LrI9K2HMO9Lr8NPYCPaiaU=;
-        b=aUrEmIOqBaZuBpXpLhfXNUlXBrksflmXT1QYahTBgtXnKKN3h2wgQfAEtJ2B/2f1up
-         nxsws/gt5wzQ4SlhfAxOSS5bPL3xEWHUruRzq7RO5qcBTgOUH3xWoTP3FwZEMXGtxNgZ
-         ciAdYnJwF0L+odYzmRK4hvjDg095odpNHJQoW9sE/Z296NpLCaksgVZjlqGSyLwl8Yaf
-         eJp6SLJ1i/7z99XpYkyaGMlsqG/TzOCCGit8f5zy5S76XSMSSt7b0vuET+AOYv/Hoowg
-         7/X+4qE5gMohu/byY1ITg0stnrgnjj0meB6gvkWX4jzP3xki1DqEmK3DPmZAVkC6oaBD
-         93iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687177952; x=1689769952;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6kQXXt7p+guLFHPeMdd87LrI9K2HMO9Lr8NPYCPaiaU=;
-        b=S7VlLlXIJiF81o88ClhCNQROgCtQV4t/1Ez62oPMGgwCeUZzQx8fkN5nsBsA/vvpJs
-         TCpg2DdZ8858L+NSMd+NsUMjVpguXIWXREbKaiI2ZnsRaUh0P9sSOr9ZPkO4cggTUKnq
-         q3QKaTETHJO7Wek08x0v26eMVu+TpuHVgc/FNl206NMS3u7YKO+eSn0d5rAmNFRAoXty
-         H5GZ508jSALHQ7aMYWHILgjF2xbJzwDjHHZt5hHKacLLP/HXu4x6oQXqPOuhHUAL5veo
-         vYqSHEY8OTQ+UVBPQ+ZFmbKclEcp2XjfRpjMxQGyKJGR+5x2UK1zoR6yMpCYpB13pyS6
-         Jwmw==
-X-Gm-Message-State: AC+VfDwlsfqoTNt7M6NqtNx0RRRduUSp/w9Wee3EN5BZiFZhEJ+4NFf7
-        11MK7V0NLG/SSi1i/DUSGcUrSi4LvG45BfgQUEA=
-X-Google-Smtp-Source: ACHHUZ52egGatzVJmcc8tV1/fH13uuqeyMtxMUK+2ORfAoCImdlFMJInTDDxmEGpv640/Hxi7LXvWA==
-X-Received: by 2002:ac2:504f:0:b0:4f5:1ac9:ab1b with SMTP id a15-20020ac2504f000000b004f51ac9ab1bmr6076236lfm.23.1687177952284;
-        Mon, 19 Jun 2023 05:32:32 -0700 (PDT)
-Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id y27-20020ac2447b000000b004f4c3feb9fbsm4240238lfl.61.2023.06.19.05.32.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 05:32:31 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 19 Jun 2023 14:32:26 +0200
-Subject: [PATCH] soc: qcom: rpmpd: Add sync_state
+        Mon, 19 Jun 2023 08:40:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50625D7;
+        Mon, 19 Jun 2023 05:40:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C46DB60BFF;
+        Mon, 19 Jun 2023 12:40:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216BFC433C9;
+        Mon, 19 Jun 2023 12:40:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687178451;
+        bh=fHn3j7JDGruB0b35e3ystzKwAQyitAIm+XUJzpDo7XE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=c3MrkHD6pLv16fyMdny0V4Wy295aYVx4hBpchrDdzMvuLvh5YHOX5BHGBgySo1Zck
+         kWVvk4Hg1J0FADnVQdOKvl3rg9BJCSmax2gnX8yieO0ZKv4TyEwuEccyV2KFdxACK+
+         C0IlNF5AR7je0biR7hsbVNmdjTnDqiKafFi8LzjsWomc5Ykw/GSe/EMVhln3bI/nhC
+         OfelTxUdfEgArRZ4GEwwtS2G1+KECW906oVr6S7WwrEXgQvWbwKOfxapxQWSfo2ZxR
+         cGfAzUd2I9LikC2FfPi/KQEeArCa4cIc3eRSR7ccUlnEOHfsnfM85FysCp2KC7BkVQ
+         SBPA2QC7T00QA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1qBEBc-00015W-Ar; Mon, 19 Jun 2023 14:40:48 +0200
+Date:   Mon, 19 Jun 2023 14:40:48 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: Drop aux devices together with DP controller
+Message-ID: <ZJBM0E0vfeLXCw0W@hovoldconsulting.com>
+References: <20230612220106.1884039-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230619-topic-rpmpd_syncstate-v1-1-54f986cf9444@linaro.org>
-X-B4-Tracking: v=1; b=H4sIANlKkGQC/x2N0QrCMAwAf2Xk2cBadW7+yhDpuswFZlaaKsrYv
- xt8vIPjNlDKTArXaoNMb1ZexcAdKohzkAchj8bga3+sG9dhWRNHzOmZxrt+JWoJhXBq/KU9dyf
- nWwfWDkEJhxwkzlbLa1lMpkwTf/6z/rbvP9iqYpl8AAAA
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687177951; l=2369;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=4R5E7B3l629um2WTAAe7o796GIVLmPC9TwVvJNOq4pA=;
- b=u6dNKI9qG7a4/XqA4lcu+SuPwfg6a4CxyLNj4pIXhVfr4Gq0owPzf0Fe164la24Pkuhn8y0Lu
- KF4iXn4AzonBZzBv9kGV6v3A7p7S8XBw13ca1GF6MVLoeg2ZLAOvCfq
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230612220106.1884039-1-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,84 +69,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a sync_state implementation, very similar to the one already present
-in the RPMhPD driver.
+On Mon, Jun 12, 2023 at 03:01:06PM -0700, Bjorn Andersson wrote:
+> Using devres to depopulate the aux bus made sure that upon a probe
+> deferral the EDP panel device would be destroyed and recreated upon next
+> attempt.
+> 
+> But the struct device which the devres is tied to is the DPUs
+> (drm_dev->dev), which may be happen after the DP controller is torn
+> down.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/soc/qcom/rpmpd.c | 34 +++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index 99b017fd76b7..fa58c04214ee 100644
---- a/drivers/soc/qcom/rpmpd.c
-+++ b/drivers/soc/qcom/rpmpd.c
-@@ -58,6 +58,7 @@ struct rpmpd {
- 	struct qcom_smd_rpm *rpm;
- 	unsigned int max_state;
- 	__le32 key;
-+	bool state_synced;
- };
+There appears to be some words missing in this sentence.
  
- struct rpmpd_desc {
-@@ -823,7 +824,11 @@ static int rpmpd_aggregate_corner(struct rpmpd *pd)
- 	unsigned int this_active_corner = 0, this_sleep_corner = 0;
- 	unsigned int peer_active_corner = 0, peer_sleep_corner = 0;
- 
--	to_active_sleep(pd, pd->corner, &this_active_corner, &this_sleep_corner);
-+	/* Clamp to the highest corner/level if sync_state isn't done yet */
-+	if (!pd->state_synced)
-+		this_active_corner = this_sleep_corner = pd->max_state - 1;
-+	else
-+		to_active_sleep(pd, pd->corner, &this_active_corner, &this_sleep_corner);
- 
- 	if (peer && peer->enabled)
- 		to_active_sleep(peer, peer->corner, &peer_active_corner,
-@@ -973,11 +978,38 @@ static int rpmpd_probe(struct platform_device *pdev)
- 	return of_genpd_add_provider_onecell(pdev->dev.of_node, data);
- }
- 
-+static void rpmpd_sync_state(struct device *dev)
-+{
-+	const struct rpmpd_desc *desc = of_device_get_match_data(dev);
-+	struct rpmpd **rpmpds = desc->rpmpds;
-+	struct rpmpd *pd;
-+	unsigned int i;
-+	int ret;
-+
-+	mutex_lock(&rpmpd_lock);
-+	for (i = 0; i < desc->num_pds; i++) {
-+		pd = rpmpds[i];
-+		if (!pd)
-+			continue;
-+
-+		pd->state_synced = true;
-+
-+		if (!pd->enabled)
-+			pd->corner = 0;
-+
-+		ret = rpmpd_aggregate_corner(pd);
-+		if (ret)
-+			dev_err(dev, "failed to sync %s: %d\n", pd->pd.name, ret);
-+	}
-+	mutex_unlock(&rpmpd_lock);
-+}
-+
- static struct platform_driver rpmpd_driver = {
- 	.driver = {
- 		.name = "qcom-rpmpd",
- 		.of_match_table = rpmpd_match_table,
- 		.suppress_bind_attrs = true,
-+		.sync_state = rpmpd_sync_state,
- 	},
- 	.probe = rpmpd_probe,
- };
+> Indications of this can be seen in the commonly seen EDID-hexdump full
+> of zeros in the log,
 
----
-base-commit: 47045630bc409ce6606d97b790895210dd1d517d
-change-id: 20230619-topic-rpmpd_syncstate-f62785941281
+This could happen also when the aux bus lifetime was tied to DP
+controller and is mostly benign as dp_aux_deinit() set the "initted"
+flag to false.
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+> or the occasional/rare KASAN fault where the
+> panel's attempt to read the EDID information causes a use after free on
+> DP resources.
 
+But this is clearly a bug as there's a small window where the aux bus
+struct holding the above flag may also have been released...
+
+> It's tempting to move the devres to the DP controller's struct device,
+> but the resources used by the device(s) on the aux bus are explicitly
+> torn down in the error path. The KASAN-reported use-after-free also
+> remains, as the DP aux "module" explicitly frees its devres-allocated
+> memory in this code path.
+
+Right, and this would also not work as the aux bus could remain
+populated for the next bind attempt which would then fail (as described
+in the commit message of the offending commit).
+
+> As such, explicitly depopulate the aux bus in the error path, and in the
+> component unbind path, to avoid these issues.
+
+Sounds good.
+
+> Fixes: 2b57f726611e ("drm/msm/dp: fix aux-bus EP lifetime")
+
+This one should also have a stable tag:
+
+Cc: stable@vger.kernel.org      # 5.19
+
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 14 +++-----------
+>  1 file changed, 3 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 3d8fa2e73583..bbb0550a022b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -322,6 +322,8 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+>  
+>  	kthread_stop(dp->ev_tsk);
+>  
+> +	of_dp_aux_depopulate_bus(dp->aux);
+
+This may now be called without first having populated the bus, but looks
+like that still works.
+
+> +
+>  	dp_power_client_deinit(dp->power);
+>  	dp_unregister_audio_driver(dev, dp->audio);
+>  	dp_aux_unregister(dp->aux);
+
+I know this one was merged while I was out-of-office last week, but for
+the record:
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
