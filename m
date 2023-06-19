@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC51D735AB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 17:05:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ED59735AB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 17:05:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230201AbjFSPFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 11:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53854 "EHLO
+        id S230047AbjFSPFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 11:05:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230308AbjFSPFQ (ORCPT
+        with ESMTP id S230362AbjFSPFR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 11:05:16 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E03419AF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:33 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-1aa291b3fc9so987368fac.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:33 -0700 (PDT)
+        Mon, 19 Jun 2023 11:05:17 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 679A319B9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:37 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-25e8b4181easo1747683a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687187073; x=1689779073;
+        d=linaro.org; s=google; t=1687187077; x=1689779077;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A98UhrwZrGyc1cxKVoW5P/FDL2aF5ZgMxYnhHsr36+Y=;
-        b=EbDKlvCL0JefPd3whitlUpQhGUTNoSgjlKumRPfJJUtaRaRyJi+GXgBe31dGYr55C9
-         ooZUsmxAmjAppZ5UZ+pVq90G5rEuSmRRGezO0LHbpNsr0QBgX/e2E8trhwuUHjO1yboz
-         IRGB2OQ4ucJyQBP+bUdwxIgscucJ1rALjFg6TBzngbUBHOD8yI8VZoJ+URb1UngfQi+R
-         1QjQXE4M89eAna+gUWYkhhDfYPqpcFOv2RDAWpYni6BG119UbCn8Ufsg5BjcyLIh/cUq
-         niy86RbSU38dkxt+ppkH+YyH6w+dfqv88OPDc1LsJILqrDaL9+6bAAQXbBuxS11oViJJ
-         xtDg==
+        bh=yzV1ZtX30jIpTNOGlDajFE+kq9Q8oevaq3YwpxK0i1A=;
+        b=fMVP0famGSK6/m4FcwKj+6ky062gCAOpAnkt/sZ2VGVyb9dams7xgPlZYxk2abPxAG
+         M7rAhy87w27XFGQiuj/RBnSRZ1V9JweXWRs1qPWV20UAdE4D0VrCKnAxFS1q69ya3g7s
+         GEBJia4tmb1PaEItzzIDpwgyf539obnQeFocpPD+XUEV94cQCtBCAs/RCrTaxpKuLsJi
+         yzSwbHbtKHCaXldbqJ0COxxfYkOnD0rSu2TjNR0OWe4thdYAnTYcbAVtWgXnIj7Kb0Do
+         CYIeAW2J7oEsqWd49SD8CVlzRIVEJJ8UZvLiuOLdzQzU5NMcYUQah2L/6cWtUTonDRdy
+         ZC2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687187073; x=1689779073;
+        d=1e100.net; s=20221208; t=1687187077; x=1689779077;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A98UhrwZrGyc1cxKVoW5P/FDL2aF5ZgMxYnhHsr36+Y=;
-        b=THxbUPChYC/UpskSPUk9vDKmLyV6WY+8Ii/kMgvBygDlefMPpFbC12qqE5fZ6pPS1R
-         lkg3CVU5SeQoWzMteXOxjPk+elg9WUvJ2H17cXySZ3NVROWbqr/VfxrekkuqeuRCHalh
-         omC4EU4LeXbythRTXNm3ieG9Jew9R7XMz6zUW0aArFEIUqoRFENXyjuStq4hsNNqn/mu
-         TGaU1c3AK8dyoKLD9krBMENGiiPLfbCYMI9BjIqQwmQuGJpSmGuLw0nEryv1DC1BOhoW
-         AVZcs3psjrKesWAEjahGp40gH6Un6caYSsE2XJIyI/MtNDlwFvm5SV+ppHi0uFDJ4f7N
-         a/4w==
-X-Gm-Message-State: AC+VfDyD5OJl4mle2lAwfGcayPnLOQzwDQTJDQJFl8FMea9U1sn9csPD
-        d76jbx3YVD2opA9W2fJjo3Cf1s92HxKVI66eW2Gw
-X-Google-Smtp-Source: ACHHUZ5SNI/kwXJznqe6EkZb9zy0U9dMvylpUymgT1TDx1gqUr+yiw95cWcUBffVD5qvzPCw77UOnw==
-X-Received: by 2002:a05:6871:894:b0:1a2:cfd7:bfdc with SMTP id r20-20020a056871089400b001a2cfd7bfdcmr12096478oaq.6.1687187072875;
-        Mon, 19 Jun 2023 08:04:32 -0700 (PDT)
+        bh=yzV1ZtX30jIpTNOGlDajFE+kq9Q8oevaq3YwpxK0i1A=;
+        b=PdAXTOAXsMVWxwNppBJV7WcR2/B3xUDbw5IyLEKecV2hapavWoDZwI4H4L4b0j+Fj2
+         YVMW/kj+XlKBF3belfFKpxinEWS8QL7idujYcs64s+l8e1Me969n7Q3kk+nabMvKEyw2
+         ehzziQQk/hPyHyNgGdf0FGh5JXN0x3NmUW2oJ8SvavSukXyVTtO1OEwfaBAT9Mh/PmOJ
+         4Ek9JbEJpNuMSgOo74XJ+n8c0dUomk9NwBiZTHEE6SC8AuzRQjMsoz+a1RZPC6i+0sK4
+         6Nqg+UPk+xRgUJPLmK//DdXlT2BxB6DZ6TTzOIN+qDTcEHRiuUgzRpYKYY8f46vNPX2e
+         st9w==
+X-Gm-Message-State: AC+VfDyI/Z51G4mgr8p4gcXRfABpv+6Fo3CMd5ozExTPwYI6CeU5Psb9
+        E8z2xWlUoTvJN/dYgzyvJHto
+X-Google-Smtp-Source: ACHHUZ60YQ5YnGIsrISqp6t96KlcerAHzAtsdaB8aBfOYilDFQxsVATkWg+lo2y3VZkqEC3vTnEmLQ==
+X-Received: by 2002:a17:90a:656:b0:259:343:86b5 with SMTP id q22-20020a17090a065600b00259034386b5mr7427310pje.47.1687187076753;
+        Mon, 19 Jun 2023 08:04:36 -0700 (PDT)
 Received: from localhost.localdomain ([117.217.183.37])
-        by smtp.gmail.com with ESMTPSA id 10-20020a17090a19ca00b0025efaf7a0d3sm2765480pjj.14.2023.06.19.08.04.29
+        by smtp.gmail.com with ESMTPSA id 10-20020a17090a19ca00b0025efaf7a0d3sm2765480pjj.14.2023.06.19.08.04.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 08:04:32 -0700 (PDT)
+        Mon, 19 Jun 2023 08:04:36 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
 Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,9 +58,9 @@ Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         quic_srichara@quicinc.com,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v4 4/9] PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and v1.9.0
-Date:   Mon, 19 Jun 2023 20:34:03 +0530
-Message-Id: <20230619150408.8468-5-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v4 5/9] PCI: qcom: Do not advertise hotplug capability for IPs v2.3.3 and v2.9.0
+Date:   Mon, 19 Jun 2023 20:34:04 +0530
+Message-Id: <20230619150408.8468-6-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230619150408.8468-1-manivannan.sadhasivam@linaro.org>
 References: <20230619150408.8468-1-manivannan.sadhasivam@linaro.org>
@@ -68,7 +68,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,12 +76,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SoCs making use of Qcom PCIe controller IPs v2.7.0 and v1.9.0 do not
+SoCs making use of Qcom PCIe controller IPs v2.3.3 and v2.9.0 do not
 support hotplug functionality. But the hotplug capability bit is set by
 default in the hardware. This causes the kernel PCI core to register
 hotplug service for the controller and send hotplug commands to it. But
-those commands will timeout generating messages as below during boot and
-suspend/resume.
+those commands will timeout generating messages as below during boot
+and suspend/resume.
 
 [    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
 [    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
@@ -89,71 +89,29 @@ suspend/resume.
 [    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
 
 This not only spams the console output but also induces a delay of a
-couple of seconds. To fix this issue, let's clear the HPC bit in
+couple of seconds. To fix this issue, let's not set the HPC bit in
 PCI_EXP_SLTCAP register as a part of the post init sequence to not
 advertise the hotplug capability for the controller.
 
+Tested-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 391a45d1e70a..8f448156eccc 100644
+index 8f448156eccc..64b6a8c6a99d 100644
 --- a/drivers/pci/controller/dwc/pcie-qcom.c
 +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -270,6 +270,20 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
- 	return 0;
- }
- 
-+static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
-+{
-+	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	u32 val;
-+
-+	dw_pcie_dbi_ro_wr_en(pci);
-+
-+	val = readl(pci->dbi_base + offset + PCI_EXP_SLTCAP);
-+	val &= ~PCI_EXP_SLTCAP_HPC;
-+	writel(val, pci->dbi_base + offset + PCI_EXP_SLTCAP);
-+
-+	dw_pcie_dbi_ro_wr_dis(pci);
-+}
-+
- static void qcom_pcie_2_1_0_ltssm_enable(struct qcom_pcie *pcie)
- {
- 	u32 val;
-@@ -966,6 +980,13 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 	return ret;
- }
- 
-+static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
-+{
-+	qcom_pcie_clear_hpc(pcie->pci);
-+
-+	return 0;
-+}
-+
- static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
- {
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-@@ -1272,6 +1293,7 @@ static const struct qcom_pcie_ops ops_2_3_3 = {
- static const struct qcom_pcie_ops ops_2_7_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_7_0,
- 	.init = qcom_pcie_init_2_7_0,
-+	.post_init = qcom_pcie_post_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- };
-@@ -1280,6 +1302,7 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
- static const struct qcom_pcie_ops ops_1_9_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_7_0,
- 	.init = qcom_pcie_init_2_7_0,
-+	.post_init = qcom_pcie_post_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- 	.config_sid = qcom_pcie_config_sid_1_9_0,
+@@ -140,7 +140,6 @@
+ 						PCI_EXP_SLTCAP_AIP | \
+ 						PCI_EXP_SLTCAP_PIP | \
+ 						PCI_EXP_SLTCAP_HPS | \
+-						PCI_EXP_SLTCAP_HPC | \
+ 						PCI_EXP_SLTCAP_EIP | \
+ 						PCIE_CAP_SLOT_POWER_LIMIT_VAL | \
+ 						PCIE_CAP_SLOT_POWER_LIMIT_SCALE)
 -- 
 2.25.1
 
