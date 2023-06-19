@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7C8B735BFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:14:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFE95735C0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:19:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232177AbjFSQN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 12:13:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33386 "EHLO
+        id S232240AbjFSQTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 12:19:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232159AbjFSQN1 (ORCPT
+        with ESMTP id S232217AbjFSQTA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 12:13:27 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED90A1B4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:13:25 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b46bfa66d2so29012611fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:13:25 -0700 (PDT)
+        Mon, 19 Jun 2023 12:19:00 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4FE5E64
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:18:57 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f867700f36so2605475e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687191204; x=1689783204;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hmgYvNinjU/fT+erZeLft1aKLnZsg+oPmLA3CULSbeM=;
-        b=PTEHzxVjoT1bF8b5NSp4p68xB+MVPrSsJJUY0khQid3MBOQ+0J/+/PjP5ztIJnoEte
-         wnFd+gMhlzHN05KizStYKFgY0/J+neM+FabraUyIE4grK0b2Xy36NcJEcfAiw/eidaTL
-         lBbCMzwMCHodFXALMzlUfFHUad8nkzCyoihpPCx6ZhelQM7cijXatQVr4/BNAib/4/zt
-         EVBHsyAyofZh9OiQNOounIyW6aW5CrPCYY1bdmTzYy2IrpZSC51i0Todnq/bli6Xw9mS
-         6D3ZYv9axSfxuK0o7pZQ2IxZZBVV5cteCUXqmOSQPNYe7B847ZjptQGNcfhNtWYSarSo
-         LpcQ==
+        d=linaro.org; s=google; t=1687191535; x=1689783535;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fsaki9f+UZgl1Nxe4pywUOtc38gD6sbALTtH94iAX+s=;
+        b=br9e16MGjHz82Yi8wkrnxP/PnHiBCOyExOzGrmUAT8y4L5ibrtZ4bjp0JluVECizki
+         F5d7C/CxoGYbCmZwMNhQ5IEOSH58CsK7mrGCn4LLzLgP+cK4a0P5odGhXp8N5FLGiFz/
+         rXnCDJHiXWgpDS23TaGCy/cfrl5lva5Xh4zamJY2xw36rIBZh/9X4HHj/+TSgGOt5KOp
+         QTf9bvqUNd+ftWGY8NwjX6dRC/rMtYDo5j4UqMWhgREsHD0U7SbfM/x8wEm2FiD92st2
+         WyAe15+NPpZq0r0JffPV/6BRKiwiO81PB/dWH8OgGXqXmeVH6GtsLV62hB1nIcT+FPk6
+         TOQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687191204; x=1689783204;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hmgYvNinjU/fT+erZeLft1aKLnZsg+oPmLA3CULSbeM=;
-        b=H7n/eXagxDzL26qX/Ho8Ie/UmZz/qO4c7zgBbiTYpIZBIXHaCmV9YY/bbNRjqVIcqc
-         TxccpIBl12bt96i2QHYUVz8R0nD5rDrza7JryLEtGZyDjagiEsFnJgkrX9E2hHL+oy+P
-         fFR2FWHezYfOmUb5fk0D0dC7X0lT2u2Rt4TzJ0Xy3+UAw6td0x+aon83iT8tqMsjEpnP
-         CUDqDh0JoveHD3Xf2HVuHbGFicFX2NTZ8fKBCG71jXAoWRROzZtZtShUBA1KERCd44s4
-         F1/gcqrQ1z8rVCI12Pvmajy7e1vYt9AlEqyPjHbjjzTNeGP/AIvTpgCXNgMuShVPYLzn
-         H5RQ==
-X-Gm-Message-State: AC+VfDwGUHNQZYbgeGpAz2O9flHKSx6/BtfwqiF6vpGAfAK7CGY6KSqv
-        5uugRda0qcA/KWhxjBScpcD13A==
-X-Google-Smtp-Source: ACHHUZ5FVyfJK40+gm5ktlujj/AXdHiYmbvKw0KBnc6dK1hlmNuaf+P6ZagFHzrzYXyq0LyYIyYb4A==
-X-Received: by 2002:a2e:960d:0:b0:2ad:d291:72e1 with SMTP id v13-20020a2e960d000000b002add29172e1mr6611945ljh.18.1687191204336;
-        Mon, 19 Jun 2023 09:13:24 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687191535; x=1689783535;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fsaki9f+UZgl1Nxe4pywUOtc38gD6sbALTtH94iAX+s=;
+        b=lxXN6qBPbyKuYSSdxkSAbAtidf7SVsQN9fkccvhYexdnfgNFIuW/uROS+tlYUqn3el
+         4MsvA+eQkIKRr5V3u8ak4RPEp20oicFe299kJAsi38UAZlKq4sMf9+7fAY9o8+rk2ViB
+         qizkE/ReWn8A6rSfWR0CNpNqk0FZf+6gKDZOrWfig6k7ZM4fDLkbP4AbY6KVjY/QKQTl
+         0jaukFpRbu/r8JmXhswOjdsw9tHw9ugw1z/FZk/K3LjqnVXO0rndTpWdsB4ug8DYvCgh
+         52OJsBnOHljriiVStGVtxG8PHfJgTsiN4x5vrVVELZKm7bApul7XIO61p4zA4rk2bIu4
+         co+A==
+X-Gm-Message-State: AC+VfDx9HCdaVMolBY4fFNkXvLLOzbsZYP8/e0Ufzo5OSNlQ9IAXdnco
+        x6GPUZETsLhN9OKbI5XQYCvX2w==
+X-Google-Smtp-Source: ACHHUZ7FKytpT1bIzBWmeX+ibT6gpEBgUWOEGUg57C2o92fQt0WDpjil/FQlercYeXK3Mwexb9xceA==
+X-Received: by 2002:a19:5f1c:0:b0:4f4:d83e:4141 with SMTP id t28-20020a195f1c000000b004f4d83e4141mr5192012lfb.50.1687191535334;
+        Mon, 19 Jun 2023 09:18:55 -0700 (PDT)
 Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id x20-20020a2e7c14000000b002b471efb253sm1011714ljc.46.2023.06.19.09.13.23
+        by smtp.gmail.com with ESMTPSA id c11-20020ac2530b000000b004b4cbc942a3sm4332824lfh.127.2023.06.19.09.18.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 09:13:24 -0700 (PDT)
+        Mon, 19 Jun 2023 09:18:54 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 19 Jun 2023 18:13:18 +0200
-Subject: [PATCH 2/2] clk: qcom: gcc-sc8280xp: Add runtime PM
+Subject: [PATCH RFT RFC 0/3] Fix up SC8280XP idle states
+Date:   Mon, 19 Jun 2023 18:18:52 +0200
+Message-Id: <20230619-topic-sc8280xp-idle-v1-0-35a8b98451d0@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230619-topic-sc8280xp-clk-rpm-v1-2-1e5e1064cdb2@linaro.org>
-References: <20230619-topic-sc8280xp-clk-rpm-v1-0-1e5e1064cdb2@linaro.org>
-In-Reply-To: <20230619-topic-sc8280xp-clk-rpm-v1-0-1e5e1064cdb2@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAOx/kGQC/x2NwQrCMBBEf6Xs2cA2LRq9Cv2A4q14SNetXQhpS
+ FQKpf/u6vHNzGM2KJyFC1yqDTJ/pMgSFepDBTT7+GQjD2WwaBs81mfzWpKQKeSswzVpG9ggToR
+ 4sk1LDtQcfWEzZh9pVje+Q9AwZZ5k/V8N0He337DvrnDf9y9rENLHhgAAAA==
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191201; l=1628;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191534; l=1359;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=iLOsinGTJtv8sPDkEM7a2zWDxDnO0K1p+yOFG6UU878=;
- b=7gTXtpfYHcJ+0pwGRH82J2GexETpGG26Gyb/o04zQKY9qD5wnd1s78SdNgclCurw05CB4RlMi
- lEdx/i0XRbsDjfQmEAqtdOzVf3WwIQRHifziP649VUBKp7lkQLL5FK5
+ bh=GYm5GFOL7jLxNcgLuse8QD/24Xdd2Q2S5dQ75UZ085U=;
+ b=RroKKu+kpc0100TCKw5v3rsJZf1kE1Ubt2T4QaB1aIyQ+f5eoIQp5dJOoKacfaAYs+E3aaTeG
+ 48wmF5OwVJQCneXWxQTSh/aDfr8jSTt/TO4veiUJZsRcI09rHEr6VDY
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,62 +89,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GCC block on SC8280XP is powered by the CX rail. We need to ensure
-that it's enabled to prevent unwanted power collapse.
+Comparing the data available in the downstream sources with what's there
+upstream, it was easy to spot some differences. This series aligns what
+we have upstream with what is there on the vendor kernel.
 
-Enable runtime PM to keep the power flowing only when necessary.
+The big asterisk there is that the downstream sources for SC8280XP can't
+always be trusted. A simple test shows that the lower idle states that
+were previously missing are implemented in the firmware (Linux reports no
+errors and enters them).
+
+HOWEVER
+
+The only cluster idle state that's been present until now (the deepest
+one) is now barely used if at all, as the scheduler seems to deem it
+inefficient or so.
+
+Hence, a request for testing and comments, especially from those who
+use the X13s daily or have reliable setup to measure the power usage.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/gcc-sc8280xp.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+Konrad Dybcio (3):
+      arm64: dts: qcom: sc8280xp: Add lower cluster idle states
+      arm64: dts: qcom: sc8280xp: Add missing CPU idle states
+      arm64: dts: qcom: sc8280xp: Fix up idle state periods
 
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index 04a99dbaa57e..b90c71637814 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -9,6 +9,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of_device.h>
-+#include <linux/pm_runtime.h>
- #include <linux/of.h>
- #include <linux/regmap.h>
- 
-@@ -7421,9 +7422,19 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
- 
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	regmap = qcom_cc_map(pdev, &gcc_sc8280xp_desc);
--	if (IS_ERR(regmap))
-+	if (IS_ERR(regmap)) {
-+		pm_runtime_put(&pdev->dev);
- 		return PTR_ERR(regmap);
-+	}
- 
- 	/*
- 	 * Keep the clocks always-ON
-@@ -7445,7 +7456,10 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	return qcom_cc_really_probe(pdev, &gcc_sc8280xp_desc, regmap);
-+	ret = qcom_cc_really_probe(pdev, &gcc_sc8280xp_desc, regmap);
-+	pm_runtime_put(&pdev->dev);
-+
-+	return ret;
- }
- 
- static const struct of_device_id gcc_sc8280xp_match_table[] = {
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 72 +++++++++++++++++++++++++---------
+ 1 file changed, 54 insertions(+), 18 deletions(-)
+---
+base-commit: 47045630bc409ce6606d97b790895210dd1d517d
+change-id: 20230619-topic-sc8280xp-idle-00fc007234c8
 
+Best regards,
 -- 
-2.41.0
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
