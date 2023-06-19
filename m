@@ -2,88 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C409E734D9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 10:26:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5285D734E98
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 10:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230281AbjFSI0u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 04:26:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60698 "EHLO
+        id S229519AbjFSIwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 04:52:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230304AbjFSIYw (ORCPT
+        with ESMTP id S230511AbjFSIve (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 04:24:52 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4315FE65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:24:47 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f9002a1a39so16070295e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:24:47 -0700 (PDT)
+        Mon, 19 Jun 2023 04:51:34 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CED1170C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:50:20 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-57001c0baddso28921147b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687163086; x=1689755086;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dHbeGiy67UyCnv7xUd7e5L5v4opOjGa7V1cKA3irBoI=;
-        b=LaYmDi6DMwM3sfRV/Z4WyxN8uju+TlzZnLXxpTubfYqpWqAJ/bWSVd8sHZ4cl7m/7k
-         HOD6VlmS2T87jfQT+pXLo4ONzuI7enuJI2X6c2uFphQgogL+rYRDgE59m44Fa+Ebfg8H
-         sAzZ73Kfg1Lu6sOGEL7/bsuUBWgmealHPtBDYUiOqZ9KnMGbxZ+Dj0mpsISf1B4SLglO
-         mrImMsxLbOCLGl0U3lMQUOESXVQn9z+BAx/0aKqdFyypdgtEogiZFE5Msz/dusl6/jcE
-         CAc+e80FyiWSQKzr9cPzgmN42OKhkcJaag7w0KCpbQ6XBAPsRau46d3ItrpwE+JuwlC9
-         RS2Q==
+        d=linaro.org; s=google; t=1687164620; x=1689756620;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2zyWJrr4bOnwjfecsiBUExh+hZgUIH4ItLQDiGLGyn4=;
+        b=YyPdqQASpuiyNJ2du2VDB51DjNpeoz0daaWpcy0vhAxz1FKl4Qq1Dtjrsv3f8XBKP+
+         fbRbhu8XO/xkCYgSId1M8jc3EbFqfUInpu5fyBwfyXoQb6b4V8ysrzsRTCcudUkiyoZ2
+         JqTxAqEBaNYkubqHXCsX7RLjz0S5YVVdf7hDtlceYfLEdi29GLI3Ut+rxLAdALVtj1Jm
+         QgMr59dwdYax89Ef8RZu/80XJ5z7ZGkizzkhf82/tRxyVd7z7qZv893Iswvo+mBtTOvM
+         94wLibhJu0echBUj44IIDNb4yqON9xpyXw5c9L7CXQnk+bfH160AEhPmpmj4KZKMdMzo
+         X9GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687163086; x=1689755086;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1687164620; x=1689756620;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dHbeGiy67UyCnv7xUd7e5L5v4opOjGa7V1cKA3irBoI=;
-        b=SC/8sjDBAv/utlj9zLv0mmarK8TcleGar0NkWZLxtz9Hq7qzEI1kiAwMIjVs+Lxzhh
-         HXnVVzn8wX1033zIIeHqEU7MhKyJEdHv2zdggLl9ECLRj0S12eHbSWfEkMEBR2r/pxL0
-         DMST/cByU2vRdGsX+UJWY5/GGNO7+M48rmjnbyHiP2/fAPS8ISI5+LitUPb6BdelipKr
-         HyLGG6cI1lqjumjjG9MFcp7UOwSvlqc5JgSZRNFOQqGjK3P31XQh/6d9q7R/VU8IDSQs
-         B13nR3NZhP5b6ARVx6enqDtlkaoPvnS8QO3bGACrCmrWOGjbcugZpGDaFRH9xsZdtSLL
-         Wyow==
-X-Gm-Message-State: AC+VfDxHGgKcolTLyKQyR7QFW0ae6VEambzZUk3tg3SPPmvXjyQzW4m6
-        44HwSTcfL6uslV3gAKnRFdxoyQ==
-X-Google-Smtp-Source: ACHHUZ6sqMEuw/lSjs1zFYAnVAfqxpwYi9RGi/eqBNKRm+xCYthzer57Y28pwkdJRlPdHC67kr99ZA==
-X-Received: by 2002:a5d:4a51:0:b0:309:419b:925d with SMTP id v17-20020a5d4a51000000b00309419b925dmr5685615wrs.70.1687163086318;
-        Mon, 19 Jun 2023 01:24:46 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id i1-20020adff301000000b002f28de9f73bsm30781262wro.55.2023.06.19.01.24.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 01:24:45 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 19 Jun 2023 10:24:41 +0200
-Subject: [PATCH 2/2] interconnect: qcom: sm8550: add enable_mask for bcm
- nodes
+        bh=2zyWJrr4bOnwjfecsiBUExh+hZgUIH4ItLQDiGLGyn4=;
+        b=IsNG4a7J9uOAVpcNneS287fS9vTgkY3pai8iqxEaqrzudZXkA3Z8njXqa0GAeB/Q3B
+         Ijn+hLsurBxrIvMjMjos6XL6LH5s03IiDAHCd2fVekfmUb0Jf56qFh7rbWDmgKXoTgon
+         0jubUMV9LRYKjZ/TjlDdU2Fzz5660asXpEQmjgGE1XorkCDMkDk8NmroI0TqF+/+9sOM
+         58+dwaNY+QLuUgIeKniPjydc8i5VFdNFUCoOpOGUU/AbwTw3A+iuecw3vC92r8nKcMin
+         Uk9nRNz7izdCVKEfWNMu2k9ytkvkBHDA8sfbJ1LbJOQn+V3IRvUYP5Vd88hYiDqTHl45
+         lbWQ==
+X-Gm-Message-State: AC+VfDyAiAgKzZvi2544P6xP/yKAudC4biHqfF6bVXF6jkm2RaGi9YeW
+        zFh3pURHBZe/o6aBsSgo3YOMZqHzN7DRA0fYzdZUdA==
+X-Google-Smtp-Source: ACHHUZ56eKFtdORrbAWDJoCJWrUSwNPczrlUQUk8NIlVDo6yY9fGLFxs8tJDYUR9AtP6ZBQ+zrXHqb1L+DXrudLj9dM=
+X-Received: by 2002:a25:6982:0:b0:ba8:1c9e:c77f with SMTP id
+ e124-20020a256982000000b00ba81c9ec77fmr364234ybc.22.1687164620200; Mon, 19
+ Jun 2023 01:50:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-2-66663c0aa592@linaro.org>
-References: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-0-66663c0aa592@linaro.org>
-In-Reply-To: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-0-66663c0aa592@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+References: <20230616185742.2250452-1-krzysztof.kozlowski@linaro.org> <20230616185742.2250452-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230616185742.2250452-3-krzysztof.kozlowski@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 19 Jun 2023 10:50:08 +0200
+Message-ID: <CACRpkdYSnXDifczX-seegRdeW-6zwpxrz0cAeZaOPNcBpXYduw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: defconfig: enable Qualcomm SM8350 LPASS pinctrl
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4864;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=uIHdrS4LyC51s+N5izPggR2Uy3XcHfTE+9d4aVoV1QI=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkBDLQdRob7w9vaGY5x7J+Xplj9H1IJNgfJ+LmDUd
- 174ZHMCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJAQywAKCRB33NvayMhJ0RDbEA
- CdTc8N3b7YocBH+QETbvesSXQWMtOUl+rmPgdcnoJzqUXSVxuTAVdYG/hdHbgjN028CYXt4H5hnmal
- DTqbsTZFrbx39xC1R+W/zbJ8r8uWhn9SR5uWeGB7mJEIctUO3xcSWXcUfNsyczmJ3NF4Xqi6x0D57Z
- 0+O7OanbARofMedbTetNdXyYlGF7MUxRocLsl9QTDE9ssVksKFRBQqwAWV5LhkrGAxC5QIrprRmEo6
- QpcnfRJvo6HfXEiof+iWzN/1FPtdgrhf4wd1eZ3Z21x1vtWnrNzlg6orf/H9mDo9d2Nl/8+qOI2RCC
- M/4pYiAkk/xeTTupq21nkSZtQKXTr1U1UvIBQIbmGsPj2kUywjcmnr+EA54aEApCPK+MXmZ6VK6jxt
- eVzLeUYVI+lmwcu3JNXBQe/Bwno/dh4kZuy9pd8ZiRm0y9DbFrVTiH8nbKskaydQYsfbyF22MQlRpC
- eIbTfL+9M7nj0TU5N8HggDQdKXTIQM4nGJ84SI9OJSsX1ZIe0cV0D+VY/LVCT4o5fxiWyX38HmlXV/
- EgUDQqTAd7OlOwVAGGvhuMJTuOKJLtGeNMnIBMvp3fpuzxBBUaGynalTS7m57hX86rMJ4SDypICzgC
- 86CQS+LgM7K0KYnSg+dp0XwEc2q52P/grfz6Wl8V8PRGazhyh3qYwKFVvkmw==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -94,158 +79,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set the proper enable_mask to needs requiring such value
-to be used instead of a bandwidth when voting.
+On Fri, Jun 16, 2023 at 8:57=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
-The masks were copied from the downstream implementation at [1].
+> Enable the Qualcomm SM8350 LPASS TLMM pin controller driver for
+> providing GPIOs/pins for audio block on SM8350 based boards (e.g.
+> HDK8350).
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[1] https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/blob/kernel.lnx.5.15.r1-rel/drivers/interconnect/qcom/kalama.c
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/interconnect/qcom/sm8550.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/drivers/interconnect/qcom/sm8550.c b/drivers/interconnect/qcom/sm8550.c
-index d823ba988ef6..0864ed285375 100644
---- a/drivers/interconnect/qcom/sm8550.c
-+++ b/drivers/interconnect/qcom/sm8550.c
-@@ -1473,6 +1473,7 @@ static struct qcom_icc_node qns_mem_noc_sf_cam_ife_2 = {
- 
- static struct qcom_icc_bcm bcm_acv = {
- 	.name = "ACV",
-+	.enable_mask = 0x8,
- 	.num_nodes = 1,
- 	.nodes = { &ebi },
- };
-@@ -1485,6 +1486,7 @@ static struct qcom_icc_bcm bcm_ce0 = {
- 
- static struct qcom_icc_bcm bcm_cn0 = {
- 	.name = "CN0",
-+	.enable_mask = 0x1,
- 	.keepalive = true,
- 	.num_nodes = 54,
- 	.nodes = { &qsm_cfg, &qhs_ahb2phy0,
-@@ -1524,6 +1526,7 @@ static struct qcom_icc_bcm bcm_cn1 = {
- 
- static struct qcom_icc_bcm bcm_co0 = {
- 	.name = "CO0",
-+	.enable_mask = 0x1,
- 	.num_nodes = 2,
- 	.nodes = { &qxm_nsp, &qns_nsp_gemnoc },
- };
-@@ -1549,6 +1552,7 @@ static struct qcom_icc_bcm bcm_mm0 = {
- 
- static struct qcom_icc_bcm bcm_mm1 = {
- 	.name = "MM1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 8,
- 	.nodes = { &qnm_camnoc_hf, &qnm_camnoc_icp,
- 		   &qnm_camnoc_sf, &qnm_vapss_hcp,
-@@ -1589,6 +1593,7 @@ static struct qcom_icc_bcm bcm_sh0 = {
- 
- static struct qcom_icc_bcm bcm_sh1 = {
- 	.name = "SH1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 13,
- 	.nodes = { &alm_gpu_tcu, &alm_sys_tcu,
- 		   &chm_apps, &qnm_gpu,
-@@ -1608,6 +1613,7 @@ static struct qcom_icc_bcm bcm_sn0 = {
- 
- static struct qcom_icc_bcm bcm_sn1 = {
- 	.name = "SN1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 3,
- 	.nodes = { &qhm_gic, &xm_gic,
- 		   &qns_gemnoc_gc },
-@@ -1633,6 +1639,7 @@ static struct qcom_icc_bcm bcm_sn7 = {
- 
- static struct qcom_icc_bcm bcm_acv_disp = {
- 	.name = "ACV",
-+	.enable_mask = 0x1,
- 	.num_nodes = 1,
- 	.nodes = { &ebi_disp },
- };
-@@ -1657,12 +1664,14 @@ static struct qcom_icc_bcm bcm_sh0_disp = {
- 
- static struct qcom_icc_bcm bcm_sh1_disp = {
- 	.name = "SH1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 2,
- 	.nodes = { &qnm_mnoc_hf_disp, &qnm_pcie_disp },
- };
- 
- static struct qcom_icc_bcm bcm_acv_cam_ife_0 = {
- 	.name = "ACV",
-+	.enable_mask = 0x0,
- 	.num_nodes = 1,
- 	.nodes = { &ebi_cam_ife_0 },
- };
-@@ -1681,6 +1690,7 @@ static struct qcom_icc_bcm bcm_mm0_cam_ife_0 = {
- 
- static struct qcom_icc_bcm bcm_mm1_cam_ife_0 = {
- 	.name = "MM1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 4,
- 	.nodes = { &qnm_camnoc_hf_cam_ife_0, &qnm_camnoc_icp_cam_ife_0,
- 		   &qnm_camnoc_sf_cam_ife_0, &qns_mem_noc_sf_cam_ife_0 },
-@@ -1694,6 +1704,7 @@ static struct qcom_icc_bcm bcm_sh0_cam_ife_0 = {
- 
- static struct qcom_icc_bcm bcm_sh1_cam_ife_0 = {
- 	.name = "SH1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 3,
- 	.nodes = { &qnm_mnoc_hf_cam_ife_0, &qnm_mnoc_sf_cam_ife_0,
- 		   &qnm_pcie_cam_ife_0 },
-@@ -1701,6 +1712,7 @@ static struct qcom_icc_bcm bcm_sh1_cam_ife_0 = {
- 
- static struct qcom_icc_bcm bcm_acv_cam_ife_1 = {
- 	.name = "ACV",
-+	.enable_mask = 0x0,
- 	.num_nodes = 1,
- 	.nodes = { &ebi_cam_ife_1 },
- };
-@@ -1719,6 +1731,7 @@ static struct qcom_icc_bcm bcm_mm0_cam_ife_1 = {
- 
- static struct qcom_icc_bcm bcm_mm1_cam_ife_1 = {
- 	.name = "MM1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 4,
- 	.nodes = { &qnm_camnoc_hf_cam_ife_1, &qnm_camnoc_icp_cam_ife_1,
- 		   &qnm_camnoc_sf_cam_ife_1, &qns_mem_noc_sf_cam_ife_1 },
-@@ -1732,6 +1745,7 @@ static struct qcom_icc_bcm bcm_sh0_cam_ife_1 = {
- 
- static struct qcom_icc_bcm bcm_sh1_cam_ife_1 = {
- 	.name = "SH1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 3,
- 	.nodes = { &qnm_mnoc_hf_cam_ife_1, &qnm_mnoc_sf_cam_ife_1,
- 		   &qnm_pcie_cam_ife_1 },
-@@ -1739,6 +1753,7 @@ static struct qcom_icc_bcm bcm_sh1_cam_ife_1 = {
- 
- static struct qcom_icc_bcm bcm_acv_cam_ife_2 = {
- 	.name = "ACV",
-+	.enable_mask = 0x0,
- 	.num_nodes = 1,
- 	.nodes = { &ebi_cam_ife_2 },
- };
-@@ -1757,6 +1772,7 @@ static struct qcom_icc_bcm bcm_mm0_cam_ife_2 = {
- 
- static struct qcom_icc_bcm bcm_mm1_cam_ife_2 = {
- 	.name = "MM1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 4,
- 	.nodes = { &qnm_camnoc_hf_cam_ife_2, &qnm_camnoc_icp_cam_ife_2,
- 		   &qnm_camnoc_sf_cam_ife_2, &qns_mem_noc_sf_cam_ife_2 },
-@@ -1770,6 +1786,7 @@ static struct qcom_icc_bcm bcm_sh0_cam_ife_2 = {
- 
- static struct qcom_icc_bcm bcm_sh1_cam_ife_2 = {
- 	.name = "SH1",
-+	.enable_mask = 0x1,
- 	.num_nodes = 3,
- 	.nodes = { &qnm_mnoc_hf_cam_ife_2, &qnm_mnoc_sf_cam_ife_2,
- 		   &qnm_pcie_cam_ife_2 },
-
--- 
-2.34.1
-
+Yours,
+Linus Walleij
