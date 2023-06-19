@@ -2,79 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 688097359FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 16:46:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6EEA735AA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 17:05:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbjFSOqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 10:46:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43626 "EHLO
+        id S231713AbjFSPF1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 11:05:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232099AbjFSOqC (ORCPT
+        with ESMTP id S229481AbjFSPFH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 10:46:02 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15C1130
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 07:45:55 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f86e1bdce5so1777441e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 07:45:55 -0700 (PDT)
+        Mon, 19 Jun 2023 11:05:07 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2689619A1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:18 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id 41be03b00d2f7-54f85f8b961so2735302a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687185954; x=1689777954;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JGh6q8YX2/fWXkHg5338c1JuUfqVUfeIziiaO9CuRyA=;
-        b=TMZberxgZEP/PuQu10gXIwK7DBYB0ixRdQQLw/TmK400FmYVO9qRtMwj6HGRz5Z7RU
-         vqFApHi2qsnNfC+tJFWbIiCxRsLCKaCrr3KOPuC9teq2sB+iJYRIn6Sn4bjVQ5Deu8rg
-         ACg3yOGdFSxE48tZD5SiCinEXwtFqkpqDlZ2qzhZU5yTPTY2PGaKqmo1E3H9c5G5fmaw
-         IvWRXha6TOCRJC5V+h7pvKj5jHJqBEbNmdrEBVP/JBsGUClnbgkabMqpFcoZZIjAE8Y+
-         dzu5cbNLQMU1eaCGZjDQGp9kbax0mtNw2rbeUxDNGxrTFZU/K3m/uLwr0CF8PFbhfDvE
-         eisg==
+        d=linaro.org; s=google; t=1687187057; x=1689779057;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1ijoPficGMbC8MNoj6bix6NY7Kbw2jw00NC2bUq8rco=;
+        b=NZohB7jULHtqmwtPONNyPyf6F6F21c9VTWQVX78xQnVRRRN5TT9252RlBsUu9fRAvl
+         tyCMversYp/dLi1xDvws1ot3xjDQb983M391KxCCwzxFSmQWXIPZ6A8r++NrceIzn0+I
+         zdde4fidaTFqUxkWLOdvU76L7W33O1oDj/VC7pfkjLhsHdEY1TbE6dIEy0s8x9tSleJt
+         +fWoxTdf8XlqLchKyZfU8vFR8yN93ly0LCoMw4DjkDAlPWqrisl+mNrIyrb2Fz49Ix4I
+         x3mSgqDd9BJb3/QdnRQQVmXfHyf71oAZmxSagmwqMJsI56usVroryAGqYZAA5mG1E598
+         tCUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687185954; x=1689777954;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JGh6q8YX2/fWXkHg5338c1JuUfqVUfeIziiaO9CuRyA=;
-        b=YtRSKO6WdwIaqIGAWXo7ldC6ZZ1ZrEuVGKZiE28Q9ZOBcMa1OPdnLDyubLwXTV2UPs
-         EBjamOe7Qx0cwfs4+ZHA5v5xoHQjMWuXF0G05zvaB1q2MfZzdr8YR83BFN5ZfPuTeeT2
-         Ufa1cj5rHDm+5b2zq2A2ubfBKwuKqMWh9Ac5P7lXyhZOQIOIb4xRdBcmHkMpaRsqqaxt
-         cORsOjVj0mzD9AC0LAJ0L1zZWnx3b+qyciF+OWkuhmBs1Sflw7Yrkw33HGdx3JE0l11P
-         73Vt+lbk94STQCO9g2p5BcjIuRiRh9zrA+HrI9C48zXGjOSEXkre5RgCDPkQ7m+6SSTh
-         xuUQ==
-X-Gm-Message-State: AC+VfDzrRVwkluHqnrxi96Y6r9pZU1DWRPLbn36r/93ge/OLgOvTq0ev
-        rBgoFX4k38vTUnnI+zqQx4nHKhB1rQcOzDDKE1U=
-X-Google-Smtp-Source: ACHHUZ58xFLtIpptHAM69KQBzXtTb2dYEYCsNT4yppezElKLNkx81i5BNudAdsvN6Sa6fvflLxceWw==
-X-Received: by 2002:a19:7b02:0:b0:4f8:83f:babe with SMTP id w2-20020a197b02000000b004f8083fbabemr5268988lfc.62.1687185954010;
-        Mon, 19 Jun 2023 07:45:54 -0700 (PDT)
-Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id y18-20020ac255b2000000b004eb12850c40sm4294426lfg.14.2023.06.19.07.45.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jun 2023 07:45:53 -0700 (PDT)
-Message-ID: <7d85389e-3066-b031-437a-0c0b800f57ad@linaro.org>
-Date:   Mon, 19 Jun 2023 16:45:52 +0200
+        d=1e100.net; s=20221208; t=1687187057; x=1689779057;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1ijoPficGMbC8MNoj6bix6NY7Kbw2jw00NC2bUq8rco=;
+        b=Qrkw7zGW6IVHPI8uUg94apG0ruWohJJBBpxnpKX1mNaOxj5jUjxB77573/hsQJLWU3
+         AgCKqYtIytv8nLmOOGG33NrZWswYlvin5COLjPcYWVLQ/+tGrhC1TItV/oQw8flPWCmE
+         wO1YP0+Ro7Ce4KYFfLG3L1DRE+tVZOiw89nQhG4g4tpTJ8o34KUjRtTQ8Q8XTxGFo06q
+         ia10gYTJiVrsTy1xfYlA5bvXnGGaz6wrrDCOmteffcSMxbZtrMlFee7IEVVwjxRqwHul
+         rxsC0g34R3OGUA+rl4qj/ch4ijjpfcZl4yYtzSpiP07et5uZ2Nrpq0fsA31BYzqBVvQx
+         i1mA==
+X-Gm-Message-State: AC+VfDy8woq6KR3G6sUQEciYmhISEfVaHj40gDuBYNryODjlz48DoKID
+        P7Zyz6J9t6/UeiIr7PbPPBENFi4WcL/MV3Nif6Nm
+X-Google-Smtp-Source: ACHHUZ6tI13kW3PqxOgCDdRV/bnoOp0Af7lFbtRpF/0aJZMLjxoWidISPg+wC/5GklYEq+HPXXgdPg==
+X-Received: by 2002:a17:90b:11d2:b0:25e:aedf:e82b with SMTP id gv18-20020a17090b11d200b0025eaedfe82bmr9751107pjb.15.1687187057447;
+        Mon, 19 Jun 2023 08:04:17 -0700 (PDT)
+Received: from localhost.localdomain ([117.217.183.37])
+        by smtp.gmail.com with ESMTPSA id 10-20020a17090a19ca00b0025efaf7a0d3sm2765480pjj.14.2023.06.19.08.04.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jun 2023 08:04:16 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
+Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        quic_srichara@quicinc.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v4 0/9] PCI: qcom: Do not advertise hotplug capability
+Date:   Mon, 19 Jun 2023 20:33:59 +0530
+Message-Id: <20230619150408.8468-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8350: add APR and LPASS TLMM
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230616190222.2251186-1-krzysztof.kozlowski@linaro.org>
- <20230616190222.2251186-3-krzysztof.kozlowski@linaro.org>
- <4e558ea5-84cf-c7d4-19c2-f6e72f497c74@linaro.org>
- <1dfcc1cd-3e71-8d02-5d5e-4b501d7ada50@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1dfcc1cd-3e71-8d02-5d5e-4b501d7ada50@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,92 +72,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19.06.2023 16:37, Krzysztof Kozlowski wrote:
-> On 19/06/2023 15:24, Konrad Dybcio wrote:
->> On 16.06.2023 21:02, Krzysztof Kozlowski wrote:
->>> Add audio-related nodes: the APR in the ADSP (same as on SM8250) and
->>> LPASS TLMM pin controller.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> ---
->>>
->>> Bindings for SM8350:
->>> https://lore.kernel.org/linux-arm-msm/20230616185742.2250452-1-krzysztof.kozlowski@linaro.org/T/#t
->>> ---
->>>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 82 ++++++++++++++++++++++++++++
->>>  1 file changed, 82 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
->>> index 33b7ef8fd78a..9650cecb1370 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
->>> @@ -15,7 +15,9 @@
->>>  #include <dt-bindings/mailbox/qcom-ipcc.h>
->>>  #include <dt-bindings/phy/phy-qcom-qmp.h>
->>>  #include <dt-bindings/power/qcom-rpmpd.h>
->>> +#include <dt-bindings/soc/qcom,apr.h>
->>>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->>> +#include <dt-bindings/sound/qcom,q6afe.h>
->>>  #include <dt-bindings/thermal/thermal.h>
->>>  #include <dt-bindings/interconnect/qcom,sm8350.h>
->>>  
->>> @@ -1780,6 +1782,20 @@ tcsr_mutex: hwlock@1f40000 {
->>>  			#hwlock-cells = <1>;
->>>  		};
->>>  
->>> +		lpass_tlmm: pinctrl@33c0000 {
->>> +			compatible = "qcom,sm8350-lpass-lpi-pinctrl";
->>> +			reg = <0 0x033c0000 0x0 0x20000>,
->> '0' for addr, '0x0' for size :/
->>
->> The rest of the file uses '0', please do that
-> It's a mixture but mostly 0x0 in both places. I don't mind switching to 0.
-0x0 would be preferred (dec makes no sense for registers) but I don't
-think anybody wants to do (or handle) the mess of replacing that
+Hi,
 
-Konrad
-> 
->>
->>> +			      <0 0x03550000 0x0 0x10000>;
->>> +
->>> +			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->>> +				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->>> +			clock-names = "core", "audio";
->>> +
->>> +			gpio-controller;
->>> +			#gpio-cells = <2>;
->>> +			gpio-ranges = <&lpass_tlmm 0 0 15>;
->>> +		};
->>> +
->>>  		gpu: gpu@3d00000 {
->>>  			compatible = "qcom,adreno-660.1", "qcom,adreno";
->>>  
->>> @@ -3189,6 +3205,72 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->>>  				label = "lpass";
->>>  				qcom,remote-pid = <2>;
->>>  
->>> +				apr {
->>> +					compatible = "qcom,apr-v2";
->>> +					qcom,glink-channels = "apr_audio_svc";
->>> +					qcom,domain = <APR_DOMAIN_ADSP>;
->>> +					#address-cells = <1>;
->>> +					#size-cells = <0>;
->>> +
->>> +					service@3 {
->>> +						reg = <APR_SVC_ADSP_CORE>;
->>> +						compatible = "qcom,q6core";
->>> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->>> +					};
->>> +
->>> +					q6afe: service@4 {
->>> +						compatible = "qcom,q6afe";
->>> +						reg = <APR_SVC_AFE>;
->>> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> Missing newline before subnodes
-> 
-> acks
-> 
-> Best regards,
-> Krzysztof
-> 
+The SoCs making use of Qualcomm PCIe controllers do not support the PCIe hotplug
+functionality. But the hotplug capability bit is set by default in the hardware.
+This causes the kernel PCI core to register hotplug service for the controller
+and send hotplug commands to it. But those commands will timeout generating
+messages as below during boot and suspend/resume.
+    
+[    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
+[    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
+[    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
+[    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
+    
+This not only spams the console output but also induces a delay of a couple of
+seconds. To fix this issue, this series clears the HPC bit in PCI_EXP_SLTCAP
+register as a part of the post init sequence for all IP versions to not
+advertise the hotplug capability for the controller.
+
+Testing
+=======
+
+This series has been tested on DB845c (SDM845 SoC) and Lenovo Thinkpad X13s
+(SC8280XP SoC).
+
+Thanks,
+Mani
+
+Changes in v4:
+
+* Splitted patch 1/8 into two
+* Rebased on top of pci/next
+
+Changes in v3:
+
+* Dropped double signed-off tags
+* Dropped Dmitry's gmail reviewed tag as per his request
+* Mentioned the newline change in commit log of patch 2/8
+
+Changes in v2:
+
+* Collected tags
+* Moved the HPC clearing to a separate function and reused across different
+  configs
+
+Manivannan Sadhasivam (9):
+  PCI: qcom: Disable write access to read only registers for IP v2.3.3
+  PCI: qcom: Use DWC helpers for modifying the read-only DBI registers
+  PCI: qcom: Disable write access to read only registers for IP v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and
+    v1.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.3.3 and
+    v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.3.2
+  PCI: qcom: Use post init sequence of IP v2.3.2 for v2.4.0
+  PCI: qcom: Do not advertise hotplug capability for IP v1.0.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.1.0
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 73 ++++++++++++++------------
+ 1 file changed, 38 insertions(+), 35 deletions(-)
+
+-- 
+2.25.1
+
