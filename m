@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE94A735765
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 14:54:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F876735779
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 15:00:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229886AbjFSMyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 08:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38750 "EHLO
+        id S230282AbjFSNAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 09:00:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbjFSMyT (ORCPT
+        with ESMTP id S231583AbjFSNAI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 08:54:19 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F24BF1729
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 05:54:06 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f870247d6aso1397961e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 05:54:06 -0700 (PDT)
+        Mon, 19 Jun 2023 09:00:08 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53C07E59
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:00:07 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-bd77424c886so3794088276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 06:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687179245; x=1689771245;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Le26KL+9DdFLnEft3uCibkKfY4cZldwlPluP1qp2kKc=;
-        b=c0WKBbF8plNCUQFI8Vzg2KPayFDXLzEl+TUB/kLWs/hI5m1VZbbM1LM7F1uGYxq5cQ
-         7ID+pH5bG/nUMErzi2pqmeTIIsMpZBg0TsbOE+otU+Y5LU3l9jCc50t1OxIxwaHS7sYK
-         Qhr/P+j/jB0DxzNMsSbYg0x3q3awWBNl3jPBYC7+GCQPPjqWwfTCZ0GV3gKjrjn5i4Or
-         81u/OIaU6E5fmR5q58t0KdtfJ2s0NaCyZ0/bYUeVWpt9VHH0Qw71BnU+81s3Q3v8Thlu
-         92jetZ7y6SaLaqxfhiKzF1Dabb1gnYi3zJyLnV8Rsuy4o45IhfU/NPRlXdO+GqGiWi5T
-         kwxA==
+        d=linaro.org; s=google; t=1687179606; x=1689771606;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BrFNh+rb4LdBzypQ3oE3U7czB9G2st4YddEl5A8gEaY=;
+        b=AcLO1dlzV/QVWRg/8clGarbCG079gBcurJW/W6CcT2EYBNX1Mdi6XhpPcfKjlWRNJs
+         150f2yxY+ezdT19RgBcJcTPYkNLvvHhtz5K7xu3dCl5w/RzoK/qzz+Vxwo4+Q2jPtcrZ
+         HS8kB3KaXUzdl/vWhP0mMQR5Lukh4YZm9WtHLmBkCrjhqCmpl/NgF3AAm9VvZYgfXURP
+         yh2fKtc0/IZUxfH9U9c/R4Dx7ivShYziW8os7ti3T8vF+gy7gu9OPc17VlfB3AEeRZXz
+         CCxcBZ4gmcIaEH3TRl7pLWjN90R6KnskwtLXoIylzOvA95O+DCPZXtCvyB3YaZO5z1Io
+         zVaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687179245; x=1689771245;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1687179606; x=1689771606;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Le26KL+9DdFLnEft3uCibkKfY4cZldwlPluP1qp2kKc=;
-        b=DicdHLmlj0FLZixaXZGsDAJ5nKfhR/uljdruCEt4zxZgzNfEPTjpg3YB/4SDcRs/7u
-         vGB9w/XNM/aSRDojGMdqCawA/dFeNBbv53ra78V2zDsTJGK95cPd7SIQCmUNeCOD8L67
-         uMXvvTDKWliFaxscXyJWfcIFB59L3t88dGJoUXwcS8q0UBcv9vd/FjN6TSFYp/TuDMpI
-         FuTAGzQpsOLxIFTvyzVTRLwR6hs37kr/BVqNylAobS/uphsNgFDCDRV/IVQzQta1coP7
-         uvb4vW4LFrlxUUilPUseJ4jl/dD2SH5hRb1PFbAmtDfFbcTV+8oN+pM7jzUwWn7sIyHG
-         jFdA==
-X-Gm-Message-State: AC+VfDyvJFEyZxYbg64xmw4HyPEFXn0DZyrt248SNBIdr4HD8FVTXums
-        57cUrGNYP5g/tzDE8/4g/0ZGeA==
-X-Google-Smtp-Source: ACHHUZ78VIb+00HUSlNRHLi7RfvqAQoF8yll8s/RrSigBfJ1VSX+E1hEMrt2Lu891L2DIFOtnYIC5g==
-X-Received: by 2002:a19:ab11:0:b0:4f8:75ac:c4e8 with SMTP id u17-20020a19ab11000000b004f875acc4e8mr618218lfe.43.1687179245263;
-        Mon, 19 Jun 2023 05:54:05 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id w23-20020a19c517000000b004f874e12e72sm229623lfe.224.2023.06.19.05.54.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 05:54:04 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Rob Clark <robdclark@gmail.com>
-Subject: [PATCH] arm64: defconfig: enable Qualcomm MSM8996 Global Clock Controller as built-in
-Date:   Mon, 19 Jun 2023 15:54:04 +0300
-Message-Id: <20230619125404.562137-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        bh=BrFNh+rb4LdBzypQ3oE3U7czB9G2st4YddEl5A8gEaY=;
+        b=lGuCyBdl85lLi3wEGg1F+jMKKpW8iNDi8VW1vhbRu4o445KmCfy19/1EEQVCfSAKYl
+         QMmBFnysOdRucuH+oa6lE3BWDk6H2zSgVP2A38ijdMCaN4y8WVx6UW85AwPVboiPWyGm
+         iWzCcw72hq0zec/MKaXLeJ4mK0LGAgcuMqlMz0S8/VMsOzIh/5L+xBlNc4oywslh0Nar
+         93I2KE7NNh4duM1e91gWESrDgG0dMCJn42aH7HsqHxVaq2i80orZy/FlfTQdtqM/btgA
+         IA/7DHHB9ITrRE+Um4D18mJAjMr/qH969cipbXnaWXsXDpAImtDo6GE9uMMfkt591ICX
+         7c5w==
+X-Gm-Message-State: AC+VfDxIsHKlb6kIfQsgR/70XrzZkWjwKaIF/DuPzZl9xqHehzXoL7am
+        Vxv6D21fdFWTTnZcfQKby/qfRWijTF9mN/JnRk+Rkg==
+X-Google-Smtp-Source: ACHHUZ7NX/vqgH3ffxXPw663ikrTwhwKINh+/6Hmi0nIZlGdFPtC6e7u2O1Jmi6XRQgudeLbnadfLd7uXozIb05IinQ=
+X-Received: by 2002:a25:ac92:0:b0:bca:2ef0:9db with SMTP id
+ x18-20020a25ac92000000b00bca2ef009dbmr6836918ybi.5.1687179606141; Mon, 19 Jun
+ 2023 06:00:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-0-66663c0aa592@linaro.org>
+ <20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-1-66663c0aa592@linaro.org>
+ <9e890ca0-396d-fb97-a7d5-db13b8fdbb92@linaro.org> <a3a7f840-eb74-dc32-dd8b-5f74a484b765@linaro.org>
+In-Reply-To: <a3a7f840-eb74-dc32-dd8b-5f74a484b765@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 19 Jun 2023 15:59:55 +0300
+Message-ID: <CAA8EJpoUo+8==4bOfv-V8fD6Wmng8GON4XMVWR4DkNtekMbtLA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] interconnect: qcom: rpmh: add optional mask to send
+ as vote
+To:     neil.armstrong@linaro.org
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,31 +74,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The commit 8f680c287445 ("arm64: defconfig: Switch msm8996 clk drivers
-to module") switched CONFIG_MSM_MMCC_8996 to module, which also resulted
-in CONFIG_MSM_GCC_8996 being switched to module. This breaks useful
-bootflow for Qualcomm MSM8996 / APQ8096 platforms, because the serial is
-not enabled anymore until the GCC module is loaded.
+On Mon, 19 Jun 2023 at 12:47, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> Hi,
+>
+> On 19/06/2023 11:45, Konrad Dybcio wrote:
+> > On 19.06.2023 10:24, Neil Armstrong wrote:
+> >> On the SM8550 SoC, some nodes requires a specific bit mark
+> >> instead of a bandwidth when voting.
+> >>
+> >> Add an enable_mask variable to be used to vote when a node
+> >> is enabled in an aggregate loop.
+> >>
+> >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> >> ---
+> > Would be nice to mention that it's literally this commit:
+> >
+> > https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/2d1573e0206998151b342e6b52a4c0f7234d7e36
+>
+> Good catch, I just copied the bits but yeah in fine it's the same...
 
-Reported-by: Rob Clark <robdclark@gmail.com>
-Fixes: 8f680c287445 ("arm64: defconfig: Switch msm8996 clk drivers to module")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+And probably it also requires copying SoB (and Author?) from the
+original commit.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index f72d0f915340..2bff20171792 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1161,6 +1161,7 @@ CONFIG_IPQ_GCC_8074=y
- CONFIG_IPQ_GCC_9574=y
- CONFIG_MSM_GCC_8916=y
- CONFIG_MSM_GCC_8994=y
-+CONFIG_MSM_GCC_8996=y
- CONFIG_MSM_MMCC_8994=m
- CONFIG_MSM_MMCC_8996=m
- CONFIG_MSM_MMCC_8998=m
+>
+> I'll refer to it in a v2.
+>
+> >
+> > For the code:
+> >
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> Thanks,
+> Neil
+>
+> >
+> > Konrad
+> >>   drivers/interconnect/qcom/bcm-voter.c | 5 +++++
+> >>   drivers/interconnect/qcom/icc-rpmh.h  | 2 ++
+> >>   2 files changed, 7 insertions(+)
+> >>
+> >> diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+> >> index 8f385f9c2dd3..d5f2a6b5376b 100644
+> >> --- a/drivers/interconnect/qcom/bcm-voter.c
+> >> +++ b/drivers/interconnect/qcom/bcm-voter.c
+> >> @@ -83,6 +83,11 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+> >>
+> >>              temp = agg_peak[bucket] * bcm->vote_scale;
+> >>              bcm->vote_y[bucket] = bcm_div(temp, bcm->aux_data.unit);
+> >> +
+> >> +            if (bcm->enable_mask && (bcm->vote_x[bucket] || bcm->vote_y[bucket])) {
+> >> +                    bcm->vote_x[bucket] = 0;
+> >> +                    bcm->vote_y[bucket] = bcm->enable_mask;
+> >> +            }
+> >>      }
+> >>
+> >>      if (bcm->keepalive && bcm->vote_x[QCOM_ICC_BUCKET_AMC] == 0 &&
+> >> diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+> >> index 04391c1ba465..7843d8864d6b 100644
+> >> --- a/drivers/interconnect/qcom/icc-rpmh.h
+> >> +++ b/drivers/interconnect/qcom/icc-rpmh.h
+> >> @@ -81,6 +81,7 @@ struct qcom_icc_node {
+> >>    * @vote_x: aggregated threshold values, represents sum_bw when @type is bw bcm
+> >>    * @vote_y: aggregated threshold values, represents peak_bw when @type is bw bcm
+> >>    * @vote_scale: scaling factor for vote_x and vote_y
+> >> + * @enable_mask: optional mask to send as vote instead of vote_x/vote_y
+> >>    * @dirty: flag used to indicate whether the bcm needs to be committed
+> >>    * @keepalive: flag used to indicate whether a keepalive is required
+> >>    * @aux_data: auxiliary data used when calculating threshold values and
+> >> @@ -97,6 +98,7 @@ struct qcom_icc_bcm {
+> >>      u64 vote_x[QCOM_ICC_NUM_BUCKETS];
+> >>      u64 vote_y[QCOM_ICC_NUM_BUCKETS];
+> >>      u64 vote_scale;
+> >> +    u32 enable_mask;
+> >>      bool dirty;
+> >>      bool keepalive;
+> >>      struct bcm_db aux_data;
+> >>
+>
+
+
 -- 
-2.39.2
-
+With best wishes
+Dmitry
