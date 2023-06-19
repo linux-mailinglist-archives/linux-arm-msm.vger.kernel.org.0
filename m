@@ -2,113 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AC75735ABB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 17:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F01B735AF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 17:17:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbjFSPGN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 11:06:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53774 "EHLO
+        id S231449AbjFSPRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 11:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231573AbjFSPFZ (ORCPT
+        with ESMTP id S231345AbjFSPRZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 11:05:25 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9B210FF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:52 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id 98e67ed59e1d1-25ecc896007so2003230a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 08:04:52 -0700 (PDT)
+        Mon, 19 Jun 2023 11:17:25 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB2F19B;
+        Mon, 19 Jun 2023 08:17:23 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f90a7325f6so22548995e9.3;
+        Mon, 19 Jun 2023 08:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687187092; x=1689779092;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BAHgbKUGLDFGyzp+XWYZ2sseIunYBsYQIO/Xldf05CU=;
-        b=XvdhBRHXtdzN60JPoHiXZGxe3Wk8p3gEVy+80P/yCIUnn5q/UjEz6wGlLUXO/Tcp/B
-         p8G1lcxkxYlP5xBp89pAbZZsu5TTC+qOgOXZx0qANDXGrqsKG5jlWFQVYeQMgog4GiVg
-         wdxkf03RP9va75x46RLsvNHYZv9BMqmZ8LQqPta7Z6Zq8i+eA+ZPRky6UY20MUYFYLkr
-         AiJCUirnH8hMizZurVOfFD4mTj3SdBbkydnp+kTqBxXNiyFRO5NJsTl5mYeFNPA5V9gf
-         rSIvT9+E06Kh8dESXnCMURATxRR6WFsSxEu8qtTmzg8ahZcvAundvWcd7CY1HHfnvrf3
-         CsnQ==
+        d=gmail.com; s=20221208; t=1687187842; x=1689779842;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C2BCqWZdnOgJLi1yS8YB0jgtq7UEXjCvPUI8CflkrIM=;
+        b=fcoarEbtF5e7jxTOdi2dHyVdAjhYmhluM3IFzimhgMrW9R2daBbBYONDuB/o0J7YOr
+         bYoFkt5eSY/Qihi9kxiUYuqaZKwp6C/9xXf69fScIaGVS4gjGSSOvIOa3jTRTzaSwqgo
+         2gaZezk7u5fR7Kg509bBrm6W/dGDLiGwmt92XSnrUpruNV7ERRTZMtx4PpTBz5mWAvXH
+         E6WXnT/ZBDfu65fZkld2fRZj1Frr4AmlNFoCLHOgMTJ+7yEUexlom1z70/90A4OAA2Yh
+         NSvi3RBD5Ebu0ss9+0SIJSPmMzhVizmHebLSUqHuIeomQXmB+2xsS8oMi2Q6cDaymSv0
+         1KBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687187092; x=1689779092;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BAHgbKUGLDFGyzp+XWYZ2sseIunYBsYQIO/Xldf05CU=;
-        b=gWbHr4Kwqj8oEENeZ2/DKas+fmyMHhDyWp9rVyYmg5kXrO85ZQ5YUtc+vuAICo5F+j
-         au4XlNfC+nxNEj+qDYrVhUcf7JGsFhU2aMs71Cu1UdHawH8jl4kxd+i/IrF5KBO3NSyb
-         XUAl41CSX/DUKbwWcOluvIcRLImOqcaxHoEqdTFWOzlN8AdJ3TMyyUVlWc8/6S97j48a
-         TEoWakSMujvtY71AkL1LZUOVzafmRdzW7/vJ6hLM9H70eLgXWSI/02Jn6Znue1w1dMh6
-         grN9vfSZN7UYVXOzdpoqAYG7AIZfTw9hfMGuzzkF1Di+lOEUxMFfurJMvzxc2XYuvvPX
-         2i5A==
-X-Gm-Message-State: AC+VfDzZ+/oNRM4wCk6h/9okb0uNUdns+P7Vju2smu+G1yLjM5S3YKEl
-        ko6HQV0kDmAzmCzkqioZ31Vt
-X-Google-Smtp-Source: ACHHUZ6mX5eL59bpG47z5VL6nwHLS8G/J72KGT7pv4yLTGgHpPgvjAqo6OiEFj63qn6HUCs8V7wiOA==
-X-Received: by 2002:a17:90a:df95:b0:25b:e216:bc15 with SMTP id p21-20020a17090adf9500b0025be216bc15mr10269006pjv.23.1687187092079;
-        Mon, 19 Jun 2023 08:04:52 -0700 (PDT)
-Received: from localhost.localdomain ([117.217.183.37])
-        by smtp.gmail.com with ESMTPSA id 10-20020a17090a19ca00b0025efaf7a0d3sm2765480pjj.14.2023.06.19.08.04.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 08:04:51 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
-Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, steev@kali.org,
-        quic_srichara@quicinc.com,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v4 9/9] PCI: qcom: Do not advertise hotplug capability for IP v2.1.0
-Date:   Mon, 19 Jun 2023 20:34:08 +0530
-Message-Id: <20230619150408.8468-10-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230619150408.8468-1-manivannan.sadhasivam@linaro.org>
-References: <20230619150408.8468-1-manivannan.sadhasivam@linaro.org>
+        d=1e100.net; s=20221208; t=1687187842; x=1689779842;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C2BCqWZdnOgJLi1yS8YB0jgtq7UEXjCvPUI8CflkrIM=;
+        b=HNHd7Kkiocvr21u+1yNLnqWjWEYf8XVohoCLKytBrq++6Alo1CgHAGP98o7nsagNq6
+         YlKuMtlI5O0bm7aM1xr1UOHQKNTtFBsNdDsdd8AZbNnUV4G4GxEILr+Oc9ub3+wXCGNs
+         7xKIIpyiP5zT5lxIindNWqwv/JX6OtYwG3lTqP4qzdNsJ6xexl68YtBWcRPk8/b1fOxC
+         U6OFAnxn+ZDgorYYZuLWKhVP/lJS1j/+WeH8cfNtX5QUCLB3j4HjrLIdDvCmRzK4Z5Vz
+         EfLulR7NAiozpZBvnSjm/Tjg1goNGmuDBhKkEXkSSYaQEHsZOW0m/jzJwfWzqP7vfKIs
+         TDOQ==
+X-Gm-Message-State: AC+VfDwRXdEt4VZK+k1Pod1JhPbo1wh+NJu68P5j5oePwenzXqRNf2E6
+        wnVXSPUFURp5kltN31jX+hQ=
+X-Google-Smtp-Source: ACHHUZ7K5Wzb9tlqACcOU9KMrL7nII5/kQ/ZHVCVs95ZpIEDFwh9jxtGKtIzb9hQmQ6Nf+bJZPS2NA==
+X-Received: by 2002:a7b:ce14:0:b0:3f9:7a15:1716 with SMTP id m20-20020a7bce14000000b003f97a151716mr3720485wmc.5.1687187842081;
+        Mon, 19 Jun 2023 08:17:22 -0700 (PDT)
+Received: from [192.168.2.177] ([207.188.167.132])
+        by smtp.gmail.com with ESMTPSA id v18-20020a5d43d2000000b0030ae93bd196sm31712456wrr.21.2023.06.19.08.17.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jun 2023 08:17:21 -0700 (PDT)
+Message-ID: <91db8e7b-29fb-3c43-ac38-008ebc9b1f6b@gmail.com>
+Date:   Mon, 19 Jun 2023 17:17:18 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v3 11/12] thermal/drivers/generic-adc: Register thermal
+ zones as hwmon sensors
+Content-Language: en-US, ca-ES, es-ES
+To:     Yangtao Li <frank.li@vivo.com>, glaroque@baylibre.com,
+        rafael@kernel.org, daniel.lezcano@linaro.org, amitk@kernel.org,
+        rui.zhang@intel.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        thara.gopinath@gmail.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, anarsoul@gmail.com,
+        tiny.windzz@gmail.com, wens@csie.org, jernej.skrabec@gmail.com,
+        samuel@sholland.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, edubezval@gmail.com, j-keerthy@ti.com,
+        angelogioacchino.delregno@collabora.com, bchihi@baylibre.com,
+        niklas.soderlund+renesas@ragnatech.se, wenst@chromium.org
+Cc:     linux-pm@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+References: <20230613114904.15749-1-frank.li@vivo.com>
+ <20230613114904.15749-11-frank.li@vivo.com>
+From:   Matthias Brugger <matthias.bgg@gmail.com>
+In-Reply-To: <20230613114904.15749-11-frank.li@vivo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SoCs making use of Qcom PCIe controller IP v2.1.0 do not support hotplug
-functionality. But the hotplug capability bit is set by default in the
-hardware. This causes the kernel PCI core to register hotplug service for
-the controller and send hotplug commands to it. But those commands will
-timeout generating messages as below during boot and suspend/resume.
 
-[    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
-[    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
-[    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
-[    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
 
-This not only spams the console output but also induces a delay of a
-couple of seconds. To fix this issue, let's clear the HPC bit in
-PCI_EXP_SLTCAP register as a part of the post init sequence to not
-advertise the hotplug capability for the controller.
+On 13/06/2023 13:49, Yangtao Li wrote:
+> From: Chen-Yu Tsai <wenst@chromium.org>
+> 
+> Register thermal zones as hwmon sensors to let userspace read
+> temperatures using standard hwmon interface.
+> 
+> Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+> [Yangtao change to use dev_warn and remove return]
+> Signed-off-by: Yangtao Li <frank.li@vivo.com>
+> ---
+>   drivers/thermal/thermal-generic-adc.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/thermal/thermal-generic-adc.c b/drivers/thermal/thermal-generic-adc.c
+> index 017b0ce52122..9531bc2f2ce7 100644
+> --- a/drivers/thermal/thermal-generic-adc.c
+> +++ b/drivers/thermal/thermal-generic-adc.c
+> @@ -13,6 +13,8 @@
+>   #include <linux/slab.h>
+>   #include <linux/thermal.h>
+>   
+> +#include "thermal_hwmon.h"
+> +
+>   struct gadc_thermal_info {
+>   	struct device *dev;
+>   	struct thermal_zone_device *tz_dev;
+> @@ -153,6 +155,9 @@ static int gadc_thermal_probe(struct platform_device *pdev)
+>   		return ret;
+>   	}
+>   
+> +	if (devm_thermal_add_hwmon_sysfs(&pdev->dev, gti->tz_dev))
+> +		dev_warn(&pdev->dev, "Failed to add hwmon sysfs attributes\n");
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+Isn't that already done by patch 1/12?
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 612266fb849a..7a87a47eb7ed 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -438,6 +438,8 @@ static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
- 	writel(CFG_BRIDGE_SB_INIT,
- 	       pci->dbi_base + AXI_MSTR_RESP_COMP_CTRL1);
- 
-+	qcom_pcie_clear_hpc(pcie->pci);
-+
- 	return 0;
- }
- 
--- 
-2.25.1
+Regards,
+Matthias
 
+> +
+>   	return 0;
+>   }
+>   
