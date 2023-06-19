@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E1A0735C11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:19:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17397735C17
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:19:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231372AbjFSQTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 12:19:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36110 "EHLO
+        id S232233AbjFSQTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 12:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230509AbjFSQTD (ORCPT
+        with ESMTP id S232117AbjFSQTE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 12:19:03 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89824E6F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:18:59 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b46f5d236dso24058671fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:18:59 -0700 (PDT)
+        Mon, 19 Jun 2023 12:19:04 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC39E73
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:19:00 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f762b3227dso4394931e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687191538; x=1689783538;
+        d=linaro.org; s=google; t=1687191539; x=1689783539;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eCJCOnI1yJIgtPY0bSH/Iw3dongLkLZbZa4jU5bzULg=;
-        b=ePl5J5GFFsh+871xAbZME1hNeODYQFBsr/Pf0XGqepVpsc1g7yb6iRA5L+h66bEmwd
-         +fCoNS473AfsfMsi/FXSC59EcVrWlWC9SlM6JjtsJazqZ3KQaRoCI8R8ohZt8P8ugqm9
-         1vVrw48aQ3dGoA0rACmYQRaIVFcbsxGyw7XYePOANlCgdItNpApuu/Gx6mbxz/fAFNal
-         haHjX3dAUuC9xIm1jroLe9YFQq3/kBJSJznUcUdVUDUF9onHm8TyHxbijkjJTWq751c+
-         VfOc6pOnIqtvfTewyjSw62LDEO6VW5Mn/+vFCkSnewjm4pn4bxkrrFInvXcVu7/IjKig
-         Ze7g==
+        bh=NeMEcI4+yKDWLM0Xoh1q+uyo2M+zCM82XkXiL0IHChQ=;
+        b=ERW7c9xDG11GsK8JfvPDwgUNzimXYc7k+0n+cwTtPkx+e/eN0Mc4b7g36HaVVsUT+2
+         ZwcynuPACuf5rZr2c+/pXN9FyIhLZ7U8CFeaslkmnjVpcy0SHCuaxcDOGMISALDUdcRL
+         sPUNNeCvRlt7d3PUcwA6sVCvxjfL/E6pOx8hYTSgmje7gyKTVGGVtFt5Kpy7t5owt/bg
+         t6Hnm1z6KXcDTrz5bMOr+avoiyHZ8umjH68N60bfHlmapbzIsPHF0194rN665irS50v1
+         NUxZWnvzBtSBADz4Wuae4ug52F/Of06tqhh1niZWQ+4ytTuWWnqj5KfMue7ScIQbiSjt
+         KLZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687191538; x=1689783538;
+        d=1e100.net; s=20221208; t=1687191539; x=1689783539;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eCJCOnI1yJIgtPY0bSH/Iw3dongLkLZbZa4jU5bzULg=;
-        b=Uj6BVaUjweM6yk2qJbNzgFBOCsdwya9aCZxNM7mOVNzJ6BEG8XrID6wiMfipzno3l8
-         nY+wygvt8l/h3LRC/Fto2WBf8ECoM1XnJUudk7FKyhEhmi7u8UDep+RixzRo/2jqL3xr
-         ogkuQSRqecQecI/BFFS/ETSiF49w5ZqVF6k7x3q9unYsPy+C8Bf3wIZl12bZf3TK5P6o
-         SDJRTfV0wu9FhGaqPrzhr6Kn6eWgo4Sqc8bXkFDV+x7E1o/3xfNEhax5dX86K4Z7LCPh
-         KKCU6jyecyk2BpXnr81PDhJs9PlyelkfF5zXUc0RYf4zN5KQpflUgkE5vfkqIm4YHoco
-         jz8w==
-X-Gm-Message-State: AC+VfDyKMaNOXKibKK110QLoRZPUgD9QXRP4Ih9eaZ36TY+bWCoelCSR
-        67yya5Cnw5+EEAvSRP2/hRH0Xw==
-X-Google-Smtp-Source: ACHHUZ5Xcmx7sD1zWAAAmVEqIO1fpkl0OmKlLVkGi+D96PTjXo1Z4toW8puq3J09X4ZLp1+5Ip8+Zg==
-X-Received: by 2002:a19:4412:0:b0:4f8:1e2a:2b55 with SMTP id r18-20020a194412000000b004f81e2a2b55mr5193195lfa.8.1687191537802;
-        Mon, 19 Jun 2023 09:18:57 -0700 (PDT)
+        bh=NeMEcI4+yKDWLM0Xoh1q+uyo2M+zCM82XkXiL0IHChQ=;
+        b=XrmwsSHkZrwiFwtVB0XZbe/ksZX5wQsxco+9xnRGGzMlCMQ7kxij8pdt84CnYXYy6N
+         uQPmgXyFBCy3WKPf9/GpCwAWy+yI7PnkuaioXQ1L5bFAwh35/HeWnpZQPAuuTJrtnVJU
+         myw0a0WDZpzkgPLTAqTXBqlKplvf+YNUyNHRiMQL+13jlL09vPJaNkLF/bVcHOWWqLH6
+         HRPnH+Bpxfjw7VI2914NG6gH0HJ3ot9Jhmu1vBcMSbNJFP2n9lj++1nKdbu1mAQrKGiy
+         t5ijEu7SbDs+4YFRE3wFs7nBvultDlMUT2ZVgIiSts9JBY/kq95jKFu07XxwZXchyaUC
+         Q3Fw==
+X-Gm-Message-State: AC+VfDw/W/L8SFWY9Lz2acN66gFo0OXRj80wdr7DtREuUOsf1ZZcunOk
+        N/xXpP1NjYXDD8NbkWA8/jYU8A==
+X-Google-Smtp-Source: ACHHUZ6iNnONLcUHaRD6LwY1bDzyrM6RE9wksQs+lZAEVUHBzQ3Teny0MCjBD4PNxgZlft0/pI5ggg==
+X-Received: by 2002:a19:5f5d:0:b0:4f8:5e62:b94b with SMTP id a29-20020a195f5d000000b004f85e62b94bmr1804453lfj.9.1687191539015;
+        Mon, 19 Jun 2023 09:18:59 -0700 (PDT)
 Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
-        by smtp.gmail.com with ESMTPSA id c11-20020ac2530b000000b004b4cbc942a3sm4332824lfh.127.2023.06.19.09.18.56
+        by smtp.gmail.com with ESMTPSA id c11-20020ac2530b000000b004b4cbc942a3sm4332824lfh.127.2023.06.19.09.18.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 09:18:57 -0700 (PDT)
+        Mon, 19 Jun 2023 09:18:58 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 19 Jun 2023 18:18:54 +0200
-Subject: [PATCH RFT RFC 2/3] arm64: dts: qcom: sc8280xp: Add missing CPU
- idle states
+Date:   Mon, 19 Jun 2023 18:18:55 +0200
+Subject: [PATCH RFT RFC 3/3] arm64: dts: qcom: sc8280xp: Fix up idle state
+ periods
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230619-topic-sc8280xp-idle-v1-2-35a8b98451d0@linaro.org>
+Message-Id: <20230619-topic-sc8280xp-idle-v1-3-35a8b98451d0@linaro.org>
 References: <20230619-topic-sc8280xp-idle-v1-0-35a8b98451d0@linaro.org>
 In-Reply-To: <20230619-topic-sc8280xp-idle-v1-0-35a8b98451d0@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -73,11 +73,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191534; l=3555;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191534; l=1802;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=KEJh5fKDHpG+tf7FsdNG34aNe2COjzMzqzjlkSjq5mA=;
- b=EAdzybHN11hL6DoTZDVLIw0L7SbOi69e139T6SXY7Fjnyra2wqywY2P/NKLQ+r5fGg4tHfvw6
- DvApguSzEUCApK6v7xQXu7MAXuBYhU13p6VyrVTifD7I5vm31/h+ojP
+ bh=mq7mfTgr9ZtvOEPLMaimjrbNtQBLNamSOSbjgI89DqQ=;
+ b=5zkt0CsawhYgMHbQ+uC07azdfetKN9uRQNsiWgI4WMR5ahWeGTk+03QDZRCGWFHV2YpGTc64b
+ bDozYqakncYDn33+Klx7kP0OU9HayubPhGh42pPDLv++NgW8eB+lqCg
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,112 +90,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Between WFI (C1) and rail power collapse (C4), the Cortex cores on the
-SC8280XP can also be shut down on their own (C3).
+Some of the values were wrong, which may have painted a wrong picture
+to the scheduler. Fix it.
 
-Describe that missing idle state.
-
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 36 ++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index d524f851cb53..b8f2ec9477f5 100644
+index b8f2ec9477f5..d7894465a0d2 100644
 --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -264,6 +264,16 @@ idle-states {
- 			entry-method = "psci";
- 
- 			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-+				compatible = "arm,idle-state";
-+				idle-state-name = "little-power-collapse";
-+				arm,psci-suspend-param = <0x40000003>;
-+				entry-latency-us = <549>;
-+				exit-latency-us = <901>;
-+				min-residency-us = <1774>;
-+				local-timer-stop;
-+			};
-+
-+			LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
+@@ -277,9 +277,9 @@ LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
  				compatible = "arm,idle-state";
  				idle-state-name = "little-rail-power-collapse";
  				arm,psci-suspend-param = <0x40000004>;
-@@ -274,6 +284,16 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+-				entry-latency-us = <355>;
+-				exit-latency-us = <909>;
+-				min-residency-us = <3934>;
++				entry-latency-us = <702>;
++				exit-latency-us = <915>;
++				min-residency-us = <4001>;
+ 				local-timer-stop;
  			};
  
- 			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-+				compatible = "arm,idle-state";
-+				idle-state-name = "big-power-collapse";
-+				arm,psci-suspend-param = <0x40000003>;
-+				entry-latency-us = <523>;
-+				exit-latency-us = <1244>;
-+				min-residency-us = <2207>;
-+				local-timer-stop;
-+			};
-+
-+			BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+@@ -297,9 +297,9 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
  				compatible = "arm,idle-state";
  				idle-state-name = "big-rail-power-collapse";
  				arm,psci-suspend-param = <0x40000004>;
-@@ -601,49 +621,49 @@ psci {
- 		CPU_PD0: power-domain-cpu0 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+-				entry-latency-us = <241>;
+-				exit-latency-us = <1461>;
+-				min-residency-us = <4488>;
++				entry-latency-us = <526>;
++				exit-latency-us = <1854>;
++				min-residency-us = <5555>;
+ 				local-timer-stop;
+ 			};
  		};
- 
- 		CPU_PD1: power-domain-cpu1 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+@@ -324,9 +324,9 @@ CLUSTER_SLEEP_CX_OFF: cluster-sleep-1 {
+ 			CLUSTER_SLEEP_APSS_OFF: cluster-sleep-2 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x4100c344>;
+-				entry-latency-us = <3263>;
++				entry-latency-us = <3638>;
+ 				exit-latency-us = <6562>;
+-				min-residency-us = <9987>;
++				min-residency-us = <9826>;
+ 			};
  		};
- 
- 		CPU_PD2: power-domain-cpu2 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
- 		};
- 
- 		CPU_PD3: power-domain-cpu3 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
- 		};
- 
- 		CPU_PD4: power-domain-cpu4 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 		};
- 
- 		CPU_PD5: power-domain-cpu5 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 		};
- 
- 		CPU_PD6: power-domain-cpu6 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 		};
- 
- 		CPU_PD7: power-domain-cpu7 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
- 		};
- 
- 		CLUSTER_PD: power-domain-cpu-cluster0 {
+ 	};
 
 -- 
 2.41.0
