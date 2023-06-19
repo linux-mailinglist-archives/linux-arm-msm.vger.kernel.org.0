@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0C52735ECE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 23:06:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAEF5735EF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 23:25:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229547AbjFSVGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 17:06:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46086 "EHLO
+        id S229763AbjFSVZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 17:25:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjFSVGv (ORCPT
+        with ESMTP id S229632AbjFSVZY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 17:06:51 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16C7AC4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:06:50 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f871c93a5fso1926046e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:06:50 -0700 (PDT)
+        Mon, 19 Jun 2023 17:25:24 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9930E5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:25:22 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f8792d2e86so535425e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687208808; x=1689800808;
+        d=linaro.org; s=google; t=1687209921; x=1689801921;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OkVUeJo8DF/DMTbUaoGZepsmdm4n19YNQ9t4FuVsxcw=;
-        b=zOaAVIgkuq0/6D3JXP7gEsmI63RvuSrt/zepsT3o68GPDhzIG1McOEShS0fLGNLzTt
-         6pZF9l+KkRtwOxH42j1TSZEgsF+5sciGwhYhmRK7Jm1fAXXHZj6S5XEuGOAGh7p0xOln
-         sIIDrj9Che3BwomoRiK+nQhUdrfdobPT/tLn1N0/m/vugdqU/YKORnwRVTijpHCzemyq
-         h1gWMVxJL2Oi2eBLvU4iE0bpZL25vYU5DHSaGBULk0D/EinUvlzgcASUJ0GzpvxIQOuG
-         /I0vEvfVaEz0BAQbTElPghEDGicin3j+E6loy1a6YQsKxvhl3eNBhNY1qFp4m9BdahTg
-         Mdwg==
+        bh=exiUNDF+HLAmrnFOJCdCXslDvr1fdVOQP4pLWtKVC4Y=;
+        b=M2yv01uKGXVKwbSTF0Y1mXa5MjewuYlrIAI/9n5uYPuzLGPiKhTOziMwr5XVb8o5k9
+         1dZ0Y2QBA1gR01v1og97H5lim3oKLZkHHoz8lWvIW21aZAufl/TkCeoAr+t2SUJ/tL+a
+         CqItG/9S9fYVah2wN0TsLmlvdhMuNdGfrug/JuvTPTISJ7/ouYbbL10GllpDHWO0JKAQ
+         YlOji7tzp29AofTQps52T5sGFsxibjJVFQoBFcx5kYW+/IvZezSxatAUSl0YDTB3BTQ+
+         1TV9pa/BN+4ioxXNFqYM4HUo3L8LPYanG0Gj4ZGF9r9FyTGFzDAZojD+ecY6gU5DHS6R
+         Cu0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687208808; x=1689800808;
+        d=1e100.net; s=20221208; t=1687209921; x=1689801921;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OkVUeJo8DF/DMTbUaoGZepsmdm4n19YNQ9t4FuVsxcw=;
-        b=IDQwXuVDo1WU7ascKUF58ybWefrnMiuCXNh7MpAq67dUl2vRktxKHZRqXFzkI+epLF
-         Ek3eAQFO3gtIntMFV0Eit49bKdlfEeI5g3U1t1SiWrKpc+gE8wkgKubBq4j17bH5D3Yh
-         HupwN49kowO6Mtlm8c80CJbLfTuzRs3enjjfg2hm/VAH8DkkcRL3asYDNWtBVO9k/4ok
-         Xf+W60OVpmNXiklkbquc18zMiadnOf1PA/Ts6AIJyHizXYMn2QPLZubuC5uC7oKgU4XT
-         HMQOzlCjeanYi4CM8gYqz/8LzHHQrMeJrz8UD8kodYPp646VaS0d6d4rfBq3LaaMO5/b
-         uBwg==
-X-Gm-Message-State: AC+VfDyYwXFFdQkRXPY6kOBWTm/9rh9jTgj/obYEB2+ahIrOkHopPImz
-        pcjhj2A7w2JTXzBOldHJQe372Q==
-X-Google-Smtp-Source: ACHHUZ4SmBnw+CU2EjLU4rEOSyCgwOagG4ydP5o2/Vnk9RVFV6Xhu/FQbT00rWxCSDdG797Z0/T0FA==
-X-Received: by 2002:a19:4f43:0:b0:4f8:6aa4:17ec with SMTP id a3-20020a194f43000000b004f86aa417ecmr2824624lfk.43.1687208808238;
-        Mon, 19 Jun 2023 14:06:48 -0700 (PDT)
+        bh=exiUNDF+HLAmrnFOJCdCXslDvr1fdVOQP4pLWtKVC4Y=;
+        b=EsmDVSGPSCd7dNUuWvO346JOx8O+8PEH07U7L+Qxuz9faztPicH4caKllBLRg/OMwN
+         va41uZkw7dE68vHhh5ieeMlEiTd15TQq9vBipQDAQf4LMcLPBhhbnf0ulT4Jpjeqf97f
+         WDLtguKonXUHcyPiCTqWX4s2nWmB+QvUaUrarVORaTt27dnnEidnWOYFza5UPI77kVBR
+         MlVIxBlcokRrLHlU3Bc8A+hevbnvWr6tifwWjeFwNAasAMwlKlw8zPrUekxGpKG6ByII
+         mCqi9R3UijMwnbr/x2qEcSYneRKz+XY6kmvpOJi+RAghh636BQyXjFwbsEZAC+Ocd+tw
+         tJJA==
+X-Gm-Message-State: AC+VfDxHyfyMh4wxQz/iHqbh/PBvOnmLDWjTRIw0nnfH2FeUTYAq3dGZ
+        DepPUdYOWI7qH/DySgmUUhjGiQ==
+X-Google-Smtp-Source: ACHHUZ6xStTemwjKOPg3BoWhXDlyu//kiuJceBLdouHhOMARUQXFtWJJWfvI6cNaSpIFQ9hleAcRcg==
+X-Received: by 2002:a19:660a:0:b0:4f6:424c:4fa8 with SMTP id a10-20020a19660a000000b004f6424c4fa8mr5679570lfc.17.1687209920828;
+        Mon, 19 Jun 2023 14:25:20 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d17-20020ac25ed1000000b004f86c6573ebsm76072lfq.168.2023.06.19.14.06.47
+        by smtp.gmail.com with ESMTPSA id j12-20020ac253ac000000b004f611dd9935sm84864lfh.152.2023.06.19.14.25.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 14:06:47 -0700 (PDT)
+        Mon, 19 Jun 2023 14:25:20 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,9 +59,9 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2] drm/msm/dsi: Document DSC related pclk_rate and hdisplay calculations
-Date:   Tue, 20 Jun 2023 00:06:47 +0300
-Message-Id: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 00/19] drm/msm/dpu: another catalog rework
+Date:   Tue, 20 Jun 2023 00:25:00 +0300
+Message-Id: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -75,80 +75,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Provide actual documentation for the pclk and hdisplay calculations in
-the case of DSC compression being used.
+Having a macro with 10 arguments doesn't seem like a good idea. It makes
+it inherently harder to compare the actual structure values. Also this
+leads to adding macros covering varieties of the block.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
+As it was previously discussed, inline all foo_BLK macros in order to
+ease performing changes to the catalog data.
+
+Major part of the conversion was performed using vim script found at
+[1]. Then some manual cleanups were applied, like dropping fields set to
+0.
+
+Dependencies: msm-next-lumag.
+
+Changes since v3:
+ - Fixed DSC 1.1 block length to 0x140 (Marijn)
+ - Fixed mdp->caps assignment in dpu_hw_mdptop_init() (Marijn)
+
+Changes since v2:
+ - Rebased on top of msm-next-lumag
+ - Fixed MSM_DP/DSI_CONTROLLER_n usage in sm6350 and sm6375 catalog data
+   (Abhinav, Marijn).
 
 Changes since v1:
-- Converted dsi_adjust_pclk_for_compression() into kerneldoc (Marijn)
-- Added a pointer from dsi_timing_setup() docs to
-  dsi_adjust_pclk_for_compression() (Marijn)
-- Fixed two typo (Marijn)
+ - Rebased on top of msm-next
+ - Dropped dependency on interrupt rework
 
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 40 ++++++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 2 deletions(-)
+[1] https://pastebin.ubuntu.com/p/K6vkjmxZdd/
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 3f6dfb4f9d5a..a8a31c3dd168 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -528,6 +528,25 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
- 	clk_disable_unprepare(msm_host->byte_clk);
- }
- 
-+/**
-+ * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for compression case
-+ * @mode: the selected mode for the DSI output
-+ * @dsc: DRM DSC configuration for this DSI output
-+ *
-+ * Adjust the pclk rate by calculating a new hdisplay proportional to
-+ * the compression ratio such that:
-+ *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
-+ *
-+ * Porches do not need to be adjusted:
-+ * - For the VIDEO mode they are not compressed by DSC and are passed as is.
-+ * - For the CMD mode there are no actual porches. Instead these fields
-+ *   currently represent the overhead to the image data transfer. As such, they
-+ *   are calculated for the final mode parameters (after the compression) and
-+ *   are not to be adjusted too.
-+ *
-+ *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
-+ *  refresh rate and data overhead as a starting point of the calculations.
-+ */
- static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
- 		const struct drm_dsc_config *dsc)
- {
-@@ -926,8 +945,25 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		if (ret)
- 			return;
- 
--		/* Divide the display by 3 but keep back/font porch and
--		 * pulse width same
-+		/*
-+		 * DPU sends 3 bytes per pclk cycle to DSI. If compression is
-+		 * not used, a single pixel is transferred at each pulse, no
-+		 * matter what bpp or pixel format is used. In case of DSC
-+		 * compression this results (due to data alignment
-+		 * requirements) in a transfer of 3 compressed pixel per pclk
-+		 * cycle.
-+		 *
-+		 * If widebus is enabled, bus width is extended to 6 bytes.
-+		 * This way the DPU can transfer 6 compressed pixels with bpp
-+		 * less or equal to 8 or 3 compressed pixels in case bpp is
-+		 * greater than 8.
-+		 *
-+		 * The back/font porch and pulse width are kept intact.  They
-+		 * represent timing parameters rather than actual data
-+		 * transfer. See the documentation of
-+		 * dsi_adjust_pclk_for_compression().
-+		 *
-+		 * XXX: widebus is not supported by the driver (yet).
- 		 */
- 		h_total -= hdisplay;
- 		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+Dmitry Baryshkov (19):
+  drm/msm: enumerate DSI interfaces
+  drm/msm/dpu: always use MSM_DP/DSI_CONTROLLER_n
+  drm/msm/dpu: simplify peer LM handling
+  drm/msm/dpu: drop dpu_mdss_cfg::mdp_count field
+  drm/msm/dpu: drop enum dpu_mdp and MDP_TOP value
+  drm/msm/dpu: expand .clk_ctrls definitions
+  drm/msm/dpu: drop zero features from dpu_mdp_cfg data
+  drm/msm/dpu: drop zero features from dpu_ctl_cfg data
+  drm/msm/dpu: correct indentation for CTL definitions
+  drm/msm/dpu: inline SSPP_BLK macros
+  drm/msm/dpu: inline DSPP_BLK macros
+  drm/msm/dpu: inline LM_BLK macros
+  drm/msm/dpu: inline DSC_BLK and DSC_BLK_1_2 macros
+  drm/msm/dpu: inline MERGE_3D_BLK macros
+  drm/msm/dpu: inline various PP_BLK_* macros
+  drm/msm/dpu: inline WB_BLK macros
+  drm/msm/dpu: inline INTF_BLK and INTF_BLK_DSI_TE macros
+  drm/msm/dpu: drop empty features mask MERGE_3D_SM8150_MASK
+  drm/msm/dpu: drop empty features mask INTF_SDM845_MASK
+
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   | 327 ++++++++----
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    | 348 +++++++++----
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    | 411 ++++++++++-----
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   | 448 +++++++++++-----
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    | 430 +++++++++++-----
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    | 184 +++++--
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  88 +++-
+ .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    | 188 ++++---
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  88 +++-
+ .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |  95 +++-
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    | 418 ++++++++++-----
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    | 244 ++++++---
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  | 484 +++++++++++++-----
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    | 445 +++++++++++-----
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    | 467 ++++++++++++-----
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 130 -----
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   5 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    |  37 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |   9 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  34 +-
+ drivers/gpu/drm/msm/msm_drv.h                 |   8 +-
+ 23 files changed, 3321 insertions(+), 1576 deletions(-)
+
 -- 
 2.39.2
 
