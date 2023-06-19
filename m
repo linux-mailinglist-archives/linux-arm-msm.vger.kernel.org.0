@@ -2,75 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37F55735F12
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 23:25:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9B56735F3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 23:30:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbjFSVZl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 17:25:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50780 "EHLO
+        id S229569AbjFSVac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 17:30:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjFSVZk (ORCPT
+        with ESMTP id S229470AbjFSVab (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 17:25:40 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21721E64
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:25:39 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f87592eccfso1400710e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:25:39 -0700 (PDT)
+        Mon, 19 Jun 2023 17:30:31 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9922FE55
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:30:29 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b466066950so40344171fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:30:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687209937; x=1689801937;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iJAyQYEm7Mb/xAuRWqfTnucOJIbBBF8mYcCHSeOQMIA=;
-        b=SZil/bWzR4jp4hJObngadVPAH1zdkWz/WrvYg9ZJNs8n4ZwVfUXRe9wTpp19aNYb5O
-         b9NOYnc1CmGTsjAJunC2PVnAbasroMUyxdxqqIuaFQ0O/UadBo3n/nSZwgIznZGZHtpp
-         93aqpWe5PNz/MFVPCOqpkkjwr45Ywl0eYwoZr1NK5DaRp8/T3VY5JRJ6HQCrZxpITa4t
-         YH4+MoXcwfTxdsyt3auvYsmkU5oP9TVEKlJOWNIunV3l1cAr2bOSb2m9Liu/HFihLxhU
-         8qFoF++ax1JLDiLXlSs2p8hc3ZqDg5DDGRDKGQzwDHvR1NAVCKksSSoCQ/azaEfxWudM
-         4t1w==
+        d=linaro.org; s=google; t=1687210228; x=1689802228;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q/v4jKV/v/ss0UgkWSkSr35lDQPiYbm4goSyQ755oto=;
+        b=MlAcH3K9STzJq9DVgte/xtOcbBQcaFntPvVsv8v7mJZBV6JWVfXm+zu8RmdPxMlCgO
+         5/7QWYwcn9XuGk+7h6CMH92f/jaAw3AhOxjdro/2OAM9wLRb3nb+LRzWvczRde0xCI7N
+         i+AAQmPlfJyZrur4euTJwHEZKlbHMux1IziygrbWvQW1HZUCrU+wy3xeiqvfSOPr91rj
+         t6YE+jnxKjFoxYIPTC2r4aKboqO0r0/Q5BvsP7jr9hN9jESWQW98uqPBrXtTtv+prAj0
+         UUyspVBdbrJdaGmIcwQo9lH4Ms7ydU5vDzYpzdIAOdAgDr6p5VezbKiArSbV5CBBuw0Z
+         RD0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687209937; x=1689801937;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iJAyQYEm7Mb/xAuRWqfTnucOJIbBBF8mYcCHSeOQMIA=;
-        b=VdgppHhdwogh/f0/ckUdRIocpxXMD9W+p0VbLnv4j0swJNG46H4JfUdVNaBIZxy1uE
-         VNdCOGU2iumneGm9F3d2V5/a8rgbxSLmR/dTGky5ZEE5FTfYeq+uRy6oaCKgONPOWrHg
-         n2TQ/lmAw1G9OrMEZDa2cWWKyWcj9JQCdoGfxzmNsuh+ALMJPUJvgIMSc9TFFXaZUdrO
-         RnK2eQgq4FGeZY9/Y9THNj3co3bGvKEfNpwO0b9CouKLzVCnDINbht2w55gk/EbQACgM
-         6hPV3OP3HK1z5XdmlELK3TgvLUVzowWH3XRAReMKsI7lZh3sZ6uUUmLOKohrWHFQUlfx
-         LU2A==
-X-Gm-Message-State: AC+VfDxocEdpZa54D0NHtL/n5c+9hv4SjoVGqtzitCwpVpW3qUwJwt+6
-        ApendT+kF4AacJSFro4Krh8ACQ==
-X-Google-Smtp-Source: ACHHUZ4To/gVBY47Ed19Ll6nn7R9JUyZMeWamwSgD0j/PI9Q7mp0FiS4WfimOjnFpKwaU5CSwPWMWw==
-X-Received: by 2002:a19:710f:0:b0:4f7:3ee8:eede with SMTP id m15-20020a19710f000000b004f73ee8eedemr6133930lfc.61.1687209937498;
-        Mon, 19 Jun 2023 14:25:37 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j12-20020ac253ac000000b004f611dd9935sm84864lfh.152.2023.06.19.14.25.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 14:25:37 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v4 19/19] drm/msm/dpu: drop empty features mask INTF_SDM845_MASK
-Date:   Tue, 20 Jun 2023 00:25:19 +0300
-Message-Id: <20230619212519.875673-20-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
-References: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1687210228; x=1689802228;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q/v4jKV/v/ss0UgkWSkSr35lDQPiYbm4goSyQ755oto=;
+        b=eTZYlKQAFuS1LZUZJfeIdRLrxKaxstKBs566xsX/1K+tH4jvY8fKphIZ2OQYWUm2jD
+         69EpxhhgQmW1mdk0HWiXW26BlluOF8acKkJg4yl/JeDX+f1FI47oZwgDgvVikUYTJfz3
+         WYkW7omrDSnto0IizQDu4E7AKFvyDjCN+efUYqAYJkFoz4NgLWqKpFFZ+eisZgIeR2/p
+         AJZkycH2/cS/aFpvdkwW20l24JXeRv3Jgcnc2ypQFcr8FOOrpgkV7ucE8zp3rbTkax7G
+         eLv0O0z/Pl7TgyWPPl+lAxTtluCWiXUY9XMYPkYdpkivSNwl+SEX9OuVnextxUkLyhn8
+         2drg==
+X-Gm-Message-State: AC+VfDzKBvpu4AWm5Efv1LiiA2okSRhCRvC38JYqVR1MbPig09KHTgK1
+        RFxT0CmUvqqhM7sh04FEjvRv9g==
+X-Google-Smtp-Source: ACHHUZ4o6dh5B2/cPLw+tC3fwf7EALethpsMM/RIRU+zmsmR1VvQNW66C59wPLdtGAiedCPoLkt0XQ==
+X-Received: by 2002:a2e:9056:0:b0:2b4:76a8:bb97 with SMTP id n22-20020a2e9056000000b002b476a8bb97mr2374523ljg.14.1687210227840;
+        Mon, 19 Jun 2023 14:30:27 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id w16-20020a2e9990000000b002a8ae16ac8csm64180lji.18.2023.06.19.14.30.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jun 2023 14:30:27 -0700 (PDT)
+Message-ID: <bba3c566-5ec3-79ca-96cf-2a7d3133831e@linaro.org>
+Date:   Tue, 20 Jun 2023 00:30:26 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 1/2] drm/msm/dpu: retrieve DSI DSC struct through
+ priv->dsi[0]
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1686694742-20862-1-git-send-email-quic_khsieh@quicinc.com>
+ <1686694742-20862-2-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1686694742-20862-2-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,102 +83,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The INTF_SDM845_MASK features mask is zero. Drop it completely.
+On 14/06/2023 01:19, Kuogee Hsieh wrote:
+> Currently struct drm_dsc_config for DSI is populated at display
+> setup during system boot up. This mechanism works fine with
+> embedded display but not for pluggable displays as the
+> struct drm_dsc_config will become stale once external display
+> is unplugged.
+> 
+> Move storing of DSI DSC struct to atomic_enable() so that same
+> mechanism will work for both embedded display and pluggable
+> displays.
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 42 ++++++++++++++++++++---------
+>   1 file changed, 30 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 2e1873d..e00cd39 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -543,11 +543,24 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
+>   	return (num_dsc > 0) && (num_dsc > intf_count);
+>   }
+>   
+> +static struct drm_dsc_config *dpu_encoder_get_dsc_config(struct drm_encoder *drm_enc)
+> +{
+> +	struct msm_drm_private *priv = drm_enc->dev->dev_private;
+> +	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	int index = dpu_enc->disp_info.h_tile_instance[0];
+> +
+> +        if (dpu_enc->disp_info.intf_type == INTF_DSI)
+> +		return msm_dsi_get_dsc_config(priv->dsi[index]);
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          | 2 --
- 3 files changed, 10 deletions(-)
+Wrong indentation.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index 4ce25ed4e36f..7d87dc2d7b1b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -244,7 +244,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
- 		.base = 0x6a000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -254,7 +253,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -264,7 +262,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -274,7 +271,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x6b800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_HDMI,
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index 5ad82b109ebb..66e3573eb613 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -260,7 +260,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
- 		.base = 0x6a000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -270,7 +269,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -280,7 +278,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	}, {
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -290,7 +287,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x6b800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 4a18fc66a412..3efa22429e5f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -95,8 +95,6 @@
- 
- #define DSPP_SC7180_MASK BIT(DPU_DSPP_PCC)
- 
--#define INTF_SDM845_MASK (0)
--
- #define INTF_SC7180_MASK \
- 	(BIT(DPU_INTF_INPUT_CTRL) | \
- 	 BIT(DPU_INTF_TE) | \
+> +
+> +	return NULL;
+> +}
+> +				
+
+A string of 4 tabs causes checkpatch.pl to report an error.
+
+>   static struct msm_display_topology dpu_encoder_get_topology(
+>   			struct dpu_encoder_virt *dpu_enc,
+>   			struct dpu_kms *dpu_kms,
+>   			struct drm_display_mode *mode,
+> -			struct drm_crtc_state *crtc_state)
+> +			struct drm_crtc_state *crtc_state,
+> +			struct drm_dsc_config *dsc)
+>   {
+>   	struct msm_display_topology topology = {0};
+>   	int i, intf_count = 0;
+> @@ -579,7 +592,7 @@ static struct msm_display_topology dpu_encoder_get_topology(
+>   
+>   	topology.num_intf = intf_count;
+>   
+> -	if (dpu_enc->dsc) {
+> +	if (dsc) {
+>   		/*
+>   		 * In case of Display Stream Compression (DSC), we would use
+>   		 * 2 DSC encoders, 2 layer mixers and 1 interface
+> @@ -605,6 +618,7 @@ static int dpu_encoder_virt_atomic_check(
+>   	struct drm_display_mode *adj_mode;
+>   	struct msm_display_topology topology;
+>   	struct dpu_global_state *global_state;
+> +	struct drm_dsc_config *dsc;
+>   	int i = 0;
+>   	int ret = 0;
+>   
+> @@ -640,7 +654,9 @@ static int dpu_encoder_virt_atomic_check(
+>   		}
+>   	}
+>   
+> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
+> +	dsc = dpu_encoder_get_dsc_config(drm_enc);
+> +
+> +	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state, dsc);
+>   
+>   	/*
+>   	 * Release and Allocate resources on every modeset
+> @@ -1072,14 +1088,12 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>   		dpu_enc->hw_pp[i] = i < num_pp ? to_dpu_hw_pingpong(hw_pp[i])
+>   						: NULL;
+>   
+> -	if (dpu_enc->dsc) {
+> -		num_dsc = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> -							drm_enc->base.id, DPU_HW_BLK_DSC,
+> -							hw_dsc, ARRAY_SIZE(hw_dsc));
+> -		for (i = 0; i < num_dsc; i++) {
+> -			dpu_enc->hw_dsc[i] = to_dpu_hw_dsc(hw_dsc[i]);
+> -			dsc_mask |= BIT(dpu_enc->hw_dsc[i]->idx - DSC_0);
+> -		}
+> +	num_dsc = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> +						drm_enc->base.id, DPU_HW_BLK_DSC,
+> +						hw_dsc, ARRAY_SIZE(hw_dsc));
+> +	for (i = 0; i < num_dsc; i++) {
+> +		dpu_enc->hw_dsc[i] = to_dpu_hw_dsc(hw_dsc[i]);
+> +		dsc_mask |= BIT(dpu_enc->hw_dsc[i]->idx - DSC_0);
+>   	}
+>   
+>   	dpu_enc->dsc_mask = dsc_mask;
+> @@ -1187,6 +1201,8 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
+>   
+>   	dpu_enc = to_dpu_encoder_virt(drm_enc);
+>   
+> +	dpu_enc->dsc = dpu_encoder_get_dsc_config(drm_enc);
+> +
+>   	mutex_lock(&dpu_enc->enc_lock);
+>   	cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
+>   
+> @@ -2109,8 +2125,10 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+>   					phys_enc->hw_pp->merge_3d->idx);
+>   	}
+>   
+> -	if (dpu_enc->dsc)
+> +	if (dpu_enc->dsc) {
+>   		dpu_encoder_unprep_dsc(dpu_enc);
+> +		dpu_enc->dsc = NULL;
+> +	}
+>   
+>   	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
+>   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
