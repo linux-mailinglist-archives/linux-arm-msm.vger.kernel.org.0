@@ -2,95 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F97B735F48
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 23:39:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88994735F51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 23:42:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbjFSVjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 17:39:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53580 "EHLO
+        id S229554AbjFSVmy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 17:42:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjFSVjC (ORCPT
+        with ESMTP id S229489AbjFSVmy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 17:39:02 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03ED11AC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:39:01 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b474dac685so25726141fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 14:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687210739; x=1689802739;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NJqgFyZORxKSRICxsmBFhPlaldFyLWkexWK7bDGxjGc=;
-        b=RPfDbbXupqzacz7KmZUEQIISSc1lhv+2xRsN7vCGYpBl6AXY9CbUmlVWhZ98RO3D42
-         nVQ8K02IklHfRbbOREnhR5b8ttJtfv5xqS3zYzOKuo76kZCzNQQqoqeAO4AUV2DFuUzG
-         DniqlfoxeWNQlHekVLs0UT9jbTxhIjD2aUk0Esm/2CsTRRKhZ0pD10m8d1ZG6AyGuYws
-         YwK9aOTmhf+qQCZ6mDc8Dxyb5p3EEvQ6npsQ7e/ZtvUyZU2WEN8z+0PBX6gwIWBQi0qW
-         fSyQdThWVI6RDHslTDs5eRZQoUcmG9jTevSVKtBGTZHvByvIDf6E+fV2/YAWve5/wkkh
-         KfVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687210739; x=1689802739;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NJqgFyZORxKSRICxsmBFhPlaldFyLWkexWK7bDGxjGc=;
-        b=hvS/7bLvtuRKv6pfwiU72pHOCoV5xAWavFwaf9IMkTZmQLDVNYxCAEJbHlP7VgX+lR
-         ToaRjszlwpyOHFDUgJYhYeRAucmvbX+G3vsG45D3LH7bLvt4+EauS3cJhv0He3OnJX4a
-         Y1sQJNRwDszt76tj9SbPrpWfc/pDWH9znm2Ped8aPrpqAkl/RZwD7qI6Zj2h6hSM/tpY
-         kTY2KSinRI/6UK5o7sELiGSjgCajuZgVpqYycSLA2SdG/3kMMZJBgGNtvVCSK4ownvTV
-         KxnT1o8RdkRiW8U9RaPZN2SZcEHZHZTRWvScy1t8h3uzDSUaXSK269eLYY0P0ImK1/aP
-         hP/A==
-X-Gm-Message-State: AC+VfDziXnkPj7Ornl1TT1AcLPEr6BAvoVIojrYcpSkfulmNaLR7yQNT
-        RoJxkIJHbKBv4V0YHN4rb6q9zA==
-X-Google-Smtp-Source: ACHHUZ7mho7mHSB6JCzN3pI1HKBCa5gj+wq/4VTVHdrMTAaqPwUmQrdQYLCZ6sPJApcpZkejhtLHCA==
-X-Received: by 2002:a2e:9189:0:b0:2b4:75b7:edda with SMTP id f9-20020a2e9189000000b002b475b7eddamr2530334ljg.24.1687210739281;
-        Mon, 19 Jun 2023 14:38:59 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id e22-20020a2e8ed6000000b002adc2fe3fc8sm66717ljl.4.2023.06.19.14.38.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jun 2023 14:38:58 -0700 (PDT)
-Message-ID: <c25ba108-1363-9c6f-3d02-2524ede7484e@linaro.org>
-Date:   Tue, 20 Jun 2023 00:38:57 +0300
+        Mon, 19 Jun 2023 17:42:54 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79DD1A4;
+        Mon, 19 Jun 2023 14:42:52 -0700 (PDT)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 0D633C6A1D;
+        Mon, 19 Jun 2023 21:42:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1687210970; bh=3hu0soY9YtA7km69BMGRI2IE7KVXxSt8iu2LEiYvoTA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=Gj7U3cG7k9Fcgl3XhebpEAHFAeaw+vYZ66Dee3gcqkpFUXkk/g74PzshA4fdQRSMU
+         Jk1ttgNaUr373W5d97uOZR/xijnmYXFXOFTu/ICjg3D2yKZv16tYsU/abh+cYDZEoD
+         g0dv8uA7CrBf5x/l07LEpyxgEm6mKc446uPHUMMU=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     agross@kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
+        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        marijn.suijten@somainline.org, kernel@collabora.com,
+        a39.skl@gmail.com, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
+Subject: Re: [PATCH v3 0/6] Add support for Qualcomm's legacy IOMMU v2
+Date:   Mon, 19 Jun 2023 23:42:49 +0200
+Message-ID: <2759637.mvXUDI8C0e@z3ntu.xyz>
+In-Reply-To: <254cfbb5-c8b8-0abc-e6bc-5007fe757004@collabora.com>
+References: <20221115101122.155440-1-angelogioacchino.delregno@collabora.com>
+ <254cfbb5-c8b8-0abc-e6bc-5007fe757004@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm: Fix typo in comment
-Content-Language: en-GB
-To:     zhumao001@208suo.com, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, airlied@gmail.com, daniel@ffwll.ch,
-        sumit.semwal@linaro.org, christian.koenig@amd.com, sean@poorly.run
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org
-References: <20230618143813.15142-1-dengshaomin@cdjrlc.com>
- <20230618143813.15142-4-dengshaomin@cdjrlc.com>
- <610b47a2989976b9dae162ecc55ddc85@208suo.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <610b47a2989976b9dae162ecc55ddc85@208suo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/06/2023 17:54, zhumao001@208suo.com wrote:
-> Fix typo in comment of msm_gem.c.
+On Mittwoch, 22. Februar 2023 10:57:47 CEST AngeloGioacchino Del Regno wrote:
+> Il 15/11/22 11:11, AngeloGioacchino Del Regno ha scritto:
+> > This series adds support for handling "v2" firmware's IOMMU, found
+> > on at least MSM8956 and MSM8976 (some other SoCs also need the same
+> > but I honestly don't remember which ones precisely).
+> > 
+> > This is strictly required to get functional IOMMUs on these SoCs.
+> > 
+> > I'm sorry for not performing a much needed schema conversion on
+> > qcom,iommu.txt, but I really didn't have time to do that :-(
+> > 
+> > This series was tested on Sony Xperia X and X Compact (MSM8956):
+> > ADSP, LPASS, Venus, MSS, MDP and GPU are happy :-)
 > 
-> Signed-off-by: Zhu Mao <zhumao001@208suo.com>
-> ---
->   drivers/gpu/drm/msm/msm_gem.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Hello,
+> this series is really old and got sent and resent many times.
+> The first time I've sent this one was .. I think in 2019, then, at the
+> end of 2022, I had some time to actually respin it and send another
+> three versions. It's been 3 long years :-)
+> The third version got the last comments addressed.
+> 
+> Since this didn't get any more feedback for 3 months, I'm worried that it
+> will be forgotten again, hence:
+> 
+> Is there any more feedback? Anything else to fix?
+> If not, can this be picked, please?
 
-This patch doesn't apply. Please use git send-email to send patches.
+Hi Angelo,
 
--- 
-With best wishes
-Dmitry
+there's some open review comments since March now on this series. Since some 
+of these patches are also needed for msm8953 and msm8974 IOMMU it would be 
+nice if you could respin :)
+
+Regards
+Luca
+
+> 
+> Thank you.
+> 
+> Best regards,
+> Angelo
+> 
+> > Changes in v3:
+> >   - Removed useless FSRRESTORE reset and definition as pointed
+> >   
+> >     out in Robin Murphy's review
+> >   
+> >   - Fixed qcom,iommu.txt changes: squashed MSM8976 compatible
+> >   
+> >     string addition with msm-iommu-v2 generics addition
+> > 
+> > Changes in v2:
+> >   - Added back Marijn's notes (sorry man!)
+> >   - Added ARM_SMMU_CB_FSRRESTORE definition
+> >   - Changed context bank reset to properly set FSR and FSRRESTORE
+> > 
+> > AngeloGioacchino Del Regno (6):
+> >    dt-bindings: iommu: qcom,iommu: Document qcom,ctx-num property
+> >    iommu/qcom: Use the asid read from device-tree if specified
+> >    iommu/qcom: Properly reset the IOMMU context
+> >    iommu/qcom: Index contexts by asid number to allow asid 0
+> >    dt-bindings: iommu: qcom,iommu: Document QSMMUv2 and MSM8976
+> >    
+> >      compatibles
+> >    
+> >    iommu/qcom: Add support for QSMMUv2 and QSMMU-500 secured contexts
+> >   
+> >   .../devicetree/bindings/iommu/qcom,iommu.txt  |  9 +++
+> >   drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 78 +++++++++++++++----
+> >   2 files changed, 70 insertions(+), 17 deletions(-)
+
+
+
 
