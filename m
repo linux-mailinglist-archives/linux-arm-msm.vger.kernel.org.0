@@ -2,251 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19E10735E95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 22:38:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAD3A735EC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 22:57:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjFSUiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 16:38:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39288 "EHLO
+        id S229473AbjFSU53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 16:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjFSUiT (ORCPT
+        with ESMTP id S229448AbjFSU52 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 16:38:19 -0400
-Received: from sonic312-26.consmr.mail.ir2.yahoo.com (sonic312-26.consmr.mail.ir2.yahoo.com [77.238.178.97])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A14E63
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 13:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1687207095; bh=FLcBbpnv0153QnbGpmedSSyW79E6oM8A7Pdaxys+PpA=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=Re7BB47B1pAVF1UFcS4WmfwGWeJBQRejgu6LSR9guwoO4EudRqMyNYyTOxDb/WdJeJGHZBGEiBBTYvxACxXagoBekVV0CfvMDuH5WOM9TtGLoDQIgQ8vyzIVzuIf2R+/3BtRy/8lVH14VfDNkhLyyukT8IdEDfm/wO+X9TbZrasCXrdkJg0f9tUGf9zEy4GhJnpUByQLcTQJ+ExK2DAqoHv3iqYuYe0Rj5geiRRBOlEmjVVCeB0/my8uBZrDQWBdIS0TQTl1Szoz8H80xKYjwEvzKCcEfbr2AE6NgEmB8t43wkY4WP7ISRSx/qF2mzjaMqgNHtapM5+vDaBxunavFQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1687207095; bh=F1vhItBNgkCiUH2/rOdOZECKFsK1CinDzNu92CWu2ZU=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=qX8kJhsDZiqeRzm+aacTxpBkfuwW/Vddu7Kn4Y39kKnB8KKbTaNMNL2OpPsSnQpGiRYzTrlFk9H9XmsXuWDFpy1s+quF0onnCcams3Q9EHndbCEjs4jO55r35MUUNu2oRgzSmlgzHpq+iIjiA7+j4azmYmUJz1+Rf1KzqL2TUpcFFznGdyFQ9XFAzNrhB8r+Q3b4T65A3oU175uUkljgw/oPwvgoQXEmoDxwN81NiwYXRcE63R9bkBOula/BSFMqDPl8FFivgfU1oUlNpo44ZYW5JVJfGMy4CIpo5d3LjLUyPfKp3OCcjc0Ar7hJbe7E3sYI73GL83PePU+HIdZpUw==
-X-YMail-OSG: sYd2DjEVM1ngnvrXRC68RMrKkNJsvc3sAkND7CqBEBYH1zhCLGe8N3PSLft7tJ5
- lYh8KqcPXW0vfnnk9.HQqS17X_2DIEK5xUv_tAHjhItxHtzGAUPqfWH5XMZ02PDR3678l8CuHhKs
- drrcmGphcnmEYdbztGC4iqPf1x2zsBLhWXa13RbLwEJTgOxO0mWI3LL_ul7RSdA6O8NP5Ms6eUt5
- ay_B8IXGYnpcK1_Wqod4.Lk0jVT5opMe6mcem6eQCKglGt0b6Sz3wv2MkAOf_4_TMeAAUW8d4QsF
- r2Kw1cRlXzdDeSMCltkunc1sfwYe6dJ0hE840M9d.buf54JfHSK.2d9FKOrlmL548cDZg1zIKf7Q
- 9oRJfIZJo14KpdHRRfo3Z94FiRwPclm0HYBu3R3Ic2SkzdIk.FVzoB6dN.xAD7BM777FWGyiXzRY
- uMNRkY8y2yTPikXIEpvHRr_f7aeg8hhb1BsQgxLPnG1.UTUBaShvKPAGBZ6Imt_COUqz.eMsPesr
- mtOK4xfMP_0GMHwH5X6GSyVBLaEFVVRTaq3bRZlVXh6BkG4yw.yAFl7UFbY7R0sBIgUjRFCdpf3C
- CD0pP74xldhsftl7txXymwaWJvUd9XcokqyzkzQPS4ogSfpU9J29tDcPIYXsKiQ2zQmtR_A9XLGy
- j5TypJmmABPmb3hV7hZaGDhmOfwjvuisPB5HHsm.AlhWyWSxwZAGdGLzJQkOpflN6i6iRCuSM3y5
- E3PB_NQ6S46XKzZTH8tD_GRjY.ni3NAsB0kxdccx06dGkWDPCK.x0fZNIXPLLoWkWXt27uvb5KZB
- R6gllhb78Q75ZrTdeYTnSyTTtx26G6XP3TZRRZxy71T__xhAhNrTjA8Dx03NkwVLYCRzUDWssv.E
- rUyeZ5ZcnP4xmC9UDZZpFviT1EmLNc0NGIf3XNqaojT_UnGJ3wmGFRifdQykvQPr2cTCPcsCgBgF
- TG_rHG1Lr7VLKyieuy_aNkScCbJ9rr.o2IWZu4bRLpDjWbh1wNDeN6QrKQEky.T1zJlsr9srk_Yc
- Ek38qraJ_lXicEE_0jPw2R5DTpA19hAeeVUEtRjaPLWz8.S3fF7eJ0ASdIBCsJ3qlBKMEEZhlxwn
- 1ogur3JFQQzhOHOoH7Oc3ZFzGoTFtWJyqcNR6hqNjq.RL1uTqRLlzWcGNPIcXj.5ZuN0pPxAWKRA
- tsmR1fEkSM9lPo4zabV5tvGJIXw5NOr8LnQSuZQgbk1b_tp4j_CQ8t47_.4qsKbeeL4caDpG53l7
- _7mxxZ.4fen789179G4GSOoQgeH9dS6u.nwuYEAW7OWfhgnL9fNobYb9TdbhL4LnznYW.4d1qPWd
- fgMI8F0ifScEkx4H1K8v0RbIl1Ti6G9paT8absie9CGYvmk0TacVeucrWwku.OBZOqd5hr0SZjan
- JUwJzdWDtQNvG3chxnjQpkXZ0yX411duLoedSYIRFEvYUH8_R_up2EJhx8p7D_QHCVTiFTDpRloL
- sUaxf_mChkzUdH23Tos_tz5fPC9UWbcrS5aQExx59oC220_d8T5rjWCDY2siTtlFP4Mc3i4Qqnrl
- sfHXZj3.QdIptGjU8CYbFGj.aFlBxwvxZTwjeL8dw3wXB7MTA0Jpo7i6nCuXVoJJS.sTiQgcL33y
- pYHmO_LDb3F.2O.8X_aIJnaOfaHuU2EwfpfMYLcOal5yZiZemyqZHWgjWRZqJktLeejMgwPOaxsm
- 1.V.jbAMu0D8.rR9p0043bMin5ZFCTLxXc9O3gVSjm4mamAM.FEgV2tDCiAlHwjHnINoFh0R.IRv
- cBRV3dFmqqqp.G.cHslsZuneqVjIzPsDpM.4kAVA_mY96IglrSpz1YPoDdLqHfLlpYUmhZqsxNa1
- 7ws_OrhTngY_mK7l4mLUNexixAL.qSJzxRakQaP97dH0Wm0pQac95IcbGVdA67sDJU8MvmYOwkA0
- 0u7oTdEVNTs2Y1eADVs8hbPYT3LB_H3kdT6foNTKFL062SFQyFFMXtY9dIFO9y2C6D6y1FcSh5AS
- 28hxcY_WedbRJx5emNjRIKzT1JG115aLc.GQgwzN0_l9aEVS7FuplrtNvzlb7jvpsdMYCIBoeBXk
- siwZ4lduQowlwcWFaEMKU6UE9sdrtUzhUnOkaX2Kaw35OPwyQbzrtuD96KW8pn8zkHyETt9CovFc
- Lmyd_CrnVvot.9plme9TP7qbjRThRNHBiE6WnIuTrKHf2s4c06Mw.MFVFZk_kkV4F9eDFBRKkMcq
- OLcfk8xDIgfyJHkWVQXvBfIudawSU7EDdWAzc2I2uryAZMQ.BRI1bTet5Mzx7dEBukNPY3ojQ4la
- MXbMhJQlXYnu.pDdWkzSmW2R3l0X8ifzLvb87A3s-
-X-Sonic-MF: <jahau@rocketmail.com>
-X-Sonic-ID: 25f0eead-2110-4286-a647-62625e7b1c2f
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic312.consmr.mail.ir2.yahoo.com with HTTP; Mon, 19 Jun 2023 20:38:15 +0000
-Received: by hermes--production-ir2-7867f454fc-mmctx (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 1045102266187eb9e3901f7e3860658d;
-          Mon, 19 Jun 2023 20:38:12 +0000 (UTC)
-From:   Jakob Hauser <jahau@rocketmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Raymond Hackley <raymondhackley@protonmail.com>,
-        Henrik Grimler <henrik@grimler.se>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Jakob Hauser <jahau@rocketmail.com>
-Subject: [PATCH v2] arm64: dts: qcom: msm8916-samsung-serranove: Add RT5033 PMIC with charger
-Date:   Mon, 19 Jun 2023 22:37:43 +0200
-Message-Id: <20230619203743.8136-1-jahau@rocketmail.com>
-X-Mailer: git-send-email 2.39.2
+        Mon, 19 Jun 2023 16:57:28 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C359EE4D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 13:57:26 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f86d8a8fd4so2455681e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 13:57:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687208245; x=1689800245;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DdgLBE7ortnikmhoP1Yw2NLv7TWW6NRWleDmf5QpKEo=;
+        b=M8WHDSQRj8BMjGsZ0EpBTXSR8iWAXp+0iL/4cqDrTB5spLjhzBAFmtxNY6YkZKMG6G
+         qbBMU1W666e1xlWMLOiYCHsMw0PDh5laDHWITK0PiSNzYCxP9HhY7WwIHoQ5880U16op
+         RKuyzAstn9EHoL5l+0rZtJrVr0OKBZwEGd1enLg9sO4eyGc6HQfs8eOSY6Ub0Wykbt+V
+         yp/ZjxA+DNuxHEGwZl09HaLVdbP583jnbkdPGu81sTRbSqH+Yua+Lapqy7MU6E4KQ8fn
+         Wvtumccy4Ub8lPFZjxQ9nvFt363PLPYylPBjkz0is3C0rW278fMQluRFanTWr72dg7Ds
+         noog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687208245; x=1689800245;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DdgLBE7ortnikmhoP1Yw2NLv7TWW6NRWleDmf5QpKEo=;
+        b=B3CU+Nu5FN2d+hFndLcAU8t53PgTPATruBJJt15L1oRHNLWQmHSu39ZPuMWynfFBT0
+         WqWBfC4rqsO30c4HaM661mMOdPuFZxRC255/xEGmm0ejjFVB9y8J5KTNAtUV6zEnKPYn
+         ECysNgff9gFK24y7j5N6AjtEvt077+y5NzgRmhTRl4ve3d5lW7zu3u+O8ZI7ZmhGMZLf
+         ezPNESP6INHwu+Kk83OJbdefZPTcn1x9XnM/WheMVUcLKmnZZgAkUoSpnAcyuyItCHdt
+         8JkcYotv6x5AoroZB7WiJsCXnDnWqlBs9dGtizCJx73YK1yOTrmN6Ni+OTbGeucWQDho
+         7gAw==
+X-Gm-Message-State: AC+VfDyj1OIOSbwAp6hczxIU7wvYtZrZ3rrds8/6iCzSCt5DsYWCdsAj
+        UM6dDuoZyButwOcmTqEVeSL7ng==
+X-Google-Smtp-Source: ACHHUZ4Zk55ODVpUx1QnaQ5Rr+X6R+tCa0odArHwPhMZ9ilpWM+NeG7YePDIF7QbTi7AU8heat1PKg==
+X-Received: by 2002:a2e:9050:0:b0:2b3:31c1:c747 with SMTP id n16-20020a2e9050000000b002b331c1c747mr6458810ljg.24.1687208244935;
+        Mon, 19 Jun 2023 13:57:24 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id i22-20020a2e8096000000b002b21089f747sm50130ljg.89.2023.06.19.13.57.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jun 2023 13:57:23 -0700 (PDT)
+Message-ID: <677b74dc-e0f5-22e9-2b21-a7272c661b6e@linaro.org>
+Date:   Mon, 19 Jun 2023 23:57:22 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-References: <20230619203743.8136-1-jahau.ref@rocketmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dsi: Document DSC related pclk_rate and hdisplay
+ calculations
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230616094152.495723-1-dmitry.baryshkov@linaro.org>
+ <h2u5wsfbfpz7qivmxl3t37xen452zxt76uheonkwcihytfmb3l@axiy5bmwf4ma>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <h2u5wsfbfpz7qivmxl3t37xen452zxt76uheonkwcihytfmb3l@axiy5bmwf4ma>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For the regulators, apply the same settings as in the downstream
-devicetree [1], including the "regulator-always-on" for the SAFE_LDO.
-For the voltage of SAFE_LDO, however, there is only one voltage of 4.9 V
-available in the mainline driver [2][3].
+On 16/06/2023 15:25, Marijn Suijten wrote:
+> On 2023-06-16 12:41:52, Dmitry Baryshkov wrote:
+>> Provide actual documentation for the pclk and hdisplay calculations in
+>> the case of DSC compression being used.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 35 ++++++++++++++++++++++++++++--
+>>   1 file changed, 33 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 3f6dfb4f9d5a..72c377c9c7be 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -528,6 +528,21 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
+>>   	clk_disable_unprepare(msm_host->byte_clk);
+>>   }
+>>   
+>> +/*
+>> + * Adjust the pclk rate by calculating a new hdisplay proportional to
+> 
+> Make this a kerneldoc with:
 
-The values of the battery data evolve from following sources:
-- precharge current: 450 mA corresponds to the default value of the chip. It
-  doesn't get changed by the downstream Android driver. Therefore let's stick
-  to this value.
-- constant charge current: The 1000 mA are taken from the downstream devicetree
-  of the serranove battery. It's not easy to spot. The value is in the line
-  "input_current_limit" [4]. The rows are according to the power supply type,
-  the 4th value stands for "main supply" [5]. That's the value used by the
-  Android driver when a charging cable is plugged into the device.
-- charge termination current: In the downstream devicetree of the battery
-  that's the line "full_check_current_1st", which contains the 150 mA [6].
-- precharge voltage: This one doesn't get set in the downstream Android driver.
-  The chip's default is 2.8 V. That seemed too low to have a notable effect of
-  handling the battery gentle. The chosen value of 3.5 V is a bit arbitrary
-  and possibly rather high. As the device is already several years old and
-  therefore most batteries too, a value on the safe side seems reasonable.
-- constant charge voltage: The value of 4.35 V is set in the line
-  "chg_float_voltage" of the downstream battery devicetree [7].
+Ack
 
-The "connector" sub-node in the extcon node, the "battery" node in the
-general section and the line "power-supplies" in the fuel-gauge node result
-from the way of implementation documented in the dt-bindings of
-rt5033-charger [8] and mfd rt5033 [9].
+> 
+>      /**
+>       * dsi_adjust_pclk_for_compression() - Adjust ...
+> 
+>> + * the compression ratio such that:
+>> + *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
+>> + *
+>> + * Porches do not need to be adjusted:
+>> + * - For the VIDEO mode they are not compressed by DSC and are passed as is.
+> 
+> as-is
 
-[1] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-eur-r03.dtsi#L135-L181
-[2] https://github.com/torvalds/linux/blob/v6.3/include/linux/mfd/rt5033-private.h#L211-L212
-[3] https://github.com/torvalds/linux/blob/v6.3/drivers/regulator/rt5033-regulator.c#L83
-[4] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L100
-[5] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/include/linux/power_supply.h#L173-L177
-[6] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L102
-[7] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L95
-[8] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/power/supply/richtek,rt5033-charger.yaml?h=next-20230616
-[9] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/mfd/richtek,rt5033.yaml?h=next-20230616
+Cambridge dictionary gives this "as is", without dash.
 
-Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
----
-The patch is based on linux-next "next-20230616".
+> 
+> Though this was never tested nor confirmed by QUIC, but we can assume it
+> is the case for now?
+> 
+>> + * - For the CMD mode the are no actual porches. Instead they represent the
+> 
+> the are no -> these are not
+> 
+> they currently* represent.  
 
-The driver rt5033-charger was just recently added to linux-next.
+Ack
 
-Changes in v2:
- - Removed "regulator-name"s and changed regulator phandle labels as
-   suggested by Stephan.
+> Let's make sure that folks read the FIXME
+> below by perhaps rewording it right into this entry?
 
-v1: https://lore.kernel.org/linux-arm-msm/20230617002934.39408-1-jahau@rocketmail.com/T/#t
+I kept it separately, so that the FIXME can be removed once CMD handling 
+is reworked.
 
- .../dts/qcom/msm8916-samsung-serranove.dts    | 64 ++++++++++++++++++-
- 1 file changed, 63 insertions(+), 1 deletion(-)
+> 
+>> + *   overhead to the image data transfer. As such, they are calculated for the
+>> + *   final mode parameters (after the compression) and are not to be adjusted
+>> + *   too.
+>> + *
+>> + *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
+>> + *  refresh rate and data overhead as a starting point of the calculations.
+>> + */
+>>   static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
+>>   		const struct drm_dsc_config *dsc)
+>>   {
+>> @@ -926,8 +941,24 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>>   		if (ret)
+>>   			return;
+>>   
+>> -		/* Divide the display by 3 but keep back/font porch and
+>> -		 * pulse width same
+>> +		/*
+>> +		 * DPU sends 3 bytes per pclk cycle to DSI. If compression is
+>> +		 * not used, a single pixel is transferred at each pulse, no
+>> +		 * matter what bpp or pixel format is used. In case of DSC
+>> +		 * compression this results (due to data alignment
+>> +		 * requirements) in a transfer of 3 compressed pixel per pclk
+> 
+> 3 compressed bytes*, not pixels.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-index 15dc246e84e2..cbda25f2ad19 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-@@ -142,6 +142,12 @@ muic: extcon@14 {
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&muic_irq_default>;
-+
-+			usb_con: connector {
-+				compatible = "usb-b-connector";
-+				label = "micro-USB";
-+				type = "micro";
-+			};
- 		};
- 	};
- 
-@@ -199,6 +205,15 @@ nfc@2b {
- 			pinctrl-0 = <&nfc_default>;
- 		};
- 	};
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+		precharge-current-microamp = <450000>;
-+		constant-charge-current-max-microamp = <1000000>;
-+		charge-term-current-microamp = <150000>;
-+		precharge-upper-limit-microvolt = <3500000>;
-+		constant-charge-voltage-max-microvolt = <4350000>;
-+	};
- };
- 
- &blsp_i2c2 {
-@@ -228,7 +243,7 @@ magnetometer@2e {
- &blsp_i2c4 {
- 	status = "okay";
- 
--	battery@35 {
-+	fuel-gauge@35 {
- 		compatible = "richtek,rt5033-battery";
- 		reg = <0x35>;
- 
-@@ -237,6 +252,8 @@ battery@35 {
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&fg_alert_default>;
-+
-+		power-supplies = <&rt5033_charger>;
- 	};
- };
- 
-@@ -261,6 +278,43 @@ touchscreen@20 {
- 	};
- };
- 
-+&blsp_i2c6 {
-+	status = "okay";
-+
-+	pmic@34 {
-+		compatible = "richtek,rt5033";
-+		reg = <0x34>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <62 IRQ_TYPE_EDGE_FALLING>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&pmic_int_default>;
-+
-+		regulators {
-+			rt5033_reg_safe_ldo: SAFE_LDO {
-+				regulator-min-microvolt = <4900000>;
-+				regulator-max-microvolt = <4900000>;
-+				regulator-always-on;
-+			};
-+			rt5033_reg_ldo: LDO {
-+				regulator-min-microvolt = <2800000>;
-+				regulator-max-microvolt = <2800000>;
-+			};
-+			rt5033_reg_buck: BUCK {
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <1200000>;
-+			};
-+		};
-+
-+		rt5033_charger: charger {
-+			compatible = "richtek,rt5033-charger";
-+			monitored-battery = <&battery>;
-+			richtek,usb-connector = <&usb_con>;
-+		};
-+	};
-+};
-+
- &blsp_uart2 {
- 	status = "okay";
- };
-@@ -387,6 +441,14 @@ nfc_i2c_default: nfc-i2c-default-state {
- 		bias-disable;
- 	};
- 
-+	pmic_int_default: pmic-int-default-state {
-+		pins = "gpio62";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	tkey_default: tkey-default-state {
- 		pins = "gpio98";
- 		function = "gpio";
+No, that's the point. With 6bpp one can think that 4 pixels would fit, 
+but they don't.
+
+> 
+>> +		 * cycle.
+>> +		 *
+>> +		 * If widebus is enabled, bus width is extended to 6 bytes.
+>> +		 * This way the DPU can transfer 6 compressed pixels with bpp
+> 
+> pixels -> bytes?
+
+Same comment, no.
+
+> 
+>> +		 * less or equal to 8 or 3 compressed pyxels in case bpp is
+> 
+> pixels*... bytes?
+> 
+> And I will ask this **again**: does this mean we can halve pclk?
+
+My guess would be no, since all other data transfers are not scaled by 
+wide bus.
+
+> 
+>> +		 * greater than 8.
+>> +		 *
+>> +		 * The back/font porch and pulse width are kept intact.  They
+>> +		 * represent timing parameters rather than actual data
+>> +		 * transfer.
+> 
+> See FIXME above on dsi_adjust_pclk_for_compression()?
+> 
+> Thanks so much for finally putting some of this to paper.
+> 
+> - Marijn
+> 
+>> +		 *
+>> +		 * XXX: widebus is not supported by the driver (yet).
+>>   		 */
+>>   		h_total -= hdisplay;
+>>   		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+>> -- 
+>> 2.39.2
+>>
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
