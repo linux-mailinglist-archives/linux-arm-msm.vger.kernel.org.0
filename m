@@ -2,122 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8604E734ED7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 10:57:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42BC7734F58
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 11:14:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230208AbjFSI47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 04:56:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58074 "EHLO
+        id S229807AbjFSJO2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 05:14:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231293AbjFSI4k (ORCPT
+        with ESMTP id S231332AbjFSJOL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 04:56:40 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DB5A1BE3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:55:42 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f90a7325f6so18202245e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 01:55:42 -0700 (PDT)
+        Mon, 19 Jun 2023 05:14:11 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653B11A4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 02:13:42 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f849a0e371so3925229e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 02:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687164940; x=1689756940;
-        h=content-transfer-encoding:in-reply-to:organization:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ab/uccW/SU2clnL7XMqPxhlr/0i0qnP9OFatwF2duQQ=;
-        b=nqsqLIrl8CSWESdnM/quQtpg3UjEW8V+yoGzWVrPNz/PiWRb+MroGyVsGbF10zdEUU
-         58FSXMD99ATdJ8ateeOoXxrIfi9cvveOu1lIEhh18V2RaUZzOFBQw15CrQFwOWdL93ba
-         rGMLKFB21ikTmbIl0F8mzpPNwzD2eQrT+uxFl+1RomQf8WYCyID+BJfk8VdBnBW411K6
-         9+xeaSMJBoiRtogYKsb5tvJvJBzcOPIxytSmg3P9wNv+m/gROVKyhM6B3TRaJrOLOl3w
-         6tRX7feD6viUGat+fXwfiBivQ5k6ztGj8RXzEzL/Q64HdR8eXPkS1NfYNSOGDqt4EvLn
-         FPoQ==
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687166020; x=1689758020;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FGUmUyPYRQe7JCe5YSSOKzsUZSYLXR3kceyIiK3bZTo=;
+        b=jF7pdXS3XhA2vRtlsR7hRh6g4RSLWEnZZL29aG3Csa3XHvACUzVJqPmkbtOf1YmX4t
+         Sk3hHWWHpFn8lqavTJDhbBqKqj75OXR2fwgsay2bnpcVxYGJlzOJrqS6i6MafXRZs6NN
+         kD5suHqFLxFkuj+7vLJScGh3Sfql66h/Gc5ntN7Wmix3dL/0lRMTGEfkrQV7e2SsgsUm
+         c8tZ0LQwU5rvBEi0+YIKuC04utnu6rzpDHXGVhru5hYdZo25u87yiTPT15h6RRKUAtSW
+         ELqf9YFazuGXOlrTf8OpsmciEKvMS7EeV8p9LoslLEE8GvD6NdI03QmLTcKphJxLRlv6
+         qJHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687164940; x=1689756940;
-        h=content-transfer-encoding:in-reply-to:organization:from
-         :content-language:references:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ab/uccW/SU2clnL7XMqPxhlr/0i0qnP9OFatwF2duQQ=;
-        b=HUTDKtC49ybO9nWyxCC9g1CKHX14np/wpECwtnXfjee6WsH7F9mit89MIGlGyPqZwJ
-         5m7arYNpQGKhjFAi4X44SesEoLn3An06S2NMO3qHGNkXFr3oPK9TLuLfcbuJxse5AbC0
-         DmNzyHA5/mCK5UewMCsnsYtYv0ahq0WG6r809Pkf7VXpLpTB1whf521W0LoIep7AYXmf
-         beD67xldSCmbFv6GhU7+iznSJjeGCMUdcypEvA1JBXPvIVTm3IeLHcVLaiYrPHphMuCO
-         DY7+hg2Os9ipoE2lWnoV4904Du5x7K/HM30V0TqTiweCagOMVAoK/vJaa4E5VLOVGZVN
-         QTlQ==
-X-Gm-Message-State: AC+VfDxUPP3KX7192Yte/V6b7Wd/ycxoUwcovd/fExoybnVMftV+9ArN
-        EsNdss3+0Jvl/NPpYsmFTGWqDw==
-X-Google-Smtp-Source: ACHHUZ6DYorP55IGV9cW6MrOSU6CDDy/X55ds2R2gJokv4SvLCDIJJcM5yGsxke8P//Hh8XInPL09g==
-X-Received: by 2002:a1c:e90d:0:b0:3f8:f663:921d with SMTP id q13-20020a1ce90d000000b003f8f663921dmr9124407wmc.41.1687164940235;
-        Mon, 19 Jun 2023 01:55:40 -0700 (PDT)
-Received: from [192.168.7.189] (679773502.box.freepro.com. [212.114.21.58])
-        by smtp.gmail.com with ESMTPSA id q19-20020a1cf313000000b003f7361ca753sm9873228wmq.24.2023.06.19.01.55.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jun 2023 01:55:39 -0700 (PDT)
-Message-ID: <613aa197-62c7-5a4d-2495-b77d9fc902d8@linaro.org>
-Date:   Mon, 19 Jun 2023 10:55:38 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
- TLMM
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        d=1e100.net; s=20221208; t=1687166020; x=1689758020;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FGUmUyPYRQe7JCe5YSSOKzsUZSYLXR3kceyIiK3bZTo=;
+        b=IZXbtxjNCEk5/3cIJZK0/uWC/z734FBxl9yRt8yzLBPchNbU5hxY3njKsWbVqy3gmo
+         Hdx0cXHgXbKuAXquGzWlcCOvwln+pYIoLVy2BJQiM7zdzrtX8HwJYCoSIymtsSHM5S5Q
+         uZAv36ukZrwSa9sOgsKwLKMwz8MrAytYRK/hzHVj2oa9KhMxcTRKb8mxzbiLR1CsQQy8
+         ZSkp/8nDFf0uFJDFrI0idTXSngay9O05dTr5ZXBICBN9LztyuBF6KRCpoikVRifMvla9
+         t83xmWcc7sGj0tsj1X15pWeMKIHYFJItg7IDxXPv7cw2Vb64inKKPcC0YXVH6JNzNGM0
+         zD+g==
+X-Gm-Message-State: AC+VfDxfQqJh9IYjKqU72c+zWkkSdyBSJ6arG5SpRH6T0kegCZrLPsE6
+        GSqp/FqfgPsSwhGeDjjKJyoD/A==
+X-Google-Smtp-Source: ACHHUZ78zEUhE9gBbobf8MIedRP5SIggqx8yhpnqgFdeJalbMShz4tBLCD/3Fg+jBdr7c4DmfZ4tFQ==
+X-Received: by 2002:a19:790e:0:b0:4f8:6e16:fca3 with SMTP id u14-20020a19790e000000b004f86e16fca3mr1368039lfc.28.1687166020479;
+        Mon, 19 Jun 2023 02:13:40 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d9e8:ddbf:7391:a0b0])
+        by smtp.gmail.com with ESMTPSA id p20-20020a05600c205400b003f9a6f3f240sm3072993wmg.14.2023.06.19.02.13.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jun 2023 02:13:40 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230616185742.2250452-1-krzysztof.kozlowski@linaro.org>
- <20230616185742.2250452-2-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230616185742.2250452-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [RESEND PATCH v2 0/3] phy: add the SerDes/SGMII driver for Qualcomm SoCs
+Date:   Mon, 19 Jun 2023 11:13:33 +0200
+Message-Id: <20230619091336.194914-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/06/2023 20:57, Krzysztof Kozlowski wrote:
-> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
-> driver is similar to SM8450 LPASS pin controller, with difference in one
-> new pin (gpio14).
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   drivers/pinctrl/qcom/Kconfig                  |  10 ++
->   drivers/pinctrl/qcom/Makefile                 |   1 +
->   .../pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c   | 167 ++++++++++++++++++
->   3 files changed, 178 insertions(+)
->   create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
-> 
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-> index 634c75336983..9c43bc05c447 100644
-> --- a/drivers/pinctrl/qcom/Kconfig
-> +++ b/drivers/pinctrl/qcom/Kconfig
-> @@ -77,6 +77,16 @@ config PINCTRL_SM8250_LPASS_LPI
->   	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
->   	  (Low Power Island) found on the Qualcomm Technologies Inc SM8250 platform.
->   
-> +config PINCTRL_SM3550_LPASS_LPI
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-s/PINCTRL_SM3550_LPASS_LPI/PINCTRL_SM8350_LPASS_LPI/g
+Add a new PHY driver and its DT bindings (reviewed by DT maintainers).
 
+This is a sub-series of [1] with only the patches targetting the PHY subsystem
+as they can go in independently.
 
+[1] https://lore.kernel.org/lkml/20230617001644.4e093326@kernel.org/T/
 
-<snip>
+Bartosz Golaszewski (3):
+  phy: qualcomm: fix indentation in Makefile
+  dt-bindings: phy: describe the Qualcomm SGMII PHY
+  phy: qcom: add the SGMII SerDes PHY driver
+
+ .../phy/qcom,sa8775p-dwmac-sgmii-phy.yaml     |  55 +++
+ drivers/phy/qualcomm/Kconfig                  |   9 +
+ drivers/phy/qualcomm/Makefile                 |   3 +-
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c     | 451 ++++++++++++++++++
+ 4 files changed, 517 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,sa8775p-dwmac-sgmii-phy.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+
+-- 
+2.39.2
 
