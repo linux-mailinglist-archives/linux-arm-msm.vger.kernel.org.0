@@ -2,135 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8FC1735B2B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 17:33:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDE0E735BF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jun 2023 18:13:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231713AbjFSPd1 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 11:33:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42700 "EHLO
+        id S232130AbjFSQN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jun 2023 12:13:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjFSPd0 (ORCPT
+        with ESMTP id S229888AbjFSQNZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 11:33:26 -0400
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A414C9;
-        Mon, 19 Jun 2023 08:33:24 -0700 (PDT)
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-55e299e1d02so1653080eaf.1;
-        Mon, 19 Jun 2023 08:33:24 -0700 (PDT)
+        Mon, 19 Jun 2023 12:13:25 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1156B1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:13:23 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b4725e9917so23447651fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 09:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687191202; x=1689783202;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZdJyfM0wQbXVorPTo/xhbHvwBGV6R1GO0tiAajjVkTc=;
+        b=GJ6cOZ91sa5wua2rUcyeQ0M2MJI+XPL9FfWQmkX0F1URArzw2jzsibCA3VVVsfRju0
+         BYEzsgEbbxZtBa8kZM17Fo8qhzDvnlH9+fL6zGk0toceoLIxcgwRx77AAJ9kuQgv6wn/
+         D6G6sWMJxT/nimw5A5ciI6shRZzZVMk3DUq9+GTsPD8CtBshrUn2pXtd0zNvY/gm4tRT
+         FZW5b92KH/lfRH/IieMylKY63mUKF7mYIm00SUBt3bAHZF/1VRqh0OsPwnlAsk+l5nqB
+         yBpYJyEN4m5i/JuSQL3ecdSWbEZOLUqLLGL3fbcxbzlr8zQ8IpoyakdWAsNNqO5/8zb3
+         MBfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687188803; x=1689780803;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xPFXYlRHAa3U0GY2gSsZaKSWcpvM3hRa94CDc3700HE=;
-        b=jJOMLhe+cAskWXv4MeJvC6VKNfelpLHNcSNqSD47TEjxZI7vgD0gWlbjWzR1qPG/k9
-         GnUpXeA+qE1sHHH+tn05s7MZTHvRGkSebn6c05T1coRDRK+jaNKvgyQJJOsTSDqYK9Vu
-         2SB8wPhWYbhQeFMkFcPUIAMc3hEAHViDMxMkcRYmwpukGUsOQ+effihI1dHH7ftzWJY6
-         k6yuuSe8Cv7cfzNSOsuhucrIpqSw2+IEg3ZjEQKlDqhwDyHg2eAKGQZlOJt+WFTavomE
-         3x883Ab8MxhZE8SdK9L26aBNUzJIM83mIiFMpVpPLG8l2CE+qnNjBLFJE9xWz/tdb5qS
-         JjgA==
-X-Gm-Message-State: AC+VfDzMuQoWZEjnMXUMlmvcCLfkbt9GGDgoKMhnsvJO48Xsx9PmWHTx
-        e9i5tRlEGFKRrSBAti99bpGvye3/NzJRog==
-X-Google-Smtp-Source: ACHHUZ7MdWUXYvt+kjRYqvFExVbA34y/25NFyEO5NbUhEBVyFpzwaNyY/hNbhxg5Gux1GK9GIm0Zgg==
-X-Received: by 2002:a4a:c919:0:b0:558:b78d:8d1e with SMTP id v25-20020a4ac919000000b00558b78d8d1emr5583364ooq.7.1687188803117;
-        Mon, 19 Jun 2023 08:33:23 -0700 (PDT)
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com. [209.85.167.179])
-        by smtp.gmail.com with ESMTPSA id k13-20020a4ad98d000000b005526bfbf131sm61598oou.26.2023.06.19.08.33.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jun 2023 08:33:22 -0700 (PDT)
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-39cd084ea62so2657972b6e.0;
-        Mon, 19 Jun 2023 08:33:22 -0700 (PDT)
-X-Received: by 2002:a05:6808:1a29:b0:39e:de09:8b96 with SMTP id
- bk41-20020a0568081a2900b0039ede098b96mr2946266oib.34.1687188801974; Mon, 19
- Jun 2023 08:33:21 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687191202; x=1689783202;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZdJyfM0wQbXVorPTo/xhbHvwBGV6R1GO0tiAajjVkTc=;
+        b=PSAAlDrhwl7xgP0Sgbl9zXvvMy2SM8/Azs1eeoTXMZaBZ/ogWa0eR/G77yrU8Pn4WK
+         f5pIth8fHLGOO/kD5QNRSYja2s9QoIiRKQ1fKFM3YqaFDmui2njVjQuM9pJmUhg2TGXN
+         rxxMfJ9Xtfs6ZFqbjXb26ijGo+nja8wbC5LARhkAdP8HPU9gsSop+N6C9iZibQ8TZk1G
+         03ChIWvGQWmBx63uw/GHfDLK4dkOtzp/szkTr7TGRoeIZLhe2gcqndZW1cQ5GC8EmxtT
+         Dh3pj4wIZdCfklxFerOdzNk+xISVTf/CCkNCIx8o/9AxS8+i2+N9CrI/0F2NGO0PIY8k
+         Vvxw==
+X-Gm-Message-State: AC+VfDww2i9V0FhEqeC5bET/40qolHssGPOpvsm1d64XyzNQD9MZr0Kz
+        dxHSbQSNpxbChVFxZDMEOfuQ5g==
+X-Google-Smtp-Source: ACHHUZ7toL2rdZPnjv56/gQRsxXwX8ZSK5dbAZyZn8H5ZcAQi5iTHDxmxNhoI9rEpwj/K2sTpYXB9w==
+X-Received: by 2002:a2e:9f54:0:b0:2b4:479a:aaba with SMTP id v20-20020a2e9f54000000b002b4479aaabamr6051054ljk.19.1687191202175;
+        Mon, 19 Jun 2023 09:13:22 -0700 (PDT)
+Received: from [192.168.1.101] (abyl242.neoplus.adsl.tpnet.pl. [83.9.31.242])
+        by smtp.gmail.com with ESMTPSA id x20-20020a2e7c14000000b002b471efb253sm1011714ljc.46.2023.06.19.09.13.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jun 2023 09:13:21 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] SC8280XP clock runtime pm
+Date:   Mon, 19 Jun 2023 18:13:16 +0200
+Message-Id: <20230619-topic-sc8280xp-clk-rpm-v1-0-1e5e1064cdb2@linaro.org>
 MIME-Version: 1.0
-References: <20230613114904.15749-1-frank.li@vivo.com> <20230613114904.15749-11-frank.li@vivo.com>
- <91db8e7b-29fb-3c43-ac38-008ebc9b1f6b@gmail.com>
-In-Reply-To: <91db8e7b-29fb-3c43-ac38-008ebc9b1f6b@gmail.com>
-Reply-To: wens@csie.org
-From:   Chen-Yu Tsai <wens@csie.org>
-Date:   Mon, 19 Jun 2023 23:33:10 +0800
-X-Gmail-Original-Message-ID: <CAGb2v65xzhzVp+pBsa_Z3aHtK4LOpiTbhA749doMpwSTwDtxCg@mail.gmail.com>
-Message-ID: <CAGb2v65xzhzVp+pBsa_Z3aHtK4LOpiTbhA749doMpwSTwDtxCg@mail.gmail.com>
-Subject: Re: [PATCH v3 11/12] thermal/drivers/generic-adc: Register thermal
- zones as hwmon sensors
-To:     Matthias Brugger <matthias.bgg@gmail.com>
-Cc:     Yangtao Li <frank.li@vivo.com>, glaroque@baylibre.com,
-        rafael@kernel.org, daniel.lezcano@linaro.org, amitk@kernel.org,
-        rui.zhang@intel.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        thara.gopinath@gmail.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, anarsoul@gmail.com,
-        tiny.windzz@gmail.com, jernej.skrabec@gmail.com,
-        samuel@sholland.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, edubezval@gmail.com, j-keerthy@ti.com,
-        angelogioacchino.delregno@collabora.com, bchihi@baylibre.com,
-        niklas.soderlund+renesas@ragnatech.se, wenst@chromium.org,
-        linux-pm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJx+kGQC/x2N0QrCMAwAf2Xk2UDWoVR/RXzostQFa1faKYOxf
+ zf4eAfH7dCkqjS4dTtU+WrTJRv0pw54DvkpqJMxOHIDXforrktRxsbeedoKcnphLW+c2NPgzpF
+ CjGDxGJrgWEPm2fL8SclkqRJ1+9/uj+P4ATBEOaB9AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687191201; l=659;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=6t4hMp1VbI7Kk57kUEUY0uBWHVgMinJG5qAuxHi3rEI=;
+ b=OmHWFgsr/nCvi5E1fj7GlkSK0nx2BNJNlkssqEyX1dGu617b4n32KYICXInHl8DsUnuAGb9LD
+ Q4PkgKAliFHC9NVaqmsYrEzsLVsCkQli+uZXIuLo6iGYbQjLKnyDHCF
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 19, 2023 at 11:17 PM Matthias Brugger
-<matthias.bgg@gmail.com> wrote:
->
->
->
-> On 13/06/2023 13:49, Yangtao Li wrote:
-> > From: Chen-Yu Tsai <wenst@chromium.org>
-> >
-> > Register thermal zones as hwmon sensors to let userspace read
-> > temperatures using standard hwmon interface.
-> >
-> > Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-> > [Yangtao change to use dev_warn and remove return]
-> > Signed-off-by: Yangtao Li <frank.li@vivo.com>
-> > ---
-> >   drivers/thermal/thermal-generic-adc.c | 5 +++++
-> >   1 file changed, 5 insertions(+)
-> >
-> > diff --git a/drivers/thermal/thermal-generic-adc.c b/drivers/thermal/thermal-generic-adc.c
-> > index 017b0ce52122..9531bc2f2ce7 100644
-> > --- a/drivers/thermal/thermal-generic-adc.c
-> > +++ b/drivers/thermal/thermal-generic-adc.c
-> > @@ -13,6 +13,8 @@
-> >   #include <linux/slab.h>
-> >   #include <linux/thermal.h>
-> >
-> > +#include "thermal_hwmon.h"
-> > +
-> >   struct gadc_thermal_info {
-> >       struct device *dev;
-> >       struct thermal_zone_device *tz_dev;
-> > @@ -153,6 +155,9 @@ static int gadc_thermal_probe(struct platform_device *pdev)
-> >               return ret;
-> >       }
-> >
-> > +     if (devm_thermal_add_hwmon_sysfs(&pdev->dev, gti->tz_dev))
-> > +             dev_warn(&pdev->dev, "Failed to add hwmon sysfs attributes\n");
->
-> Isn't that already done by patch 1/12?
+Keeping power domains always enabled hinders power efficiency. Add runtime
+PM to 8280 clock controllers to prevent that.
 
-I think patch 12 should just be squashed in?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      clk: qcom: gpucc-sc8280xp: Add runtime PM
+      clk: qcom: gcc-sc8280xp: Add runtime PM
 
-> Regards,
-> Matthias
->
-> > +
-> >       return 0;
-> >   }
-> >
+ drivers/clk/qcom/gcc-sc8280xp.c   | 18 ++++++++++++++++--
+ drivers/clk/qcom/gpucc-sc8280xp.c | 19 +++++++++++++++++--
+ 2 files changed, 33 insertions(+), 4 deletions(-)
+---
+base-commit: 47045630bc409ce6606d97b790895210dd1d517d
+change-id: 20230619-topic-sc8280xp-clk-rpm-dc80325f0aff
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
