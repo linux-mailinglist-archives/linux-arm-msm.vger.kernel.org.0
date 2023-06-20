@@ -2,143 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAB4F736D89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 15:41:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2060F736E7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 16:17:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232030AbjFTNlP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 09:41:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40864 "EHLO
+        id S232109AbjFTORu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 10:17:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbjFTNlO (ORCPT
+        with ESMTP id S231810AbjFTORt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 09:41:14 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 49E42E7D;
-        Tue, 20 Jun 2023 06:41:12 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5AA7B1063;
-        Tue, 20 Jun 2023 06:41:56 -0700 (PDT)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2EBD63F71E;
-        Tue, 20 Jun 2023 06:41:10 -0700 (PDT)
-Message-ID: <e82385f1-de55-4c70-5c5c-35b93a5b2488@arm.com>
-Date:   Tue, 20 Jun 2023 14:41:08 +0100
+        Tue, 20 Jun 2023 10:17:49 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB5591;
+        Tue, 20 Jun 2023 07:17:48 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35KBLueM020164;
+        Tue, 20 Jun 2023 14:17:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=EF/KLh/vr02DqncFcz84OcH5fXVmt70cnGcVY1/nMns=;
+ b=b4eirrkBUDknc7I74lTDAMrGqG9fD2ieOURAz3F/gj/5AvWfe4PfokOFyI1yLzWCkmP3
+ TKnYVUwRVMtuOGsdU4YY2YKYuno+Zu7ZEI2VMXhwQWjkeMFoFFZ2rcFjuhCLW1gHZz9C
+ KjAPjIWLs9/7xI/rbNB02oiZ1gtocuQ8CP/n7KSE80lBAOLu3g3YYQKOh18KV9c06RKt
+ 4txM1IHMOC9aa3MmOthrZyvG/DgUDQHNSKm+tSrrqqg0TUPp2B4Pp3+kDfGmE+XpjZOi
+ /SF3Ivg/QPIh3YHcbIrAQ6SzjPvWCz14KMQgX2tOMZkXzedKj/A5j9ICh5+pq/dfAMVT /Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rarx8tb2n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 14:17:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35KEHWpv010964
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 14:17:32 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 20 Jun
+ 2023 07:17:31 -0700
+Message-ID: <01ec9084-a3c4-82c6-90ae-1460b8b284b1@quicinc.com>
+Date:   Tue, 20 Jun 2023 08:17:31 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v6 09/13] Add nodes for dsb edge control
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] accel/qaic: Call DRM helper function to destroy prime GEM
 Content-Language: en-US
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1687246361-23607-1-git-send-email-quic_taozha@quicinc.com>
- <1687246361-23607-10-git-send-email-quic_taozha@quicinc.com>
- <2023062024-sincere-tripod-95dc@gregkh>
- <3aca4a55-0dc7-b34c-d2c0-111a96c33ec3@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <3aca4a55-0dc7-b34c-d2c0-111a96c33ec3@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
+        <christian.koenig@amd.com>, <sukrut.bellary@linux.com>,
+        <sumit.semwal@linaro.org>
+CC:     <ogabbay@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <linux-media@vger.kernel.org>
+References: <20230614161528.11710-1-quic_jhugo@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230614161528.11710-1-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0XT9GN57nPD0HgguXT1khJ8iYVG-0oEk
+X-Proofpoint-ORIG-GUID: 0XT9GN57nPD0HgguXT1khJ8iYVG-0oEk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-20_10,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ mlxlogscore=851 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ adultscore=0 mlxscore=0 clxscore=1015 impostorscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306200129
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/06/2023 09:31, Tao Zhang wrote:
+On 6/14/2023 10:15 AM, Jeffrey Hugo wrote:
+> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 > 
-> On 6/20/2023 3:37 PM, Greg Kroah-Hartman wrote:
->> On Tue, Jun 20, 2023 at 03:32:37PM +0800, Tao Zhang wrote:
->>> Add the nodes to set value for DSB edge control and DSB edge
->>> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
->>> resgisters to configure edge control. DSB edge detection control
->>> 00: Rising edge detection
->>> 01: Falling edge detection
->>> 10: Rising and falling edge detection (toggle detection)
->>> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
->>> configure mask. Eight 32 bit registers providing DSB interface
->>> edge detection mask control.
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> ---
->>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  32 +++++
->>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 143 
->>> ++++++++++++++++++++-
->>>   drivers/hwtracing/coresight/coresight-tpdm.h       |  22 ++++
->>>   3 files changed, 196 insertions(+), 1 deletion(-)
->>>
->>> diff --git 
->>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
->>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>> index 2a82cd0..34189e4a 100644
->>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>> @@ -60,3 +60,35 @@ Description:
->>>           Bit[3] : Set to 0 for low performance mode.
->>>                    Set to 1 for high performance mode.
->>>           Bit[4:8] : Select byte lane for high performance mode.
->>> +
->>> +What:        /sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl
->>> +Date:        March 2023
->>> +KernelVersion    6.5
->>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
->>> (QUIC) <quic_taozha@quicinc.com>
->>> +Description:
->>> +        Read/Write a set of the edge control registers of the DSB
->>> +        in TPDM.
->>> +
->>> +        Expected format is the following:
->>> +        <integer1> <integer2> <integer3>
->> sysfs is "one value", not 3.  Please never have to parse a sysfs file.
+> smatch warning:
+> 	drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
+> 		dereferencing freed memory 'obj->import_attach'
 > 
-> Do you mean sysfs file can only accept "one value"?
+> obj->import_attach is detached and freed using dma_buf_detach().
+> But used after free to decrease the dmabuf ref count using
+> dma_buf_put().
 > 
-> I see that more than one value are written to the sysfs file 
-> "trigout_attach".
+> drm_prime_gem_destroy() handles this issue and performs the proper clean
+> up instead of open coding it in the driver.
 > 
->>
->>> +static ssize_t dsb_edge_ctrl_show(struct device *dev,
->>> +                       struct device_attribute *attr,
->>> +                       char *buf)
->>> +{
->>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>> +    ssize_t size = 0;
->>> +    unsigned long bytes;
->>> +    int i;
->>> +
->>> +    spin_lock(&drvdata->spinlock);
->>> +    for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
->>> +        bytes = sysfs_emit_at(buf, size,
->>> +                  "Index:0x%x Val:0x%x\n", i,
->> Again, no, one value, no "string" needed to parse anything.
-> 
-> I also see other sysfs files can be read more than one value in other 
-> drivers.
-> 
-> Is this "one value" limitation the usage rule of Linux sysfs system?
-> 
-> Or am I misunderstanding what you mean?
+> Fixes: ff13be830333 ("accel/qaic: Add datapath")
+> Reported-by: Sukrut Bellary <sukrut.bellary@linux.com>
+> Closes: https://lore.kernel.org/all/20230610021200.377452-1-sukrut.bellary@linux.com/
+> Suggested-by: Christian König <christian.koenig@amd.com>
+> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Please fix the other sysfs tunables in the following patches.
+Pushed to drm-misc-fixes
 
-Kind regards
-Suzuki
-
-
+-Jeff
