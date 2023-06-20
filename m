@@ -2,126 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01EDA737687
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 23:17:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFE33737686
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 23:17:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230011AbjFTVRn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 17:17:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49190 "EHLO
+        id S230120AbjFTVRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 17:17:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjFTVRl (ORCPT
+        with ESMTP id S230204AbjFTVRQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 17:17:41 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C16E71BCD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 14:17:26 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35KKcEFB003231;
-        Tue, 20 Jun 2023 21:17:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Y2+lOJFBzxAOHDSRZYpegeJjNKdxdYBF68Ffd3zqxI0=;
- b=gjwk7MBcviMTfo5Xjl7Kx0KBV/uVw4+mRrz85sWTX1rVfKj+4ASHLuoYo7jHt1kkBojd
- UILtMKymPKIhe+tHNaRrFwTiY9fVVKRhNWRFwFNtPDDH/72HNII3whSkp/O88tZt70wG
- fn/+a3Gd/2vpHbGvPsAWoBBym534gtIwKRxhb80gdaZwFrujqZGgfY6FZgsps5xV8RNx
- BMqgTdb+G5XFARE2nGnNQqoxEOd++OpwOpkWAEwBkzO83w4nKJ9j/9fdnhSdx5V0mzuK
- S4fGj0hoQeMPeLdcCNKB36ngEALD1TwFOX9us4yDCPsIBQDsWw8GCoIyqeJkFc8W3aL8 RQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rb1dtjhkk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Jun 2023 21:17:10 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35KLH95r009334
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Jun 2023 21:17:09 GMT
-Received: from [10.110.24.68] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 20 Jun
- 2023 14:17:08 -0700
-Message-ID: <07ad7dd7-cb2f-d838-722b-022cfd7b31d6@quicinc.com>
-Date:   Tue, 20 Jun 2023 14:17:07 -0700
+        Tue, 20 Jun 2023 17:17:16 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98F4198C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 14:17:10 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f6283d0d84so7031383e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 14:17:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687295829; x=1689887829;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UPcRbyzrPBTxh5e0r2I/sN2Nvc7Urb0kOMHV0diZqdw=;
+        b=CQu1w8pkgs9sLq8smHD+VkuObwIGFEAjr2b99lVsxujqz9UxgJK098Q4X5ecR3G2Pz
+         MjIUXRHLNKoFjiXm6XG3zXBu5o8h/wsYVeXkUyqU0Jpf1VriwLVpqyR1JKe84dGKEacU
+         EYYi8iMjSwg2DiTDa90Fw/k7Tl35mTSkxAycNaOrfP7wtivCxQz3wAjA6AxTM2IOAn4C
+         mbJKqlGWzPPBDTrTx7ycQ3Twex/1igeDbkXsKnzuC21jDYckP1mLz1So81N+bv62WbL3
+         ovIXu2Cjq4FnFRyqoXE2HPOL/N7HNF5WJmqfUwVWCb29yV2PQ8vrSnHFNMfbvM8zV80p
+         hCvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687295829; x=1689887829;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UPcRbyzrPBTxh5e0r2I/sN2Nvc7Urb0kOMHV0diZqdw=;
+        b=gMyy5bS6e67ueNuN6VzTdq1CO6qli1PdTCU1kBeEikbHpP8bwwJY+Bbi+ZOWT7P1Un
+         A/T4XfqluXi+CrpZkgXFFU67a12jorVbgMaE9O+T35HdKw+hwbhZM/SQgDDV4WRwRBBI
+         re4ME+wvikxbRQqaYEMWb4U/IywsO1S4M3dyiuBU1z6G7hzKVu2s+1ps6pzSZNUKrQwv
+         cxkJ2PR/amqc6jx+Aa4ojO+4sxix9texPJ7YH55iqzWGJB/XOJ5oImxseIMWqG8NFM9/
+         0w8Byr8uaS948gHdNB/is224smD6Md7D39iyV0oKfAT/Yb/Sbn+UW0CO07Xa2N6JPKCF
+         bvFg==
+X-Gm-Message-State: AC+VfDzXIJRFDuvLlH/FzpdyIWGUkLQahBh+AtFjVwJz6VBjazK5VX2t
+        4JcFudqbRhjYeiWckj0LFtGhBs1lDUHco8c5Igw=
+X-Google-Smtp-Source: ACHHUZ42zuQ97fKC1z95oyBm6krHDvkPqn4sSbYoI5MZhT61I0o8fPqGcaEblpMLxK2Y+Kx4OTdYeUtjLOOAhSbFoa0=
+X-Received: by 2002:ac2:465a:0:b0:4f9:569c:54b3 with SMTP id
+ s26-20020ac2465a000000b004f9569c54b3mr884197lfo.58.1687295828438; Tue, 20 Jun
+ 2023 14:17:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 16/20] arm64: enable Permission Indirection Extension
- (PIE)
-To:     Marc Zyngier <maz@kernel.org>, <neil.armstrong@linaro.org>
-CC:     Joey Gouly <joey.gouly@arm.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Bjorn Andersson <andersson@kernel.org>, <nd@arm.com>,
-        <broonie@kernel.org>, <catalin.marinas@arm.com>,
-        <james.morse@arm.com>, <mark.rutland@arm.com>,
-        <oliver.upton@linux.dev>, <shuah@kernel.org>,
-        <suzuki.poulose@arm.com>, <will@kernel.org>,
-        <yuzenghui@huawei.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <20230606145859.697944-1-joey.gouly@arm.com>
- <20230606145859.697944-17-joey.gouly@arm.com>
- <c3598e8e-46a5-c8d6-bf9f-9fb8f6cd346e@linaro.org>
- <1c70fa1065b313d314707f22386972e3@kernel.org>
-Content-Language: en-US
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <1c70fa1065b313d314707f22386972e3@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: W_faszSL6xEEK9vmva9lHiOVLgqIRB3q
-X-Proofpoint-GUID: W_faszSL6xEEK9vmva9lHiOVLgqIRB3q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-20_16,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- suspectscore=0 mlxscore=0 mlxlogscore=845 clxscore=1011 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306200192
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:7208:b015:b0:6c:542c:ce3 with HTTP; Tue, 20 Jun 2023
+ 14:17:07 -0700 (PDT)
+Reply-To: wormer.amos@aol.com
+From:   Wormer Amos <claudiakhaledyahya02@gmail.com>
+Date:   Tue, 20 Jun 2023 09:17:07 -1200
+Message-ID: <CANcjk_AX62_4-6ooC6SF_Z8mFMS7cC+HgBwah3d0eRbNL10Uvg@mail.gmail.com>
+Subject: GOOD MORNING.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,SUBJ_ALL_CAPS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:131 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [claudiakhaledyahya02[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [claudiakhaledyahya02[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/20/2023 1:35 PM, Marc Zyngier wrote:
-> On 2023-06-20 20:16, Neil Armstrong wrote:
->> Hi Joey,
->>
->> On 06/06/2023 16:58, Joey Gouly wrote:
->>> Now that the necessary changes have been made, set the Permission 
->>> Indirection
->>> registers and enable the Permission Indirection Extension.
->>>
->>> Signed-off-by: Joey Gouly <joey.gouly@arm.com>
->>> Cc: Catalin Marinas <catalin.marinas@arm.com>
->>> Cc: Will Deacon <will@kernel.org>
->>> Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
->>
->> This patch on linux-next causes a great amount of:
->>
->> X     xxx.xxxxxx Emulated RAZ for ID register: ISS 0x36002f
->>
->> messages printed by the system firmware on the Qualcomm SM8550 SoC,
->> and the platform is barely usable.
-> 
-> As others have said on this thread, this is a firmware bug.
-> Not a lot we can do about that, unfortunately, apart from hiding
-> the new feature behind a config option that you'd disable on this
-> platform.
-> 
-> Alternatively, disabling idle management on this machine should
-> reduce the screaming greatly.
+Good friend. i kindly wanted to know if you're capable for investment
+project in
+your country. i
+need a serious partnership with good background, kindly reply
+me to discuss details immediately. i will appreciate you to contact me
+on this email.
 
-I have informed Carl about the Gunyah messaging, I have also added him 
-into this thread.
+Thanks and awaiting for your quick response,
 
----Trilok Soni
+Wormer?
