@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 894C17374D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:02:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45A477374DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:03:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230229AbjFTTC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 15:02:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49442 "EHLO
+        id S230331AbjFTTDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 15:03:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229629AbjFTTCZ (ORCPT
+        with ESMTP id S230326AbjFTTDo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 15:02:25 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20EA4170F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:02:24 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f8689fbf59so3892218e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:02:24 -0700 (PDT)
+        Tue, 20 Jun 2023 15:03:44 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8E4E10FF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:03:43 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f883420152so1997903e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:03:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687287742; x=1689879742;
+        d=linaro.org; s=google; t=1687287822; x=1689879822;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7LIPQ7TmOkpbIvBCWabiui+NKsz8UsHfmjlDRffHBUk=;
-        b=Xs4PfMspW7xDc/O1aa4rE+DQ9pkOJ4ZTsInVa0vytaaeZpQBMkh49mIONsbq23o/v8
-         REPjMxfyTaLoWX60QsuvW1A9JV1EXfEhLCL5TMFC9z2Q+WkdOS7RX7rLA23TjLs4jMuu
-         X0gtnRQAQKRe+cYWOdZEprxDRUlgFZasijjJA4vO27jBYxmgtw6ZyGzRz1962r5KIpKo
-         dAe6rHRhKDMAhuztkwRGPcLcUHx1NmRw4zDqtnm+IjE4buY51pSJnMg9AMc6CSDN0+5D
-         ODfgm5AIJ5CemHo7VjK+qoC7xx+hSL5fp67SGAKor5YJHHoYA0/dryF07AbL5AMkaFD9
-         qUdw==
+        bh=yhFl7csls6VbQpRJBHh5j2tQyC8b07HNJS4qfJGgohA=;
+        b=iF4yTNc77O+N4+MMq+HnSFJ+btZOf3ve7xLf2SUYea8xR10c1zDtlhYSHqueI7hvRe
+         ATX2a9A2xzy0AaWGiazqKlKzk2lstSUC7Miro+Le0oTgy/ZEGjdkfGRsU99ETnTrwVG9
+         1nk5dAuyF3kh+Z6IcE3s5oIet1a8YlhiD32E3GdkaIAMjerBZJqa6U+XYws06GNsUvIX
+         Iaqu/oyGpeN7NpBSF8rASuSaJ7saJgTwzH9JXgw2kDJpI49ILh3Ife+w8L4cn45MFqjd
+         CyCkO+hiYI9KJlLpdih0eWnRpT22+dREjZo9upVBMeAxqrdI+2Q172HRBGyn/kgKBA9i
+         bVjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687287742; x=1689879742;
+        d=1e100.net; s=20221208; t=1687287822; x=1689879822;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7LIPQ7TmOkpbIvBCWabiui+NKsz8UsHfmjlDRffHBUk=;
-        b=Ttum5bsUUSUxkyfVs8CFipLXBXGoemkaW7KwiX4UNbnMGokJnad8J0TutX4WnCs8JF
-         Z2GCb+y7TDGp3lQLh13nM7uP6tjgVRSRjkpejijCFfN78KeB0iTYMxWJi/O/5NlIAn0o
-         iqOesjRlyOEYn7n4Rxb6bZlHxh1G+XOVXHy/Ol8mhph1FHwiMx+JVlYEHFbudJZP/2ES
-         +gltauWPDsa0anF/7SRqQIIoSP0/TSoVsd+U1Vr54QC8i+0Qmv15QRbsmQ7Plp6h0GdQ
-         rtX3/aNydfWM+KaH3F0XDwAb4/8GnJDJJwbDOQ4D+Jw4zxPVcGsNbdSqG8qLzIrcArkr
-         5EMg==
-X-Gm-Message-State: AC+VfDyhCzoKK4YPA58cpn5cLkE1Nv+lYNO7dYvZZ6lsRZMt+QGFgnmL
-        YIYLSIYvRlNUIVRIRRhd9XWSag==
-X-Google-Smtp-Source: ACHHUZ4t8Pq5QEb7VId6ZVll1Oua+R9L/mIP9UOkzwJC8+552a1mk2SXWhsTfB/x2sy3Dvs003n/3A==
-X-Received: by 2002:a05:6512:454:b0:4f8:565f:8ec7 with SMTP id y20-20020a056512045400b004f8565f8ec7mr4350043lfk.27.1687287742337;
-        Tue, 20 Jun 2023 12:02:22 -0700 (PDT)
+        bh=yhFl7csls6VbQpRJBHh5j2tQyC8b07HNJS4qfJGgohA=;
+        b=E36Tr+pIX+HlkyVk0fmbSjSEZ52YnZq8pzvEXb86/sEGcMdsxEkz2Jr81b7ZfF6y7j
+         a8NyaTODXGyS8hYnrhjBIHPKljgiAZcHgendiZrTU4UGNUE/uHR9SfOlYfwDIZdoWGiV
+         ubHau/j3vZ9jPz9698p8ShH0lWlmCUiUx4OBLClO28Hs33aKXRimXvj0TzyOuWJW+B5b
+         fSy42b24OiyJvzLg+DToax/bhO9p8itWjKU42s5d7ByvHPLlAK+dk/HRBZInfGq86qKp
+         UPmL1k1jHVqYRz9WzY94Xfsaln2sLqYthr8/9V7sUBbFJEehs7cGUsFGmt6ELyGzKwXm
+         ozxg==
+X-Gm-Message-State: AC+VfDyIP6npS76cDWL69qKSPknq2+c5rnaF6FBy1JrXoWPbu79uOMhZ
+        eBggWRHvWa5pWA7t4Zqyou5PFg==
+X-Google-Smtp-Source: ACHHUZ5JeTANAG/P0Z/5Ude0RuprBA3s6XiRGOPpGOLVemNka9J+vhmKajP+GrfY3D4g3b74f8GDww==
+X-Received: by 2002:a05:6512:3288:b0:4f6:29b2:f92a with SMTP id p8-20020a056512328800b004f629b2f92amr7475693lfe.21.1687287822003;
+        Tue, 20 Jun 2023 12:03:42 -0700 (PDT)
 Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id o3-20020a056512050300b004f8751285a5sm460669lfb.80.2023.06.20.12.02.21
+        by smtp.gmail.com with ESMTPSA id p2-20020a19f002000000b004f85885cff1sm456176lfc.134.2023.06.20.12.03.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 12:02:21 -0700 (PDT)
-Message-ID: <02ee3320-4ff6-f713-3020-c2c82deb674a@linaro.org>
-Date:   Tue, 20 Jun 2023 21:02:20 +0200
+        Tue, 20 Jun 2023 12:03:41 -0700 (PDT)
+Message-ID: <72b34fea-70c1-8d80-ef3a-15e82678c757@linaro.org>
+Date:   Tue, 20 Jun 2023 21:03:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm6115p-j606f: Hook up display
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: qrb4210-rb2: Enable GPU
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,10 +67,10 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230620-topic-gpu_tablet_disp-v1-0-7bb02bec8dc0@linaro.org>
- <20230620-topic-gpu_tablet_disp-v1-2-7bb02bec8dc0@linaro.org>
- <c9ed9e06-3a94-e8ee-7fb6-8ff66c41a32e@linaro.org>
+ <20230620-topic-gpu_tablet_disp-v1-4-7bb02bec8dc0@linaro.org>
+ <30cfddfb-fabb-a65e-6bb6-c0efdbd92fd7@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <c9ed9e06-3a94-e8ee-7fb6-8ff66c41a32e@linaro.org>
+In-Reply-To: <30cfddfb-fabb-a65e-6bb6-c0efdbd92fd7@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,106 +83,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.06.2023 17:52, Dmitry Baryshkov wrote:
+On 20.06.2023 17:47, Dmitry Baryshkov wrote:
 > On 20/06/2023 16:17, Konrad Dybcio wrote:
->> Enable the required nodes, add the required pins and tweak a
->> regulator to enable non-simplefb display on the Tab P11.
->>
->> Do note that there exists a second SKU with a different panel+touch
->> combo, but due to insufficient information, that will need to be
->> handled separately.
+>> Enable the A610 GPU and provide a firmware path to the ZAP blob.
 >>
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
->>   arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 57 +++++++++++++++++++++--
->>   1 file changed, 52 insertions(+), 5 deletions(-)
+>>   arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
->> index 81fdcaf48926..a10ce676bd44 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
->> @@ -65,9 +65,41 @@ ramoops@ffc00000 {
->>       };
+>> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+>> index e23a0406eacc..a7278a9472ed 100644
+>> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+>> @@ -179,6 +179,14 @@ &gpi_dma0 {
+>>       status = "okay";
 >>   };
->>   -&dispcc {
->> -    /* HACK: disable until a panel driver is ready to retain simplefb */
->> -    status = "disabled";
->> +&mdss {
->> +    status = "okay";
->> +};
->> +
->> +&mdss_dsi0 {
->> +    vdda-supply = <&pm6125_l18>;
+>>   +&gpu {
 >> +    status = "okay";
 >> +
->> +    panel: panel@0 {
->> +        compatible = "lenovo,j606f-boe-nt36523w", "novatek,nt36523w";
->> +        reg = <0>;
->> +
->> +        reset-gpios = <&tlmm 82 GPIO_ACTIVE_LOW>;
->> +        vddio-supply = <&pm6125_l9>;
->> +
->> +        pinctrl-names = "default";
->> +        pinctrl-0 = <&te_active &sde_dsi_active>;
->> +
->> +        rotation = <180>; /* Yep, it's mounted upside down! */
->> +
->> +        port {
->> +            panel_in: endpoint {
->> +                remote-endpoint = <&mdss_dsi0_out>;
->> +            };
->> +        };
->> +    };
->> +};
->> +
->> +&mdss_dsi0_out {
->> +    data-lanes = <0 1 2 3>;
->> +    remote-endpoint = <&panel_in>;
->> +};
->> +
->> +&mdss_dsi0_phy {
->> +    status = "okay";
->>   };
->>     &pm6125_gpios {
->> @@ -212,8 +244,9 @@ pm6125_l17: l17 {
->>           };
->>             pm6125_l18: l18 {
->> -            regulator-min-microvolt = <1104000>;
->> -            regulator-max-microvolt = <1312000>;
->> +            /* 1.104V-1.312V fixed @ 1.232V for DSIPHY */
->> +            regulator-min-microvolt = <1232000>;
->> +            regulator-max-microvolt = <1232000>;
->>           };
->>             pm6125_l19: l19 {
->> @@ -282,6 +315,20 @@ sdc2_gate_pin: sdc2-gate-state {
->>           bias-pull-up;
->>           output-high;
->>       };
->> +
->> +    te_active: te-active-state {
->> +        pins = "gpio81";
->> +        function = "mdp_vsync";
->> +        drive-strength = <2>;
->> +        bias-pull-down;
->> +    };
->> +
->> +    sde_dsi_active: te-active-state {
+>> +    zap-shader {
+>> +        firmware-name = "qcom/qrb4210/a610_zap.mbn";
 > 
-> mdss_dsi_active? Or just dsi_active?
-mdss is ok
-
-Also Marijn pointed out in private that this node overwrites
-the previous one.. Thankfully video mode panels don't care about
-TE! :D
+> Should this be qrb4210 or sm4250? Previously we did not use special subdirs for IOT versions. See qrb5165-rb5.dts.
+https://lore.kernel.org/linux-arm-msm/CAH=2NtwVtLdE5hg8Qhd_MLCPJTqXvus8+qW_uj4O7hnOy7PVUA@mail.gmail.com/
 
 Konrad
 > 
->> +        pins = "gpio82";
->> +        function = "gpio";
->> +        drive-strength = <8>;
->> +        bias-disable;
 >> +    };
->>   };
->>     &ufs_mem_hc {
+>> +};
+>> +
+>>   &i2c2 {
+>>       clock-frequency = <400000>;
+>>       status = "okay";
 >>
 > 
