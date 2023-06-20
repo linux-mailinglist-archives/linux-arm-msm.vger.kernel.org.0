@@ -2,82 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AAED7362FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 07:08:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A10473633A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 07:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjFTFI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 01:08:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51510 "EHLO
+        id S229579AbjFTFkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 01:40:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjFTFI2 (ORCPT
+        with ESMTP id S229601AbjFTFkq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 01:08:28 -0400
+        Tue, 20 Jun 2023 01:40:46 -0400
 Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C2781A4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 22:08:25 -0700 (PDT)
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com [209.85.167.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C11210D5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 22:40:45 -0700 (PDT)
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com [209.85.167.71])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id EF159423ED
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 05:08:20 +0000 (UTC)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 854263F149
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 05:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1687237701;
-        bh=kYHiqY0MrmuYOQjx/9zPX9Eu/K7YT+C3YLGg4BNkKMQ=;
-        h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-         MIME-Version:Content-Type;
-        b=UGWYbdwAgdh75VBmXRWciBFshgQIqLBrfFUT4X/bIsd2Vf9eL2LVnGMdnZtd9fH8h
-         Y9Eh18aDDuH0s+QEu/Z+UVmCT+0DQ8ry8YXiY5mQrwGfuea9qO6ZPb1JlFKz2QWNpR
-         hloJkujhUaJWsZYbC88Zhch/hT/4KDyvsnImAoxvE3b042+EpBFYwACA7Lm4jeZXKU
-         MMoe95U6cKlYFfbraifQYmV4eugrguXQaqmVzozowDeyCJORu0fbOUDcOPrbeIwo7Y
-         tSb3jT558wKNHM/pPdRb1UZeZA6PHT90JG8D8KI2GHE+7n9fT7KcuvMfaatsQYvFop
-         JluVW6V2MxGgw==
-Received: by mail-lf1-f70.google.com with SMTP id 2adb3069b0e04-4edc7406cbaso3136354e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 22:08:20 -0700 (PDT)
+        s=20210705; t=1687239642;
+        bh=eKxatBk/Yyq4Kcp78eUZOCU8RQk/O3McJworAZUfA7k=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+         MIME-Version;
+        b=T5Hp33hp8sH8SB+GtVt0lOk0HFqlLnOo1+aPARMJpjk7wxa7PEJpw45sl+lkPIaQF
+         EPGIeIC8vC4cNgPIPkmn7xibVTIAY8EoixypLlfE9ZHGBaSZrepobxPNeGP9DdKOyW
+         wwXQ9XlTumC3GTvtA5UdekeOTOIVCZU8pXv6UIVeLy/Hm0da12QfSdFoVr0UK/DLQ0
+         Z7a2J9TWSReZa7RYdDOz2msZYntc8bzcyMZfkycIL2Hjq1P8D6iYZxj6x2XsZtZxuD
+         AjmUJONcyayrrASxU5rpDOP1D/cNfOiRJCNln4bJUzdjmNHef2FZHRjUqTcu4JrZ1N
+         b9igdkakSF0kg==
+Received: by mail-lf1-f71.google.com with SMTP id 2adb3069b0e04-4ec817fb123so2655426e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 22:40:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687237700; x=1689829700;
-        h=mime-version:organization:references:in-reply-to:message-id:subject
-         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kYHiqY0MrmuYOQjx/9zPX9Eu/K7YT+C3YLGg4BNkKMQ=;
-        b=XTygISBy9hjrY+8vxKGypMkAon8U4gPZEfd6zWkctA3hwmsyyWpcEet0mBjg07Knyo
-         1j8bInQfdWrlz6HPkdw6e83DxsXe0+++Ho095Bv2Lkm5XQjJwlQVIHSSsNBtZJVlI1F+
-         wtx9S/V0u08MI1FZRgZF+B8FAv9y42eLiwUYzLXlOOEE/ICBWJgs9Ie1XZYdEGzKMqdm
-         0HmnrHNoD+k4usZ20qzgNUJD7OB9H/yUpslYZFmoCpWB3y+xnuT4Zy3zQkXEV4rWcQUt
-         BoY+5IM3DUKzRF29E8Dyqy/6/hv3UrifsRL0Vt3uzKiOHs+nYNG1gVsG3tbqAqg+ztqd
-         Sr6g==
-X-Gm-Message-State: AC+VfDxC2pmmAHo5gQwQ0vodML7oj+m1fN6mPopDG00Z0sbCN8bixVvm
-        luMY4KOQcS+pNrYIcAJGr/a1S8pzjleJV5zAstIJVmY1R5891nyIeWkpLBnjutcxTKDnIw1s3Ds
-        jWYin+8YEXtQ4+6mLOjpLZW041kPCgKFTwab/Qgg8GRw=
-X-Received: by 2002:a05:6512:532:b0:4f8:770f:1b04 with SMTP id o18-20020a056512053200b004f8770f1b04mr1430011lfc.0.1687237699870;
-        Mon, 19 Jun 2023 22:08:19 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ4Ml787KUueP3m3sr+JeQpNhdsMKcAJhcImYx4vsWXakhX+FZUrxJU3CNpSuEPCRQjER4LtIw==
-X-Received: by 2002:a05:6512:532:b0:4f8:770f:1b04 with SMTP id o18-20020a056512053200b004f8770f1b04mr1429991lfc.0.1687237699554;
-        Mon, 19 Jun 2023 22:08:19 -0700 (PDT)
-Received: from smeagol ([194.191.244.86])
-        by smtp.gmail.com with ESMTPSA id c25-20020a7bc859000000b003f90ab2fff9sm1360281wml.9.2023.06.19.22.08.18
+        d=1e100.net; s=20221208; t=1687239641; x=1689831641;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eKxatBk/Yyq4Kcp78eUZOCU8RQk/O3McJworAZUfA7k=;
+        b=XhcyEweTW0NH6xIRkT5ZoEI6eX/ovGX9hkcmGOZG4QpeydWcPClfEa/LkstwN0W0l+
+         wij5E526BVgDHHyMFnIASWEgY0q5Ld+8xqowCHu5xnIB+F+4FDatMa5S8jHv0pOvvypq
+         vFoSRekWNsU62Q0KXSjl6mtrSwaOVg6SQkCl2plnk3OuYL5q4OfdftEivL53XMrKBAM4
+         BVcbuWvzEy2PxF2uiHbjR+dOXoytxw8nK947UycyHiix2eYEpI+ms+udjpJwPv1LICr1
+         nGfbMozFabKF3kYo89oQTBa6xghTDmu1piBZG3Kv4ZoBuYTy2zLurf4Le6Rzfb9OSMPQ
+         GkTg==
+X-Gm-Message-State: AC+VfDy55zZLTl+uW4ifu28xdJM+TtI/tPRlGu4y7tlqY9HjwsaOYLMR
+        YHjBl/zrxQp2TeVtawaO71VrI6iK5iaRHAmyENPQUyIlNM1SUkU1Lr8C7VkRZ0LvhV/TnNtM5bI
+        Pw5qfOzOFhQmwcF6o1t6T75Q5CyumAAYxMMfVpeeUBG0=
+X-Received: by 2002:ac2:499e:0:b0:4f8:6f40:4776 with SMTP id f30-20020ac2499e000000b004f86f404776mr2610356lfl.46.1687239641134;
+        Mon, 19 Jun 2023 22:40:41 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ7mAmYRUNcTRvaEpgafMNWbpCh84NFbi5qKXny7yAHkhYQctNPgq9IskSasfT3ZfXza5M/jjg==
+X-Received: by 2002:ac2:499e:0:b0:4f8:6f40:4776 with SMTP id f30-20020ac2499e000000b004f86f404776mr2610336lfl.46.1687239640866;
+        Mon, 19 Jun 2023 22:40:40 -0700 (PDT)
+Received: from localhost ([194.191.244.86])
+        by smtp.gmail.com with ESMTPSA id m12-20020a7bcb8c000000b003f7ea771b5dsm1433746wmi.1.2023.06.19.22.40.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 22:08:18 -0700 (PDT)
-Date:   Tue, 20 Jun 2023 07:08:15 +0200
+        Mon, 19 Jun 2023 22:40:40 -0700 (PDT)
 From:   Juerg Haefliger <juerg.haefliger@canonical.com>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <johan+linaro@kernel.org>, <konrad.dybcio@linaro.org>,
-        <ribalda@chromium.org>, <joel@joelfernandes.org>
-Subject: Re: [PATCH] drm/msm/adreno: Update MODULE_FIRMWARE macros
-Message-ID: <20230620070815.2c0bd60f@smeagol>
-In-Reply-To: <yl7qxypdzlzwmmp3b43vz5xo6jxey4zcpdxurcvfzujxrawz36@lneajulwoy4k>
+To:     juerg.haefliger@canonical.com
+Cc:     airlied@gmail.com, daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        joel@joelfernandes.org, johan+linaro@kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_abhinavk@quicinc.com,
+        quic_akhilpo@quicinc.com, ribalda@chromium.org,
+        robdclark@gmail.com, sean@poorly.run
+Subject: [PATCH v2] drm/msm/adreno: Add missing MODULE_FIRMWARE macros
+Date:   Tue, 20 Jun 2023 07:40:31 +0200
+Message-Id: <20230620054031.1203960-1-juerg.haefliger@canonical.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20230616122815.1037425-1-juerg.haefliger@canonical.com>
 References: <20230616122815.1037425-1-juerg.haefliger@canonical.com>
-        <yl7qxypdzlzwmmp3b43vz5xo6jxey4zcpdxurcvfzujxrawz36@lneajulwoy4k>
-Organization: Canonical Ltd
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/vDXuG4klP3vp2xxWUE+QEvn";
- protocol="application/pgp-signature"; micalg=pgp-sha512
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -88,110 +85,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/vDXuG4klP3vp2xxWUE+QEvn
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+The driver references some firmware files that don't have corresponding
+MODULE_FIRMWARE macros and thus won't be listed via modinfo. Fix that.
 
-On Fri, 16 Jun 2023 21:25:01 +0530
-Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
 
-> On Fri, Jun 16, 2023 at 02:28:15PM +0200, Juerg Haefliger wrote:
-> >=20
-> > Add missing MODULE_FIRMWARE macros and remove some for firmwares that
-> > the driver no longer references.
-> >=20
-> > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_device.c | 23 ++++++++++++++++++----
-> >  1 file changed, 19 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
-rm/msm/adreno/adreno_device.c
-> > index 8cff86e9d35c..9f70d7c1a72a 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -364,17 +364,32 @@ MODULE_FIRMWARE("qcom/a330_pm4.fw");
-> >  MODULE_FIRMWARE("qcom/a330_pfp.fw");
-> >  MODULE_FIRMWARE("qcom/a420_pm4.fw");
-> >  MODULE_FIRMWARE("qcom/a420_pfp.fw");
-> > +MODULE_FIRMWARE("qcom/a506_zap.mdt");
-> > +MODULE_FIRMWARE("qcom/a508_zap.mdt");
-> > +MODULE_FIRMWARE("qcom/a512_zap.mdt");
-> >  MODULE_FIRMWARE("qcom/a530_pm4.fw");
-> >  MODULE_FIRMWARE("qcom/a530_pfp.fw");
-> >  MODULE_FIRMWARE("qcom/a530v3_gpmu.fw2");
-> >  MODULE_FIRMWARE("qcom/a530_zap.mdt");
-> > -MODULE_FIRMWARE("qcom/a530_zap.b00");
-> > -MODULE_FIRMWARE("qcom/a530_zap.b01");
-> > -MODULE_FIRMWARE("qcom/a530_zap.b02"); =20
-> Why are these not required when "qcom/a530_zap.mdt" is present?
->=20
-> mdt & b0* binaries are different partitions of the same secure
-> firmware. Even though we specify only the .mdt file here, the PIL driver
-> will load the *.b0* file automatically. OTOH, "*.mbn" is a standalone
-> unified binary format.
+---
+v2:
+  - Drop addition and removal of zap files (needs more discussion)
+  - Add new a690_gmu.bin
+  - Update commit subject and message accordingly
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Ah thanks for the clarification.
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index cb94cfd137a8..7c1f9a844009 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -397,10 +397,21 @@ MODULE_FIRMWARE("qcom/a530_zap.mdt");
+ MODULE_FIRMWARE("qcom/a530_zap.b00");
+ MODULE_FIRMWARE("qcom/a530_zap.b01");
+ MODULE_FIRMWARE("qcom/a530_zap.b02");
++MODULE_FIRMWARE("qcom/a540_gpmu.fw2");
+ MODULE_FIRMWARE("qcom/a619_gmu.bin");
+ MODULE_FIRMWARE("qcom/a630_sqe.fw");
+ MODULE_FIRMWARE("qcom/a630_gmu.bin");
+ MODULE_FIRMWARE("qcom/a630_zap.mbn");
++MODULE_FIRMWARE("qcom/a640_gmu.bin");
++MODULE_FIRMWARE("qcom/a650_gmu.bin");
++MODULE_FIRMWARE("qcom/a650_sqe.fw");
++MODULE_FIRMWARE("qcom/a660_gmu.bin");
++MODULE_FIRMWARE("qcom/a660_sqe.fw");
++MODULE_FIRMWARE("qcom/a690_gmu.bin");
++MODULE_FIRMWARE("qcom/leia_pfp_470.fw");
++MODULE_FIRMWARE("qcom/leia_pm4_470.fw");
++MODULE_FIRMWARE("qcom/yamato_pfp.fw");
++MODULE_FIRMWARE("qcom/yamato_pm4.fw");
+ 
+ static inline bool _rev_match(uint8_t entry, uint8_t id)
+ {
+-- 
+2.37.2
 
-
-> If the requirement is to ensure that all necessary firmwares are part of
-> your distribution, you should include the *.b0* files too here.
-
-I'll look into that. IMO, everything that the drivers can load should be
-listed for completeness.
-
-...Juerg
-
-
-> -Akhil
->=20
-> > +MODULE_FIRMWARE("qcom/a540_gpmu.fw2");
-> > +MODULE_FIRMWARE("qcom/a540_zap.mdt");
-> > +MODULE_FIRMWARE("qcom/a615_zap.mdt");
-> >  MODULE_FIRMWARE("qcom/a619_gmu.bin");
-> >  MODULE_FIRMWARE("qcom/a630_sqe.fw");
-> >  MODULE_FIRMWARE("qcom/a630_gmu.bin");
-> > -MODULE_FIRMWARE("qcom/a630_zap.mbn");
-> > +MODULE_FIRMWARE("qcom/a630_zap.mdt");
-> > +MODULE_FIRMWARE("qcom/a640_gmu.bin");
-> > +MODULE_FIRMWARE("qcom/a640_zap.mdt");
-> > +MODULE_FIRMWARE("qcom/a650_gmu.bin");
-> > +MODULE_FIRMWARE("qcom/a650_sqe.fw");
-> > +MODULE_FIRMWARE("qcom/a650_zap.mdt");
-> > +MODULE_FIRMWARE("qcom/a660_gmu.bin");
-> > +MODULE_FIRMWARE("qcom/a660_sqe.fw");
-> > +MODULE_FIRMWARE("qcom/a660_zap.mdt");
-> > +MODULE_FIRMWARE("qcom/leia_pfp_470.fw");
-> > +MODULE_FIRMWARE("qcom/leia_pm4_470.fw");
-> > +MODULE_FIRMWARE("qcom/yamato_pfp.fw");
-> > +MODULE_FIRMWARE("qcom/yamato_pm4.fw");
-> > =20
-> >  static inline bool _rev_match(uint8_t entry, uint8_t id)
-> >  {
-> > --=20
-> > 2.37.2
-> >  =20
-
-
---Sig_/vDXuG4klP3vp2xxWUE+QEvn
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmSRND8ACgkQD9OLCQum
-QrdPYw//QzGQ0R5KDY7yYZt83rqtfWawMZuuBi9PMkzDHZWRYkFYdmeVGDdxtAm4
-od/7vmulM8dUSjdiTvbSmnxi4kapgysgi9xFpZ6y998+V/FPlFU7bYAbjV43c0xo
-2WeklNS4fKaoJg0jVMbVFegQIRENqKj9xwqbNHlDKhPNRELiU7lpMDRBJalzICdi
-FuwZvGv59ah+voSxHNpo0e9et659RjgqxvxlS7ivWLR/gimoCURRXj+oLD3nKtav
-ibG704hNsnEPqGvf9NQi+C3NTMZPF123EpiXyNQoe6J158Xg6dgur0oBPyn97TFX
-rrsm+9usyGPzfrwdtwdz9OtqL0wCT9uOD12W+E8MqVBryU8HHRdCt/ZQkkJ5sz1V
-6+wHya9PseGN5zCRBOr+flAjRmfNDCLcveB06BmhXSEUk1CmPHhJvUAfKgrMMK+n
-R0BUF+V2/r82AcPQpx1rNuPWeEeSsgGwq/gq+Bbp8lJB9BYm/IDst9fch711WV70
-70AsC5zdSN/E75TJpQ9qqG/ZafWzPoI5YhYx6MOIHxwvmFBgSBLHUqCrSSVargjF
-qAYkTizvh4BMknx5hL+XfReFriTRkU93eyTHwOkXFN5BTKPFFIWSA6CFF+1+wiNy
-GYQ8qgldRA6YZFXjF3FN/+oTAmwzjp/ZBgAI1C36IVWqinwjXV4=
-=rUQw
------END PGP SIGNATURE-----
-
---Sig_/vDXuG4klP3vp2xxWUE+QEvn--
