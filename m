@@ -2,73 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8013773761D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 22:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC0B3737627
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 22:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbjFTUfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 16:35:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36288 "EHLO
+        id S229696AbjFTUj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 16:39:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbjFTUfP (ORCPT
+        with ESMTP id S229479AbjFTUjZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 16:35:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A765F1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 13:35:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AB428611B2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 20:35:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06427C433C8;
-        Tue, 20 Jun 2023 20:35:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687293313;
-        bh=L6C55bLH2MmOAb1RFlwgD1LvVJ33Fgkb0bgADj5i8to=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=sdCtAt9wA/e4f07TlKewZZi1SYQl+7RGIW+cUQej1hrqiTwRFv/+KEa2N7OhIVs9r
-         200DDhzUuxLdRajcS7CmlxRs9YrUA0c49KuK0/gGxlFI4g0wBxvWpjGnDVqOaLtPl+
-         ikhkJbfNtCUVzvde/VNPBebq2vudbIY+rPF3I0uakspi3UYnr75MQ9t3d5KCjzekdx
-         0p92PTpVq4XxMBRDJ094NkQzeFuifuI0+Qe/TzfuP+zMRMon0R7VzyObGxAAOZQQKR
-         XnrBclqp6IdKXVxbf4b0ompn4FweBPjI7PhBRWQ86OFPGO9RRLbWAvT8nNxGooMtoQ
-         3znf0xl+NF3/Q==
-Received: from disco-boy.misterjones.org ([217.182.43.188] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.95)
-        (envelope-from <maz@kernel.org>)
-        id 1qBi4E-006tCY-GZ;
-        Tue, 20 Jun 2023 21:35:10 +0100
+        Tue, 20 Jun 2023 16:39:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDF8A1706;
+        Tue, 20 Jun 2023 13:39:24 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35KJdfNY006188;
+        Tue, 20 Jun 2023 20:39:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=/GBt3/0+glJfPRKq9iSw/9YV3FQYo7+Ct/jAtWoWEik=;
+ b=K/8GWu7VTRgghPTyKhSrsk2ApOop3Vxdawo+MZYmxvTAit2KEkNa1JbgvpxqlhCtKr40
+ ad6kqjJWD0z4Gq4eGtfv3nOhYVbQM/uvM+hNMoQOkF8eHVMPoL2ZxMXsXb2oJZeLLeqB
+ pJIPU4Hse1M7hbAK4ZZlUK8IxAVG9a6GhFCTSFo8026JSEJ2FDHXs47OrlW82lttqi6o
+ OK5UY3qpSETh2F+mXQ87yz60MapB/4ES063bmrM/ftcwnSN9jz7WAncAAKEIbXA6Me00
+ mLLAvdukvuWbF+liqBLq5gIOyfp1lFoqP+xzexgXxdp/V7T/b4Zq6FmG4aKFjcP1932W Pw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ramke3q5j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 20:39:21 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35KKdKp7024380
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 20:39:20 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 20 Jun 2023 13:39:20 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: sc8280xp-crd: Correct vreg_misc_3p3 GPIO
+Date:   Tue, 20 Jun 2023 13:39:14 -0700
+Message-ID: <20230620203915.141337-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Date:   Tue, 20 Jun 2023 21:35:10 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     neil.armstrong@linaro.org
-Cc:     Joey Gouly <joey.gouly@arm.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Bjorn Andersson <andersson@kernel.org>, nd@arm.com,
-        broonie@kernel.org, catalin.marinas@arm.com, james.morse@arm.com,
-        mark.rutland@arm.com, oliver.upton@linux.dev, shuah@kernel.org,
-        suzuki.poulose@arm.com, will@kernel.org, yuzenghui@huawei.com,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v4 16/20] arm64: enable Permission Indirection Extension
- (PIE)
-In-Reply-To: <c3598e8e-46a5-c8d6-bf9f-9fb8f6cd346e@linaro.org>
-References: <20230606145859.697944-1-joey.gouly@arm.com>
- <20230606145859.697944-17-joey.gouly@arm.com>
- <c3598e8e-46a5-c8d6-bf9f-9fb8f6cd346e@linaro.org>
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <1c70fa1065b313d314707f22386972e3@kernel.org>
-X-Sender: maz@kernel.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 217.182.43.188
-X-SA-Exim-Rcpt-To: neil.armstrong@linaro.org, joey.gouly@arm.com, linux-arm-kernel@lists.infradead.org, andersson@kernel.org, nd@arm.com, broonie@kernel.org, catalin.marinas@arm.com, james.morse@arm.com, mark.rutland@arm.com, oliver.upton@linux.dev, shuah@kernel.org, suzuki.poulose@arm.com, will@kernel.org, yuzenghui@huawei.com, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: yJhdOd7C-or8mrAhqBdCRn1bMT3Vo9C_
+X-Proofpoint-GUID: yJhdOd7C-or8mrAhqBdCRn1bMT3Vo9C_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-20_16,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ clxscore=1015 mlxscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=911 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306200187
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,34 +80,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-20 20:16, Neil Armstrong wrote:
-> Hi Joey,
-> 
-> On 06/06/2023 16:58, Joey Gouly wrote:
->> Now that the necessary changes have been made, set the Permission 
->> Indirection
->> registers and enable the Permission Indirection Extension.
->> 
->> Signed-off-by: Joey Gouly <joey.gouly@arm.com>
->> Cc: Catalin Marinas <catalin.marinas@arm.com>
->> Cc: Will Deacon <will@kernel.org>
->> Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-> 
-> This patch on linux-next causes a great amount of:
-> 
-> X     xxx.xxxxxx Emulated RAZ for ID register: ISS 0x36002f
-> 
-> messages printed by the system firmware on the Qualcomm SM8550 SoC,
-> and the platform is barely usable.
+The vreg_misc_3p3 regulator is controlled by PMC8280_1 GPIO 2, not 1, on
+the CRD.
 
-As others have said on this thread, this is a firmware bug.
-Not a lot we can do about that, unfortunately, apart from hiding
-the new feature behind a config option that you'd disable on this
-platform.
+Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Alternatively, disabling idle management on this machine should
-reduce the screaming greatly.
-
-         M.
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index b566e403d1db..b21b41a066b6 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -167,7 +167,7 @@ vreg_misc_3p3: regulator-misc-3p3 {
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
+ 
+-		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
++		gpio = <&pmc8280_1_gpios 2 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
+ 
+ 		pinctrl-names = "default";
+@@ -757,7 +757,7 @@ edp_bl_reg_en: edp-bl-reg-en-state {
+ 	};
+ 
+ 	misc_3p3_reg_en: misc-3p3-reg-en-state {
+-		pins = "gpio1";
++		pins = "gpio2";
+ 		function = "normal";
+ 	};
+ };
 -- 
-Jazz is not dead. It just smells funny...
+2.25.1
+
