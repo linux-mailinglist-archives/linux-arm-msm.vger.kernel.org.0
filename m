@@ -2,89 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A86F7367C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 11:33:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57EDF736820
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 11:43:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232326AbjFTJd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 05:33:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50536 "EHLO
+        id S232405AbjFTJnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 05:43:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231246AbjFTJd0 (ORCPT
+        with ESMTP id S232381AbjFTJnm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 05:33:26 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF42A3;
-        Tue, 20 Jun 2023 02:33:24 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35K7qkfO030100;
-        Tue, 20 Jun 2023 09:32:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=ky61XlTFvnA7lVh5OyfvaMQHiiNipeR+9XCFDt37Dwk=;
- b=WJJudu5ihbSzoI/GwMqVJJs6kk+CC9UMvWpbMMTS6FL7ccnm0bl1q635GOd6dEug4d1n
- uqP6+503Oawhj8muKEIWZmukfDBV2x+8CQlGrlHSkImP+4mhuj0v32GQTAXXT50CuxD2
- f3/T030jYt4PtLfFo+JQXYy800Nx1YB+H2GdFZHcuIiPqpzSjpD+h7eWrrP4OfPYEHt5
- Ftw6lW4YbXGFHsGvJrYEsBcWXnKYqNxcrosY/rE9NgThETpcA02MDqQkDRnCMzPSqZq3
- yzrh6L+XrN+Vo46Q7VRFvurCYIVANXa4SYdAJ261EuKqqeQkoBSBSb5XzpR+oDbj0rC3 cA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rb1dtgykj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Jun 2023 09:32:53 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35K9WqXi010487
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Jun 2023 09:32:52 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 20 Jun 2023 02:32:43 -0700
-Date:   Tue, 20 Jun 2023 15:02:33 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
-        <nfraprado@collabora.com>, <broonie@kernel.org>,
-        <rafal@milecki.pl>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.org>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH 2/9] dt-bindings: phy: qcom,m31: Document qcom,m31 USB phy
-Message-ID: <20230620093225.GA9966@varda-linux.qualcomm.com>
-References: <cover.1686126439.git.quic_varada@quicinc.com>
- <14f60578e2935c0844537eab162af3afa52ffe39.1686126439.git.quic_varada@quicinc.com>
- <98960024-7dbc-91a3-75de-90b529637916@linaro.org>
- <20230615052746.GB22186@varda-linux.qualcomm.com>
- <aca54f67-cc09-ff4f-93ca-6973d153db2c@linaro.org>
+        Tue, 20 Jun 2023 05:43:42 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6D33E68;
+        Tue, 20 Jun 2023 02:43:41 -0700 (PDT)
+Received: from [IPV6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2] (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id EB9966602242;
+        Tue, 20 Jun 2023 10:43:38 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1687254220;
+        bh=tZEQ2BgJPG46bXO/eTD7ZVZWC8BzMZH3DZDhyoOxcXI=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=lyPiK9hpXVlj0uVpnW/lNz3ZGOWW37jFTe8j03qHuWtTse7as8pDD5Rpf2vd+URoW
+         MVdMC/AkwmISd0h7KivioDsw5Vg9ExZgHGY6iNCzcAqDLVrQEbLONeRR08RdaoFcea
+         yfOjo7ZAt/RQ1bBQbQNalpDKazrFVqBXxQAwXKoUHwbonlvKd6ahdl0ETeEKD+e9ad
+         k49A9PpF3imsmNHMQ5CdyDZXAGB3EBJCFrX5XyPHCnrw1P0A9KRMcsCyQVvOWTpCeQ
+         Uj7RCP/1zMYFStq/e5jmva1C3AomIe2O0RJJrS8tk3FY2ib/N2tf7iFXa14HywkJoM
+         KzlTh2V4Ios8g==
+Message-ID: <6e3f4ff6-2556-a696-58dc-40e1e4d84189@collabora.com>
+Date:   Tue, 20 Jun 2023 11:43:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <aca54f67-cc09-ff4f-93ca-6973d153db2c@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aP3VCaexHP-8vPhMErFKpkN7DtlWrrC8
-X-Proofpoint-GUID: aP3VCaexHP-8vPhMErFKpkN7DtlWrrC8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-20_06,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- suspectscore=0 mlxscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306200084
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 2/6] iommu/qcom: Use the asid read from device-tree if
+ specified
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
+        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        marijn.suijten@somainline.org, kernel@collabora.com,
+        luca@z3ntu.xyz, a39.skl@gmail.com, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20221115101122.155440-1-angelogioacchino.delregno@collabora.com>
+ <20221115101122.155440-3-angelogioacchino.delregno@collabora.com>
+ <12f0800c-beb3-6fdc-b743-8624f0d5d6ac@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <12f0800c-beb3-6fdc-b743-8624f0d5d6ac@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -93,103 +68,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 17, 2023 at 10:48:41AM +0200, Krzysztof Kozlowski wrote:
-> On 15/06/2023 07:27, Varadarajan Narayanan wrote:
-> >>> +          - enum:
-> >>> +              - qcom,m31-usb-hsphy
-> >>
-> >> I am confused what's this. If m31 is coming from some IP block provider,
-> >> then you are using wrong vendor prefix.
-> >> https://www.m31tech.com/download_file/M31_USB.pdf
-> >>
-> >>
-> >>> +              - qcom,ipq5332-m31-usb-hsphy
-> >>
-> >> This confuses me even more. IPQ m31?
-> >
-> > Will change this to m31,usb-hsphy and m31,ipq5332-usb-hsphy respectively.
-> > Will that be acceptable?
->
-> m31,ipq5332 seems wrong, as m31 did not create ipq5332. Does the m31
-> device have some name/version/model? If it is not really known, then I
-> would just propose to go with qcom,ipq5332-usb-hsphy.
->
-> Skip generic compatible ("usb-hsphy") entirely.
+Il 07/03/23 17:44, Dmitry Baryshkov ha scritto:
+> On 15/11/2022 12:11, AngeloGioacchino Del Regno wrote:
+>> As specified in this driver, the context banks are 0x1000 apart but
+>> on some SoCs the context number does not necessarily match this
+>> logic, hence we end up using the wrong ASID: keeping in mind that
+>> this IOMMU implementation relies heavily on SCM (TZ) calls, it is
+>> mandatory that we communicate the right context number.
+>>
+>> Since this is all about how context banks are mapped in firmware,
+>> which may be board dependent (as a different firmware version may
+>> eventually change the expected context bank numbers), introduce a
+>> new property "qcom,ctx-num": when found, the ASID will be forced
+>> as read from the devicetree.
+>>
+>> When "qcom,ctx-num" is not found, this driver retains the previous
+>> behavior as to avoid breaking older devicetrees or systems that do
+>> not require forcing ASID numbers.
+>>
+>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> [Marijn: Rebased over next-20221111]
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 18 +++++++++++++++---
+>>   1 file changed, 15 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c 
+>> b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>> index bfd7b51eb5db..491a8093f3d6 100644
+>> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+>> @@ -551,7 +551,8 @@ static int qcom_iommu_of_xlate(struct device *dev, struct 
+>> of_phandle_args *args)
+>>        * index into qcom_iommu->ctxs:
+>>        */
+>>       if (WARN_ON(asid < 1) ||
+>> -        WARN_ON(asid > qcom_iommu->num_ctxs)) {
+>> +        WARN_ON(asid > qcom_iommu->num_ctxs) ||
+>> +        WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL)) {
+> 
+> Separate change in my opinion. Please split it to a separate patch with proper 
+> Fixes: tag.
+> 
 
-Ok.
+This is of_xlate: the array entry at [asid - 1] is always initialized before
+the introduction of `qcom,ctx-num`, so this is not a separate change and it
+does not require a Fixes tag, as it is not fixing a previous behavior, but
+accounting for a new one.
 
-> And then we have... existing bindings qcom,usb-hs-phy.yaml. Don't create
-> something similar with difference in the hyphen. Just use device
-> specific compatible thus device specific filename.
+>>           put_device(&iommu_pdev->dev);
+>>           return -EINVAL;
+>>       }
+>> @@ -638,7 +639,8 @@ static int qcom_iommu_sec_ptbl_init(struct device *dev)
+>>   static int get_asid(const struct device_node *np)
+>>   {
+>> -    u32 reg;
+>> +    u32 reg, val;
+>> +    int asid;
+>>       /* read the "reg" property directly to get the relative address
+>>        * of the context bank, and calculate the asid from that:
+>> @@ -646,7 +648,17 @@ static int get_asid(const struct device_node *np)
+>>       if (of_property_read_u32_index(np, "reg", 0, &reg))
+>>           return -ENODEV;
+>> -    return reg / 0x1000;      /* context banks are 0x1000 apart */
+>> +    /*
+>> +     * Context banks are 0x1000 apart but, in some cases, the ASID
+>> +     * number doesn't match to this logic and needs to be passed
+>> +     * from the DT configuration explicitly.
+>> +     */
+>> +    if (of_property_read_u32(np, "qcom,ctx-num", &val))
+>> +        asid = reg / 0x1000;
+>> +    else
+>> +        asid = val;
+> 
+> As a matter of preference (and logic) I'd have written that as:
+> 
+> if (!of_property_read(np, "qcom,ctx-num", &val))
+>      asid = val;
+> else
+>      asid = reg / 0x1000;
+> 
+> LGTM otherwise
+> 
 
-qcom,usb-hs-phy.yaml seems to be for ULPI mode phy and the
-driver we are introducing is for UTMI. We would have to
-modify phy-qcom-usb-hs.c to accomodate M31. Will that be
-acceptable to phy-qcom-usb-hs.c owners/maintainers?
+Will do!
 
-> >>> +
-> >>> +  reg:
-> >>> +    description:
-> >>> +      Offset and length of the M31 PHY register set
-> >>
-> >> Drop description, obvious.
-> >
-> > Ok.
-> >
-> >>> +    maxItems: 2
-> >>> +
-> >>> +  reg-names:
-> >>> +    items:
-> >>> +      - const: m31usb_phy_base
-> >>> +      - const: qscratch_base
-> >>
-> >> Drop "_base" from both.
-> >
-> > Ok. Will drop qscratch_base. This is in the controller space.
-> > Should not come here.
->
-> Then drop reg-names entirely.
+Thanks,
+Angelo
 
-Ok.
+P.S.: Sorry for the very late reply.
 
-> >>> +
-> >>> +  phy_type:
-> >>> +    oneOf:
-> >>> +      - items:
-> >>> +          - enum:
-> >>> +              - utmi
-> >>> +              - ulpi
-> >>
-> >> This does not belong to phy, but to USB node.
-> >
-> > This is used by the driver to set a bit during phy init. Hence
-> > have it as a replication of the USB node's entry. If this is not
-> > permissible, is there some way to get this from the USB node,
-> > or any other alternative mechanism?
->
-> Shouldn't USB controller choose what type of PHY type it wants?
+>> +
+>> +    return asid;
+>>   }
+>>   static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+> 
 
-Will remove this. IPQ5332 uses it in UTMI mode only.
 
-> >>> +
-> >>> +additionalProperties: false
-> >>> +
-> >>> +examples:
-> >>> +  - |
-> >>> +    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
-> >>> +    hs_m31phy_0: hs_m31phy@5b00 {
-> >>
-> >> Node names should be generic. See also explanation and list of examples
-> >> in DT specification:
-> >> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-> >>
-> >> Also, no underscores in node names.
-> >
-> > Will change this as usbphy0:hs_m31phy@7b000
->
-> This does not solve my comments. I did not write "label" but "node name".
 
-Sorry. will fix it.
-
-Thanks
-Varada
