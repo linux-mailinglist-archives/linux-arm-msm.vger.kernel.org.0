@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD943736A4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 13:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4ADF736A6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 13:10:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232505AbjFTLFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 07:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43068 "EHLO
+        id S232313AbjFTLKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 07:10:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232518AbjFTLFs (ORCPT
+        with ESMTP id S231366AbjFTLKo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 07:05:48 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BCD110DB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:05:45 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b46773e427so45761431fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:05:45 -0700 (PDT)
+        Tue, 20 Jun 2023 07:10:44 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DA4101
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:10:42 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f769c37d26so5969354e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687259141; x=1689851141;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VnfEhtDDR79cB+JFtObt/sWNnZM5L1YdVH546wXBYs8=;
-        b=wU/8UQ6nXqxYFGp68FTCKcSnWpb/gYUxxrIcc9aDr0TNcWJ77k8M0UvXKKLLAYHxEP
-         3+c7TZaiHOynszRfHfpALcvykypFvwaWo7ycXt9/Uy4G6xH54leb/97SsImTBfG60dXl
-         QC9f89iF4xo4zfECxO9lOmdeIAHXG6cTJZvyOHQNe9hv/Q0We+RVWmigN9TU5r5J064g
-         KzpOZzj0QuPwkLZzfwuHz3IXsLJerYg4kYlykkR22dkIYmZeFT0RSD0xB6Wo3arQLPTI
-         R9AaGI9sqELUsOtF8F/zBneiPZqz9l4P0GTzZGXmIDaocBGCt4Z0GtxnUjK3yMdSO14L
-         QOKA==
+        d=linaro.org; s=google; t=1687259440; x=1689851440;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IoT2GR/Uoi2aGgdfRzromK+7BmskPgx1PJTo67yINu0=;
+        b=SjWj58M0HawcUhEnQUhjDM2rl2u3ACNUOQeMLzsfSi0fTfnUMqvhrYeKRIRujPz8eW
+         O7EEYwV0QGDFDPaCpuyfIx23shDmD5szRESu4SFz70X5NOVfeNgexNX7qzjUAgWn4v6h
+         FwyolvZ1znYI46bFZgQcjoaCwKRHBQ2+Imxbz9y139MVOilQxeRvXK2XLDyqp3JUwCKU
+         LUcRfiEI6VcFsvIQ9Ll7TwR/L9A7nVmyDthePNoE5cr6DgJ9mMcA70dsrYIJK9GWyuxY
+         hLgXz/e7892voLDN5mNhNxyw3NuYJMK2nO8PWJZu4VKw7rMMyzFK0WzB0ebL9rcW0Rv8
+         BQKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687259141; x=1689851141;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VnfEhtDDR79cB+JFtObt/sWNnZM5L1YdVH546wXBYs8=;
-        b=ds9PlQdmRS4pI9tf3GZ9jHDbPOTWcntcwnlA5//uaythf2DdP1Od8+uExH0p97lvGE
-         SJHElfyCl5DC7+nHdoomzPWRGulUY0ahG53DujWmX4nW2sgoCJ4hncsU/GTkj0QmLApv
-         rYBmrKDiuKb4KxkRFh56YU0Kk5mJajdtUITRTonpkjl6Aqm5QwkxQC1j535z759DeOSI
-         UZWaj7wy09KQ/vACShR3EMdJuX1xG90cjentlAcU4I81V2t/altMKmhIGqEy0Aa7JL1l
-         t8wSgMG7yVH+H1LsEVOZkgC0Trv8Yf1cM1UYEAqOCR2ou2fDWDrOHPDaSiCuCfi+In+n
-         3QyQ==
-X-Gm-Message-State: AC+VfDzGxCF/ezBbkUAhYqAqVefYnQiLN7cuc9+oARPsrg6Rnny2T30X
-        9JEjiZ1rWTneWnI94FITKAyslA==
-X-Google-Smtp-Source: ACHHUZ5z0plB70c5G+uV6as3l0ESzn6YBCngAMY2mllmoSMD9KtsOE7+Low5QUJYp2bDbucXoMEmZA==
-X-Received: by 2002:a2e:b1c7:0:b0:2af:c9d8:87b4 with SMTP id e7-20020a2eb1c7000000b002afc9d887b4mr7761776lja.29.1687259141664;
-        Tue, 20 Jun 2023 04:05:41 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687259440; x=1689851440;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IoT2GR/Uoi2aGgdfRzromK+7BmskPgx1PJTo67yINu0=;
+        b=NbpAvKjs/njoJJ7HOx7q9I6VwAXcqSPElmnvkyEmclZkGoZheNBjf36N2GzVIPdtYT
+         0rb56yvkKTJg61fziJD1aeg7tG8wrYEv4r+nNiw7pvgfKOP/g5tX8+mFoYg2ydPMXPve
+         ZUH0cFnplwyzt19scnGiRR67RBnowWpi874rywiEeROE+gwYrcGbZJNDTVRQkQBFYsla
+         XFJzzSpglIx3YtPNw54a98tcKXLjsBC9BVMyhWB+AuqkLuAroiCqzU+B4YZyIl7Pk8na
+         nSNpytPfRqIdzRCVtNeBOkH/k9960xwAR/uHzwx/XKwV2fTGEYYKYk+pANmkw+jZjuip
+         i6AA==
+X-Gm-Message-State: AC+VfDzhlWqGKwLaGYayrpAIlaJOqSRLqOBhqstmAms4WOL86R4YDoFf
+        Q8ys5wRPsaV9eJGrMHG5C7+6Tg==
+X-Google-Smtp-Source: ACHHUZ45duw0feSQ/bSA0cRlMKEsqbS53ljbZe0BeA7XZhGamKkfrfynxW77p5B4lFpDMQzTPbmzPQ==
+X-Received: by 2002:a05:6512:288:b0:4f3:a99f:1ea1 with SMTP id j8-20020a056512028800b004f3a99f1ea1mr7040192lfp.45.1687259440360;
+        Tue, 20 Jun 2023 04:10:40 -0700 (PDT)
 Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05651c008b00b002ac7b0fc473sm369047ljq.38.2023.06.20.04.05.40
+        by smtp.gmail.com with ESMTPSA id u26-20020a056512041a00b004f764716afdsm314395lfk.257.2023.06.20.04.10.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 04:05:41 -0700 (PDT)
+        Tue, 20 Jun 2023 04:10:39 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 20 Jun 2023 13:05:37 +0200
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sm8250-edo: Rectify gpio-keys
+Subject: [PATCH v4 0/6] Adreno QoL changes
+Date:   Tue, 20 Jun 2023 13:10:35 +0200
+Message-Id: <20230517-topic-a7xx_prep-v4-0-b16f273a91d4@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230614-topic-edo_pinsgpiopmic-v2-4-6f90bba54c53@linaro.org>
-References: <20230614-topic-edo_pinsgpiopmic-v2-0-6f90bba54c53@linaro.org>
-In-Reply-To: <20230614-topic-edo_pinsgpiopmic-v2-0-6f90bba54c53@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
+X-B4-Tracking: v=1; b=H4sIACuJkWQC/4XNQQrCMBAF0KtI1kbSiW2MK+8hIpM0sYGSlKSWi
+ vTuju5EpMs/zH//yYrLwRV23DxZdlMoIUUK++2G2Q7jzfHQUmYgQIq6UnxMQ7Ac1Txfh+wGrg4
+ KG21VK7xn1DJYHDcZo+2oF+99T0f69GH+zJwvlLtQxpQfn9Wpel//D0wVF1yhbvYenNYWTn2Im
+ NMu5Rt7YxOsAEBAbXSLCAasFz+AXAEkASitkwpqeajNF7AsywvpOsZDRgEAAA==
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687259134; l=3233;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687259438; l=1738;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=0Nd+IdxLUHksSzQLBMfzn4JECl7I9SIpO0+ZAvt3EYc=;
- b=bc2ot/iKUegdQZ8gQDU/jocKCigfCb/6ZURQiAG07ACxdMU4T15qYmbOuuNKWjmy/XIFsODcA
- WcfqRF27u7BCtu9Rhtu6rAvMEfD7VIxpBUkWObGlF/QBdR888aZWlFr
+ bh=eX5ZTxH/9LwPpvZBJk24YxyZZoovg4iLjcTUF8O57GU=;
+ b=eYdW9DwxTwYnC48PMFoXBqN4XCttHvlsNmTdrnieqG6ADJHwq4DgAv5Euo8IT8Sgs6KGjoJYS
+ bcv2VpLfEIlB4d9XqRNEN7KOTFEqoKzs66a9BGbti6xQED2Id7N9kH3
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,118 +88,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set up the corresponding GPIOs properly and add the leftover hardware
-buttons to mark this piece of the puzzle complete.
+This series brings some niceties in preparation for A7xx introduction.
 
-Fixes: 46e14907c716 ("arm64: dts: qcom: sm8250-edo: Add hardware keys")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+It should be fully independent of the GMU wrapper series.
+
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../dts/qcom/sm8250-sony-xperia-edo-pdx206.dts     | 10 ++++
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi      | 54 +++++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+Changes in v4:
+- Fix an issue where half of patch 1 got squashed into the cover letter..
+- Link to v3: https://lore.kernel.org/r/20230517-topic-a7xx_prep-v3-0-a3ce3725385b@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-index ea4571bf4fbf..58a521046f5f 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-@@ -20,6 +20,8 @@ &framebuffer {
- };
- 
- &gpio_keys {
-+	pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
-+
- 	g-assist-key {
- 		label = "Google Assistant Key";
- 		linux,code = <KEY_LEFTMETA>;
-@@ -48,6 +50,14 @@ &pm8150_gpios {
- 			  "SP_ARI_PWR_ALARM",
- 			  "NC",
- 			  "NC"; /* GPIO_10 */
-+
-+	g_assist_n: g-assist-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
- };
- 
- &pm8150b_gpios {
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 70da10fb9d9d..897b97db819e 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -51,12 +51,26 @@ framebuffer: framebuffer@9c000000 {
- 	gpio_keys: gpio-keys {
- 		compatible = "gpio-keys";
- 
--		/*
--		 * Camera focus (light press) and camera snapshot (full press)
--		 * seem not to work properly.. Adding the former one stalls the CPU
--		 * and the latter kills the volume down key for whatever reason. In any
--		 * case, they are both on &pm8150b_gpios: camera focus(2), camera snapshot(1).
--		 */
-+		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
-+		pinctrl-names = "default";
-+
-+		key-camera-focus {
-+			label = "Camera Focus";
-+			linux,code = <KEY_CAMERA_FOCUS>;
-+			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
-+
-+		key-camera-snapshot {
-+			label = "Camera Snapshot";
-+			linux,code = <KEY_CAMERA>;
-+			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
- 
- 		key-vol-down {
- 			label = "Volume Down";
-@@ -544,6 +558,34 @@ &pcie2_phy {
- 	vdda-pll-supply = <&vreg_l9a_1p2>;
- };
- 
-+&pm8150_gpios {
-+	vol_down_n: vol-down-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pm8150b_gpios {
-+	snapshot_n: snapshot-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+
-+	focus_n: focus-n-state {
-+		pins = "gpio2";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
- &pon_pwrkey {
- 	status = "okay";
- };
+Changes in v3:
+- Pull more definitions from mesa
+- Decode CP_PROTECT_CNTL bitfields
+- Rebase on next-20230619
+- Link to v2: https://lore.kernel.org/r/20230517-topic-a7xx_prep-v2-0-5b9daa2b2cf0@linaro.org
 
+Changes in v2:
+- Drop switching to using the GMU_AO counter in timestamp
+- Add a definition for REG_A6XX_GMU_AHB_FENCE_STATUS_CLR, may be subbed
+  with a register sync after mesa MR22901
+- Link to v1: https://lore.kernel.org/r/20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org
+
+---
+Konrad Dybcio (6):
+      drm/msm/a6xx: Add some missing header definitions
+      drm/msm/a6xx: Use descriptive bitfield names for CP_PROTECT_CNTL
+      drm/msm/a6xx: Skip empty protection ranges entries
+      drm/msm/a6xx: Ensure clean GMU state in a6xx_gmu_fw_start
+      drm/msm/a6xx: Improve GMU force shutdown sequence
+      drm/msm/a6xx: Fix up GMU region reservations
+
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h     |  3 +++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c     | 21 +++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h |  2 ++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 14 ++++++++++----
+ 4 files changed, 32 insertions(+), 8 deletions(-)
+---
+base-commit: 9dbf40840551df336c95ce2a3adbdd25ed53c0ef
+change-id: 20230517-topic-a7xx_prep-787a69c7d0ff
+
+Best regards,
 -- 
-2.41.0
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
