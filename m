@@ -2,116 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E528F737344
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 19:52:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 795A073738A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 20:11:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbjFTRwi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 13:52:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43182 "EHLO
+        id S229839AbjFTSLk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 14:11:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229957AbjFTRwh (ORCPT
+        with ESMTP id S229657AbjFTSLj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 13:52:37 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D91D1722
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 10:52:36 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-51a2c60c529so6122587a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 10:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687283555; x=1689875555;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gs0JaMdxaK1cDSK+TclP/9U4A4K+O/89wzrG8AQc9xI=;
-        b=mjmHOOAqBwAxZzSllQNJxf665tsGphMNTFp77Y2bw+g48Flapr6EP2l/0RRjjLheCf
-         +/2mjdMD+NX9c2KX0vodQwNGtZc4OOotE8XIrVYLUSUV30H1VuYoPzQDo6IQIVxfndJb
-         wbUMackc0dtA4x+jLAVPJ4i/Vm+zYpjU7aKWDYnvOBET1f9Kp6GrNbIVOVlbXREQ3M4x
-         YkhZZTLxRAQg0PdpwHvvctApE7GjwUC7uwdoVnBnWvKJcAgYwl5gu3eVWlLbKiCcHD31
-         i3rYIlTl2tgPkQF9sbnWuLqFDIDl5JVQR9rcAl291I9aeTi0Fe/HASY+xEu7Zzwa/0Hk
-         QrgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687283555; x=1689875555;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gs0JaMdxaK1cDSK+TclP/9U4A4K+O/89wzrG8AQc9xI=;
-        b=YlOLHz+ye3AOCPnM91K0oyhCfCM/vrY9KpQxa0xJn7OW4uv0vgr8GL/hLpFpTKQfts
-         hl6ijQWv+JEAeuwbkJu/Ghg28J7fnpvTVP/cos6urFG7u21ZFAZYGwssX+1kPtgPvz+U
-         yUupg1vc5l1vAc2UmhIAhoo4oVWmZQtUi0fSKBNR4zPFqb5UzveyCdngBSyAGGkEGX3h
-         hXFz6nJzCkgM+qFdwHCXhYJCuJIxjfB76J5jAsUH+rkuYIJp9qd8j2bug93YjnPx9TtC
-         hOusoB+8AcEFGFw3wGsX8bcl4AhfnaVqhS/MCRGna9IKb40ewKPA9e+lF9ifcCGlhlkl
-         GYyw==
-X-Gm-Message-State: AC+VfDw4k96zA1nSGiEtxqlGNooU3hbapNE69pKvv4/Eq6lUj46VQnlw
-        uZ/NlhDSjxnIBZv9pomXgcgl7w==
-X-Google-Smtp-Source: ACHHUZ4Em/Ifysew+y1s7Iw/jNPQp6xq0vy6/GtUvreRdDs/WnjMo3QTxpW0ZCC9qOFrwQpK8dyXCg==
-X-Received: by 2002:aa7:cb17:0:b0:50c:2215:317e with SMTP id s23-20020aa7cb17000000b0050c2215317emr8192954edt.15.1687283554877;
-        Tue, 20 Jun 2023 10:52:34 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id ca22-20020aa7cd76000000b0051bc7483bc7sm1522173edb.78.2023.06.20.10.52.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 10:52:34 -0700 (PDT)
-Message-ID: <f038a41a-bed5-38f3-889c-39c42f024393@linaro.org>
-Date:   Tue, 20 Jun 2023 19:52:31 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add
- SM8350 LPASS TLMM
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Tue, 20 Jun 2023 14:11:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E384B186;
+        Tue, 20 Jun 2023 11:11:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 80C536135B;
+        Tue, 20 Jun 2023 18:11:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B49C433C0;
+        Tue, 20 Jun 2023 18:11:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687284697;
+        bh=VTiFKT6Z64g8zSgonzXFVxQd/dWKaj0YtS/ajTUezpw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LS9BK7eLpAP73WcTFv8l0fgFL9o/t1b/Tx9HjzSZL31GlFhrnKdU/79nw0gz19IHR
+         F0XMbKzmmWsttEZNv6qCM9wgAdHjc52slCOjO8C8HgBpx/wRq96ksJqN4XFh9pM7l7
+         HjGhxBrr0+XMxG6WoIc54qNrHorg6FWBX068XtVeHmWwsg6+ck4IX1sLSJIpfy9gXL
+         aQ5D1GWVG074oRFoFM8ACxO1ifsK9XGOIakbQdtAvTiLh5lzMAbJ8K3Yu2wgEpp8jo
+         S1r24JvaWPYE7vf3TW64i4W8hQYMgD2gxBAdaO0EeCVHULsm+DJMclS2kltemUOn8X
+         5uK9wODajJxBg==
+Date:   Tue, 20 Jun 2023 11:14:51 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230619092735.20323-1-krzysztof.kozlowski@linaro.org>
- <20230620172753.GA3858158-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230620172753.GA3858158-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: icc-bwmon: Don't ignore return values of
+ regmap functions
+Message-ID: <20230620181451.idesqpkdyb2wa65l@ripper>
+References: <20230615-topic-bwmonretval-v1-1-223bd048ebf7@linaro.org>
+ <3364339a-908d-7ab6-7d62-a05ab8e67739@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3364339a-908d-7ab6-7d62-a05ab8e67739@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/06/2023 19:27, Rob Herring wrote:
-> On Mon, Jun 19, 2023 at 11:27:33AM +0200, Krzysztof Kozlowski wrote:
->> Add bidings for pin controller in SM8350 Low Power Audio SubSystem
+On Thu, Jun 15, 2023 at 11:26:13PM +0200, Krzysztof Kozlowski wrote:
+> On 15/06/2023 23:12, Konrad Dybcio wrote:
+> > As it turns out, not all regmap accesses succeed. Not knowing this is
+> > particularly suboptimal when there's a breaking change to the regmap
+> > APIs. Monitor the return values of regmap_ calls and propagate errors,
+> > should any occur.
+> > 
+> > To keep any level of readability in bwmon_enable(), add some comments
+> > to separate the logical blocks.
+> > 
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> bidings?
-
-It's actually real word...
-https://en.wiktionary.org/wiki/bidings
-
-:)
-
->> +examples:
->> +  - |
->> +    #include <dt-bindings/sound/qcom,q6afe.h>
->> +
->> +    lpass_tlmm: pinctrl@33c0000 {
+> Nice coincidence, I just had some talks with a friend about uselessness
+> (IMHO) of regmap MMIO return status checks.
 > 
-> Drop unused label.
+> Sorry, for me most of this makes the code difficult to read for no gain.
+> Errors are not real. This is some artificial problem. Solving it makes
+> code less maintainable.
 > 
-> With those,
+> If we used here readl/writel, you would not add any checks, right? Then
+> don't add for regmap mmio.
+> 
 
-It is used through gpio-ranges below:
+I agree, the mmio regmap interface should only fail because of bugs or
+things are misconfigured. Would be nice to capture that in a WARN_ON()
+or something...
 
-gpio-ranges = <&lpass_tlmm 0 0 15>;
-
-Best regards,
-Krzysztof
-
+Regards,
+Bjorn
