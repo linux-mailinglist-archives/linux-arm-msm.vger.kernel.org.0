@@ -2,167 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E06CC736760
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 11:14:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A86F7367C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 11:33:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232217AbjFTJOC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 05:14:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38176 "EHLO
+        id S232326AbjFTJd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 05:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232210AbjFTJNl (ORCPT
+        with ESMTP id S231246AbjFTJd0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 05:13:41 -0400
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2103.outbound.protection.outlook.com [40.107.215.103])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A98A1987;
-        Tue, 20 Jun 2023 02:13:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YBamWFcKEiL8fVJuYw8P7JLnvCuwl34rX3I6cfCbNLIMM61mFULX3SOH7PwtQ3Er6SDGC7rJDRAmIhqeDyO2vk2T3RnQVk8jJaTuace8Zfdb+meDmyx7WsTc0NJt9gArfGDCspc+yn98ibx/MouYD/QQI+2b8WVmNcqQEPy5AUXnntzCRGtAL3K/C7LOkDnLmStXETC3FJg1okF4K5fFxjlqovNGo3Myv76Ej6ahMRk1piEiMP7p4PdQiJfVMs1kdeANRx07vTyzX8cUpdj4ILVjDut2n0wHl58gump/j+mk9D1sYNzMvxMe7ZCIUbDxUpn0D0U5ZYa6DLSUvF3xfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qdfum3zQ41PAyJBaqzfMXeD4WG/WbS/KD/ReWKJZ84k=;
- b=bceWC8cR0xRj8kFB0s4/1S1dQI2z3dVcYLPTDWyULMKInYez7GJ4YqGWsfNt95GnFrHl8xduNCqblDJggOPDbEmlv6LyU9Vh5Vb0Euh2BTgzhd31uZOAw0TpatOBVw36v6h/yWn6dERhYArrbj4dwqr4g4MnCb+mCTDMWXuDpOFJYoDbNoPehrn7LzO+lO9/1LuPhWbwRshBdprleaaNAyCsBUFs6V6dtNkTfJ5nFfV5n1mpzuKJYRoByJb/QOSo4oM1tnUrVYLKxfKGJGXE2bO0p+Ojv/i6pjIrCrQE/ifhIpX6dENR2zNvYu/8P92YJoEys/sjhuy1raYnrB+gDA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qdfum3zQ41PAyJBaqzfMXeD4WG/WbS/KD/ReWKJZ84k=;
- b=PQ4Q5WbPJB21ZFOQkoEiPIzA9yggPuAXYzd9UWdC8eZVCskaCYbmwapNRPC17ddLiRUjGqairPsqmZIQ4X4snMvAUAsVvKqiEq8QQ9xdCRXbZ4DSz7iPXfvnEHFyef9Z85qwSmEt5Yd+MXlUMwUAMIz0QQD8RTG9mLP6o4iRl+FEcW5FPIrv+2U82Phm4zj4FJJ0TicgL2XEBUHCl7HhcAFze5B8gYTihvZE4KHlmeoR3QEQsxWfzh+80Ajf/ewp9ZlJyUMVX8H+diRFoVfWNxPJIdNPuvZPY7S9DoTUwxHxkkKDB5j8oEBHAV1I1wnytQWeJwBvqWzJHqSgxdKQUg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
- by TYZPR06MB4510.apcprd06.prod.outlook.com (2603:1096:400:65::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6500.29; Tue, 20 Jun
- 2023 09:11:56 +0000
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::fa0e:6c06:7474:285c]) by SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::fa0e:6c06:7474:285c%4]) with mapi id 15.20.6500.036; Tue, 20 Jun 2023
- 09:11:56 +0000
-From:   Yangtao Li <frank.li@vivo.com>
-To:     glaroque@baylibre.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, amitk@kernel.org, rui.zhang@intel.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        thara.gopinath@gmail.com, anarsoul@gmail.com,
-        tiny.windzz@gmail.com, wens@csie.org, jernej.skrabec@gmail.com,
-        samuel@sholland.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, edubezval@gmail.com, j-keerthy@ti.com,
-        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
-        bchihi@baylibre.com, f.fainelli@gmail.com,
-        niklas.soderlund+renesas@ragnatech.se
-Cc:     linux-pm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Yangtao Li <frank.li@vivo.com>
-Subject: [PATCH v4 11/11] thermal/drivers/generic-adc: Register thermal zones as hwmon sensors
-Date:   Tue, 20 Jun 2023 17:07:32 +0800
-Message-Id: <20230620090732.50025-11-frank.li@vivo.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230620090732.50025-1-frank.li@vivo.com>
-References: <20230620090732.50025-1-frank.li@vivo.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SI1PR02CA0014.apcprd02.prod.outlook.com
- (2603:1096:4:1f7::9) To SEZPR06MB5269.apcprd06.prod.outlook.com
- (2603:1096:101:78::6)
+        Tue, 20 Jun 2023 05:33:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF42A3;
+        Tue, 20 Jun 2023 02:33:24 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35K7qkfO030100;
+        Tue, 20 Jun 2023 09:32:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=ky61XlTFvnA7lVh5OyfvaMQHiiNipeR+9XCFDt37Dwk=;
+ b=WJJudu5ihbSzoI/GwMqVJJs6kk+CC9UMvWpbMMTS6FL7ccnm0bl1q635GOd6dEug4d1n
+ uqP6+503Oawhj8muKEIWZmukfDBV2x+8CQlGrlHSkImP+4mhuj0v32GQTAXXT50CuxD2
+ f3/T030jYt4PtLfFo+JQXYy800Nx1YB+H2GdFZHcuIiPqpzSjpD+h7eWrrP4OfPYEHt5
+ Ftw6lW4YbXGFHsGvJrYEsBcWXnKYqNxcrosY/rE9NgThETpcA02MDqQkDRnCMzPSqZq3
+ yzrh6L+XrN+Vo46Q7VRFvurCYIVANXa4SYdAJ261EuKqqeQkoBSBSb5XzpR+oDbj0rC3 cA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rb1dtgykj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 09:32:53 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35K9WqXi010487
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 09:32:52 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 20 Jun 2023 02:32:43 -0700
+Date:   Tue, 20 Jun 2023 15:02:33 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <rafal@milecki.pl>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.org>, <quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH 2/9] dt-bindings: phy: qcom,m31: Document qcom,m31 USB phy
+Message-ID: <20230620093225.GA9966@varda-linux.qualcomm.com>
+References: <cover.1686126439.git.quic_varada@quicinc.com>
+ <14f60578e2935c0844537eab162af3afa52ffe39.1686126439.git.quic_varada@quicinc.com>
+ <98960024-7dbc-91a3-75de-90b529637916@linaro.org>
+ <20230615052746.GB22186@varda-linux.qualcomm.com>
+ <aca54f67-cc09-ff4f-93ca-6973d153db2c@linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|TYZPR06MB4510:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6d045f7f-4e5f-449e-f535-08db716e652c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: CJp6l93F5kmeiKYp85Azn66JyZ+T55At5WUwQ9rsxhAwKqg5iNIEKdWV/CpLWu+SYC9Ya3LgEUGY07MFNIX+tkYsLj/3N1OgGbnbaiOLSTglPHWwy90l0mJoztBuv8EzmvpuFR0ZqENkXAfEDeTaDi5I9c/AMaqtp4j151Sr2lIx82YWaNgD85JGVqo/LdToq90N23srcvG/UojBoPWB4kw9upikXdqq2aN3InBRQJUe+yeTvXBHBk7mrKBFOGWdz0vaaBdb5dc2zXHuTqxzDXRdxLUReJAcVhZR3p/hn9RBxRX0rvXoq1dDG526CB0I2hys1RT+0pzujH3TNvx7im7GSumnMPGJvjY57gp1GvL0FxUwzYbIDaZjPG/biLMKs3uV93a8VT+pne0VkUmjMqRzOGTih5C3lrxNFHubjDLxQ6v2MXarDT4oO1FxqXTS3mcByWi8lBrWACXrNAi1jtM0NZ+ucKt/0yXPOYS0aqIKoZuq1eI4LCuqRrZNwJuF6Y5z9zUt3ekjPVk/DBnE7ANCCjkF5KC2e4ovS055cGiGCQThXb8WF6bQeUcFRMkW8cj9NhCO6RVrUIyQaRJaOyJY/hDbBMhOypCPbLJ6KjcXjku7mNcGQN0klfDJjq0jQliwMSdqp69mZzb7hFe+dubShq4oNTee4pM36lauxbU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(346002)(376002)(366004)(39850400004)(396003)(451199021)(478600001)(54906003)(52116002)(6666004)(6486002)(921005)(5660300002)(8936002)(8676002)(36756003)(4744005)(41300700001)(2906002)(86362001)(7416002)(7406005)(38100700002)(38350700002)(66476007)(66556008)(316002)(66946007)(4326008)(107886003)(26005)(1076003)(6512007)(6506007)(186003)(2616005)(41533002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?BJKCGPGnsxd1mjXatKoQDcaEeDPxLgEe1YPyjkkcGOubu/MING34Xvb98Did?=
- =?us-ascii?Q?2ZTD7+xeWL9Uc7zoGjKCMQyIbyxafG/dKM4DJ8QcjtWlP3Wn90c05F19ROav?=
- =?us-ascii?Q?bRpvong7z4anPK5yDpv1YWQLF6T7hxS3eU3RQfjHbfNfA5EAybyutfaFbmUO?=
- =?us-ascii?Q?QOQz/MpXsR8eqkTKREYi7szHqe3qCiDiyygl7f/Vfrh80wst+vvkMTMwZEDO?=
- =?us-ascii?Q?o20a0MizAxfnfJ5GkOagQVxYBDkRs8uMaKBXtunOZ38E3TYJ3W+lnrxOo9/i?=
- =?us-ascii?Q?hHq5OHMInk3yj/TCS68JEt0W8NQgfL5qHQNC/bnSGa36gO83/hc87bNrN+yG?=
- =?us-ascii?Q?h9NazhOZ1Oex0JVsBOP2nu11KNYqVy9fvp2kFfT6OKXD5eJu0KU8Ib4FKiRv?=
- =?us-ascii?Q?Id1Yxi2+jxnBUetKDT+0F7CCf6+59QqXLELZIY6LgpRDdjLbiIra7e8DfMmW?=
- =?us-ascii?Q?Z0sLnF1jLVcYfBrzb0DEgYLM/Qjh8w4ppG+hnZ6mh6vlXXl3lV75CIIgxihY?=
- =?us-ascii?Q?Lf7iaUiBkyL4oa4G6JOccoIaaogbN6Va+Y8ADfTCk/rSo2nGaOElLMOONMTt?=
- =?us-ascii?Q?7cDaOQoxpiNqdl2LY+wFcp8Q/fDb+7IAbSaCXexzJlwD62yQ8+Y4Qn5VL92k?=
- =?us-ascii?Q?puPRurdl7XM5GdMiuNhE1hWqMUyUlpr6rRuruCFKBIChPpeYWKW69LwrasBh?=
- =?us-ascii?Q?sNPLhlfDJZYdSanxn8kP2ATouBCFzV2EUOxdni5Q4AH+WdYW1uNseO14cEHN?=
- =?us-ascii?Q?LgSJRtmePItpQCYTQvzKrXVslqaQcket7yJfNQVJhVngHYnKVRocpL29y+9l?=
- =?us-ascii?Q?FIW4/HFiDE14vVYyY7KQNDgbt3sbzHD7V3dgAGM38Uj5MPt5aLYPlKDGKMUD?=
- =?us-ascii?Q?7Wi8Mqgp0UDn4rvZF49u0lWCAhKH5o0U2IupVyIJu+WvqV6pvIxnfBMOv5Eq?=
- =?us-ascii?Q?HAOO2KWtrRwS60hIz6vesX+fK9xIkdfpejwuLjI/sTPbxTcWQ4wmDiu/koyx?=
- =?us-ascii?Q?gGgTDumBiVh+wYleXJ1/YM2Vv3HPUc6SOQTfIG/Bdilhwk3pDNWR7Fh0YPbg?=
- =?us-ascii?Q?FU5Kugov9B5EYE2kjHmg+Dz9oyhJI8pmIi8WwE6OfUJFCDigkeaDT0eeQBES?=
- =?us-ascii?Q?b9LPZ59YCfzuV43Rrg4gghu4+thtDuUY4tEZMtV/M3MYFB+jBW4h3Abbm7D2?=
- =?us-ascii?Q?KXe6BIwos2cqKSvp6PP1nXF5s3YX3Cth58uRd88FOBlGoC+uenU5jYD97frn?=
- =?us-ascii?Q?0/EebRTyGqK+gHaNLvvsXNMymE6C8LLJTtP9N9o7+bAjz1UP+e0M952wQWpE?=
- =?us-ascii?Q?h8fVGx8ZZLjrSxA1O3VTvr9v55UpKHcAO46QJB3eOKs+lj6F1KCqveYOy6Qa?=
- =?us-ascii?Q?Bho2S7Jy8DV3fncy2ll/sAfyyZ2dG0XWU5HSH/iex2Fv/Un905m1ITEc5PBU?=
- =?us-ascii?Q?ofcmm0d4EKQkO29OILwmjH5ITwJuTfGIWurHCglgQLCPb9dG8PG0MDFHt4+4?=
- =?us-ascii?Q?zt9ZkwMatA3PkgHCDcvI6KVQpCShdLqjypt0vYJHPnk+3mGpzihdx7qDhzlM?=
- =?us-ascii?Q?sn7miSaaNhk3MXHot2vEYnJ8F7JbxG/TH1UriahY?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6d045f7f-4e5f-449e-f535-08db716e652c
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2023 09:11:56.2872
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: moG64Hhire5BhADZAEVPJ8vXKH2JhPqfBISmns5hzX5znhWV0JdVIvPRiXHqdonefpRoQwmgZ3r2lN2qEbco+w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB4510
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <aca54f67-cc09-ff4f-93ca-6973d153db2c@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aP3VCaexHP-8vPhMErFKpkN7DtlWrrC8
+X-Proofpoint-GUID: aP3VCaexHP-8vPhMErFKpkN7DtlWrrC8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-20_06,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306200084
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+On Sat, Jun 17, 2023 at 10:48:41AM +0200, Krzysztof Kozlowski wrote:
+> On 15/06/2023 07:27, Varadarajan Narayanan wrote:
+> >>> +          - enum:
+> >>> +              - qcom,m31-usb-hsphy
+> >>
+> >> I am confused what's this. If m31 is coming from some IP block provider,
+> >> then you are using wrong vendor prefix.
+> >> https://www.m31tech.com/download_file/M31_USB.pdf
+> >>
+> >>
+> >>> +              - qcom,ipq5332-m31-usb-hsphy
+> >>
+> >> This confuses me even more. IPQ m31?
+> >
+> > Will change this to m31,usb-hsphy and m31,ipq5332-usb-hsphy respectively.
+> > Will that be acceptable?
+>
+> m31,ipq5332 seems wrong, as m31 did not create ipq5332. Does the m31
+> device have some name/version/model? If it is not really known, then I
+> would just propose to go with qcom,ipq5332-usb-hsphy.
+>
+> Skip generic compatible ("usb-hsphy") entirely.
 
-Register thermal zones as hwmon sensors to let userspace read
-temperatures using standard hwmon interface.
+Ok.
 
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-[Yangtao: only keep devm_thermal_add_hwmon_sysfs]
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
----
- drivers/thermal/thermal-generic-adc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+> And then we have... existing bindings qcom,usb-hs-phy.yaml. Don't create
+> something similar with difference in the hyphen. Just use device
+> specific compatible thus device specific filename.
 
-diff --git a/drivers/thermal/thermal-generic-adc.c b/drivers/thermal/thermal-generic-adc.c
-index 017b0ce52122..f4f1a04f8c0f 100644
---- a/drivers/thermal/thermal-generic-adc.c
-+++ b/drivers/thermal/thermal-generic-adc.c
-@@ -13,6 +13,8 @@
- #include <linux/slab.h>
- #include <linux/thermal.h>
- 
-+#include "thermal_hwmon.h"
-+
- struct gadc_thermal_info {
- 	struct device *dev;
- 	struct thermal_zone_device *tz_dev;
-@@ -153,6 +155,8 @@ static int gadc_thermal_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	devm_thermal_add_hwmon_sysfs(&pdev->dev, gti->tz_dev);
-+
- 	return 0;
- }
- 
--- 
-2.39.0
+qcom,usb-hs-phy.yaml seems to be for ULPI mode phy and the
+driver we are introducing is for UTMI. We would have to
+modify phy-qcom-usb-hs.c to accomodate M31. Will that be
+acceptable to phy-qcom-usb-hs.c owners/maintainers?
 
+> >>> +
+> >>> +  reg:
+> >>> +    description:
+> >>> +      Offset and length of the M31 PHY register set
+> >>
+> >> Drop description, obvious.
+> >
+> > Ok.
+> >
+> >>> +    maxItems: 2
+> >>> +
+> >>> +  reg-names:
+> >>> +    items:
+> >>> +      - const: m31usb_phy_base
+> >>> +      - const: qscratch_base
+> >>
+> >> Drop "_base" from both.
+> >
+> > Ok. Will drop qscratch_base. This is in the controller space.
+> > Should not come here.
+>
+> Then drop reg-names entirely.
+
+Ok.
+
+> >>> +
+> >>> +  phy_type:
+> >>> +    oneOf:
+> >>> +      - items:
+> >>> +          - enum:
+> >>> +              - utmi
+> >>> +              - ulpi
+> >>
+> >> This does not belong to phy, but to USB node.
+> >
+> > This is used by the driver to set a bit during phy init. Hence
+> > have it as a replication of the USB node's entry. If this is not
+> > permissible, is there some way to get this from the USB node,
+> > or any other alternative mechanism?
+>
+> Shouldn't USB controller choose what type of PHY type it wants?
+
+Will remove this. IPQ5332 uses it in UTMI mode only.
+
+> >>> +
+> >>> +additionalProperties: false
+> >>> +
+> >>> +examples:
+> >>> +  - |
+> >>> +    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
+> >>> +    hs_m31phy_0: hs_m31phy@5b00 {
+> >>
+> >> Node names should be generic. See also explanation and list of examples
+> >> in DT specification:
+> >> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+> >>
+> >> Also, no underscores in node names.
+> >
+> > Will change this as usbphy0:hs_m31phy@7b000
+>
+> This does not solve my comments. I did not write "label" but "node name".
+
+Sorry. will fix it.
+
+Thanks
+Varada
