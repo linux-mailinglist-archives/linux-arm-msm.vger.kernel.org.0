@@ -2,121 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDC57737527
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:36:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61988737545
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:47:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229665AbjFTTgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 15:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60496 "EHLO
+        id S229696AbjFTTr1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 15:47:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjFTTf7 (ORCPT
+        with ESMTP id S229549AbjFTTr0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 15:35:59 -0400
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2080.outbound.protection.outlook.com [40.107.243.80])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46C0DE58;
-        Tue, 20 Jun 2023 12:35:58 -0700 (PDT)
+        Tue, 20 Jun 2023 15:47:26 -0400
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-db5eur01on2082.outbound.protection.outlook.com [40.107.15.82])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72DF310F4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:47:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com;
+ s=selector2-armh-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3X5rY/jDQsRY7rrJjCc2n7t6LaF9hpWs9nkrJCxQW7Q=;
+ b=gWMTUBAttDOGQFvjKaf1YKTpipGuxEeOC9tXt/WE/t95RgfJZ2cXmcTY4ZQZPud0RqbWcYz34oGLhuzTLH9L0hBAkkm4SUYHDFnbQvNFpMSKwlHS1tF/jafAbk0O9VU3MJP21UYE+VnFV1V2Bt4uhzS3uV26FkJ+7NCuREvdplY=
+Received: from AM5PR0101CA0020.eurprd01.prod.exchangelabs.com
+ (2603:10a6:206:16::33) by AS8PR08MB10025.eurprd08.prod.outlook.com
+ (2603:10a6:20b:630::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6500.36; Tue, 20 Jun
+ 2023 19:47:21 +0000
+Received: from VI1EUR03FT012.eop-EUR03.prod.protection.outlook.com
+ (2603:10a6:206:16:cafe::36) by AM5PR0101CA0020.outlook.office365.com
+ (2603:10a6:206:16::33) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6500.37 via Frontend
+ Transport; Tue, 20 Jun 2023 19:47:21 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 63.35.35.123)
+ smtp.mailfrom=arm.com; dkim=pass (signature was verified)
+ header.d=armh.onmicrosoft.com;dmarc=pass action=none header.from=arm.com;
+Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
+ 63.35.35.123 as permitted sender) receiver=protection.outlook.com;
+ client-ip=63.35.35.123; helo=64aa7808-outbound-1.mta.getcheckrecipient.com;
+ pr=C
+Received: from 64aa7808-outbound-1.mta.getcheckrecipient.com (63.35.35.123) by
+ VI1EUR03FT012.mail.protection.outlook.com (100.127.145.22) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6521.21 via Frontend Transport; Tue, 20 Jun 2023 19:47:21 +0000
+Received: ("Tessian outbound 5154e9d36775:v136"); Tue, 20 Jun 2023 19:47:20 +0000
+X-CheckRecipientChecked: true
+X-CR-MTA-CID: aa72f2272aa0703e
+X-CR-MTA-TID: 64aa7808
+Received: from 9e2fbc2a98ab.1
+        by 64aa7808-outbound-1.mta.getcheckrecipient.com id D38702D4-9053-4F3D-B9A6-94CFCB864EB1.1;
+        Tue, 20 Jun 2023 19:47:13 +0000
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com
+    by 64aa7808-outbound-1.mta.getcheckrecipient.com with ESMTPS id 9e2fbc2a98ab.1
+    (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384);
+    Tue, 20 Jun 2023 19:47:13 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hj/ARfgXqHnOoog901fNHp+59OlNUB16o6f4j+KZWVJfUE9gtzaQ1B8IkoUrVw7Nv7dlhC2GWF3+WmHlid5LHeshO09tb01xxED3QAnOJ4EQWVxYm0PyvSL2H47u6komni/kI/yobuaME8TebtQgjqXQYNdmztJZYhCVXjFGcby4E2AUzy1rgix+Wdm9BHjQP4KnEkWj8h9Oi2I5Cs4ns+reGJhtGL1BsujDuTBvbWAWrWu7orF2pFVr4768JOzbmItsSAMs5Cr6dMvXZ+iGGyFfJFKZRx45zb0v2xD9vY7EpngTarcCwDAyLq5YSXOGsuyE3GcC2q+SclR9FZxgaQ==
+ b=Cfi5XttCSJOJ8RaqtXUXE6PqrfzAwRw+UwzD9GiA0xSXZTPbWJTPXr1vdLTUuzy8ICeLBA7HxQ+s9o+UeeXAbO//QNJkdLQ7ll7hrkCYApYeDmQ1sZ+qbXxuwsV0EPcl32fgNdN+q+6iOOkPEiTcfKG8NJQihiDDigPCePYD+0sXRBzC0pQCCj40NOEdKSWHK8je81LIhpwQc/6MvdznI/pGxSzjMWl6tgUlG0arH6IC2ZwC6c/aUb79p6dzT8IfPbptBNkKcwpZBloUR0Vw0esLoTiFPZbuBnuacycJ0+5i1ePERauxzsIqiNw5kR4hANfUKZcMVWZTsFJBN5zOHw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2C/xiWvbyJUCUowY6eJwd1U1/qgcepfIdLTM9OHUdbw=;
- b=QtlaXHxiKwcq8JmFMU3frjoT4ULNtcZhhzmZqQ4GEGm71+AhELbInvwJE6vD0fvdwVFSguZaZXcMVAsb32Uj2sIp/I++SLpo0xqYvLzAmxtkwlJQ3iHwCsVBFBxt8fbSBlxj8UrbMK6ylU3AyMcO559Tf+TCdXcVzdZzBL2ApjRNGZLjLrznKgTtqNin1lHYZ6omRwaoTepH0ydwAl8HfcNJY5hjXn4YTEv/WMQ7Qc/BG74/u8a2yveSHnWWKuxr57LNKzC35sOeY/68QFCFBTEJnYwoFeKifrkHpmZ7Jk34cZspU4sge/K/L2bN0PlW/L2YYX2LdPvrN/HNDMq0+Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=labundy.com; dmarc=pass action=none header.from=labundy.com;
- dkim=pass header.d=labundy.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=NETORG5796793.onmicrosoft.com; s=selector1-NETORG5796793-onmicrosoft-com;
+ bh=3X5rY/jDQsRY7rrJjCc2n7t6LaF9hpWs9nkrJCxQW7Q=;
+ b=SfzwOqj3/RUWsNXeg4MobtC4lOwamYq2dmb+8sILdu1IpLCqzTg0hl8g3AhvTxkbWC2G5ZjG2zxx+fb5OMoiCAMdvAil00MLJRek8u/O1qsE+yVOAfYD6DwMGwosjSbCcGjZfGYOOiPpOdqqaEH1KgNpdRFEe+xhbimtlqHcX8GhwKRd9QfIobyPlBUDKwsgKF/Gsk0G2/2mCGo/vyTVtbeVkvEt+KhvUr5C8GvwDsQ9CueWKeo/zJn+EjrV1VMjp1tdfC2mhbhdojty/X/ti4QM45RWpeKGZR/cUdNskKM2p9LE2QXQh4As9DuQKJxuB1ob/95s21apNehQaWLfQQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.67.248.234) smtp.rcpttodomain=linaro.org smtp.mailfrom=arm.com; dmarc=pass
+ (p=none sp=none pct=100) action=none header.from=arm.com; dkim=none (message
+ not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com;
+ s=selector2-armh-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2C/xiWvbyJUCUowY6eJwd1U1/qgcepfIdLTM9OHUdbw=;
- b=I+2cobgJghPo9cFKJUEeEB8cjMm+auT+T/WcVsnZlzYMuh+rB8vmDVz26RI2WxeqwxJLC/zRf2nsLKGGqWmkxziIzuse5E7YmL3iBu0xfyuCC94vXVUZOSOuIgqYkQei8e5xdInyfOrXYgOHEzBFEZDEEViI6UDhNgOvEq8f0go=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=labundy.com;
-Received: from SN4PR0801MB3774.namprd08.prod.outlook.com
- (2603:10b6:803:43::21) by SA1PR08MB7165.namprd08.prod.outlook.com
- (2603:10b6:806:184::20) with Microsoft SMTP Server (version=TLS1_2,
+ bh=3X5rY/jDQsRY7rrJjCc2n7t6LaF9hpWs9nkrJCxQW7Q=;
+ b=gWMTUBAttDOGQFvjKaf1YKTpipGuxEeOC9tXt/WE/t95RgfJZ2cXmcTY4ZQZPud0RqbWcYz34oGLhuzTLH9L0hBAkkm4SUYHDFnbQvNFpMSKwlHS1tF/jafAbk0O9VU3MJP21UYE+VnFV1V2Bt4uhzS3uV26FkJ+7NCuREvdplY=
+Received: from AS9PR06CA0673.eurprd06.prod.outlook.com (2603:10a6:20b:49c::17)
+ by DU2PR08MB7357.eurprd08.prod.outlook.com (2603:10a6:10:2f0::9) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6500.37; Tue, 20 Jun
- 2023 19:35:55 +0000
-Received: from SN4PR0801MB3774.namprd08.prod.outlook.com
- ([fe80::b94e:6032:56d4:35b2]) by SN4PR0801MB3774.namprd08.prod.outlook.com
- ([fe80::b94e:6032:56d4:35b2%6]) with mapi id 15.20.6500.036; Tue, 20 Jun 2023
- 19:35:54 +0000
-Date:   Tue, 20 Jun 2023 14:35:49 -0500
-From:   Jeff LaBundy <jeff@labundy.com>
+ 2023 19:47:12 +0000
+Received: from AM7EUR03FT008.eop-EUR03.prod.protection.outlook.com
+ (2603:10a6:20b:49c:cafe::39) by AS9PR06CA0673.outlook.office365.com
+ (2603:10a6:20b:49c::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6500.37 via Frontend
+ Transport; Tue, 20 Jun 2023 19:47:11 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 40.67.248.234)
+ smtp.mailfrom=arm.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=arm.com;
+Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
+ 40.67.248.234 as permitted sender) receiver=protection.outlook.com;
+ client-ip=40.67.248.234; helo=nebula.arm.com; pr=C
+Received: from nebula.arm.com (40.67.248.234) by
+ AM7EUR03FT008.mail.protection.outlook.com (100.127.141.25) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.6521.21 via Frontend Transport; Tue, 20 Jun 2023 19:47:11 +0000
+Received: from AZ-NEU-EX03.Arm.com (10.251.24.31) by AZ-NEU-EX04.Arm.com
+ (10.251.24.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.23; Tue, 20 Jun
+ 2023 19:47:10 +0000
+Received: from e124191.cambridge.arm.com (10.1.197.45) by mail.arm.com
+ (10.251.24.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.23 via Frontend
+ Transport; Tue, 20 Jun 2023 19:47:10 +0000
+Date:   Tue, 20 Jun 2023 20:47:08 +0100
+From:   Joey Gouly <joey.gouly@arm.com>
 To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] input: touchscreen: add core support for Goodix
- Berlin Touchscreen IC
-Message-ID: <ZJH/lTA0TWmdEfJN@nixie71>
-References: <20230606-topic-goodix-berlin-upstream-initial-v2-0-26bc8fe1e90e@linaro.org>
- <20230606-topic-goodix-berlin-upstream-initial-v2-2-26bc8fe1e90e@linaro.org>
- <ZIvTfE5O31NKnywd@nixie71>
- <a4f36bef-7c2c-08f4-bf93-fe1f0f1d315e@linaro.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a4f36bef-7c2c-08f4-bf93-fe1f0f1d315e@linaro.org>
-X-ClientProxiedBy: SA9PR13CA0179.namprd13.prod.outlook.com
- (2603:10b6:806:28::34) To SN4PR0801MB3774.namprd08.prod.outlook.com
- (2603:10b6:803:43::21)
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        Bjorn Andersson <andersson@kernel.org>, <nd@arm.com>,
+        <broonie@kernel.org>, <catalin.marinas@arm.com>,
+        <james.morse@arm.com>, <mark.rutland@arm.com>, <maz@kernel.org>,
+        <oliver.upton@linux.dev>, <shuah@kernel.org>,
+        <suzuki.poulose@arm.com>, <will@kernel.org>,
+        <yuzenghui@huawei.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v4 16/20] arm64: enable Permission Indirection Extension
+ (PIE)
+Message-ID: <20230620194708.GA585062@e124191.cambridge.arm.com>
+References: <20230606145859.697944-1-joey.gouly@arm.com>
+ <20230606145859.697944-17-joey.gouly@arm.com>
+ <c3598e8e-46a5-c8d6-bf9f-9fb8f6cd346e@linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR0801MB3774:EE_|SA1PR08MB7165:EE_
-X-MS-Office365-Filtering-Correlation-Id: 371c3e5f-8c36-47d9-1acd-08db71c5905a
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <c3598e8e-46a5-c8d6-bf9f-9fb8f6cd346e@linaro.org>
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: AM7EUR03FT008:EE_|DU2PR08MB7357:EE_|VI1EUR03FT012:EE_|AS8PR08MB10025:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8d83225e-8cf5-4901-c167-08db71c7298c
+x-checkrecipientrouted: true
+NoDisclaimer: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: Qfy9xu5BidToiLQ4SVP9AVaR1ywwLVs2F8w88d7AUPgFA9w1ZDbJkDfkoZ9JdX5Ui2EmIHdIQYL9hll9axxk9XrD0jhhm+f+tW2+MF39vLF4GVa5IXlGQu23ZoTgzPi3tvr2iu6xJZtNxNpqOqzBoKdrZSSoNtasTOBEuGP65m9N9jgzsE++DueoiPy/tYURnd2N+Gn+6dVuinFXw/9dQgZjfGOgVuy8oAONNVx9cqDX9sVZxHl6XfMNkWckwrV0TT2MJQDUn/PcitCM6bIKUxci9wRZ7/PoJtzuU1mdBp2SyA2N/HdChXvahM4fzelFl4J1tFii7/RxaQu8eFrqU+GvIRQcWKETDPLRYMCQ/vp9NlxIGB8/CefSjlwwfmCnzOCSole2ZGhjJ6MTqzySLkeyYC9Q9u3CeNSv4+RZ+EfcEqSMiHm+y06fzgWMYORiO/1rzhlnK02+a8MGPB9N+O4gjxZhCrs9+Xm8oVeYHr+FwZfhX8XBzLRmqC6yYmi9jrkL3/bQPN88YfqN4YyNtcwIm5A1iTYR/9PgahjEBTiV2UnlddNvc6AfKozkCHlgLxFw24+IvUlZSey2T5vri+xF2wYpBEe5zIFpUQx9w/tbWBiUJAexe7JmmuM+PgWmt/I4GKb3ud6UYkiCOl4vZ4QmMpFhm2DXhAZmY5UVuVh3Ro0XmxNob+kKE1+HePod4yt1nP45ND5RJzapkDkft1CzYsOMQlwjenO/Mau3Xeo4R8eZcOp32rGehCA8tav++y76+sOrHDFuEh+jOwAxOw==
+X-Forefront-Antispam-Report-Untrusted: CIP:40.67.248.234;CTRY:IE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:nebula.arm.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230028)(4636009)(376002)(346002)(136003)(39860400002)(396003)(451199021)(36840700001)(46966006)(55016003)(36860700001)(2906002)(47076005)(336012)(83380400001)(70206006)(8676002)(7416002)(478600001)(426003)(7696005)(54906003)(70586007)(5660300002)(53546011)(8936002)(44832011)(6916009)(316002)(4326008)(26005)(1076003)(41300700001)(186003)(40480700001)(82740400003)(356005)(81166007)(82310400005)(33656002)(86362001)(21314003)(36900700001);DIR:OUT;SFP:1101;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR08MB7357
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: VI1EUR03FT012.eop-EUR03.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 3ae12c21-0c32-4fd4-04b7-08db71c723ea
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: LAGMLPmhtCPur0Dn8EML0CusWRDmKiszAYOqlzYyrR29ulwzAgkmA5YUy7ozupUZ+Jlj7tSyBFnUHikN0kNNxJlXQA4He3ODse9opJvM0M7YbqG5iL+9CFN4TqMFjTivbtvJjSUlnvy7GMeZt119h8lR8/dW+oJI9yqg8om2e7QsZlcoWgBx2OIVi3VqbTOCoXfIVt4OTrHWph6+DiBZFPpuvN+FegSsKnWmIaHY+NeUvLKgQcj3y8kTlF0FL29aLKHJn/LOa7sogWSGf1usum9+RfpYPqDCQR5qRQOW+D6BUyEZk6T970mu5gIsjJJCzYcl0UNhl5Rz2fbgL0k5A6uNt7he3XnaAY+zEGVZ560BePI9dmMJWs1ranPGnIhmF2wjtCjKAGPiKsjwjxOUGlrVwVEIEkknD6unCXJvGyyJdTWgkeUOASexPYilNI7HlqvQj+l/A3t/awzjEJLL7whMK9f6TNwca+5TA12kczvo5sSXAsqlOUmv7//veAuaJKMwJ9h+g385fjHSmCtkl/PWPh/d1nURJbPa3ToWWvx+nB3AI/N7/sTjGXCMP6D+
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR0801MB3774.namprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(7916004)(366004)(136003)(396003)(376002)(39830400003)(346002)(451199021)(7416002)(33716001)(86362001)(83380400001)(38100700002)(41300700001)(8936002)(8676002)(66946007)(5660300002)(6916009)(66556008)(66476007)(316002)(26005)(6506007)(6512007)(9686003)(6666004)(186003)(6486002)(478600001)(54906003)(4326008)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?b9aSmzld9UHsNN5wjdMR4Ug8bXDPDK0QNpeKZh98hktJhtxK3BUBXdDoQd6/?=
- =?us-ascii?Q?plN8jLM1TQL912Kkb/zF088Sq9SCW49qtXEUy04b9/61fP/Co6qdqdQbFYb/?=
- =?us-ascii?Q?cli24GDc67ML6RQD9grl3WSDqhRsN9HkxqVq6NwBvKMG3wB2s15jcj7rYRyf?=
- =?us-ascii?Q?maTgrsWMP7li7hv0xtCt6PvHXMU2XuInp1dPXnNG0MHWH005saH88qnLSryQ?=
- =?us-ascii?Q?r51k3gkeB1BoOhXeQpMD0rrd/0LVWupN6Xx9pLrearglnwx8PVS1rFeQWGOj?=
- =?us-ascii?Q?GpHTBZ1DLSEPEzitflvJoGWhAYZl2SsKWo5Va+SBOwjR3sojmPHZyExzO4/r?=
- =?us-ascii?Q?wf9I7h/8pxkMUuV7GmkfUpZM+5KzrfijqwYLxEJMnSVLEF8iRRAAwpiS5r2P?=
- =?us-ascii?Q?StuduK6RYUgE1XfmxQx+zEQ8WFH7PhcuWDTUbMkYG0ArUC7CgGoIW9IF7c8i?=
- =?us-ascii?Q?3bgTKvkUODu3TgAJSQ4vDEimjWT1MGb0ExT2vxg5yPOwW4zSiOK3L3Khrete?=
- =?us-ascii?Q?d0XXf6vTsqCsCALY9x5gWiS5ZUo+xNwt6UPPYEPLiWPZAC3gh5KtHV5IPbT6?=
- =?us-ascii?Q?qodo/6/TcYq2DWnE3Z+bniVP/D8pPJkbOTjcdghOYESI8lmB6CrykUnThsHM?=
- =?us-ascii?Q?wb6erD7LihiAGTF7cQBBzDaEjcEk7CKdwwiAWNSTa3z2E1c8lc1DssE9DLOZ?=
- =?us-ascii?Q?axxYAupYslfN+eEm4fSafF9PKkwszrNx/y5E11w52nrogKM7sNhgwHPm4TZV?=
- =?us-ascii?Q?V3iQtyypvQ1AIn4H69DO1hbRO/2VjZQn0SHwpLs7qA9f7hui8XO9gGXEennm?=
- =?us-ascii?Q?1HXOV7hMM2W6K9zQtEIDLvOIoUefV3GK1sYU+j2NXprchFLhLjRl8mhX3zFE?=
- =?us-ascii?Q?xJtd7Yd0hJsIcmEdHAHXNlAsXDrKNLulY58By1YxLaCnH+2gDr4s2IAuRODY?=
- =?us-ascii?Q?546+QPwAYnWexiImY8KuYT8Eg7akt/e2DuVEz1JmAC/m35ABcTAicA2Fsx6V?=
- =?us-ascii?Q?GKrKjDhF1qLzRHtyPpnqlGo5RP2ItlkGuNdt7AhUUXkpXZ1QfaGndMzvXxiI?=
- =?us-ascii?Q?/IXkK/d7sFDc0lcsovC48F39+HeUyhMykjKiwYWsx3DirBZUFK7ZvKtTeCXM?=
- =?us-ascii?Q?ZnpDr9K30BP2E7by6tFCSFK36N3P78wfSybu9h3MKHUAlvlapJoa8TdGyoB/?=
- =?us-ascii?Q?pcp7KeyJAsCYu2GG5UFs5PbFsq4Yq0ZY1+FfocfDSMHO7eKM9yzdNiF4RzlR?=
- =?us-ascii?Q?EoA7Py3O2hwG9MOlH6b/AFGqECJPy1BwRbH6z7eNVTH+O2+v7VVjpakXItjj?=
- =?us-ascii?Q?DUqoVYIWa57kP9P2W1xtuX72bvB0d9eZ5IC2MjXDqdZXiP6RlPQ9AR2Kwl+x?=
- =?us-ascii?Q?GrOn+y03rcuhoIg5Cx+w8JnerdwSdUS5bQ8GeH0iwxrjSSyx7+jpxIXDMKZL?=
- =?us-ascii?Q?MLM+toESI7xtKax63UNXEVBhsroVhn1345PoORH1tz50ZfxEM+gJcrJBUz1h?=
- =?us-ascii?Q?Gph/+T9N9pZcPOaovC7OiGNH9G4omV/8c2pGRm1xVC7200DlOMQFqTYpm28/?=
- =?us-ascii?Q?XMqZOMsT7Ry7wprNeE+mXp/u4r5ecikML+VpTm9i?=
-X-OriginatorOrg: labundy.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 371c3e5f-8c36-47d9-1acd-08db71c5905a
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR0801MB3774.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2023 19:35:54.8840
+X-Microsoft-Antispam-Message-Info: +T83kx0lS9yaizuP5XaXkKedc4RpG3tDJiPATicgxWIiVccWr+cYsplpO+DmnBEoYlhXWTJizVgepGdYK7d5m6L6oFdmDDhV9GwTMwZ/YlSbbu8wbPeBrwOGc5AVeI1gCOwX4WcpXFZkmaxjsekaMvbg/SUy+6ghqv2RpIOfL4/UHg2CHtme1n5dinzGThfa+YG62pEjdzVJuXw8tPHXybRsZQKhObEkuqIn6rVywA2wg5BfUuRJ+fR+LETQBO/T46+nL0cjatLSC3xX80+gWyUCGhe/UVIZwe+v0ceAeAU1EPnm3thBwVDov4DVSRliOnNsrIxySFWPZF6sJlw0DacbXQc+pIHJjzIFZ7AIvZvC1CtrsLGD8s2fd1ofSJstLxGHUM9Wtkjxllp85l2fs2sAEL3ONDV+MqnpxX9Xj8WZs/GEtsz66lzs09jCBDc6Z1V8rJYTuajR0X00HWyicsOibc4VxOszmtwnt2GYKFRyZmiXg7P+hjX/255XO0Zv3DyoCZT546PNC3N1qYvSgQiRV/2TGZm/L6ZwiJJIO3Vf6EhRM06oSE+abMHJ/6zSidCIOOQvBi+tdrw2MzsUVswXjUDDRZWKavRBUlymWwkhE4OJfo+C6UvP3nQLb22QOQSuJIpRMtncNM7iCN8K3+SrIkDpcoI9llHz03BiGUpk5vVL6bdKWhdkGAys0SfAANWtGDPArHnZ+IUJhCFtqt7Dpd/KJ3tvlc3N02eP88RgCgruQF7sDeLFpr2XxuH01pP88puKv1xr3ckz7ftbNg==
+X-Forefront-Antispam-Report: CIP:63.35.35.123;CTRY:IE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:64aa7808-outbound-1.mta.getcheckrecipient.com;PTR:ec2-63-35-35-123.eu-west-1.compute.amazonaws.com;CAT:NONE;SFS:(13230028)(4636009)(376002)(346002)(136003)(396003)(39860400002)(451199021)(46966006)(40470700004)(36840700001)(478600001)(186003)(7696005)(86362001)(1076003)(53546011)(26005)(54906003)(426003)(316002)(336012)(82740400003)(83380400001)(70586007)(81166007)(4326008)(70206006)(47076005)(36860700001)(6862004)(8676002)(8936002)(5660300002)(44832011)(2906002)(40460700003)(41300700001)(55016003)(40480700001)(82310400005)(33656002)(21314003);DIR:OUT;SFP:1101;
+X-OriginatorOrg: arm.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2023 19:47:21.1015
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 00b69d09-acab-4585-aca7-8fb7c6323e6f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: addZM3+N6KehIuBPSgBLBg1P2eEYo4aWg4i5uk2S5aK3hgFleGVwIravsRYWiDEICm+orSkLIrTjduIDlEZohQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR08MB7165
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d83225e-8cf5-4901-c167-08db71c7298c
+X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[63.35.35.123];Helo=[64aa7808-outbound-1.mta.getcheckrecipient.com]
+X-MS-Exchange-CrossTenant-AuthSource: VI1EUR03FT012.eop-EUR03.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB10025
+X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,FORGED_SPF_HELO,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -125,62 +156,175 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Neil,
 
-On Tue, Jun 20, 2023 at 08:38:20PM +0200, Neil Armstrong wrote:
-
-[...]
-
-> > > +static int goodix_berlin_power_on(struct goodix_berlin_core *cd, bool on)
-> > > +{
-> > > +	int error = 0;
-> > 
-> > No need to initialize 'error' here.
+On Tue, Jun 20, 2023 at 09:16:05PM +0200, Neil Armstrong wrote:
+> Hi Joey,
 > 
-> Th refactor I did needs it to be initialized at 0 because the if() always calls return,
-> but yeah it's kind of ugly.
-
-Ah, you're correct; I see now.
-
+> On 06/06/2023 16:58, Joey Gouly wrote:
+> > Now that the necessary changes have been made, set the Permission Indirection
+> > registers and enable the Permission Indirection Extension.
+> > 
+> > Signed-off-by: Joey Gouly <joey.gouly@arm.com>
+> > Cc: Catalin Marinas <catalin.marinas@arm.com>
+> > Cc: Will Deacon <will@kernel.org>
+> > Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 > 
-> > 
-> > > +
-> > > +	if (on) {
-> > > +		error = regulator_enable(cd->iovdd);
-> > > +		if (error < 0) {
-> > > +			dev_err(cd->dev, "Failed to enable iovdd: %d\n", error);
-> > > +			return error;
-> > > +		}
-> > > +
-> > > +		/* Vendor waits 3ms for IOVDD to settle */
-> > > +		usleep_range(3000, 3100);
-> > > +
-> > > +		error = regulator_enable(cd->avdd);
-> > > +		if (error < 0) {
-> > > +			dev_err(cd->dev, "Failed to enable avdd: %d\n", error);
-> > > +			goto power_off_iovdd;
-> > > +		}
-> > > +
-> > > +		/* Vendor waits 15ms for IOVDD to settle */
-> > > +		usleep_range(15000, 15100);
-> > > +
-> > > +		gpiod_set_value(cd->reset_gpio, 0);
-> > > +
-> > > +		/* Vendor waits 4ms for Firmware to initialize */
-> > > +		usleep_range(4000, 4100);
-> > > +
-> > > +		error = goodix_berlin_dev_confirm(cd);
-> > > +		if (error < 0)
-> > > +			goto power_off_gpio;
-> > 
-> > All of this cleaned up nicely. The following comment is idiomatic, but I feel
-> > the goto can be easily eliminated as follows:
-> > 
-> > 		error = goodix_berlin_dev_confirm(cd);
-> > 		if (error)
-> > 			break;
+> This patch on linux-next causes a great amount of:
 > 
-> Break ? in an if ?
+> X     xxx.xxxxxx Emulated RAZ for ID register: ISS 0x36002f
+> 
+> messages printed by the system firmware on the Qualcomm SM8550 SoC,
+> and the platform is barely usable.
 
-Ignore my comment; I lost my place and thought we were inside a loop :)
 
-Kind regards,
-Jeff LaBundy
+Not sure what's going on here, and I don't think I have access to that platform.
+The new registers are only set a few times, so not sure why it would be RAZ emulating
+them a lot. KVM context switches them, but I don't think that platform uses KVM.
+
+Could you try to bisect the actual lines? It would be intersting to know which of the
+registers that it's actually causing an issue. It should be taking the .skip_indirection
+branch, so only ID_AA64MMFR3_EL1 should be accessed, but it would be good to confirm that
+if you can somehow.
+
+Thanks,
+Joey
+ 
+> 
+> Here is the SoC cpuinfo for reference:
+> # cat /proc/cpuinfo
+> processor	: 0
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x1
+> CPU part	: 0xd46
+> CPU revision	: 1
+> 
+> processor	: 1
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x1
+> CPU part	: 0xd46
+> CPU revision	: 1
+> 
+> processor	: 2
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x1
+> CPU part	: 0xd46
+> CPU revision	: 1
+> 
+> processor	: 3
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x1
+> CPU part	: 0xd4d
+> CPU revision	: 0
+> 
+> processor	: 4
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x1
+> CPU part	: 0xd4d
+> CPU revision	: 0
+> 
+> processor	: 5
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x2
+> CPU part	: 0xd47
+> CPU revision	: 0
+> 
+> processor	: 6
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x2
+> CPU part	: 0xd47
+> CPU revision	: 0
+> 
+> processor	: 7
+> BogoMIPS	: 38.40
+> Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+> CPU implementer	: 0x41
+> CPU architecture: 8
+> CPU variant	: 0x1
+> CPU part	: 0xd4e
+> CPU revision	: 0
+> 
+> The bisect log for reference:
+> # bad: [925294c9aa184801cc0a451b69a18dd0fe7d847d] Add linux-next specific files for 20230615
+> # good: [858fd168a95c5b9669aac8db6c14a9aeab446375] Linux 6.4-rc6
+> git bisect start 'FETCH_HEAD' 'v6.4-rc6'
+> # bad: [c20f7e5e521ee3f50b064cdb441f65075ca6eb17] Merge branch 'nand/next' of git://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git
+> git bisect bad c20f7e5e521ee3f50b064cdb441f65075ca6eb17
+> # bad: [9b3c3144b2d3b5022370883e2834887fc7f3d5d3] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/deller/parisc-linux.git
+> git bisect bad 9b3c3144b2d3b5022370883e2834887fc7f3d5d3
+> # bad: [8a2e6adeea094195f860f1f5dd799c9f0015dd92] Merge branch 'at91-next' of git://git.kernel.org/pub/scm/linux/kernel/git/at91/linux.git
+> git bisect bad 8a2e6adeea094195f860f1f5dd799c9f0015dd92
+> # good: [4f826d17f9de4d708f2c07bb40a104426a22b384] Merge branch 'mm-everything' of git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm
+> git bisect good 4f826d17f9de4d708f2c07bb40a104426a22b384
+> # good: [62f97a067a7e77fd2016ce7d413fceaaf5882385] Merge branch 'for-next' of git://git.infradead.org/users/hch/dma-mapping.git
+> git bisect good 62f97a067a7e77fd2016ce7d413fceaaf5882385
+> # good: [e5047345bb6c8ee1e5d319c989dc9e3442f891c7] soc: document merges
+> git bisect good e5047345bb6c8ee1e5d319c989dc9e3442f891c7
+> # good: [cca5c2136d9ca679a9b0cdb51ce64c79cd7c092c] Merge branches 'for-next/kpti', 'for-next/missing-proto-warn', 'for-next/iss2-decode', 'for-next/kselftest', 'for-next/misc', 'for-next/feat_mops', 'for-next/module-alloc', 'for-next/sysreg', 'for-next/cpucap', 'for-next/acpi', 'for-next/kdump' and 'for-next/acpi-doc' into for-next/core
+> git bisect good cca5c2136d9ca679a9b0cdb51ce64c79cd7c092c
+> # bad: [b6719d317df3ab47dc86776c499fc1e2009e1b37] Merge branch 'for-next/core' of git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux
+> git bisect bad b6719d317df3ab47dc86776c499fc1e2009e1b37
+> # bad: [ee053e03b08e1b287d9a43152e4623a04cb24fe6] KVM: selftests: get-reg-list: support ID register features
+> git bisect bad ee053e03b08e1b287d9a43152e4623a04cb24fe6
+> # good: [86f9de9db1783b32e8812fe21c2c8cf02cf911ff] KVM: arm64: Save/restore PIE registers
+> git bisect good 86f9de9db1783b32e8812fe21c2c8cf02cf911ff
+> # good: [7df7170965a28c61f80a57b655b0cc10adb88ab9] arm64: disable EL2 traps for PIE
+> git bisect good 7df7170965a28c61f80a57b655b0cc10adb88ab9
+> # bad: [9e9bb6ede00a84275b65bb8d00812c1e24b5fa7e] arm64: enable Permission Indirection Extension (PIE)
+> git bisect bad 9e9bb6ede00a84275b65bb8d00812c1e24b5fa7e
+> # good: [eeda243dfeb996fe236c624796630c16237a18d6] arm64: add encodings of PIRx_ELx registers
+> git bisect good eeda243dfeb996fe236c624796630c16237a18d6
+> # first bad commit: [9e9bb6ede00a84275b65bb8d00812c1e24b5fa7e] arm64: enable Permission Indirection Extension (PIE)
+> 
+> Thanks,
+> Neil
+> 
+> > ---
+> >   arch/arm64/mm/proc.S | 15 +++++++++++++++
+> >   1 file changed, 15 insertions(+)
+> > 
+> > diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+> > index 9513a8d2ce0e..2baeec419f62 100644
+> > --- a/arch/arm64/mm/proc.S
+> > +++ b/arch/arm64/mm/proc.S
+> > @@ -454,6 +454,21 @@ SYM_FUNC_START(__cpu_setup)
+> >   #endif	/* CONFIG_ARM64_HW_AFDBM */
+> >   	msr	mair_el1, mair
+> >   	msr	tcr_el1, tcr
+> > +
+> > +	mrs_s	x1, SYS_ID_AA64MMFR3_EL1
+> > +	ubfx	x1, x1, #ID_AA64MMFR3_EL1_S1PIE_SHIFT, #4
+> > +	cbz	x1, .Lskip_indirection
+> > +
+> > +	mov_q	x0, PIE_E0
+> > +	msr	REG_PIRE0_EL1, x0
+> > +	mov_q	x0, PIE_E1
+> > +	msr	REG_PIR_EL1, x0
+> > +
+> > +	mov	x0, TCR2_EL1x_PIE
+> > +	msr	REG_TCR2_EL1, x0
+> > +
+> > +.Lskip_indirection:
+> > +
+> >   	/*
+> >   	 * Prepare SCTLR
+> >   	 */
