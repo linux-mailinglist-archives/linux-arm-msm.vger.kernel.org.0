@@ -2,114 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E1AE736B47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 13:43:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB1D2736B83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 14:05:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231322AbjFTLnl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 07:43:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35050 "EHLO
+        id S231384AbjFTMFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 08:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231264AbjFTLnc (ORCPT
+        with ESMTP id S230451AbjFTMFL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 07:43:32 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7639F171F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:43:31 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f64fb05a8aso6121760e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687261409; x=1689853409;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RI8zJ2B4Z2X5IcHWBKS5WPAJQqO4aBjX6c2mtTI8B2Q=;
-        b=CCTRNsgvR2UPVb1xJXQQZiCUabVKolwzo7UTGIODyexvGu2GPrMRg1g7UxVbFYZYfB
-         cP5yDros9mziT2CV7bMqFjA8wdpqFgjHjmUfNaXgECkgjdJbiXMeDZQbbEuA5NiqatIK
-         fEJ2j9ZTacjoL+sBLp1nX6WZNveNeZ0AI2MT5pXkTz6zZZ2MR3E2UwoCMhfOvVd4kWxf
-         Vjk8E4gSdo04E8YYSvjrDE9ie2YDpNieF449TUUATWR+ayI0uaGb0VZaGDon4i28HAki
-         82tLQvVV3CibPCH8uVNDzSPqeRRkak/Wuy/CwEshNRxxSv/cTmy1jYe4Qa36Zj0yPMLk
-         LPXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687261409; x=1689853409;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RI8zJ2B4Z2X5IcHWBKS5WPAJQqO4aBjX6c2mtTI8B2Q=;
-        b=I8b3Q9bntUwv8Rs1yvmC1iupfFu/fj+/fu0SnB0COrTArGsRngnrdXcrF2iO21Kun5
-         PFKWGfCruaKoyL7m0zM7FQ/vkW2QvAsAAuym1US0XqkXdbqdPph2sPLAeUL+St1z1B8/
-         TXP+PQrCiU0qHNwC0mi5gM34dgel+o7czMwuyNstWmLD0m62UzfkDyZBweGLqQhg8e+Y
-         EKRsdNweyNUbdo2dm+vk1mFGHqGwKXuO+goBBe7MFy2ytUJGzCy3B91JUo87t5HkclmX
-         McGbHw9w4dotUr7EjFCuM1Eeo8JvhWqr7oXJdAn1eLcEU8E64IAZTe7Jk9TeUDKSQSig
-         GY4Q==
-X-Gm-Message-State: AC+VfDyi8fopn9iwCE+btZMfVCMqvZqcl+KgVSK/ByGZ14533lcpZBu+
-        tI159W6QM2OWkiZn6D4oo4yb2sk6xVxLMI4Y4lY=
-X-Google-Smtp-Source: ACHHUZ4brkblTOFRd/aUUHxZjq1zHbMhvCCj6HWtCPfsrSx/hxBC/7I663A9U2A8XTdEhYztMwW5oA==
-X-Received: by 2002:a19:4350:0:b0:4f8:4919:2dd5 with SMTP id m16-20020a194350000000b004f849192dd5mr6575126lfj.30.1687261409551;
-        Tue, 20 Jun 2023 04:43:29 -0700 (PDT)
-Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id v17-20020ac25591000000b004f640b0fb04sm324158lfg.212.2023.06.20.04.43.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 04:43:29 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 20 Jun 2023 13:43:21 +0200
-Subject: [PATCH v2 2/2] drm/msm/dsi: Enable runtime PM
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230620-topic-dsiphy_rpm-v2-2-a11a751f34f0@linaro.org>
-References: <20230620-topic-dsiphy_rpm-v2-0-a11a751f34f0@linaro.org>
-In-Reply-To: <20230620-topic-dsiphy_rpm-v2-0-a11a751f34f0@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
+        Tue, 20 Jun 2023 08:05:11 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616F9E7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 05:05:09 -0700 (PDT)
+Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id CC40D1F91E;
+        Tue, 20 Jun 2023 14:05:06 +0200 (CEST)
+Date:   Tue, 20 Jun 2023 14:05:04 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687261406; l=898;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=iR0+YI1D9awhWod+Sc5nGzcONvn3jPDAmrCRI6Yrb7M=;
- b=VXt0CmEZJgqL4MCbC8F8Mojwr2O2qliYJQRqyaxSfqgW8xqo1xrUAiXuEgFa1sXkhE/W9UIrX
- bMwaD2UuaKvCaVzwZHX20kE7AInt4nccV5Tl9zu6jVR+uwOOhLf/b9q
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2] drm/msm/dsi: Document DSC related pclk_rate and
+ hdisplay calculations
+Message-ID: <6rcphtpxou2ef3z44upzfbx23ahmqc4f3eys6qreozutt7v6z6@b22a535fhpor>
+References: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some devices power the DSI PHY/PLL through a power rail that we model
-as a GENPD. Enable runtime PM to make it suspendable.
+On 2023-06-20 00:06:47, Dmitry Baryshkov wrote:
+> Provide actual documentation for the pclk and hdisplay calculations in
+> the case of DSC compression being used.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Converted dsi_adjust_pclk_for_compression() into kerneldoc (Marijn)
+> - Added a pointer from dsi_timing_setup() docs to
+>   dsi_adjust_pclk_for_compression() (Marijn)
+> - Fixed two typo (Marijn)
+> 
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 40 ++++++++++++++++++++++++++++--
+>  1 file changed, 38 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 3f6dfb4f9d5a..a8a31c3dd168 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -528,6 +528,25 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
+>  	clk_disable_unprepare(msm_host->byte_clk);
+>  }
+>  
+> +/**
+> + * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for compression case
+> + * @mode: the selected mode for the DSI output
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 ++++
- 1 file changed, 4 insertions(+)
+The
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 2f319e0eb74f..22431e106529 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -689,6 +689,10 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(phy->ahb_clk),
- 				     "Unable to get ahb clk\n");
- 
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	/* PLL init will call into clk_register which requires
- 	 * register access, so we need to enable power and ahb clock.
- 	 */
+> + * @dsc: DRM DSC configuration for this DSI output
+> + *
+> + * Adjust the pclk rate by calculating a new hdisplay proportional to
+> + * the compression ratio such that:
+> + *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
 
--- 
-2.41.0
+And in v1 you explained that it is _not_ about bpp...
 
+> + *
+> + * Porches do not need to be adjusted:
+> + * - For the VIDEO mode they are not compressed by DSC and are passed as is.
+> + * - For the CMD mode there are no actual porches. Instead these fields
+
+I feel like "For VIDEO mode" and "For CMD mode" reads more naturally, no
+need for "the", but I don't know the grammar rule that states so.
+
+> + *   currently represent the overhead to the image data transfer. As such, they
+> + *   are calculated for the final mode parameters (after the compression) and
+> + *   are not to be adjusted too.
+> + *
+> + *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
+> + *  refresh rate and data overhead as a starting point of the calculations.
+
+Nit: well, refresh rate is already part of this calculation (that's how
+drm_display_mode's clock member comes to be, and how drm_mode_vrefresh()
+figures out fps after the fact).  It's all about the per-CMD transfer
+overhead in bytes that is currently not part of the calculation.
+
+> + */
+>  static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
+>  		const struct drm_dsc_config *dsc)
+>  {
+> @@ -926,8 +945,25 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  		if (ret)
+>  			return;
+>  
+> -		/* Divide the display by 3 but keep back/font porch and
+> -		 * pulse width same
+> +		/*
+> +		 * DPU sends 3 bytes per pclk cycle to DSI. If compression is
+
+Should this be pixels (1 pixel), not bytes, just like in the compressed
+scenario?
+
+> +		 * not used, a single pixel is transferred at each pulse, no
+> +		 * matter what bpp or pixel format is used. In case of DSC
+> +		 * compression this results (due to data alignment
+> +		 * requirements) in a transfer of 3 compressed pixel per pclk
+> +		 * cycle.
+> +		 *
+> +		 * If widebus is enabled, bus width is extended to 6 bytes.
+> +		 * This way the DPU can transfer 6 compressed pixels with bpp
+> +		 * less or equal to 8 or 3 compressed pixels in case bpp is
+> +		 * greater than 8.
+
+Okay, so one can not send more than 6 pixels even if the bpp is less
+than 8, is what this comes down to.
+
+> +		 *
+> +		 * The back/font porch and pulse width are kept intact.  They
+> +		 * represent timing parameters rather than actual data
+> +		 * transfer. See the documentation of
+> +		 * dsi_adjust_pclk_for_compression().
+
+Nit: note that this is only for VIDEO mode, h_total and ha_end are
+accurately unused in the CMDmode path below.
+
+- Marijn
+
+> +		 *
+> +		 * XXX: widebus is not supported by the driver (yet).
+>  		 */
+>  		h_total -= hdisplay;
+>  		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> -- 
+> 2.39.2
+> 
