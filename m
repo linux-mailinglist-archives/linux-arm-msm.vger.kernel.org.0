@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CB357370DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 17:48:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E11A7370F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 17:51:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbjFTPsH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 11:48:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37242 "EHLO
+        id S232402AbjFTPvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 11:51:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbjFTPsE (ORCPT
+        with ESMTP id S232757AbjFTPu6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 11:48:04 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EBB7E72
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 08:48:02 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b45d7ec066so51966091fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 08:48:02 -0700 (PDT)
+        Tue, 20 Jun 2023 11:50:58 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 792A81982
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 08:50:51 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f7677a94d1so6549389e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 08:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687276080; x=1689868080;
+        d=linaro.org; s=google; t=1687276243; x=1689868243;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CB7I5deqvfRAsDiKv3nBAxEGbRsq3QHGkVHFD9w89QE=;
-        b=ToCBgX6Gtm3xbJorZrR6x03ESc42glw+gGVOIaZIna9QBCB8GDn0MpoH5E79OIciwA
-         Ri2nyCOLVKjuSBgzpGq6H2EY9wOTVz+XWiiN13e3iVGmBda8PgwMOFjfT33Hi6anHAkn
-         P1xO+T01Coh1eFvpbhmtPDY5/SoUHwVkji2jVBBNUO1VSxmTaFS/T9jx8Ii6cZNmjwM7
-         8O2RxPY39bIJaEb//AipTYGBGfkqKkVhdlfpX7ublLomaxoYdyYiH/02hueVIf/3wC1Z
-         WmD0Qs71jHa2FpMVku8CwilQrRaarc+b9XbitUzjoc43j2AV20FXZLzI1uYXr/CxYqZp
-         I2gA==
+        bh=skGRnWXbaDAmxSHLLNOUSIFxKxnOiD0CNtHSEWtxfdI=;
+        b=d4mEUkeoY/NnvUZXnubpdarO/uMzKhmVAFiMQbasHk+/hjGoeLoT7utpA00IDdOaoA
+         fMkfoPfCBWWG9pExdb+3TLMdtbIIyy46n7Fc/oIZge7F1c9MRbVUitRIeKH8DZHT7KNY
+         QXgMCvqG5cXvcaqeTlomEtbqHYIm567PAGRKP6Rbr2IGDjg80P/oJISsZ/AnBMy+CCf3
+         zzBIwhfcbeG1Yayw3KG1upHrYgkf9f/94QGwtDB/2ThjgdVpkTHMYxkYKNiVF7ZIUgYw
+         TrNaKusELPXuo1jVchHAMmH9UFlhwbA3v6fqtuHAeX19jPbFtE6UlQvqF3l5Ws9MeLQz
+         wUiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687276080; x=1689868080;
+        d=1e100.net; s=20221208; t=1687276243; x=1689868243;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CB7I5deqvfRAsDiKv3nBAxEGbRsq3QHGkVHFD9w89QE=;
-        b=cIxnpmvJHs9vz97HeqIeCU5t6/UtO6fRW77Jg5kx2zuGPbsql3E8FwjZtboqlIENy+
-         pcrgUKG4HBbjkhIGQElqZIPBMqfEP1mpNPwhCGDfolRWF9FbSMAV7sRDQA4xwxd00A9N
-         Eo+DYdHq6soaxGEztx4CR/abyQfbenjbaOHuemmpt5k3QQs3hdDXO5ucc2uX2bLI6/Ax
-         dqY2fS9ofsqhyVOTfLLGDE+hSPBLAPzbk/v3RWATgSHyhaE1MKaBdRJ95yry/D9GOS9/
-         1z8txMVRP09zG/O+Ovq5BoMx8KGKANhvw1u8bprTW2/6+y1Np2rlpolsH3+Hd8ivvpkb
-         gh3A==
-X-Gm-Message-State: AC+VfDzlUr8k+SGFzPZdj8hStCAUMLNLbOBVz/m75g9Dpdjm5fM4Jq36
-        tcptCat3WWPjWwvCuNpHmRZ6kQ==
-X-Google-Smtp-Source: ACHHUZ6wv7m1p8YHOSnAWAjZyy/J3gu0hGgkbFPMicTp1pe03t8A1xeBhnfUhWqy5zxMk1P/hNBmSQ==
-X-Received: by 2002:a2e:9b01:0:b0:2a2:ac00:4de4 with SMTP id u1-20020a2e9b01000000b002a2ac004de4mr4480035lji.22.1687276080309;
-        Tue, 20 Jun 2023 08:48:00 -0700 (PDT)
+        bh=skGRnWXbaDAmxSHLLNOUSIFxKxnOiD0CNtHSEWtxfdI=;
+        b=ci0mP4pN8Nqmaa3E0J+7xgQi3OFggQgThyKcow8RJgE1EH+pN7Vsoc+UFZ885Ntv7k
+         Loo2FYWLn9ehCnAlEXR/L7epOQKqlis/TgaUW3UKMn4J217cZbbKiiFYNzNQRgwpyv1S
+         r2s0X+sB1dxbCkLt5ZvK9ml1Aa0K8Vmq7M1Qg17ZMx0f33005ueNdLFx0B4ew1oJZQsC
+         7onEZzmcMa0iSAJMcpUVGIplYIjDwpsglRdyv1l1mjqW2jEm4DSCllFhexSDfw2y/9i5
+         RbJhN37tSnyK+OfB3+ncReuVCA+OvtolHIR512jD6bQhH7ov4vBqIjfhVA1pis7j4I1f
+         P+9A==
+X-Gm-Message-State: AC+VfDz/NnX0/aX28crBE728a+ne52tob7Rlfoun4aYSDMov+1YDYnhc
+        S9VJrwsfAH3N/yD5l8lJYEt9Ew==
+X-Google-Smtp-Source: ACHHUZ55fJimkB+yVIu5K0zMbf5nDTzXCwdNjDvgXHIkQnZK4eMJnlsOF+ipp7ITrLJO/iB/M241kg==
+X-Received: by 2002:a05:6512:532:b0:4f8:770f:1b04 with SMTP id o18-20020a056512053200b004f8770f1b04mr2690492lfc.0.1687276243367;
+        Tue, 20 Jun 2023 08:50:43 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id x9-20020a2e3109000000b00295a3a64816sm468549ljx.2.2023.06.20.08.47.59
+        by smtp.gmail.com with ESMTPSA id y11-20020a19750b000000b004f4cabba7desm418853lfe.74.2023.06.20.08.50.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 08:47:59 -0700 (PDT)
-Message-ID: <30cfddfb-fabb-a65e-6bb6-c0efdbd92fd7@linaro.org>
-Date:   Tue, 20 Jun 2023 18:47:59 +0300
+        Tue, 20 Jun 2023 08:50:42 -0700 (PDT)
+Message-ID: <049f55ed-7531-224a-9d15-14f6c359bb92@linaro.org>
+Date:   Tue, 20 Jun 2023 18:50:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: qrb4210-rb2: Enable GPU
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sm6115p-j606f: Enable GPU
 Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230620-topic-gpu_tablet_disp-v1-0-7bb02bec8dc0@linaro.org>
- <20230620-topic-gpu_tablet_disp-v1-4-7bb02bec8dc0@linaro.org>
+ <20230620-topic-gpu_tablet_disp-v1-3-7bb02bec8dc0@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230620-topic-gpu_tablet_disp-v1-4-7bb02bec8dc0@linaro.org>
+In-Reply-To: <20230620-topic-gpu_tablet_disp-v1-3-7bb02bec8dc0@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,33 +87,11 @@ On 20/06/2023 16:17, Konrad Dybcio wrote:
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 8 ++++++++
+>   arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 8 ++++++++
 >   1 file changed, 8 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> index e23a0406eacc..a7278a9472ed 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> @@ -179,6 +179,14 @@ &gpi_dma0 {
->   	status = "okay";
->   };
->   
-> +&gpu {
-> +	status = "okay";
-> +
-> +	zap-shader {
-> +		firmware-name = "qcom/qrb4210/a610_zap.mbn";
 
-Should this be qrb4210 or sm4250? Previously we did not use special 
-subdirs for IOT versions. See qrb5165-rb5.dts.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> +	};
-> +};
-> +
->   &i2c2 {
->   	clock-frequency = <400000>;
->   	status = "okay";
-> 
 
 -- 
 With best wishes
