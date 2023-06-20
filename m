@@ -2,98 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C9467368EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 12:14:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A379C736966
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 12:36:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231232AbjFTKOA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 06:14:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43934 "EHLO
+        id S231727AbjFTKgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 06:36:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230449AbjFTKN7 (ORCPT
+        with ESMTP id S229519AbjFTKf7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 06:13:59 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60941A2;
-        Tue, 20 Jun 2023 03:13:58 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DE7F8611AE;
-        Tue, 20 Jun 2023 10:13:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A044C433C8;
-        Tue, 20 Jun 2023 10:13:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687256037;
-        bh=L0yfnyhjpRQ5SEJS36jb8fm0ymm+Olhfyv7cV9XbFhQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ulOzXDduo7oT4hI6IJ3Y95X/9fWIGU5Wq/hGJGvIa6+wh7iIw8yz08eUMz3dOwd40
-         jQmtOOt1hSdTO1dLYgKG1sOlu+AOvNUf+Ef/gDgCboGDbKYyxNGA1I6T0nh62gRgvI
-         /l2IZuqIOAtZb05ad2uWcRPcHkbPoYFou0dynZ98oajBv/VaFE0vP1i/Yaevi4qbAS
-         JK6QL1SLNPiAkYfzLxnG9URuj5Dqy+3eK7C6/bfzr7e4zKjpLfe3+O77rOYGzrStFX
-         PjxEAZDU4fLnbhkicld2Nla+pyhUXY0m8TNRoMKFYyk0dOBlaExPd2vuU4gwXbDOpg
-         2TO2haWI7FB+g==
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     kw@linux.com, bhelgaas@google.com,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>, robh@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, steev@kali.org,
-        quic_srichara@quicinc.com
-Subject: Re: [PATCH v4 0/9] PCI: qcom: Do not advertise hotplug capability
-Date:   Tue, 20 Jun 2023 12:13:50 +0200
-Message-Id: <168725600736.54372.7257062051885655719.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230619150408.8468-1-manivannan.sadhasivam@linaro.org>
-References: <20230619150408.8468-1-manivannan.sadhasivam@linaro.org>
+        Tue, 20 Jun 2023 06:35:59 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6375AE3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 03:35:57 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b479d53d48so28253051fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 03:35:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687257353; x=1689849353;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/HIA2CPxgECjXLspDDsjBe6Xv7WQ50oq1xrRdt7Bp5U=;
+        b=sVPvMzd8ZXN6fxiD2g18okClyC51hJfp0d54xnvst+U3AgVzvn0TK1b6PuQdEtFrTw
+         Iv/vqOjmm6F4LhfhFF+BYgXbKQo0jIoR/LTmZ6WGl1994yjMbNJ+FfX1rviiepbOUZvU
+         yJnIvN33VaiaP/zbYArV6ndtl9cax7PA+GMlxdF4c8WP7QNkO2XZpMqCYpVm+D+EmTlH
+         5C0Mv6679SGVx2Z+gnNLt4ycjaEStf9uB0hEyuJ14jJrpmRd8zlaiZxxgcIdLUJOWP2L
+         lv6Uuw4AD6mOhLftfE8Ha3PLlfbbLkL66+HCS+zv7SchnCIV27RjQKJt1MzNr/+MfZuW
+         OCsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687257353; x=1689849353;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/HIA2CPxgECjXLspDDsjBe6Xv7WQ50oq1xrRdt7Bp5U=;
+        b=KLqbkfdDBKdRE+1aZjN546E/ZOQ2udWAKSVfdoW3kD0LQ5Pc59Obr5g2mJsDzD6m2l
+         gwu+GqHb5X2mdALgCVOb76XSVVHX3GBEsJJkRSTY9/y2UdXh7yX4b9kA+EEae42cd+/B
+         /suHvV0yZG7X9J09Dyz8AAg3D9uY1yN0INM69uGrsD/no1rwNUvvE1DltQdvZ6fvDPdW
+         hHAEAib3sW92wI6KEkel44YSmO7Orn6cTEXqTxcFCY6yiQVHIzuiKxqXLRa4wEpvYTpf
+         G0LThaPs1eqfhuTozqaLUqiUsevbT1YOfOy5sogzQj1Lqm0aEstm/HUVnDMkEsUKoOgz
+         4lAw==
+X-Gm-Message-State: AC+VfDyR619yYfDBzsZjgVTXlExE4obQgkWHi7wwXryHI2IqP9LiSIbN
+        dFTRK9acd3zryCZcR2ekDqCteQ==
+X-Google-Smtp-Source: ACHHUZ7Vk8cUEKNVc/DdXw9Q7qrbYezVTFnd3aciTZZxAlPCmlNI4FE1L+wYmVuHxswAOAO6vrO1sQ==
+X-Received: by 2002:a2e:a175:0:b0:2b3:47b3:3c39 with SMTP id u21-20020a2ea175000000b002b347b33c39mr7252516ljl.23.1687257352911;
+        Tue, 20 Jun 2023 03:35:52 -0700 (PDT)
+Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
+        by smtp.gmail.com with ESMTPSA id b22-20020a2e8496000000b002b1f8c10926sm347259ljh.138.2023.06.20.03.35.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Jun 2023 03:35:52 -0700 (PDT)
+Message-ID: <06087f90-ba34-f044-707c-7f3557ec6198@linaro.org>
+Date:   Tue, 20 Jun 2023 12:35:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/8] drm/msm/dpu: drop enum dpu_core_perf_data_bus_id
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
+ <20230620000846.946925-2-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230620000846.946925-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 19 Jun 2023 20:33:59 +0530, Manivannan Sadhasivam wrote:
-> The SoCs making use of Qualcomm PCIe controllers do not support the PCIe hotplug
-> functionality. But the hotplug capability bit is set by default in the hardware.
-> This causes the kernel PCI core to register hotplug service for the controller
-> and send hotplug commands to it. But those commands will timeout generating
-> messages as below during boot and suspend/resume.
+On 20.06.2023 02:08, Dmitry Baryshkov wrote:
+> Drop the leftover of bus-client -> interconnect conversion, the enum
+> dpu_core_perf_data_bus_id.
 > 
-> [    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
-> [    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
-> [    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
-> [    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
+> Fixes: cb88482e2570 ("drm/msm/dpu: clean up references of DPU custom bus scaling")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 13 -------------
+>  1 file changed, 13 deletions(-)
 > 
-> [...]
-
-Applied to controller/qcom, thanks!
-
-[1/9] PCI: qcom: Disable write access to read only registers for IP v2.3.3
-      https://git.kernel.org/pci/pci/c/a33d700e8eea
-[2/9] PCI: qcom: Use DWC helpers for modifying the read-only DBI registers
-      https://git.kernel.org/pci/pci/c/60f0072d7fb7
-[3/9] PCI: qcom: Disable write access to read only registers for IP v2.9.0
-      https://git.kernel.org/pci/pci/c/200b8f85f202
-[4/9] PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and v1.9.0
-      https://git.kernel.org/pci/pci/c/a54db86ddc15
-[5/9] PCI: qcom: Do not advertise hotplug capability for IPs v2.3.3 and v2.9.0
-      https://git.kernel.org/pci/pci/c/11bce06b21a0
-[6/9] PCI: qcom: Do not advertise hotplug capability for IP v2.3.2
-      https://git.kernel.org/pci/pci/c/25966e78d303
-[7/9] PCI: qcom: Use post init sequence of IP v2.3.2 for v2.4.0
-      https://git.kernel.org/pci/pci/c/e35d13a5ff37
-[8/9] PCI: qcom: Do not advertise hotplug capability for IP v1.0.0
-      https://git.kernel.org/pci/pci/c/fa2dc2528684
-[9/9] PCI: qcom: Do not advertise hotplug capability for IP v2.1.0
-      https://git.kernel.org/pci/pci/c/1fdecc5bc8e8
-
-Thanks,
-Lorenzo
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> index e3795995e145..29bb8ee2bc26 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> @@ -14,19 +14,6 @@
+>  
+>  #define	DPU_PERF_DEFAULT_MAX_CORE_CLK_RATE	412500000
+>  
+> -/**
+> - * enum dpu_core_perf_data_bus_id - data bus identifier
+> - * @DPU_CORE_PERF_DATA_BUS_ID_MNOC: DPU/MNOC data bus
+> - * @DPU_CORE_PERF_DATA_BUS_ID_LLCC: MNOC/LLCC data bus
+> - * @DPU_CORE_PERF_DATA_BUS_ID_EBI: LLCC/EBI data bus
+> - */
+> -enum dpu_core_perf_data_bus_id {
+> -	DPU_CORE_PERF_DATA_BUS_ID_MNOC,
+> -	DPU_CORE_PERF_DATA_BUS_ID_LLCC,
+> -	DPU_CORE_PERF_DATA_BUS_ID_EBI,
+> -	DPU_CORE_PERF_DATA_BUS_ID_MAX,
+> -};
+> -
+>  /**
+>   * struct dpu_core_perf_params - definition of performance parameters
+>   * @max_per_pipe_ib: maximum instantaneous bandwidth request
