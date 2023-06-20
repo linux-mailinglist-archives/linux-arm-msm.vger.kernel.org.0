@@ -2,115 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28A35736B05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 13:32:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B113736B1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 13:38:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231713AbjFTLcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 07:32:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57746 "EHLO
+        id S229746AbjFTLh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 07:37:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231737AbjFTLcH (ORCPT
+        with ESMTP id S231429AbjFTLh5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 07:32:07 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C23191BB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:32:03 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b4636bb22eso48689141fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:32:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687260720; x=1689852720;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A713VP1miYx4+izRL/fshmdCGqW1R6uuzjTJsyEBlBo=;
-        b=jl4pD3kF0tm7QmDvJr2zbmpLqOxfCVocE5kHXW0BC4xP9WCCzZIp1fQe2fwsdQlE69
-         zAR7GwYN9TdOoPPeD7aMR/l4JeqIODkNYwQCTifkFKAAySlP1nmti/Q2wzZkXE+X7Lck
-         agoHtVPkfeqYK/FrJlVKulpZf2uJcN/RJx5tx21+sqnZU4j1RNkvfM78VxgdeB0+4RCr
-         eaw5FPigoI+C+YgSvn5H+lD2jaxNN63OL5PPvkIVhFALzEpMJ1/wC0m3sOyD3pc25Hkv
-         /zuOGyCmj5pkVU5vsKLo/iaBfr3BN3yX01OcKhOHS5uPeqrd7PtCbfVqFjvPw/6ZfypV
-         KVzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687260720; x=1689852720;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A713VP1miYx4+izRL/fshmdCGqW1R6uuzjTJsyEBlBo=;
-        b=E6AlIKpD/cRFdE4QIa7DzSmshRjNbD36O/t12GexIJJJSZ3Y9ALwtpvgJmdxJFmZzI
-         eO2M/QssNXfilfJs5hcXGXD915BUVJC8mo3xkVW0pWl/ob67C6SArB/i1dLa+3++YPz9
-         HKhAw0UjvmiJNAR63sx+ZkqKdEciXo09YBRVXGnl5vx0xhSrUZlQ1alWT2FAanyq0vRg
-         G+rDJjHzSIXV+hZpCJO74G9PPy7Z/Z/Cdj4HzuotgOD0wWAbCOaXde+FDHQy0Crdhg96
-         hxEWgREDIlHH7soZS174fXGusRXFY4LvHUsnZqmqLXD2i3NXSUGXFBhkJpD6PVL31xRi
-         xztg==
-X-Gm-Message-State: AC+VfDw8p8FkE6vrdiM857lbrk6+krFw0cvzKvdpLAty+Jemq61k1dLU
-        SxHGzvNibL6QPKCoWiw4x9H2gw==
-X-Google-Smtp-Source: ACHHUZ5ZiHncGJDt4FdxRbpjnbkarvrTFJypLWFMX2swHPEiI3dYNbw/zJsdn242Z5m5uxes9LGzow==
-X-Received: by 2002:a2e:b0e1:0:b0:2ab:19a0:667b with SMTP id h1-20020a2eb0e1000000b002ab19a0667bmr7270502ljl.0.1687260720414;
-        Tue, 20 Jun 2023 04:32:00 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id e3-20020a2e8183000000b002b1a4238c96sm372656ljg.128.2023.06.20.04.31.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 04:32:00 -0700 (PDT)
-Message-ID: <71f30a49-6d21-8ee4-1d35-545f0d7a1c46@linaro.org>
-Date:   Tue, 20 Jun 2023 14:31:59 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] drm/msm/dsi: Use pm_runtime_resume_and_get to prevent
- refcnt leaks
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+        Tue, 20 Jun 2023 07:37:57 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F28C170A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:37:51 -0700 (PDT)
+Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 51FEA1F87B;
+        Tue, 20 Jun 2023 13:37:47 +0200 (CEST)
+Date:   Tue, 20 Jun 2023 13:37:45 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230620-topic-dsiphy_rpm-v1-0-446a7fd0ce43@linaro.org>
- <20230620-topic-dsiphy_rpm-v1-1-446a7fd0ce43@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230620-topic-dsiphy_rpm-v1-1-446a7fd0ce43@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/dsi: Document DSC related pclk_rate and hdisplay
+ calculations
+Message-ID: <cqivx6g3xwsjyy7b3qyrlq4ojbx3alybdopm5gtx26xzs34nfc@kiktrnlxj3x2>
+References: <20230616094152.495723-1-dmitry.baryshkov@linaro.org>
+ <h2u5wsfbfpz7qivmxl3t37xen452zxt76uheonkwcihytfmb3l@axiy5bmwf4ma>
+ <677b74dc-e0f5-22e9-2b21-a7272c661b6e@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <677b74dc-e0f5-22e9-2b21-a7272c661b6e@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/06/2023 14:29, Konrad Dybcio wrote:
-> This helper has been introduced to avoid programmer errors when using
-> pm_runtime_get, use it.
-
-Please expand to mention the error kind. Also as you are at it, could 
-you please add an error check here?
-
+On 2023-06-19 23:57:22, Dmitry Baryshkov wrote:
+> On 16/06/2023 15:25, Marijn Suijten wrote:
+> > On 2023-06-16 12:41:52, Dmitry Baryshkov wrote:
+> >> Provide actual documentation for the pclk and hdisplay calculations in
+> >> the case of DSC compression being used.
+> >>
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> ---
+> >>   drivers/gpu/drm/msm/dsi/dsi_host.c | 35 ++++++++++++++++++++++++++++--
+> >>   1 file changed, 33 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> index 3f6dfb4f9d5a..72c377c9c7be 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> @@ -528,6 +528,21 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
+> >>   	clk_disable_unprepare(msm_host->byte_clk);
+> >>   }
+> >>   
+> >> +/*
+> >> + * Adjust the pclk rate by calculating a new hdisplay proportional to
+> > 
+> > Make this a kerneldoc with:
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Ack
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 9d5795c58a98..0a8e1dd4509e 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -516,7 +516,7 @@ static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
->   	struct device *dev = &phy->pdev->dev;
->   	int ret;
->   
-> -	pm_runtime_get_sync(dev);
-> +	pm_runtime_resume_and_get(dev);
->   
->   	ret = clk_prepare_enable(phy->ahb_clk);
->   	if (ret) {
+> > 
+> >      /**
+> >       * dsi_adjust_pclk_for_compression() - Adjust ...
+> > 
+> >> + * the compression ratio such that:
+> >> + *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
+> >> + *
+> >> + * Porches do not need to be adjusted:
+> >> + * - For the VIDEO mode they are not compressed by DSC and are passed as is.
+> > 
+> > as-is
 > 
+> Cambridge dictionary gives this "as is", without dash.
 
--- 
-With best wishes
-Dmitry
+I think you are right, it depends on whether this compound adjective
+comes before or after (in this case after) the verb it modifies, and it
+shouldn't be hyphenated if it comes after [1].
 
+[1]: https://ell.stackexchange.com/questions/24014/as-it-is-and-as-is-as-as-a-conjunction-and-a-pronoun#comment45615_24105
+
+> > Though this was never tested nor confirmed by QUIC, but we can assume it
+> > is the case for now?
+> > 
+> >> + * - For the CMD mode the are no actual porches. Instead they represent the
+> > 
+> > the are no -> these are not
+> > 
+> > they currently* represent.  
+> 
+> Ack
+> 
+> > Let's make sure that folks read the FIXME
+> > below by perhaps rewording it right into this entry?
+> 
+> I kept it separately, so that the FIXME can be removed once CMD handling 
+> is reworked.
+> 
+> > 
+> >> + *   overhead to the image data transfer. As such, they are calculated for the
+> >> + *   final mode parameters (after the compression) and are not to be adjusted
+> >> + *   too.
+> >> + *
+> >> + *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
+> >> + *  refresh rate and data overhead as a starting point of the calculations.
+> >> + */
+> >>   static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
+> >>   		const struct drm_dsc_config *dsc)
+> >>   {
+> >> @@ -926,8 +941,24 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> >>   		if (ret)
+> >>   			return;
+> >>   
+> >> -		/* Divide the display by 3 but keep back/font porch and
+> >> -		 * pulse width same
+> >> +		/*
+> >> +		 * DPU sends 3 bytes per pclk cycle to DSI. If compression is
+
+Following your comment below, this should then also be "3 compressed
+pixels"?
+
+> >> +		 * not used, a single pixel is transferred at each pulse, no
+> >> +		 * matter what bpp or pixel format is used. In case of DSC
+> >> +		 * compression this results (due to data alignment
+> >> +		 * requirements) in a transfer of 3 compressed pixel per pclk
+> > 
+> > 3 compressed bytes*, not pixels.
+> 
+> No, that's the point. With 6bpp one can think that 4 pixels would fit, 
+> but they don't.
+
+But that is not what Jessica was doing in the function that adjusts the
+pclk **based on the bpp ratio** rather than this fixed factor relating
+to the number of pixels you are bringing up here.  All this time the
+code, discussion, and code-comments are contradictory and it makes it
+impossible to understand.
+
+And likewise, if we have bpp=10 or bpp=12, what will happen to pclk and
+hdisplay?
+
+(It makes sense from how DSC is implemented, processing groups of 3
+ pixels at a time)
+
+ In any case, then it is the plural pixels* not "3 compressed pixel".
+
+> >> +		 * cycle.
+> >> +		 *
+> >> +		 * If widebus is enabled, bus width is extended to 6 bytes.
+> >> +		 * This way the DPU can transfer 6 compressed pixels with bpp
+> > 
+> > pixels -> bytes?
+> 
+> Same comment, no.
+> 
+> > 
+> >> +		 * less or equal to 8 or 3 compressed pyxels in case bpp is
+> > 
+> > pixels*... bytes?
+> > 
+> > And I will ask this **again**: does this mean we can halve pclk?
+> 
+> My guess would be no, since all other data transfers are not scaled by 
+> wide bus.
+
+Is the fact that we *don't scale it yet* definitive for saying that we
+shouldn't?
+
+- Marijn
