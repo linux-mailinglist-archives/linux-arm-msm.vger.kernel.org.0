@@ -2,104 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFE33737686
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 23:17:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E37777376B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 23:37:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbjFTVRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 17:17:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48788 "EHLO
+        id S229836AbjFTVhO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 17:37:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230204AbjFTVRQ (ORCPT
+        with ESMTP id S229740AbjFTVhN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 17:17:16 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98F4198C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 14:17:10 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f6283d0d84so7031383e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 14:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687295829; x=1689887829;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UPcRbyzrPBTxh5e0r2I/sN2Nvc7Urb0kOMHV0diZqdw=;
-        b=CQu1w8pkgs9sLq8smHD+VkuObwIGFEAjr2b99lVsxujqz9UxgJK098Q4X5ecR3G2Pz
-         MjIUXRHLNKoFjiXm6XG3zXBu5o8h/wsYVeXkUyqU0Jpf1VriwLVpqyR1JKe84dGKEacU
-         EYYi8iMjSwg2DiTDa90Fw/k7Tl35mTSkxAycNaOrfP7wtivCxQz3wAjA6AxTM2IOAn4C
-         mbJKqlGWzPPBDTrTx7ycQ3Twex/1igeDbkXsKnzuC21jDYckP1mLz1So81N+bv62WbL3
-         ovIXu2Cjq4FnFRyqoXE2HPOL/N7HNF5WJmqfUwVWCb29yV2PQ8vrSnHFNMfbvM8zV80p
-         hCvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687295829; x=1689887829;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UPcRbyzrPBTxh5e0r2I/sN2Nvc7Urb0kOMHV0diZqdw=;
-        b=gMyy5bS6e67ueNuN6VzTdq1CO6qli1PdTCU1kBeEikbHpP8bwwJY+Bbi+ZOWT7P1Un
-         A/T4XfqluXi+CrpZkgXFFU67a12jorVbgMaE9O+T35HdKw+hwbhZM/SQgDDV4WRwRBBI
-         re4ME+wvikxbRQqaYEMWb4U/IywsO1S4M3dyiuBU1z6G7hzKVu2s+1ps6pzSZNUKrQwv
-         cxkJ2PR/amqc6jx+Aa4ojO+4sxix9texPJ7YH55iqzWGJB/XOJ5oImxseIMWqG8NFM9/
-         0w8Byr8uaS948gHdNB/is224smD6Md7D39iyV0oKfAT/Yb/Sbn+UW0CO07Xa2N6JPKCF
-         bvFg==
-X-Gm-Message-State: AC+VfDzXIJRFDuvLlH/FzpdyIWGUkLQahBh+AtFjVwJz6VBjazK5VX2t
-        4JcFudqbRhjYeiWckj0LFtGhBs1lDUHco8c5Igw=
-X-Google-Smtp-Source: ACHHUZ42zuQ97fKC1z95oyBm6krHDvkPqn4sSbYoI5MZhT61I0o8fPqGcaEblpMLxK2Y+Kx4OTdYeUtjLOOAhSbFoa0=
-X-Received: by 2002:ac2:465a:0:b0:4f9:569c:54b3 with SMTP id
- s26-20020ac2465a000000b004f9569c54b3mr884197lfo.58.1687295828438; Tue, 20 Jun
- 2023 14:17:08 -0700 (PDT)
+        Tue, 20 Jun 2023 17:37:13 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEAD0122;
+        Tue, 20 Jun 2023 14:37:12 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35KKO3ow014004;
+        Tue, 20 Jun 2023 21:37:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=E8IiX3xq5Kaz6WnoYLQCLeytrsRxL9XqVvHBESze5jo=;
+ b=mxLapoMH6eStL/MFEkHtAV51FLwl8sSL8/7L3+WODX/X3uAN5/j6O6VAAcCGJo3KhON3
+ T7dVUnlVYtrwS/zZ/MzFdrdKOTZ30745CbDbr0loCDPZiwRDHDpvptfzFxb/vqPIIiN6
+ dm8MW2gfliMuSR3uvKnfU4MoGdcrsONMGTXp131Wgqn3k87+OUrgrNk5oF8Ad9+7yPKF
+ c0Uw69QdlIjXZhaTFb3R+iwF8z75M74rMbgYMotr4fW+YPvU3xOrdClOr+JomCcayIVd
+ 9ThNwUXuE9byQliloy/D8etPpMs2iHHZT7QA64NwcHpONFTf5DdtV93zhBBUL8GY0mVD +A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rb3fhtcwx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 21:37:09 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35KLb8ho027782
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 21:37:08 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 20 Jun 2023 14:37:08 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] soc: qcom: cmd-db: Drop NUL bytes from debugfs output
+Date:   Tue, 20 Jun 2023 14:37:03 -0700
+Message-ID: <20230620213703.283583-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Received: by 2002:a05:7208:b015:b0:6c:542c:ce3 with HTTP; Tue, 20 Jun 2023
- 14:17:07 -0700 (PDT)
-Reply-To: wormer.amos@aol.com
-From:   Wormer Amos <claudiakhaledyahya02@gmail.com>
-Date:   Tue, 20 Jun 2023 09:17:07 -1200
-Message-ID: <CANcjk_AX62_4-6ooC6SF_Z8mFMS7cC+HgBwah3d0eRbNL10Uvg@mail.gmail.com>
-Subject: GOOD MORNING.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,SUBJ_ALL_CAPS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OSds_C6vNQpbyw-PS_0ZAS9IPaK0VthZ
+X-Proofpoint-ORIG-GUID: OSds_C6vNQpbyw-PS_0ZAS9IPaK0VthZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-20_16,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306200195
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:131 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [claudiakhaledyahya02[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [claudiakhaledyahya02[at]gmail.com]
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Good friend. i kindly wanted to know if you're capable for investment
-project in
-your country. i
-need a serious partnership with good background, kindly reply
-me to discuss details immediately. i will appreciate you to contact me
-on this email.
+The debugfs dump of Command DB relies uses %*pEp to print the resource
+identifiers, with escaping of non-printable characters.
+But p (ESCAPE_NP) does not escape NUL characters, so for identifiers
+less than 8 bytes in length the output will retain these.
 
-Thanks and awaiting for your quick response,
+This does not cause an issue while looking at the dump in the terminal
+(no known complaints at least), but when programmatically consuming the
+debugfs output the extra characters are unwanted.
 
-Wormer?
+Change the fixed 8-byte sizeof() to a dynamic strnlen() to avoid
+printing these NUL characters.
+
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ drivers/soc/qcom/cmd-db.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index 33856abd560c..34c40368d5b5 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -284,7 +284,7 @@ static int cmd_db_debugfs_dump(struct seq_file *seq, void *p)
+ 		ent = rsc_to_entry_header(rsc);
+ 		for (j = 0; j < le16_to_cpu(rsc->cnt); j++, ent++) {
+ 			seq_printf(seq, "0x%05x: %*pEp", le32_to_cpu(ent->addr),
+-				   (int)sizeof(ent->id), ent->id);
++				   (int)strnlen(ent->id, sizeof(ent->id)), ent->id);
+ 
+ 			len = le16_to_cpu(ent->len);
+ 			if (len) {
+-- 
+2.25.1
+
