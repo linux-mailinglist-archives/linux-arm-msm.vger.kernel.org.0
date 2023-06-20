@@ -2,78 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01A637371DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 18:37:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40B2273722D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 18:57:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232483AbjFTQht (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 12:37:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
+        id S229784AbjFTQ5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 12:57:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbjFTQhg (ORCPT
+        with ESMTP id S230518AbjFTQ5X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 12:37:36 -0400
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9AE2198B;
-        Tue, 20 Jun 2023 09:37:17 -0700 (PDT)
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-341c72be673so24743775ab.1;
-        Tue, 20 Jun 2023 09:37:17 -0700 (PDT)
+        Tue, 20 Jun 2023 12:57:23 -0400
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD480E68;
+        Tue, 20 Jun 2023 09:57:21 -0700 (PDT)
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3420ed1a745so20220715ab.3;
+        Tue, 20 Jun 2023 09:57:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687278995; x=1689870995;
+        d=1e100.net; s=20221208; t=1687280241; x=1689872241;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=85ycF3hecAMuGXOhwj9jJJFOE19UT7fZCAss7kLUOhg=;
-        b=IXvRmoMkm9LyItJKAbHuxief5THmRWrs+YNfCa5IGK27nHL+cx09ppDub9W1g4bR6r
-         xn/j6Ht25kQedoVab1NiY5blDxOrQwathmDMu9K0IcB7Bg+SBsrOTNRzdAfzsyqXBeta
-         M5EZNxxVjhJPweWzxusZIHPvN5RkhrBzS3X2ZoADPMY5nTMjCrHv3oWYKsAiGDx2UMzd
-         LDvWyN4mtSyIOw6XX9WsJiiYhxyB32DQ34wxVV5MMgQywgBnYWeEgSnV/8bbfZxtwuKH
-         rlan7cdUwqxlQyxzIF/o36Vxifr5GVIBI0rOqcGI7qEEz43e6UpSwyTS+LUggxHXYiY7
-         vFdg==
-X-Gm-Message-State: AC+VfDxQCDG1YzvChba/Yk5yyVttZEo4pNzpGHW0kp3l0NE+Ii5YxmKF
-        8B9KbnODkwt7ZWmQN+xh+Q==
-X-Google-Smtp-Source: ACHHUZ4riU11u7eu+RnQQlZcN7Q/lf8OrfPR1grO+uL6MNJjLsR6F7z2sKzW0av3kxeX/tTgYurw1Q==
-X-Received: by 2002:a92:c647:0:b0:342:89b4:b8c1 with SMTP id 7-20020a92c647000000b0034289b4b8c1mr5080768ill.21.1687278995655;
-        Tue, 20 Jun 2023 09:36:35 -0700 (PDT)
+        bh=fC5LTzrdW72AjRfXsobL8u3UH+veW/fbZ9ZJyUEUeyc=;
+        b=HUq7mKQKWf19VJTMTtdEIlIgrZ00Ywq3wZFaiDIVMXwgdMPHSz/HCNpR9Nk9/S5aZU
+         UZmQ/U5zRX4A2yXwa23ixgaRzQ1RKwXPaymuVOEe9Mzh6uKSXxtzsBqzuMgUmIGbo/UD
+         tBlMs8Ib0Az3ufqNunqkyIl2M30Q4fVDnywdUcg7o4K34gis0PL8O2WtoIYdrGUOiIj4
+         dGjUNRCXTElpOSOeqY3rSkIpjgt2lwfvwQw2MqD12VmBVSUoLnAU7VjeFNFvnPCJAEb5
+         ZmR9Q5cSJFXXlXibA7aYbWlSqJ1xxi662NDmRQiFIK75z8IOlTgKALPUCqcAc0PvVCmm
+         3B2w==
+X-Gm-Message-State: AC+VfDx6as3OUzNSkjIdu5yeo3LqOlQho+78oSc8v+HvcYJ6rodLShce
+        ch+NqEtJlVW10GCi37Ob3w==
+X-Google-Smtp-Source: ACHHUZ6Wepi8qaaAa7+QyMTVgGI7G32JZdMVMM6o+c/Yvv5Tqm/Ued6aJXSw2qrtLL6F4MGXPFOwjQ==
+X-Received: by 2002:a92:c806:0:b0:341:c484:1c36 with SMTP id v6-20020a92c806000000b00341c4841c36mr11987996iln.8.1687280240930;
+        Tue, 20 Jun 2023 09:57:20 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id l14-20020a92290e000000b003427601b77esm708354ilg.21.2023.06.20.09.36.33
+        by smtp.gmail.com with ESMTPSA id p17-20020a92d491000000b0034248a56432sm703724ilg.32.2023.06.20.09.57.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 09:36:34 -0700 (PDT)
-Received: (nullmailer pid 3787225 invoked by uid 1000);
-        Tue, 20 Jun 2023 16:36:32 -0000
-Date:   Tue, 20 Jun 2023 10:36:32 -0600
+        Tue, 20 Jun 2023 09:57:20 -0700 (PDT)
+Received: (nullmailer pid 3815844 invoked by uid 1000);
+        Tue, 20 Jun 2023 16:57:18 -0000
+Date:   Tue, 20 Jun 2023 10:57:18 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Alexander Stein <alexander.stein@ew.tq-group.com>
-Cc:     Tony Lindgren <tony@atomide.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>, linux-omap@vger.kernel.org,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-mediatek@lists.infradead.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        linux-rockchip@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        Rob Herring <robh+dt@kernel.org>,
-        =?iso-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Banajit Goswami <bgoswami@quicinc.com>, devicetree@vger.kernel.org,
+        Patrick Lai <quic_plai@quicinc.com>,
+        Jaroslav Kysela <perex@perex.cz>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>
-Subject: Re: [PATCH v2 1/3] dt-bindings: extcon-usb-gpio: convert to DT
- schema format
-Message-ID: <168727899219.3787165.585753030890671451.robh@kernel.org>
-References: <20230615145838.1526919-1-alexander.stein@ew.tq-group.com>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH v4 1/2] ASoC: dt-bindings: qcom,wsa8840: Add WSA884x
+ family of speakers
+Message-ID: <168728023784.3815805.7354509685855772862.robh@kernel.org>
+References: <20230616115751.392886-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230615145838.1526919-1-alexander.stein@ew.tq-group.com>
+In-Reply-To: <20230616115751.392886-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -86,23 +77,29 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 15 Jun 2023 16:58:36 +0200, Alexander Stein wrote:
-> Convert the binding to DT schema format. Change the GPIO properties to new
-> naming convention using -gpios as well.
+On Fri, 16 Jun 2023 13:57:50 +0200, Krzysztof Kozlowski wrote:
+> Add binding for WSA8840/WSA8845/WSA8845H smart speaker amplifiers used
+> in Qualcomm QRD8550 board with SM8550 SoC.
 > 
-> Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
-> Changes in v2:
-> * Mark extcon-usb-gpio as deprecated
-> * Fix YAML format
-> * Fix example node
-> * Remove unneeded consumer node in example
 > 
->  .../bindings/extcon/extcon-usb-gpio.txt       | 21 --------
->  .../bindings/extcon/extcon-usb-gpio.yaml      | 51 +++++++++++++++++++
->  2 files changed, 51 insertions(+), 21 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/extcon/extcon-usb-gpio.txt
->  create mode 100644 Documentation/devicetree/bindings/extcon/extcon-usb-gpio.yaml
+> Changes in v4:
+> 1. None.
+> 
+> Changes in v3:
+> 1. None.
+> 
+> Changes in v2:
+> 1. Correct compatible (sdw version 1 -> 2).
+> 
+> Cc: Patrick Lai <quic_plai@quicinc.com>
+> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  .../bindings/sound/qcom,wsa8840.yaml          | 66 +++++++++++++++++++
+>  1 file changed, 66 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
