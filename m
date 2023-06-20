@@ -2,80 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49170736A07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 12:56:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D46A6736A41
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 13:05:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbjFTK44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 06:56:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38638 "EHLO
+        id S232509AbjFTLFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 07:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232405AbjFTK4z (ORCPT
+        with ESMTP id S232500AbjFTLFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 06:56:55 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE9E10E2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 03:56:49 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b4745834f3so34272961fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 03:56:49 -0700 (PDT)
+        Tue, 20 Jun 2023 07:05:41 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E61B100
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:05:38 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f86fbe5e4fso2861238e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 04:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687258608; x=1689850608;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oFqY3JPIOHhrCDWe7opJVMIu2iuwa1Q7D1xQRKlMgbQ=;
-        b=uRLcWOUWpEIQl6vz1xWRgHsilN6LvWK3L/02cDKUqJHNnzb4hwG+pxYVHl/+VYASRF
-         nC6X79mVaUbV2G3YKCFY+lC/JYjNGWR5fp2Dbn59T9gHCSXoCxjbnHE5Zl8TkDBgREVv
-         Ai9Et1hrlL9UIRmTGf8A3LJCO+iXgq580QUmnWOecZ5Ve9+3vaYkjoZ5En5Z/A7RJ+48
-         BTkiJojsH97sqWJdy5YbfYSZUW3r8hiOs7z7x+UfIjWe+U5Iz9TCjgQAbnF+K2FHK7GG
-         4RiGrnb2D6TdyK+8NK3Qa+uDZW5RDxhdETLXy7inyxXF6T64XzUiwAqZLh8jZKONWhCp
-         Oc8Q==
+        d=linaro.org; s=google; t=1687259136; x=1689851136;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b75FYxuvT/RTDVWXxiUHRtH4AAZYp/PYI//JWD1JyWw=;
+        b=aA6exhIWmV7/kc6Hwh27TYTXRhzQdf40adxxigDp9ACtjMuW7pdFdPgN7FD9XFckBZ
+         QODrAYAbh4BmFuqxL/BSvjIPOtoTJlC8HoTsnC662Tt83Ue5aOJ49FrVYW2o6c2CngqK
+         vQ+YiL59kkzh3qNssrPa6NN8+7sQUFeU2dytuGLFJV2DjRC9oyVSIlHkS41CC3CqFVr5
+         idfPe7RyEMwS6unfSp9aE/MH24Eujyt9txbNuoReGWA0/5BlOEGeSdz4xJ4gMqOXhNDD
+         K5B6+gSptWz71R9iQaCSCSrvAbbzUA+eSD1sApJ/t7pmBK1PzzS2mFIoF2ru+aDOVXKG
+         wE5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687258608; x=1689850608;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oFqY3JPIOHhrCDWe7opJVMIu2iuwa1Q7D1xQRKlMgbQ=;
-        b=Gk6DnGZleUFs39nYrv3AgcUB0gyS5MrkE3cWDiwqg0TwjYpuOD3poxlUgwBDUn5Ewb
-         Ly6X8yS3iAu9WMP/yJlMLp1REn/TTv7w8M2H05cJn/tZ7gsmQzkRXHTq4Am/FuLoJ0ap
-         +/AF8hTU/vBxQTycSBD7AhO/NPnTlC31rv6oSGlmcHCydaHf8AzqfnM4ap0/T+SYSZWw
-         qIULbiXL2737brmN7TNb5NHC1JiIXExqIgjhGqYG1i/9dInwgTzFpViilyf7NKPP2LRO
-         biCray8NQBYI2CMq3HL8SP/onyU6UEkkw+7jPaGrWZRhyVjL4Ggr30EIVkjEqvHwXmYH
-         3prA==
-X-Gm-Message-State: AC+VfDwqwOPbYjK8k/kAyLVlwMtgWSURjmuTvYyLJTs17XeViO2eKc5e
-        /AMo13uOJQJYE2Bi4peLI4/TZQ==
-X-Google-Smtp-Source: ACHHUZ6hCNdrCmb27LQnbm+NLckOTiA3YD8TuMMSXhmHUe5FnN3n3LlMF3AW9/tFmXxA+iXnNOXJsg==
-X-Received: by 2002:a2e:a601:0:b0:2b4:4bb7:2618 with SMTP id v1-20020a2ea601000000b002b44bb72618mr7652691ljp.19.1687258608115;
-        Tue, 20 Jun 2023 03:56:48 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687259136; x=1689851136;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=b75FYxuvT/RTDVWXxiUHRtH4AAZYp/PYI//JWD1JyWw=;
+        b=BuSv9rLT+2OMfzC/bMkza0oKruFl5sc94QHjbFHu3j5RzzmiIxWmqZxsXPSnVoo6uq
+         0x7MuaFrJslQNIMe9fdWBIGUSfdouB8JRtdWzUgBB/6iDwqqqgrhlrl1v6gyecg8fJPC
+         1Q0wVFxBByR96RDMq2ytwepWlYRFqA934ZnFdc0pKcfN5c1XzXcWcONcNIR1wBAb1p/O
+         O0AD321uDTxajlf/sGVcwSG2bQEAA37+sJ+7G4ZbUB6lSnuEskqgk1xDLz3gNYlkRzEP
+         9FUwAkEqZJUPkvOPAGHaYkZGEs98WFEeH6IfuDDgVRXSC9mX9ZhURStUJbNIpbXR0hFd
+         16Mg==
+X-Gm-Message-State: AC+VfDzRi6mEPdwP+CrgFSQTyOXPKOzu+tk6AnNzylEVcetjs7y7+huI
+        jbU8mRWN3OKtO2qr1ioxYOUM5A==
+X-Google-Smtp-Source: ACHHUZ7tWYoedG8hXxOX/lkMppk7hoaSV8JNZTqDLhxtxfFIuWplsbQoA45PSqsHLLPETYoP7tYnlA==
+X-Received: by 2002:a2e:3513:0:b0:2b4:83c3:d285 with SMTP id z19-20020a2e3513000000b002b483c3d285mr2188693ljz.38.1687259135655;
+        Tue, 20 Jun 2023 04:05:35 -0700 (PDT)
 Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id h19-20020a2eb0f3000000b002b3318c8d6fsm359850ljl.28.2023.06.20.03.56.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 03:56:47 -0700 (PDT)
-Message-ID: <331b4f84-a852-3197-f26a-4f1f0368ef70@linaro.org>
-Date:   Tue, 20 Jun 2023 12:56:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 8/8] drm/msm/dpu: remove unused fields from struct
- dpu_core_perf
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
- <20230620000846.946925-9-dmitry.baryshkov@linaro.org>
+        by smtp.gmail.com with ESMTPSA id 11-20020a05651c008b00b002ac7b0fc473sm369047ljq.38.2023.06.20.04.05.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jun 2023 04:05:35 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230620000846.946925-9-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH v2 0/4] SM8250 Edo pins, keys & pmic
+Date:   Tue, 20 Jun 2023 13:05:33 +0200
+Message-Id: <20230614-topic-edo_pinsgpiopmic-v2-0-6f90bba54c53@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-B4-Tracking: v=1; b=H4sIAP2HkWQC/4WNWwrCMBAAryL5NpJECcUv7yFF8ti0CzUbNrUop
+ Xc39gJ+zsAwq6jACFVcD6tgWLAi5QbmeBBhdHkAibGxMMqcldUXOVPBICHSo2CuQ0EqzyZi6ny
+ 0SXsbvWixdxWkZ5fD2PL8mqYmC0PC9367941HrDPxZ58v+mf/fhYtlQyp65zyLhgbbhNmx3QiH
+ kS/bdsXF7rITtIAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687259134; l=1097;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=lsxCpXK9lusbdQ0WpahHP1F9ZITtSHhAZWslr5vKO6U=;
+ b=Lb+0br68Z6t46QCzFZr2gzNbxiUzsY5K/+HvKJs12oRpZzO46OnLShnLJuKcHfVACiJyonfkf
+ A9CvlbEUVzdD8lV5zibHD0EZ2T3oqWrjUuynCI/wAZs56Q/QBIcGb9Y
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,75 +88,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.06.2023 02:08, Dmitry Baryshkov wrote:
-> Remove dpu_core_perf::dev and dpu_core_perf::debugfs_root fields, they
-> are not used by the code.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This series brings fixes to the GPIO buttons, adds gpio-line-names and
+introduces the SLG51000 camera on Xperia Edo devices.
 
-Konrad
->  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 2 --
->  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 4 ----
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 2 +-
->  3 files changed, 1 insertion(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> index f779ad544347..7f110d15b101 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> @@ -395,11 +395,9 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
->  #endif
->  
->  int dpu_core_perf_init(struct dpu_core_perf *perf,
-> -		struct drm_device *dev,
->  		const struct dpu_perf_cfg *perf_cfg,
->  		struct clk *core_clk)
->  {
-> -	perf->dev = dev;
->  	perf->perf_cfg = perf_cfg;
->  	perf->core_clk = core_clk;
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> index e1198c104b5e..623e2d058695 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> @@ -27,7 +27,6 @@ struct dpu_core_perf_params {
->  /**
->   * struct dpu_core_perf - definition of core performance context
->   * @dev: Pointer to drm device
-> - * @debugfs_root: top level debug folder
->   * @perf_cfg: Platform-specific performance configuration
->   * @core_clk: Pointer to the core clock
->   * @core_clk_rate: current core clock rate
-> @@ -36,8 +35,6 @@ struct dpu_core_perf_params {
->   * @enable_bw_release: debug control for bandwidth release
->   */
->  struct dpu_core_perf {
-> -	struct drm_device *dev;
-> -	struct dentry *debugfs_root;
->  	const struct dpu_perf_cfg *perf_cfg;
->  	struct clk *core_clk;
->  	u64 core_clk_rate;
-> @@ -77,7 +74,6 @@ void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
->   * @core_clk: pointer to core clock
->   */
->  int dpu_core_perf_init(struct dpu_core_perf *perf,
-> -		struct drm_device *dev,
->  		const struct dpu_perf_cfg *perf_cfg,
->  		struct clk *core_clk);
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 4439147d2c35..5297cec68c9c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1115,7 +1115,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->  		dpu_kms->hw_vbif[vbif->id] = hw;
->  	}
->  
-> -	rc = dpu_core_perf_init(&dpu_kms->perf, dev, dpu_kms->catalog->perf,
-> +	rc = dpu_core_perf_init(&dpu_kms->perf, dpu_kms->catalog->perf,
->  			msm_clk_bulk_get_clock(dpu_kms->clocks, dpu_kms->num_clocks, "core"));
->  	if (rc) {
->  		DPU_ERROR("failed to init perf %d\n", rc);
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Fix the Fixes tag in patch 4
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20230614-topic-edo_pinsgpiopmic-v1-0-cf88a0bac26c@linaro.org
+
+---
+Konrad Dybcio (4):
+      arm64: dts: qcom: sm8250-edo: Add gpio line names for TLMM
+      arm64: dts: qcom: sm8250-edo: Add GPIO line names for PMIC GPIOs
+      arm64: dts: qcom: sm8250-pdx203: Configure SLG51000 PMIC
+      arm64: dts: qcom: sm8250-edo: Rectify gpio-keys
+
+ .../dts/qcom/sm8250-sony-xperia-edo-pdx203.dts     | 364 +++++++++++++++++++++
+ .../dts/qcom/sm8250-sony-xperia-edo-pdx206.dts     | 243 ++++++++++++++
+ .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi      |  61 +++-
+ 3 files changed, 655 insertions(+), 13 deletions(-)
+---
+base-commit: 9dbf40840551df336c95ce2a3adbdd25ed53c0ef
+change-id: 20230614-topic-edo_pinsgpiopmic-df8bd6f1b6db
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
