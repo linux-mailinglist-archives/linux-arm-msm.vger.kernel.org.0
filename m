@@ -2,156 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83C8F736877
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 11:54:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED66E7368AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 12:03:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232623AbjFTJy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 05:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57458 "EHLO
+        id S231357AbjFTKD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 06:03:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232471AbjFTJxZ (ORCPT
+        with ESMTP id S231144AbjFTKDD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 05:53:25 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11A46213A;
-        Tue, 20 Jun 2023 02:51:40 -0700 (PDT)
-Received: from IcarusMOD.eternityproject.eu (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Tue, 20 Jun 2023 06:03:03 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F1019BD;
+        Tue, 20 Jun 2023 03:02:21 -0700 (PDT)
+Received: from [IPV6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2] (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
         (No client certificate requested)
         (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id C03646606F8A;
-        Tue, 20 Jun 2023 10:51:37 +0100 (BST)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 756F06606F23;
+        Tue, 20 Jun 2023 11:02:19 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1687254698;
-        bh=k+nsMftVQKFojPuOIYlMvR1FeQL9yk/GZjypHf7SXbs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=g1cv0+eAJHvUiVQz3QyVgp3i6kuvXb5dGqZI3w9NOBGG7arWRIVZVLCzYTG3nM/Nl
-         2KvOVygazZFszBMFnL1QBelMnf9B7EyM1nyvoQkgsQ3BmK+6Oyhkp7I1i+xYMoO8Ls
-         sN5x9V4G7nFMhwshOUHgWSNx/w1C39MWp1ee3rXCFb3cjsIkHQ+xCwcDSAaNGonHG8
-         Kl5Aqd4ekDIVr/kZjCkkWW+kOQKa+5fNTQEewilAa+hho1J8MayiW+iQ71l1N0z8O1
-         MSGIa428Xe01M0Plqv1tAdbsI+Hlcyd/8flhqs6KWTIPUNVm2Q8yLsYdNSVPiQSUw9
-         oMbQ0+QgePfRw==
+        s=mail; t=1687255340;
+        bh=RLHVI/wjjEu7tgaFY7P5mxMUKibf2l0LJy6KXwWfTcA=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=MNBGt+PAu1mufc3pOtgjMZsDRsZVkBktZDjH9Dz7Uj7xuARm3UE1Hp+m1EuAIkv1B
+         wsq6HxhL47hyFqG48h1AfLyEMdcZsEm0/sSi/U9RmHlRp92TaYQ+I/IBQ1CRI0TpL0
+         UZH2wsHoxlN5X0vH2NahxbvGryTduWB+/Bu5n9jlo8uFISCOE69AArOmnuKga363U4
+         ZTLQKgeyWz4WLy76ZsYBMetcLMh9wOugHPNULDaww5W4x8zAMemG0KQnL3cz74M+vs
+         +LflWzhOmPJXhdCE4lDo68BVQwnIOdTiPxnHCKfh/uElBlSBNNhpyMR/xEPikge/JQ
+         t4n5olsHSPtmA==
+Message-ID: <491fab1f-e1fe-4388-52a7-05adb17c2c36@collabora.com>
+Date:   Tue, 20 Jun 2023 12:02:16 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 0/6] Add support for Qualcomm's legacy IOMMU v2
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
+        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        marijn.suijten@somainline.org, kernel@collabora.com,
+        a39.skl@gmail.com, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>
+References: <20221115101122.155440-1-angelogioacchino.delregno@collabora.com>
+ <254cfbb5-c8b8-0abc-e6bc-5007fe757004@collabora.com>
+ <2759637.mvXUDI8C0e@z3ntu.xyz>
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>
-To:     agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
-        dmitry.baryshkov@linaro.org, joro@8bytes.org, will@kernel.org,
-        robin.murphy@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux.dev, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, kernel@collabora.com,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Subject: [PATCH v4 6/6] iommu/qcom: Add support for QSMMUv2 and QSMMU-500 secured contexts
-Date:   Tue, 20 Jun 2023 11:51:27 +0200
-Message-Id: <20230620095127.96600-7-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230620095127.96600-1-angelogioacchino.delregno@collabora.com>
-References: <20230620095127.96600-1-angelogioacchino.delregno@collabora.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <2759637.mvXUDI8C0e@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some SoCs like MSM8956, MSM8976 and others, secure contexts are
-also secured: these get programmed by the bootloader or TZ (as usual)
-but their "interesting" registers are locked out by the hypervisor,
-disallowing direct register writes from Linux and, in many cases,
-completely disallowing the reprogramming of TTBR, TCR, MAIR and other
-registers including, but not limited to, resetting contexts.
-This is referred downstream as a "v2" IOMMU but this is effectively
-a "v2 firmware configuration" instead.
+Il 19/06/23 23:42, Luca Weiss ha scritto:
+> On Mittwoch, 22. Februar 2023 10:57:47 CEST AngeloGioacchino Del Regno wrote:
+>> Il 15/11/22 11:11, AngeloGioacchino Del Regno ha scritto:
+>>> This series adds support for handling "v2" firmware's IOMMU, found
+>>> on at least MSM8956 and MSM8976 (some other SoCs also need the same
+>>> but I honestly don't remember which ones precisely).
+>>>
+>>> This is strictly required to get functional IOMMUs on these SoCs.
+>>>
+>>> I'm sorry for not performing a much needed schema conversion on
+>>> qcom,iommu.txt, but I really didn't have time to do that :-(
+>>>
+>>> This series was tested on Sony Xperia X and X Compact (MSM8956):
+>>> ADSP, LPASS, Venus, MSS, MDP and GPU are happy :-)
+>>
+>> Hello,
+>> this series is really old and got sent and resent many times.
+>> The first time I've sent this one was .. I think in 2019, then, at the
+>> end of 2022, I had some time to actually respin it and send another
+>> three versions. It's been 3 long years :-)
+>> The third version got the last comments addressed.
+>>
+>> Since this didn't get any more feedback for 3 months, I'm worried that it
+>> will be forgotten again, hence:
+>>
+>> Is there any more feedback? Anything else to fix?
+>> If not, can this be picked, please?
+> 
+> Hi Angelo,
+> 
+> there's some open review comments since March now on this series. Since some
+> of these patches are also needed for msm8953 and msm8974 IOMMU it would be
+> nice if you could respin :)
+> 
 
-Luckily, the described behavior of version 2 is effective only on
-secure contexts and not on non-secure ones: add support for that,
-finally getting a completely working IOMMU on at least MSM8956/76.
+Hello Luca,
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-[Marijn: Rebased over next-20221111]
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+I've just sent a v4, but I'm sorry I forgot to Cc you. Please find it at [1].
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index f4b948a0bd1c..5b69f336b797 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -59,6 +59,7 @@ struct qcom_iommu_ctx {
- 	struct device		*dev;
- 	void __iomem		*base;
- 	bool			 secure_init;
-+	bool			 secured_ctx;
- 	u8			 asid;      /* asid and ctx bank # are 1:1 */
- 	struct iommu_domain	*domain;
- };
-@@ -273,6 +274,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 			ctx->secure_init = true;
- 		}
- 
-+		/* Secured QSMMU-500/QSMMU-v2 contexts cannot be programmed */
-+		if (ctx->secured_ctx) {
-+			ctx->domain = domain;
-+			continue;
-+		}
-+
- 		/* Disable context bank before programming */
- 		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
- 
-@@ -669,10 +676,14 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return -ENODEV;
- 
-+	if (of_device_is_compatible(dev->of_node, "qcom,msm-iommu-v2-sec"))
-+		ctx->secured_ctx = true;
-+
- 	/* clear IRQs before registering fault handler, just in case the
- 	 * boot-loader left us a surprise:
- 	 */
--	iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
-+	if (!ctx->secured_ctx)
-+		iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
- 
- 	ret = devm_request_irq(dev, irq,
- 			       qcom_iommu_fault,
-@@ -712,6 +723,8 @@ static void qcom_iommu_ctx_remove(struct platform_device *pdev)
- static const struct of_device_id ctx_of_match[] = {
- 	{ .compatible = "qcom,msm-iommu-v1-ns" },
- 	{ .compatible = "qcom,msm-iommu-v1-sec" },
-+	{ .compatible = "qcom,msm-iommu-v2-ns" },
-+	{ .compatible = "qcom,msm-iommu-v2-sec" },
- 	{ /* sentinel */ }
- };
- 
-@@ -729,7 +742,8 @@ static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
- 	struct device_node *child;
- 
- 	for_each_child_of_node(qcom_iommu->dev->of_node, child) {
--		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec")) {
-+		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec") ||
-+		    of_device_is_compatible(child, "qcom,msm-iommu-v2-sec")) {
- 			of_node_put(child);
- 			return true;
- 		}
-@@ -873,6 +887,7 @@ static const struct dev_pm_ops qcom_iommu_pm_ops = {
- 
- static const struct of_device_id qcom_iommu_of_match[] = {
- 	{ .compatible = "qcom,msm-iommu-v1" },
-+	{ .compatible = "qcom,msm-iommu-v2" },
- 	{ /* sentinel */ }
- };
- 
--- 
-2.40.1
+[1]: 
+https://lore.kernel.org/all/20230620095127.96600-1-angelogioacchino.delregno@collabora.com/
 
+Cheers,
+Angelo
+
+> Regards
+> Luca
+> 
+>>
+>> Thank you.
+>>
+>> Best regards,
+>> Angelo
+>>
+>>> Changes in v3:
+>>>    - Removed useless FSRRESTORE reset and definition as pointed
+>>>    
+>>>      out in Robin Murphy's review
+>>>    
+>>>    - Fixed qcom,iommu.txt changes: squashed MSM8976 compatible
+>>>    
+>>>      string addition with msm-iommu-v2 generics addition
+>>>
+>>> Changes in v2:
+>>>    - Added back Marijn's notes (sorry man!)
+>>>    - Added ARM_SMMU_CB_FSRRESTORE definition
+>>>    - Changed context bank reset to properly set FSR and FSRRESTORE
+>>>
+>>> AngeloGioacchino Del Regno (6):
+>>>     dt-bindings: iommu: qcom,iommu: Document qcom,ctx-num property
+>>>     iommu/qcom: Use the asid read from device-tree if specified
+>>>     iommu/qcom: Properly reset the IOMMU context
+>>>     iommu/qcom: Index contexts by asid number to allow asid 0
+>>>     dt-bindings: iommu: qcom,iommu: Document QSMMUv2 and MSM8976
+>>>     
+>>>       compatibles
+>>>     
+>>>     iommu/qcom: Add support for QSMMUv2 and QSMMU-500 secured contexts
+>>>    
+>>>    .../devicetree/bindings/iommu/qcom,iommu.txt  |  9 +++
+>>>    drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 78 +++++++++++++++----
+>>>    2 files changed, 70 insertions(+), 17 deletions(-)
+> 
+> 
+> 
+> 
+> 
