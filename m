@@ -2,78 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5756737637
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 22:42:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01EDA737687
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 23:17:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230047AbjFTUmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 16:42:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39194 "EHLO
+        id S230011AbjFTVRn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 17:17:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230042AbjFTUmQ (ORCPT
+        with ESMTP id S229632AbjFTVRl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 16:42:16 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33151125
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 13:42:15 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b4769a2ee5so43345311fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 13:42:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687293733; x=1689885733;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1SlNItgKMhxIdAJOyMCl7jBbGZ0tV9Ya6lDxNumxzlQ=;
-        b=Y6AWHH0TkQ75vfiwY0rg/MSSYtxn7ib7YMZcD99L3albtELrMpDTam2dD23cNyByht
-         45i3DbjCMBuv74OkCr6LmkzYYnffllxo4V+ensnvdSlZBJDeyDaN+gh0ha3tA6PogyN+
-         DUlK8IocoTO5eh1Bg79jQZJ3M44w9h8mkNHsQ505bcn8K7gQvSb4mliyqwcV6xqWTSHL
-         VpfFx12nDQcSqiApPzDzVMsPULA/REIu9Q013cJ4WtVa/al0U4rGLXf4JoJyqazTnjk9
-         WoMAajf/M7NlMoS9/18ZxieFfYzkBqpm98dLrl7gpzG9EpEqzTp9iGDZxE4+eZjgucTj
-         axSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687293733; x=1689885733;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1SlNItgKMhxIdAJOyMCl7jBbGZ0tV9Ya6lDxNumxzlQ=;
-        b=SbqdBoyJa97bO2GLUQmeA4ROhibEMtolSvrYDoVgXU4kF9mPqER4ePlu5w3W/hDqEq
-         F2Cz4hgJZeRBJGout2uls0KE0oux/Djng4J8zPyX8VeCiYsGhmWXf/Y0r4wsRYZ/eWtm
-         VSH90MHeM+HrylRmy2heLplKkeM5eApwM9X3LfF9bIXpvWM8Dl9GzxQqgU4Wook4zVs4
-         cPRmeQX/IOHuj6Tw42O+X2n8Yb8ryuVzDp48Wsa+Ggte70uuFdiZdXb7ujICesSGUI05
-         L3wAa8Aexy6Phwr9uzUDjNQwj7//XfFIEs1GjNbVPnidZVASe03eUYOgv/80tmf0+skZ
-         dnow==
-X-Gm-Message-State: AC+VfDzUE5DijgUcSCNca6ftK0V1gtpgOT0mfaC+ijYayYvQJoGZvtvV
-        uY+/4AhIGM+OkV8pYA+ACMcJPw==
-X-Google-Smtp-Source: ACHHUZ6OR2bE6aOh0tQ6O8bGGdQg3XbqttHOm2XmDVyaVqQ4iYMwYBHZlLiNoaFlmGkOdraxczsxMw==
-X-Received: by 2002:a2e:9cd1:0:b0:2b4:70c1:b484 with SMTP id g17-20020a2e9cd1000000b002b470c1b484mr5688644ljj.38.1687293733589;
-        Tue, 20 Jun 2023 13:42:13 -0700 (PDT)
-Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id v20-20020a2e9254000000b002b46c473d0bsm573976ljg.20.2023.06.20.13.42.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 13:42:13 -0700 (PDT)
-Message-ID: <8b8c35ba-e495-6363-e8fd-65e60bc6e879@linaro.org>
-Date:   Tue, 20 Jun 2023 22:42:12 +0200
+        Tue, 20 Jun 2023 17:17:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C16E71BCD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 14:17:26 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35KKcEFB003231;
+        Tue, 20 Jun 2023 21:17:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Y2+lOJFBzxAOHDSRZYpegeJjNKdxdYBF68Ffd3zqxI0=;
+ b=gjwk7MBcviMTfo5Xjl7Kx0KBV/uVw4+mRrz85sWTX1rVfKj+4ASHLuoYo7jHt1kkBojd
+ UILtMKymPKIhe+tHNaRrFwTiY9fVVKRhNWRFwFNtPDDH/72HNII3whSkp/O88tZt70wG
+ fn/+a3Gd/2vpHbGvPsAWoBBym534gtIwKRxhb80gdaZwFrujqZGgfY6FZgsps5xV8RNx
+ BMqgTdb+G5XFARE2nGnNQqoxEOd++OpwOpkWAEwBkzO83w4nKJ9j/9fdnhSdx5V0mzuK
+ S4fGj0hoQeMPeLdcCNKB36ngEALD1TwFOX9us4yDCPsIBQDsWw8GCoIyqeJkFc8W3aL8 RQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rb1dtjhkk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 21:17:10 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35KLH95r009334
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Jun 2023 21:17:09 GMT
+Received: from [10.110.24.68] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 20 Jun
+ 2023 14:17:08 -0700
+Message-ID: <07ad7dd7-cb2f-d838-722b-022cfd7b31d6@quicinc.com>
+Date:   Tue, 20 Jun 2023 14:17:07 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp-crd: Fix naming of
- regulators
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 16/20] arm64: enable Permission Indirection Extension
+ (PIE)
+To:     Marc Zyngier <maz@kernel.org>, <neil.armstrong@linaro.org>
+CC:     Joey Gouly <joey.gouly@arm.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Bjorn Andersson <andersson@kernel.org>, <nd@arm.com>,
+        <broonie@kernel.org>, <catalin.marinas@arm.com>,
+        <james.morse@arm.com>, <mark.rutland@arm.com>,
+        <oliver.upton@linux.dev>, <shuah@kernel.org>,
+        <suzuki.poulose@arm.com>, <will@kernel.org>,
+        <yuzenghui@huawei.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>
+References: <20230606145859.697944-1-joey.gouly@arm.com>
+ <20230606145859.697944-17-joey.gouly@arm.com>
+ <c3598e8e-46a5-c8d6-bf9f-9fb8f6cd346e@linaro.org>
+ <1c70fa1065b313d314707f22386972e3@kernel.org>
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230620203915.141337-1-quic_bjorande@quicinc.com>
- <20230620203915.141337-2-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230620203915.141337-2-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <1c70fa1065b313d314707f22386972e3@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: W_faszSL6xEEK9vmva9lHiOVLgqIRB3q
+X-Proofpoint-GUID: W_faszSL6xEEK9vmva9lHiOVLgqIRB3q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-20_16,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=845 clxscore=1011 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306200192
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,64 +92,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.06.2023 22:39, Bjorn Andersson wrote:
-> The external regulators in the CRD seems to have inherited their names
-> from the X13s DeviceTree, correct them.
+On 6/20/2023 1:35 PM, Marc Zyngier wrote:
+> On 2023-06-20 20:16, Neil Armstrong wrote:
+>> Hi Joey,
+>>
+>> On 06/06/2023 16:58, Joey Gouly wrote:
+>>> Now that the necessary changes have been made, set the Permission 
+>>> Indirection
+>>> registers and enable the Permission Indirection Extension.
+>>>
+>>> Signed-off-by: Joey Gouly <joey.gouly@arm.com>
+>>> Cc: Catalin Marinas <catalin.marinas@arm.com>
+>>> Cc: Will Deacon <will@kernel.org>
+>>> Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+>>
+>> This patch on linux-next causes a great amount of:
+>>
+>> X     xxx.xxxxxx Emulated RAZ for ID register: ISS 0x36002f
+>>
+>> messages printed by the system firmware on the Qualcomm SM8550 SoC,
+>> and the platform is barely usable.
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-Please also update the node names to match.
+> As others have said on this thread, this is a firmware bug.
+> Not a lot we can do about that, unfortunately, apart from hiding
+> the new feature behind a config option that you'd disable on this
+> platform.
+> 
+> Alternatively, disabling idle management on this machine should
+> reduce the screaming greatly.
 
-Konrad
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index b21b41a066b6..678cdf253f2e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -133,7 +133,7 @@ vreg_edp_3p3: regulator-edp-3p3 {
->  	vreg_edp_bl: regulator-edp-bl {
->  		compatible = "regulator-fixed";
->  
-> -		regulator-name = "VBL9";
-> +		regulator-name = "VREG_EDP_BL";
->  		regulator-min-microvolt = <3600000>;
->  		regulator-max-microvolt = <3600000>;
->  
-> @@ -149,7 +149,7 @@ vreg_edp_bl: regulator-edp-bl {
->  	vreg_nvme: regulator-nvme {
->  		compatible = "regulator-fixed";
->  
-> -		regulator-name = "VCC3_SSD";
-> +		regulator-name = "VREG_NVME_3P3";
->  		regulator-min-microvolt = <3300000>;
->  		regulator-max-microvolt = <3300000>;
->  
-> @@ -163,7 +163,7 @@ vreg_nvme: regulator-nvme {
->  	vreg_misc_3p3: regulator-misc-3p3 {
->  		compatible = "regulator-fixed";
->  
-> -		regulator-name = "VCC3B";
-> +		regulator-name = "VREG_MISC_3P3";
->  		regulator-min-microvolt = <3300000>;
->  		regulator-max-microvolt = <3300000>;
->  
-> @@ -180,7 +180,7 @@ vreg_misc_3p3: regulator-misc-3p3 {
->  	vreg_wlan: regulator-wlan {
->  		compatible = "regulator-fixed";
->  
-> -		regulator-name = "VCC_WLAN_3R9";
-> +		regulator-name = "VPH_PWR_WLAN";
->  		regulator-min-microvolt = <3900000>;
->  		regulator-max-microvolt = <3900000>;
->  
-> @@ -196,7 +196,7 @@ vreg_wlan: regulator-wlan {
->  	vreg_wwan: regulator-wwan {
->  		compatible = "regulator-fixed";
->  
-> -		regulator-name = "VCC3B_WAN";
-> +		regulator-name = "SDX_VPH_PWR";
->  		regulator-min-microvolt = <3300000>;
->  		regulator-max-microvolt = <3300000>;
->  
+I have informed Carl about the Gunyah messaging, I have also added him 
+into this thread.
+
+---Trilok Soni
