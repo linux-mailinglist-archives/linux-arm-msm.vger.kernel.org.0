@@ -2,77 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45A477374DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:03:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D96777374F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:16:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230331AbjFTTDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 15:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50340 "EHLO
+        id S230204AbjFTTQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 15:16:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230326AbjFTTDo (ORCPT
+        with ESMTP id S229500AbjFTTQK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 15:03:44 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8E4E10FF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:03:43 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f883420152so1997903e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:03:43 -0700 (PDT)
+        Tue, 20 Jun 2023 15:16:10 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138109B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:16:09 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f9b4a715d9so17121635e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687287822; x=1689879822;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yhFl7csls6VbQpRJBHh5j2tQyC8b07HNJS4qfJGgohA=;
-        b=iF4yTNc77O+N4+MMq+HnSFJ+btZOf3ve7xLf2SUYea8xR10c1zDtlhYSHqueI7hvRe
-         ATX2a9A2xzy0AaWGiazqKlKzk2lstSUC7Miro+Le0oTgy/ZEGjdkfGRsU99ETnTrwVG9
-         1nk5dAuyF3kh+Z6IcE3s5oIet1a8YlhiD32E3GdkaIAMjerBZJqa6U+XYws06GNsUvIX
-         Iaqu/oyGpeN7NpBSF8rASuSaJ7saJgTwzH9JXgw2kDJpI49ILh3Ife+w8L4cn45MFqjd
-         CyCkO+hiYI9KJlLpdih0eWnRpT22+dREjZo9upVBMeAxqrdI+2Q172HRBGyn/kgKBA9i
-         bVjw==
+        d=linaro.org; s=google; t=1687288567; x=1689880567;
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1mD9I4nNUeLdpFMPXDPLZezt3lAmxRCFthasDSn18PM=;
+        b=jQatyIPfnr/GickdR7M/CtBDgpq4n7sh4fxj3o6rLZC8wXSl2AZ+NVsLiurfcJLHZA
+         6R3OYfuzsABcvRqOCx95ad8ZP3zYE6IULkEuIz0vtbXOfZNi4i8C+hyEqnF5SRV0vpGh
+         6kOdq6bMnkRcvyf/I2fSIlh/deQwwzKyz6UibaBm3ZXfMNVk14JjfETuelBgbQnGuqIe
+         fko71Fi3fRkdWn+GWHYzjD8mBAOE4jxV4JyFYaMQYvt9PVMMT/K0oKrtyuxqui+LuO9+
+         aro/E3Srf7h6StIyYzG6jj/EI3MwWIsYh1QyIl9kXtAzONDOScRDlSfOB9GpTaHs+23c
+         gI9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687287822; x=1689879822;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yhFl7csls6VbQpRJBHh5j2tQyC8b07HNJS4qfJGgohA=;
-        b=E36Tr+pIX+HlkyVk0fmbSjSEZ52YnZq8pzvEXb86/sEGcMdsxEkz2Jr81b7ZfF6y7j
-         a8NyaTODXGyS8hYnrhjBIHPKljgiAZcHgendiZrTU4UGNUE/uHR9SfOlYfwDIZdoWGiV
-         ubHau/j3vZ9jPz9698p8ShH0lWlmCUiUx4OBLClO28Hs33aKXRimXvj0TzyOuWJW+B5b
-         fSy42b24OiyJvzLg+DToax/bhO9p8itWjKU42s5d7ByvHPLlAK+dk/HRBZInfGq86qKp
-         UPmL1k1jHVqYRz9WzY94Xfsaln2sLqYthr8/9V7sUBbFJEehs7cGUsFGmt6ELyGzKwXm
-         ozxg==
-X-Gm-Message-State: AC+VfDyIP6npS76cDWL69qKSPknq2+c5rnaF6FBy1JrXoWPbu79uOMhZ
-        eBggWRHvWa5pWA7t4Zqyou5PFg==
-X-Google-Smtp-Source: ACHHUZ5JeTANAG/P0Z/5Ude0RuprBA3s6XiRGOPpGOLVemNka9J+vhmKajP+GrfY3D4g3b74f8GDww==
-X-Received: by 2002:a05:6512:3288:b0:4f6:29b2:f92a with SMTP id p8-20020a056512328800b004f629b2f92amr7475693lfe.21.1687287822003;
-        Tue, 20 Jun 2023 12:03:42 -0700 (PDT)
-Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id p2-20020a19f002000000b004f85885cff1sm456176lfc.134.2023.06.20.12.03.40
+        d=1e100.net; s=20221208; t=1687288567; x=1689880567;
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1mD9I4nNUeLdpFMPXDPLZezt3lAmxRCFthasDSn18PM=;
+        b=cC6VQ4ZM6pEgNW5f609u3hiH8XCFyVSpo2zZn1hJOs0kEm/PqpqK2mctqwK4OXuXuQ
+         nxRi6P1MM0uNbu7GTpyfw2XH5acuPN8PDnbknftxnkd6mj5t+NC+6YORpkxfsHYbSICX
+         cILvlxLM/pTaPg56JlQYXmLTl+S9hRH5V79GtHtlgO01ZTdfKbyfqj1PlBJROBjVIoRf
+         2vWyfGx4QvIHvoCnqOp9twLOVFrcojm4AgXr6I6SQg9FIzeG/f30tkSjiuSfm3F00P+l
+         YtwJgnWYxtbI5XZQ9w3QIomG7MOQAhrhFemdsGWlNZx5AXDUg5nuwDHHf28OS5F90XTj
+         Fmkw==
+X-Gm-Message-State: AC+VfDwAhuRgYEWqtSWNyHRt24zCu1YaxZwjfpQ2IrE0fBJMaKzcSU1D
+        gS2agprFbKoE8WXU7c9A4WCbCV7Pw+Nlam3g7eT95Q==
+X-Google-Smtp-Source: ACHHUZ7Wi8jQlrG/8Tz7cerVxiBskvE3mDHqDqzUD9L4DdnQLhDyZnlNN8q1ba1lOxGKAY/occt7pQ==
+X-Received: by 2002:a05:600c:3b97:b0:3f9:b535:381a with SMTP id n23-20020a05600c3b9700b003f9b535381amr3743255wms.10.1687288567444;
+        Tue, 20 Jun 2023 12:16:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:496f:4432:b5b2:1b3b? ([2a01:e0a:982:cbb0:496f:4432:b5b2:1b3b])
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c231100b003f8ec58995fsm3063313wmo.6.2023.06.20.12.16.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 12:03:41 -0700 (PDT)
-Message-ID: <72b34fea-70c1-8d80-ef3a-15e82678c757@linaro.org>
-Date:   Tue, 20 Jun 2023 21:03:40 +0200
+        Tue, 20 Jun 2023 12:16:07 -0700 (PDT)
+Message-ID: <c3598e8e-46a5-c8d6-bf9f-9fb8f6cd346e@linaro.org>
+Date:   Tue, 20 Jun 2023 21:16:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: qrb4210-rb2: Enable GPU
+Subject: Re: [PATCH v4 16/20] arm64: enable Permission Indirection Extension
+ (PIE)
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230620-topic-gpu_tablet_disp-v1-0-7bb02bec8dc0@linaro.org>
- <20230620-topic-gpu_tablet_disp-v1-4-7bb02bec8dc0@linaro.org>
- <30cfddfb-fabb-a65e-6bb6-c0efdbd92fd7@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <30cfddfb-fabb-a65e-6bb6-c0efdbd92fd7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To:     Joey Gouly <joey.gouly@arm.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     nd@arm.com, broonie@kernel.org, catalin.marinas@arm.com,
+        james.morse@arm.com, mark.rutland@arm.com, maz@kernel.org,
+        oliver.upton@linux.dev, shuah@kernel.org, suzuki.poulose@arm.com,
+        will@kernel.org, yuzenghui@huawei.com,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20230606145859.697944-1-joey.gouly@arm.com>
+ <20230606145859.697944-17-joey.gouly@arm.com>
+Reply-To: neil.armstrong@linaro.org
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230606145859.697944-17-joey.gouly@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -83,38 +85,161 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.06.2023 17:47, Dmitry Baryshkov wrote:
-> On 20/06/2023 16:17, Konrad Dybcio wrote:
->> Enable the A610 GPU and provide a firmware path to the ZAP blob.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
->> index e23a0406eacc..a7278a9472ed 100644
->> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
->> @@ -179,6 +179,14 @@ &gpi_dma0 {
->>       status = "okay";
->>   };
->>   +&gpu {
->> +    status = "okay";
->> +
->> +    zap-shader {
->> +        firmware-name = "qcom/qrb4210/a610_zap.mbn";
-> 
-> Should this be qrb4210 or sm4250? Previously we did not use special subdirs for IOT versions. See qrb5165-rb5.dts.
-https://lore.kernel.org/linux-arm-msm/CAH=2NtwVtLdE5hg8Qhd_MLCPJTqXvus8+qW_uj4O7hnOy7PVUA@mail.gmail.com/
+Hi Joey,
 
-Konrad
+On 06/06/2023 16:58, Joey Gouly wrote:
+> Now that the necessary changes have been made, set the Permission Indirection
+> registers and enable the Permission Indirection Extension.
 > 
->> +    };
->> +};
->> +
->>   &i2c2 {
->>       clock-frequency = <400000>;
->>       status = "okay";
->>
+> Signed-off-by: Joey Gouly <joey.gouly@arm.com>
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+
+This patch on linux-next causes a great amount of:
+
+X     xxx.xxxxxx Emulated RAZ for ID register: ISS 0x36002f
+
+messages printed by the system firmware on the Qualcomm SM8550 SoC,
+and the platform is barely usable.
+
+Here is the SoC cpuinfo for reference:
+# cat /proc/cpuinfo
+processor	: 0
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd46
+CPU revision	: 1
+
+processor	: 1
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd46
+CPU revision	: 1
+
+processor	: 2
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd46
+CPU revision	: 1
+
+processor	: 3
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd4d
+CPU revision	: 0
+
+processor	: 4
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd4d
+CPU revision	: 0
+
+processor	: 5
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x2
+CPU part	: 0xd47
+CPU revision	: 0
+
+processor	: 6
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x2
+CPU part	: 0xd47
+CPU revision	: 0
+
+processor	: 7
+BogoMIPS	: 38.40
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bti
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd4e
+CPU revision	: 0
+
+The bisect log for reference:
+# bad: [925294c9aa184801cc0a451b69a18dd0fe7d847d] Add linux-next specific files for 20230615
+# good: [858fd168a95c5b9669aac8db6c14a9aeab446375] Linux 6.4-rc6
+git bisect start 'FETCH_HEAD' 'v6.4-rc6'
+# bad: [c20f7e5e521ee3f50b064cdb441f65075ca6eb17] Merge branch 'nand/next' of git://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git
+git bisect bad c20f7e5e521ee3f50b064cdb441f65075ca6eb17
+# bad: [9b3c3144b2d3b5022370883e2834887fc7f3d5d3] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/deller/parisc-linux.git
+git bisect bad 9b3c3144b2d3b5022370883e2834887fc7f3d5d3
+# bad: [8a2e6adeea094195f860f1f5dd799c9f0015dd92] Merge branch 'at91-next' of git://git.kernel.org/pub/scm/linux/kernel/git/at91/linux.git
+git bisect bad 8a2e6adeea094195f860f1f5dd799c9f0015dd92
+# good: [4f826d17f9de4d708f2c07bb40a104426a22b384] Merge branch 'mm-everything' of git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm
+git bisect good 4f826d17f9de4d708f2c07bb40a104426a22b384
+# good: [62f97a067a7e77fd2016ce7d413fceaaf5882385] Merge branch 'for-next' of git://git.infradead.org/users/hch/dma-mapping.git
+git bisect good 62f97a067a7e77fd2016ce7d413fceaaf5882385
+# good: [e5047345bb6c8ee1e5d319c989dc9e3442f891c7] soc: document merges
+git bisect good e5047345bb6c8ee1e5d319c989dc9e3442f891c7
+# good: [cca5c2136d9ca679a9b0cdb51ce64c79cd7c092c] Merge branches 'for-next/kpti', 'for-next/missing-proto-warn', 'for-next/iss2-decode', 'for-next/kselftest', 'for-next/misc', 'for-next/feat_mops', 'for-next/module-alloc', 'for-next/sysreg', 'for-next/cpucap', 'for-next/acpi', 'for-next/kdump' and 'for-next/acpi-doc' into for-next/core
+git bisect good cca5c2136d9ca679a9b0cdb51ce64c79cd7c092c
+# bad: [b6719d317df3ab47dc86776c499fc1e2009e1b37] Merge branch 'for-next/core' of git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux
+git bisect bad b6719d317df3ab47dc86776c499fc1e2009e1b37
+# bad: [ee053e03b08e1b287d9a43152e4623a04cb24fe6] KVM: selftests: get-reg-list: support ID register features
+git bisect bad ee053e03b08e1b287d9a43152e4623a04cb24fe6
+# good: [86f9de9db1783b32e8812fe21c2c8cf02cf911ff] KVM: arm64: Save/restore PIE registers
+git bisect good 86f9de9db1783b32e8812fe21c2c8cf02cf911ff
+# good: [7df7170965a28c61f80a57b655b0cc10adb88ab9] arm64: disable EL2 traps for PIE
+git bisect good 7df7170965a28c61f80a57b655b0cc10adb88ab9
+# bad: [9e9bb6ede00a84275b65bb8d00812c1e24b5fa7e] arm64: enable Permission Indirection Extension (PIE)
+git bisect bad 9e9bb6ede00a84275b65bb8d00812c1e24b5fa7e
+# good: [eeda243dfeb996fe236c624796630c16237a18d6] arm64: add encodings of PIRx_ELx registers
+git bisect good eeda243dfeb996fe236c624796630c16237a18d6
+# first bad commit: [9e9bb6ede00a84275b65bb8d00812c1e24b5fa7e] arm64: enable Permission Indirection Extension (PIE)
+
+Thanks,
+Neil
+
+> ---
+>   arch/arm64/mm/proc.S | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
 > 
+> diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+> index 9513a8d2ce0e..2baeec419f62 100644
+> --- a/arch/arm64/mm/proc.S
+> +++ b/arch/arm64/mm/proc.S
+> @@ -454,6 +454,21 @@ SYM_FUNC_START(__cpu_setup)
+>   #endif	/* CONFIG_ARM64_HW_AFDBM */
+>   	msr	mair_el1, mair
+>   	msr	tcr_el1, tcr
+> +
+> +	mrs_s	x1, SYS_ID_AA64MMFR3_EL1
+> +	ubfx	x1, x1, #ID_AA64MMFR3_EL1_S1PIE_SHIFT, #4
+> +	cbz	x1, .Lskip_indirection
+> +
+> +	mov_q	x0, PIE_E0
+> +	msr	REG_PIRE0_EL1, x0
+> +	mov_q	x0, PIE_E1
+> +	msr	REG_PIR_EL1, x0
+> +
+> +	mov	x0, TCR2_EL1x_PIE
+> +	msr	REG_TCR2_EL1, x0
+> +
+> +.Lskip_indirection:
+> +
+>   	/*
+>   	 * Prepare SCTLR
+>   	 */
+
