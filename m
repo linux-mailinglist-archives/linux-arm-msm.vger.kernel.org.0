@@ -2,167 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57EDF736820
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 11:43:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5790B736862
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 11:53:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232405AbjFTJnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 05:43:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54074 "EHLO
+        id S232569AbjFTJxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 05:53:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232381AbjFTJnm (ORCPT
+        with ESMTP id S232520AbjFTJxQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 05:43:42 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6D33E68;
-        Tue, 20 Jun 2023 02:43:41 -0700 (PDT)
-Received: from [IPV6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2] (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+        Tue, 20 Jun 2023 05:53:16 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32C9A2112;
+        Tue, 20 Jun 2023 02:51:33 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id EB9966602242;
-        Tue, 20 Jun 2023 10:43:38 +0100 (BST)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 004026602242;
+        Tue, 20 Jun 2023 10:51:30 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1687254220;
-        bh=tZEQ2BgJPG46bXO/eTD7ZVZWC8BzMZH3DZDhyoOxcXI=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=lyPiK9hpXVlj0uVpnW/lNz3ZGOWW37jFTe8j03qHuWtTse7as8pDD5Rpf2vd+URoW
-         MVdMC/AkwmISd0h7KivioDsw5Vg9ExZgHGY6iNCzcAqDLVrQEbLONeRR08RdaoFcea
-         yfOjo7ZAt/RQ1bBQbQNalpDKazrFVqBXxQAwXKoUHwbonlvKd6ahdl0ETeEKD+e9ad
-         k49A9PpF3imsmNHMQ5CdyDZXAGB3EBJCFrX5XyPHCnrw1P0A9KRMcsCyQVvOWTpCeQ
-         Uj7RCP/1zMYFStq/e5jmva1C3AomIe2O0RJJrS8tk3FY2ib/N2tf7iFXa14HywkJoM
-         KzlTh2V4Ios8g==
-Message-ID: <6e3f4ff6-2556-a696-58dc-40e1e4d84189@collabora.com>
-Date:   Tue, 20 Jun 2023 11:43:36 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 2/6] iommu/qcom: Use the asid read from device-tree if
- specified
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
-        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        marijn.suijten@somainline.org, kernel@collabora.com,
-        luca@z3ntu.xyz, a39.skl@gmail.com, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20221115101122.155440-1-angelogioacchino.delregno@collabora.com>
- <20221115101122.155440-3-angelogioacchino.delregno@collabora.com>
- <12f0800c-beb3-6fdc-b743-8624f0d5d6ac@linaro.org>
+        s=mail; t=1687254691;
+        bh=uwyXNF91v6sGa/spbsQK7wgAPR7kXwSg3iM/Za/E/Xk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=BPG4e43Bc1WYfvc9ppgzIf3ZLFkS/kDzOrzHj1Bb+188214CDobn964KQShkW99jc
+         gw+qld4zJq4vDmwoM0ett2hIaLJtNR752pRFX8amyiwdp5vdfcnitygfeHhxguPmkg
+         sQ/pGm1BZNWMqb/MhkGo82mfhsQutaZE9HzQjTtkd3nVuuesxQWWfNZGF92ibeupnp
+         hhyT91I6tubjw9X2/113WaghEqrhKaDumwaDgTuShtsAj/9UP9i/C9HdBG0rbmkEdh
+         Q2LKk+j5VxWWHKQU4+zLIS7TKW079pox5c0Cu+CIk5TZ+hCSQGgG52C2qZeTWgx4oY
+         f6lHArq+I2p+Q==
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <12f0800c-beb3-6fdc-b743-8624f0d5d6ac@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
+        dmitry.baryshkov@linaro.org, joro@8bytes.org, will@kernel.org,
+        robin.murphy@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux.dev, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>, kernel@collabora.com
+Subject: [PATCH v4 0/6] Add support for Qualcomm's legacy IOMMU v2
+Date:   Tue, 20 Jun 2023 11:51:21 +0200
+Message-Id: <20230620095127.96600-1-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.40.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 07/03/23 17:44, Dmitry Baryshkov ha scritto:
-> On 15/11/2022 12:11, AngeloGioacchino Del Regno wrote:
->> As specified in this driver, the context banks are 0x1000 apart but
->> on some SoCs the context number does not necessarily match this
->> logic, hence we end up using the wrong ASID: keeping in mind that
->> this IOMMU implementation relies heavily on SCM (TZ) calls, it is
->> mandatory that we communicate the right context number.
->>
->> Since this is all about how context banks are mapped in firmware,
->> which may be board dependent (as a different firmware version may
->> eventually change the expected context bank numbers), introduce a
->> new property "qcom,ctx-num": when found, the ASID will be forced
->> as read from the devicetree.
->>
->> When "qcom,ctx-num" is not found, this driver retains the previous
->> behavior as to avoid breaking older devicetrees or systems that do
->> not require forcing ASID numbers.
->>
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> [Marijn: Rebased over next-20221111]
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
->> ---
->>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 18 +++++++++++++++---
->>   1 file changed, 15 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c 
->> b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> index bfd7b51eb5db..491a8093f3d6 100644
->> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
->> @@ -551,7 +551,8 @@ static int qcom_iommu_of_xlate(struct device *dev, struct 
->> of_phandle_args *args)
->>        * index into qcom_iommu->ctxs:
->>        */
->>       if (WARN_ON(asid < 1) ||
->> -        WARN_ON(asid > qcom_iommu->num_ctxs)) {
->> +        WARN_ON(asid > qcom_iommu->num_ctxs) ||
->> +        WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL)) {
-> 
-> Separate change in my opinion. Please split it to a separate patch with proper 
-> Fixes: tag.
-> 
+This series adds support for handling "v2" firmware's IOMMU, found
+on at least MSM8956 and MSM8976 (some other SoCs also need the same
+but I honestly don't remember which ones precisely).
 
-This is of_xlate: the array entry at [asid - 1] is always initialized before
-the introduction of `qcom,ctx-num`, so this is not a separate change and it
-does not require a Fixes tag, as it is not fixing a previous behavior, but
-accounting for a new one.
+This is strictly required to get functional IOMMUs on these SoCs.
 
->>           put_device(&iommu_pdev->dev);
->>           return -EINVAL;
->>       }
->> @@ -638,7 +639,8 @@ static int qcom_iommu_sec_ptbl_init(struct device *dev)
->>   static int get_asid(const struct device_node *np)
->>   {
->> -    u32 reg;
->> +    u32 reg, val;
->> +    int asid;
->>       /* read the "reg" property directly to get the relative address
->>        * of the context bank, and calculate the asid from that:
->> @@ -646,7 +648,17 @@ static int get_asid(const struct device_node *np)
->>       if (of_property_read_u32_index(np, "reg", 0, &reg))
->>           return -ENODEV;
->> -    return reg / 0x1000;      /* context banks are 0x1000 apart */
->> +    /*
->> +     * Context banks are 0x1000 apart but, in some cases, the ASID
->> +     * number doesn't match to this logic and needs to be passed
->> +     * from the DT configuration explicitly.
->> +     */
->> +    if (of_property_read_u32(np, "qcom,ctx-num", &val))
->> +        asid = reg / 0x1000;
->> +    else
->> +        asid = val;
-> 
-> As a matter of preference (and logic) I'd have written that as:
-> 
-> if (!of_property_read(np, "qcom,ctx-num", &val))
->      asid = val;
-> else
->      asid = reg / 0x1000;
-> 
-> LGTM otherwise
-> 
+I'm sorry for not performing a much needed schema conversion on
+qcom,iommu.txt, but I really didn't have time to do that :-(
 
-Will do!
+This series was tested on Sony Xperia X and X Compact (MSM8956):
+ADSP, LPASS, Venus, MSS, MDP and GPU are happy :-)
 
-Thanks,
-Angelo
+Changes in v4:
+ - Rebase over next-20230619
+ - Rewrite qcom,iommu.txt changes to qcom,iommu.yaml
+ - Changed reset writes to only disable CB through CB_SCTLR
+   and reset CB_FSR and CB_FAR
+ - Addressed misc reviewer's comments
 
-P.S.: Sorry for the very late reply.
+Changes in v3:
+ - Removed useless FSRRESTORE reset and definition as pointed
+   out in Robin Murphy's review
+ - Fixed qcom,iommu.txt changes: squashed MSM8976 compatible
+   string addition with msm-iommu-v2 generics addition
 
->> +
->> +    return asid;
->>   }
->>   static int qcom_iommu_ctx_probe(struct platform_device *pdev)
-> 
+Changes in v2:
+ - Added back Marijn's notes (sorry man!)
+ - Added ARM_SMMU_CB_FSRRESTORE definition
+ - Changed context bank reset to properly set FSR and FSRRESTORE
 
+AngeloGioacchino Del Regno (6):
+  dt-bindings: iommu: qcom,iommu: Add qcom,ctx-num property
+  iommu/qcom: Use the asid read from device-tree if specified
+  iommu/qcom: Disable and reset context bank before programming
+  iommu/qcom: Index contexts by asid number to allow asid 0
+  dt-bindings: iommu: qcom,iommu: Add QSMMUv2 and MSM8976 compatibles
+  iommu/qcom: Add support for QSMMUv2 and QSMMU-500 secured contexts
 
+ .../devicetree/bindings/iommu/qcom,iommu.yaml | 22 +++++--
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 62 ++++++++++++++-----
+ 2 files changed, 64 insertions(+), 20 deletions(-)
+
+-- 
+2.40.1
 
