@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3864B7374CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:00:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 894C17374D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 21:02:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjFTTAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jun 2023 15:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47762 "EHLO
+        id S230229AbjFTTC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 15:02:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbjFTS7x (ORCPT
+        with ESMTP id S229629AbjFTTCZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jun 2023 14:59:53 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A839DC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 11:59:52 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b46d4e1b0aso50131111fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 11:59:52 -0700 (PDT)
+        Tue, 20 Jun 2023 15:02:25 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20EA4170F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:02:24 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f8689fbf59so3892218e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 12:02:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687287590; x=1689879590;
+        d=linaro.org; s=google; t=1687287742; x=1689879742;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4pUkoASnKDVlNRbghMhxgnOUer5/QTr4MEdQPSjInRM=;
-        b=A1SgxJsLuu4gRO/+ZsKe4oQwLXr96Dqgko66fMBvjLK32Vp0aOgQl150Om5Py4zLEK
-         4VEekx2N0yLkUI0KGoU1jbDU43Gr/a3oony//zKTExijueVasseFR611zm9x6Nll8UBA
-         tG9pQPHiMkbE58Lq8bAeMA5d8NzD21mvDvkhxV/yZqomkqf456g8c7KcUu4oLKnnB9UR
-         p7UrJ9KcIv4aXuVmzuUJhMIbvD/xNxvNJsmsfPdwiIlvhiYeQAsLD71/xEWlfTrruXtq
-         pYwfzHtraUPOsDVdlwBEqSjiBkAtWI4e0arZDB7xcCSCv9oPSIORZMtRvcAEIQ1E43lG
-         tGpQ==
+        bh=7LIPQ7TmOkpbIvBCWabiui+NKsz8UsHfmjlDRffHBUk=;
+        b=Xs4PfMspW7xDc/O1aa4rE+DQ9pkOJ4ZTsInVa0vytaaeZpQBMkh49mIONsbq23o/v8
+         REPjMxfyTaLoWX60QsuvW1A9JV1EXfEhLCL5TMFC9z2Q+WkdOS7RX7rLA23TjLs4jMuu
+         X0gtnRQAQKRe+cYWOdZEprxDRUlgFZasijjJA4vO27jBYxmgtw6ZyGzRz1962r5KIpKo
+         dAe6rHRhKDMAhuztkwRGPcLcUHx1NmRw4zDqtnm+IjE4buY51pSJnMg9AMc6CSDN0+5D
+         ODfgm5AIJ5CemHo7VjK+qoC7xx+hSL5fp67SGAKor5YJHHoYA0/dryF07AbL5AMkaFD9
+         qUdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687287590; x=1689879590;
+        d=1e100.net; s=20221208; t=1687287742; x=1689879742;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4pUkoASnKDVlNRbghMhxgnOUer5/QTr4MEdQPSjInRM=;
-        b=c9M/Ri3iT4cFPfDfKuFJLqj+IQPSK7v07DTsMaYwBV5LQSHIsV7Sa+tUR1kzASwjmt
-         E3tCfANzXgjegU9zF0/7Cwn8iKB7z1yH6dm1V5d7JBrav417e/qaq9j/BtlzV0fjkNU1
-         W1KDBN/6ZWyUvRJmMxsQ2bLmQJKOo0OYvfVpQNxepu0wZTgVg8As15zzyLM7uuUbqJOT
-         EbsOeJq+Mwm/wtUJHh9a4OzlYTNUtuEwIYaNsjnyAi3jusiQgWMmsyMjhVrunWCLuncq
-         87qs5yLU2xx71Z/7NbDCcbxhHgqxCovRMHZsCv8Zddv8DhTsnP0b3tYmvLh5oJmwzn1+
-         VNOA==
-X-Gm-Message-State: AC+VfDx1QMdVO17x4yQvwG0tGNmjItG7nt5McXyl1FlUQkN1hhgqJ+zZ
-        /ADniLDuu3fitLwaUKh79k9ZXCOLp7QKHMfbn0g=
-X-Google-Smtp-Source: ACHHUZ4E+w2dp1HuPb0wqbUE0OT8L4urfStbwm6IK+13DNhi9a9IxNo2qwHdj5AO3Sp78CfbPyMchg==
-X-Received: by 2002:a2e:a0d8:0:b0:2b5:7f93:b3b3 with SMTP id f24-20020a2ea0d8000000b002b57f93b3b3mr1649596ljm.32.1687287590246;
-        Tue, 20 Jun 2023 11:59:50 -0700 (PDT)
+        bh=7LIPQ7TmOkpbIvBCWabiui+NKsz8UsHfmjlDRffHBUk=;
+        b=Ttum5bsUUSUxkyfVs8CFipLXBXGoemkaW7KwiX4UNbnMGokJnad8J0TutX4WnCs8JF
+         Z2GCb+y7TDGp3lQLh13nM7uP6tjgVRSRjkpejijCFfN78KeB0iTYMxWJi/O/5NlIAn0o
+         iqOesjRlyOEYn7n4Rxb6bZlHxh1G+XOVXHy/Ol8mhph1FHwiMx+JVlYEHFbudJZP/2ES
+         +gltauWPDsa0anF/7SRqQIIoSP0/TSoVsd+U1Vr54QC8i+0Qmv15QRbsmQ7Plp6h0GdQ
+         rtX3/aNydfWM+KaH3F0XDwAb4/8GnJDJJwbDOQ4D+Jw4zxPVcGsNbdSqG8qLzIrcArkr
+         5EMg==
+X-Gm-Message-State: AC+VfDyhCzoKK4YPA58cpn5cLkE1Nv+lYNO7dYvZZ6lsRZMt+QGFgnmL
+        YIYLSIYvRlNUIVRIRRhd9XWSag==
+X-Google-Smtp-Source: ACHHUZ4t8Pq5QEb7VId6ZVll1Oua+R9L/mIP9UOkzwJC8+552a1mk2SXWhsTfB/x2sy3Dvs003n/3A==
+X-Received: by 2002:a05:6512:454:b0:4f8:565f:8ec7 with SMTP id y20-20020a056512045400b004f8565f8ec7mr4350043lfk.27.1687287742337;
+        Tue, 20 Jun 2023 12:02:22 -0700 (PDT)
 Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id j6-20020a2e8506000000b002b473358e7asm516739lji.108.2023.06.20.11.59.49
+        by smtp.gmail.com with ESMTPSA id o3-20020a056512050300b004f8751285a5sm460669lfb.80.2023.06.20.12.02.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jun 2023 11:59:49 -0700 (PDT)
-Message-ID: <1cf4af9b-b40e-9e1a-47e4-40c6334fd410@linaro.org>
-Date:   Tue, 20 Jun 2023 20:59:48 +0200
+        Tue, 20 Jun 2023 12:02:21 -0700 (PDT)
+Message-ID: <02ee3320-4ff6-f713-3020-c2c82deb674a@linaro.org>
+Date:   Tue, 20 Jun 2023 21:02:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH] soc: qcom: icc-bwmon: Don't ignore return values of
- regmap functions
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm6115p-j606f: Hook up display
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230615-topic-bwmonretval-v1-1-223bd048ebf7@linaro.org>
- <3364339a-908d-7ab6-7d62-a05ab8e67739@linaro.org>
- <20230620181451.idesqpkdyb2wa65l@ripper>
- <3b1b7849-c116-a9da-5c5c-a520c10a521b@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230620-topic-gpu_tablet_disp-v1-0-7bb02bec8dc0@linaro.org>
+ <20230620-topic-gpu_tablet_disp-v1-2-7bb02bec8dc0@linaro.org>
+ <c9ed9e06-3a94-e8ee-7fb6-8ff66c41a32e@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <3b1b7849-c116-a9da-5c5c-a520c10a521b@linaro.org>
+In-Reply-To: <c9ed9e06-3a94-e8ee-7fb6-8ff66c41a32e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -81,50 +83,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.06.2023 20:15, Krzysztof Kozlowski wrote:
-> On 20/06/2023 20:14, Bjorn Andersson wrote:
->> On Thu, Jun 15, 2023 at 11:26:13PM +0200, Krzysztof Kozlowski wrote:
->>> On 15/06/2023 23:12, Konrad Dybcio wrote:
->>>> As it turns out, not all regmap accesses succeed. Not knowing this is
->>>> particularly suboptimal when there's a breaking change to the regmap
->>>> APIs. Monitor the return values of regmap_ calls and propagate errors,
->>>> should any occur.
->>>>
->>>> To keep any level of readability in bwmon_enable(), add some comments
->>>> to separate the logical blocks.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>
->>> Nice coincidence, I just had some talks with a friend about uselessness
->>> (IMHO) of regmap MMIO return status checks.
->>>
->>> Sorry, for me most of this makes the code difficult to read for no gain.
->>> Errors are not real. This is some artificial problem. Solving it makes
->>> code less maintainable.
->>>
->>> If we used here readl/writel, you would not add any checks, right? Then
->>> don't add for regmap mmio.
->>>
+On 20.06.2023 17:52, Dmitry Baryshkov wrote:
+> On 20/06/2023 16:17, Konrad Dybcio wrote:
+>> Enable the required nodes, add the required pins and tweak a
+>> regulator to enable non-simplefb display on the Tab P11.
 >>
->> I agree, the mmio regmap interface should only fail because of bugs or
->> things are misconfigured. Would be nice to capture that in a WARN_ON()
->> or something...
+>> Do note that there exists a second SKU with a different panel+touch
+>> combo, but due to insufficient information, that will need to be
+>> handled separately.
 >>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 57 +++++++++++++++++++++--
+>>   1 file changed, 52 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>> index 81fdcaf48926..a10ce676bd44 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>> @@ -65,9 +65,41 @@ ramoops@ffc00000 {
+>>       };
+>>   };
+>>   -&dispcc {
+>> -    /* HACK: disable until a panel driver is ready to retain simplefb */
+>> -    status = "disabled";
+>> +&mdss {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&mdss_dsi0 {
+>> +    vdda-supply = <&pm6125_l18>;
+>> +    status = "okay";
+>> +
+>> +    panel: panel@0 {
+>> +        compatible = "lenovo,j606f-boe-nt36523w", "novatek,nt36523w";
+>> +        reg = <0>;
+>> +
+>> +        reset-gpios = <&tlmm 82 GPIO_ACTIVE_LOW>;
+>> +        vddio-supply = <&pm6125_l9>;
+>> +
+>> +        pinctrl-names = "default";
+>> +        pinctrl-0 = <&te_active &sde_dsi_active>;
+>> +
+>> +        rotation = <180>; /* Yep, it's mounted upside down! */
+>> +
+>> +        port {
+>> +            panel_in: endpoint {
+>> +                remote-endpoint = <&mdss_dsi0_out>;
+>> +            };
+>> +        };
+>> +    };
+>> +};
+>> +
+>> +&mdss_dsi0_out {
+>> +    data-lanes = <0 1 2 3>;
+>> +    remote-endpoint = <&panel_in>;
+>> +};
+>> +
+>> +&mdss_dsi0_phy {
+>> +    status = "okay";
+>>   };
+>>     &pm6125_gpios {
+>> @@ -212,8 +244,9 @@ pm6125_l17: l17 {
+>>           };
+>>             pm6125_l18: l18 {
+>> -            regulator-min-microvolt = <1104000>;
+>> -            regulator-max-microvolt = <1312000>;
+>> +            /* 1.104V-1.312V fixed @ 1.232V for DSIPHY */
+>> +            regulator-min-microvolt = <1232000>;
+>> +            regulator-max-microvolt = <1232000>;
+>>           };
+>>             pm6125_l19: l19 {
+>> @@ -282,6 +315,20 @@ sdc2_gate_pin: sdc2-gate-state {
+>>           bias-pull-up;
+>>           output-high;
+>>       };
+>> +
+>> +    te_active: te-active-state {
+>> +        pins = "gpio81";
+>> +        function = "mdp_vsync";
+>> +        drive-strength = <2>;
+>> +        bias-pull-down;
+>> +    };
+>> +
+>> +    sde_dsi_active: te-active-state {
 > 
-> One choice could be to have for entire functions doing reads/writes:
-> 
-> 	ret = 0;
-> 	ret != regmap_write();
-> 	ret != regmap_write();
-> 	ret != regmap_write();
-> 	return ret;
-> 
-> and handle this in the caller somehow. I don't think that aborting such
-> chain early, just because regmap mmio failures, makes sense.
-Meh, perhaps let's just forget about this patch.
+> mdss_dsi_active? Or just dsi_active?
+mdss is ok
+
+Also Marijn pointed out in private that this node overwrites
+the previous one.. Thankfully video mode panels don't care about
+TE! :D
 
 Konrad
 > 
-> Best regards,
-> Krzysztof
+>> +        pins = "gpio82";
+>> +        function = "gpio";
+>> +        drive-strength = <8>;
+>> +        bias-disable;
+>> +    };
+>>   };
+>>     &ufs_mem_hc {
+>>
 > 
