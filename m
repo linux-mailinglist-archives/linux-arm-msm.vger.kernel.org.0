@@ -2,75 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8145773607B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 02:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AAED7362FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jun 2023 07:08:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbjFTAJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jun 2023 20:09:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60730 "EHLO
+        id S229601AbjFTFI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jun 2023 01:08:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjFTAJA (ORCPT
+        with ESMTP id S229478AbjFTFI2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jun 2023 20:09:00 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 821AEE4A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 17:08:58 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f870247d6aso2374005e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 17:08:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687219737; x=1689811737;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9+33/Akyz646WCk+zNakB+A6BgRlH4AMlTc8/nb1Uiw=;
-        b=mViB2xyscK9XvkiZe8et+ffPaojmjZnVgSiyod4kbVC/jfi56Msx70UGca6oaOB/FR
-         2wqJTftRiIHtiZHrT4R+IZVP6Xih7HcGt+YiiqqYISzfUNNzXSx+y+qmhoh41ReWNnyq
-         ptF06oiTB6zUNSTeBL6QiMHurRBFcFs1uBXufkBqcSYF6HENnzpVJp92I6Wu7UFK7zS/
-         dgU/BP3JDtsh9epaT/wCacefdh60VuBlnbOJGQiZtaLZxS/H/wDHenbYsS0xypyMcqXu
-         vhVVY3Olv9aq4U18FrmvLb12PZdeaIkASkoQgwKlkqTZzR1gB2Ta0RYpVcM17jQhW+uL
-         PSFQ==
+        Tue, 20 Jun 2023 01:08:28 -0400
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C2781A4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 22:08:25 -0700 (PDT)
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com [209.85.167.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id EF159423ED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jun 2023 05:08:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1687237701;
+        bh=kYHiqY0MrmuYOQjx/9zPX9Eu/K7YT+C3YLGg4BNkKMQ=;
+        h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+         MIME-Version:Content-Type;
+        b=UGWYbdwAgdh75VBmXRWciBFshgQIqLBrfFUT4X/bIsd2Vf9eL2LVnGMdnZtd9fH8h
+         Y9Eh18aDDuH0s+QEu/Z+UVmCT+0DQ8ry8YXiY5mQrwGfuea9qO6ZPb1JlFKz2QWNpR
+         hloJkujhUaJWsZYbC88Zhch/hT/4KDyvsnImAoxvE3b042+EpBFYwACA7Lm4jeZXKU
+         MMoe95U6cKlYFfbraifQYmV4eugrguXQaqmVzozowDeyCJORu0fbOUDcOPrbeIwo7Y
+         tSb3jT558wKNHM/pPdRb1UZeZA6PHT90JG8D8KI2GHE+7n9fT7KcuvMfaatsQYvFop
+         JluVW6V2MxGgw==
+Received: by mail-lf1-f70.google.com with SMTP id 2adb3069b0e04-4edc7406cbaso3136354e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jun 2023 22:08:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687219737; x=1689811737;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9+33/Akyz646WCk+zNakB+A6BgRlH4AMlTc8/nb1Uiw=;
-        b=keEFP+jwufjVatluoB43tC1iEYqm0EhiU3DylGBAMSFcQPm7Azy56i3oSPSDByTB4w
-         uGzqeCpWLJYawTydnIyawk+X3079RONaKcaGJi5hfFTxQyTDrAmkId+t9CEEyGJmYEnq
-         vQ0hZorCqgevtszMZLt3V7ilTtibgd0JMwsOB9FHyIA9w0Utzcvz7VoQtkTbC3sSND05
-         RyIDesphVDSgQMrvE9beGW0gWM2N8jVzL0sQHua423kb2wblU/7LXFmZT/zgTpxfI3tT
-         zAUTpXRa3FOsSvuqCCBtzz9AHvkaB4monm2r1fmucxPofp+zsECrR1viGsLGLdHhwzOu
-         mniA==
-X-Gm-Message-State: AC+VfDz+fG7JZETEPIjbmrG+3z0XIAKIO2QZXA4URet9Ugs8Dvh5+u45
-        FGFcpIYjMN61JI9Y9jdmR+Fl7w==
-X-Google-Smtp-Source: ACHHUZ7+MHKGzjjUh8q06D4T/v/Z2RLXhkVs/d7Oy3VT82VSGELeoh4tOCrfFU/4XXfrlzAkLPbcug==
-X-Received: by 2002:a19:644e:0:b0:4e9:9e45:3470 with SMTP id b14-20020a19644e000000b004e99e453470mr6766655lfj.3.1687219736953;
-        Mon, 19 Jun 2023 17:08:56 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a6-20020a056512020600b004f869e46fd4sm128815lfo.100.2023.06.19.17.08.55
+        d=1e100.net; s=20221208; t=1687237700; x=1689829700;
+        h=mime-version:organization:references:in-reply-to:message-id:subject
+         :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kYHiqY0MrmuYOQjx/9zPX9Eu/K7YT+C3YLGg4BNkKMQ=;
+        b=XTygISBy9hjrY+8vxKGypMkAon8U4gPZEfd6zWkctA3hwmsyyWpcEet0mBjg07Knyo
+         1j8bInQfdWrlz6HPkdw6e83DxsXe0+++Ho095Bv2Lkm5XQjJwlQVIHSSsNBtZJVlI1F+
+         wtx9S/V0u08MI1FZRgZF+B8FAv9y42eLiwUYzLXlOOEE/ICBWJgs9Ie1XZYdEGzKMqdm
+         0HmnrHNoD+k4usZ20qzgNUJD7OB9H/yUpslYZFmoCpWB3y+xnuT4Zy3zQkXEV4rWcQUt
+         BoY+5IM3DUKzRF29E8Dyqy/6/hv3UrifsRL0Vt3uzKiOHs+nYNG1gVsG3tbqAqg+ztqd
+         Sr6g==
+X-Gm-Message-State: AC+VfDxC2pmmAHo5gQwQ0vodML7oj+m1fN6mPopDG00Z0sbCN8bixVvm
+        luMY4KOQcS+pNrYIcAJGr/a1S8pzjleJV5zAstIJVmY1R5891nyIeWkpLBnjutcxTKDnIw1s3Ds
+        jWYin+8YEXtQ4+6mLOjpLZW041kPCgKFTwab/Qgg8GRw=
+X-Received: by 2002:a05:6512:532:b0:4f8:770f:1b04 with SMTP id o18-20020a056512053200b004f8770f1b04mr1430011lfc.0.1687237699870;
+        Mon, 19 Jun 2023 22:08:19 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ4Ml787KUueP3m3sr+JeQpNhdsMKcAJhcImYx4vsWXakhX+FZUrxJU3CNpSuEPCRQjER4LtIw==
+X-Received: by 2002:a05:6512:532:b0:4f8:770f:1b04 with SMTP id o18-20020a056512053200b004f8770f1b04mr1429991lfc.0.1687237699554;
+        Mon, 19 Jun 2023 22:08:19 -0700 (PDT)
+Received: from smeagol ([194.191.244.86])
+        by smtp.gmail.com with ESMTPSA id c25-20020a7bc859000000b003f90ab2fff9sm1360281wml.9.2023.06.19.22.08.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jun 2023 17:08:56 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 8/8] drm/msm/dpu: remove unused fields from struct dpu_core_perf
-Date:   Tue, 20 Jun 2023 03:08:46 +0300
-Message-Id: <20230620000846.946925-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
-References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
+        Mon, 19 Jun 2023 22:08:18 -0700 (PDT)
+Date:   Tue, 20 Jun 2023 07:08:15 +0200
+From:   Juerg Haefliger <juerg.haefliger@canonical.com>
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <johan+linaro@kernel.org>, <konrad.dybcio@linaro.org>,
+        <ribalda@chromium.org>, <joel@joelfernandes.org>
+Subject: Re: [PATCH] drm/msm/adreno: Update MODULE_FIRMWARE macros
+Message-ID: <20230620070815.2c0bd60f@smeagol>
+In-Reply-To: <yl7qxypdzlzwmmp3b43vz5xo6jxey4zcpdxurcvfzujxrawz36@lneajulwoy4k>
+References: <20230616122815.1037425-1-juerg.haefliger@canonical.com>
+        <yl7qxypdzlzwmmp3b43vz5xo6jxey4zcpdxurcvfzujxrawz36@lneajulwoy4k>
+Organization: Canonical Ltd
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: multipart/signed; boundary="Sig_/vDXuG4klP3vp2xxWUE+QEvn";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,74 +88,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove dpu_core_perf::dev and dpu_core_perf::debugfs_root fields, they
-are not used by the code.
+--Sig_/vDXuG4klP3vp2xxWUE+QEvn
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 2 +-
- 3 files changed, 1 insertion(+), 7 deletions(-)
+On Fri, 16 Jun 2023 21:25:01 +0530
+Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index f779ad544347..7f110d15b101 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -395,11 +395,9 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
- #endif
- 
- int dpu_core_perf_init(struct dpu_core_perf *perf,
--		struct drm_device *dev,
- 		const struct dpu_perf_cfg *perf_cfg,
- 		struct clk *core_clk)
- {
--	perf->dev = dev;
- 	perf->perf_cfg = perf_cfg;
- 	perf->core_clk = core_clk;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index e1198c104b5e..623e2d058695 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -27,7 +27,6 @@ struct dpu_core_perf_params {
- /**
-  * struct dpu_core_perf - definition of core performance context
-  * @dev: Pointer to drm device
-- * @debugfs_root: top level debug folder
-  * @perf_cfg: Platform-specific performance configuration
-  * @core_clk: Pointer to the core clock
-  * @core_clk_rate: current core clock rate
-@@ -36,8 +35,6 @@ struct dpu_core_perf_params {
-  * @enable_bw_release: debug control for bandwidth release
-  */
- struct dpu_core_perf {
--	struct drm_device *dev;
--	struct dentry *debugfs_root;
- 	const struct dpu_perf_cfg *perf_cfg;
- 	struct clk *core_clk;
- 	u64 core_clk_rate;
-@@ -77,7 +74,6 @@ void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
-  * @core_clk: pointer to core clock
-  */
- int dpu_core_perf_init(struct dpu_core_perf *perf,
--		struct drm_device *dev,
- 		const struct dpu_perf_cfg *perf_cfg,
- 		struct clk *core_clk);
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 4439147d2c35..5297cec68c9c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1115,7 +1115,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 		dpu_kms->hw_vbif[vbif->id] = hw;
- 	}
- 
--	rc = dpu_core_perf_init(&dpu_kms->perf, dev, dpu_kms->catalog->perf,
-+	rc = dpu_core_perf_init(&dpu_kms->perf, dpu_kms->catalog->perf,
- 			msm_clk_bulk_get_clock(dpu_kms->clocks, dpu_kms->num_clocks, "core"));
- 	if (rc) {
- 		DPU_ERROR("failed to init perf %d\n", rc);
--- 
-2.39.2
+> On Fri, Jun 16, 2023 at 02:28:15PM +0200, Juerg Haefliger wrote:
+> >=20
+> > Add missing MODULE_FIRMWARE macros and remove some for firmwares that
+> > the driver no longer references.
+> >=20
+> > Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/adreno_device.c | 23 ++++++++++++++++++----
+> >  1 file changed, 19 insertions(+), 4 deletions(-)
+> >=20
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
+rm/msm/adreno/adreno_device.c
+> > index 8cff86e9d35c..9f70d7c1a72a 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > @@ -364,17 +364,32 @@ MODULE_FIRMWARE("qcom/a330_pm4.fw");
+> >  MODULE_FIRMWARE("qcom/a330_pfp.fw");
+> >  MODULE_FIRMWARE("qcom/a420_pm4.fw");
+> >  MODULE_FIRMWARE("qcom/a420_pfp.fw");
+> > +MODULE_FIRMWARE("qcom/a506_zap.mdt");
+> > +MODULE_FIRMWARE("qcom/a508_zap.mdt");
+> > +MODULE_FIRMWARE("qcom/a512_zap.mdt");
+> >  MODULE_FIRMWARE("qcom/a530_pm4.fw");
+> >  MODULE_FIRMWARE("qcom/a530_pfp.fw");
+> >  MODULE_FIRMWARE("qcom/a530v3_gpmu.fw2");
+> >  MODULE_FIRMWARE("qcom/a530_zap.mdt");
+> > -MODULE_FIRMWARE("qcom/a530_zap.b00");
+> > -MODULE_FIRMWARE("qcom/a530_zap.b01");
+> > -MODULE_FIRMWARE("qcom/a530_zap.b02"); =20
+> Why are these not required when "qcom/a530_zap.mdt" is present?
+>=20
+> mdt & b0* binaries are different partitions of the same secure
+> firmware. Even though we specify only the .mdt file here, the PIL driver
+> will load the *.b0* file automatically. OTOH, "*.mbn" is a standalone
+> unified binary format.
 
+Ah thanks for the clarification.
+
+
+> If the requirement is to ensure that all necessary firmwares are part of
+> your distribution, you should include the *.b0* files too here.
+
+I'll look into that. IMO, everything that the drivers can load should be
+listed for completeness.
+
+...Juerg
+
+
+> -Akhil
+>=20
+> > +MODULE_FIRMWARE("qcom/a540_gpmu.fw2");
+> > +MODULE_FIRMWARE("qcom/a540_zap.mdt");
+> > +MODULE_FIRMWARE("qcom/a615_zap.mdt");
+> >  MODULE_FIRMWARE("qcom/a619_gmu.bin");
+> >  MODULE_FIRMWARE("qcom/a630_sqe.fw");
+> >  MODULE_FIRMWARE("qcom/a630_gmu.bin");
+> > -MODULE_FIRMWARE("qcom/a630_zap.mbn");
+> > +MODULE_FIRMWARE("qcom/a630_zap.mdt");
+> > +MODULE_FIRMWARE("qcom/a640_gmu.bin");
+> > +MODULE_FIRMWARE("qcom/a640_zap.mdt");
+> > +MODULE_FIRMWARE("qcom/a650_gmu.bin");
+> > +MODULE_FIRMWARE("qcom/a650_sqe.fw");
+> > +MODULE_FIRMWARE("qcom/a650_zap.mdt");
+> > +MODULE_FIRMWARE("qcom/a660_gmu.bin");
+> > +MODULE_FIRMWARE("qcom/a660_sqe.fw");
+> > +MODULE_FIRMWARE("qcom/a660_zap.mdt");
+> > +MODULE_FIRMWARE("qcom/leia_pfp_470.fw");
+> > +MODULE_FIRMWARE("qcom/leia_pm4_470.fw");
+> > +MODULE_FIRMWARE("qcom/yamato_pfp.fw");
+> > +MODULE_FIRMWARE("qcom/yamato_pm4.fw");
+> > =20
+> >  static inline bool _rev_match(uint8_t entry, uint8_t id)
+> >  {
+> > --=20
+> > 2.37.2
+> >  =20
+
+
+--Sig_/vDXuG4klP3vp2xxWUE+QEvn
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEhZfU96IuprviLdeLD9OLCQumQrcFAmSRND8ACgkQD9OLCQum
+QrdPYw//QzGQ0R5KDY7yYZt83rqtfWawMZuuBi9PMkzDHZWRYkFYdmeVGDdxtAm4
+od/7vmulM8dUSjdiTvbSmnxi4kapgysgi9xFpZ6y998+V/FPlFU7bYAbjV43c0xo
+2WeklNS4fKaoJg0jVMbVFegQIRENqKj9xwqbNHlDKhPNRELiU7lpMDRBJalzICdi
+FuwZvGv59ah+voSxHNpo0e9et659RjgqxvxlS7ivWLR/gimoCURRXj+oLD3nKtav
+ibG704hNsnEPqGvf9NQi+C3NTMZPF123EpiXyNQoe6J158Xg6dgur0oBPyn97TFX
+rrsm+9usyGPzfrwdtwdz9OtqL0wCT9uOD12W+E8MqVBryU8HHRdCt/ZQkkJ5sz1V
+6+wHya9PseGN5zCRBOr+flAjRmfNDCLcveB06BmhXSEUk1CmPHhJvUAfKgrMMK+n
+R0BUF+V2/r82AcPQpx1rNuPWeEeSsgGwq/gq+Bbp8lJB9BYm/IDst9fch711WV70
+70AsC5zdSN/E75TJpQ9qqG/ZafWzPoI5YhYx6MOIHxwvmFBgSBLHUqCrSSVargjF
+qAYkTizvh4BMknx5hL+XfReFriTRkU93eyTHwOkXFN5BTKPFFIWSA6CFF+1+wiNy
+GYQ8qgldRA6YZFXjF3FN/+oTAmwzjp/ZBgAI1C36IVWqinwjXV4=
+=rUQw
+-----END PGP SIGNATURE-----
+
+--Sig_/vDXuG4klP3vp2xxWUE+QEvn--
