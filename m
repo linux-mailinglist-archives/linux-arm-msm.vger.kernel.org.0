@@ -2,126 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C9C5738A67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 18:05:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACFE4738AC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 18:18:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232020AbjFUQFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 12:05:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36034 "EHLO
+        id S232000AbjFUQSx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 12:18:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232281AbjFUQFX (ORCPT
+        with ESMTP id S231743AbjFUQSu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 12:05:23 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7825E65
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 09:05:21 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b45bc83f26so86007821fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 09:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687363520; x=1689955520;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L97xFUB/temtwy4P5WXSXI6EdGmq+W3P48s85yOFasc=;
-        b=OhBo8mdY2EQb4doBeRjxfE/PCPaqhdve5qfzbO/LYFBLeEl3giTQiM/3gL1/ebNztJ
-         Z+qflDHVyA8waw+OkfW8gyMa17G8CTA3qdijO4i5v0tm8PxAt4HJfQxaUIR1/8kG/ZEG
-         NwlYOq1dyLDAt0Dl8rTKCa3WcyQtRV2H9/rMqm2SGE8mzNZDxreRcolNm0zsAVIMTI/h
-         JCQdMLfeOasEsb57iCHZubEooCYGB2UBTewCGkh8XFHis+6j5rUFnaUUGLktLsJ58ijy
-         Zo7twp4zxKjFXfj++JJ3L+aLdw65jAbo2kqa3L8TQ9+l4oZ0IdlvMGHgDvIMieBpW+sH
-         JpMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687363520; x=1689955520;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L97xFUB/temtwy4P5WXSXI6EdGmq+W3P48s85yOFasc=;
-        b=cBTquK5b/K7bQgIy6hWbuSI/fa3uS7skIHz8lMEO+xjcjUh3hdZZ+q60Pb2qxIzlTu
-         jpH0mf9Wkwt76Jpf7y0FE1U0MpNELB85b4RWjUPEsQ6k/rIXwnbW4VU27yS65shv4Ypc
-         8LlO70D9+/hut0CgBYRtUiqKIYBhpjA6JD0N9ywFLJglaIMjzk4vU8kk/mBdv3DEAvdH
-         LQZZBJ0dgiFfutZvoMoJaMhtTIAI06PMx4bi3BSu2dZhw9DMrjKI6aotxUWPf5mIcY/I
-         bm5RiZRL+Ks9jmIFQl5jTKqOY4rOhzW+dDRapKajGjDrcayQV4OGNEGk4EonIdN0IC2S
-         xpAA==
-X-Gm-Message-State: AC+VfDxj55A6BHj9zrp1vQ3f8wyYRbQfUdifGkYLv8gWv9HpHpHTriik
-        mXvj3W6PmMBLzkm6rNdkcF2sRjYbiK+e7D0thFU=
-X-Google-Smtp-Source: ACHHUZ5rCvUCzPIvEum9mq8ucBtspidgJe6E23DjJm1oYmWw/EALGwZQFr0w1VJsKrVexbtw+LoOlA==
-X-Received: by 2002:a2e:b0e6:0:b0:2b4:78f6:d331 with SMTP id h6-20020a2eb0e6000000b002b478f6d331mr6371359ljl.32.1687363519916;
-        Wed, 21 Jun 2023 09:05:19 -0700 (PDT)
-Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id y2-20020a2e7d02000000b002b4750c4db0sm942964ljc.49.2023.06.21.09.05.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jun 2023 09:05:19 -0700 (PDT)
-Message-ID: <faed77b0-d783-bbbb-313a-628cf32b4d22@linaro.org>
-Date:   Wed, 21 Jun 2023 18:05:18 +0200
+        Wed, 21 Jun 2023 12:18:50 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCFAC1726;
+        Wed, 21 Jun 2023 09:18:42 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35LE0Qnw032048;
+        Wed, 21 Jun 2023 16:18:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=4NFulaNR1E7CRy263dCl+NgHlV+kg6VZqPlxL+izebc=;
+ b=Coda6LT5dKc5g+nMT5k64oxxi0s76j214TAV00rRpeY9eyUN49aDSCnqlkwN0HT4EAI7
+ Ai/XNBORXqPitT1bnZB8J2kZsdVmQK9JijXL6KYy13qhOaFHxV3Tb0PU0wntentoZGn2
+ Q3qNsA5NupEJKXNINwPAU2K2iB4xR7Olsun2d0muAViQz6mwXyXh82OdUWCfgLBwt9a8
+ LRg6AmOxodtf6cXrK/0aGLG8DDQu5kpiyvlZmIXRVjli/pX/xM1V8CkGR4CsOqzQvKHi
+ GbAENSza8godHpxRU7lR3+nv0KV4sty6IcrwkE4qi3JZXLEAk7W99sGpG37sELZVD7rJ 6g== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbqjb9sj8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Jun 2023 16:18:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35LGIUdA018153
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Jun 2023 16:18:30 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 21 Jun 2023 09:18:29 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4 0/2] retrieve DSI DSC through priv-dsi[0]
+Date:   Wed, 21 Jun 2023 09:18:16 -0700
+Message-ID: <1687364298-29430-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HcvUzWs8hHTN157SM2O45skX8icD5DMn
+X-Proofpoint-GUID: HcvUzWs8hHTN157SM2O45skX8icD5DMn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-21_09,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ phishscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=924
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306210137
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21.06.2023 16:36, Krzysztof Kozlowski wrote:
-> SM8350 HDK and MTP boards were silently dying and rebooting during BAM
-> DMA probe:
-> 
->   [    1.574304] vreg_bob: Setting 3008000-3960000uV
->   [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
->   Optional Info
->   Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
->   S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
->   S - IMAGE_VARIANT_STRING=SocLahainaLAA
->   S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
->   S - Boot Interface: UFS
-> 
-> It seems that BAM DMA is locally controller (not by firmware) and
-> requires proper initialization by the driver prior to use, at least on
-> HDK8350 and MTP8350, but probably on all boards.
-> 
-> Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM8350 PDX215
+moving retrieving struct drm_dsc_cofnig from setup_display to
+atomic_enable() and delete struct drm_dsc_config from
+struct msm_display_info.
 
-Konrad
-> 
-> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index 88ef478cb5cc..b382ce66387e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -1741,7 +1741,6 @@ cryptobam: dma-controller@1dc4000 {
->  			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
->  			#dma-cells = <1>;
->  			qcom,ee = <0>;
-> -			qcom,controlled-remotely;
->  			iommus = <&apps_smmu 0x594 0x0011>,
->  				 <&apps_smmu 0x596 0x0011>;
->  		};
+Kuogee Hsieh (2):
+  drm/msm/dpu: retrieve DSI DSC struct through priv->dsi[0]
+  drm/msm/dpu: remove struct drm_dsc_config from struct msm_display_info
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32 +++++++++++++++++++++++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  2 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 --
+ 3 files changed, 26 insertions(+), 10 deletions(-)
+
+-- 
+2.7.4
+
