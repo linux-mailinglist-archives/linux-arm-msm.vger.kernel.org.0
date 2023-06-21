@@ -2,149 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CC3F737A52
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 06:39:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 875F9737AFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 08:02:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbjFUEjO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 00:39:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54746 "EHLO
+        id S229845AbjFUGA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 02:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbjFUEjK (ORCPT
+        with ESMTP id S229470AbjFUGA0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 00:39:10 -0400
+        Wed, 21 Jun 2023 02:00:26 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61FD9198D;
-        Tue, 20 Jun 2023 21:38:43 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35L4G6Ij009750;
-        Wed, 21 Jun 2023 04:37:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=7eLJ5VGSEKr9ajDV2vpmqHH8rLnmFPgGlnGIZu7ZnSg=;
- b=Gw3hFBFtG3mPITzlXsU8UzXBAdv3zxW6yvb5GbGZIFC8f+tnjNxC4YFiKPva3/W2m7oz
- PA3KFUdea2fdOr+aaxe3TPZaBdUI8/4JBf+sCMsGCr5r7lqPTwc5Hv8hwbIR4GmF7T4g
- W8UZ3c1XQS1oIFHXeZAngE2S7lX58OQDA+A/K57xSL6emjrX3N4BYXhIM25D66jgqSFm
- AL9av2454UTH6N2CuXCa3+Kb39JSOdywdc/fAsA2c7wP4Su2N4iVDZ07BOOEvg5CHV9r
- 9gUgSKFJzkRsWaTxxWKiFoS6qiXwgfJylTiguhAqB+dcPVH5Z4BAUwtRT8AmJ9keuHUl uw== 
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D400A94;
+        Tue, 20 Jun 2023 23:00:24 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35L5OlsW023073;
+        Wed, 21 Jun 2023 06:00:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xjY2SYNfv3RwEGW+uucTh9bt3QwnFzKvr/dlKJfaTl4=;
+ b=JB6f+RnzBFvZYNkUb927gnK12732kWuDCE8LzxJi+9HKCMLbfgN55z6uoCreKiwq8llc
+ yA6lKCApig4bb/aBFs2VGP9KY6u+h1ku6XZI1FZ7IZ6qT3CHmqx5H8QKusdigShpi2YG
+ cZ4n+ypySkbdsOCd2A4SfWO85NAGU3Qt43PqD5UCVGyh37IAol9Uu4f0Kai68emVCPWj
+ bRXGsl3hpu6EGJ5xst1FfRqaQBZpfESKX2IoHfU+fMRd9WHnYxyNWthVPsV/ky4gDEra
+ zi4pNanQo5YuhXqNuLsOwk+w6fyIBhEzYzLGU6qrWBZSbantyHP05XH4YvNK6k20HhcZ 7Q== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rb3guu04p-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rb1dtk93n-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 21 Jun 2023 04:37:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35L4bpIb003900
+        Wed, 21 Jun 2023 06:00:19 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35L60HN0009259
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 21 Jun 2023 04:37:51 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 20 Jun 2023 21:37:45 -0700
-From:   Krishna Kurapati <quic_kriskura@quicinc.com>
-To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v9 10/10] arm64: dts: qcom: sa8540-ride: Enable first port of tertiary usb controller
-Date:   Wed, 21 Jun 2023 10:06:28 +0530
-Message-ID: <20230621043628.21485-11-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230621043628.21485-1-quic_kriskura@quicinc.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+        Wed, 21 Jun 2023 06:00:17 GMT
+Received: from [10.216.41.219] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 20 Jun
+ 2023 23:00:13 -0700
+Message-ID: <c5302062-e66a-c943-9fed-d959a1b6a9ed@quicinc.com>
+Date:   Wed, 21 Jun 2023 11:29:51 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [RESEND v6 7/8] arm64: dts: qcom: sc7280: Modify LPASS_MCC reg
+ region size in the lpass_tlmm node
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <swboyd@chromium.org>,
+        <andersson@kernel.org>, <broonie@kernel.org>, <agross@kernel.org>
+CC:     <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <judyhsiao@chromium.org>,
+        <quic_visr@quicinc.com>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+References: <20230616103534.4031331-1-quic_mohs@quicinc.com>
+ <20230616103534.4031331-8-quic_mohs@quicinc.com>
+ <6a0a9fe7-d08e-4d1d-0085-f854f95c390f@linaro.org>
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+In-Reply-To: <6a0a9fe7-d08e-4d1d-0085-f854f95c390f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Vw8XW0VwCZYndRFdUPPZ7FcTvbIPeiYi
-X-Proofpoint-GUID: Vw8XW0VwCZYndRFdUPPZ7FcTvbIPeiYi
+X-Proofpoint-ORIG-GUID: PCvf3pB22Dsytsb8SB8oPClhWgRck59z
+X-Proofpoint-GUID: PCvf3pB22Dsytsb8SB8oPClhWgRck59z
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-06-21_03,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- spamscore=0 suspectscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=919
- priorityscore=1501 phishscore=0 clxscore=1015 bulkscore=0 malwarescore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=887 clxscore=1015 priorityscore=1501
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306210039
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+ definitions=main-2306210051
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is now support for the multiport USB controller this uses so
-enable it.
 
-The board only has a single port hooked up (despite it being wired up to
-the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
-which by default on boot is selected to mux properly. Grab the gpio
-controlling that and ensure it stays in the right position so USB 2.0
-continues to be routed from the external port to the SoC.
+On 6/16/2023 5:00 PM, Konrad Dybcio wrote:
+> On 16.06.2023 12:35, Mohammad Rafi Shaik wrote:
+>> From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>
+>> Modify LPASS_MCC register region size in "lpass_tlmm" node.
+>> The pincntl driver requires access until slew-rate register region
+>> and remaining register region related to the lpass_efuse register
+>> is not required in pincntl driver as lpass_efuse register region is
+>> required in adsp remoteproc driver.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> ---
+> Fixes tag?
+>
+> Konrad
+Thanks for comment,
 
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-[Krishna: Rebased on top of usb-next]
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index 24fa449d48a6..53d47593306e 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -309,6 +309,19 @@ &usb_2_qmpphy0 {
- 	status = "okay";
- };
- 
-+&usb_2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&usb2_en_state>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "host";
-+	phy-names = "usb2-port0", "usb3-port0";
-+	phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
-+};
-+
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-@@ -401,4 +414,13 @@ wake-pins {
- 			bias-pull-up;
- 		};
- 	};
-+
-+	usb2_en_state: usb2-en-state {
-+		/* TS3USB221A USB2.0 mux select */
-+		pins = "gpio24";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
- };
--- 
-2.40.0
-
+okay, will add fixes tag.
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 36f9edabb9d7..ec38f2feb9bf 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -2509,7 +2509,7 @@ lpass_ag_noc: interconnect@3c40000 {
+>>   		lpass_tlmm: pinctrl@33c0000 {
+>>   			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
+>>   			reg = <0 0x033c0000 0x0 0x20000>,
+>> -				<0 0x03550000 0x0 0x10000>;
+>> +				<0 0x03550000 0x0 0xa100>;
+>>   			qcom,adsp-bypass-mode;
+>>   			gpio-controller;
+>>   			#gpio-cells = <2>;
