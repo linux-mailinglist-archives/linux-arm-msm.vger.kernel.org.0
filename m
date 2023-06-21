@@ -2,87 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A56E737E4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 11:17:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1077D738111
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 13:11:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231694AbjFUIvg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 04:51:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39694 "EHLO
+        id S230522AbjFUJT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 05:19:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjFUIvf (ORCPT
+        with ESMTP id S229727AbjFUJT2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 04:51:35 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EC2B1731
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 01:51:34 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-987accb4349so680038266b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 01:51:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687337493; x=1689929493;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+VbF1k9dd0zR8M+O8v5QVhhHeg+UsKC97YqfD/3djKw=;
-        b=W9VaK97xEUvQskcBtLs7tk+n04BFDJpXeUjX+cYAr5LnylC9aKil7zVrTudDVqQP9E
-         QZrci0JsHWuz9APMU8guZZAB5tmazOoxXVYsUjZo+f98KuL53kagG+a65Xs7VosLrg9u
-         DwJJCrqzh+8A5HeC5WzQ03Y7Pnn90Una0/AfV5usJcXGEJs0/xvQnL9XP6TS0uBi9hr/
-         cpNj9UCp/sl9VqaN54jRvpz1X/faOwY+99aaSqpKrWqNib3tmRQU1tUMvoIQU3pBYF2V
-         sFnxtV3SKWcLg2EUPXj7T6C5nH3MFV7Hhk7dnSgDW0Fy25RSnqbcFvcNqQIr9Z0Qv0HP
-         s7gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687337493; x=1689929493;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+VbF1k9dd0zR8M+O8v5QVhhHeg+UsKC97YqfD/3djKw=;
-        b=J8DmIcqM8LjeJPhj3zpRtiP1U3W0BKVuxF73xrHs6aXBGxbywUhX5rJ1I9GKc6uHLj
-         fGZEkCO1FH0hnFkLBiGsRtxYyo59F9CQC3tvqgXzAmaeqPqgAPOC/oOK9i8lvrYtRpRl
-         ZB3GNfIwHZiawCold2eJMoeCVryZm40dYg3JBEiIpp543AgOQUZlC7kdkviLXmLxTlbZ
-         /EZ0MpZrW4e4B/f01aRFNcfVzxmn3qY6W5vndClPiIu6MgUFr3I13TdDUC5VYA5yh6m8
-         ADrodI+0/tvmRbFrOe3LYdIj1Djx6trf6NR3dxoOtCpq3L+mzk5BpVQkvMLIlqiQq0SF
-         5i7g==
-X-Gm-Message-State: AC+VfDwM6kB+fYhFfMPDosOHWe+hHTXVLgGHjYpL4OCVhZmK1u6LZGl8
-        78gm0m0wZ6XeHs/Ek9zhxMX7QA==
-X-Google-Smtp-Source: ACHHUZ6Enbd+GNv/reZhivVW7l625b/Sh8RzonsXjZQhvpGhNFDvv98VDEanD/um4iUr3kXswgQAmg==
-X-Received: by 2002:a17:907:2688:b0:988:4a48:6ff3 with SMTP id bn8-20020a170907268800b009884a486ff3mr9771237ejc.30.1687337492837;
-        Wed, 21 Jun 2023 01:51:32 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id a22-20020a1709063a5600b00988e699d07fsm2746507ejf.112.2023.06.21.01.51.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jun 2023 01:51:32 -0700 (PDT)
-Message-ID: <2156ae79-e092-656c-c357-09807f622474@linaro.org>
-Date:   Wed, 21 Jun 2023 10:51:29 +0200
+        Wed, 21 Jun 2023 05:19:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D4C51B4;
+        Wed, 21 Jun 2023 02:19:27 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35L6S9jI014635;
+        Wed, 21 Jun 2023 09:19:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=vAU1Ys21VigpVm04YN3UwYN6qhXIfFW/h2O0LO0OSkQ=;
+ b=W8tHjkD+x3IpP0NQZ+x4link8tgA1je6GgNR3qMxzb1G8Q7mLZEIwAy0h/b/c2EuG9rH
+ mqRyByOkozGtH9vCl3WD3EwmTyWiYoNeIaftkyqIE88WxCff+0gWXxpNPAQYsyTto3At
+ QAtQK2WTVDvbGFw4M57+1zbeJmaDfxYo0ulSbSEJZXY3j0r+3jppKqV/Qaf9G4TWi4h2
+ RnIW7nzhe+bSebmKvDxd2lwUMmTS92w4/N7IVoFbZHX2BLjR86mN7WJisU8qlpMBCw/V
+ 0dP4sVYu1incJa6al3MHYlJ2t2Q9BtJ8yZzyCT2Udpt37FA3tbW8jkh7TAFGpKyrBNrD Bg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbqkh0rwc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Jun 2023 09:19:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35L9IsJE015739
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Jun 2023 09:18:54 GMT
+Received: from [10.50.7.175] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 21 Jun
+ 2023 02:18:49 -0700
+Message-ID: <31cb09ae-dbb8-8ba0-08dc-fcc2af63ca30@quicinc.com>
+Date:   Wed, 21 Jun 2023 14:48:23 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 01/18] dt-bindings: opp: opp-v2-kryo-cpu: support Qualcomm
- Krait SoCs
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Subject: Re: [PATCH V23 2/3] misc: dcc: Add driver support for Data Capture
+ and Compare unit(DCC)
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>
-References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
- <20230612053922.3284394-2-dmitry.baryshkov@linaro.org>
- <5c750c6a-a0f8-c6f7-64fe-716da434d819@linaro.org>
- <678a3750-0a89-aedf-b5cf-e68da003f4a0@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <678a3750-0a89-aedf-b5cf-e68da003f4a0@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        "Rajendra Nayak" <quic_rjendra@quicinc.com>
+References: <cover.1683265984.git.quic_schowdhu@quicinc.com>
+ <2259ab0348282349e88905ea99bcb4aa815d941f.1683265984.git.quic_schowdhu@quicinc.com>
+ <2023061542-reformed-unholy-10a3@gregkh>
+ <cc9750f3-c85c-be7f-e63c-0fcf4eb160f0@quicinc.com>
+ <2023061515-unbuckled-consonant-e207@gregkh>
+ <5d9ab90f-4fc3-26c6-141e-e9388ac2f0cf@quicinc.com>
+ <2023061548-subtly-cackle-8be2@gregkh>
+Content-Language: en-US
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <2023061548-subtly-cackle-8be2@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: QQgPXKIzyOTwBP_LMUYqItkgCave8iml
+X-Proofpoint-GUID: QQgPXKIzyOTwBP_LMUYqItkgCave8iml
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-21_07,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ spamscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=869
+ priorityscore=1501 bulkscore=0 clxscore=1011 adultscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306210079
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,36 +94,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/06/2023 22:11, Dmitry Baryshkov wrote:
 
->> Why?
+
+On 6/15/2023 7:36 PM, Greg Kroah-Hartman wrote:
+> On Thu, Jun 15, 2023 at 07:17:34PM +0530, Souradeep Chowdhury wrote:
+>>>>>> +static ssize_t ready_read(struct file *filp, char __user *userbuf,
+>>>>>> +			  size_t count, loff_t *ppos)
+>>>>>> +{
+>>>>>> +	int ret = 0;
+>>>>>> +	char *buf;
+>>>>>> +	struct dcc_drvdata *drvdata = filp->private_data;
+>>>>>> +
+>>>>>> +	mutex_lock(&drvdata->mutex);
+>>>>>> +
+>>>>>> +	if (!is_dcc_enabled(drvdata)) {
+>>>>>> +		ret = -EINVAL;
+>>>>>> +		goto out_unlock;
+>>>>>> +	}
+>>>>>> +
+>>>>>> +	if (!FIELD_GET(BIT(1), readl(drvdata->base + dcc_status(drvdata->mem_map_ver))))
+>>>>>> +		buf = "Y\n";
+>>>>>> +	else
+>>>>>> +		buf = "N\n";
+>>>>>> +out_unlock:
+>>>>>> +	mutex_unlock(&drvdata->mutex);
+>>>>>> +
+>>>>>> +	if (ret < 0)
+>>>>>> +		return -EINVAL;
+>>>>>> +	else
+>>>>>
+>>>>> You do the "lock, get a value, unlock, do something with the value"
+>>>>> thing a bunch, but what prevents the value from changing after the lock
+>>>>> happens?  So why is the lock needed at all?
+>>>>
+>>>> The lock is used to prevent concurrent accesses of the drv_data when
+>>>> scripts are being run from userspace.
+>>>
+>>> How would that matter?  The state can change instantly after the lock is
+>>> given up, and then the returned value is now incorrect.  So no need for
+>>> a lock at all as you really aren't "protecting" anything, or am I
+>>> missing something else?
 >>
->>> +        $ref: /schemas/types.yaml#/definitions/uint32
->>
->> You are changing the type. No. It should be fixed instead (enum applies
->> to items).
+>> This lock is needed to protect the access to the global instance of drv_data
+>> structure instantiated at probe time within each individual callbacks of
+>> debugfs.
 > 
-> Currenlty this bindings are only usable for msm8996/msm8996pro. As such 
-> we listed opp-supported-hw values that are applicable to this platform. 
-> This series adds support for apq8064 platform, which will add new items 
-> to this enum. I think it is not very sensible to list all of them here.
+> What exactly are you "protecting" here that could change in a way that
+> cause a problem?
+> 
+> You aren't returning a value that is ever guaranteed to be "correct"
+> except that it happened sometime in the past, it might be right anymore.
 
-Sure, but this is uint32-matrix, so don't change the type to something else.
+Hi Greg,
+
+The lock doesn't add any value in this particular case and I will be 
+dropping it from here but in other cases it is being used to protect the 
+concurrent access of the data-structures used inside the drv_data mainly 
+the list which is being used to append register configurations, write 
+the configuration to the dcc_sram and also delete it while doing a 
+config reset. The lock is also used in case of software trigger to read 
+the bitmap of the lists to set register values.
+
+Thanks,
+Souradeep
 
 > 
-> However granted there is already a good enough base type definition, I 
-> think it would be better to drop the $ref, drop the enum, add ': true' 
-> (is it necessary if we have a description already?) and expand 
-> documentation.
-
-Probably this should be constrained to only one value with:
-  items:
-    - items:
-       - description: foo bar
-
-
-
-
-Best regards,
-Krzysztof
-
+> thanks,
+> 
+> greg k-h
