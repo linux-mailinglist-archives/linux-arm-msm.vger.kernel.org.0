@@ -2,63 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC44C73869D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 16:17:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7595573872B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 16:36:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232565AbjFUORU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 10:17:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35250 "EHLO
+        id S231624AbjFUOgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 10:36:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232660AbjFUORT (ORCPT
+        with ESMTP id S231731AbjFUOgj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 10:17:19 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1055310EC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 07:17:18 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-57028539aadso66320257b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 07:17:18 -0700 (PDT)
+        Wed, 21 Jun 2023 10:36:39 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891E51BD0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 07:36:32 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f8f3786f20so70277015e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 07:36:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687357037; x=1689949037;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+xYklj5PMyobjhXA/VwaGPhy9KcchXftQTErxK2SLto=;
-        b=Y+sLE2CE7LA3Yqa8VXZaagqvjg43wDGdJvjZUFuAv2RxLSOuZXVfbkHl0ai5X+ZdwS
-         dpo9ve84MPGB/CyNiJeS1QGFJjXYYB2qYmTite/cgjhrIuhfjq2JKovr+umi1LjFu+Hg
-         3SGRwLsEvGWh53glzikHdPu8fRi28FM9VRe2udbPKqu7dmmk4PRQZdDVSGIgDpZmKsAX
-         ijoJFm7stjl8kd0VRn5Kf2hnOiwz1xwcuEjJjYBJ1BRHWOYdnWaNUQeh4tvpl+rz/NfC
-         trQmvm6Bh5xtzMoBjfRp04WlAcT2UXByZrSV9I7BOHkGOtn+bfWozmThAjYyj2QM8Jj1
-         5U/g==
+        d=linaro.org; s=google; t=1687358191; x=1689950191;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q267PzQvbc4qiFwzCDZZB6FJw0yi1HjyAE+qzfNhuaE=;
+        b=rctvtICKF4lpjMQ4GFaTKRkNEYiwDdBGk+QsCrkbDIvg2uKEXYwGN3Wa0p+Vkp04Qu
+         Mc+CJdKQoGg2fnW3O2noq9sVKVt1r2fp4uGqKX8clqnunM31HC2FP78fjWw16TzOIJze
+         yG6G9rpvpMV9bVY1CxNBf0JbNnSU0ACalWYnWbsOh7tSZ59syXRaQMYxm8kaLiZJ4MSF
+         qj3FILCAHpak5gHHfuP5rLYG1uJK3fBWnr9xLRiyalNDbRc6nYwRPLLMImk0Ijf+iTCS
+         K3StGdsijCQgTHT9Tm0nDauIz4fR8T0CZr4wVVEaCfCkc1CnkrnQHCoX6wlYLQLEYsfW
+         65Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687357037; x=1689949037;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1687358191; x=1689950191;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+xYklj5PMyobjhXA/VwaGPhy9KcchXftQTErxK2SLto=;
-        b=R2Pu2oIN/EVcx240z0JXHzpQGKS+8JQezPD+Ft6MutGFV3Tsmqr6ziQDfY3H1pvav+
-         xQHNz0QSpiO1uHUdc4n8uTTT0EVanAqZxs/ZrnYKTs3WIrG/H4O3DH7gjKtQS6VgEkI4
-         LcOfjTrE0oCQ1BNIg0zt4yGaltRWr6aRtvDvLQqBr5T42G4uEe7xVh6UtGkakpgoJX31
-         jxAf6yDWg1t3UQVZN5WpHoX2lgtMdodZIZePgbdldGGHyKPVbvqDYXCBnCeftKf/ygHM
-         rSURAsO7UyN55UB7Go0VL8+dStx+ylfpO2VMdKToX65qjcyt8JGKKWlBTGezGhNrMWfT
-         VsLQ==
-X-Gm-Message-State: AC+VfDwuHVqghol+LSW+VZw3oVLEGhWirakzRpMwz4t9zbZj5xpMllPL
-        Wqcsdn7+CO7i/b+J8pfTwuLPSjvecLB94fde4nFd0w5eqKPBUJKw
-X-Google-Smtp-Source: ACHHUZ4+JSxviD45oXipN+JSDE2ZcZ/gtwyTm9modvwdd/BXFUfRHPaKIotRrEMNyfj1LNyc58BAWLuMiEErPALNN9s=
-X-Received: by 2002:a25:bcd2:0:b0:bca:6694:23e6 with SMTP id
- l18-20020a25bcd2000000b00bca669423e6mr14132777ybm.16.1687357037246; Wed, 21
- Jun 2023 07:17:17 -0700 (PDT)
+        bh=Q267PzQvbc4qiFwzCDZZB6FJw0yi1HjyAE+qzfNhuaE=;
+        b=dt5irvWhrFsBm44h7x+eUkZ7JSoRDePhnvL/yV18MYoOXd+7/8q2s6SZfXtofSzMxN
+         ti2QWjQrGAsEACjRP23jcT/9Owy7f4eb5NbE+tV9O5qXIbnlK3lOTw2KEoyfG7V8JKau
+         ScZv007vRBX2Dsi2wPwG1NdWjNAGoS17PrmWAccS9+KpXr9Ju2zzPEvJV74h+ZYZQkrB
+         kJujf6V9j3G7owREyP8Xxf57hTCnwxqIexX4byrm/anE4GOdAPkejlzOv7oPhrg+zm88
+         ez2OBOYLvxIezcHzuVurpaxEgg0U4E48lTtlqPnyEmPbF4xYj53mLCMEBwkALLUD7wVU
+         DXaw==
+X-Gm-Message-State: AC+VfDw7+w4ykc5ruo4aj5K6zuWJTDJt5U2lyUtkeMlK7EdffQAR4wwX
+        5HNerjfyp1YKzFF2Qq+QPrABKQ==
+X-Google-Smtp-Source: ACHHUZ5ZhzIpeWIh4DikrGJcv3Fx3/cxAiObvcEZly48e8AIamOEO6BA+6S4z/LW5iad5YqDZNOJlw==
+X-Received: by 2002:a05:600c:281:b0:3f9:960:2bb7 with SMTP id 1-20020a05600c028100b003f909602bb7mr11643793wmk.23.1687358190927;
+        Wed, 21 Jun 2023 07:36:30 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id y9-20020adfdf09000000b0031122bd3c82sm4642396wrl.17.2023.06.21.07.36.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jun 2023 07:36:30 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
+Date:   Wed, 21 Jun 2023 16:36:27 +0200
+Message-Id: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <9d59b054-76b9-9c8b-0be9-c614742c519b@linaro.org>
-In-Reply-To: <9d59b054-76b9-9c8b-0be9-c614742c519b@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 21 Jun 2023 17:17:06 +0300
-Message-ID: <CAA8EJpoXvL3rADU18AyEH_gPNXZH=odoUCVEnxgQ7vaxEYqvpw@mail.gmail.com>
-Subject: Re: [PULL] Add Audio topology firmware for Qualcomm SC8280XP X13s platform
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-firmware@kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Brian Masney <bmasney@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -69,35 +77,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 21 Jun 2023 at 13:55, Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
-> The following changes since commit 045b2136a61968e7984caeae857a326150bfe851:
->
->    amdgpu: update DMCUB to v0.0.172.0 for various AMDGPU ASICs
-> (2023-06-20 11:50:21 -0400)
->
-> are available in the Git repository at:
->
->
-> git://git.kernel.org/pub/scm/linux/kernel/git/srini/linux-firmware.git
-> sc8280xp-audio-fw
->
-> for you to fetch changes up to 85d1739e5aafcfada7a1e847c258217bd7408a5c:
->
->    qcom: Add Audio firmware for SC8280XP X13s (2023-06-21 11:11:34 +0100)
->
-> ----------------------------------------------------------------
-> Srinivas Kandagatla (1):
->        qcom: Add Audio firmware for SC8280XP X13s
->
->   LICENCE.linaro                              |  30
-> ++++++++++++++++++++++++++++++
->   WHENCE                                      |   8 ++++++++
->   qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin | Bin 0 -> 24296 bytes
+SM8350 HDK and MTP boards were silently dying and rebooting during BAM
+DMA probe:
 
-Could you please move it to the directory with the rest of X13s firmware?
+  [    1.574304] vreg_bob: Setting 3008000-3960000uV
+  [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
+  Optional Info
+  Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+  S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
+  S - IMAGE_VARIANT_STRING=SocLahainaLAA
+  S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
+  S - Boot Interface: UFS
 
+It seems that BAM DMA is locally controller (not by firmware) and
+requires proper initialization by the driver prior to use, at least on
+HDK8350 and MTP8350, but probably on all boards.
+
+Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+---
+
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 88ef478cb5cc..b382ce66387e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1741,7 +1741,6 @@ cryptobam: dma-controller@1dc4000 {
+ 			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
+-			qcom,controlled-remotely;
+ 			iommus = <&apps_smmu 0x594 0x0011>,
+ 				 <&apps_smmu 0x596 0x0011>;
+ 		};
 -- 
-With best wishes
-Dmitry
+2.34.1
+
