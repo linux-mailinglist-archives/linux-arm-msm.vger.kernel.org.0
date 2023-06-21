@@ -2,73 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C51DD738131
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 13:11:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67093738225
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 13:12:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232276AbjFUKCf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 06:02:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53076 "EHLO
+        id S232422AbjFUKIx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 06:08:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232198AbjFUKBo (ORCPT
+        with ESMTP id S232399AbjFUKI3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 06:01:44 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1230F1991
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 03:01:25 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b455855fb2so78976321fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 03:01:24 -0700 (PDT)
+        Wed, 21 Jun 2023 06:08:29 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9E7294D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 03:07:08 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f766777605so7574249e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 03:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687341683; x=1689933683;
+        d=linaro.org; s=google; t=1687341957; x=1689933957;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3N1Cp+ZHd30+mMr+Qg3QOgcBjQtYpnarJP3zn5OpWSQ=;
-        b=gf0AwFM5jwx/Nj2G/RlmZL42wzUcPNs+jtzfhOehyJjeMOe6g0GzdiJYmADGnMvukD
-         CIaGPmWJrklQnUXIrz8VcxuZ4NWXsw5UwOJaNhhFcPcoIkoyWi22AGhQYRvU71Ft5rWE
-         +vALsISZOTnQ4dkMlsd8Ny9LcKp5X7Zv5QjX+WqIulneclXlywQQzG1TbYMU9hZkcvOk
-         UAnzRXr6A/Z0euuWYSKKBQ8oUenpBTLWRmTtvpK8ETamaZEfOA3fjlLl3hW3hAxfreny
-         5155ToBCkrXryFjWgFialnDI4MGJM1cj402263j1hIlpqQ3Jk3dPOMbcU5+uv0WzUQh3
-         j8VA==
+        bh=pksCYSKSrUw959LX6eQrI6QTHRyxobqR3+3tR4T6QsY=;
+        b=HxtKccS8RJbfFltppK+lao89MD5mbUlOnGUB3wU94Lbk12nijhYFO8yzyRD0gFMXKc
+         47ZVNkQuTdJTwRBXXfX4EWbKf/p67W5lu0qaS4rUpPt4XepdOnBDx64bPb3Hc2UnNSSK
+         jY0c9t66KDde3h7uicuu26TUo7Xret5V6rms1HY6u1OakmTevNL+A1ZDhwDT7TXpypg5
+         WDuTqHvIxN2YavpPb7K+VDs8hPpYpYeQKJgsjs1NOIpyMknTFG0rLLNZ3rTmKUe/H2nI
+         n4d+vC54Cx+iqu9Wc7kqd+6BT3DgAkw1+b3RnUrR7+YhovyjIfa5EC/+obPHf/TJCRQc
+         eMUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687341683; x=1689933683;
+        d=1e100.net; s=20221208; t=1687341957; x=1689933957;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3N1Cp+ZHd30+mMr+Qg3QOgcBjQtYpnarJP3zn5OpWSQ=;
-        b=U7mHdeB+hs8g13rQjs79hNncUn4oE6GLHttirrTX4LS/RwsbVKnST68yrImIrWEbaU
-         fULAknNIdtwYghu4cI0XoHK9G3qohEmC4tpqKxmpkM2nyczdgrxafRbJjpZCqwxRQ838
-         LmzS5LMqqiXFhcaXFOPYXFo+G/+TCY459a6ufl2+X2Qg+XvgzYgyutzb+20NK3SF475k
-         pX1qJIUVnpllfwxP3TUJ0lUSzCrgXlA09skmGSu3m8aLrixbEeI5Rf09eBclgLoo1w1r
-         CBwIuED1S9wMcwc7cxAbWYmadXPiT7aWnlHRvp4DVXftgSzmx1FAf8CMePYSR2+m1Hur
-         v4Ag==
-X-Gm-Message-State: AC+VfDxtRsWwSrdhLzJezmtNdByiUVH3iAZu11TDK7pEebB//G4zD6x8
-        njb7oaJRMZ9jNfdC9vSQOSLKkQ==
-X-Google-Smtp-Source: ACHHUZ66a3AzllNSYDYkKMw7cpU5YXg+ZcxxJR8ML8T4JEUaot4oG3PY3PIPSa89oMUpCfBYkt14EQ==
-X-Received: by 2002:a2e:a413:0:b0:2b4:6c47:6253 with SMTP id p19-20020a2ea413000000b002b46c476253mr6842618ljn.38.1687341683227;
-        Wed, 21 Jun 2023 03:01:23 -0700 (PDT)
+        bh=pksCYSKSrUw959LX6eQrI6QTHRyxobqR3+3tR4T6QsY=;
+        b=dajRhnYphBPvtE72mncTtKyFGNEmtojB3hZBby/6o7yFAIDfCZwAh8Vv9wmx4qXS2S
+         idWYSQsAZepsA5SUnducvPse7Hp8Kgvo++hiQdk1kokUb4aJ0x5vTS1tb9hgNzneCDIY
+         LSAUHouBwYDJFNxYIJbxUBtshXr2onfETIBsni4hXYkiWpNJI9WPAQmAA+OBuTcmPEQ7
+         4GxejfZ9dnv7Kgvg0zURINrTenUuGEUt4Prqo5cdPBHM90RYMxjN+qwAbJmm+SvpEbkv
+         iUIzMMedXdzA4Gw67Hu1DQA32tCnh1MODzejuir8TXTpxy8zm3zJsG77ocbW1iUeymWA
+         jkhg==
+X-Gm-Message-State: AC+VfDw9QFfYioFJqBZ1crQyh4xUyN8+TINYVA7T4ghZ9mVMNPzBAvvi
+        8x31ryjFPk9YGbeXUuc+n6jeWXkLQoXUeiLNyPo=
+X-Google-Smtp-Source: ACHHUZ5QiiQtUk4JbcmnjEQdDbclg/kzrtbPZxS/pLfnjRuPS/9CAQscff3Ta9mnLU0++IilXDxIIw==
+X-Received: by 2002:a19:6555:0:b0:4f8:5f32:b1da with SMTP id c21-20020a196555000000b004f85f32b1damr6833037lfj.24.1687341957210;
+        Wed, 21 Jun 2023 03:05:57 -0700 (PDT)
 Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
-        by smtp.gmail.com with ESMTPSA id j6-20020a2e8506000000b002b473358e7asm801740lji.108.2023.06.21.03.01.21
+        by smtp.gmail.com with ESMTPSA id l11-20020ac24a8b000000b004f87487db79sm718117lfp.222.2023.06.21.03.05.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jun 2023 03:01:22 -0700 (PDT)
-Message-ID: <e31ad5ac-77ab-cf04-2e3e-d0857ccfdecf@linaro.org>
-Date:   Wed, 21 Jun 2023 12:01:20 +0200
+        Wed, 21 Jun 2023 03:05:56 -0700 (PDT)
+Message-ID: <03371bd0-12a5-3109-ebf7-33feeef31bac@linaro.org>
+Date:   Wed, 21 Jun 2023 12:05:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: add missing power-domains
- property to usb qmpphy node
+Subject: Re: [PATCH v9 06/10] usb: dwc3: qcom: Add support to read IRQ's
+ related to multiport
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230621-topic-sm8450-upstream-usb-phy-missing-power-domains-v1-1-d850c086c43c@linaro.org>
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-7-quic_kriskura@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230621-topic-sm8450-upstream-usb-phy-missing-power-domains-v1-1-d850c086c43c@linaro.org>
+In-Reply-To: <20230621043628.21485-7-quic_kriskura@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,37 +90,194 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21.06.2023 11:55, Neil Armstrong wrote:
-> Add the missing property to fix the bindings check error:
-> arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: phy@88e8000: 'power-domains' is a required property
->     From schema: Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+On 21.06.2023 06:36, Krishna Kurapati wrote:
+> Add support to read Multiport IRQ's related to quad port controller
+> of SA8295 Device.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > ---
-Are you sure about this one? Historically PHYs have had their own GDSCs.
-
-May just be a wrong binding fwiw
+>  drivers/usb/dwc3/dwc3-qcom.c | 108 +++++++++++++++++++++++++++++------
+>  1 file changed, 91 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 3de43df6bbe8..3ab48a6925fe 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -74,9 +74,9 @@ struct dwc3_qcom {
+>  	struct reset_control	*resets;
+>  
+>  	int			hs_phy_irq;
+> -	int			dp_hs_phy_irq;
+> -	int			dm_hs_phy_irq;
+> -	int			ss_phy_irq;
+> +	int			dp_hs_phy_irq[4];
+> +	int			dm_hs_phy_irq[4];
+> +	int			ss_phy_irq[2];
+Not sure if that's been raised previously, but having raw numbers here
+is not very descriptive.. MAX_NUM_MP_HSPHY or something would be helpful
+for readability..
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 5cd7296c7660..f921bd520e40 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -2046,6 +2046,8 @@ usb_1_qmpphy: phy@88e8000 {
->  				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
->  			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
+>  	enum usb_device_speed	usb2_speed;
 >  
-> +			power-domains = <&gcc USB30_PRIM_GDSC>;
+>  	struct extcon_dev	*edev;
+> @@ -375,16 +375,16 @@ static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+>  	dwc3_qcom_disable_wakeup_irq(qcom->hs_phy_irq);
+>  
+>  	if (qcom->usb2_speed == USB_SPEED_LOW) {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq[0]);
+>  	} else if ((qcom->usb2_speed == USB_SPEED_HIGH) ||
+>  			(qcom->usb2_speed == USB_SPEED_FULL)) {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq[0]);
+>  	} else {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
+> -		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq[0]);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq[0]);
+>  	}
+>  
+> -	dwc3_qcom_disable_wakeup_irq(qcom->ss_phy_irq);
+> +	dwc3_qcom_disable_wakeup_irq(qcom->ss_phy_irq[0]);
+>  }
+>  
+>  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+> @@ -401,20 +401,20 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+>  	 */
+>  
+>  	if (qcom->usb2_speed == USB_SPEED_LOW) {
+> -		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq,
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq[0],
+>  						IRQ_TYPE_EDGE_FALLING);
+>  	} else if ((qcom->usb2_speed == USB_SPEED_HIGH) ||
+>  			(qcom->usb2_speed == USB_SPEED_FULL)) {
+> -		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq,
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq[0],
+>  						IRQ_TYPE_EDGE_FALLING);
+>  	} else {
+> -		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq,
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq[0],
+>  						IRQ_TYPE_EDGE_RISING);
+> -		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq,
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq[0],
+>  						IRQ_TYPE_EDGE_RISING);
+>  	}
+>  
+> -	dwc3_qcom_enable_wakeup_irq(qcom->ss_phy_irq, 0);
+> +	dwc3_qcom_enable_wakeup_irq(qcom->ss_phy_irq[0], 0);
+>  }
+>  
+>  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+> @@ -535,6 +535,80 @@ static int dwc3_qcom_get_irq(struct platform_device *pdev,
+>  	return ret;
+>  }
+>  
+> +static int dwc3_qcom_setup_mp_irq(struct platform_device *pdev)
+> +{
+> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> +	char irq_name[15];
+> +	int irq;
+> +	int ret;
+> +	int i;
 > +
->  			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
->  				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
->  			reset-names = "phy", "common";
-> 
-> ---
-> base-commit: 15e71592dbae49a674429c618a10401d7f992ac3
-> change-id: 20230621-topic-sm8450-upstream-usb-phy-missing-power-domains-499a3d6c725f
-> 
-> Best regards,
+> +	for (i = 0; i < 4; i++) {
+> +		if (qcom->dp_hs_phy_irq[i])
+> +			continue;
+> +
+> +		sprintf(irq_name, "dp%d_hs_phy_irq", i+1);
+> +		irq = dwc3_qcom_get_irq(pdev, irq_name, -1);
+> +		if (irq > 0) {
+> +			irq_set_status_flags(irq, IRQ_NOAUTOEN);
+> +			ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+> +					qcom_dwc3_resume_irq,
+> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> +					irq_name, qcom);
+> +			if (ret) {
+> +				dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
+> +				return ret;
+> +			}
+> +		}
+> +
+> +		qcom->dp_hs_phy_irq[i] = irq;
+> +	}
+> +
+> +	for (i = 0; i < 4; i++) {
+> +		if (qcom->dm_hs_phy_irq[i])
+> +			continue;
+> +
+> +		sprintf(irq_name, "dm%d_hs_phy_irq", i+1);
+> +		irq = dwc3_qcom_get_irq(pdev, irq_name, -1);
+> +		if (irq > 0) {
+> +			irq_set_status_flags(irq, IRQ_NOAUTOEN);
+> +			ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+> +					qcom_dwc3_resume_irq,
+> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> +					irq_name, qcom);
+> +			if (ret) {
+> +				dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
+> +				return ret;
+> +			}
+> +		}
+> +
+> +		qcom->dm_hs_phy_irq[i] = irq;
+> +	}
+> +
+> +	for (i = 0; i < 2; i++) {
+> +		if (qcom->ss_phy_irq[i])
+> +			continue;
+> +
+> +		sprintf(irq_name, "ss%d_phy_irq", i+1);
+> +		irq = dwc3_qcom_get_irq(pdev, irq_name, -1);
+> +		if (irq > 0) {
+> +			irq_set_status_flags(irq, IRQ_NOAUTOEN);
+> +			ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+> +					qcom_dwc3_resume_irq,
+> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> +					irq_name, qcom);
+> +			if (ret) {
+> +				dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
+> +				return ret;
+> +			}
+> +		}
+> +
+> +		qcom->ss_phy_irq[i] = irq;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+>  {
+>  	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> @@ -570,7 +644,7 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+>  			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
+>  			return ret;
+>  		}
+> -		qcom->dp_hs_phy_irq = irq;
+> +		qcom->dp_hs_phy_irq[0] = irq;
+>  	}
+>  
+>  	irq = dwc3_qcom_get_irq(pdev, "dm_hs_phy_irq",
+> @@ -585,7 +659,7 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+>  			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
+>  			return ret;
+>  		}
+> -		qcom->dm_hs_phy_irq = irq;
+> +		qcom->dm_hs_phy_irq[0] = irq;
+>  	}
+>  
+>  	irq = dwc3_qcom_get_irq(pdev, "ss_phy_irq",
+> @@ -600,10 +674,10 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+>  			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
+>  			return ret;
+>  		}
+> -		qcom->ss_phy_irq = irq;
+> +		qcom->ss_phy_irq[0] = irq;
+>  	}
+>  
+> -	return 0;
+> +	return dwc3_qcom_setup_mp_irq(pdev);;
+>  }
+>  
+>  static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
