@@ -2,148 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21543738753
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 16:40:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CE497388C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 17:21:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231712AbjFUOkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 10:40:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51062 "EHLO
+        id S233253AbjFUPVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 11:21:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231178AbjFUOkb (ORCPT
+        with ESMTP id S233252AbjFUPUt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 10:40:31 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB71A10EC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 07:40:29 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-51a2c8e5a2cso8103942a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 07:40:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687358428; x=1689950428;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XmB7aafZYu+t3l7iCsSmX4rGYeW4d39sw8kiK1MfRbc=;
-        b=vbFeL6g/0gsnlVG3qe4dFQ8UgIqumpBG61md5jata02BeIpTUP5kaC99ThhE7dmF4O
-         I7Y6Zk5tYifXsAurwx4LMPSIMFpU9Uu6yDlI+EBdE6mOHSG1vQP3bEWFSAODNm5tMAIz
-         LsRijdo+V3NVq1ZT/fxLXgfSryujgdNMA1JxE9gWEwTMz1pUqJLzarZBXWf44s239bLm
-         TdB9UU5sroVO28ey88uuV0uMfBQwyLW+RskbylYy58Ok9Xk4xzMLpNXO98g5W5m1cRPx
-         iD8aORPz8tkdFjxBJk6+5sw+YR+XVIlM9Clkc1SXJc9guWiefmUzSYaphjxgmLinhgdV
-         +6xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687358428; x=1689950428;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XmB7aafZYu+t3l7iCsSmX4rGYeW4d39sw8kiK1MfRbc=;
-        b=ipmY3e8K7TP3SKhb0pwErqsN1ggPNbbYyr733sKb3awGWPibyyjm+M++GgA/50QUx/
-         by2DvWmYiivddy5RujqYOw15/w9iklsrg0ab/o0Rs8w8dTGUtv5yuipKRWp3gUHM37KQ
-         FZTGBz5nW2xRMNHinvo1Y0943Eke8Dc6bV7SH9aPgx+c/YHdwxoKmdFRJSB7HC+E5ZA1
-         5hTesGm1XY5JPBDLuIhZ+VJq2TEA0Jx7ENjBXxG1N7GkyQhIOdaZp9LEeI3ZSVJy9dkN
-         25Xr1/4dwQirshTC5cevph4g7lutbjjR1rSN1GmdWZNLMNAjk+kw1aeRErfvzUp/qW1N
-         S1rw==
-X-Gm-Message-State: AC+VfDwJMEd3hyueLxlDzzq/Z6zu3k+dGj6hLNwgEXos9bzzpTG3/Yoq
-        lM+n1COhu5Ly3oetLbkdhcOrMw==
-X-Google-Smtp-Source: ACHHUZ4omXHV92p6l7BRCmNWk6b/xm5hYh8nglQVFTzBHSceHAhc/cMnje+b0wXypCUxuAfl56P+9g==
-X-Received: by 2002:aa7:c90f:0:b0:51a:50f2:4e7a with SMTP id b15-20020aa7c90f000000b0051a50f24e7amr7153676edt.13.1687358428418;
-        Wed, 21 Jun 2023 07:40:28 -0700 (PDT)
-Received: from hackbox.lan ([82.79.124.17])
-        by smtp.gmail.com with ESMTPSA id l13-20020a056402344d00b0051879c4f598sm2689505edc.66.2023.06.21.07.40.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 07:40:28 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Saravana Kannan <saravanak@google.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>, linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [RFC PATCH v5 4/4] PM: domains: Add and set generic sync state callback
-Date:   Wed, 21 Jun 2023 17:40:19 +0300
-Message-Id: <20230621144019.3219858-5-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230621144019.3219858-1-abel.vesa@linaro.org>
-References: <20230621144019.3219858-1-abel.vesa@linaro.org>
+        Wed, 21 Jun 2023 11:20:49 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C62D4C2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 08:17:34 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 43F9E200EA;
+        Wed, 21 Jun 2023 17:17:31 +0200 (CEST)
+Date:   Wed, 21 Jun 2023 17:17:29 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] drm/msm/dpu: Set DATABUS_WIDEN on command mode
+ encoders
+Message-ID: <26tvhvqpxtxz5tqc6jbjixadpae34k7uc7fyec2u5o2ccj4tdq@tjvguzlolc3g>
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+ <20230525-add-widebus-support-v1-2-c7069f2efca1@quicinc.com>
+ <c74c9e0e-d059-f0e3-4350-03089c37131a@linaro.org>
+ <cce68370-3fd9-4c9a-258e-af0d5d057fda@quicinc.com>
+ <n2c5qlujxhbbj2aqlgj7fetzoteood5h4hmbwt4mapi77xlvmt@bpourzaideti>
+ <81a5e241-ec82-7414-8752-4ce3cb084959@linaro.org>
+ <f14f2c31-38c2-0600-3a29-17e83afececf@quicinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <f14f2c31-38c2-0600-3a29-17e83afececf@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For every provider that doesn't register a sync_state callback,
-register a generic one. This new generic sync_state callback queues up a
-power off request.
+On 2023-06-20 14:38:34, Jessica Zhang wrote:
+<snip>
+> >>>>> +    if (phys_enc->hw_intf->ops.enable_widebus)
+> >>>>> +        phys_enc->hw_intf->ops.enable_widebus(phys_enc->hw_intf);
+> >>>>
+> >>>> No. Please provide a single function which takes necessary
+> >>>> configuration, including compression and wide_bus_enable.
+> >>>>
+> >>>
+> >>> There are two ways to look at this. Your point is coming from the
+> >>> perspective that its programming the same register but just a different
+> >>> bit. But that will also make it a bit confusing.
+> > 
+> > My point is to have a high-level function that configures the INTF for 
+> > the CMD mode. This way it can take a structure with necessary 
+> > configuration bits.
+> 
+> Hi Dmitry,
+> 
+> After discussing this approach with Abhinav, we still have a few 
+> questions about it:
+> 
+> Currently, only 3 of the 32 bits for INTF_CONFIG2 are being used (the 
+> rest are reserved with no plans of being programmed in the future). Does 
+> this still justify the use of a struct to pass in the necessary 
+> configuration?
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/base/power/domain.c | 23 +++++++++++++++++++++++
- include/linux/pm_domain.h   |  3 +++
- 2 files changed, 26 insertions(+)
+No.  The point Dmitry is making is **not** about this concidentally
+using the same register, but about adding a common codepath to enable
+compression on this hw_intf (regardless of the registers it needs to
+touch).  Similar to how dpu_hw_intf_setup_timing_engine() programs the
+hw_intf - including widebus! - for video-mode.
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 5967ade160e2..ec16db0599ac 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -654,6 +654,27 @@ static void genpd_queue_power_off_work(struct generic_pm_domain *genpd)
- 	queue_work(pm_wq, &genpd->power_off_work);
- }
- 
-+/**
-+ * pm_genpd_power_off_unused_sync_state - Power off all domains for provider.
-+ * @dev: Provider's device.
-+ *
-+ * Request power off for all unused domains of the provider.
-+ * This should be used exclusively as sync state callback for genpd providers.
-+ */
-+void pm_genpd_power_off_unused_sync_state(struct device *dev)
-+{
-+	struct generic_pm_domain *genpd;
-+
-+	mutex_lock(&gpd_list_lock);
-+
-+	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-+		if (genpd->provider && genpd->provider->dev == dev)
-+			genpd_queue_power_off_work(genpd);
-+
-+	mutex_unlock(&gpd_list_lock);
-+}
-+EXPORT_SYMBOL_GPL(pm_genpd_power_off_unused_sync_state);
-+
- /**
-  * genpd_keep_on - Tells if the domain should skip the power 'off' request
-  * @genpd: PM domain to be checked.
-@@ -2329,6 +2350,8 @@ static int genpd_add_provider(struct device_node *np, genpd_xlate_t xlate,
- 	cp->xlate = xlate;
- 	fwnode_dev_initialized(&np->fwnode, true);
- 
-+	dev_set_drv_sync_state(np->fwnode.dev, pm_genpd_power_off_unused_sync_state);
-+
- 	mutex_lock(&of_genpd_mutex);
- 	list_add(&cp->link, &of_genpd_providers);
- 	mutex_unlock(&of_genpd_mutex);
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index 3eb32c4b6d4f..78164244b89f 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -279,6 +279,9 @@ static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
- 	return -EOPNOTSUPP;
- }
- 
-+static inline void pm_genpd_power_off_unused_sync_state(struct device *dev)
-+{ }
-+
- static inline int dev_pm_genpd_set_performance_state(struct device *dev,
- 						     unsigned int state)
- {
--- 
-2.34.1
+Or even more generically, have a struct similar to intf_timing_params
+that says how the intf needs to be configured - without the caller
+knowing about INTF_CONFIG2.
 
+struct dpu_hw_intf_cfg is a very good example of how we can use a single
+struct and a single callback to configure multiple registers at once
+based on some input parameters.
+
+> In addition, it seems that video mode does all its INTF_CONFIG2 
+> configuration separately in dpu_hw_intf_setup_timing_engine(). If we 
+> have a generic set_intf_config2() op, it might be good to have it as 
+> part of a larger cleanup where we have both video and command mode use 
+> the generic op. What are your thoughts on this?
+
+Not in that way, but if there is a generic enable_compression() or
+configure_compression() callback (or even more generic, similar to
+setup_intf_cfg in dpu_hw_ctl) that would work for both video-mode and
+command-mode, maybe that is beneficial.
+
+- Marijn
