@@ -2,72 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A89A8737B6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 08:39:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AA9F737BBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 09:06:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbjFUG3G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 02:29:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59262 "EHLO
+        id S229727AbjFUGwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 02:52:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbjFUG26 (ORCPT
+        with ESMTP id S229883AbjFUGwR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 02:28:58 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC7B1BF6;
-        Tue, 20 Jun 2023 23:28:31 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35L4tULC005728;
-        Wed, 21 Jun 2023 06:28:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=KRueZjDVXXVePjkpXei4lkDqfz5xHDID1SW6e9AveoI=;
- b=YNjQEqCwa6K8rOnbTI9c4FtvSwxKhq9MSc2+vAXrXRIpANzbEmYbsLOFr65+gi5mDZ6K
- Gh4ihFs9zS9VzXd88o9P6M7DqmiWXzx/H2kz9LgDu8xQd/7KDLTphpxHpg4Pz46f2SQt
- KF7Z/yNwLcaC3gxCb11Hy3Ms9NRnqjTWqezqaAUbxE4VspmNyQRS4zbMqwTGtsp9unxy
- zEUVaIEOkNGz6T5cgLdH2uKyNY3C36QFtQwOll4g5jtj2AoDlZ3XZkUkfgMvxSubxzrv
- DPm7z2szCCrA4Ukt5AS/lxUXoPpjisiYowz2wYc/yqSmZcVmdcF3q/esJ4VutwN74dSc CA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbqu2ge41-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 21 Jun 2023 06:28:27 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35L6SRSg021086
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 21 Jun 2023 06:28:27 GMT
-Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 20 Jun 2023 23:28:24 -0700
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
-Subject: [PATCH v1] misc: fastrpc: Fix DSP capabilities request
-Date:   Wed, 21 Jun 2023 11:58:20 +0530
-Message-ID: <1687328900-3039-1-git-send-email-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Wed, 21 Jun 2023 02:52:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD2FE199C;
+        Tue, 20 Jun 2023 23:52:15 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 50FE46149D;
+        Wed, 21 Jun 2023 06:52:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D10BC433C8;
+        Wed, 21 Jun 2023 06:52:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687330334;
+        bh=EwqKQ1nwum2bfJwwQKl3k0V2eCGACGa57qfG+/yXvak=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=olTwWmhdGxPC+rgbQ+rHhQpbB2lyELiJZabUbSj3QLdmhZIghHr9lpwARyBdVJHTE
+         LyceFTv2U7Jd14qZCHTaKdqMxe3GE/L00syR1O9h+Uf2P8Kc0I9Jqkxz+iH3F6lbDG
+         F73z0CweO52sbLowqrfIa1URIGjWqUC8fx85odgarQH5qDLfbYycz3eyGNjVcqf8wh
+         5qL4ytU+kfs7Rg+tEDEsV8+Ba79+QvmR4TAt6qff+ireIJzW8ey0JhjZXry6WSw3j/
+         AhnvcIeJbod1PciEAXNQeYckL2l0xWwldS8Fr1q790w5d7bkvA/g2CyTAc+CjJlX8R
+         GztPbZmNDy1Zw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1qBrhQ-0003uF-TX; Wed, 21 Jun 2023 08:52:16 +0200
+Date:   Wed, 21 Jun 2023 08:52:16 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp-crd: Fix naming of
+ regulators
+Message-ID: <ZJKeIHPa5CxdE83j@hovoldconsulting.com>
+References: <20230620203915.141337-1-quic_bjorande@quicinc.com>
+ <20230620203915.141337-2-quic_bjorande@quicinc.com>
+ <8b8c35ba-e495-6363-e8fd-65e60bc6e879@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pKTgKlN2rfBEpKEYf19_3iwXhFchIYv9
-X-Proofpoint-GUID: pKTgKlN2rfBEpKEYf19_3iwXhFchIYv9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-21_04,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 mlxscore=0 spamscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306210053
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8b8c35ba-e495-6363-e8fd-65e60bc6e879@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,54 +67,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Incorrect remote arguments are getting passed when requesting for
-capabilities from DSP. Also there is no requirement to update the
-PD type as it might cause problems for any PD other than user PD.
-In addition to this, the collected capability information is not
-getting copied properly to user. Add changes to address these
-problems and get correct DSP capabilities.
+On Tue, Jun 20, 2023 at 10:42:12PM +0200, Konrad Dybcio wrote:
+> On 20.06.2023 22:39, Bjorn Andersson wrote:
+> > The external regulators in the CRD seems to have inherited their names
+> > from the X13s DeviceTree, correct them.
+> > 
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> Please also update the node names to match.
 
-Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
-Cc: stable <stable@kernel.org>
-Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
- drivers/misc/fastrpc.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+I don't think that's necessary in this case. The labels and node names
+currently used are either close enough or more descriptive.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 30d4d04..776c596 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1693,9 +1693,8 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
- 	args[0].length = sizeof(dsp_attr_buf_len);
- 	args[0].fd = -1;
- 	args[1].ptr = (u64)(uintptr_t)&dsp_attr_buf[1];
--	args[1].length = dsp_attr_buf_len;
-+	args[1].length = dsp_attr_buf_len * sizeof(uint32_t);
- 	args[1].fd = -1;
--	fl->pd = USER_PD;
- 
- 	return fastrpc_internal_invoke(fl, true, FASTRPC_DSP_UTILITIES_HANDLE,
- 				       FASTRPC_SCALARS(0, 1, 1), args);
-@@ -1723,7 +1722,7 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
- 	if (!dsp_attributes)
- 		return -ENOMEM;
- 
--	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES_LEN);
-+	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
- 	if (err == DSP_UNSUPPORTED_API) {
- 		dev_info(&cctx->rpdev->dev,
- 			 "Warning: DSP capabilities not supported on domain: %d\n", domain);
-@@ -1776,7 +1775,7 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
- 	if (err)
- 		return err;
- 
--	if (copy_to_user(argp, &cap.capability, sizeof(cap.capability)))
-+	if (copy_to_user(argp, &cap, sizeof(cap)))
- 		return -EFAULT;
- 
- 	return 0;
--- 
-2.7.4
-
+Johan
