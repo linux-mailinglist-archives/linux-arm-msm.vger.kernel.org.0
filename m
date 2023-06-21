@@ -2,111 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0728D737E94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 11:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AAE2737E5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 11:17:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbjFUInr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 04:43:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36830 "EHLO
+        id S231272AbjFUIq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 04:46:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjFUInq (ORCPT
+        with ESMTP id S231638AbjFUIq0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 04:43:46 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C52B10E6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 01:43:44 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-988a5383fd4so588370966b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 01:43:44 -0700 (PDT)
+        Wed, 21 Jun 2023 04:46:26 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE631733
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 01:46:23 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9896216338cso114026266b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 01:46:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687337023; x=1689929023;
+        d=linaro.org; s=google; t=1687337182; x=1689929182;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/2Kz4mhZ5NhzflxslpPdDmilN35XglyTAYV8hsPZpaE=;
-        b=jXpnIwUeuFoxX9JBb12JmmY6ewTjwwjEAokuT+H4fKpH0TDopxcDyanK9UaDI7w+j3
-         6E5nSTpE3f9XWpBgK4/8WgHhdRSe7h482tsqJHfBctM5j62NkGAVWzfbLka9oq70pZab
-         0Q3Nf8QROYTPA5xRN8D4ZrYBbeF196feVkIP7s1cUZUHgkUkoLDN116GjZrCbk6j97jv
-         Ns9Yuu3bpCmUZRgr43tgr1pujBZXnG9xkNmb/g59G3ZgUc4slZ9OovBXRDaLjSWEMwLx
-         R8Y0c+T6EsKc0a0PImDTwMTCtp0trpX5f3PP9Qs0m/COO38CO7+EtJFrnyHhJP8XX5rI
-         5QjQ==
+        bh=GflvE0roPSdSbGvWDUkng37TEfI0UgvNgk9OrUiAXgg=;
+        b=IcHaWSJyViXSUhu1kU4YbjkKQo3cyhjXO5TxFn0/x7bspgST9bG6wmFihhp5GiFDqy
+         zU2zIg6geWOCZTVRuKjUYZmL7nIBDA99twkxsf75TNvnRNeaVKxkGAkzde5k0oUP8gjf
+         VFjjWkeCnqYI4Lbit6xZLnpsqHoiGSyvsLCxdYN8OlFn5f3zdTI+tp6WdhPHh8ep15Om
+         xxid5A/zoJJN0gaBlQ4oC8fmSwBK57dT0lK2wN1+gi6SYueIIakDyzrH5ts525fUpkab
+         W+M40bpnB/9Yf7oVfi8WWAw3/4h04UMIZCl+pq+nj/AvqmX+8Q6d6L/RD0FiyGi0qfqo
+         bWnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687337023; x=1689929023;
+        d=1e100.net; s=20221208; t=1687337182; x=1689929182;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/2Kz4mhZ5NhzflxslpPdDmilN35XglyTAYV8hsPZpaE=;
-        b=KSJvxK98IEG3Wwl7wdH9WJpTUJLSWKsymQkq8Shzt+OHvV7PMqfCEmve74ZCI2EwgK
-         Lp1NPzLV8aqeKSjcwOh/+ySMDi9ATkY93T8ZNNELCnY1VoWob090GVOskD1WI+LuhOgp
-         Wp7xbOSLE3/br4ojorBZRlnIr1p1900zdyIC849hnpCcDCYNzSGG1Zxmy042zC32ALjr
-         gtdKITW4Wkz6e6cAraUgnLaQgZS/SCOc/cpwaBfF+/0jTTGqTTiCGFPP0HrBuTx2QvQD
-         LBglIYKY3JhQTLxtX/fmMq4fWfRsJuy1xj7LtTkF/pkzxY0s6+5/IsjVMjiKq4z1/RcX
-         4QbA==
-X-Gm-Message-State: AC+VfDyWoiEawuw8lbLwowpe6jTx0ZE0peVqatFL+YDUXeendaGF1SVG
-        7zYOg/6NFPHKf+ZKyVH9XjH+fA==
-X-Google-Smtp-Source: ACHHUZ7vclfELi9G7yDOkfIcP1pfbpU9l07YtQf/u79BJENXrzqrZRFFBWYdHwVKmMJA/qNz7Xb2wg==
-X-Received: by 2002:a17:907:d26:b0:977:d468:827 with SMTP id gn38-20020a1709070d2600b00977d4680827mr15211393ejc.17.1687337022910;
-        Wed, 21 Jun 2023 01:43:42 -0700 (PDT)
+        bh=GflvE0roPSdSbGvWDUkng37TEfI0UgvNgk9OrUiAXgg=;
+        b=DGng+udFxu9QR9Obx+rdOLA+riYwOpseTq8ueGhLSej2X3cC8IItMzWRMfXIVuqVJK
+         BwrhjFwZUbI2VA2dolbvk2/cXibYZde4u4uBS4p8uL6Gy5cEEXSoTdVLWp4sg68Nfc+b
+         055bXBqqt9CvZ1v9jAqcuK5lSKAF+0RvZDDiLdNUH8Jk+CDiquY6VIFNwLaE1Vef5mmN
+         ydkg76JhVsY9Grjhd+62+lsMr966FZ3DbNNpDdPDmPCMMnidsZYdlRoPiY2BtVTOuhUj
+         Rce4lXZOfwtFXT8HIpdZXwj0e9QIo4aq4PJemZr1qU0Mz7zfTN1jE086kw8bZLq6Xp5V
+         XfOQ==
+X-Gm-Message-State: AC+VfDzZE9KzOxYqnoG3uamO4FoH9yHfz5oji79sNe9B9G1cINpESi94
+        m+jIOr0e9X3I1paql8nw2BX7ow==
+X-Google-Smtp-Source: ACHHUZ75Ib9mgET+SuFnggOlzImf1yD7bISLiyp7cqP7i+51zkAOt08tWIrxe5qkk/VpAcGrKE4n+Q==
+X-Received: by 2002:a17:907:1c07:b0:982:84c9:96bd with SMTP id nc7-20020a1709071c0700b0098284c996bdmr15416351ejc.76.1687337182265;
+        Wed, 21 Jun 2023 01:46:22 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id n19-20020a1709061d1300b00982a352f078sm2715466ejh.124.2023.06.21.01.43.39
+        by smtp.gmail.com with ESMTPSA id la18-20020a170906ad9200b009888f0bbd38sm2702486ejb.169.2023.06.21.01.46.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jun 2023 01:43:42 -0700 (PDT)
-Message-ID: <dd78b449-8ff8-108d-cc49-fbddbb660c76@linaro.org>
-Date:   Wed, 21 Jun 2023 10:43:38 +0200
+        Wed, 21 Jun 2023 01:46:21 -0700 (PDT)
+Message-ID: <c487c05e-f6b9-1dbd-065b-19aca19d130d@linaro.org>
+Date:   Wed, 21 Jun 2023 10:46:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 2/9] dt-bindings: phy: qcom,m31: Document qcom,m31 USB phy
+Subject: Re: [PATCH 03/18] dt-bindings: soc: qcom: qcom,saw2: define optional
+ regulator node
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
-        will@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        p.zabel@pengutronix.de, arnd@arndb.de, geert+renesas@glider.be,
-        neil.armstrong@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, rafal@milecki.pl, quic_srichara@quicinc.com,
-        quic_varada@quicinc.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-clk@vger.kernel.org
-References: <cover.1686126439.git.quic_varada@quicinc.com>
- <14f60578e2935c0844537eab162af3afa52ffe39.1686126439.git.quic_varada@quicinc.com>
- <98960024-7dbc-91a3-75de-90b529637916@linaro.org>
- <20230615052746.GB22186@varda-linux.qualcomm.com>
- <aca54f67-cc09-ff4f-93ca-6973d153db2c@linaro.org>
- <20230620093225.GA9966@varda-linux.qualcomm.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+ <20230612053922.3284394-4-dmitry.baryshkov@linaro.org>
+ <e48f6153-0485-9fb9-5fe0-145251a8b367@linaro.org>
+ <e70520a9-6c97-07b3-326a-6fa80aad0d6a@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230620093225.GA9966@varda-linux.qualcomm.com>
+In-Reply-To: <e70520a9-6c97-07b3-326a-6fa80aad0d6a@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/06/2023 11:32, Varadarajan Narayanan wrote:
-
+On 15/06/2023 00:49, Dmitry Baryshkov wrote:
+> On 14/06/2023 19:05, Krzysztof Kozlowski wrote:
+>> On 12/06/2023 07:39, Dmitry Baryshkov wrote:
+>>> The SAW2 device can optionally provide a voltage regulator supplying the
+>>> CPU core, cluster or L2 cache. Describe it in the device bindings.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   .../devicetree/bindings/soc/qcom/qcom,saw2.yaml | 17 +++++++++++++++++
+>>>   1 file changed, 17 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+>>> index a016242367b9..b809a9cc0916 100644
+>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+>>> @@ -47,6 +47,10 @@ properties:
+>>>         - description: Base address and size of the alias register region
+>>>       minItems: 1
+>>>   
+>>> +  regulator:
+>>> +    $ref: /schemas/regulator/regulator.yaml#
+>>
+>> There was such property in the binding (and DTS!) but a bool. Previous
+>> patch silently dropped it, so re-introducing it with different type is
+>> confusing.
 > 
->> And then we have... existing bindings qcom,usb-hs-phy.yaml. Don't create
->> something similar with difference in the hyphen. Just use device
->> specific compatible thus device specific filename.
-> 
-> qcom,usb-hs-phy.yaml seems to be for ULPI mode phy and the
-> driver we are introducing is for UTMI. We would have to
-> modify phy-qcom-usb-hs.c to accomodate M31. Will that be
-> acceptable to phy-qcom-usb-hs.c owners/maintainers?
+> Could you please propose a better name here? saw-regulator? Or maybe 
+> regulator-saw? (as we might get regulator-avs at some point).
 
-We don't talk about drivers here but bindings. Why would you need to
-modify the driver when introducing new binding for different device?
-
-
+regulator name is OK for me, but any ABI change should be:
+1. Clearly expressed with rationale,
+2. Done probably in one DT commit, not two. IOW, first silently dropping
+a property and then adding a new one like nothing happened is not good.
+It should be clear that old property is wrong because foo bar and we
+make it now different with breaking all the DTS because foo bar.
 
 Best regards,
 Krzysztof
