@@ -2,94 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A63C6737FF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 13:09:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2A9773809A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 13:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231671AbjFUJ2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 05:28:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57912 "EHLO
+        id S230346AbjFUJzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 05:55:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231642AbjFUJ2B (ORCPT
+        with ESMTP id S229925AbjFUJzq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 05:28:01 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91E0230C2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 02:26:34 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3f90b8acefeso37579705e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 02:26:34 -0700 (PDT)
+        Wed, 21 Jun 2023 05:55:46 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6A1DD3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 02:55:44 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f87592ecaeso4080011e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 02:55:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687339592; x=1689931592;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VG9qCKvekYoYgR4Fl0peORs6WrpDzePjez0ReZU/eVI=;
-        b=xQESYjL4gW6Io7gbTKsEXRQ8/CpdNIXOBuDG3JUhaOFlzoppGV+5OdFgHiwAJC3epk
-         ZHClsNRFnRbabFhaovMpFfMaBODei/Isc4Bpt68KnQoTK42nsknP3LICATYnMfHC+UQ5
-         7wzMu7dSfMet++/e5wqPTh+orUNzicgV3xnJxXVbheQcZT1I3EDXf8m87cTKDRIOdBoD
-         uCIgcxWtNLh1kWF/qcro/TeVoH+n27IIiI3V54NrEigBZqsM3FWhPwdOVm64chuI0jGm
-         acdqDhZD3yiL5KWfr9krEO0ubp+bTruMLn+fm/Qn+QUTOXllvx3AS2dZ21uUTpoUWrWf
-         VosQ==
+        d=linaro.org; s=google; t=1687341343; x=1689933343;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cHDeuA0BCZm9Mf3LuBjPH47HJ3bTPiRckRvN89KzLZQ=;
+        b=GqxXjRwWaKH4O2DIYiZYa4yeoO13DgadXj5p6HDOiVCwg5X/WCjbpkmykwSDzr37ER
+         c9GfxdRyKM3RA5P5Fn+J96qsC2KtorE3uf9w13Fx0vAbM6RygQqqphRttyrnFRNaeP9q
+         qr+H135irn5iTAR7DrkYSuZEf461cRwp8qPhOSbABIy/tC8Cvfz236NdJWKDR9bGKoGi
+         d5AJoz222DyW5kzKBlN8NGu3ThEiN2pu3pUG3yubHDXMJ7Eye84Sdlb9jeoTBmsKO1mv
+         T5NR3uTgrV3RgMDJMnlj/8q2U0iR9xtQP69R/GFEzxOt6lmJ5L/0IBeX1A7mYw3DWAVb
+         vfNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687339592; x=1689931592;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VG9qCKvekYoYgR4Fl0peORs6WrpDzePjez0ReZU/eVI=;
-        b=ZBdcQ9Tjhyey99U06YZvTk5jyUbWbf73biWVMA7Gb1kVIupYtOh8CI2tyzSfms6IKi
-         /l1SxrajZcRssNKnFKYjRr3CuJmTwp6HJaWrq4F7ztzkOY/impn5cryB61fpOl8VGUEa
-         CwGsPr/qMZkfZ9IMMgdFQbJw2r/KMkNbb1h6bzK0Gv7RWNTLPYwANdNb30yXC2PRoqPY
-         UVA8LurZ/bVLL0QJDqNPb/lII0VJZ3QhqpFmfO3JcTMm1hQ+5YvDkaXkt+LzFjuFMSC4
-         5rUr1xepf5i+bQfxgDVAsVZRymDwoOj89ScuhQXn7vqYO3f0x3QZzd4N4iDNOkZLqcXF
-         O/Xw==
-X-Gm-Message-State: AC+VfDzKRs41Epg7rNZnihkuAECZT9pciF9gsbEdgMxqhzVyuTUV/SIt
-        EL0Hd+LCwUP6pgXVlSVkHmRRGQ==
-X-Google-Smtp-Source: ACHHUZ76qDL0JPGb4BAfepy4QIinWf6vA5aG9heOM2nB+6kfh7t7vrhlEdyUFRtNteZskvZUuQkciw==
-X-Received: by 2002:a7b:c045:0:b0:3f7:b1dd:9553 with SMTP id u5-20020a7bc045000000b003f7b1dd9553mr10904437wmc.14.1687339592026;
-        Wed, 21 Jun 2023 02:26:32 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id n8-20020a05600c294800b003f90a604885sm4435068wmd.34.2023.06.21.02.26.31
+        d=1e100.net; s=20221208; t=1687341343; x=1689933343;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cHDeuA0BCZm9Mf3LuBjPH47HJ3bTPiRckRvN89KzLZQ=;
+        b=RP2+7R/WTgK25Xu25JaOPey38kzmftPRnHGFJLDUcpaUN3lET/viKkC8Atrm5L8nHs
+         d6Z2HkQgGY0j2L4E+kMfKG0RdeyxtOt2pCQeuvAEFoNVTB4eZlJkLwIhdKMz6oW+N4yH
+         tPRYTAjAm7zcFLn9wy2PPzpkuwygDrWWN2Hoyx3DLxmD78b8L018wJjUKiKuN/Eg3m9N
+         AkcB0oJ2vaIFWZpuN4BlXdUjDxeOtM+QLmllxZjlP3LMC4DGiLMdZffkF1cjPr905+vy
+         dhw4GeDI2N5iQZww4X22uf3xPEF3UG2ay9pdHnQC6A4T2ISa8iX74cz4XIDlHX1qsso2
+         qiUg==
+X-Gm-Message-State: AC+VfDzhyze7L6A0ReUh7aemZMtPcUWJ4UcWmhs/Jdfg6z8KJoKsx1tA
+        2X9/OnmBa85rC1mdGPq0dhch/w==
+X-Google-Smtp-Source: ACHHUZ6ySlB8AFsYGsXPJVpD0AgAwtSuQaMhMapnyz6G8Bzm0NrHJE5ekHdsoPJNi/tg12hykfhv7A==
+X-Received: by 2002:a05:6512:224d:b0:4f9:5d3b:6a3a with SMTP id i13-20020a056512224d00b004f95d3b6a3amr552225lfu.31.1687341343175;
+        Wed, 21 Jun 2023 02:55:43 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id x23-20020a05600c21d700b003f427687ba7sm4437478wmj.41.2023.06.21.02.55.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 02:26:31 -0700 (PDT)
+        Wed, 21 Jun 2023 02:55:42 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 21 Jun 2023 11:26:27 +0200
-Subject: [PATCH 3/3] dt-bindings: display: msm: sm8550-mdss: document
- displayport controller subnode
+Date:   Wed, 21 Jun 2023 11:55:41 +0200
+Subject: [PATCH] arm64: dts: qcom: sm8450: add missing power-domains
+ property to usb qmpphy node
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230621-topic-sm8x50-upstream-mdss-bindings-dp-subnode-v1-3-8bf386b373eb@linaro.org>
-References: <20230621-topic-sm8x50-upstream-mdss-bindings-dp-subnode-v1-0-8bf386b373eb@linaro.org>
-In-Reply-To: <20230621-topic-sm8x50-upstream-mdss-bindings-dp-subnode-v1-0-8bf386b373eb@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Message-Id: <20230621-topic-sm8450-upstream-usb-phy-missing-power-domains-v1-1-d850c086c43c@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABzJkmQC/x2OOQrDMBAAv2JUZ0GWj8T5SkihY20vWAdaKwfGf
+ 49IOVMMcwjGTMji3hwi44uYYqjQXhphVx0WBHKVhZKqk6NqYY+JLLC/9YOEknjPqD0UNpDWL3h
+ iprBAim/M4KLXFBj6adKdG+1VDbOoZaMZwWQd7FrboWxblSnjTJ//yuN5nj9coSUbmgAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Robert Foss <rfoss@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=971;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1146;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=OJLy9BOcYtfmScZM3DtWEAFi/hUxNEeYncZLHm7ar6U=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkksJD6P8+2DIjZZuy4odgtDdmcuanRr0RVltXqACF
- 3dixsyaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJLCQwAKCRB33NvayMhJ0aasEA
- CIw1on1qij6mV/QegVshdcgWDNEBHwXCtfLomZ9fxodct2WSOziNhiAn7o7fUP2U2CXS57K7h3JD/b
- 5DdWW1OYk3hLVZgFOoKQ0/RqxzIKulddUnaCA49ScYAvCrghj8iOn8abGBrEYseXJmZoKCkVRKJ6Qd
- m02qXNfrPtHYm++FfR3NB0z3zuboKzncbnf7DbSUD2cUGIOOIdYHCZNKQopgZW3VpHOHvro8lC3zjX
- CijhwuMCyZoqDYkRXHulx+pSnTvykNCaNqQe6At+qQ0Jvx55tkdO0xr7lo+UEzBt2Y1tuKjfandjrJ
- O1dKxzkrOdVN7f6FG0zqLrp3hx8iQe/8y+WTcGevIdew5V5Zpe7g9nXAOV6q+hdwFDBM4ZImVvtpN0
- 8xp0Jp5Bk60xAhsQluHYpqlkp53227XSGKuP+4SoQ9Hq/3/dTErV3dC60dtzFji71oLvBiiY5RNh5A
- q2Ag7aDw5HEaECHvgYGnf+4F5MDhMFw4XxPUk2hRcg1qf8eb50iAq1COfMspp5cjPJYUdsc7iCBMfd
- dWY6f7HclsSO08vRySXDhRqqlQk5E1JQxGIGz6fxk6tCxR4En4F42+929J9OAUJuIfa6b8/mIzJia8
- iWc6gfCvRVtjQa/hKZpnz20oVG8I/AZAc3vrHgFyJofaST2TPyaj2uSVQT+g==
+ bh=G6+Bov5hTBJLt1e/L02QrltMcTDY6r7pkw3usfxiqi0=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkkskd9J3VdkwZe0ldVUWqjgPTYH5wY2JZ/GYHBulI
+ bLEyOe+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJLJHQAKCRB33NvayMhJ0ZhmEA
+ CFfVZtcjJjWw5KkarOluj/ZgCKpyZTRfb389AmdzXKesFcLr0RgKLoqMWfutoeCTgGGyvS4V+IUkbU
+ xTY5WuB65T3LLCZJmzMKCLl8DriVs5KTyBqUDYQ8dVTaEi6ZEwbp9Pi07NMCt9ZWgJVqUxIQlCZRYv
+ SnXDy7UVHDmh4QiLmQ4b/wavM2cxoLHi++xNOlR2gl0Zso9SV0w+E4kyhW4NhtQOgLeTD7xFH8Kk6n
+ UbEsgT0fA5XlTDOcQqH6ULKMr9xjPwj2Fo+0DgRE0FH7VDQ1KC/oY7Lax3UOTks+XRqDt38o0thQzc
+ hKI8HedC/mzJ/FdqP4HoXPzPHczTtORUYnIq1zd7nw/oeHp2savvtoysjRUGCiQvpLyNsLUqe0H8d6
+ IDoWSd5DooQop+0eHO8/qT1UGCRL5j08laQ/xLCIlAHLaQQDWYwbAo2c2Lf7NgrB7TifluPOorxwEN
+ X6e/heObZ5XSLqr6h440/Lm2Nh3Zth7bl1VeoAH6rkbfu43U4NsYqJgN7AZE8ShR3uDoMUi2ClDUSA
+ o90yjK1DWTxflbWGDUcmfsj0znC2yR+6AXZxaMbH7lipgiqydFwbYhZRhf5TnB5leDD43Lqa/pSqFl
+ eJrWXy+pyk3yjS5fzeFx6uJ2Wq8ZESGGZp9oHf6MGxn30ofUgqXZcFfywxsg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -102,34 +96,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the optional document displayport controller subnode
-of the SM8550 MDSS.
+Add the missing property to fix the bindings check error:
+arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: phy@88e8000: 'power-domains' is a required property
+    From schema: Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- .../devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml         | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml
-index 887be33ba108..70ce7cb7a80d 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml
-@@ -42,6 +42,14 @@ patternProperties:
-       compatible:
-         const: qcom,sm8550-dpu
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 5cd7296c7660..f921bd520e40 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -2046,6 +2046,8 @@ usb_1_qmpphy: phy@88e8000 {
+ 				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+ 			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
  
-+  "^displayport-controller@[0-9a-f]+$":
-+    type: object
-+    properties:
-+      compatible:
-+        items:
-+          - const: qcom,sm8550-dp
-+          - const: qcom,sm8350-dp
++			power-domains = <&gcc USB30_PRIM_GDSC>;
 +
-   "^dsi@[0-9a-f]+$":
-     type: object
-     properties:
+ 			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+ 				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+ 			reset-names = "phy", "common";
 
+---
+base-commit: 15e71592dbae49a674429c618a10401d7f992ac3
+change-id: 20230621-topic-sm8450-upstream-usb-phy-missing-power-domains-499a3d6c725f
+
+Best regards,
 -- 
-2.34.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
