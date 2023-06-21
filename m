@@ -2,224 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E991738970
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 17:35:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C9C5738A67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 18:05:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233543AbjFUPfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 11:35:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42514 "EHLO
+        id S232020AbjFUQFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 12:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233631AbjFUPfG (ORCPT
+        with ESMTP id S232281AbjFUQFX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 11:35:06 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9AF0E65;
-        Wed, 21 Jun 2023 08:35:00 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35LEBaT8005716;
-        Wed, 21 Jun 2023 15:34:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=x+9Mq5G/4MTfP3wbk1AvprpBabM/WOm8p64yagazSBo=;
- b=Yzy0C0VodSt/lpY8mxZKXChui3ynvstuMB+BzrqGcGnmPCfPHezVN3b7QBQXOvyiB6RP
- ahh7f9lg4U/jbOh7jIRrIFZXG7GyS1VsT9OooOihDq/7zx5vqOC50YPU31+xUipdgotU
- v5PAJDXtowb6htvofvBqRw+n20IoiuIt2yyI2oj1oFbvsitNmLW0d/rVjD5e8di9U8O3
- osbwF7RfBwya4IMWmszfWEBhqdOHm+ntQjjz0/v//7RJZSE5sqm+ZIsGZdTYg+u/IUOz
- vxAmOKhRW/hOK9h1p0xQTCd+6dhLD8zFBBxe4+dTzanLcRbabYM6uQDNOrnZqkpsg/hV ig== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc2rcg7we-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 21 Jun 2023 15:34:54 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35LFYr82022370
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 21 Jun 2023 15:34:53 GMT
-Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 21 Jun 2023 08:34:49 -0700
-From:   Sarannya S <quic_sarannya@quicinc.com>
-To:     <quic_bjorande@quicinc.com>, <arnaud.pouliquen@foss.st.com>,
-        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Sarannya S <quic_sarannya@quicinc.com>,
-        "Bjorn Andersson" <andersson@kernel.org>
-Subject: [PATCH V8 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL support
-Date:   Wed, 21 Jun 2023 21:04:08 +0530
-Message-ID: <1687361648-27688-4-git-send-email-quic_sarannya@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1687361648-27688-1-git-send-email-quic_sarannya@quicinc.com>
-References: <1687361648-27688-1-git-send-email-quic_sarannya@quicinc.com>
+        Wed, 21 Jun 2023 12:05:23 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7825E65
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 09:05:21 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b45bc83f26so86007821fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 09:05:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687363520; x=1689955520;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L97xFUB/temtwy4P5WXSXI6EdGmq+W3P48s85yOFasc=;
+        b=OhBo8mdY2EQb4doBeRjxfE/PCPaqhdve5qfzbO/LYFBLeEl3giTQiM/3gL1/ebNztJ
+         Z+qflDHVyA8waw+OkfW8gyMa17G8CTA3qdijO4i5v0tm8PxAt4HJfQxaUIR1/8kG/ZEG
+         NwlYOq1dyLDAt0Dl8rTKCa3WcyQtRV2H9/rMqm2SGE8mzNZDxreRcolNm0zsAVIMTI/h
+         JCQdMLfeOasEsb57iCHZubEooCYGB2UBTewCGkh8XFHis+6j5rUFnaUUGLktLsJ58ijy
+         Zo7twp4zxKjFXfj++JJ3L+aLdw65jAbo2kqa3L8TQ9+l4oZ0IdlvMGHgDvIMieBpW+sH
+         JpMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687363520; x=1689955520;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L97xFUB/temtwy4P5WXSXI6EdGmq+W3P48s85yOFasc=;
+        b=cBTquK5b/K7bQgIy6hWbuSI/fa3uS7skIHz8lMEO+xjcjUh3hdZZ+q60Pb2qxIzlTu
+         jpH0mf9Wkwt76Jpf7y0FE1U0MpNELB85b4RWjUPEsQ6k/rIXwnbW4VU27yS65shv4Ypc
+         8LlO70D9+/hut0CgBYRtUiqKIYBhpjA6JD0N9ywFLJglaIMjzk4vU8kk/mBdv3DEAvdH
+         LQZZBJ0dgiFfutZvoMoJaMhtTIAI06PMx4bi3BSu2dZhw9DMrjKI6aotxUWPf5mIcY/I
+         bm5RiZRL+Ks9jmIFQl5jTKqOY4rOhzW+dDRapKajGjDrcayQV4OGNEGk4EonIdN0IC2S
+         xpAA==
+X-Gm-Message-State: AC+VfDxj55A6BHj9zrp1vQ3f8wyYRbQfUdifGkYLv8gWv9HpHpHTriik
+        mXvj3W6PmMBLzkm6rNdkcF2sRjYbiK+e7D0thFU=
+X-Google-Smtp-Source: ACHHUZ5rCvUCzPIvEum9mq8ucBtspidgJe6E23DjJm1oYmWw/EALGwZQFr0w1VJsKrVexbtw+LoOlA==
+X-Received: by 2002:a2e:b0e6:0:b0:2b4:78f6:d331 with SMTP id h6-20020a2eb0e6000000b002b478f6d331mr6371359ljl.32.1687363519916;
+        Wed, 21 Jun 2023 09:05:19 -0700 (PDT)
+Received: from [192.168.1.101] (abxj193.neoplus.adsl.tpnet.pl. [83.9.3.193])
+        by smtp.gmail.com with ESMTPSA id y2-20020a2e7d02000000b002b4750c4db0sm942964ljc.49.2023.06.21.09.05.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Jun 2023 09:05:19 -0700 (PDT)
+Message-ID: <faed77b0-d783-bbbb-313a-628cf32b4d22@linaro.org>
+Date:   Wed, 21 Jun 2023 18:05:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9N1bipnJwOYhI1iAVCN2A_razVseYJLA
-X-Proofpoint-GUID: 9N1bipnJwOYhI1iAVCN2A_razVseYJLA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-21_08,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 impostorscore=0 adultscore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306210131
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+References: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Chris Lew <quic_clew@quicinc.com>
+On 21.06.2023 16:36, Krzysztof Kozlowski wrote:
+> SM8350 HDK and MTP boards were silently dying and rebooting during BAM
+> DMA probe:
+> 
+>   [    1.574304] vreg_bob: Setting 3008000-3960000uV
+>   [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
+>   Optional Info
+>   Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+>   S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
+>   S - IMAGE_VARIANT_STRING=SocLahainaLAA
+>   S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
+>   S - Boot Interface: UFS
+> 
+> It seems that BAM DMA is locally controller (not by firmware) and
+> requires proper initialization by the driver prior to use, at least on
+> HDK8350 and MTP8350, but probably on all boards.
+> 
+> Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM8350 PDX215
 
-Add RPMSG_GET_OUTGOING_FLOWCONTROL and RPMSG_SET_INCOMING_FLOWCONTROL
-IOCTL support for rpmsg char device nodes to get/set the low level
-transport signals.
-
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
----
- drivers/rpmsg/rpmsg_char.c | 50 ++++++++++++++++++++++++++++++++++++++++------
- include/uapi/linux/rpmsg.h | 10 ++++++++++
- 2 files changed, 54 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index a271fce..2cdd31e 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -52,6 +52,8 @@ static DEFINE_IDA(rpmsg_minor_ida);
-  * @readq:	wait object for incoming queue
-  * @default_ept: set to channel default endpoint if the default endpoint should be re-used
-  *              on device open to prevent endpoint address update.
-+ * remote_flow_restricted: to indicate if the remote has requested for flow to be limited
-+ * remote_flow_updated:	to indicate if the flow control has been requested
-  */
- struct rpmsg_eptdev {
- 	struct device dev;
-@@ -68,6 +70,8 @@ struct rpmsg_eptdev {
- 	struct sk_buff_head queue;
- 	wait_queue_head_t readq;
- 
-+	bool remote_flow_restricted;
-+	bool remote_flow_updated;
- };
- 
- int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
-@@ -116,6 +120,18 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
- 	return 0;
- }
- 
-+static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
-+{
-+	struct rpmsg_eptdev *eptdev = priv;
-+
-+	eptdev->remote_flow_restricted = enable;
-+	eptdev->remote_flow_updated = true;
-+
-+	wake_up_interruptible(&eptdev->readq);
-+
-+	return 0;
-+}
-+
- static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- {
- 	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
-@@ -152,6 +168,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- 		return -EINVAL;
- 	}
- 
-+	ept->flow_cb = rpmsg_ept_flow_cb;
- 	eptdev->ept = ept;
- 	filp->private_data = eptdev;
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -172,6 +189,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
- 		eptdev->ept = NULL;
- 	}
- 	mutex_unlock(&eptdev->ept_lock);
-+	eptdev->remote_flow_updated = false;
- 
- 	/* Discard all SKBs */
- 	skb_queue_purge(&eptdev->queue);
-@@ -285,6 +303,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
- 	if (!skb_queue_empty(&eptdev->queue))
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
-+	if (eptdev->remote_flow_updated)
-+		mask |= EPOLLPRI;
-+
- 	mutex_lock(&eptdev->ept_lock);
- 	mask |= rpmsg_poll(eptdev->ept, filp, wait);
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -297,14 +318,31 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
- {
- 	struct rpmsg_eptdev *eptdev = fp->private_data;
- 
--	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
--		return -EINVAL;
-+	bool set;
-+	int ret;
- 
--	/* Don't allow to destroy a default endpoint. */
--	if (eptdev->default_ept)
--		return -EINVAL;
-+	switch (cmd) {
-+	case RPMSG_GET_OUTGOING_FLOWCONTROL:
-+		eptdev->remote_flow_updated = false;
-+		ret = put_user(eptdev->remote_flow_restricted, (int __user *)arg);
-+		break;
-+	case RPMSG_SET_INCOMING_FLOWCONTROL:
-+		set = !!arg;
-+		ret = rpmsg_set_flow_control(eptdev->ept, set, eptdev->chinfo.dst);
-+		break;
-+	case RPMSG_DESTROY_EPT_IOCTL:
-+		/* Don't allow to destroy a default endpoint. */
-+		if (eptdev->default_ept) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+		break;
-+	default:
-+		ret = -EINVAL;
-+	}
- 
--	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+	return ret;
- }
- 
- static const struct file_operations rpmsg_eptdev_fops = {
-diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
-index 1637e68..b0a6c17 100644
---- a/include/uapi/linux/rpmsg.h
-+++ b/include/uapi/linux/rpmsg.h
-@@ -43,4 +43,14 @@ struct rpmsg_endpoint_info {
-  */
- #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
- 
-+/**
-+ * Set the flow control for the remote rpmsg char device.
-+ */
-+#define RPMSG_GET_OUTGOING_FLOWCONTROL _IOW(0xb5, 0x5, struct rpmsg_endpoint_info)
-+
-+/**
-+ * Set the flow control for the local rpmsg char device.
-+ */
-+#define RPMSG_SET_INCOMING_FLOWCONTROL _IOW(0xb5, 0x6, struct rpmsg_endpoint_info)
-+
- #endif
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Konrad
+> 
+> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index 88ef478cb5cc..b382ce66387e 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -1741,7 +1741,6 @@ cryptobam: dma-controller@1dc4000 {
+>  			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+>  			#dma-cells = <1>;
+>  			qcom,ee = <0>;
+> -			qcom,controlled-remotely;
+>  			iommus = <&apps_smmu 0x594 0x0011>,
+>  				 <&apps_smmu 0x596 0x0011>;
+>  		};
