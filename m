@@ -2,57 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54FF2738DDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 19:56:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B087B738F6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jun 2023 21:01:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231809AbjFUR4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 13:56:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57466 "EHLO
+        id S231714AbjFUTBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 15:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231139AbjFURzn (ORCPT
+        with ESMTP id S231642AbjFUTBJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 13:55:43 -0400
-Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3A87419AB;
-        Wed, 21 Jun 2023 10:54:45 -0700 (PDT)
-Received: from lexxgentoo.devos.club (unknown [77.239.252.99])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id F150C1408B3;
-        Wed, 21 Jun 2023 17:52:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-        s=donut; t=1687369959;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=spj7M1eu0BpTeWO4D88uXHofRs63AcicfCjtgCEG0j4=;
-        b=bUP0j+i7VThOhmj1qULSbsnS2q8655wfM/XpfJNl53YC4HK7km1yUcz5GBjPsrwQtrYOzT
-        isUEBs95ZytRcRA/wMVGrEHCOxyLzG3GfiWf4DzgtLbi5EFx+ZGmPJ6GsoDThl46xQk3bh
-        P9+yHoMSdQ7mLSvfECwFnVjK1SfbUME=
-From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sdm630: Add support for modem remoteproc
-Date:   Wed, 21 Jun 2023 20:50:46 +0300
-Message-Id: <20230621175046.61521-3-alexeymin@postmarketos.org>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20230621175046.61521-1-alexeymin@postmarketos.org>
-References: <20230621175046.61521-1-alexeymin@postmarketos.org>
+        Wed, 21 Jun 2023 15:01:09 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C109DB4;
+        Wed, 21 Jun 2023 12:01:05 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35LHtmAk006865;
+        Wed, 21 Jun 2023 19:00:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=qVmVwv5lBXo2mzhJIw+jA/mdwdbctTzwNXxp+Kidd4g=;
+ b=BUK5nFhiBOgNM4+DQHAieAl8bRAhPJsrzpg/DI84Ey4cKUTkNmh3/GY32bVPMcA1noMc
+ cmkl+3TnMgSNafsmN6shyF8iE7kWaVp9mQP7clz7zdPqA4WQ7lOxpbq6dfSVVcdNtvu7
+ a3dgrimj2ajtvQo/7CcdeNbw29K2XCqnWB0+heTxsXVCe3pk+KTrqITn+wTCP2WOTqlj
+ +55C42l/7EvyXtPGe2LDxmVRgJL0Nf5TCAPAqAdsjrLWifGwo9gm4Fkv4uL4hjlbLgxG
+ WuoueT3einU2F9RLP+semvJjoKcqLyYNDP9ET3aht7mqblz2iXRqhOeKJwhMBKYGdKtB hw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbqkhj4qh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Jun 2023 19:00:46 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35LJ0jVS024917
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Jun 2023 19:00:45 GMT
+Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 21 Jun 2023 12:00:44 -0700
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+To:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>
+CC:     <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>,
+        Anjelique Melendez <quic_amelende@quicinc.com>
+Subject: [PATCH 0/7] Add support for LUT PPG
+Date:   Wed, 21 Jun 2023 11:59:43 -0700
+Message-ID: <20230621185949.2068-1-quic_amelende@quicinc.com>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ecsGRqo74DEqjJoxQGrNZ84lvFb2IBqf
+X-Proofpoint-ORIG-GUID: ecsGRqo74DEqjJoxQGrNZ84lvFb2IBqf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-21_11,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 impostorscore=0
+ adultscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=757
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306210158
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,90 +80,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Modem subsystem in SDM630/660 is similar to MSM8998 and
-device tree node for it is based on the one from msm8998.dtsi.
+In certain PMICs, LUT pattern and LPG configuration can be stored in SDAM
+modules instead of LUT peripheral. This feature is called PPG.
 
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
----
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 65 ++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+This change series adds support for PPG. Thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 014237d4b5b2..ad01f2951154 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1028,6 +1028,71 @@ data-pins {
- 			};
- 		};
- 
-+		remoteproc_mss: remoteproc@4080000 {
-+			compatible = "qcom,sdm660-mss-pil";
-+			reg = <0x04080000 0x100>, <0x04180000 0x40>;
-+			reg-names = "qdsp6", "rmb";
-+
-+			interrupts-extended = <&intc GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-+					      <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack",
-+					  "shutdown-ack";
-+
-+			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-+				 <&gcc GCC_BIMC_MSS_Q6_AXI_CLK>,
-+				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
-+				 <&gcc GPLL0_OUT_MSSCC>,
-+				 <&gcc GCC_MSS_SNOC_AXI_CLK>,
-+				 <&gcc GCC_MSS_MNOC_BIMC_AXI_CLK>,
-+				 <&rpmcc RPM_SMD_QDSS_CLK>,
-+				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
-+			clock-names = "iface",
-+				      "bus",
-+				      "mem",
-+				      "gpll0_mss",
-+				      "snoc_axi",
-+				      "mnoc_axi",
-+				      "qdss",
-+				      "xo";
-+
-+			qcom,smem-states = <&modem_smp2p_out 0>;
-+			qcom,smem-state-names = "stop";
-+
-+			resets = <&gcc GCC_MSS_RESTART>;
-+			reset-names = "mss_restart";
-+
-+			qcom,halt-regs = <&tcsr_regs_1 0x3000 0x5000 0x4000>;
-+
-+			power-domains = <&rpmpd SDM660_VDDCX>,
-+					<&rpmpd SDM660_VDDMX>;
-+			power-domain-names = "cx", "mx";
-+
-+			status = "disabled";
-+
-+			mba {
-+				memory-region = <&mba_region>;
-+			};
-+
-+			mpss {
-+				memory-region = <&mpss_region>;
-+			};
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 452 IRQ_TYPE_EDGE_RISING>;
-+				label = "modem";
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 15>;
-+			};
-+		};
-+
- 		adreno_gpu: gpu@5000000 {
- 			compatible = "qcom,adreno-508.0", "qcom,adreno";
- 
+Anjelique Melendez (7):
+  dt-bindings: soc: qcom: Add qcom-pbs bindings
+  dt-bindings: leds: leds-qcom-lpg: Add support for LUT through NVMEM
+    devices
+  soc: qcom: add QCOM PBS driver
+  leds: rgb: leds-qcom-lpg: Add support for LUT pattern through single
+    SDAM
+  leds: rgb: leds-qcom-lpg: Update PMI632 lpg_data to support PPG
+  leds: rgb: leds-qcom-lpg: Support two-nvmem PPG Scheme
+  leds: rgb: Update PM8350C lpg_data to support two-nvmem PPG Scheme
+
+ .../bindings/leds/leds-qcom-lpg.yaml          |  85 ++++
+ .../bindings/soc/qcom/qcom-pbs.yaml           |  41 ++
+ drivers/leds/rgb/leds-qcom-lpg.c              | 393 ++++++++++++++++--
+ drivers/soc/qcom/Kconfig                      |   9 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/qcom-pbs.c                   | 343 +++++++++++++++
+ include/linux/soc/qcom/qcom-pbs.h             |  36 ++
+ 7 files changed, 877 insertions(+), 31 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
+ create mode 100644 drivers/soc/qcom/qcom-pbs.c
+ create mode 100644 include/linux/soc/qcom/qcom-pbs.h
+
 -- 
-2.39.3
+2.40.0
 
