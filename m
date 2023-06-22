@@ -2,105 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0C5A73A16F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:06:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 197C173A197
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:14:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230390AbjFVNGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 09:06:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55680 "EHLO
+        id S231572AbjFVNOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 09:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbjFVNGP (ORCPT
+        with ESMTP id S229437AbjFVNOA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 09:06:15 -0400
-Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2470826AA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:05:47 -0700 (PDT)
-Received: (qmail 18934 invoked by uid 990); 22 Jun 2023 13:05:34 -0000
-Authentication-Results: devico.uberspace.de;
-        auth=pass (plain)
+        Thu, 22 Jun 2023 09:14:00 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317E210F8;
+        Thu, 22 Jun 2023 06:13:59 -0700 (PDT)
+Received: from benjamin-XPS-13-9310.. (unknown [IPv6:2a01:e0a:120:3210:7d72:676c:e745:a6ef])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 411256607115;
+        Thu, 22 Jun 2023 14:13:57 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1687439637;
+        bh=7Bj5hAoh3Iuvgs44g1/kDJV9XKTUPPQFWhuUxH1CfxU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=F/M4eSTFBa0RVdvd99Qfx5JodBeCZuvC5W+xcR2jfJ9AoPKorjPt4DR3Aom0jclX7
+         FOld3+gclSyEgJCEeZxnFr7DxjrvNjZSuM5JA+JEoVzLEZ10L9rxNHb4gDuWT7o7oL
+         1aXA2ccbTIZvNlNcCWQAhY2a/FgiXkmFhZZp1vHGUlK9CxDcI33Jh7u13bdfEXsoT2
+         YiSwiNniqrsZj9TjnZM9r6WDNMShGgadZI0PSMPFT17DwPmRsXnYNokP88lmzGB4MI
+         Xon5UQAYvyEJfN/ufvy+FqNaNus1SRDnaFK2nYpSgubd2ikSLAdz+i/wq7f2WUvHeg
+         tuMOaSBrPra+Q==
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: [PATCH v3 00/11] Add DELETE_BUF ioctl
+Date:   Thu, 22 Jun 2023 15:13:38 +0200
+Message-Id: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Date:   Thu, 22 Jun 2023 13:05:34 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From:   "Leonard Lausen" <leonard@lausen.nl>
-Message-ID: <c451cea0e0541f786e06d771afeb4112d3349dbc@lausen.nl>
-TLS-Required: No
-Subject: Re: [Freedreno] [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
-To:     "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        regressions@lists.linux.dev
-Cc:     freedreno@lists.freedesktop.org,
-        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>,
-        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
-        "David Airlie" <airlied@gmail.com>,
-        "Nikita Travkin" <nikita@trvn.ru>, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, "Rob Clark" <robdclark@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        "Stephen Boyd" <swboyd@chromium.org>,
-        "Sean Paul" <sean@poorly.run>,
-        "Johan Hovold" <johan+linaro@kernel.org>
-In-Reply-To: <f98dcffe4b1dc91edf692fbaa766a263910f2c5b@lausen.nl>
-References: <f98dcffe4b1dc91edf692fbaa766a263910f2c5b@lausen.nl>
- <932ee149-c524-25e7-ee49-5ea1a7e6708c@quicinc.com>
- <e547edf4-1b48-5d12-1600-45f78e7cab49@quicinc.com>
- <1345a125-f745-4fe3-0f5e-bfe84225958d@quicinc.com>
- <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
- <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
- <20230508021536.txtamifw2vkfncnx@ripper>
- <3802269cd54ce105ef6dece03b1b9af575b4fa06@lausen.nl>
- <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
- <49d175ec16e3f65a18265063e51092ee8d0d79c1@lausen.nl>
- <f2d1bb37-ea83-4d5d-6ef5-ae84c26d6ac1@quicinc.com>
- <b9c8243ed53c5c9d7c1b5711237f6130976ea99b@lausen.nl>
-X-Rspamd-Bar: /
-X-Rspamd-Report: MIME_GOOD(-0.1) BAYES_HAM(-1.376189) SUSPICIOUS_RECIPS(1.5)
-X-Rspamd-Score: 0.02381
-Received: from unknown (HELO unkown) (::1)
-        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Thu, 22 Jun 2023 15:05:34 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=lausen.nl; s=uberspace;
-        h=from;
-        bh=vccUnMmIqdngT99oaK8My7B6NiGz9nspCO7ChiAPVtI=;
-        b=BvxzYWRr6A5zJe+/S9o10zNf9FhFlriFlWDTcyToHnftwViksxL3QK1bAlfDH72t91Kp870plW
-        ebKanfqnUQWFRbAz6WvO1SIcpplgaC+qQLl2Nyd506fL376PY8epR3gBxeFSd92R3IvBQT9rU+2o
-        RKEgKDlHsbNszoREiduTSgTqvuJxE5vW377XXDZRqKhcqJV+ZsbgtWRfPsQpgtPFDEJNetCDqloJ
-        tl+ohiZfk3R5DFLBwimlIuBC+nbRHGKBbU6XUlXzMxEx0+uBxXd6mU8ffydJaIEyxxpx9iK9VF21
-        XG2Hg0TAuqEvHW3sOJRigerZPXAUQibGgHKwgaKxPZsxD+gAGHnmfGpzwGnlXjfrq8UZg/o6uCRg
-        37pkIDED7SE9BN1fwBe5KYk7oxHJi/FNBOEpSXA2VV5GEwBh3/+NmFtwrIJKrYT/BKYzCFJYOkA4
-        EfYCpPvv/SVrgoptTxrfcE5kwhEk35GdQlzGvJ26makQmTglqgiQhoIJ8Q6ZT6nbSKognSFQAHuk
-        jQ3ktfuskG8gKMYxTzEqDgJObOQ6gJCgS04B6w4j/lYSgtjP9xC8qPzKIHVxg+ChR0I2OeU2quso
-        NKa+AWqiKVVtxBx7+txGbHlmeyQiPp2tIw3bPMkr0Rszuy4z0ID3cN3wRtW8p87qOvrFuNWX3Z7L
-        Q=
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> > https://patchwork.freedesktop.org/patch/538601/?series=3D118148&rev=
-=3D3
-> >  Apologies if you were not CCed on this, if a next version is CCed,
-> >=20
->=20>  will ask kuogee to cc you.
-> >=20
->=20>  Meanwhile, will be great if you can verify if it works for you and
-> >=20
->=20>  provide Tested-by tags.
-> >=20
->=20
-> I see Bjorn also tested the patch. As it fixes a serious USB-C DP regre=
-ssion which broke USB-C DP completely on lazor for v6.3, can it be includ=
-ed in upcoming 6.3.y release?
+Unlike when resolution change on keyframes, dynamic resolution change
+on inter frames doesn't allow to do a stream off/on sequence because
+it is need to keep all previous references alive to decode inter frames.
+This constraint have two main problems:
+- more memory consumption.
+- more buffers in use.
+To solve these issue this series introduce DELETE_BUF ioctl and remove
+the 32 buffers limit per queue.
 
-Kuogee's fix has since been committed to drm-tip on 2023-06-08 as a8e981a=
-c2d0eb9dd53a4c173e29ca0c99c88abe2. Since it fixes a serious regression in=
- 6.3 and 6.4 kernels, can we include it for the stable releases?
+VP9 conformance tests using fluster give a score of 210/305.
+The 25 resize inter tests (vp90-2-21-resize_inter_* files) are ok
+but require to use postprocessor.
 
-Thank you
-Leonard
+Kernel branch is available here:
+https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v3
+
+GStreamer branch to use DELETE_BUF ioctl and testing dynamic resolution
+change is here:
+https://gitlab.freedesktop.org/benjamin.gaignard1/gstreamer/-/commits/VP9_drc
+
+changes in version 3:
+- Use Xarray API to store allocated video buffers.
+- No module parameter to limit the number of buffer per queue.
+- Use Xarray inside Verisilicon driver to store postprocessor buffers
+  and remove VB2_MAX_FRAME limit.
+- Allow Versilicon driver to change of resolution while streaming
+- Various fixes the Verisilicon VP9 code to improve fluster score.
+ 
+changes in version 2:
+- Use a dynamic array and not a list to keep trace of allocated buffers.
+  Not use IDR interface because it is marked as deprecated in kernel
+  documentation.
+- Add a module parameter to limit the number of buffer per queue.
+- Add DELETE_BUF ioctl and m2m helpers.
+
+Benjamin Gaignard (11):
+  media: videobuf2: Access vb2_queue bufs array through helper functions
+  media: videobuf2: Use Xarray instead of static buffers array
+  media: videobuf2: Remove VB2_MAX_FRAME limit on buffer storage
+  media: videobuf2: Stop define VB2_MAX_FRAME as global
+  media: verisilicon: Refactor postprocessor to store more buffers
+  media: verisilicon: Store chroma and motion vectors offset
+  media: verisilicon: vp9: Use destination buffer height to compute
+    chroma offset
+  media: verisilicon: postproc: Fix down scale test
+  media: verisilicon: vp9: Allow to change resolution while streaming
+  media: v4l2: Add DELETE_BUF ioctl
+  media: v4l2: Add mem2mem helpers for DELETE_BUF ioctl
+
+ .../userspace-api/media/v4l/user-func.rst     |   1 +
+ .../media/v4l/vidioc-delete-buf.rst           |  51 ++++
+ .../media/common/videobuf2/videobuf2-core.c   | 275 ++++++++++++++----
+ .../media/common/videobuf2/videobuf2-v4l2.c   |  34 ++-
+ drivers/media/platform/amphion/vdec.c         |   1 +
+ drivers/media/platform/amphion/vpu_dbg.c      |  22 +-
+ .../platform/mediatek/jpeg/mtk_jpeg_core.c    |   6 +-
+ .../vcodec/vdec/vdec_vp9_req_lat_if.c         |   4 +-
+ drivers/media/platform/qcom/venus/hfi.h       |   2 +
+ drivers/media/platform/st/sti/hva/hva-v4l2.c  |   4 +
+ drivers/media/platform/verisilicon/hantro.h   |   8 +-
+ .../platform/verisilicon/hantro_g2_vp9_dec.c  |  10 +-
+ .../media/platform/verisilicon/hantro_hw.h    |   4 +-
+ .../platform/verisilicon/hantro_postproc.c    | 114 +++++---
+ .../media/platform/verisilicon/hantro_v4l2.c  |  37 +--
+ drivers/media/test-drivers/vim2m.c            |   1 +
+ drivers/media/test-drivers/visl/visl-dec.c    |  28 +-
+ drivers/media/v4l2-core/v4l2-dev.c            |   1 +
+ drivers/media/v4l2-core/v4l2-ioctl.c          |  10 +
+ drivers/media/v4l2-core/v4l2-mem2mem.c        |  20 ++
+ .../staging/media/atomisp/pci/atomisp_ioctl.c |   2 +-
+ drivers/staging/media/ipu3/ipu3-v4l2.c        |   2 +
+ include/media/v4l2-ioctl.h                    |   4 +
+ include/media/v4l2-mem2mem.h                  |  12 +
+ include/media/videobuf2-core.h                |  16 +-
+ include/media/videobuf2-v4l2.h                |  15 +-
+ include/uapi/linux/videodev2.h                |   2 +
+ 27 files changed, 523 insertions(+), 163 deletions(-)
+ create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
+
+-- 
+2.39.2
+
