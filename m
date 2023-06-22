@@ -2,340 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CEC173AD68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 01:50:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9767773AD81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 01:56:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231834AbjFVXun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 19:50:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58552 "EHLO
+        id S230330AbjFVX4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 19:56:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231790AbjFVXui (ORCPT
+        with ESMTP id S229930AbjFVX4o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 19:50:38 -0400
+        Thu, 22 Jun 2023 19:56:44 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09DE4212B;
-        Thu, 22 Jun 2023 16:50:37 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35MN47xP005500;
-        Thu, 22 Jun 2023 23:50:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=SiWbOMCmpgwxxX3TlE2LyY2gp55DW7XcM5FPAL+Pfo0=;
- b=NNxFqeHoqOiEX0kOvvlPyyQOMyFiDOdFczZFDgnF2xkx1NZLMLdmcTxP59dFgPef3ay/
- EUpCdwgcvtCfQsKTng4rHKjr1eQ0SsnPycGpGzDsyN6pRHL8V+xLcbGUbMB9dQNWieE/
- ZgD3aiiG/C7y65CyGdRHgwe/C6Tjq0r3CApHVA9rtU7jHQP4d+bgKL9Z4v2oNoZo3MiV
- ulhF3IBEr9ebQsAFrbyrW7op2IHuqdlaD39Uqtf1MCSn2A8D7Qr1BI/EKzdOlNxG/8pL
- YsKB6atVQ59/rNEwAahMqdkS3P5DvWPZDCgvfWS2UmIaoKbVGb4gSPt0hHpuhNayrVfA qg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rckn2t3vy-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2337DE2;
+        Thu, 22 Jun 2023 16:56:42 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35MNgbS5029631;
+        Thu, 22 Jun 2023 23:56:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5NZFfx4l5dqawCysO4yk9lFz/3mwWnZoAoVSw/Fj0VY=;
+ b=hKK+9Fa157vTt3ci2RQMdiqZO0XHEd0+eiVEo0mybVmlSHp6Farc5+v3DZLih44cKK/s
+ M95jdm1kuPi+DiKsD1KM1F1yN2o2QeUI5PBApAe3buHdFvGEWS1AZomW2G2BQrzuwLoK
+ +kDkl3QTHVwb3ZCDmqK9MfPV7JoIZA5jdtv65TjRNGO6HmAhYpOuzlQ7B1ZZgLjwvUjn
+ M/4N7sj/VMM8U021F6dQt0cIk44p3pStbzofDSxMTkxo2xECGgaNtGFOJiusUcHppuQD
+ 6u76B2oE1EA3YUvjrXpZWC3gUsyt+i5UbnO4VXuqxQFNIIdsJuhbU1Ur1681fOB6m/vt tg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcurrghc9-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 23:50:28 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35MNoRq1004798
+        Thu, 22 Jun 2023 23:56:24 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35MNuN0h010726
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 23:50:27 GMT
-Received: from hu-rmccann-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 22 Jun 2023 16:50:27 -0700
-From:   Ryan McCann <quic_rmccann@quicinc.com>
-Date:   Thu, 22 Jun 2023 16:48:58 -0700
-Subject: [PATCH 6/6] drm/msm/dpu: Update dev core dump to dump registers of
- sub blocks
+        Thu, 22 Jun 2023 23:56:23 GMT
+Received: from [10.71.111.76] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 22 Jun
+ 2023 16:56:21 -0700
+Message-ID: <eae302ab-b508-cdc6-847f-dff6a6b82798@quicinc.com>
+Date:   Thu, 22 Jun 2023 16:56:20 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20230622-devcoredump_patch-v1-6-3b2cdcc6a576@quicinc.com>
-References: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
-In-Reply-To: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v13 10/24] gunyah: vm_mgr: Add/remove user memory regions
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+To:     Will Deacon <will@kernel.org>
+CC:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     Rob Clark <robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <quic_jesszhan@quicinc.com>, Ryan McCann <quic_rmccann@quicinc.com>
-X-Mailer: b4 0.13-dev-8a804
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687477824; l=9099;
- i=quic_rmccann@quicinc.com; s=20230622; h=from:subject:message-id;
- bh=GPxUKbhVRNfWIyXk3T5WLt4/ZaogBUP0uckeyfQQy4s=;
- b=q+otuAwcBqj5+AUuode0cgyK8Ew6TfCfsv4Yb8SHTIZs+ukXypQE4NsP+AscDiDIlFk+2VJD9
- B6rdAZFE/4TDC+5Yg2yvnbU35CogUREVSqCHL2MKk3nverPe5u3iiT/
-X-Developer-Key: i=quic_rmccann@quicinc.com; a=ed25519;
- pk=d/uP3OwPGpj/bTtiHvV1RBZ2S6q4AL6j1+A5y+dmbTI=
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Arnd Bergmann" <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Catalin Marinas" <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <qperret@google.com>
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+ <20230509204801.2824351-11-quic_eberman@quicinc.com>
+ <20230519115948.GB2637@willie-the-truck>
+ <e22c31bd-10ed-f242-3e72-debf40e01e3c@quicinc.com>
+ <20230605141839.GD21212@willie-the-truck>
+ <3bd86221-ee2e-d157-009b-11f6ada98537@quicinc.com>
+In-Reply-To: <3bd86221-ee2e-d157-009b-11f6ada98537@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Mn6Qi1SvhbsTxhfaxOqp2f5N9clFK8OR
-X-Proofpoint-ORIG-GUID: Mn6Qi1SvhbsTxhfaxOqp2f5N9clFK8OR
+X-Proofpoint-GUID: PD7O_AwW6snAmWVqgBTYVEXKXNnV1-AV
+X-Proofpoint-ORIG-GUID: PD7O_AwW6snAmWVqgBTYVEXKXNnV1-AV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-06-22_17,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=956
- lowpriorityscore=0 malwarescore=0 phishscore=0 impostorscore=0 mlxscore=0
- spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306220205
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 mlxlogscore=830 suspectscore=0 spamscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306220205
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the device core dump mechanism does not dump registers of sub
-blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Add wrapper
-function to dump hardware blocks that contain sub blocks.
 
-Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 194 +++++++++++++++++++++++++++-----
- 1 file changed, 168 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index aa8499de1b9f..9b1b1c382269 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -885,6 +885,154 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
- 	return 0;
- }
- 
-+static void dpu_kms_mdp_snapshot_add_block(struct msm_disp_state *disp_state,
-+					   void __iomem *mmio, void *blk,
-+					   enum dpu_hw_blk_type blk_type)
-+{
-+	u32 base;
-+
-+	switch (blk_type) {
-+	case DPU_HW_BLK_TOP:
-+	{
-+		struct dpu_mdp_cfg *top = (struct dpu_mdp_cfg *)blk;
-+
-+		if (top->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
-+			msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
-+						    mmio + top->base, "top");
-+			msm_disp_snapshot_add_block(disp_state, top->len - MDP_PERIPH_TOP0_END,
-+						    mmio + top->base + MDP_PERIPH_TOP0_END,
-+						    "top_2");
-+		} else {
-+			msm_disp_snapshot_add_block(disp_state, top->len, mmio + top->base, "top");
-+		}
-+		break;
-+	}
-+	case DPU_HW_BLK_LM:
-+	{
-+		struct dpu_lm_cfg *mixer = (struct dpu_lm_cfg *)blk;
-+
-+		msm_disp_snapshot_add_block(disp_state, mixer->len, mmio + mixer->base, "%s",
-+					    mixer->name);
-+		break;
-+	}
-+	case DPU_HW_BLK_CTL:
-+	{
-+		struct dpu_ctl_cfg *ctl = (struct dpu_ctl_cfg *)blk;
-+
-+		msm_disp_snapshot_add_block(disp_state, ctl->len, mmio + ctl->base, "%s",
-+					    ctl->name);
-+		break;
-+	}
-+	case DPU_HW_BLK_INTF:
-+	{
-+		struct dpu_intf_cfg *intf = (struct dpu_intf_cfg *)blk;
-+
-+		msm_disp_snapshot_add_block(disp_state, intf->len, mmio + intf->base, "%s",
-+					    intf->name);
-+		break;
-+	}
-+	case DPU_HW_BLK_WB:
-+	{
-+		struct dpu_wb_cfg *wb = (struct dpu_wb_cfg *)blk;
-+
-+		msm_disp_snapshot_add_block(disp_state, wb->len, mmio + wb->base, "%s",
-+					    wb->name);
-+		break;
-+	}
-+	case DPU_HW_BLK_SSPP:
-+	{
-+		struct dpu_sspp_cfg *sspp_block = (struct dpu_sspp_cfg *)blk;
-+		const struct dpu_sspp_sub_blks *sblk = sspp_block->sblk;
-+
-+		base = sspp_block->base;
-+
-+		msm_disp_snapshot_add_block(disp_state, sspp_block->len, mmio + base, "%s",
-+					    sspp_block->name);
-+
-+		if (sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
-+		    sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
-+		    sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED4))
-+			msm_disp_snapshot_add_block(disp_state, sblk->scaler_blk.len,
-+						    mmio + base + sblk->scaler_blk.base, "%s_%s",
-+						    sspp_block->name, sblk->scaler_blk.name);
-+
-+		if (sspp_block->features & BIT(DPU_SSPP_CSC) || sspp_block->features
-+					& BIT(DPU_SSPP_CSC_10BIT))
-+			msm_disp_snapshot_add_block(disp_state, sblk->csc_blk.len,
-+						    mmio + base + sblk->csc_blk.base, "%s_%s",
-+						    sspp_block->name, sblk->csc_blk.name);
-+		break;
-+	}
-+	case DPU_HW_BLK_DSPP:
-+	{
-+		struct dpu_dspp_cfg *dspp_block = (struct dpu_dspp_cfg *)blk;
-+
-+		base = dspp_block->base;
-+
-+		msm_disp_snapshot_add_block(disp_state, dspp_block->len, mmio + base, "%s",
-+					    dspp_block->name);
-+
-+		if (dspp_block->features & BIT(DPU_DSPP_PCC))
-+			msm_disp_snapshot_add_block(disp_state, dspp_block->sblk->pcc.len,
-+						    mmio + base + dspp_block->sblk->pcc.base,
-+						    "%s_%s", dspp_block->name,
-+						    dspp_block->sblk->pcc.name);
-+		break;
-+	}
-+	case DPU_HW_BLK_PINGPONG:
-+	{
-+		struct dpu_pingpong_cfg *pingpong_block = (struct dpu_pingpong_cfg *)blk;
-+		const struct dpu_pingpong_sub_blks *sblk = pingpong_block->sblk;
-+
-+		base = pingpong_block->base;
-+
-+		msm_disp_snapshot_add_block(disp_state, pingpong_block->len, mmio + base, "%s",
-+					    pingpong_block->name);
-+
-+		if (pingpong_block->features & BIT(DPU_PINGPONG_TE2))
-+			msm_disp_snapshot_add_block(disp_state, sblk->te2.len,
-+						    mmio + base + sblk->te2.base, "%s_%s",
-+						    pingpong_block->name, sblk->te2.name);
-+
-+		if (pingpong_block->features & BIT(DPU_PINGPONG_DITHER))
-+			msm_disp_snapshot_add_block(disp_state, sblk->dither.len,
-+						    mmio + base + sblk->dither.base, "%s_%s",
-+						    pingpong_block->name, sblk->dither.name);
-+		break;
-+	}
-+	case DPU_HW_BLK_DSC:
-+	{
-+		struct dpu_dsc_cfg *dsc_block = (struct dpu_dsc_cfg *)blk;
-+
-+		base = dsc_block->base;
-+
-+		if (dsc_block->features & BIT(DPU_DSC_HW_REV_1_2)) {
-+			struct dpu_dsc_blk enc = dsc_block->sblk->enc;
-+			struct dpu_dsc_blk ctl = dsc_block->sblk->ctl;
-+
-+			/* For now, pass in a length of 0 because the DSC_BLK register space
-+			 * overlaps with the sblks' register space.
-+			 *
-+			 * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW catalog where
-+			 * applicable.
-+			 */
-+			msm_disp_snapshot_add_block(disp_state, 0, mmio + base, "%s",
-+						    dsc_block->name);
-+			msm_disp_snapshot_add_block(disp_state, enc.len, mmio + base + enc.base,
-+						    "%s_%s", dsc_block->name, enc.name);
-+			msm_disp_snapshot_add_block(disp_state, ctl.len, mmio + base + ctl.base,
-+						    "%s_%s", dsc_block->name, ctl.name);
-+		} else {
-+			msm_disp_snapshot_add_block(disp_state, dsc_block->len, mmio + base, "%s",
-+						    dsc_block->name);
-+		}
-+		break;
-+	}
-+	default:
-+		DPU_ERROR("Block type not supported.");
-+	}
-+}
-+
- static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_kms *kms)
- {
- 	int i;
-@@ -899,53 +1047,47 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
- 
- 	/* dump CTL sub-blocks HW regs info */
- 	for (i = 0; i < cat->ctl_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len,
--				dpu_kms->mmio + cat->ctl[i].base, "ctl_%d", i);
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->ctl[i],
-+					       DPU_HW_BLK_CTL);
- 
- 	/* dump DSPP sub-blocks HW regs info */
- 	for (i = 0; i < cat->dspp_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len,
--				dpu_kms->mmio + cat->dspp[i].base, "dspp_%d", i);
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->dspp[i],
-+					       DPU_HW_BLK_DSPP);
- 
- 	/* dump INTF sub-blocks HW regs info */
- 	for (i = 0; i < cat->intf_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->intf[i].len,
--				dpu_kms->mmio + cat->intf[i].base, "intf_%d", i);
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->intf[i],
-+					       DPU_HW_BLK_INTF);
- 
- 	/* dump PP sub-blocks HW regs info */
- 	for (i = 0; i < cat->pingpong_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len,
--				dpu_kms->mmio + cat->pingpong[i].base, "pingpong_%d", i);
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->pingpong[i],
-+					       DPU_HW_BLK_PINGPONG);
- 
- 	/* dump SSPP sub-blocks HW regs info */
- 	for (i = 0; i < cat->sspp_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len,
--				dpu_kms->mmio + cat->sspp[i].base, "sspp_%d", i);
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->sspp[i],
-+					       DPU_HW_BLK_SSPP);
- 
- 	/* dump LM sub-blocks HW regs info */
- 	for (i = 0; i < cat->mixer_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len,
--				dpu_kms->mmio + cat->mixer[i].base, "lm_%d", i);
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->mixer[i],
-+					       DPU_HW_BLK_LM);
- 
- 	/* dump WB sub-blocks HW regs info */
- 	for (i = 0; i < cat->wb_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
--				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
--
--	if (cat->mdp[0].features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
--		msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
--				dpu_kms->mmio + cat->mdp[0].base, "top");
--		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len - MDP_PERIPH_TOP0_END,
--				dpu_kms->mmio + cat->mdp[0].base + MDP_PERIPH_TOP0_END, "top_2");
--	} else {
--		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
--				dpu_kms->mmio + cat->mdp[0].base, "top");
--	}
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->wb[i],
-+					       DPU_HW_BLK_WB);
-+
-+	/* dump top block */
-+	dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->mdp[0],
-+				       DPU_HW_BLK_TOP);
- 
- 	/* dump DSC sub-blocks HW regs info */
- 	for (i = 0; i < cat->dsc_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
--				dpu_kms->mmio + cat->dsc[i].base, "dsc_%d", i);
-+		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->dsc[i],
-+					       DPU_HW_BLK_DSC);
- 
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- }
+On 6/7/2023 8:54 AM, Elliot Berman wrote:
+> 
+> 
+> On 6/5/2023 7:18 AM, Will Deacon wrote:
+>> Hi Elliot,
+>>
+>> [+Quentin since he's looked at the MMU notifiers]
+>>
+>> Sorry for the slow response, I got buried in email during a week away.
+>>
+>> On Fri, May 19, 2023 at 10:02:29AM -0700, Elliot Berman wrote:
+>>> On 5/19/2023 4:59 AM, Will Deacon wrote:
+>>>> On Tue, May 09, 2023 at 01:47:47PM -0700, Elliot Berman wrote:
+>>>>> +    ret = account_locked_vm(ghvm->mm, mapping->npages, true);
+>>>>> +    if (ret)
+>>>>> +        goto free_mapping;
+>>>>> +
+>>>>> +    mapping->pages = kcalloc(mapping->npages, 
+>>>>> sizeof(*mapping->pages), GFP_KERNEL_ACCOUNT);
+>>>>> +    if (!mapping->pages) {
+>>>>> +        ret = -ENOMEM;
+>>>>> +        mapping->npages = 0; /* update npages for reclaim */
+>>>>> +        goto unlock_pages;
+>>>>> +    }
+>>>>> +
+>>>>> +    gup_flags = FOLL_LONGTERM;
+>>>>> +    if (region->flags & GH_MEM_ALLOW_WRITE)
+>>>>> +        gup_flags |= FOLL_WRITE;
+>>>>> +
+>>>>> +    pinned = pin_user_pages_fast(region->userspace_addr, 
+>>>>> mapping->npages,
+>>>>> +                    gup_flags, mapping->pages);
+>>>>> +    if (pinned < 0) {
+>>>>> +        ret = pinned;
+>>>>> +        goto free_pages;
+>>>>> +    } else if (pinned != mapping->npages) {
+>>>>> +        ret = -EFAULT;
+>>>>> +        mapping->npages = pinned; /* update npages for reclaim */
+>>>>> +        goto unpin_pages;
+>>>>> +    }
+>>>>
+>>>> Sorry if I missed it, but I still don't see where you reject file 
+>>>> mappings
+>>>> here.
+>>>>
+>>>
+>>> Sure, I can reject file mappings. I didn't catch that was the ask 
+>>> previously
+>>> and thought it was only a comment about behavior of file mappings.
+>>
+>> I thought the mention of filesystem corruption was clear enough! It's
+>> definitely something we shouldn't allow.
+>>
+>>>> This is also the wrong interface for upstream. Please get involved with
+>>>> the fd-based guest memory discussions [1] and port your series to that.
+>>>>
+>>>
+>>> The user interface design for *shared* memory aligns with
+>>> KVM_SET_USER_MEMORY_REGION.
+>>
+>> I don't think it does. For example, file mappings don't work (as above),
+>> you're placing additional rlimit requirements on the caller, read-only
+>> memslots are not functional, the memory cannot be swapped or migrated,
+>> dirty logging doesn't work etc. pKVM is in the same boat, but that's why
+>> we're not upstreaming this part in its current form.
+>>
+> 
+> I thought pKVM was only holding off on upstreaming changes related to 
+> guest-private memory?
+> 
+>>> I understood we want to use restricted memfd for giving guest-private 
+>>> memory
+>>> (Gunyah calls this "lending memory"). When I went through the changes, I
+>>> gathered KVM is using restricted memfd only for guest-private memory 
+>>> and not
+>>> for shared memory. Thus, I dropped support for lending memory to the 
+>>> guest
+>>> VM and only retained the shared memory support in this series. I'd 
+>>> like to
+>>> merge what we can today and introduce the guest-private memory 
+>>> support in
+>>> tandem with the restricted memfd; I don't see much reason to delay the
+>>> series.
+>>
+>> Right, protected guests will use the new restricted memfd ("guest mem"
+>> now, I think?), but non-protected guests should implement the existing
+>> interface *without* the need for the GUP pin on guest memory pages. Yes,
+>> that means full support for MMU notifiers so that these pages can be
+>> managed properly by the host kernel. We're working on that for pKVM, but
+>> it requires a more flexible form of memory sharing over what we currently
+>> have so that e.g. the zero page can be shared between multiple entities.
+> 
+> Gunyah doesn't support swapping pages out while the guest is running and 
+> the design of Gunyah isn't made to give host kernel full control over 
+> the S2 page table for its guests. As best I can tell from reading the 
+> respective drivers, ACRN and Nitro Enclaves both GUP pin guest memory 
+> pages prior to giving them to the guest, so I don't think this 
+> requirement from Gunyah is particularly unusual.
+> 
 
--- 
-2.25.1
+I read/dug into mmu notifiers more and I don't think it matches with 
+Gunyah's features today. We don't allow the host to freely manage VM's 
+pages because it requires the guest VM to have a level of trust on the 
+host. Once a page is given to the guest, it's done for the lifetime of 
+the VM. Allowing the host to replace pages in the guest memory map isn't 
+part of any VM's security model that we run in Gunyah. With that 
+requirement, longterm pinning looks like the correct approach to me.
 
+Thanks,
+Elliot
