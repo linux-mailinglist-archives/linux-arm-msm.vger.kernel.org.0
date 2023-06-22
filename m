@@ -2,90 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C27E1739D82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 11:36:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2C18739D97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 11:42:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231969AbjFVJgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 05:36:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37688 "EHLO
+        id S230124AbjFVJlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 05:41:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232593AbjFVJfY (ORCPT
+        with ESMTP id S232434AbjFVJjz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 05:35:24 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED3B12D4B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 02:28:52 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-311394406d0so4449371f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 02:28:52 -0700 (PDT)
+        Thu, 22 Jun 2023 05:39:55 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ABAE4C06
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 02:31:40 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b4619ef079so86224741fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 02:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687426131; x=1690018131;
+        d=linaro.org; s=google; t=1687426276; x=1690018276;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=a8I/X4DIkumE0o217fuyqlb4csZOvMDW/UlSifsV2GU=;
-        b=bYzxCtFqXPloCjCKlMFQWGOz34JRH3wCnPD3AX38cFSLTi6Cm/moRaAzr/P9UvW8yK
-         T1UlfaUEMwKRoiHsYP2AP1eNfAXLJpOw6fuiK9KovJ6TTbshtiNVn6qpKJwQbplR7OOg
-         cx6Tisg37W53vmqv5m1Z8lPI4korclfp1prU7mkLZhjPR9+rdDrp6MRwgW2Ncm7RM0tH
-         EKlfS2nMwEz3mW4p3CO9SV7SgitOCSSmw0Hb3yAyfNuhyh4ElkPZLngym63CKrx/nmnW
-         QWcMXIrvh+PraUYucMC8xzhBhv0/T9lnF2rJXI9ik824sFmQmQnBhTTJQeTPzfNemHg1
-         WgqA==
+        bh=h0su4etilG9DUxoAHiiXtsXNHxIThfP1qbA8hYKFV+4=;
+        b=AS2CcnaQCTsVrrCP5p669RDfFRtDFV/9lb2w0L4BLRKxXV18Xc3VNg2lYDlEuB7T9x
+         l1gLwir8dhDeVU7ndAVojN/mL8BTUzIw8ScyC0s85MB7GbttatCo5351X4yjRrLjWUwW
+         d9KHT2XwtZpvjkSBM+29pxGLkMdV9WCCVt9sk8XhHy9J9gCfHKRpSYQP6/O/R6pfjqdO
+         Kl0EL4KoAaf6EQ+6mPEYXd79ybOeoHagiHjto/RweaYmozNx3Gz8StgudIO/GiOdGzg7
+         gtYt3geovHMSb55bhHQCEAFF80ILpmAq3HKMrxQSr6kTmcs1NYrhF1aGhrzi4l7tqKFv
+         xuMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687426131; x=1690018131;
+        d=1e100.net; s=20221208; t=1687426276; x=1690018276;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a8I/X4DIkumE0o217fuyqlb4csZOvMDW/UlSifsV2GU=;
-        b=Td2nzUDJ/xqJmZM4XSYqbEUFwvr/TLcTt4YBF1kayv8YfOdIrdIGbXlZQu9OVINfTH
-         qZ/aQwfKYPobpOWABNUeRikepyzL7BbFyEXpEO2OFa0exhfmpbwmsNhRHCHi7EngtWib
-         3ixvzH8Rho1Ms+Wohmkj7oar7ajB36T71GH+XOQIuMh4SC7i4/pLs8eLPGsOa29W19dx
-         RVcEMBK8OvAxvKqfkMmmoGE+/nu313kSn/wTKEEIgziktecn96cd3qQ3ABLbS6FYvGOt
-         epJb3t3B7yOEJXqWL2WBRNtYiG7MWU0a8OYQuVH/LuOXGkiTPZdWbdNHhOI0wLXh1Hoj
-         f3aA==
-X-Gm-Message-State: AC+VfDzrAKTB/UkZafJnxEadPfIjBs8/fXzWRBbvQCa3x5Lexem8D9IV
-        a8hEOCZ+tVj/9bTdImhBXCCyEg==
-X-Google-Smtp-Source: ACHHUZ4T77alv8uvZQD/zqnC6VfvSZmzxDS+DYzTGDKhKFLEX9r7QGKfu+W2jacagsaCQjaDDoaMnw==
-X-Received: by 2002:a5d:591c:0:b0:311:1a9d:98e with SMTP id v28-20020a5d591c000000b003111a9d098emr11415672wrd.58.1687426131213;
-        Thu, 22 Jun 2023 02:28:51 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id c11-20020a056000104b00b003063a92bbf5sm6641190wrx.70.2023.06.22.02.28.48
+        bh=h0su4etilG9DUxoAHiiXtsXNHxIThfP1qbA8hYKFV+4=;
+        b=eKSj/qxQd66Rs7YX9mERFGGFLdDBnNGvQWEX+X2AxXw81Eg1ve2lnxoT7Utb1rN/qb
+         JJ5QFU7qGbwSx3rCW3qEVjGMCbOmu+NPVumvOWYnvHrkRZW3wjWq8FKpi9E+Io38kKvE
+         QdKY+d47eLbBILv++ouFDEuGCFFDDSPa8HsTLDBOY3zb/B3/FBJvnVx3oZR0W1M6cRvP
+         wgsaXu4ubgxJOKW+twVdqqd3oeat/V7VhcT7a2sCkJMmg1HZrTtFPyEhLpjczf4rWzKA
+         1WsnwKwdO3sX9zHOgsJ477zfIE7+wPxyK27QMfww2wZL+Vo74n6rC7Rrq8i9mjTDvFfn
+         1S7g==
+X-Gm-Message-State: AC+VfDwL8T3rjKRTia96LJzHojjt8/0vcj8tfHgRzby1TpoKcOi6s4mt
+        FfI8LAAmofSsH/FrJnZcv5FQ7A==
+X-Google-Smtp-Source: ACHHUZ71vwoNNEacKd0FTRQZr1ek70tsPteUvGY5LcMuqNFwVZ2JS6uYFjlBXTUj1lQSIEg5pD3i+g==
+X-Received: by 2002:a2e:98cf:0:b0:2b5:1b80:264b with SMTP id s15-20020a2e98cf000000b002b51b80264bmr6153288ljj.12.1687426276202;
+        Thu, 22 Jun 2023 02:31:16 -0700 (PDT)
+Received: from [192.168.1.101] (abyl165.neoplus.adsl.tpnet.pl. [83.9.31.165])
+        by smtp.gmail.com with ESMTPSA id x10-20020a2e880a000000b002b2255c4950sm1240578ljh.41.2023.06.22.02.31.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jun 2023 02:28:50 -0700 (PDT)
-Message-ID: <35253eaa-78b0-8976-aaf4-8917331e7823@linaro.org>
-Date:   Thu, 22 Jun 2023 11:28:47 +0200
+        Thu, 22 Jun 2023 02:31:15 -0700 (PDT)
+Message-ID: <0fc42dbb-3b23-70d2-b18e-92424e04418f@linaro.org>
+Date:   Thu, 22 Jun 2023 11:31:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v7 1/3] dt-bindings: ufs: qcom: Add ICE phandle
+Subject: Re: [PATCH v5 2/6] iommu/qcom: Use the asid read from device-tree if
+ specified
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-References: <20230408214041.533749-1-abel.vesa@linaro.org>
- <20230408214041.533749-2-abel.vesa@linaro.org>
- <4aadaf24-11f6-5cc1-4fbd-addbef4f891b@linaro.org>
- <yq1ilbgqoq6.fsf@ca-mkp.ca.oracle.com>
- <80ca0da4-5243-9771-0c4c-62b956e97b2f@linaro.org>
- <ZJPyGW2I4fHqFMRV@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZJPyGW2I4fHqFMRV@linaro.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
+Cc:     andersson@kernel.org, luca@z3ntu.xyz, dmitry.baryshkov@linaro.org,
+        joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@collabora.com,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230622092742.74819-1-angelogioacchino.delregno@collabora.com>
+ <20230622092742.74819-3-angelogioacchino.delregno@collabora.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230622092742.74819-3-angelogioacchino.delregno@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -98,33 +84,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/06/2023 09:02, Abel Vesa wrote:
-> On 23-06-22 08:07:51, Krzysztof Kozlowski wrote:
->> On 22/06/2023 03:19, Martin K. Petersen wrote:
->>>
->>> Abel,
->>>
->>>> Un-reviewed. This is broken and was never tested. After applying this
->>>> patch, I can see many new warnings in all DTBs (so it is easy to spot
->>>> that it was not actually tested).
->>>>
->>>> Your probably meant here:
->>>>   if:
->>>>     required:
->>>
->>> Please provide a fix for this. I don't want to rebase this late in the
->>> cycle.
->>
->> AFAIK, this was not applied. At least as of next 20210621 and I
->> commented on this few days ago. Anything changed here?
+On 22.06.2023 11:27, AngeloGioacchino Del Regno wrote:
+> As specified in this driver, the context banks are 0x1000 apart but
+> on some SoCs the context number does not necessarily match this
+> logic, hence we end up using the wrong ASID: keeping in mind that
+> this IOMMU implementation relies heavily on SCM (TZ) calls, it is
+> mandatory that we communicate the right context number.
 > 
-> Check this one:
-> https://lore.kernel.org/all/yq1a5x1wl4g.fsf@ca-mkp.ca.oracle.com/
+> Since this is all about how context banks are mapped in firmware,
+> which may be board dependent (as a different firmware version may
+> eventually change the expected context bank numbers), introduce a
+> new property "qcom,ctx-asid": when found, the ASID will be forced
+> as read from the devicetree.
 > 
+> When "qcom,ctx-asid" is not found, this driver retains the previous
+> behavior as to avoid breaking older devicetrees or systems that do
+> not require forcing ASID numbers.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> [Marijn: Rebased over next-20221111]
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-So staging tree is not in next? If it cannot be rebased "that late in
-the cycle", this means it should be in the next. :/
-
-Best regards,
-Krzysztof
-
+Konrad
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> index a503ed758ec3..8face57c4180 100644
+> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> @@ -531,7 +531,8 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+>  	 * index into qcom_iommu->ctxs:
+>  	 */
+>  	if (WARN_ON(asid < 1) ||
+> -	    WARN_ON(asid > qcom_iommu->num_ctxs)) {
+> +	    WARN_ON(asid > qcom_iommu->num_ctxs) ||
+> +	    WARN_ON(qcom_iommu->ctxs[asid - 1] == NULL)) {
+>  		put_device(&iommu_pdev->dev);
+>  		return -EINVAL;
+>  	}
+> @@ -617,7 +618,8 @@ static int qcom_iommu_sec_ptbl_init(struct device *dev)
+>  
+>  static int get_asid(const struct device_node *np)
+>  {
+> -	u32 reg;
+> +	u32 reg, val;
+> +	int asid;
+>  
+>  	/* read the "reg" property directly to get the relative address
+>  	 * of the context bank, and calculate the asid from that:
+> @@ -625,7 +627,17 @@ static int get_asid(const struct device_node *np)
+>  	if (of_property_read_u32_index(np, "reg", 0, &reg))
+>  		return -ENODEV;
+>  
+> -	return reg / 0x1000;      /* context banks are 0x1000 apart */
+> +	/*
+> +	 * Context banks are 0x1000 apart but, in some cases, the ASID
+> +	 * number doesn't match to this logic and needs to be passed
+> +	 * from the DT configuration explicitly.
+> +	 */
+> +	if (!of_property_read_u32(np, "qcom,ctx-asid", &val))
+> +		asid = val;
+> +	else
+> +		asid = reg / 0x1000;
+> +
+> +	return asid;
+>  }
+>  
+>  static int qcom_iommu_ctx_probe(struct platform_device *pdev)
