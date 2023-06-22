@@ -2,167 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3907573A4AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 17:21:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B64CC73A4F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 17:29:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231873AbjFVPVD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 11:21:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53768 "EHLO
+        id S232589AbjFVP3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 11:29:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232046AbjFVPVB (ORCPT
+        with ESMTP id S232604AbjFVP2R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 11:21:01 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC4DB10F2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:20:59 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f86e1bdce5so7410944e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:20:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687447258; x=1690039258;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c9Nib1mjQ7HUVslIx9EtURK9z/yS/7mpl1B4Ox7/c/s=;
-        b=g15tA4+CNcniYf/OcLJKZt2ymRKzXESCDfPItGGf4pXM5u5X0DdAweQxDe+YuHymKN
-         HCYHcv4nhoMVPTvohDVk/2XxmWYeXhzfneaiKr082wMmGHZ2GKygtvUPPAEA524UAtxy
-         bmcqY6FuJBxlZe8TchhILJkH1GYMoqDZZEBGqK2JPaVajS3v2KvZYyenL/6VbHYFgEeg
-         VFfCihnzU9iwpvPRInH6mOxO8kkOUvkprS1mAxdvP3NFkz4XNjgeI9L8lqcM7R8ApVzi
-         DdPjtgvLR6ALfJQsKO6aF4PCymSNHzbj+dW7iimcPMQfrmOhBVn6daWWPgAUTd+M+PGG
-         6g3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687447258; x=1690039258;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c9Nib1mjQ7HUVslIx9EtURK9z/yS/7mpl1B4Ox7/c/s=;
-        b=PRimTT+yapNIkyAw2h7uh7nUkrrJby52mWUyQhoQgS7kfBhK9phHTA5uW5H0OPDsHp
-         6pf34MKQDzUDkj+8y5XDx40prxSw023WRG8QK0YUjNdpNi9Mg6Myhx9fiAVXsrur0Y64
-         wgA5ceu5waFXogrEKl9TcZv+6y3aQB4ZWza530MI3L24SUGpLx+kklJVbcO48WzVfFYe
-         DT0w5PMiZXmt0i7haGfwU4HqqmqIsHgNCg209PVXwsHpP00SgrUhmUB92ZMG4qIK65Zk
-         OHH3dQVBKkgkr8+UaSw9idNl/rsbjs+D6wpahTDyUBQhzoA1R0rCluF+A02GeHBn/UB7
-         0Q9A==
-X-Gm-Message-State: AC+VfDxOyeBhhXnpetcZdH+WGpW11PGdCl5Wv0ycAUljl7Hk81K7ILcn
-        +A6AJgXemUHkd7O1x1XUoCdKxQ==
-X-Google-Smtp-Source: ACHHUZ65em47HxJ5uP2ScMq4wC1WUQ8IS3y4pSQ5ePJuf0EI86kFZ1IXZW0p0liht+sUtKhW1HKrpA==
-X-Received: by 2002:a19:6446:0:b0:4e9:bafc:88d0 with SMTP id b6-20020a196446000000b004e9bafc88d0mr11095123lfj.23.1687447257858;
-        Thu, 22 Jun 2023 08:20:57 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id d7-20020a056402516700b00514bcbfd9e0sm4134273ede.46.2023.06.22.08.20.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jun 2023 08:20:57 -0700 (PDT)
-Message-ID: <218a76d9-d00b-3856-80b1-7d2f11b4ff1f@linaro.org>
-Date:   Thu, 22 Jun 2023 17:20:55 +0200
+        Thu, 22 Jun 2023 11:28:17 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BE042118;
+        Thu, 22 Jun 2023 08:27:32 -0700 (PDT)
+Received: from [IPV6:2a01:e0a:120:3210:7d72:676c:e745:a6ef] (unknown [IPv6:2a01:e0a:120:3210:7d72:676c:e745:a6ef])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 9F2486606EDE;
+        Thu, 22 Jun 2023 16:27:25 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1687447646;
+        bh=Yz+NRZOehOEU34hZagSNPjsgeqyatJPhUhG6wIg2Iio=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=V8Imr1qeQyMMtuQ6blSrhADA3yYPLUM83j3zTux9jWDQffVzlaZrPfjWcPSu8Hk3e
+         CjET/duybztDC6v97V7rZ+VUhyRSgRjOi9iIjQj5YQMFoiKN6MnVxQNlvAJy1MHQLH
+         n50qvwtAv2LD4c0FuoMOImVHMOMPZPnfWcGTU0rtmzhFQVdwdTEUjE93x7NkYKmBAV
+         9qZMTQKrDqEXE1dUmcVQqVHOVnpXADp4k8NwGkLsRg8ZpcITM/OPJAPhCjJWu9K/d6
+         XHkwcQZNRn0FF3f1bPBSQBshUdzZvevH7svbFJEKCEGB/xdZfPpm3K20Udcz5bQw4r
+         wXEDVkApYNnqw==
+Message-ID: <6798cc82-d5dc-5603-7e7e-57ce09c09d24@collabora.com>
+Date:   Thu, 22 Jun 2023 17:27:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: msm8916-samsung-fortuna: Add NFC
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 08/11] media: verisilicon: postproc: Fix down scale
+ test
 Content-Language: en-US
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, soc@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Joe Mason <buddyjojo06@outlook.com>
-References: <20230622000007.48219-1-linmengbo0689@protonmail.com>
- <20230622000437.48367-1-linmengbo0689@protonmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230622000437.48367-1-linmengbo0689@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
+ <20230622131349.144160-9-benjamin.gaignard@collabora.com>
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+In-Reply-To: <20230622131349.144160-9-benjamin.gaignard@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/06/2023 02:05, Lin, Meng-Bo wrote:
-> From: Joe Mason <buddyjojo06@outlook.com>
-> 
-> The Samsung Galaxy Ace 4, Core Prime and some Grand Prime have a
-> Samsung S3FWRN5 NFC chip that works quite well with the s3fwrn5 driver
-> in the Linux NFC subsystem.
-> 
-> The clock setup for the NFC chip is a bit special (although this
-> seems to be a common approach used for Qualcomm devices with NFC):
-> 
-> The NFC chip has an output GPIO that is asserted whenever the clock
-> is needed to function properly. On the A3/A5 this is wired up to
-> PM8916 GPIO2, which is then configured with a special function
-> (NFC_CLK_REQ or BB_CLK2_REQ).
-> 
-> Enabling the rpmcc RPM_SMD_BB_CLK2_PIN clock will then instruct
-> PM8916 to automatically enable the clock whenever the NFC chip
-> requests it. The advantage is that the clock is only enabled when
-> needed and we don't need to manage it ourselves from the NFC driver.
-> 
-> Grand Prime SM-G530Y (fortunaltezt) has a NXP PN547, which is supported
-> by the nxp-nci-i2c driver in mainline.
-> 
-> It seems to detect NFC tags using "nfctool" just fine, although more
-> testing is difficult given there seem to be very few useful applications
-> making use of the Linux NFC subsystem.
-> 
-> Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
-> [Put i2c-nfc and NFC pinctrl into fortuna.dtsi to share it with other variants]
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-This and other SoB chains look like missing Co-developed-by.
-
-> [Add pn547_nfc]
-> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+Le 22/06/2023 à 15:13, Benjamin Gaignard a écrit :
+> Do not allow down scaling if the source buffer resolution is
+> smaller than destination one.
+>
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 > ---
+>   drivers/media/platform/verisilicon/hantro_postproc.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
+> index a6b67d0cc66c..a4f2c5e8932c 100644
+> --- a/drivers/media/platform/verisilicon/hantro_postproc.c
+> +++ b/drivers/media/platform/verisilicon/hantro_postproc.c
+> @@ -103,7 +103,10 @@ static void hantro_postproc_g1_enable(struct hantro_ctx *ctx)
+>   
+>   static int down_scale_factor(struct hantro_ctx *ctx)
+>   {
+> -	if (ctx->src_fmt.width == ctx->dst_fmt.width)
+> +	if (ctx->src_fmt.width <= ctx->dst_fmt.width)
+> +		return 0;
+> +
+> +	if (ctx->src_fmt.height <= ctx->dst_fmt.height)
 
+One test will be enough.
+I will fix that in v4.
 
-> +		/* Available NFC chip varies depending on model variant */
-> +		pn547_nfc: nfc@2b {
-> +			compatible = "nxp,pn547", "nxp,nxp-nci-i2c";
-> +			reg = <0x2b>;
-> +
-> +			interrupt-parent = <&tlmm>;
-> +			interrupts = <21 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-> +			firmware-gpios = <&tlmm 49 GPIO_ACTIVE_HIGH>;
-> +
-> +			pinctrl-0 = <&nfc_default>;
-> +			pinctrl-names = "default";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		s3fwrn5_nfc: nfc@27 {
-> +			compatible = "samsung,s3fwrn5-i2c";
-> +			reg = <0x27>;
-> +
-> +			interrupt-parent = <&tlmm>;
-> +			interrupts = <21 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			en-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-> +			wake-gpios = <&tlmm 49 GPIO_ACTIVE_HIGH>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_BB_CLK2_PIN>;
-> +
-> +			pinctrl-0 = <&nfc_default>, <&nfc_clk_req>;
-> +			pinctrl-names = "default";
-> +
-> +			status = "disabled";
+Benjamin
 
-Common part does not have two NFCs. It seems common part has zero
-NFCs... or should be put into different file.
-
-Best regards,
-Krzysztof
-
+>   		return 0;
+>   
+>   	return DIV_ROUND_CLOSEST(ctx->src_fmt.width, ctx->dst_fmt.width);
