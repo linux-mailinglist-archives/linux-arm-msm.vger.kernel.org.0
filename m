@@ -2,80 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99964739DA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 11:48:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2960739E80
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 12:23:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbjFVJsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 05:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50122 "EHLO
+        id S231445AbjFVKX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 06:23:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230268AbjFVJsK (ORCPT
+        with ESMTP id S231440AbjFVKXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 05:48:10 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ABC893C2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 02:37:37 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b46cfde592so76592311fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 02:37:37 -0700 (PDT)
+        Thu, 22 Jun 2023 06:23:08 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8213B212A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 03:22:28 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f64fb05a8aso9570921e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 03:22:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687426604; x=1690018604;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tNkV9xAtMniIcjJ9HwdT1bLznh1eJZZcSsFGcqOzrhQ=;
-        b=UsK03MOaYaOQ3HgcTdNopysn7bz+2NhG7PUdGIT2G7+OO+U3YpmhjQP5Zwv5hvbWBS
-         h38/tZZwzc8jy5NhMTu/1wqAZN39bVOL8cFpwE64Vr+nOLxrQxEF077Up1h0w5Q84CXD
-         VnbVJc9peKFaLGhQTRWKDjTEG4WDQBB5teXoKF/2UEke2ms+24qjPXCjIo7dDIqiyN9l
-         vXTnc/A9pntZ6qkurXialJ1DoXse1GMedPSDcDGAaaJARbBTdGqRgqRThvx/7OAfk4H6
-         pOiPNVOKLtWmhGg5vyJjH5NMRP+rqtf4cQUbiQ4dAPo0r5Rr0eXfuuyjs96My6y+x4b4
-         2Bcw==
+        d=linaro.org; s=google; t=1687429347; x=1690021347;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kPKiuyN9lTn2LkZFVM0hiwkDKLitkiUuOZ5BrxWQ9JM=;
+        b=VbQI4QlQql6NTE3CK6vOzMgaeeV7NW1krLgdhMVTPHSFmkonfA/KWeFi64sy9yRSa9
+         WUaGbnhaJ1RSUyZbQ2fZaaQBxPsEHVBSn9bjIXwHdA/f9BjSo/kML4xI3dbZcthIQtqr
+         7pqCPWZygL5QDOgRU1IIkSEkKC7Qbn+0UgZ2QTfk67U46C75l54cqTGL+u5jg8ZUVB0A
+         AJ/azt9aI29oJrmWdHehsC6VmNOcEDkG9fvISBCYWgDuM+J9dqh+J6NNi9LBeycA4tWo
+         BNVBPvExzXZ4K4CVLWh8QtSI2EJbdqL0UHN2RD+e4FepanCbNps4zG+rYlUK5GRBtBh2
+         w/3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687426604; x=1690018604;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tNkV9xAtMniIcjJ9HwdT1bLznh1eJZZcSsFGcqOzrhQ=;
-        b=AqVs+Nj+tJo2MEXvlj1hgO5AhggbBOWChPaK/aDiMc40XZ6Z6F1EbtyweQ7icyKYc7
-         quZfy5Gb/FOFqieGbLsX/M2GCiqS8Y3YxOfEiuLQVpPu/qCmhFX9Lwg6tJc0JZmteyea
-         pflB8WUzMVyzyhnDCZb3zJV6F/JT7E6jJj0iAz5ck8DJ/80/ah2MmPwWkpC3wmWWn4d3
-         Dyo3XBaxXft9d647wBjRjJPX+3B02iy4goADVx97SrKGYfM+Ywf44SWCifmL4rpYFmzL
-         fNg5Bhbv/c1NUGo8WdMWL5QogTYjriDJIUjbNj/Zf33k2tNUTzEiiQnWqIC79qWeHUZN
-         pLCQ==
-X-Gm-Message-State: AC+VfDwP0r4d2apWn8ANO4pTWzHIjSDQifK9E3w4XF78MdLBuHJIMub8
-        MIeJ0jZtPE8VqcSZhuLgORErwA==
-X-Google-Smtp-Source: ACHHUZ7oME0q+/73a/ckmmmGjXtpmVy3hhaghu6ttoRXj2kLaocap0Vh1OZNUNakyMXv8HXG+bt1CQ==
-X-Received: by 2002:a2e:a307:0:b0:2b4:5afc:fe0c with SMTP id l7-20020a2ea307000000b002b45afcfe0cmr11588750lje.7.1687426604342;
-        Thu, 22 Jun 2023 02:36:44 -0700 (PDT)
-Received: from [192.168.1.101] (abyl165.neoplus.adsl.tpnet.pl. [83.9.31.165])
-        by smtp.gmail.com with ESMTPSA id l11-20020a2e99cb000000b002adb10a6620sm1192869ljj.107.2023.06.22.02.36.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jun 2023 02:36:44 -0700 (PDT)
-Message-ID: <bd27fc27-70d4-dfff-22d1-2e632ac7a868@linaro.org>
-Date:   Thu, 22 Jun 2023 11:36:42 +0200
+        d=1e100.net; s=20221208; t=1687429347; x=1690021347;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kPKiuyN9lTn2LkZFVM0hiwkDKLitkiUuOZ5BrxWQ9JM=;
+        b=GSb8pJRG3EUKGITR7kbGmmkfF4QoW3Xtg9PqpOxi7jWMo9kjrTOKazAAeA0/DEKs+N
+         A61Qw3Ab+enr8684hvgP672vq5UskJDB522+6JoGCbw7zJkllHP1eMA7EYS6NuPgFE00
+         d8Isp+2Vn5BVNdom+Jy++Nu7x7RXj2YQYS2A6V8U7T2uEG0OqC0BMbhge0w6TdmRBl2x
+         LUS5TFC2SKAKjwN+3pgarDOfmzVf9r4e5/keSspW25qSV+DfxjSAI/WCRS80GIDifkuK
+         tsa3sRDtG73LcHvK7puoSbGnh5eM9+ICeHvku7nQiQ3P4gF7oAD8gN+6G5h1hvM1uHYy
+         1W6A==
+X-Gm-Message-State: AC+VfDwF7vSAUsklyqZtPjzy7G2d+sRwUuySeTbQqOAQFkvef1dC8LUY
+        NHAU1XRXjQcvs75mGFuKb1Ml3w==
+X-Google-Smtp-Source: ACHHUZ76DdJUUP3DxprlEuqhHV0dMUceghkOayHt/bFjamB18quiILV7W/OOPRCuhZnD96eCgMJnzw==
+X-Received: by 2002:a19:8c18:0:b0:4f4:fdb4:c76d with SMTP id o24-20020a198c18000000b004f4fdb4c76dmr12121954lfd.47.1687429346736;
+        Thu, 22 Jun 2023 03:22:26 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id s10-20020a5d69ca000000b003047ea78b42sm6652592wrw.43.2023.06.22.03.22.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jun 2023 03:22:24 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 13:22:21 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
+        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        kernel-janitors@vger.kernel.org, smatch@vger.kernel.org,
+        Harshit Mogalapalli <harshit.m.mogalapalli@gmail.com>
+Subject: Re: [PATCH 0/5] accel/qaic: Improve bounds checking in encode/decode
+Message-ID: <780f7135-cd3c-4c3f-802e-4aa0e7ec3413@kadam.mountain>
+References: <af83549b-ccb4-4a8d-b036-9359eba9d39f@moroto.mountain>
+ <26a1858f-d428-a2ac-9ddd-115ba2d8becc@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v5 6/6] iommu/qcom: Add support for QSMMUv2 and QSMMU-500
- secured contexts
-Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
-Cc:     andersson@kernel.org, luca@z3ntu.xyz, dmitry.baryshkov@linaro.org,
-        joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, robdclark@gmail.com,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@collabora.com,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20230622092742.74819-1-angelogioacchino.delregno@collabora.com>
- <20230622092742.74819-7-angelogioacchino.delregno@collabora.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230622092742.74819-7-angelogioacchino.delregno@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <26a1858f-d428-a2ac-9ddd-115ba2d8becc@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,96 +76,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22.06.2023 11:27, AngeloGioacchino Del Regno wrote:
-> On some SoCs like MSM8956, MSM8976 and others, secure contexts are
-> also secured: these get programmed by the bootloader or TZ (as usual)
-> but their "interesting" registers are locked out by the hypervisor,
-> disallowing direct register writes from Linux and, in many cases,
-> completely disallowing the reprogramming of TTBR, TCR, MAIR and other
-> registers including, but not limited to, resetting contexts.
-> This is referred downstream as a "v2" IOMMU but this is effectively
-> a "v2 firmware configuration" instead.
+On Wed, Jun 21, 2023 at 08:53:41PM -0600, Jeffrey Hugo wrote:
+> On 6/21/2023 1:21 AM, Dan Carpenter wrote:
+> > (I think this is the first cover letter I have ever written).
+> > 
+> > These patches are based on review and not from testing.
 > 
-> Luckily, the described behavior of version 2 is effective only on
-> secure contexts and not on non-secure ones: add support for that,
-> finally getting a completely working IOMMU on at least MSM8956/76.
+> Thank you for your review.  I look forward to reading your patches and
+> learning from them.
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> [Marijn: Rebased over next-20221111]
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Did you use any kind of tooling?  If there is something we can add to our
+> flow to bring up the quality, I would like to consider it.
 
-Konrad
->  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 19 +++++++++++++++++--
->  1 file changed, 17 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> index 9786fd094e7d..7b6241f36698 100644
-> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> @@ -59,6 +59,7 @@ struct qcom_iommu_ctx {
->  	struct device		*dev;
->  	void __iomem		*base;
->  	bool			 secure_init;
-> +	bool			 secured_ctx;
->  	u8			 asid;      /* asid and ctx bank # are 1:1 */
->  	struct iommu_domain	*domain;
->  };
-> @@ -273,6 +274,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
->  			ctx->secure_init = true;
->  		}
->  
-> +		/* Secured QSMMU-500/QSMMU-v2 contexts cannot be programmed */
-> +		if (ctx->secured_ctx) {
-> +			ctx->domain = domain;
-> +			continue;
-> +		}
-> +
->  		/* Disable context bank before programming */
->  		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
->  
-> @@ -669,10 +676,14 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
->  	if (irq < 0)
->  		return -ENODEV;
->  
-> +	if (of_device_is_compatible(dev->of_node, "qcom,msm-iommu-v2-sec"))
-> +		ctx->secured_ctx = true;
-> +
->  	/* clear IRQs before registering fault handler, just in case the
->  	 * boot-loader left us a surprise:
->  	 */
-> -	iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
-> +	if (!ctx->secured_ctx)
-> +		iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
->  
->  	ret = devm_request_irq(dev, irq,
->  			       qcom_iommu_fault,
-> @@ -712,6 +723,8 @@ static void qcom_iommu_ctx_remove(struct platform_device *pdev)
->  static const struct of_device_id ctx_of_match[] = {
->  	{ .compatible = "qcom,msm-iommu-v1-ns" },
->  	{ .compatible = "qcom,msm-iommu-v1-sec" },
-> +	{ .compatible = "qcom,msm-iommu-v2-ns" },
-> +	{ .compatible = "qcom,msm-iommu-v2-sec" },
->  	{ /* sentinel */ }
->  };
->  
-> @@ -729,7 +742,8 @@ static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
->  	struct device_node *child;
->  
->  	for_each_child_of_node(qcom_iommu->dev->of_node, child) {
-> -		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec")) {
-> +		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec") ||
-> +		    of_device_is_compatible(child, "qcom,msm-iommu-v2-sec")) {
->  			of_node_put(child);
->  			return true;
->  		}
-> @@ -873,6 +887,7 @@ static const struct dev_pm_ops qcom_iommu_pm_ops = {
->  
->  static const struct of_device_id qcom_iommu_of_match[] = {
->  	{ .compatible = "qcom,msm-iommu-v1" },
-> +	{ .compatible = "qcom,msm-iommu-v2" },
->  	{ /* sentinel */ }
->  };
->  
+I started reviewing this code because of an unpublished Smatch warning:
+
+drivers/accel/qaic/qaic_control.c:379 encode_passthrough() warn: check that subtract can't underflow 'in_trans->hdr.len - 8' '0-3999968'
+
+The warning message means that Smatch thinks in_trans->hdr.len can be
+controlled by the user and is in the 0-3999968.  But from review it's
+in increments of 8.  "0,8,16...3999968".
+
+The other subtract underflow warnings are false positives except maybe
+cx231xx_bulk_copy()?  The put_cmsg() and the bpf warnings are definitely
+false positives.
+
+drivers/accel/qaic/qaic_control.c:379 encode_passthrough() warn: check that subtract can't underflow 'in_trans->hdr.len - 8' '0-3999968'
+drivers/media/usb/cx231xx/cx231xx-417.c:1355 cx231xx_bulk_copy() warn: check that subtract can't underflow 'buffer_size - 3' '0-4000000'
+drivers/net/ethernet/microchip/sparx5/sparx5_packet.c:153 sparx5_xtr_grp() warn: check that subtract can't underflow 'byte_cnt - 4' '0'
+drivers/net/ethernet/packetengines/hamachi.c:1504 hamachi_rx() warn: check that subtract can't underflow '(frame_status & 2047) - 4' '0-2047'
+drivers/net/ethernet/packetengines/hamachi.c:1506 hamachi_rx() warn: check that subtract can't underflow '(frame_status & 2047) - 4' '0-2047'
+drivers/net/ethernet/packetengines/hamachi.c:1520 hamachi_rx() warn: check that subtract can't underflow '(frame_status & 2047) - 4' '0-2047'
+fs/ubifs/debug.c:334 ubifs_dump_node() warn: check that subtract can't underflow 'safe_len - 24' 's32min-(-1),25-2147483646'
+fs/ubifs/debug.c:512 ubifs_dump_node() warn: check that subtract can't underflow 'safe_len - 48' 's32min-s32max'
+kernel/bpf/bpf_iter.c:479 bpf_iter_link_fill_link_info() warn: check that subtract can't underflow 'ulen - 1' '0-1010101'
+kernel/bpf/btf.c:7274 btf_get_info_by_fd() warn: check that subtract can't underflow 'uname_len - 1' '0-55'
+kernel/bpf/syscall.c:3268 bpf_raw_tp_link_fill_link_info() warn: check that subtract can't underflow 'ulen - 1' '0-1010101'
+net/compat.c:273 put_cmsg_compat() warn: check that subtract can't underflow 'cmlen - 12' 's32min-s32max'
+net/core/scm.c:249 put_cmsg() warn: check that subtract can't underflow 'cmlen - 16' 's32min-s32max'
+
+regards,
+dan carpenter
