@@ -2,191 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0B6E73A06F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 14:02:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A394673A12D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 14:48:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231442AbjFVMCt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 08:02:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55362 "EHLO
+        id S230081AbjFVMsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 08:48:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231281AbjFVMCZ (ORCPT
+        with ESMTP id S229822AbjFVMsP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 08:02:25 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BBC2107
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 05:02:05 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f8fcaa31c7so78551925e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 05:02:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687435316; x=1690027316;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ehfVzvQExF8A0HC8WC/ILIhv/WTmHbal1y8W4TeN1es=;
-        b=ZpJlE94aIfdZ9blu2+e25WvPl8E39qqcqv4OIVo9dcwtr02ZZPnabvhB6ySYT1BSvw
-         ETcVMk0WKIXLkk2VIzg4qbrJ5ibZ0fZa367vc1GgCC2cP/rWtmaNWjRI5u+bLebeKm6D
-         jEj1SShT6AdDF4NUSmVUOv8yXLBUk4AiuBnwehuZn0aNh4sEveOJv7IcHdjNEoQnj4Zl
-         q4D7hHxRwyfBpFCZWPtjeGYQDUxbQq92/eFlHwXdCD0Ib7HWc1iU6sjyf7/8Q5/1OGgl
-         BjR9e4xabZljgBBLYoAQ2L3IRq/cLZhktBx91P1TxVnJJIeatGpjdV6rCC/gGya1WxWk
-         QGIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687435316; x=1690027316;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ehfVzvQExF8A0HC8WC/ILIhv/WTmHbal1y8W4TeN1es=;
-        b=MZrQzQV8VSC6U50Mt0IWqLhwlqyzHU3N2Kn5whs+WIa/0bab8gtSvY8lVQH1ezfs4p
-         G36mpY4veZMlaM2yAbK5sPb6y3Czpv5uv3Eh3PLIpQdw41jgnTqj/076/+PGgbkltKlv
-         B1RnQVq+mY/9eijPT3PBj94Gfg+wmtyH6H3UvBagdbSkQsmS6D5WCYUqwiYuLJlGbB7l
-         KAd6PzPCdh3QWzO5KychEixGd0nIKAqiFa+Zs27jORLMlI1HGUPR6muBNcXjrXEX6TDG
-         wdrsaH1CuawhcgtQ2edoqq0l6B6k0vRY8JeQy66PGRkSkp/1dgH+lBi3FGNS7uiTircg
-         YgQg==
-X-Gm-Message-State: AC+VfDz2Nst5Qaqiay7ekJlxQZggaHKOpO8JdWAE5n58UsynJTUQJ7V0
-        FwynoU7zNUi5fug0Cy3Hc0pKVg==
-X-Google-Smtp-Source: ACHHUZ7FpEJIjzvQwxNwPUBwmllXRykV33/rRLw9bzvXYHni/kpzPOKVm3FCkT6F91vdGlY1pyzwxg==
-X-Received: by 2002:a05:600c:2206:b0:3f9:515:ccfb with SMTP id z6-20020a05600c220600b003f90515ccfbmr16742469wml.12.1687435316511;
-        Thu, 22 Jun 2023 05:01:56 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d785:af3e:3bf5:7f36])
-        by smtp.gmail.com with ESMTPSA id 17-20020a05600c231100b003f8ec58995fsm7594296wmo.6.2023.06.22.05.01.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 05:01:56 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 22 Jun 2023 08:48:15 -0400
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E54B5193;
+        Thu, 22 Jun 2023 05:48:14 -0700 (PDT)
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35MCCCVs028146;
+        Thu, 22 Jun 2023 12:47:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=ZnXKwDJCmpNLo0BVLBFTTmnOcdUdxoUTDz2INcncd5s=;
+ b=Em6+nFh6MIADfcFTsYAwUj4mpD0xvsl0kNY28ypt8NaenRkq6OTTVMvUPipBBiOuLY9A
+ UepsZsQCnvzXvFmrXOAyoB354SEMfaaDs+bfOczJhFAkM6u9UW8ey61htjq51RKln7pe
+ YFINu+0e7CkcfQEC0k7KS0WawK4669dVyIyDwsuoIopGDW2F6Fln+nEYs5u4LGpbhV4c
+ MDbTRnVoBOSgPglVkrxvx8JbgdLfGiafA56Pep+knwqYub6SFQjg1mpjKtHYY4sx1Eo2
+ GHQ4cnCr1neHEP0pWlfDIFQFgGSRAdyeKK8S/ZblZnpgYhGwyq+JIepnUwc2j16YRhbN ug== 
+Received: from pps.reinject (localhost [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3rcp3k151v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 22 Jun 2023 12:47:29 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35MCCF4p028899;
+        Thu, 22 Jun 2023 12:47:28 GMT
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com [169.51.49.98])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3rcp3k150m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 22 Jun 2023 12:47:28 +0000
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+        by ppma03ams.nl.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 35M3Pbbp023319;
+        Thu, 22 Jun 2023 12:47:25 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+        by ppma03ams.nl.ibm.com (PPS) with ESMTPS id 3r94f53f9w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 22 Jun 2023 12:47:25 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+        by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 35MClKer17302058
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 22 Jun 2023 12:47:20 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id CD5A620040;
+        Thu, 22 Jun 2023 12:47:20 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 7E07020043;
+        Thu, 22 Jun 2023 12:47:18 +0000 (GMT)
+Received: from [9.171.1.190] (unknown [9.171.1.190])
+        by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+        Thu, 22 Jun 2023 12:47:18 +0000 (GMT)
+Message-ID: <2bd0da80754331e00f66c724138d9bbf157e1565.camel@linux.ibm.com>
+Subject: Re: [PATCH v10 5/6] iommu/dma: Allow a single FQ in addition to
+ per-CPU FQs
+From:   Niklas Schnelle <schnelle@linux.ibm.com>
+To:     Joerg Roedel <joro@8bytes.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>
+Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [RESEND PATCH v2 5/5] arm64: dts: qcom: sa8775p-ride: enable ethernet0
-Date:   Thu, 22 Jun 2023 14:01:42 +0200
-Message-Id: <20230622120142.218055-6-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230622120142.218055-1-brgl@bgdev.pl>
-References: <20230622120142.218055-1-brgl@bgdev.pl>
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Date:   Thu, 22 Jun 2023 14:47:18 +0200
+In-Reply-To: <20230310-dma_iommu-v10-5-f1fbd8310854@linux.ibm.com>
+References: <20230310-dma_iommu-v10-0-f1fbd8310854@linux.ibm.com>
+         <20230310-dma_iommu-v10-5-f1fbd8310854@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.48.3 (3.48.3-1.fc38) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: -L5DK6LIKNXBkDMbv58a_9My2c2n4j5V
+X-Proofpoint-ORIG-GUID: Kvl6x-pcaGo5ydQSLF0ieEdnFokEMGpS
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-22_08,2023-06-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ mlxscore=0 clxscore=1011 spamscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 mlxlogscore=897 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306220105
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Wed, 2023-05-24 at 16:53 +0200, Niklas Schnelle wrote:
+> In some virtualized environments, including s390 paged memory guests,
+> IOTLB flushes are used to update IOMMU shadow tables. Due to this, they
+> are much more expensive than in typical bare metal environments or
+> non-paged s390 guests. In addition they may parallelize poorly in
+> virtualized environments. This changes the trade off for flushing IOVAs
+> such that minimizing the number of IOTLB flushes trumps any benefit of
+> cheaper queuing operations or increased paralellism.
+>=20
+> In this scenario per-CPU flush queues pose several problems. Firstly
+> per-CPU memory is often quite limited prohibiting larger queues.
+> Secondly collecting IOVAs per-CPU but flushing via a global timeout
+> reduces the number of IOVAs flushed for each timeout especially on s390
+> where PCI interrupts may not be bound to a specific CPU.
+>=20
+> Let's introduce a single flush queue mode that reuses the same queue
+> logic but only allocates a single global queue. This mode is selected by
+> dma-iommu if a newly introduced .shadow_on_flush flag is set in struct
+> dev_iommu. As a first user the s390 IOMMU driver sets this flag during
+> probe_device. With the unchanged small FQ size and timeouts this setting
+> is worse than per-CPU queues but a follow up patch will make the FQ size
+> and timeout variable. Together this allows the common IOVA flushing code
+> to more closely resemble the global flush behavior used on s390's
+> previous internal DMA API implementation.
+>=20
+> Link: https://lore.kernel.org/linux-iommu/3e402947-61f9-b7e8-1414-fde0062=
+57b6f@arm.com/
+> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com> #s390
+> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> ---
 
-Enable the first 1Gb ethernet port on sa8775p-ride development board.
+Gentle ping. As stated in the cover letter this version aimed to
+resolve the only outstanding feedback of removing the .tune_dma_iommu()
+op in favor of a .shadow_on_flush flag in struct dev_iommu. This then
+let's the dma-iommu choose a single queue and larger timeouts and IOVA
+counts. This leaves the dma-iommu  with full responsibility for the
+settings.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 88 +++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index bf90f825ff67..b2aa16037707 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -261,6 +261,94 @@ vreg_l8e: ldo8 {
- 	};
- };
- 
-+&ethernet0 {
-+	phy-mode = "sgmii";
-+	phy-handle = <&sgmii_phy>;
-+
-+	pinctrl-0 = <&ethernet0_default>;
-+	pinctrl-names = "default";
-+
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+	snps,ps-speed = <1000>;
-+
-+	status = "okay";
-+
-+	mdio {
-+		compatible = "snps,dwmac-mdio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <11000>;
-+		reset-post-delay-us = <70000>;
-+
-+		sgmii_phy: phy@8 {
-+			reg = <0x8>;
-+			device_type = "ethernet-phy";
-+		};
-+	};
-+
-+	mtl_rx_setup: rx-queues-config {
-+		snps,rx-queues-to-use = <4>;
-+		snps,rx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x0>;
-+			snps,route-up;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x1>;
-+			snps,route-ptp;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x2>;
-+			snps,route-avcp;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x3>;
-+			snps,priority = <0xc>;
-+		};
-+	};
-+
-+	mtl_tx_setup: tx-queues-config {
-+		snps,tx-queues-to-use = <4>;
-+		snps,tx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+	};
-+};
-+
- &i2c11 {
- 	clock-frequency = <400000>;
- 	pinctrl-0 = <&qup_i2c11_default>;
--- 
-2.39.2
-
+Thanks,
+Niklas
