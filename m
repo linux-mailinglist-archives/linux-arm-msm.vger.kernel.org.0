@@ -2,64 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C69DB73A045
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 13:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 199F573A052
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 13:59:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229561AbjFVL6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 07:58:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51500 "EHLO
+        id S229757AbjFVL7w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 07:59:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231247AbjFVL6I (ORCPT
+        with ESMTP id S230521AbjFVL7v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 07:58:08 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B2FE210C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 04:58:02 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f954d7309fso692565e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 04:58:02 -0700 (PDT)
+        Thu, 22 Jun 2023 07:59:51 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93CB26A0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 04:59:30 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b46b11051aso78982241fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 04:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687435080; x=1690027080;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qd4+5bYIJSD1AWeQPTgthQXsn71VUDPalDNC260pIEQ=;
-        b=s0PIpjdHBrUCmeQJXzRAvu/7Mwfkh5y9yHnSBMd/UCbKepsIHfBNbp1Ck5i4GSkk6W
-         Ypof/0JQ4qeLyg4e5sM0TyAwowvArVeU+FnQO5mXoIoyqEkvCdwiL/a9jT8baQZVWdjH
-         jjKfLQOfsufM6WNmjlKHKSF0P/FbW/XEtI57A6VQfdtDuaiM8Gb+8DdXzFH6BBk+Mmml
-         c/bL5/g5YiZm2g2pe9Tqrj+8sM7xfOeGQNYsvesoY7ak0ZaU6cDeHfjQn+1EVGrPf79y
-         rwtB4glx+8vV1qCKtbx9jrcnsU1UeQCLQDGvwmw6fG8TZkZo4aUwQkL/ge9wGP9adtl4
-         E1vA==
+        d=linaro.org; s=google; t=1687435151; x=1690027151;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8gfvgZtBkZSYhAfc+yGsnMs5vDVoQLGwn02xQquywfI=;
+        b=A9Z5XrleFtxkeWPhM2xA/Z2/jXfRPUADuhZ/tkXK/G/ZKJw72GNOpeNhOdHHCoMN7/
+         8sZoXuz+4QjJVRNr9fXLXzjqh7EyIeN+f7smrzNreQTurrM7f9aREX9n7RCyKnekSnFG
+         FZsbixXXoNBT84hqoMwneqhkcDZIf0/yCLCm+EB1HYM+FBeLZHmAXHl9azBj8NgPbsMU
+         RtGQX4QfdEwNSieila3owtChaA5jfM0QvDTnWFYnDW2nVa8ejQmxtXSfQjShatwx0BKq
+         dgECufe67JL7zmv2a504Q+YPj29ymfRJnPl5AHp4jV4qSPqRyRVcHozjqdcK/1CQJCUD
+         5ngQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687435080; x=1690027080;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qd4+5bYIJSD1AWeQPTgthQXsn71VUDPalDNC260pIEQ=;
-        b=TbIiQHc2ldNxVHFq2M20OnuD8223d8/Svg8wdL3rjb8IZyA9FRDSBXqu82sB11Da5a
-         us2/6AJX/o3yj2wh1vOvwTTC+HnlbJxrGlEvwU9XxuEkG0QsnoF1ZZnele9apEsd1d0c
-         NAVhB5t3JLuGLZwc3Z6draYCI+kWarkvrhRXtLX4LK9XquZMgtHhfgoZketRuCz7QqyA
-         Y3BBVfCeJntwfAoyYuDW69oon937AiSN9vLCXTDzvUdBKxJ8QviUxmx9Re1i68e5BWOk
-         DHOfhd+5h3DeDxdHndhyb8xAhwRiBzpYY8xwMf5fDuY2iKP/CkCa5/THQUcXFtm55tEc
-         MAcw==
-X-Gm-Message-State: AC+VfDygb+QA1B69bKPAo0g27Nm3gAOBvax/B9O34KnQ10aXgNsrP5PG
-        Uk2QrhCXTLxmdpVwZ7pRo7ev4A==
-X-Google-Smtp-Source: ACHHUZ6mSwfTPRX+hOMQU4jgq9OD77Do6O2v/qGaMaDRKmBcy6Ihebui932eq6rSNRtrcEfrp5P2Cw==
-X-Received: by 2002:a05:6512:12d1:b0:4f7:65a7:4d94 with SMTP id p17-20020a05651212d100b004f765a74d94mr8080678lfg.7.1687435080447;
-        Thu, 22 Jun 2023 04:58:00 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687435151; x=1690027151;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8gfvgZtBkZSYhAfc+yGsnMs5vDVoQLGwn02xQquywfI=;
+        b=QZsTRBGMs4yMnVVrT1xg4ELceJU/4Lv7WSr+GcJYspe9cab0w2zy0gG5PVhHR7jc2I
+         Ua4tfxETR8ylGBFl7x/uDz5ZwR9epyf5lATfm27STnSfw+8SigRCuoEWsRCDfnvq0l7o
+         ncAKQEqsZhecpma4sm01SsVz41v862UjmlSZijDGO5lou4KYFL7AmARK5G2H52e6QiJj
+         u8rSb3g6VQUV7Bt4iE1vBOOseI2cQZypD8QJ85Kcu0UGzM63i0QPgcbuQSsxMgBH0Dg4
+         rpgEbVBVw95ADSKc8CX8xPd4nK54q1Mob10qyjjdZIr9Lni/cI+mXmPqUl40rkinmGd4
+         ZX0A==
+X-Gm-Message-State: AC+VfDygKcEsF9JPSVcZoWADW/HjHy6szIOTNY2QUP1d4u6BcxjjqYX8
+        b7D0HwPHkngZXTy/Ge376qAG8Jp3Dq3VP4LpWNY=
+X-Google-Smtp-Source: ACHHUZ4F1bF1UmUqlJE6VAJv5piLov6ByvxQd9nP8EQ0RxH3bU96LJw9NdAhvH0NxtD8GWthjv3OXg==
+X-Received: by 2002:a19:381b:0:b0:4f8:5713:4400 with SMTP id f27-20020a19381b000000b004f857134400mr9925242lfa.1.1687435151334;
+        Thu, 22 Jun 2023 04:59:11 -0700 (PDT)
 Received: from [192.168.1.101] (abyl165.neoplus.adsl.tpnet.pl. [83.9.31.165])
-        by smtp.gmail.com with ESMTPSA id eq21-20020a056512489500b004f4c3feb9fbsm1099235lfb.61.2023.06.22.04.57.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 04:58:00 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 22 Jun 2023 13:57:49 +0200
-Subject: [PATCH 9/9] arm64: dts: qcom: msm8998: Use the correct GPLL0_DIV
- leg for MMCC
+        by smtp.gmail.com with ESMTPSA id u22-20020ac24c36000000b004f857bdbb26sm1100686lfq.30.2023.06.22.04.59.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jun 2023 04:59:11 -0700 (PDT)
+Message-ID: <cd7564a3-8cd8-4535-07ee-60c1d2b0e321@linaro.org>
+Date:   Thu, 22 Jun 2023 13:59:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230622-topic-8998clk-v1-9-5b7a0d6e98b1@linaro.org>
-References: <20230622-topic-8998clk-v1-0-5b7a0d6e98b1@linaro.org>
-In-Reply-To: <20230622-topic-8998clk-v1-0-5b7a0d6e98b1@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 6/9] clk: qcom: gcc-msm8998: Don't check halt bit on some
+ branch clks
+Content-Language: en-US
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -71,18 +69,15 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <tdas@codeaurora.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687435067; l=1056;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=gJtjlM23H/np8JPlgrRMMzMMmFruemZY5INaIEO4+Kg=;
- b=ZOzGxwxyKdjB5CuoCZtPs1vOWhS12y7dZRhQ3MdXQ/4bwzI2xByM4FWZDx1OQatfW2recggXb
- 6Hy5kqKivQtDFlZuMQ0ki2sV22O+49Wdan7ocq1Q56hCZGjMNz5OB1y
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230622-topic-8998clk-v1-0-5b7a0d6e98b1@linaro.org>
+ <20230622-topic-8998clk-v1-6-5b7a0d6e98b1@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230622-topic-8998clk-v1-6-5b7a0d6e98b1@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,40 +86,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MMCC has its own GPLL0 legs - one for 1-1 and one for div-2 output.
-We've already been using the correct one in the non-div case, start
-doing so for the other one as well.
+On 22.06.2023 13:57, Konrad Dybcio wrote:
+> Some branch clocks are governed externally and we're only supposed to
+> send a request concerning their shutdown, not actually ensure it happens.
+> 
+> Use the BRANCH_HALT_SKIP define to skip checking the halt bit.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+Whoops. Again, right after hitting send, I noticed this one was already
+sent with 
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 74bd05579796..c4faba092368 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2718,7 +2718,8 @@ mmcc: clock-controller@c8c0000 {
- 				      "dsi1byte",
- 				      "hdmipll",
- 				      "dplink",
--				      "dpvco";
-+				      "dpvco",
-+				      "gpll0_div";
- 			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&gcc GCC_MMSS_GPLL0_CLK>,
- 				 <0>,
-@@ -2727,7 +2728,8 @@ mmcc: clock-controller@c8c0000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <0>;
-+				 <0>,
-+				 <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
- 		};
- 
- 		mmss_smmu: iommu@cd00000 {
-
--- 
-2.41.0
-
+https://lore.kernel.org/linux-arm-msm/20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org/
+>  drivers/clk/qcom/gcc-msm8998.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
+> index cccb19cae481..ef410f52f09f 100644
+> --- a/drivers/clk/qcom/gcc-msm8998.c
+> +++ b/drivers/clk/qcom/gcc-msm8998.c
+> @@ -2112,7 +2112,7 @@ static struct clk_branch gcc_gp3_clk = {
+>  
+>  static struct clk_branch gcc_bimc_gfx_clk = {
+>  	.halt_reg = 0x46040,
+> -	.halt_check = BRANCH_HALT,
+> +	.halt_check = BRANCH_HALT_SKIP,
+>  	.clkr = {
+>  		.enable_reg = 0x46040,
+>  		.enable_mask = BIT(0),
+> @@ -2125,7 +2125,7 @@ static struct clk_branch gcc_bimc_gfx_clk = {
+>  
+>  static struct clk_branch gcc_gpu_bimc_gfx_clk = {
+>  	.halt_reg = 0x71010,
+> -	.halt_check = BRANCH_HALT,
+> +	.halt_check = BRANCH_HALT_SKIP,
+>  	.clkr = {
+>  		.enable_reg = 0x71010,
+>  		.enable_mask = BIT(0),
+> @@ -2151,7 +2151,7 @@ static struct clk_branch gcc_gpu_bimc_gfx_src_clk = {
+>  
+>  static struct clk_branch gcc_gpu_cfg_ahb_clk = {
+>  	.halt_reg = 0x71004,
+> -	.halt_check = BRANCH_HALT,
+> +	.halt_check = BRANCH_HALT_SKIP,
+>  	.clkr = {
+>  		.enable_reg = 0x71004,
+>  		.enable_mask = BIT(0),
+> 
