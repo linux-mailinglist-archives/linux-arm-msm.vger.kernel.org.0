@@ -2,98 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B64CC73A4F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 17:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62A1F73A56C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 17:56:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232589AbjFVP3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 11:29:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58676 "EHLO
+        id S231679AbjFVP4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 11:56:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232604AbjFVP2R (ORCPT
+        with ESMTP id S231151AbjFVP4U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 11:28:17 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BE042118;
-        Thu, 22 Jun 2023 08:27:32 -0700 (PDT)
-Received: from [IPV6:2a01:e0a:120:3210:7d72:676c:e745:a6ef] (unknown [IPv6:2a01:e0a:120:3210:7d72:676c:e745:a6ef])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 9F2486606EDE;
-        Thu, 22 Jun 2023 16:27:25 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1687447646;
-        bh=Yz+NRZOehOEU34hZagSNPjsgeqyatJPhUhG6wIg2Iio=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=V8Imr1qeQyMMtuQ6blSrhADA3yYPLUM83j3zTux9jWDQffVzlaZrPfjWcPSu8Hk3e
-         CjET/duybztDC6v97V7rZ+VUhyRSgRjOi9iIjQj5YQMFoiKN6MnVxQNlvAJy1MHQLH
-         n50qvwtAv2LD4c0FuoMOImVHMOMPZPnfWcGTU0rtmzhFQVdwdTEUjE93x7NkYKmBAV
-         9qZMTQKrDqEXE1dUmcVQqVHOVnpXADp4k8NwGkLsRg8ZpcITM/OPJAPhCjJWu9K/d6
-         XHkwcQZNRn0FF3f1bPBSQBshUdzZvevH7svbFJEKCEGB/xdZfPpm3K20Udcz5bQw4r
-         wXEDVkApYNnqw==
-Message-ID: <6798cc82-d5dc-5603-7e7e-57ce09c09d24@collabora.com>
-Date:   Thu, 22 Jun 2023 17:27:23 +0200
+        Thu, 22 Jun 2023 11:56:20 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F341010F8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:56:18 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b47bfd4e45so67618951fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:56:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687449377; x=1690041377;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=znbfd2xCee88YdgNKMrXKidpIDwcYeqJYjkjML37kUs=;
+        b=Jl8sA2H2N6xEpPLAfJMdYne8O1GMT4DQAz0HuYpnztSZ6AH6yA5TfBNpzEZMeoiWU+
+         IF7bD2inU3xfOGuN/5AdzPyI3BkcSEaEpkm/INLIM5Nhpp4SmRnU9ibfVyxtmvkK4DHI
+         9nDHf8ejOhPbN2F2paMPK5DqM6WUEhW4I4Rf3xUfRtZmTn2pwQHlK5oiemdH0IyjW+uO
+         EI2LGQNwdBr59DfPAW2VP7clT9ESNnSRMlK8V/hnjeckuYlWaEsaQ7FFmVybYR1gidpl
+         Ds0ISDWFWN6qbp0zU+wlKhGE2wfSSVWYhyxkVDr5SBgWCskIX0+5H2Zl8c5fgYGS/oej
+         8/5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687449377; x=1690041377;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=znbfd2xCee88YdgNKMrXKidpIDwcYeqJYjkjML37kUs=;
+        b=k7nuHbCGf/Jy7mwi9LShqeVY+UJDaK7jqV21fKpJyzUMCw9Tp2QWLEW3tJAuKu84hQ
+         nSYL+8JSHgewme+XtGT9XwHpRM3GDUTJ7/q1D+hXVtQ/uyDwezeNrOfnvMMJ8DDiFwcq
+         6HALEseKzLIVmtH1BEyPDJdwHObA+j8w2nf07goFgt7ntuWH9kZ7PDDgS4FiVo3DI8pf
+         gzAFKEUM2Xn8ic95PW1ezLNOqOqK6yBamG5IvRFTszz0aH/SZk6IMbfE1LCFcvwJPvUr
+         YteNLNtMzp0DHl3db3e9J8Ea9PBg+pdr1QEaGl3N95YPFa8g0J9nHLOziEFqo9cpLc3r
+         Lqkg==
+X-Gm-Message-State: AC+VfDyM/H7NdInexS0aE1P/rDQEfcRtE0+4h/2cNdxutRtrpa0L7u8g
+        SAytFHuOEW+kfd+o5RkCKjJB28ePWbhQIALN6AU=
+X-Google-Smtp-Source: ACHHUZ7gHI3Ym/l712eWpcpACbY1KSyeARpNpHP8ldZLdPbWsB+/WgRnC5YmBCjkAvtI/ELEya3mdw==
+X-Received: by 2002:a19:6409:0:b0:4f8:7781:9875 with SMTP id y9-20020a196409000000b004f877819875mr7130473lfb.60.1687449377155;
+        Thu, 22 Jun 2023 08:56:17 -0700 (PDT)
+Received: from [192.168.1.101] (abyl165.neoplus.adsl.tpnet.pl. [83.9.31.165])
+        by smtp.gmail.com with ESMTPSA id h25-20020ac25979000000b004f8747e519bsm1146876lfp.125.2023.06.22.08.56.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jun 2023 08:56:16 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] Hook up 8280 SCM icc
+Date:   Thu, 22 Jun 2023 17:56:14 +0200
+Message-Id: <20230622-topic-8280scmicc-v1-0-6ef318919ea5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 08/11] media: verisilicon: postproc: Fix down scale
- test
-Content-Language: en-US
-To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
- <20230622131349.144160-9-benjamin.gaignard@collabora.com>
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-In-Reply-To: <20230622131349.144160-9-benjamin.gaignard@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAB9vlGQC/x2NQQqDQAwAvyI5N7BGWGy/UjzsxlgDdpVNWwTx7
+ 4YeZ2CYA0yqisGjOaDKT03X4tDeGuA5lZegjs5AgboQifCzbsrYUx+M38qMEtN0JyGKOYNnOZl
+ grqnw7GH5LovLrcqk+//zHM7zAu5xIzh3AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687449375; l=614;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=7gsI8qHufrl5sqmyv5QgxVvJHPbBfQ5Kso3+5N5mNaM=;
+ b=Bcsu9pilCwH0a3I2Nr3hjwd1RSTN+HlTKMB36UxuS2pey+DxFOYwuDNg8XDsh3I0kY76ASFGs
+ upHy0Ldh9usC9gIvzDemR+rI7FH99U9VPAakSBan3XNz5S2qjAVgfwW
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The icc handle for SCM was missing on 8280. Add it.
 
-Le 22/06/2023 à 15:13, Benjamin Gaignard a écrit :
-> Do not allow down scaling if the source buffer resolution is
-> smaller than destination one.
->
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->   drivers/media/platform/verisilicon/hantro_postproc.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
-> index a6b67d0cc66c..a4f2c5e8932c 100644
-> --- a/drivers/media/platform/verisilicon/hantro_postproc.c
-> +++ b/drivers/media/platform/verisilicon/hantro_postproc.c
-> @@ -103,7 +103,10 @@ static void hantro_postproc_g1_enable(struct hantro_ctx *ctx)
->   
->   static int down_scale_factor(struct hantro_ctx *ctx)
->   {
-> -	if (ctx->src_fmt.width == ctx->dst_fmt.width)
-> +	if (ctx->src_fmt.width <= ctx->dst_fmt.width)
-> +		return 0;
-> +
-> +	if (ctx->src_fmt.height <= ctx->dst_fmt.height)
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: firmware: qcom,scm: Allow interconnect on SC8280XP
+      arm64: dts: qcom: sc8280xp: Add missing SCM interconnect
 
-One test will be enough.
-I will fix that in v4.
+ Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi                   | 1 +
+ 2 files changed, 2 insertions(+)
+---
+base-commit: c87d46a9e8ebd2f2c3960927b1d21687096d1109
+change-id: 20230622-topic-8280scmicc-e6af92e226bb
 
-Benjamin
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
->   		return 0;
->   
->   	return DIV_ROUND_CLOSEST(ctx->src_fmt.width, ctx->dst_fmt.width);
