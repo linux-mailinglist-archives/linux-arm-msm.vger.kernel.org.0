@@ -2,82 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9000C739752
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 08:22:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4BE0739773
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 08:26:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230143AbjFVGWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 02:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45206 "EHLO
+        id S229746AbjFVG0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 02:26:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229985AbjFVGWv (ORCPT
+        with ESMTP id S229437AbjFVG0Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 02:22:51 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D30199F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 23:22:49 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f8fb0e7709so66491585e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 23:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687414968; x=1690006968;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gmobDT7+8aP4aCITE+/y9FPE9+vYWQGY04+aUMJ3l7w=;
-        b=lID62h52Vg7jFEFKKGfYC1kkLFKjhrmEaN54va3c25gVRp2g2G2LKNjA5jU36CP/FM
-         EfbeCTtZ0jFAIPb6YIKzWuxc33dMDC068Dmdje4pOUrNa7RqiaHdJfceWAyu39ky3b2/
-         uhu0yXSogwt0krlQbGwRiKptmJh4XVy+BBwM3VTBzHNPY1zThzMoLOrBPEuxLJEbxf1c
-         KBd6X7MCFiXtbd9mkazy+H7pM+4XzNNsn7eY0hsEg/x+pvQHa2UiV3euzouZ3GLf8vZ/
-         uLCU1BqXhm6agprvaXHTCgJi7jzqht+Oyrm2KKpiYG6R4s/XRKsqWcU8PyHDfHRWY2rg
-         VNXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687414968; x=1690006968;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gmobDT7+8aP4aCITE+/y9FPE9+vYWQGY04+aUMJ3l7w=;
-        b=BqImCKHZoOKMA57rPw+N+/6gol87xl7AqnWllZxCXU0oHdi8j0ONLNlTyKzog7xdyA
-         666QVqfAo54s6X6UmbMwXJ5H19WdQl9Au6x5B2GJiNhfp0myxCVtHRm6fyF16uRPC5cn
-         3esj0KCo21eS8ijqRmmxE3QOJxerhnMrMSOTJFLSqT0jE1ZAMFk80jf8ueYkkrwWh4KN
-         6zepO5a6wMa8ILBxl/+AsBzl3Yt5R55tQYDTD7RiTuVBnPBkxptloqt1AGvT0km4LTHV
-         A7dsPR0Hcsu+sb/on0UVHv46gLqVcnAv4hotT5TRkS4Kx9XY/xjo3QDbwF8q5T880Soh
-         KcdA==
-X-Gm-Message-State: AC+VfDyAQUwvEYzDOBggR1Viqq3JqliTjBOtEkWhXBzS+TKauR0jQ7ON
-        kSIhws1aQr+4IElOcSND3W3t6A==
-X-Google-Smtp-Source: ACHHUZ6+nD3/452NS4FRuKF9FIbtua9FwfR8JwTgiR4FpTZ6V0c9K02Q1pSxdZdLn4/hpcjiNbVA3g==
-X-Received: by 2002:a1c:7211:0:b0:3f9:206:c3a6 with SMTP id n17-20020a1c7211000000b003f90206c3a6mr12041497wmc.20.1687414967617;
-        Wed, 21 Jun 2023 23:22:47 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id b8-20020adff248000000b003063772a55bsm6183782wrp.61.2023.06.21.23.22.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jun 2023 23:22:46 -0700 (PDT)
-Message-ID: <5e381133-969f-943a-a7a1-1243d7b105b2@linaro.org>
-Date:   Thu, 22 Jun 2023 08:22:44 +0200
+        Thu, 22 Jun 2023 02:26:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0C82113;
+        Wed, 21 Jun 2023 23:26:06 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35M5NAEv023583;
+        Thu, 22 Jun 2023 06:26:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=P2EFfgzAdwxr3yzoWV40orFUBW1EY4sDEyJi3axqpGA=;
+ b=abN4PlihoiHqgyppEmlIgsg0cFu6m6aWCSecEAI+EwBku/u66UUrV+HHGmmyA9rwIcGv
+ I18smzV3l6O/L/RnJTGZgtjZv+C3xdVu/MwhlX50HrA5uNvDovd9banPZHLLNMNU51m3
+ lh5sKA3ai4WTKxlu1b2guniAKLIFH+vJs+EVdXp6AM7gkaQPWC4J03ku1pEFJN/SibJh
+ p/r4IUOPZ66H02l8E88xNqKg6AygKuEZL+ULH7ykwpqF/ukDXXG6x1P1pJGyWBSxa3QI
+ JPad3Ii/7LI+xFAQeK2BB/RkhIsMh8o0yziO3w5XxJrJL8jYfn9/wxQcPEypHaYgWgng Ig== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbykdj4df-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 22 Jun 2023 06:26:02 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35M6Q1Fd018528
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 22 Jun 2023 06:26:01 GMT
+Received: from [10.216.5.133] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 21 Jun
+ 2023 23:25:57 -0700
+Message-ID: <d05c7b0e-6edb-bc0f-5875-fc5cb8ea6b8a@quicinc.com>
+Date:   Thu, 22 Jun 2023 11:55:49 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdm630: Add support for modem
- remoteproc
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Use assigned-clock-rates for
+ QUP I2C core clks
 Content-Language: en-US
-To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230621175046.61521-1-alexeymin@postmarketos.org>
- <20230621175046.61521-3-alexeymin@postmarketos.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230621175046.61521-3-alexeymin@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
+References: <20230615084841.12375-1-quic_devipriy@quicinc.com>
+ <1ab63d4b-6358-ce08-818a-b5751f88cdde@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <1ab63d4b-6358-ce08-818a-b5751f88cdde@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oE3WsmWfn0CAE7z63tYq6MBVeoNZ4Tt0
+X-Proofpoint-GUID: oE3WsmWfn0CAE7z63tYq6MBVeoNZ4Tt0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-22_03,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 clxscore=1015 mlxlogscore=858 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306220053
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,37 +85,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/06/2023 19:50, Alexey Minnekhanov wrote:
-> Modem subsystem in SDM630/660 is similar to MSM8998 and
-> device tree node for it is based on the one from msm8998.dtsi.
+
+
+On 6/15/2023 2:21 PM, Konrad Dybcio wrote:
+> On 15.06.2023 10:48, Devi Priya wrote:
+>> Use assigned-clock-rates property for configuring the QUP I2C core clocks
+>> to operate at nominal frequency.
+>>
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> ---
+> There's probably some logic behind this, and it almost sounds like
+> it'd be fitting to introduce an OPP table for I2C hosts, especially
+> given the voltage requirements.
 > 
-> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm630.dtsi | 65 ++++++++++++++++++++++++++++
->  1 file changed, 65 insertions(+)
-> 
+> Konrad
+The qup i2c core clocks are not scalable and operate at fixed frequency.
+The assigned-clock-rates are used to configure the clock frequency
+if it is not done by the bootloaders.
 
-...
-> +
-> +			qcom,halt-regs = <&tcsr_regs_1 0x3000 0x5000 0x4000>;
-> +
-> +			power-domains = <&rpmpd SDM660_VDDCX>,
-> +					<&rpmpd SDM660_VDDMX>;
-> +			power-domain-names = "cx", "mx";
-> +
-> +			status = "disabled";
-> +
-> +			mba {
-> +				memory-region = <&mba_region>;
-> +			};
-> +
-> +			mpss {
-> +				memory-region = <&mpss_region>;
-> +			};
-
-mba and mpss are deprecated. I think this was changed to memory-regions
-in remoteproc node.
-
-Best regards,
-Krzysztof
-
+Thanks,
+Devi Priya
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> index 0baeb10bbdae..78bf7f9c455a 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> @@ -361,6 +361,8 @@
+>>   			clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>,
+>>   				 <&gcc GCC_BLSP1_AHB_CLK>;
+>>   			clock-names = "core", "iface";
+>> +			assigned-clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>;
+>> +			assigned-clock-rates = <50000000>;
+>>   			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
+>>   			dma-names = "tx", "rx";
+>>   			status = "disabled";
+>> @@ -389,6 +391,8 @@
+>>   			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
+>>   				 <&gcc GCC_BLSP1_AHB_CLK>;
+>>   			clock-names = "core", "iface";
+>> +			assigned-clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>;
+>> +			assigned-clock-rates = <50000000>;
+>>   			dmas = <&blsp_dma 16>, <&blsp_dma 17>;
+>>   			dma-names = "tx", "rx";
+>>   			status = "disabled";
+>> @@ -417,6 +421,8 @@
+>>   			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
+>>   				 <&gcc GCC_BLSP1_AHB_CLK>;
+>>   			clock-names = "core", "iface";
+>> +			assigned-clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>;
+>> +			assigned-clock-rates = <50000000>;
+>>   			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
+>>   			dma-names = "tx", "rx";
+>>   			status = "disabled";
+>> @@ -446,6 +452,8 @@
+>>   			clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>,
+>>   				 <&gcc GCC_BLSP1_AHB_CLK>;
+>>   			clock-names = "core", "iface";
+>> +			assigned-clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>;
+>> +			assigned-clock-rates = <50000000>;
+>>   			dmas = <&blsp_dma 20>, <&blsp_dma 21>;
+>>   			dma-names = "tx", "rx";
+>>   			status = "disabled";
