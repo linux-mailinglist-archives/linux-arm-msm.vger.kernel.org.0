@@ -2,59 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 325FC73959D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 04:53:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E446573966E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 06:39:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229717AbjFVCxw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 22:53:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45106 "EHLO
+        id S230451AbjFVEjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 00:39:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjFVCxv (ORCPT
+        with ESMTP id S229694AbjFVEjj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 22:53:51 -0400
+        Thu, 22 Jun 2023 00:39:39 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4662C6;
-        Wed, 21 Jun 2023 19:53:49 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35M2aBNT007094;
-        Thu, 22 Jun 2023 02:53:44 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B280EE69;
+        Wed, 21 Jun 2023 21:39:38 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35M3rpGN000655;
+        Thu, 22 Jun 2023 04:39:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ldYepX8jKIyJFGSxDPjdZyCIZll72alhZGIxLxkAGN0=;
- b=Iszjj0wbM6up4z2W3al4IScBR8Ogpl54vi0EZxwnJK7MaHtUa3xTQ4D+GE6LZ2BziDfp
- KHK8CNaPJ/MdhtQaMPvIIzBTS0dDvXQ7ocKhQq9GLRhfdwKzDfbhM9Nzd1VXDx3HNoai
- f2lhd7jZq5rdWcLIzCxK8mJozlzM1aZO7pXK+N2o3fxrlAVYEI4YoTl+MeQvBKpg1kNG
- qmrKk0aKfDXlocqQtOtqx6EjTwMetzh+wZ6WAD3Xddal6dUDNqQl/accMh8oikTOBcGs
- cWIBL6i97QLlP2HW3byta+Jp9o3VLu+jMwh0TJYQ28lDQA3s8JhWA28GKK7CUOzlO1WX CQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbvr1j8hn-1
+ bh=b3QY04BaXwdxDByWW6IPZPiZMwPBhZgi2RIteR6pKGQ=;
+ b=B6nso4tg9DmX7jyXWouafFaVpAEiIY2tdnU+3G5xsWjW3PeB26xFPXkLLrCC1bdxB1Gl
+ /93vpMZW3lcuIGHKLS+Wp9zisRDaXWesWpEZfSUzAq8kj4TbpuFmOcUsiPqZb/9XFRBc
+ v8kN3nQnLOPlhpW9vao8MDvuvtlY9ALvgXSdvOMv5doMwnhOAKGHneX4gMVb9rTOo8xm
+ QFx320XvRmxDNypu2uf7TfhQMs4xoM12qKploqQU7xjQF+S813ZWTWTMVr1jI6K/JvKj
+ cOGcThqo2lvZ8HsD4pUwQPQpASjqRSqZyBN2psXAn5R2nd8UwDAX4fI7OEy/ob34x/gH tw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbqjbaxfe-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 02:53:43 +0000
+        Thu, 22 Jun 2023 04:39:23 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35M2rgMo024703
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35M4dL2n000851
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 02:53:42 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Thu, 22 Jun 2023 04:39:21 GMT
+Received: from [10.216.6.225] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 21 Jun
- 2023 19:53:41 -0700
-Message-ID: <26a1858f-d428-a2ac-9ddd-115ba2d8becc@quicinc.com>
-Date:   Wed, 21 Jun 2023 20:53:41 -0600
+ 2023 21:39:16 -0700
+Message-ID: <3f9957ad-cc73-2a4b-f11c-98b0b79f829c@quicinc.com>
+Date:   Thu, 22 Jun 2023 10:09:13 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 0/5] accel/qaic: Improve bounds checking in encode/decode
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
+ for qcom wrapper
+To:     Johan Hovold <johan@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "quic_pkondeti@quicinc.com" <quic_pkondeti@quicinc.com>,
+        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
+        "quic_wcheng@quicinc.com" <quic_wcheng@quicinc.com>,
+        "quic_jackp@quicinc.com" <quic_jackp@quicinc.com>,
+        "quic_harshq@quicinc.com" <quic_harshq@quicinc.com>,
+        "ahalaney@redhat.com" <ahalaney@redhat.com>
+References: <82553597-ce0e-48f4-44d4-9eeaaf4cb1c4@quicinc.com>
+ <ZIBsDQJtgDZRe7MG@hovoldconsulting.com>
+ <99cded6f-6a71-ffce-8479-c7c0726bfb8e@quicinc.com>
+ <ZIGihYS5EacISEFm@hovoldconsulting.com>
+ <279fff8b-57e2-cfc8-cd6d-c69d00e71799@quicinc.com>
+ <20230608175705.2ajrteztdeqdrkzg@synopsys.com>
+ <ZILgW5CwfSlBxzNB@hovoldconsulting.com>
+ <20230609181602.ljxdchgzl7kzk73n@synopsys.com>
+ <acd46bb7-0708-d095-c3c6-53653f9e47d6@quicinc.com>
+ <20230615210800.lvmekpvxjiszkrh4@synopsys.com>
+ <ZJKo3LyIMD1xr2ru@hovoldconsulting.com>
 Content-Language: en-US
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-CC:     Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <kernel-janitors@vger.kernel.org>
-References: <af83549b-ccb4-4a8d-b036-9359eba9d39f@moroto.mountain>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <af83549b-ccb4-4a8d-b036-9359eba9d39f@moroto.mountain>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZJKo3LyIMD1xr2ru@hovoldconsulting.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -62,16 +87,16 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7dnmcz4J2lFzqWFWEc99eA77B2y3-OI8
-X-Proofpoint-ORIG-GUID: 7dnmcz4J2lFzqWFWEc99eA77B2y3-OI8
+X-Proofpoint-ORIG-GUID: E9IEAhF4tL47Moo3iCf2rcMMLYffulG6
+X-Proofpoint-GUID: E9IEAhF4tL47Moo3iCf2rcMMLYffulG6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-21_14,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- mlxlogscore=864 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- impostorscore=0 phishscore=0 mlxscore=0 bulkscore=0 malwarescore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306220021
+ definitions=2023-06-22_02,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ phishscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=659
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306220036
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -82,55 +107,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/21/2023 1:21 AM, Dan Carpenter wrote:
-> (I think this is the first cover letter I have ever written).
+
+
+On 6/21/2023 1:08 PM, Johan Hovold wrote:
+> On Thu, Jun 15, 2023 at 09:08:01PM +0000, Thinh Nguyen wrote:
+>> On Thu, Jun 15, 2023, Krishna Kurapati PSSNV wrote:
 > 
-> These patches are based on review and not from testing.
-
-Thank you for your review.  I look forward to reading your patches and 
-learning from them.
-
-Did you use any kind of tooling?  If there is something we can add to 
-our flow to bring up the quality, I would like to consider it.
-
-Tooling or no, the control path is not a trivial part of the driver to 
-dip your toes in, and it seems like you really dug deep.  I find that 
-impressive.
-
-> I found it quite complicated to track the buffer sizes.  What happens
-> is the qaic_manage() gets a buffer user_msg->data[] which has
-> user_msg->len bytes.  The qaic_manage() calls qaic_manage_msg_xfer()
-> which encodes the user's message.
+>>>   How about we add compatible data indicating the number of usb2/usb3 ports.
+>>> That way we needn't parse the DT or read xhci registers atleast as a
+>>> temporary solution to unblock other patches. Once this series is merged, we
+>>> can get back to fixing the port count calculation. Does it seem fine ?
+>>>
+>>
+>> Temporary solution should not involve DT as it's not easily reverted or
+>> changed. Just include xhci-ext-caps.h and use the inline function. I
+>> think Johan is fine with that. If not, he can provide more feedback.
 > 
-> Then we get a response and we decode the response back into
-> user_msg->data[], but we don't check that it is overflowed.  We instead
-> copy seem to check against msg_hdr_len (which would prevent a read
-> overflow).  At the end user_msg->len gets set to the number of bytes
-> that we copied to the buffer.
+> Yes, I already suggested that as a quick way forward since it is already
+> used this way by the xhci debug driver.
 > 
-> I'm coming to this code brand new, it's the first time I have seen it.
-> So I don't really understand.  There is an element of trust in
-> msg_hdr_len but then at other times we check it for integer overflows
-> which indicates deep distrust.
+> Johan
 
-Overall, we are taking a message from userspace and transforming it into 
-something the firmware on the device can consume.  Then we get a 
-response back from the firmware, and transform that back into something 
-userspace can consume.  From the driver perspective, neither the 
-firmware nor userspace is really trusted.  msg_hdr_len is something that 
-the driver calculates and maintains, but is updated with untrusted values.
+Hi Johan, Thinh,
 
-I can see where that could be confusing.  I look forward to looking at 
-what you've found, and hopefully making the code better.
+  Pushed a v9 following the above suggestion.
 
-> What I'm saying is that there may be more issues in this code.  But also
-> that I don't really understand it so please review carefully.
-> 
-> The patch that I'm least sure of is 4/5:
-> 
-> [PATCH 4/5] accel/qaic: move and expand integer overflow checks for
->   map_user_pages()
-> 
-> regards,
-> dan carpenter
-
+Thanks,
+Krishna,
