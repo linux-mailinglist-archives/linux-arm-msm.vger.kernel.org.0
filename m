@@ -2,31 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07E2F7399EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 10:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17CE47399E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 10:35:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbjFVIf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230364AbjFVIf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 22 Jun 2023 04:35:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52592 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230315AbjFVIfZ (ORCPT
+        with ESMTP id S230267AbjFVIfZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 22 Jun 2023 04:35:25 -0400
-X-Greylist: delayed 563 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 22 Jun 2023 01:35:20 PDT
-Received: from out-48.mta0.migadu.com (out-48.mta0.migadu.com [91.218.175.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004DD1BD9
+Received: from out-43.mta0.migadu.com (out-43.mta0.migadu.com [91.218.175.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ED84EA
         for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 01:35:20 -0700 (PDT)
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-        t=1687422370;
+        t=1687422388;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=w53NcBmn/IPVgjrXh3hKsvtsk7tDad26SsdH585QToY=;
-        b=XwhMjboYkO1IjigA7jJUMcuvrlsYL6AEdKhP6EAdQek7nGl7SCwZP+s1KaXaDd0EbpkijC
-        WzHmsAAL7fH0Q68pqE9kbEs/wm6WDN8VuTFUTe+F4YIjoGCH/bDYiJlTs6zAXz5aY/DcIU
-        qOKI3csGnCUAw3UqbPNbuNVS2tXOJrg=
+        bh=oQpOCkSVz0jjdFm4oEP2NJJ+zKFOVCxqbVN/b6qKeiM=;
+        b=Vou+QBcBsFfrycM2PkKySs/6vc7t4z2y+ESRPtdGGBu1nh2ELX2n3XwLyStu2J7FwIsey0
+        GRSdEt3Uk6O3X+qjfRuw6k2zIEyamPbwTm+TOHkS5CEaR6KvBgQJdhpJF9uZHGex1bKqla
+        yWmLNi3h067slmAnbRZ3GfDMps2hTHE=
 From:   Qi Zheng <qi.zheng@linux.dev>
 To:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
         vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
@@ -53,9 +52,9 @@ Cc:     airlied@gmail.com, daniel@ffwll.ch, robdclark@gmail.com,
         linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
         linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
         linux-btrfs@vger.kernel.org, Qi Zheng <zhengqi.arch@bytedance.com>
-Subject: [PATCH 01/29] mm: shrinker: add shrinker::private_data field
-Date:   Thu, 22 Jun 2023 08:24:26 +0000
-Message-Id: <20230622082454.4090236-2-qi.zheng@linux.dev>
+Subject: [PATCH 02/29] mm: vmscan: introduce some helpers for dynamically allocating shrinker
+Date:   Thu, 22 Jun 2023 08:24:27 +0000
+Message-Id: <20230622082454.4090236-3-qi.zheng@linux.dev>
 In-Reply-To: <20230622082454.4090236-1-qi.zheng@linux.dev>
 References: <20230622082454.4090236-1-qi.zheng@linux.dev>
 MIME-Version: 1.0
@@ -73,29 +72,100 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-To prepare for the dynamic allocation of shrinker instances
-embedded in other structures, add a private_data field to
-struct shrinker, so that we can use shrinker::private_data
-to record and get the original embedded structure.
+Introduce some helpers for dynamically allocating shrinker instance,
+and their uses are as follows:
+
+1. shrinker_alloc_and_init()
+
+Used to allocate and initialize a shrinker instance, the priv_data
+parameter is used to pass the pointer of the previously embedded
+structure of the shrinker instance.
+
+2. shrinker_free()
+
+Used to free the shrinker instance when the registration of shrinker
+fails.
+
+3. unregister_and_free_shrinker()
+
+Used to unregister and free the shrinker instance, and the kfree()
+will be changed to kfree_rcu() later.
 
 Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
 ---
- include/linux/shrinker.h | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/shrinker.h | 12 ++++++++++++
+ mm/vmscan.c              | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
 diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
-index 224293b2dd06..43e6fcabbf51 100644
+index 43e6fcabbf51..8e9ba6fa3fcc 100644
 --- a/include/linux/shrinker.h
 +++ b/include/linux/shrinker.h
-@@ -70,6 +70,8 @@ struct shrinker {
- 	int seeks;	/* seeks to recreate an obj */
- 	unsigned flags;
+@@ -107,6 +107,18 @@ extern void unregister_shrinker(struct shrinker *shrinker);
+ extern void free_prealloced_shrinker(struct shrinker *shrinker);
+ extern void synchronize_shrinkers(void);
  
-+	void *private_data;
++typedef unsigned long (*count_objects_cb)(struct shrinker *s,
++					  struct shrink_control *sc);
++typedef unsigned long (*scan_objects_cb)(struct shrinker *s,
++					 struct shrink_control *sc);
 +
- 	/* These are for internal use */
- 	struct list_head list;
- #ifdef CONFIG_MEMCG
++struct shrinker *shrinker_alloc_and_init(count_objects_cb count,
++					 scan_objects_cb scan, long batch,
++					 int seeks, unsigned flags,
++					 void *priv_data);
++void shrinker_free(struct shrinker *shrinker);
++void unregister_and_free_shrinker(struct shrinker *shrinker);
++
+ #ifdef CONFIG_SHRINKER_DEBUG
+ extern int shrinker_debugfs_add(struct shrinker *shrinker);
+ extern struct dentry *shrinker_debugfs_detach(struct shrinker *shrinker,
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 45d17c7cc555..64ff598fbad9 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -809,6 +809,41 @@ void unregister_shrinker(struct shrinker *shrinker)
+ }
+ EXPORT_SYMBOL(unregister_shrinker);
+ 
++struct shrinker *shrinker_alloc_and_init(count_objects_cb count,
++					 scan_objects_cb scan, long batch,
++					 int seeks, unsigned flags,
++					 void *priv_data)
++{
++	struct shrinker *shrinker;
++
++	shrinker = kzalloc(sizeof(struct shrinker), GFP_KERNEL);
++	if (!shrinker)
++		return NULL;
++
++	shrinker->count_objects = count;
++	shrinker->scan_objects = scan;
++	shrinker->batch = batch;
++	shrinker->seeks = seeks;
++	shrinker->flags = flags;
++	shrinker->private_data = priv_data;
++
++	return shrinker;
++}
++EXPORT_SYMBOL(shrinker_alloc_and_init);
++
++void shrinker_free(struct shrinker *shrinker)
++{
++	kfree(shrinker);
++}
++EXPORT_SYMBOL(shrinker_free);
++
++void unregister_and_free_shrinker(struct shrinker *shrinker)
++{
++	unregister_shrinker(shrinker);
++	kfree(shrinker);
++}
++EXPORT_SYMBOL(unregister_and_free_shrinker);
++
+ /**
+  * synchronize_shrinkers - Wait for all running shrinkers to complete.
+  *
 -- 
 2.30.2
 
