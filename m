@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B51CA73A56D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 17:56:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EB0E73A570
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 17:56:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231151AbjFVP4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 11:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43592 "EHLO
+        id S231578AbjFVP4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 11:56:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231623AbjFVP4V (ORCPT
+        with ESMTP id S231755AbjFVP4X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 11:56:21 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB9719A6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:56:20 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so9981703e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:56:20 -0700 (PDT)
+        Thu, 22 Jun 2023 11:56:23 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7ED10F8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:56:21 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f866a3d8e4so8210569e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 08:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687449378; x=1690041378;
+        d=linaro.org; s=google; t=1687449380; x=1690041380;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PZz1MWlumgnM+wp0QVxppezVNb3Fgjy59UxeRVaXANg=;
-        b=AwB2HaENuJfOEm7Alo7cv/DJb+7nWVsLnFkWeNpkUJ0qfFMEAGLEwKkBIw8CBUsqh5
-         2y8jQ/gSlNbmKV+2Ua1HNgZwpXtYV9k9dKiMsbC8kdu4bnJm03ESeVGgBLVMiNpzVAqj
-         hSw1hjtcJ1qGHzG5BGwhIK3cz6XS8s9i9Elg1aHoDL3bU2mDM2tuVtYhta/SryjjiDNr
-         A1yHMui6vSryO9y8HKCbw9JlOatShHc/oxkCrXbG74gm8AkhbPXAwrvVjGGwb4GCV29E
-         kL8279XUjoX+tOkIe4xC4YFPW0WpfYiEn4/OLJYiqdfSReKZQchT7oTZoi+71VVusB42
-         diUw==
+        bh=bVNrmV62YGYAQclYMSUvX/eEvXhGpa0L72Uy0QPgV9s=;
+        b=BzVSalBJO+Ok0bneB2AbcR9n2rGZ0Sm2D88rJqBgvzTAfgKlFlc2bYTTTefvfUFq0k
+         vmTSqz+3to603Mg6XqQafFXZ54QTAFMOQXroRcm2weX+xKYI0y/VR0nmzBOp1RwlfgM0
+         WmAXL8VAtQ4/lBN2ZgMmGW2eCOZ/DgITv7y3/kXpLUt+f+W5CADIl6HIavAn14cbnn1G
+         +H3oYCexGn2MxsrLNgCrkSJOaWbhLC+b2p0iQDsFEgptlQiCOLOc26+9SB13uIeoePrZ
+         iQ8vdWhKMKsDSntfQyvfK2oZ7jPOx4sdnn9NfRbWIXmU4uRrDAt1XEqN1X/4m248c+i+
+         lU6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687449378; x=1690041378;
+        d=1e100.net; s=20221208; t=1687449380; x=1690041380;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PZz1MWlumgnM+wp0QVxppezVNb3Fgjy59UxeRVaXANg=;
-        b=S71S+S2RgTcTM/QU66eaHPF0RIDskFi2g0pavejDYYq1CTvIiOKcttc61laWpB1rtC
-         DeIKbp+oMsF8nGgwm6va9DsXx4HLAPxLcJ5cM+ryy4/AvL2GnAqcAVfyCtGW/R/j1HVE
-         G61QusJ+X4flU47VBKEbDVof8HUnqmYEk5733e2e1qGHoN7gHVlsLD7notTQYOhSE3O1
-         21XNjI+ocxZoHTC5tHH2N9jccRVADej5+oL1oPGsGR7ZXR1dp/UkD/Kg2wmXzugDmDoN
-         7m/K4QAPMLwaCuo4iojLSH7OMfYyksYJEgiD0cK+gtpAo9vqSIp8yh2oaHrMGSqClorT
-         cYeg==
-X-Gm-Message-State: AC+VfDz7vfTEX+oG/d6dGE0rLnzWSrzfckdyQEiM5VOLZf8Z3Y98Vzzd
-        vh7/T5xDHp5jq3qZ2GkQJGTvog==
-X-Google-Smtp-Source: ACHHUZ4hBVeDcoulULfDaMl1yIeXGI22tR3XwUEz6R+XRPxoedJos8Jil8c3Qan5JZ17LOEOg+v0wg==
-X-Received: by 2002:a05:6512:b94:b0:4f9:5ff6:c06a with SMTP id b20-20020a0565120b9400b004f95ff6c06amr3246849lfv.67.1687449378499;
-        Thu, 22 Jun 2023 08:56:18 -0700 (PDT)
+        bh=bVNrmV62YGYAQclYMSUvX/eEvXhGpa0L72Uy0QPgV9s=;
+        b=KT8MKV/mWagl4F7mACKRno3MW7usjdWIckjOzY+SZ5Ws7f4rMOclKdSJAbNcY7D210
+         CU7+J+nIkfN0eMZUFX8UcUdf776DMJMbd1LC0fgLFljKSy1uNKAkmzi5d3DbZoVXUv0C
+         tXLt3ge9LyLBPJzlVWivrH9z6CURu5N6DrM9aHs9ax6IVGOWHQuyuTbLKN5JEj2Q4/f5
+         SW71arxxl9mi0TMdPeFsixkeq/r376ieyoSfvPMyYxVXXe+71VtBfq4AnxvV+KHxjZiN
+         GVjKNz2LRUFpcaOFJPYFP16qHgrOhK/zLmWv3zbj1HlfNx1cHN+TVXZb6Gt560La3jKS
+         pDsQ==
+X-Gm-Message-State: AC+VfDztcmvjJfxW3hPG2Vf8VRiahz1hOtz/ff7T7DhvQTea9EZxu+wd
+        8BBWkXD6UZjIgClLLGW7g6l2Gg==
+X-Google-Smtp-Source: ACHHUZ45KLmkDj4mnujXGEY6jCtLWMORO5pw/AK4vZMy3tS3mdPCy/TcTsCI+Ou3bbAWg7eDzXTFDA==
+X-Received: by 2002:a19:e346:0:b0:4f8:3b17:e0c7 with SMTP id c6-20020a19e346000000b004f83b17e0c7mr11277064lfk.7.1687449379838;
+        Thu, 22 Jun 2023 08:56:19 -0700 (PDT)
 Received: from [192.168.1.101] (abyl165.neoplus.adsl.tpnet.pl. [83.9.31.165])
-        by smtp.gmail.com with ESMTPSA id h25-20020ac25979000000b004f8747e519bsm1146876lfp.125.2023.06.22.08.56.17
+        by smtp.gmail.com with ESMTPSA id h25-20020ac25979000000b004f8747e519bsm1146876lfp.125.2023.06.22.08.56.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 08:56:18 -0700 (PDT)
+        Thu, 22 Jun 2023 08:56:19 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 22 Jun 2023 17:56:15 +0200
-Subject: [PATCH 1/2] dt-bindings: firmware: qcom,scm: Allow interconnect on
- SC8280XP
+Date:   Thu, 22 Jun 2023 17:56:16 +0200
+Subject: [PATCH 2/2] arm64: dts: qcom: sc8280xp: Add missing SCM
+ interconnect
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230622-topic-8280scmicc-v1-1-6ef318919ea5@linaro.org>
+Message-Id: <20230622-topic-8280scmicc-v1-2-6ef318919ea5@linaro.org>
 References: <20230622-topic-8280scmicc-v1-0-6ef318919ea5@linaro.org>
 In-Reply-To: <20230622-topic-8280scmicc-v1-0-6ef318919ea5@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -75,16 +75,16 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687449375; l=804;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687449375; l=727;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=+UfpFZ/wJIEsyc9bAr5nQcF5M174YsTVUpB1F+LOz78=;
- b=AAB3uEjnIq3Yp4vPg9MT0jrLckhsxK5SY3wooS5vMPCEk/YX6VcbVC9j6NPknxySEaG0jWp5p
- /Ie22N51PNTDvIjLrVdZLOv/ze2vEzwG34HXjx99BWl5/eNdu5gHkFo
+ bh=NT3m86WoL3MkuuKoi81cggAgHYdFEiNVsimtMtL3KRo=;
+ b=AjjwFA8GMpl1wQJjRKRh/1ni1Ey8g62u9DCNUSpyVhDBY1R27Po0DTh92p2G0bmvoR3aZQmCk
+ yrQaRrGnWOmAClZ9QI1ighmZqb4YKlwMulT9fJKqD0wrTl6SThyx9Mp
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,26 +92,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Just like all other Qualcomm SoCs, SC8280XP SCM should be fed an
-interconnect path. Do so.
+The SCM interconnect path was missing. Add it.
 
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-index 09073e1d88ff..42d064be753b 100644
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-@@ -174,6 +174,7 @@ allOf:
-             contains:
-               enum:
-                 - qcom,scm-qdu1000
-+                - qcom,scm-sc8280xp
-                 - qcom,scm-sm8450
-                 - qcom,scm-sm8550
-     then:
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index ac0596dfdbc4..0756b7c141ff 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -298,6 +298,7 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 	firmware {
+ 		scm: scm {
+ 			compatible = "qcom,scm-sc8280xp", "qcom,scm";
++			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+ 		};
+ 	};
+ 
 
 -- 
 2.41.0
