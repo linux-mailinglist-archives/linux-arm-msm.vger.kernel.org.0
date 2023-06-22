@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22E8173A937
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 21:55:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B1B673A986
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 22:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229973AbjFVTzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 15:55:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60246 "EHLO
+        id S230143AbjFVUeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 16:34:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbjFVTzt (ORCPT
+        with ESMTP id S229873AbjFVUeO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 15:55:49 -0400
+        Thu, 22 Jun 2023 16:34:14 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D93F1;
-        Thu, 22 Jun 2023 12:55:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3344CDC;
+        Thu, 22 Jun 2023 13:34:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 99A13618DB;
-        Thu, 22 Jun 2023 19:55:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AD0C433C0;
-        Thu, 22 Jun 2023 19:55:44 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C34BB618E5;
+        Thu, 22 Jun 2023 20:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECE1C433C8;
+        Thu, 22 Jun 2023 20:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687463748;
-        bh=hFUatM9PSRU0Dtg23g2n8VgrlPwM86dU8bJ9w0p+FCQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dVNb0e2EKqjI5Qc332vgXziWEwH7cj78nZGHidT7flsGhZ2Pc3uG2tHz3SLHBH+i6
-         RuuQuvNvxS/T1Z41sK5bHowla2XhehXYTtybi0w+V/em4hg7YKn7HLrXfBqD2it2Zo
-         L85qzCl9mbs65Sa4XYLV1RQycOUZaQEEtBASRZfPKVIsIDSK4ub1qdX3aw9zN7tYhT
-         XJD1gdLiHkUezRZpIpRZy2hxMbv6fveTmd+JKl0PcFoPE0dBSBxLtn+Kf+vTG3aYds
-         LHiEdtmX8wV7ck3OTU2Ts8UC2FAMCeuiymrOY+L5b6770xGy+A/xh3CTXpqTPjaaFL
-         /xbX7pzPi3ynQ==
-Date:   Thu, 22 Jun 2023 20:55:42 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        s=k20201202; t=1687466052;
+        bh=Z5y5hDsI2WXqU5W36Hh41r3e9huUDgznGRpPUg89jlU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=QPKgU8V8Bm+OC675d8kbC5giP4wg168IX3yRQf8iIgbOgedxxh6sD92EQ3G0Hg6eJ
+         u49s99n2DiQRRsAM/l6qclvcPRWUdoWIGeSHRLnszmhNHvqPIFCjhrPa6lwSYdKg6F
+         FutQTuVJ3egS4jNRduAU3JyYM1SHxMaJEzHuO6S9nUD/ejqspFsBdnuWiYknL/rt+4
+         9BpB+1nTM6Q0/KI3BUJ1iLdHnK0vbLUI/C69ULFYK/f+lFIleFW/THdkUDj+M4o/hi
+         q19pikCFEdyAW6CupJYkx97lY8Zl/b0o2Dau3kTW2CxRymkq3HOefRN0VGNv+A9lF2
+         P+E2CHOJtaD3A==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     amit.pundir@linaro.org, Will Deacon <will@kernel.org>,
+        sumit.semwal@linaro.org, linux-arm-msm@vger.kernel.org,
+        konrad.dybcio@somainline.org, linux-arm-kernel@lists.infradead.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
         Das Srinagesh <quic_gurus@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 1/2] dt-bindings: firmware: qcom,scm: Allow interconnect
- on SC8280XP
-Message-ID: <20230622-santa-alias-6fb047a12794@spud>
-References: <20230622-topic-8280scmicc-v1-0-6ef318919ea5@linaro.org>
- <20230622-topic-8280scmicc-v1-1-6ef318919ea5@linaro.org>
+        Manivannan Sadhasivam <mani@kernel.org>
+Subject: Re: (subset) [PATCH v2 1/4] dt-bindings: firmware: qcom,scm: Document that SCM can be dma-coherent
+Date:   Thu, 22 Jun 2023 13:38:10 -0700
+Message-ID: <168746628699.107789.12308094014658247045.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
+References: <20230616081440.v2.1.Ie79b5f0ed45739695c9970df121e11d724909157@changeid>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="y6lHOH+nZzJT02Is"
-Content-Disposition: inline
-In-Reply-To: <20230622-topic-8280scmicc-v1-1-6ef318919ea5@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -70,53 +71,29 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---y6lHOH+nZzJT02Is
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 16 Jun 2023 08:14:38 -0700, Douglas Anderson wrote:
+> Trogdor devices use firmware backed by TF-A instead of Qualcomm's
+> normal TZ. On TF-A we end up mapping memory as cacheable. Specifically,
+> you can see in Trogdor's TF-A code [1] in qti_sip_mem_assign() that we
+> call qti_mmap_add_dynamic_region() with MT_RO_DATA. This translates
+> down to MT_MEMORY instead of MT_NON_CACHEABLE or MT_DEVICE.
+> 
+> Let's allow devices like trogdor to be described properly by allowing
+> "dma-coherent" in the SCM node.
+> 
+> [...]
 
-On Thu, Jun 22, 2023 at 05:56:15PM +0200, Konrad Dybcio wrote:
-> Just like all other Qualcomm SoCs, SC8280XP SCM should be fed an
-> interconnect path. Do so.
->=20
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Applied, thanks!
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+[1/4] dt-bindings: firmware: qcom,scm: Document that SCM can be dma-coherent
+      commit: c0877829ada0406233aee5bd54f6813db79d5f1f
+[2/4] arm64: dts: qcom: sc7180: Mark SCM as dma-coherent for IDP
+      commit: 9a5f0b11e49e27f0a01a73c31d05df4a95bea3fa
+[3/4] arm64: dts: qcom: sc7180: Mark SCM as dma-coherent for trogdor
+      commit: a54b7fa6b9ab6b4ecb7d9aba6b1a0ce1bcc961e3
+[4/4] arm64: dts: qcom: sc7280: Mark SCM as dma-coherent for chrome devices
+      commit: 7b59e8ae92fe089fed8ff1b23e53442ae5b204c9
 
-Cheers,
-Conor.
-
-> ---
->  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/D=
-ocumentation/devicetree/bindings/firmware/qcom,scm.yaml
-> index 09073e1d88ff..42d064be753b 100644
-> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> @@ -174,6 +174,7 @@ allOf:
->              contains:
->                enum:
->                  - qcom,scm-qdu1000
-> +                - qcom,scm-sc8280xp
->                  - qcom,scm-sm8450
->                  - qcom,scm-sm8550
->      then:
->=20
-> --=20
-> 2.41.0
->=20
-
---y6lHOH+nZzJT02Is
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZJSnPgAKCRB4tDGHoIJi
-0jlIAP4h7eOJcII1qn4nFLfKSdk1p0Feg0+Vi4ccqrhZJwNKOAEAlGbcQW+dynEQ
-ZQJj2xuB5X6bT7VckV39IkMvhdjUMwI=
-=AnV9
------END PGP SIGNATURE-----
-
---y6lHOH+nZzJT02Is--
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
