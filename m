@@ -2,161 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E560773A15C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:02:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0C5A73A16F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:06:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230097AbjFVNCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 09:02:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54596 "EHLO
+        id S230390AbjFVNGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 09:06:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229762AbjFVNCT (ORCPT
+        with ESMTP id S230116AbjFVNGP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 09:02:19 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1CA10F8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:02:18 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-bb2ffa1e235so6641469276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:02:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687438938; x=1690030938;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DB8d3i9SZQpXK0PITMgG0UJJzhOSPFuZ3siR9gFiirA=;
-        b=Gcz6jpzhlWzyKBiINO0MQWAQNgV35LASQwyv08Bx7fybrKFe6LpMGQ0gGznjMXmjM+
-         4jbndJ2S69MExVjCjqHdzWB9Xf7BssxARsaPaDZId9Vz5K7JSgkzblB72Udg6hldGOHH
-         P60GsUjCgXmNwdScCjPpZn5Q15r00B+NeFZpa2qDoyV7P7/dL8uK1sF37hTbNn0lwbUQ
-         7q1qFZqxa5bbQEI7U7ol6LFluScMrfbM7N2fDh+MZzYASy02q6QK2de+eNmWTwT44Jq4
-         onC92DTw9wO3o8a2/bFEid/obXAcJvCtR6jfa3vP+KWcVxW2LS8lgpjVb7N6swGy4wUm
-         NGug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687438938; x=1690030938;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DB8d3i9SZQpXK0PITMgG0UJJzhOSPFuZ3siR9gFiirA=;
-        b=NhVLhIsQdRnKIHyLZvo5XfuY5IA/JmWR5A35zMHSPBNtN/hAwqkb5L+m8ZDXiGc+aH
-         6LWXS4acUhjDxA2BW4sjLabGj/hXSCJW/uygZ2o+7HIBs+CCre5MjOz0QfcdqBQV6pWh
-         I6BhUFLwh1ZKO+aU7NTsa9+bqWFfk1/Ho07h5jcg+xWMjsy1k0BT6vEAXabuWTLQW8Tj
-         C6HjrCBqjVcmDmPwHOm/pzBX8qarykk93nV/wjfAtIYCjlP0d0ELdmlV2hyPD1P1zEcl
-         0tmMO4lsdEzTvfRD6AvB7+cm4TETCg7UedrtwgmDrJfV8l/YwFPooGeT1/nzk19BEk9y
-         KC5Q==
-X-Gm-Message-State: AC+VfDzvOKHGWpLrMEuzsmkq9/99KO74FP2MamW0/WHKg0U7Tho+tIbx
-        bYI8MJ3cwiu21IPYhoMGCDHl2kFrR37TXbxliScJ7iTj3S4OD+Lz
-X-Google-Smtp-Source: ACHHUZ4ChvoACcCJQotbXKQBZUwe/sEs7gSKFAkswWcZVLaKUoJZrYTOIXV9DhFPqKFims2TUNOSo1U3L5+94nmtzwg=
-X-Received: by 2002:a25:185:0:b0:be7:dee3:1fed with SMTP id
- 127-20020a250185000000b00be7dee31fedmr14146499ybb.65.1687438936863; Thu, 22
- Jun 2023 06:02:16 -0700 (PDT)
+        Thu, 22 Jun 2023 09:06:15 -0400
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2470826AA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:05:47 -0700 (PDT)
+Received: (qmail 18934 invoked by uid 990); 22 Jun 2023 13:05:34 -0000
+Authentication-Results: devico.uberspace.de;
+        auth=pass (plain)
 MIME-Version: 1.0
-References: <20230608085544.16211-1-quic_tnimkar@quicinc.com>
- <CAPDyKFqhVkMH42Vz0+a62j5kFh+R_CvGrcSU7hxoW__tjOhfLw@mail.gmail.com>
- <443b00b1-76b8-c31d-53d3-42e3592d26e8@quicinc.com> <CAPDyKFp5L454WmTPo2eYnBuZ=ZMKEtinLgYU09n=J=3DA1FSJQ@mail.gmail.com>
- <29ccc60e-9ef8-883f-9936-95e6ef842746@quicinc.com>
-In-Reply-To: <29ccc60e-9ef8-883f-9936-95e6ef842746@quicinc.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 22 Jun 2023 15:01:40 +0200
-Message-ID: <CAPDyKFqKw-6Qu7YoZw9LQDGvj1PFi3nCDkXcmCJTffxtX75naQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Add provision to keep idle state disabled
-To:     Tushar Nimkar <quic_tnimkar@quicinc.com>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_lsrao@quicinc.com,
-        quic_mkshah@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Date:   Thu, 22 Jun 2023 13:05:34 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From:   "Leonard Lausen" <leonard@lausen.nl>
+Message-ID: <c451cea0e0541f786e06d771afeb4112d3349dbc@lausen.nl>
+TLS-Required: No
+Subject: Re: [Freedreno] [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
+To:     "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        regressions@lists.linux.dev
+Cc:     freedreno@lists.freedesktop.org,
+        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
+        "David Airlie" <airlied@gmail.com>,
+        "Nikita Travkin" <nikita@trvn.ru>, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, "Rob Clark" <robdclark@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        "Sean Paul" <sean@poorly.run>,
+        "Johan Hovold" <johan+linaro@kernel.org>
+In-Reply-To: <f98dcffe4b1dc91edf692fbaa766a263910f2c5b@lausen.nl>
+References: <f98dcffe4b1dc91edf692fbaa766a263910f2c5b@lausen.nl>
+ <932ee149-c524-25e7-ee49-5ea1a7e6708c@quicinc.com>
+ <e547edf4-1b48-5d12-1600-45f78e7cab49@quicinc.com>
+ <1345a125-f745-4fe3-0f5e-bfe84225958d@quicinc.com>
+ <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
+ <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
+ <20230508021536.txtamifw2vkfncnx@ripper>
+ <3802269cd54ce105ef6dece03b1b9af575b4fa06@lausen.nl>
+ <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
+ <49d175ec16e3f65a18265063e51092ee8d0d79c1@lausen.nl>
+ <f2d1bb37-ea83-4d5d-6ef5-ae84c26d6ac1@quicinc.com>
+ <b9c8243ed53c5c9d7c1b5711237f6130976ea99b@lausen.nl>
+X-Rspamd-Bar: /
+X-Rspamd-Report: MIME_GOOD(-0.1) BAYES_HAM(-1.376189) SUSPICIOUS_RECIPS(1.5)
+X-Rspamd-Score: 0.02381
+Received: from unknown (HELO unkown) (::1)
+        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Thu, 22 Jun 2023 15:05:34 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=lausen.nl; s=uberspace;
+        h=from;
+        bh=vccUnMmIqdngT99oaK8My7B6NiGz9nspCO7ChiAPVtI=;
+        b=BvxzYWRr6A5zJe+/S9o10zNf9FhFlriFlWDTcyToHnftwViksxL3QK1bAlfDH72t91Kp870plW
+        ebKanfqnUQWFRbAz6WvO1SIcpplgaC+qQLl2Nyd506fL376PY8epR3gBxeFSd92R3IvBQT9rU+2o
+        RKEgKDlHsbNszoREiduTSgTqvuJxE5vW377XXDZRqKhcqJV+ZsbgtWRfPsQpgtPFDEJNetCDqloJ
+        tl+ohiZfk3R5DFLBwimlIuBC+nbRHGKBbU6XUlXzMxEx0+uBxXd6mU8ffydJaIEyxxpx9iK9VF21
+        XG2Hg0TAuqEvHW3sOJRigerZPXAUQibGgHKwgaKxPZsxD+gAGHnmfGpzwGnlXjfrq8UZg/o6uCRg
+        37pkIDED7SE9BN1fwBe5KYk7oxHJi/FNBOEpSXA2VV5GEwBh3/+NmFtwrIJKrYT/BKYzCFJYOkA4
+        EfYCpPvv/SVrgoptTxrfcE5kwhEk35GdQlzGvJ26makQmTglqgiQhoIJ8Q6ZT6nbSKognSFQAHuk
+        jQ3ktfuskG8gKMYxTzEqDgJObOQ6gJCgS04B6w4j/lYSgtjP9xC8qPzKIHVxg+ChR0I2OeU2quso
+        NKa+AWqiKVVtxBx7+txGbHlmeyQiPp2tIw3bPMkr0Rszuy4z0ID3cN3wRtW8p87qOvrFuNWX3Z7L
+        Q=
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 21 Jun 2023 at 08:21, Tushar Nimkar <quic_tnimkar@quicinc.com> wrote:
->
-> Many thanks again,
->
-> On 6/16/2023 4:25 PM, Ulf Hansson wrote:
-> > On Wed, 14 Jun 2023 at 08:43, Tushar Nimkar <quic_tnimkar@quicinc.com> wrote:
->
-> >
-> > Right. I am not saying it's the perfect solution, but it seems like it
-> > could potentially solve the problem for many cases.
-> >
-> > If you want some help to turn the cpuidle-psci driver into a loadable
-> > module, just reach out, I am happy to help.
-> >
-> Thanks :)
+> > https://patchwork.freedesktop.org/patch/538601/?series=3D118148&rev=
+=3D3
+> >  Apologies if you were not CCed on this, if a next version is CCed,
+> >=20
+>=20>  will ask kuogee to cc you.
+> >=20
+>=20>  Meanwhile, will be great if you can verify if it works for you and
+> >=20
+>=20>  provide Tested-by tags.
+> >=20
+>=20
+> I see Bjorn also tested the patch. As it fixes a serious USB-C DP regre=
+ssion which broke USB-C DP completely on lazor for v6.3, can it be includ=
+ed in upcoming 6.3.y release?
 
-Np!
+Kuogee's fix has since been committed to drm-tip on 2023-06-08 as a8e981a=
+c2d0eb9dd53a4c173e29ca0c99c88abe2. Since it fixes a serious regression in=
+ 6.3 and 6.4 kernels, can we include it for the stable releases?
 
-> Making cpuidle-psci as loadable does not hold good for target does not
-> support DLKM, in addition to it rpmh driver has dependency on
-> cpuidle-psci for pm-domain and rpmh probe will get defer, their are
-> driver which depends on rpmh probe like interconnect, clk etc. And
-> eventually dependent driver probe defers which are essential for Linux
-> boot-up.
-> Hope you got scenario for getting probe defer if we make cpuidle-psci as
-> loadable.
-
-I understand your concern, but you have got my idea wrong.
-
-I was suggesting turning the cpuidle-psci driver into a loadable
-module - not the cpuidle-psci-domain driver. The latter is the genpd
-provider, which consumers like rpmh need to probe.
-
->
-> I have below options as well
-> [A]: Can we think of making "governor/param_governor"
-> module_param_string, string named governor only to load. In that way
-> need to remove check [3]. Let's say string passed as "teo" then it will
-> not load "menu" and loads "teo" once comes-up.
->
-> [B]: Can we think of making cpuidle.off as writable, let governors to
-> register (i.e remove check [4]) and allow cpuidle_init() to happen (i.e
-> remove check [5])
-> So in this way cpuidle.off=1, your idle state can not be selected
-> because [6] and later we can write off=0 to let same check [6] to fail.
->
-> [C]: Coming to this series approach...What is best way to utilize
-> already present Flag-CPUIDLE_FLAG_OFF ?
-> Since we can not add new DT property to take decision in driver as it's
-> not HW feature to be expose in device tree [7]. Can we introduce new
-> module_param() for making idle-state disable default and utilize
-> CPUIDLE_FLAG_OFF? maybe similar to [8]
->
-> happy to hear your thoughts!
-
-In general I am not in favor of module parameters, but maybe it's the
-best option to solve this problem. We need Rafael's and Daniel's
-opinion to conclude.
-
-However, to me, I still think the easiest approach would be to turn
-the cpuidle-psci driver into a loadable module. Let me hack on that
-and post a few patches that you can test for this.
-
->
->
-> [3]
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/cpuidle/governor.c?h=next-20230620#n93
->
-> [4]
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/cpuidle/governor.c?h=next-20230620#n86
->
-> [5]
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/cpuidle/cpuidle.c?h=next-20230620#n808
->
-> [6]
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/kernel/sched/idle.c?h=next-20230620#n167
->
-> [7]
-> https://lore.kernel.org/lkml/20230608085544.16211-1-quic_tnimkar@quicinc.com/T/#m5d6012b0dfcff700f48c0efbba629382f18ee33b
->
-> [8]
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/idle/intel_idle.c?h=next-20230620#n2160
-> > [...]
-> >
-
-Kind regards
-Uffe
+Thank you
+Leonard
