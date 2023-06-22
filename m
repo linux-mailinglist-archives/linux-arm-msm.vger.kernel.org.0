@@ -2,148 +2,389 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC94B73A72E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 19:25:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D91A73A777
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 19:42:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbjFVRZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 13:25:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56440 "EHLO
+        id S231172AbjFVRmC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 13:42:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230237AbjFVRZT (ORCPT
+        with ESMTP id S229483AbjFVRmC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 13:25:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA5EE195;
-        Thu, 22 Jun 2023 10:25:18 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35M8UN99030273;
-        Thu, 22 Jun 2023 17:25:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=Q7cQSiMiwma6YA+vYMCWzys7oVYU7wUQxMyFH6yu0GU=;
- b=hFZ+kRtXHTizOm1COPz6Ue4IyVudlt5u6tvqnaC86OExTjvTvErneCLMlJYOOW+K+z80
- 8ksvhgnoNXtasNVZW3K+7dLu6Td+T98DAPOaTzCDyV5gWLC6O9LfBTns20u5nZTR1Cqo
- 9LANZUg7IfVy/IZY8lBFdP9vWmtGrIP5rGuI82IEqfd21is8IAp+Go1I1qR5czqA7Nd3
- O3ultxjXUH2nQ4E8YBCrL5YlKhOMK5KC9VJKpUOjCtBeNY+AlUp5HAieIorgZoJv8+/B
- ieqsTvrazrGb9cqipQ0I+8hBfvYMpr9bHG3UPdq7PUWZqdc5mGk9pDuYVV4GauqWS/TV RQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcju81dt4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 17:25:08 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35MHP4K1004911
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 17:25:04 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 22 Jun 2023 10:25:02 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 2/2] drm/msm/dpu: remove struct drm_dsc_config from struct msm_display_info
-Date:   Thu, 22 Jun 2023 10:24:46 -0700
-Message-ID: <1687454686-10340-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1687454686-10340-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1687454686-10340-1-git-send-email-quic_khsieh@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vgmorYxN8NhdVsOzV6UV0B_wVBHNvEi_
-X-Proofpoint-GUID: vgmorYxN8NhdVsOzV6UV0B_wVBHNvEi_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-22_12,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- clxscore=1015 phishscore=0 suspectscore=0 mlxlogscore=999
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306220146
+        Thu, 22 Jun 2023 13:42:02 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D57C1BE1;
+        Thu, 22 Jun 2023 10:42:00 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1b5465a79cdso35694005ad.3;
+        Thu, 22 Jun 2023 10:42:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687455720; x=1690047720;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YR6riefaBxO/qJacf8c9XUzeqz5GLT8THdv+ODXmKSw=;
+        b=GUhWgwtWtKrZDnuSJCgYa1cOw3G6fiKz0lIoUCvLREEz71vtcRYCluXM5YqEsRm9ht
+         Wn3m02SHfuwML1dU476ZrelAyvPgytRnH6hfCrsEGmk5ZKgs3nce1OiWf4U8+FvY56Wh
+         GDA/5zHheVC9RMAFUkTyeJiT8xFBcA8sCkmGJvx5ANxTn7C6VnAVryToqgVv5/gq3VOW
+         4jhoVMGXImhjBO7rYVEvL60C/y+4lw+SHMprbFFYboLGhwPmB8UPwDlVhO1pxlhvbzso
+         KErSYpLEtubkl3M447W8C9h0SJECCFplCNsy9zdLmyrhsytB8LHHZhCPFLxQ3YSYRMRm
+         Q9Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687455720; x=1690047720;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YR6riefaBxO/qJacf8c9XUzeqz5GLT8THdv+ODXmKSw=;
+        b=lPf2KcNeDP/0dFn86ePREkBGncT6utBvOkSZ7nl1Ssbj7CsU2KHCnfE1ws06XjRG7p
+         mKdD/hzigTmBqxUxzXBUDABKNxugSq0VlG15oEpBt9CDX8KzHjDnWuC554UrKNh4OyLM
+         YPuR7yKYH3WcAhBaW9vaLqATeaqL4Nt1/i1lSj5FNyE4wdClUvBWRs0LMP7WKWRV5e+g
+         5r8iYmpCCH2VEJBJn5Htd7jNTjA0ZmDRqTL1gu64V238Ns4olWPxv5WAzkYbJJma8L2p
+         AD2OHu7zQ6C/RGPEkiRbOkW4ZTgj+CznfKG39UwSc2wygV+W433qXDpukoDuVXUncWpd
+         IeXQ==
+X-Gm-Message-State: AC+VfDyH4g4mVKMzIYxyJ+ug4nU5AC8kM2xKXAGFYt/fzGOnBvlhFWhO
+        XJrmBrUTMikd//0QUyIkdoQ=
+X-Google-Smtp-Source: ACHHUZ7evwZkAV8a0wVuAaIAW+pO3mkR7GW9pnxAUzkJDJVxa9Kkl4NfZezomSDymMDqt+DaH+7SkA==
+X-Received: by 2002:a17:902:ecc8:b0:1b5:561a:5ca9 with SMTP id a8-20020a170902ecc800b001b5561a5ca9mr14043372plh.50.1687455719660;
+        Thu, 22 Jun 2023 10:41:59 -0700 (PDT)
+Received: from [127.0.0.1] ([2402:d0c0:2:a2a::1])
+        by smtp.gmail.com with ESMTPSA id jk14-20020a170903330e00b001b3d756a6f4sm5715243plb.13.2023.06.22.10.41.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Jun 2023 10:41:59 -0700 (PDT)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [PATCH 24/29] mm: vmscan: make global slab shrink lockless
+From:   Alan Huang <mmpgouride@gmail.com>
+In-Reply-To: <bfcf8b34-2efc-258e-bcec-d6ce10220205@bytedance.com>
+Date:   Fri, 23 Jun 2023 01:41:47 +0800
+Cc:     Vlastimil Babka <vbabka@suse.cz>, akpm@linux-foundation.org,
+        Dave Chinner <david@fromorbit.com>, tkhai@ya.ru,
+        roman.gushchin@linux.dev, "Darrick J. Wong" <djwong@kernel.org>,
+        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
+        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
+        linux-btrfs@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <43CEA22D-3FF5-40CB-BF07-0FB9829EF778@gmail.com>
+References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
+ <20230622085335.77010-25-zhengqi.arch@bytedance.com>
+ <cf0d9b12-6491-bf23-b464-9d01e5781203@suse.cz>
+ <bfcf8b34-2efc-258e-bcec-d6ce10220205@bytedance.com>
+To:     Qi Zheng <zhengqi.arch@bytedance.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since struct drm_dsc_config is stored at atomic_enable() instead
-of display setup time during boot up, saving struct drm_dsc_config
-at struct msm_display_info is not necessary. Lets drop the dsc member
-from struct msm_display_info.
 
-Changes in v4:
--- fix "Since" at commit text
+> 2023=E5=B9=B46=E6=9C=8823=E6=97=A5 =E4=B8=8A=E5=8D=8812:42=EF=BC=8CQi =
+Zheng <zhengqi.arch@bytedance.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+>=20
+>=20
+> On 2023/6/22 23:12, Vlastimil Babka wrote:
+>> On 6/22/23 10:53, Qi Zheng wrote:
+>>> The shrinker_rwsem is a global read-write lock in
+>>> shrinkers subsystem, which protects most operations
+>>> such as slab shrink, registration and unregistration
+>>> of shrinkers, etc. This can easily cause problems in
+>>> the following cases.
+>>>=20
+>>> 1) When the memory pressure is high and there are many
+>>>    filesystems mounted or unmounted at the same time,
+>>>    slab shrink will be affected (down_read_trylock()
+>>>    failed).
+>>>=20
+>>>    Such as the real workload mentioned by Kirill Tkhai:
+>>>=20
+>>>    ```
+>>>    One of the real workloads from my experience is start
+>>>    of an overcommitted node containing many starting
+>>>    containers after node crash (or many resuming containers
+>>>    after reboot for kernel update). In these cases memory
+>>>    pressure is huge, and the node goes round in long reclaim.
+>>>    ```
+>>>=20
+>>> 2) If a shrinker is blocked (such as the case mentioned
+>>>    in [1]) and a writer comes in (such as mount a fs),
+>>>    then this writer will be blocked and cause all
+>>>    subsequent shrinker-related operations to be blocked.
+>>>=20
+>>> Even if there is no competitor when shrinking slab, there
+>>> may still be a problem. If we have a long shrinker list
+>>> and we do not reclaim enough memory with each shrinker,
+>>> then the down_read_trylock() may be called with high
+>>> frequency. Because of the poor multicore scalability of
+>>> atomic operations, this can lead to a significant drop
+>>> in IPC (instructions per cycle).
+>>>=20
+>>> We used to implement the lockless slab shrink with
+>>> SRCU [1], but then kernel test robot reported -88.8%
+>>> regression in stress-ng.ramfs.ops_per_sec test case [2],
+>>> so we reverted it [3].
+>>>=20
+>>> This commit uses the refcount+RCU method [4] proposed by
+>>> by Dave Chinner to re-implement the lockless global slab
+>>> shrink. The memcg slab shrink is handled in the subsequent
+>>> patch.
+>>>=20
+>>> Currently, the shrinker instances can be divided into
+>>> the following three types:
+>>>=20
+>>> a) global shrinker instance statically defined in the kernel,
+>>> such as workingset_shadow_shrinker.
+>>>=20
+>>> b) global shrinker instance statically defined in the kernel
+>>> modules, such as mmu_shrinker in x86.
+>>>=20
+>>> c) shrinker instance embedded in other structures.
+>>>=20
+>>> For case a, the memory of shrinker instance is never freed.
+>>> For case b, the memory of shrinker instance will be freed
+>>> after the module is unloaded. But we will call synchronize_rcu()
+>>> in free_module() to wait for RCU read-side critical section to
+>>> exit. For case c, the memory of shrinker instance will be
+>>> dynamically freed by calling kfree_rcu(). So we can use
+>>> rcu_read_{lock,unlock}() to ensure that the shrinker instance
+>>> is valid.
+>>>=20
+>>> The shrinker::refcount mechanism ensures that the shrinker
+>>> instance will not be run again after unregistration. So the
+>>> structure that records the pointer of shrinker instance can be
+>>> safely freed without waiting for the RCU read-side critical
+>>> section.
+>>>=20
+>>> In this way, while we implement the lockless slab shrink, we
+>>> don't need to be blocked in unregister_shrinker() to wait
+>>> RCU read-side critical section.
+>>>=20
+>>> The following are the test results:
+>>>=20
+>>> stress-ng --timeout 60 --times --verify --metrics-brief --ramfs 9 &
+>>>=20
+>>> 1) Before applying this patchset:
+>>>=20
+>>>  setting to a 60 second run per stressor
+>>>  dispatching hogs: 9 ramfs
+>>>  stressor       bogo ops real time  usr time  sys time   bogo ops/s  =
+   bogo ops/s
+>>>                            (secs)    (secs)    (secs)   (real time) =
+(usr+sys time)
+>>>  ramfs            880623     60.02      7.71    226.93     14671.45  =
+      3753.09
+>>>  ramfs:
+>>>           1 System Management Interrupt
+>>>  for a 60.03s run time:
+>>>     5762.40s available CPU time
+>>>        7.71s user time   (  0.13%)
+>>>      226.93s system time (  3.94%)
+>>>      234.64s total time  (  4.07%)
+>>>  load average: 8.54 3.06 2.11
+>>>  passed: 9: ramfs (9)
+>>>  failed: 0
+>>>  skipped: 0
+>>>  successful run completed in 60.03s (1 min, 0.03 secs)
+>>>=20
+>>> 2) After applying this patchset:
+>>>=20
+>>>  setting to a 60 second run per stressor
+>>>  dispatching hogs: 9 ramfs
+>>>  stressor       bogo ops real time  usr time  sys time   bogo ops/s  =
+   bogo ops/s
+>>>                            (secs)    (secs)    (secs)   (real time) =
+(usr+sys time)
+>>>  ramfs            847562     60.02      7.44    230.22     14120.66  =
+      3566.23
+>>>  ramfs:
+>>>           4 System Management Interrupts
+>>>  for a 60.12s run time:
+>>>     5771.95s available CPU time
+>>>        7.44s user time   (  0.13%)
+>>>      230.22s system time (  3.99%)
+>>>      237.66s total time  (  4.12%)
+>>>  load average: 8.18 2.43 0.84
+>>>  passed: 9: ramfs (9)
+>>>  failed: 0
+>>>  skipped: 0
+>>>  successful run completed in 60.12s (1 min, 0.12 secs)
+>>>=20
+>>> We can see that the ops/s has hardly changed.
+>>>=20
+>>> [1]. =
+https://lore.kernel.org/lkml/20230313112819.38938-1-zhengqi.arch@bytedance=
+.com/
+>>> [2]. =
+https://lore.kernel.org/lkml/202305230837.db2c233f-yujie.liu@intel.com/
+>>> [3]. =
+https://lore.kernel.org/all/20230609081518.3039120-1-qi.zheng@linux.dev/
+>>> [4]. =
+https://lore.kernel.org/lkml/ZIJhou1d55d4H1s0@dread.disaster.area/
+>>>=20
+>>> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+>>> ---
+>>>  include/linux/shrinker.h |  6 ++++++
+>>>  mm/vmscan.c              | 33 ++++++++++++++-------------------
+>>>  2 files changed, 20 insertions(+), 19 deletions(-)
+>>>=20
+>>> diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
+>>> index 7bfeb2f25246..b0c6c2df9db8 100644
+>>> --- a/include/linux/shrinker.h
+>>> +++ b/include/linux/shrinker.h
+>>> @@ -74,6 +74,7 @@ struct shrinker {
+>>>    	refcount_t refcount;
+>>>  	struct completion completion_wait;
+>>> +	struct rcu_head rcu;
+>>>    	void *private_data;
+>>>  @@ -123,6 +124,11 @@ struct shrinker =
+*shrinker_alloc_and_init(count_objects_cb count,
+>>>  void shrinker_free(struct shrinker *shrinker);
+>>>  void unregister_and_free_shrinker(struct shrinker *shrinker);
+>>>  +static inline bool shrinker_try_get(struct shrinker *shrinker)
+>>> +{
+>>> +	return refcount_inc_not_zero(&shrinker->refcount);
+>>> +}
+>>> +
+>>>  static inline void shrinker_put(struct shrinker *shrinker)
+>>>  {
+>>>  	if (refcount_dec_and_test(&shrinker->refcount))
+>>> diff --git a/mm/vmscan.c b/mm/vmscan.c
+>>> index 6f9c4750effa..767569698946 100644
+>>> --- a/mm/vmscan.c
+>>> +++ b/mm/vmscan.c
+>>> @@ -57,6 +57,7 @@
+>>>  #include <linux/khugepaged.h>
+>>>  #include <linux/rculist_nulls.h>
+>>>  #include <linux/random.h>
+>>> +#include <linux/rculist.h>
+>>>    #include <asm/tlbflush.h>
+>>>  #include <asm/div64.h>
+>>> @@ -742,7 +743,7 @@ void register_shrinker_prepared(struct shrinker =
+*shrinker)
+>>>  	down_write(&shrinker_rwsem);
+>>>  	refcount_set(&shrinker->refcount, 1);
+>>>  	init_completion(&shrinker->completion_wait);
+>>> -	list_add_tail(&shrinker->list, &shrinker_list);
+>>> +	list_add_tail_rcu(&shrinker->list, &shrinker_list);
+>>>  	shrinker->flags |=3D SHRINKER_REGISTERED;
+>>>  	shrinker_debugfs_add(shrinker);
+>>>  	up_write(&shrinker_rwsem);
+>>> @@ -800,7 +801,7 @@ void unregister_shrinker(struct shrinker =
+*shrinker)
+>>>  	wait_for_completion(&shrinker->completion_wait);
+>>>    	down_write(&shrinker_rwsem);
+>>> -	list_del(&shrinker->list);
+>>> +	list_del_rcu(&shrinker->list);
+>>>  	shrinker->flags &=3D ~SHRINKER_REGISTERED;
+>>>  	if (shrinker->flags & SHRINKER_MEMCG_AWARE)
+>>>  		unregister_memcg_shrinker(shrinker);
+>>> @@ -845,7 +846,7 @@ EXPORT_SYMBOL(shrinker_free);
+>>>  void unregister_and_free_shrinker(struct shrinker *shrinker)
+>>>  {
+>>>  	unregister_shrinker(shrinker);
+>>> -	kfree(shrinker);
+>>> +	kfree_rcu(shrinker, rcu);
+>>>  }
+>>>  EXPORT_SYMBOL(unregister_and_free_shrinker);
+>>>  @@ -1067,33 +1068,27 @@ static unsigned long shrink_slab(gfp_t =
+gfp_mask, int nid,
+>>>  	if (!mem_cgroup_disabled() && !mem_cgroup_is_root(memcg))
+>>>  		return shrink_slab_memcg(gfp_mask, nid, memcg, =
+priority);
+>>>  -	if (!down_read_trylock(&shrinker_rwsem))
+>>> -		goto out;
+>>> -
+>>> -	list_for_each_entry(shrinker, &shrinker_list, list) {
+>>> +	rcu_read_lock();
+>>> +	list_for_each_entry_rcu(shrinker, &shrinker_list, list) {
+>>>  		struct shrink_control sc =3D {
+>>>  			.gfp_mask =3D gfp_mask,
+>>>  			.nid =3D nid,
+>>>  			.memcg =3D memcg,
+>>>  		};
+>>>  +		if (!shrinker_try_get(shrinker))
+>>> +			continue;
+>>> +		rcu_read_unlock();
+>> I don't think you can do this unlock?
+>>> +
+>>>  		ret =3D do_shrink_slab(&sc, shrinker, priority);
+>>>  		if (ret =3D=3D SHRINK_EMPTY)
+>>>  			ret =3D 0;
+>>>  		freed +=3D ret;
+>>> -		/*
+>>> -		 * Bail out if someone want to register a new shrinker =
+to
+>>> -		 * prevent the registration from being stalled for long =
+periods
+>>> -		 * by parallel ongoing shrinking.
+>>> -		 */
+>>> -		if (rwsem_is_contended(&shrinker_rwsem)) {
+>>> -			freed =3D freed ? : 1;
+>>> -			break;
+>>> -		}
+>>> -	}
+>>>  -	up_read(&shrinker_rwsem);
+>>> -out:
+>>> +		rcu_read_lock();
+>> That new rcu_read_lock() won't help AFAIK, the whole
+>> list_for_each_entry_rcu() needs to be under the single =
+rcu_read_lock() to be
+>> safe.
+>=20
+> In the unregister_shrinker() path, we will wait for the refcount to =
+zero
+> before deleting the shrinker from the linked list. Here, we first took
+> the rcu lock, and then decrement the refcount of this shrinker.
+>=20
+>    shrink_slab                 unregister_shrinker
+>    =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D                 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> 			=09
+> 				/* wait for B */
+> 				wait_for_completion()
+>  rcu_read_lock()
+>=20
+>  shrinker_put() --> (B)
+> 				list_del_rcu()
+>                                /* wait for rcu_read_unlock() */
+> 				kfree_rcu()
+>=20
+>  /*
+>   * so this shrinker will not be freed here,
+>   * and can be used to traverse the next node
+>   * normally?
+>   */
+>  list_for_each_entry()
+>=20
+>  shrinker_try_get()
+>  rcu_read_unlock()
+>=20
+> Did I miss something?
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 2 --
- 3 files changed, 6 deletions(-)
+After calling rcu_read_unlock(), the next shrinker in the list can be =
+freed,
+so in the next iteration, use after free might happen?
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index edc559d..952e1f2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2309,8 +2309,6 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
- 		dpu_enc->idle_pc_supported =
- 				dpu_kms->catalog->caps->has_idle_pc;
- 
--	dpu_enc->dsc = disp_info->dsc;
--
- 	mutex_lock(&dpu_enc->enc_lock);
- 	for (i = 0; i < disp_info->num_of_h_tiles && !ret; i++) {
- 		/*
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-index 90e1925..4c05fd5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-@@ -28,7 +28,6 @@
-  * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
-  * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
-  *				 used instead of panel TE in cmd mode panels
-- * @dsc:		DSC configuration data for DSC-enabled displays
-  */
- struct msm_display_info {
- 	enum dpu_intf_type intf_type;
-@@ -36,7 +35,6 @@ struct msm_display_info {
- 	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
- 	bool is_cmd_mode;
- 	bool is_te_using_watchdog_timer;
--	struct drm_dsc_config *dsc;
- };
- 
- /**
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 613384b..5e77e09 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -544,8 +544,6 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
- 
- 		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
- 
--		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i]);
--
- 		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI, &info);
- 		if (IS_ERR(encoder)) {
- 			DPU_ERROR("encoder init failed for dsi display\n");
--- 
-2.7.4
+Is that right?
+
+>=20
+>> IIUC this is why Dave in [4] suggests unifying shrink_slab() with
+>> shrink_slab_memcg(), as the latter doesn't iterate the list but uses =
+IDR.
+>>> +		shrinker_put(shrinker);
+>>> +	}
+>>> +	rcu_read_unlock();
+>>>  	cond_resched();
+>>>  	return freed;
+>>>  }
 
