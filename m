@@ -2,134 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 199F573A052
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 13:59:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 379CE73A060
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 14:02:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbjFVL7w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 07:59:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53434 "EHLO
+        id S230252AbjFVMCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 08:02:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230521AbjFVL7v (ORCPT
+        with ESMTP id S231151AbjFVMCQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 07:59:51 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93CB26A0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 04:59:30 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b46b11051aso78982241fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 04:59:30 -0700 (PDT)
+        Thu, 22 Jun 2023 08:02:16 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 827CC2706
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 05:01:54 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f9bece8e19so21935185e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 05:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687435151; x=1690027151;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8gfvgZtBkZSYhAfc+yGsnMs5vDVoQLGwn02xQquywfI=;
-        b=A9Z5XrleFtxkeWPhM2xA/Z2/jXfRPUADuhZ/tkXK/G/ZKJw72GNOpeNhOdHHCoMN7/
-         8sZoXuz+4QjJVRNr9fXLXzjqh7EyIeN+f7smrzNreQTurrM7f9aREX9n7RCyKnekSnFG
-         FZsbixXXoNBT84hqoMwneqhkcDZIf0/yCLCm+EB1HYM+FBeLZHmAXHl9azBj8NgPbsMU
-         RtGQX4QfdEwNSieila3owtChaA5jfM0QvDTnWFYnDW2nVa8ejQmxtXSfQjShatwx0BKq
-         dgECufe67JL7zmv2a504Q+YPj29ymfRJnPl5AHp4jV4qSPqRyRVcHozjqdcK/1CQJCUD
-         5ngQ==
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687435311; x=1690027311;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wCOTNZfhd7+agr1wxdRguQNnip7k7RN73PzCcqk8bM4=;
+        b=OleKPyhN3R4wczfN+QHAWvvG1WL9/mN+I/K+mCIcYDknUObAItercHBRDw+AYq5bdO
+         rxVUFw4luQrnSpDFIYfIsD5LZo7ebRoAnNVqjZ4oS2gzThWzSX3Ubftwhkfdecfzvvoy
+         gDuFBbgfvVU7pQ79DU46SdQ+Wzd+KEeeogBxIOXbxgjBfVMQZfcp5pfrQTRc3+urPClw
+         BOr7IJ0iygFHiZiGjHtCOhj5gLEytQexoPD8Q9ejTB5+ToE0yLW0aWKVdUuToLth6JC4
+         E4+nvFoQBaulTAhf4W/eV/8vRs2xMKS9gIbh31HPeaJ/OCFIrONsjALpdTSloLsRcg2D
+         LKBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687435151; x=1690027151;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8gfvgZtBkZSYhAfc+yGsnMs5vDVoQLGwn02xQquywfI=;
-        b=QZsTRBGMs4yMnVVrT1xg4ELceJU/4Lv7WSr+GcJYspe9cab0w2zy0gG5PVhHR7jc2I
-         Ua4tfxETR8ylGBFl7x/uDz5ZwR9epyf5lATfm27STnSfw+8SigRCuoEWsRCDfnvq0l7o
-         ncAKQEqsZhecpma4sm01SsVz41v862UjmlSZijDGO5lou4KYFL7AmARK5G2H52e6QiJj
-         u8rSb3g6VQUV7Bt4iE1vBOOseI2cQZypD8QJ85Kcu0UGzM63i0QPgcbuQSsxMgBH0Dg4
-         rpgEbVBVw95ADSKc8CX8xPd4nK54q1Mob10qyjjdZIr9Lni/cI+mXmPqUl40rkinmGd4
-         ZX0A==
-X-Gm-Message-State: AC+VfDygKcEsF9JPSVcZoWADW/HjHy6szIOTNY2QUP1d4u6BcxjjqYX8
-        b7D0HwPHkngZXTy/Ge376qAG8Jp3Dq3VP4LpWNY=
-X-Google-Smtp-Source: ACHHUZ4F1bF1UmUqlJE6VAJv5piLov6ByvxQd9nP8EQ0RxH3bU96LJw9NdAhvH0NxtD8GWthjv3OXg==
-X-Received: by 2002:a19:381b:0:b0:4f8:5713:4400 with SMTP id f27-20020a19381b000000b004f857134400mr9925242lfa.1.1687435151334;
-        Thu, 22 Jun 2023 04:59:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyl165.neoplus.adsl.tpnet.pl. [83.9.31.165])
-        by smtp.gmail.com with ESMTPSA id u22-20020ac24c36000000b004f857bdbb26sm1100686lfq.30.2023.06.22.04.59.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jun 2023 04:59:11 -0700 (PDT)
-Message-ID: <cd7564a3-8cd8-4535-07ee-60c1d2b0e321@linaro.org>
-Date:   Thu, 22 Jun 2023 13:59:09 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 6/9] clk: qcom: gcc-msm8998: Don't check halt bit on some
- branch clks
-Content-Language: en-US
+        d=1e100.net; s=20221208; t=1687435311; x=1690027311;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wCOTNZfhd7+agr1wxdRguQNnip7k7RN73PzCcqk8bM4=;
+        b=UUmaJEI51NwXk0Xy5gBgUooS/T8WKgzGom/g0cCmMhAKM69aIo6zKkvFy5slGQBX/8
+         BA9pk+poBDvr7ZAvnub71vOwen2iMxZzUc+rcmsYfETyZ8Sq4+Eo8HPBI9rYjwD+lJHY
+         cW7u6ZaSZBgAfgZ7i5kgTYKm60ZMIoXnXj/wP+vb2+tibrP3RZ26uLmq7Zy1xxgcMSJb
+         ga1RScuhQQpvGXJB6ArJVTSp5F2VjVYUZ1c1aZGWL8s8NzWMLnFsCmx0UoYJrbZu0zR9
+         vc6xKjlXIjYhdzeLJ+Drc7cTdMvENetQT2C0J6xFScRLGdSNFTAtqudDjhxrI06xF2G7
+         Ctvw==
+X-Gm-Message-State: AC+VfDxyDgNdt9q9LL5zviq6zN81PKrhDNeLpYNN3iLJNafm/C09Esia
+        bap8G7dsv5qsUINR/NI5lm+eaQ==
+X-Google-Smtp-Source: ACHHUZ4q83MzrTYI5PC+sT3pKo1MxOyPmpZ1Le9Xh/MjC5lBvY/oPQVeLRdZlgcujE9VQ5+gnSMz6Q==
+X-Received: by 2002:a1c:7914:0:b0:3f9:eaf6:1760 with SMTP id l20-20020a1c7914000000b003f9eaf61760mr3172664wme.3.1687435311108;
+        Thu, 22 Jun 2023 05:01:51 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d785:af3e:3bf5:7f36])
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c231100b003f8ec58995fsm7594296wmo.6.2023.06.22.05.01.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jun 2023 05:01:50 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230622-topic-8998clk-v1-0-5b7a0d6e98b1@linaro.org>
- <20230622-topic-8998clk-v1-6-5b7a0d6e98b1@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230622-topic-8998clk-v1-6-5b7a0d6e98b1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Richard Cochran <richardcochran@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [RESEND PATCH v2 0/5] arm64: dts: qcom: enable ethernet on sa8775p-ride
+Date:   Thu, 22 Jun 2023 14:01:37 +0200
+Message-Id: <20230622120142.218055-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22.06.2023 13:57, Konrad Dybcio wrote:
-> Some branch clocks are governed externally and we're only supposed to
-> send a request concerning their shutdown, not actually ensure it happens.
-> 
-> Use the BRANCH_HALT_SKIP define to skip checking the halt bit.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-Whoops. Again, right after hitting send, I noticed this one was already
-sent with 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-https://lore.kernel.org/linux-arm-msm/20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org/
->  drivers/clk/qcom/gcc-msm8998.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
-> index cccb19cae481..ef410f52f09f 100644
-> --- a/drivers/clk/qcom/gcc-msm8998.c
-> +++ b/drivers/clk/qcom/gcc-msm8998.c
-> @@ -2112,7 +2112,7 @@ static struct clk_branch gcc_gp3_clk = {
->  
->  static struct clk_branch gcc_bimc_gfx_clk = {
->  	.halt_reg = 0x46040,
-> -	.halt_check = BRANCH_HALT,
-> +	.halt_check = BRANCH_HALT_SKIP,
->  	.clkr = {
->  		.enable_reg = 0x46040,
->  		.enable_mask = BIT(0),
-> @@ -2125,7 +2125,7 @@ static struct clk_branch gcc_bimc_gfx_clk = {
->  
->  static struct clk_branch gcc_gpu_bimc_gfx_clk = {
->  	.halt_reg = 0x71010,
-> -	.halt_check = BRANCH_HALT,
-> +	.halt_check = BRANCH_HALT_SKIP,
->  	.clkr = {
->  		.enable_reg = 0x71010,
->  		.enable_mask = BIT(0),
-> @@ -2151,7 +2151,7 @@ static struct clk_branch gcc_gpu_bimc_gfx_src_clk = {
->  
->  static struct clk_branch gcc_gpu_cfg_ahb_clk = {
->  	.halt_reg = 0x71004,
-> -	.halt_check = BRANCH_HALT,
-> +	.halt_check = BRANCH_HALT_SKIP,
->  	.clkr = {
->  		.enable_reg = 0x71004,
->  		.enable_mask = BIT(0),
-> 
+Bjorn,
+
+Now that all other bits and pieces are in next, I'm resending the reviewed
+DTS patches for pick up. This enables one of the 1Gb ethernet ports on
+sa8775p-ride.
+
+Bartosz Golaszewski (5):
+  arm64: dts: qcom: sa8775p: add the SGMII PHY node
+  arm64: dts: qcom: sa8775p: add the first 1Gb ethernet interface
+  arm64: dts: qcom: sa8775p-ride: enable the SerDes PHY
+  arm64: dts: qcom: sa8775p-ride: add pin functions for ethernet0
+  arm64: dts: qcom: sa8775p-ride: enable ethernet0
+
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 109 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi     |  42 +++++++++
+ 2 files changed, 151 insertions(+)
+
+-- 
+2.39.2
+
