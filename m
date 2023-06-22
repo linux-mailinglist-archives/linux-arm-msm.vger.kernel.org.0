@@ -2,90 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0100F739511
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 04:00:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E064739518
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 04:04:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbjFVCA5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 22:00:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60758 "EHLO
+        id S229680AbjFVCET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 22:04:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230214AbjFVCAy (ORCPT
+        with ESMTP id S229765AbjFVCES (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 22:00:54 -0400
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB7661BD8;
-        Wed, 21 Jun 2023 19:00:51 -0700 (PDT)
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-77e43dde8c9so151953839f.3;
-        Wed, 21 Jun 2023 19:00:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687399251; x=1689991251;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wBXEfv4Yrn77qP/MYPvp3SEav3PapGrc9nExUoKa+q4=;
-        b=PFr5gGH7gNv36I0mknoHpsjPcdyG/6UCDtBCjUjqOCUtiqQ0+eh2k4gm4zw0TngJ4s
-         PtS+okesHAM0q+iCaXaNOwNi+EKnExAAlAzs/SBmngq717DvfehWmMiOMPfmLMGEnCXz
-         Z99IOdTemXFwHEcOV1VuIMJRvnSJ6k2NNoVxzt63/oE3ZFspeFlL6QYxc7bOZAreqe6R
-         9YfIAMmPC2LOkm9o6qdGkrdJR/gk0dAKddvnWo49tLcB/E18irSsZFrcxrtHU7E47NXF
-         JUl4zcKNtYytR9CN1BJhAQ93Dq69CZxyQCffuoatRIYbEsFlAIwBhyIChwtH/RiTXq4u
-         7RWw==
-X-Gm-Message-State: AC+VfDyhSm4UA+c2cB74BM8A9K+kE0j+47SXMnKzvu0fixtfDEx4eb/O
-        8y5nhbfLT0sDg9D88itJMg==
-X-Google-Smtp-Source: ACHHUZ4LjlN2f3BpdV6OS0nUzSrKIpexflZ3GCFR2u9mVTl6o2I45TcjN3WnmY9ZnCdbw80O88zXjg==
-X-Received: by 2002:a05:6e02:4d2:b0:340:b569:aec1 with SMTP id f18-20020a056e0204d200b00340b569aec1mr15521666ils.28.1687399251132;
-        Wed, 21 Jun 2023 19:00:51 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id n13-20020a92d9cd000000b0033b2a123254sm1670712ilq.61.2023.06.21.19.00.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jun 2023 19:00:50 -0700 (PDT)
-Received: (nullmailer pid 55180 invoked by uid 1000);
-        Thu, 22 Jun 2023 02:00:48 -0000
-Date:   Wed, 21 Jun 2023 20:00:48 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Wed, 21 Jun 2023 22:04:18 -0400
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8674B198E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 19:04:17 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 02:03:59 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1687399453; x=1687658653;
+        bh=/cve8Q6U6rQp6Q0xdA16Ihm8oDULhwZvYL+WJ6ax/6Y=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=s9LG+7vpA7ypY/BCUDmB+frs8jhsUVlCoKiGifnrNogAmLivjy6H1BXCmrGvZlIBL
+         VjxFtDDRACIoxgwI0TCKXC9cwMVjmMU7aAmxGTNWqJSszy9oUQWk2bw7MFo+MgEbxE
+         wx5kS7N7ud6diG6ZFAjVpYbL8Y92D8jfo5WC8pbEyfHtaM402S0//vBjcMxsBjooDI
+         UtCn8kpll+yYDFep5YId/93pdn+x4RONmF0Ji3MlUD6szDkUMf4pxAF6LLFTcDpoeR
+         6n8WuXTgzmJfVCYfMBeUHzeKb2vW3SQaoCe80s4hl4vAGJCeO1CofCkTFexAsguPKp
+         UVuXQMSkH/mAg==
+To:     linux-kernel@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        freedreno@lists.freedesktop.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Robert Foss <rfoss@kernel.org>, devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [PATCH 3/3] dt-bindings: display: msm: sm8550-mdss: document
- displayport controller subnode
-Message-ID: <168739924746.55132.18209927857725642853.robh@kernel.org>
-References: <20230621-topic-sm8x50-upstream-mdss-bindings-dp-subnode-v1-0-8bf386b373eb@linaro.org>
- <20230621-topic-sm8x50-upstream-mdss-bindings-dp-subnode-v1-3-8bf386b373eb@linaro.org>
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH 0/8] arm64: dts: qcom: msm8939-samsung-a7: Add initial dts
+Message-ID: <20230622020344.65745-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230621-topic-sm8x50-upstream-mdss-bindings-dp-subnode-v1-3-8bf386b373eb@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This dts adds support for Samsung Galaxy A7 smartphone released in 2015.
 
-On Wed, 21 Jun 2023 11:26:27 +0200, Neil Armstrong wrote:
-> Document the optional document displayport controller subnode
-> of the SM8550 MDSS.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/qcom,sm8550-mdss.yaml         | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
+Add a device tree for A7 with initial support for:
 
-Acked-by: Rob Herring <robh@kernel.org>
+- GPIO keys
+- Hall Sensor
+- SDHCI (internal and external storage)
+- USB Device Mode
+- UART (on USB connector via the SM5502 MUIC)
+- WCNSS (WiFi/BT)
+- Regulators
+- Touch key
+- Accelerometer/Magnetometer
+- Fuelgauge
+- NFC
+- Vibrator
+- Touchscreen
 
