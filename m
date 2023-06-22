@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D92D073A915
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 21:41:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66E7F73A911
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 21:41:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbjFVTle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 15:41:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55624 "EHLO
+        id S230287AbjFVTlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 15:41:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbjFVTlc (ORCPT
+        with ESMTP id S229802AbjFVTlY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 15:41:32 -0400
+        Thu, 22 Jun 2023 15:41:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A461BCC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 12:40:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38711A4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 12:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1687462846;
+        s=mimecast20190719; t=1687462845;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=DqhwtQo4HweKbF66I7wMIR+srfhZ3FF6k/Qs3cAOKDk=;
-        b=M2WPIDDM4lXcXJOgy8DZ74L4KophhdtAS9YVgWi+1jwZl7l8TOdX7Uja2F4geMcCa8nYqz
-        aJFGMl0IpHjYWDOjfwncUqyo8gm6wp9RIeRlUw5uLD4KkS0OTDWsOrXXGLYuC0mhZLtNBD
-        Jodnuc+ywgrWQPr4xZOlC4+GYXrlkYA=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=MWrDFCHsqN4+5MSAzLCn1UT7GF/+NLROeJoU0j89xKo=;
+        b=bA8OFLJH8+0lMEJj9Vxwwe6fxeNXye3bCU9fg4Cp0HV+Vp7cUmvPArutbBaVslHXgD0+4l
+        a8EcJy+DieB5IfuajukvrzhTuPfHtC6RQRDL+UGIKV3WBVdQ5cQQQPs43qFFyVpup9rX7l
+        x2zQjKqyOsQm0DhEvKZhuicFk6rG7H0=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-UPigSbFrPNW2UaS0u1sLpw-1; Thu, 22 Jun 2023 15:40:43 -0400
-X-MC-Unique: UPigSbFrPNW2UaS0u1sLpw-1
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6238c3bf768so95840306d6.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 12:40:40 -0700 (PDT)
+ us-mta-124-zElQo2liMQWwGpttbHNYKA-1; Thu, 22 Jun 2023 15:40:42 -0400
+X-MC-Unique: zElQo2liMQWwGpttbHNYKA-1
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-62ffe2b9faaso74790326d6.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 12:40:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687462839; x=1690054839;
+        d=1e100.net; s=20221208; t=1687462841; x=1690054841;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DqhwtQo4HweKbF66I7wMIR+srfhZ3FF6k/Qs3cAOKDk=;
-        b=I3Sw4AvI8Oki5kqeDp6B8hOKrmUIulgooZhx2Ui/hIs8yBiuoFQHOf7ocDEPkRIzaQ
-         I7IzisHIYHRXFQEo4HlSPyza7cO2g8P4kK0jkBn0hw5wxt4tfztgdsvTmJ0b0oiItrGG
-         saU467hQbeWUeRHhqTTUZUDD9jva4e7y00vTzWP5JOF6J652gGqgJqWqMv+2x0atjZuY
-         XCUDUan+D6WngFtwuUZHvTFdQsdWwagaRBHX7y8i6kxj7WQPa2B74FSslpsB1x/zITyt
-         MbOQvqNtoe54mS+VEvtVp6Cf0fgQn8qpwSrq4zRvJRqwtcm2P789FP5EFeMCjew8yGeM
-         q25Q==
-X-Gm-Message-State: AC+VfDzZTJMvWoJ3iFICrov3ihS5JywaBw5m3piYMuQygsunnYOcZCEg
-        6VjhGQWfmrtKYqTMluKBuxpyaaodiILATO6ZO/WfIAhXxHNYI7T6YcBpFqOuRs3pQ0JWBn4v9MZ
-        jRVvSLEeJpunsT/5uiSHuYJMLMg==
-X-Received: by 2002:a05:6214:5086:b0:631:f6f1:87dd with SMTP id kk6-20020a056214508600b00631f6f187ddmr9337129qvb.8.1687462839593;
-        Thu, 22 Jun 2023 12:40:39 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ69TnqqnfQxrmbJrjGYdzCVW52XHc4aK+QXoi41a2M0LmdNJH1EUhWqDLJh8yup8EdWguSn+g==
-X-Received: by 2002:a05:6214:5086:b0:631:f6f1:87dd with SMTP id kk6-20020a056214508600b00631f6f187ddmr9337105qvb.8.1687462839297;
-        Thu, 22 Jun 2023 12:40:39 -0700 (PDT)
+        bh=MWrDFCHsqN4+5MSAzLCn1UT7GF/+NLROeJoU0j89xKo=;
+        b=JROLXjGkJFfAXawbrh7Zy2uIWddscGlYtmruOMEIfbc9gUb5YHwGprKVdAPMc4+GM0
+         q0CufzpvJT52VWE6a1Kdkj2pdgMQm4Q/82lxehd1a476Gqv8l14LAvyQaAS9sgolfFPI
+         97Xkz48AdsosEklgKWMgcOAZG95T/ciDnCU32b4GqsirlfQSWvNixkW5JHJTmvy/oyVF
+         Xe0ZFXWYbpBpT6L2KLhRF2xBqDf8s/L+XdA18Zm6bX2W6Ze0bcRj9ak1ETl9qntOJE2d
+         k4LxWGCsXW9/X1h0xmr6xStdqc72u5MMf16TyOYGYEh2G5aZUZ0kQ2rJzpr9wtzgXVF7
+         dqmg==
+X-Gm-Message-State: AC+VfDyCYbgPGVy2Kdm8H43yOtzP2l3eGrtvJ4SooKbU5MzfdOkuBtsp
+        4uN8AF7qiJg7vf14zABy32Lyg5zOqHpoLzhgMVpZrSyUQPxWSWKpYnC/kH5mi+SirAZN58tp1LI
+        xHid72FI4mT0j77l1G3Kpe4B3HA==
+X-Received: by 2002:ad4:5945:0:b0:625:bb19:278c with SMTP id eo5-20020ad45945000000b00625bb19278cmr21175179qvb.2.1687462841470;
+        Thu, 22 Jun 2023 12:40:41 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ73yfvqsiPyuOtABnb0j8eIwVwowAAFand2k5OPq2wcWipHS01G81L+H9yJSu96nSUjf8KfOw==
+X-Received: by 2002:ad4:5945:0:b0:625:bb19:278c with SMTP id eo5-20020ad45945000000b00625bb19278cmr21175163qvb.2.1687462841144;
+        Thu, 22 Jun 2023 12:40:41 -0700 (PDT)
 Received: from fedora.redhat.com ([107.171.218.122])
-        by smtp.gmail.com with ESMTPSA id jo30-20020a056214501e00b006301819be40sm4174183qvb.49.2023.06.22.12.40.37
+        by smtp.gmail.com with ESMTPSA id jo30-20020a056214501e00b006301819be40sm4174183qvb.49.2023.06.22.12.40.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 12:40:38 -0700 (PDT)
+        Thu, 22 Jun 2023 12:40:40 -0700 (PDT)
 From:   Adrien Thierry <athierry@redhat.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     Adrien Thierry <athierry@redhat.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v3 2/3] phy: qcom-snps-femto-v2: add system sleep PM ops
-Date:   Thu, 22 Jun 2023 15:40:19 -0400
-Message-Id: <20230622194021.80892-3-athierry@redhat.com>
+Subject: [PATCH v3 3/3] phy: qcom-snps-femto-v2: use qcom_snps_hsphy_do_suspend/resume error code
+Date:   Thu, 22 Jun 2023 15:40:20 -0400
+Message-Id: <20230622194021.80892-4-athierry@redhat.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230622194021.80892-1-athierry@redhat.com>
 References: <20230622194021.80892-1-athierry@redhat.com>
@@ -82,83 +82,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The downstream driver [1] implements set_suspend(), which deals with
-both runtime and system sleep/resume. The upstream driver already has
-runtime PM ops, so add the system sleep PM ops as well, reusing the same
-code as the runtime PM ops.
-
-[1] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c
+The return value from qcom_snps_hsphy_do_suspend/resume is not used.
+Make sure qcom_snps_hsphy_suspend/resume return this value as well.
 
 Signed-off-by: Adrien Thierry <athierry@redhat.com>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index ce1d2f8b568a..378a5029f61e 100644
+index 378a5029f61e..6be8b5218aaa 100644
 --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
 +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -179,7 +179,7 @@ static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
- 	readl_relaxed(base + offset);
- }
- 
--static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
-+static int qcom_snps_hsphy_do_suspend(struct qcom_snps_hsphy *hsphy)
- {
- 	dev_dbg(&hsphy->phy->dev, "Suspend QCOM SNPS PHY\n");
- 
-@@ -199,7 +199,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
- 	return 0;
- }
- 
--static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
-+static int qcom_snps_hsphy_do_resume(struct qcom_snps_hsphy *hsphy)
- {
- 	int ret;
- 
-@@ -214,25 +214,25 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
- 	return 0;
- }
- 
--static int __maybe_unused qcom_snps_hsphy_runtime_suspend(struct device *dev)
-+static int __maybe_unused qcom_snps_hsphy_suspend(struct device *dev)
- {
- 	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
- 
+@@ -221,8 +221,7 @@ static int __maybe_unused qcom_snps_hsphy_suspend(struct device *dev)
  	if (!hsphy->phy_initialized)
  		return 0;
  
--	qcom_snps_hsphy_suspend(hsphy);
-+	qcom_snps_hsphy_do_suspend(hsphy);
- 	return 0;
+-	qcom_snps_hsphy_do_suspend(hsphy);
+-	return 0;
++	return qcom_snps_hsphy_do_suspend(hsphy);
  }
  
--static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
-+static int __maybe_unused qcom_snps_hsphy_resume(struct device *dev)
- {
- 	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
- 
+ static int __maybe_unused qcom_snps_hsphy_resume(struct device *dev)
+@@ -232,8 +231,7 @@ static int __maybe_unused qcom_snps_hsphy_resume(struct device *dev)
  	if (!hsphy->phy_initialized)
  		return 0;
  
--	qcom_snps_hsphy_resume(hsphy);
-+	qcom_snps_hsphy_do_resume(hsphy);
- 	return 0;
+-	qcom_snps_hsphy_do_resume(hsphy);
+-	return 0;
++	return qcom_snps_hsphy_do_resume(hsphy);
  }
  
-@@ -518,8 +518,10 @@ static const struct of_device_id qcom_snps_hsphy_of_match_table[] = {
- MODULE_DEVICE_TABLE(of, qcom_snps_hsphy_of_match_table);
- 
- static const struct dev_pm_ops qcom_snps_hsphy_pm_ops = {
--	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_runtime_suspend,
--			   qcom_snps_hsphy_runtime_resume, NULL)
-+	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_suspend,
-+			   qcom_snps_hsphy_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(qcom_snps_hsphy_suspend,
-+				qcom_snps_hsphy_resume)
- };
- 
- static void qcom_snps_hsphy_override_param_update_val(
+ static int qcom_snps_hsphy_set_mode(struct phy *phy, enum phy_mode mode,
 -- 
 2.40.1
 
