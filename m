@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF2F673A22F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:51:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 730F173A250
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:56:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229916AbjFVNvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 09:51:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47974 "EHLO
+        id S231175AbjFVN4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 09:56:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229840AbjFVNvJ (ORCPT
+        with ESMTP id S231159AbjFVN4j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 09:51:09 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A006D1997
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:51:07 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so9750484e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:51:07 -0700 (PDT)
+        Thu, 22 Jun 2023 09:56:39 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D52A51BC3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:56:36 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-311183ef595so7208789f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687441866; x=1690033866;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=IeSbPg4ZIVu85Aig3buKlFPPdDBd8bIr1LgjNoNCfVk=;
-        b=cltVl1bLV6D0wwr/IhxvmEkAVZ0UkptHZRIIhZrDKqR88upROqWz0lTQy1FY+SFwl6
-         Z7JJvbeBn84dbj6E/gbdBj+sivPejDW9OeRikMtenMWMOpFSP0WCiBFjjczDLzfysFBC
-         q8c8++3BYSuqz5IwxOOnMac6WTn97wNcPYvggFLv3iDVB0/tjbcR2pBAIxIhAxZCRd1s
-         +0Caf70RkQUzUSj0mPxsIQNUlfdVpXRcV3a2HzT0XF+AuC5+aD6LmO4wSBnvzrFW9dE/
-         6DYWGWgHUNc+l6Sd8hzp87i1Qsb0x/w7WxNlb6eQzmIMyJfX3cdnbTi9JNF13SUPo0wm
-         eu6w==
+        d=linaro.org; s=google; t=1687442195; x=1690034195;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QEW2WXBte3jN1fLJ211gvIuJSeoOteLGjUnX78P98k4=;
+        b=rrCXA0HYW+NRaxuK0LzkBkWHaS32roNXnVTcSlzHkz0PKFiRzi6Lf0a2kxT5sw4sbW
+         jjMVv3gbRGX7y73/rTeAxgcyKJRaEjx8hgeXVmr1KOVjDxufD90egWATGqaHhCdg5lyL
+         CCWBPoNFR/6czRV2XsuleAFb6zUW8evSN0nKHKSOPM/86ngFyJnI//xhzazH6g+ufdey
+         iAvpeJ61KZ0V6PMuriG406hq6r4Jp2DjThmRQnPoG+2mD5V8pIHj1OSfFc1yhmt6x4Iw
+         hJJY0N9IrNvCEy31Uv4j6O7vgmIRqgPp5toYxfIEQfRxNvrKDPf6N2IWfmuS9pLtFoy0
+         IMUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687441866; x=1690033866;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IeSbPg4ZIVu85Aig3buKlFPPdDBd8bIr1LgjNoNCfVk=;
-        b=WRBgEIJD4/RS9pjjL1wWbaAH3LHbM3dkXMtuZJ59aGdtK7XV3WTLOPupllRPHWEvxO
-         uYcyyuZHzCIeD9mDFZiBCjkkGBMnGLqtGyHadkEUhh+19482d96AvqH4OTfVHbnIuMEU
-         8wsyJr7pwRuF5ixdwogiJYNJWifad9anKZVBidH+xX9TzypHgAeBRDUJFwnkSHmClCAM
-         3zdN4zig6uyOB1wNwTPlTA1GIHv0O9n9vtUlY7Akiwmie8kTZc2hTAboF4vr7aCADqCg
-         Si/JHFKfYzbAD4JvFxZK5MjpPxD1RlYh7wqrsqOTazGWm0CGyAKUb4KDtVQqTqen5ogV
-         RSNg==
-X-Gm-Message-State: AC+VfDwP5O2xmcByg2QzrrQHUdpNNr4P/0ueLez4m+nrmdJGjWBHRo7I
-        b9G3XEyoPXa803VDPCTv/Kc2
-X-Google-Smtp-Source: ACHHUZ7JOp4XzRU7Tu08nNDLkjzkmR9cW6tj2MYtZ4uxvW09KgxaFEH4yAsowrkNCrMvjaKqyOViWA==
-X-Received: by 2002:a05:6512:3d90:b0:4f8:58ae:8ea8 with SMTP id k16-20020a0565123d9000b004f858ae8ea8mr11196655lfv.58.1687441865729;
-        Thu, 22 Jun 2023 06:51:05 -0700 (PDT)
-Received: from thinkpad ([117.217.178.216])
-        by smtp.gmail.com with ESMTPSA id q16-20020aa7d450000000b0051a409e752asm4034616edr.17.2023.06.22.06.50.59
+        d=1e100.net; s=20221208; t=1687442195; x=1690034195;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QEW2WXBte3jN1fLJ211gvIuJSeoOteLGjUnX78P98k4=;
+        b=UdvG6n43QIhJd4G1Ri/sM1+ZkbyXcMuBBrsCveisEzff1/wHe/gxWsgOZcn2LZCKUR
+         sz9/JDXFnOjEtdI/kgF/8wGkO18/Nm4qG5wuDxyRihrexylRjNUBIqH1vuDNhmqmxkdu
+         1buPDyYa6GPlcEQB722mRJUNOgjtTNfrgN0SnOTfhz0PO+GaKSBkwXwYytNVipjffzAQ
+         sH6ijWeGWsxRMt6lxkAz4c7vhqoarJzTIhaSRyYdB8idGZgQOO7fffyE/7xg/5Q1P4YT
+         cASCzOIgXC5PKx6W6ZMJemJYToIIzKXGw23rIZSrdHM/JgyU3aj8VH7Suh8Ipok2gscw
+         4piA==
+X-Gm-Message-State: AC+VfDwbJPutGnGKt3ZbK7+Slvl6dKliufxb2wn6VboewmsOQ2L7Hsjp
+        GDCC3uG3EuRUA7JR1hObBX1x7A==
+X-Google-Smtp-Source: ACHHUZ6a6EZPyQbiw2QFhMNDMLiHUFcNZTWVMQXmY1brW9zlZbdXXamxNjQ4bnHgoRKMXiHVkCeg6Q==
+X-Received: by 2002:adf:ec45:0:b0:30f:af06:7320 with SMTP id w5-20020adfec45000000b0030faf067320mr1923670wrn.23.1687442195120;
+        Thu, 22 Jun 2023 06:56:35 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id s3-20020a7bc383000000b003f6132f95e6sm18924956wmj.35.2023.06.22.06.56.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 06:51:05 -0700 (PDT)
-Date:   Thu, 22 Jun 2023 19:20:54 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
-Message-ID: <20230622135054.GA69564@thinkpad>
-References: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+        Thu, 22 Jun 2023 06:56:33 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 16:56:29 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+Subject: Re: [PATCH v3 03/11] media: videobuf2: Remove VB2_MAX_FRAME limit on
+ buffer storage
+Message-ID: <1d9fea5b-5c74-4fc2-9287-71cd68adbda1@kadam.mountain>
+References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
+ <20230622131349.144160-4-benjamin.gaignard@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230622131349.144160-4-benjamin.gaignard@collabora.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -80,53 +80,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 04:36:27PM +0200, Krzysztof Kozlowski wrote:
-> SM8350 HDK and MTP boards were silently dying and rebooting during BAM
-> DMA probe:
-> 
->   [    1.574304] vreg_bob: Setting 3008000-3960000uV
->   [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
->   Optional Info
->   Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
->   S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
->   S - IMAGE_VARIANT_STRING=SocLahainaLAA
->   S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
->   S - Boot Interface: UFS
-> 
-> It seems that BAM DMA is locally controller (not by firmware) and
-> requires proper initialization by the driver prior to use, at least on
-> HDK8350 and MTP8350, but probably on all boards.
-> 
-> Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Thu, Jun 22, 2023 at 03:13:41PM +0200, Benjamin Gaignard wrote:
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index f1ff7af34a9f..86e1e926fa45 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -455,9 +455,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>  	struct vb2_buffer *vb;
+>  	int ret;
+>  
+> -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
+> +	/* Ensure that q->num_buffers + num_buffers is UINT_MAX */
+>  	num_buffers = min_t(unsigned int, num_buffers,
+> -			    VB2_MAX_FRAME - q->num_buffers);
+> +			    UINT_MAX - q->num_buffers);
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+The UINT_MAX limit adds a level of danger.  It would be safer to do what
+the vfs layer does for MAX_RW_COUNT and use "INT_MAX - PAGE_SIZE".  That
+way you can take size + sizeof() and it's only very rarely going to turn
+negative.  Or at least just INT_MAX.  I would keep the VB2_MAX_FRAME and
+define it as:
 
-- Mani
+#define VB2_MAX_FRAME (INT_MAX & PAGE_MASK)  /* The mask prevents 85% of integer overflows */
 
-> 
-> ---
-> 
-> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index 88ef478cb5cc..b382ce66387e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -1741,7 +1741,6 @@ cryptobam: dma-controller@1dc4000 {
->  			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
->  			#dma-cells = <1>;
->  			qcom,ee = <0>;
-> -			qcom,controlled-remotely;
->  			iommus = <&apps_smmu 0x594 0x0011>,
->  				 <&apps_smmu 0x596 0x0011>;
->  		};
-> -- 
-> 2.34.1
-> 
+>  
+>  	for (buffer = 0; buffer < num_buffers; ++buffer) {
+>  		/* Allocate vb2 buffer structures */
+> @@ -858,9 +858,9 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>  	/*
+>  	 * Make sure the requested values and current defaults are sane.
+>  	 */
+> -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
+> +	WARN_ON(q->min_buffers_needed > UINT_MAX);
 
--- 
-மணிவண்ணன் சதாசிவம்
+This will trigger a static checker warning because the condition is
+impossible.
+
+regards,
+dan carpenter
+
