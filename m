@@ -2,34 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4386B73939D
+	by mail.lfdr.de (Postfix) with ESMTP id EB13A73939F
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 02:15:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229843AbjFVAP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jun 2023 20:15:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53382 "EHLO
+        id S229645AbjFVAP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jun 2023 20:15:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230253AbjFVAPZ (ORCPT
+        with ESMTP id S230256AbjFVAP1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jun 2023 20:15:25 -0400
-Received: from mail-41103.protonmail.ch (mail-41103.protonmail.ch [185.70.41.103])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C1AE1730;
-        Wed, 21 Jun 2023 17:15:23 -0700 (PDT)
-Date:   Thu, 22 Jun 2023 00:04:25 +0000
-Authentication-Results: mail-41103.protonmail.ch;
-        dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="J3HGnhIZ"
+        Wed, 21 Jun 2023 20:15:27 -0400
+X-Greylist: delayed 460 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 21 Jun 2023 17:15:26 PDT
+Received: from mail-4321.protonmail.ch (mail-4321.protonmail.ch [185.70.43.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCB211C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jun 2023 17:15:26 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 00:04:37 +0000
+Authentication-Results: mail-4321.protonmail.ch;
+        dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="QZTu5g/b"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1687392279; x=1687651479;
-        bh=7io2nYrzkHD3aXlPybSWf16LW6ApjJS6Dz0Z07AACno=;
+        s=protonmail3; t=1687392292; x=1687651492;
+        bh=KPV8l5vWbr9QkrijMiYUQ4TXqOgXrZpEbZB6K+/SA4w=;
         h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
          Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
          Message-ID:BIMI-Selector;
-        b=J3HGnhIZuW2c0V617HbLENla7VuW4MpttI+pL/EhcZ8Mr1eOBgMbLIJj+1K67zdZl
-         Hacf+Dud6NyVDwsZzt93pIoBg0p+uh6TLqcWg5mSoem5VR01qHfBDGTtFgiyMhpv4h
-         hdWlex33whlRhAPD9u29aSiYinmwuGBzCMbHSwHgcUSXT8eGBEQkkDkSxcn2rk4b6B
-         9EFu0ggCqS4+ZKwmNMBm/WgwGNDimLKhjmoYK/Bfzgzt0bapLh/bynklunTvYFsyAx
-         QgWuLf+SgkKuMY9Im5b2U22TtFzK2lynIkOx3yTuqmYpL5AAXt0gHf7E43PetSMzJ0
-         336O4ySxkjuoQ==
+        b=QZTu5g/bwfZI/hjKsmmVwZoifpGc4f0JfgYX8vgDKgVyZvKwtvBJpQstpdpIcANMN
+         FnEfjIB7e2w2jYlPnzfHqlh+gY6eDss1QLQlbBmWSXLyjbhaNdtfn7ZzvF75PcLpnx
+         UJ8b5KTqRG08yhW57yf+BF3otxf1zx9iowo7Lm9AwtffR2v2JyrKML+otfgvipB3o1
+         VbyAcHjB5kaQ+0eTVVshm2VUAK0v1rQWmQ5Nx9h9Rh3VJUQYgiMbjbCCHnk3Zhl8kO
+         1Qw4sAbYcKTKMGI46uFqSayLpli4M6daY17IQjr30l6ffXlNiNh25r3HG3+tTU4isG
+         jAnSp8HhAjVPw==
 To:     linux-kernel@vger.kernel.org
 From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -46,8 +47,8 @@ Cc:     Andy Gross <agross@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
         Joe Mason <buddyjojo06@outlook.com>,
         "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Subject: [PATCH 4/7] arm64: dts: qcom: msm8916-samsung-fortuna: Add rt5033 battery
-Message-ID: <20230622000338.48315-1-linmengbo0689@protonmail.com>
+Subject: [PATCH 5/7] arm64: dts: qcom: msm8916-samsung-fortuna: Add touchscreen
+Message-ID: <20230622000358.48332-1-linmengbo0689@protonmail.com>
 In-Reply-To: <20230622000007.48219-1-linmengbo0689@protonmail.com>
 References: <20230622000007.48219-1-linmengbo0689@protonmail.com>
 Feedback-ID: 40467236:user:proton
@@ -57,7 +58,7 @@ Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
         FREEMAIL_FROM,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -66,61 +67,107 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Joe Mason <buddyjojo06@outlook.com>
 
-Like the Samsung Galaxy A3/A5, the Grand Prime uses a Richtek RT5033 PMIC
-as battery fuel gauge, charger, flash LED and for some regulators.
-For now, only add the fuel gauge/battery device to the device tree, so we
-can check the remaining battery percentage.
-
-The other RT5033 drivers need some more work first before they can be used
-properly.
+Like msm8916-samsung-a3u-eur, the Grand Prime uses a Zinitix BT541
+touchscreen. Add it together with the necessary fixed-regulator to the
+device tree.
 
 Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
 Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 ---
- .../qcom/msm8916-samsung-fortuna-common.dtsi  | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ .../qcom/msm8916-samsung-fortuna-common.dtsi  | 50 +++++++++++++++++++
+ .../qcom/msm8916-samsung-rossa-common.dtsi    |  7 +++
+ 2 files changed, 57 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi b=
 /arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-index 40c8edc795b0..ca147310c27a 100644
+index ca147310c27a..6d9f89446105 100644
 --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-@@ -79,6 +79,21 @@ muic: extcon@25 {
+@@ -64,6 +64,19 @@ reg_motor_vdd: regulator-motor-vdd {
+ =09=09pinctrl-0 =3D <&motor_en_default>;
+ =09=09pinctrl-names =3D "default";
+ =09};
++
++=09reg_vdd_tsp_a: regulator-vdd-tsp-a {
++=09=09compatible =3D "regulator-fixed";
++=09=09regulator-name =3D "vdd_tsp_a";
++=09=09regulator-min-microvolt =3D <3000000>;
++=09=09regulator-max-microvolt =3D <3000000>;
++
++=09=09gpio =3D <&tlmm 73 GPIO_ACTIVE_HIGH>;
++=09=09enable-active-high;
++
++=09=09pinctrl-0 =3D <&tsp_en_default>;
++=09=09pinctrl-names =3D "default";
++=09};
+ };
+=20
+ &blsp_i2c1 {
+@@ -94,6 +107,29 @@ battery@35 {
  =09};
  };
 =20
-+&blsp_i2c4 {
++&blsp_i2c5 {
 +=09status =3D "okay";
 +
-+=09battery@35 {
-+=09=09compatible =3D "richtek,rt5033-battery";
-+=09=09reg =3D <0x35>;
++=09touchscreen@20 {
++=09=09compatible =3D "zinitix,bt541";
++=09=09reg =3D <0x20>;
 +
 +=09=09interrupt-parent =3D <&tlmm>;
-+=09=09interrupts =3D <121 IRQ_TYPE_EDGE_FALLING>;
++=09=09interrupts =3D <13 IRQ_TYPE_EDGE_FALLING>;
 +
-+=09=09pinctrl-0 =3D <&fg_alert_default>;
++=09=09touchscreen-size-x =3D <540>;
++=09=09touchscreen-size-y =3D <960>;
++
++=09=09vcca-supply =3D <&reg_vdd_tsp_a>;
++=09=09vdd-supply =3D <&pm8916_l6>;
++
++=09=09pinctrl-0 =3D <&tsp_int_default>;
 +=09=09pinctrl-names =3D "default";
++
++=09=09linux,keycodes =3D <KEY_APPSELECT KEY_BACK>;
 +=09};
 +};
 +
  &blsp_uart2 {
  =09status =3D "okay";
  };
-@@ -127,6 +142,13 @@ &wcnss_iris {
- };
-=20
- &tlmm {
-+=09fg_alert_default: fg-alert-default-state {
-+=09=09pins =3D "gpio121";
+@@ -176,4 +212,18 @@ sdc2_cd_default: sdc2-cd-default-state {
+ =09=09drive-strength =3D <2>;
+ =09=09bias-disable;
+ =09};
++
++=09tsp_en_default: tsp-en-default-state {
++=09=09pins =3D "gpio73";
 +=09=09function =3D "gpio";
 +=09=09drive-strength =3D <2>;
 +=09=09bias-disable;
 +=09};
 +
- =09gpio_keys_default: gpio-keys-default-state {
- =09=09pins =3D "gpio107", "gpio109";
- =09=09function =3D "gpio";
++=09tsp_int_default: tsp-int-default-state {
++=09=09pins =3D "gpio13";
++=09=09function =3D "gpio";
++=09=09drive-strength =3D <2>;
++=09=09bias-disable;
++=09};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi b/a=
+rch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
+index 5b012dc92e0e..242cb61e55fd 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
+@@ -15,3 +15,10 @@ muic: extcon@14 {
+ =09=09pinctrl-names =3D "default";
+ =09};
+ };
++
++&blsp_i2c5 {
++=09status =3D "disabled";
++
++=09/* Touchscreen varies depending on model variant */
++=09/delete-node/ touchscreen@20;
++};
 --=20
 2.39.2
 
