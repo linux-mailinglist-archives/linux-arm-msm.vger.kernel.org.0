@@ -2,166 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE18773A1B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:14:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B9F873A20D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:41:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231627AbjFVNOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 09:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32862 "EHLO
+        id S230450AbjFVNlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 09:41:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231623AbjFVNOG (ORCPT
+        with ESMTP id S230373AbjFVNly (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 09:14:06 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46D721BF6;
-        Thu, 22 Jun 2023 06:14:04 -0700 (PDT)
-Received: from benjamin-XPS-13-9310.. (unknown [IPv6:2a01:e0a:120:3210:7d72:676c:e745:a6ef])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id BD701660713E;
-        Thu, 22 Jun 2023 14:14:02 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1687439643;
-        bh=w7TelsLJmHPPFBbH7cdd4Q4u9mfk8qz6m8m3ILNeG3Q=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=drrv7EArNlrMc2bqooR2UXQWYueWvIBP+Y1UDX7ZsxJ63fm9MWRTLdvcy/nd3MtmR
-         1tAPfYMWNjrmPUNRS0XxCwqXho+WBGpGewAnYEE2Ie+xdCEP8PrQjPE1/As1XTSeyn
-         xo3B32kzTLEBtIyn4PJwr+EjAOq7FA6fpFlwXN2Z3uefoRQqtw9FpEHPug6LThebK/
-         Phxk51rtR7zmF4yR5QN7vIcsJ7/u5EPHjYGDIFfcOkODSzlshf3WIBEh+wamPxDcUG
-         cWTeOwNzSOsFR7WozNP+PQ3eLDCtl+RCP7lgpfh103fQjpIRJovqxw58Wv7OnDvRLI
-         iyFgvrTal3KYg==
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Subject: [PATCH v3 11/11] media: v4l2: Add mem2mem helpers for DELETE_BUF ioctl
-Date:   Thu, 22 Jun 2023 15:13:49 +0200
-Message-Id: <20230622131349.144160-12-benjamin.gaignard@collabora.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
-References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
+        Thu, 22 Jun 2023 09:41:54 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC35F1997
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:41:52 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b46cfde592so80865181fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687441311; x=1690033311;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ve+OWfFYUCiv6UHrWR4xPWh16PPXcMY6jkpEu/4lkPk=;
+        b=mEsIWVfPlLZBJzIrz6iH+Fqscjlr8yqjSX/5UY7QAb3wOE2jQ2vPCbjehTp3ugtIiJ
+         ciU4iqovmzpuCDqQtO5+gQSjh2MCgfV5H3YuXXzeeBaJtWKeJYCIUMRnmcoV3ctUcrb/
+         WbBkwO5OHGyWKPM50Od1ru2DwqTAFuj24/eLFE0jB4gP/bwOeTDM9isWdVnMpgfSa5tZ
+         m1sUp7gRYFgazJUpUNVlsajcsWWdv4hbANzEnpvJaI7zMfeikYQE9yjVJnaycXMlDoC+
+         YWUD5bkYcXcPo7DZOXX94crnIPS2gohNMatnMHIDly51LQ27u2UZOKS//FyWgE9XIu+d
+         YVkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687441311; x=1690033311;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ve+OWfFYUCiv6UHrWR4xPWh16PPXcMY6jkpEu/4lkPk=;
+        b=hyZqepAYclhJpVy0u/G47rwBwVttQiN9jIk1+Y1uPAi5bzLumHl/nJDbzWUUwM1F3a
+         ZANKY9pLK2YYorFMYFIlr2G8RLJu/wJAGXkxPbE0GYToD54JKvN8PqoAHRBba6wRkUBt
+         fT6nglUNXqLoPabSArJeDAj8KHlvqgzNRaAyrK1bl8O7ZNM0Qw6fmBXWr1ZwVrXzDcc3
+         EDOjWHmMBqekMmglx+BLYfjwOw7s98cPhz6/qZ/KIo/NW+y4H9w6WQVb7pnQJBsGByZz
+         OI9hS5IiiiPxqSFhcxUp/iwKVevUeD2yYIathJC3+ad9ge/pfiuM/K/w6CpNWRSoeMgj
+         DAOw==
+X-Gm-Message-State: AC+VfDwHDuhvrYiHIRXCSUslkDwsC2rAdAEnCA1zbDP6ELhz+l462PB5
+        ygv8AJImO+/Au+y3M1nr10YYZA==
+X-Google-Smtp-Source: ACHHUZ693SHZ00xXP/TUAnRuoBeJF7p+1FXKnQq8Ptl5OFmwybVISLqAUR5w8tE+g41UXjI9uCFi6g==
+X-Received: by 2002:a2e:7007:0:b0:2b5:923a:2a55 with SMTP id l7-20020a2e7007000000b002b5923a2a55mr1263369ljc.1.1687441310860;
+        Thu, 22 Jun 2023 06:41:50 -0700 (PDT)
+Received: from [192.168.1.101] (abyl165.neoplus.adsl.tpnet.pl. [83.9.31.165])
+        by smtp.gmail.com with ESMTPSA id 3-20020a05651c00c300b002b31ec01c97sm1332296ljr.15.2023.06.22.06.41.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jun 2023 06:41:50 -0700 (PDT)
+Message-ID: <9dbbfa6a-b302-3bdb-4bfb-51409b34dd42@linaro.org>
+Date:   Thu, 22 Jun 2023 15:41:48 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 2/3] remoteproc: qcom: q6v5-mss: Add support for
+ SDM630/636/660
+Content-Language: en-US
+To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Konrad Dybcio <konradybcio@gmail.com>
+References: <20230621175046.61521-1-alexeymin@postmarketos.org>
+ <20230621175046.61521-2-alexeymin@postmarketos.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230621175046.61521-2-alexeymin@postmarketos.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create v4l2-mem2mem helpers for VIDIOC_DELETE_BUF ioctl.
+On 21.06.2023 19:50, Alexey Minnekhanov wrote:
+> Snapdragon 630/660 modem subsystem is similar to one in MSM8998
+> and can almost reuse it's reset sequence.
+> 
+> Downstream sources call this q6v5 version "qdsp6v62-1-5" and its
+> code path has additional checks for QDSP6v55_BHS_EN_REST_ACK
+> status [2].
+> 
+> Inspiration is taken from Konrad Dybcio's work in [1], but reworked
+> to use common code path with MSM8996/8998, instead of completely
+> separate "if" block for SDM660.
+> 
+> [1] https://github.com/SoMainline/linux/commit/7dd6dd9b936dc8d6c1f1abe299e5b065c33741e8
+> [2] https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/lavender-q-oss/drivers/soc/qcom/pil-q6v5.c#L393
+> 
+> Co-developed-by: Konrad Dybcio <konradybcio@gmail.com>
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+> 
+> ---
+> 
+> V2: use readl_relaxed_poll_timeout instead of hand-coded for loop.
+> 
+> In his commit Konrad mentions that modem was unstable, but I don't
+> observe such behaviour on my device. Modem does not restart by itself,
+> and I could successfully enable ath10k wcn3990 Wi-Fi with this.
+> 
+> Also worth saying that in my initial tests just using qcom,msm8998-mss-pil
+> as-is, without separate resource struct and separate code paths for
+> SDM660, was also working fine.
+> ---
+Looks like pre-SMxxxx Sony devices have some touchy watchdog..
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
----
- .../media/platform/verisilicon/hantro_v4l2.c  |  1 +
- drivers/media/test-drivers/vim2m.c            |  1 +
- drivers/media/v4l2-core/v4l2-mem2mem.c        | 20 +++++++++++++++++++
- include/media/v4l2-mem2mem.h                  | 12 +++++++++++
- 4 files changed, 34 insertions(+)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-index cdddfb4179aa..bf418191278f 100644
---- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-+++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-@@ -720,6 +720,7 @@ const struct v4l2_ioctl_ops hantro_ioctl_ops = {
- 	.vidioc_dqbuf = v4l2_m2m_ioctl_dqbuf,
- 	.vidioc_prepare_buf = v4l2_m2m_ioctl_prepare_buf,
- 	.vidioc_create_bufs = v4l2_m2m_ioctl_create_bufs,
-+	.vidioc_delete_buf = v4l2_m2m_ioctl_delete_buf,
- 	.vidioc_expbuf = v4l2_m2m_ioctl_expbuf,
- 
- 	.vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
-diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
-index 3e3b424b4860..3014b8ee13d0 100644
---- a/drivers/media/test-drivers/vim2m.c
-+++ b/drivers/media/test-drivers/vim2m.c
-@@ -960,6 +960,7 @@ static const struct v4l2_ioctl_ops vim2m_ioctl_ops = {
- 	.vidioc_dqbuf		= v4l2_m2m_ioctl_dqbuf,
- 	.vidioc_prepare_buf	= v4l2_m2m_ioctl_prepare_buf,
- 	.vidioc_create_bufs	= v4l2_m2m_ioctl_create_bufs,
-+	.vidioc_delete_buf	= v4l2_m2m_ioctl_delete_buf,
- 	.vidioc_expbuf		= v4l2_m2m_ioctl_expbuf,
- 
- 	.vidioc_streamon	= v4l2_m2m_ioctl_streamon,
-diff --git a/drivers/media/v4l2-core/v4l2-mem2mem.c b/drivers/media/v4l2-core/v4l2-mem2mem.c
-index 0cc30397fbad..42f51ca25379 100644
---- a/drivers/media/v4l2-core/v4l2-mem2mem.c
-+++ b/drivers/media/v4l2-core/v4l2-mem2mem.c
-@@ -831,6 +831,17 @@ int v4l2_m2m_prepare_buf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
- }
- EXPORT_SYMBOL_GPL(v4l2_m2m_prepare_buf);
- 
-+int v4l2_m2m_delete_buf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
-+			struct v4l2_buffer *buf)
-+{
-+	struct vb2_queue *vq;
-+
-+	vq = v4l2_m2m_get_vq(m2m_ctx, buf->type);
-+
-+	return vb2_delete_buf(vq, buf);
-+}
-+EXPORT_SYMBOL_GPL(v4l2_m2m_delete_buf);
-+
- int v4l2_m2m_create_bufs(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
- 			 struct v4l2_create_buffers *create)
- {
-@@ -1377,6 +1388,15 @@ int v4l2_m2m_ioctl_create_bufs(struct file *file, void *priv,
- }
- EXPORT_SYMBOL_GPL(v4l2_m2m_ioctl_create_bufs);
- 
-+int v4l2_m2m_ioctl_delete_buf(struct file *file, void *priv,
-+			      struct v4l2_buffer *buf)
-+{
-+	struct v4l2_fh *fh = file->private_data;
-+
-+	return v4l2_m2m_delete_buf(file, fh->m2m_ctx, buf);
-+}
-+EXPORT_SYMBOL_GPL(v4l2_m2m_ioctl_delete_buf);
-+
- int v4l2_m2m_ioctl_querybuf(struct file *file, void *priv,
- 				struct v4l2_buffer *buf)
- {
-diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
-index bb9de6a899e0..d062a35c8246 100644
---- a/include/media/v4l2-mem2mem.h
-+++ b/include/media/v4l2-mem2mem.h
-@@ -381,6 +381,16 @@ int v4l2_m2m_dqbuf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
- int v4l2_m2m_prepare_buf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
- 			 struct v4l2_buffer *buf);
- 
-+/**
-+ * v4l2_m2m_delete_buf() - delete buffer from the queue
-+ *
-+ * @file: pointer to struct &file
-+ * @m2m_ctx: m2m context assigned to the instance given by struct &v4l2_m2m_ctx
-+ * @buf: pointer to struct &v4l2_buffer
-+ */
-+int v4l2_m2m_delete_buf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
-+			struct v4l2_buffer *buf);
-+
- /**
-  * v4l2_m2m_create_bufs() - create a source or destination buffer, depending
-  * on the type
-@@ -846,6 +856,8 @@ int v4l2_m2m_ioctl_reqbufs(struct file *file, void *priv,
- 				struct v4l2_requestbuffers *rb);
- int v4l2_m2m_ioctl_create_bufs(struct file *file, void *fh,
- 				struct v4l2_create_buffers *create);
-+int v4l2_m2m_ioctl_delete_buf(struct file *file, void *priv,
-+			      struct v4l2_buffer *buf);
- int v4l2_m2m_ioctl_querybuf(struct file *file, void *fh,
- 				struct v4l2_buffer *buf);
- int v4l2_m2m_ioctl_expbuf(struct file *file, void *fh,
--- 
-2.39.2
-
+Konrad
+>  drivers/remoteproc/qcom_q6v5_mss.c | 51 ++++++++++++++++++++++++++++--
+>  1 file changed, 49 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 8e15e4f85de1..dcbecae675e2 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -71,6 +71,7 @@
+>  #define QDSP6SS_MEM_PWR_CTL		0x0B0
+>  #define QDSP6V6SS_MEM_PWR_CTL		0x034
+>  #define QDSP6SS_STRAP_ACC		0x110
+> +#define QDSP6V62SS_BHS_STATUS		0x0C4
+>  
+>  /* AXI Halt Register Offsets */
+>  #define AXI_HALTREQ_REG			0x0
+> @@ -123,6 +124,7 @@
+>  #define QDSP6v56_CLAMP_QMC_MEM		BIT(22)
+>  #define QDSP6SS_XO_CBCR		0x0038
+>  #define QDSP6SS_ACC_OVERRIDE_VAL		0x20
+> +#define QDSP6v55_BHS_EN_REST_ACK	BIT(0)
+>  
+>  /* QDSP6v65 parameters */
+>  #define QDSP6SS_CORE_CBCR		0x20
+> @@ -130,6 +132,7 @@
+>  #define QDSP6SS_BOOT_CORE_START         0x400
+>  #define QDSP6SS_BOOT_CMD                0x404
+>  #define BOOT_FSM_TIMEOUT                10000
+> +#define BHS_CHECK_MAX_LOOPS             200
+>  
+>  struct reg_info {
+>  	struct regulator *reg;
+> @@ -250,6 +253,7 @@ enum {
+>  	MSS_MSM8998,
+>  	MSS_SC7180,
+>  	MSS_SC7280,
+> +	MSS_SDM660,
+>  	MSS_SDM845,
+>  };
+>  
+> @@ -700,7 +704,8 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+>  	} else if (qproc->version == MSS_MSM8909 ||
+>  		   qproc->version == MSS_MSM8953 ||
+>  		   qproc->version == MSS_MSM8996 ||
+> -		   qproc->version == MSS_MSM8998) {
+> +		   qproc->version == MSS_MSM8998 ||
+> +		   qproc->version == MSS_SDM660) {
+>  
+>  		if (qproc->version != MSS_MSM8909 &&
+>  		    qproc->version != MSS_MSM8953)
+> @@ -734,6 +739,16 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+>  		val |= readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+>  		udelay(1);
+>  
+> +		if (qproc->version == MSS_SDM660) {
+> +			ret = readl_relaxed_poll_timeout(qproc->reg_base + QDSP6V62SS_BHS_STATUS,
+> +							 i, (i & QDSP6v55_BHS_EN_REST_ACK),
+> +							 1, BHS_CHECK_MAX_LOOPS);
+> +			if (ret == -ETIMEDOUT) {
+> +				dev_err(qproc->dev, "BHS_EN_REST_ACK not set!\n");
+> +				return -ETIMEDOUT;
+> +			}
+> +		}
+> +
+>  		/* Put LDO in bypass mode */
+>  		val |= QDSP6v56_LDO_BYP;
+>  		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+> @@ -756,7 +771,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+>  				mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
+>  				i = 19;
+>  			} else {
+> -				/* MSS_MSM8998 */
+> +				/* MSS_MSM8998, MSS_SDM660 */
+>  				mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
+>  				i = 28;
+>  			}
+> @@ -2193,6 +2208,37 @@ static const struct rproc_hexagon_res sc7280_mss = {
+>  	.version = MSS_SC7280,
+>  };
+>  
+> +static const struct rproc_hexagon_res sdm660_mss = {
+> +	.hexagon_mba_image = "mba.mbn",
+> +	.proxy_clk_names = (char*[]){
+> +			"xo",
+> +			"qdss",
+> +			"mem",
+> +			NULL
+> +	},
+> +	.active_clk_names = (char*[]){
+> +			"iface",
+> +			"bus",
+> +			"gpll0_mss",
+> +			"mnoc_axi",
+> +			"snoc_axi",
+> +			NULL
+> +	},
+> +	.proxy_pd_names = (char*[]){
+> +			"cx",
+> +			"mx",
+> +			NULL
+> +	},
+> +	.need_mem_protection = true,
+> +	.has_alt_reset = false,
+> +	.has_mba_logs = false,
+> +	.has_spare_reg = false,
+> +	.has_qaccept_regs = false,
+> +	.has_ext_cntl_regs = false,
+> +	.has_vq6 = false,
+> +	.version = MSS_SDM660,
+> +};
+> +
+>  static const struct rproc_hexagon_res sdm845_mss = {
+>  	.hexagon_mba_image = "mba.mbn",
+>  	.proxy_clk_names = (char*[]){
+> @@ -2475,6 +2521,7 @@ static const struct of_device_id q6v5_of_match[] = {
+>  	{ .compatible = "qcom,msm8998-mss-pil", .data = &msm8998_mss},
+>  	{ .compatible = "qcom,sc7180-mss-pil", .data = &sc7180_mss},
+>  	{ .compatible = "qcom,sc7280-mss-pil", .data = &sc7280_mss},
+> +	{ .compatible = "qcom,sdm660-mss-pil", .data = &sdm660_mss},
+>  	{ .compatible = "qcom,sdm845-mss-pil", .data = &sdm845_mss},
+>  	{ },
+>  };
