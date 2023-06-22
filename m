@@ -2,82 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4BE0739773
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 08:26:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 576147397BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 09:03:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbjFVG0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 02:26:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48526 "EHLO
+        id S230317AbjFVHC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 03:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjFVG0Y (ORCPT
+        with ESMTP id S229985AbjFVHCz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 02:26:24 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0C82113;
-        Wed, 21 Jun 2023 23:26:06 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35M5NAEv023583;
-        Thu, 22 Jun 2023 06:26:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=P2EFfgzAdwxr3yzoWV40orFUBW1EY4sDEyJi3axqpGA=;
- b=abN4PlihoiHqgyppEmlIgsg0cFu6m6aWCSecEAI+EwBku/u66UUrV+HHGmmyA9rwIcGv
- I18smzV3l6O/L/RnJTGZgtjZv+C3xdVu/MwhlX50HrA5uNvDovd9banPZHLLNMNU51m3
- lh5sKA3ai4WTKxlu1b2guniAKLIFH+vJs+EVdXp6AM7gkaQPWC4J03ku1pEFJN/SibJh
- p/r4IUOPZ66H02l8E88xNqKg6AygKuEZL+ULH7ykwpqF/ukDXXG6x1P1pJGyWBSxa3QI
- JPad3Ii/7LI+xFAQeK2BB/RkhIsMh8o0yziO3w5XxJrJL8jYfn9/wxQcPEypHaYgWgng Ig== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rbykdj4df-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 06:26:02 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35M6Q1Fd018528
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Jun 2023 06:26:01 GMT
-Received: from [10.216.5.133] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 21 Jun
- 2023 23:25:57 -0700
-Message-ID: <d05c7b0e-6edb-bc0f-5875-fc5cb8ea6b8a@quicinc.com>
-Date:   Thu, 22 Jun 2023 11:55:49 +0530
+        Thu, 22 Jun 2023 03:02:55 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869571BD4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 00:02:53 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51a200fc3eeso8682657a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 00:02:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687417372; x=1690009372;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Sxq2D1Pi6NZiEBOnH2qdeVUWhttdMHZfreLodTzhEE=;
+        b=yYUgNsMrj3xuvCcgzGXPbzjbSkW9p1D43qESgbwIVVshJ53Zs5aC4U6Ro0i5gK/t/K
+         SpwZIDbGmdwZofsZdZ/QzEIhISMc43PgVU0GarADwmqbw6rIAmztG35YEobmdLHegHJ2
+         vlJtlr1JemHBD44JqzIqyojk3pFpLCFOKa0A/KP5Jafxg8hhIdkznPh0vt4vZ7tJ9wDU
+         fqHO9WtZLBv5/QGEKoa6Z7TjmIKkbrrBZnjS/ATCDkw04+BCrdu8Wgr5+xMEFV0ILW6X
+         AF9B7r6i+XATybTiVqtDr4XY2obc+JXCVIrBGd9JqEjQ7niG4Rd4KfXFCDjR2E9k/XEk
+         ldeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687417372; x=1690009372;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1Sxq2D1Pi6NZiEBOnH2qdeVUWhttdMHZfreLodTzhEE=;
+        b=iw6xT4Awili9v/uDao2tfcDH7J8ywYf47JFuKhKZHyWQgxhfHdYLBU9EwYXqp4spB9
+         afPghsBZ579Lv/SwDFYagwjZjb+J2yJZR2z+kvPNna1toBBk/Z7T/AHQs/mJnxR5lZSj
+         N9KFnahwXuARN6j+r+xrMtxW9QN60htFmKYZLWNb+3dIxw1H+I9IxwGinFVeKJOpNbo/
+         expd4v6P9dmOHPH2+Qd/iQNrPU0mtbPggVhlKHxy8b8pbrQbK/gsja/HVHKGyN+71/Jz
+         SJsIiOkToGAa0JbXAFFP1IKo61QykKaFbFsGthJekcG16QsZv5dsFK1xlqwdIsIU4N3i
+         f3PQ==
+X-Gm-Message-State: AC+VfDzWuY5b401UWB1hrtdvXUVk5VO5FjE2tn5ut2XYP66UJLnqR2WX
+        T9xMSez+38NpQ5JRLj+dFcIbsg==
+X-Google-Smtp-Source: ACHHUZ5ukNukwYHHv8TsonoqFE7mHUyfEWuDNcZ1NmDmk/3S0+NaZRbPRoKiPoAhvItJvuBXGXfaTA==
+X-Received: by 2002:a05:6402:498:b0:519:b784:b157 with SMTP id k24-20020a056402049800b00519b784b157mr10627419edv.12.1687417371921;
+        Thu, 22 Jun 2023 00:02:51 -0700 (PDT)
+Received: from linaro.org ([62.231.110.100])
+        by smtp.gmail.com with ESMTPSA id i9-20020a056402054900b0051873c201a0sm3507830edx.26.2023.06.22.00.02.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jun 2023 00:02:51 -0700 (PDT)
+Date:   Thu, 22 Jun 2023 10:02:49 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v7 1/3] dt-bindings: ufs: qcom: Add ICE phandle
+Message-ID: <ZJPyGW2I4fHqFMRV@linaro.org>
+References: <20230408214041.533749-1-abel.vesa@linaro.org>
+ <20230408214041.533749-2-abel.vesa@linaro.org>
+ <4aadaf24-11f6-5cc1-4fbd-addbef4f891b@linaro.org>
+ <yq1ilbgqoq6.fsf@ca-mkp.ca.oracle.com>
+ <80ca0da4-5243-9771-0c4c-62b956e97b2f@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Use assigned-clock-rates for
- QUP I2C core clks
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
-References: <20230615084841.12375-1-quic_devipriy@quicinc.com>
- <1ab63d4b-6358-ce08-818a-b5751f88cdde@linaro.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <1ab63d4b-6358-ce08-818a-b5751f88cdde@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oE3WsmWfn0CAE7z63tYq6MBVeoNZ4Tt0
-X-Proofpoint-GUID: oE3WsmWfn0CAE7z63tYq6MBVeoNZ4Tt0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-22_03,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- priorityscore=1501 phishscore=0 clxscore=1015 mlxlogscore=858 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306220053
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <80ca0da4-5243-9771-0c4c-62b956e97b2f@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,66 +93,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/15/2023 2:21 PM, Konrad Dybcio wrote:
-> On 15.06.2023 10:48, Devi Priya wrote:
->> Use assigned-clock-rates property for configuring the QUP I2C core clocks
->> to operate at nominal frequency.
->>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
-> There's probably some logic behind this, and it almost sounds like
-> it'd be fitting to introduce an OPP table for I2C hosts, especially
-> given the voltage requirements.
+On 23-06-22 08:07:51, Krzysztof Kozlowski wrote:
+> On 22/06/2023 03:19, Martin K. Petersen wrote:
+> > 
+> > Abel,
+> > 
+> >> Un-reviewed. This is broken and was never tested. After applying this
+> >> patch, I can see many new warnings in all DTBs (so it is easy to spot
+> >> that it was not actually tested).
+> >>
+> >> Your probably meant here:
+> >>   if:
+> >>     required:
+> > 
+> > Please provide a fix for this. I don't want to rebase this late in the
+> > cycle.
 > 
-> Konrad
-The qup i2c core clocks are not scalable and operate at fixed frequency.
-The assigned-clock-rates are used to configure the clock frequency
-if it is not done by the bootloaders.
+> AFAIK, this was not applied. At least as of next 20210621 and I
+> commented on this few days ago. Anything changed here?
 
-Thanks,
-Devi Priya
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 0baeb10bbdae..78bf7f9c455a 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -361,6 +361,8 @@
->>   			clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>,
->>   				 <&gcc GCC_BLSP1_AHB_CLK>;
->>   			clock-names = "core", "iface";
->> +			assigned-clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>;
->> +			assigned-clock-rates = <50000000>;
->>   			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
->>   			dma-names = "tx", "rx";
->>   			status = "disabled";
->> @@ -389,6 +391,8 @@
->>   			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
->>   				 <&gcc GCC_BLSP1_AHB_CLK>;
->>   			clock-names = "core", "iface";
->> +			assigned-clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>;
->> +			assigned-clock-rates = <50000000>;
->>   			dmas = <&blsp_dma 16>, <&blsp_dma 17>;
->>   			dma-names = "tx", "rx";
->>   			status = "disabled";
->> @@ -417,6 +421,8 @@
->>   			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
->>   				 <&gcc GCC_BLSP1_AHB_CLK>;
->>   			clock-names = "core", "iface";
->> +			assigned-clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>;
->> +			assigned-clock-rates = <50000000>;
->>   			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
->>   			dma-names = "tx", "rx";
->>   			status = "disabled";
->> @@ -446,6 +452,8 @@
->>   			clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>,
->>   				 <&gcc GCC_BLSP1_AHB_CLK>;
->>   			clock-names = "core", "iface";
->> +			assigned-clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>;
->> +			assigned-clock-rates = <50000000>;
->>   			dmas = <&blsp_dma 20>, <&blsp_dma 21>;
->>   			dma-names = "tx", "rx";
->>   			status = "disabled";
+Check this one:
+https://lore.kernel.org/all/yq1a5x1wl4g.fsf@ca-mkp.ca.oracle.com/
+
+I'll send a fix today.
+
+> 
+> Best regards,
+> Krzysztof
+> 
