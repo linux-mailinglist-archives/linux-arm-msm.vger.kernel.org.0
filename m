@@ -2,82 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D55CA73A3B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 16:53:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5F8673A3BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 16:54:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232019AbjFVOxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 10:53:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59252 "EHLO
+        id S232036AbjFVOy3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 10:54:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232023AbjFVOxf (ORCPT
+        with ESMTP id S231954AbjFVOy2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 10:53:35 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0887F1996;
-        Thu, 22 Jun 2023 07:53:28 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id A90F421E02;
-        Thu, 22 Jun 2023 14:53:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1687445606; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZQ3M1L1RSqVm2MyuTa4Yvo8YEEMygwWogDC8ahfHfNI=;
-        b=2owPffEDM1iWz8CdazqjHy3AxJwGsYxlZ/+Yu6QxT8lvwEyn3YIeSbOY0yI3awkLbxaQdW
-        HukONKfPUiwfPgQxBnupzVK2Jrf64g9NYFm97ZaEaq2iZWVoDl76nKahT+/qS1IuVFo23d
-        TeekWSDBLq+2AtU2kusUiFeopHoXy3Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1687445606;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZQ3M1L1RSqVm2MyuTa4Yvo8YEEMygwWogDC8ahfHfNI=;
-        b=7qmzsmLYYk2NVw1wMGtpHBWQOSu1V6A2Uv1zH9sP8UFUndexvPNSZb0b+10dVOMyxbb72u
-        ceanv5+68xTC81DQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 53B7213905;
-        Thu, 22 Jun 2023 14:53:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id aD+2E2ZglGS3JAAAMHmgww
-        (envelope-from <vbabka@suse.cz>); Thu, 22 Jun 2023 14:53:26 +0000
-Message-ID: <f90772f6-11fe-0d8a-7b1c-d630b884d775@suse.cz>
-Date:   Thu, 22 Jun 2023 16:53:26 +0200
+        Thu, 22 Jun 2023 10:54:28 -0400
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E721319A1;
+        Thu, 22 Jun 2023 07:54:25 -0700 (PDT)
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-77e2ed26037so214861139f.0;
+        Thu, 22 Jun 2023 07:54:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687445665; x=1690037665;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ubD2PYBeh8ffF/UBDCXX/95bU5nJS9x9g5EvZCRcauI=;
+        b=I3ZCHul0o7fm5jKiRYEyG3tofgoctWkZo0gVWi6qZ/RZ9bUvuVn7gxqANQZqPl8FPe
+         dOjCpm2RqwUF9vJ19OrXYGmFfNCEke2TrzW3kLxuJ//nyYFgCcmw6lyUJKPuRhvHjivu
+         HN97+tOMRRLZ7Kwxd0QdHI05p2lBM+VMuT8cpCQ8lNIPs8E0+ZItNpjNKsttZBG+4phL
+         GiA13s/SfwUhDemIVkrvC3KRX0x5JwsaEYdpv+cixYUm3+eE16Hekmi+Xp6zwU52vzjy
+         JOf0cEyT7x+D9KUhFI1h3zdN2zBlmhZa7hJaLdZQ9J2YexWmJaoLnfwgNBwKZDh235DI
+         JNVg==
+X-Gm-Message-State: AC+VfDydDV6FXDhLRisFbamokKhZiz8VBY/zambY3twLb5w+eD0Qzdwk
+        zVZzSgr42SBLj/JGoaJ5vg==
+X-Google-Smtp-Source: ACHHUZ4xM8qYK+FTWkEBsnwnqleZPi90wXUqnuZc1HyM70ODQwp5BkQwv6xzqviWU4jJydkT/1QMEw==
+X-Received: by 2002:a92:d406:0:b0:335:a70:5e4d with SMTP id q6-20020a92d406000000b003350a705e4dmr13720772ilm.16.1687445665035;
+        Thu, 22 Jun 2023 07:54:25 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id w5-20020a92d605000000b00341fa29aaf4sm2034982ilm.39.2023.06.22.07.54.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jun 2023 07:54:24 -0700 (PDT)
+Received: (nullmailer pid 1689134 invoked by uid 1000);
+        Thu, 22 Jun 2023 14:54:22 -0000
+Date:   Thu, 22 Jun 2023 08:54:22 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH 2/9] dt-bindings: clock: qcom,mmcc: Add GPLL0_DIV for
+ MSM8998
+Message-ID: <168744566173.1689075.15807872833231274999.robh@kernel.org>
+References: <20230622-topic-8998clk-v1-0-5b7a0d6e98b1@linaro.org>
+ <20230622-topic-8998clk-v1-2-5b7a0d6e98b1@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 29/29] mm: shrinker: move shrinker-related code into a
- separate file
-Content-Language: en-US
-To:     Qi Zheng <zhengqi.arch@bytedance.com>, akpm@linux-foundation.org,
-        david@fromorbit.com, tkhai@ya.ru, roman.gushchin@linux.dev,
-        djwong@kernel.org, brauner@kernel.org, paulmck@kernel.org,
-        tytso@mit.edu
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
-        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-30-zhengqi.arch@bytedance.com>
-From:   Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <20230622085335.77010-30-zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230622-topic-8998clk-v1-2-5b7a0d6e98b1@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,12 +75,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/22/23 10:53, Qi Zheng wrote:
-> The mm/vmscan.c file is too large, so separate the shrinker-related
-> code from it into a separate file. No functional changes.
-> 
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
 
-Maybe do this move as patch 01 so the further changes are done in the new
-file already?
+On Thu, 22 Jun 2023 13:57:42 +0200, Konrad Dybcio wrote:
+> We've not been consuming that clock for no apparent reason. Describe it.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,mmcc.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+
+Acked-by: Rob Herring <robh@kernel.org>
 
