@@ -2,120 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 730F173A250
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 15:56:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A07873A284
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jun 2023 16:00:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231175AbjFVN4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 09:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50434 "EHLO
+        id S231310AbjFVOAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 10:00:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231159AbjFVN4j (ORCPT
+        with ESMTP id S231199AbjFVOAg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 09:56:39 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D52A51BC3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:56:36 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-311183ef595so7208789f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 06:56:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687442195; x=1690034195;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QEW2WXBte3jN1fLJ211gvIuJSeoOteLGjUnX78P98k4=;
-        b=rrCXA0HYW+NRaxuK0LzkBkWHaS32roNXnVTcSlzHkz0PKFiRzi6Lf0a2kxT5sw4sbW
-         jjMVv3gbRGX7y73/rTeAxgcyKJRaEjx8hgeXVmr1KOVjDxufD90egWATGqaHhCdg5lyL
-         CCWBPoNFR/6czRV2XsuleAFb6zUW8evSN0nKHKSOPM/86ngFyJnI//xhzazH6g+ufdey
-         iAvpeJ61KZ0V6PMuriG406hq6r4Jp2DjThmRQnPoG+2mD5V8pIHj1OSfFc1yhmt6x4Iw
-         hJJY0N9IrNvCEy31Uv4j6O7vgmIRqgPp5toYxfIEQfRxNvrKDPf6N2IWfmuS9pLtFoy0
-         IMUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687442195; x=1690034195;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QEW2WXBte3jN1fLJ211gvIuJSeoOteLGjUnX78P98k4=;
-        b=UdvG6n43QIhJd4G1Ri/sM1+ZkbyXcMuBBrsCveisEzff1/wHe/gxWsgOZcn2LZCKUR
-         sz9/JDXFnOjEtdI/kgF/8wGkO18/Nm4qG5wuDxyRihrexylRjNUBIqH1vuDNhmqmxkdu
-         1buPDyYa6GPlcEQB722mRJUNOgjtTNfrgN0SnOTfhz0PO+GaKSBkwXwYytNVipjffzAQ
-         sH6ijWeGWsxRMt6lxkAz4c7vhqoarJzTIhaSRyYdB8idGZgQOO7fffyE/7xg/5Q1P4YT
-         cASCzOIgXC5PKx6W6ZMJemJYToIIzKXGw23rIZSrdHM/JgyU3aj8VH7Suh8Ipok2gscw
-         4piA==
-X-Gm-Message-State: AC+VfDwbJPutGnGKt3ZbK7+Slvl6dKliufxb2wn6VboewmsOQ2L7Hsjp
-        GDCC3uG3EuRUA7JR1hObBX1x7A==
-X-Google-Smtp-Source: ACHHUZ6a6EZPyQbiw2QFhMNDMLiHUFcNZTWVMQXmY1brW9zlZbdXXamxNjQ4bnHgoRKMXiHVkCeg6Q==
-X-Received: by 2002:adf:ec45:0:b0:30f:af06:7320 with SMTP id w5-20020adfec45000000b0030faf067320mr1923670wrn.23.1687442195120;
-        Thu, 22 Jun 2023 06:56:35 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id s3-20020a7bc383000000b003f6132f95e6sm18924956wmj.35.2023.06.22.06.56.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 06:56:33 -0700 (PDT)
-Date:   Thu, 22 Jun 2023 16:56:29 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-Subject: Re: [PATCH v3 03/11] media: videobuf2: Remove VB2_MAX_FRAME limit on
- buffer storage
-Message-ID: <1d9fea5b-5c74-4fc2-9287-71cd68adbda1@kadam.mountain>
-References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
- <20230622131349.144160-4-benjamin.gaignard@collabora.com>
+        Thu, 22 Jun 2023 10:00:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8D3E2;
+        Thu, 22 Jun 2023 07:00:30 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35MCjGig008256;
+        Thu, 22 Jun 2023 14:00:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=h2EBvV+4ERBDJFI7Nkia3mS5+PDriEEjcQlmLmcedpg=;
+ b=DqAbW5EL8hV+2GRJbEvCo3rc85U9/U2Ucg5GLB/6HZ0A96wdq9EBETWQ2Nlw0p2fmxRD
+ ROCBIUx1C37Cb61OoH2Zn420Rn3W0M0Fwxa6VyYSjf7kSY04vwZSItJAhzowyGKX+DPF
+ je2+oUPhq2tE0HkvZGwcTE5SRly/PoZqgPz6xv8CJ6dSRIeqJl4ro7eSi1xd7Dv8DRhc
+ ciL2qYhyNoYs9Ve9wbk2kyBhxEv3pyNOoVHcZ0KzRuPur50mgIouGtksofo4XtjVNzYp
+ th7nvXNAJja1n+zG+2I/kM8SwljCMvvgJm1FGtdjBNnFWVWfJD4ouM5EqfgOHMXko3As YA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcpjh8687-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 22 Jun 2023 14:00:27 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35ME0NeT029032
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 22 Jun 2023 14:00:25 GMT
+Received: from hu-ptalari-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 22 Jun 2023 07:00:19 -0700
+From:   Praveen Talari <quic_ptalari@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
+        <quic_vnivarth@quicinc.com>, <quic_arandive@quicinc.com>,
+        Praveen Talari <quic_ptalari@quicinc.com>
+Subject: [PATCH v3 0/3] spi-geni-qcom: Add SPI device mode support for GENI based QuPv3
+Date:   Thu, 22 Jun 2023 19:29:52 +0530
+Message-ID: <20230622135955.941-1-quic_ptalari@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230622131349.144160-4-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cc5Z3JJCLpA9AQ_uwlr4zXL26UHGCOAB
+X-Proofpoint-GUID: cc5Z3JJCLpA9AQ_uwlr4zXL26UHGCOAB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-22_10,2023-06-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 priorityscore=1501 bulkscore=0
+ mlxlogscore=709 impostorscore=0 malwarescore=0 clxscore=1011 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306220118
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 22, 2023 at 03:13:41PM +0200, Benjamin Gaignard wrote:
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index f1ff7af34a9f..86e1e926fa45 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -455,9 +455,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->  	struct vb2_buffer *vb;
->  	int ret;
->  
-> -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
-> +	/* Ensure that q->num_buffers + num_buffers is UINT_MAX */
->  	num_buffers = min_t(unsigned int, num_buffers,
-> -			    VB2_MAX_FRAME - q->num_buffers);
-> +			    UINT_MAX - q->num_buffers);
+This series adds spi device mode functionality to geni based Qupv3.
+The common header file contains spi slave related registers and masks.
 
-The UINT_MAX limit adds a level of danger.  It would be safer to do what
-the vfs layer does for MAX_RW_COUNT and use "INT_MAX - PAGE_SIZE".  That
-way you can take size + sizeof() and it's only very rarely going to turn
-negative.  Or at least just INT_MAX.  I would keep the VB2_MAX_FRAME and
-define it as:
+Praveen Talari (3):
+  soc: qcom: geni-se: Add SPI Device mode support for GENI based QuPv3
+  spi: dt-bindings: qcom,spi-geni-qcom: Add SPI device mode support for
+    GENI based QuPv3
+  spi: spi-geni-qcom: Add SPI Device mode support for GENI based QuPv3
+---
+v2 -> v3:
+- Modified commit message
+- Addressed comment on dt-binding
+	
+v1 -> v2:
+- Added dt-binding change for spi slave
+- Modified commit message
+- Addressed review comments in driver
 
-#define VB2_MAX_FRAME (INT_MAX & PAGE_MASK)  /* The mask prevents 85% of integer overflows */
+ .../bindings/spi/qcom,spi-geni-qcom.yaml      |  4 ++
+ drivers/spi/spi-geni-qcom.c                   | 57 +++++++++++++++++--
+ include/linux/soc/qcom/geni-se.h              |  9 +++
+ 3 files changed, 64 insertions(+), 6 deletions(-)
 
->  
->  	for (buffer = 0; buffer < num_buffers; ++buffer) {
->  		/* Allocate vb2 buffer structures */
-> @@ -858,9 +858,9 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  	/*
->  	 * Make sure the requested values and current defaults are sane.
->  	 */
-> -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
-> +	WARN_ON(q->min_buffers_needed > UINT_MAX);
-
-This will trigger a static checker warning because the condition is
-impossible.
-
-regards,
-dan carpenter
+-- 
+2.17.1
 
