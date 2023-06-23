@@ -2,121 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9896273B218
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 09:51:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1762473B253
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 10:08:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230355AbjFWHvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 03:51:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44976 "EHLO
+        id S231462AbjFWIIf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 04:08:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230280AbjFWHve (ORCPT
+        with ESMTP id S231424AbjFWIIf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 03:51:34 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3F3B10D;
-        Fri, 23 Jun 2023 00:51:33 -0700 (PDT)
-Received: from [IPV6:2a01:e0a:120:3210:4849:8b52:4bff:674] (unknown [IPv6:2a01:e0a:120:3210:4849:8b52:4bff:674])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id EB293660712B;
-        Fri, 23 Jun 2023 08:51:31 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1687506692;
-        bh=IXSG7zZWbP+AwYQOLnWcF9xBZeJYynGpMRfo2WLgtCg=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=opJS58tLdQU7YgNFJUmqNjtvNi91rAm2bjUy5XSJTziw0Kzbhy0CJ0UUak/xI7jgL
-         vx4+DOqhd4m2VeH5sfQokwGGD0g6ZmWRimqlB7E+W+uPcKyTPWaekM7ENeW/FT6PV4
-         VFIQejfKUdiTG98Hi5h+j1pc3nPu1gW7ynHnEQ8bXu5/MAP6RkFjaoRDX08emZ3sEw
-         Vu8z8i1m5gQ9bpjSIh6QvkNJS6E8nWRkeGXOe1Dxegk+Xq+fkyHdtozWTz7CfS+HPL
-         QCftKOh1hkTTKqzuc+w9+1m53HCjE+sXCTihxVYdk9QnB35uWZW57tDSvK3DFJOb6F
-         BVFs/E+zgUpGQ==
-Message-ID: <fee4a434-a4b6-9ecc-1188-4638a3cd6af8@collabora.com>
-Date:   Fri, 23 Jun 2023 09:51:29 +0200
+        Fri, 23 Jun 2023 04:08:35 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93EE1FEF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 01:08:30 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-988f066f665so34907566b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 01:08:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687507709; x=1690099709;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Mp20BGhs0XvV3lIs6JOjcLuOy8WK9QGNJZoe3Xf5rIg=;
+        b=ZuX9fp5CkoOW74bUtib5WMACzLBOIBzsjYDxwjXU9I9gGQqNRjKE38M5lnhJntWefh
+         iHTW1LRaKgQ2du1Jbi66pq4vcvKnBuNcsXRBMvdcBXCTOSZjIbsJNrtaBPuhZfN8ZDz3
+         LvklX67c+DTQe3DcZI8w+f6dM+bLJhR1bD+wBG7iFTYrtAkdYPKEIRnuLOYDnOBU7+tB
+         S/on9kE6OXNvIPDFffB5vFdiUtFs09S7bgv8obp4eCrdXakQ3CcPNXY19FK38f3LvBI0
+         b1nocMlVWGiU0I+dsTwIwrRd2TSy9YYhIEQNadlqrfOpu22Zm6Y84j9xnvABM1814kPb
+         3oJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687507709; x=1690099709;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mp20BGhs0XvV3lIs6JOjcLuOy8WK9QGNJZoe3Xf5rIg=;
+        b=dnv5VKwbVR09TF5icXsT4pW3WrFnUq+N4Okfjx1eVtvtkM360IIxL0RPYQChTe+tzF
+         P9vjxof7qdt9wLjEosO2hTOxJZuur7oS5Rsw6+FDR8y2ws8ZVbvoqmPVUt+qZV7KM2OJ
+         GPsU/sv+OrTkbNzKPxEbLACl96va09dhe5zk8xGUORA/aPs6bzQgtf2TxeZX+xctaDuK
+         hXVyJtFYcSMDGRmAAPAI5ss14Ew/NhirzHNgDTlZ1py+jptXlGZ4c8YClJnLFzmwtxLj
+         e7ht9cSf4pe2a0JMrN0t2fC14m6Js907G6MOVYi+V19Mrrg4VmjSaAvBObhJqzrv2XWy
+         aqSw==
+X-Gm-Message-State: AC+VfDy7HipGN+9wrPQY9/sLHlakaw9LXYe9QBrZTqRtwFjJqmy/tFhZ
+        gH0ipNBFm809wvEJAtYw5vwleg==
+X-Google-Smtp-Source: ACHHUZ4bdgTVBJHUBS8Eb40jSpl9xmaCaFpPY+WUFySk47we5BeGwuNXlRZGzFalcblrjeyGrqaorA==
+X-Received: by 2002:a17:907:8a08:b0:987:ae30:4b8c with SMTP id sc8-20020a1709078a0800b00987ae304b8cmr16007348ejc.70.1687507709385;
+        Fri, 23 Jun 2023 01:08:29 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id r16-20020a1709062cd000b00982c5bc1e8asm5644025ejr.114.2023.06.23.01.08.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Jun 2023 01:08:28 -0700 (PDT)
+Message-ID: <fffa4486-1f76-f7e3-2bc9-21dbe40a606e@linaro.org>
+Date:   Fri, 23 Jun 2023 10:08:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 03/11] media: videobuf2: Remove VB2_MAX_FRAME limit on
- buffer storage
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,m31: Document qcom,m31 USB
+ phy
 Content-Language: en-US
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        nicolas.dufresne@collabora.com, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
- <20230622131349.144160-4-benjamin.gaignard@collabora.com>
- <bddd6cb7-cd72-4fb5-8d4a-d02cb9c46dce@kadam.mountain>
- <39aff680-316a-7382-c93b-d9ca61c389e9@collabora.com>
- <f21d6fce-155c-28f0-fdea-e9264ba1f7ba@xs4all.nl>
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-In-Reply-To: <f21d6fce-155c-28f0-fdea-e9264ba1f7ba@xs4all.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
+        will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
+        geert+renesas@glider.be, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org, rafal@milecki.pl,
+        quic_srichara@quicinc.com, quic_varada@quicinc.org,
+        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <cover.1687414716.git.quic_varada@quicinc.com>
+ <4f4136a91b24d3ad35fa12bd19fe14b83da9affe.1687414716.git.quic_varada@quicinc.com>
+ <20230622144627.GA1672260-robh@kernel.org>
+ <20230623054508.GA13261@varda-linux.qualcomm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230623054508.GA13261@varda-linux.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Le 23/06/2023 à 09:02, Hans Verkuil a écrit :
-> On 22/06/2023 16:13, Benjamin Gaignard wrote:
->> Le 22/06/2023 à 16:11, Dan Carpenter a écrit :
->>> On Thu, Jun 22, 2023 at 03:13:41PM +0200, Benjamin Gaignard wrote:
->>>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
->>>> index f1ff7af34a9f..86e1e926fa45 100644
->>>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
->>>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
->>>> @@ -455,9 +455,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->>>>        struct vb2_buffer *vb;
->>>>        int ret;
->>>>    -    /* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
->>>> +    /* Ensure that q->num_buffers + num_buffers is UINT_MAX */
->>>>        num_buffers = min_t(unsigned int, num_buffers,
->>>> -                VB2_MAX_FRAME - q->num_buffers);
->>>> +                UINT_MAX - q->num_buffers);
->>>>          for (buffer = 0; buffer < num_buffers; ++buffer) {
->>>>            /* Allocate vb2 buffer structures */
->>> Ah...  Here's one of the integer overflow bugs I was talking about.  The
->>> __vb2_queue_alloc() function returns an int so if num_buffers goes over
->>> INT_MAX we are hosed.
->> I will limit it to:
->> #define VB2_QUEUE_MAX_BUFFERS  (INT_MAX & PAGE_MASK)  /* The mask prevents 85% of integer overflows */
->> as you have suggest it.
-> IMHO INT_MAX is way overkill. How about (1U << 20)? I would like some sort of
-> sanity check here. 1048576 buffers of 640x480 and 4 bytes per pixel is 1.2 TB.
-
-I will go for (1U << 20) in next version.
-
-Regards,
-Benjamin
-
->
-> Since a TB of memory is doable these days, I think this is a reasonable
-> value for MAX_BUFFERS without allowing just anything.
->
-> An alternative is to make this a kernel config.
->
-> Regards,
->
-> 	Hans
->
->> That will be in version 4.
+On 23/06/2023 07:45, Varadarajan Narayanan wrote:
+> 
+>>> +
+>>> +description:
+>>> +  USB M31 PHY found in Qualcomm IPQ5018, IPQ5332 SoCs.
 >>
->> Thanks,
->> Benjamin
->>
->>> regards,
->>> dan carpenter
->>>
+>> Where's the IPQ5018 compatible?
+> 
+> In the previous version had a default and IPQ5332 specific
+> compatible. IPQ5018 would have used the default compatible.
+> However, in the review was asked to drop the default compatible.
+> Hence planned to include ipq5018 compatible and post it in
+> separate patchset while enabling IPQ5018 USB. IPQ5018 init is
+> also diffferent from the init used here.
+
+Your previous patch did not have ipq5018 compatible. There was nothing
+indicating that some default means ipq5018...
+
+Best regards,
+Krzysztof
+
