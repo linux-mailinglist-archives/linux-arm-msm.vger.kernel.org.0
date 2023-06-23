@@ -2,205 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDE5573B08E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 08:12:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 922DD73B0A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 08:18:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231450AbjFWGMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 02:12:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41552 "EHLO
+        id S231214AbjFWGS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 02:18:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbjFWGML (ORCPT
+        with ESMTP id S230163AbjFWGSz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 02:12:11 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE1711995
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 23:12:08 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-763c997ee0aso18575485a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 23:12:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fromorbit-com.20221208.gappssmtp.com; s=20221208; t=1687500728; x=1690092728;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=g6Rx1Xf0LH0dvCkca5awQZbD4QgAJXvuKCZBBi/mUhU=;
-        b=SecpzgOSYBos+0sqL4EbPW75FGWVTx9L5r0t3G2iuevcqFrKG4F/tLNs6eWS22kOmh
-         C0PZvcjnf7UYxgnqR+bpG0mTlEGom1YtlVhT3auz/n35x7KxiTrn9uMCHEu7lYc1dP6p
-         eY+aw4EnvIi6B8fviKsKoQH1Jzl15W85hgTxNUcsJ3dNHiRrVQFHxysMeC3SWqeWxnsy
-         yeeVzTshwEBU92s9eN4WsR3lm2qnu+8pne5nYPYtXC9PnDXRC5K4UnNnq5jjmfz2fAMm
-         luXgCfjy27KBowEi38EwnMkC5XGcuX6tyW21/tEwr1FrSp+rGCyLdSsWF3R6DJsSbivl
-         1Q3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687500728; x=1690092728;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g6Rx1Xf0LH0dvCkca5awQZbD4QgAJXvuKCZBBi/mUhU=;
-        b=VVo6CKYx4Db/PORfkNCJb3bVKEGx4VB6OzLjSbJIt00Fw3wjYVsLWdp21Qq7OtnLXH
-         UrkrklI47DF1E/Dz43RRL2ZJJ4eVXe+ndHFxqzeuRUOKHSHVTkRBxRI7Z48CWepsHTQ4
-         ZlOG3aQrNvokDn4FEdHK+DuHF/uqn2nPWCm9yfITji7cOBvvGzkV8TloHPjZPt/K0BbU
-         2gmq7BUDORcc9LoYsfQPp/BsS8sFxDhasPm7at0ZS7s+RyJWIHYxGNSU5jiDqD2ewQjB
-         IMJ0j/TlsfJjF0RQQjWlvHkoaE+TWT0G9hDmZXrBfp3vTCLeYAE/B8gPzbf0j0+p/0LI
-         Rgtg==
-X-Gm-Message-State: AC+VfDxJEpp+9XdgKTFrA6cTs8osw79ktBTpSEhZ4nnBSM3ZYIxsNeuv
-        mV7YYQ7YpnD8KAqxn53De3RbTA==
-X-Google-Smtp-Source: ACHHUZ5b6N+FK7PXoTwlvRKh6LsH0vyG6YXCaEWGf5NRL5zfUiNEb8MHT84h6djsafTCO/ahpimwww==
-X-Received: by 2002:a05:6214:764:b0:62d:e913:f9ae with SMTP id f4-20020a056214076400b0062de913f9aemr22933956qvz.1.1687500727864;
-        Thu, 22 Jun 2023 23:12:07 -0700 (PDT)
-Received: from dread.disaster.area (pa49-180-13-202.pa.nsw.optusnet.com.au. [49.180.13.202])
-        by smtp.gmail.com with ESMTPSA id p28-20020a634f5c000000b0055387ffef10sm5712930pgl.24.2023.06.22.23.12.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 23:12:07 -0700 (PDT)
-Received: from dave by dread.disaster.area with local (Exim 4.96)
-        (envelope-from <david@fromorbit.com>)
-        id 1qCa1b-00F8aV-2d;
-        Fri, 23 Jun 2023 16:12:03 +1000
-Date:   Fri, 23 Jun 2023 16:12:03 +1000
-From:   Dave Chinner <david@fromorbit.com>
-To:     Qi Zheng <zhengqi.arch@bytedance.com>
-Cc:     akpm@linux-foundation.org, tkhai@ya.ru, vbabka@suse.cz,
-        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
-        paulmck@kernel.org, tytso@mit.edu, linux-kernel@vger.kernel.org,
-        linux-mm@kvack.org, intel-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org
-Subject: Re: [PATCH 02/29] mm: vmscan: introduce some helpers for dynamically
- allocating shrinker
-Message-ID: <ZJU3s8tyGsYTVS8f@dread.disaster.area>
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-3-zhengqi.arch@bytedance.com>
+        Fri, 23 Jun 2023 02:18:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62970189;
+        Thu, 22 Jun 2023 23:18:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F2B8F61988;
+        Fri, 23 Jun 2023 06:18:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EFBC433C0;
+        Fri, 23 Jun 2023 06:18:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687501133;
+        bh=OhAcmxvQIZSLKJdX6Slkll6dY3L+01o3voqnmE4tALo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qgd9wDIpuOoTdcPBctQKlD5bqnEQb2Sy+RCFfvDHDKfVWdD3uZhvHKIclbSp2bD36
+         Lhc1xKFz/2FDPm9II/O10T2vipd486FCVOq/XcaK/VRYueRBMJw2ta8cp2QLdT4UId
+         HjMzSNOKlTLvXvjLJ5IkrRBqCrkxGgK78EbetWFkZ228ABjknQ/VYYMiMpOX9sx86l
+         iiU1CYfhIkNBFEJPJhafe8SdmzAF2PffM85ZJLul27INGj6Negx30uUiMMOl4oeAHQ
+         l7BuXO4BpKiHcVGCZcsbPJ2I6J2rMU7YTjbpwGg9K/NImENT6Tnn7iebhZxh69PLaV
+         /OOvqlKNNmawg==
+Date:   Fri, 23 Jun 2023 11:48:39 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
+        quic_ramkri@quicinc.com, linux-arm-msm@vger.kernel.org,
+        konrad.dybcio@linaro.org,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
+        <linux-pci@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH RFC v1 3/3] PCI: qcom: ep: Add wake up host op to
+ dw_pcie_ep_ops
+Message-ID: <20230623061839.GC5611@thinkpad>
+References: <1686754850-29817-1-git-send-email-quic_krichai@quicinc.com>
+ <1686754850-29817-4-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230622085335.77010-3-zhengqi.arch@bytedance.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1686754850-29817-4-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 22, 2023 at 04:53:08PM +0800, Qi Zheng wrote:
-> Introduce some helpers for dynamically allocating shrinker instance,
-> and their uses are as follows:
+On Wed, Jun 14, 2023 at 08:30:49PM +0530, Krishna chaitanya chundru wrote:
+> Add wakeup host op to dw_pcie_ep_ops to wake up host from D3cold
+> or D3hot.
 > 
-> 1. shrinker_alloc_and_init()
-> 
-> Used to allocate and initialize a shrinker instance, the priv_data
-> parameter is used to pass the pointer of the previously embedded
-> structure of the shrinker instance.
-> 
-> 2. shrinker_free()
-> 
-> Used to free the shrinker instance when the registration of shrinker
-> fails.
-> 
-> 3. unregister_and_free_shrinker()
-> 
-> Used to unregister and free the shrinker instance, and the kfree()
-> will be changed to kfree_rcu() later.
-> 
-> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+
+Commit message should describe how the wakeup is implemented in the driver.
+
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
->  include/linux/shrinker.h | 12 ++++++++++++
->  mm/vmscan.c              | 35 +++++++++++++++++++++++++++++++++++
->  2 files changed, 47 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 34 +++++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
 > 
-> diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
-> index 43e6fcabbf51..8e9ba6fa3fcc 100644
-> --- a/include/linux/shrinker.h
-> +++ b/include/linux/shrinker.h
-> @@ -107,6 +107,18 @@ extern void unregister_shrinker(struct shrinker *shrinker);
->  extern void free_prealloced_shrinker(struct shrinker *shrinker);
->  extern void synchronize_shrinkers(void);
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 5d146ec..916a138 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -91,6 +91,7 @@
+>  /* PARF_PM_CTRL register fields */
+>  #define PARF_PM_CTRL_REQ_EXIT_L1		BIT(1)
+>  #define PARF_PM_CTRL_READY_ENTR_L23		BIT(2)
+> +#define PARF_PM_CTRL_XMT_PME			BIT(4)
+>  #define PARF_PM_CTRL_REQ_NOT_ENTR_L1		BIT(5)
 >  
-> +typedef unsigned long (*count_objects_cb)(struct shrinker *s,
-> +					  struct shrink_control *sc);
-> +typedef unsigned long (*scan_objects_cb)(struct shrinker *s,
-> +					 struct shrink_control *sc);
+>  /* PARF_MHI_CLOCK_RESET_CTRL fields */
+> @@ -794,10 +795,43 @@ static void qcom_pcie_ep_init(struct dw_pcie_ep *ep)
+>  		dw_pcie_ep_reset_bar(pci, bar);
+>  }
+>  
+> +static int qcom_pcie_ep_wakeup_host(struct dw_pcie_ep *ep, u8 func_no)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+> +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+> +	struct device *dev = pci->dev;
+> +	u32 perst, dstate, val;
 > +
-> +struct shrinker *shrinker_alloc_and_init(count_objects_cb count,
-> +					 scan_objects_cb scan, long batch,
-> +					 int seeks, unsigned flags,
-> +					 void *priv_data);
-> +void shrinker_free(struct shrinker *shrinker);
-> +void unregister_and_free_shrinker(struct shrinker *shrinker);
+> +	perst = gpiod_get_value(pcie_ep->reset);
+> +	/* Toggle wake GPIO when device is in D3 cold */
+> +	if (perst) {
+> +		dev_info(dev, "Device is in D3 cold toggling wake\n");
 
-Hmmmm. Not exactly how I envisioned this to be done.
+dev_dbg(). "Waking up the host by toggling WAKE#"
 
-Ok, this will definitely work, but I don't think it is an
-improvement. It's certainly not what I was thinking of when I
-suggested dynamically allocating shrinkers.
+> +		gpiod_set_value_cansleep(pcie_ep->wake, 1);
 
-The main issue is that this doesn't simplify the API - it expands it
-and creates a minefield of old and new functions that have to be
-used in exactly the right order for the right things to happen.
+Waking a device from D3cold requires power-on sequence by the host and in the
+presence of Vaux, the EPF should be prepared for that. In that case, the mode of
+wakeup should be decided by the EPF driver. So the wakeup API should have an
+argument to decide whether the wakeup is through PME or sideband WAKE#.
 
-What I was thinking of was moving the entire shrinker setup code
-over to the prealloc/register_prepared() algorithm, where the setup
-is already separated from the activation of the shrinker.
+Also note that as per PCIe Spec 3.0, the devices can support PME generation from
+D3cold provided that the Vaux is supplied to the device. I do not know if that
+is supported by Qcom devices but API should honor the spec. So the wakeup
+control should come from EPF driver as I suggested above.
 
-That is, we start by renaming prealloc_shrinker() to
-shrinker_alloc(), adding a flags field to tell it everything that it
-needs to alloc (i.e. the NUMA/MEMCG_AWARE flags) and having it
-returned a fully allocated shrinker ready to register. Initially
-this also contains an internal flag to say the shrinker was
-allocated so that unregister_shrinker() knows to free it.
+> +		usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
+> +		gpiod_set_value_cansleep(pcie_ep->wake, 0);
+> +		return 0;
+> +	}
+> +
+> +	dstate = dw_pcie_readl_dbi(pci, DBI_CON_STATUS) &
+> +				   DBI_CON_STATUS_POWER_STATE_MASK;
+> +	if (dstate == 3) {
+> +		dev_info(dev, "Device is in D3 hot sending inband PME\n");
 
-The caller then fills out the shrinker functions, seeks, etc. just
-like the do now, and then calls register_shrinker_prepared() to make
-the shrinker active when it wants to turn it on.
+dev_dbg(). As I said, the device can sent PME from D3cold also. So the log could
+be "Waking up the host using PME".
 
-When it is time to tear down the shrinker, no API needs to change.
-unregister_shrinker() does all the shutdown and frees all the
-internal memory like it does now. If the shrinker is also marked as
-allocated, it frees the shrinker via RCU, too.
+> +		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
+> +		val |= PARF_PM_CTRL_XMT_PME;
+> +		writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
+> +	} else {
+> +		dev_err(dev, "Device is not in D3 state wakeup is not supported\n");
+> +		return -EPERM;
 
-Once everything is converted to this API, we then remove
-register_shrinker(), rename register_shrinker_prepared() to
-shrinker_register(), rename unregister_shrinker to
-shrinker_unregister(), get rid of the internal "allocated" flag
-and always free the shrinker.
+-ENOTSUPP
 
-At the end of the patchset, every shrinker should be set
-up in a manner like this:
+- Mani
 
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static const struct dw_pcie_ep_ops pci_ep_ops = {
+>  	.ep_init = qcom_pcie_ep_init,
+>  	.raise_irq = qcom_pcie_ep_raise_irq,
+>  	.get_features = qcom_pcie_epc_get_features,
+> +	.wakeup_host = qcom_pcie_ep_wakeup_host,
+>  };
+>  
+>  static int qcom_pcie_ep_probe(struct platform_device *pdev)
+> -- 
+> 2.7.4
+> 
 
-	sb->shrinker = shrinker_alloc(SHRINKER_MEMCG_AWARE|SHRINKER_NUMA_AWARE,
-				"sb-%s", type->name);
-	if (!sb->shrinker)
-		return -ENOMEM;
-
-	sb->shrinker->count_objects = super_cache_count;
-	sb->shrinker->scan_objects = super_cache_scan;
-	sb->shrinker->batch = 1024;
-	sb->shrinker->private = sb;
-
-	.....
-
-	shrinker_register(sb->shrinker);
-
-And teardown is just a call to shrinker_unregister(sb->shrinker)
-as it is now.
-
-i.e. the entire shrinker regsitration API is now just three
-functions, down from the current four, and much simpler than the
-the seven functions this patch set results in...
-
-The other advantage of this is that it will break all the existing
-out of tree code and third party modules using the old API and will
-no longer work with a kernel using lockless slab shrinkers. They
-need to break (both at the source and binary levels) to stop bad
-things from happening due to using uncoverted shrinkers in the new
-setup.
-
--Dave.
 -- 
-Dave Chinner
-david@fromorbit.com
+மணிவண்ணன் சதாசிவம்
