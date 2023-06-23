@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A06273B4D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 12:10:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4A6573B4C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 12:10:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231936AbjFWKKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229632AbjFWKKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 23 Jun 2023 06:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45870 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230421AbjFWKKE (ORCPT
+        with ESMTP id S231179AbjFWKKE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 23 Jun 2023 06:10:04 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A323A2D79
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:08:58 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f8775126d3so486700e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:08:58 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E4E32D7F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:09:00 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3111cb3dda1so705789f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687514937; x=1690106937;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687514938; x=1690106938;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lNP6LkxylJsTZb04Lj9SoU8dCYBcHfZtyvvvsQ9AlHo=;
-        b=PvMz0b+jSap43nhn4QJaLQonQdi2SD8yAay0iiQfX4Lu0Rv3crnP0MseXmLoRA8F0M
-         bQwOsyO0oYcQCtTDU4WfsA4BMsVem8Ti7WTwX+ten58hF5BzvkABmYOxQ55n3g4OZXW4
-         i4P+I2H+3MAQriJ1kAWdZH389h5BcJUtJqcaP0OOXTLQuFPth5IY6+j+AluewzLIIyOJ
-         NxAesZkFA4Oj1qgtEtV60U7CyHmGbKRQkHShzz7w+PBJAbbCahThmWwDuAq7s27YNjit
-         nWAjJqBn2Tyl6BmNFP4ZulFhqPj+6pNv0eFa8lZEqcKd5xgY42eUdcQAFTaBDUfMrMiP
-         ZWVw==
+        bh=zYsPM0znkqN61dd+ZblYn0iKga8HXqcuyw6SkrjlQfc=;
+        b=t7DoDBXh+qjcmsLYlF54Co4CxG2yA9retQMT5sBA82x+exLmrhSN5Npx0GPVjj3Gyi
+         AgRR3V6GX4ilj/GxSz4DXW3/de0jb5HNsuxVHA2ROFIU6lBftCaGkWsgqwAMcIwr792b
+         s2Yr9Zkz2B+Z5es4KxhF98suZ5PY0Sp04tAjXyIFCRcU9rqW+WzdW+IfblqIIszCVmxm
+         YjDzR7cBCQe9UuqmNfGrK0w12bfwtpDntT0G9T2bTDqAHnBm9zHGrbRapnZnC5zWIC3z
+         jXhOR6xzOkPxjw5xtRdP1AMWXcCJ2kP7JBc6Nn6GxBJV7Dem9yCFYqW1zjg3q8/F13al
+         mFrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687514937; x=1690106937;
+        d=1e100.net; s=20221208; t=1687514938; x=1690106938;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lNP6LkxylJsTZb04Lj9SoU8dCYBcHfZtyvvvsQ9AlHo=;
-        b=ERviu5+IcGhIdPsg5mPXDMLb3knM0xQE+/a6tiUPnr28C97WhmtLrN4deHBdmINI9z
-         nwuQgM/+ihTbhvGPcL4atNmg9x8oh7X2frQsR8JQLArFVtYwv7LujWrQ3+7wtTWFEPR8
-         2O4fvMNqscpelnNsL87zW7hxmZeFBImf1tE5EmpSlvNoGE13EeTByVeSR6MtlOngPuG1
-         068F7K1dK11IsL7I3liz89aC3JYkKq2ALbe0uNLFKswIeePQAi7lhgWF8ohEQkkxw3/1
-         CWLBWbCWJyF6BTozDnmW0J8jBkj8QwbbSjG5ffvWpyluTuxJZWF6qZrtid3kTLpd7/n6
-         hLYg==
-X-Gm-Message-State: AC+VfDzbbDcrM8tUDLPnUfj5xu4FIDLkj+obxDWugQPhXPDfZ/i+u7Y9
-        5HCc+3h9b8nxoAA5NFaByHOhoQ==
-X-Google-Smtp-Source: ACHHUZ7Gfpz+O8Pfgqto5VDAPSltno+ePGZCpvLFDaRzpQSPS/x6kKbSsBk4g8DsDoJQP0lc8g6tXg==
-X-Received: by 2002:a19:7718:0:b0:4f8:6e6e:3f42 with SMTP id s24-20020a197718000000b004f86e6e3f42mr9627135lfc.14.1687514936795;
-        Fri, 23 Jun 2023 03:08:56 -0700 (PDT)
+        bh=zYsPM0znkqN61dd+ZblYn0iKga8HXqcuyw6SkrjlQfc=;
+        b=K1NT0x1URwKjbFIQFy3Z3fGLrre1NWpYyjzsenmWC2CWvi7x+Ykxji1ADlg8XOFdNh
+         sTIo3d5ZiY1VIIbhVAiMPCsOxeaKdEFgveRXEFYB3A24MTOs8ALJMFEFn9skrjI8KNJx
+         3EZ881/Tus5s3cT9Mvl4U4tEQXy8orLxT0qELIcQxAKwjVePyj1NIWw4FSgQ9l946PFp
+         XG87jZsfV2iMVT3ufhZAehjLtZx+RmF59yupu3Bah129jLALgRofbeeZWLmMQdk4MUt3
+         Q/VXAeEiRFcBPKATA/SXCRahRyEoh8nohX5e5L6I6HP3xOdG4hsS7L38qum1OUVF27F1
+         RBdA==
+X-Gm-Message-State: AC+VfDzm1w0aBHrhyPy252sP95xnG9frXyb2tv1XiLerzYI5o6czgKBt
+        q/vyioVEY7+13APlRD55gkGBGQ==
+X-Google-Smtp-Source: ACHHUZ7vENHxVyZhytONW2EeAI/gfZIHdeb5dzA9Kq6kNveW/7Svnu2VZwESWi9KLZN/Vl2NIU/V8g==
+X-Received: by 2002:a5d:6452:0:b0:307:7ae6:fe98 with SMTP id d18-20020a5d6452000000b003077ae6fe98mr21132722wrw.22.1687514938545;
+        Fri, 23 Jun 2023 03:08:58 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:ddc2:ce92:1ed6:27bd])
-        by smtp.gmail.com with ESMTPSA id k18-20020adfe8d2000000b0030ae3a6be4asm9278100wrn.72.2023.06.23.03.08.55
+        by smtp.gmail.com with ESMTPSA id k18-20020adfe8d2000000b0030ae3a6be4asm9278100wrn.72.2023.06.23.03.08.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jun 2023 03:08:56 -0700 (PDT)
+        Fri, 23 Jun 2023 03:08:57 -0700 (PDT)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Vinod Koul <vkoul@kernel.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
@@ -73,9 +73,9 @@ Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-arm-kernel@lists.infradead.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH net-next v2 06/12] net: stmmac: replace the serdes_up_after_phy_linkup field with a flag
-Date:   Fri, 23 Jun 2023 12:08:39 +0200
-Message-Id: <20230623100845.114085-7-brgl@bgdev.pl>
+Subject: [PATCH net-next v2 07/12] net: stmmac: replace the vlan_fail_q_en field with a flag
+Date:   Fri, 23 Jun 2023 12:08:40 +0200
+Message-Id: <20230623100845.114085-8-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230623100845.114085-1-brgl@bgdev.pl>
 References: <20230623100845.114085-1-brgl@bgdev.pl>
@@ -98,78 +98,58 @@ simple bitfield flag.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c | 2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 ++++++---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
  include/linux/stmmac.h                            | 2 +-
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
-index 5e8aa03cffae..99e2e5a5cd60 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
-@@ -337,7 +337,7 @@ static int tegra_mgbe_probe(struct platform_device *pdev)
- 	/* Program SID */
- 	writel(MGBE_SID, mgbe->hv + MGBE_WRAP_AXI_ASID0_CTRL);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+index faa6f4ec6838..1f1bc99571a5 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+@@ -560,7 +560,7 @@ static int intel_mgbe_common_data(struct pci_dev *pdev,
+ 	/* Set the maxmtu to a default of JUMBO_LEN */
+ 	plat->maxmtu = JUMBO_LEN;
  
--	plat->serdes_up_after_phy_linkup = 1;
-+	plat->flags |= STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP;
+-	plat->vlan_fail_q_en = true;
++	plat->flags |= STMMAC_FLAG_VLAN_FAIL_Q_EN;
  
- 	err = stmmac_dvr_probe(&pdev->dev, plat, &res);
- 	if (err < 0)
+ 	/* Use the last Rx queue */
+ 	plat->vlan_fail_q = plat->rx_queues_to_use - 1;
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 73002ed923aa..d444514db07e 100644
+index d444514db07e..c5763f60c6ef 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -991,7 +991,8 @@ static void stmmac_mac_link_up(struct phylink_config *config,
- 	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
- 	u32 old_ctrl, ctrl;
+@@ -6923,7 +6923,8 @@ static int stmmac_hw_init(struct stmmac_priv *priv)
+ 	if (priv->dma_cap.tsoen)
+ 		dev_info(priv->device, "TSO supported\n");
  
--	if (priv->plat->serdes_up_after_phy_linkup && priv->plat->serdes_powerup)
-+	if ((priv->plat->flags & STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP) &&
-+	    priv->plat->serdes_powerup)
- 		priv->plat->serdes_powerup(priv->dev, priv->plat->bsp_priv);
+-	priv->hw->vlan_fail_q_en = priv->plat->vlan_fail_q_en;
++	priv->hw->vlan_fail_q_en =
++		(priv->plat->flags & STMMAC_FLAG_VLAN_FAIL_Q_EN);
+ 	priv->hw->vlan_fail_q = priv->plat->vlan_fail_q;
  
- 	old_ctrl = readl(priv->ioaddr + MAC_CTRL_REG);
-@@ -3838,7 +3839,8 @@ static int __stmmac_open(struct net_device *dev,
- 
- 	stmmac_reset_queues_param(priv);
- 
--	if (!priv->plat->serdes_up_after_phy_linkup && priv->plat->serdes_powerup) {
-+	if (!(priv->plat->flags & STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP) &&
-+	    priv->plat->serdes_powerup) {
- 		ret = priv->plat->serdes_powerup(dev, priv->plat->bsp_priv);
- 		if (ret < 0) {
- 			netdev_err(priv->dev, "%s: Serdes powerup failed\n",
-@@ -7623,7 +7625,8 @@ int stmmac_resume(struct device *dev)
- 			stmmac_mdio_reset(priv->mii);
- 	}
- 
--	if (!priv->plat->serdes_up_after_phy_linkup && priv->plat->serdes_powerup) {
-+	if (!(priv->plat->flags & STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP) &&
-+	    priv->plat->serdes_powerup) {
- 		ret = priv->plat->serdes_powerup(ndev,
- 						 priv->plat->bsp_priv);
- 
+ 	/* Run HW quirks, if any */
 diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index 47ae29a98835..aeb3e75dc748 100644
+index aeb3e75dc748..155cb11b1c8a 100644
 --- a/include/linux/stmmac.h
 +++ b/include/linux/stmmac.h
-@@ -209,6 +209,7 @@ struct dwmac4_addrs {
- #define STMMAC_FLAG_USE_PHY_WOL			BIT(2)
+@@ -210,6 +210,7 @@ struct dwmac4_addrs {
  #define STMMAC_FLAG_HAS_SUN8I			BIT(3)
  #define STMMAC_FLAG_TSO_EN			BIT(4)
-+#define STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP	BIT(5)
+ #define STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP	BIT(5)
++#define STMMAC_FLAG_VLAN_FAIL_Q_EN		BIT(6)
  
  struct plat_stmmacenet_data {
  	int bus_id;
-@@ -293,7 +294,6 @@ struct plat_stmmacenet_data {
- 	int msi_sfty_ue_vec;
- 	int msi_rx_base_vec;
- 	int msi_tx_base_vec;
--	bool serdes_up_after_phy_linkup;
- 	const struct dwmac4_addrs *dwmac4_addrs;
- 	unsigned int flags;
- };
+@@ -278,7 +279,6 @@ struct plat_stmmacenet_data {
+ 	bool en_tx_lpi_clockgating;
+ 	bool rx_clk_runs_in_lpi;
+ 	int has_xgmac;
+-	bool vlan_fail_q_en;
+ 	u8 vlan_fail_q;
+ 	unsigned int eee_usecs_rate;
+ 	struct pci_dev *pdev;
 -- 
 2.39.2
 
