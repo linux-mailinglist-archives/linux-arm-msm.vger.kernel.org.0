@@ -2,52 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC04373BF2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:02:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35D0773BF32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:07:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231389AbjFWUCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 16:02:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40546 "EHLO
+        id S231626AbjFWUHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 16:07:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbjFWUCk (ORCPT
+        with ESMTP id S229620AbjFWUHY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 16:02:40 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B4A01BCA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 13:02:37 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5E5103F7A3;
-        Fri, 23 Jun 2023 22:02:34 +0200 (CEST)
-Date:   Fri, 23 Jun 2023 22:02:32 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2] drm/msm/dsi: Document DSC related pclk_rate and
- hdisplay calculations
-Message-ID: <gpxqh6mu5dora7ul4agaflmzqiq7ps6j2dic3zj2ygvp7dsori@lnbnexnbqthg>
-References: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
- <e9d5876a-3113-8c79-c2aa-e1ad175f0d84@quicinc.com>
- <b632e52d-7b86-9f5a-913a-aace26d9a039@linaro.org>
- <c2f632e7-8302-a77f-fc61-ccda3b5a8aac@quicinc.com>
- <eqdu44xcd6qdrmxcdr44dfcliydz6q4oombghjg6ptlcbxf22v@uhqnhnlv6gxi>
- <6e2ded6a-63a9-d32a-7a2f-67d3c72b1aa2@quicinc.com>
+        Fri, 23 Jun 2023 16:07:24 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B29F1FC2;
+        Fri, 23 Jun 2023 13:07:22 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NJlNoQ000584;
+        Fri, 23 Jun 2023 20:07:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2xHXymm26cFGkOCmd3L+uGoYsa3TapT3K+2VJZpL/HU=;
+ b=c1XWAN619G3ywT4uGK0lbIyQOxcYXqBtMvRDt7bOgDEkIcj68vwFi5OswhiLIY0olbFM
+ RrKSD2Dy3PRzLTiSjnUu8WDuouR+o9Bg7lj0hRbjXjnvQPgQJCAc/on04PxToT9YdSKt
+ kXfHKkfHnh+8wfHjfJHWvDr4SBmYZDiSFK0IPvwO1iHDgI3eBlzlpc2wlbJZy2/DfjKg
+ FPlPocCEnt1dKwnyWTnzbRZrwrD/PAef5Bb+gGXZvh9h3tJ5QrJDH+3uYKHmdEThjLX4
+ b0MT6BPKBnuePc302MxwZViw/YrUagl6Shx2O/XOcV2VfVxzsePI0PWFtbLUDLq6w5JP Xw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc6b2dnmh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 20:07:14 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NK7DX4001455
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 20:07:13 GMT
+Received: from [10.38.246.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
+ 2023 13:07:12 -0700
+Message-ID: <113b50f8-35f6-73fc-4fc9-302262927c5e@quicinc.com>
+Date:   Fri, 23 Jun 2023 13:07:10 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6e2ded6a-63a9-d32a-7a2f-67d3c72b1aa2@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 0/4] interconnect: qcom: rpmh: sm8550: mask to send as
+ vote
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     <neil.armstrong@linaro.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
+ <5b68b9ba-157b-067c-3926-9c5ecfecc311@linaro.org>
+ <20230623185814.GA1775967@hu-bjorande-lv.qualcomm.com>
+From:   Mike Tipton <quic_mdtipton@quicinc.com>
+In-Reply-To: <20230623185814.GA1775967@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xWSel6hMzNX2qt-rS0PvK4M_Ed5WDMIi
+X-Proofpoint-GUID: xWSel6hMzNX2qt-rS0PvK4M_Ed5WDMIi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_11,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ malwarescore=0 spamscore=0 phishscore=0 suspectscore=0 priorityscore=1501
+ mlxlogscore=999 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306230180
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,148 +86,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-23 12:54:17, Abhinav Kumar wrote:
+On 6/23/2023 11:58 AM, Bjorn Andersson wrote:
+> On Fri, Jun 23, 2023 at 03:58:09PM +0200, Konrad Dybcio wrote:
+>> On 23.06.2023 14:50, neil.armstrong@linaro.org wrote:
+>>> On the SM8550 SoC, some nodes requires a specific bit mark
+>>> instead of a bandwidth when voting.
+>>>
+>>> Add an enable_mask variable to be used instead of bandwidth.
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>> After reviewing this patchset and taking a peek at older downstream,
+>> it looks like ACV should be using 0x8 bmask on *all RPMh SoCs*.
+>>
+>> It's worth noting however, that 8350's downstream (the first msm
+>> kernel using the icc framework) did not incorporate that change.
+>> Not sure if intentionally or not. Probably not. Might be worth to
+>> poke Qcom to backport it in such case. If 8350 is still supported.
+>> Probably not.
+>>
 > 
-> 
-> On 6/23/2023 12:26 AM, Marijn Suijten wrote:
-> > On 2023-06-22 17:32:17, Abhinav Kumar wrote:
-> >>
-> >>
-> >> On 6/22/2023 5:17 PM, Dmitry Baryshkov wrote:
-> >>> On 23/06/2023 03:14, Abhinav Kumar wrote:
-> >>>>
-> >>>>
-> >>>> On 6/19/2023 2:06 PM, Dmitry Baryshkov wrote:
-> >>>>> Provide actual documentation for the pclk and hdisplay calculations in
-> >>>>> the case of DSC compression being used.
-> >>>>>
-> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>>> ---
-> >>>>>
-> >>>>> Changes since v1:
-> >>>>> - Converted dsi_adjust_pclk_for_compression() into kerneldoc (Marijn)
-> >>>>> - Added a pointer from dsi_timing_setup() docs to
-> >>>>>     dsi_adjust_pclk_for_compression() (Marijn)
-> >>>>> - Fixed two typo (Marijn)
-> >>>>>
-> >>>>> ---
-> >>>>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 40 ++++++++++++++++++++++++++++--
-> >>>>>    1 file changed, 38 insertions(+), 2 deletions(-)
-> >>>>>
-> >>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>>> index 3f6dfb4f9d5a..a8a31c3dd168 100644
-> >>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>>> @@ -528,6 +528,25 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host
-> >>>>> *msm_host)
-> >>>>>        clk_disable_unprepare(msm_host->byte_clk);
-> >>>>>    }
-> >>>>> +/**
-> >>>>> + * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for
-> >>>>> compression case
-> >>>>> + * @mode: the selected mode for the DSI output
-> >>>>> + * @dsc: DRM DSC configuration for this DSI output
-> >>>>> + *
-> >>>>> + * Adjust the pclk rate by calculating a new hdisplay proportional to
-> >>>>> + * the compression ratio such that:
-> >>>>> + *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
-> >>>>> + *
-> >>>>> + * Porches do not need to be adjusted:
-> >>>>> + * - For the VIDEO mode they are not compressed by DSC and are
-> >>>>> passed as is.
-> >>>>> + * - For the CMD mode there are no actual porches. Instead these fields
-> >>>>> + *   currently represent the overhead to the image data transfer. As
-> >>>>> such, they
-> >>>>> + *   are calculated for the final mode parameters (after the
-> >>>>> compression) and
-> >>>>> + *   are not to be adjusted too.
-> >>>>> + *
-> >>>>> + *  FIXME: Reconsider this if/when CMD mode handling is rewritten to
-> >>>>> use
-> >>>>> + *  refresh rate and data overhead as a starting point of the
-> >>>>> calculations.
-> >>>>> + */
-> >>>>>    static unsigned long dsi_adjust_pclk_for_compression(const struct
-> >>>>> drm_display_mode *mode,
-> >>>>>            const struct drm_dsc_config *dsc)
-> >>>>
-> >>>> I am fine with this part of the doc.
-> >>>>
-> >>>>>    {
-> >>>>> @@ -926,8 +945,25 @@ static void dsi_timing_setup(struct msm_dsi_host
-> >>>>> *msm_host, bool is_bonded_dsi)
-> >>>>>            if (ret)
-> >>>>>                return;
-> >>>>> -        /* Divide the display by 3 but keep back/font porch and
-> >>>>> -         * pulse width same
-> >>>>> +        /*
-> >>>>> +         * DPU sends 3 bytes per pclk cycle to DSI. If compression is
-> >>>>> +         * not used, a single pixel is transferred at each pulse, no
-> >>>>> +         * matter what bpp or pixel format is used. In case of DSC
-> >>>>> +         * compression this results (due to data alignment
-> >>>>> +         * requirements) in a transfer of 3 compressed pixel per pclk
-> >>>>> +         * cycle.
-> >>>>> +         *
-> >>>>
-> >>>> I dont want to talk about data alignment nor formats and I will not
-> >>>> ack any references to those.
-> >>>>
-> >>>> I would like to keep this simple and say that DPU sends 3 bytes of
-> >>>> compressed data / pclk (6 with widebus enabled) and all this math is
-> >>>> doing is that its calculating number of bytes and diving it by 3 OR 6
-> >>>> with widebus to calculate the pclk cycles. Thats it.
-> >>>
-> >>> This makes it unclear, why do we simply by 3 rather than doing * dsc_bpp
-> >>> / 24.  My description might be inaccurate as I don't have hw docs at
-> >>> hand, but simple description is not enough.
-> >>>
-> >>
-> >> Why is it unclear? With compression, we are saying we process at 3
-> >> compressed bytes / pclk and this math is accurately giving the pclk cycles.
-> >>
-> >> You are once again trying to arrive at 3 with compression factor in mind
-> >> by calculating target_bpp / src_bpp.
-> >>
-> >> I am saying that its independent of that. Whenever we do compression
-> >> rate is 3 bytes of compressed data (and 6 with widebus) irrespective of
-> >> what your dsc_bpp was.
-> > 
-> > Abhinav, this is exactly what the confusion the pclk series is about.
-> > There it was said (and committed to mainline now!) that pclk is based on
-> > the compression factor of target_bpp / src_bpp.  Now you are saying
-> > there is a fixed number of bytes sent by the (wide)bus between DPU-DSC
-> > and DSI.
-> > 
-> > Is pclk used for more purposes besides just ticking for the data
-> > transfer between DPU and DSI?
-> > 
-> 
-> There is no confusion between what was said earlier and now.
-> 
-> This line is calculating the number of pclks needed to transmit one line 
-> of the compressed data:
-> 
-> hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-> 
-> msm_dsc_get_bytes_per_line() is calculating the number of compressed 
-> bytes as it uses the target bits_per_pixel
-> 
-> 126 	 * @bits_per_pixel:
-> 127 	 * Target bits per pixel with 4 fractional bits, bits_per_pixel << 4
-> 128 	 */
-> 129 	u16 bits_per_pixel;
-> 
-> (like I have said a few times, hdisplay is perhaps confusing us)
-> 
-> If you calculate the bytes this way you are already accounting for the 
-> compression, so where is the confusion.
-> 
-> The pclk calculation does the same thing of using the ratio instead.
+> Your observation is correct.
 
-This is not answering my question whether the ratio for pclk calculation
-should also be adjusted to account for widebus.  And if the ratio is
-fixed, why use a fixed factor here but the ratio between
-src_bpp:target_bpp here?  It only adds extra confusion.
+Mostly correct. Historically it's always been 0x8, but it's not 
+guaranteed. And it will be different on some upcoming SoCs.
 
-- Marijn
+> 
+> But, note further that command db reports ACV to have data-width of 0,
+> resulting in the numerator, and thereby vote_x and vote_y always being
+> 0.
+> 
+> This is downstream worked around by:
+> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/4d2818084015df1e05274ebcc5a0d21e6d256f93
+> 
+> Which should cause vote_x and vote_y to be non-zero. However without
+> this series (and enable_mask defined for ACV on all platforms) the votes
+> placed in the BCM would then be garbage...
+> 
+> 
+> 
+> That said, unless I'm missing something the math involved here is
+> unnecessary.For BCMs with enable_mask, if for any node sum_avg[bucket]
+> or max_peak[bucket] is non-zero then the calculated vote_x and vote_y
+> comes out non-zero and we write the mask, otherwise 0.
+
+You're not missing anything. The full aggregation logic isn't necessary 
+for BCMs with an enable_mask. It was just a bit simpler to implement 
+this way. And the extra time spent in the aggregation logic should be 
+minimal. But, it could certainly be rewritten to have an entirely 
+separate, simpler "aggregation" loop than the full BCMs.
+
+> 
+> Rewritten to avoid all the unnecessary multiplication and divisions, we
+> wouldn't care about the unit or width and thereby don't need above
+> referenced patch.
+
+Yeah, the patch shouldn't be necessary anymore in that case. Though 
+keeping it would protect us against div-by-zero in case of something 
+unexpected in cmd_db.
+
+> 
+> 
+> A further tangent here is that a BCM with enable_mask != BIT(0) but
+> keepalive set, a 0-bandwidth vote in AMC would result in an invalid
+> (undefined?) BCM value being written out in the snippet below the loop.
+
+True, though in practice it should never be a problem. Currently, there 
+are only two use cases for enable_mask -- "on/off" BCMs and ACV. The 
+enable_mask for on/off BCMs is always 0x1. The only time enable_mask != 
+0x1 is for ACV, but keepalive should never be set for ACV. I agree this 
+is a bit of a logical hole, though. And could break in the future for 
+as-yet undefined usage of enable_mask.
+
+> 
+>> Check out these snippets:
+>>
+>> https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L556-567
+>>
+>> https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L475-495
+>>
+>> Notice how acv is never updated beyond effectively setting =0 or =bmask,
+>> perhaps Qualcomm never implemented something else..
+>>
+>> Since this series is fine as-is, I'd be happy to see an incremental one.
+>> Reported-by would be cool as well :D
+> 
+> I agree, let's get this merged, backported to stable, and then fix ACV
+> handling in a follow up commit (which doesn't necessarily need to hit
+> stable).
+> 
+> You should have a Jira card for this one already, but I don't mind
+> sharing the Reported-by with you ;)
+> 
+> Regards,
+> Bjorn
+> 
+>>
+>> Konrad
+>>> Changes in v2:
+>>> - Took downstream patch for patch 1
+>>> - Added konrad's reviewed tag
+>>> - Added changes for sm8450 and sa8775p
+>>> - Link to v1: https://lore.kernel.org/r/20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-0-66663c0aa592@linaro.org
+>>>
+>>> ---
+>>> Mike Tipton (1):
+>>>        interconnect: qcom: Add support for mask-based BCMs
+>>>
+>>> Neil Armstrong (3):
+>>>        interconnect: qcom: sm8450: add enable_mask for bcm nodes
+>>>        interconnect: qcom: sm8550: add enable_mask for bcm nodes
+>>>        interconnect: qcom: sa8775p: add enable_mask for bcm nodes
+>>>
+>>>   drivers/interconnect/qcom/bcm-voter.c |  5 +++++
+>>>   drivers/interconnect/qcom/icc-rpmh.h  |  2 ++
+>>>   drivers/interconnect/qcom/sa8775p.c   |  1 +
+>>>   drivers/interconnect/qcom/sm8450.c    |  9 +++++++++
+>>>   drivers/interconnect/qcom/sm8550.c    | 17 +++++++++++++++++
+>>>   5 files changed, 34 insertions(+)
+>>> ---
+>>> base-commit: 47045630bc409ce6606d97b790895210dd1d517d
+>>> change-id: 20230619-topic-sm8550-upstream-interconnect-mask-vote-96aa20355158
+>>>
+>>> Best regards,
