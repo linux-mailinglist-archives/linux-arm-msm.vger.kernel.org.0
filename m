@@ -2,114 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A50E73C2E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 23:33:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F6BD73C31F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 23:45:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230358AbjFWVdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 17:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34162 "EHLO
+        id S231828AbjFWVpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 17:45:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230171AbjFWVdK (ORCPT
+        with ESMTP id S232267AbjFWVpw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 17:33:10 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 809F01BFC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 14:33:09 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7D4DC3F28C;
-        Fri, 23 Jun 2023 23:33:07 +0200 (CEST)
-Date:   Fri, 23 Jun 2023 23:33:05 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for
- DSI command mode
-Message-ID: <q7ysvtgkhvc3fv4ib65li6hb3p5aw2hfp4ck3d4afuvqxjopzj@mbsg3zr3pint>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
- <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
- <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
- <xrqiat4otnfwtss6zwubh77qx3frdyi77flna2xljzycvr6r2v@riimvmhoondt>
- <654ccc4c-40c2-bef6-9f47-847216e16cb0@quicinc.com>
- <daqhyz4rtgdxthsezmgk6t2egbdsvzsdy3cihrqrhyveoqbizi@etq2tafkucg2>
- <117d21da-aa44-9439-5d5b-9a9144b53979@quicinc.com>
+        Fri, 23 Jun 2023 17:45:52 -0400
+Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1645A2139;
+        Fri, 23 Jun 2023 14:45:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=inria.fr; s=dc;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=CbwxMU596UN3SHXGFCDkR8oQ2050lXlWn2EuGniSkS4=;
+  b=EnKI3OerFqRJX9FzejlToSjLEGBQaFe4p1OYUsELEL5mz49EsMp7ZTrL
+   0rRfmNl38pAAant36AUp5WyAldBAMH9gGcou0pN731+QmBCeBJ/fMisKG
+   BNkUQ/FAz38XkMpHuBvR/jzmTPPzMuBlAOAw+Tqm5JEM5IyQ7cUIrX8cT
+   I=;
+Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=julia.lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.01,153,1684792800"; 
+   d="scan'208";a="59686842"
+Received: from 231.85.89.92.rev.sfr.net (HELO hadrien) ([92.89.85.231])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2023 23:45:49 +0200
+Date:   Fri, 23 Jun 2023 23:45:48 +0200 (CEST)
+From:   Julia Lawall <julia.lawall@inria.fr>
+X-X-Sender: jll@hadrien
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+cc:     Manivannan Sadhasivam <mani@kernel.org>, keescook@chromium.org,
+        kernel-janitors@vger.kernel.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 10/26] bus: mhi: host: use array_size
+In-Reply-To: <3b4ff79b-93b4-cf56-1488-113905b3981d@quicinc.com>
+Message-ID: <alpine.DEB.2.22.394.2306232340510.3129@hadrien>
+References: <20230623211457.102544-1-Julia.Lawall@inria.fr> <20230623211457.102544-11-Julia.Lawall@inria.fr> <3b4ff79b-93b4-cf56-1488-113905b3981d@quicinc.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <117d21da-aa44-9439-5d5b-9a9144b53979@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-23 13:34:06, Abhinav Kumar wrote:
-> 
-> 
-> On 6/23/2023 1:14 PM, Marijn Suijten wrote:
-> > On 2023-06-23 10:29:51, Abhinav Kumar wrote:
-> > <snip>
-> >> The concept is quite simple
-> >>
-> >> one pixel per clock for uncompresssed without widebubus
-> >>
-> >> 2 pixels per clock for uncompressed with widebus (only enabled for DP
-> >> not DSI)
-> >>
-> >> 3 bytes worth of data for compressed without widebus
-> >>
-> >> 6 bytes worth of data for compressed with widebus
-> >>
-> >> When compression happens, we cannot quantify with pixels as the boundary
-> >> is not defined with respect to bytes.
-> >>
-> >> You brought up uncompressed in your below comment so I assumed your
-> >> question of /2 was about uncompressed too.
-> > 
-> > No clue where things are going wrong, but you either avoid or
-> > misunderstand the question.
-> > 
-> > (Talking exclusively about compressed data here!)
-> > 
-> > pclk is determined based on the number of bytes.
-> > 
-> > When widebus is enabled, we transfer twice as many bytes per pclk cycle.
-> > 
-> > Can pclk be reduced by a factor two, as that should still be enough to
-> > transfer the same amount of bytes when widebus is enabled?
-> > 
-> 
-> I dont know where the misunderstanding is too.
-> 
-> I already did answer that pclk can be /2 for uncompressed.
 
-Except that my question is about compressed.
 
-> But for compressed it will be divided by the compression ration.
+On Fri, 23 Jun 2023, Jeffrey Hugo wrote:
 
-The question here is "why exactly"?  I am looking for the argument that
-justifies pclk being twice as high for the number of bytes we need to
-send.
+> On 6/23/2023 3:14 PM, Julia Lawall wrote:
+> > Use array_size to protect against multiplication overflows.
+> >
+> > The changes were done using the following Coccinelle semantic patch:
+> >
+> > // <smpl>
+> > @@
+> >      expression E1, E2;
+> >      constant C1, C2;
+> >      identifier alloc = {vmalloc,vzalloc};
+> > @@
+> >      (
+> >        alloc(C1 * C2,...)
+> > |
+> >        alloc(
+> > -           (E1) * (E2)
+> > +           array_size(E1, E2)
+> >        ,...)
+> > )
+> > // </smpl>
+> >
+> > Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+> >
+> > ---
+> >   drivers/bus/mhi/host/init.c |    4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> > index f72fcb66f408..34a543a67068 100644
+> > --- a/drivers/bus/mhi/host/init.c
+> > +++ b/drivers/bus/mhi/host/init.c
+> > @@ -759,8 +759,8 @@ static int parse_ch_cfg(struct mhi_controller
+> > *mhi_cntrl,
+> >   	 * so to avoid any memory possible allocation failures, vzalloc is
+> >   	 * used here
+> >   	 */
+> > -	mhi_cntrl->mhi_chan = vzalloc(mhi_cntrl->max_chan *
+> > -				      sizeof(*mhi_cntrl->mhi_chan));
+> > +	mhi_cntrl->mhi_chan = vzalloc(array_size(mhi_cntrl->max_chan,
+> > +				      sizeof(*mhi_cntrl->mhi_chan)));
+> >   	if (!mhi_cntrl->mhi_chan)
+> >   		return -ENOMEM;
+> >
+> >
+>
+> This doesn't seem like a good fix.
+>
+> If we've overflowed the multiplication, I don't think we should continue, and
+> the function should return an error.  array_size() is going to return
+> SIZE_MAX, and it looks like it is possible that vzalloc() may be able to
+> allocate that successfully in some scenarios. However, that is going to be
+> less memory than parse_ch_cfg() expected to allocate, so later on I expect the
+> function will still corrupt memory - basically the same result as what the
+> unchecked overflow would do.
+>
+> I'm not convinced the semantic patch is bringing value as I suspect most of
+> the code being patched is in the same situation.
 
-Is that answer: pclk is not only used for the bus between DPU and DSI?
+OK, this just brings the code in line with all the calls updated by Kees's
+original patch, cited in the cover letter, which were all the
+calls containing a multiplication that existed at the time.
 
-If the answer to that question is yes, then I'd ask what the advantage
-is of widebus.
+42bc47b35320 ("treewide: Use array_size() in vmalloc()")
+fad953ce0b22 ("treewide: Use array_size() in vzalloc()")
 
-<snip>
+julia
 
-Let's leave the rest for what it is.
-
-- Marijn
+>
+> -Jeff
+>
