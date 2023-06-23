@@ -2,189 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9E5D73BCF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 18:47:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63FDD73BD76
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 19:10:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232160AbjFWQr1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 12:47:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54784 "EHLO
+        id S230008AbjFWRKL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 13:10:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232199AbjFWQrZ (ORCPT
+        with ESMTP id S232281AbjFWRJq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 12:47:25 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF5BB2720
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 09:47:21 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f973035d60so1010917e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 09:47:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687538840; x=1690130840;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OBUMS6+Ixu1UXqr8YNawSIcwQonUlT827pYdb6QYXzM=;
-        b=Eq2l7Fk3m2lCefTcxvs3+qQRjgFuhPqfZXhyz91WenXW4qaDYW7tL3o4sqmvx9/h9j
-         LogKawFNSl8qmE2Hp9FS+L9O/1GgBEo4JVyOpq3EKMcdeaWTG4uCKlac7Bn3QrDpm948
-         DKGLo8OFoRAEn+dxZUeyzTNaVFZAq6hgkaXEcvzuRcj+Ko4n1I/3R85b1h6U5XBH0kG4
-         OG5XPKRxqTSdkMjATUKVBw5mn8z9gKEj7Svy62GCTLJno5ItYalw+YgijGwaGjKP7Ji/
-         ilV5ajz2eBLuT06wt+aqdJTX4kcI8NTfuQYEUs1h+0PBk/aUWrEV1IGibRteyY3l9WBz
-         SjRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687538840; x=1690130840;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OBUMS6+Ixu1UXqr8YNawSIcwQonUlT827pYdb6QYXzM=;
-        b=GSvBcA2OzmgeJ8En5CzSfBo8GrRrn07ZWzyQ6WqH/2xwBZvWUQDkFZpAujMjzJWei+
-         yfIAVBYvakyEBPn33Gv87LqRZ2Ov337eHR5pHcGKyfMX6uM5gBAuMqqF2G/rIRXtnIZg
-         GghDEyFPD5HWW0c0ONkG4qw8tuh81zwv1niDmx+E4DfNFpnMAQTE/cbwdMBZ3yemtBNc
-         y1Apo8fMij6H3LhGpNczUqF8/QfiK8n5UlyMkCNO2xUDtPg+uRP+Y7hmj+Eoue4t38JP
-         8/NEeQPFL1a9Bg1dJ5UVXMLqoeqylXROFIWtue7Hn9rs/bfOvCMJ2IxiCnhPuJw9Gyh/
-         sz7w==
-X-Gm-Message-State: AC+VfDxB9TrJb75e7SDZh7xSP6x9cZr9tYN6zXmLmUXiE4MbE/ht+x9y
-        FQWi+uD5104nkRfuEGf3CJ4t1A==
-X-Google-Smtp-Source: ACHHUZ4mTr8TfarXPNlaSuduTiF2uA8iz5vlWI4LEQ7eCH/nJ1M2G9BvOXl8zA6zlbqA6FLWYDfDmA==
-X-Received: by 2002:a19:670f:0:b0:4f8:7513:8cac with SMTP id b15-20020a19670f000000b004f875138cacmr9096198lfc.48.1687538839814;
-        Fri, 23 Jun 2023 09:47:19 -0700 (PDT)
-Received: from [192.168.1.101] (abyk30.neoplus.adsl.tpnet.pl. [83.9.30.30])
-        by smtp.gmail.com with ESMTPSA id l30-20020ac24a9e000000b004f86c43d615sm1481013lfp.295.2023.06.23.09.47.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 09:47:19 -0700 (PDT)
-Message-ID: <d0c08de9-0506-d430-4928-4a441d8102a4@linaro.org>
-Date:   Fri, 23 Jun 2023 18:47:17 +0200
+        Fri, 23 Jun 2023 13:09:46 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9072D69;
+        Fri, 23 Jun 2023 10:09:05 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NDf6qV010028;
+        Fri, 23 Jun 2023 17:08:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=czNt/8joIzOa1GCzQN/TG6UFZ73VTlS7L/4YiZu44dY=;
+ b=As3Dk1lO9yf4DAtP+ZS0ENhbiwWoNGjz38uu/AaSF5Oaa720ymoc7WJ2ASzPaNko1t8n
+ uVMNCRkmiGk0PyOVpmQw0AyPJr7xpJVPnWWA9HtJapgLTVVvxux1kgzQW3KUY409xqMz
+ 6DykOnYGt0FW3gkroAyQsK42C4y+WGcZfe76HYkUc0Cr2/j0NzYx+TyKdKbAKd/iv0a+
+ jnQQ3dU9JKM8KSHEHgqG74Wyf41+Ssp6pd4ZVXEdG2DJ8uoZoGjX+W6dy3L3wlx1t4oR
+ sO8eBNUWPHhGqPq+ZnbjukqYAqXKNqgMGNYZu9h3Ugplsivoo9r7WEjvlbcWljmQ6kb6 8w== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcw93j4bf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 17:08:58 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NH8vC6008169
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 17:08:57 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 23 Jun 2023 10:08:57 -0700
+Date:   Fri, 23 Jun 2023 10:08:56 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Andrew Halaney <ahalaney@redhat.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <viresh.kumar@linaro.org>,
+        <rafael@kernel.org>, <konrad.dybcio@linaro.org>,
+        <andersson@kernel.org>, <agross@kernel.org>
+Subject: Re: [PATCH] cpufreq: qcom-cpufreq-hw: Use dev_err_probe() when
+ failing to get icc paths
+Message-ID: <20230623170856.GA1736857@hu-bjorande-lv.qualcomm.com>
+References: <20230623155707.944272-1-ahalaney@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V4 4/4] arm64: dts: qcom: sm8550: Add camera clock
- controller
-Content-Language: en-US
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230609115058.9059-1-quic_jkona@quicinc.com>
- <20230609115058.9059-5-quic_jkona@quicinc.com>
- <8d1ead23-8361-7943-baba-baf20d16cbe5@linaro.org>
- <a3652f67-3e48-db33-1dd2-c17abdbdae41@quicinc.com>
- <CAA8EJpqjAkdnU+WXoPJs2m4OSZQe10D=Y8nUAofEoEfV139VjA@mail.gmail.com>
- <bb149870-ed5a-3587-f85a-1080fd6ca03e@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <bb149870-ed5a-3587-f85a-1080fd6ca03e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230623155707.944272-1-ahalaney@redhat.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ps1W09bcuLMUPMOYI_SbyqSZgazmL5fE
+X-Proofpoint-ORIG-GUID: ps1W09bcuLMUPMOYI_SbyqSZgazmL5fE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_09,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306230153
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.06.2023 18:45, Jagadeesh Kona wrote:
+On Fri, Jun 23, 2023 at 10:57:07AM -0500, Andrew Halaney wrote:
+> This way, if there's an issue (in this case a -EPROBE_DEFER), you can
+> get useful output:
 > 
+>     [root@dhcp19-243-150 ~]# cat /sys/kernel/debug/devices_deferred
+>     18591000.cpufreq        qcom-cpufreq-hw: Failed to find icc paths
 > 
-> On 6/14/2023 5:45 PM, Dmitry Baryshkov wrote:
->> On Wed, 14 Jun 2023 at 14:56, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>>
->>>
->>>
->>> On 6/9/2023 6:22 PM, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 9.06.2023 13:50, Jagadeesh Kona wrote:
->>>>> Add device node for camera clock controller on Qualcomm
->>>>> SM8550 platform.
->>>>>
->>>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>> ---
->>>>> Changes since V3:
->>>>>    - No changes
->>>>> Changes since V2:
->>>>>    - No changes
->>>>> Changes since V1:
->>>>>    - Padded non-zero address part to 8 hex digits
->>>>>
->>>>>    arch/arm64/boot/dts/qcom/sm8550.dtsi | 15 +++++++++++++++
->>>>>    1 file changed, 15 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>>>> index 75cd374943eb..4d2d610fc66a 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>>>> @@ -5,6 +5,7 @@
->>>>>
->>>>>    #include <dt-bindings/clock/qcom,rpmh.h>
->>>>>    #include <dt-bindings/clock/qcom,sm8450-videocc.h>
->>>>> +#include <dt-bindings/clock/qcom,sm8550-camcc.h>
->>>>>    #include <dt-bindings/clock/qcom,sm8550-gcc.h>
->>>>>    #include <dt-bindings/clock/qcom,sm8550-gpucc.h>
->>>>>    #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
->>>>> @@ -2419,6 +2420,20 @@ videocc: clock-controller@aaf0000 {
->>>>>                       #power-domain-cells = <1>;
->>>>>               };
->>>>>
->>>>> +            camcc: clock-controller@ade0000 {
->>>>> +                    compatible = "qcom,sm8550-camcc";
->>>>> +                    reg = <0 0x0ade0000 0 0x20000>;
->>>>> +                    clocks = <&gcc GCC_CAMERA_AHB_CLK>,
->>>>> +                             <&bi_tcxo_div2>,
->>>>> +                             <&bi_tcxo_ao_div2>,
->>>>> +                             <&sleep_clk>;
->>>>> +                    power-domains = <&rpmhpd SM8550_MMCX>;
->>>> I see that both MMCX ("mmcx.lvl") and MXC ("mxc.lvl") (and MX, FWIW)
->>>> are consumed on msm-5.15, with the latter one powering camcc PLLs..
->>>>
->>>> How are they related? Is that resolved internally or does it need
->>>> manual intervention?
->>>>
->>>> Konrad
->>>
->>> These are just different voltage rails, camcc clocks are powered by MMCX
->>> rail and camcc pll's are powered by MXC rail. Consumer drivers need to
->>> take care of voting on these rails properly based on the frequency of
->>> clocks requested.
->>
->> Which rail powers registers of the camcc? Which rail is required to
->> read PLL registers?
->>
-> MMCX rail is required to access camcc registers, both MMCX and MXC are required to read PLL registers. MXC rail should be left ON from bootloaders during bootup and hence does not require explicit voting.
-That's a bad approach. We have a sync_state callback in rpmhpd that kills
-unused-from-linux-POV power rails, so Linux should be made aware of any
-and all requirements there.
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 
-Konrad
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+
+Regards,
+Bjorn
+
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Thanks,
-> Jagadeesh
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index a78d7a27b4b5..f2830371d25f 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -661,7 +661,7 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>  
+>  	ret = dev_pm_opp_of_find_icc_paths(cpu_dev, NULL);
+>  	if (ret)
+> -		return ret;
+> +		return dev_err_probe(dev, ret, "Failed to find icc paths\n");
+>  
+>  	for (num_domains = 0; num_domains < MAX_FREQ_DOMAINS; num_domains++)
+>  		if (!platform_get_resource(pdev, IORESOURCE_MEM, num_domains))
+> -- 
+> 2.40.1
 > 
->>>
->>> Thanks,
->>> Jagadeesh
->>>
->>>>> +                    required-opps = <&rpmhpd_opp_low_svs>;
->>>>> +                    #clock-cells = <1>;
->>>>> +                    #reset-cells = <1>;
->>>>> +                    #power-domain-cells = <1>;
->>>>> +            };
->>>>> +
->>>>>               mdss: display-subsystem@ae00000 {
->>>>>                       compatible = "qcom,sm8550-mdss";
->>>>>                       reg = <0 0x0ae00000 0 0x1000>;
->>
->>
->>
