@@ -2,79 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D190073BFAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:32:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8D3173BFED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:35:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231627AbjFWUcx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 16:32:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50334 "EHLO
+        id S232094AbjFWUfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 16:35:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230355AbjFWUcv (ORCPT
+        with ESMTP id S232139AbjFWUej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 16:32:51 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B2C2949
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 13:32:30 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3D4D13F6F7;
-        Fri, 23 Jun 2023 22:32:28 +0200 (CEST)
-Date:   Fri, 23 Jun 2023 22:32:26 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 17/19] drm/msm/dpu: inline INTF_BLK and
- INTF_BLK_DSI_TE macros
-Message-ID: <tonifmpxqvp56mzwf5tzwclwzu7evbmtmtje5uce5ikitj3pbt@m34soh22rhpp>
-References: <20230616100317.500687-1-dmitry.baryshkov@linaro.org>
- <20230616100317.500687-18-dmitry.baryshkov@linaro.org>
- <vpuwgjbgfau6fwn3etg3hyoo44yn4n4xo7hzbe3kfir4ih2tgp@rmutsfjobrub>
- <227c2ba0-cfb2-cd88-6506-895e8735d221@linaro.org>
+        Fri, 23 Jun 2023 16:34:39 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 811FB2728;
+        Fri, 23 Jun 2023 13:34:16 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NK17Qa010999;
+        Fri, 23 Jun 2023 20:34:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=9UDnCFpdM4OwJ1V1McJjMa8iTd+WLOlQ/OmL9IFPRLY=;
+ b=pGAH6lfF3IeRGi9uK7xgNzIG4pqhl33RqehFTvNfooKAVpEUo3dIAIu2lfyjsfaZw19Z
+ T1RJrStH/PPjjsgQj49S53C88keChqfuYbg/ZstleRrtFMAAAppAL3BY2k2QMmV4PSBT
+ hw30XqToQpvrlAqhSNEYS8hCLTB8/Z7NiMtVc3EmLaj2+E06FeEwoMA0q/ZqezhNOAnm
+ 6GQAAan5GhMiQmcBlgihXK+TfAK8UFOHkUiEVcZ0JaQBZr+nqljFlWgPS6yn/ppHBEP2
+ mkkAxfY5rx3eVcMf5rJ856J6y83ykHXYADblqF0Zgp5YTsacCZCIkNEt63jsAsei5MEK jA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdcuurw2f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 20:34:10 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NKY9X0004373
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 20:34:09 GMT
+Received: from [10.110.61.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
+ 2023 13:34:07 -0700
+Message-ID: <117d21da-aa44-9439-5d5b-9a9144b53979@quicinc.com>
+Date:   Fri, 23 Jun 2023 13:34:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <227c2ba0-cfb2-cd88-6506-895e8735d221@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for DSI
+ command mode
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+ <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
+ <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
+ <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
+ <xrqiat4otnfwtss6zwubh77qx3frdyi77flna2xljzycvr6r2v@riimvmhoondt>
+ <654ccc4c-40c2-bef6-9f47-847216e16cb0@quicinc.com>
+ <daqhyz4rtgdxthsezmgk6t2egbdsvzsdy3cihrqrhyveoqbizi@etq2tafkucg2>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <daqhyz4rtgdxthsezmgk6t2egbdsvzsdy3cihrqrhyveoqbizi@etq2tafkucg2>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 44jk4GD9bYKowD1H7qB85hyaMzvQxOu_
+X-Proofpoint-ORIG-GUID: 44jk4GD9bYKowD1H7qB85hyaMzvQxOu_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_12,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=718
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306230184
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-17 03:48:33, Dmitry Baryshkov wrote:
-> On 17/06/2023 01:12, Marijn Suijten wrote:
-> > On 2023-06-16 13:03:15, Dmitry Baryshkov wrote:
-> >> To simplify making changes to the hardware block definitions, expand
-> >> corresponding macros. This way making all the changes are more obvious
-> >> and visible in the source files.
-> >>
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > Looks good but I am not sure how much it is worth to review this (versus
-> > checking your script and rerunning it to see if I get the same results),
-> > considering that there are quite some conflicts with your interrupt
-> > rework.  In what order to you intend to land that?
+
+
+On 6/23/2023 1:14 PM, Marijn Suijten wrote:
+> On 2023-06-23 10:29:51, Abhinav Kumar wrote:
+> <snip>
+>> The concept is quite simple
+>>
+>> one pixel per clock for uncompresssed without widebubus
+>>
+>> 2 pixels per clock for uncompressed with widebus (only enabled for DP
+>> not DSI)
+>>
+>> 3 bytes worth of data for compressed without widebus
+>>
+>> 6 bytes worth of data for compressed with widebus
+>>
+>> When compression happens, we cannot quantify with pixels as the boundary
+>> is not defined with respect to bytes.
+>>
+>> You brought up uncompressed in your below comment so I assumed your
+>> question of /2 was about uncompressed too.
 > 
-> As I wrote, this series goes in first. Initially I designed them the 
-> other way, but intr rework depends on DPU revision changes, while this 
-> one doesn't have such dependencies.
+> No clue where things are going wrong, but you either avoid or
+> misunderstand the question.
+> 
+> (Talking exclusively about compressed data here!)
+> 
+> pclk is determined based on the number of bytes.
+> 
+> When widebus is enabled, we transfer twice as many bytes per pclk cycle.
+> 
+> Can pclk be reduced by a factor two, as that should still be enough to
+> transfer the same amount of bytes when widebus is enabled?
+> 
 
-Thanks, I'll drop the intr rework from my local "-next" then.  Have been
-collecting and testing almost all patches that way thus far, but it's
-becoming hairy with so many dependencies.
+I dont know where the misunderstanding is too.
 
-Will pick it up again once a v2 lands.  Is any review still needed on
-the current v1 (or was it RFC)?
+I already did answer that pclk can be /2 for uncompressed.
 
-- Marijn
+But for compressed it will be divided by the compression ration.
+
+What is still missing here. Please clarify.
+
+>>>> We tried our best to respond and explain to all your queries both on the
+>>>> bug and the patch but i guess it just kept coming :)
+>>>
+>>> Then send less patches!  As long as there is activity on the mailing
+>>> list there'll always be questions going back and forth, and I don't
+>>> think that's unreasonable.
+>>>
+>>> Unless you want to push patches into mainline without questioning.
+>>>
+>>
+>> the comments were bordering the line of becoming irrelevant to the
+>> patches like discussing video mode on a command mode patch when we had
+>> explained many many times that we did not validate them.
+> 
+> You(r team) came up with irrelevant video-mode checks in these patches,
+> and you keep bringing up topics that I did not mention (such as
+> suddently talking about uncompressed formats above).  Stop pretending
+> there's any nefarious intent here unless you intend to push external
+> contributors away.
+> 
+
+There is no nefarious intent. If it was there we would not have spent 2 
+weeks to answer every question on the bug and explaining every math 
+about it despite calling our patches hacks.
+
+So either something is still missing in our answers or the questions.
+
+So please ask the question whatever has not been answered one more time.
+
+>> I dont want to add more comments to this. Lets stop discussing this and
+>> focus more on this patch.
+> 
+> Perhaps if you answer the question?
+> 
+> - Marijn
