@@ -2,61 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB35673B031
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 07:43:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E63D673B03E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 07:46:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229958AbjFWFna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 01:43:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59332 "EHLO
+        id S231544AbjFWFqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 01:46:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjFWFn3 (ORCPT
+        with ESMTP id S231329AbjFWFqP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 01:43:29 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B054E46;
-        Thu, 22 Jun 2023 22:43:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1D8D061987;
-        Fri, 23 Jun 2023 05:43:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FA4C433C0;
-        Fri, 23 Jun 2023 05:43:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687499007;
-        bh=MYGG5cGrVBYsNDfhjkbhLquFlj7sZGMulbxa+VzidYE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KSahqqew1oabjk0qHPGkyWZkQbRye24+ZmhkAmK31tjBf34wBGPvyfhujOmgUipPy
-         uv753O6l+9Ti3s6XqElDRbPB9oZHTUjYkRZAwH6kuYApgZm4kJDCe4zTBoruEvZMo5
-         julQg7+6lMEdNCwv02fD//PaNuW7pPkFewQlSimO4W9xFgV3Vt1egrd+uz+kiPNqhI
-         WUyrBzGvBHZU1hcLQBO1pV9+2fQJyseB1BFhttCO7JU2GJgiEWLZLdVaRGx9Us/jlL
-         KNSJrmqrM729cMtMHQ2eQKntRU06OOUNH2qewiBZWMox+qSXNfGOGm8bcOjFw5s93h
-         apbrPh/FfI9Yw==
-Date:   Fri, 23 Jun 2023 11:13:13 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
-        quic_ramkri@quicinc.com, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@linaro.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCI ENDPOINT SUBSYSTEM" <linux-pci@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH RFC v1 1/3] PCI: endpoint: Add wakeup host API to EPC core
-Message-ID: <20230623054313.GB5611@thinkpad>
-References: <1686754850-29817-1-git-send-email-quic_krichai@quicinc.com>
- <1686754850-29817-2-git-send-email-quic_krichai@quicinc.com>
+        Fri, 23 Jun 2023 01:46:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF99B2969;
+        Thu, 22 Jun 2023 22:45:56 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35N5KbxJ013113;
+        Fri, 23 Jun 2023 05:45:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=m0eZon9twmkZkc434FGAkX2VJzOfYrElusM5ziWPVSY=;
+ b=g86zOIowtThYIcHa+a9e5SMYhYYGRs9VCGV2uIjiSC3Qyj+CyyZfcBLDiHRY/ar3/oXl
+ 9UDanKdYuYc4+g53axKTZh3P62Rx/ZPBYX+ocdNzEGZucj9KMBI7tZIiHGilqTD7gxG9
+ U56MwdDEtsysNWcmgdoTCsNCwZ+fmpQ6xj2fRaz/w8m1oWu4CKK0iGNSSfJdaxyRk5vE
+ bZzVMGs8pF9Y6NzdfGyQknSH+Cp/a0KP9tqipo+JBnr7DcJbtz/dfI2CdCkKGCAn1Vsv
+ jAu7zRNpzfkd570Xw7oAyQuntCMh3z+LMibBTVPgxcbJC7PCDHT+yVvP0fn36QaVBQne /Q== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcurrgyfh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 05:45:22 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35N5jLUl006922
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 05:45:21 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 22 Jun 2023 22:45:14 -0700
+Date:   Fri, 23 Jun 2023 11:15:10 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Rob Herring <robh@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <rafal@milecki.pl>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.org>, <quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,m31: Document qcom,m31 USB
+ phy
+Message-ID: <20230623054508.GA13261@varda-linux.qualcomm.com>
+References: <cover.1687414716.git.quic_varada@quicinc.com>
+ <4f4136a91b24d3ad35fa12bd19fe14b83da9affe.1687414716.git.quic_varada@quicinc.com>
+ <20230622144627.GA1672260-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1686754850-29817-2-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20230622144627.GA1672260-robh@kernel.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8CorgTQKjorILKJnvr3SkE_IEfgEMSoy
+X-Proofpoint-ORIG-GUID: 8CorgTQKjorILKJnvr3SkE_IEfgEMSoy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_02,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0 spamscore=0
+ adultscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306230052
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,111 +90,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 14, 2023 at 08:30:47PM +0530, Krishna chaitanya chundru wrote:
-> Endpoint cannot send any data/MSI when the device state is in
-> D3cold or D3hot. Endpoint needs to bring the device back to D0
-> to send any kind of data.
-> 
-> For this endpoint can send inband PME the device is in D3hot or
-> toggle wake when the device is D3 cold.
-> 
+On Thu, Jun 22, 2023 at 08:46:27AM -0600, Rob Herring wrote:
+> On Thu, Jun 22, 2023 at 11:52:09AM +0530, Varadarajan Narayanan wrote:
+> > Document the M31 USB2 phy present in IPQ5332.
+> >
+> > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> > v1:
+> > 	Rename qcom,m31.yaml -> qcom,ipq5332-usb-hsphy.yaml
+> > 	Drop default binding "m31,usb-hsphy"
+> > 	Add clock
+> > 	Remove 'oneOf' from compatible
+> > 	Remove 'qscratch' region from register space as it is not needed
+> > 	Remove reset-names
+> > 	Fix the example definition
+> > ---
+> >  .../bindings/phy/qcom,ipq5332-usb-hsphy.yaml       | 51 ++++++++++++++++++++++
+> >  1 file changed, 51 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+> > new file mode 100644
+> > index 0000000..ab2e945
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+> > @@ -0,0 +1,51 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/phy/qcom,ipq5332-usb-hsphy.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: M31 (https://www.m31tech.com) USB PHY
+>
+> Put the URL in 'description'.
 
-Are you referring to "host" as the "device"? If so, then it is a wrong
-terminology.
+Ok.
 
-> To support this adding wake up host to epc core.
-> 
+> > +
+> > +maintainers:
+> > +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> > +  - Varadarajan Narayanan <quic_varada@quicinc.org>
+>
+> .org? It's .com everywhere else.
 
-Commit message should be imperative.
+Ok.
 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/endpoint/pci-epc-core.c | 29 +++++++++++++++++++++++++++++
->  include/linux/pci-epc.h             |  3 +++
->  2 files changed, 32 insertions(+)
-> 
-> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-> index 46c9a5c..d203947 100644
-> --- a/drivers/pci/endpoint/pci-epc-core.c
-> +++ b/drivers/pci/endpoint/pci-epc-core.c
-> @@ -167,6 +167,35 @@ const struct pci_epc_features *pci_epc_get_features(struct pci_epc *epc,
->  EXPORT_SYMBOL_GPL(pci_epc_get_features);
->  
->  /**
-> + * pci_epc_wakeup_host() - interrupt the host system
+> > +
+> > +description:
+> > +  USB M31 PHY found in Qualcomm IPQ5018, IPQ5332 SoCs.
+>
+> Where's the IPQ5018 compatible?
 
-s/interrupt the host system/Wakeup the host
+In the previous version had a default and IPQ5332 specific
+compatible. IPQ5018 would have used the default compatible.
+However, in the review was asked to drop the default compatible.
+Hence planned to include ipq5018 compatible and post it in
+separate patchset while enabling IPQ5018 USB. IPQ5018 init is
+also diffferent from the init used here.
 
-> + * @epc: the EPC device which has to interrupt the host
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - enum:
+> > +          - qcom,ipq5332-usb-hsphy
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  clocks:
+> > +    maxItems: 1
+> > +
+> > +  clock-names:
+> > +    maxItems: 1
+> > +    contains:
+>
+> 'contains' is not appropriate here. Drop.
+>
+> > +      items:
+> > +        - const: cfg_ahb
+>
+> Don't need both items list and maxItems. Really, you don't need
+> 'clock-names' at all because there is only 1 clock.
 
-s/interrupt/wake
+Will drop 'clock-names'.
 
-> + * @func_no: the physical endpoint function number in the EPC device
-> + * @vfunc_no: the virtual endpoint function number in the physical function
-> + *
-> + * Invoke to wakeup host
-> + */
-> +int pci_epc_wakeup_host(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
-> +{
-> +	int ret;
-> +
-> +	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
-> +		return -EINVAL;
-> +
-> +	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
-> +		return -EINVAL;
-> +
+> > +
+> > +  resets:
+> > +    maxItems: 1
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
+> > +    usbphy0: ipq5332-hsphy@7b000 {
+>
+> Drop unused labels.
 
-Use proper errno for both of the above.
+Ok.
 
-- Mani
+> > +    	compatible = "qcom,ipq5332-usb-hsphy";
+> > +    	reg = <0x0007b000 0x12c>;
+> > +
+> > +    	clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
+> > +    	clock-names = "cfg_ahb";
+> > +
+> > +    	resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
+>
+> Whitespace errors in here.
 
-> +	if (!epc->ops->wakeup_host)
-> +		return 0;
-> +
-> +	mutex_lock(&epc->lock);
-> +	ret = epc->ops->wakeup_host(epc, func_no, vfunc_no);
-> +	mutex_unlock(&epc->lock);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(pci_epc_wakeup_host);
-> +
-> +/**
->   * pci_epc_stop() - stop the PCI link
->   * @epc: the link of the EPC device that has to be stopped
->   *
-> diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-> index 301bb0e..a8496be 100644
-> --- a/include/linux/pci-epc.h
-> +++ b/include/linux/pci-epc.h
-> @@ -59,6 +59,7 @@ pci_epc_interface_string(enum pci_epc_interface_type type)
->   * @start: ops to start the PCI link
->   * @stop: ops to stop the PCI link
->   * @get_features: ops to get the features supported by the EPC
-> + * @wakeup_host: ops to wakeup the host
->   * @owner: the module owner containing the ops
->   */
->  struct pci_epc_ops {
-> @@ -88,6 +89,7 @@ struct pci_epc_ops {
->  	void	(*stop)(struct pci_epc *epc);
->  	const struct pci_epc_features* (*get_features)(struct pci_epc *epc,
->  						       u8 func_no, u8 vfunc_no);
-> +	int	(*wakeup_host)(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
->  	struct module *owner;
->  };
->  
-> @@ -232,6 +234,7 @@ int pci_epc_start(struct pci_epc *epc);
->  void pci_epc_stop(struct pci_epc *epc);
->  const struct pci_epc_features *pci_epc_get_features(struct pci_epc *epc,
->  						    u8 func_no, u8 vfunc_no);
-> +int pci_epc_wakeup_host(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
->  enum pci_barno
->  pci_epc_get_first_free_bar(const struct pci_epc_features *epc_features);
->  enum pci_barno pci_epc_get_next_free_bar(const struct pci_epc_features
-> -- 
-> 2.7.4
-> 
+Ok.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks
+Varada
+
+> > +    };
+> > +
+> > --
+> > 2.7.4
+> >
