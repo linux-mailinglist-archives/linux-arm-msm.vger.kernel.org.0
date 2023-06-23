@@ -2,140 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45CDF73B93E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 15:58:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DE4573B955
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 16:04:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231709AbjFWN64 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 09:58:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40288 "EHLO
+        id S229469AbjFWOEg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 10:04:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231663AbjFWN6z (ORCPT
+        with ESMTP id S229673AbjFWOEg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 09:58:55 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6197DE48
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:58:54 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b46f5f4d79so9103461fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:58:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687528732; x=1690120732;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lIPapwS0VMu+wGq+Urug2AT2MCJbQHQnh/g0ltMMjs4=;
-        b=Hak4tsYIfEepTwZkWlNigHuwL7fEFVH0RgwEi27fX3YConuf914hnwjqCm3DhGE7je
-         mtzbDAlolGPQvAWTD+r06ecDBW7eHuDb18+1bCF3gy/1X/pFjlknvjQfjY6wd5w9n5qI
-         j492aylTrQWBe0Yas37fxs3/lbmLLF6no160jBGhGyxEQtrlqoyW0NMOqpjChgM8ctad
-         RslcK7KvpEbOfmwNcQU//dlxbux/6WxragZwUmz0i+s4Wybink/PoHsqB1nnJr9h+5mf
-         DvqMcTubeyBXlfVfCcsKUysUH0UlBCpW5yzyA+MssBDQkdS5KnJy3oqfuWIkeXCV3LBI
-         7ErQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687528732; x=1690120732;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lIPapwS0VMu+wGq+Urug2AT2MCJbQHQnh/g0ltMMjs4=;
-        b=R+g1ssn6GmLe+eM8Ml2kGxrPY4q3FVRmXGrbFoBvl1MMayv9Fr0+r/yDpCEBcuZ66F
-         H6LFshMqSmHkHOZIVWVAL/gOjU/VKsYM1JQHxDUqVjECO/dXnQzu9BVkUYmon3f1WCaL
-         TIcak6YfqqLwMd1iVRk8sHbldBI+e93Q0XWb8OF2nrwEbO24S0pMxFNYQG44AiTAAp3f
-         0XiwZRC9BLKZU1sN1TWnl0GSVpsN01TkAnS3KcvNrtfGcXVmzp6+a/A+qVj6EK44mTjI
-         i+tywJj1OgysKpgXah8b93C4PItxeYQofY0LqMWKZ6Hsv+Z9PYiZezTNH365FUaxDCPc
-         4Ysw==
-X-Gm-Message-State: AC+VfDwAG5I50NMCSsrs4Onz02s4pdXGx2yCQrttmk7gB45gHtGJOZn2
-        cBJVrYmnLMfM5yyXAwW3MtdKQw==
-X-Google-Smtp-Source: ACHHUZ6HhxYzygSwvCnSTPeCfM2VScj9CICogwmsSA5qNEVnWyJGZ/ZEKnW4nAV0d6KT9mUUUZnzlg==
-X-Received: by 2002:a2e:b532:0:b0:2b4:5c28:908a with SMTP id z18-20020a2eb532000000b002b45c28908amr7611933ljm.7.1687528732761;
-        Fri, 23 Jun 2023 06:58:52 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05651c008b00b002ac7b0fc473sm1756869ljq.38.2023.06.23.06.58.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jun 2023 06:58:52 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 7/7] drm/msm/dpu: merge dpu_csc_blk and dpu_dsc_blk into dpu_simple_blk
-Date:   Fri, 23 Jun 2023 16:58:44 +0300
-Message-Id: <20230623135844.1113908-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230623135844.1113908-1-dmitry.baryshkov@linaro.org>
-References: <20230623135844.1113908-1-dmitry.baryshkov@linaro.org>
+        Fri, 23 Jun 2023 10:04:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0042695;
+        Fri, 23 Jun 2023 07:04:34 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NDpSKp013672;
+        Fri, 23 Jun 2023 14:04:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=wXAtRsjcIkvT30vMqvMcqecNTXMlzi9PASJwLOd4LVc=;
+ b=pFWmax/bxi+iXwsdnN3letf7Nd/gfVCkYSK97kwTRmIvs4Quk/cf6Kd8s5CIW0je8d5d
+ nvYL4PK60lrVbeN0U+Ub1P00ozMgS7QdHPV8oCXDjg5rjCi3qY0iMWI6rJAzTnYoejw1
+ u7UQE2LZ2a5RGdX5upRKHLv6cilhdooGsCeSYVblrXCv1stqnin+ywHyJagTxpFrBj33
+ wqZTA3MWkoEPPgYqEFAX4PGnMERhpU6hX8g1TrkYFYTemEwW1CZmlhFlJR9aaC1Lbia2
+ rv3Kt6wh4Tz2vqM3zfSnS8pvEyA5Y4a5Mwrm+2ySagh9NXXANT39HHDCTQRFWfQ+APps bw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rckn2ufh7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 14:04:29 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NE4TVZ005528
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 14:04:29 GMT
+Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 23 Jun 2023 07:04:26 -0700
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>,
+        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
+Subject: [PATCH v2] misc: fastrpc: Fix remote heap allocation request
+Date:   Fri, 23 Jun 2023 19:34:22 +0530
+Message-ID: <1687529062-25988-1-git-send-email-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JU6qxwFUHclaM26nPTR36ycRkZFomFVm
+X-Proofpoint-ORIG-GUID: JU6qxwFUHclaM26nPTR36ycRkZFomFVm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_07,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
+ lowpriorityscore=0 malwarescore=0 phishscore=0 impostorscore=0 mlxscore=0
+ spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306230128
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Merge struct dpu_csc_blk and struct dpu_dsc_blk into new struct
-dpu_simple_blk, which contains just base and length.
+Remote heap is used by DSP audioPD on need basis. This memory is
+allocated from reserved CMA memory region and is then shared with
+audioPD to use it for it's functionality.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Current implementation of remote heap is not allocating the memory
+from CMA region, instead it is allocating the memory from SMMU
+context bank. The arguments passed to scm call for the reassignment
+of ownership is also not correct. Added changes to allocate CMA
+memory and have a proper ownership reassignment.
+
+Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+Changes in v2:
+  - Removed redundant code
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 7cb9ef940225..4b3fb104c412 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -283,11 +283,6 @@ struct dpu_scaler_blk {
- 	u32 version;
- };
+ drivers/misc/fastrpc.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 30d4d04..87a9096 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1866,7 +1866,11 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 		return -EINVAL;
+ 	}
  
--struct dpu_csc_blk {
--	u32 base;
--	u32 len;
--};
--
- /**
-  * struct dpu_pp_blk : Pixel processing sub-blk information
-  * @base: offset of this sub-block relative to the block offset
-@@ -301,11 +296,11 @@ struct dpu_pp_blk {
- };
+-	err = fastrpc_buf_alloc(fl, fl->sctx->dev, req.size, &buf);
++	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
++		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
++	else
++		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
++
+ 	if (err) {
+ 		dev_err(dev, "failed to allocate buffer\n");
+ 		return err;
+@@ -1905,12 +1909,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
  
- /**
-- * struct dpu_dsc_blk - DSC Encoder sub-blk information
-+ * struct dpu_simple_blk - DSC Encoder sub-blk information
-  * @base: offset of this sub-block relative to the block offset
-  * @len: register block length of this sub-block
-  */
--struct dpu_dsc_blk {
-+struct dpu_simple_blk {
- 	u32 base;
- 	u32 len;
- };
-@@ -403,7 +398,7 @@ struct dpu_sspp_sub_blks {
- 	u32 max_per_pipe_bw;
- 	u32 qseed_ver;
- 	struct dpu_scaler_blk scaler_blk;
--	struct dpu_pp_blk csc_blk;
-+	struct dpu_simple_blk csc_blk;
+ 	/* Add memory to static PD pool, protection thru hypervisor */
+ 	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+-		struct qcom_scm_vmperm perm;
++		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
  
- 	const u32 *format_list;
- 	u32 num_formats;
-@@ -444,8 +439,8 @@ struct dpu_pingpong_sub_blks {
-  * @ctl: DSC controller sub-block
-  */
- struct dpu_dsc_sub_blks {
--	struct dpu_dsc_blk enc;
--	struct dpu_dsc_blk ctl;
-+	struct dpu_simple_blk enc;
-+	struct dpu_simple_blk ctl;
- };
- 
- /**
+-		perm.vmid = QCOM_SCM_VMID_HLOS;
+-		perm.perm = QCOM_SCM_PERM_RWX;
+-		err = qcom_scm_assign_mem(buf->phys, buf->size,
+-			&fl->cctx->perms, &perm, 1);
++		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
++			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
+ 		if (err) {
+ 			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+ 					buf->phys, buf->size, err);
 -- 
-2.39.2
+2.7.4
 
