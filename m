@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AFA073BACF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 16:54:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7750973BAE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 16:58:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231925AbjFWOyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 10:54:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47034 "EHLO
+        id S230421AbjFWO6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 10:58:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232241AbjFWOxw (ORCPT
+        with ESMTP id S230010AbjFWO6i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 10:53:52 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7B012139
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:53:48 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f8689fbf59so2341270e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:53:48 -0700 (PDT)
+        Fri, 23 Jun 2023 10:58:38 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29F3E172A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:58:37 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b45e347266so13055571fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687532027; x=1690124027;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ywWlQEVYzwfSZWC3nP0DnjTINAyN7bltwFnQGKJDDu0=;
-        b=XUx/E7Y5eLDAkFap+YXIagMU8bPG2wW7Rw0ZzrfNRXlI8BHbAuodaCHPoDFx7TEjaZ
-         lMKrdmv24I35rn04WzDifgYvOUiE8bt8+KTIs5nEWJJMNw3+D30tWJYKh7sYMkUguGsZ
-         FMe/LA/ZUiRBl/zYHw6ZcHoxWu6/G+GyGrO+4/0FIRQty0LqnUyNRgtNKrJS0BK8mL3o
-         se23G6FERNj1nU/6p/aPQbcal3CVO+mJPx9iXZf39St3FaGN5DJiSHu5HY5bj7jkH8YL
-         IEkeMsx/uNpOhVM/WTxKotBrHs7O7eUur0CcvfyFnol4hE0x+Il/HsO6ZVan5ZqKfvVA
-         OYpQ==
+        d=linaro.org; s=google; t=1687532315; x=1690124315;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8iZIJHkItLzlXB/SuaNbWjOORPBzNehh8JHCznNClo8=;
+        b=bZhD81QjHVE8sLn30+Dd41TV0wM7G4i/8DkeEXF1eJQxsHb+olly0T23rqvbY53Aue
+         YnuNAoZOej/1SEdDY8GxulmTxZXtGgeH8m51x+RLe1q/+B/kCht9hWVr9Pw5/11m11DK
+         E6W424mcqrNxWxU4XRDBHgjhhadtXSCSIBq8ggbZVEGQAFdIxxejy3MQ57+naN9oACIa
+         hhWd7zLtyCpQoyZ0DTrEo2U1qfDes1gHK0EgxIc7WaTo066x3U0QqvqN3SugjYAH0vEI
+         v/1AqIgzbBNN9LdKQ6jVw8U6XGNfBp9l9bsfBIRXL86WjJ1MNtUpuCIkZJ5RZm/Qkczl
+         Ytcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687532027; x=1690124027;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1687532315; x=1690124315;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ywWlQEVYzwfSZWC3nP0DnjTINAyN7bltwFnQGKJDDu0=;
-        b=WXILtseHRUPzOhJWndHY5Fp0MU7Pcv4BfI4A74U68L3IKU+nsJk+J/HZlW0L0ckfeM
-         +rCGG1jFZvfzauoQ0xm7IJiu1Z5GgNyAs8AitdRG5kzB6Xt5cyoHuOKvrgDjikUf+zQV
-         uGErlopyCck4OVmkmlRzDH5Y4VxhUcV8Rp6MbxlMEWrqw0lOPSjfeYfyNP/rfQx1Ej7Y
-         dtdln0kBBaV1gQsd60E85MIufv/H4npa9N6bTB9vUT5zfZHGVkkK3aEs4Vi9oXB6RZA4
-         eqi2EN55x5XuiuWGcA1td8BpdcvjoFFWUcYCj5cARLo38aKDQOCbKPbIBndAn1of/UlK
-         d1vA==
-X-Gm-Message-State: AC+VfDwq7OFiOBIBi5lnjYX2+6I59atZKD7V0LRgndP85zECuUio2gEM
-        yShT9vykVOF8GxH/aGNke1sE6WGyCaHO1xLi370=
-X-Google-Smtp-Source: ACHHUZ4UqxKHsbpBQ/weiu7Z3t+7Vilm2xxQqFtDR6Ewg2XIpl9CLNFPsEoL+aQ8nWZY4jlLcg780g==
-X-Received: by 2002:a19:650c:0:b0:4f8:6ac4:1aa9 with SMTP id z12-20020a19650c000000b004f86ac41aa9mr5951721lfb.21.1687532026789;
-        Fri, 23 Jun 2023 07:53:46 -0700 (PDT)
+        bh=8iZIJHkItLzlXB/SuaNbWjOORPBzNehh8JHCznNClo8=;
+        b=I9e+x8enqdadSvxaw1B53g4QLm/tH9MsrpzKKbxGpivCec25LY3ektpEiTAo9F6p2L
+         d1ZyRlAk6zRvfSOuXNV9IBdkKUvFlvq2FUOKS/f0P6aky6idvv00l1AtBPdt+FfEh3Ry
+         E0fPGdIsZCU7+Nr3IqQcFarZqj0tYSfSzfIJTFoT+HKOen7UFW/9f9ndUWo5okoJwruc
+         XbYgTVEls2dfiJMjy+pn/UInc4ydp5J9ysgIeFVAt8j2hPMZOY//Pels0pUNBqWQQwte
+         /+fS17ap0vOxcFOxaeiPk5SGiaaVFYIvcSYYBsVOKs6yFZkgqNghAhrtTu7Slhi+VmOQ
+         7U+w==
+X-Gm-Message-State: AC+VfDyB7YgTYWBl6yKK4UIOEZ2qjIMZJ5LcZMCvwjOjPAqOSHfsccbb
+        wSRGEOsmVI+8bclHINys6+D1LQ==
+X-Google-Smtp-Source: ACHHUZ5UNgjRV3IV53BdUnHm0xskpC+nJbc1ZFFx10PdV6FKFLVu9EqMffd5rt/yKNDNP8AJppix9A==
+X-Received: by 2002:a2e:3e13:0:b0:2b5:813c:b74f with SMTP id l19-20020a2e3e13000000b002b5813cb74fmr6319924lja.5.1687532315261;
+        Fri, 23 Jun 2023 07:58:35 -0700 (PDT)
 Received: from [192.168.1.101] (abyk30.neoplus.adsl.tpnet.pl. [83.9.30.30])
-        by smtp.gmail.com with ESMTPSA id w10-20020ac254aa000000b004e843d6244csm1466931lfk.99.2023.06.23.07.53.45
+        by smtp.gmail.com with ESMTPSA id p14-20020a2e9a8e000000b002b58eb44badsm753175lji.106.2023.06.23.07.58.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 07:53:46 -0700 (PDT)
-Message-ID: <ea4c49cd-17d1-6921-a447-5debaebb0cfd@linaro.org>
-Date:   Fri, 23 Jun 2023 16:53:44 +0200
+        Fri, 23 Jun 2023 07:58:34 -0700 (PDT)
+Message-ID: <b84b2bfc-6f8f-f50f-27b5-52a982ae30f2@linaro.org>
+Date:   Fri, 23 Jun 2023 16:58:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
+Subject: Re: [PATCH v4 5/6] soc: qcom: Add LLCC support for multi channel DDR
 Content-Language: en-US
 To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -66,17 +67,15 @@ To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
- <20230623141806.13388-4-quic_kbajaj@quicinc.com>
+ <20230623141806.13388-6-quic_kbajaj@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v4 3/6] nvmem: sec-qfprom: Add Qualcomm secure QFPROM
- support.
-In-Reply-To: <20230623141806.13388-4-quic_kbajaj@quicinc.com>
+In-Reply-To: <20230623141806.13388-6-quic_kbajaj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,207 +83,105 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23.06.2023 16:18, Komal Bajaj wrote:
-> For some of the Qualcomm SoC's, it is possible that
-> some of the fuse regions or entire qfprom region is
-> protected from non-secure access. In such situations,
-> linux will have to use secure calls to read the region.
-> With that motivation, add secure qfprom driver. Ensuring
-> the address to read is word aligned since our secure I/O
-> only supports word size I/O.
+> Add LLCC support for multi channel DDR configuration
+> based on a feature register. Reading DDR channel
+> confiuration uses nvmem framework, so select the
+> dependency in Kconfig. Without this, there will be
+> errors while building the driver with COMPILE_TEST only.
 > 
 > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
->  drivers/nvmem/Kconfig      |  12 ++++
->  drivers/nvmem/Makefile     |   2 +
->  drivers/nvmem/sec-qfprom.c | 116 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 130 insertions(+)
->  create mode 100644 drivers/nvmem/sec-qfprom.c
+>  drivers/soc/qcom/Kconfig     |  2 ++
+>  drivers/soc/qcom/llcc-qcom.c | 33 ++++++++++++++++++++++++++++++---
+>  2 files changed, 32 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
-> index b291b27048c7..2b0dd73d899e 100644
-> --- a/drivers/nvmem/Kconfig
-> +++ b/drivers/nvmem/Kconfig
-> @@ -216,6 +216,18 @@ config NVMEM_QCOM_QFPROM
->  	  This driver can also be built as a module. If so, the module
->  	  will be called nvmem_qfprom.
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index a491718f8064..cc9ad41c63aa 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -64,6 +64,8 @@ config QCOM_LLCC
+>  	tristate "Qualcomm Technologies, Inc. LLCC driver"
+>  	depends on ARCH_QCOM || COMPILE_TEST
+>  	select REGMAP_MMIO
+> +	select NVMEM
+> +	select QCOM_SCM
+>  	help
+>  	  Qualcomm Technologies, Inc. platform specific
+>  	  Last Level Cache Controller(LLCC) driver for platforms such as,
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 6cf373da5df9..3c29612da1c5 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/mutex.h>
+> +#include <linux/nvmem-consumer.h>
+>  #include <linux/of.h>
+>  #include <linux/of_device.h>
+>  #include <linux/regmap.h>
+> @@ -943,6 +944,19 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
+>  	return ret;
+>  }
 >  
-> +config NVMEM_QCOM_SEC_QFPROM
-> +        tristate "QCOM SECURE QFPROM Support"
-> +        depends on ARCH_QCOM || COMPILE_TEST
-> +        depends on HAS_IOMEM
-> +        select QCOM_SCM
-You also need OF
-
-> +        help
-> +          Say y here to enable secure QFPROM support. The secure QFPROM provides access
-> +          functions for QFPROM data to rest of the drivers via nvmem interface.
-> +
-> +          This driver can also be built as a module. If so, the module will be called
-> +          nvmem_sec_qfprom.
-> +
->  config NVMEM_RAVE_SP_EEPROM
->  	tristate "Rave SP EEPROM Support"
->  	depends on RAVE_SP_CORE
-> diff --git a/drivers/nvmem/Makefile b/drivers/nvmem/Makefile
-> index f82431ec8aef..4b4bf5880488 100644
-> --- a/drivers/nvmem/Makefile
-> +++ b/drivers/nvmem/Makefile
-> @@ -44,6 +44,8 @@ obj-$(CONFIG_NVMEM_NINTENDO_OTP)	+= nvmem-nintendo-otp.o
->  nvmem-nintendo-otp-y			:= nintendo-otp.o
->  obj-$(CONFIG_NVMEM_QCOM_QFPROM)		+= nvmem_qfprom.o
->  nvmem_qfprom-y				:= qfprom.o
-> +obj-$(CONFIG_NVMEM_QCOM_SEC_QFPROM)     += nvmem_sec_qfprom.o
-> +nvmem_sec_qfprom-y                          := sec-qfprom.o
->  obj-$(CONFIG_NVMEM_RAVE_SP_EEPROM)	+= nvmem-rave-sp-eeprom.o
->  nvmem-rave-sp-eeprom-y			:= rave-sp-eeprom.o
->  obj-$(CONFIG_NVMEM_RMEM) 		+= nvmem-rmem.o
-> diff --git a/drivers/nvmem/sec-qfprom.c b/drivers/nvmem/sec-qfprom.c
-> new file mode 100644
-> index 000000000000..47b2c71593dd
-> --- /dev/null
-> +++ b/drivers/nvmem/sec-qfprom.c
-> @@ -0,0 +1,116 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/device.h>
-> +#include <linux/firmware/qcom/qcom_scm.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/nvmem-provider.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pm_domain.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/property.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +
-> +/**
-> + * struct sec_sec_qfprom_priv - structure holding secure qfprom attributes
-> + *
-> + * @qfpseccorrected: iomapped memory space for secure qfprom corrected address space.
-> + * @dev: qfprom device structure.
-> + */
-> +struct sec_qfprom_priv {
-> +	phys_addr_t qfpseccorrected;
-> +	struct device *dev;
-> +};
-> +
-> +static int sec_qfprom_reg_read(void *context, unsigned int reg, void *_val, size_t bytes)
+> +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u8 *cfg_index)
 > +{
-> +	struct sec_qfprom_priv *priv = context;
-> +	u8 *val = _val;
-> +	u8 *tmp;
-> +	u32 read_val;
-> +	unsigned int i;
-Please sort this to look like a reverse-Christmas-tree
-
-
-> +
-> +	for (i = 0; i < bytes; i++, reg++) {
-> +		if (i == 0 || reg % 4 == 0) {
-> +			if (qcom_scm_io_readl(priv->qfpseccorrected + (reg & ~3), &read_val)) {
-> +				dev_err(priv->dev, "Couldn't access fuse register\n");
-> +				return -EINVAL;
-> +			}
-> +			tmp = (u8 *)&read_val;
-> +		}
-I don't understand this read-4-times dance.. qcom_scm_io_readl() reads
-u32, so this should be as simple as:
-
-val[i + 0] = FIELD_GET(GENMASK(7, 0), reg);
-val[i + 1] = ..
-val[i + 2] = ..
-val[i + 3] = ..
-
-
-> +
-> +		val[i] = tmp[reg & 3];
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void sec_qfprom_runtime_disable(void *data)
-> +{
-> +	pm_runtime_disable(data);
-> +}
-> +
-> +static int sec_qfprom_probe(struct platform_device *pdev)
-> +{
-> +	struct nvmem_config econfig = {
-> +		.name = "sec-qfprom",
-> +		.stride = 1,
-> +		.word_size = 1,
-> +		.id = NVMEM_DEVID_AUTO,
-> +		.reg_read = sec_qfprom_reg_read,
-> +	};
-> +	struct device *dev = &pdev->dev;
-> +	struct resource *res;
-> +	struct nvmem_device *nvmem;
-> +	struct sec_qfprom_priv *priv;
 > +	int ret;
 > +
-> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> +	if (!priv)
-> +		return -ENOMEM;
+> +	ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
+> +	if (ret == -ENOENT) {
+> +		*cfg_index = 0;
+> +		return 0;
+> +	}
 > +
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	priv->qfpseccorrected = res->start;
-> +	if (!priv->qfpseccorrected)
-> +		return -ENOMEM;
-While it works all the same, I think checking if(!res) would be more
-logical
-
-Also, ENOMEM seems weird here.. Perhaps EINVAL?
-
-> +
-> +	econfig.size = resource_size(res);
-> +	econfig.dev = dev;
-> +	econfig.priv = priv;
-> +
-> +	priv->dev = dev;
-> +
-> +	pm_runtime_enable(dev);
-> +	ret = devm_add_action_or_reset(dev, sec_qfprom_runtime_disable, dev);
-> +	if (ret)
-> +		return ret;
-Wouldn't devm_pm_runtime_enable() take care of this? Or do we need
-for this block to be always-powered?
-
-> +
-> +	nvmem = devm_nvmem_register(dev, &econfig);
-> +
-> +	return PTR_ERR_OR_ZERO(nvmem);
+> +	return ret;
 > +}
 > +
-> +static const struct of_device_id sec_qfprom_of_match[] = {
-> +	{ .compatible = "qcom,sec-qfprom",},
-The comma inside is unnecessary, replacing it with a space would also
-make the whitespacing match
-
-> +	{/* sentinel */},
-> +};
-> +MODULE_DEVICE_TABLE(of, sec_qfprom_of_match);
+>  static int qcom_llcc_remove(struct platform_device *pdev)
+>  {
+>  	/* Set the global pointer to a error code to avoid referencing it */
+> @@ -975,11 +989,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  	struct device *dev = &pdev->dev;
+>  	int ret, i;
+>  	struct platform_device *llcc_edac;
+> -	const struct qcom_llcc_config *cfg;
+> +	const struct qcom_llcc_config *cfg, *entry;
+>  	const struct llcc_slice_config *llcc_cfg;
+>  	u32 sz;
+> +	u8 cfg_index;
+>  	u32 version;
+>  	struct regmap *regmap;
+> +	u32 num_entries = 0;
+>  
+>  	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
+>  	if (!drv_data) {
+> @@ -1040,8 +1056,19 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  
+>  	drv_data->version = version;
+>  
+> -	llcc_cfg = cfg[0]->sct_data;
+> -	sz = cfg[0]->size;
+> +	ret = qcom_llcc_get_cfg_index(pdev, &cfg_index);
+> +	if (ret)
+> +		goto err;
 > +
-> +static struct platform_driver qfprom_driver = {
-> +	.probe = sec_qfprom_probe,
-> +	.driver = {
-> +		.name = "qcom,sec_qfprom",
-Commas in driver names are rather.. rare? Let's make it qcom_
 
-> +		.of_match_table = sec_qfprom_of_match,
-> +	},
-> +};
-> +module_platform_driver(qfprom_driver);
-> +MODULE_DESCRIPTION("Qualcomm Secure QFPROM driver");
-> +MODULE_LICENSE("GPL v2");
-Please run scripts/checkpatch.pl on your patches before sending.
+
+> +	for (entry = cfg; entry->sct_data; entry++, num_entries++)
+> +		;
+> +	if (cfg_index >= num_entries || cfg_index < 0) {
+cfg_index is an unsigned variable, it can never be < 0
+
+> +		ret = -EINVAL;
+> +		goto err;
+> +	}
+> +
+if (cfg_index >= entry->size)? With that, you can also keep the config
+entries non-0-terminated in the previous patch, saving a whole lot of RAM.
 
 Konrad
+> +	llcc_cfg = cfg[cfg_index].sct_data;
+> +	sz = cfg[cfg_index].size;
+>  
+>  	for (i = 0; i < sz; i++)
+>  		if (llcc_cfg[i].slice_id > drv_data->max_slices)
