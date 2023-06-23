@@ -2,233 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0DCC73B349
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 11:11:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D255A73B3B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 11:36:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbjFWJLW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 05:11:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48426 "EHLO
+        id S231211AbjFWJgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 05:36:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbjFWJLV (ORCPT
+        with ESMTP id S229501AbjFWJgM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 05:11:21 -0400
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFDE5AC;
-        Fri, 23 Jun 2023 02:11:19 -0700 (PDT)
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35N8w2oS024484;
-        Fri, 23 Jun 2023 11:11:10 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=omZ0zQt1pwfFhIi98bamv9Vd4R9xMlAoJM5+IlZeCM8=;
- b=GGogktkeQ+MBzfvQNS8MR/4cUuG/NNQ/GCInUAheJnNHnkUoY/W/0Sj7QeGTqfy54Vng
- 5Hvwm/lOfQUbUs6gbLp9Us8UZ6yqlOx0SEsisolOefIdf29xp9SxmG4cyjk8810XPScL
- qm3c2GVdyqnUSEOkrYlaxwXct7K8RaRHMaRVMLSQAOCYuCWVBYr+3qwXKawtGiPBWOqd
- HzsoVtsbh3RoUyigR+sLGBS+UIfSjeoZrp6IHDgdVuxoSDGXZKmmLDohcDqGM60mTOju
- xva3XFsHbP9uWTbdpGBuborOK5Oy8WzHP0OmMNcnsLzOzDq8n8W5MFS9gkwoQO6lObpG +Q== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3rd8bp02y6-1
+        Fri, 23 Jun 2023 05:36:12 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35B91BFC;
+        Fri, 23 Jun 2023 02:36:10 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35N9Vc5d013591;
+        Fri, 23 Jun 2023 09:36:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=0LTxr9YIR4qFghBO4pEabh9B3dPBGBcN1vi0qYLTj0s=;
+ b=XYV916koxJTZ32aX8Gm588Hsa1ppcqQ5SrfDvmoeJR6YxSQRANObo3AMP627p50p2xI3
+ IDNQ161Tn/Am4mrLsagdQ08oYwMyRxmPy5gpyXirJUTpvA/wzejP/dpUjx/KouJpIFb1
+ YWLXJU1+PuKV0M8ily+lIGZYr9Sqd2b8yNyxvcIC5AhCV6O58HQA8wLGjYFdBMMWk7Rq
+ cEv8CXQKIvROleraoivD3QMO75ecTU5zWQH6/Swk7TC55wm42YDB0DvMItPCYvJ3Mh+2
+ D5wXDvy7+4EL91m1NzBEaHCIMsUwr2KmyN2JFVXvDjtdpl4/Agj+xtg/a1bMRl8/2cNG 3Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcju833t5-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 11:11:10 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 7448B100073;
-        Fri, 23 Jun 2023 11:11:06 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 6C9B4218613;
-        Fri, 23 Jun 2023 11:11:06 +0200 (CEST)
-Received: from [10.201.21.9] (10.201.21.9) by SHFDAG1NODE2.st.com
- (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Fri, 23 Jun
- 2023 11:11:04 +0200
-Message-ID: <d0e5a6bf-e89f-bcf0-7009-94edfbcf2a83@foss.st.com>
-Date:   Fri, 23 Jun 2023 11:11:03 +0200
+        Fri, 23 Jun 2023 09:36:01 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35N9a0gO019531
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 09:36:00 GMT
+Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 23 Jun 2023 02:35:55 -0700
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <sboyd@kernel.org>, <mturquette@baylibre.com>, <mani@kernel.org>,
+        <lpieralisi@kernel.org>, <bhelgaas@google.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <quic_srichara@quicinc.com>
+Subject: [PATCH 0/4]  IPQ8074 pcie/wcss fixes
+Date:   Fri, 23 Jun 2023 15:04:41 +0530
+Message-ID: <20230623093445.3977772-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V8 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL
- support
-Content-Language: en-US
-To:     Sarannya S <quic_sarannya@quicinc.com>,
-        <quic_bjorande@quicinc.com>, <swboyd@chromium.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <1687361648-27688-1-git-send-email-quic_sarannya@quicinc.com>
- <1687361648-27688-4-git-send-email-quic_sarannya@quicinc.com>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Organization: STMicroelectronics
-In-Reply-To: <1687361648-27688-4-git-send-email-quic_sarannya@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.201.21.9]
-X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SHFDAG1NODE2.st.com
- (10.75.129.70)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HdAvPwXWEIxi9Wysj6M0yyXnO13vaoUX
+X-Proofpoint-GUID: HdAvPwXWEIxi9Wysj6M0yyXnO13vaoUX
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-06-23_04,2023-06-22_02,2023-05-22_02
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ clxscore=1011 phishscore=0 suspectscore=0 mlxlogscore=612
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306230085
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+These are required to have pcie/wcss working on IPQ8074 based
+boards. Pcie was broken recently, first patch fixes that and
+next 2 are for adding WCSS reset and 1 for adding reserved region
+for NSS.
 
+Will be following this up with few more dts updates and pcie
+fixes.
 
-On 6/21/23 17:34, Sarannya S wrote:
-> From: Chris Lew <quic_clew@quicinc.com>
-> 
-> Add RPMSG_GET_OUTGOING_FLOWCONTROL and RPMSG_SET_INCOMING_FLOWCONTROL
-> IOCTL support for rpmsg char device nodes to get/set the low level
-> transport signals.
-> 
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
-> ---
->  drivers/rpmsg/rpmsg_char.c | 50 ++++++++++++++++++++++++++++++++++++++++------
->  include/uapi/linux/rpmsg.h | 10 ++++++++++
->  2 files changed, 54 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-> index a271fce..2cdd31e 100644
-> --- a/drivers/rpmsg/rpmsg_char.c
-> +++ b/drivers/rpmsg/rpmsg_char.c
-> @@ -52,6 +52,8 @@ static DEFINE_IDA(rpmsg_minor_ida);
->   * @readq:	wait object for incoming queue
->   * @default_ept: set to channel default endpoint if the default endpoint should be re-used
->   *              on device open to prevent endpoint address update.
-> + * remote_flow_restricted: to indicate if the remote has requested for flow to be limited
-> + * remote_flow_updated:	to indicate if the flow control has been requested
+Sricharan Ramabadhran (4):
+  pcie: qcom: Fix the macro PARF_SLV_ADDR_SPACE_SIZE_2_3_3
+  dt-bindings: clock: qcom: Add reset for WCSSAON
+  clk: qcom: Add WCSSAON reset
+  dts: Reserve memory region for NSS and TZ
 
-replace tab by space after ':'
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 7 ++++++-
+ drivers/clk/qcom/gcc-ipq8074.c               | 1 +
+ drivers/pci/controller/dwc/pcie-qcom.c       | 2 +-
+ include/dt-bindings/clock/qcom,gcc-ipq8074.h | 1 +
+ 4 files changed, 9 insertions(+), 2 deletions(-)
 
->   */
->  struct rpmsg_eptdev {
->  	struct device dev;
-> @@ -68,6 +70,8 @@ struct rpmsg_eptdev {
->  	struct sk_buff_head queue;
->  	wait_queue_head_t readq;
->  
-> +	bool remote_flow_restricted;
-> +	bool remote_flow_updated;
->  };
->  
->  int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
-> @@ -116,6 +120,18 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
->  	return 0;
->  }
->  
-> +static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
-> +{
-> +	struct rpmsg_eptdev *eptdev = priv;
-> +
-> +	eptdev->remote_flow_restricted = enable;
-> +	eptdev->remote_flow_updated = true;
-> +
-> +	wake_up_interruptible(&eptdev->readq);
-> +
-> +	return 0;
-> +}
-> +
->  static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
->  {
->  	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
-> @@ -152,6 +168,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
->  		return -EINVAL;
->  	}
->  
-> +	ept->flow_cb = rpmsg_ept_flow_cb;
->  	eptdev->ept = ept;
->  	filp->private_data = eptdev;
->  	mutex_unlock(&eptdev->ept_lock);
-> @@ -172,6 +189,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
->  		eptdev->ept = NULL;
->  	}
->  	mutex_unlock(&eptdev->ept_lock);
-> +	eptdev->remote_flow_updated = false;
->  
->  	/* Discard all SKBs */
->  	skb_queue_purge(&eptdev->queue);
-> @@ -285,6 +303,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
->  	if (!skb_queue_empty(&eptdev->queue))
->  		mask |= EPOLLIN | EPOLLRDNORM;
->  
-> +	if (eptdev->remote_flow_updated)
-> +		mask |= EPOLLPRI;
-> +
->  	mutex_lock(&eptdev->ept_lock);
->  	mask |= rpmsg_poll(eptdev->ept, filp, wait);
->  	mutex_unlock(&eptdev->ept_lock);
-> @@ -297,14 +318,31 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
->  {
->  	struct rpmsg_eptdev *eptdev = fp->private_data;
->  
-> -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
-> -		return -EINVAL;
-> +	bool set;
-> +	int ret;
->  
-> -	/* Don't allow to destroy a default endpoint. */
-> -	if (eptdev->default_ept)
-> -		return -EINVAL;
-> +	switch (cmd) {
-> +	case RPMSG_GET_OUTGOING_FLOWCONTROL:
-> +		eptdev->remote_flow_updated = false;
-> +		ret = put_user(eptdev->remote_flow_restricted, (int __user *)arg);
-> +		break;
-> +	case RPMSG_SET_INCOMING_FLOWCONTROL:
-> +		set = !!arg;
-> +		ret = rpmsg_set_flow_control(eptdev->ept, set, eptdev->chinfo.dst);
-> +		break;
-> +	case RPMSG_DESTROY_EPT_IOCTL:
-> +		/* Don't allow to destroy a default endpoint. */
-> +		if (eptdev->default_ept) {
-> +			ret = -EINVAL;
-> +			break;
-> +		}
-> +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-> +		break;
-> +	default:
-> +		ret = -EINVAL;
-> +	}
->  
-> -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-> +	return ret;
->  }
->  
->  static const struct file_operations rpmsg_eptdev_fops = {
-> diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
-> index 1637e68..b0a6c17 100644
-> --- a/include/uapi/linux/rpmsg.h
-> +++ b/include/uapi/linux/rpmsg.h
-> @@ -43,4 +43,14 @@ struct rpmsg_endpoint_info {
->   */
->  #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
->  
-> +/**
-> + * Set the flow control for the remote rpmsg char device.
-> + */
-> +#define RPMSG_GET_OUTGOING_FLOWCONTROL _IOW(0xb5, 0x5, struct rpmsg_endpoint_info)
-> +
-> +/**
-> + * Set the flow control for the local rpmsg char device.
-> + */
-> +#define RPMSG_SET_INCOMING_FLOWCONTROL _IOW(0xb5, 0x6, struct rpmsg_endpoint_info)
+-- 
+2.34.1
 
-
-Perhaps I missed something, but you use "rpmsg_endpoint_info" as argument.
-In rpmsg_eptdev_ioctl the argument is treated as a boolean.
-Seems to me that something is wrong here.
-
-regards,
-Arnaud
-
-> +
->  #endif
