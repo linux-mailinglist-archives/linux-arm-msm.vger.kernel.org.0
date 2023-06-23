@@ -2,117 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0734873C213
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 23:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 789D673C279
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 23:20:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232079AbjFWVKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 17:10:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47606 "EHLO
+        id S229451AbjFWVUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 17:20:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbjFWVKc (ORCPT
+        with ESMTP id S232937AbjFWVTo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 17:10:32 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91603186
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 14:10:31 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f865f0e16cso1487613e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 14:10:31 -0700 (PDT)
+        Fri, 23 Jun 2023 17:19:44 -0400
+X-Greylist: delayed 211 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 23 Jun 2023 14:18:49 PDT
+Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095473A9A;
+        Fri, 23 Jun 2023 14:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687554630; x=1690146630;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eF9BO1+sTgEflyYG3uBq3qZ3S2MP3BOMyGGS7irakRI=;
-        b=kQ8U3YflCUL1YQG0wCknGb3zbFndvhRju34td346VC7+OHp+RGQpg2ClzY5ukSetrT
-         XpHh+MZP66vyyFf5ng1/i+/QcdXAvcCqahGxyPwna3QW5Sw6EKejVh+5CfJw5J9XiYMP
-         OY8xMmvzTBTpEgmSE3/8Ecr+rbEN0rTAIrwBwxi9YPf5dOBW+2c8+MlkogyUmGEoJdJb
-         34o2qDjXIK12xAD7ABog4QEdcnRfNHQGsWhKmyLy2hXefaHMZCBBg4ISjET5ztHIu1cO
-         7el2PzfyLaJ5ByeAVb/24E6YRcj+NPzkjFqgzmIYlLV+VdTtuQuhqCDGxjzQG2X72Pui
-         3/jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687554630; x=1690146630;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eF9BO1+sTgEflyYG3uBq3qZ3S2MP3BOMyGGS7irakRI=;
-        b=EPoY5vuyDOskhYrgibnBWTWqk7kIj5VXSVpkPr4fqRu8vL1C9Pr68lbdgIKxEGxTk/
-         RhqJChk5PhOwjtZyjLyaHav2RqDlkloh8c0qvUkr2BlMV4wda0gELdbsznp1V+KObGwq
-         xorGQRHZtVrT5ytdwedJx3qMigKWnKJbrGSkQMafH/S7UAlQAq1Iz01jm6KmsLvG8Omr
-         MkJUww+RlYoRdD9OpqGvELafO3vQE8SV0IfxCzcpzd9RLew5uxbGDmI+/2TnpvP759IQ
-         cvKWeb+7577RUwXHEyUFgBmaBmayi9usGrmhJARTl6Fba7nbPLxgSkJcYuUD4DEr/yFq
-         nErQ==
-X-Gm-Message-State: AC+VfDwuSegK9TKb3mZSYiCsn7N2f3lSxYXiJdAYuIzMhAzXqoQjfUSW
-        alnlzwDzBnQTi7jpNVxkOa3qx+ty5yG0sGj1ToQ=
-X-Google-Smtp-Source: ACHHUZ5fhQQi3b0Jxv75nyWacBFXiBcDJ9zw04ejXME8JmcPnLBZ0cvTRnSUjmKvpRVn82eMXo8kbA==
-X-Received: by 2002:ac2:4d84:0:b0:4f8:5ede:d457 with SMTP id g4-20020ac24d84000000b004f85eded457mr11379421lfe.55.1687554629820;
-        Fri, 23 Jun 2023 14:10:29 -0700 (PDT)
-Received: from [192.168.1.101] (abyk30.neoplus.adsl.tpnet.pl. [83.9.30.30])
-        by smtp.gmail.com with ESMTPSA id q1-20020ac25101000000b004f858249932sm28551lfb.90.2023.06.23.14.10.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jun 2023 14:10:29 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 23 Jun 2023 23:10:22 +0200
-Subject: [PATCH] arm64: dts: qcom: msm8998: Provide XO to RPMCC
+  d=inria.fr; s=dc;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=yokMEiNdELJzyHFQdE73QSq1qzFaQMznhY0/hFJPXdI=;
+  b=PQ1b0Em2N9AUVeD/LpbU+ZN+rhktTH+Y6Q7VDw8Cf3pNA0l+BtcyhZxn
+   ojeRsFjGxDD8u0+Y/YOKGSuPFSO6phFB8O6SWqeWn+vMMRvPryqL5bt/o
+   lImhNqRZeaTWVm1/g7h+gT/Zhi5gA6YeaCo8RJpx27aob7O1b3mfST+O1
+   0=;
+Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=Julia.Lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.01,153,1684792800"; 
+   d="scan'208";a="59686157"
+Received: from i80.paris.inria.fr (HELO i80.paris.inria.fr.) ([128.93.90.48])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2023 23:15:09 +0200
+From:   Julia Lawall <Julia.Lawall@inria.fr>
+To:     linux-staging@lists.linux.dev
+Cc:     keescook@chromium.org, kernel-janitors@vger.kernel.org,
+        Tianshu Qiu <tian.shu.qiu@intel.com>,
+        Bingbu Cao <bingbu.cao@intel.com>, linux-sgx@vger.kernel.org,
+        "H. Peter Anvin" <hpa@zytor.com>,
+        Dave Hansen <dave.hansen@linux.intel.com>,
+        kasan-dev@googlegroups.com,
+        Andrey Konovalov <andreyknvl@gmail.com>,
+        Dmitry Vyukov <dvyukov@google.com>, iommu@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        Krishna Reddy <vdumpa@nvidia.com>, linux-scsi@vger.kernel.org,
+        linux-rdma@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        Shailend Chand <shailend@google.com>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        Liam Mark <lmark@codeaurora.org>,
+        Laura Abbott <labbott@redhat.com>,
+        Brian Starkey <Brian.Starkey@arm.com>,
+        John Stultz <jstultz@google.com>, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org,
+        Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+        virtualization@lists.linux-foundation.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        intel-gvt-dev@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        linux-hyperv@vger.kernel.org
+Subject: [PATCH 00/26] use array_size
+Date:   Fri, 23 Jun 2023 23:14:31 +0200
+Message-Id: <20230623211457.102544-1-Julia.Lawall@inria.fr>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230623-topic-8998xorpm-v1-1-aa13edc51d7e@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAD0KlmQC/x2NQQqDMBAAvyJ77oKJKKZfKT0kcVMXbBI2bRHEv
- 3fxOAPDHNBImBrcuwOEfty4ZAVz6yCuPr8IeVEG29uhn+yAn1I54uzcvBepbzTOpTGFuJjJgVb
- BN8IgPsdVu/zdNpVVKPF+bR7P8/wDrGNpw3YAAAA=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687554628; l=843;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=lH6Jm41r0mdMcgUy6XjNmzH96J0Qtanj71lp+seNSqE=;
- b=XyPpE8qZzw5CA/d0v7SUDrgykCPjHkrDJ9eDl2rw8jbwKKapkoyFvG8sdCsUfUhYaJ4MgziQD
- e3ZQU0sHhFKACcQSOsDLSsSi/JGnKKGJWrzrjYMviXnfbifIRGUF+h2
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The RPMCC node should be fed a reference to the XO fixed clock.
-Do so.
+Use array_size to protect against multiplication overflows.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This follows up on the following patches by Kees Cook from 2018.
+
+42bc47b35320 ("treewide: Use array_size() in vmalloc()")
+fad953ce0b22 ("treewide: Use array_size() in vzalloc()")
+
+The changes were done using the following Coccinelle semantic patch,
+adapted from the one posted by Kees.
+
+// Drop single-byte sizes and redundant parens.
+@@
+    expression COUNT;
+    typedef u8;
+    typedef __u8;
+    type t = {u8,__u8,char,unsigned char};
+    identifier alloc = {vmalloc,vzalloc};
+@@
+      alloc(
+-           (sizeof(t)) * (COUNT)
++           COUNT
+      , ...)
+
+// 3-factor product with 2 sizeof(variable), with redundant parens removed.
+@@
+    expression COUNT;
+    size_t e1, e2, e3;
+    identifier alloc = {vmalloc,vzalloc};
+@@
+
+(    
+      alloc(
+-           (e1) * (e2) * (e3)
++           array3_size(e1, e2, e3)
+      ,...)
+|
+      alloc(
+-           (e1) * (e2) * (COUNT)
++           array3_size(COUNT, e1, e2)
+      ,...)
+)
+
+// 3-factor product with 1 sizeof(type) or sizeof(expression), with
+// redundant parens removed.
+@@
+    expression STRIDE, COUNT;
+    size_t e;
+    identifier alloc = {vmalloc,vzalloc};
+@@
+
+      alloc(
+-           (e) * (COUNT) * (STRIDE)
++           array3_size(COUNT, STRIDE, e)
+      ,...)
+
+// Any remaining multi-factor products, first at least 3-factor products
+// when they're not all constants...
+@@
+    expression E1, E2, E3;
+    constant C1, C2, C3;
+    identifier alloc = {vmalloc,vzalloc};
+@@
+    
+(
+      alloc(C1 * C2 * C3,...)
+|
+      alloc(
+-           (E1) * (E2) * (E3)
++           array3_size(E1, E2, E3)
+      ,...)
+)
+
+// 2-factor product with sizeof(type/expression) and identifier or constant.
+@@
+    size_t e1,e2;
+    expression COUNT;
+    identifier alloc = {vmalloc,vzalloc};
+@@
+
+(
+      alloc(
+-           (e1) * (e2)
++           array_size(e1, e2)
+      ,...)
+|
+      alloc(
+-           (e1) * (COUNT)
++           array_size(COUNT, e1)
+      ,...)
+)
+    
+// And then all remaining 2 factors products when they're not all constants.
+@@
+    expression E1, E2;
+    constant C1, C2;
+    identifier alloc = {vmalloc,vzalloc};
+@@
+    
+(
+      alloc(C1 * C2,...)
+|
+      alloc(
+-           (E1) * (E2)
++           array_size(E1, E2)
+      ,...)
+)
+
+
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index f0e943ff0046..171f2e21d80a 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -334,6 +334,8 @@ rpm_requests: rpm-requests {
- 
- 			rpmcc: clock-controller {
- 				compatible = "qcom,rpmcc-msm8998", "qcom,rpmcc";
-+				clocks = <&xo>;
-+				clock-names = "xo";
- 				#clock-cells = <1>;
- 			};
- 
-
----
-base-commit: c87d46a9e8ebd2f2c3960927b1d21687096d1109
-change-id: 20230623-topic-8998xorpm-199f5fbcd169
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+ arch/x86/kernel/cpu/sgx/main.c                    |    3 ++-
+ drivers/accel/habanalabs/common/device.c          |    3 ++-
+ drivers/accel/habanalabs/common/state_dump.c      |    6 +++---
+ drivers/bus/mhi/host/init.c                       |    4 ++--
+ drivers/comedi/comedi_buf.c                       |    4 ++--
+ drivers/dma-buf/heaps/system_heap.c               |    2 +-
+ drivers/gpu/drm/gud/gud_pipe.c                    |    2 +-
+ drivers/gpu/drm/i915/gvt/gtt.c                    |    6 ++++--
+ drivers/gpu/drm/vmwgfx/vmwgfx_devcaps.c           |    2 +-
+ drivers/infiniband/hw/bnxt_re/qplib_res.c         |    4 ++--
+ drivers/infiniband/hw/erdma/erdma_verbs.c         |    4 ++--
+ drivers/infiniband/sw/siw/siw_qp.c                |    4 ++--
+ drivers/infiniband/sw/siw/siw_verbs.c             |    6 +++---
+ drivers/iommu/tegra-gart.c                        |    4 ++--
+ drivers/net/ethernet/amd/pds_core/core.c          |    4 ++--
+ drivers/net/ethernet/freescale/enetc/enetc.c      |    4 ++--
+ drivers/net/ethernet/google/gve/gve_tx.c          |    2 +-
+ drivers/net/ethernet/marvell/octeon_ep/octep_rx.c |    2 +-
+ drivers/net/ethernet/microsoft/mana/hw_channel.c  |    2 +-
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c   |    4 ++--
+ drivers/scsi/fnic/fnic_trace.c                    |    2 +-
+ drivers/scsi/qla2xxx/qla_init.c                   |    4 ++--
+ drivers/staging/media/ipu3/ipu3-mmu.c             |    2 +-
+ drivers/vdpa/vdpa_user/iova_domain.c              |    3 +--
+ drivers/virtio/virtio_mem.c                       |    6 +++---
+ fs/btrfs/zoned.c                                  |    5 +++--
+ kernel/kcov.c                                     |    2 +-
+ lib/test_vmalloc.c                                |   12 ++++++------
+ 28 files changed, 56 insertions(+), 52 deletions(-)
