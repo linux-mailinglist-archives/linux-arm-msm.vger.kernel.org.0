@@ -2,119 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A18B373B3FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 11:45:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DF3473B44E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 12:01:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231300AbjFWJpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 05:45:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33492 "EHLO
+        id S229972AbjFWKBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 06:01:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231887AbjFWJpC (ORCPT
+        with ESMTP id S229564AbjFWKBV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 05:45:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB1321FF5;
-        Fri, 23 Jun 2023 02:44:51 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35N9W1sF023206;
-        Fri, 23 Jun 2023 09:44:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=Bbl2GUsX/+aU3++gosIdUgd7In2HdktUDbQX2d7ZDtw=;
- b=LvzzD6Ni0V1t2xso25ZScpvR7Dt9Dt39sLmoQgdQVOvTsEQqXQcNjYV6BmNUR8BZkYMS
- OXc5JYYJvcwG90IXCG9eEDHAMo7axLUUEoY2ZFFfzJgxRNHwO0320pTLnsOi2BRhXEEK
- +c5pZtPoHUsZ0zXMsMe1UZd3/WY6j5JJI/EYYtznRlxuwqQrv6yDW4TA9r3bqBOALFTN
- vu22YiSG5phIEOA/xtbVi+A7lbp7/jjVyQonIICdtsLIB92S+yvVZgJ3ixUKAU9k5kwD
- 2jIQbwIqrYM0VFhUOnjVxIKQ1hjpcvaK8GkTMqKeURs56caQHUN5ha8/Bq7JBab8851M 6Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rd64a0cw2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 09:44:45 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35N9iiKU010101
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 09:44:44 GMT
-Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 23 Jun 2023 02:44:39 -0700
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <sboyd@kernel.org>, <mturquette@baylibre.com>, <mani@kernel.org>,
-        <lpieralisi@kernel.org>, <bhelgaas@google.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <quic_srichara@quicinc.com>
-Subject: [PATCH 4/4] dts: Reserve memory region for NSS and TZ
-Date:   Fri, 23 Jun 2023 15:14:03 +0530
-Message-ID: <20230623094403.3978838-5-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230623094403.3978838-1-quic_srichara@quicinc.com>
-References: <20230623094403.3978838-1-quic_srichara@quicinc.com>
+        Fri, 23 Jun 2023 06:01:21 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id EC52D189;
+        Fri, 23 Jun 2023 03:01:18 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 61950C14;
+        Fri, 23 Jun 2023 03:02:02 -0700 (PDT)
+Received: from [10.1.30.17] (e122027.cambridge.arm.com [10.1.30.17])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E25C23F64C;
+        Fri, 23 Jun 2023 03:01:13 -0700 (PDT)
+Message-ID: <35f80572-0ba2-be54-c947-fcbe2d71ed5e@arm.com>
+Date:   Fri, 23 Jun 2023 11:01:11 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: XCI8-8PcmvfJo-CB1Fqor9MKfxqj2TjI
-X-Proofpoint-ORIG-GUID: XCI8-8PcmvfJo-CB1Fqor9MKfxqj2TjI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_04,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 phishscore=0 mlxscore=0 adultscore=0
- mlxlogscore=624 clxscore=1015 priorityscore=1501 suspectscore=0
- bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306230087
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 05/29] drm/panfrost: dynamically allocate the drm-panfrost
+ shrinker
+To:     Qi Zheng <qi.zheng@linux.dev>, akpm@linux-foundation.org,
+        david@fromorbit.com, tkhai@ya.ru, vbabka@suse.cz,
+        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
+        paulmck@kernel.org, tytso@mit.edu
+Cc:     linux-bcache@vger.kernel.org, linux-xfs@vger.kernel.org,
+        linux-nfs@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        linux-raid@vger.kernel.org, linux-mm@kvack.org,
+        dm-devel@redhat.com, Qi Zheng <zhengqi.arch@bytedance.com>,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-btrfs@vger.kernel.org
+References: <20230622083932.4090339-1-qi.zheng@linux.dev>
+ <20230622083932.4090339-6-qi.zheng@linux.dev>
+Content-Language: en-GB
+From:   Steven Price <steven.price@arm.com>
+In-Reply-To: <20230622083932.4090339-6-qi.zheng@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add reserved memory region for NSS and fix the name
-for tz region explicitly.
+On 22/06/2023 09:39, Qi Zheng wrote:
+> From: Qi Zheng <zhengqi.arch@bytedance.com>
+> 
+> In preparation for implementing lockless slab shrink,
+> we need to dynamically allocate the drm-panfrost shrinker,
+> so that it can be freed asynchronously using kfree_rcu().
+> Then it doesn't need to wait for RCU read-side critical
+> section when releasing the struct panfrost_device.
+> 
+> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+> ---
+>  drivers/gpu/drm/panfrost/panfrost_device.h    |  2 +-
+>  .../gpu/drm/panfrost/panfrost_gem_shrinker.c  | 24 ++++++++++---------
+>  2 files changed, 14 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h b/drivers/gpu/drm/panfrost/panfrost_device.h
+> index b0126b9fbadc..e667e5689353 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_device.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
+> @@ -118,7 +118,7 @@ struct panfrost_device {
+>  
+>  	struct mutex shrinker_lock;
+>  	struct list_head shrinker_list;
+> -	struct shrinker shrinker;
+> +	struct shrinker *shrinker;
+>  
+>  	struct panfrost_devfreq pfdevfreq;
+>  };
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
+> index bf0170782f25..2a5513eb9e1f 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
+> @@ -18,8 +18,7 @@
+>  static unsigned long
+>  panfrost_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
+>  {
+> -	struct panfrost_device *pfdev =
+> -		container_of(shrinker, struct panfrost_device, shrinker);
+> +	struct panfrost_device *pfdev = shrinker->private_data;
+>  	struct drm_gem_shmem_object *shmem;
+>  	unsigned long count = 0;
+>  
+> @@ -65,8 +64,7 @@ static bool panfrost_gem_purge(struct drm_gem_object *obj)
+>  static unsigned long
+>  panfrost_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+>  {
+> -	struct panfrost_device *pfdev =
+> -		container_of(shrinker, struct panfrost_device, shrinker);
+> +	struct panfrost_device *pfdev = shrinker->private_data;
+>  	struct drm_gem_shmem_object *shmem, *tmp;
+>  	unsigned long freed = 0;
+>  
+> @@ -100,10 +98,15 @@ panfrost_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+>  void panfrost_gem_shrinker_init(struct drm_device *dev)
+>  {
+>  	struct panfrost_device *pfdev = dev->dev_private;
+> -	pfdev->shrinker.count_objects = panfrost_gem_shrinker_count;
+> -	pfdev->shrinker.scan_objects = panfrost_gem_shrinker_scan;
+> -	pfdev->shrinker.seeks = DEFAULT_SEEKS;
+> -	WARN_ON(register_shrinker(&pfdev->shrinker, "drm-panfrost"));
+> +
+> +	pfdev->shrinker = shrinker_alloc_and_init(panfrost_gem_shrinker_count,
+> +						  panfrost_gem_shrinker_scan, 0,
+> +						  DEFAULT_SEEKS, 0, pfdev);
+> +	if (pfdev->shrinker &&
+> +	    register_shrinker(pfdev->shrinker, "drm-panfrost")) {
+> +		shrinker_free(pfdev->shrinker);
+> +		WARN_ON(1);
+> +	}
 
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+So we didn't have good error handling here before, but this is
+significantly worse. Previously if register_shrinker() failed then the
+driver could safely continue without a shrinker - it would waste memory
+but still function.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 791af73334cb..d51ff9b4f5c1 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -86,6 +86,11 @@ reserved-memory {
- 		#size-cells = <2>;
- 		ranges;
- 
-+		nss@40000000 {
-+			reg = <0x0 0x40000000 0x0 0x01000000>;
-+			no-map;
-+		};
+However we now have two failure conditions:
+ * shrinker_alloc_init() returns NULL. No warning and NULL deferences
+   will happen later.
+
+ * register_shrinker() fails, shrinker_free() will free pdev->shrinker
+   we get a warning, but followed by a use-after-free later.
+
+I think we need to modify panfrost_gem_shrinker_init() to be able to
+return an error, so a change something like the below (untested) before
+your change.
+
+Steve
+
+----8<---
+diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c
+b/drivers/gpu/drm/panfrost/panfrost_drv.c
+index bbada731bbbd..f705bbdea360 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_drv.c
++++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+@@ -598,10 +598,14 @@ static int panfrost_probe(struct platform_device
+*pdev)
+ 	if (err < 0)
+ 		goto err_out1;
+
+-	panfrost_gem_shrinker_init(ddev);
++	err = panfrost_gem_shrinker_init(ddev);
++	if (err)
++		goto err_out2;
+
+ 	return 0;
+
++err_out2:
++	drm_dev_unregister(ddev);
+ err_out1:
+ 	pm_runtime_disable(pfdev->dev);
+ 	panfrost_device_fini(pfdev);
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h
+b/drivers/gpu/drm/panfrost/panfrost_gem.h
+index ad2877eeeccd..863d2ec8d4f0 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gem.h
++++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
+@@ -81,7 +81,7 @@ panfrost_gem_mapping_get(struct panfrost_gem_object *bo,
+ void panfrost_gem_mapping_put(struct panfrost_gem_mapping *mapping);
+ void panfrost_gem_teardown_mappings_locked(struct panfrost_gem_object *bo);
+
+-void panfrost_gem_shrinker_init(struct drm_device *dev);
++int panfrost_gem_shrinker_init(struct drm_device *dev);
+ void panfrost_gem_shrinker_cleanup(struct drm_device *dev);
+
+ #endif /* __PANFROST_GEM_H__ */
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
+b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
+index bf0170782f25..90265b37636f 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
+@@ -97,13 +97,17 @@ panfrost_gem_shrinker_scan(struct shrinker
+*shrinker, struct shrink_control *sc)
+  *
+  * This function registers and sets up the panfrost shrinker.
+  */
+-void panfrost_gem_shrinker_init(struct drm_device *dev)
++int panfrost_gem_shrinker_init(struct drm_device *dev)
+ {
+ 	struct panfrost_device *pfdev = dev->dev_private;
++	int ret;
 +
- 		bootloader@4a600000 {
- 			reg = <0x0 0x4a600000 0x0 0x400000>;
- 			no-map;
-@@ -104,7 +109,7 @@ smem@4ab00000 {
- 			hwlocks = <&tcsr_mutex 0>;
- 		};
- 
--		memory@4ac00000 {
-+		tz@4ac00000 {
- 			reg = <0x0 0x4ac00000 0x0 0x400000>;
- 			no-map;
- 		};
--- 
-2.34.1
+ 	pfdev->shrinker.count_objects = panfrost_gem_shrinker_count;
+ 	pfdev->shrinker.scan_objects = panfrost_gem_shrinker_scan;
+ 	pfdev->shrinker.seeks = DEFAULT_SEEKS;
+-	WARN_ON(register_shrinker(&pfdev->shrinker, "drm-panfrost"));
++	ret = register_shrinker(&pfdev->shrinker, "drm-panfrost");
++
++	return ret;
+ }
+
+ /**
 
