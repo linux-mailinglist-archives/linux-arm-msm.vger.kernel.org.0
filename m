@@ -2,125 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C886773B82B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 14:51:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5F4373B81E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 14:51:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231732AbjFWMvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 08:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231591AbjFWMvO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S231721AbjFWMvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 23 Jun 2023 08:51:14 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD061FF5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:50:51 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-66872dbc2efso106266b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:50:51 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38656 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231284AbjFWMvK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Jun 2023 08:51:10 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2153D2136
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:50:48 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-307d58b3efbso599111f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:50:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1687524651; x=1690116651;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3J6qedKH7rACUI+d8+QjoI1iru+7/a5M9lap7RdXq+s=;
-        b=Q524DUGT6itGV4gw01qJj/zWbJLa4vy2WCXqnWOngK0C3q+dq5EKhIS0CVZv0oxxho
-         LJ6tY9YfoIHNM/tflF8trZPv/Spx8OYgEAYGDhp6iajWSx+dfQpGCxtVSU4j+uchKR2K
-         6jjaYk2avrTfJwxxTgNPxH+prD4PA2RYda//8FNhgDDbtNG8gCEmPUtJ+VXKPa4DXVej
-         a5KLbc1PmFNVMjg9t+MjU8GHA1HEy3OLaOZU0A/n71b/fjkikDpbyETS6JPqwOfw6qlc
-         81KayU6/lII4/pSrE7vPjFTNx81tmGljnxk2j498q4g7qxCoplXlCdPQ4N13nBnNs8tt
-         8JpQ==
+        d=linaro.org; s=google; t=1687524646; x=1690116646;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=38ZFJVWNUQQxQWdNSjPpbRwE1qGpIOrtYRqEuWvZ+/4=;
+        b=YpUOOjwzMFvEIZShfWlC9G9X4m1UFxwzymvN/G9VN0jT4MLBCkY3Un7MS1sVdNyjO3
+         ZnZ16AZ8/G0Kol6CIDuaRN8Hu1LxMgVUivI44reoX4CsufuAeF6NdNkeqsVKpIGaXcI+
+         pP3u1e8sDjuDocGR2ijci7yNo71tlVtq+p6roarJbXC/qoudVknl6dMP/jkw1LuwhX4c
+         dZqX5Tmsxn3fKGdIwtSY2PLzrHGQxLcCdP6luhbbYYry2XTfheNw6g8xugqZMAXQq3E4
+         HuRXlqwemtH45ekuFJWNkeoZdwcW89TaHkvdcGRGMPr44pvXqtkm8nxreHrqKXe9ACdW
+         TLnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687524651; x=1690116651;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3J6qedKH7rACUI+d8+QjoI1iru+7/a5M9lap7RdXq+s=;
-        b=kXKImNX2toYF+5+jp16AiZYvNTZoGhq+qtz4Ll+2xoXUR+n0Ji4BViLtoysl54FbBU
-         fBSoGNX9ieXEDZXM492oL3Q/dfkHnpox8b8E5ymmOrm78g03ll/JzVcA5GG+EXTY1J1/
-         K7p0qAkl7yAMGGa4WrzmJDzJRD5SSqd7e5CE6kES4Q12XyuW3dsuIpitv9Qvpkrdd8nZ
-         WNAJDUTj/8xurTab0FXdHxNvKr7E0HzrpHkT4FHLWfkE/BQswvKc9N7CVXtenmXgxPZq
-         CsQexNzTOPLLq2Ig9ujTO50LBF1D2VqEd/Z8lzZ24JVP6p6vg6RRdMUSZMR0vZrDCv6Y
-         z2yQ==
-X-Gm-Message-State: AC+VfDwln6l8KXal06+YH4jfCZeBDUrP5rusXNhBMtZtOdFg5b6y+sKm
-        QpgDdEx5ad3uhxRX1CMLN/l+GQ==
-X-Google-Smtp-Source: ACHHUZ6Fjrszr4MOiG7PTx+CVGVeY59XJZwzJifNOvY5NLzJaatECslqahuGwHQe8HJSyn0Dmf/QQQ==
-X-Received: by 2002:a05:6a00:3186:b0:668:7fe6:c220 with SMTP id bj6-20020a056a00318600b006687fe6c220mr14325912pfb.3.1687524651198;
-        Fri, 23 Jun 2023 05:50:51 -0700 (PDT)
-Received: from [10.4.168.167] ([139.177.225.254])
-        by smtp.gmail.com with ESMTPSA id x21-20020aa79195000000b0063a04905379sm6063171pfa.137.2023.06.23.05.50.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 05:50:50 -0700 (PDT)
-Message-ID: <31d3f685-3017-25d8-5b0b-2795ed7049bc@bytedance.com>
-Date:   Fri, 23 Jun 2023 20:50:41 +0800
+        d=1e100.net; s=20221208; t=1687524646; x=1690116646;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=38ZFJVWNUQQxQWdNSjPpbRwE1qGpIOrtYRqEuWvZ+/4=;
+        b=PaBE0kImpMg/7Ovn38TWc6Tx2kQOmSKfgMvalha9xFHU6e3E+GZHUNj90sSZLTsMw+
+         eEiUpahL1Tpqr7pC/gkY53lYxpo4I9gyPpDsQQQted5MKz6tPelZD1bjPAnrlTfQbMKd
+         RX/tuTwxiuNFz7fBjWD3ySR0ztCItDp4kMg9bqXmh7TVw+1VmBgmxMZDkD/AWVP0dTLZ
+         h6ZRCgWkkuDdruWmF8cpmcdftMcXluchGjoexhEv92Im/dKODluphQH5oy2WXQJcviCk
+         pq/Yk+9QkYlXBWT3xTgNxN20PnToDJoQAg57989yKWoR3jAY+5soSHyOCda8fyKPHKIV
+         LgCw==
+X-Gm-Message-State: AC+VfDyCN9riOdQJ+5I63UqDoToBPbc/+rzM81IeqrsCLdIF4aeGod8s
+        jtLPxiYS561fnsgey0m+QVpx3eR1kYIDPuz+sq/rwA==
+X-Google-Smtp-Source: ACHHUZ4Vmgs4jLypOn8hl1JUDcNuGhBdib1XRFYXWUSNxlTfqNBHVVFvIVw3AWZtFCRqT6WcTBQdVQ==
+X-Received: by 2002:a5d:404f:0:b0:30f:c1ac:9249 with SMTP id w15-20020a5d404f000000b0030fc1ac9249mr13513756wrp.51.1687524646558;
+        Fri, 23 Jun 2023 05:50:46 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id m5-20020adffe45000000b002fae7408544sm9455350wrs.108.2023.06.23.05.50.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jun 2023 05:50:46 -0700 (PDT)
+From:   neil.armstrong@linaro.org
+Subject: [PATCH v2 0/4] interconnect: qcom: rpmh: sm8550: mask to send as
+ vote
+Date:   Fri, 23 Jun 2023 14:50:41 +0200
+Message-Id: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [External] Re: [PATCH 01/29] mm: shrinker: add
- shrinker::private_data field
-Content-Language: en-US
-To:     Vlastimil Babka <vbabka@suse.cz>, akpm@linux-foundation.org,
-        david@fromorbit.com, tkhai@ya.ru, roman.gushchin@linux.dev,
-        djwong@kernel.org, brauner@kernel.org, paulmck@kernel.org,
-        tytso@mit.edu
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
-        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-2-zhengqi.arch@bytedance.com>
- <b04a0191-fa27-f8dc-440c-ec363d9c0636@suse.cz>
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-In-Reply-To: <b04a0191-fa27-f8dc-440c-ec363d9c0636@suse.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-B4-Tracking: v=1; b=H4sIACGVlWQC/52OQQ6CMBBFr0K6dkwpKQFX3sOwGOoIE6El00I0h
+ LtbPYJ/9/7i/b+rSMIU1aXYldDGkYPPYE6FciP6gYDvmZXRptJ12UIKCzuIc2OthnWJSQhnYJ9
+ IXPCeXIIZ4xO2kAjaGtHoytrSNiore4wEvaB3Y5b6dZpyuQg9+PX7cOsyjxxTkPfv0lZ+2z/Xt
+ xI01DmV04i2NdeJPUo4BxlUdxzHB4ZKyyX+AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Mike Tipton <mdtipton@codeaurora.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1285;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=dHlYALK7LZK9JGD1GTv8PH7HVFxRRCXWRUuHCV2V1AE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBklZUjcy8hCaoLpedyJOAMD1KNd/U0sIl7+rBl6/L1
+ kwC3bMWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZJWVIwAKCRB33NvayMhJ0T0DEA
+ CUBYXFjABUSSNfXkbhRd6ZUxLRmT8sVvHDnlBGaMc1HnJTlZq9VCvg+o/xbI8LBT3F2RLIC/OvF92w
+ Qikg5QnjV5qREQUOoc1QY1iH1wd2PsFVMsxJNvx3HcmMRLEoK7RFo9P5qeVnszgjq2uSK9J10e2kjF
+ jNC1qhfmqEvyma1Td5E4lscNtq646V7JCHk8G55VGUp+MnBy3d+9+PHk8fVKdaZUEAAc8XfzchoB8p
+ QckZsVoIVdMTW55QWEipRDPd2tc8NzC1pVFKgxWIxBK1/TKuQ+uh372XQbEWLFHKGz767KTXd4I+0r
+ 7ENEjTc7qJtG+t1x576F1dsCaa3ACsCEkV4ZdmM6kiRb0oNpXsPliOsfn0vizrWbdNvM3zxjl1C3nE
+ f57l47tvJLgnwEG3YSt+n0nilAgY7X2h47eeyonqLbg5YF+UuhVl20e33oZGJVNpGV3cY38NjI/0Vq
+ 0zjjW2mNjqLw4VSFpOXUozQK2gISHYZ1qbbHf8zcfq9laVr59pUf+oPqnFvBxVVMcX21LoNAHZGn72
+ PoWsjpBQ/Ugj1YtxmAv3X9JgBdvabCnr+Bq9FNlP+vy6irA83VF5/VYEgby6dBA793iHFJ5AajROKX
+ O7rEOLOGNYElmY2JiaN6h3KCZ0DAJohyQG8k/not+Ie+zul1WcJPMZJpZ77A==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vlastimil,
+On the SM8550 SoC, some nodes requires a specific bit mark
+instead of a bandwidth when voting.
 
-On 2023/6/22 22:47, Vlastimil Babka wrote:
-> On 6/22/23 10:53, Qi Zheng wrote:
->> To prepare for the dynamic allocation of shrinker instances
->> embedded in other structures, add a private_data field to
->> struct shrinker, so that we can use shrinker::private_data
->> to record and get the original embedded structure.
->>
->> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-> 
-> I would fold this to 02/29, less churn.
+Add an enable_mask variable to be used instead of bandwidth.
 
-OK, I will fold this to 02/29 in the v2.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Took downstream patch for patch 1
+- Added konrad's reviewed tag
+- Added changes for sm8450 and sa8775p
+- Link to v1: https://lore.kernel.org/r/20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-0-66663c0aa592@linaro.org
 
-Thanks,
-Qi
+---
+Mike Tipton (1):
+      interconnect: qcom: Add support for mask-based BCMs
 
-> 
->> ---
->>   include/linux/shrinker.h | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/include/linux/shrinker.h b/include/linux/shrinker.h
->> index 224293b2dd06..43e6fcabbf51 100644
->> --- a/include/linux/shrinker.h
->> +++ b/include/linux/shrinker.h
->> @@ -70,6 +70,8 @@ struct shrinker {
->>   	int seeks;	/* seeks to recreate an obj */
->>   	unsigned flags;
->>   
->> +	void *private_data;
->> +
->>   	/* These are for internal use */
->>   	struct list_head list;
->>   #ifdef CONFIG_MEMCG
-> 
+Neil Armstrong (3):
+      interconnect: qcom: sm8450: add enable_mask for bcm nodes
+      interconnect: qcom: sm8550: add enable_mask for bcm nodes
+      interconnect: qcom: sa8775p: add enable_mask for bcm nodes
+
+ drivers/interconnect/qcom/bcm-voter.c |  5 +++++
+ drivers/interconnect/qcom/icc-rpmh.h  |  2 ++
+ drivers/interconnect/qcom/sa8775p.c   |  1 +
+ drivers/interconnect/qcom/sm8450.c    |  9 +++++++++
+ drivers/interconnect/qcom/sm8550.c    | 17 +++++++++++++++++
+ 5 files changed, 34 insertions(+)
+---
+base-commit: 47045630bc409ce6606d97b790895210dd1d517d
+change-id: 20230619-topic-sm8550-upstream-interconnect-mask-vote-96aa20355158
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
