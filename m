@@ -2,137 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7B4673B115
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 09:10:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1CB273B12F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 09:19:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbjFWHKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 03:10:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52140 "EHLO
+        id S229830AbjFWHTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 03:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230444AbjFWHKG (ORCPT
+        with ESMTP id S229607AbjFWHTl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 03:10:06 -0400
+        Fri, 23 Jun 2023 03:19:41 -0400
 Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C20CE2136
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 00:10:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E31C6;
+        Fri, 23 Jun 2023 00:19:40 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 68D083F64E;
-        Fri, 23 Jun 2023 09:10:01 +0200 (CEST)
-Date:   Fri, 23 Jun 2023 09:10:00 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 6C97D3EBDD;
+        Fri, 23 Jun 2023 09:19:38 +0200 (CEST)
+Date:   Fri, 23 Jun 2023 09:19:35 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Ryan McCann <quic_rmccann@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        quic_jesszhan@quicinc.com
-Subject: Re: [PATCH 0/6] Add support to print sub block registers in dpu hw
- catalog
-Message-ID: <nywovdd4op22ylnrntqx2f6x2plmfrxsgsirq6vmqu2eemulzq@z5sc2kmypl74>
-References: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
+        David Airlie <airlied@gmail.com>
+Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for
+ DSI command mode
+Message-ID: <xrqiat4otnfwtss6zwubh77qx3frdyi77flna2xljzycvr6r2v@riimvmhoondt>
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+ <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
+ <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
+ <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
+In-Reply-To: <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It is nice if cover letters also include the subsystem:
-
-drm/msm: Add support to print DPU sub-block registers
-
-On 2023-06-22 16:48:52, Ryan McCann wrote:
-> The purpose of this patch series is to add support to print the registers
-> of sub blocks in the dpu hardware catalog and fix the order in which all
-
-Global nit: I think we previously settled on "sblk" or "sub-block(s)",
-not "sub blocks".
-
-And capitalize DPU.
-
-> hardware blocks are dumped for a device core dump. This involves:
+On 2023-06-22 17:01:34, Abhinav Kumar wrote:
+<snip>
+> > More interesting would be a link to the Mesa MR upstreaming this
+> > bitfield to dsi.xml [2] (which I have not found on my own yet).
+> > 
+> > [2]: https://gitlab.freedesktop.org/mesa/mesa/-/blame/main/src/freedreno/registers/dsi/dsi.xml
+> > 
 > 
-> 1. Changing data structure from stack to queue to fix the printing order
-> of the device core dump.
+> Thats because we havent submitted a MR yet for this on mesa.
 > 
-> 2. Removing redundant suffix of sub block names.
+> Generally, our team does not have legal permissions yet for mesa MRs 
+> other than mesa drm because we got permissions for the modetest.
 > 
-> 3. Removing redundant prefix of sub block names.
+> Rob/Dmitry, can one of you pls help with the corresponding mesa MR for this?
+
+Thanks!
+
+> The xml file change was autogenerated so this patch can go in.
+<snip>
+> >>   		 *
+> >>   		 * hdisplay will be divided by 3 here to account for the fact
+> >>   		 * that DPU sends 3 bytes per pclk cycle to DSI.
+> >> +		 *
+> >> +		 * If widebus is supported, set DATABUS_WIDEN register and divide hdisplay by 6
+> >> +		 * instead of 3
+> > 
+> > So this should allow us to divide pclk by 2, or have much lower latency?
+> > Otherwise it'll tick enough times to transmit the data twice.
+> > 
+> > Note that I brought up the exact same concerns when you used the 3:1
+> > ratio from dsi_bpp / dsc_bpp in your pclk reduction patch (instad of the
+> > number of bits/bytes that DPU sends to DSI per pclk), but no-one has
+> > replied to my inquiry yet.
+> > 
 > 
-> 4. Eliminating unused variable from relevant macros.
+> Ideally yes, we could have done pclk/2 on uncompressed pixels but we are 
+> not going to add support for widebus on DSI without DSC as that is not 
+> recommended in our docs.
 
-Dmitry has been doing that in one of his DPU catalog reworks.
+No-one here mentioned uncompressed pixels?
 
-> 5. Defining names for sub blocks that have not yet been defined.
+None of this code suddenly makes DPU send twice as many pixels/bytes to
+the DSI, yet we are enabling a feature that makes the bus twice as wide,
+so the clock can be halved *for comressed pixels*?
 
-Let's see what this means, because the code logic should already be able
-to figure this out (and in some places we can perhaps delete the name
-entirely).
-
-> 6. Implementing wrapper function that prints the registers of sub blocks
-> when there is a need.
-
-Thought this could be rather automated, but let me see what it means in
-the patches.
-
-> Sample Output of the sspp_0 block and its sub blocks for devcore dump:
-> ======sspp_0======
-> ...registers
-> ...
-> ====sspp_0_scaler====
-
-My suggestion would be to put less emphasis on this header with:
-
-    ----sspp_0_scaler----
-
-So that it becomes obvious that this is a sblk of the ====sspp_0====
-above.
-
-> ...
-> ...
-> ====sspp_0_csc====
-> ...
-> ...
-> ====next_block====
-> ...
+> So this cannot be done.
 > 
-> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
+> We tried our best to respond and explain to all your queries both on the 
+> bug and the patch but i guess it just kept coming :)
 
-No need for sign-off in cover letters.
+Then send less patches!  As long as there is activity on the mailing
+list there'll always be questions going back and forth, and I don't
+think that's unreasonable.
+
+Unless you want to push patches into mainline without questioning.
+
+> I am going to try one more time to explain it in the documentation change.
+
+Would love to hear, why, for compressed streams, the bus is twice as
+wide yet pclk is not reduced to account for that.
+
+<snip>
+> > Can we also support widebus for uncompressed streams (sending 2 pixels
+> > of bpp=24 per pclk), and if so, is that something you want to add in the
+> > future (a comment would be nice)?
+> 
+> No, we cannot support widebus on uncompressed streams on DSI so we wont 
+> be adding that.
+
+And here we start talking about uncompressed pixels *separately*.  Okay,
+if it is not supported (e.g. widebus is specific to / reserved for DSC)
+it of course makes no sense to add it.
 
 - Marijn
-
-> ---
-> Ryan McCann (6):
->       drm/msm: Update dev core dump to not print backwards
->       drm/msm/dpu: Drop unused num argument from relevant macros
->       drm/msm/dpu: Define names for unnamed sblks
->       drm/msm/dpu: Remove redundant suffix in name of sub blocks
->       drm/msm/disp: Remove redundant prefix in name of sub blocks
->       drm/msm/dpu: Update dev core dump to dump registers of sub blocks
-> 
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  90 +++++-----
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 194 +++++++++++++++++++---
->  drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c |   2 +-
->  3 files changed, 214 insertions(+), 72 deletions(-)
-> ---
-> base-commit: 710025fdedb3767655823c3a12d27d404d209f75
-> change-id: 20230622-devcoredump_patch-df7e8f6fd632
-> 
-> Best regards,
-> -- 
-> Ryan McCann <quic_rmccann@quicinc.com>
-> 
