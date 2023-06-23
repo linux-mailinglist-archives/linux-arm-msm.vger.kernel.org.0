@@ -2,84 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F0C373BDF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 19:42:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD1D873BDFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 19:42:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229551AbjFWRmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 13:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56180 "EHLO
+        id S232209AbjFWRm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 13:42:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231961AbjFWRl7 (ORCPT
+        with ESMTP id S232085AbjFWRm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 13:41:59 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E23F91FE1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 10:41:57 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NH0US1000662;
-        Fri, 23 Jun 2023 17:41:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vbccG3sKe3AZFrTNQpv9NS/+Ov7edvQzpdJW4wnPrTM=;
- b=FQCLFaXWN7MoqNOeAbAJ6K+o9reE5pxk2tr5SUXlkONPeyeAKYvIMrdLKtWACMTvD6Au
- b3b+HyUbYvWmEYrdvOL2MEZjvWazPdx2OTIPlSmkWMvu0vFkXoe4q6xsfcZIjNvpRDQZ
- Zr9AkqbljOlbhXMCNe/T+7U1/UnsIcCuZKOapgrstS0XXMN5IC15sBMV3LmSPgtKqOSc
- FR96H1dlOLMMeyuMr9YYqiEJPD7iTUfPmEOukD5zk5jZG9aMKcZK5WvjgHBoxvjSTGYa
- gYPV18Z75l59+1nvEgEwD11QuFsYRdu9iwh35ARZKTmZPOQI2M290AniquX1O7srDLC2 SA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc0sk69vv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 17:41:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NHfeAH016356
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 17:41:40 GMT
-Received: from [10.110.6.30] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
- 2023 10:41:39 -0700
-Message-ID: <dc38d253-54aa-b4c1-499a-3d66f8c305c4@quicinc.com>
-Date:   Fri, 23 Jun 2023 10:41:38 -0700
+        Fri, 23 Jun 2023 13:42:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 861451FDF;
+        Fri, 23 Jun 2023 10:42:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1A27A61AEF;
+        Fri, 23 Jun 2023 17:42:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06578C433CD;
+        Fri, 23 Jun 2023 17:42:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687542145;
+        bh=B+ile9UQYyNQVSV2ovecEJKbv71x2PzA3Mu7PzfgpNM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=V3n+dW/7W+8e4ky/y2CyPQlPjv86avWhWcfjxymBA4Y+zefycJKi8ZcW3Y4UdCeDd
+         ecCGXt5OXv7xbAB2gFl4x15UlnXyZc7d65neHutk/85HFFdSo+PS1Lo6PB53sRFxBP
+         xiWSzo6wQ58H3gdEAxcIRxnTAuKcwgJGSmNmWy85pdv+5qBxweplEJc3T0tw4UYfjC
+         474rwzv8sdgGpqCsDussCzD4t1h39VW749/8df2hG14suPM2epAAy+wlHB3/rbie1h
+         FzKyo28RbTcpg2kD+y7/dzqUOjxloaopxsE4ZVy5svZ8OCnX1vNyVT0C9KkR38tRSO
+         kS4iSHMz7h+dQ==
+Date:   Fri, 23 Jun 2023 12:42:21 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
+        mani@kernel.org, lpieralisi@kernel.org, bhelgaas@google.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: Re: [PATCH 1/4] pcie: qcom: Fix the macro
+ PARF_SLV_ADDR_SPACE_SIZE_2_3_3
+Message-ID: <20230623174221.GA180338@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] drm/msm/dpu: fix DSC 1.2 block lengths
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230623013731.1088007-1-dmitry.baryshkov@linaro.org>
- <6b74cb1f-3128-4ebd-8ff9-33cc025d957b@quicinc.com>
- <d98ddf40-c4b5-56a4-c444-2d87712a6ebd@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <d98ddf40-c4b5-56a4-c444-2d87712a6ebd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: V4oUbbhhE3xZJ0qwC06O4Oto_FPVHaPG
-X-Proofpoint-ORIG-GUID: V4oUbbhhE3xZJ0qwC06O4Oto_FPVHaPG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_08,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- phishscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501
- malwarescore=0 adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306230157
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230623093445.3977772-2-quic_srichara@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,197 +61,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/23/2023 4:25 AM, Dmitry Baryshkov wrote:
-> On 23/06/2023 08:47, Abhinav Kumar wrote:
->>
->>
->> On 6/22/2023 6:37 PM, Dmitry Baryshkov wrote:
->>> All DSC_BLK_1_2 declarations incorrectly pass 0x29c as the block length.
->>> This includes the common block itself, enc subblocks and some empty
->>> space around. Change that to pass 0x4 instead, the length of common
->>> register block itself.
->>>
->>> Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant 
->>> chipsets")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>
->> There is no need of a fixes tag for this.
->>
->> This is not a bug but was intentional.
+On Fri, Jun 23, 2023 at 03:04:42PM +0530, Sricharan Ramabadhran wrote:
+> PARF_SLV_ADDR_SPACE_SIZE_2_3_3 macro used for IPQ8074
+> pcie slave addr size was initially set to 0x358, but
+> was wrongly changed to 0x168 as a part of
+> 'PCI: qcom: Sort and group registers and bitfield definitions'
+> Fixing it back to right value here.
 > 
-> We have other subblocks which are not dumped withoyt Ryan's patchset. So 
-> this declaration should be corrected.
+> Without this pcie bring up on IPQ8074 is broken now.
 > 
+> Fixes: 769e49d87b15 ("PCI: qcom: Sort and group registers and bitfield definitions")
 
-As registers were not contiguous, some of them had to be missed but the 
-goal was to cover as much as possible with the len of the main blk.
+769e49d87b15 appeared in v6.4-rc1, so ideally this would get merged
+before v6.4 releases on Monday.  I can try to do that, given an ack
+from Manivannan.
 
-Some registers had to take a hit till we dumped sub-blocks.
-
->>
->> Till we added sub-block parsing support we had to dump the whole block.
->>
->> And hence I would suggest this change should be merged after the 
->> sub-block parsing change otherwise we wont have full register dumps 
->> for DSC.
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> No, the order should be opposite: this is merged first, then subblocks 
-> dumping can use block->len in all the cases.
-> 
-
-Please stop pushing changes in the middle of an ongoing series. If you 
-really wanted this, we could have expanded the sub-block series to fix 
-this too or you could have discussed with the authors that you were 
-going to push this in parallel.
-
-Instead of helping developers, it sometimes offends them to receive 
-patches in the middle of an ongoing series.
-
-
->>
->> Also, please add :
->>
->> Suggested-by: Ryan McCann <quic_rmccann@quicinc.com>
-> 
-
-+			/* For now, pass in a length of 0 because the DSC_BLK register space
-+			 * overlaps with the sblks' register space.
-+			 *
-+			 * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW catalog where
-+			 * applicable.
-
-The comment reports and tells what to do.
-
-I thought of suggesting to add both first.
-> More likely:
-> 
-> Reported-by: Ryan McCann <quic_rmccann@quicinc.com>
-> 
->>
->>
->>> ---
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   |  8 ++++----
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   |  2 +-
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 12 ++++++------
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   |  8 ++++----
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   |  8 ++++----
->>>   5 files changed, 19 insertions(+), 19 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->>> index 8da424eaee6a..6edf323f381f 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->>> @@ -159,10 +159,10 @@ static const struct dpu_merge_3d_cfg 
->>> sm8350_merge_3d[] = {
->>>    * its own different sub block address.
->>>    */
->>>   static const struct dpu_dsc_cfg sm8350_dsc[] = {
->>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>>   };
->>>   static const struct dpu_intf_cfg sm8350_intf[] = {
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->>> index 900fee410e11..5354003aa8be 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->>> @@ -104,7 +104,7 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
->>>   /* NOTE: sc7280 only has one DSC hard slice encoder */
->>>   static const struct dpu_dsc_cfg sc7280_dsc[] = {
->>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>>   };
->>>   static const struct dpu_wb_cfg sc7280_wb[] = {
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>> index f6ce6b090f71..1d374abec1fd 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>> @@ -148,12 +148,12 @@ static const struct dpu_merge_3d_cfg 
->>> sc8280xp_merge_3d[] = {
->>>    * its own different sub block address.
->>>    */
->>>   static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
->>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>> -    DSC_BLK_1_2("dce_2_0", DSC_4, 0x82000, 0x29c, 0, dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_2_1", DSC_5, 0x82000, 0x29c, 0, dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_2_0", DSC_4, 0x82000, 0x4, 0, dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_2_1", DSC_5, 0x82000, 0x4, 0, dsc_sblk_1),
->>>   };
->>>   /* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for 
->>> now */
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->>> index 8d13c369213c..79447d8cab05 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->>> @@ -167,10 +167,10 @@ static const struct dpu_merge_3d_cfg 
->>> sm8450_merge_3d[] = {
->>>    * its own different sub block address.
->>>    */
->>>   static const struct dpu_dsc_cfg sm8450_dsc[] = {
->>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>>   };
->>>   static const struct dpu_intf_cfg sm8450_intf[] = {
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->>> index f17b9a7fee85..26e3c28003f7 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->>> @@ -171,10 +171,10 @@ static const struct dpu_merge_3d_cfg 
->>> sm8550_merge_3d[] = {
->>>    * its own different sub block address.
->>>    */
->>>   static const struct dpu_dsc_cfg sm8550_dsc[] = {
->>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
->>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
->>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->>>   };
->>>   static const struct dpu_intf_cfg sm8550_intf[] = {
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 4ab30892f6ef..59823beed13f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -43,7 +43,7 @@
+>  #define PARF_PHY_REFCLK				0x4c
+>  #define PARF_CONFIG_BITS			0x50
+>  #define PARF_DBI_BASE_ADDR			0x168
+> -#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x16c /* Register offset specific to IP ver 2.3.3 */
+> +#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x358 /* Register offset specific to IP ver 2.3.3 */
+>  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+>  #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+>  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+> -- 
+> 2.34.1
 > 
