@@ -2,47 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2955873B104
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 09:02:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF06473B109
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 09:05:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230407AbjFWHCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 03:02:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51174 "EHLO
+        id S230132AbjFWHFf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 03:05:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230337AbjFWHCq (ORCPT
+        with ESMTP id S230081AbjFWHFe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 03:02:46 -0400
+        Fri, 23 Jun 2023 03:05:34 -0400
 Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409682134
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 00:02:45 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235602132
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 00:05:33 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id AE3D53F32D;
-        Fri, 23 Jun 2023 09:02:42 +0200 (CEST)
-Date:   Fri, 23 Jun 2023 09:02:42 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 487243F751;
+        Fri, 23 Jun 2023 09:05:31 +0200 (CEST)
+Date:   Fri, 23 Jun 2023 09:05:29 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for DSI command
- mode
-Message-ID: <qgqzbcoy5rbkya4vodicmty3pvhqj5laqb3sb5kcdicwityboq@m4hpqw3tofdz>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
- <3a6cc492-6b54-2c70-402e-995c0b003c01@linaro.org>
- <mfzmioovf54lcuiuzvk4fuz26elag6iw3ohbdhgym7k3qzirhx@dd7vu7ms6azz>
- <e594fed4-fc01-477b-1e7c-d1d58e1a0dda@quicinc.com>
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 2/2] drm/msm/dpu: fix DSC 1.2 enc subblock length
+Message-ID: <4fn5y2bfhyr243yw4jdnyco5zkizl4o4xbmbtfmfc26nliq7pf@5tmbvriphw3h>
+References: <20230623013731.1088007-1-dmitry.baryshkov@linaro.org>
+ <20230623013731.1088007-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e594fed4-fc01-477b-1e7c-d1d58e1a0dda@quicinc.com>
+In-Reply-To: <20230623013731.1088007-2-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
@@ -52,49 +49,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-22 16:04:30, Abhinav Kumar wrote:
-<snip>
-> >> Is widebus applicable only to the CMD mode, or video mode can employ it too?
-> > 
-> > The patch description states that it was not tested on video-mode yet,
-> > so I assume it will.  But this should also be highlighted with a comment
-> > (e.g. /* XXX: Allow for video-mode once tested/fixed */), _especially_
-> > on the check for MIPI_DSI_MODE_VIDEO above.
+On 2023-06-23 04:37:31, Dmitry Baryshkov wrote:
+> Both struct dpu_dsc_sub_blks instances declare enc subblock length to be
+> 0x100, while the actual length is 0x9c (last register having offset 0x98).
+> Reduce subblock length to remove the empty register space from being
+> dumped.
 > 
-> Sure, we can leave a comment.
+> Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks!
-> 
-> > If I understand this correctly DSC is not working for video mode at all
-> > on these setups, right?  Or no-one was able to test it?  I'm inclined to
-> > request dropping these artifical guards to have as little friction as
-> > possible when someone starts enabling and testing this - and less
-> > patches removing artificial bounds in the future.
-> > 
-> 
-> Noone was able to test it. Like I have said before, we dont have or have 
-> not brought up any DSI DSC panel with video mode. DP will be the first 
-> to validate the video mode path for DSC so even that time we cannot test 
-> DSI with DSC on video mode.
-> 
-> I think we should find a panel which supports cmd and video mode ( I 
-> believe one of the HDKs does have that ) and bring that one up first to 
-> validate this.
-> 
-> I believe we should keep this checks with the comment you have 
-> suggested. If someone tests it and then removes it, I am comfortable 
-> with that.
-> 
-> Till then, I would rather guard that configuration.
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Sure.  On the one hand my suggestion to drop it would be to simplify
-DSC video-mode "bring-up" and not put up arbitrary barriers, but for
-distinct optional features like widebus it makes sense to keep them
-guarded so that a developer can enable them one at a time.  I'm just
-afraid that them being spread far and wide across the codebase makes it
-hard to find all the places where this guard is in place.
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 0de507d4d7b7..dd2f89ada043 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -517,12 +517,12 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+>   * DSC sub blocks config
+>   *************************************************************/
+>  static const struct dpu_dsc_sub_blks dsc_sblk_0 = {
+> -	.enc = {.base = 0x100, .len = 0x100},
+> +	.enc = {.base = 0x100, .len = 0x9c},
+>  	.ctl = {.base = 0xF00, .len = 0x10},
 
-Unless it is hopefully one of the current active developers testing
-video-mode, because we all know what's where now :)
+Hmm, these hexadecimals are still uppercase.  When do we get a
+formatter/linter that automatically catches and fixes these?
 
 - Marijn
+
+>  };
+>  
+>  static const struct dpu_dsc_sub_blks dsc_sblk_1 = {
+> -	.enc = {.base = 0x200, .len = 0x100},
+> +	.enc = {.base = 0x200, .len = 0x9c},
+>  	.ctl = {.base = 0xF80, .len = 0x10},
+>  };
+>  
+> -- 
+> 2.39.2
+> 
