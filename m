@@ -2,131 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C46F73AFA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 06:58:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A87273AFC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 07:26:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229972AbjFWE57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 00:57:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49906 "EHLO
+        id S230071AbjFWF0H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 01:26:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbjFWE56 (ORCPT
+        with ESMTP id S229907AbjFWF0G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 00:57:58 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65B1F189;
-        Thu, 22 Jun 2023 21:57:57 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35N4W9hj008366;
-        Fri, 23 Jun 2023 04:57:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=j7Bm8l5mYYRm61e7L8igeHe8pJPYWRzXqv07q/u7m/Q=;
- b=a14tQ1YAoaZ4dgyzx+W+UgrNouAtGQjl+49SeJ3heUF2suaSa7XqcYNlU8fyOh2pkiLr
- bZ8v0lnkQo6gAy2AgFDr2Wdp3r76l1Kji1Uc3X5C0mEXkqqKTq4b0QEwkaAlsF/5ZefP
- PEf/5KnZv3OVgzoHNheBO922ACwP5C7Vm304TJsEQhmeaBXhKeJdXIo0XPB95OEooATR
- 3CDA4IOWJTw6pFn6+Rcex1iEe6IQ3Hk0xnwPMZ48S6NOU2//7GABTVDgqPclYsRn9ckP
- wD3VNxVQ4gT5sLWTQlTUnn3yVHWEb0bXT1U6AgueA/bJbVI3E8nly1X2bDALEhV6Mv+W CA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc359mcdt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 04:57:50 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35N4vns4003782
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 04:57:49 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 22 Jun 2023 21:57:44 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <mani@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_ipkumar@quicinc.com>
-Subject: [PATCH] PCI: qcom: configure the parf halt window size to 1GB
-Date:   Fri, 23 Jun 2023 10:27:31 +0530
-Message-ID: <20230623045731.29397-1-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 23 Jun 2023 01:26:06 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C68F210A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 22:26:02 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1b512309c86so2230555ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 22:26:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1687497961; x=1690089961;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=I74A3FzNlMiWSwenHJ0qW6K9Kk3RrnXa52gDQFbNI94=;
+        b=FE8O7Vw+I3Rj3/ymdkfv8Bc+lpDZ080s6kF+VZ6KYuJ8IcvSDzEvJHrYtehbevzDKJ
+         k39KSog3mD45RBSDswKQweqzUA8WL0SL0uOXty3tY4QBaCgZzpYfPiVwVN0bS3NDj5Wp
+         Vlnc7que1gB/FOXny+Xqd3OrpA8296BqQ44lM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687497961; x=1690089961;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I74A3FzNlMiWSwenHJ0qW6K9Kk3RrnXa52gDQFbNI94=;
+        b=CcFHOBeheigwPWsKfeL2yBZVXdvPZnqUFbq0ghP0WOCLpsSzeXca/ggROqb9A5SwJl
+         BP4NaX9cerg7Ri2z3i3yGJCf8bOPHODeTb4Q/m3ZV/WqqKmfg+d7NgFYIdWhDahYGGm9
+         XUsZGG08vmWAyLxFYZmrksn2kf0s73CFPI2LBX1XcdPDjjI/Pj/SjEFIXW5WPuI0wli6
+         w7QwfG4qkKeXKiS61waPE9UoAYxUx6aHz6WcSzZlh4BaaQfoq30PFST1D6N3Kdw9V9cI
+         PMFKrc7BmIyr66y3cQKD7PKE+rQgPWoQX6AGdug88kAMHtGxfiJXt5B1hkSQHmi14HSu
+         aOEA==
+X-Gm-Message-State: AC+VfDzkv/WFI6pNvVpyKD+TANEdAVTCApCdW9TWRxLYnAPrrOd3zCHn
+        NltsBgI2JDD8lYJAzcF6AHEoFg==
+X-Google-Smtp-Source: ACHHUZ5sPbLx4vVXAJjIGembGjCJJyMTydKicDo1snyQX4c1P9pglVj/z3vqORh1yZ2I9l32bGJbWQ==
+X-Received: by 2002:a17:902:ecc6:b0:1ae:8fa:cd4c with SMTP id a6-20020a170902ecc600b001ae08facd4cmr41235916plh.7.1687497961344;
+        Thu, 22 Jun 2023 22:26:01 -0700 (PDT)
+Received: from google.com ([2401:fa00:8f:203:3383:b451:fa2:1538])
+        by smtp.gmail.com with ESMTPSA id c1-20020a170902d48100b00192aa53a7d5sm6288753plg.8.2023.06.22.22.25.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jun 2023 22:26:00 -0700 (PDT)
+Date:   Fri, 23 Jun 2023 14:25:54 +0900
+From:   Sergey Senozhatsky <senozhatsky@chromium.org>
+To:     Qi Zheng <zhengqi.arch@bytedance.com>
+Cc:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
+        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
+        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
+        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
+        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
+        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
+        linux-btrfs@vger.kernel.org
+Subject: Re: [PATCH 29/29] mm: shrinker: move shrinker-related code into a
+ separate file
+Message-ID: <20230623052554.GA11471@google.com>
+References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
+ <20230622085335.77010-30-zhengqi.arch@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6mu3sAqHVH8Ft5UzANOCDEBRyuLhbt20
-X-Proofpoint-ORIG-GUID: 6mu3sAqHVH8Ft5UzANOCDEBRyuLhbt20
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_02,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=733
- spamscore=0 impostorscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306230043
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230622085335.77010-30-zhengqi.arch@bytedance.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FSL_HELO_FAKE,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure the ADDR_BIT_INDEX of PARF_AXI_MSTR_WR_ADDR_HALT_V2 register with
-0x1E to increase the halt window size to 1GB so that, when new inbound
-posted write transactions whose address crosses 1G address range, the
-controller would halt all the incoming writes until all the previous AXI
-responses are received.
+On (23/06/22 16:53), Qi Zheng wrote:
+> +/*
+> + * Remove one
+> + */
+> +void unregister_shrinker(struct shrinker *shrinker)
+> +{
+> +	struct dentry *debugfs_entry;
+> +	int debugfs_id;
+> +
+> +	if (!(shrinker->flags & SHRINKER_REGISTERED))
+> +		return;
+> +
+> +	shrinker_put(shrinker);
+> +	wait_for_completion(&shrinker->completion_wait);
+> +
+> +	mutex_lock(&shrinker_mutex);
+> +	list_del_rcu(&shrinker->list);
 
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- This patch depends on the below series which adds support for PCIe 
- controllers in IPQ9574
- https://lore.kernel.org/linux-arm-msm/20230519090219.15925-1-quic_devipriy@quicinc.com/
+Should this function wait for RCU grace period(s) before it goes
+touching shrinker fields?
 
- drivers/pci/controller/dwc/pcie-qcom.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+> +	shrinker->flags &= ~SHRINKER_REGISTERED;
+> +	if (shrinker->flags & SHRINKER_MEMCG_AWARE)
+> +		unregister_memcg_shrinker(shrinker);
+> +	debugfs_entry = shrinker_debugfs_detach(shrinker, &debugfs_id);
+> +	mutex_unlock(&shrinker_mutex);
+> +
+> +	shrinker_debugfs_remove(debugfs_entry, debugfs_id);
+> +
+> +	kfree(shrinker->nr_deferred);
+> +	shrinker->nr_deferred = NULL;
+> +}
+> +EXPORT_SYMBOL(unregister_shrinker);
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index c7579dfa5b1c..26c40e006120 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -116,6 +116,8 @@
- 
- /* PARF_AXI_MSTR_WR_ADDR_HALT register fields */
- #define EN					BIT(31)
-+#define ADDR_BIT_INDEX				(BIT(0) | BIT(1) | BIT(2) | \
-+						BIT(3) | BIT(4) | BIT(5))
- 
- /* PARF_LTSSM register fields */
- #define LTSSM_EN				BIT(8)
-@@ -154,6 +156,8 @@
- 
- #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
- 
-+#define PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE	0x1e
-+
- #define QCOM_PCIE_1_0_0_MAX_CLOCKS		4
- struct qcom_pcie_resources_1_0_0 {
- 	struct clk_bulk_data clks[QCOM_PCIE_1_0_0_MAX_CLOCKS];
-@@ -1126,6 +1130,11 @@ static int qcom_pcie_post_init(struct qcom_pcie *pcie)
- 
- 	writel(0, pcie->parf + PARF_Q2A_FLUSH);
- 
-+	val = readl(pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-+	val &= ~ADDR_BIT_INDEX;
-+	writel(val | PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE, pcie->parf +
-+			PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-+
- 	dw_pcie_dbi_ro_wr_en(pci);
- 	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
- 
--- 
-2.17.1
+[..]
 
+> +void shrinker_free(struct shrinker *shrinker)
+> +{
+> +	kfree(shrinker);
+> +}
+> +EXPORT_SYMBOL(shrinker_free);
+> +
+> +void unregister_and_free_shrinker(struct shrinker *shrinker)
+> +{
+> +	unregister_shrinker(shrinker);
+> +	kfree_rcu(shrinker, rcu);
+> +}
+
+Seems like this
+
+	unregister_shrinker();
+	shrinker_free();
+
+is not exact equivalent of this
+
+	unregister_and_free_shrinker();
