@@ -2,84 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B01D173BDCC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 19:30:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F0C373BDF8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 19:42:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230506AbjFWRaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 13:30:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51596 "EHLO
+        id S229551AbjFWRmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 13:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232086AbjFWRaC (ORCPT
+        with ESMTP id S231961AbjFWRl7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 13:30:02 -0400
+        Fri, 23 Jun 2023 13:41:59 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9662C1993;
-        Fri, 23 Jun 2023 10:30:01 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NDuPwG007161;
-        Fri, 23 Jun 2023 17:29:55 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E23F91FE1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 10:41:57 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NH0US1000662;
+        Fri, 23 Jun 2023 17:41:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=lnIbIf7NmudFilKAbXIrXRh3WR7inmW/SzqPR4v7r0Q=;
- b=Af1iYuTBzGUrutsebEwLC4KhmkN4yGIbqtWYGDTHSAXMYzKqe1aXIU7QjgtKmjkXqYBX
- dRlhArdD7PiP8Wq4KlVim72n3Do4yawWbEzBWphsW4D66wTjBOoJ8lJWncoZ1v/4DyvW
- naMO2GR7MgDFtLvVAI13bAVu7Ipe568AVChp5WmiEaIYnRbkEBOF3eTOVVx9na5JR7ml
- scyyRQU2OU714aVgYl/YdR4d+iJ6fyDSEPn1SwPNQJoNd8tY86Bl0a2gVQKZcduV9a7k
- f2P4FBIq33nEUfOAaTXHKQ/X7zyEasAK20ws+l5A0xmLRPB81B25zUjPquwVrnGQOsit tA== 
+ bh=vbccG3sKe3AZFrTNQpv9NS/+Ov7edvQzpdJW4wnPrTM=;
+ b=FQCLFaXWN7MoqNOeAbAJ6K+o9reE5pxk2tr5SUXlkONPeyeAKYvIMrdLKtWACMTvD6Au
+ b3b+HyUbYvWmEYrdvOL2MEZjvWazPdx2OTIPlSmkWMvu0vFkXoe4q6xsfcZIjNvpRDQZ
+ Zr9AkqbljOlbhXMCNe/T+7U1/UnsIcCuZKOapgrstS0XXMN5IC15sBMV3LmSPgtKqOSc
+ FR96H1dlOLMMeyuMr9YYqiEJPD7iTUfPmEOukD5zk5jZG9aMKcZK5WvjgHBoxvjSTGYa
+ gYPV18Z75l59+1nvEgEwD11QuFsYRdu9iwh35ARZKTmZPOQI2M290AniquX1O7srDLC2 SA== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc6b2da9f-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc0sk69vv-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 17:29:55 +0000
+        Fri, 23 Jun 2023 17:41:42 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NHTsLN001132
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NHfeAH016356
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 17:29:54 GMT
+        Fri, 23 Jun 2023 17:41:40 GMT
 Received: from [10.110.6.30] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
- 2023 10:29:52 -0700
-Message-ID: <654ccc4c-40c2-bef6-9f47-847216e16cb0@quicinc.com>
-Date:   Fri, 23 Jun 2023 10:29:51 -0700
+ 2023 10:41:39 -0700
+Message-ID: <dc38d253-54aa-b4c1-499a-3d66f8c305c4@quicinc.com>
+Date:   Fri, 23 Jun 2023 10:41:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for DSI
- command mode
+Subject: Re: [PATCH 1/2] drm/msm/dpu: fix DSC 1.2 block lengths
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
- <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
- <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
- <xrqiat4otnfwtss6zwubh77qx3frdyi77flna2xljzycvr6r2v@riimvmhoondt>
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230623013731.1088007-1-dmitry.baryshkov@linaro.org>
+ <6b74cb1f-3128-4ebd-8ff9-33cc025d957b@quicinc.com>
+ <d98ddf40-c4b5-56a4-c444-2d87712a6ebd@linaro.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <xrqiat4otnfwtss6zwubh77qx3frdyi77flna2xljzycvr6r2v@riimvmhoondt>
+In-Reply-To: <d98ddf40-c4b5-56a4-c444-2d87712a6ebd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0rJIduGmZPurT6kYCsCNdSHZsqJs1pW1
-X-Proofpoint-GUID: 0rJIduGmZPurT6kYCsCNdSHZsqJs1pW1
+X-Proofpoint-GUID: V4oUbbhhE3xZJ0qwC06O4Oto_FPVHaPG
+X-Proofpoint-ORIG-GUID: V4oUbbhhE3xZJ0qwC06O4Oto_FPVHaPG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-06-23_08,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- malwarescore=0 spamscore=0 phishscore=0 suspectscore=0 priorityscore=1501
- mlxlogscore=740 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306230156
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ phishscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501
+ malwarescore=0 adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306230157
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
@@ -92,105 +89,195 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/23/2023 12:19 AM, Marijn Suijten wrote:
-> On 2023-06-22 17:01:34, Abhinav Kumar wrote:
-> <snip>
->>> More interesting would be a link to the Mesa MR upstreaming this
->>> bitfield to dsi.xml [2] (which I have not found on my own yet).
+On 6/23/2023 4:25 AM, Dmitry Baryshkov wrote:
+> On 23/06/2023 08:47, Abhinav Kumar wrote:
+>>
+>>
+>> On 6/22/2023 6:37 PM, Dmitry Baryshkov wrote:
+>>> All DSC_BLK_1_2 declarations incorrectly pass 0x29c as the block length.
+>>> This includes the common block itself, enc subblocks and some empty
+>>> space around. Change that to pass 0x4 instead, the length of common
+>>> register block itself.
 >>>
->>> [2]: https://gitlab.freedesktop.org/mesa/mesa/-/blame/main/src/freedreno/registers/dsi/dsi.xml
+>>> Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant 
+>>> chipsets")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>
+>> There is no need of a fixes tag for this.
+>>
+>> This is not a bug but was intentional.
+> 
+> We have other subblocks which are not dumped withoyt Ryan's patchset. So 
+> this declaration should be corrected.
+> 
+
+As registers were not contiguous, some of them had to be missed but the 
+goal was to cover as much as possible with the len of the main blk.
+
+Some registers had to take a hit till we dumped sub-blocks.
+
+>>
+>> Till we added sub-block parsing support we had to dump the whole block.
+>>
+>> And hence I would suggest this change should be merged after the 
+>> sub-block parsing change otherwise we wont have full register dumps 
+>> for DSC.
+> 
+> No, the order should be opposite: this is merged first, then subblocks 
+> dumping can use block->len in all the cases.
+> 
+
+Please stop pushing changes in the middle of an ongoing series. If you 
+really wanted this, we could have expanded the sub-block series to fix 
+this too or you could have discussed with the authors that you were 
+going to push this in parallel.
+
+Instead of helping developers, it sometimes offends them to receive 
+patches in the middle of an ongoing series.
+
+
+>>
+>> Also, please add :
+>>
+>> Suggested-by: Ryan McCann <quic_rmccann@quicinc.com>
+> 
+
++			/* For now, pass in a length of 0 because the DSC_BLK register space
++			 * overlaps with the sblks' register space.
++			 *
++			 * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW catalog where
++			 * applicable.
+
+The comment reports and tells what to do.
+
+I thought of suggesting to add both first.
+> More likely:
+> 
+> Reported-by: Ryan McCann <quic_rmccann@quicinc.com>
+> 
+>>
+>>
+>>> ---
+>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   |  8 ++++----
+>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   |  2 +-
+>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 12 ++++++------
+>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   |  8 ++++----
+>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   |  8 ++++----
+>>>   5 files changed, 19 insertions(+), 19 deletions(-)
 >>>
->>
->> Thats because we havent submitted a MR yet for this on mesa.
->>
->> Generally, our team does not have legal permissions yet for mesa MRs
->> other than mesa drm because we got permissions for the modetest.
->>
->> Rob/Dmitry, can one of you pls help with the corresponding mesa MR for this?
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+>>> index 8da424eaee6a..6edf323f381f 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+>>> @@ -159,10 +159,10 @@ static const struct dpu_merge_3d_cfg 
+>>> sm8350_merge_3d[] = {
+>>>    * its own different sub block address.
+>>>    */
+>>>   static const struct dpu_dsc_cfg sm8350_dsc[] = {
+>>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+>>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>>   };
+>>>   static const struct dpu_intf_cfg sm8350_intf[] = {
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>> index 900fee410e11..5354003aa8be 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>> @@ -104,7 +104,7 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+>>>   /* NOTE: sc7280 only has one DSC hard slice encoder */
+>>>   static const struct dpu_dsc_cfg sc7280_dsc[] = {
+>>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>>   };
+>>>   static const struct dpu_wb_cfg sc7280_wb[] = {
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>>> index f6ce6b090f71..1d374abec1fd 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>>> @@ -148,12 +148,12 @@ static const struct dpu_merge_3d_cfg 
+>>> sc8280xp_merge_3d[] = {
+>>>    * its own different sub block address.
+>>>    */
+>>>   static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
+>>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+>>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>> -    DSC_BLK_1_2("dce_2_0", DSC_4, 0x82000, 0x29c, 0, dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_2_1", DSC_5, 0x82000, 0x29c, 0, dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_2_0", DSC_4, 0x82000, 0x4, 0, dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_2_1", DSC_5, 0x82000, 0x4, 0, dsc_sblk_1),
+>>>   };
+>>>   /* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for 
+>>> now */
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>>> index 8d13c369213c..79447d8cab05 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>>> @@ -167,10 +167,10 @@ static const struct dpu_merge_3d_cfg 
+>>> sm8450_merge_3d[] = {
+>>>    * its own different sub block address.
+>>>    */
+>>>   static const struct dpu_dsc_cfg sm8450_dsc[] = {
+>>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+>>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>>   };
+>>>   static const struct dpu_intf_cfg sm8450_intf[] = {
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>> index f17b9a7fee85..26e3c28003f7 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>> @@ -171,10 +171,10 @@ static const struct dpu_merge_3d_cfg 
+>>> sm8550_merge_3d[] = {
+>>>    * its own different sub block address.
+>>>    */
+>>>   static const struct dpu_dsc_cfg sm8550_dsc[] = {
+>>> -    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+>>> -    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> -    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x4, 0, dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x4, 0, dsc_sblk_1),
+>>> +    DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+>>> +    DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x4, 
+>>> BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+>>>   };
+>>>   static const struct dpu_intf_cfg sm8550_intf[] = {
 > 
-> Thanks!
-> 
->> The xml file change was autogenerated so this patch can go in.
-> <snip>
->>>>    		 *
->>>>    		 * hdisplay will be divided by 3 here to account for the fact
->>>>    		 * that DPU sends 3 bytes per pclk cycle to DSI.
->>>> +		 *
->>>> +		 * If widebus is supported, set DATABUS_WIDEN register and divide hdisplay by 6
->>>> +		 * instead of 3
->>>
->>> So this should allow us to divide pclk by 2, or have much lower latency?
->>> Otherwise it'll tick enough times to transmit the data twice.
->>>
->>> Note that I brought up the exact same concerns when you used the 3:1
->>> ratio from dsi_bpp / dsc_bpp in your pclk reduction patch (instad of the
->>> number of bits/bytes that DPU sends to DSI per pclk), but no-one has
->>> replied to my inquiry yet.
->>>
->>
->> Ideally yes, we could have done pclk/2 on uncompressed pixels but we are
->> not going to add support for widebus on DSI without DSC as that is not
->> recommended in our docs.
-> 
-> No-one here mentioned uncompressed pixels?
-> 
-> None of this code suddenly makes DPU send twice as many pixels/bytes to
-> the DSI, yet we are enabling a feature that makes the bus twice as wide,
-> so the clock can be halved *for comressed pixels*?
-> 
-
-The concept is quite simple
-
-one pixel per clock for uncompresssed without widebubus
-
-2 pixels per clock for uncompressed with widebus (only enabled for DP 
-not DSI)
-
-3 bytes worth of data for compressed without widebus
-
-6 bytes worth of data for compressed with widebus
-
-When compression happens, we cannot quantify with pixels as the boundary 
-is not defined with respect to bytes.
-
-You brought up uncompressed in your below comment so I assumed your 
-question of /2 was about uncompressed too.
-
-
->> So this cannot be done.
->>
->> We tried our best to respond and explain to all your queries both on the
->> bug and the patch but i guess it just kept coming :)
-> 
-> Then send less patches!  As long as there is activity on the mailing
-> list there'll always be questions going back and forth, and I don't
-> think that's unreasonable.
-> 
-> Unless you want to push patches into mainline without questioning.
-> 
-
-the comments were bordering the line of becoming irrelevant to the 
-patches like discussing video mode on a command mode patch when we had 
-explained many many times that we did not validate them.
-
-I dont want to add more comments to this. Lets stop discussing this and 
-focus more on this patch.
-
->> I am going to try one more time to explain it in the documentation change.
-> 
-> Would love to hear, why, for compressed streams, the bus is twice as
-> wide yet pclk is not reduced to account for that.
-> 
-> <snip>
->>> Can we also support widebus for uncompressed streams (sending 2 pixels
->>> of bpp=24 per pclk), and if so, is that something you want to add in the
->>> future (a comment would be nice)?
->>
->> No, we cannot support widebus on uncompressed streams on DSI so we wont
->> be adding that.
-> 
-> And here we start talking about uncompressed pixels *separately*.  Okay,
-> if it is not supported (e.g. widebus is specific to / reserved for DSC)
-> it of course makes no sense to add it.
-> 
-> - Marijn
