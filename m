@@ -2,106 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BEEC73B5B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 12:48:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC8073B5BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 12:52:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjFWKsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 06:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48216 "EHLO
+        id S231175AbjFWKwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 06:52:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbjFWKsu (ORCPT
+        with ESMTP id S231168AbjFWKw3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 06:48:50 -0400
-Received: from mail-40138.protonmail.ch (mail-40138.protonmail.ch [185.70.40.138])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 783F7172A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:48:49 -0700 (PDT)
-Date:   Fri, 23 Jun 2023 10:47:05 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1687517327; x=1687776527;
-        bh=njggoM5qv9v0nrUjGAlbTE4gjHY6AHfrf/AEkceyafU=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=m+GfRfTg/4EBmzW1ShQVhw62yM1BMw+JUawuWgiRyztr8dBIxT/FD5PH93ZLWn901
-         A8GNRhftM9lRcmXODGL3hqXHsSYzIu+RciDFsaoKt5nydntanOMoAjn1H1Jc2J+bDy
-         C4kjGx6l6DLexxWU8sNAv4Nv9686ufi4ywT8raSpRCPfEq2VeRtv4nnb08iMNAYpDO
-         6VZyRGWM30rQ7IZgYJnRWCQRQHkoF3MZFNr1kOq8+BSi7yPG/p5u7FzzqNLDEpfexj
-         bT+6dv+J4ik3KF+9lgHlpVqX5TAUfbVIAjtU6BGa4A85+1Xt6VkLYEg/FM0c/p2+9X
-         P33SrYXhbnkmQ==
-To:     bryan.odonoghue@linaro.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+        Fri, 23 Jun 2023 06:52:29 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A862C172A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:52:28 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-311394406d0so483143f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687517547; x=1690109547;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eWEOidUJqp0aLghw7rI6ZPiFar30CL1k7BWpWzIKSaQ=;
+        b=fEPfYpNpM+kOWFETP5HHPhwsrhU96CN7hlkvNOZApJD0sTbef+VnuLpfGgpatZzsTf
+         ZtxzyO9aFCzREXLWdLBdqQuanuSe1p27au1LN9G9cGvQ0Y+dMFPZZdeRbB1+iKVVHul3
+         1fm4Exe6wgpVgPUHPK3P0TTRmVqs5wgtgilmk38LxwUsoGmb9DO/ju3cWLIZiXriTu/b
+         YxP0Nu/SIcfqJQpptgkW4u9fQaMbaE/VxH7QXGmTk0KzNxfAUh5AZopwReyIFL7qtgZ4
+         UbOgmove+bah38iGaNDz/ffdIjg9enWzqvhp06Yqts//HtHFf/CjtG4PYGgLfJsdnGLm
+         UECg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687517547; x=1690109547;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eWEOidUJqp0aLghw7rI6ZPiFar30CL1k7BWpWzIKSaQ=;
+        b=e86g6RbrKx86nw3JzaBq5Y8QN0D9QBryGcOHPZWdRr2mBgcRQyFLtXJ+0sPjS8YGn/
+         yA5yxhpzhM5wjIw/5vZXiNPpzBWwi8maHunwchT5pK/DqTpfwpf+CdN9ywdHko0i1T+u
+         d5xmP0CKsVUnGqbf9AuS2cctouUshRko1DNKeZV2MeM2E8Lft7RcJSP52XV42tsa5Glc
+         tHqT/XzNA/PpaGNOA7gyVAdB82nMNbI8HZmVob9g1e+lgYHrbWvTKby98gG4fY92uGEJ
+         fJAEVxufIa6XeP3/GDwM5IfE+AQABpUNTi3zdyWeW2DUqYUhDiklToZ7ZrwGjR6zHFcs
+         Xy5Q==
+X-Gm-Message-State: AC+VfDxc2Fwnp1uqecbd3bdxpC4NhUO/kHOjrnQO4FieSbKwIYnUR6+v
+        FE1GJjiiSCz3LNfcwVk/hJBj8w==
+X-Google-Smtp-Source: ACHHUZ5NzN+KrJhCPGgb27SRp4H+bicuOgMOfPu6WiCpbEXbCfrOYSaqJFBUF7vf7wxFZQPT+lx+Tw==
+X-Received: by 2002:adf:f203:0:b0:311:19df:dac7 with SMTP id p3-20020adff203000000b0031119dfdac7mr15248678wro.28.1687517546863;
+        Fri, 23 Jun 2023 03:52:26 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id e14-20020adfef0e000000b0030c2e3c7fb3sm9223908wro.101.2023.06.23.03.52.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Jun 2023 03:52:26 -0700 (PDT)
+Message-ID: <71ae3799-4668-891c-c32d-d36da655d56d@linaro.org>
+Date:   Fri, 23 Jun 2023 11:52:25 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: msm8939-samsung-a7: Add initial
+ dts
+Content-Language: en-US
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 Cc:     agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
         devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linmengbo0689@protonmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        nikita@trvn.ru, robh+dt@kernel.org, stephan@gerhold.net,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: msm8939-samsung-a7: Add initial dts
-Message-ID: <20230623104647.5501-1-linmengbo0689@protonmail.com>
-In-Reply-To: <5fbba4e8-a8d9-0e99-e112-31b5781c1648@linaro.org>
-References: <20230623100135.5269-1-linmengbo0689@protonmail.com> <20230623100237.5299-1-linmengbo0689@protonmail.com> <5fbba4e8-a8d9-0e99-e112-31b5781c1648@linaro.org>
-Feedback-ID: 40467236:user:proton
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, nikita@trvn.ru, robh+dt@kernel.org,
+        stephan@gerhold.net, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230623100135.5269-1-linmengbo0689@protonmail.com>
+ <20230623100237.5299-1-linmengbo0689@protonmail.com>
+ <5fbba4e8-a8d9-0e99-e112-31b5781c1648@linaro.org>
+ <20230623104647.5501-1-linmengbo0689@protonmail.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230623104647.5501-1-linmengbo0689@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
+On 23/06/2023 11:47, Lin, Meng-Bo wrote:
+> Hi Bryan,
+> 
+> On Friday, June 23rd, 2023 at 10:27 AM, Bryan O'Donoghue <bryan.odonoghue@linaro.org> wrote:
+> 
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
+>>> @@ -0,0 +1,495 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +
+>>> +/dts-v1/;
+>>> +
+>>> +#include "msm8939-pm8916.dtsi"
+>>> +
+>>> +#include <dt-bindings/gpio/gpio.h>
+>>> +#include <dt-bindings/input/input.h>
+>>> +#include <dt-bindings/interrupt-controller/irq.h>
+>>> +
+>>> +/ {
+>>> + model = "Samsung Galaxy A7 (2015)";
+>>> + compatible = "samsung,a7", "qcom,msm8939";
+>>> + chassis-type = "handset";
+>>
+>>
+>> Will the downstream bootloader accept this dts without
+>>
+>> // This is used by the bootloader to find the correct DTB
+>> qcom,msm-id = <239 0>;
+>>
+>> qcom,board-id = <0xEF08FF1 1>;
+>>
+>>
+>> ?
+>>
+>> https://github.com/msm8916-mainline/lk2nd/blob/master/dts/msm8916/msm8939-samsung-r01.dts#L10
+>>
+> 
+> Similar to A3 and A5, and the other msm8916 devices, with lk2nd,
+> "qcom,msm-id" or "qcom,board-id" are not required in mainline to boot
+> this dts.
+> If I understand correctly, lk2nd will attempt to boot an image with any
+> qcdt appended.
+> 
+> https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts
+> https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
 
-On Friday, June 23rd, 2023 at 10:27 AM, Bryan O'Donoghue <bryan.odonoghue@l=
-inaro.org> wrote:
+I understand.
 
-> > +++ b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-> > @@ -0,0 +1,495 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include "msm8939-pm8916.dtsi"
-> > +
-> > +#include <dt-bindings/gpio/gpio.h>
-> > +#include <dt-bindings/input/input.h>
-> > +#include <dt-bindings/interrupt-controller/irq.h>
-> > +
-> > +/ {
-> > + model =3D "Samsung Galaxy A7 (2015)";
-> > + compatible =3D "samsung,a7", "qcom,msm8939";
-> > + chassis-type =3D "handset";
->=20
->=20
-> Will the downstream bootloader accept this dts without
->=20
-> // This is used by the bootloader to find the correct DTB
-> qcom,msm-id =3D <239 0>;
->=20
-> qcom,board-id =3D <0xEF08FF1 1>;
->=20
->=20
-> ?
->=20
-> https://github.com/msm8916-mainline/lk2nd/blob/master/dts/msm8916/msm8939=
--samsung-r01.dts#L10
->=20
+IMO the upstream DTS should work without depending on lk2nd.
 
-Similar to A3 and A5, and the other msm8916 devices, with lk2nd,
-"qcom,msm-id" or "qcom,board-id" are not required in mainline to boot
-this dts.
-If I understand correctly, lk2nd will attempt to boot an image with any
-qcdt appended.
+I'd add the board and msm id to the DTS for that reason.
 
-https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8=
-916-samsung-a3u-eur.dts
-https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8=
-916-samsung-a5u-eur.dts
+If not then I'd put a comment into the DTS explaining the dependency.
 
-Regards,
-Lin
+For preference the upstream dts should *just work* as much as possible 
+without requiring churning of bootloader.
+
+---
+bod
 
