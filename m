@@ -2,157 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A5FB73B53B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 12:28:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7863A73B59C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 12:42:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231421AbjFWK17 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 06:27:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35434 "EHLO
+        id S230260AbjFWKmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 06:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbjFWK15 (ORCPT
+        with ESMTP id S229448AbjFWKmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 06:27:57 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A608410C1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:27:55 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f9b627c1b8so6271215e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 03:27:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687516074; x=1690108074;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=susFV57im5tSf3WGR3zOStFyG2/oJd0dt6Ch9Sc5R/Q=;
-        b=CQ26+r7KjbMFIgFsXrZx03f5Ypz1JJ10KyMGQBCHYHCEHCPdHnSVif7EgPDUedT7JQ
-         yZDsqUQgH/CoPO+aq2wggZXdnqjBLdwYujJWjdQ042c8arIcP2JLN5AiR8HxhrHxG887
-         Sq/3F6oHNMe8XGCPg6Lmpj/x64rWHKoI8TuTe66EA0kzSDkbRilJa8NDZTetBWQ6nOmH
-         lqJSTJ9W/bJJAju8/QsBopiubfaA6ZWWZyfXTFsOlFJcVtAHlNvUGNLXqunQ4oZFkhWA
-         8bJvzMlZw5ThOQccm8phIt0IkxOg1RG/mut3d2GaU5jfi4vlz+MM77ELcYRRiBu6l4gh
-         kimw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687516074; x=1690108074;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=susFV57im5tSf3WGR3zOStFyG2/oJd0dt6Ch9Sc5R/Q=;
-        b=HDnQpEp7HULunaj4Z84lqnPT9ctbmbYKSzmqn2UcsfeUoa9+55knYiNXOdiMHumd32
-         UCbgmHaiVnzIWNRGQ/DY0KQ6bo2UI0LXmJbTXrtyASy6HAlyF8JPlHucmzg40f+joX0N
-         7qlh/ATCW+3Ug6k8j/baSBSs2m2gJHOxCZ+aqO9LErwNUV9ooxa/5HUVsatv8k24Z6eL
-         Rnk++nHQDRAOgsWqfpK7S+z09lvSMbVLWAjCBZp3Uiy90PMs1eMMNu4t3eep5beQgXTP
-         jOso3Xx3GfYfVXnd5TSjPkMcBcoudIIHirAdPGn3mIrwwmH70BOlilunUVnLZ7MZUT5L
-         BPrQ==
-X-Gm-Message-State: AC+VfDxjpKMppdNwV7kDkHo5rQ4B23U+7h3+yfDMEkPe5/asiCye3XAC
-        Paw+8Xj+Xe+kXR+3870vryjS2LpyMbgL4SgBp6k=
-X-Google-Smtp-Source: ACHHUZ6zbSDzHqUUOp6uJk47EIyk+W/ESkxUmRwqpu4U8tTf86ZaJNkr4kooSftOtxD+8aLz2UNHlw==
-X-Received: by 2002:adf:dcc3:0:b0:309:54b6:33b0 with SMTP id x3-20020adfdcc3000000b0030954b633b0mr19128922wrm.44.1687516074065;
-        Fri, 23 Jun 2023 03:27:54 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q6-20020adff506000000b00307c8d6b4a0sm9180899wro.26.2023.06.23.03.27.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 03:27:53 -0700 (PDT)
-Message-ID: <5fbba4e8-a8d9-0e99-e112-31b5781c1648@linaro.org>
-Date:   Fri, 23 Jun 2023 11:27:52 +0100
+        Fri, 23 Jun 2023 06:42:19 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DC36E6D;
+        Fri, 23 Jun 2023 03:42:16 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NAAaLq004834;
+        Fri, 23 Jun 2023 10:42:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=d1LF1mJaWIXY2wqgqwNTTbh1aJxpIYjRmC7iKI93Vck=;
+ b=R9MYf7rT70TVlvHWvooT4Q7wR6meXXx880hRn+PxOaZQQ0NTgKUEFmMLNDWJ4HJ9cNJr
+ nF+9/H5/qPB3wc1WJGvSqFG7gF8nsz0lVUrvgS6kAe7jJQRIuloRbu0jRzObsLp/86WR
+ hLQUmTYPSjsOK66b0zAwN9c5TQd5tGCNrwxcgWzBeHgxlUkinBfoNMMGacqrWR1GmhFk
+ 7GNDSvWPjE2oYm62KIHxggViKw9frCYlaWMGwaC6DuGEh9+zC4ITsjwWkObpsht8YTis
+ znbqj4Ukv/9+NeGKR9hF7THx1mJYS19ZvuMIZPbnQ3iC+dzzAiJJCw/GuwOJsgh95mEy Rg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rckn2u3xd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 10:42:08 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NAg772023100
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 10:42:07 GMT
+Received: from [10.216.15.42] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
+ 2023 03:42:02 -0700
+Message-ID: <1d814c12-6749-b670-42a5-326757f77ca8@quicinc.com>
+Date:   Fri, 23 Jun 2023 16:11:59 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: msm8939-samsung-a7: Add initial
- dts
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 1/4] pcie: qcom: Fix the macro
+ PARF_SLV_ADDR_SPACE_SIZE_2_3_3
 Content-Language: en-US
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230623100135.5269-1-linmengbo0689@protonmail.com>
- <20230623100237.5299-1-linmengbo0689@protonmail.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230623100237.5299-1-linmengbo0689@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <sboyd@kernel.org>, <mturquette@baylibre.com>, <mani@kernel.org>,
+        <lpieralisi@kernel.org>, <bhelgaas@google.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>
+References: <20230623094403.3978838-1-quic_srichara@quicinc.com>
+ <20230623094403.3978838-2-quic_srichara@quicinc.com>
+ <b3a1bca2-1867-aa4d-47c7-63c5f9df868f@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <b3a1bca2-1867-aa4d-47c7-63c5f9df868f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dOf4SboSho_n8HLzfczfvRItm1-Zp-qv
+X-Proofpoint-ORIG-GUID: dOf4SboSho_n8HLzfczfvRItm1-Zp-qv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_04,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
+ lowpriorityscore=0 malwarescore=0 phishscore=0 impostorscore=0 mlxscore=0
+ spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306230096
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/06/2023 11:02, Lin, Meng-Bo wrote:
-> This dts adds support for Samsung Galaxy A7 smartphone released in 2015.
+
+
+On 6/23/2023 3:52 PM, Konrad Dybcio wrote:
+> On 23.06.2023 11:44, Sricharan Ramabadhran wrote:
+>> PARF_SLV_ADDR_SPACE_SIZE_2_3_3 macro used for IPQ8074
+>> pcie slave addr size was initially set to 0x358, but
+>> was wrongly changed to 0x168 as a part of
+>> 'PCI: qcom: Sort and group registers and bitfield definitions'
+> Surely not, this commit only moved the definition containing 0x358 up.
 > 
-> Add a device tree for A7 with initial support for:
-> 
-> - GPIO keys
-> - Hall Sensor
-> - SDHCI (internal and external storage)
-> - USB Device Mode
-> - UART (on USB connector via the SM5502 MUIC)
-> - WCNSS (WiFi/BT)
-> - Regulators
-> - Touch key
-> - Accelerometer/Magnetometer
-> - Fuelgauge
-> - NFC
-> - Vibrator
-> - Touchscreen
-> 
-> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->   .../boot/dts/qcom/msm8939-samsung-a7.dts      | 495 ++++++++++++++++++
->   2 files changed, 496 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 337abc4ceb17..23fd31d4bf5a 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -39,6 +39,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-> new file mode 100644
-> index 000000000000..66e56ac59998
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-> @@ -0,0 +1,495 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8939-pm8916.dtsi"
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +/ {
-> +	model = "Samsung Galaxy A7 (2015)";
-> +	compatible = "samsung,a7", "qcom,msm8939";
-> +	chassis-type = "handset";
 
-Will the downstream bootloader accept this dts without
+   Oops, infact it was the one just below, this one which changed it.
 
-         // This is used by the bootloader to find the correct DTB
-         qcom,msm-id = <239 0>;
-         qcom,board-id = <0xEF08FF1 1>;
+    "PCI: qcom: Remove PCIE20_ prefix from register definitions"
 
-?
+  Will fix this in V2.
 
-https://github.com/msm8916-mainline/lk2nd/blob/master/dts/msm8916/msm8939-samsung-r01.dts#L10
+Regards,
+  Sricharan
 
----
-bod
+> Konrad
+>> Fixing it back to right value here.
+>>
+>> Without this pcie bring up on IPQ8074 is broken now.
+>>
+>> Fixes: 769e49d87b15 ("PCI: qcom: Sort and group registers and bitfield definitions")
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 4ab30892f6ef..59823beed13f 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -43,7 +43,7 @@
+>>   #define PARF_PHY_REFCLK				0x4c
+>>   #define PARF_CONFIG_BITS			0x50
+>>   #define PARF_DBI_BASE_ADDR			0x168
+>> -#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x16c /* Register offset specific to IP ver 2.3.3 */
+>> +#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x358 /* Register offset specific to IP ver 2.3.3 */
+>>   #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+>>   #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+>>   #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
