@@ -2,99 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54AE273B6D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 13:56:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12C1773B702
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 14:21:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbjFWL4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 07:56:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45418 "EHLO
+        id S230308AbjFWMVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 08:21:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjFWL4B (ORCPT
+        with ESMTP id S230355AbjFWMV2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 07:56:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608B991;
-        Fri, 23 Jun 2023 04:56:00 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NBDZJn025775;
-        Fri, 23 Jun 2023 11:55:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=EMYcB5EQMk7xfxoD5jZL7SCS7GloqAQ/+Tu1J86+LpQ=;
- b=NZy6bGFulUZ12QdAXr4mNWuVBCdZ/ObG+VD/DB+pwH1w5HouEsEsImUfkC8l7oxo7JAg
- f/JWWKGBKF+Am14b6K5AkFpJVbxaiVx5Nf/K2TauNl7aydUccpO4LWNh55FVsQb0+t4G
- jU7sdxck4yGaUBWnM2N392kQEXJZ/I7lNQ+az3e3loObzYApjb1FKtKFrXcGtm8iQ4W0
- LDG924xmxGe9Y+y+4Ftl6Iq3XCkfnonZqwbV+nevxPfzitGmMUto/D0WHxQkQ3Rwb+6t
- 1RRojD3fiyqd6mxhL58Hh86NgUT5bqfm2gk/2mLLWiMeeU6oKp/feqOA1Ljp1P+YAaO+ Ww== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc6b2cjc4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 11:55:48 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NBtlb2007364
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 11:55:47 GMT
-Received: from anusha-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 23 Jun 2023 04:55:39 -0700
-From:   Anusha Rao <quic_anusha@quicinc.com>
-To:     <quic_anusha@quicinc.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <bhupesh.sharma@linaro.org>, <conor+dt@kernel.org>,
-        <davem@davemloft.net>, <devicetree@vger.kernel.org>,
-        <herbert@gondor.apana.org.au>, <konrad.dybcio@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <mturquette@baylibre.com>, <p.zabel@pengutronix.de>,
-        <quic_arajkuma@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_poovendh@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_srichara@quicinc.com>,
-        <robh+dt@kernel.org>, <sboyd@kernel.org>,
-        <thara.gopinath@gmail.com>
-Subject: Re: [PATCH V4 3/4] dt-bindings: qcom-qce: add SoC compatible string for ipq9574
-Date:   Fri, 23 Jun 2023 17:25:25 +0530
-Message-ID: <20230623115525.7300-1-quic_anusha@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230526161129.1454-4-quic_anusha@quicinc.com>
-References: <20230526161129.1454-4-quic_anusha@quicinc.com>
+        Fri, 23 Jun 2023 08:21:28 -0400
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E5821BFA;
+        Fri, 23 Jun 2023 05:21:27 -0700 (PDT)
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-341ff6251f2so2056965ab.0;
+        Fri, 23 Jun 2023 05:21:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687522887; x=1690114887;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=yQSdFJAVTnk3qxJjfylhV8RKjwAoWiB8oCEQSQ64LXw=;
+        b=XBDdiwJc+DcefDw4HrP2TtB9UfY7/Wdb6EqGuvfKi1HqwYvF8aM1cONX4jaS+Aa5MB
+         MX0r3MwEiwgYTrHc827SEihECQ4t1e24t1GHV44e1wEZx/1h8bMTIru2MTmPgU+p5qt9
+         XzaP9yW0iFChDM2KnJo4306E9KCESZMhK9dFNTFMUsOIOUfsFKA9Znr6ppHZucOJy9yK
+         l2ChXlpU41tz2Edw3mH0t+PJuGi4dbc4u55tri9+MyHfnJJZRYHEX//IS++UDba8k8qp
+         ith83KATfse3RJRN6cJFRoDMrkkH4S3z7miRuXctwki3VYQJQVIZmFiX1LBPNYEb8Qqa
+         qzzA==
+X-Gm-Message-State: AC+VfDzwKYi3gRuspGPNJDWsJB/eEsYDbe8IkdaT17heYbf3xPv7u/Dd
+        3QlILtY4rVbTqaIASn4jpA==
+X-Google-Smtp-Source: ACHHUZ6PvkiRbelDYtDOJYRBqil07WdG7hR4Lr/TlrWUoohyLS1Z2dU2OmjmbHVB8LqMKTR0Hg67nQ==
+X-Received: by 2002:a92:c143:0:b0:33d:6988:bfea with SMTP id b3-20020a92c143000000b0033d6988bfeamr16680004ilh.21.1687522886662;
+        Fri, 23 Jun 2023 05:21:26 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id v2-20020a92d242000000b003443732257asm663017ilg.57.2023.06.23.05.21.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jun 2023 05:21:25 -0700 (PDT)
+Received: (nullmailer pid 27048 invoked by uid 1000);
+        Fri, 23 Jun 2023 12:21:24 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 43NMBdc0BsON7s9os7zyfujjANOw3q6T
-X-Proofpoint-GUID: 43NMBdc0BsON7s9os7zyfujjANOw3q6T
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_06,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- malwarescore=0 spamscore=0 phishscore=0 suspectscore=0 priorityscore=1501
- mlxlogscore=384 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306230107
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-scsi@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+In-Reply-To: <20230623113009.2512206-5-abel.vesa@linaro.org>
+References: <20230623113009.2512206-1-abel.vesa@linaro.org>
+ <20230623113009.2512206-5-abel.vesa@linaro.org>
+Message-Id: <168752288418.27031.1090471926569361855.robh@kernel.org>
+Subject: Re: [PATCH 4/5] scsi: dt-bindings: ufs: qcom: Fix sm8450 clocks
+Date:   Fri, 23 Jun 2023 06:21:24 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Document the compatible string for ipq9574.
->
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> ---
->  Changes in V4:
->	- Picked up Reviewed-by tag.
 
-A gentle reminder to pick the dt-binding patch.
-As the dts change is picked, this patch is required to resolve dt-bindings check issues.
+On Fri, 23 Jun 2023 14:30:08 +0300, Abel Vesa wrote:
+> The sm8450 has an ICE clock, so move the compatible to the proper
+> clocks check.
+> 
+> Fixes: 462c5c0aa798 ("dt-bindings: ufs: qcom,ufs: convert to dtschema")
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clocks: [[4294967295, 151], [4294967295, 10], [4294967295, 150], [4294967295, 166], [4294967295, 0], [4294967295, 164], [4294967295, 160], [4294967295, 162]] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clock-names: ['core_clk', 'bus_aggr_clk', 'iface_clk', 'core_clk_unipro', 'ref_clk', 'tx_lane0_sync_clk', 'rx_lane0_sync_clk', 'rx_lane1_sync_clk'] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: reg: [[0, 30949376, 0, 12288]] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230623113009.2512206-5-abel.vesa@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
