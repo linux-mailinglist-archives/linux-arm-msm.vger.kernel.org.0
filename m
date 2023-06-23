@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2946C73B627
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 13:30:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDE2173B62E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 13:30:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231424AbjFWLaR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 07:30:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59824 "EHLO
+        id S231586AbjFWLa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 07:30:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231316AbjFWLaQ (ORCPT
+        with ESMTP id S231477AbjFWLaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 07:30:16 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D48F2688
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 04:30:15 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-51be527628fso488390a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 04:30:15 -0700 (PDT)
+        Fri, 23 Jun 2023 07:30:18 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 994022695
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 04:30:16 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-510d6b939bfso581289a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 04:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687519814; x=1690111814;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JUTP9KVdzCwXWEwQEK/WejGY1+tnzW8te7FkC1dLoUk=;
-        b=Ryr1CDxaKF6klmfgzieOQd0RUv82RS6cdmB4lzrb2CxCHmGN58GhreizxfG5yU/BRR
-         PnVaoMBV54RF4gSMlQWwEuBqiN7sU84FCjWpqTav3GPGNxvGtrveqtU7qZ85URuvR0Lg
-         oY6f25j+rOfWqd3Yqab+/D84yb2Vr9s4LEb2zDOUp5Zl92YpmAHJLDOR8StSU4fyZqBN
-         KYV7JsgR+mlmKhV5Dr+LHDtJikqPcnXoizq9+Z7wE4ObxYjmj1DHtOqkJHZD0Z8lxVSp
-         Eyavsq0gisJd8fGV6IuTNw/V/H0m/vNf/PouoavbQxwW0Sb9RLW+MeIo+MsOSkllodUL
-         c88Q==
+        d=linaro.org; s=google; t=1687519815; x=1690111815;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BAVdWTyVv3g73n3CI+aPBRAAgKOeuBE5xdTL21wVIwg=;
+        b=WU2xliCvd4k0PhUDtYCukSTQgNP9IiMRwhkE2J29RhyOsvutK/TR4kgQpzmawI250J
+         GOG03XVJm+9emx4oszUbYeVHs9gjUh7b7vu2oMGGhMmvRwAn6qJweCH9wdC0PgSB1sKO
+         Rct9gMXEDBM59Q/QQfMQ+fk7n1/H13ThS0AA9VBveGdZ3mjHsPka8tUukz03sGmhYXAA
+         21GNh5ot1k6SunbyV8wix9rCiSC2Fl9vDuP1F9Jjb+MfYRv5bPOtbKLpP8NIvdfVF/fa
+         YhTkhRlINM4WmIVTOnEm5hDpJLNSaSrHMZMKeabp19NV3xtsZGmsH8wXYz8E96otd/s/
+         uD4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687519814; x=1690111814;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JUTP9KVdzCwXWEwQEK/WejGY1+tnzW8te7FkC1dLoUk=;
-        b=avlG48s1bh4VUxpvNrWsPe1ewrLgHE5+DnDThAsv8WB8PShSx6Gp2TJMJKnPdtfeMb
-         ooawomUls6FeKvWcTp5rJFrWQfTjV/WoFL6YHkKwjnLAZ7SPqC6c993gdOC0UbwL/+Z7
-         eNwQ9OE11qeRuntuXA0ahmlw5Iavu+F4ON5h/uwyGYcWr4opx+iROwnvKqPzF/nvok82
-         wzIrSejNMWJV38jm6b+vbYz8Q9qNAFbF6KW4J+sKtd0Zb0eWNEG2ae+5jKnFi/VyfYAu
-         IXWaffkmElmaqVIt+llb4OZ3Idi3wcCkGadwVCVeq/dsk6Xfvm11a343xRCa6xMak9YR
-         tEbw==
-X-Gm-Message-State: AC+VfDyo6f8ko6gn0CJUKksiQqvrKogeJfxSTu4jMPg3xFAD2qPfpXzj
-        /PuGr7B7s8d+CtZ/dKAWX71ssQ==
-X-Google-Smtp-Source: ACHHUZ4be4+kKq0mciVEYRYbXmHEBQgeyuORUYXwDn/q+SYYNMtYOzdSeAFZMWMlYLVGaLxRvHATwA==
-X-Received: by 2002:a17:907:1c9c:b0:960:d9d:ffb5 with SMTP id nb28-20020a1709071c9c00b009600d9dffb5mr21446151ejc.41.1687519813731;
-        Fri, 23 Jun 2023 04:30:13 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1687519815; x=1690111815;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BAVdWTyVv3g73n3CI+aPBRAAgKOeuBE5xdTL21wVIwg=;
+        b=OMQZs5FPqrnvwpQG80uZkzUyPdX9VL3VGvk0XQFKfPAEXIoCAKaM+gk7hh0k5wrj4n
+         +hjLOxtyCpGWp8U06Cvv1NqFpVfTAE7XMC6OMIGcLzbWtsjJLlO/obiUTSEfmNPgRpeJ
+         7i8+5ZOjbGWqPkJKkV/161D0LVmUefChY16VgNJwZp31sU9EreMzgjIebCvDCWLTj5nr
+         vtQPZ5CkpizRTIn3S2fX3Huf/YBrkkXOTQ7Tj8fLTHneLRNYxuW2vz0ZL86HHhmzHJtC
+         IbMTdAAX2KZL2w6yeKa0wCcRa+0uMgpYZvexmTEALxZk+raNCGDbHNsdmNOmPhO2arjS
+         uyPw==
+X-Gm-Message-State: AC+VfDxppUOzH0dShelynTOUdE+2+2ZC3+4Jhh+IbB7239K7vgZgr0RT
+        ThhyWMchSjRS2etLAqqFvCNVKQ==
+X-Google-Smtp-Source: ACHHUZ7442WtdeZn/EbQNjnsNf4WN5KkBAVB7CFMsOO+BKNDLrNVoN9HuA2w7XSsTcE9PVr8p/76FQ==
+X-Received: by 2002:a17:907:9810:b0:96f:bcea:df87 with SMTP id ji16-20020a170907981000b0096fbceadf87mr21417284ejc.42.1687519815129;
+        Fri, 23 Jun 2023 04:30:15 -0700 (PDT)
 Received: from hackbox.lan ([62.231.110.100])
-        by smtp.gmail.com with ESMTPSA id z17-20020a1709063ad100b009821ce1ea33sm5908033ejd.7.2023.06.23.04.30.12
+        by smtp.gmail.com with ESMTPSA id z17-20020a1709063ad100b009821ce1ea33sm5908033ejd.7.2023.06.23.04.30.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jun 2023 04:30:13 -0700 (PDT)
+        Fri, 23 Jun 2023 04:30:14 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -64,10 +65,12 @@ To:     Manivannan Sadhasivam <mani@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
         devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH 0/5] scsi: dt-bindings: ufs: qcom: Some fixes to clear all dtbs_check warnings
-Date:   Fri, 23 Jun 2023 14:30:04 +0300
-Message-Id: <20230623113009.2512206-1-abel.vesa@linaro.org>
+Subject: [PATCH 1/5] scsi: dt-bindings: ufs: qcom: Fix ICE phandle
+Date:   Fri, 23 Jun 2023 14:30:05 +0300
+Message-Id: <20230623113009.2512206-2-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230623113009.2512206-1-abel.vesa@linaro.org>
+References: <20230623113009.2512206-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,19 +83,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These are all the warnings left to fix for qcom,ufs schema.
+The check for 'qcom,ice' property is wrong. Fix it by checking using
+if-required clause and expand the clocks minItems and maxItems for
+platforms where 'qcom,ice' is not required so that it includes platforms
+with single reg entry and clocks that do not provide an ICE one.
 
-Abel Vesa (5):
-  scsi: dt-bindings: ufs: qcom: Fix ICE phandle
-  scsi: dt-bindings: ufs: qcom: Add compatible for sm6115 and sm6125
-  scsi: dt-bindings: ufs: qcom: Add compatible for sc8180x
-  scsi: dt-bindings: ufs: qcom: Fix sm8450 clocks
-  scsi: dt-bindings: ufs: qcom: Fix warning for sdm845 by adding
-    reg-names
+Fixes: 29a6d1215b7c ("scsi: ufs: dt-bindings: qcom: Add ICE phandle")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
- .../devicetree/bindings/ufs/qcom,ufs.yaml     | 49 ++++++++++++++++---
- 1 file changed, 43 insertions(+), 6 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index 943dafb69529..bdfa86a0cc98 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -194,9 +194,8 @@ allOf:
+     # TODO: define clock bindings for qcom,msm8994-ufshc
+ 
+   - if:
+-      properties:
+-        qcom,ice:
+-          maxItems: 1
++      required:
++        - qcom,ice
+     then:
+       properties:
+         reg:
+@@ -207,10 +206,10 @@ allOf:
+     else:
+       properties:
+         reg:
+-          minItems: 2
++          minItems: 1
+           maxItems: 2
+         clocks:
+-          minItems: 9
++          minItems: 8
+           maxItems: 11
+ 
+ unevaluatedProperties: false
 -- 
 2.34.1
 
