@@ -2,169 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A5073B0BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 08:29:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAFEE73B0F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 08:54:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230491AbjFWG3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 02:29:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
+        id S229907AbjFWGy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 02:54:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbjFWG3p (ORCPT
+        with ESMTP id S230387AbjFWGyq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 02:29:45 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D306C1995
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 23:29:43 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1b52bf6e669so2085335ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 23:29:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fromorbit-com.20221208.gappssmtp.com; s=20221208; t=1687501783; x=1690093783;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zCEqJX5mm9cbUE56OVCDucRVQniQh/jh7QjO1tCYRyw=;
-        b=VCN1cKAzYZWGpOm/hUHuPZp8plVnErZlG9G0OlFzhPpXaNGHYvVufkX79JUDsPqJVj
-         SxdYAM9A9ivCYhtFxc3SyvMZr6s5SlnDngyF1CSlxpEdm/HUuOSGwHgmJomuuYgedrRX
-         aqax0M2Dw9QUTGwitN8bpL0qLseKhs7EVUc6lepS488qyivLAQHSFGtevNE0LyqUhWPi
-         NKkNR95/QZWn2OoaLsjXJllgmMFsp0mHDlbo5o60jR1YeUkdYXlMSdAiD7/jZsXdB48G
-         reDdzoxXO5mM4WdQ8i9rMsSwtC5huiBFlnlMXvIXzYTlsiTrC5P7Z8F16npWgNIfnf8B
-         ShDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687501783; x=1690093783;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zCEqJX5mm9cbUE56OVCDucRVQniQh/jh7QjO1tCYRyw=;
-        b=fnZQdfZudxXzGmEeeHcren8i8yYUlTsPgYbXHX+FEKuNT+DHUgop0KYybaKfXJn0/9
-         y1TySZeOF00w1j7MuXWM7bmPeKNcUELHmkUxaag7kuYctZWYHR3TjZA0LH83HJplBFCf
-         OMLAu0X4/dSsn9UvFYat1pNfQjl0IOVUUtkuqigbOFx7A5QwhWjCud5QT87d10zQcQkB
-         E19jExfIJqo9Zt5FlXYTRiP40LRSeuSZjlSD6s+Mj7/qRR5R2gz3S2UhIt5YyoGhkba3
-         LoCZgfdsZKABxJ6ZItEG33dwmFaqDcUIXNOBNzwHLDRi4ht7ZOcKvoYpedBdFrQazpw9
-         J+pw==
-X-Gm-Message-State: AC+VfDxxk0WRwjPA7dH7K5I+PLwKT2teVYfQr4oLe6oRkpPbJHmVNjlJ
-        TRasddNUFuELKjjbmrZou2PCgg==
-X-Google-Smtp-Source: ACHHUZ6xCu/M/0AOwG5LVLb8OX3DoTsqyFTeplRrHsUG1u2SLkBGduWAm9ZrSI41Zhf0Zeq1UunMJA==
-X-Received: by 2002:a17:902:8214:b0:1aa:d971:4623 with SMTP id x20-20020a170902821400b001aad9714623mr18870991pln.38.1687501783228;
-        Thu, 22 Jun 2023 23:29:43 -0700 (PDT)
-Received: from dread.disaster.area (pa49-180-13-202.pa.nsw.optusnet.com.au. [49.180.13.202])
-        by smtp.gmail.com with ESMTPSA id x5-20020a1709027c0500b001b246dcffb7sm6311389pll.300.2023.06.22.23.29.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 23:29:42 -0700 (PDT)
-Received: from dave by dread.disaster.area with local (Exim 4.96)
-        (envelope-from <david@fromorbit.com>)
-        id 1qCaId-00F8x8-0s;
-        Fri, 23 Jun 2023 16:29:39 +1000
-Date:   Fri, 23 Jun 2023 16:29:39 +1000
-From:   Dave Chinner <david@fromorbit.com>
-To:     Vlastimil Babka <vbabka@suse.cz>
-Cc:     Qi Zheng <zhengqi.arch@bytedance.com>, akpm@linux-foundation.org,
-        tkhai@ya.ru, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
-        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org
-Subject: Re: [PATCH 24/29] mm: vmscan: make global slab shrink lockless
-Message-ID: <ZJU708VIyJ/3StAX@dread.disaster.area>
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-25-zhengqi.arch@bytedance.com>
- <cf0d9b12-6491-bf23-b464-9d01e5781203@suse.cz>
+        Fri, 23 Jun 2023 02:54:46 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE9C213B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 23:54:42 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2C3993F310;
+        Fri, 23 Jun 2023 08:54:39 +0200 (CEST)
+Date:   Fri, 23 Jun 2023 08:54:37 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/2] drm/msm/dpu: fix DSC 1.2 block lengths
+Message-ID: <mwxs3rvemvdizqtsfa7pxms5prgrdq2lue6lvkt2f23nehzhwr@uawaxv5jsnmh>
+References: <20230623013731.1088007-1-dmitry.baryshkov@linaro.org>
+ <6b74cb1f-3128-4ebd-8ff9-33cc025d957b@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cf0d9b12-6491-bf23-b464-9d01e5781203@suse.cz>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <6b74cb1f-3128-4ebd-8ff9-33cc025d957b@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 22, 2023 at 05:12:02PM +0200, Vlastimil Babka wrote:
-> On 6/22/23 10:53, Qi Zheng wrote:
-> > @@ -1067,33 +1068,27 @@ static unsigned long shrink_slab(gfp_t gfp_mask, int nid,
-> >  	if (!mem_cgroup_disabled() && !mem_cgroup_is_root(memcg))
-> >  		return shrink_slab_memcg(gfp_mask, nid, memcg, priority);
-> >  
-> > -	if (!down_read_trylock(&shrinker_rwsem))
-> > -		goto out;
-> > -
-> > -	list_for_each_entry(shrinker, &shrinker_list, list) {
-> > +	rcu_read_lock();
-> > +	list_for_each_entry_rcu(shrinker, &shrinker_list, list) {
-> >  		struct shrink_control sc = {
-> >  			.gfp_mask = gfp_mask,
-> >  			.nid = nid,
-> >  			.memcg = memcg,
-> >  		};
-> >  
-> > +		if (!shrinker_try_get(shrinker))
-> > +			continue;
-> > +		rcu_read_unlock();
+On 2023-06-22 22:47:04, Abhinav Kumar wrote:
+> On 6/22/2023 6:37 PM, Dmitry Baryshkov wrote:
+> > All DSC_BLK_1_2 declarations incorrectly pass 0x29c as the block length.
+> > This includes the common block itself, enc subblocks and some empty
+> > space around. Change that to pass 0x4 instead, the length of common
+> > register block itself.
+> > 
+> > Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> I don't think you can do this unlock?
+> There is no need of a fixes tag for this.
 > 
-> > +
-> >  		ret = do_shrink_slab(&sc, shrinker, priority);
-> >  		if (ret == SHRINK_EMPTY)
-> >  			ret = 0;
-> >  		freed += ret;
-> > -		/*
-> > -		 * Bail out if someone want to register a new shrinker to
-> > -		 * prevent the registration from being stalled for long periods
-> > -		 * by parallel ongoing shrinking.
-> > -		 */
-> > -		if (rwsem_is_contended(&shrinker_rwsem)) {
-> > -			freed = freed ? : 1;
-> > -			break;
-> > -		}
-> > -	}
-> >  
-> > -	up_read(&shrinker_rwsem);
-> > -out:
-> > +		rcu_read_lock();
+> This is not a bug but was intentional.
 > 
-> That new rcu_read_lock() won't help AFAIK, the whole
-> list_for_each_entry_rcu() needs to be under the single rcu_read_lock() to be
-> safe.
+> Till we added sub-block parsing support we had to dump the whole block.
+> 
+> And hence I would suggest this change should be merged after the 
+> sub-block parsing change otherwise we wont have full register dumps for DSC.
 
-Yeah, that's the pattern we've been taught and the one we can look
-at and immediately say "this is safe".
+This was indeed intentional, we discussed it in [1].
 
-This is a different pattern, as has been explained bi Qi, and I
-think it *might* be safe.
+In fact I asked to make it 0xf00 + 0x10 or 0xf80 + 0x10 to also cover
+the CTL registers, but that change didn't make it through.  0x29c is an
+arbitrary number that I have no clue what it was based on.
 
-*However.*
+[1]: https://lore.kernel.org/linux-arm-msm/y2whfntyo2rbrg3taazjdw5sijle6k6swzl4uutcxm6tmuayh4@uxdur74uasua/
 
-Right now I don't have time to go through a novel RCU list iteration
-pattern it one step at to determine the correctness of the
-algorithm. I'm mostly worried about list manipulations that can
-occur outside rcu_read_lock() section bleeding into the RCU
-critical section because rcu_read_lock() by itself is not a memory
-barrier.
-
-Maybe Paul has seen this pattern often enough he could simply tell
-us what conditions it is safe in. But for me to work that out from
-first principles? I just don't have the time to do that right now.
-
-> IIUC this is why Dave in [4] suggests unifying shrink_slab() with
-> shrink_slab_memcg(), as the latter doesn't iterate the list but uses IDR.
-
-Yes, I suggested the IDR route because radix tree lookups under RCU
-with reference counted objects are a known safe pattern that we can
-easily confirm is correct or not.  Hence I suggested the unification
-+ IDR route because it makes the life of reviewers so, so much
-easier...
-
-Cheers,
-
-Dave.
--- 
-Dave Chinner
-david@fromorbit.com
+- Marijn
