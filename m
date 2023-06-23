@@ -2,136 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27FF273BF25
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:00:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC04373BF2D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:02:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231680AbjFWUAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 16:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39698 "EHLO
+        id S231389AbjFWUCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 16:02:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231168AbjFWUAb (ORCPT
+        with ESMTP id S229620AbjFWUCk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 16:00:31 -0400
-Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F297271F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 13:00:30 -0700 (PDT)
-Received: by mail-ua1-x930.google.com with SMTP id a1e0cc1a2514c-78a1e095508so392779241.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 13:00:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687550429; x=1690142429;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m1M1xaiNrSMz3C3bpTzsCCZISH1fndbXxP2b6AYA7P8=;
-        b=25Kx93HWxGNrW7i8PiktSOxdVI0xb3gbLHu/eSh/j7KcjQodThxWFZuBF6WKG7vUNS
-         fYGM58rw15YqtrfK2oWLKC89wNDMbmfUK8+JUWu7fId3vSV6WvME2X6LNspLodF8+Gzk
-         JeGZfAvppULZbqGu0aJaAxlUxXk+SBbxfbERd5XMyCmMiMWuNJUgw4blEMn28OAKgq5x
-         g57zEZlB4IiEhm4455u2ZGEzB8LTZ/xNmtAKaKdOAlIvBBzUBx/DuWC9ZSunGwJEHezU
-         6t9WGtZdYGDquTmuZk1GnP1yKTKRpGH0LGW7iszsplwh/aOwdfaW5wDh3OjguCw5FfAN
-         +Rmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687550429; x=1690142429;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=m1M1xaiNrSMz3C3bpTzsCCZISH1fndbXxP2b6AYA7P8=;
-        b=DdvDc55azRtXvQSirRKU/VpaWE0JaWFi9HhSHoDUvvLM5PiExQhol40eybEJ+syn71
-         Mgu+5cte0Y4IH2DTUFWFM88mbb2zBDivQDBFo5o8h3oDIkpBLa3apIxqNQPxC0LAkrlB
-         4rqPlT8Xbvh9IGan8jbjHwqGFfhqL3H0IiVAW9l/K5aSKhQXjThP6feh/K7VB9NojIXM
-         QtD4zreolggwix91hYVB2sGcIYMEVc8rM+FPyBE35LsVtBXzjkBZcb0QJignU2QmRHIB
-         8P+Mk411c5SkOuLDwXNP2cERz6ulYeCIUw4KZHK1o4w9UIFxZ1idM1lmBy8VtP8TJGwx
-         bPcA==
-X-Gm-Message-State: AC+VfDxdkQ8Ur75tdZLQJLGKF4oOHFVwSXWXJzc7LluPY2REcWlA1cQj
-        S+1hMatq7eoC5sv7lRC9mpG8r0lBrFB2gQejRnmxtw==
-X-Google-Smtp-Source: ACHHUZ4dgCpqMi4ZlVuTYZHeFbBd4fFXdHkx89qsxKlJ0GOPlCr0eVv4RzmW7IXVicUlGnXnteN3dR3IFwrJ2sBV24Y=
-X-Received: by 2002:a05:6102:2453:b0:440:d2f5:e36d with SMTP id
- g19-20020a056102245300b00440d2f5e36dmr5548679vss.14.1687550429626; Fri, 23
- Jun 2023 13:00:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230623100845.114085-1-brgl@bgdev.pl> <20230623100845.114085-3-brgl@bgdev.pl>
- <ZJXw+92ee7CGtnCS@corigine.com>
-In-Reply-To: <ZJXw+92ee7CGtnCS@corigine.com>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Fri, 23 Jun 2023 22:00:18 +0200
-Message-ID: <CAMRc=MeXtK8kNbNo0u7onz3vmKS1eHWdok7vGFRMr41S2Aehvg@mail.gmail.com>
-Subject: Re: [PATCH net-next v2 02/12] net: stmmac: replace the sph_disable
- field with a flag
-To:     Simon Horman <simon.horman@corigine.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 23 Jun 2023 16:02:40 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B4A01BCA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 13:02:37 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5E5103F7A3;
+        Fri, 23 Jun 2023 22:02:34 +0200 (CEST)
+Date:   Fri, 23 Jun 2023 22:02:32 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Andrew Halaney <ahalaney@redhat.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2] drm/msm/dsi: Document DSC related pclk_rate and
+ hdisplay calculations
+Message-ID: <gpxqh6mu5dora7ul4agaflmzqiq7ps6j2dic3zj2ygvp7dsori@lnbnexnbqthg>
+References: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
+ <e9d5876a-3113-8c79-c2aa-e1ad175f0d84@quicinc.com>
+ <b632e52d-7b86-9f5a-913a-aace26d9a039@linaro.org>
+ <c2f632e7-8302-a77f-fc61-ccda3b5a8aac@quicinc.com>
+ <eqdu44xcd6qdrmxcdr44dfcliydz6q4oombghjg6ptlcbxf22v@uhqnhnlv6gxi>
+ <6e2ded6a-63a9-d32a-7a2f-67d3c72b1aa2@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6e2ded6a-63a9-d32a-7a2f-67d3c72b1aa2@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 23, 2023 at 9:22=E2=80=AFPM Simon Horman <simon.horman@corigine=
-.com> wrote:
->
-> On Fri, Jun 23, 2023 at 12:08:35PM +0200, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Drop the boolean field of the plat_stmmacenet_data structure in favor o=
-f a
-> > simple bitfield flag.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> ...
->
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/driver=
-s/net/ethernet/stmicro/stmmac/dwmac-intel.c
-> > index ab9f876b6df7..70e91bbef2a6 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-> > @@ -459,7 +459,7 @@ static int intel_mgbe_common_data(struct pci_dev *p=
-dev,
-> >       plat->has_gmac4 =3D 1;
-> >       plat->force_sf_dma_mode =3D 0;
-> >       plat->tso_en =3D 1;
-> > -     plat->sph_disable =3D 1;
-> > +     data->flags |=3D STMMAC_FLAG_SPH_DISABLE;
->
-> Hi Bartosz,
->
-> I think something must have got mixed-up here.
-> An x86_64 allmodconfig reports that data is undeclared here.
->
+On 2023-06-23 12:54:17, Abhinav Kumar wrote:
+> 
+> 
+> On 6/23/2023 12:26 AM, Marijn Suijten wrote:
+> > On 2023-06-22 17:32:17, Abhinav Kumar wrote:
+> >>
+> >>
+> >> On 6/22/2023 5:17 PM, Dmitry Baryshkov wrote:
+> >>> On 23/06/2023 03:14, Abhinav Kumar wrote:
+> >>>>
+> >>>>
+> >>>> On 6/19/2023 2:06 PM, Dmitry Baryshkov wrote:
+> >>>>> Provide actual documentation for the pclk and hdisplay calculations in
+> >>>>> the case of DSC compression being used.
+> >>>>>
+> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>>> ---
+> >>>>>
+> >>>>> Changes since v1:
+> >>>>> - Converted dsi_adjust_pclk_for_compression() into kerneldoc (Marijn)
+> >>>>> - Added a pointer from dsi_timing_setup() docs to
+> >>>>>     dsi_adjust_pclk_for_compression() (Marijn)
+> >>>>> - Fixed two typo (Marijn)
+> >>>>>
+> >>>>> ---
+> >>>>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 40 ++++++++++++++++++++++++++++--
+> >>>>>    1 file changed, 38 insertions(+), 2 deletions(-)
+> >>>>>
+> >>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>>> index 3f6dfb4f9d5a..a8a31c3dd168 100644
+> >>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>>> @@ -528,6 +528,25 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host
+> >>>>> *msm_host)
+> >>>>>        clk_disable_unprepare(msm_host->byte_clk);
+> >>>>>    }
+> >>>>> +/**
+> >>>>> + * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for
+> >>>>> compression case
+> >>>>> + * @mode: the selected mode for the DSI output
+> >>>>> + * @dsc: DRM DSC configuration for this DSI output
+> >>>>> + *
+> >>>>> + * Adjust the pclk rate by calculating a new hdisplay proportional to
+> >>>>> + * the compression ratio such that:
+> >>>>> + *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
+> >>>>> + *
+> >>>>> + * Porches do not need to be adjusted:
+> >>>>> + * - For the VIDEO mode they are not compressed by DSC and are
+> >>>>> passed as is.
+> >>>>> + * - For the CMD mode there are no actual porches. Instead these fields
+> >>>>> + *   currently represent the overhead to the image data transfer. As
+> >>>>> such, they
+> >>>>> + *   are calculated for the final mode parameters (after the
+> >>>>> compression) and
+> >>>>> + *   are not to be adjusted too.
+> >>>>> + *
+> >>>>> + *  FIXME: Reconsider this if/when CMD mode handling is rewritten to
+> >>>>> use
+> >>>>> + *  refresh rate and data overhead as a starting point of the
+> >>>>> calculations.
+> >>>>> + */
+> >>>>>    static unsigned long dsi_adjust_pclk_for_compression(const struct
+> >>>>> drm_display_mode *mode,
+> >>>>>            const struct drm_dsc_config *dsc)
+> >>>>
+> >>>> I am fine with this part of the doc.
+> >>>>
+> >>>>>    {
+> >>>>> @@ -926,8 +945,25 @@ static void dsi_timing_setup(struct msm_dsi_host
+> >>>>> *msm_host, bool is_bonded_dsi)
+> >>>>>            if (ret)
+> >>>>>                return;
+> >>>>> -        /* Divide the display by 3 but keep back/font porch and
+> >>>>> -         * pulse width same
+> >>>>> +        /*
+> >>>>> +         * DPU sends 3 bytes per pclk cycle to DSI. If compression is
+> >>>>> +         * not used, a single pixel is transferred at each pulse, no
+> >>>>> +         * matter what bpp or pixel format is used. In case of DSC
+> >>>>> +         * compression this results (due to data alignment
+> >>>>> +         * requirements) in a transfer of 3 compressed pixel per pclk
+> >>>>> +         * cycle.
+> >>>>> +         *
+> >>>>
+> >>>> I dont want to talk about data alignment nor formats and I will not
+> >>>> ack any references to those.
+> >>>>
+> >>>> I would like to keep this simple and say that DPU sends 3 bytes of
+> >>>> compressed data / pclk (6 with widebus enabled) and all this math is
+> >>>> doing is that its calculating number of bytes and diving it by 3 OR 6
+> >>>> with widebus to calculate the pclk cycles. Thats it.
+> >>>
+> >>> This makes it unclear, why do we simply by 3 rather than doing * dsc_bpp
+> >>> / 24.  My description might be inaccurate as I don't have hw docs at
+> >>> hand, but simple description is not enough.
+> >>>
+> >>
+> >> Why is it unclear? With compression, we are saying we process at 3
+> >> compressed bytes / pclk and this math is accurately giving the pclk cycles.
+> >>
+> >> You are once again trying to arrive at 3 with compression factor in mind
+> >> by calculating target_bpp / src_bpp.
+> >>
+> >> I am saying that its independent of that. Whenever we do compression
+> >> rate is 3 bytes of compressed data (and 6 with widebus) irrespective of
+> >> what your dsc_bpp was.
+> > 
+> > Abhinav, this is exactly what the confusion the pclk series is about.
+> > There it was said (and committed to mainline now!) that pclk is based on
+> > the compression factor of target_bpp / src_bpp.  Now you are saying
+> > there is a fixed number of bytes sent by the (wide)bus between DPU-DSC
+> > and DSI.
+> > 
+> > Is pclk used for more purposes besides just ticking for the data
+> > transfer between DPU and DSI?
+> > 
+> 
+> There is no confusion between what was said earlier and now.
+> 
+> This line is calculating the number of pclks needed to transmit one line 
+> of the compressed data:
+> 
+> hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> 
+> msm_dsc_get_bytes_per_line() is calculating the number of compressed 
+> bytes as it uses the target bits_per_pixel
+> 
+> 126 	 * @bits_per_pixel:
+> 127 	 * Target bits per pixel with 4 fractional bits, bits_per_pixel << 4
+> 128 	 */
+> 129 	u16 bits_per_pixel;
+> 
+> (like I have said a few times, hdisplay is perhaps confusing us)
+> 
+> If you calculate the bytes this way you are already accounting for the 
+> compression, so where is the confusion.
+> 
+> The pclk calculation does the same thing of using the ratio instead.
 
-Cr*p, I thought I build-tested everything...
+This is not answering my question whether the ratio for pclk calculation
+should also be adjusted to account for widebus.  And if the ratio is
+fixed, why use a fixed factor here but the ratio between
+src_bpp:target_bpp here?  It only adds extra confusion.
 
-My bad, I'll resend a v3 after the merge window.
-
-Bart
-
-> ...
->
-> --
-> pw-bot: changes-requested
->
+- Marijn
