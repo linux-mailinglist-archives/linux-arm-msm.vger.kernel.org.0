@@ -2,73 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B13F473BF3E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:12:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7F2473BF47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:15:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231820AbjFWUMe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 16:12:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42098 "EHLO
+        id S229446AbjFWUPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 16:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231177AbjFWUMe (ORCPT
+        with ESMTP id S231824AbjFWUOu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 16:12:34 -0400
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A3E62721;
-        Fri, 23 Jun 2023 13:12:33 -0700 (PDT)
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-78337d6b14fso11356039f.1;
-        Fri, 23 Jun 2023 13:12:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687551152; x=1690143152;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mIR790y01Y2bPW5MOoqgrgXvnrYJCrBg8XRy1PjtoJY=;
-        b=BJoG/cNi7CtWImHF7kin1/5vG96A0IKW4Rho44zIGheD0gfGjM2EJ6S1lfQIg7ifgB
-         9+EpjDIasiH+trW/Wtu/L3xfnY8kcN4AZgeWqGUSh/pMDATAOsYTMkuCkXbVyQq+1KV7
-         /5Lqg4q7ljyniDdLi8hm155oet//C29/8ef25lOJEHH9f9nwq1d0Oq6Ey0XXWhEsTUGa
-         p+Itg2jsXBCy/7/755KPE/5w4on2Oy72inqXpjg6SBrtaCYk8kpfaGxnjmEExShw6Qp6
-         VoE8tXN+kb2szIGYrNtUoqiVgizIfH6cq/HMgxLAYRyHwW1enJ2jzDbSv3FhMg6xVY1K
-         gDJw==
-X-Gm-Message-State: AC+VfDyM+3jJWHICqDX3e/otb/Dgj0UgCx/kDQOJhQmmOwHuCfXahnL9
-        D334IlcXvTJQIfTIHtheOg==
-X-Google-Smtp-Source: ACHHUZ5+4vAMYvqL65nBRMGEpteSxNFOw4+9+RQXvw/CZSamsT8j+pvvD3T/frJwTVTFe9VBJYQ5qA==
-X-Received: by 2002:a6b:ef16:0:b0:780:d76c:b645 with SMTP id k22-20020a6bef16000000b00780d76cb645mr4084530ioh.1.1687551152417;
-        Fri, 23 Jun 2023 13:12:32 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id j25-20020a5d9d19000000b00780dcff0414sm44315ioj.20.2023.06.23.13.12.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jun 2023 13:12:31 -0700 (PDT)
-Received: (nullmailer pid 1024620 invoked by uid 1000);
-        Fri, 23 Jun 2023 20:12:30 -0000
-Date:   Fri, 23 Jun 2023 14:12:30 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        devicetree@vger.kernel.org, linux-scsi@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH 4/5] scsi: dt-bindings: ufs: qcom: Fix sm8450 clocks
-Message-ID: <20230623201230.GA1022063-robh@kernel.org>
-References: <20230623113009.2512206-1-abel.vesa@linaro.org>
- <20230623113009.2512206-5-abel.vesa@linaro.org>
- <168752288418.27031.1090471926569361855.robh@kernel.org>
+        Fri, 23 Jun 2023 16:14:50 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D152721;
+        Fri, 23 Jun 2023 13:14:48 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 01A583EBA4;
+        Fri, 23 Jun 2023 22:14:45 +0200 (CEST)
+Date:   Fri, 23 Jun 2023 22:14:44 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>
+Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for
+ DSI command mode
+Message-ID: <daqhyz4rtgdxthsezmgk6t2egbdsvzsdy3cihrqrhyveoqbizi@etq2tafkucg2>
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+ <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
+ <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
+ <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
+ <xrqiat4otnfwtss6zwubh77qx3frdyi77flna2xljzycvr6r2v@riimvmhoondt>
+ <654ccc4c-40c2-bef6-9f47-847216e16cb0@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <168752288418.27031.1090471926569361855.robh@kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+In-Reply-To: <654ccc4c-40c2-bef6-9f47-847216e16cb0@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,32 +53,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 23, 2023 at 06:21:24AM -0600, Rob Herring wrote:
+On 2023-06-23 10:29:51, Abhinav Kumar wrote:
+<snip>
+> The concept is quite simple
 > 
-> On Fri, 23 Jun 2023 14:30:08 +0300, Abel Vesa wrote:
-> > The sm8450 has an ICE clock, so move the compatible to the proper
-> > clocks check.
-> > 
-> > Fixes: 462c5c0aa798 ("dt-bindings: ufs: qcom,ufs: convert to dtschema")
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
+> one pixel per clock for uncompresssed without widebubus
 > 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 2 pixels per clock for uncompressed with widebus (only enabled for DP 
+> not DSI)
 > 
-> yamllint warnings/errors:
+> 3 bytes worth of data for compressed without widebus
 > 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clocks: [[4294967295, 151], [4294967295, 10], [4294967295, 150], [4294967295, 166], [4294967295, 0], [4294967295, 164], [4294967295, 160], [4294967295, 162]] is too short
-> 	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: clock-names: ['core_clk', 'bus_aggr_clk', 'iface_clk', 'core_clk_unipro', 'ref_clk', 'tx_lane0_sync_clk', 'rx_lane0_sync_clk', 'rx_lane1_sync_clk'] is too short
-> 	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: reg: [[0, 30949376, 0, 12288]] is too short
-> 	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+> 6 bytes worth of data for compressed with widebus
+> 
+> When compression happens, we cannot quantify with pixels as the boundary 
+> is not defined with respect to bytes.
+> 
+> You brought up uncompressed in your below comment so I assumed your 
+> question of /2 was about uncompressed too.
 
-Looks like patch 1 didn't apply for me and would fix this.
+No clue where things are going wrong, but you either avoid or
+misunderstand the question.
 
-Rob
+(Talking exclusively about compressed data here!)
+
+pclk is determined based on the number of bytes.
+
+When widebus is enabled, we transfer twice as many bytes per pclk cycle.
+
+Can pclk be reduced by a factor two, as that should still be enough to
+transfer the same amount of bytes when widebus is enabled?
+
+> >> We tried our best to respond and explain to all your queries both on the
+> >> bug and the patch but i guess it just kept coming :)
+> > 
+> > Then send less patches!  As long as there is activity on the mailing
+> > list there'll always be questions going back and forth, and I don't
+> > think that's unreasonable.
+> > 
+> > Unless you want to push patches into mainline without questioning.
+> > 
+> 
+> the comments were bordering the line of becoming irrelevant to the 
+> patches like discussing video mode on a command mode patch when we had 
+> explained many many times that we did not validate them.
+
+You(r team) came up with irrelevant video-mode checks in these patches,
+and you keep bringing up topics that I did not mention (such as
+suddently talking about uncompressed formats above).  Stop pretending
+there's any nefarious intent here unless you intend to push external
+contributors away.
+
+> I dont want to add more comments to this. Lets stop discussing this and 
+> focus more on this patch.
+
+Perhaps if you answer the question?
+
+- Marijn
