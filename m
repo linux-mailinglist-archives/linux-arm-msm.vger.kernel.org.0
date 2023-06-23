@@ -2,228 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B88673B95C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 16:07:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 263A673B9C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 16:18:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229958AbjFWOHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 10:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42386 "EHLO
+        id S231952AbjFWOSe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 10:18:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230237AbjFWOHM (ORCPT
+        with ESMTP id S231723AbjFWOSd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 10:07:12 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36F32689
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:07:09 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-bfe97b3752bso578104276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687529229; x=1690121229;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RiTsI118hafq6i7nvtRJQvtGzINzF3YoXOeY8ZJPq3A=;
-        b=I73lpsaBMc0XCR6IVKEAqO9BTMv4WIAHysjUU3hEuxBO4wItAaE29RcseaPW/qLmtU
-         D9OArOCZ/fjcEvxjmKeKeaPMmD6sElsbLNWBrYGtUywFe0Za4UsOHARyAp3MVTaKdD4L
-         ZV9ZzOYlc17QmrRTHaTAoQRA7VHCC6s3y2qQEbC/NRfuliJE7c87Bw/xJKI/1Ng4hm11
-         +U5VbUst/Rn/5yv0zI2mKrSk3pYz9lTU32a0udN5aPcqX3nlFUbAq4ZAPIK5BfU0Mrhh
-         8QTMmTSTsBxuHP3kVnpl+7Kv+G586s84HV3y8bRulyMIvAA4Di+neNPL9jEpNjwDl5CN
-         mz4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687529229; x=1690121229;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RiTsI118hafq6i7nvtRJQvtGzINzF3YoXOeY8ZJPq3A=;
-        b=ZPBHX1cROPw23Tnnb5cnlJtBC9wOqENGFN2dbqDHIHwQK+vyv50F5q+Nkjq3w/fGp5
-         dLYFs1r2gSoxmEVcXXvF5Ffr4oECgJXqAahswPywELhy+U0kUEOzD4ZPppoM7KISJ/jc
-         JZ+eL484fKzdGbkT1SYwJek+kx51QF/7D8EDgZeZLAeT8AXFLQOC4GRjXgjS4BcxsnrK
-         FY6QODiDL0xfpf3tj0kosIWHGa93nIxTC4RqP23EH/5EQ6m9gX9gOu28M5ZuLV1qyLdy
-         /GSTig4la2oigtw0jSPOecUnzMMvPq8cpghtA8/5lQvIoyDf1PWNubnmt7+hdIN9s3zY
-         JIGQ==
-X-Gm-Message-State: AC+VfDxXL0rExjorqs42kvwh5lNgGhHTpYjcdcXIHbme/K9scST3nx+p
-        RCOuPM7BacrOBT3T3Qwa4o8j3ZLMmlC0/TrEE1rmdw==
-X-Google-Smtp-Source: ACHHUZ5jvJ6GmqvtQsOQTLLuQkFQ6bbuFf78sByUgFT/7MU80lXUpNxJtuz6gFslpjENxjQ4EgbwL15CIaoB/AnF1DQ=
-X-Received: by 2002:a25:4183:0:b0:bcc:571d:a300 with SMTP id
- o125-20020a254183000000b00bcc571da300mr15312465yba.20.1687529229088; Fri, 23
- Jun 2023 07:07:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230616104941.921555-1-quic_imrashai@quicinc.com>
- <20230616104941.921555-3-quic_imrashai@quicinc.com> <acc8d1e4-e899-2ea4-947f-2bdcef7b7263@linaro.org>
- <66da39ad-33bf-2de8-949d-9f2f93e915e3@quicinc.com>
-In-Reply-To: <66da39ad-33bf-2de8-949d-9f2f93e915e3@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 23 Jun 2023 17:06:57 +0300
-Message-ID: <CAA8EJpqynBfuoxnVMc5yG9qYgZO3sKMssjAz-REt2umYqe2_8w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-qdu1000: Update GCC clocks and add
- support for GDSCs
-To:     Imran Shaik <quic_imrashai@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 23 Jun 2023 10:18:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19D1F10D;
+        Fri, 23 Jun 2023 07:18:32 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NDLkhm031167;
+        Fri, 23 Jun 2023 14:18:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Wi4cFQk9or+XQgY+OqPrYSjSZ0nwiMpRcfaUZ70Ofm8=;
+ b=NM3IN8ljpDS/Ow2Enc0hTl1LrOE77tY0PZXmW7j2OsDcp1KWuHYZebKqCTFWxThBaVlX
+ vKApvRt1DQLLlL3OyDCkJxTg9W15fRJgcNfg4C9E5TC9ETpJi1YzQr6HfQ58zFp1wGa9
+ 2lKiFrUcMxqemIpPvk399DSeGFygisJFGifY4MnuYDAasjsSncFWZrWN059fk7h6XLnq
+ +GxSTU0OL3U99UAtShT/1IytwU7YiMkSrUtLPeEt+dmReGd7hXSHmsBjIdmrNqqWJOJW
+ DUiTmypXjR08tSP0crb+SjSFgB3+BBVXjExkU1YPWKrkNFN2EqoT0d/hHK7DONsYwtyl /g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcw93hnbq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 14:18:28 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NEIRPT013190
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 14:18:27 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 23 Jun 2023 07:18:23 -0700
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Komal-Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH v4 0/6] soc: qcom: llcc: Add support for QDU1000/QRU1000
+Date:   Fri, 23 Jun 2023 19:48:00 +0530
+Message-ID: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.40.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4dTuosr0_9od_NxDsUUb8p2XaNbDUe8Y
+X-Proofpoint-ORIG-GUID: 4dTuosr0_9od_NxDsUUb8p2XaNbDUe8Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_08,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306230130
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 23 Jun 2023 at 13:08, Imran Shaik <quic_imrashai@quicinc.com> wrote:
->
->
->
-> On 6/16/2023 4:50 PM, Dmitry Baryshkov wrote:
-> > On 16/06/2023 13:49, Imran Shaik wrote:
-> >> Update the GCC clocks and add support for GDSCs for QDU1000 and
-> >> QRU1000 SoCs. While at it, fix the PCIe pipe clock handling and
-> >> add support for v2 variant.
-> >
-> > Please split this into individual chunks instead of squashing everything
-> > together. For each change please describe the logic behind the change in
-> > the commit message. Please describe why, not what is changed.
-> >
->
-> Sure, will split this patch and post the next series.
->
-> >>
-> >> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> >> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-> >
-> > This doesn't look fully logical. Who is the author of the patch? If
-> > there are two authors, please add Co-developed-by tag.
-> >
->
-> Yes, will use Co-developed-by tag in the next patch series.
->
-> >> ---
-> >>   drivers/clk/qcom/gcc-qdu1000.c | 162 ++++++++++++++++++++++-----------
-> >>   1 file changed, 110 insertions(+), 52 deletions(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/gcc-qdu1000.c
-> >> b/drivers/clk/qcom/gcc-qdu1000.c
-> >> index 5051769ad90c..5d8125c0eacc 100644
-> >> --- a/drivers/clk/qcom/gcc-qdu1000.c
-> >> +++ b/drivers/clk/qcom/gcc-qdu1000.c
-> >> @@ -1,6 +1,6 @@
-> >>   // SPDX-License-Identifier: GPL-2.0-only
-> >>   /*
-> >> - * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights
-> >> reserved.
-> >> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All
-> >> rights reserved.
-> >>    */
-> >>   #include <linux/clk-provider.h>
-> >> @@ -17,6 +17,7 @@
-> >>   #include "clk-regmap-divider.h"
-> >>   #include "clk-regmap-mux.h"
-> >>   #include "clk-regmap-phy-mux.h"
-> >> +#include "gdsc.h"
-> >>   #include "reset.h"
-> >>   enum {
-> >> @@ -370,16 +371,6 @@ static const struct clk_parent_data
-> >> gcc_parent_data_6[] = {
-> >>       { .index = DT_TCXO_IDX },
-> >>   };
-> >> -static const struct parent_map gcc_parent_map_7[] = {
-> >> -    { P_PCIE_0_PIPE_CLK, 0 },
-> >> -    { P_BI_TCXO, 2 },
-> >> -};
-> >> -
-> >> -static const struct clk_parent_data gcc_parent_data_7[] = {
-> >> -    { .index = DT_PCIE_0_PIPE_CLK_IDX },
-> >> -    { .index = DT_TCXO_IDX },
-> >> -};
-> >> -
-> >>   static const struct parent_map gcc_parent_map_8[] = {
-> >>       { P_BI_TCXO, 0 },
-> >>       { P_GCC_GPLL0_OUT_MAIN, 1 },
-> >> @@ -439,16 +430,15 @@ static struct clk_regmap_mux
-> >> gcc_pcie_0_phy_aux_clk_src = {
-> >>       },
-> >>   };
-> >> -static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
-> >> +static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
-> >>       .reg = 0x9d064,
-> >> -    .shift = 0,
-> >> -    .width = 2,
-> >> -    .parent_map = gcc_parent_map_7,
-> >>       .clkr = {
-> >>           .hw.init = &(const struct clk_init_data) {
-> >>               .name = "gcc_pcie_0_pipe_clk_src",
-> >> -            .parent_data = gcc_parent_data_7,
-> >> -            .num_parents = ARRAY_SIZE(gcc_parent_data_7),
-> >> +            .parent_data = &(const struct clk_parent_data){
-> >> +                .index = DT_PCIE_0_PIPE_CLK_IDX,
-> >> +            },
-> >> +            .num_parents = 1,
-> >>               .ops = &clk_regmap_phy_mux_ops,
-> >>           },
-> >>       },
-> >> @@ -485,7 +475,7 @@ static struct clk_rcg2
-> >> gcc_aggre_noc_ecpri_dma_clk_src = {
-> >>           .name = "gcc_aggre_noc_ecpri_dma_clk_src",
-> >>           .parent_data = gcc_parent_data_4,
-> >>           .num_parents = ARRAY_SIZE(gcc_parent_data_4),
-> >> -        .ops = &clk_rcg2_ops,
-> >> +        .ops = &clk_rcg2_shared_ops,
-> >>       },
-> >>   };
-> >> @@ -505,7 +495,7 @@ static struct clk_rcg2
-> >> gcc_aggre_noc_ecpri_gsi_clk_src = {
-> >>           .name = "gcc_aggre_noc_ecpri_gsi_clk_src",
-> >>           .parent_data = gcc_parent_data_5,
-> >>           .num_parents = ARRAY_SIZE(gcc_parent_data_5),
-> >> -        .ops = &clk_rcg2_ops,
-> >> +        .ops = &clk_rcg2_shared_ops,
-> >
-> > This is probably some kind of NoC or NIU clock. If it is not to be
-> > touched by Linux, the recent clk_rcg2_ro_ops patch looks promising here.
-> >
->
-> This is not a NoC or NIU clock and Linux will use this clock.
+From: Komal-Bajaj <quic_kbajaj@quicinc.com>
 
-The clock name ("gcc_aggre_noc_ecpri_gsi_clk_src") seems to disagree with you.
+This patch series does the following -
+ * Add secure qfprom driver for reading secure fuse region in qfprom driver
+ * Add dt-bindings for secure qfprom
+ * Refactor LLCC driver to support multiple configuration
+ * Add support for multi channel DDR configuration in LLCC
+ * Add LLCC support for the Qualcomm QDU1000 and QRU1000 SoCs
 
-> >>       },
-> >>   };
-> >> @@ -524,7 +514,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
-> >>           .name = "gcc_gp1_clk_src",
-> >>           .parent_data = gcc_parent_data_1,
-> >>           .num_parents = ARRAY_SIZE(gcc_parent_data_1),
-> >> -        .ops = &clk_rcg2_ops,
-> >> +        .ops = &clk_rcg2_shared_ops,
-> >
-> > But why? GP clocks are not shared.
-> > The 'why?' question applies to all such changes. As I wrote, please
-> > split & describe the reason.
-> >
->
-> We want to park all the RCGs at safe clock source (XO) during disable.
-> Hence using the clk_rcg2_shared_ops for all the RCGs.
->
-> Will split and post the next patch series.
+Changes in v4 -
+ - Created a separate driver for reading from secure fuse region as suggested.
+ - Added patch for dt-bindings of secure qfprom driver accordingly.
+ - Added new properties in the dt-bindings for LLCC. 
+ - Implemented new logic to read the nvmem cell as suggested by Bjorn.
+ - Separating the DT patches from this series as per suggestion.
 
-For this (and for all other changes) please describe the reason behind
-the change in the commit message.
-For example, for GP clocks there seems to be no reason to park them.
-On other platforms it was perfectly fine to disable them instead.
+Changes in v3-
+ - Addressed comments from Krzysztof and Mani.
+ - Using qfprom to read DDR configuration from feature register.
 
+Changes in v2:
+  - Addressing comments from Konrad.
+
+Komal Bajaj (6):
+  dt-bindings: nvmem: sec-qfprom: Add bindings for secure qfprom
+  dt-bindings: cache: qcom,llcc: Add LLCC compatible for QDU1000/QRU1000
+  nvmem: sec-qfprom: Add Qualcomm secure QFPROM support.
+  soc: qcom: llcc: Refactor llcc driver to support multiple
+    configuration
+  soc: qcom: Add LLCC support for multi channel DDR
+  soc: qcom: llcc: Add QDU1000 and QRU1000 LLCC support
+
+ .../devicetree/bindings/cache/qcom,llcc.yaml  |  10 +
+ .../bindings/nvmem/qcom,sec-qfprom.yaml       |  58 ++++
+ drivers/nvmem/Kconfig                         |  12 +
+ drivers/nvmem/Makefile                        |   2 +
+ drivers/nvmem/sec-qfprom.c                    | 116 +++++++
+ drivers/soc/qcom/Kconfig                      |   2 +
+ drivers/soc/qcom/llcc-qcom.c                  | 304 +++++++++++++-----
+ include/linux/soc/qcom/llcc-qcom.h            |   2 +-
+ 8 files changed, 416 insertions(+), 90 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+ create mode 100644 drivers/nvmem/sec-qfprom.c
 
 -- 
-With best wishes
-Dmitry
+2.40.1
+
