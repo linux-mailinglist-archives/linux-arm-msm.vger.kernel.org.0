@@ -2,164 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E89B873BE7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 20:35:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CC8373BEA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 20:58:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbjFWSfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 14:35:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46690 "EHLO
+        id S230203AbjFWS6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 14:58:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231769AbjFWSfR (ORCPT
+        with ESMTP id S229644AbjFWS6v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 14:35:17 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA5D3272D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 11:34:53 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-98bcc533490so104678866b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 11:34:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1687545259; x=1690137259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R2nFjoCVagpUQnGTY4TyMi8H++398zSsVgy7rwLSo8s=;
-        b=jID0+Pwz0b/F80mb0EdE7kWEB/69edmTvKggTgsQsih20rOc9r1Tny7KF7oMqZuiYb
-         fJLr/VhLCBkNSZLIP2LhxVv4OFwlPwQBV2CoDiiVORbeiWX+brBYXOmJshB0bsM7un4h
-         x3sQddxxXgQ0nI6UxKqtSYEsMs0hlpe2bVx0k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687545259; x=1690137259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R2nFjoCVagpUQnGTY4TyMi8H++398zSsVgy7rwLSo8s=;
-        b=fcnkMrU7RpYs54XLU+QrPPuYt9BvE4zw5L+1yIayOo5ZXzKhoRbq1uOaBrJ+MgJZMe
-         z3R1KUmv7NBhNcl9OEOmy6FTivByrZICHzjJtWZmr0rdUTx/5Xa2YDDKJGyyhuPXNMYQ
-         UXHfLnkJr7lPGTKNXu7gGWhyWLiANgA4wCTL7jxYPtI98X924NAUYBgAx5YQWaOdbvpr
-         ZcAWqxR5WQFqSqMecTVYArQGV/EmMwzk5UzIKHchgkV/0qlx9pt0j4MD21tJ857Eqkmr
-         YZdjm+mVuadRVlreuNIlbFgkxtHfCAytBxWRImfPyOtd4UdopmNVB7FJoDhFDz7X8NHc
-         tI2g==
-X-Gm-Message-State: AC+VfDyqsjscrJGjaomjMhwti4rc1NRe0vo0f4LztNM/ridinXIfgw1o
-        SklbrVa2WHOtWWiRZJpD18x4fmepwP1Lb/DTgQZ3ow==
-X-Google-Smtp-Source: ACHHUZ7ROem0frNU0tXNDRr4SdeyfjH/c7PphKkd8GLIn3ZZPWsJZUeG7tIYJoSrZu/Yg5YgmqBxlw==
-X-Received: by 2002:a17:907:3e88:b0:97d:cdf4:719f with SMTP id hs8-20020a1709073e8800b0097dcdf4719fmr21356341ejc.68.1687545258942;
-        Fri, 23 Jun 2023 11:34:18 -0700 (PDT)
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com. [209.85.208.45])
-        by smtp.gmail.com with ESMTPSA id u9-20020a170906068900b00988ca8b175dsm6317601ejb.119.2023.06.23.11.34.16
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 11:34:17 -0700 (PDT)
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-516500163b2so1174a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 11:34:16 -0700 (PDT)
-X-Received: by 2002:a50:9f89:0:b0:506:b280:4993 with SMTP id
- c9-20020a509f89000000b00506b2804993mr2667edf.2.1687545256551; Fri, 23 Jun
- 2023 11:34:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
- <20230617171541.286957-9-krzysztof.kozlowski@linaro.org> <29f6fb78-c122-2b71-61b8-2dc9aa27ad1d@linaro.org>
-In-Reply-To: <29f6fb78-c122-2b71-61b8-2dc9aa27ad1d@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 23 Jun 2023 11:34:04 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UMqrAU9cLy3Ew5o1MJyNDAAG2TY1mvMkY2-8kiw6qpjg@mail.gmail.com>
-Message-ID: <CAD=FV=UMqrAU9cLy3Ew5o1MJyNDAAG2TY1mvMkY2-8kiw6qpjg@mail.gmail.com>
-Subject: Re: [PATCH 09/15] arm64: dts: qcom: sc7280-crd: add dummy Bluetooth
- VDDIO supply
+        Fri, 23 Jun 2023 14:58:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C73491FCE;
+        Fri, 23 Jun 2023 11:58:49 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NHScY6006660;
+        Fri, 23 Jun 2023 18:58:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=nn4S/UTExuHhumcH/0O3TdCgnEhlwonUpMWQlXPcsag=;
+ b=AuRGSPZ1kIgbVyuyxgz0P+l7O+Oo4P7hSzK03DGA3UflttuuNxQhqGy4nidfuIuKbdaV
+ 4WSE9ffYQK/LzQAY9F6d/HuGVwienKigANDMVw7sk3zjKjpW3VvdRYimg3wDHNJ6iim3
+ ilqrcnAUNAfNJoDTydFhlj0cntwP3nASmrHdvL1zBLhMnDItMdX5GwSdAxONiUAy84fw
+ vm//efnHxHnQIp1M5H+BCDRkjiYx6vGzFcmvjqmtcxR4XLI0X8oaeavKU7acYKkxKt85
+ n6Acb9DnoUCpE3IPONRZMGpXNyWQnJ158VYVRXhFuf+voOxmzhX7bwF/Y8RK86/91Ajf TQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcju849gv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 18:58:17 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NIwGA1007065
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 18:58:16 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 23 Jun 2023 11:58:15 -0700
+Date:   Fri, 23 Jun 2023 11:58:14 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Nikita Travkin <nikita@trvn.ru>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+CC:     <neil.armstrong@linaro.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Mike Tipton <mdtipton@codeaurora.org>,
+        "Mike Tipton" <quic_mdtipton@quicinc.com>
+Subject: Re: [PATCH v2 0/4] interconnect: qcom: rpmh: sm8550: mask to send as
+ vote
+Message-ID: <20230623185814.GA1775967@hu-bjorande-lv.qualcomm.com>
+References: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
+ <5b68b9ba-157b-067c-3926-9c5ecfecc311@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <5b68b9ba-157b-067c-3926-9c5ecfecc311@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: F3a5MqwWTQUBSzATLVutSExqQXBtZ2A_
+X-Proofpoint-GUID: F3a5MqwWTQUBSzATLVutSExqQXBtZ2A_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_10,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ clxscore=1011 phishscore=0 suspectscore=0 mlxlogscore=999
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306230169
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Jun 19, 2023 at 6:14=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> On 17.06.2023 19:15, Krzysztof Kozlowski wrote:
-> > Bluetooth requires VDDIO supply.  Due to lack of schematics provide
-> > something dummy to satisfy `dtbs_check`:
-> >
-> >   sc7280-crd-r3.dtb: bluetooth: 'vddio-supply' is a required property
-> >
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Fri, Jun 23, 2023 at 03:58:09PM +0200, Konrad Dybcio wrote:
+> On 23.06.2023 14:50, neil.armstrong@linaro.org wrote:
+> > On the SM8550 SoC, some nodes requires a specific bit mark
+> > instead of a bandwidth when voting.
+> > 
+> > Add an enable_mask variable to be used instead of bandwidth.
+> > 
+> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > > ---
-> For this:
->
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->
-> +CC Doug to perhaps fix this properly (though I think we should have got
-> it through the cros list anyway)
->
+> After reviewing this patchset and taking a peek at older downstream,
+> it looks like ACV should be using 0x8 bmask on *all RPMh SoCs*.
+> 
+> It's worth noting however, that 8350's downstream (the first msm
+> kernel using the icc framework) did not incorporate that change.
+> Not sure if intentionally or not. Probably not. Might be worth to
+> poke Qcom to backport it in such case. If 8350 is still supported.
+> Probably not.
+> 
+
+Your observation is correct.
+
+But, note further that command db reports ACV to have data-width of 0,
+resulting in the numerator, and thereby vote_x and vote_y always being
+0.
+
+This is downstream worked around by:
+https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/4d2818084015df1e05274ebcc5a0d21e6d256f93
+
+Which should cause vote_x and vote_y to be non-zero. However without
+this series (and enable_mask defined for ACV on all platforms) the votes
+placed in the BCM would then be garbage...
+
+
+
+That said, unless I'm missing something the math involved here is
+unnecessary.For BCMs with enable_mask, if for any node sum_avg[bucket]
+or max_peak[bucket] is non-zero then the calculated vote_x and vote_y
+comes out non-zero and we write the mask, otherwise 0.
+
+Rewritten to avoid all the unnecessary multiplication and divisions, we
+wouldn't care about the unit or width and thereby don't need above
+referenced patch.
+
+
+A further tangent here is that a BCM with enable_mask != BIT(0) but
+keepalive set, a 0-bandwidth vote in AMC would result in an invalid
+(undefined?) BCM value being written out in the snippet below the loop.
+
+> Check out these snippets:
+> 
+> https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L556-567
+> 
+> https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L475-495
+> 
+> Notice how acv is never updated beyond effectively setting =0 or =bmask,
+> perhaps Qualcomm never implemented something else..
+> 
+> Since this series is fine as-is, I'd be happy to see an incremental one.
+> Reported-by would be cool as well :D
+
+I agree, let's get this merged, backported to stable, and then fix ACV
+handling in a follow up commit (which doesn't necessarily need to hit
+stable).
+
+You should have a Jira card for this one already, but I don't mind
+sharing the Reported-by with you ;)
+
+Regards,
+Bjorn
+
+> 
 > Konrad
-> >  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts | 11 +++++++++++
-> >  1 file changed, 11 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/bo=
-ot/dts/qcom/sc7280-crd-r3.dts
-> > index afae7f46b050..b1aa5b0ee95c 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
-> > @@ -24,6 +24,13 @@ aliases {
-> >       chosen {
-> >               stdout-path =3D "serial0:115200n8";
-> >       };
-> > +
-> > +     bt_vddio: regulator-bt-vddio {
-> > +             compatible =3D "regulator-fixed";
-> > +             regulator-name =3D "bt-vddio";
-> > +             regulator-min-microvolt =3D <1800000>;
-> > +             regulator-max-microvolt =3D <1800000>;
-> > +     };
-> >  };
-> >
-> >  &apps_rsc {
-> > @@ -38,6 +45,10 @@ vreg_s1k_1p0: smps1 {
-> >       };
-> >  };
-> >
-> > +&bluetooth {
-> > +     vddio-supply =3D <&bt_vddio>;
-> > +};
-> > +
-
-I would have a hard time believing that the more correct fix wouldn't be:
-
-vddio-supply =3D <&vreg_l18b_1p8>;
-
-Specifically L18B is what we have on the newer CRD (the one that is
-considered a "herobrine" and includes Qcard) and also IDP2. In terms
-of timeline / similarities, CRD-rev3 falls in between IDP2 and newer
-CRD. These both agree on L18B. The only board that uses something
-different (L19B) is the very old IDP1.
-
-That being said, Qualcomm has never provided (at least to me)
-schematics for any given reference board. Whenever asked, I was always
-pointed at schematics that were said to be "close enough". Thus, I
-can't really give a definitive answer here. Even so, pointing at L18B
-seems to me to be 99% likely to be correct.
-
-If anyone reading actually has schematics, I think you can just look
-at what goes to the pad labelled "VDDPX_3". The datasheet I have shows
-that as "Pad group 3 (most peripherals)". If nothing else, that powers
-the pins connected to the UART that Bluetooth uses (along with a whole
-pile of other things in the system).
-
-
--Doug
+> > Changes in v2:
+> > - Took downstream patch for patch 1
+> > - Added konrad's reviewed tag
+> > - Added changes for sm8450 and sa8775p
+> > - Link to v1: https://lore.kernel.org/r/20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-0-66663c0aa592@linaro.org
+> > 
+> > ---
+> > Mike Tipton (1):
+> >       interconnect: qcom: Add support for mask-based BCMs
+> > 
+> > Neil Armstrong (3):
+> >       interconnect: qcom: sm8450: add enable_mask for bcm nodes
+> >       interconnect: qcom: sm8550: add enable_mask for bcm nodes
+> >       interconnect: qcom: sa8775p: add enable_mask for bcm nodes
+> > 
+> >  drivers/interconnect/qcom/bcm-voter.c |  5 +++++
+> >  drivers/interconnect/qcom/icc-rpmh.h  |  2 ++
+> >  drivers/interconnect/qcom/sa8775p.c   |  1 +
+> >  drivers/interconnect/qcom/sm8450.c    |  9 +++++++++
+> >  drivers/interconnect/qcom/sm8550.c    | 17 +++++++++++++++++
+> >  5 files changed, 34 insertions(+)
+> > ---
+> > base-commit: 47045630bc409ce6606d97b790895210dd1d517d
+> > change-id: 20230619-topic-sm8550-upstream-interconnect-mask-vote-96aa20355158
+> > 
+> > Best regards,
