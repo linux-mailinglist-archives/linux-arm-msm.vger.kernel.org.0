@@ -2,88 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CA5973B76C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 14:35:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D45773B78A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 14:38:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230044AbjFWMfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 08:35:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55654 "EHLO
+        id S231582AbjFWMiS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 08:38:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbjFWMfA (ORCPT
+        with ESMTP id S231627AbjFWMiP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 08:35:00 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94381FCE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:34:49 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fa70ec8d17so16899135e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:34:49 -0700 (PDT)
+        Fri, 23 Jun 2023 08:38:15 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88FD1213A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:38:06 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-98934f000a5so63080466b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 05:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687523688; x=1690115688;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j1yZaWJGe9IcIKWNFpQUcAmfs5rS4cwacSwQxYTHl74=;
-        b=GqNLDhDRTN6ok7PjO865yX7X3mT/Pb35GyUvaH6DePu01cUCOMxDbFwXI3LW/EoYZ3
-         pKYniy2LaU83C7AdOUrghfd89pQbqxU1zh0i1yHzgKLFYzK9i8jYT+YsB0KG8DE/DA10
-         pWOMsGunZ7GTpdNRQewlPEH4WyUnv9j4sedqUhKncv+1wI+5FEZq6EaOvwPpvoAkF1us
-         gIkMZFR1pnCg1/YPb+wXpEuFTnMpi9cxC9JaR+sA0BwCRDfu45CeOws0/ma0Uohzxs4w
-         nq0kLPupebWozyr4gM94xrPp8zeCX/DjwEri5XVVtJTneRCF+2U3EKDOABXRTiHoiYb8
-         uWSg==
+        d=fairphone.com; s=fair; t=1687523885; x=1690115885;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pYc9Y8Fk+9JanmEhEnHaiaBpMkiE5E4zckC1jKCp3JI=;
+        b=jTgYOyaAjpoo8Mcnnx0WQTeFsoAmeb/wJWjvW/uLF3NxAr5hORXlIS5clrheKakDCQ
+         QUDYNxTqJyaRvkFKYCQH6DaIFcHre9Bn/4M1WDmI3Tz9RZWY+ZNSAdsTGuWCiXWmfnjs
+         kfBp7EuhmbcjR0E2nMIiOvM3i1mdQhV5x9EBqLOJJZiYIfqyhvLtd0biBO77K6Gn0/7Z
+         +8eBxWacql+/teWnCb6Px268OENyc3W8t4WNUX1ww+tTX7X2C9fMvgnxwm2XKn/0Idwj
+         Trmz92DVC1nGoNj1Sf/RQJrw7pv4EygiSJVOz3KgNj0Iac94MFFTF6lmLblZa2ZYN0i8
+         vFVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687523688; x=1690115688;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j1yZaWJGe9IcIKWNFpQUcAmfs5rS4cwacSwQxYTHl74=;
-        b=QK6BZUelzsKNq3vN80eUzk1Acm+xt2NlrG5GOb1AFW/vq3pGsfRont27rfeOjNmAvu
-         nUzcHMCMujINSds9uwTteUeYVTbGa/oFf9gQMFjUm3vvm6E7g4LeYDhmzHlt7U5+czTG
-         2DMBU3HukmkaxPzSyIpDWzgPH2UVcWDz6IBZiP+zmx+IQDKHxrRM6Wd1VAGhazCFPaGq
-         V7itBsrRVIr7QFASks2PNM68yaL/URW1/2wD8t+KhFb3+A118p4qGyTWbXWQ36of1UcD
-         ZrvmlcgmfHHG6/6+tW+ScpRe3yL7Ey7f4NilsRr+zAfraN845h4snhmQG5MREZVkoQkQ
-         g7Qg==
-X-Gm-Message-State: AC+VfDzrUL2YXJLgJ0f1fvK0srmmQ1cykuV6gAmsGBHILgjy4gJrc4kc
-        e6RtuGtGmQuGWAcQK0kZBaVFaw==
-X-Google-Smtp-Source: ACHHUZ5yeHlhiQmXZLa1mYovHiOgvXzYqqfZRMhfDDvQP9zdkIqqawnzDkpqqWGh/UDGyzaIZZcDsg==
-X-Received: by 2002:a05:600c:861a:b0:3fa:77b0:263d with SMTP id ha26-20020a05600c861a00b003fa77b0263dmr3876640wmb.14.1687523688208;
-        Fri, 23 Jun 2023 05:34:48 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id t23-20020a7bc3d7000000b003f9b0f640b1sm2250520wmj.22.2023.06.23.05.34.46
+        d=1e100.net; s=20221208; t=1687523885; x=1690115885;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pYc9Y8Fk+9JanmEhEnHaiaBpMkiE5E4zckC1jKCp3JI=;
+        b=RFpPfBLnScmyqdvnHFI8ufA0FCBF/D/ZihTerVJyj3UOKFvDR9gOtSPFWox55FcdnJ
+         qlHowSTnK58WDtHeeXnhyOarsQhgnbUwB6AU4ivrJvreMg6HYeq5XCHsA0SittSiPF4X
+         k/dvplelglurqqIgXUMlQTuffTs+V0Na7ZWy5Q/TlOeoq25cVd9jRQufJ8cLtCQ0WFW0
+         TpTDqzHcTKBK+0vnAYF6sR7noAOfEbfTY1dvouXlFZRTwOSlFFAV48Y0TaPAybDNuSAL
+         QZvbuCzO+NVdDP/9R7hVwCSvIZIFZYrniQdI4mV78dEfYtvcPUqXjifett/ox4XOq0ve
+         uLyw==
+X-Gm-Message-State: AC+VfDxjbbCedISFms/RdSLvDIwxJWuZ296JM4CL9aS6PA4cgqgqxcJM
+        pVpEpoveeKKY4qHgdYAIgzoO7A==
+X-Google-Smtp-Source: ACHHUZ6/T6ZvEX84bh2OjD7TKv4ueJqlqSL0QOFwrlvlM/U3oeVXKQGNI/jpfhtNnyAHk0yddxh/CA==
+X-Received: by 2002:a17:907:6095:b0:989:1cc5:24a with SMTP id ht21-20020a170907609500b009891cc5024amr10643271ejc.13.1687523884866;
+        Fri, 23 Jun 2023 05:38:04 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id p16-20020a170906141000b0096f937b0d3esm5930041ejc.3.2023.06.23.05.38.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 05:34:47 -0700 (PDT)
-Message-ID: <472d7c85-2b73-aa7d-b060-5a1a87580f15@linaro.org>
-Date:   Fri, 23 Jun 2023 14:34:45 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 2/5] scsi: dt-bindings: ufs: qcom: Add compatible for
- sm6115 and sm6125
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Lux Aliaga <they@mint.lgbt>,
-        Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20230623113009.2512206-1-abel.vesa@linaro.org>
- <20230623113009.2512206-3-abel.vesa@linaro.org>
- <1e66ae2e-d88d-7c7f-a42f-e4ba17fd254e@linaro.org>
-In-Reply-To: <1e66ae2e-d88d-7c7f-a42f-e4ba17fd254e@linaro.org>
+        Fri, 23 Jun 2023 05:38:04 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Date:   Fri, 23 Jun 2023 14:38:04 +0200
+Message-Id: <CTK1AI4TVYRZ.F77OZB62YYC0@otso>
+Cc:     <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        "Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 5/5] scsi: dt-bindings: ufs: qcom: Fix warning for
+ sdm845 by adding reg-names
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Abel Vesa" <abel.vesa@linaro.org>,
+        "Manivannan Sadhasivam" <mani@kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        "Alim Akhtar" <alim.akhtar@samsung.com>,
+        "Avri Altman" <avri.altman@wdc.com>,
+        "Bart Van Assche" <bvanassche@acm.org>
+X-Mailer: aerc 0.15.1
+References: <20230623113009.2512206-1-abel.vesa@linaro.org>
+ <20230623113009.2512206-6-abel.vesa@linaro.org>
+ <cd84b8c6-fac7-ecef-26be-792a1b04a102@linaro.org>
+In-Reply-To: <cd84b8c6-fac7-ecef-26be-792a1b04a102@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,75 +89,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/06/2023 14:33, Krzysztof Kozlowski wrote:
+On Fri Jun 23, 2023 at 2:31 PM CEST, Krzysztof Kozlowski wrote:
 > On 23/06/2023 13:30, Abel Vesa wrote:
->> Add the compatible string for the UFS on sm6115 and sm6125 platforms.
->>
->> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->> ---
->>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 32 +++++++++++++++++++
->>  1 file changed, 32 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> index bdfa86a0cc98..46f454ec3688 100644
->> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> @@ -29,6 +29,8 @@ properties:
->>            - qcom,sa8775p-ufshc
->>            - qcom,sc8280xp-ufshc
->>            - qcom,sdm845-ufshc
->> +          - qcom,sm6115-ufshc
->> +          - qcom,sm6125-ufshc
->>            - qcom,sm6350-ufshc
->>            - qcom,sm8150-ufshc
->>            - qcom,sm8250-ufshc
->> @@ -163,6 +165,36 @@ allOf:
->>            minItems: 2
->>            maxItems: 2
->>  
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,sm6115-ufshc
->> +              - qcom,sm6125-ufshc
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 8
->> +          maxItems: 8
->> +        clock-names:
->> +          items:
->> +            - const: core_clk
->> +            - const: bus_aggr_clk
->> +            - const: iface_clk
->> +            - const: core_clk_unipro
->> +            - const: ref_clk
->> +            - const: tx_lane0_sync_clk
->> +            - const: rx_lane0_sync_clk
->> +            - const: ice_core_clk
->> +        reg:
->> +          minItems: 2
->> +          maxItems: 2
->> +        reg-names:
->> +          items:
->> +            - const: std
->> +            - const: ice
-> 
-> Same comment about reg-names as for your further patch.
-> 
-> I guess this will supersed the
-> https://lore.kernel.org/all/20221215190404.398788-1-they@mint.lgbt/
-> (because it was abandoned... I keep rebasing this patch for half a year)
-> 
+> > There is a warning on dtbs check for sdm845, amongst other platforms,
+> > about the reg-names being unevaluated. Fix that by adding reg-names to
+> > the clocks and reg properties check for such platforms.
+> >=20
+> > Fixes: 462c5c0aa798 ("dt-bindings: ufs: qcom,ufs: convert to dtschema")
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Docu=
+mentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> > index 0209713d1f88..894b57117314 100644
+> > --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> > +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> > @@ -166,6 +166,10 @@ allOf:
+> >          reg:
+> >            minItems: 2
+> >            maxItems: 2
+> > +        reg-names:
+> > +          items:
+> > +            - const: std
+> > +            - const: ice
+>
+> reg-names looks like a new property, so it should be defined in
+> top-level and just constrained per-variant.
+>
+> Also there was similar approach:
+> https://lore.kernel.org/all/20221209-dt-binding-ufs-v2-2-dc7a04699579@fai=
+rphone.com/
+>
+> but I guess no resends and it can be superseded.
 
-The 6115 is even older - from October:
+Right, the patches got reviews but was never applied... I really need to
+find a strategy to keep track of sent patches until they're applied with
+my work mailbox, it's not the first time that a patch has gotten
+forgotten.
 
-https://lore.kernel.org/all/20221030094258.486428-2-iskren.chernev@gmail.com/
+With my private mailbox I just have a different folder for patches that
+have been sent which I archive once they're applied, but with work GMail
+I don't see how I can easily replicate this since it's also not grouping
+threads properly.
 
-Let's go with your patch, but you anyway need to fix reg-names.
+Also patch 4/5 in this series has an equivalent from me:
+https://lore.kernel.org/all/20221209-dt-binding-ufs-v2-3-dc7a04699579@fairp=
+hone.com/
+^ this might also be preferable since I guess it doesn't break
+dt_binding_check?
 
-Best regards,
-Krzysztof
+Regards
+Luca
+
+>
+> Best regards,
+> Krzysztof
 
