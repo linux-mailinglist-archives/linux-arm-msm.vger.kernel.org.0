@@ -2,89 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8D3173BFED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:35:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69D7F73C0BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:43:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232094AbjFWUfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 16:35:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
+        id S232506AbjFWUnY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 16:43:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232139AbjFWUej (ORCPT
+        with ESMTP id S232369AbjFWUm5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 16:34:39 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 811FB2728;
-        Fri, 23 Jun 2023 13:34:16 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NK17Qa010999;
-        Fri, 23 Jun 2023 20:34:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=9UDnCFpdM4OwJ1V1McJjMa8iTd+WLOlQ/OmL9IFPRLY=;
- b=pGAH6lfF3IeRGi9uK7xgNzIG4pqhl33RqehFTvNfooKAVpEUo3dIAIu2lfyjsfaZw19Z
- T1RJrStH/PPjjsgQj49S53C88keChqfuYbg/ZstleRrtFMAAAppAL3BY2k2QMmV4PSBT
- hw30XqToQpvrlAqhSNEYS8hCLTB8/Z7NiMtVc3EmLaj2+E06FeEwoMA0q/ZqezhNOAnm
- 6GQAAan5GhMiQmcBlgihXK+TfAK8UFOHkUiEVcZ0JaQBZr+nqljFlWgPS6yn/ppHBEP2
- mkkAxfY5rx3eVcMf5rJ856J6y83ykHXYADblqF0Zgp5YTsacCZCIkNEt63jsAsei5MEK jA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdcuurw2f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 20:34:10 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NKY9X0004373
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 20:34:09 GMT
-Received: from [10.110.61.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
- 2023 13:34:07 -0700
-Message-ID: <117d21da-aa44-9439-5d5b-9a9144b53979@quicinc.com>
-Date:   Fri, 23 Jun 2023 13:34:06 -0700
+        Fri, 23 Jun 2023 16:42:57 -0400
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5584B30D8;
+        Fri, 23 Jun 2023 13:42:16 -0700 (PDT)
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-78333585d28so27860739f.1;
+        Fri, 23 Jun 2023 13:42:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687552873; x=1690144873;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kg94xVxU+KBk6JV80YmvR4uIRCIi8Yio8OJz8y0ssbk=;
+        b=J1XjXY1MEHAwAXZnoWli13HnNOgJyV+YHTDPE1gmC/2XzFMYFe/jAkyK86jmu8WfkN
+         wWOTXXj8F6f+1qsqFqAYVPLQBSIbB2bN5GI7mwZLtkjuz1RfwStmOHqLk9XnsplN/LHh
+         em7JQbSjUQMhCGuwPUBHP8VGzyAuix94hQCLlZGV96a+TqjSbHUFK6H70IiGGXwYbpjd
+         4cHSzpLJkhlJ04SGO+Wk9xLeBslzT/zo/4UUIT4oqA6FZEzkebV6zhwRgkUPLn1mkwaC
+         wslITwOEMdZM4UY4lIesG8coF4JILNyrMHPL6Gh1/gvEmkmDMUGv5sRpo/w4Ki7jLpA9
+         OjlA==
+X-Gm-Message-State: AC+VfDwhkCVbBhb5Etxr66kGuvMcfpwxgeupCeqK5IEMzFeUh53PNFhJ
+        MGY302EOHbiImG5jXpxIrg==
+X-Google-Smtp-Source: ACHHUZ4LUHt4NfXfv/satE+F1gFdH3T1avoQDVlD2XXbG2ZJJT/R6HUWYFMBKKHGXAU0Cl+v8ZbCqg==
+X-Received: by 2002:a05:6602:2995:b0:760:f795:ccdf with SMTP id o21-20020a056602299500b00760f795ccdfmr20481712ior.8.1687552873011;
+        Fri, 23 Jun 2023 13:41:13 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id a15-20020a056602208f00b0077e3acd5ea1sm38156ioa.53.2023.06.23.13.41.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jun 2023 13:41:11 -0700 (PDT)
+Received: (nullmailer pid 1083781 invoked by uid 1000);
+        Fri, 23 Jun 2023 20:41:09 -0000
+Date:   Fri, 23 Jun 2023 14:41:09 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Felipe Balbi <balbi@kernel.org>, ahalaney@redhat.com,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        quic_ppratap@quicinc.com,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        quic_harshq@quicinc.com, linux-usb@vger.kernel.org,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        devicetree@vger.kernel.org, Philipp Zabel <p.zabel@pengutronix.de>,
+        quic_shazhuss@quicinc.com, Johan Hovold <johan@kernel.org>,
+        quic_jackp@quicinc.com, linux-kernel@vger.kernel.org,
+        quic_pkondeti@quicinc.com, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH v9 01/10] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SC8280 Multiport
+Message-ID: <168755286916.1083702.6661052967683571256.robh@kernel.org>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-2-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for DSI
- command mode
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
- <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
- <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
- <xrqiat4otnfwtss6zwubh77qx3frdyi77flna2xljzycvr6r2v@riimvmhoondt>
- <654ccc4c-40c2-bef6-9f47-847216e16cb0@quicinc.com>
- <daqhyz4rtgdxthsezmgk6t2egbdsvzsdy3cihrqrhyveoqbizi@etq2tafkucg2>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <daqhyz4rtgdxthsezmgk6t2egbdsvzsdy3cihrqrhyveoqbizi@etq2tafkucg2>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 44jk4GD9bYKowD1H7qB85hyaMzvQxOu_
-X-Proofpoint-ORIG-GUID: 44jk4GD9bYKowD1H7qB85hyaMzvQxOu_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_12,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=718
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- clxscore=1015 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306230184
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230621043628.21485-2-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,80 +79,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 6/23/2023 1:14 PM, Marijn Suijten wrote:
-> On 2023-06-23 10:29:51, Abhinav Kumar wrote:
-> <snip>
->> The concept is quite simple
->>
->> one pixel per clock for uncompresssed without widebubus
->>
->> 2 pixels per clock for uncompressed with widebus (only enabled for DP
->> not DSI)
->>
->> 3 bytes worth of data for compressed without widebus
->>
->> 6 bytes worth of data for compressed with widebus
->>
->> When compression happens, we cannot quantify with pixels as the boundary
->> is not defined with respect to bytes.
->>
->> You brought up uncompressed in your below comment so I assumed your
->> question of /2 was about uncompressed too.
+On Wed, 21 Jun 2023 10:06:19 +0530, Krishna Kurapati wrote:
+> Add the compatible string for SC8280 Multiport USB controller from
+> Qualcomm.
 > 
-> No clue where things are going wrong, but you either avoid or
-> misunderstand the question.
+> There are 4 power event irq interrupts supported by this controller
+> (one for each port of multiport). Added all the 4 as non-optional
+> interrupts for SC8280XP-MP
 > 
-> (Talking exclusively about compressed data here!)
+> Also each port of multiport has one DP and oen DM IRQ. Add all DP/DM
+> IRQ's related to 4 ports of SC8280XP Teritiary controller.
 > 
-> pclk is determined based on the number of bytes.
+> Also added ss phy irq for both SS Ports.
 > 
-> When widebus is enabled, we transfer twice as many bytes per pclk cycle.
-> 
-> Can pclk be reduced by a factor two, as that should still be enough to
-> transfer the same amount of bytes when widebus is enabled?
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml    | 29 +++++++++++++++++++
+>  1 file changed, 29 insertions(+)
 > 
 
-I dont know where the misunderstanding is too.
+Reviewed-by: Rob Herring <robh@kernel.org>
 
-I already did answer that pclk can be /2 for uncompressed.
-
-But for compressed it will be divided by the compression ration.
-
-What is still missing here. Please clarify.
-
->>>> We tried our best to respond and explain to all your queries both on the
->>>> bug and the patch but i guess it just kept coming :)
->>>
->>> Then send less patches!  As long as there is activity on the mailing
->>> list there'll always be questions going back and forth, and I don't
->>> think that's unreasonable.
->>>
->>> Unless you want to push patches into mainline without questioning.
->>>
->>
->> the comments were bordering the line of becoming irrelevant to the
->> patches like discussing video mode on a command mode patch when we had
->> explained many many times that we did not validate them.
-> 
-> You(r team) came up with irrelevant video-mode checks in these patches,
-> and you keep bringing up topics that I did not mention (such as
-> suddently talking about uncompressed formats above).  Stop pretending
-> there's any nefarious intent here unless you intend to push external
-> contributors away.
-> 
-
-There is no nefarious intent. If it was there we would not have spent 2 
-weeks to answer every question on the bug and explaining every math 
-about it despite calling our patches hacks.
-
-So either something is still missing in our answers or the questions.
-
-So please ask the question whatever has not been answered one more time.
-
->> I dont want to add more comments to this. Lets stop discussing this and
->> focus more on this patch.
-> 
-> Perhaps if you answer the question?
-> 
-> - Marijn
