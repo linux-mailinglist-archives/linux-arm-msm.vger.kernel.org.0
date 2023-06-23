@@ -2,246 +2,358 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9FEC73AD92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 02:02:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BFEE73ADA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 02:13:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231682AbjFWACV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jun 2023 20:02:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36382 "EHLO
+        id S230306AbjFWANK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jun 2023 20:13:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231752AbjFWACS (ORCPT
+        with ESMTP id S230351AbjFWANJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jun 2023 20:02:18 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4891A2128;
-        Thu, 22 Jun 2023 17:02:16 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35MNuDkM021898;
-        Fri, 23 Jun 2023 00:02:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=udIIYlI6EIvzHrY5eGLUj5OyqjSPX9bIwoP4FpcqHak=;
- b=cnXca3q8Kb7kNlaTkfbID6RJxao96PsHrsRdheFjcacdSpakKgRSzEl6sVqiVmrJASbc
- wAYHr0UrTe7gZq+5mhR10EdU8BDdvB54LCk1BagAymeqz754eDBeBtWaXWZDZNkLMbwd
- 8ixD6mE3jSXZSK4o5N1wTJpy9yvFBRoIyHINklMWF4kh3KVcXnM/l+pOWIKoJ1bX7Vkf
- FMdR+VTrthj1xruZlBPhNi6OrPYhjKK3WT9luJ3kpcpxOdEdtNyZM00bIKwB19qrYwyb
- eZgTvioNOhw1TeNohN9UdhCcpJz0vVel5FHJ0cgebw0gWAg6nYir+XQ9a8UqoC4uR67y Dg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rc6b2bgay-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 00:02:09 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35N01aOQ015915
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 00:01:36 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 22 Jun
- 2023 17:01:35 -0700
-Message-ID: <cf968ab4-e4c4-dcad-f7d1-4edff6f08147@quicinc.com>
-Date:   Thu, 22 Jun 2023 17:01:34 -0700
+        Thu, 22 Jun 2023 20:13:09 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AAA61FE1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 17:13:07 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b4636bb22eso1862951fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jun 2023 17:13:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687479185; x=1690071185;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7OBMWiQz5SKlQFOgJtcvGQb/Je3ERsxAOPrGehz6pFc=;
+        b=s3uRz10048rHjIkbkzzNcnVpx4K4H57Z1xiig/1EJadsZ/CIlukZgGA2aYEBlcjRqy
+         y4WPbemfowigrNbuc3X2Tc/jYYhwPNwYANWLo0HMD6kinxoONwe12yJjIA2EUNrl0/Vb
+         C0rmK9dWExZIax1zcmYgtdRjwrJjDiD1j3mddjMXbsqVwJ33bq0B9a7EesVmPvAoVDO9
+         eHqsxAWtx3RgYILjw7LfxQRWuRveZtUkBoVJBAvyUGxscdNTceAH28opg1ZfSXZBpVrA
+         yb6FL9FSJquPYdw0HWEYUGaQQbI+w2nXspNU+z/yBRm5QBAla9BJckGN57kHY/aO6sug
+         q9hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687479185; x=1690071185;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7OBMWiQz5SKlQFOgJtcvGQb/Je3ERsxAOPrGehz6pFc=;
+        b=LlWiSvEvECR+e0a077nNSd3H8DJxC/Q22tlytSGMuu+xcB5t1BkKjjwloLrBSVuocS
+         +vztEBbrUQwFx5gPALc/wzLxu4xY4b+Gjhz/wYLSMBW9KxtHgTw8jKIe2jhO0kA7lX+s
+         a9XfkCGeoxvk+zxT5l7klgKJNcc8+vPEXM7218YTxiuvSp51UbmO5xpgFrm5yqrOopS8
+         75KNJkxw4Pp/ur05dddhsVGLmwXJREv5Unfen7GK5E7mDS+V5I6Ya78CTAMpzRSWq7s8
+         99uuyxtbbsdCnPSAHlz7yNUVENB7eN3Cn718OtP957xmYL8YF8nWrVQjqTtbWpMgcgv9
+         K3JQ==
+X-Gm-Message-State: AC+VfDyEKjr1Iy+IN5awPp6e5MFmz9xPLerU9KTkssY1weBkmksK/dO0
+        KqQP0uKG6QPh7BOKCBOls0n1ng==
+X-Google-Smtp-Source: ACHHUZ6J0cGRchjcolAtWC9ovD1xV3EIViBTVz11rROZiFot+lLsFkdRvnYYz9Ketg5J7htNaIEeWg==
+X-Received: by 2002:a2e:a401:0:b0:2b4:809a:1c7c with SMTP id p1-20020a2ea401000000b002b4809a1c7cmr7920540ljn.19.1687479185415;
+        Thu, 22 Jun 2023 17:13:05 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id f14-20020a2e918e000000b002b47d704330sm1493431ljg.6.2023.06.22.17.13.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jun 2023 17:13:04 -0700 (PDT)
+Message-ID: <114f34dd-e5ce-f878-5b23-4c14dc800547@linaro.org>
+Date:   Fri, 23 Jun 2023 03:13:03 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for DSI
- command mode
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-CC:     <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+Subject: Re: [PATCH 6/6] drm/msm/dpu: Update dev core dump to dump registers
+ of sub blocks
+Content-Language: en-GB
+To:     Ryan McCann <quic_rmccann@quicinc.com>,
         Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
- <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <ky7sgsaohak2pcdf6pbhedfyrwk4ea7y3ekfqlw7rn6cpk4rhe@rjuhb23n37oz>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, quic_jesszhan@quicinc.com
+References: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
+ <20230622-devcoredump_patch-v1-6-3b2cdcc6a576@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230622-devcoredump_patch-v1-6-3b2cdcc6a576@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HP5nHhaseBcxF2se_bo6Vl9SfLqc38Z1
-X-Proofpoint-GUID: HP5nHhaseBcxF2se_bo6Vl9SfLqc38Z1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-22_18,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- malwarescore=0 spamscore=0 phishscore=0 suspectscore=0 priorityscore=1501
- mlxlogscore=923 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306220206
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 23/06/2023 02:48, Ryan McCann wrote:
+> Currently, the device core dump mechanism does not dump registers of sub
+> blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Add wrapper
+> function to dump hardware blocks that contain sub blocks.
+> 
+> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 194 +++++++++++++++++++++++++++-----
+>   1 file changed, 168 insertions(+), 26 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index aa8499de1b9f..9b1b1c382269 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -885,6 +885,154 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
+>   	return 0;
+>   }
+>   
+> +static void dpu_kms_mdp_snapshot_add_block(struct msm_disp_state *disp_state,
+> +					   void __iomem *mmio, void *blk,
+> +					   enum dpu_hw_blk_type blk_type)
+
+No. Such multiplexers add no value to the code. Please inline it.
+
+Not to mention that this patch is hard to review. You both move existing 
+code and add new features. If it were to go, it should have been split 
+into two patches: one introducing the multiplexer and another one adding 
+subblocks.
+
+> +{
+> +	u32 base;
+> +
+> +	switch (blk_type) {
+> +	case DPU_HW_BLK_TOP:
+> +	{
+> +		struct dpu_mdp_cfg *top = (struct dpu_mdp_cfg *)blk;
+> +
+> +		if (top->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
+> +			msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
+> +						    mmio + top->base, "top");
+> +			msm_disp_snapshot_add_block(disp_state, top->len - MDP_PERIPH_TOP0_END,
+> +						    mmio + top->base + MDP_PERIPH_TOP0_END,
+> +						    "top_2");
+> +		} else {
+> +			msm_disp_snapshot_add_block(disp_state, top->len, mmio + top->base, "top");
+> +		}
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_LM:
+> +	{
+> +		struct dpu_lm_cfg *mixer = (struct dpu_lm_cfg *)blk;
+> +
+> +		msm_disp_snapshot_add_block(disp_state, mixer->len, mmio + mixer->base, "%s",
+> +					    mixer->name);
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_CTL:
+> +	{
+> +		struct dpu_ctl_cfg *ctl = (struct dpu_ctl_cfg *)blk;
+> +
+> +		msm_disp_snapshot_add_block(disp_state, ctl->len, mmio + ctl->base, "%s",
+> +					    ctl->name);
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_INTF:
+> +	{
+> +		struct dpu_intf_cfg *intf = (struct dpu_intf_cfg *)blk;
+> +
+> +		msm_disp_snapshot_add_block(disp_state, intf->len, mmio + intf->base, "%s",
+> +					    intf->name);
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_WB:
+> +	{
+> +		struct dpu_wb_cfg *wb = (struct dpu_wb_cfg *)blk;
+> +
+> +		msm_disp_snapshot_add_block(disp_state, wb->len, mmio + wb->base, "%s",
+> +					    wb->name);
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_SSPP:
+> +	{
+> +		struct dpu_sspp_cfg *sspp_block = (struct dpu_sspp_cfg *)blk;
+> +		const struct dpu_sspp_sub_blks *sblk = sspp_block->sblk;
+> +
+> +		base = sspp_block->base;
+> +
+> +		msm_disp_snapshot_add_block(disp_state, sspp_block->len, mmio + base, "%s",
+> +					    sspp_block->name);
+> +
+> +		if (sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
+> +		    sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
+> +		    sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED4))
+> +			msm_disp_snapshot_add_block(disp_state, sblk->scaler_blk.len,
+> +						    mmio + base + sblk->scaler_blk.base, "%s_%s",
+> +						    sspp_block->name, sblk->scaler_blk.name);
+
+Actually, it would be better to:
+- drop name from all sblk instances (and use known string instead of the 
+sblk name here)
+- Use sblk->foo_blk.len to check if it should be printed or not.
+
+> +
+> +		if (sspp_block->features & BIT(DPU_SSPP_CSC) || sspp_block->features
+> +					& BIT(DPU_SSPP_CSC_10BIT))
+
+A very bad use of indentation. In future please split logically rather 
+than just filling the line up to the line width.
+
+> +			msm_disp_snapshot_add_block(disp_state, sblk->csc_blk.len,
+> +						    mmio + base + sblk->csc_blk.base, "%s_%s",
+> +						    sspp_block->name, sblk->csc_blk.name);
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_DSPP:
+> +	{
+> +		struct dpu_dspp_cfg *dspp_block = (struct dpu_dspp_cfg *)blk;
+> +
+> +		base = dspp_block->base;
+> +
+> +		msm_disp_snapshot_add_block(disp_state, dspp_block->len, mmio + base, "%s",
+> +					    dspp_block->name);
+> +
+> +		if (dspp_block->features & BIT(DPU_DSPP_PCC))
+> +			msm_disp_snapshot_add_block(disp_state, dspp_block->sblk->pcc.len,
+> +						    mmio + base + dspp_block->sblk->pcc.base,
+> +						    "%s_%s", dspp_block->name,
+> +						    dspp_block->sblk->pcc.name);
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_PINGPONG:
+> +	{
+> +		struct dpu_pingpong_cfg *pingpong_block = (struct dpu_pingpong_cfg *)blk;
+> +		const struct dpu_pingpong_sub_blks *sblk = pingpong_block->sblk;
+> +
+> +		base = pingpong_block->base;
+> +
+> +		msm_disp_snapshot_add_block(disp_state, pingpong_block->len, mmio + base, "%s",
+> +					    pingpong_block->name);
+> +
+> +		if (pingpong_block->features & BIT(DPU_PINGPONG_TE2))
+> +			msm_disp_snapshot_add_block(disp_state, sblk->te2.len,
+> +						    mmio + base + sblk->te2.base, "%s_%s",
+> +						    pingpong_block->name, sblk->te2.name);
+> +
+> +		if (pingpong_block->features & BIT(DPU_PINGPONG_DITHER))
+> +			msm_disp_snapshot_add_block(disp_state, sblk->dither.len,
+> +						    mmio + base + sblk->dither.base, "%s_%s",
+> +						    pingpong_block->name, sblk->dither.name);
+> +		break;
+> +	}
+> +	case DPU_HW_BLK_DSC:
+> +	{
+> +		struct dpu_dsc_cfg *dsc_block = (struct dpu_dsc_cfg *)blk;
+> +
+> +		base = dsc_block->base;
+> +
+> +		if (dsc_block->features & BIT(DPU_DSC_HW_REV_1_2)) {
+> +			struct dpu_dsc_blk enc = dsc_block->sblk->enc;
+> +			struct dpu_dsc_blk ctl = dsc_block->sblk->ctl;
+> +
+> +			/* For now, pass in a length of 0 because the DSC_BLK register space
+> +			 * overlaps with the sblks' register space.
+> +			 *
+> +			 * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW catalog where
+> +			 * applicable.
+
+Nice catch, thank you. We should fix that.
+
+> +			 */
+> +			msm_disp_snapshot_add_block(disp_state, 0, mmio + base, "%s",
+> +						    dsc_block->name);
 
 
-On 6/14/2023 2:56 AM, Marijn Suijten wrote:
-> On 2023-06-13 18:57:13, Jessica Zhang wrote:
->> DSI 6G v2.5.x+ supports a data-bus widen mode that allows DSI to send
->> 48 bits of compressed data per pclk instead of 24.
->>
->> For all chipsets that support this mode, enable it whenever DSC is
->> enabled as recommend by the hardware programming guide.
->>
->> Only enable this for command mode as we are currently unable to validate
->> it for video mode.
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>
->> Note: The dsi.xml.h changes were generated using the headergen2 script in
->> envytools [1], but the changes to the copyright and rules-ng-ng source file
->> paths were dropped.
->>
->> [1] https://github.com/freedreno/envytools/
-> 
-> More interesting would be a link to the Mesa MR upstreaming this
-> bitfield to dsi.xml [2] (which I have not found on my own yet).
-> 
-> [2]: https://gitlab.freedesktop.org/mesa/mesa/-/blame/main/src/freedreno/registers/dsi/dsi.xml
+
+> +			msm_disp_snapshot_add_block(disp_state, enc.len, mmio + base + enc.base,
+> +						    "%s_%s", dsc_block->name, enc.name);
+> +			msm_disp_snapshot_add_block(disp_state, ctl.len, mmio + base + ctl.base,
+> +						    "%s_%s", dsc_block->name, ctl.name);
+> +		} else {
+> +			msm_disp_snapshot_add_block(disp_state, dsc_block->len, mmio + base, "%s",
+> +						    dsc_block->name);
+> +		}
+> +		break;
+> +	}
+> +	default:
+> +		DPU_ERROR("Block type not supported.");
+> +	}
+> +}
+> +
+>   static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_kms *kms)
+>   {
+>   	int i;
+> @@ -899,53 +1047,47 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+>   
+>   	/* dump CTL sub-blocks HW regs info */
+>   	for (i = 0; i < cat->ctl_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len,
+> -				dpu_kms->mmio + cat->ctl[i].base, "ctl_%d", i);
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->ctl[i],
+> +					       DPU_HW_BLK_CTL);
+>   
+>   	/* dump DSPP sub-blocks HW regs info */
+>   	for (i = 0; i < cat->dspp_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len,
+> -				dpu_kms->mmio + cat->dspp[i].base, "dspp_%d", i);
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->dspp[i],
+> +					       DPU_HW_BLK_DSPP);
+>   
+>   	/* dump INTF sub-blocks HW regs info */
+>   	for (i = 0; i < cat->intf_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->intf[i].len,
+> -				dpu_kms->mmio + cat->intf[i].base, "intf_%d", i);
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->intf[i],
+> +					       DPU_HW_BLK_INTF);
+>   
+>   	/* dump PP sub-blocks HW regs info */
+>   	for (i = 0; i < cat->pingpong_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len,
+> -				dpu_kms->mmio + cat->pingpong[i].base, "pingpong_%d", i);
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->pingpong[i],
+> +					       DPU_HW_BLK_PINGPONG);
+>   
+>   	/* dump SSPP sub-blocks HW regs info */
+>   	for (i = 0; i < cat->sspp_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len,
+> -				dpu_kms->mmio + cat->sspp[i].base, "sspp_%d", i);
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->sspp[i],
+> +					       DPU_HW_BLK_SSPP);
+>   
+>   	/* dump LM sub-blocks HW regs info */
+>   	for (i = 0; i < cat->mixer_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len,
+> -				dpu_kms->mmio + cat->mixer[i].base, "lm_%d", i);
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->mixer[i],
+> +					       DPU_HW_BLK_LM);
+>   
+>   	/* dump WB sub-blocks HW regs info */
+>   	for (i = 0; i < cat->wb_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
+> -				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
+> -
+> -	if (cat->mdp[0].features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
+> -		msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
+> -				dpu_kms->mmio + cat->mdp[0].base, "top");
+> -		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len - MDP_PERIPH_TOP0_END,
+> -				dpu_kms->mmio + cat->mdp[0].base + MDP_PERIPH_TOP0_END, "top_2");
+> -	} else {
+> -		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
+> -				dpu_kms->mmio + cat->mdp[0].base, "top");
+> -	}
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->wb[i],
+> +					       DPU_HW_BLK_WB);
+> +
+> +	/* dump top block */
+> +	dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->mdp[0],
+> +				       DPU_HW_BLK_TOP);
+>   
+>   	/* dump DSC sub-blocks HW regs info */
+>   	for (i = 0; i < cat->dsc_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
+> -				dpu_kms->mmio + cat->dsc[i].base, "dsc_%d", i);
+> +		dpu_kms_mdp_snapshot_add_block(disp_state, dpu_kms->mmio, (void *)&cat->dsc[i],
+> +					       DPU_HW_BLK_DSC);
+>   
+>   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>   }
 > 
 
-Thats because we havent submitted a MR yet for this on mesa.
+-- 
+With best wishes
+Dmitry
 
-Generally, our team does not have legal permissions yet for mesa MRs 
-other than mesa drm because we got permissions for the modetest.
-
-Rob/Dmitry, can one of you pls help with the corresponding mesa MR for this?
-
-The xml file change was autogenerated so this patch can go in.
-
->>   drivers/gpu/drm/msm/dsi/dsi.xml.h  |  1 +
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 19 ++++++++++++++++++-
->>   2 files changed, 19 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
->> index a4a154601114..2a7d980e12c3 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
->> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
->> @@ -664,6 +664,7 @@ static inline uint32_t DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP(enum dsi_rgb_swap v
->>   	return ((val) << DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__SHIFT) & DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__MASK;
->>   }
->>   #define DSI_CMD_MODE_MDP_CTRL2_BURST_MODE			0x00010000
->> +#define DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN			0x00100000
->>
->>   #define REG_DSI_CMD_MODE_MDP_STREAM2_CTRL			0x000001b8
->>   #define DSI_CMD_MODE_MDP_STREAM2_CTRL_DATA_TYPE__MASK		0x0000003f
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 5d7b4409e4e9..1da5238e7105 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -927,6 +927,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>   	u32 hdisplay = mode->hdisplay;
->>   	u32 wc;
->>   	int ret;
->> +	bool widebus_supported = msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
->> +			msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V2_5_0;
->> +
->>
->>   	DBG("");
->>
->> @@ -973,8 +976,15 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>   		 *
->>   		 * hdisplay will be divided by 3 here to account for the fact
->>   		 * that DPU sends 3 bytes per pclk cycle to DSI.
->> +		 *
->> +		 * If widebus is supported, set DATABUS_WIDEN register and divide hdisplay by 6
->> +		 * instead of 3
-> 
-> So this should allow us to divide pclk by 2, or have much lower latency?
-> Otherwise it'll tick enough times to transmit the data twice.
-> 
-> Note that I brought up the exact same concerns when you used the 3:1
-> ratio from dsi_bpp / dsc_bpp in your pclk reduction patch (instad of the
-> number of bits/bytes that DPU sends to DSI per pclk), but no-one has
-> replied to my inquiry yet.
-> 
-
-Ideally yes, we could have done pclk/2 on uncompressed pixels but we are 
-not going to add support for widebus on DSI without DSC as that is not 
-recommended in our docs.
-
-So this cannot be done.
-
-We tried our best to respond and explain to all your queries both on the 
-bug and the patch but i guess it just kept coming :)
-
-I am going to try one more time to explain it in the documentation change.
-
->>   		 */
->> -		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
->> +		if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) && widebus_supported)
->> +			hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 6);
->> +		else
->> +			hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-> 
-> Nit: I wonder if this is more concise when written as:
-> 
->      u32 bytes_per_pclk;
->      ...
->      if (!video && widebus)
->          bytes_per_pclk = 6;
->      else
->          bytes_per_pclk = 3;
-> 
->      hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc),
->                              bytes_per_pclk);
-> 
-> That is less duplication, **and** the value becomes self-documenting!
-> 
-
-Sure, no concerns with making this change.
-
->> +
->>   		h_total += hdisplay;
->>   		ha_end = ha_start + hdisplay;
->>   	}
->> @@ -1027,6 +1037,13 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>   		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_TOTAL,
->>   			DSI_CMD_MDP_STREAM0_TOTAL_H_TOTAL(hdisplay) |
->>   			DSI_CMD_MDP_STREAM0_TOTAL_V_TOTAL(mode->vdisplay));
->> +
->> +		if (msm_host->dsc && widebus_supported) {
-> 
-> Can we also support widebus for uncompressed streams (sending 2 pixels
-> of bpp=24 per pclk), and if so, is that something you want to add in the
-> future (a comment would be nice)?
-
-No, we cannot support widebus on uncompressed streams on DSI so we wont 
-be adding that.
-
-> 
->> +			u32 mdp_ctrl2 = dsi_read(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2);
->> +
->> +			mdp_ctrl2 |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
->> +			dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, mdp_ctrl2);
->> +		}
-> 
-> Same comment as on your BURST_MODE patch (which this'll conflict with):
-> does this belong to the timing setup or is it better moved to
-> dsi_ctrl_config?
-> 
-> - Marijn
-> 
->>   	}
->>   }
->>
->>
->> --
->> 2.40.1
->>
