@@ -2,70 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A9E073BA14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 16:26:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25B4A73BA21
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 16:28:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232108AbjFWO0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 10:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56508 "EHLO
+        id S232147AbjFWO2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 10:28:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232019AbjFWO0r (ORCPT
+        with ESMTP id S231243AbjFWO2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 10:26:47 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98A132133
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:26:46 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-bff4f1e93caso604237276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:26:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687530406; x=1690122406;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QgboT9DB1el8gJJMu7+C2OURoRCCX7Ata/wxDdFKnN4=;
-        b=w28n1amYeL0DJ/moDFxZsD4D4MuFuyVqFZaHKTF8qUkt40kVGuD5V4sAJ2PVpOnSOz
-         SK/WciwJXYcst1+LisK2JMF51MeP36BkHHDTgXvSLB3HmtjJG8kxO0E3DjE6S6QIjDCz
-         SGb7ABPzsxAL/BtnZ88pXun1sLYuk7P3RfzkyUJbLQp1wKdkoP0NTevfW81bN53fHz8E
-         LtesYSQnJnMHNqCsKpuFbtU7cCv7X374R2fDgrQJp7R5wB5Rrk5qUdWgAEceHJIO15bB
-         3V8hcaodENPcD+hySYGJXRhMpVRUuMvAGXxK95u/XwjZ6KXfIZoIiAzflvktmnDUXG6/
-         hIPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687530406; x=1690122406;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QgboT9DB1el8gJJMu7+C2OURoRCCX7Ata/wxDdFKnN4=;
-        b=fWG44L7NpHzl0/Gsldvdwkg8tk8ADTIS3ZxtWQ9PfrDV5EuAm+a6koAIVrS9IzKd4S
-         3FOVx8nPvYMO6TMy64s1yWguvUCaBRL6eoSGiQTFV1y1yrG7YAD+FGJ4/PcgAcOV8U/x
-         u5ZTY3l28bJH0RaaVl+Z6QyLfe1ECh9c7Q+KtSvw+ZJatTOc3j7WdxbucwYT0n5tZUqc
-         VZVXng52DXHNSl5UMh8wHLgVs9Sop4m2g0FJ9Z4gollxyjIQ0oWvlI/GwWI5O7h68MQN
-         i0kvsTWtthDNixI1oOicJ1fK/uNFfzhTvq9ecj5UvPpMb9IqUnpnDJ+HMtmXKAuU2IA0
-         96LA==
-X-Gm-Message-State: AC+VfDw00wANTBAy8SO4fUCB1/kfNL9/HIAdkGv/0SQdMf55aYFm5yxF
-        W2SnReULBugDL3flnEFi9mK9jLQr0uWbRcBDh6WgEfAKsdoiKvSrBLA=
-X-Google-Smtp-Source: ACHHUZ6J8HzYKG87DLuuKBMXmZ9SfPCwcNmLq3/1E4kMwaCy5SDeCN050rapC3NLRcfgeOFsYfxeI5jqznlchHJJxyE=
-X-Received: by 2002:a25:aab3:0:b0:bcb:523e:addf with SMTP id
- t48-20020a25aab3000000b00bcb523eaddfmr18499604ybi.65.1687530405703; Fri, 23
- Jun 2023 07:26:45 -0700 (PDT)
+        Fri, 23 Jun 2023 10:28:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9190E2139;
+        Fri, 23 Jun 2023 07:28:07 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NEQbxr005942;
+        Fri, 23 Jun 2023 14:27:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TC29x/yrqf12mrPqYDqnBOOE4V3VsGfOSofY8oLcnI4=;
+ b=J20+NhySU3v0PP75WTymC2uD3Xhmh7erhLFd6uOzh5tjJ7o+kBC3MEyVL8vb8H6qw+hZ
+ gQGAafhVAziG4yPe6hhwDZ+i9QUde8ixe2HGiuQ5zTqG69v6HCJUyF+QTRFF+qxMavXq
+ gSXmR6Gqt+ynGav3S7bOu6q7Go50eo3YTsVfwX3bihbPnk0HNI+MfoAjoS+2F3+RFkTC
+ mOLdcUhpvxDv7rYPEfAG4Qsw9dOuSf2H3wNZp3h/HmqWLWNCUcUFUHdvCkVmLOl7O7aH
+ aGInlu+mduv6FX11q+kMMi+/NTuKAkfWF7sQdAgl7rIj+difD3Y0fFV3UDcVXs7VM7F6 5A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcurrhwqk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 14:27:28 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NERRWJ024051
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 14:27:27 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
+ 2023 07:27:26 -0700
+Message-ID: <1645ef35-8cd6-eea5-3fd8-0625a9e21e7c@quicinc.com>
+Date:   Fri, 23 Jun 2023 08:27:25 -0600
 MIME-Version: 1.0
-References: <20230623141806.13388-1-quic_kbajaj@quicinc.com> <20230623141806.13388-6-quic_kbajaj@quicinc.com>
-In-Reply-To: <20230623141806.13388-6-quic_kbajaj@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 23 Jun 2023 17:26:34 +0300
-Message-ID: <CAA8EJpoZiXWDHGEgBF6KuKruQigqdy37pLH1Q_AnXsN6iRPhyA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/6] soc: qcom: Add LLCC support for multi channel DDR
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: msm8998: Use the correct GPLL0_DIV
+ leg for MMCC
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Taniya Das <tdas@codeaurora.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230622-topic-8998clk-v1-0-5b7a0d6e98b1@linaro.org>
+ <20230622-topic-8998clk-v1-9-5b7a0d6e98b1@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230622-topic-8998clk-v1-9-5b7a0d6e98b1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XHxbzhequdUuYGyi4k7ct57tx2mFKloM
+X-Proofpoint-ORIG-GUID: XHxbzhequdUuYGyi4k7ct57tx2mFKloM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_08,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 mlxlogscore=645 suspectscore=0 spamscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306230130
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,119 +90,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 23 Jun 2023 at 17:19, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->
-> Add LLCC support for multi channel DDR configuration
-> based on a feature register. Reading DDR channel
-> confiuration uses nvmem framework, so select the
-> dependency in Kconfig. Without this, there will be
-> errors while building the driver with COMPILE_TEST only.
->
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
->  drivers/soc/qcom/Kconfig     |  2 ++
->  drivers/soc/qcom/llcc-qcom.c | 33 ++++++++++++++++++++++++++++++---
->  2 files changed, 32 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index a491718f8064..cc9ad41c63aa 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -64,6 +64,8 @@ config QCOM_LLCC
->         tristate "Qualcomm Technologies, Inc. LLCC driver"
->         depends on ARCH_QCOM || COMPILE_TEST
->         select REGMAP_MMIO
-> +       select NVMEM
+On 6/22/2023 5:57 AM, Konrad Dybcio wrote:
+> MMCC has its own GPLL0 legs - one for 1-1 and one for div-2 output.
+> We've already been using the correct one in the non-div case, start
+> doing so for the other one as well.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-No need to select NVMEM. The used functions are stubbed if NVMEM is disabled
-
-> +       select QCOM_SCM
->         help
->           Qualcomm Technologies, Inc. platform specific
->           Last Level Cache Controller(LLCC) driver for platforms such as,
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 6cf373da5df9..3c29612da1c5 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -12,6 +12,7 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/mutex.h>
-> +#include <linux/nvmem-consumer.h>
->  #include <linux/of.h>
->  #include <linux/of_device.h>
->  #include <linux/regmap.h>
-> @@ -943,6 +944,19 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
->         return ret;
->  }
->
-> +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u8 *cfg_index)
-> +{
-> +       int ret;
-> +
-> +       ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
-> +       if (ret == -ENOENT) {
-
-|| ret == -EOPNOTSUPP ?
-
-> +               *cfg_index = 0;
-> +               return 0;
-> +       }
-> +
-> +       return ret;
-> +}
-> +
->  static int qcom_llcc_remove(struct platform_device *pdev)
->  {
->         /* Set the global pointer to a error code to avoid referencing it */
-> @@ -975,11 +989,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->         struct device *dev = &pdev->dev;
->         int ret, i;
->         struct platform_device *llcc_edac;
-> -       const struct qcom_llcc_config *cfg;
-> +       const struct qcom_llcc_config *cfg, *entry;
->         const struct llcc_slice_config *llcc_cfg;
->         u32 sz;
-> +       u8 cfg_index;
->         u32 version;
->         struct regmap *regmap;
-> +       u32 num_entries = 0;
->
->         drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
->         if (!drv_data) {
-> @@ -1040,8 +1056,19 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->
->         drv_data->version = version;
->
-> -       llcc_cfg = cfg[0]->sct_data;
-> -       sz = cfg[0]->size;
-> +       ret = qcom_llcc_get_cfg_index(pdev, &cfg_index);
-> +       if (ret)
-> +               goto err;
-> +
-> +       for (entry = cfg; entry->sct_data; entry++, num_entries++)
-> +               ;
-
-Please add num_cfgs to the configuration data instead.
-
-> +       if (cfg_index >= num_entries || cfg_index < 0) {
-
-cfg_index is unsigned, so it can not be less than 0.
-
-> +               ret = -EINVAL;
-> +               goto err;
-> +       }
-> +
-> +       llcc_cfg = cfg[cfg_index].sct_data;
-> +       sz = cfg[cfg_index].size;
->
->         for (i = 0; i < sz; i++)
->                 if (llcc_cfg[i].slice_id > drv_data->max_slices)
-> --
-> 2.40.1
->
-
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
