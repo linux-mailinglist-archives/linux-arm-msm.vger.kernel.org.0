@@ -2,230 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5665D73BF17
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 21:54:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27FF273BF25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 22:00:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbjFWTyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 15:54:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38512 "EHLO
+        id S231680AbjFWUAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 16:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjFWTyf (ORCPT
+        with ESMTP id S231168AbjFWUAb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 15:54:35 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678E62718
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 12:54:34 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NHScZW006660;
-        Fri, 23 Jun 2023 19:54:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=KJXCSt6vNX6JuN5fiOipIYi6v7+kPoyW7neXNHF/pW0=;
- b=OXJASK/U9jh8flmL6jx8S59WI7AINvtcc+fWLozyHpxn05jJavdy1lpq9YZ7utRgWawL
- np/XX5bWpVX4+XMcdMk0aZT4nbWxLNY+tntJj/1dKyJsD8/FajhWsYpReuLlAHcTHGsB
- W7iJkdYO/4mpegjRakg9YuhTfAyVP/2cC3g/unUSCJvch2BFbPqQp3yyBjqdt9Vqd3dJ
- WaBRWvnxvMiDqTTYovphDSl+FSpBAvJnzm7vP7KY2lhuluoCaIX2kAqFT0lB/Xmo5j92
- 5/0jH56tX+g6OvPyQnb1wVVcNRqbdAmJ/wEZO+6VYlPsYo/rJPEpOLwdHCfY5ahORl4t fg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcju84db5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 19:54:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NJsJre019340
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 19:54:19 GMT
-Received: from [10.110.61.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
- 2023 12:54:18 -0700
-Message-ID: <6e2ded6a-63a9-d32a-7a2f-67d3c72b1aa2@quicinc.com>
-Date:   Fri, 23 Jun 2023 12:54:17 -0700
+        Fri, 23 Jun 2023 16:00:31 -0400
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F297271F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 13:00:30 -0700 (PDT)
+Received: by mail-ua1-x930.google.com with SMTP id a1e0cc1a2514c-78a1e095508so392779241.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 13:00:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1687550429; x=1690142429;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m1M1xaiNrSMz3C3bpTzsCCZISH1fndbXxP2b6AYA7P8=;
+        b=25Kx93HWxGNrW7i8PiktSOxdVI0xb3gbLHu/eSh/j7KcjQodThxWFZuBF6WKG7vUNS
+         fYGM58rw15YqtrfK2oWLKC89wNDMbmfUK8+JUWu7fId3vSV6WvME2X6LNspLodF8+Gzk
+         JeGZfAvppULZbqGu0aJaAxlUxXk+SBbxfbERd5XMyCmMiMWuNJUgw4blEMn28OAKgq5x
+         g57zEZlB4IiEhm4455u2ZGEzB8LTZ/xNmtAKaKdOAlIvBBzUBx/DuWC9ZSunGwJEHezU
+         6t9WGtZdYGDquTmuZk1GnP1yKTKRpGH0LGW7iszsplwh/aOwdfaW5wDh3OjguCw5FfAN
+         +Rmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687550429; x=1690142429;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=m1M1xaiNrSMz3C3bpTzsCCZISH1fndbXxP2b6AYA7P8=;
+        b=DdvDc55azRtXvQSirRKU/VpaWE0JaWFi9HhSHoDUvvLM5PiExQhol40eybEJ+syn71
+         Mgu+5cte0Y4IH2DTUFWFM88mbb2zBDivQDBFo5o8h3oDIkpBLa3apIxqNQPxC0LAkrlB
+         4rqPlT8Xbvh9IGan8jbjHwqGFfhqL3H0IiVAW9l/K5aSKhQXjThP6feh/K7VB9NojIXM
+         QtD4zreolggwix91hYVB2sGcIYMEVc8rM+FPyBE35LsVtBXzjkBZcb0QJignU2QmRHIB
+         8P+Mk411c5SkOuLDwXNP2cERz6ulYeCIUw4KZHK1o4w9UIFxZ1idM1lmBy8VtP8TJGwx
+         bPcA==
+X-Gm-Message-State: AC+VfDxdkQ8Ur75tdZLQJLGKF4oOHFVwSXWXJzc7LluPY2REcWlA1cQj
+        S+1hMatq7eoC5sv7lRC9mpG8r0lBrFB2gQejRnmxtw==
+X-Google-Smtp-Source: ACHHUZ4dgCpqMi4ZlVuTYZHeFbBd4fFXdHkx89qsxKlJ0GOPlCr0eVv4RzmW7IXVicUlGnXnteN3dR3IFwrJ2sBV24Y=
+X-Received: by 2002:a05:6102:2453:b0:440:d2f5:e36d with SMTP id
+ g19-20020a056102245300b00440d2f5e36dmr5548679vss.14.1687550429626; Fri, 23
+ Jun 2023 13:00:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2] drm/msm/dsi: Document DSC related pclk_rate and
- hdisplay calculations
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+References: <20230623100845.114085-1-brgl@bgdev.pl> <20230623100845.114085-3-brgl@bgdev.pl>
+ <ZJXw+92ee7CGtnCS@corigine.com>
+In-Reply-To: <ZJXw+92ee7CGtnCS@corigine.com>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Fri, 23 Jun 2023 22:00:18 +0200
+Message-ID: <CAMRc=MeXtK8kNbNo0u7onz3vmKS1eHWdok7vGFRMr41S2Aehvg@mail.gmail.com>
+Subject: Re: [PATCH net-next v2 02/12] net: stmmac: replace the sph_disable
+ field with a flag
+To:     Simon Horman <simon.horman@corigine.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
- <e9d5876a-3113-8c79-c2aa-e1ad175f0d84@quicinc.com>
- <b632e52d-7b86-9f5a-913a-aace26d9a039@linaro.org>
- <c2f632e7-8302-a77f-fc61-ccda3b5a8aac@quicinc.com>
- <eqdu44xcd6qdrmxcdr44dfcliydz6q4oombghjg6ptlcbxf22v@uhqnhnlv6gxi>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <eqdu44xcd6qdrmxcdr44dfcliydz6q4oombghjg6ptlcbxf22v@uhqnhnlv6gxi>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Wyi_L1pib2UqUke0dCJpyYoyuAyXISdG
-X-Proofpoint-GUID: Wyi_L1pib2UqUke0dCJpyYoyuAyXISdG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_11,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- clxscore=1015 phishscore=0 suspectscore=0 mlxlogscore=999
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306230178
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Andrew Halaney <ahalaney@redhat.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Jun 23, 2023 at 9:22=E2=80=AFPM Simon Horman <simon.horman@corigine=
+.com> wrote:
+>
+> On Fri, Jun 23, 2023 at 12:08:35PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Drop the boolean field of the plat_stmmacenet_data structure in favor o=
+f a
+> > simple bitfield flag.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> ...
+>
+> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/driver=
+s/net/ethernet/stmicro/stmmac/dwmac-intel.c
+> > index ab9f876b6df7..70e91bbef2a6 100644
+> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+> > @@ -459,7 +459,7 @@ static int intel_mgbe_common_data(struct pci_dev *p=
+dev,
+> >       plat->has_gmac4 =3D 1;
+> >       plat->force_sf_dma_mode =3D 0;
+> >       plat->tso_en =3D 1;
+> > -     plat->sph_disable =3D 1;
+> > +     data->flags |=3D STMMAC_FLAG_SPH_DISABLE;
+>
+> Hi Bartosz,
+>
+> I think something must have got mixed-up here.
+> An x86_64 allmodconfig reports that data is undeclared here.
+>
 
+Cr*p, I thought I build-tested everything...
 
-On 6/23/2023 12:26 AM, Marijn Suijten wrote:
-> On 2023-06-22 17:32:17, Abhinav Kumar wrote:
->>
->>
->> On 6/22/2023 5:17 PM, Dmitry Baryshkov wrote:
->>> On 23/06/2023 03:14, Abhinav Kumar wrote:
->>>>
->>>>
->>>> On 6/19/2023 2:06 PM, Dmitry Baryshkov wrote:
->>>>> Provide actual documentation for the pclk and hdisplay calculations in
->>>>> the case of DSC compression being used.
->>>>>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>
->>>>> Changes since v1:
->>>>> - Converted dsi_adjust_pclk_for_compression() into kerneldoc (Marijn)
->>>>> - Added a pointer from dsi_timing_setup() docs to
->>>>>     dsi_adjust_pclk_for_compression() (Marijn)
->>>>> - Fixed two typo (Marijn)
->>>>>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 40 ++++++++++++++++++++++++++++--
->>>>>    1 file changed, 38 insertions(+), 2 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> index 3f6dfb4f9d5a..a8a31c3dd168 100644
->>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> @@ -528,6 +528,25 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host
->>>>> *msm_host)
->>>>>        clk_disable_unprepare(msm_host->byte_clk);
->>>>>    }
->>>>> +/**
->>>>> + * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for
->>>>> compression case
->>>>> + * @mode: the selected mode for the DSI output
->>>>> + * @dsc: DRM DSC configuration for this DSI output
->>>>> + *
->>>>> + * Adjust the pclk rate by calculating a new hdisplay proportional to
->>>>> + * the compression ratio such that:
->>>>> + *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
->>>>> + *
->>>>> + * Porches do not need to be adjusted:
->>>>> + * - For the VIDEO mode they are not compressed by DSC and are
->>>>> passed as is.
->>>>> + * - For the CMD mode there are no actual porches. Instead these fields
->>>>> + *   currently represent the overhead to the image data transfer. As
->>>>> such, they
->>>>> + *   are calculated for the final mode parameters (after the
->>>>> compression) and
->>>>> + *   are not to be adjusted too.
->>>>> + *
->>>>> + *  FIXME: Reconsider this if/when CMD mode handling is rewritten to
->>>>> use
->>>>> + *  refresh rate and data overhead as a starting point of the
->>>>> calculations.
->>>>> + */
->>>>>    static unsigned long dsi_adjust_pclk_for_compression(const struct
->>>>> drm_display_mode *mode,
->>>>>            const struct drm_dsc_config *dsc)
->>>>
->>>> I am fine with this part of the doc.
->>>>
->>>>>    {
->>>>> @@ -926,8 +945,25 @@ static void dsi_timing_setup(struct msm_dsi_host
->>>>> *msm_host, bool is_bonded_dsi)
->>>>>            if (ret)
->>>>>                return;
->>>>> -        /* Divide the display by 3 but keep back/font porch and
->>>>> -         * pulse width same
->>>>> +        /*
->>>>> +         * DPU sends 3 bytes per pclk cycle to DSI. If compression is
->>>>> +         * not used, a single pixel is transferred at each pulse, no
->>>>> +         * matter what bpp or pixel format is used. In case of DSC
->>>>> +         * compression this results (due to data alignment
->>>>> +         * requirements) in a transfer of 3 compressed pixel per pclk
->>>>> +         * cycle.
->>>>> +         *
->>>>
->>>> I dont want to talk about data alignment nor formats and I will not
->>>> ack any references to those.
->>>>
->>>> I would like to keep this simple and say that DPU sends 3 bytes of
->>>> compressed data / pclk (6 with widebus enabled) and all this math is
->>>> doing is that its calculating number of bytes and diving it by 3 OR 6
->>>> with widebus to calculate the pclk cycles. Thats it.
->>>
->>> This makes it unclear, why do we simply by 3 rather than doing * dsc_bpp
->>> / 24.  My description might be inaccurate as I don't have hw docs at
->>> hand, but simple description is not enough.
->>>
->>
->> Why is it unclear? With compression, we are saying we process at 3
->> compressed bytes / pclk and this math is accurately giving the pclk cycles.
->>
->> You are once again trying to arrive at 3 with compression factor in mind
->> by calculating target_bpp / src_bpp.
->>
->> I am saying that its independent of that. Whenever we do compression
->> rate is 3 bytes of compressed data (and 6 with widebus) irrespective of
->> what your dsc_bpp was.
-> 
-> Abhinav, this is exactly what the confusion the pclk series is about.
-> There it was said (and committed to mainline now!) that pclk is based on
-> the compression factor of target_bpp / src_bpp.  Now you are saying
-> there is a fixed number of bytes sent by the (wide)bus between DPU-DSC
-> and DSI.
-> 
-> Is pclk used for more purposes besides just ticking for the data
-> transfer between DPU and DSI?
-> 
+My bad, I'll resend a v3 after the merge window.
 
-There is no confusion between what was said earlier and now.
+Bart
 
-This line is calculating the number of pclks needed to transmit one line 
-of the compressed data:
-
-hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-
-msm_dsc_get_bytes_per_line() is calculating the number of compressed 
-bytes as it uses the target bits_per_pixel
-
-126 	 * @bits_per_pixel:
-127 	 * Target bits per pixel with 4 fractional bits, bits_per_pixel << 4
-128 	 */
-129 	u16 bits_per_pixel;
-
-(like I have said a few times, hdisplay is perhaps confusing us)
-
-If you calculate the bytes this way you are already accounting for the 
-compression, so where is the confusion.
-
-The pclk calculation does the same thing of using the ratio instead.
-
-> - Marijn
+> ...
+>
+> --
+> pw-bot: changes-requested
+>
