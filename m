@@ -2,79 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7156A73B8D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 15:34:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A1FC73B901
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 15:46:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229673AbjFWNeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 09:34:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55720 "EHLO
+        id S231764AbjFWNqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 09:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231477AbjFWNeA (ORCPT
+        with ESMTP id S231743AbjFWNqP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 09:34:00 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72FE42683
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:33:34 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1b52418c25bso936915ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:33:34 -0700 (PDT)
+        Fri, 23 Jun 2023 09:46:15 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E960826B8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:45:47 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f865f0e16cso823703e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1687527214; x=1690119214;
+        d=linaro.org; s=google; t=1687527943; x=1690119943;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ACoox6lHywQa9wO0MGPPVAOCZzDjfudqnGd2G0lw0os=;
-        b=fa1yyl1XuChlZVeuHnAOkkfkq2hZyLQlU7Qx7FIzebWZlha3QE3pftRSrj+DJxI7Rv
-         UhXvlkHo3Vcdolq+ME68HhnTz0k5XIGoqWorIAsqCzinXOgMm/YBV2p6rPjxxhB9xA+p
-         CKbtixmq104K/XaeP7c/FRQEzfBhOolOJ13XEqLz2Vl/3W9UCdfjI5o3p38fxwPZQ7jM
-         f2Nv1spQskpxwNqmrAc0KV9Etlyt/W0NlU64HVCq3FTgTv7qi6xblmtVtEFrypVRLxTd
-         swjUrDnQOk53j5e/5rffnzu2n8zAvNVx/4KpVQ/7vpT1VvkShyKZT45f4U4Mq3kIEUCc
-         sA+A==
+        bh=CG/L5fCcL7PugjOiD8VAGfzqZ5AV8spPcF/+MHEpizc=;
+        b=JgnrBgJTH8r9UwKtq/t9/7Oi9fcEDKiRWPJoksmFlGffyYpNBC+4PpUlxI5wutnRMR
+         oF2NJbXJBiUxqWUG1/Ut3T02e2R4x9QCVJHRT3B1eRVn7fj7GhMef6JU/uYPKbptl1KA
+         5d1HYQjTZYnL/G/pgBLh8mIUfJqmzTxNm2fL195TyYKXPNrS8rhgGVHKI3DDrsEPsOP+
+         n/J4BF+aVuwo0UWpA/VQKeGTFgDqqGzMSLYYnZ0MWH36/icuTWu7d/cXyidUIYt3WiML
+         Z+ypYsAp6EBf7hj6SCuFf7gtZfxHDroviFaIKAhO2RoHs6u6z2Q1u2gUBv24sFvz36i5
+         Dnxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687527214; x=1690119214;
+        d=1e100.net; s=20221208; t=1687527943; x=1690119943;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ACoox6lHywQa9wO0MGPPVAOCZzDjfudqnGd2G0lw0os=;
-        b=Kh9x5eb47j15gu8W9bAeP1D7pfmZedo87+PTGXDN94hi5exLDCcdN1fLonfNW9HaMH
-         RxxJjT8CTJ/F/mIUL18OjOs0AmRwtWQjgJcLWcQCaYifT/SuSiqtxLzZqUD9KtvGFpsN
-         4lyAAXoqp5v8XjBIAbe+LR6MAi6bc1QU7KGYvEJi7kLNzPpC4hvlehYMn1WhHXcw4KU0
-         UEQv/vnuNFSc4IoWNPey8FfI8DsnTUd47ZcsOR1leL8xZxWgq+lHZClkFxaDIU84cS2x
-         nJSFGuRtIU+RHC00Z/A8mu/8MAy64NW4SVMOVWL7yXs954Cc0zlujedY4PwEhvjB96QD
-         9N6g==
-X-Gm-Message-State: AC+VfDz5myCXBsEhH/OJ3tNW6pJjjox5GY5nugnJ+guOfeqZpeqVWz3z
-        mBLy2ZQjfYmefuNY5mJHDLiNUA==
-X-Google-Smtp-Source: ACHHUZ7fC8cfi9SbpxWbw1P19vY2WFeiY5bxjWE/lWxj83YOdeMLdFfAi7QBoo42W5+SZOFqK06Ryw==
-X-Received: by 2002:a17:902:c945:b0:1ae:3ff8:7fa7 with SMTP id i5-20020a170902c94500b001ae3ff87fa7mr26069073pla.4.1687527213878;
-        Fri, 23 Jun 2023 06:33:33 -0700 (PDT)
-Received: from [10.4.168.167] ([139.177.225.254])
-        by smtp.gmail.com with ESMTPSA id kg14-20020a170903060e00b001b6a27dff99sm4341406plb.159.2023.06.23.06.33.26
+        bh=CG/L5fCcL7PugjOiD8VAGfzqZ5AV8spPcF/+MHEpizc=;
+        b=hoXCyxw0gHGDy3S9UmOOoIl0LyX8nLs72f0oOBrxPbNW5UdbmUa2igRo2ZIeh5N67y
+         1GGEkchW068GzxjWhcagIu14eIZCv7W1SFBwgWHj6MlufGY0d+vXTTx0CIHSUxAMj+D8
+         a8VCfquLNTmA6jN8J4FMMujPq42MTaCa3uk40od/x6C+SHgbHcIjWnDP9a9d7E/kbQLi
+         ApaGD4PIZhCkBs6QCNXnFJMRP0ec4lTBpdGe6UA38OQUmBpMFVMQdr54SCSKRs859bq1
+         Ld/4mF0sf0VpnRiHRALlgvWigcDCVPW/8zPbOLep2+NPkTcFrCKf7C1TJpRZf9vgjvBS
+         FeRA==
+X-Gm-Message-State: AC+VfDzwVNjbpQZO4x6bPDkRvAcG254yW2Apqwpi0zrjrfHooAa11NkB
+        wdOFdBstgSP5fkxwR9RMBeC4nQ==
+X-Google-Smtp-Source: ACHHUZ40Rmt0bQ6tFBgxMHDz3EIeoFE2P2zGcudX3YjsMnKPoegGaAcdTpd5fvMVdW+M2iYNeBFdZQ==
+X-Received: by 2002:a05:6512:2205:b0:4f9:69b8:1e6d with SMTP id h5-20020a056512220500b004f969b81e6dmr3371663lfu.3.1687527943566;
+        Fri, 23 Jun 2023 06:45:43 -0700 (PDT)
+Received: from [192.168.1.101] (abyk30.neoplus.adsl.tpnet.pl. [83.9.30.30])
+        by smtp.gmail.com with ESMTPSA id q30-20020ac2515e000000b004f1383d57ecsm1437980lfd.202.2023.06.23.06.45.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 06:33:33 -0700 (PDT)
-Message-ID: <43a07dbe-5049-8596-da58-51e0a0d6243c@bytedance.com>
-Date:   Fri, 23 Jun 2023 21:33:24 +0800
+        Fri, 23 Jun 2023 06:45:43 -0700 (PDT)
+Message-ID: <e1e82967-f2d5-48f9-80ba-2dafbac554c9@linaro.org>
+Date:   Fri, 23 Jun 2023 15:45:41 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH 05/29] drm/panfrost: dynamically allocate the drm-panfrost
- shrinker
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 1/4] interconnect: qcom: Add support for mask-based
+ BCMs
 Content-Language: en-US
-To:     Steven Price <steven.price@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
-        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, akpm@linux-foundation.org,
-        david@fromorbit.com, tkhai@ya.ru, vbabka@suse.cz,
-        roman.gushchin@linux.dev, djwong@kernel.org, brauner@kernel.org,
-        paulmck@kernel.org, tytso@mit.edu
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-6-zhengqi.arch@bytedance.com>
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-In-Reply-To: <20230622085335.77010-6-zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Mike Tipton <mdtipton@codeaurora.org>
+References: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
+ <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-1-709474b151cc@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-1-709474b151cc@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -86,179 +79,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steven,
+On 23.06.2023 14:50, neil.armstrong@linaro.org wrote:
+> From: Mike Tipton <mdtipton@codeaurora.org>
+> 
+> Some BCMs aren't directly associated with the data path (i.e. ACV) and
+> therefore don't communicate using BW. Instead, they are simply
+> enabled/disabled with a simple bit mask. Add support for these.
+> 
+> Origin commit retrieved from:
+> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/2d1573e0206998151b342e6b52a4c0f7234d7e36
+> 
+> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+> [narmstrong: removed copyright change from original commit]
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-The email you replied to was the failed version (due to the error
-below), so I copied your reply and replied to you on this successful
-version.
-
-(4.7.1 Error: too many recipients from 49.7.199.173)
-
-On 2023/6/23 18:01, Steven Price wrote:
- > On 22/06/2023 09:39, Qi Zheng wrote:
- >> From: Qi Zheng <zhengqi.arch@bytedance.com>
- >>
- >> In preparation for implementing lockless slab shrink,
- >> we need to dynamically allocate the drm-panfrost shrinker,
- >> so that it can be freed asynchronously using kfree_rcu().
- >> Then it doesn't need to wait for RCU read-side critical
- >> section when releasing the struct panfrost_device.
- >>
- >> Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
- >> ---
- >>   drivers/gpu/drm/panfrost/panfrost_device.h    |  2 +-
- >>   .../gpu/drm/panfrost/panfrost_gem_shrinker.c  | 24 ++++++++++---------
- >>   2 files changed, 14 insertions(+), 12 deletions(-)
- >>
- >> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h 
-b/drivers/gpu/drm/panfrost/panfrost_device.h
- >> index b0126b9fbadc..e667e5689353 100644
- >> --- a/drivers/gpu/drm/panfrost/panfrost_device.h
- >> +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
- >> @@ -118,7 +118,7 @@ struct panfrost_device {
- >>
- >>   	struct mutex shrinker_lock;
- >>   	struct list_head shrinker_list;
- >> -	struct shrinker shrinker;
- >> +	struct shrinker *shrinker;
- >>
- >>   	struct panfrost_devfreq pfdevfreq;
- >>   };
- >> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c 
-b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
- >> index bf0170782f25..2a5513eb9e1f 100644
- >> --- a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
- >> +++ b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
- >> @@ -18,8 +18,7 @@
- >>   static unsigned long
- >>   panfrost_gem_shrinker_count(struct shrinker *shrinker, struct 
-shrink_control *sc)
- >>   {
- >> -	struct panfrost_device *pfdev =
- >> -		container_of(shrinker, struct panfrost_device, shrinker);
- >> +	struct panfrost_device *pfdev = shrinker->private_data;
- >>   	struct drm_gem_shmem_object *shmem;
- >>   	unsigned long count = 0;
- >>
- >> @@ -65,8 +64,7 @@ static bool panfrost_gem_purge(struct 
-drm_gem_object *obj)
- >>   static unsigned long
- >>   panfrost_gem_shrinker_scan(struct shrinker *shrinker, struct 
-shrink_control *sc)
- >>   {
- >> -	struct panfrost_device *pfdev =
- >> -		container_of(shrinker, struct panfrost_device, shrinker);
- >> +	struct panfrost_device *pfdev = shrinker->private_data;
- >>   	struct drm_gem_shmem_object *shmem, *tmp;
- >>   	unsigned long freed = 0;
- >>
- >> @@ -100,10 +98,15 @@ panfrost_gem_shrinker_scan(struct shrinker 
-*shrinker, struct shrink_control *sc)
- >>   void panfrost_gem_shrinker_init(struct drm_device *dev)
- >>   {
- >>   	struct panfrost_device *pfdev = dev->dev_private;
- >> -	pfdev->shrinker.count_objects = panfrost_gem_shrinker_count;
- >> -	pfdev->shrinker.scan_objects = panfrost_gem_shrinker_scan;
- >> -	pfdev->shrinker.seeks = DEFAULT_SEEKS;
- >> -	WARN_ON(register_shrinker(&pfdev->shrinker, "drm-panfrost"));
- >> +
- >> +	pfdev->shrinker = shrinker_alloc_and_init(panfrost_gem_shrinker_count,
- >> +						  panfrost_gem_shrinker_scan, 0,
- >> +						  DEFAULT_SEEKS, 0, pfdev);
- >> +	if (pfdev->shrinker &&
- >> +	    register_shrinker(pfdev->shrinker, "drm-panfrost")) {
- >> +		shrinker_free(pfdev->shrinker);
- >> +		WARN_ON(1);
- >> +	}
- >
- > So we didn't have good error handling here before, but this is
- > significantly worse. Previously if register_shrinker() failed then the
- > driver could safely continue without a shrinker - it would waste memory
- > but still function.
- >
- > However we now have two failure conditions:
- >   * shrinker_alloc_init() returns NULL. No warning and NULL deferences
- >     will happen later.
- >
- >   * register_shrinker() fails, shrinker_free() will free pdev->shrinker
- >     we get a warning, but followed by a use-after-free later.
- >
- > I think we need to modify panfrost_gem_shrinker_init() to be able to
- > return an error, so a change something like the below (untested) before
- > your change.
-
-Indeed. I will fix it in the v2.
-
-Thanks,
-Qi
-
- >
- > Steve
- >
- > ----8<---
- > diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c
- > b/drivers/gpu/drm/panfrost/panfrost_drv.c
- > index bbada731bbbd..f705bbdea360 100644
- > --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
- > +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
- > @@ -598,10 +598,14 @@ static int panfrost_probe(struct platform_device
- > *pdev)
- >   	if (err < 0)
- >   		goto err_out1;
- >
- > -	panfrost_gem_shrinker_init(ddev);
- > +	err = panfrost_gem_shrinker_init(ddev);
- > +	if (err)
- > +		goto err_out2;
- >
- >   	return 0;
- >
- > +err_out2:
- > +	drm_dev_unregister(ddev);
- >   err_out1:
- >   	pm_runtime_disable(pfdev->dev);
- >   	panfrost_device_fini(pfdev);
- > diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h
- > b/drivers/gpu/drm/panfrost/panfrost_gem.h
- > index ad2877eeeccd..863d2ec8d4f0 100644
- > --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
- > +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
- > @@ -81,7 +81,7 @@ panfrost_gem_mapping_get(struct panfrost_gem_object 
-*bo,
- >   void panfrost_gem_mapping_put(struct panfrost_gem_mapping *mapping);
- >   void panfrost_gem_teardown_mappings_locked(struct 
-panfrost_gem_object *bo);
- >
- > -void panfrost_gem_shrinker_init(struct drm_device *dev);
- > +int panfrost_gem_shrinker_init(struct drm_device *dev);
- >   void panfrost_gem_shrinker_cleanup(struct drm_device *dev);
- >
- >   #endif /* __PANFROST_GEM_H__ */
- > diff --git a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
- > b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
- > index bf0170782f25..90265b37636f 100644
- > --- a/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
- > +++ b/drivers/gpu/drm/panfrost/panfrost_gem_shrinker.c
- > @@ -97,13 +97,17 @@ panfrost_gem_shrinker_scan(struct shrinker
- > *shrinker, struct shrink_control *sc)
- >    *
- >    * This function registers and sets up the panfrost shrinker.
- >    */
- > -void panfrost_gem_shrinker_init(struct drm_device *dev)
- > +int panfrost_gem_shrinker_init(struct drm_device *dev)
- >   {
- >   	struct panfrost_device *pfdev = dev->dev_private;
- > +	int ret;
- > +
- >   	pfdev->shrinker.count_objects = panfrost_gem_shrinker_count;
- >   	pfdev->shrinker.scan_objects = panfrost_gem_shrinker_scan;
- >   	pfdev->shrinker.seeks = DEFAULT_SEEKS;
- > -	WARN_ON(register_shrinker(&pfdev->shrinker, "drm-panfrost"));
- > +	ret = register_shrinker(&pfdev->shrinker, "drm-panfrost");
- > +
- > +	return ret;
- >   }
- >
- >   /**
- >
-
+Konrad
+>  drivers/interconnect/qcom/bcm-voter.c | 5 +++++
+>  drivers/interconnect/qcom/icc-rpmh.h  | 2 ++
+>  2 files changed, 7 insertions(+)
+> 
+> diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+> index 8f385f9c2dd3..d5f2a6b5376b 100644
+> --- a/drivers/interconnect/qcom/bcm-voter.c
+> +++ b/drivers/interconnect/qcom/bcm-voter.c
+> @@ -83,6 +83,11 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+>  
+>  		temp = agg_peak[bucket] * bcm->vote_scale;
+>  		bcm->vote_y[bucket] = bcm_div(temp, bcm->aux_data.unit);
+> +
+> +		if (bcm->enable_mask && (bcm->vote_x[bucket] || bcm->vote_y[bucket])) {
+> +			bcm->vote_x[bucket] = 0;
+> +			bcm->vote_y[bucket] = bcm->enable_mask;
+> +		}
+>  	}
+>  
+>  	if (bcm->keepalive && bcm->vote_x[QCOM_ICC_BUCKET_AMC] == 0 &&
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+> index 04391c1ba465..7843d8864d6b 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.h
+> +++ b/drivers/interconnect/qcom/icc-rpmh.h
+> @@ -81,6 +81,7 @@ struct qcom_icc_node {
+>   * @vote_x: aggregated threshold values, represents sum_bw when @type is bw bcm
+>   * @vote_y: aggregated threshold values, represents peak_bw when @type is bw bcm
+>   * @vote_scale: scaling factor for vote_x and vote_y
+> + * @enable_mask: optional mask to send as vote instead of vote_x/vote_y
+>   * @dirty: flag used to indicate whether the bcm needs to be committed
+>   * @keepalive: flag used to indicate whether a keepalive is required
+>   * @aux_data: auxiliary data used when calculating threshold values and
+> @@ -97,6 +98,7 @@ struct qcom_icc_bcm {
+>  	u64 vote_x[QCOM_ICC_NUM_BUCKETS];
+>  	u64 vote_y[QCOM_ICC_NUM_BUCKETS];
+>  	u64 vote_scale;
+> +	u32 enable_mask;
+>  	bool dirty;
+>  	bool keepalive;
+>  	struct bcm_db aux_data;
+> 
