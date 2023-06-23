@@ -2,212 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A70973BAF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 17:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C353A73BB51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 17:13:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232058AbjFWO7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 10:59:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51912 "EHLO
+        id S232431AbjFWPNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 11:13:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231935AbjFWO7p (ORCPT
+        with ESMTP id S231501AbjFWPMI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 10:59:45 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD29C172C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:59:43 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f866a3d8e4so1001754e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 07:59:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687532382; x=1690124382;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B4/OJdczlYExXAsvuIIQOlq/URlmPtl71pqrwUBjURI=;
-        b=fyI3NLEFUrtSIjj+s2A2JztYeLbDTeVfZncA9D3FZAEAsJaR+GA14hxIQ4DYVw05ro
-         Gx85vCarBgl/IDfY2sbA4sfkHITvmqGN/7NbAjlJVimzASSwsSI4t/IA0+DcAYDrTCoy
-         itJ1fAciQPIhIgesHi5JPuwU7MP0eAWxCexoQbPIS6330gMakFg/wGddI1d+BJF/VTJK
-         Me4MVHA4nOsIwhRCHbl1ydyBBPCMTM4ZX9IbDn5luJCe7siABaDx4/8ExuzYjKxpnoOq
-         Cpobm+whab7caxALV9FlddEzSszDyPucYMV0ZDYq1fi+DQ6UsJIvO8SnIozvldIeicSX
-         VxTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687532382; x=1690124382;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B4/OJdczlYExXAsvuIIQOlq/URlmPtl71pqrwUBjURI=;
-        b=a6XVxgttir8fkt6+eAUx2sbUPKaQvtA035qZjM29UJQofeMXp+gWftPSTCsLKmQjoV
-         f3NCX1urmgp8n+kjw2ys8qr6xXbEkgKINIS2BeiLxluB5T3Gh/3EmH2CnjrLK5cJLuKD
-         fjk3oJCrALf7WCZ8cGGZE3e8PaYMsuIIc2yQqkCQ/dKZ+zBn9aJlaHo3Pusn3PaKo5qz
-         krNMfpH7Sm0ZHyAWEqH+0tSRO+YCYkKiwSrlgn4R+f9Zyrm/jPB1GlMYWOHQjm2dFkZW
-         B1MHx4X1nSsHKTY0el6mUchhX0+wpvdC+uilXG6ZELas8YK8xInNPL/BsBomO0f/AiEG
-         k1ZA==
-X-Gm-Message-State: AC+VfDyGxBPPyb9qGk2b0dAcEQfzNZ1bCAgrsb3R4g/aFRG2RYtSpzIB
-        xSnmVxlijFD7qytNefJGJwLjUQ==
-X-Google-Smtp-Source: ACHHUZ40p/DIccVDgVOPyFUWxm9saDGv2mPGJ0DeSVPwmIYQzPKvFhkIdsaR3YF2gzwz0bZzYhAP1g==
-X-Received: by 2002:a19:6d1b:0:b0:4f6:2cd8:5ff4 with SMTP id i27-20020a196d1b000000b004f62cd85ff4mr12620332lfc.2.1687532382109;
-        Fri, 23 Jun 2023 07:59:42 -0700 (PDT)
-Received: from [192.168.1.101] (abyk30.neoplus.adsl.tpnet.pl. [83.9.30.30])
-        by smtp.gmail.com with ESMTPSA id f28-20020ac251bc000000b004f13ca69dc8sm1479064lfk.72.2023.06.23.07.59.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 07:59:41 -0700 (PDT)
-Message-ID: <894163b0-65f7-60c4-4054-1c6af1683af9@linaro.org>
-Date:   Fri, 23 Jun 2023 16:59:40 +0200
+        Fri, 23 Jun 2023 11:12:08 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D88232116;
+        Fri, 23 Jun 2023 08:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1687533079; x=1719069079;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Rx5rxTjZywE9SSTSseHg/Sc6c4OWkUAeUcWp+yPZTQ4=;
+  b=H9NUY+Yp+d81csGjoJSguOlub4eGXQFFvjdNNYHZVXM7BZ41MzuXRZZX
+   JGPHTBNjT8+hGLHZ6ZAjT432exRgIDd3VJeCvCqhJSMFxGUQU0XGNT974
+   l3UOaIVZeC7bgvujMpD6kH+OpoALuh/nvKov0Teve4k6P6gyO7WRTd9xG
+   SluNp47UzuRbPiJchme6x8xyUZMjeIXlm9xyCUjcuevp051csKoybaTK/
+   Ww6TR9IpKG+LkFUEvvEdCu/XoOMZQdq/0GnoIJ0JWzgvnd1TUOE6nlLwu
+   EQ/KziXOQcpjEWdQZBdv1rM7zLzO2K7E22wdptoc6st6v53yd7Gb6abEW
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="345540975"
+X-IronPort-AV: E=Sophos;i="6.01,152,1684825200"; 
+   d="scan'208";a="345540975"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2023 08:11:15 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="889506053"
+X-IronPort-AV: E=Sophos;i="6.01,152,1684825200"; 
+   d="scan'208";a="889506053"
+Received: from lkp-server01.sh.intel.com (HELO 783282924a45) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 23 Jun 2023 08:11:11 -0700
+Received: from kbuild by 783282924a45 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qCiRK-0008Lr-15;
+        Fri, 23 Jun 2023 15:11:10 +0000
+Date:   Fri, 23 Jun 2023 23:10:54 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: Re: [PATCH v3 01/11] media: videobuf2: Access vb2_queue bufs array
+ through helper functions
+Message-ID: <202306232218.dOcWboPB-lkp@intel.com>
+References: <20230622131349.144160-2-benjamin.gaignard@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v4 6/6] soc: qcom: llcc: Add QDU1000 and QRU1000 LLCC
- support
-Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
- <20230623141806.13388-7-quic_kbajaj@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230623141806.13388-7-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230622131349.144160-2-benjamin.gaignard@collabora.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.06.2023 16:18, Komal Bajaj wrote:
-> Add LLCC configuration data for QDU1000 and QRU1000 SoCs
-> and updating macro name for LLCC_DRE to LLCC_ECC as per
-> the latest specification.
-> 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
->  drivers/soc/qcom/llcc-qcom.c       | 65 +++++++++++++++++++++++++++++-
->  include/linux/soc/qcom/llcc-qcom.h |  2 +-
->  2 files changed, 65 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 3c29612da1c5..d2826158ae60 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -187,7 +187,7 @@ static const struct llcc_slice_config sc8280xp_data[] = {
->  	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
->  	{ LLCC_DISP,     16, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
->  	{ LLCC_AUDHW,    22, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> -	{ LLCC_DRE,      26, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_ECC,      26, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
->  	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
->  	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
->  	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> @@ -358,6 +358,36 @@ static const struct llcc_slice_config sm8550_data[] =  {
->  	{LLCC_VIDVSP,   28,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
->  };
->  
-> +static const struct llcc_slice_config qdu1000_data_2ch[] = {
-> +	{LLCC_MDMHPGRW, 7, 512, 1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_MODHW,    9, 256, 1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_MDMPNG,  21, 256, 0, 1,   0x3, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_ECC,     26, 512, 3, 1, 0xFFC, 0x0, 0, 0, 0, 0, 1, 0, 0 },
-> +	{LLCC_MODPE,   29, 256, 1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_APTCM,   30, 256, 3, 1,   0x0, 0xC, 1, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_WRCACHE, 31, 128, 1, 1,   0x3, 0x0, 0, 0, 0, 0, 1, 0, 0 },
-Please keep the style coherent with existing entries, so:
+Hi Benjamin,
 
-- spacing between curly braces and data
-- tabs/spaces
-- hex should be lowercase
+kernel test robot noticed the following build errors:
 
-Konrad
-> +};
-> +
-> +static const struct llcc_slice_config qdu1000_data_4ch[] = {
-> +	{LLCC_MDMHPGRW, 7, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_MODHW,    9, 512,  1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_MDMPNG,  21, 512,  0, 1,   0x3, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_ECC,     26, 1024, 3, 1, 0xFFC, 0x0, 0, 0, 0, 0, 1, 0, 0 },
-> +	{LLCC_MODPE,   29, 512,  1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_APTCM,   30, 512,  3, 1,   0x0, 0xC, 1, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_WRCACHE, 31, 256,  1, 1,   0x3, 0x0, 0, 0, 0, 0, 1, 0, 0 },
-> +};
-> +
-> +static const struct llcc_slice_config qdu1000_data_8ch[] = {
-> +	{LLCC_MDMHPGRW, 7, 2048, 1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_MODHW,    9, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_MDMPNG,  21, 1024, 0, 1,   0x3, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_ECC,     26, 2048, 3, 1, 0xFFC, 0x0, 0, 0, 0, 0, 1, 0, 0 },
-> +	{LLCC_MODPE,   29, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_APTCM,   30, 1024, 3, 1,   0x0, 0xC, 1, 0, 0, 1, 0, 0, 0 },
-> +	{LLCC_WRCACHE, 31, 512,  1, 1,   0x3, 0x0, 0, 0, 0, 0, 1, 0, 0 },
-> +};
-> +
->  static const struct llcc_edac_reg_offset llcc_v1_edac_reg_offset = {
->  	.trp_ecc_error_status0 = 0x20344,
->  	.trp_ecc_error_status1 = 0x20348,
-> @@ -557,6 +587,38 @@ static const struct qcom_llcc_config sm8550_cfg[] = {
->  	{ },
->  };
->  
-> +static const struct qcom_llcc_config qdu1000_cfg[] = {
-> +	{
-> +		.sct_data       = qdu1000_data_8ch,
-> +		.size		= ARRAY_SIZE(qdu1000_data_8ch),
-> +		.need_llcc_cfg	= true,
-> +		.reg_offset	= llcc_v2_1_reg_offset,
-> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-> +	},
-> +	{
-> +		.sct_data       = qdu1000_data_4ch,
-> +		.size           = ARRAY_SIZE(qdu1000_data_4ch),
-> +		.need_llcc_cfg  = true,
-> +		.reg_offset     = llcc_v2_1_reg_offset,
-> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-> +	},
-> +	{
-> +		.sct_data       = qdu1000_data_4ch,
-> +		.size           = ARRAY_SIZE(qdu1000_data_4ch),
-> +		.need_llcc_cfg  = true,
-> +		.reg_offset     = llcc_v2_1_reg_offset,
-> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-> +	},
-> +	{
-> +		.sct_data       = qdu1000_data_2ch,
-> +		.size           = ARRAY_SIZE(qdu1000_data_2ch),
-> +		.need_llcc_cfg  = true,
-> +		.reg_offset     = llcc_v2_1_reg_offset,
-> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-> +	},
-> +	{ },
-> +};
-> +
->  static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
->  
->  /**
-> @@ -1114,6 +1176,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  }
->  
->  static const struct of_device_id qcom_llcc_of_match[] = {
-> +	{ .compatible = "qcom,qdu1000-llcc", .data = qdu1000_cfg},
->  	{ .compatible = "qcom,sc7180-llcc", .data = sc7180_cfg },
->  	{ .compatible = "qcom,sc7280-llcc", .data = sc7280_cfg },
->  	{ .compatible = "qcom,sc8180x-llcc", .data = sc8180x_cfg },
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index 93417ba1ead4..1a886666bbb6 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -30,7 +30,7 @@
->  #define LLCC_NPU         23
->  #define LLCC_WLHW        24
->  #define LLCC_PIMEM       25
-> -#define LLCC_DRE         26
-> +#define LLCC_ECC         26
->  #define LLCC_CVP         28
->  #define LLCC_MODPE       29
->  #define LLCC_APTCM       30
+[auto build test ERROR on media-tree/master]
+[also build test ERROR on linus/master v6.4-rc7 next-20230623]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Access-vb2_queue-bufs-array-through-helper-functions/20230622-214122
+base:   git://linuxtv.org/media_tree.git master
+patch link:    https://lore.kernel.org/r/20230622131349.144160-2-benjamin.gaignard%40collabora.com
+patch subject: [PATCH v3 01/11] media: videobuf2: Access vb2_queue bufs array through helper functions
+config: i386-allyesconfig (https://download.01.org/0day-ci/archive/20230623/202306232218.dOcWboPB-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20230623/202306232218.dOcWboPB-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202306232218.dOcWboPB-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/staging/media/atomisp/pci/atomisp_ioctl.c: In function 'atomisp_dqbuf_wrapper':
+>> drivers/staging/media/atomisp/pci/atomisp_ioctl.c:1080:33: error: incompatible type for argument 1 of 'vb2_get_buffer'
+    1080 |         vb = vb2_get_buffer(pipe->vb_queue, buf->index);
+         |                             ~~~~^~~~~~~~~~
+         |                                 |
+         |                                 struct vb2_queue
+   In file included from include/media/videobuf2-v4l2.h:16,
+                    from drivers/staging/media/atomisp//pci/ia_css_frame_public.h:23,
+                    from drivers/staging/media/atomisp/pci/sh_css_legacy.h:22,
+                    from drivers/staging/media/atomisp/pci/atomisp_internal.h:34,
+                    from drivers/staging/media/atomisp/pci/atomisp_cmd.h:30,
+                    from drivers/staging/media/atomisp/pci/atomisp_ioctl.c:27:
+   include/media/videobuf2-core.h:1239:67: note: expected 'struct vb2_queue *' but argument is of type 'struct vb2_queue'
+    1239 | static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
+         |                                                 ~~~~~~~~~~~~~~~~~~^
+
+
+vim +/vb2_get_buffer +1080 drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+
+  1065	
+  1066	static int atomisp_dqbuf_wrapper(struct file *file, void *fh, struct v4l2_buffer *buf)
+  1067	{
+  1068		struct video_device *vdev = video_devdata(file);
+  1069		struct atomisp_video_pipe *pipe = atomisp_to_video_pipe(vdev);
+  1070		struct atomisp_sub_device *asd = pipe->asd;
+  1071		struct atomisp_device *isp = video_get_drvdata(vdev);
+  1072		struct ia_css_frame *frame;
+  1073		struct vb2_buffer *vb;
+  1074		int ret;
+  1075	
+  1076		ret = vb2_ioctl_dqbuf(file, fh, buf);
+  1077		if (ret)
+  1078			return ret;
+  1079	
+> 1080		vb = vb2_get_buffer(pipe->vb_queue, buf->index);
+  1081		frame = vb_to_frame(vb);
+  1082	
+  1083		buf->reserved = asd->frame_status[buf->index];
+  1084	
+  1085		/*
+  1086		 * Hack:
+  1087		 * Currently frame_status in the enum type which takes no more lower
+  1088		 * 8 bit.
+  1089		 * use bit[31:16] for exp_id as it is only in the range of 1~255
+  1090		 */
+  1091		buf->reserved &= 0x0000ffff;
+  1092		if (!(buf->flags & V4L2_BUF_FLAG_ERROR))
+  1093			buf->reserved |= frame->exp_id;
+  1094		buf->reserved2 = pipe->frame_config_id[buf->index];
+  1095	
+  1096		dev_dbg(isp->dev,
+  1097			"dqbuf buffer %d (%s) with exp_id %d, isp_config_id %d\n",
+  1098			buf->index, vdev->name, buf->reserved >> 16, buf->reserved2);
+  1099		return 0;
+  1100	}
+  1101	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
