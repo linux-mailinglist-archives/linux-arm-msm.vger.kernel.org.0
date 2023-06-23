@@ -2,86 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7133573C4E7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 01:45:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14D4C73C4EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 01:47:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231617AbjFWXpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 19:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56284 "EHLO
+        id S230256AbjFWXrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 19:47:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbjFWXpS (ORCPT
+        with ESMTP id S230022AbjFWXrv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 19:45:18 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C252706
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 16:45:17 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-668711086f4so884221b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 16:45:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1687563917; x=1690155917;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oxpqoKiLiXHAYzo2GF/yRNN4ujaz4VhDxbbYENoZ7HE=;
-        b=MO5Uki3XpE8DoU/U9pdbrC+SMdd1H2KLAbjuYzWFlsdCGIiOkj6xMjCmrNwkPxHlYg
-         gg/JSMjuPunSfXbqIdQ9X55hKImJNSiLi4B0AwwWJDyuqsLiCRllyCE2ITFjgLCNc7ON
-         9HA4X+tEwV2L6eky+lcR1MlmUzdMt/kvCzxvc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687563917; x=1690155917;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oxpqoKiLiXHAYzo2GF/yRNN4ujaz4VhDxbbYENoZ7HE=;
-        b=V/l7kkAtbwiNXk5tgv5FlnJO+YZOO8GZMbgz3oQ7JVGFLv71jWpp2DqgT7yy4TN/qX
-         /133NtDZqankW+DgVcBqAwklHWq3x4PntEl/FVu2B8sK/HzY/RwjJfNa7IhgeRKzCwaW
-         ZTvLeP0qxhqcZ1P0nc6wtJN8LaVHJLL+ZZ8BPFtNcywYi51rA1DrYLYuVYomgfIfC5DC
-         217bZUEf41AWyKzJ3RZpSgcIUQ8gG0q+Uqg1qcvIxneOz43fjeI4hO7lvoO2GpPjhqhP
-         tGNDY4HEXdTSccnpiforuu3+TDpFutDo4H7E+Tz1Ws7mn56U4qbSJ1iehL74lCqbCO/q
-         7dZw==
-X-Gm-Message-State: AC+VfDzW6TsNBqcCmNUZuVHA8Gm+uyhNVPR9UHQqcub3qPDLs/7OEk5j
-        mjZcKeZky1jIrVjkOwb/fCK1XA==
-X-Google-Smtp-Source: ACHHUZ54SvsRZGuby7rh6NGkLzQV2rO8W2svdlmGiXVK6ldfvev3mbsAUeaWTAJ9SaJHOMXk4MXy/A==
-X-Received: by 2002:a05:6a20:12c4:b0:123:152d:d46b with SMTP id v4-20020a056a2012c400b00123152dd46bmr14778534pzg.26.1687563917013;
-        Fri, 23 Jun 2023 16:45:17 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id v26-20020aa7809a000000b0062cf75a9e6bsm70691pff.131.2023.06.23.16.45.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jun 2023 16:45:16 -0700 (PDT)
-Date:   Fri, 23 Jun 2023 16:45:15 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Julia Lawall <julia.lawall@inria.fr>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        kernel-janitors@vger.kernel.org, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/26] bus: mhi: host: use array_size
-Message-ID: <202306231639.68955384A@keescook>
-References: <20230623211457.102544-1-Julia.Lawall@inria.fr>
- <20230623211457.102544-11-Julia.Lawall@inria.fr>
- <3b4ff79b-93b4-cf56-1488-113905b3981d@quicinc.com>
- <alpine.DEB.2.22.394.2306232340510.3129@hadrien>
- <58cb3bf6-5ffd-194b-1455-4e5bb045fc34@quicinc.com>
+        Fri, 23 Jun 2023 19:47:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B510189
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 16:47:49 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NNbGgC012691;
+        Fri, 23 Jun 2023 23:47:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NdumVFG0UxTGtv9SjRebHqegowG7qYHciwzHb3gBfsA=;
+ b=OOftGYfTx19hwBRU/vu39ot5x26YexLRSnOE6LGmVeV/1E6cTjAisdxPRr6UXXfjfaDJ
+ es2VvAx8vncQD/ILghm/ruy44H3NGotyOJrMllyEoj0AwtjtKwew6JBxfFNnyLAKoLWz
+ 7+UD76uK7zrgO0mFzZK+vM12Qki3Yb616qXYgIVxlWwGYe8aaecndXO5m8xTHY+40rOq
+ 7b+KFfYZiY4gNIV+1izi4CRxVoZSES6VQrbuaBupoMKtMZax2A/bNYUybL22wa+n7dcp
+ Y4AIQPFC+ikvYhiTHcsOXfCVlxtppmnmQx+qGZWj8fhCQGdIUBk6w4RTiTHR7j0UZPJV tQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdfb18r0a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 23:47:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NNlYI6016643
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 23 Jun 2023 23:47:34 GMT
+Received: from [10.110.61.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
+ 2023 16:47:33 -0700
+Message-ID: <a0ef6cda-3f84-2294-4b38-0c7e5c08179a@quicinc.com>
+Date:   Fri, 23 Jun 2023 16:47:32 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <58cb3bf6-5ffd-194b-1455-4e5bb045fc34@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2] drm/msm/dsi: Document DSC related pclk_rate and
+ hdisplay calculations
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
+ <e9d5876a-3113-8c79-c2aa-e1ad175f0d84@quicinc.com>
+ <b632e52d-7b86-9f5a-913a-aace26d9a039@linaro.org>
+ <c2f632e7-8302-a77f-fc61-ccda3b5a8aac@quicinc.com>
+ <eqdu44xcd6qdrmxcdr44dfcliydz6q4oombghjg6ptlcbxf22v@uhqnhnlv6gxi>
+ <6e2ded6a-63a9-d32a-7a2f-67d3c72b1aa2@quicinc.com>
+ <gpxqh6mu5dora7ul4agaflmzqiq7ps6j2dic3zj2ygvp7dsori@lnbnexnbqthg>
+ <a3ce94a4-8e5b-427c-28ad-1bfad041d097@linaro.org>
+ <gtbpo6o255z3wb5veapjf4z2gasf6sjqdswqxxgpcwtkxaa6qk@dgkopjxs47uz>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <gtbpo6o255z3wb5veapjf4z2gasf6sjqdswqxxgpcwtkxaa6qk@dgkopjxs47uz>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 40LnioeA3bV3l3_b4bXlSL1y_r4fSvB8
+X-Proofpoint-GUID: 40LnioeA3bV3l3_b4bXlSL1y_r4fSvB8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-23_12,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306230215
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 23, 2023 at 04:09:46PM -0600, Jeffrey Hugo wrote:
-> Kees, would you please chime in and educate me here?  I feel like I'm
-> missing something important here.
 
-The array_size() family will saturate at SIZE_MAX (rather than potentially
-wrapping around). No allocator can fulfil a 18446744073709551615 byte
-(18 exabyte) allocation. :) So the NULL return value will (hopefully)
-trigger an error path.
 
--- 
-Kees Cook
+On 6/23/2023 1:18 PM, Marijn Suijten wrote:
+> On 2023-06-23 23:10:56, Dmitry Baryshkov wrote:
+> <snip>
+>>>> There is no confusion between what was said earlier and now.
+>>>>
+>>>> This line is calculating the number of pclks needed to transmit one line
+>>>> of the compressed data:
+>>>>
+>>>> hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+>>>>
+>>>> msm_dsc_get_bytes_per_line() is calculating the number of compressed
+>>>> bytes as it uses the target bits_per_pixel
+>>>>
+>>>> 126 	 * @bits_per_pixel:
+>>>> 127 	 * Target bits per pixel with 4 fractional bits, bits_per_pixel << 4
+>>>> 128 	 */
+>>>> 129 	u16 bits_per_pixel;
+>>>>
+>>>> (like I have said a few times, hdisplay is perhaps confusing us)
+>>>>
+>>>> If you calculate the bytes this way you are already accounting for the
+>>>> compression, so where is the confusion.
+>>>>
+>>>> The pclk calculation does the same thing of using the ratio instead.
+>>>
+>>> This is not answering my question whether the ratio for pclk calculation
+>>> should also be adjusted to account for widebus.  And if the ratio is
+>>> fixed, why use a fixed factor here but the ratio between
+>>> src_bpp:target_bpp here?  It only adds extra confusion.
+>>
+>> Wide bus is dicussed separately. I think the question you are trying to
+>> ask is "why are we not using msm_dsc_get_bytes_per_line() in
+>> dsi_adjust_pclk_for_compression()?"
+> 
+> I have asked that question before, and the answer was something
+> incomprehensible.  But indeed, it would look more natural if
+> dsi_adjust_pclk_for_compression() replaces:
+> 
+>      int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
+>          dsc->bits_per_component * 3)
+> 
+> With:
+> 
+>      int new_hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(dsc), 3);
+> 
+> Which is the same value as we have here.
+> 
+> And then it becomes more clear how widebus affects this calculation.
+> 
+> - Marijn
+
+Ok, I finally got your question I think. That "why don't we account for 
+widebus in the pixel clock calculation but only for calculating pclk 
+cycles for REG_DSI_CMD_MDP_STREAM0_TOTAL"
+
+Even though DPU shall transmit 48 bits worth of data , DSI will be able 
+to consume only one uncompressed pixel worth of data. Thats the rule.
+
+Hence even though we are able to account for widebus in the 
+stream0_total to indicate DPU's increased data transfer rate with 
+widebus, since DSI is still going to consume only one uncompressed pixel 
+worth of data, we can only scale the pixel clock with compression ratio.
+
+Hope that clarifies it.
