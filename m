@@ -2,135 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38FD573B931
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 15:58:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06CDC73B936
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jun 2023 15:58:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232023AbjFWN6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 09:58:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39826 "EHLO
+        id S231147AbjFWN6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 09:58:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231290AbjFWN6R (ORCPT
+        with ESMTP id S230262AbjFWN6s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 09:58:17 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25E052696
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:58:13 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f76a0a19d4so868264e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:58:13 -0700 (PDT)
+        Fri, 23 Jun 2023 09:58:48 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01132E52
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:58:46 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b4790ff688so11776771fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 06:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687528691; x=1690120691;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W6jndWPX8g/RkMlqUci+O1Pg3iw2GfjP5tf07sb/A2o=;
-        b=dKTmAAk1unTaguUb5PRb+mOCEnMd9/Ew/koIQi6g/d9jFBJmpJMQ0RUIvRatEqy/+W
-         9kFEK/981cTfEX6zuZu1niWIAXZyJ18FNth13ADJrP1BrvBKEhl+FNyl8m/fo93PAeAV
-         NlDinSNZ0+Bu7cX5uxuev5T6uEBRe9UscDjvxZfhZXyFmeJ1+cz511spcHb3JWyGBZDs
-         D+Ey/gnhVC3STTr4PM/ArciaypvNjcSufgXbpfuUcoTAb8y4GA3H0AEtzAhjSuzg1JYA
-         m6LsKowiV1gPbV7SCEXO6hbo+pyP29UEf4PqHoF/dtZ2GZTivhzyGIdxXIF9jGrFxgby
-         2g8g==
+        d=linaro.org; s=google; t=1687528725; x=1690120725;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yOhWkbu2l8TcyI6GhCT/UC0v9ZBG8+6y99ASll4jh3w=;
+        b=gOT4WUNixw1iqApc2hvVhE0lW9ZYNsgY52m1tquGH6LS+PTQVh3rFeQ4cM7/c/Ux5h
+         x7cywYZVk2Dq4XyJTHpb28rS2VY+mSLlLIngwNUc9waWV6G2KceJ660ddP9C0tEAzpuF
+         Z1+Qcqrt47Iuj2Toio3qx931DbFv8VRkQzFSb0wflAjrP/2tMWqbBeEWfVeVQdw0jpU8
+         8IyLpjOQUEUqf/AU1TX9OE48wD1z71a510M5mnVRY24KEVjbNyUWy2RcKwCsVCozuoSk
+         okqHVYl7Qdj6BdutCgjVMy/Yctq0RUpoHlj9y2gnyPc4PL5aqf68ByLmC2NBClwKgqck
+         9bZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687528691; x=1690120691;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W6jndWPX8g/RkMlqUci+O1Pg3iw2GfjP5tf07sb/A2o=;
-        b=FuYA/hTSfBfxPa2WxiG2Zg0pyRh+ZhN59BYFtqoI1XHDuxzpUnEGlBWRO459v27RzN
-         8z04jfz3h7SZ0BvMxbDOoTpgHZtpCqmvyVn9sLOwntzE6xeqzpQ4tCPBfEm9iLvVw7Ea
-         Mkb33bwnuEOn+m8q+WHHM8vYnyW4GBhd3A4GgeIEbrPqutoVuH8sue13T0la7W/SFVP/
-         WMdavkmb4v4Csu29MerYjXK25S8xRf2cUm2wt7DwoGCfmrWHz+t6HetuVVGhaSKHD9EN
-         YEDhbpZHpxDG8RwYhh9iKsBcxDkwwT/EVu1l64LXbVn8UYjy8LlIrbxdHj5KfpBurgb5
-         eW2Q==
-X-Gm-Message-State: AC+VfDz7aOod1lF5lIsS0TlRtEKUKFGO/CEbSrmItup8GNz5EXQfe7kE
-        6I/3icb3En2xlySZwF6o7kqdJA==
-X-Google-Smtp-Source: ACHHUZ4u9yMyuI7mFr8evCNJV8EmOBr8kiJdt1uVnBpthIzjn/dhfH39xVwJwnZHO7+er1/mIsk7Yg==
-X-Received: by 2002:a19:e34a:0:b0:4f4:c973:c97d with SMTP id c10-20020a19e34a000000b004f4c973c97dmr12247542lfk.25.1687528691143;
-        Fri, 23 Jun 2023 06:58:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyk30.neoplus.adsl.tpnet.pl. [83.9.30.30])
-        by smtp.gmail.com with ESMTPSA id u24-20020ac25198000000b004eeec1261ecsm1457547lfi.31.2023.06.23.06.58.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 06:58:10 -0700 (PDT)
-Message-ID: <5b68b9ba-157b-067c-3926-9c5ecfecc311@linaro.org>
-Date:   Fri, 23 Jun 2023 15:58:09 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Content-Language: en-US
-To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1687528725; x=1690120725;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yOhWkbu2l8TcyI6GhCT/UC0v9ZBG8+6y99ASll4jh3w=;
+        b=WZFeX1idHO/NnhdI0XEONvYpZa2Cafxu+CA2ShVLmkifSvDZth+OzW9uXCl/F2YNDm
+         e7mOyqIV+LEpBVb6BnXTCuOrANObEQcUGXyuuo0QyodVB2pnB7FDDugBTI+/ewQVN2ve
+         wegscKvc/7r9QxWpqmLAUdenYyL6e7WVJp/4sjdwijk741NpIHnFk7ZRMJQQq8/BuZnT
+         QAXU8aSVOqSKt9apt74LQE0Bnsz9Dh32rUXlZOELN/DnymuSRLn6VScWrs6G0K2BbOLX
+         lufnELFxkLZ8rzhgnUSt6CdXbz46GCwP24EscuKCCAleev+wKIrwT4m2lhlMenAL2OKj
+         weXg==
+X-Gm-Message-State: AC+VfDzny5I7kMQI2oUv1TR38Lo6vGIHBgPeLLtFULWEZVPSYzovJvO1
+        r0JTyFVA4Ig0TJ6FBxyXnK1QzDCmUeTKkQyCrNQ=
+X-Google-Smtp-Source: ACHHUZ7CUw4mSjt7xEoQZLR9dgp37du/c/s9wAc01Q2NRnVzbTqGUFk86gqyTYlJKvykW/TqCI39OA==
+X-Received: by 2002:a2e:a175:0:b0:2b1:fda8:e653 with SMTP id u21-20020a2ea175000000b002b1fda8e653mr14243650ljl.27.1687528725225;
+        Fri, 23 Jun 2023 06:58:45 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 11-20020a05651c008b00b002ac7b0fc473sm1756869ljq.38.2023.06.23.06.58.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jun 2023 06:58:44 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Mike Tipton <mdtipton@codeaurora.org>
-References: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v2 0/4] interconnect: qcom: rpmh: sm8550: mask to send as
- vote
-In-Reply-To: <20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-0-709474b151cc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/7] drm/msm/dpu: simplify DPU sub-blocks info
+Date:   Fri, 23 Jun 2023 16:58:37 +0300
+Message-Id: <20230623135844.1113908-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.06.2023 14:50, neil.armstrong@linaro.org wrote:
-> On the SM8550 SoC, some nodes requires a specific bit mark
-> instead of a bandwidth when voting.
-> 
-> Add an enable_mask variable to be used instead of bandwidth.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-After reviewing this patchset and taking a peek at older downstream,
-it looks like ACV should be using 0x8 bmask on *all RPMh SoCs*.
+Ryan pointed out [1] that some (most) of of sub-blocks do not fill the
+field `name'. Further research showed that we can drop the fields `name'
+and `id' and further simplify the catalog. The handling code also
+usually knows, which sub-block it is now looking at.
 
-It's worth noting however, that 8350's downstream (the first msm
-kernel using the icc framework) did not incorporate that change.
-Not sure if intentionally or not. Probably not. Might be worth to
-poke Qcom to backport it in such case. If 8350 is still supported.
-Probably not.
+Drop unused field and arguments and merge some of sub-block
+declarations. I did not merge inter-generation VIG_SBLK definitions,
+this is pending another cleanup (which will also switch to using
+hardcoded scaler version).
 
-Check out these snippets:
+Dependencies: [2]
 
-https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L556-567
+[1] https://patchwork.freedesktop.org/patch/543903/?series=119773&rev=1
+[2] https://patchwork.freedesktop.org/series/118839/
 
-https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LA.UM.10.2.1.c25/drivers/soc/qcom/msm_bus/msm_bus_arb_rpmh.c#L475-495
+Dmitry Baryshkov (6):
+  drm/msm/dpu: drop the `id' field from DPU_HW_SUBBLK_INFO
+  drm/msm/dpu: drop the field `name' from DPU_HW_SUBBLK_INFO
+  drm/msm/dpu: drop the `smart_dma_priority' field from struct
+    dpu_sspp_sub_blks
+  drm/msm/dpu: deduplicate some (most) of SSPP sub-blocks
+  drm/msm/dpu: drop DPU_HW_SUBBLK_INFO macro
+  drm/msm/dpu: merge dpu_csc_blk and dpu_dsc_blk into dpu_simple_blk
 
-Notice how acv is never updated beyond effectively setting =0 or =bmask,
-perhaps Qualcomm never implemented something else..
+Ryan McCann (1):
+  drm/msm/dpu: Drop unused num argument from relevant macros
 
-Since this series is fine as-is, I'd be happy to see an incremental one.
-Reported-by would be cool as well :D
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |   8 +-
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   4 +-
+ .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |   8 +-
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   4 +-
+ .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |   4 +-
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |   8 +-
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  16 +--
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  20 +--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 122 +++++++-----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  48 +++----
+ 17 files changed, 154 insertions(+), 200 deletions(-)
 
-Konrad
-> Changes in v2:
-> - Took downstream patch for patch 1
-> - Added konrad's reviewed tag
-> - Added changes for sm8450 and sa8775p
-> - Link to v1: https://lore.kernel.org/r/20230619-topic-sm8550-upstream-interconnect-mask-vote-v1-0-66663c0aa592@linaro.org
-> 
-> ---
-> Mike Tipton (1):
->       interconnect: qcom: Add support for mask-based BCMs
-> 
-> Neil Armstrong (3):
->       interconnect: qcom: sm8450: add enable_mask for bcm nodes
->       interconnect: qcom: sm8550: add enable_mask for bcm nodes
->       interconnect: qcom: sa8775p: add enable_mask for bcm nodes
-> 
->  drivers/interconnect/qcom/bcm-voter.c |  5 +++++
->  drivers/interconnect/qcom/icc-rpmh.h  |  2 ++
->  drivers/interconnect/qcom/sa8775p.c   |  1 +
->  drivers/interconnect/qcom/sm8450.c    |  9 +++++++++
->  drivers/interconnect/qcom/sm8550.c    | 17 +++++++++++++++++
->  5 files changed, 34 insertions(+)
-> ---
-> base-commit: 47045630bc409ce6606d97b790895210dd1d517d
-> change-id: 20230619-topic-sm8550-upstream-interconnect-mask-vote-96aa20355158
-> 
-> Best regards,
+-- 
+2.39.2
+
