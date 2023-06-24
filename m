@@ -2,82 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E15B73C765
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 09:39:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CE7C73C778
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 09:49:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229379AbjFXHjN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 03:39:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45624 "EHLO
+        id S229727AbjFXHtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 03:49:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbjFXHjK (ORCPT
+        with ESMTP id S231808AbjFXHtT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 03:39:10 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80FB32733
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:39:08 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-51d885b0256so148173a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:39:08 -0700 (PDT)
+        Sat, 24 Jun 2023 03:49:19 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F6B269A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:49:16 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5149aafef44so1504857a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:49:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687592347; x=1690184347;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1687592955; x=1690184955;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XVdAZfHRZ6u7osPMfY1qK+xI94SNWiX6MJMl3Svpx34=;
-        b=AzlNBzAV19R9cgDJFcLQljjYVhJ/XvCe2JIZN1//+0MtkcJdBz7KpnpLco+q2jt33H
-         6zjAgqYBLdCnP6loYtt3cP/qF6jVxOqReXdnP+LzWQQtYQR/7BOjnSRMWL5BkoRONk34
-         i4ij3h6YDWhJIOpa1M0tPVY2zOu/iLE76cVfhuwN8+0TA4fMzDiOJIHv7ReRw8awdqrf
-         Rz/SXJPISnwUr0t2IpOuX7XynFepgqMNrv5qvQ7B+z9fU9W6c2x/towRwkBN0iJfbdaL
-         Luaxi9k30z9TnexneyQFansJlLTSGDzepPju7Flf51dPjiW07LKrkIZWW8+l5j7ym5Nk
-         6Ezg==
+        bh=fobpxe2Vh3rTegR8aAILQO/aor/jN2XTUZh+y2BjRx8=;
+        b=p0vcB9NOqpDYcOFBUgjJtMCwF6u2j2jVYTScX1y2/6gMwv22HEnMNzigrsNRNvZbMY
+         fbmdwyutBRnJqkmZXJaWUm1xJ0c/uPYJslawKx77u4kN4PQwydalmy8slyP7J2De9dfl
+         N3t9pLZ7Nj7nARI6GTPETalZ3gx8ySvxsgSdz6o50H9bsdG4lI1I6pBTgtzbbqOK7VvP
+         c1KAp4StwpRAwDGi5bzdc3oiPOHaP5EQxwQMjq0vp7m2xUYcgzME0pa1Mig2T5tX30+d
+         fa4Eu8f6v8k9+JYXYw8Tt0Iqmsl3cFAZ5v4tQxHwqeQ/Czw4iXsHyL7Z8iAPcBsnJfsH
+         laIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687592347; x=1690184347;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1687592955; x=1690184955;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XVdAZfHRZ6u7osPMfY1qK+xI94SNWiX6MJMl3Svpx34=;
-        b=HnUqyr4YSDHpwIuDm6/xStdJr2FummsqW10jUvlXLkm8Gw43Y7oY+31JObwcSAZdbW
-         s42fSSx/qCULYtAEO7w07vwj/YRyTyDzO3xz62xWabGCB6HUjSD+BW8LjchSQhmzfIMr
-         Ac1nex9k44pW+q2i98rrLScjCHa5pFLNC6nMsE8hKrzdIfDwulsub6cwOtYuqkVK/Hso
-         1b/fKQ7eQKO4PfX9XMALr0e/HKpJYgNRgF+7cCGP2kQgfDcG0VGKdVvnpUzJ2yDoB0h3
-         51SmFSOjIoeI0U5aCYPSJUuAm0pfa/wJG9Ah9iuHbsuIXq8MU2QFqxJUdxRWa2oZSSb2
-         b/TQ==
-X-Gm-Message-State: AC+VfDzI/XIb+V7ft25c750VjFUWNSiceyEbaH/IG/kxd1GXEiw9nB8C
-        Ps3Gxppz0Uqhy6MuaEw1RFfTUA==
-X-Google-Smtp-Source: ACHHUZ7tKT/4JTpFEGf6HPPRHWpY3Wpj7qBTPZ5d9erU7Y4QOGAHnB07BZ2jcM0YimyIpPzQjzaehQ==
-X-Received: by 2002:a05:6402:1212:b0:51a:3e67:3514 with SMTP id c18-20020a056402121200b0051a3e673514mr18616484edw.24.1687592346828;
-        Sat, 24 Jun 2023 00:39:06 -0700 (PDT)
+        bh=fobpxe2Vh3rTegR8aAILQO/aor/jN2XTUZh+y2BjRx8=;
+        b=dL3watLpc/nmmjRCLZDO4b4zGKGgtwJ3sjXWiN8Tb7JePsTmUdA4G3BnRYstNxicUH
+         Pk7t0tbFzwFk3qsHs4lTPc0jaUderRJjaswpGhs6uQ5h9kpcilTUCgg3QE+Ow3GaWule
+         PNTv3hciKAeSUEEsPeqe9sYWOapzviYtGHWj6dpfhZkS44g2wRIR62qoum902gRe4NfP
+         jsPcQ65lBxkPXQu2ZX05h/8nUoJUPhEMEtMd/ZvBLxAlPCn9VCae5A8NzJsd3vqSJTiG
+         TogviVVkMhKYej65wCtw+9dCtpRu0huxPitJs9hRu4ZP5A4IrGHZcnU7kAc6N91es2SI
+         sZzw==
+X-Gm-Message-State: AC+VfDzA1a0/yI3omBh0ydn6+ZCvZ5i8K+dJyF2/DmoNkmLzGLc6h094
+        KcqYQSf7VAkASPxt2wSfu25kbg==
+X-Google-Smtp-Source: ACHHUZ5zxQNQmvecCWEX+T8SpICSGCyG7Q95vSIHvgEfe3ifIVl00Aelqo52kll7A4K7AbgmyvUGYg==
+X-Received: by 2002:a17:907:805:b0:989:450:e57d with SMTP id wv5-20020a170907080500b009890450e57dmr11352975ejb.73.1687592955055;
+        Sat, 24 Jun 2023 00:49:15 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id w15-20020a50fa8f000000b0051bfa07af4asm383979edr.93.2023.06.24.00.39.05
+        by smtp.gmail.com with ESMTPSA id bm4-20020a170906c04400b00973ca837a68sm574507ejb.217.2023.06.24.00.49.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Jun 2023 00:39:06 -0700 (PDT)
-Message-ID: <a3ece9a5-7718-020d-66b1-be6885fb1da2@linaro.org>
-Date:   Sat, 24 Jun 2023 09:39:04 +0200
+        Sat, 24 Jun 2023 00:49:14 -0700 (PDT)
+Message-ID: <f1ff2c32-df2a-e349-1227-e5a93fe37c92@linaro.org>
+Date:   Sat, 24 Jun 2023 09:49:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 09/15] arm64: dts: qcom: sc7280-crd: add dummy Bluetooth
- VDDIO supply
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH 5/5] scsi: dt-bindings: ufs: qcom: Fix warning for sdm845
+ by adding reg-names
+To:     Rob Herring <robh@kernel.org>,
+        Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Nikita Travkin <nikita@trvn.ru>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230617171541.286957-1-krzysztof.kozlowski@linaro.org>
- <20230617171541.286957-9-krzysztof.kozlowski@linaro.org>
- <29f6fb78-c122-2b71-61b8-2dc9aa27ad1d@linaro.org>
- <CAD=FV=UMqrAU9cLy3Ew5o1MJyNDAAG2TY1mvMkY2-8kiw6qpjg@mail.gmail.com>
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20230623113009.2512206-1-abel.vesa@linaro.org>
+ <20230623113009.2512206-6-abel.vesa@linaro.org>
+ <cd84b8c6-fac7-ecef-26be-792a1b04a102@linaro.org>
+ <CTK1AI4TVYRZ.F77OZB62YYC0@otso> <20230623211746.GA1128583-robh@kernel.org>
+Content-Language: en-US
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=UMqrAU9cLy3Ew5o1MJyNDAAG2TY1mvMkY2-8kiw6qpjg@mail.gmail.com>
+In-Reply-To: <20230623211746.GA1128583-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -88,74 +92,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/06/2023 20:34, Doug Anderson wrote:
-> Hi,
+On 23/06/2023 23:17, Rob Herring wrote:
+>> With my private mailbox I just have a different folder for patches that
+>> have been sent which I archive once they're applied, but with work GMail
+>> I don't see how I can easily replicate this since it's also not grouping
+>> threads properly.
 > 
-> On Mon, Jun 19, 2023 at 6:14 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 17.06.2023 19:15, Krzysztof Kozlowski wrote:
->>> Bluetooth requires VDDIO supply.  Due to lack of schematics provide
->>> something dummy to satisfy `dtbs_check`:
->>>
->>>   sc7280-crd-r3.dtb: bluetooth: 'vddio-supply' is a required property
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->> For this:
->>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>
->> +CC Doug to perhaps fix this properly (though I think we should have got
->> it through the cros list anyway)
->>
->> Konrad
->>>  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts | 11 +++++++++++
->>>  1 file changed, 11 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
->>> index afae7f46b050..b1aa5b0ee95c 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
->>> @@ -24,6 +24,13 @@ aliases {
->>>       chosen {
->>>               stdout-path = "serial0:115200n8";
->>>       };
->>> +
->>> +     bt_vddio: regulator-bt-vddio {
->>> +             compatible = "regulator-fixed";
->>> +             regulator-name = "bt-vddio";
->>> +             regulator-min-microvolt = <1800000>;
->>> +             regulator-max-microvolt = <1800000>;
->>> +     };
->>>  };
->>>
->>>  &apps_rsc {
->>> @@ -38,6 +45,10 @@ vreg_s1k_1p0: smps1 {
->>>       };
->>>  };
->>>
->>> +&bluetooth {
->>> +     vddio-supply = <&bt_vddio>;
->>> +};
->>> +
-> 
-> I would have a hard time believing that the more correct fix wouldn't be:
-> 
-> vddio-supply = <&vreg_l18b_1p8>;
-> 
-> Specifically L18B is what we have on the newer CRD (the one that is
-> considered a "herobrine" and includes Qcard) and also IDP2. In terms
-> of timeline / similarities, CRD-rev3 falls in between IDP2 and newer
-> CRD. These both agree on L18B. The only board that uses something
-> different (L19B) is the very old IDP1.
-> 
-> That being said, Qualcomm has never provided (at least to me)
-> schematics for any given reference board. Whenever asked, I was always
-> pointed at schematics that were said to be "close enough". Thus, I
-> can't really give a definitive answer here. Even so, pointing at L18B
-> seems to me to be 99% likely to be correct.
+> Yeah, GMail sucks for that. I use 'lei' to get all my patches and 
+> replies to them (though its caching will miss replies). Then I delete 
+> them from the mbox when they are applied or otherwise finished. lei 
+> updates won't re-add them to the mbox.
 
-99% is good enough for me. Thanks, I will send a v2 after the merge window.
+That's interesting approach. What's your lei search query for getting
+your patches? "f:rob" would get all your threads you participated in.
 
 Best regards,
 Krzysztof
