@@ -2,175 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFC8B73C731
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 08:57:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A3F473C735
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 09:02:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbjFXG5w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 02:57:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39668 "EHLO
+        id S231169AbjFXHCF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 03:02:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjFXG5v (ORCPT
+        with ESMTP id S230152AbjFXHCA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 02:57:51 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1D91706
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 23:57:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2149860AB8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 06:57:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72652C433C0;
-        Sat, 24 Jun 2023 06:57:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687589869;
-        bh=toF4EBgCXkrjlP8EG+AMEChN1VhN9P26lMjqYGNkT1Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nouXr1Z2SVd7KsHroM2bVeZ8pPIZvGJXpA2zA1HsYg6hKIeip3KO81zs68UOewz9M
-         UWxWWVdPumpO5mIuj2Hiz8mGAOw+v3tb4wuNEgl3rlC6kaQ2hrsOrLxEUjbca5neZO
-         yowOLwo9md8Dwhjt8eRdg35IuN+v24vobk/e9MZfDZlapvxmgelrgQIq7o+cEHubDN
-         giCJB3gXdhAcNIRAEjp3UtWsbFVFUrB520rJiloIrKcQBLSVQzQggagmmWYm+4bBer
-         hP21SZYvDYFdWDzR0mSKFadWPVmlifuaZroQ0ifo7jmpi3up4Klbc11MKMKlq4G71A
-         l4RTnBNFt8SBA==
-Date:   Sat, 24 Jun 2023 12:27:34 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Duke =?utf-8?B?WGluKOi+m+WuieaWhyk=?= <duke.xin@quectel.com>
-Cc:     Duke =?utf-8?B?WGluKOi+m+WuieaWhyk=?= <duke_xinanwen@163.com>,
-        "loic.poulain@linaro.org" <loic.poulain@linaro.org>,
-        "slark_xiao@163.com" <slark_xiao@163.com>,
-        "fabio.porcedda@gmail.com" <fabio.porcedda@gmail.com>,
-        "koen.vandeputte@citymesh.com" <koen.vandeputte@citymesh.com>,
-        "song.fc@gmail.com" <song.fc@gmail.com>,
-        "bhelgaas@google.com" <bhelgaas@google.com>,
-        "mhi@lists.linux.dev" <mhi@lists.linux.dev>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Jerry =?utf-8?B?TWVuZyjokpnmnbAp?= <jerry.meng@quectel.com>
-Subject: Re: =?utf-8?B?5Zue5aSNOiBbUEFUQ0ggdjRdIGJ1czogbWhpOiBob3N0OiBw?=
- =?utf-8?Q?ci=5Fgeneric=3A?= Add support for quectel's new EM160R-GL product
-Message-ID: <20230624065734.7az2zttz7yzq7adj@thinkpad>
-References: <d86d1878598b633b437f87e5b75196079-6-23kernel.org@g.corp-email.com>
- <20230609153800.GC6847@thinkpad>
- <SEZPR06MB6087B403321E6528CB5589428454A@SEZPR06MB6087.apcprd06.prod.outlook.com>
- <SEZPR06MB608764064A2D2E91117C2610845DA@SEZPR06MB6087.apcprd06.prod.outlook.com>
+        Sat, 24 Jun 2023 03:02:00 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D704E26AF
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:01:57 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51d5569e4d1so371004a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:01:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687590116; x=1690182116;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Rstg4NpttCkFKjk4xPOPy5qzsYOhiiNR5cuB32vmPTU=;
+        b=xCetTBRI+jYa1hkw8BFGBLtJgUWF0KulNspNAD2p6n2aAKdWT3J+pzJk4UFWiurGQ1
+         XvDFEQcrKWqde35nugJ3hu3vRP/S5lPM9fs23Jav2N/fsF9Ji4AVxmEb1SwfY4kpQAsR
+         8UcNVk1xTl/iMcwh0lqjT/IxnZB/2/fL/6kTrYcJE9xi8uhd+z4ijDwUXW6IVyf+1zeJ
+         ZCFD4kBl6ofbubatr5AdgaURaA8eJR6AjiefEpHnMT6HASIpA5C4j2DcRS7TtJRzFnkJ
+         3nArBiKbR7RRS5Kk2RFYbWOaihX62SJjf9ZLZOvkIOPuSgwzVeYhsUNV744EXvYWW9X9
+         OfLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687590116; x=1690182116;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rstg4NpttCkFKjk4xPOPy5qzsYOhiiNR5cuB32vmPTU=;
+        b=OiKrWe8gRph4yyXfF2KGv8sF8Czqja3FUKUm2wdWwNYud7M9Mv2vLbL8XkiD8l/cs/
+         1AjC44JA/YrQygcJxNXSYWY5oRY1dgltxriuogxUpP3gh4puvaZLegXwnQ7BZJ8MiOXH
+         bKPojtb2cp8vaJ+J4yA3inOKwhF6EBcIaaguYQZ0e6tiq306at2QQXgj6k1RcwmfTeTn
+         R61lOICpeyCfCX/e7l0Zeoo7rD3K2VVfFIdlYX+yBJ69v0nQXsZdRiBQ/yx7BYNt5lSX
+         vommzZQlx4s1l6hgfhrI9eCUR5p/eLPkauj3ZcHJjyJFGwl2xibA0O4N4mfWETC14N7Y
+         x4nw==
+X-Gm-Message-State: AC+VfDwmF1/ja2icwCwO5Lw9y/i2cLJ6j/SMJFPrB3TH9f+QJA3ugGHN
+        EsD2CSf4aZIQgELUMckD7fnCxA==
+X-Google-Smtp-Source: ACHHUZ5QlyQLJpJ+SDCgTV0vCOMYhcaQ7VpHCOj3aJd7W47UVPI8CTRjhYnV64/SRx8cnsrpCDrIVg==
+X-Received: by 2002:a17:907:9812:b0:98d:10d:a51c with SMTP id ji18-20020a170907981200b0098d010da51cmr6420472ejc.75.1687590116254;
+        Sat, 24 Jun 2023 00:01:56 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id o18-20020a170906289200b00982b204678fsm537134ejd.207.2023.06.24.00.01.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Jun 2023 00:01:55 -0700 (PDT)
+Message-ID: <8d21467a-83a4-8478-dbf5-edd77461e6dc@linaro.org>
+Date:   Sat, 24 Jun 2023 09:01:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <SEZPR06MB608764064A2D2E91117C2610845DA@SEZPR06MB6087.apcprd06.prod.outlook.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH V2 13/13] arm64: dtsi: qcom: ipq9574: Add nodes to bring
+ up multipd
+Content-Language: en-US
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, jassisinghbrar@gmail.com,
+        mathieu.poirier@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, quic_eberman@quicinc.com, quic_mojha@quicinc.com,
+        kvalo@kernel.org, loic.poulain@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com, quic_varada@quicinc.com,
+        quic_devipriy@quicinc.com
+References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
+ <20230521222852.5740-14-quic_mmanikan@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230521222852.5740-14-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 10:36:36AM +0000, Duke Xin(辛安文) wrote:
-> Hi Mani
+On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
+> Enable nodes required for multipd remoteproc bring up.
 > 
-> Regarding [PATCH v4] submission for review, I would like to confirm with you whether there are any defects that need to be corrected?
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> ---
+> Changes in V2:
+> 	- Corrected syntax like alignmnet and kept nodes in sorted order.
+> 	- Added 'firmware-name' property.
 > 
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 118 ++++++++++++++++++++++++++
+>  1 file changed, 118 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 0e04549c69a5..ff0da53ba05f 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -160,6 +160,11 @@
+>  			no-map;
+>  		};
+> 
+> +		q6_region: wcnss@4ab00000 {
+> +			reg = <0x0 0x4ab00000 0x0 0x2b00000>;
+> +			no-map;
+> +		};
+> +
+>  		smem@4aa00000 {
+>  			compatible = "qcom,smem";
+>  			reg = <0x0 0x4aa00000 0x0 0x00100000>;
+> @@ -697,6 +702,95 @@
+>  			};
+>  		};
+> 
+> +		q6v5_wcss: remoteproc@cd00000 {
+> +			compatible = "qcom,ipq9574-q6-mpd";
+> +			reg = <0x0cd00000 0x4040>;
+> +			firmware-name = "IPQ9574/q6_fw.mdt",
+> +					"IPQ9574/m3_fw.mdt";
 
-Patch has been applied to mhi-next branch and will be part of v6.5 release:
-https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/commit/?h=mhi-next&id=6bb6aba2f57ab58a8853bf09cc4e875a46646c0b
+Here and...
 
-- Mani
+> +			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wcss_smp2p_in 0 0>,
+> +					      <&wcss_smp2p_in 1 0>,
+> +					      <&wcss_smp2p_in 2 0>,
+> +					      <&wcss_smp2p_in 3 0>;
+> +			interrupt-names = "wdog",
+> +					  "fatal",
+> +					  "ready",
+> +					  "handover",
+> +					  "stop-ack";
+> +
+> +			qcom,smem-states = <&wcss_smp2p_out 0>,
+> +					   <&wcss_smp2p_out 1>;
+> +			qcom,smem-state-names = "shutdown",
+> +						"stop";
+> +			memory-region = <&q6_region>;
+> +
+> +			glink-edge {
+> +				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
+> +				label = "rtr";
+> +				qcom,remote-pid = <1>;
+> +				mboxes = <&apcs_glb 8>;
+> +			};
+> +
+> +			pd-1 {
+> +				compatible = "qcom,ipq9574-wcss-ahb-mpd";
+> +				firmware-name = "IPQ9574/q6_fw.mdt";
 
-> 
-> 辛安文  Duke Xin | Software Department IX Engineer | Quectel Wireless Solutions Co., Ltd. 
->             
-> Mobile: +86-15375456183 | Email : Duke.xin@quectel.com  | Tel: +86-0551-65869386-8632
-> Website: www.quectel.com  | QQ: 602659072 | Wechat: 15375456183
-> 
-> Building 1-C, China Speech Valley Area A, 3335 Xiyou Road, High-tech Zone, Hefei, Anhui 230088, China    
-> 安徽省合肥市高新区习友路3335号中国（合肥）国际智能语音产业园A区1号中试楼 230088
-> HQ: Building 5, Shanghai Business Park Phase III (Area B), No.1016 Tianlin Road, Minhang District, Shanghai 200233, China
-> 总部：上海市闵行区田林路1016号科技绿洲3期（B区）5号楼  200233
-> 
-> -----邮件原件-----
-> 发件人: Duke Xin(辛安文) 
-> 发送时间: 2023年6月12日 10:02
-> 收件人: Manivannan Sadhasivam <mani@kernel.org>; Duke Xin(辛安文) <duke_xinanwen@163.com>
-> 抄送: loic.poulain@linaro.org; slark_xiao@163.com; fabio.porcedda@gmail.com; koen.vandeputte@citymesh.com; song.fc@gmail.com; bhelgaas@google.com; mhi@lists.linux.dev; linux-arm-msm@vger.kernel.org; Jerry Meng(蒙杰) <jerry.meng@QUECTEL.COM>
-> 主题: 回复: [PATCH v4] bus: mhi: host: pci_generic: Add support for quectel's new EM160R-GL product
-> 
-> Hi Mani
-> 
-> Ok. Previously I used to see same modules having two different IDs because they share different baseline (from qcom). I will amend the commit message accordingly.
-> For future patches, please include these info in the commit message.
-> >>  Got it. In the future patch, I will add the corresponding supplementary information (such as baseline) to make a difference.
->   
->   Thank you very much for your patient review again.
-> 
-> 辛安文  Duke Xin | Software Department IX Engineer | Quectel Wireless Solutions Co., Ltd. 
->             
-> Mobile: +86-15375456183 | Email : Duke.xin@quectel.com  | Tel: +86-0551-65869386-8632
-> Website: www.quectel.com  | QQ: 602659072 | Wechat: 15375456183
-> 
-> Building 1-C, China Speech Valley Area A, 3335 Xiyou Road, High-tech Zone, Hefei, Anhui 230088, China    
-> 安徽省合肥市高新区习友路3335号中国（合肥）国际智能语音产业园A区1号中试楼 230088
-> HQ: Building 5, Shanghai Business Park Phase III (Area B), No.1016 Tianlin Road, Minhang District, Shanghai 200233, China
-> 总部：上海市闵行区田林路1016号科技绿洲3期（B区）5号楼  200233
-> 
-> -----邮件原件-----
-> 发件人: Manivannan Sadhasivam <mani@kernel.org> 
-> 发送时间: 2023年6月9日 23:38
-> 收件人: Duke Xin(辛安文) <duke_xinanwen@163.com>
-> 抄送: loic.poulain@linaro.org; slark_xiao@163.com; fabio.porcedda@gmail.com; koen.vandeputte@citymesh.com; song.fc@gmail.com; bhelgaas@google.com; mhi@lists.linux.dev; linux-arm-msm@vger.kernel.org; Jerry Meng(蒙杰) <jerry.meng@quectel.com>; Duke Xin(辛安文) <duke.xin@quectel.com>
-> 主题: Re: [PATCH v4] bus: mhi: host: pci_generic: Add support for quectel's new EM160R-GL product
-> 
-> On Thu, Jun 08, 2023 at 02:29:27AM -0700, Duke Xin(辛安文) wrote:
-> > The product's would use the same config as previous EM160R-GL
-> > 
-> > Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
-> 
-> Modified the commit message and subject to reflect the usecase and applied to mhi-next!
-> 
-> - Mani
-> 
-> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> > ---
-> > Changelog
-> > 
-> > v3 -> v4
-> > 
-> > * Update commit message to include the changelog and reviewd tag.
-> > 
-> > v2 -> v3
-> > 
-> > * Add patch CC to mhi@lists.linux.dev.
-> > 
-> > v1 -> v2
-> > 
-> > * Remove Space before */ and "for laptop" description.
-> > ---
-> >  drivers/bus/mhi/host/pci_generic.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> > 
-> > diff --git a/drivers/bus/mhi/host/pci_generic.c 
-> > b/drivers/bus/mhi/host/pci_generic.c
-> > index 70e37c490150..5f204b819e95 100644
-> > --- a/drivers/bus/mhi/host/pci_generic.c
-> > +++ b/drivers/bus/mhi/host/pci_generic.c
-> > @@ -591,6 +591,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
-> >  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
-> >  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> > +	/* EM160R-GL (sdx24) */
-> > +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x100d),
-> > +		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-> >  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
-> > --
-> > 2.25.1
-> > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+... here - why do you have firmware in both places?
 
--- 
-மணிவண்ணன் சதாசிவம்
+> +				interrupts-extended = <&wcss_smp2p_in 8 0>,
+> +						      <&wcss_smp2p_in 9 0>,
+> +						      <&wcss_smp2p_in 12 0>,
+> +						      <&wcss_smp2p_in 11 0>;
+> +				interrupt-names = "fatal",
+> +						  "ready",
+> +						  "spawn-ack",
+> +						  "stop-ack";
+> +				qcom,smem-states = <&wcss_smp2p_out 8>,
+> +						   <&wcss_smp2p_out 9>,
+> +						   <&wcss_smp2p_out 10>;
+> +				qcom,smem-state-names = "shutdown",
+> +							"stop",
+> +							"spawn";
+> +			};
+> +
+> +			pd-2 {
+> +				compatible = "qcom,ipq5018-wcss-pcie-mpd";
+
+This compatible is confusing for this device.
+
+Best regards,
+Krzysztof
+
