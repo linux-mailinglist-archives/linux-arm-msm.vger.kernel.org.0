@@ -2,102 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C29E73CAE7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 14:31:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 761DB73CB19
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 15:48:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231911AbjFXMbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 08:31:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53546 "EHLO
+        id S232993AbjFXNss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 09:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230388AbjFXMbF (ORCPT
+        with ESMTP id S232834AbjFXNsr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 08:31:05 -0400
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [IPv6:2607:fcd0:100:8a00::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7958E5D;
-        Sat, 24 Jun 2023 05:31:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=hansenpartnership.com; s=20151216; t=1687609858;
-        bh=mVIJR4nMBjtez2qGjfCXvDgWZNOR+zXfVhJPIUl/Iv4=;
-        h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-        b=VVs3b+cKfTVsbQ04tkLwm1dwlaFoywd9QVlDOQ1Mla3JQSx0THZQB/I2qZV/kngZg
-         rxfUENf2roXtZmUFsEr2WrVwlyHCnHN3m7LJLwq12W/3Q8K2xLawib0u9p3y81jMGz
-         zPyD5W3t7sI49wOt6Bn86Soufm1TNXZ+2yrqwMso=
-Received: from localhost (localhost [127.0.0.1])
-        by bedivere.hansenpartnership.com (Postfix) with ESMTP id 9E95E12862C2;
-        Sat, 24 Jun 2023 08:30:58 -0400 (EDT)
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
- by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavis, port 10024)
- with ESMTP id JMB_OKpXtfZI; Sat, 24 Jun 2023 08:30:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=hansenpartnership.com; s=20151216; t=1687609858;
-        bh=mVIJR4nMBjtez2qGjfCXvDgWZNOR+zXfVhJPIUl/Iv4=;
-        h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-        b=VVs3b+cKfTVsbQ04tkLwm1dwlaFoywd9QVlDOQ1Mla3JQSx0THZQB/I2qZV/kngZg
-         rxfUENf2roXtZmUFsEr2WrVwlyHCnHN3m7LJLwq12W/3Q8K2xLawib0u9p3y81jMGz
-         zPyD5W3t7sI49wOt6Bn86Soufm1TNXZ+2yrqwMso=
-Received: from [IPv6:2601:5c4:4302:c21::a774] (unknown [IPv6:2601:5c4:4302:c21::a774])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (Client did not present a certificate)
-        by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id F39711286268;
-        Sat, 24 Jun 2023 08:30:56 -0400 (EDT)
-Message-ID: <38e69be8524c85062e627f77ed7ad766905e60a3.camel@HansenPartnership.com>
-Subject: Re: [PATCH 5/5] scsi: dt-bindings: ufs: qcom: Fix warning for
- sdm845 by adding reg-names
-From:   James Bottomley <James.Bottomley@HansenPartnership.com>
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
+        Sat, 24 Jun 2023 09:48:47 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46AAF1FD7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 06:48:45 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f954d7309fso2026778e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 06:48:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687614523; x=1690206523;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=d9YJLCIpYToQE57X7+5G5EtcnZ1RMPAgUeTIP11pd3U=;
+        b=yHPJtC7Mp2cKx/Prulu7JGSmBR2bUP0DTFHIsXsdA5OrKiie2bdUh3DlzVcyickWop
+         BrP9M9h3zu3fXX2393zawF/mVYsSPomYUzmEnxwy5CSLSa35xCek3z8sovdA7k1cyaSt
+         95R8yiJ7phSb/skwB+BYeVTtus5kcH38LmZzGscMFWb0KIdWXrEDKZZOgr1LrVMCqqx0
+         nhGTvmDPk4L+zv4yxSbzGg1OrVpAS2waKKVPVwSeXe6PCUhzZ1TU6zWgoC5NrutHz4yg
+         5cpEvcNJVmDF2o+6GEjdfvsfarw2HIj7vS0HsSoTWELYkjYX7QwiXrvVsQ9GPsW8VTtO
+         B4sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687614523; x=1690206523;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d9YJLCIpYToQE57X7+5G5EtcnZ1RMPAgUeTIP11pd3U=;
+        b=iUTfdG4VagoXsxcEwdruh3b9dtlembPYb53Xr9wBqt4w2hOGvw0vhekcuSdHpLH7oG
+         XMzJyrBHPXXpZmwUuBof0Rxfkxvet08Ts6akyHFDBEk69TjgtTYlP/ExBZmc/vHIq5Td
+         Brlls6mHAbOxrgu87TfULobrDqz4sPWf3GGDsAmz63R/ElDT+CDRmdWRWcGBRM6wgNZQ
+         mOsa7/LR0C+NoOD7rxm+/oIAU/GtEmnvC81Q6ALMbakc9uHdnjQ32hclQi+HF/SuzQyU
+         NE4MbBZJIrjE+M5kRRxy0XBW6nHZEKqizX79YZ+pM8bFs+uwJMFAjGCo5JCdjvSDiZ8V
+         YkBw==
+X-Gm-Message-State: AC+VfDyh65fh4vomzcpVJeNhZmJP7pNlZuFvGhcKT7Sa5tsZTKzYV6c+
+        bfVgx+i4uK+yY3jhVIzxqotWKg==
+X-Google-Smtp-Source: ACHHUZ42jKtX7W+P46oaiEZR1+/HWcRGkV+LXkEy7ADI+/OMe3SZiS9nVNJQHkJyEVtg3yvpJlSVwg==
+X-Received: by 2002:a19:5007:0:b0:4f8:52a8:d123 with SMTP id e7-20020a195007000000b004f852a8d123mr8242945lfb.12.1687614523211;
+        Sat, 24 Jun 2023 06:48:43 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id x11-20020ac259cb000000b004f873e3282asm284858lfn.63.2023.06.24.06.48.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Jun 2023 06:48:42 -0700 (PDT)
+Message-ID: <1b40b16e-025a-c10b-e99b-404246de73fe@linaro.org>
+Date:   Sat, 24 Jun 2023 16:48:41 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 10/15] dt-bindings: msm: dsi-phy-14nm: Document SM6125
+ variant
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Date:   Sat, 24 Jun 2023 08:30:54 -0400
-In-Reply-To: <CTK1AI4TVYRZ.F77OZB62YYC0@otso>
-References: <20230623113009.2512206-1-abel.vesa@linaro.org>
-         <20230623113009.2512206-6-abel.vesa@linaro.org>
-         <cd84b8c6-fac7-ecef-26be-792a1b04a102@linaro.org>
-         <CTK1AI4TVYRZ.F77OZB62YYC0@otso>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 
-MIME-Version: 1.0
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
+ <20230624-sm6125-dpu-v1-10-1d5a638cebf2@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230624-sm6125-dpu-v1-10-1d5a638cebf2@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 2023-06-23 at 14:38 +0200, Luca Weiss wrote:
-> With my private mailbox I just have a different folder for patches
-> that have been sent which I archive once they're applied, but with
-> work GMail I don't see how I can easily replicate this since it's
-> also not grouping threads properly.
+On 24/06/2023 03:41, Marijn Suijten wrote:
+> Document availability of the 14nm DSI PHY on SM6125.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>   Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+> index a43e11d3b00d..60b590f21138 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+> @@ -18,6 +18,7 @@ properties:
+>         - qcom,dsi-phy-14nm
+>         - qcom,dsi-phy-14nm-2290
+>         - qcom,dsi-phy-14nm-660
+> +      - qcom,dsi-phy-14nm-6125
 
-I have something similar, but instead of multiple folders, I use imap
-labels to achieve the same thing (and then evolution search folders to
-sort out the labels).  I believe GMail has some primitive labelling
-system that actually works (unlike exchange), so you might be able to
-get a scheme like that to work.
+Should we start using standard scheme, so "qcom,sm6125-dsi-phy-14nm" ?
 
-For my mobile phone, which doesn't have the sophisticated search
-folders evolution does, I use dovecot virtual folders to achieve the
-same effect.  I'm afraid I don't think GMail has any equivalent of
-this.
-
-James
+>         - qcom,dsi-phy-14nm-8953
+-- 
+With best wishes
+Dmitry
 
