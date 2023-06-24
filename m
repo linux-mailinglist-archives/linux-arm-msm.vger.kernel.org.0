@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FDAD73C9E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 11:10:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25D2D73C9E8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 11:11:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232596AbjFXJKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 05:10:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48594 "EHLO
+        id S232560AbjFXJLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 05:11:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231210AbjFXJKU (ORCPT
+        with ESMTP id S229786AbjFXJLV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 05:10:20 -0400
+        Sat, 24 Jun 2023 05:11:21 -0400
 Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4343A19B7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:10:18 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-987a977f62aso153401366b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:10:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF9319B7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:11:19 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-98e0c1d5289so7277766b.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687597816; x=1690189816;
+        d=linaro.org; s=google; t=1687597878; x=1690189878;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=iyaZqfbPtoW544erxGkV79CDXXxsYM/Fp16IQb+tP9I=;
-        b=jc1Auh5tqvnIULQo0SinoF4pptEI9CJAL3uA1jKLnlNGiTWufhWrhahGAE+h32L1xx
-         hCwdO7h3Vmv1b34q5rAjJbBMrkdAJ8jeyZmjvO+/pFLJkS4CYb8abNyKpQxPGX5ienRW
-         PIJMAwGBAxWfsdY4eyp40JyXmD5mVqTuA7AjloZ2sTj1+fTYOyn35xzG2+XOl0lDTdlS
-         QPyfGp/MBw3L4SDMqlLRDP9AJH7so7ie6Vil1QYZyTe6pApxQk8F1CZiR60hS7V1esSW
-         za+FT3/7dbx3jXeTCm+xsyV8y0gAot6PpCd97/OoF2RdV9kXALgQsFE8fatD+p/d2bEU
-         4+iA==
+        bh=TB9IHENJDTgP3/+RgmCR40mbzefHRkoxy0VpWnLxklY=;
+        b=grwUtLESlVNXp6uim+dHlAYHJFBXetSUjezL5bHBZaNCN4WHItbgPsVqVEFsjYN4Rt
+         2BAB2zpWJwRo9UEqMnSqwJkUbanLf/6B1TSOZLeZ8UfKg2TvccWv5R4eHxIvn5z24DMl
+         qk+juz7k5H9qq5p8oUhdEvxEClDedMtrUTeu1djwzyeMCx2QWE5ZyGXJqSF4iB+D7sFM
+         IorPe6SpPqO7N3InbG456FHlrS70BkvkEJqIrsMdwpNPXQoILbm6jRlrMgiKN3OppCZC
+         39cqq4zhyC9Ea/FvFTODLTojMQmM0Ft5CoePsTengl0SjhapGJAjF1w5j8Ao5uvmcgWP
+         gmGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687597816; x=1690189816;
+        d=1e100.net; s=20221208; t=1687597878; x=1690189878;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iyaZqfbPtoW544erxGkV79CDXXxsYM/Fp16IQb+tP9I=;
-        b=Ru01mgU2tnjJNMkCh2XqJuhGyRmQs3frgqMZ3vbnJhd2nKUky4+cqMBccnmdd3HArA
-         9XBPnP+dIZE0tPcJmTp3OSKlO2flXJxsq2FEdOLxHzKDufOpRw9sGgx9xEBB4dKWYOsl
-         3SuSHUL6Wxd/5UfRiwtHZIHET73LxUMMcNz/5XpypdjM8z2fhxXHEMmzPdxMAFTzOc/7
-         AGldNGIHBam4z0LxJ2wNTZHi//Eek/HX+6obOoXWz/hplfDGiHlv4hp40c/b72QeEN4f
-         aIHn5qFrP2Mgv8iTPEmhHmoq8wHazxmovtsEQqNBcSI1Q/H3iCyYO0vX1dLoCw04dwJV
-         TEuQ==
-X-Gm-Message-State: AC+VfDy3rWy2m0rMzxEucJglf598q7qcroTlp25PsmYPjNADRwuyWvnf
-        jSYXxGBM0KLsqCuZ4q1oYjtOXQ==
-X-Google-Smtp-Source: ACHHUZ4pqNge7JwaJVBPQcyWNxciyTTsdI3G9ALVxmbefnkvykz7tn8SBKrUteVDofWtt9OCuMQg/g==
-X-Received: by 2002:a17:907:7628:b0:98e:a54:42e3 with SMTP id jy8-20020a170907762800b0098e0a5442e3mr173662ejc.54.1687597816650;
-        Sat, 24 Jun 2023 02:10:16 -0700 (PDT)
+        bh=TB9IHENJDTgP3/+RgmCR40mbzefHRkoxy0VpWnLxklY=;
+        b=SRdFcb54rRvn5m9HM5zLaW5CsVIBSeiAv5Bbu3Jppm0diIQbXCx3xpQoxRc8i/u85O
+         J4KZPYZ8U/Gtx9B1f9TcHafngb/qoZMkWpyWdJwWkfIG0m194rIyvlJlu12eFTpiq1Bh
+         ZPA7y2tg2V4GuQNjaNRlLrvBdNVeImcJ9hKSWEyi+DvoblywY0jctNQ8+3SohIrg/njM
+         nY+CPtgewBOaW52BndTphQz/+ONB0eZgItG83+3P936RrIHEQNwudFjD5WXonkmw+kmI
+         +urKluT9gneagPlRju8/uOIoC+0EpI3q7VEOFIZ58nKGxz73CzkWUhVYRh8fp+c4VJda
+         ZyFA==
+X-Gm-Message-State: AC+VfDySqJDAMujTO27PC/K043XJZ49R92vPlvRcfAZKG1sVApDwZOzA
+        YWKg8knVF+CbrJkiBu/YXeUswQ==
+X-Google-Smtp-Source: ACHHUZ4TP0Vdg3BKzhJVTx8ptKa5/v9jsxLjJ+4KkREwbvl+gOjJuEvoSK1K+Qjdqw+DMfHimDsPFQ==
+X-Received: by 2002:a17:907:7293:b0:988:84e8:747c with SMTP id dt19-20020a170907729300b0098884e8747cmr15007406ejc.32.1687597877906;
+        Sat, 24 Jun 2023 02:11:17 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id n3-20020aa7db43000000b0051a4361f3efsm455606edt.61.2023.06.24.02.10.14
+        by smtp.gmail.com with ESMTPSA id u10-20020a056402064a00b00514b3dd8638sm455576edx.67.2023.06.24.02.11.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Jun 2023 02:10:16 -0700 (PDT)
-Message-ID: <0aefd7ef-a877-2501-1db9-d2c14c6ffdb8@linaro.org>
-Date:   Sat, 24 Jun 2023 11:10:13 +0200
+        Sat, 24 Jun 2023 02:11:17 -0700 (PDT)
+Message-ID: <f880e10e-080e-4c80-4faa-fc2c0e62f260@linaro.org>
+Date:   Sat, 24 Jun 2023 11:11:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 04/15] dt-bindings: clock: qcom,dispcc-sm6125: Allow
- power-domains property
+Subject: Re: [PATCH 05/15] dt-bindings: display/msm: dsi-controller-main:
+ Document SM6125
 Content-Language: en-US
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
         Andy Gross <agross@kernel.org>,
@@ -84,9 +84,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
 References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-4-1d5a638cebf2@somainline.org>
+ <20230624-sm6125-dpu-v1-5-1d5a638cebf2@somainline.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230624-sm6125-dpu-v1-4-1d5a638cebf2@somainline.org>
+In-Reply-To: <20230624-sm6125-dpu-v1-5-1d5a638cebf2@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -100,17 +100,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/06/2023 02:41, Marijn Suijten wrote:
-> On SM6125 the dispcc block is gated behind VDDCX: allow this domain to
-> be configured.
+> Document general compatibility of the DSI controller on SM6125.
 > 
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
+>  Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
 
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
