@@ -2,183 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A3F473C735
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 09:02:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86F4073C73D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 09:12:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231169AbjFXHCF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 03:02:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39848 "EHLO
+        id S231432AbjFXHMK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 03:12:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230152AbjFXHCA (ORCPT
+        with ESMTP id S231467AbjFXHMI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 03:02:00 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D704E26AF
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:01:57 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51d5569e4d1so371004a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 00:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687590116; x=1690182116;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Rstg4NpttCkFKjk4xPOPy5qzsYOhiiNR5cuB32vmPTU=;
-        b=xCetTBRI+jYa1hkw8BFGBLtJgUWF0KulNspNAD2p6n2aAKdWT3J+pzJk4UFWiurGQ1
-         XvDFEQcrKWqde35nugJ3hu3vRP/S5lPM9fs23Jav2N/fsF9Ji4AVxmEb1SwfY4kpQAsR
-         8UcNVk1xTl/iMcwh0lqjT/IxnZB/2/fL/6kTrYcJE9xi8uhd+z4ijDwUXW6IVyf+1zeJ
-         ZCFD4kBl6ofbubatr5AdgaURaA8eJR6AjiefEpHnMT6HASIpA5C4j2DcRS7TtJRzFnkJ
-         3nArBiKbR7RRS5Kk2RFYbWOaihX62SJjf9ZLZOvkIOPuSgwzVeYhsUNV744EXvYWW9X9
-         OfLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687590116; x=1690182116;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rstg4NpttCkFKjk4xPOPy5qzsYOhiiNR5cuB32vmPTU=;
-        b=OiKrWe8gRph4yyXfF2KGv8sF8Czqja3FUKUm2wdWwNYud7M9Mv2vLbL8XkiD8l/cs/
-         1AjC44JA/YrQygcJxNXSYWY5oRY1dgltxriuogxUpP3gh4puvaZLegXwnQ7BZJ8MiOXH
-         bKPojtb2cp8vaJ+J4yA3inOKwhF6EBcIaaguYQZ0e6tiq306at2QQXgj6k1RcwmfTeTn
-         R61lOICpeyCfCX/e7l0Zeoo7rD3K2VVfFIdlYX+yBJ69v0nQXsZdRiBQ/yx7BYNt5lSX
-         vommzZQlx4s1l6hgfhrI9eCUR5p/eLPkauj3ZcHJjyJFGwl2xibA0O4N4mfWETC14N7Y
-         x4nw==
-X-Gm-Message-State: AC+VfDwmF1/ja2icwCwO5Lw9y/i2cLJ6j/SMJFPrB3TH9f+QJA3ugGHN
-        EsD2CSf4aZIQgELUMckD7fnCxA==
-X-Google-Smtp-Source: ACHHUZ5QlyQLJpJ+SDCgTV0vCOMYhcaQ7VpHCOj3aJd7W47UVPI8CTRjhYnV64/SRx8cnsrpCDrIVg==
-X-Received: by 2002:a17:907:9812:b0:98d:10d:a51c with SMTP id ji18-20020a170907981200b0098d010da51cmr6420472ejc.75.1687590116254;
-        Sat, 24 Jun 2023 00:01:56 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id o18-20020a170906289200b00982b204678fsm537134ejd.207.2023.06.24.00.01.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Jun 2023 00:01:55 -0700 (PDT)
-Message-ID: <8d21467a-83a4-8478-dbf5-edd77461e6dc@linaro.org>
-Date:   Sat, 24 Jun 2023 09:01:52 +0200
+        Sat, 24 Jun 2023 03:12:08 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 445542720;
+        Sat, 24 Jun 2023 00:12:07 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35O6wKZU011250;
+        Sat, 24 Jun 2023 07:11:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=9slJZrGRD94l5YVeMjlqxxdCSHlkyyjTep/49ZplkdY=;
+ b=miIuSJcd1ljpInlOZ2FLue5kk4+L36FpwgGXR6s5Nw4IgzgUZTHfenzCzEsHMZ2CK8CO
+ yGhglU6MGdworPCQAgU4PZ73PAZ7ZFWGGeWdZ3LzSBFQnV0O1i+3RNitTPUNKmEPoBTx
+ Lu/+qonIwGBUqMLJ1/0hdvZ7rBAudkepKSIUdOSULv3ZzvKXSOgoG9Fq2R/vp6gwTRzV
+ cBU9EWJ+h94Qr/GV+Dam94fT30Zkbe+loyq6BekcbIf4RluOJZeD7lT37k6VFUl7HfjX
+ w5ZhIgBE8wZomA44nlUKGiHQjHBBVA+rJR44PG5UcMCnGuVZHWy2XvNXw6/kxG4txVMp Mw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdqew09bg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 24 Jun 2023 07:11:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35O7BiAt019783
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 24 Jun 2023 07:11:44 GMT
+Received: from [10.216.12.107] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 24 Jun
+ 2023 00:11:38 -0700
+Message-ID: <5ee7579c-7190-fb0f-0202-297aa0f7fc08@quicinc.com>
+Date:   Sat, 24 Jun 2023 12:41:34 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V2 13/13] arm64: dtsi: qcom: ipq9574: Add nodes to bring
- up multipd
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v9 10/10] arm64: dts: qcom: sa8540-ride: Enable first port
+ of tertiary usb controller
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-11-quic_kriskura@quicinc.com>
+ <144c5bff-6d81-b681-57ac-b1e51993c9b3@linaro.org>
 Content-Language: en-US
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, jassisinghbrar@gmail.com,
-        mathieu.poirier@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, quic_eberman@quicinc.com, quic_mojha@quicinc.com,
-        kvalo@kernel.org, loic.poulain@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com, quic_varada@quicinc.com,
-        quic_devipriy@quicinc.com
-References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
- <20230521222852.5740-14-quic_mmanikan@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230521222852.5740-14-quic_mmanikan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <144c5bff-6d81-b681-57ac-b1e51993c9b3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: MwjbgO1r-IzDCIaUfuX2TKemUuu7qQ1k
+X-Proofpoint-GUID: MwjbgO1r-IzDCIaUfuX2TKemUuu7qQ1k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-24_04,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ malwarescore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 mlxlogscore=999 adultscore=0 phishscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306240066
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
-> Enable nodes required for multipd remoteproc bring up.
+
+
+On 6/24/2023 4:12 AM, Konrad Dybcio wrote:
+> On 21.06.2023 06:36, Krishna Kurapati wrote:
+>> There is now support for the multiport USB controller this uses so
+>> enable it.
+>>
+>> The board only has a single port hooked up (despite it being wired up to
+>> the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
+>> which by default on boot is selected to mux properly. Grab the gpio
+>> controlling that and ensure it stays in the right position so USB 2.0
+>> continues to be routed from the external port to the SoC.
+>>
+>> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+>> [Krishna: Rebased on top of usb-next]
+> If that's your only change to this patch, you should have kept the
+> Author: field unchanged.
 > 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
-> Changes in V2:
-> 	- Corrected syntax like alignmnet and kept nodes in sorted order.
-> 	- Added 'firmware-name' property.
+Sure, will do reset-author and resubmit the patch next version.
+
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+> Same comments as patch 9
 > 
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 118 ++++++++++++++++++++++++++
->  1 file changed, 118 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 0e04549c69a5..ff0da53ba05f 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -160,6 +160,11 @@
->  			no-map;
->  		};
-> 
-> +		q6_region: wcnss@4ab00000 {
-> +			reg = <0x0 0x4ab00000 0x0 0x2b00000>;
-> +			no-map;
-> +		};
-> +
->  		smem@4aa00000 {
->  			compatible = "qcom,smem";
->  			reg = <0x0 0x4aa00000 0x0 0x00100000>;
-> @@ -697,6 +702,95 @@
->  			};
->  		};
-> 
-> +		q6v5_wcss: remoteproc@cd00000 {
-> +			compatible = "qcom,ipq9574-q6-mpd";
-> +			reg = <0x0cd00000 0x4040>;
-> +			firmware-name = "IPQ9574/q6_fw.mdt",
-> +					"IPQ9574/m3_fw.mdt";
+> Konrad
 
-Here and...
+Thanks for the review.
 
-> +			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wcss_smp2p_in 0 0>,
-> +					      <&wcss_smp2p_in 1 0>,
-> +					      <&wcss_smp2p_in 2 0>,
-> +					      <&wcss_smp2p_in 3 0>;
-> +			interrupt-names = "wdog",
-> +					  "fatal",
-> +					  "ready",
-> +					  "handover",
-> +					  "stop-ack";
-> +
-> +			qcom,smem-states = <&wcss_smp2p_out 0>,
-> +					   <&wcss_smp2p_out 1>;
-> +			qcom,smem-state-names = "shutdown",
-> +						"stop";
-> +			memory-region = <&q6_region>;
-> +
-> +			glink-edge {
-> +				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-> +				label = "rtr";
-> +				qcom,remote-pid = <1>;
-> +				mboxes = <&apcs_glb 8>;
-> +			};
-> +
-> +			pd-1 {
-> +				compatible = "qcom,ipq9574-wcss-ahb-mpd";
-> +				firmware-name = "IPQ9574/q6_fw.mdt";
-
-... here - why do you have firmware in both places?
-
-> +				interrupts-extended = <&wcss_smp2p_in 8 0>,
-> +						      <&wcss_smp2p_in 9 0>,
-> +						      <&wcss_smp2p_in 12 0>,
-> +						      <&wcss_smp2p_in 11 0>;
-> +				interrupt-names = "fatal",
-> +						  "ready",
-> +						  "spawn-ack",
-> +						  "stop-ack";
-> +				qcom,smem-states = <&wcss_smp2p_out 8>,
-> +						   <&wcss_smp2p_out 9>,
-> +						   <&wcss_smp2p_out 10>;
-> +				qcom,smem-state-names = "shutdown",
-> +							"stop",
-> +							"spawn";
-> +			};
-> +
-> +			pd-2 {
-> +				compatible = "qcom,ipq5018-wcss-pcie-mpd";
-
-This compatible is confusing for this device.
-
-Best regards,
-Krzysztof
-
+Regards,
+Krishna,
+>>   arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 22 ++++++++++++++++++++++
+>>   1 file changed, 22 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+>> index 24fa449d48a6..53d47593306e 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+>> @@ -309,6 +309,19 @@ &usb_2_qmpphy0 {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&usb_2 {
+>> +	pinctrl-names = "default";
+>> +	pinctrl-0 = <&usb2_en_state>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&usb_2_dwc3 {
+>> +	dr_mode = "host";
+>> +	phy-names = "usb2-port0", "usb3-port0";
+>> +	phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
+>> +};
+>> +
+>>   &xo_board_clk {
+>>   	clock-frequency = <38400000>;
+>>   };
+>> @@ -401,4 +414,13 @@ wake-pins {
+>>   			bias-pull-up;
+>>   		};
+>>   	};
+>> +
+>> +	usb2_en_state: usb2-en-state {
+>> +		/* TS3USB221A USB2.0 mux select */
+>> +		pins = "gpio24";
+>> +		function = "gpio";
+>> +		drive-strength = <2>;
+>> +		bias-disable;
+>> +		output-low;
+>> +	};
+>>   };
