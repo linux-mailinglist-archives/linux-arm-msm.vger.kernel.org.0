@@ -2,154 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84B9673C61B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 03:53:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4698173C635
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 04:03:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230148AbjFXBxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 21:53:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35712 "EHLO
+        id S231445AbjFXCDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 22:03:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjFXBxJ (ORCPT
+        with ESMTP id S229496AbjFXCDf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 21:53:09 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C56273E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 18:53:08 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f86e6e4038so1632468e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 18:53:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687571586; x=1690163586;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xNrGZecLKe91T/RJadHDeBwRyXg51e++/hjjgaZ5Zfo=;
-        b=fd2xR/W9T3VNdMGl2gDzFiJvpXAZKGwDScUe9qk28QUYT5uPn+DR6U3858yc+v8zsL
-         lEJU+cSGuI3Ijm2JKHXTQ9EmcEVoiMwwPAc1VP1XB9j0knwLfBI+PgBYqdw7S9XIlfAL
-         eVqXcrxzzeYSVZ1Yzsn7ZgUDtshcO02Ido4mlJGmVBBIO+A1+jHwNWFon6h3VOYqTMz3
-         XGUIWBHc+Xg0zoADXhnSMWiMcjTyv093GYwBI2V8/4XhfesVkLy0mEBfof8XM+04eRtt
-         KFDqQsmoe/+FtKNvAGR+06TddSqfymXySspmZJbZ8SC8J1/Vqg/L/kFi6CA5FPGRroGl
-         a27g==
+        Fri, 23 Jun 2023 22:03:35 -0400
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35EE269F;
+        Fri, 23 Jun 2023 19:03:33 -0700 (PDT)
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-77acb04309dso49894139f.2;
+        Fri, 23 Jun 2023 19:03:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687571586; x=1690163586;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xNrGZecLKe91T/RJadHDeBwRyXg51e++/hjjgaZ5Zfo=;
-        b=exEYE/4r+c1L1d6LWu8FMzoJyhbNx58vSmW+qK0Ulmp/izILF+98KqcH4RpG7KLSIw
-         LRCG4oMR4+HUqEPXxV1TKOGweWl7eZ680q7RpP6GKvOI8FlSpWHSnWV0nfm40KDbrUiJ
-         LSIEPRnF5J2ybjJPJrO6/CoRM/JeoXXcaIML+aVySGhGw5MhtudCl5o2KZ2UoUzlPqko
-         rXxgJAt8Q6gbfJUYV/mwjBazzdO32eA4DH2awbVnWgYez4kDQF1fKFLP8n3jYKnPKZNL
-         SYMWp8/qV0HBLnTlHeV7slZ+Hi6IKXsyCLLvRxj5sVFmWmFErn1lnyI5kX5wY1n2zNZi
-         iACQ==
-X-Gm-Message-State: AC+VfDzAITC7Lw+qExBNXmeneSLeqjYW0lqmZFdy6PDcSoVVRFPV3B41
-        YnuBWYT5G/kWXqslx/cjfPlKGQ==
-X-Google-Smtp-Source: ACHHUZ4NbvdAMNbfgXRrkwClNB4QE38qmcc1+X8dG5c7wHh6GLwbGWLie6OsLeycuVureCf+/9Mf+w==
-X-Received: by 2002:a05:6512:6d6:b0:4f6:e06:50bb with SMTP id u22-20020a05651206d600b004f60e0650bbmr11455242lff.30.1687571586381;
-        Fri, 23 Jun 2023 18:53:06 -0700 (PDT)
-Received: from [192.168.1.101] (abyk30.neoplus.adsl.tpnet.pl. [83.9.30.30])
-        by smtp.gmail.com with ESMTPSA id c6-20020ac244a6000000b004f85df6e650sm90971lfm.276.2023.06.23.18.53.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jun 2023 18:53:05 -0700 (PDT)
-Message-ID: <f061e2ee-7e9f-474e-c86e-24fa1d4bd10b@linaro.org>
-Date:   Sat, 24 Jun 2023 03:53:03 +0200
+        d=1e100.net; s=20221208; t=1687572213; x=1690164213;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rGg2O0zEvNTaUz+Yqansh6i7dqCak3I39tmxqW21GEg=;
+        b=aB91Q3sM+W0w2wNcFbb8Xw3Z8s3L20JrQxl4Jg5rJGtavzvpV9ifx+OUSOCbEXhgT7
+         dIUc1UunLljUmdEkjZ5Z9AvhtOL8rQ+CNlSgsoWx/szEpG4I2PbRUtapYq0PRU2NH0wQ
+         HxBKm+EI1Pz06nYnT6Vj+0D8nYP35F0/GZ6q/HmLfg98cIKWtBuRXHVH+FvwJWbVKAoq
+         sJOKJov49qvzxMdmqgbDxGeAc1Mlgv7GGH3LBmenw4lKBr/FDkxMjJ/EKnBYV54TXwNf
+         fxmXjNVBHR4wOKlsOoZG+6jsLY7kL4KTihUgxMrLbgQlcKfNa8gy8OzPFzzg3DLpTa5/
+         +HZw==
+X-Gm-Message-State: AC+VfDxjZKNDl3oj6JIHDHv/a+po0aYrYjryvkUn0n4xy2FlO5GXUMrh
+        xUvt8J9ss+S/ramkMqd8Kg==
+X-Google-Smtp-Source: ACHHUZ7bzhMWwi1DcWImaJJJn45AROSAYcaom4wZsq9l1VuaCSL6rK0XADnlkgKFZ6jmfp4ELXTJew==
+X-Received: by 2002:a05:6e02:6c7:b0:342:623b:f45c with SMTP id p7-20020a056e0206c700b00342623bf45cmr19072980ils.9.1687572212906;
+        Fri, 23 Jun 2023 19:03:32 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id q3-20020a92d403000000b0033079f435f7sm210498ilm.65.2023.06.23.19.03.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jun 2023 19:03:32 -0700 (PDT)
+Received: (nullmailer pid 2100446 invoked by uid 1000);
+        Sat, 24 Jun 2023 02:03:28 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 13/15] arm64: dts: qcom: sm6125: Add dispcc node
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+From:   Rob Herring <robh@kernel.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     David Airlie <airlied@gmail.com>, linux-kernel@vger.kernel.org,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-clk@vger.kernel.org,
+        Martin Botka <martin.botka@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, Sean Paul <sean@poorly.run>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        devicetree@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Lux Aliaga <they@mint.lgbt>, Andy Gross <agross@kernel.org>,
+        dri-devel@lists.freedesktop.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>,
-        Martin Botka <martin.botka@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+        Rob Clark <robdclark@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        freedreno@lists.freedesktop.org
+In-Reply-To: <20230624-sm6125-dpu-v1-7-1d5a638cebf2@somainline.org>
 References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-13-1d5a638cebf2@somainline.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230624-sm6125-dpu-v1-13-1d5a638cebf2@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+ <20230624-sm6125-dpu-v1-7-1d5a638cebf2@somainline.org>
+Message-Id: <168757220872.2100411.1990367342423970894.robh@kernel.org>
+Subject: Re: [PATCH 07/15] dt-bindings: display/msm: Add SM6125 MDSS
+Date:   Fri, 23 Jun 2023 20:03:28 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.06.2023 02:41, Marijn Suijten wrote:
-> Enable and configure the dispcc node on SM6125 for consumption by MDSS
-> later on.
+
+On Sat, 24 Jun 2023 02:41:05 +0200, Marijn Suijten wrote:
+> Document the SM6125 MDSS.
 > 
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm6125.dtsi | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
+>  .../bindings/display/msm/qcom,sm6125-mdss.yaml     | 206 +++++++++++++++++++++
+>  1 file changed, 206 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> index edb03508dba3..7d78b4e48ebe 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2021, Martin Botka <martin.botka@somainline.org>
->   */
->  
-> +#include <dt-bindings/clock/qcom,dispcc-sm6125.h>
->  #include <dt-bindings/clock/qcom,gcc-sm6125.h>
->  #include <dt-bindings/clock/qcom,rpmcc.h>
->  #include <dt-bindings/dma/qcom-gpi.h>
-> @@ -1203,6 +1204,28 @@ sram@4690000 {
->  			reg = <0x04690000 0x10000>;
->  		};
->  
-> +		dispcc: clock-controller@5f00000 {
-> +			compatible = "qcom,sm6125-dispcc";
-> +			reg = <0x05f00000 0x20000>;
-> +			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> +				 <0>,
-are you..
 
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>;
-> +			clock-names = "bi_tcxo",
-> +				      "gcc_disp_gpll0_div_clk_src",
-..sure?
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Konrad
-> +				      "dsi0_phy_pll_out_byteclk",
-> +				      "dsi0_phy_pll_out_dsiclk",
-> +				      "dsi1_phy_pll_out_dsiclk",
-> +				      "dp_phy_pll_link_clk",
-> +				      "dp_phy_pll_vco_div_clk";
-> +			power-domains = <&rpmpd SM6125_VDDCX>;
-> +			#clock-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +		};
-> +
->  		apps_smmu: iommu@c600000 {
->  			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
->  			reg = <0x0c600000 0x80000>;
-> 
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.example.dtb: dsi@5e94000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sm6125-dsi-ctrl', 'qcom,mdss-dsi-ctrl'] is too long
+	'qcom,sm6125-dsi-ctrl' is not one of ['qcom,apq8064-dsi-ctrl', 'qcom,msm8916-dsi-ctrl', 'qcom,msm8953-dsi-ctrl', 'qcom,msm8974-dsi-ctrl', 'qcom,msm8996-dsi-ctrl', 'qcom,msm8998-dsi-ctrl', 'qcom,qcm2290-dsi-ctrl', 'qcom,sc7180-dsi-ctrl', 'qcom,sc7280-dsi-ctrl', 'qcom,sdm660-dsi-ctrl', 'qcom,sdm845-dsi-ctrl', 'qcom,sm6115-dsi-ctrl', 'qcom,sm8150-dsi-ctrl', 'qcom,sm8250-dsi-ctrl', 'qcom,sm8350-dsi-ctrl', 'qcom,sm8450-dsi-ctrl', 'qcom,sm8550-dsi-ctrl']
+	'qcom,sm6125-dsi-ctrl' is not one of ['qcom,dsi-ctrl-6g-qcm2290', 'qcom,mdss-dsi-ctrl']
+	from schema $id: http://devicetree.org/schemas/display/msm/dsi-controller-main.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6125-mdss.example.dtb: dsi@5e94000: Unevaluated properties are not allowed ('compatible' was unexpected)
+	from schema $id: http://devicetree.org/schemas/display/msm/dsi-controller-main.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230624-sm6125-dpu-v1-7-1d5a638cebf2@somainline.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
