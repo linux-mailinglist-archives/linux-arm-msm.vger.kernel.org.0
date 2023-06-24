@@ -2,63 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A9CA73C581
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 02:42:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0BDE73C5B3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 03:07:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbjFXAmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 20:42:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42654 "EHLO
+        id S229727AbjFXBH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 21:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232387AbjFXAlf (ORCPT
+        with ESMTP id S229451AbjFXBH0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 20:41:35 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C4072D5E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 17:41:21 -0700 (PDT)
-Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 22CA43F85C;
-        Sat, 24 Jun 2023 02:41:19 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Date:   Sat, 24 Jun 2023 02:41:13 +0200
-Subject: [PATCH 15/15] arm64: dts: qcom: sm6125-seine: Configure MDSS, DSI
- and panel
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230624-sm6125-dpu-v1-15-1d5a638cebf2@somainline.org>
-References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
-In-Reply-To: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 23 Jun 2023 21:07:26 -0400
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC2AE26B9;
+        Fri, 23 Jun 2023 18:07:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1687568845; x=1719104845;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=P6wZk7MF4SlFUpTpCcuRbEr7K9Mso347QOjbT+IxNlc=;
+  b=Kd0VUo7hbiJ8OVl82u9dZb3AK1qryJFtMQc8uqtxuTH+zCu/FLrrFA9O
+   8XOWk2QcIfzIH8BjapH72SenE4XyB1CxrzERrvQKiY7ZwGgYobs1pNwJZ
+   y+Y38dREuhgj8PA1nu8t1B7qtQIuJ8v7mDRKW9xFlH/w5vB96DlxV4gWv
+   CdFfY8ExIkk8L9pFNDZjLf5YknWR1tYKDcgizl1iglvLGmaxTzximYSUh
+   fqiIWO9wnqRDySzOvYdsPvjUm+RMzWVypeW2tMC8vfR7AOCXEsp9HHY2J
+   YmZWfZ02F4uoF3hQHTqvsbaCCyFXkjCCmrYircEYYURUzGvaRQWP5c+qV
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="390970069"
+X-IronPort-AV: E=Sophos;i="6.01,153,1684825200"; 
+   d="scan'208";a="390970069"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2023 18:07:25 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="805378537"
+X-IronPort-AV: E=Sophos;i="6.01,153,1684825200"; 
+   d="scan'208";a="805378537"
+Received: from lkp-server01.sh.intel.com (HELO 783282924a45) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 23 Jun 2023 18:07:22 -0700
+Received: from kbuild by 783282924a45 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qCrkH-0008cn-2g;
+        Sat, 24 Jun 2023 01:07:21 +0000
+Date:   Sat, 24 Jun 2023 09:06:30 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: Re: [PATCH v4 3/6] nvmem: sec-qfprom: Add Qualcomm secure QFPROM
+ support.
+Message-ID: <202306240837.Keyvmt2I-lkp@intel.com>
+References: <20230623141806.13388-4-quic_kbajaj@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230623141806.13388-4-quic_kbajaj@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,92 +75,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MDSS and DSI, and configure the Samsung SOFEF01-M ams597ut01
-6.0" 1080x2520 panel.
+Hi Komal,
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- .../dts/qcom/sm6125-sony-xperia-seine-pdx201.dts   | 59 ++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+kernel test robot noticed the following build warnings:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-index 9f8a9ef398a2..bdf7c15f9b83 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-@@ -179,6 +179,43 @@ &i2c3 {
- 	/* Cirrus Logic CS35L41 boosted audio amplifier @ 40 */
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&pm6125_l18>;
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "samsung,sofef01-m-ams597ut01";
-+		reg = <0>;
-+
-+		reset-gpios = <&tlmm 90 GPIO_ACTIVE_LOW>;
-+
-+		vddio-supply = <&pm6125_l12>;
-+
-+		pinctrl-0 = <&sde_dsi_active &sde_te_active_sleep>;
-+		pinctrl-1 = <&sde_dsi_sleep &sde_te_active_sleep>;
-+		pinctrl-names = "default", "sleep";
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&panel_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	status = "okay";
-+};
-+
- &pm6125_adc {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&camera_flash_therm &emmc_ufs_therm &rf_pa1_therm>;
-@@ -469,6 +506,28 @@ vol_down_n: vol-down-n-state {
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
-+
-+	sde_te_active_sleep: sde-te-active-sleep-state {
-+		pins = "gpio89";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	sde_dsi_active: sde-dsi-active-state {
-+		pins = "gpio90";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	sde_dsi_sleep: sde-dsi-sleep-state {
-+		pins = "gpio90";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
- };
- 
- &usb3 {
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on linus/master v6.4-rc7 next-20230623]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Komal-Bajaj/dt-bindings-nvmem-sec-qfprom-Add-bindings-for-secure-qfprom/20230623-222054
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230623141806.13388-4-quic_kbajaj%40quicinc.com
+patch subject: [PATCH v4 3/6] nvmem: sec-qfprom: Add Qualcomm secure QFPROM support.
+config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20230624/202306240837.Keyvmt2I-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.3.0
+reproduce: (https://download.01.org/0day-ci/archive/20230624/202306240837.Keyvmt2I-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202306240837.Keyvmt2I-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/nvmem/sec-qfprom.c:31: warning: expecting prototype for struct sec_sec_qfprom_priv. Prototype was for struct sec_qfprom_priv instead
+
+
+vim +31 drivers/nvmem/sec-qfprom.c
+
+    20	
+    21	
+    22	/**
+    23	 * struct sec_sec_qfprom_priv - structure holding secure qfprom attributes
+    24	 *
+    25	 * @qfpseccorrected: iomapped memory space for secure qfprom corrected address space.
+    26	 * @dev: qfprom device structure.
+    27	 */
+    28	struct sec_qfprom_priv {
+    29		phys_addr_t qfpseccorrected;
+    30		struct device *dev;
+  > 31	};
+    32	
 
 -- 
-2.41.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
