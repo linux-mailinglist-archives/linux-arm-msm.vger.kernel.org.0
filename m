@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A2D873CB29
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 15:55:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DC6273CB2D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 15:56:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233068AbjFXNzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 09:55:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34606 "EHLO
+        id S231526AbjFXN4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 09:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231804AbjFXNzS (ORCPT
+        with ESMTP id S232939AbjFXN4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 09:55:18 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B600171A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 06:55:16 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f867700f36so2212824e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 06:55:16 -0700 (PDT)
+        Sat, 24 Jun 2023 09:56:32 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37DA110CC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 06:56:31 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b45b6adffbso25049971fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 06:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687614914; x=1690206914;
+        d=linaro.org; s=google; t=1687614989; x=1690206989;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7n7f2j+EMyC8PXYiwMfyicqeP+FHCYf8oKKlFwAX47I=;
-        b=s8dCH/+vA65xIAvBWTEn7oHmjky3lDSK3zvLdKsZBg7qelWicIXVf2xeTm2s2K0Qov
-         QWYSQC03cg94UYUdzaUyO0/yRpISfHh76qnyBfZpscsK/pjFfpSxPVPtDlZKxi7T06H5
-         maIXl4OqZ/vD2FmqE9bKpsT5PsuTaFSOy5LvbrRCRXVVFOWshFZigneQ+C2B88yFIP4r
-         bc1sf7IQRUUHD5nmB8Tq9JLh/GafW7qiG3KUFr7/u6fEJiB4T/ilZJtiJkzZhdWDI1EN
-         MRK9yB2l81tjePbamPN3vgUqA7pJyi6/ZCM+KpiedOyNsZjQdH6O/8HMpn9kERoL8kQl
-         c1EQ==
+        bh=dGvLUc16Lc7z7JPHc6BytUM1hxQYmYHaK9WFMQYko8c=;
+        b=M2NtPk96+vwTXP7huFIp9PeoIwNHAIQOi+8heAZWuJkTczvawpE5NEirOOEFvehJTe
+         XFyBM+KaYmNNQQJoKJXAfx2w4I9mJmIZS59kY+zugRSdKjQM1uzobixwH7oQzKNGpJ4e
+         B1w5VdhFqPIFYugJvxysAuUy8VI/eb/P76XyC6t7a959hZl7nlzUL0I0o3+rOHBuwQ6O
+         EwQZruB0RkbCMagYr0N9S4d1YKl00LdjPfS14F6v43etayrsTd2pIYBz9707VKNRt7HH
+         8AKeS2RW9JvkFrnJOsh5YUCa2E9GraqZbY5zjFqCztugjW9aeDtsrQg5XWLiUuHvqyLn
+         EFyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687614914; x=1690206914;
+        d=1e100.net; s=20221208; t=1687614989; x=1690206989;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7n7f2j+EMyC8PXYiwMfyicqeP+FHCYf8oKKlFwAX47I=;
-        b=Zz12uhZD/qg/WYSJKxH72FgZGKsyVSnOxgGOK41CLZD3TiVzr3zd74MS+nm7iyxaFt
-         WTsTZPmht6eTNm7GcnvQ776+jrQRxMPSOaLjEK8i/ry/7XjQBuJoJXFgRFAVZ70cyEPN
-         V1l4TSJO1ht/tJF0mTKVdX1sCSsUtlZ3uohTAG6HXu0e6cBDLTY4fn8oadDQmThsanIT
-         3Ft9J7bYP7b5Y8q5N1ZMMDVa2cJpxvJU0yNgbHncAATLCRBnTe6uwIpyvbn8/RKQ7VgH
-         8ye3kz2wJV++8cqk6RMibg8n9DI8WyiXG1mtsxq5yQUuXu4EKs9j/N9So+gHVzE/lVxv
-         PSnA==
-X-Gm-Message-State: AC+VfDzn8CZnSE0QmTBIV6SVUIsCRr09NhXXb10Cz3eM0So6lIZmTBsZ
-        WZXEM6PPtYVPQquGy8mRHnj2xw==
-X-Google-Smtp-Source: ACHHUZ426/E1B9Uqk2kE5mpc4XbeW6s8koRCJX4KWBE+b4BBK3aSr8h57d/zCuTzAzlZ7miJeuBtww==
-X-Received: by 2002:a05:6512:3f19:b0:4fa:6d62:9219 with SMTP id y25-20020a0565123f1900b004fa6d629219mr302709lfa.62.1687614914483;
-        Sat, 24 Jun 2023 06:55:14 -0700 (PDT)
+        bh=dGvLUc16Lc7z7JPHc6BytUM1hxQYmYHaK9WFMQYko8c=;
+        b=iwXnmp9rDlLYQ5U1DQ8J+6FzREjfkOy/dOsID5rjg+q2EQRlUMqaRmfeR9Lb0PBVwI
+         mPQKjfCY1FR7TOw/MtI5Qrc3s1dkWB05Kpp9B4CUXaBftNtJIkFztrK6z2XAezxwuOS8
+         IO9vjYWV736cDybszXY21bZXKFpCSNfOhMbm5BRak0l5EcXQdRZQf4DptNPLINODBH2Q
+         jOdk/dANcoftTlo8upG940Z3+SNsp88hRkHTE0MugEBWqAz4Psc0ZaCK/ehJIiXscbd8
+         L93lC7Kro1ADzvLGdYV3MVJxD3qVwrpxs7Q7pEn+gJSBoYdIIuDL8uaErYiUa0hMh7e6
+         2L2g==
+X-Gm-Message-State: AC+VfDxGxsTQwqxSqGBuQIC6k9cTheG0f9JcHLB65vrAFf8z720R5Q1K
+        dDjPaj4Y7n1R5rQWmZRS9HXCsQ==
+X-Google-Smtp-Source: ACHHUZ5JDsxY9Ml7hquxmv4vE8mpl7234U8KZ5CytEKB1Qb+RLm/V2adXZ+S1s4PM+LLvLBWIvw2kg==
+X-Received: by 2002:a19:6558:0:b0:4f8:6abe:5249 with SMTP id c24-20020a196558000000b004f86abe5249mr12029382lfj.3.1687614989334;
+        Sat, 24 Jun 2023 06:56:29 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id a11-20020a19f80b000000b004eff1163c37sm277334lff.308.2023.06.24.06.55.13
+        by smtp.gmail.com with ESMTPSA id a6-20020a056512390600b004f1383d57ecsm280827lfu.202.2023.06.24.06.56.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Jun 2023 06:55:13 -0700 (PDT)
-Message-ID: <804447cc-2d94-2eb2-7e7d-e0dbc9348c67@linaro.org>
-Date:   Sat, 24 Jun 2023 16:55:12 +0300
+        Sat, 24 Jun 2023 06:56:28 -0700 (PDT)
+Message-ID: <1c80bac1-0168-b260-e4dd-651e229b8fdf@linaro.org>
+Date:   Sat, 24 Jun 2023 16:56:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH V5 2/5] clk: qcom: clk-alpha-pll: Add support for lucid
- ole pll configure
+Subject: Re: [PATCH V5 3/5] clk: qcom: camcc-sm8550: Add camera clock
+ controller driver for SM8550
 Content-Language: en-GB
 To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -75,9 +75,9 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Imran Shaik <quic_imrashai@quicinc.com>,
         Ajit Pandey <quic_ajipan@quicinc.com>
 References: <20230623164619.11464-1-quic_jkona@quicinc.com>
- <20230623164619.11464-3-quic_jkona@quicinc.com>
+ <20230623164619.11464-4-quic_jkona@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230623164619.11464-3-quic_jkona@quicinc.com>
+In-Reply-To: <20230623164619.11464-4-quic_jkona@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -91,14 +91,32 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/06/2023 19:46, Jagadeesh Kona wrote:
-> Lucid ole pll has as extra RINGOSC_CAL_L field in L register in
-> addition to the fields that are part of lucid evo pll, hence add
-> support for lucid ole pll configure function to configure the ole plls.
+> Add support for the camera clock controller for camera clients to be
+> able to request for camcc clocks on SM8550 platform.
 > 
+> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 > ---
 > Changes since v4:
->   - Newly added in v5
+>   - Removed overloading .l config with CAL_L and RINGOSC_CAL_L fields
+>   - Used clk_lucid_ole_pll_configure() to configure lucid ole pll's
+>   - Used module_platform_driver() instead of subsys_initcall()
+> Changes since v3:
+>   - No changes
+> Changes since v2:
+>   - No changes
+> Changes since v1:
+>   - Sorted the PLL names in proper order
+>   - Updated all PLL configurations to lower case hex
+>   - Reused evo ops instead of adding new ops for ole pll
+>   - Moved few clocks to separate patch to fix patch too long error
+> 
+>   drivers/clk/qcom/Kconfig        |    7 +
+>   drivers/clk/qcom/Makefile       |    1 +
+>   drivers/clk/qcom/camcc-sm8550.c | 3383 +++++++++++++++++++++++++++++++
+>   3 files changed, 3391 insertions(+)
+>   create mode 100644 drivers/clk/qcom/camcc-sm8550.c
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
