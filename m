@@ -2,92 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14D4C73C4EC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 01:47:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 123E673C508
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 02:09:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbjFWXrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 19:47:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56910 "EHLO
+        id S230506AbjFXAJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 20:09:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230022AbjFWXrv (ORCPT
+        with ESMTP id S230148AbjFXAJa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 19:47:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B510189
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jun 2023 16:47:49 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NNbGgC012691;
-        Fri, 23 Jun 2023 23:47:36 GMT
+        Fri, 23 Jun 2023 20:09:30 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E79D2957;
+        Fri, 23 Jun 2023 17:09:23 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NNqr03021448;
+        Sat, 24 Jun 2023 00:09:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=NdumVFG0UxTGtv9SjRebHqegowG7qYHciwzHb3gBfsA=;
- b=OOftGYfTx19hwBRU/vu39ot5x26YexLRSnOE6LGmVeV/1E6cTjAisdxPRr6UXXfjfaDJ
- es2VvAx8vncQD/ILghm/ruy44H3NGotyOJrMllyEoj0AwtjtKwew6JBxfFNnyLAKoLWz
- 7+UD76uK7zrgO0mFzZK+vM12Qki3Yb616qXYgIVxlWwGYe8aaecndXO5m8xTHY+40rOq
- 7b+KFfYZiY4gNIV+1izi4CRxVoZSES6VQrbuaBupoMKtMZax2A/bNYUybL22wa+n7dcp
- Y4AIQPFC+ikvYhiTHcsOXfCVlxtppmnmQx+qGZWj8fhCQGdIUBk6w4RTiTHR7j0UZPJV tQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdfb18r0a-1
+ bh=cnq5krcqwAsOwPeNM8J57gWplA/sMeZZivFN/l7ve1M=;
+ b=CqPMSlHDIdXi+W/xuHav8hDD1E9y27HpiUzwAhc8sxXwhtpiGOSMehnYlFa66hPjbKYu
+ GSr10+qTUNDvrMzgEgmN/OkrqvTSH1WVyaK7cj98HV1t5rGvwOlaHlgFJb/3pR9ZBHEd
+ 7EC9TkQB484lK75Mzy4UZVOR0WWHPf5gyU45MrCW7H7ErwoWFVI3EbMBd/T78Q17A3K1
+ hZONSMLwACKfzQ8/VDerjSUjFgWQnOwiuGlnn2MvdAjl7vRphy+Q7JUuPv6yGOmqeyQd
+ 996PWLpBfF9nxcvUBoGOVKmMH+cQaBhdM0xX7AiyuCK3kB5waeeckWJbGdMzqOflWnT+ eg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcw93jvgu-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 23:47:35 +0000
+        Sat, 24 Jun 2023 00:09:12 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35NNlYI6016643
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35O09CVZ013409
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Jun 2023 23:47:34 GMT
+        Sat, 24 Jun 2023 00:09:12 GMT
 Received: from [10.110.61.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
- 2023 16:47:33 -0700
-Message-ID: <a0ef6cda-3f84-2294-4b38-0c7e5c08179a@quicinc.com>
-Date:   Fri, 23 Jun 2023 16:47:32 -0700
+ 2023 17:09:10 -0700
+Message-ID: <1e41b909-4886-8392-edbc-78684e52bbf9@quicinc.com>
+Date:   Fri, 23 Jun 2023 17:09:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2] drm/msm/dsi: Document DSC related pclk_rate and
- hdisplay calculations
+Subject: Re: [PATCH 6/6] drm/msm/dpu: Update dev core dump to dump registers
+ of sub blocks
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC:     Rob Clark <robdclark@chromium.org>,
         <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230619210647.867630-1-dmitry.baryshkov@linaro.org>
- <e9d5876a-3113-8c79-c2aa-e1ad175f0d84@quicinc.com>
- <b632e52d-7b86-9f5a-913a-aace26d9a039@linaro.org>
- <c2f632e7-8302-a77f-fc61-ccda3b5a8aac@quicinc.com>
- <eqdu44xcd6qdrmxcdr44dfcliydz6q4oombghjg6ptlcbxf22v@uhqnhnlv6gxi>
- <6e2ded6a-63a9-d32a-7a2f-67d3c72b1aa2@quicinc.com>
- <gpxqh6mu5dora7ul4agaflmzqiq7ps6j2dic3zj2ygvp7dsori@lnbnexnbqthg>
- <a3ce94a4-8e5b-427c-28ad-1bfad041d097@linaro.org>
- <gtbpo6o255z3wb5veapjf4z2gasf6sjqdswqxxgpcwtkxaa6qk@dgkopjxs47uz>
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <quic_jesszhan@quicinc.com>
+References: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
+ <20230622-devcoredump_patch-v1-6-3b2cdcc6a576@quicinc.com>
+ <114f34dd-e5ce-f878-5b23-4c14dc800547@linaro.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <gtbpo6o255z3wb5veapjf4z2gasf6sjqdswqxxgpcwtkxaa6qk@dgkopjxs47uz>
+In-Reply-To: <114f34dd-e5ce-f878-5b23-4c14dc800547@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 40LnioeA3bV3l3_b4bXlSL1y_r4fSvB8
-X-Proofpoint-GUID: 40LnioeA3bV3l3_b4bXlSL1y_r4fSvB8
+X-Proofpoint-GUID: A9EqZX9Jcar87sot__13p7oWJRsOaaQg
+X-Proofpoint-ORIG-GUID: A9EqZX9Jcar87sot__13p7oWJRsOaaQg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_12,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
- adultscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306230215
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+ definitions=2023-06-23_14,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306230219
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -96,67 +90,218 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/23/2023 1:18 PM, Marijn Suijten wrote:
-> On 2023-06-23 23:10:56, Dmitry Baryshkov wrote:
-> <snip>
->>>> There is no confusion between what was said earlier and now.
->>>>
->>>> This line is calculating the number of pclks needed to transmit one line
->>>> of the compressed data:
->>>>
->>>> hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
->>>>
->>>> msm_dsc_get_bytes_per_line() is calculating the number of compressed
->>>> bytes as it uses the target bits_per_pixel
->>>>
->>>> 126 	 * @bits_per_pixel:
->>>> 127 	 * Target bits per pixel with 4 fractional bits, bits_per_pixel << 4
->>>> 128 	 */
->>>> 129 	u16 bits_per_pixel;
->>>>
->>>> (like I have said a few times, hdisplay is perhaps confusing us)
->>>>
->>>> If you calculate the bytes this way you are already accounting for the
->>>> compression, so where is the confusion.
->>>>
->>>> The pclk calculation does the same thing of using the ratio instead.
->>>
->>> This is not answering my question whether the ratio for pclk calculation
->>> should also be adjusted to account for widebus.  And if the ratio is
->>> fixed, why use a fixed factor here but the ratio between
->>> src_bpp:target_bpp here?  It only adds extra confusion.
+On 6/22/2023 5:13 PM, Dmitry Baryshkov wrote:
+> On 23/06/2023 02:48, Ryan McCann wrote:
+>> Currently, the device core dump mechanism does not dump registers of sub
+>> blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Add wrapper
+>> function to dump hardware blocks that contain sub blocks.
 >>
->> Wide bus is dicussed separately. I think the question you are trying to
->> ask is "why are we not using msm_dsc_get_bytes_per_line() in
->> dsi_adjust_pclk_for_compression()?"
+>> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 194 
+>> +++++++++++++++++++++++++++-----
+>>   1 file changed, 168 insertions(+), 26 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index aa8499de1b9f..9b1b1c382269 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -885,6 +885,154 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
+>>       return 0;
+>>   }
+>> +static void dpu_kms_mdp_snapshot_add_block(struct msm_disp_state 
+>> *disp_state,
+>> +                       void __iomem *mmio, void *blk,
+>> +                       enum dpu_hw_blk_type blk_type)
 > 
-> I have asked that question before, and the answer was something
-> incomprehensible.  But indeed, it would look more natural if
-> dsi_adjust_pclk_for_compression() replaces:
+> No. Such multiplexers add no value to the code. Please inline it.
 > 
->      int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
->          dsc->bits_per_component * 3)
+> Not to mention that this patch is hard to review. You both move existing 
+> code and add new features. If it were to go, it should have been split 
+> into two patches: one introducing the multiplexer and another one adding 
+> subblocks.
 > 
-> With:
-> 
->      int new_hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(dsc), 3);
-> 
-> Which is the same value as we have here.
-> 
-> And then it becomes more clear how widebus affects this calculation.
-> 
-> - Marijn
 
-Ok, I finally got your question I think. That "why don't we account for 
-widebus in the pixel clock calculation but only for calculating pclk 
-cycles for REG_DSI_CMD_MDP_STREAM0_TOTAL"
+Ok. we can split this into:
 
-Even though DPU shall transmit 48 bits worth of data , DSI will be able 
-to consume only one uncompressed pixel worth of data. Thats the rule.
+1) adding the multiplexer
+2) adding sub-blk parsing support inside the multiplexer
 
-Hence even though we are able to account for widebus in the 
-stream0_total to indicate DPU's increased data transfer rate with 
-widebus, since DSI is still going to consume only one uncompressed pixel 
-worth of data, we can only scale the pixel clock with compression ratio.
+>> +{
+>> +    u32 base;
+>> +
+>> +    switch (blk_type) {
+>> +    case DPU_HW_BLK_TOP:
+>> +    {
+>> +        struct dpu_mdp_cfg *top = (struct dpu_mdp_cfg *)blk;
+>> +
+>> +        if (top->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
+>> +            msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
+>> +                            mmio + top->base, "top");
+>> +            msm_disp_snapshot_add_block(disp_state, top->len - 
+>> MDP_PERIPH_TOP0_END,
+>> +                            mmio + top->base + MDP_PERIPH_TOP0_END,
+>> +                            "top_2");
+>> +        } else {
+>> +            msm_disp_snapshot_add_block(disp_state, top->len, mmio + 
+>> top->base, "top");
+>> +        }
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_LM:
+>> +    {
+>> +        struct dpu_lm_cfg *mixer = (struct dpu_lm_cfg *)blk;
+>> +
+>> +        msm_disp_snapshot_add_block(disp_state, mixer->len, mmio + 
+>> mixer->base, "%s",
+>> +                        mixer->name);
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_CTL:
+>> +    {
+>> +        struct dpu_ctl_cfg *ctl = (struct dpu_ctl_cfg *)blk;
+>> +
+>> +        msm_disp_snapshot_add_block(disp_state, ctl->len, mmio + 
+>> ctl->base, "%s",
+>> +                        ctl->name);
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_INTF:
+>> +    {
+>> +        struct dpu_intf_cfg *intf = (struct dpu_intf_cfg *)blk;
+>> +
+>> +        msm_disp_snapshot_add_block(disp_state, intf->len, mmio + 
+>> intf->base, "%s",
+>> +                        intf->name);
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_WB:
+>> +    {
+>> +        struct dpu_wb_cfg *wb = (struct dpu_wb_cfg *)blk;
+>> +
+>> +        msm_disp_snapshot_add_block(disp_state, wb->len, mmio + 
+>> wb->base, "%s",
+>> +                        wb->name);
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_SSPP:
+>> +    {
+>> +        struct dpu_sspp_cfg *sspp_block = (struct dpu_sspp_cfg *)blk;
+>> +        const struct dpu_sspp_sub_blks *sblk = sspp_block->sblk;
+>> +
+>> +        base = sspp_block->base;
+>> +
+>> +        msm_disp_snapshot_add_block(disp_state, sspp_block->len, mmio 
+>> + base, "%s",
+>> +                        sspp_block->name);
+>> +
+>> +        if (sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
+>> +            sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
+>> +            sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED4))
+>> +            msm_disp_snapshot_add_block(disp_state, 
+>> sblk->scaler_blk.len,
+>> +                            mmio + base + sblk->scaler_blk.base, 
+>> "%s_%s",
+>> +                            sspp_block->name, sblk->scaler_blk.name);
+> 
+> Actually, it would be better to:
+> - drop name from all sblk instances (and use known string instead of the 
+> sblk name here)
+> - Use sblk->foo_blk.len to check if it should be printed or not.
+> 
 
-Hope that clarifies it.
+No, I dont agree. If we drop the names from the sub_blk in the catalog, 
+we will end up using "sub_blk_name" string here in the code to indicate 
+which blk that is in the dump.
+
+If we add more sub_blks in the catalog in the future we need to keep 
+changing the code over here. Thats not how it should be.
+
+Leaving the names in the catalog ensures that this code wont change and 
+only catalog changes when we add a new sub_blk either for an existing or 
+new chipset.
+
+catalog is indicating the new blk, and dumping code just prints it.
+
+with your approach, dumping code will or can keep changing with chipsets 
+or sub_blks. Thats not how it should be.
+
+>> +
+>> +        if (sspp_block->features & BIT(DPU_SSPP_CSC) || 
+>> sspp_block->features
+>> +                    & BIT(DPU_SSPP_CSC_10BIT))
+> 
+> A very bad use of indentation. In future please split logically rather 
+> than just filling the line up to the line width.
+> 
+>> +            msm_disp_snapshot_add_block(disp_state, sblk->csc_blk.len,
+>> +                            mmio + base + sblk->csc_blk.base, "%s_%s",
+>> +                            sspp_block->name, sblk->csc_blk.name);
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_DSPP:
+>> +    {
+>> +        struct dpu_dspp_cfg *dspp_block = (struct dpu_dspp_cfg *)blk;
+>> +
+>> +        base = dspp_block->base;
+>> +
+>> +        msm_disp_snapshot_add_block(disp_state, dspp_block->len, mmio 
+>> + base, "%s",
+>> +                        dspp_block->name);
+>> +
+>> +        if (dspp_block->features & BIT(DPU_DSPP_PCC))
+>> +            msm_disp_snapshot_add_block(disp_state, 
+>> dspp_block->sblk->pcc.len,
+>> +                            mmio + base + dspp_block->sblk->pcc.base,
+>> +                            "%s_%s", dspp_block->name,
+>> +                            dspp_block->sblk->pcc.name);
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_PINGPONG:
+>> +    {
+>> +        struct dpu_pingpong_cfg *pingpong_block = (struct 
+>> dpu_pingpong_cfg *)blk;
+>> +        const struct dpu_pingpong_sub_blks *sblk = pingpong_block->sblk;
+>> +
+>> +        base = pingpong_block->base;
+>> +
+>> +        msm_disp_snapshot_add_block(disp_state, pingpong_block->len, 
+>> mmio + base, "%s",
+>> +                        pingpong_block->name);
+>> +
+>> +        if (pingpong_block->features & BIT(DPU_PINGPONG_TE2))
+>> +            msm_disp_snapshot_add_block(disp_state, sblk->te2.len,
+>> +                            mmio + base + sblk->te2.base, "%s_%s",
+>> +                            pingpong_block->name, sblk->te2.name);
+>> +
+>> +        if (pingpong_block->features & BIT(DPU_PINGPONG_DITHER))
+>> +            msm_disp_snapshot_add_block(disp_state, sblk->dither.len,
+>> +                            mmio + base + sblk->dither.base, "%s_%s",
+>> +                            pingpong_block->name, sblk->dither.name);
+>> +        break;
+>> +    }
+>> +    case DPU_HW_BLK_DSC:
+>> +    {
+>> +        struct dpu_dsc_cfg *dsc_block = (struct dpu_dsc_cfg *)blk;
+>> +
+>> +        base = dsc_block->base;
+>> +
+>> +        if (dsc_block->features & BIT(DPU_DSC_HW_REV_1_2)) {
+>> +            struct dpu_dsc_blk enc = dsc_block->sblk->enc;
+>> +            struct dpu_dsc_blk ctl = dsc_block->sblk->ctl;
+>> +
+>> +            /* For now, pass in a length of 0 because the DSC_BLK 
+>> register space
+>> +             * overlaps with the sblks' register space.
+>> +             *
+>> +             * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW 
+>> catalog where
+>> +             * applicable.
+> 
+> Nice catch, thank you. We should fix that.
+> 
+
+Yes and we would have fixed that ourself if you wanted that with this 
+series as another patch.
+
