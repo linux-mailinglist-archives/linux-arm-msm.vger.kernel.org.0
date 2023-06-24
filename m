@@ -2,333 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D8F673CB48
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 16:18:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7220C73CB4D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 16:19:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231374AbjFXOSL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 10:18:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37820 "EHLO
+        id S230043AbjFXOT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 10:19:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232459AbjFXOSJ (ORCPT
+        with ESMTP id S229584AbjFXOT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 10:18:09 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD84B1BD6;
-        Sat, 24 Jun 2023 07:18:05 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35OEGqo3003773;
-        Sat, 24 Jun 2023 14:17:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Lw46R/g/f7pb9OJJkn7Fb2XoGlQ+3XcED4KUXlyqxCE=;
- b=hBSMYTjzGsP0RzijB6fTAY0jWKW/Pw763YiDV4ineuAS2DXwqMFnAEE5G7N2TqZ6rycE
- fCQdkwpfKrGTU+N1CBFYnlUy+RtPbhnyYtZdKvFQhPhLCiwKR0J9elKDpz16AfxFUOol
- UE6NQaof5V2/Y7E4AfDiTzQzhTyOqYC/DXgUEQZzfLUVXPoqXB2yGf745Uq7U2SkVJ1Y
- 5/j32PMKZ4U9KokIEcS6uSSA28EEJoRU6A+wHAr67j50xZZ4Nb9cLuDImlCy0hd4bqGK
- QhwW09WzAbcyy0/r+UJCg+lMKEDHqReoaIW9BUKMdeb0UYuKCRKJ0mWntUawIJzjD/p0 MQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdr360pk5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 24 Jun 2023 14:17:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35OEHrJJ016569
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 24 Jun 2023 14:17:53 GMT
-Received: from [10.110.58.66] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 24 Jun
- 2023 07:17:52 -0700
-Message-ID: <37c4bde0-0798-7506-ffd3-c8689ab78ba0@quicinc.com>
-Date:   Sat, 24 Jun 2023 07:17:51 -0700
+        Sat, 24 Jun 2023 10:19:56 -0400
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D66C1997;
+        Sat, 24 Jun 2023 07:19:55 -0700 (PDT)
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-66c729f5618so302178b3a.1;
+        Sat, 24 Jun 2023 07:19:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687616394; x=1690208394;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4Lt8rVZcLBBLvWmzWUEEsEG7voRn3Ez10TeZpg/RjPk=;
+        b=DLXa7stn4xDzA/kZn7A5zou3oXjJ3VH7bciBdDMbhkhymIzzxx4sP/rulplQLLe18M
+         GyIqWB067HXraJy/T3GTRfYYW4RXr+yWdhtbG+venKvKAvxXl0F84v+1QOZaRP2SgKjf
+         +GkIghCOdtdIrYw/Q2qOFJVFe/724YH+nIzD64mgnRSnkJJtjFn0Gd4iUT+ccb7qr/xB
+         VFgIxuUyYlydkRQL7xAGF4xIG0Q8eYsT3FgVyj4QAKbXsOl7jxMKa5oG7G/Lykwhwgia
+         BLtm0qpwXCOH6ny8pQp5lhEWu47qAk4gnZ5HO2fj0NFLpNPDSggTeilqtzx/AAuYZK5K
+         YY1A==
+X-Gm-Message-State: AC+VfDzE2J7T8MiUN/AqHun7c6WiNQe8qYZlUWhogskJHx217XoGlgMD
+        qQAomgUfuvXcaF/hL9ZMK4A=
+X-Google-Smtp-Source: ACHHUZ7V4ur+WjVdxiJp9SMnFICVdY4GzXniERNA4mlZ5oQMqFI4aBU4506d4ioclwCaJARbESzQrw==
+X-Received: by 2002:a17:902:c44c:b0:1b0:2d08:eb51 with SMTP id m12-20020a170902c44c00b001b02d08eb51mr1857911plm.12.1687616394388;
+        Sat, 24 Jun 2023 07:19:54 -0700 (PDT)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id bg6-20020a1709028e8600b001b3d0aff88fsm1296336plb.109.2023.06.24.07.19.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Jun 2023 07:19:53 -0700 (PDT)
+Date:   Sat, 24 Jun 2023 23:19:52 +0900
+From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Joyce Ooi <joyce.ooi@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Jim Quinlan <jim2101024@gmail.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tom Joseph <tjoseph@cadence.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Jisheng Zhang <jszhang@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Toan Le <toan@os.amperecomputing.com>,
+        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@pengutronix.de,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
+ void
+Message-ID: <20230624141952.GB2636347@rocinante>
+References: <20230321193208.366561-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 6/6] drm/msm/dpu: Update dev core dump to dump registers
- of sub blocks
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC:     Rob Clark <robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <quic_jesszhan@quicinc.com>
-References: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
- <20230622-devcoredump_patch-v1-6-3b2cdcc6a576@quicinc.com>
- <114f34dd-e5ce-f878-5b23-4c14dc800547@linaro.org>
- <1e41b909-4886-8392-edbc-78684e52bbf9@quicinc.com>
- <412f68a3-e3cc-f26e-2e3d-59727e5c48d8@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <412f68a3-e3cc-f26e-2e3d-59727e5c48d8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: myRkyTC66X0bYn52PjoWZ0iBz_gUpMNd
-X-Proofpoint-GUID: myRkyTC66X0bYn52PjoWZ0iBz_gUpMNd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-24_10,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306240134
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230321193208.366561-1-u.kleine-koenig@pengutronix.de>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello,
 
-
-On 6/24/2023 5:07 AM, Dmitry Baryshkov wrote:
-> On 24/06/2023 03:09, Abhinav Kumar wrote:
->>
->>
->> On 6/22/2023 5:13 PM, Dmitry Baryshkov wrote:
->>> On 23/06/2023 02:48, Ryan McCann wrote:
->>>> Currently, the device core dump mechanism does not dump registers of 
->>>> sub
->>>> blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Add wrapper
->>>> function to dump hardware blocks that contain sub blocks.
->>>>
->>>> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
->>>> ---
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 194 
->>>> +++++++++++++++++++++++++++-----
->>>>   1 file changed, 168 insertions(+), 26 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>> index aa8499de1b9f..9b1b1c382269 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>> @@ -885,6 +885,154 @@ static int dpu_irq_postinstall(struct msm_kms 
->>>> *kms)
->>>>       return 0;
->>>>   }
->>>> +static void dpu_kms_mdp_snapshot_add_block(struct msm_disp_state 
->>>> *disp_state,
->>>> +                       void __iomem *mmio, void *blk,
->>>> +                       enum dpu_hw_blk_type blk_type)
->>>
->>> No. Such multiplexers add no value to the code. Please inline it.
->>>
->>> Not to mention that this patch is hard to review. You both move 
->>> existing code and add new features. If it were to go, it should have 
->>> been split into two patches: one introducing the multiplexer and 
->>> another one adding subblocks.
->>>
->>
->> Ok. we can split this into:
->>
->> 1) adding the multiplexer
->> 2) adding sub-blk parsing support inside the multiplexer
+> this series adapts the platform drivers below drivers/pci to use the
+> .remove_new() callback. Compared to the traditional .remove() callback
+> .remove_new() returns no value. This is a good thing because the driver core
+> doesn't (and cannot) cope for errors during remove. The only effect of a
+> non-zero return value in .remove() is that the driver core emits a warning. The
+> device is removed anyhow and an early return from .remove() usually yields a
+> resource leak.
 > 
-> I'd say, drop the multiplexer completely. It adds no value here. It is 
-> only used from dpu_kms_mdp_snapshot(). If the code there was complex 
-> enough, it would have made sense to _split_ the function. But even in 
-> such case there would be no point in having multiplexer. We do not 
-> enumerate block by type.
+> By changing the remove callback to return void driver authors cannot
+> reasonably assume any more that there is some kind of cleanup later.
 > 
-
-Can you pls elaborate what you mean by enumerate blk by type?
-
-We do have DPU_HW_BLK_***
-
-Did you mean sub-blk?
-
->>
->>>> +{
->>>> +    u32 base;
->>>> +
->>>> +    switch (blk_type) {
->>>> +    case DPU_HW_BLK_TOP:
->>>> +    {
->>>> +        struct dpu_mdp_cfg *top = (struct dpu_mdp_cfg *)blk;
->>>> +
->>>> +        if (top->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
->>>> +            msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
->>>> +                            mmio + top->base, "top");
->>>> +            msm_disp_snapshot_add_block(disp_state, top->len - 
->>>> MDP_PERIPH_TOP0_END,
->>>> +                            mmio + top->base + MDP_PERIPH_TOP0_END,
->>>> +                            "top_2");
->>>> +        } else {
->>>> +            msm_disp_snapshot_add_block(disp_state, top->len, mmio 
->>>> + top->base, "top");
->>>> +        }
->>>> +        break;
->>>> +    }
->>>> +    case DPU_HW_BLK_LM:
->>>> +    {
->>>> +        struct dpu_lm_cfg *mixer = (struct dpu_lm_cfg *)blk;
->>>> +
->>>> +        msm_disp_snapshot_add_block(disp_state, mixer->len, mmio + 
->>>> mixer->base, "%s",
->>>> +                        mixer->name);
->>>> +        break;
->>>> +    }
->>>> +    case DPU_HW_BLK_CTL:
->>>> +    {
->>>> +        struct dpu_ctl_cfg *ctl = (struct dpu_ctl_cfg *)blk;
->>>> +
->>>> +        msm_disp_snapshot_add_block(disp_state, ctl->len, mmio + 
->>>> ctl->base, "%s",
->>>> +                        ctl->name);
->>>> +        break;
->>>> +    }
->>>> +    case DPU_HW_BLK_INTF:
->>>> +    {
->>>> +        struct dpu_intf_cfg *intf = (struct dpu_intf_cfg *)blk;
->>>> +
->>>> +        msm_disp_snapshot_add_block(disp_state, intf->len, mmio + 
->>>> intf->base, "%s",
->>>> +                        intf->name);
->>>> +        break;
->>>> +    }
->>>> +    case DPU_HW_BLK_WB:
->>>> +    {
->>>> +        struct dpu_wb_cfg *wb = (struct dpu_wb_cfg *)blk;
->>>> +
->>>> +        msm_disp_snapshot_add_block(disp_state, wb->len, mmio + 
->>>> wb->base, "%s",
->>>> +                        wb->name);
->>>> +        break;
->>>> +    }
->>>> +    case DPU_HW_BLK_SSPP:
->>>> +    {
->>>> +        struct dpu_sspp_cfg *sspp_block = (struct dpu_sspp_cfg *)blk;
->>>> +        const struct dpu_sspp_sub_blks *sblk = sspp_block->sblk;
->>>> +
->>>> +        base = sspp_block->base;
->>>> +
->>>> +        msm_disp_snapshot_add_block(disp_state, sspp_block->len, 
->>>> mmio + base, "%s",
->>>> +                        sspp_block->name);
->>>> +
->>>> +        if (sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
->>>> +            sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
->>>> +            sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED4))
->>>> +            msm_disp_snapshot_add_block(disp_state, 
->>>> sblk->scaler_blk.len,
->>>> +                            mmio + base + sblk->scaler_blk.base, 
->>>> "%s_%s",
->>>> +                            sspp_block->name, sblk->scaler_blk.name);
->>>
->>> Actually, it would be better to:
->>> - drop name from all sblk instances (and use known string instead of 
->>> the sblk name here)
->>> - Use sblk->foo_blk.len to check if it should be printed or not.
->>>
->>
->> No, I dont agree. If we drop the names from the sub_blk in the 
->> catalog, we will end up using "sub_blk_name" string here in the code 
->> to indicate which blk that is in the dump.
->>
->> If we add more sub_blks in the catalog in the future we need to keep 
->> changing the code over here. Thats not how it should be.
->>
->> Leaving the names in the catalog ensures that this code wont change 
->> and only catalog changes when we add a new sub_blk either for an 
->> existing or new chipset.
->>
->> catalog is indicating the new blk, and dumping code just prints it.
->>
->> with your approach, dumping code will or can keep changing with 
->> chipsets or sub_blks. Thats not how it should be.
+> All drivers were easy to convert as they all returned zero in their
+> remove callback. Only for iproc the conversion wasn't trivial, the other
+> were converted using coccinelle.
 > 
-> Well, we do not enumerate sub-blocks in any way, they are not indexed. 
-> So even with sblk->blk.name in place, adding new sub-block would require 
-> adding new code here. That's why I wrote that the calling code knows 
-> which sub-block it refers to.
-> 
+> There are no interdependencies between these patches. So even if there
+> are some concerns for individual patches, I ask you to apply the
+> remaining set. Then I only have to care for the review feedback of the
+> refused patches. (Having said that I don't expect any serious objection,
+> just things like squashing or separating patches, or maybe I picked a
+> wrong subject prefix.)
 
-Today, unfortunately each sub_blk type is different so we have to do 
-this case by case.
+Applied to controller/remove-void-callbacks, thank you!
 
-Ideally, this should have just been
+[01/15] PCI: aardvark: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/b11c76db97e7
+[02/15] PCI: altera: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/3a610560aa4f
+[03/15] PCI: altera-msi: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/60d03f70455c
+[04/15] PCI: brcmstb: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/b169c576ad0c
+[05/15] PCI: j721e: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/c86f4bd6008e
+[06/15] PCI: dwc: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/221879c98698
+[07/15] PCI: hisi-error: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/9a285fbbb591
+[08/15] PCI: iproc: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/6f1c0a046048
+[09/15] PCI: mediatek: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/5e0005409427
+[10/15] PCI: mediatek-gen3: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/22626c46bb32
+[11/15] PCI: mt7621: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/8c47ac2a66c4
+[12/15] PCI: mvebu: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/4c3bc1b41b8f
+[13/15] PCI: rockchip-host: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/2998efcd8e73
+[14/15] PCI: tegra: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/c7fd95cda648
+[15/15] PCI: xgene-msi: Convert to platform remove callback returning void
+        https://git.kernel.org/pci/pci/c/afbb9130d2bf
 
--> print main blk
--> print all sub-blks of the main blk
-
-Without having to handle each main blk's sub-blks separately.
-
-That way the dumping code would have remained generic without having to 
-do even the multiplexer in the first place.
-
-Need to explore if somehow we can come up with a generic sub-blk struct 
-and make this possible. Then this code will become much easier and what 
-I am saying will make total sense.
-
-Even without that, conceptually these sub-blk names are reflecting whats 
-in our software document. So its not a random name but reflects the 
-actual sub-blk name from the hardware. So this belongs in the catalog.
-
-Dumping code should not change or know whats the name of each block. It 
-should just use whats in the catalog. thats why even conceptually I am 
-not okay with your idea.
-
-> Let me extract the relevant code (skipping all the conditions for now):
-> 
-> msm_disp_snapshot_add_block(disp_state, sspp_block->len, mmio + base, "%s",
->                  sspp_block->name);
-> 
-> if (have_scaler)
->      msm_disp_snapshot_add_block(disp_state, sblk->scaler_blk.len,
->                      mmio + base + sblk->scaler_blk.base, "%s_%s",
->                      sspp_block->name, sblk->scaler_blk.name);
-> 
-> if (have_csc)
->      msm_disp_snapshot_add_block(disp_state, sblk->csc_blk.len,
->                      mmio + base + sblk->csc_blk.base, "%s_%s",
->                      sspp_block->name, sblk->csc_blk.name);
-> 
-> Consider adding new sub-block, "baz". We would still require manual 
-> addition of the following code:
-> 
->      msm_disp_snapshot_add_block(disp_state, sblk->baz_blk.len,
->                      mmio + base + sblk->baz_blk.base, "%s_%s",
->                      sspp_block->name, sblk->baz_blk.name);
-> 
-> 
-> Compare this with:
-> 
->      msm_disp_snapshot_add_block(disp_state, sblk->baz_blk.len,
->                      mmio + base + sblk->baz_blk.base, "%s_baz",
->                      sspp_block->name);
-> 
-
-Basically you are saying why not make the one line change here instead 
-of using the name from the catalog.
-
-I think it will be better to use from the catalog for the reason I wrote 
-above that dumping code should just "use" the catalog's information and 
-not become a catalog itself.
-
-You are not saving much by dropping the sub-blk name from catalog anyway.
-
-> Moreover, if we follow the style of dpu_kms_mdp_snapshot() (which 
-> doesn't use name), it should be:
-> 
->      msm_disp_snapshot_add_block(disp_state, sblk->baz_blk.len,
->                      mmio + base + sblk->baz_blk.base, "sspp%d_baz", idx);
-> 
-> 
-tbh, after looking at this series, it made me think why I didnt use the 
-name from the catalog even for the dpu_kms_mdp_snapshot()
-> 
->>
-
-<snipped>
+	Krzysztof
