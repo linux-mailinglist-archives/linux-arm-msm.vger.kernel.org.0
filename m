@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46C3973C9DB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 11:09:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FDAD73C9E3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 11:10:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232937AbjFXJJH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 05:09:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48078 "EHLO
+        id S232596AbjFXJKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 05:10:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231715AbjFXJJE (ORCPT
+        with ESMTP id S231210AbjFXJKU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 05:09:04 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A261BF7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:09:00 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-98802908fedso167465166b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:09:00 -0700 (PDT)
+        Sat, 24 Jun 2023 05:10:20 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4343A19B7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:10:18 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-987a977f62aso153401366b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 02:10:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687597738; x=1690189738;
+        d=linaro.org; s=google; t=1687597816; x=1690189816;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0iJR1qiOnOHItJJH4VOhUi4FNwu4+h9jh885qlL4HP0=;
-        b=OT3cBSaqgJw4XxYazcpaRD93GXIBn7LdLztsnGLlMNIEIyOKPL1gZmj3j+HxgBttPb
-         0mtbq5H1u7zAWmKBJW/f0KfaG/iOwrpKDdt1GUksKeFH8ZWYFmLRy4vi3+87B7dBvqhf
-         0KeBi3ETipQyEr5aymal6vu3bybyt1J02yrnNhDwoNkpFuSnXguiCsRQ8Hr9zx040nG5
-         OXUDtuxjgX3Zif51XMvuX7vtVHt+S/K65CKN/ukJmCw2kuHrhogat9TrHvRn3SrFUSDv
-         D4uxHmPtbc92N5zinMsOWc6uhMl5acWHRMK0ydlgNuz8u4P+4M/RLEvht4pW01cBa7Os
-         ZJOQ==
+        bh=iyaZqfbPtoW544erxGkV79CDXXxsYM/Fp16IQb+tP9I=;
+        b=jc1Auh5tqvnIULQo0SinoF4pptEI9CJAL3uA1jKLnlNGiTWufhWrhahGAE+h32L1xx
+         hCwdO7h3Vmv1b34q5rAjJbBMrkdAJ8jeyZmjvO+/pFLJkS4CYb8abNyKpQxPGX5ienRW
+         PIJMAwGBAxWfsdY4eyp40JyXmD5mVqTuA7AjloZ2sTj1+fTYOyn35xzG2+XOl0lDTdlS
+         QPyfGp/MBw3L4SDMqlLRDP9AJH7so7ie6Vil1QYZyTe6pApxQk8F1CZiR60hS7V1esSW
+         za+FT3/7dbx3jXeTCm+xsyV8y0gAot6PpCd97/OoF2RdV9kXALgQsFE8fatD+p/d2bEU
+         4+iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687597738; x=1690189738;
+        d=1e100.net; s=20221208; t=1687597816; x=1690189816;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0iJR1qiOnOHItJJH4VOhUi4FNwu4+h9jh885qlL4HP0=;
-        b=DQ1XM1LvyzeZ0b4EilFOx89l5VO4OJY4JsgtU4asrpEuHCoGB8ATu2uJkRypND+nPg
-         kGxYUrO1EyVf1tfOYn6TSlSzFxjigVxTY0ykv5npYhv0Rm6y+GKu8nQj31zNlEV+mjWu
-         3xcFzg0w3OGc+Qxa1GZBY5fABV8zNGTl0ZIFibdiPci4pNnwAX02sQxhGJ/GnluKjNNq
-         Acy2m368sWQYzJS0tvy2r6nQKNaXwsGZ8FwSBL9C+IPpfPSDdPmdUkqEaHrLnW/1SDWh
-         gVuAwidFyf25fNHWi1l9B0pu5RiQB9k790XUHsevRzsLbdr59Pm3klyknYU/7RUpW8cA
-         uj2w==
-X-Gm-Message-State: AC+VfDxLNZ82vMoovr1V2q+XcMoIPW63oh+1vDal6YU64GjxRfJisTZa
-        Lg+rgYblcbIjgtoiB3EMJoKbyw==
-X-Google-Smtp-Source: ACHHUZ57vhhKgA2KWro0eA03NX7qoeLCiR9NZwED/O7dYzF3Ya0EjhnjcRnSJ+HMRT5ofjOczockxA==
-X-Received: by 2002:a17:907:d0c:b0:973:91f7:508a with SMTP id gn12-20020a1709070d0c00b0097391f7508amr22977407ejc.4.1687597738687;
-        Sat, 24 Jun 2023 02:08:58 -0700 (PDT)
+        bh=iyaZqfbPtoW544erxGkV79CDXXxsYM/Fp16IQb+tP9I=;
+        b=Ru01mgU2tnjJNMkCh2XqJuhGyRmQs3frgqMZ3vbnJhd2nKUky4+cqMBccnmdd3HArA
+         9XBPnP+dIZE0tPcJmTp3OSKlO2flXJxsq2FEdOLxHzKDufOpRw9sGgx9xEBB4dKWYOsl
+         3SuSHUL6Wxd/5UfRiwtHZIHET73LxUMMcNz/5XpypdjM8z2fhxXHEMmzPdxMAFTzOc/7
+         AGldNGIHBam4z0LxJ2wNTZHi//Eek/HX+6obOoXWz/hplfDGiHlv4hp40c/b72QeEN4f
+         aIHn5qFrP2Mgv8iTPEmhHmoq8wHazxmovtsEQqNBcSI1Q/H3iCyYO0vX1dLoCw04dwJV
+         TEuQ==
+X-Gm-Message-State: AC+VfDy3rWy2m0rMzxEucJglf598q7qcroTlp25PsmYPjNADRwuyWvnf
+        jSYXxGBM0KLsqCuZ4q1oYjtOXQ==
+X-Google-Smtp-Source: ACHHUZ4pqNge7JwaJVBPQcyWNxciyTTsdI3G9ALVxmbefnkvykz7tn8SBKrUteVDofWtt9OCuMQg/g==
+X-Received: by 2002:a17:907:7628:b0:98e:a54:42e3 with SMTP id jy8-20020a170907762800b0098e0a5442e3mr173662ejc.54.1687597816650;
+        Sat, 24 Jun 2023 02:10:16 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id p26-20020a170906229a00b00986bf50fe7asm678897eja.60.2023.06.24.02.08.55
+        by smtp.gmail.com with ESMTPSA id n3-20020aa7db43000000b0051a4361f3efsm455606edt.61.2023.06.24.02.10.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Jun 2023 02:08:58 -0700 (PDT)
-Message-ID: <55b0ca89-8f2e-5383-59d4-6809e813abf8@linaro.org>
-Date:   Sat, 24 Jun 2023 11:08:54 +0200
+        Sat, 24 Jun 2023 02:10:16 -0700 (PDT)
+Message-ID: <0aefd7ef-a877-2501-1db9-d2c14c6ffdb8@linaro.org>
+Date:   Sat, 24 Jun 2023 11:10:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 03/15] dt-bindings: clock: qcom,dispcc-sm6125: Require GCC
- PLL0 DIV clock
+Subject: Re: [PATCH 04/15] dt-bindings: clock: qcom,dispcc-sm6125: Allow
+ power-domains property
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -76,6 +75,7 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
@@ -84,34 +84,33 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
 References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-3-1d5a638cebf2@somainline.org>
- <c9681bce-efa8-9b79-4bf6-837dd6a2dc12@linaro.org>
+ <20230624-sm6125-dpu-v1-4-1d5a638cebf2@somainline.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <c9681bce-efa8-9b79-4bf6-837dd6a2dc12@linaro.org>
+In-Reply-To: <20230624-sm6125-dpu-v1-4-1d5a638cebf2@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/06/2023 03:45, Konrad Dybcio wrote:
-> On 24.06.2023 02:41, Marijn Suijten wrote:
->> The "gcc_disp_gpll0_div_clk_src" clock is consumed by the driver, will
->> be passed from DT, and should be required by the bindings.
->>
->> Fixes: 8397c9c0c26b ("dt-bindings: clock: add QCOM SM6125 display clock bindings")
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> ---
-> Ideally, you'd stick it at the bottom of the list, as the items: order
-> is part of the ABI
+On 24/06/2023 02:41, Marijn Suijten wrote:
+> On SM6125 the dispcc block is gated behind VDDCX: allow this domain to
+> be configured.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
 
-Yes, please add them to the end. Order is fixed.
+
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
