@@ -2,85 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 123E673C508
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 02:09:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB59973C512
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 02:16:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230506AbjFXAJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 20:09:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35694 "EHLO
+        id S229543AbjFXAQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 20:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230148AbjFXAJa (ORCPT
+        with ESMTP id S229539AbjFXAQZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 20:09:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E79D2957;
-        Fri, 23 Jun 2023 17:09:23 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35NNqr03021448;
-        Sat, 24 Jun 2023 00:09:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cnq5krcqwAsOwPeNM8J57gWplA/sMeZZivFN/l7ve1M=;
- b=CqPMSlHDIdXi+W/xuHav8hDD1E9y27HpiUzwAhc8sxXwhtpiGOSMehnYlFa66hPjbKYu
- GSr10+qTUNDvrMzgEgmN/OkrqvTSH1WVyaK7cj98HV1t5rGvwOlaHlgFJb/3pR9ZBHEd
- 7EC9TkQB484lK75Mzy4UZVOR0WWHPf5gyU45MrCW7H7ErwoWFVI3EbMBd/T78Q17A3K1
- hZONSMLwACKfzQ8/VDerjSUjFgWQnOwiuGlnn2MvdAjl7vRphy+Q7JUuPv6yGOmqeyQd
- 996PWLpBfF9nxcvUBoGOVKmMH+cQaBhdM0xX7AiyuCK3kB5waeeckWJbGdMzqOflWnT+ eg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rcw93jvgu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 24 Jun 2023 00:09:12 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35O09CVZ013409
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 24 Jun 2023 00:09:12 GMT
-Received: from [10.110.61.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 23 Jun
- 2023 17:09:10 -0700
-Message-ID: <1e41b909-4886-8392-edbc-78684e52bbf9@quicinc.com>
-Date:   Fri, 23 Jun 2023 17:09:09 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 6/6] drm/msm/dpu: Update dev core dump to dump registers
- of sub blocks
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Fri, 23 Jun 2023 20:16:25 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59DF02735;
+        Fri, 23 Jun 2023 17:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1687565784; x=1719101784;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pNoCAdk57HxgqNty5nTEh06JfbUOL9kPT7lSrlnTP9M=;
+  b=Vuk02p6yaaX7vSCQzgl7+TZTmj2lRiIAqTviVxoVfPUZv7QKtwwZVqME
+   isDrGLqds3ORvuNYHgnD6ySgaaOT1qMKbtXlHwOf1DSWXcTSRqbQ9AFzZ
+   LNctu7go2Fc8zBQ7zrIev9x2XqS+ckquUBZm+40Ovz3oudc+almKE4XCG
+   tli6s1iddLfgGJlg2hjQkp7rgNBnBrv+rZJ6LImmUXmbtpIayevCBCzyF
+   xT8NbfJELQzbEtSXMX4EoAwG6FEnQKCIaLhKIAD76jw7Xb0i6/EEQBYbN
+   zI+Qfdg09vTsL8FI/1xwU3c+prCgwT5vAGRkmz1Qln6sUhjTm+Xh/jrz6
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="447269390"
+X-IronPort-AV: E=Sophos;i="6.01,153,1684825200"; 
+   d="scan'208";a="447269390"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2023 17:16:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="718701484"
+X-IronPort-AV: E=Sophos;i="6.01,153,1684825200"; 
+   d="scan'208";a="718701484"
+Received: from lkp-server01.sh.intel.com (HELO 783282924a45) ([10.239.97.150])
+  by fmsmga007.fm.intel.com with ESMTP; 23 Jun 2023 17:16:21 -0700
+Received: from kbuild by 783282924a45 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qCqwv-0008bT-0J;
+        Sat, 24 Jun 2023 00:16:21 +0000
+Date:   Sat, 24 Jun 2023 08:15:33 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC:     Rob Clark <robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <quic_jesszhan@quicinc.com>
-References: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
- <20230622-devcoredump_patch-v1-6-3b2cdcc6a576@quicinc.com>
- <114f34dd-e5ce-f878-5b23-4c14dc800547@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <114f34dd-e5ce-f878-5b23-4c14dc800547@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: A9EqZX9Jcar87sot__13p7oWJRsOaaQg
-X-Proofpoint-ORIG-GUID: A9EqZX9Jcar87sot__13p7oWJRsOaaQg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-23_14,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 phishscore=0
- mlxlogscore=999 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306230219
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 1/3] firmware: qcom_scm: Always try to consume all three
+ clocks
+Message-ID: <202306240841.iVZhYL4l-lkp@intel.com>
+References: <20230623-topic-scm_cleanup-v1-1-383089eae98d@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230623-topic-scm_cleanup-v1-1-383089eae98d@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,220 +70,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Konrad,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on c87d46a9e8ebd2f2c3960927b1d21687096d1109]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/firmware-qcom_scm-Always-try-to-consume-all-three-clocks/20230624-055215
+base:   c87d46a9e8ebd2f2c3960927b1d21687096d1109
+patch link:    https://lore.kernel.org/r/20230623-topic-scm_cleanup-v1-1-383089eae98d%40linaro.org
+patch subject: [PATCH 1/3] firmware: qcom_scm: Always try to consume all three clocks
+config: arm64-randconfig-r023-20230622 (https://download.01.org/0day-ci/archive/20230624/202306240841.iVZhYL4l-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 12.3.0
+reproduce: (https://download.01.org/0day-ci/archive/20230624/202306240841.iVZhYL4l-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202306240841.iVZhYL4l-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/firmware/qcom_scm.c: In function 'qcom_scm_probe':
+>> drivers/firmware/qcom_scm.c:1404:23: warning: variable 'clks' set but not used [-Wunused-but-set-variable]
+    1404 |         unsigned long clks;
+         |                       ^~~~
 
 
-On 6/22/2023 5:13 PM, Dmitry Baryshkov wrote:
-> On 23/06/2023 02:48, Ryan McCann wrote:
->> Currently, the device core dump mechanism does not dump registers of sub
->> blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Add wrapper
->> function to dump hardware blocks that contain sub blocks.
->>
->> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 194 
->> +++++++++++++++++++++++++++-----
->>   1 file changed, 168 insertions(+), 26 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index aa8499de1b9f..9b1b1c382269 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -885,6 +885,154 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
->>       return 0;
->>   }
->> +static void dpu_kms_mdp_snapshot_add_block(struct msm_disp_state 
->> *disp_state,
->> +                       void __iomem *mmio, void *blk,
->> +                       enum dpu_hw_blk_type blk_type)
-> 
-> No. Such multiplexers add no value to the code. Please inline it.
-> 
-> Not to mention that this patch is hard to review. You both move existing 
-> code and add new features. If it were to go, it should have been split 
-> into two patches: one introducing the multiplexer and another one adding 
-> subblocks.
-> 
+vim +/clks +1404 drivers/firmware/qcom_scm.c
 
-Ok. we can split this into:
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1400  
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1401  static int qcom_scm_probe(struct platform_device *pdev)
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1402  {
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1403  	struct qcom_scm *scm;
+ab0822d57d8ccd Sarangdhar Joshi   2016-11-15 @1404  	unsigned long clks;
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1405  	int irq, ret;
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1406  
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1407  	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1408  	if (!scm)
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1409  		return -ENOMEM;
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1410  
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1411  	ret = qcom_scm_find_dload_address(&pdev->dev, &scm->dload_mode_addr);
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1412  	if (ret < 0)
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1413  		return ret;
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1414  
+65b7ebda502861 Sibi Sankar        2022-05-23  1415  	mutex_init(&scm->scm_bw_lock);
+65b7ebda502861 Sibi Sankar        2022-05-23  1416  
+ab0822d57d8ccd Sarangdhar Joshi   2016-11-15  1417  	clks = (unsigned long)of_device_get_match_data(&pdev->dev);
+60cd420c91e28c Bjorn Andersson    2018-08-29  1418  
+65b7ebda502861 Sibi Sankar        2022-05-23  1419  	scm->path = devm_of_icc_get(&pdev->dev, NULL);
+65b7ebda502861 Sibi Sankar        2022-05-23  1420  	if (IS_ERR(scm->path))
+65b7ebda502861 Sibi Sankar        2022-05-23  1421  		return dev_err_probe(&pdev->dev, PTR_ERR(scm->path),
+65b7ebda502861 Sibi Sankar        2022-05-23  1422  				     "failed to acquire interconnect path\n");
+65b7ebda502861 Sibi Sankar        2022-05-23  1423  
+06987a4b9a3c31 Konrad Dybcio      2023-06-23  1424  	scm->core_clk = devm_clk_get_optional(&pdev->dev, "core");
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1425  	if (IS_ERR(scm->core_clk)) {
+60cd420c91e28c Bjorn Andersson    2018-08-29  1426  		if (PTR_ERR(scm->core_clk) == -EPROBE_DEFER)
+60cd420c91e28c Bjorn Andersson    2018-08-29  1427  			return PTR_ERR(scm->core_clk);
+ab0822d57d8ccd Sarangdhar Joshi   2016-11-15  1428  	}
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1429  
+06987a4b9a3c31 Konrad Dybcio      2023-06-23  1430  	scm->iface_clk = devm_clk_get_optional(&pdev->dev, "iface");
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1431  	if (IS_ERR(scm->iface_clk)) {
+60cd420c91e28c Bjorn Andersson    2018-08-29  1432  		if (PTR_ERR(scm->iface_clk) == -EPROBE_DEFER)
+60cd420c91e28c Bjorn Andersson    2018-08-29  1433  			return PTR_ERR(scm->iface_clk);
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1434  	}
+60cd420c91e28c Bjorn Andersson    2018-08-29  1435  
+06987a4b9a3c31 Konrad Dybcio      2023-06-23  1436  	scm->bus_clk = devm_clk_get_optional(&pdev->dev, "bus");
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1437  	if (IS_ERR(scm->bus_clk)) {
+60cd420c91e28c Bjorn Andersson    2018-08-29  1438  		if (PTR_ERR(scm->bus_clk) == -EPROBE_DEFER)
+60cd420c91e28c Bjorn Andersson    2018-08-29  1439  			return PTR_ERR(scm->bus_clk);
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1440  	}
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1441  
+dd4fe5b292226f Bjorn Andersson    2016-06-17  1442  	scm->reset.ops = &qcom_scm_pas_reset_ops;
+dd4fe5b292226f Bjorn Andersson    2016-06-17  1443  	scm->reset.nr_resets = 1;
+dd4fe5b292226f Bjorn Andersson    2016-06-17  1444  	scm->reset.of_node = pdev->dev.of_node;
+bd4760ca031567 Wei Yongjun        2016-08-28  1445  	ret = devm_reset_controller_register(&pdev->dev, &scm->reset);
+bd4760ca031567 Wei Yongjun        2016-08-28  1446  	if (ret)
+bd4760ca031567 Wei Yongjun        2016-08-28  1447  		return ret;
+dd4fe5b292226f Bjorn Andersson    2016-06-17  1448  
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1449  	/* vote for max clk rate for highest performance */
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1450  	ret = clk_set_rate(scm->core_clk, INT_MAX);
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1451  	if (ret)
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1452  		return ret;
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1453  
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1454  	__scm = scm;
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1455  	__scm->dev = &pdev->dev;
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1456  
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1457  	init_completion(&__scm->waitq_comp);
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1458  
+f3d0fbad6765da Johan Hovold       2023-03-09  1459  	irq = platform_get_irq_optional(pdev, 0);
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1460  	if (irq < 0) {
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1461  		if (irq != -ENXIO)
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1462  			return irq;
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1463  	} else {
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1464  		ret = devm_request_threaded_irq(__scm->dev, irq, NULL, qcom_scm_irq_handler,
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1465  						IRQF_ONESHOT, "qcom-scm", __scm);
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1466  		if (ret < 0)
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1467  			return dev_err_probe(scm->dev, ret, "Failed to request qcom-scm irq\n");
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1468  	}
+6bf32599223634 Guru Das Srinagesh 2023-01-13  1469  
+f6ea568f0ddcdf Stephen Boyd       2021-02-23  1470  	__get_convention();
+6b1751a86ce2eb Kumar Gala         2016-06-03  1471  
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1472  	/*
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1473  	 * If requested enable "download mode", from this point on warmboot
+c19698a9e41bd6 Jiang Jian         2022-06-21  1474  	 * will cause the boot stages to enter download mode, unless
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1475  	 * disabled below by a clean shutdown/reboot.
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1476  	 */
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1477  	if (download_mode)
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1478  		qcom_scm_set_download_mode(true);
+8c1b7dc9ba2294 Bjorn Andersson    2017-08-14  1479  
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1480  	return 0;
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1481  }
+d0f6fa7ba2d624 Andy Gross         2016-06-03  1482  
 
-1) adding the multiplexer
-2) adding sub-blk parsing support inside the multiplexer
-
->> +{
->> +    u32 base;
->> +
->> +    switch (blk_type) {
->> +    case DPU_HW_BLK_TOP:
->> +    {
->> +        struct dpu_mdp_cfg *top = (struct dpu_mdp_cfg *)blk;
->> +
->> +        if (top->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
->> +            msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
->> +                            mmio + top->base, "top");
->> +            msm_disp_snapshot_add_block(disp_state, top->len - 
->> MDP_PERIPH_TOP0_END,
->> +                            mmio + top->base + MDP_PERIPH_TOP0_END,
->> +                            "top_2");
->> +        } else {
->> +            msm_disp_snapshot_add_block(disp_state, top->len, mmio + 
->> top->base, "top");
->> +        }
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_LM:
->> +    {
->> +        struct dpu_lm_cfg *mixer = (struct dpu_lm_cfg *)blk;
->> +
->> +        msm_disp_snapshot_add_block(disp_state, mixer->len, mmio + 
->> mixer->base, "%s",
->> +                        mixer->name);
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_CTL:
->> +    {
->> +        struct dpu_ctl_cfg *ctl = (struct dpu_ctl_cfg *)blk;
->> +
->> +        msm_disp_snapshot_add_block(disp_state, ctl->len, mmio + 
->> ctl->base, "%s",
->> +                        ctl->name);
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_INTF:
->> +    {
->> +        struct dpu_intf_cfg *intf = (struct dpu_intf_cfg *)blk;
->> +
->> +        msm_disp_snapshot_add_block(disp_state, intf->len, mmio + 
->> intf->base, "%s",
->> +                        intf->name);
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_WB:
->> +    {
->> +        struct dpu_wb_cfg *wb = (struct dpu_wb_cfg *)blk;
->> +
->> +        msm_disp_snapshot_add_block(disp_state, wb->len, mmio + 
->> wb->base, "%s",
->> +                        wb->name);
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_SSPP:
->> +    {
->> +        struct dpu_sspp_cfg *sspp_block = (struct dpu_sspp_cfg *)blk;
->> +        const struct dpu_sspp_sub_blks *sblk = sspp_block->sblk;
->> +
->> +        base = sspp_block->base;
->> +
->> +        msm_disp_snapshot_add_block(disp_state, sspp_block->len, mmio 
->> + base, "%s",
->> +                        sspp_block->name);
->> +
->> +        if (sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
->> +            sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
->> +            sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED4))
->> +            msm_disp_snapshot_add_block(disp_state, 
->> sblk->scaler_blk.len,
->> +                            mmio + base + sblk->scaler_blk.base, 
->> "%s_%s",
->> +                            sspp_block->name, sblk->scaler_blk.name);
-> 
-> Actually, it would be better to:
-> - drop name from all sblk instances (and use known string instead of the 
-> sblk name here)
-> - Use sblk->foo_blk.len to check if it should be printed or not.
-> 
-
-No, I dont agree. If we drop the names from the sub_blk in the catalog, 
-we will end up using "sub_blk_name" string here in the code to indicate 
-which blk that is in the dump.
-
-If we add more sub_blks in the catalog in the future we need to keep 
-changing the code over here. Thats not how it should be.
-
-Leaving the names in the catalog ensures that this code wont change and 
-only catalog changes when we add a new sub_blk either for an existing or 
-new chipset.
-
-catalog is indicating the new blk, and dumping code just prints it.
-
-with your approach, dumping code will or can keep changing with chipsets 
-or sub_blks. Thats not how it should be.
-
->> +
->> +        if (sspp_block->features & BIT(DPU_SSPP_CSC) || 
->> sspp_block->features
->> +                    & BIT(DPU_SSPP_CSC_10BIT))
-> 
-> A very bad use of indentation. In future please split logically rather 
-> than just filling the line up to the line width.
-> 
->> +            msm_disp_snapshot_add_block(disp_state, sblk->csc_blk.len,
->> +                            mmio + base + sblk->csc_blk.base, "%s_%s",
->> +                            sspp_block->name, sblk->csc_blk.name);
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_DSPP:
->> +    {
->> +        struct dpu_dspp_cfg *dspp_block = (struct dpu_dspp_cfg *)blk;
->> +
->> +        base = dspp_block->base;
->> +
->> +        msm_disp_snapshot_add_block(disp_state, dspp_block->len, mmio 
->> + base, "%s",
->> +                        dspp_block->name);
->> +
->> +        if (dspp_block->features & BIT(DPU_DSPP_PCC))
->> +            msm_disp_snapshot_add_block(disp_state, 
->> dspp_block->sblk->pcc.len,
->> +                            mmio + base + dspp_block->sblk->pcc.base,
->> +                            "%s_%s", dspp_block->name,
->> +                            dspp_block->sblk->pcc.name);
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_PINGPONG:
->> +    {
->> +        struct dpu_pingpong_cfg *pingpong_block = (struct 
->> dpu_pingpong_cfg *)blk;
->> +        const struct dpu_pingpong_sub_blks *sblk = pingpong_block->sblk;
->> +
->> +        base = pingpong_block->base;
->> +
->> +        msm_disp_snapshot_add_block(disp_state, pingpong_block->len, 
->> mmio + base, "%s",
->> +                        pingpong_block->name);
->> +
->> +        if (pingpong_block->features & BIT(DPU_PINGPONG_TE2))
->> +            msm_disp_snapshot_add_block(disp_state, sblk->te2.len,
->> +                            mmio + base + sblk->te2.base, "%s_%s",
->> +                            pingpong_block->name, sblk->te2.name);
->> +
->> +        if (pingpong_block->features & BIT(DPU_PINGPONG_DITHER))
->> +            msm_disp_snapshot_add_block(disp_state, sblk->dither.len,
->> +                            mmio + base + sblk->dither.base, "%s_%s",
->> +                            pingpong_block->name, sblk->dither.name);
->> +        break;
->> +    }
->> +    case DPU_HW_BLK_DSC:
->> +    {
->> +        struct dpu_dsc_cfg *dsc_block = (struct dpu_dsc_cfg *)blk;
->> +
->> +        base = dsc_block->base;
->> +
->> +        if (dsc_block->features & BIT(DPU_DSC_HW_REV_1_2)) {
->> +            struct dpu_dsc_blk enc = dsc_block->sblk->enc;
->> +            struct dpu_dsc_blk ctl = dsc_block->sblk->ctl;
->> +
->> +            /* For now, pass in a length of 0 because the DSC_BLK 
->> register space
->> +             * overlaps with the sblks' register space.
->> +             *
->> +             * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW 
->> catalog where
->> +             * applicable.
-> 
-> Nice catch, thank you. We should fix that.
-> 
-
-Yes and we would have fixed that ourself if you wanted that with this 
-series as another patch.
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
