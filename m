@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0F1173C571
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 02:41:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF5B373C578
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 02:41:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231978AbjFXAlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jun 2023 20:41:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42946 "EHLO
+        id S232498AbjFXAlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jun 2023 20:41:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231991AbjFXAl2 (ORCPT
+        with ESMTP id S232235AbjFXAlb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jun 2023 20:41:28 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B208C297F;
-        Fri, 23 Jun 2023 17:41:16 -0700 (PDT)
+        Fri, 23 Jun 2023 20:41:31 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CC4294B;
+        Fri, 23 Jun 2023 17:41:17 -0700 (PDT)
 Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 45C823F84F;
-        Sat, 24 Jun 2023 02:41:14 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 78D663F853;
+        Sat, 24 Jun 2023 02:41:15 +0200 (CEST)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-Date:   Sat, 24 Jun 2023 02:41:09 +0200
-Subject: [PATCH 11/15] drm/msm/dsi: Add 14nm phy configuration for SM6125
+Date:   Sat, 24 Jun 2023 02:41:10 +0200
+Subject: [PATCH 12/15] arm64: dts: qcom: sm6125: Switch fixed xo_board
+ clock to RPM XO clock
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230624-sm6125-dpu-v1-11-1d5a638cebf2@somainline.org>
+Message-Id: <20230624-sm6125-dpu-v1-12-1d5a638cebf2@somainline.org>
 References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
 In-Reply-To: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -56,78 +57,64 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>,
         Marijn Suijten <marijn.suijten@somainline.org>
 X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM6125 features only a single PHY (despite a secondary PHY PLL source
-being available to the disp_cc_mdss_pclk0_clk_src clock), and downstream
-sources for this "trinket" SoC do not define the typical "vcca"
-regulator to be available nor used.
+We have a working RPM XO clock; no other driver except rpmcc should be
+parenting directly to the fixed-factor xo_board clock nor should it be
+reachable by that global name.  Remove the name to that effect, so that
+every clock relation is explicitly defined in DTS.
 
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c      |  2 ++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h      |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 15 +++++++++++++++
- 3 files changed, 18 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 9d5795c58a98..8688ed502dcf 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -559,6 +559,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
- 	  .data = &dsi_phy_14nm_2290_cfgs },
- 	{ .compatible = "qcom,dsi-phy-14nm-660",
- 	  .data = &dsi_phy_14nm_660_cfgs },
-+	{ .compatible = "qcom,dsi-phy-14nm-6125",
-+	  .data = &dsi_phy_14nm_6125_cfgs },
- 	{ .compatible = "qcom,dsi-phy-14nm-8953",
- 	  .data = &dsi_phy_14nm_8953_cfgs },
- #endif
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 8b640d174785..ebf915f5e6c6 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -52,6 +52,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_14nm_2290_cfgs;
-+extern const struct msm_dsi_phy_cfg dsi_phy_14nm_6125_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_14nm_8953_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index 3ce45b023e63..5d43c9ec69ae 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -1068,6 +1068,21 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs = {
- 	.num_dsi_phy = 2,
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index 722dde560bec..edb03508dba3 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -22,7 +22,6 @@ xo_board: xo-board {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+ 			clock-frequency = <19200000>;
+-			clock-output-names = "xo_board";
+ 		};
  
-+const struct msm_dsi_phy_cfg dsi_phy_14nm_6125_cfgs = {
-+	.has_phy_lane = true,
-+	.ops = {
-+		.enable = dsi_14nm_phy_enable,
-+		.disable = dsi_14nm_phy_disable,
-+		.pll_init = dsi_pll_14nm_init,
-+		.save_pll_state = dsi_14nm_pll_save_state,
-+		.restore_pll_state = dsi_14nm_pll_restore_state,
-+	},
-+	.min_pll_rate = VCO_MIN_RATE,
-+	.max_pll_rate = VCO_MAX_RATE,
-+	.io_start = { 0x5e94400 },
-+	.num_dsi_phy = 1,
-+};
-+
- const struct msm_dsi_phy_cfg dsi_phy_14nm_8953_cfgs = {
- 	.has_phy_lane = true,
- 	.regulator_data = dsi_phy_14nm_17mA_regulators,
+ 		sleep_clk: sleep-clk {
+@@ -306,6 +305,8 @@ rpm_requests: rpm-requests {
+ 			rpmcc: clock-controller {
+ 				compatible = "qcom,rpmcc-sm6125", "qcom,rpmcc";
+ 				#clock-cells = <1>;
++				clocks = <&xo_board>;
++				clock-names = "xo";
+ 			};
+ 
+ 			rpmpd: power-controller {
+@@ -713,7 +714,7 @@ sdhc_1: mmc@4744000 {
+ 
+ 			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+ 				 <&gcc GCC_SDCC1_APPS_CLK>,
+-				 <&xo_board>;
++				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+ 			clock-names = "iface", "core", "xo";
+ 			iommus = <&apps_smmu 0x160 0x0>;
+ 
+@@ -740,7 +741,7 @@ sdhc_2: mmc@4784000 {
+ 
+ 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+ 				 <&gcc GCC_SDCC2_APPS_CLK>,
+-				 <&xo_board>;
++				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+ 			clock-names = "iface", "core", "xo";
+ 			iommus = <&apps_smmu 0x180 0x0>;
+ 
 
 -- 
 2.41.0
