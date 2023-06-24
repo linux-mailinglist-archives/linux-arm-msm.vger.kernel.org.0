@@ -2,117 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6978E73CBD3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 18:06:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 403CC73CD72
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 01:34:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229846AbjFXQGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 12:06:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56988 "EHLO
+        id S230021AbjFXXee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 19:34:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjFXQGT (ORCPT
+        with ESMTP id S229939AbjFXXe3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 12:06:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 858F4E5E;
-        Sat, 24 Jun 2023 09:06:17 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35OFwvSD003729;
-        Sat, 24 Jun 2023 16:06:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AHeKVxN60rAVGoJtIK+ThHIv61dgUGDzkTmgkYmzxzg=;
- b=fjgH+Q42vxty8HRmoAIjsGPTcq5OagzOo/eCsSFEDX/LlGaPftUTaq5hoB+UKiyOMspk
- CTa009BojN/HvMitavybhCyzkwWq1YfL6yJ8W2bfkznHCmgTrxdrmt7Llx4LM//b/pai
- S6LgwOS0bE3wjGRVo8YGK1V7nrVizqbgIQvcdDL0YOYU6ei4/Yww4CIbRMwBuSht1IT3
- +clhVC0uWuDBenUDEW2dKMZMwHL3RsthNDFQ74J3n9AkXQOxAqAIsZ86FRBsBxWb9j3G
- LwlEZzEJThBdFO9njaU3r8L7MgD/UHfrhqvwehJnbrOkS+hpfQNfEH7qvkz1zdZONvIt qA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdssdgpcy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 24 Jun 2023 16:06:09 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35OG68rA025297
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 24 Jun 2023 16:06:08 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 24 Jun
- 2023 09:06:08 -0700
-Message-ID: <2f1d4e18-f377-74c1-59fc-da422d4e99ee@quicinc.com>
-Date:   Sat, 24 Jun 2023 10:06:07 -0600
+        Sat, 24 Jun 2023 19:34:29 -0400
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 415BA10F4;
+        Sat, 24 Jun 2023 16:34:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1687649668; x=1719185668;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=uSich5WtIL4xEDBsn+PUSmiT50AF+RCLc8UMqP5tImA=;
+  b=Kox0T0vk10oRBNLnPo8erjBEidnzQMqWPog1vNTdr3a/2yz1HkPTRh/P
+   YOyN9CeLYUy7zzQduV7c/JkHh1gkjp2d+00HB0MVYJFlm6JjPrbhB2oMW
+   cYqUu9Ad2TFy8be12ItJ72d2vRPTVvfPLYDQee54J6Vf/l56HXcJm0f+d
+   16iuXq2aX4WjDb1KiTvnOwNxfyDLy11KB7+LrNoYC6SYdoV6/uvJSU2+H
+   os9J5NNIvFIHRAP0qDSe1GqCwFXw0k4tkiCRkyv1BgG7MBb7xmzsLdlgu
+   zILeIWs2xaWNqgSkiU5GgyzCNEMOiEOK0+aT5z5zxrzYuaJQJu3wbVndH
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10751"; a="391122035"
+X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
+   d="scan'208";a="391122035"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2023 16:34:27 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10751"; a="839837858"
+X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
+   d="scan'208";a="839837858"
+Received: from lkp-server01.sh.intel.com (HELO 783282924a45) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 24 Jun 2023 16:34:22 -0700
+Received: from kbuild by 783282924a45 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qDClq-0009Xr-05;
+        Sat, 24 Jun 2023 23:34:22 +0000
+Date:   Sun, 25 Jun 2023 07:34:12 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: Re: [PATCH v3 01/11] media: videobuf2: Access vb2_queue bufs array
+ through helper functions
+Message-ID: <202306250705.Ts4zHhMG-lkp@intel.com>
+References: <20230622131349.144160-2-benjamin.gaignard@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 10/26] bus: mhi: host: use array_size
-Content-Language: en-US
-To:     Kees Cook <keescook@chromium.org>
-CC:     Julia Lawall <julia.lawall@inria.fr>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        <kernel-janitors@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230623211457.102544-1-Julia.Lawall@inria.fr>
- <20230623211457.102544-11-Julia.Lawall@inria.fr>
- <3b4ff79b-93b4-cf56-1488-113905b3981d@quicinc.com>
- <alpine.DEB.2.22.394.2306232340510.3129@hadrien>
- <58cb3bf6-5ffd-194b-1455-4e5bb045fc34@quicinc.com>
- <202306231639.68955384A@keescook>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <202306231639.68955384A@keescook>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FVd_FYpvNMuEqE3Jw1BkvypnTVJkbW7m
-X-Proofpoint-ORIG-GUID: FVd_FYpvNMuEqE3Jw1BkvypnTVJkbW7m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-24_11,2023-06-22_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- phishscore=0 suspectscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 spamscore=0
- mlxlogscore=749 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306240152
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230622131349.144160-2-benjamin.gaignard@collabora.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/23/2023 5:45 PM, Kees Cook wrote:
-> On Fri, Jun 23, 2023 at 04:09:46PM -0600, Jeffrey Hugo wrote:
->> Kees, would you please chime in and educate me here?  I feel like I'm
->> missing something important here.
-> 
-> The array_size() family will saturate at SIZE_MAX (rather than potentially
-> wrapping around). No allocator can fulfil a 18446744073709551615 byte
-> (18 exabyte) allocation. :) So the NULL return value will (hopefully)
-> trigger an error path.
-> 
+Hi Benjamin,
 
-Fair enough, that handles the 64-bit usecase.  I'm guessing the 
-assumption is that on a 32-bit usecase where size_t is ~4GB, there won't 
-actually be 4GB to allocate and things will also fail.  So far, so good.
+kernel test robot noticed the following build errors:
 
-What about a 32-bit system with something like ARM's LPAE (Large 
-Physical Address Extension) where the host is 32-bit, and so size_t 
-would be ~4GB (as far as I can tell) but phys_addr_t is larger than 
-that, and so we can have/access more than 4GB of resources?  Lets see, 
-ignoring that its a 13 year old feature and probably not in circulation 
-anymore, probably still can't satisfy a 4GB allocation since you'd need 
-to map all of it to address it, and part of the address space is surely 
-reserved for other things.
+[auto build test ERROR on media-tree/master]
+[also build test ERROR on linus/master v6.4-rc7 next-20230623]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Ok, I think I'm convinced.  I'm going to sleep on it, but I suspect all 
-will still be good early next week.
+url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Access-vb2_queue-bufs-array-through-helper-functions/20230622-214122
+base:   git://linuxtv.org/media_tree.git master
+patch link:    https://lore.kernel.org/r/20230622131349.144160-2-benjamin.gaignard%40collabora.com
+patch subject: [PATCH v3 01/11] media: videobuf2: Access vb2_queue bufs array through helper functions
+config: i386-allyesconfig (https://download.01.org/0day-ci/archive/20230625/202306250705.Ts4zHhMG-lkp@intel.com/config)
+compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
+reproduce: (https://download.01.org/0day-ci/archive/20230625/202306250705.Ts4zHhMG-lkp@intel.com/reproduce)
 
-Thank you for the explanation.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202306250705.Ts4zHhMG-lkp@intel.com/
 
--Jeff
+All errors (new ones prefixed by >>):
+
+>> drivers/staging/media/atomisp/pci/atomisp_ioctl.c:1080:22: error: passing 'struct vb2_queue' to parameter of incompatible type 'struct vb2_queue *'; take the address with &
+           vb = vb2_get_buffer(pipe->vb_queue, buf->index);
+                               ^~~~~~~~~~~~~~
+                               &
+   include/media/videobuf2-core.h:1239:67: note: passing argument to parameter 'q' here
+   static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
+                                                                     ^
+   1 error generated.
+
+
+vim +1080 drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+
+  1065	
+  1066	static int atomisp_dqbuf_wrapper(struct file *file, void *fh, struct v4l2_buffer *buf)
+  1067	{
+  1068		struct video_device *vdev = video_devdata(file);
+  1069		struct atomisp_video_pipe *pipe = atomisp_to_video_pipe(vdev);
+  1070		struct atomisp_sub_device *asd = pipe->asd;
+  1071		struct atomisp_device *isp = video_get_drvdata(vdev);
+  1072		struct ia_css_frame *frame;
+  1073		struct vb2_buffer *vb;
+  1074		int ret;
+  1075	
+  1076		ret = vb2_ioctl_dqbuf(file, fh, buf);
+  1077		if (ret)
+  1078			return ret;
+  1079	
+> 1080		vb = vb2_get_buffer(pipe->vb_queue, buf->index);
+  1081		frame = vb_to_frame(vb);
+  1082	
+  1083		buf->reserved = asd->frame_status[buf->index];
+  1084	
+  1085		/*
+  1086		 * Hack:
+  1087		 * Currently frame_status in the enum type which takes no more lower
+  1088		 * 8 bit.
+  1089		 * use bit[31:16] for exp_id as it is only in the range of 1~255
+  1090		 */
+  1091		buf->reserved &= 0x0000ffff;
+  1092		if (!(buf->flags & V4L2_BUF_FLAG_ERROR))
+  1093			buf->reserved |= frame->exp_id;
+  1094		buf->reserved2 = pipe->frame_config_id[buf->index];
+  1095	
+  1096		dev_dbg(isp->dev,
+  1097			"dqbuf buffer %d (%s) with exp_id %d, isp_config_id %d\n",
+  1098			buf->index, vdev->name, buf->reserved >> 16, buf->reserved2);
+  1099		return 0;
+  1100	}
+  1101	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
