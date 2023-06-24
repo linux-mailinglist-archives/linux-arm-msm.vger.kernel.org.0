@@ -2,129 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CF4A73CB5E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 16:23:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 793DD73CB7C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jun 2023 16:57:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbjFXOXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 10:23:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38882 "EHLO
+        id S232983AbjFXO5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 10:57:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbjFXOXe (ORCPT
+        with ESMTP id S232981AbjFXO5E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 10:23:34 -0400
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB5EC1BD6;
-        Sat, 24 Jun 2023 07:23:33 -0700 (PDT)
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-666ecb21f86so1516276b3a.3;
-        Sat, 24 Jun 2023 07:23:33 -0700 (PDT)
+        Sat, 24 Jun 2023 10:57:04 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CF9819B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 07:57:03 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3112c11fdc9so1525990f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 07:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687618621; x=1690210621;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Sy7fPEGEDCMmwEn/3Ug5tuBvNGDyVHoAclBv/BnN2Ig=;
+        b=Ndq5blxSplU89R+Avk5O5MvybCqYfI1gw5eIb2obe6Jg3GHZ9JrvtSy+Ihb7hF5On2
+         iQ3B4RUJ59OiLZYTpLlGwd5Dx0M67Z/VkvLah5h1Ii8iU9FBCA3x0+eiDFbhsNismofv
+         ZKI0eFI27FCwkaTNa8/RTSuLU1KG+mxbkgWvou+obpWoDETsfzd1uHlz3W9K9HbgF7mB
+         d3eyIj3tI3vxqiwYRHzZUtW0wc/LiuY9/sLJPRGW6otnSz9+Vwk7VH6Eyw+InG+e3DfS
+         E7EiIcpeQ7N0S40LN1MGGOAhAEQsU3xUiEhBNjPECtQzvc6NJ7vXlscsSv1tKvlXVA+p
+         dg7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687616613; x=1690208613;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l61WbsGIflGvlUxdvoJkBkB8edAun9mmIBPamQIpoWM=;
-        b=WlhZh2un2W+mSqxtEXiZl+aosNZr2GYzB6kzB7tAOnkWQ/Qs4zBKuDh2AJl+12AUSX
-         Q5UMywz4ZgGR5h2XJn4mfWukV+sS4MMLKuoYFyrGUkLI8yE+3qFXuEVc6l/MpL+8wEDk
-         GH9FEnwSq3liU5dRgBVreGcBUBNDwwN6nhkxdr7NxT9gjw7TaW+VAyJ0Y/e2t70lsT2p
-         oiNbAd10Zgujbyt6HPZT8l4KoQu+twbANJ/STAgH7z2e4AonJb6JkI+DEUASSozV+KHN
-         QJTyAYiTJIzsAIi7wg5bTIxj8GwaB7oMl3SBa4IaUD8S7jygc7BdZUbFL1VrZKiJA33M
-         ToZw==
-X-Gm-Message-State: AC+VfDz1UHbypIPUbQZbIlLAHv4xIBV/CkvulPH3/ABGpNwU0rmH5GHw
-        I/64kAJnAO/9yOKZAT08yqI=
-X-Google-Smtp-Source: ACHHUZ4/e98bK2UmPfEy4r3yCMJ6M+KXaviUSrYfc5Ra0ti+kRhvfGmLjPU3w2ysu/LA7SWvpPix5Q==
-X-Received: by 2002:a05:6a00:22d2:b0:668:7143:50b0 with SMTP id f18-20020a056a0022d200b00668714350b0mr26865595pfj.31.1687616613173;
-        Sat, 24 Jun 2023 07:23:33 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id j21-20020aa783d5000000b006580e98326esm1155839pfn.42.2023.06.24.07.23.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jun 2023 07:23:32 -0700 (PDT)
-Date:   Sat, 24 Jun 2023 23:23:30 +0900
-From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Bjorn Helgaas <helgaas@kernel.org>,
-        Miaoqian Lin <linmq006@gmail.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-pci@vger.kernel.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jisheng Zhang <jszhang@kernel.org>,
-        Toan Le <toan@os.amperecomputing.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Rob Herring <robh@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        linux-rockchip@lists.infradead.org,
-        Joyce Ooi <joyce.ooi@intel.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jianjun Wang <jianjun.wang@mediatek.com>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Rahul Tanwar <rtanwar@maxlinear.com>,
-        Jim Quinlan <jim2101024@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        linux-arm-msm@vger.kernel.org,
-        Shawn Lin <shawn.lin@rock-chips.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        linux-tegra@vger.kernel.org, kernel@pengutronix.de,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Ray Jui <rjui@broadcom.com>,
-        Ryder Lee <ryder.lee@mediatek.com>,
-        linux-mediatek@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Tom Joseph <tjoseph@cadence.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
- void
-Message-ID: <20230624142330.GC2636347@rocinante>
-References: <20230530140742.ebbrxmpieuphbmz3@pengutronix.de>
- <ZHphHkNLO4tEJIm/@bhelgaas>
- <20230606160234.elcvyqlz2j3mggih@pengutronix.de>
+        d=1e100.net; s=20221208; t=1687618621; x=1690210621;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sy7fPEGEDCMmwEn/3Ug5tuBvNGDyVHoAclBv/BnN2Ig=;
+        b=ILXJUCi+qO6yEBcpDPZqdtjiCg5vIvAjEqyrnaRwf6z8sKBmoiDolj9I1HT9TnsNQQ
+         bjf4oDJUHX13ZodFGuy0RXQiwuhA65q35aHc6fgwbSJ3E7wDKkuHWIfqckvac2ZzgbEO
+         v4YiLGFd7ariRlS8bQiRL2CC8PREMD1aaxtB4x+tK9uPrxBjmFbxtzldJYZeWMuyy5NU
+         RsvgCkg0WpFkHTS8vbr2GDKO0BAY0K9CSIJE7whoxsC2K+mSr55k1yGjZBFXDjkI8Zk0
+         bOxjSj1HcJ00/ZwleRW9cQyMLajcY+8J9HLW4QeGuBD641q0fxGDdOxCoeX4ugS0Vz9T
+         1owg==
+X-Gm-Message-State: AC+VfDy4a0mhKM+P7ViOuUI+iFge7oONdxIo+H9b160NJaOde8xYB1As
+        dGkSrv/MfDpcsYDgmaagY/LNZU/bbhzpQ/FH9Do7zQ==
+X-Google-Smtp-Source: ACHHUZ7qJnFn5fHS2T2L7g8GNkZHsZjBV7Yl9ZXHxPv+6wQkhJ/pSP9dVB8iDOuC1JzP8YkFz7S9yQ==
+X-Received: by 2002:a5d:6506:0:b0:313:e735:6d23 with SMTP id x6-20020a5d6506000000b00313e7356d23mr525786wru.22.1687618621094;
+        Sat, 24 Jun 2023 07:57:01 -0700 (PDT)
+Received: from [192.168.0.79] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id d10-20020adfe2ca000000b0031272fced4dsm2307084wrj.52.2023.06.24.07.57.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Jun 2023 07:57:00 -0700 (PDT)
+Message-ID: <52dbabb2-8cc1-5579-8c83-adcc7a699222@linaro.org>
+Date:   Sat, 24 Jun 2023 14:56:59 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230606160234.elcvyqlz2j3mggih@pengutronix.de>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [RFT PATCH] arm64: dts: qcom: sdm850-c630: add missing panel
+ supply
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230617171512.286795-1-krzysztof.kozlowski@linaro.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20230617171512.286795-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
 
-[...]
-> > > These patches wait for application for quite some time now. They apply
-> > > just fine to v6.4-rc1 and next/master. Would be great to get them in
-> > > during the next merge window and ideally give them some time in next
-> > > before.
-> > 
-> > Thanks, these seem fine to me, and Lorenzo normally takes care of
-> > drivers/pci/controller/.  Lorenzo, if it's easier to have me apply
-> > them, that's fine, too, just let me know.
-> > 
-> > The only tweaks I would make would be:
-> > 
-> >   PCI: j721e: Convert to platform remove callback returning void
-> >   PCI: dwc: Convert to platform remove callback returning void
+
+On 17/06/2023 17:15, Krzysztof Kozlowski wrote:
+> Panel bindings (boe,nv133fhm-n61) require supply which here actually can
+> be turned on/off via GPIO control:
 > 
-> If it's easier for you (or Lorenzo) I can resend with these tweaks.
-> Otherwise if these are adapted when applying them, that's fine for me,
-> too. Just tell me if I should do anything here.
+>   sdm850-lenovo-yoga-c630.dtb: panel: 'power-supply' is a required property
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I took the entire series and tweaked the subject lines as Bjorn requested.
+I've been running an equivalent patch for a while, so
 
-Thank you!
+Tested-by: Caleb Connolly <caleb.connolly@linaro.org>
 
-	Krzysztof
+The dsi bridge vcc and vcca supplies are also missing, they're powered
+from vreg_l2a_1p2 and controlled by pm8998_gpio 9.
+> 
+> ---
+> 
+> Not tested on hardware
+> ---
+>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 20 +++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> index cfbc4fc1eba9..3d871567cf81 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> @@ -87,6 +87,25 @@ sn65dsi86_refclk: sn65dsi86-refclk {
+>  		clock-frequency = <19200000>;
+>  	};
+>  
+> +	vph_pwr: regulator-vph-pwr {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +	};
+> +
+> +	vlcm_3v3: regulator-vlcm-3v3 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vlcm_3v3";
+> +
+> +		vin-supply = <&vph_pwr>;
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +	};
+> +
+>  	backlight: backlight {
+>  		compatible = "pwm-backlight";
+>  		pwms = <&sn65dsi86 1000000>;
+> @@ -419,6 +438,7 @@ aux-bus {
+>  			panel: panel {
+>  				compatible = "boe,nv133fhm-n61";
+>  				backlight = <&backlight>;
+> +				power-supply = <&vlcm_3v3>;
+>  
+>  				port {
+>  					panel_in_edp: endpoint {
+
+-- 
+// Caleb (they/them)
