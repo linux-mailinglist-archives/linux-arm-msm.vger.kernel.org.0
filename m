@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BB4A73D3B4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 22:25:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 477D873D3B7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 22:26:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230116AbjFYUZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Jun 2023 16:25:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60174 "EHLO
+        id S229980AbjFYUZ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jun 2023 16:25:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230058AbjFYUZy (ORCPT
+        with ESMTP id S229683AbjFYUZy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 25 Jun 2023 16:25:54 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAF3AE4A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 13:25:51 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f86dbce369so3139320e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 13:25:51 -0700 (PDT)
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C260E4E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 13:25:52 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f76a0a19d4so3276360e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 13:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1687724750; x=1690316750;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z1S1is2cOz63gQMr+iNsqA7cGkmzXDgvApekIDI21n4=;
-        b=IPkhDeBtv1Tnpg8MFffJbkZe8Qw0dogWowNIkFifoqYVxDORKYIYYPlyb6F6IfHPeP
-         tr3QK9AaGNI+LbULrFXO6N0Cp2To2JnkHWl3XvalPdZMTmCCn7Qo8L5wlMMQxF6TZ7lD
-         j5qI3nZbEw/Q+xu3PrAyFsMTF252S7iA3kodH+Cu+LCw0muhGCaYyCTlronFEDokJA58
-         taQCRPi+jMxeSZO7qcOOlfl1zatPcatOwzdKQz94qZPMkJSRYVkvbnO7lnv3mK2yxe1F
-         zINrIda5b29EP0ktnx+TnmUc+USWclm6G+iC2SHiLSjXvE3cDedNFUv/Zn4hIq25L26O
-         edqA==
+        bh=k2Nz0ILPn3EOKaQkWVWab6M25ZwY+ZxoTLvBh9FKz8o=;
+        b=aWel7HW/JXNoVUkF5FXL/5n8Z0xVjoQDrx/5pdrGJiYoKiXYCzG9KgomSsU+o6zF2A
+         WI5pJpHWjrWVviczdm959y+mgPk/g3BdjiHVOdu/c7syVGc3BbACPIEGO5esspOyZK5n
+         v82vd/qsrJn2IggmlmVxgtVqVja14ce5yc+5V7AhWdizvXs/C4oF1of/+yLmMXdURZ2/
+         aVrK7JBw9ysMz6DgiUMFSvo80E1dc7cvhYlr4u4d13b8geuyCk3mA6xkn8K6goS9UxFO
+         mL43SGlvVeydLRP67KozgrDCD9edZOLxYEIl5r518OcKn0spIXQT8Vqh5y3dlccABLWK
+         9U9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1687724750; x=1690316750;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=z1S1is2cOz63gQMr+iNsqA7cGkmzXDgvApekIDI21n4=;
-        b=aJauJ0AxGXmB3KwQ/Kz2RbczD40nC/0JtvaUMVYUnNx5ZILvra2yzxP4GrirH60WCe
-         9RvtHTvDnVKBfgKBYsnz+yTFt4CYsM6lw+qV6NyaHR6M5Z3pbyN1LBKMwQ72WuC8Jg8m
-         onNDGxBCIr/QEae/bjUEFO8vnE3+xHSnunqq0Z8sGOti5UhcWyemaA8/4C1TyytFIZSf
-         NPbwFdXc3C8dxhoQ8FmbCS3Zxn0H3iVJBp8f/2JWrnxJwo7beWGEgYhu4o/23nc7PPwd
-         oqzWNjv335V/hrqV8wEH5KxkMhPG3XUT8NaEaSTMNNHjW+EvYxde1TPFi/gB0YO0AWpt
-         lfrw==
-X-Gm-Message-State: AC+VfDyI9chB9UgB1jY0ZKLU4gb3Z0ELX4WMdkEvAkf2LX4QaG1/mxMn
-        P2Vx2i5K2IBdTnLuT3C96uQyWA==
-X-Google-Smtp-Source: ACHHUZ5CC8puO7GbHdrVgRG7ffiHWCvaGNAWdqGja/m0zKO+WEDCYC8YY0TOxxarPk33O5HZVXHo5Q==
-X-Received: by 2002:a19:ca50:0:b0:4f8:578f:ace1 with SMTP id h16-20020a19ca50000000b004f8578face1mr13971019lfj.21.1687724749873;
-        Sun, 25 Jun 2023 13:25:49 -0700 (PDT)
+        bh=k2Nz0ILPn3EOKaQkWVWab6M25ZwY+ZxoTLvBh9FKz8o=;
+        b=JoFvKzJValuTktOyvC3R1i8IFH8g+0jyRyP9k0oooYnIHaifZJUObCuPh3H5Gh7EH/
+         apUo61GaCnYu/KAn2s6VGqaL4sSb2g2zkyc+/WHTYqlK6wL2/NArA21y/2jdC+F3FyCj
+         OKUWThSKLxH2+DRUh1U2Wd+YsNoIrYWRcDFJ6kRwdCURWJfUMpFmcLQmC3HNr+7qa+Y+
+         cQaOVou8/1VCOauPyk6l6TEq4uGlDxCx1E0C6hvQrrMPjAkyRQBdJFQFE7C9rE2xyObc
+         EuwYxZPrkiEuQJWbJrtC9Uc7lUdkaWYQ3icjGhiirKqQ2HmBqjmNozs710Y3sMEY5JY8
+         rBRw==
+X-Gm-Message-State: AC+VfDy55F6l6EZZ7JVoRVMdcRsNg+bCx1dOPacO0iHcs58ZoTafHjOe
+        e2Tn+wzNGuFLrCcKbhf9FHQdjw==
+X-Google-Smtp-Source: ACHHUZ6Mgbq0WTTe1FZF23x/VuJ9Cvbn9txxpD+uM9o8/8VD9zcT+uWuAd/VHmrMifKmSNOM293P3g==
+X-Received: by 2002:a19:5e01:0:b0:4f6:45af:70b8 with SMTP id s1-20020a195e01000000b004f645af70b8mr14700353lfb.58.1687724750738;
+        Sun, 25 Jun 2023 13:25:50 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id m21-20020a195215000000b004f8427f8716sm787537lfb.262.2023.06.25.13.25.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jun 2023 13:25:49 -0700 (PDT)
+        Sun, 25 Jun 2023 13:25:50 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -67,9 +67,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
         Christian Marangi <ansuelsmth@gmail.com>,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH v2 01/26] dt-bindings: opp: opp-v2-kryo-cpu: support Qualcomm Krait SoCs
-Date:   Sun, 25 Jun 2023 23:25:22 +0300
-Message-Id: <20230625202547.174647-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 02/26] dt-bindings: soc: qcom: merge qcom,saw2.txt into qcom,spm.yaml
+Date:   Sun, 25 Jun 2023 23:25:23 +0300
+Message-Id: <20230625202547.174647-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
 References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
@@ -77,7 +77,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,59 +85,142 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Exted the opp-v2-kryo-cpu.yaml to support defining OPP tables for the
-previous generation of Qualcomm CPUs, 32-bit Krait-based platforms.
+The Qualcomm SPM / SAW2 device is described in two bindigns files:
+arm/msm/qcom,saw2.txt and soc/qcom/qcom,spm.yaml. Merge the former into
+the latter, adding detailed device node description. While we are at it,
+also rename qcom,spm.yaml to qcom,saw2.yaml to follow the actual
+compatible used for these devices.
 
-It makes no sense to use 'operating-points-v2-kryo-cpu' compatibility
-node for the Krait cores. Add support for the Krait-specific
-'operating-points-v2-krait-cpu' compatibility string and the relevant
-opp-microvolt subclasses properties.
-
-The listed opp-supported-hw values are applicable only to msm8996 /
-msm8996pro platforms. Remove the enum as other platforms will use other
-bit values. It makes little sense to list all possible values for all
-the platforms here.
+The regulator property is retained as is. It will be changed in the
+later patches.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/opp/opp-v2-kryo-cpu.yaml     | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/arm/msm/qcom,saw2.txt | 58 -------------------
+ .../qcom/{qcom,spm.yaml => qcom,saw2.yaml}    | 26 +++++++--
+ 2 files changed, 20 insertions(+), 64 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
+ rename Documentation/devicetree/bindings/soc/qcom/{qcom,spm.yaml => qcom,saw2.yaml} (64%)
 
-diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-index bbbad31ae4ca..4e84d06d5ff9 100644
---- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-+++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-@@ -26,7 +26,9 @@ description: |
+diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt b/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
+deleted file mode 100644
+index c0e3c3a42bea..000000000000
+--- a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
++++ /dev/null
+@@ -1,58 +0,0 @@
+-SPM AVS Wrapper 2 (SAW2)
+-
+-The SAW2 is a wrapper around the Subsystem Power Manager (SPM) and the
+-Adaptive Voltage Scaling (AVS) hardware. The SPM is a programmable
+-power-controller that transitions a piece of hardware (like a processor or
+-subsystem) into and out of low power modes via a direct connection to
+-the PMIC. It can also be wired up to interact with other processors in the
+-system, notifying them when a low power state is entered or exited.
+-
+-Multiple revisions of the SAW hardware are supported using these Device Nodes.
+-SAW2 revisions differ in the register offset and configuration data. Also, the
+-same revision of the SAW in different SoCs may have different configuration
+-data due the differences in hardware capabilities. Hence the SoC name, the
+-version of the SAW hardware in that SoC and the distinction between cpu (big
+-or Little) or cache, may be needed to uniquely identify the SAW register
+-configuration and initialization data. The compatible string is used to
+-indicate this parameter.
+-
+-PROPERTIES
+-
+-- compatible:
+-	Usage: required
+-	Value type: <string>
+-	Definition: Must have
+-			"qcom,saw2"
+-		    A more specific value could be one of:
+-			"qcom,apq8064-saw2-v1.1-cpu"
+-			"qcom,msm8226-saw2-v2.1-cpu"
+-			"qcom,msm8974-saw2-v2.1-cpu"
+-			"qcom,apq8084-saw2-v2.1-cpu"
+-
+-- reg:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: the first element specifies the base address and size of
+-		    the register region. An optional second element specifies
+-		    the base address and size of the alias register region.
+-
+-- regulator:
+-	Usage: optional
+-	Value type: boolean
+-	Definition: Indicates that this SPM device acts as a regulator device
+-			device for the core (CPU or Cache) the SPM is attached
+-			to.
+-
+-Example 1:
+-
+-	power-controller@2099000 {
+-		compatible = "qcom,saw2";
+-		reg = <0x02099000 0x1000>, <0x02009000 0x1000>;
+-		regulator;
+-	};
+-
+-Example 2:
+-	saw0: power-controller@f9089000 {
+-		compatible = "qcom,apq8084-saw2-v2.1-cpu", "qcom,saw2";
+-		reg = <0xf9089000 0x1000>, <0xf9009000 0x1000>;
+-	};
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+similarity index 64%
+rename from Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+rename to Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+index 20c8cd38ff0d..84b3f01d590c 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+@@ -1,18 +1,25 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: http://devicetree.org/schemas/soc/qcom/qcom,spm.yaml#
++$id: http://devicetree.org/schemas/soc/qcom/qcom,saw2.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+-title: Qualcomm Subsystem Power Manager
++title: Qualcomm Subsystem Power Manager / SPM AVS Wrapper 2 (SAW2)
+ 
+ maintainers:
+   - Andy Gross <agross@kernel.org>
+   - Bjorn Andersson <bjorn.andersson@linaro.org>
+ 
+ description: |
+-  This binding describes the Qualcomm Subsystem Power Manager, used to control
+-  the peripheral logic surrounding the application cores in Qualcomm platforms.
++  The Qualcomm Subsystem Power Manager is used to control the peripheral logic
++  surrounding the application cores in Qualcomm platforms.
++
++  The SAW2 is a wrapper around the Subsystem Power Manager (SPM) and the
++  Adaptive Voltage Scaling (AVS) hardware. The SPM is a programmable
++  power-controller that transitions a piece of hardware (like a processor or
++  subsystem) into and out of low power modes via a direct connection to
++  the PMIC. It can also be wired up to interact with other processors in the
++  system, notifying them when a low power state is entered or exited.
  
  properties:
    compatible:
--    const: operating-points-v2-kryo-cpu
-+    enum:
-+      - operating-points-v2-krait-cpu
-+      - operating-points-v2-kryo-cpu
+@@ -34,8 +41,15 @@ properties:
+       - const: qcom,saw2
  
-   nvmem-cells:
-     description: |
-@@ -63,14 +65,16 @@ patternProperties:
-           5:  MSM8996SG, speedbin 1
-           6:  MSM8996SG, speedbin 2
-           7-31:  unused
--        enum: [0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
--               0x9, 0xd, 0xe, 0xf,
--               0x10, 0x20, 0x30, 0x70]
+   reg:
+-    description: Base address and size of the SPM register region
+-    maxItems: 1
++    items:
++      - description: Base address and size of the SPM register region
++      - description: Base address and size of the alias register region
++    minItems: 1
 +
-+          Other platforms use bits directly corresponding to speedbin index.
++  regulator:
++    type: boolean
++    description: Indicates that this SPM device acts as a regulator device
++      device for the core (CPU or Cache) the SPM is attached to.
  
-       clock-latency-ns: true
- 
-       required-opps: true
- 
-+    patternProperties:
-+      '^opp-microvolt-speed[0-9]+-pvs[0-9]+$': true
-+
-     required:
-       - opp-hz
- 
+ required:
+   - compatible
 -- 
 2.39.2
 
