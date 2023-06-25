@@ -2,73 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 403CC73CD72
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 01:34:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC05673CE1A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 04:44:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbjFXXee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 19:34:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51360 "EHLO
+        id S230229AbjFYCoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jun 2023 22:44:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229939AbjFXXe3 (ORCPT
+        with ESMTP id S229550AbjFYCon (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 19:34:29 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 415BA10F4;
-        Sat, 24 Jun 2023 16:34:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687649668; x=1719185668;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=uSich5WtIL4xEDBsn+PUSmiT50AF+RCLc8UMqP5tImA=;
-  b=Kox0T0vk10oRBNLnPo8erjBEidnzQMqWPog1vNTdr3a/2yz1HkPTRh/P
-   YOyN9CeLYUy7zzQduV7c/JkHh1gkjp2d+00HB0MVYJFlm6JjPrbhB2oMW
-   cYqUu9Ad2TFy8be12ItJ72d2vRPTVvfPLYDQee54J6Vf/l56HXcJm0f+d
-   16iuXq2aX4WjDb1KiTvnOwNxfyDLy11KB7+LrNoYC6SYdoV6/uvJSU2+H
-   os9J5NNIvFIHRAP0qDSe1GqCwFXw0k4tkiCRkyv1BgG7MBb7xmzsLdlgu
-   zILeIWs2xaWNqgSkiU5GgyzCNEMOiEOK0+aT5z5zxrzYuaJQJu3wbVndH
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10751"; a="391122035"
-X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
-   d="scan'208";a="391122035"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2023 16:34:27 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10751"; a="839837858"
-X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
-   d="scan'208";a="839837858"
-Received: from lkp-server01.sh.intel.com (HELO 783282924a45) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 24 Jun 2023 16:34:22 -0700
-Received: from kbuild by 783282924a45 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qDClq-0009Xr-05;
-        Sat, 24 Jun 2023 23:34:22 +0000
-Date:   Sun, 25 Jun 2023 07:34:12 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Subject: Re: [PATCH v3 01/11] media: videobuf2: Access vb2_queue bufs array
- through helper functions
-Message-ID: <202306250705.Ts4zHhMG-lkp@intel.com>
-References: <20230622131349.144160-2-benjamin.gaignard@collabora.com>
+        Sat, 24 Jun 2023 22:44:43 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32934E4E;
+        Sat, 24 Jun 2023 19:44:41 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35P2VQWD024712;
+        Sun, 25 Jun 2023 02:44:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=GAHAHFp+QbI0+vD/5vn2jiV7Ycsbk790Pr34oLVYiGI=;
+ b=fm5gGFI1u9PQlVhynIdHhGmq3h0LuiYSAwb5bgs2lwRI3xTpiIxF2fXaavnZfvXYkhSr
+ 563d6m6Xkpv5u0RPllEptDpOa89R20lPbALwRhlCLT0zo5wS44F1/yh2T6hqn8++L4yb
+ rsscz4mXxxrRcB931rMy/TFGRdZBwjhVoWINH4jc/fEvKGpfSk5Wo1B6/lgjf9nDRqrH
+ psAfBhhiiZlAFVVIVyfXuW79K5vIPIl/nrTfZDodBi2CTzPN2lOWuMvfI8UvEVs+TUHO
+ LZFnE9wLi9NH9tcBUFzIZx/sTs8/W11eCBXQsUKEh8hqSHupkCo3BlbMrYznUufT1dz7 OA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdnutshab-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 25 Jun 2023 02:44:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35P2iTxq024007
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 25 Jun 2023 02:44:29 GMT
+Received: from [10.110.58.66] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 24 Jun
+ 2023 19:44:28 -0700
+Message-ID: <9fcf6fb4-20eb-500d-a5fd-a0a328e530ed@quicinc.com>
+Date:   Sat, 24 Jun 2023 19:44:27 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230622131349.144160-2-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 6/6] drm/msm/dpu: Update dev core dump to dump registers
+ of sub blocks
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC:     Rob Clark <robdclark@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <quic_jesszhan@quicinc.com>
+References: <20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com>
+ <20230622-devcoredump_patch-v1-6-3b2cdcc6a576@quicinc.com>
+ <114f34dd-e5ce-f878-5b23-4c14dc800547@linaro.org>
+ <1e41b909-4886-8392-edbc-78684e52bbf9@quicinc.com>
+ <412f68a3-e3cc-f26e-2e3d-59727e5c48d8@linaro.org>
+ <37c4bde0-0798-7506-ffd3-c8689ab78ba0@quicinc.com>
+ <dffa5b4c-3273-3b8a-a170-acb146063f43@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <dffa5b4c-3273-3b8a-a170-acb146063f43@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hK4P3QidlFQGTVKqSk4l3nyKx1A6J7yD
+X-Proofpoint-ORIG-GUID: hK4P3QidlFQGTVKqSk4l3nyKx1A6J7yD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-24_18,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 mlxscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=999 priorityscore=1501 clxscore=1015 bulkscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306250024
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,81 +92,341 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Benjamin,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on media-tree/master]
-[also build test ERROR on linus/master v6.4-rc7 next-20230623]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Access-vb2_queue-bufs-array-through-helper-functions/20230622-214122
-base:   git://linuxtv.org/media_tree.git master
-patch link:    https://lore.kernel.org/r/20230622131349.144160-2-benjamin.gaignard%40collabora.com
-patch subject: [PATCH v3 01/11] media: videobuf2: Access vb2_queue bufs array through helper functions
-config: i386-allyesconfig (https://download.01.org/0day-ci/archive/20230625/202306250705.Ts4zHhMG-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
-reproduce: (https://download.01.org/0day-ci/archive/20230625/202306250705.Ts4zHhMG-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202306250705.Ts4zHhMG-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/staging/media/atomisp/pci/atomisp_ioctl.c:1080:22: error: passing 'struct vb2_queue' to parameter of incompatible type 'struct vb2_queue *'; take the address with &
-           vb = vb2_get_buffer(pipe->vb_queue, buf->index);
-                               ^~~~~~~~~~~~~~
-                               &
-   include/media/videobuf2-core.h:1239:67: note: passing argument to parameter 'q' here
-   static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
-                                                                     ^
-   1 error generated.
 
 
-vim +1080 drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+On 6/24/2023 8:03 AM, Dmitry Baryshkov wrote:
+> On 24/06/2023 17:17, Abhinav Kumar wrote:
+>>
+>>
+>> On 6/24/2023 5:07 AM, Dmitry Baryshkov wrote:
+>>> On 24/06/2023 03:09, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 6/22/2023 5:13 PM, Dmitry Baryshkov wrote:
+>>>>> On 23/06/2023 02:48, Ryan McCann wrote:
+>>>>>> Currently, the device core dump mechanism does not dump registers 
+>>>>>> of sub
+>>>>>> blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Add wrapper
+>>>>>> function to dump hardware blocks that contain sub blocks.
+>>>>>>
+>>>>>> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
+>>>>>> ---
+>>>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 194 
+>>>>>> +++++++++++++++++++++++++++-----
+>>>>>>   1 file changed, 168 insertions(+), 26 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
+>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>>>> index aa8499de1b9f..9b1b1c382269 100644
+>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>>>> @@ -885,6 +885,154 @@ static int dpu_irq_postinstall(struct 
+>>>>>> msm_kms *kms)
+>>>>>>       return 0;
+>>>>>>   }
+>>>>>> +static void dpu_kms_mdp_snapshot_add_block(struct msm_disp_state 
+>>>>>> *disp_state,
+>>>>>> +                       void __iomem *mmio, void *blk,
+>>>>>> +                       enum dpu_hw_blk_type blk_type)
+>>>>>
+>>>>> No. Such multiplexers add no value to the code. Please inline it.
+>>>>>
+>>>>> Not to mention that this patch is hard to review. You both move 
+>>>>> existing code and add new features. If it were to go, it should 
+>>>>> have been split into two patches: one introducing the multiplexer 
+>>>>> and another one adding subblocks.
+>>>>>
+>>>>
+>>>> Ok. we can split this into:
+>>>>
+>>>> 1) adding the multiplexer
+>>>> 2) adding sub-blk parsing support inside the multiplexer
+>>>
+>>> I'd say, drop the multiplexer completely. It adds no value here. It 
+>>> is only used from dpu_kms_mdp_snapshot(). If the code there was 
+>>> complex enough, it would have made sense to _split_ the function. But 
+>>> even in such case there would be no point in having multiplexer. We 
+>>> do not enumerate block by type.
+>>>
+>>
+>> Can you pls elaborate what you mean by enumerate blk by type?
+>>
+>> We do have DPU_HW_BLK_***
+>>
+>> Did you mean sub-blk?
+>>
+>>>>
+>>>>>> +{
+>>>>>> +    u32 base;
+>>>>>> +
+>>>>>> +    switch (blk_type) {
+>>>>>> +    case DPU_HW_BLK_TOP:
+>>>>>> +    {
+>>>>>> +        struct dpu_mdp_cfg *top = (struct dpu_mdp_cfg *)blk;
+>>>>>> +
+>>>>>> +        if (top->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
+>>>>>> +            msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
+>>>>>> +                            mmio + top->base, "top");
+>>>>>> +            msm_disp_snapshot_add_block(disp_state, top->len - 
+>>>>>> MDP_PERIPH_TOP0_END,
+>>>>>> +                            mmio + top->base + MDP_PERIPH_TOP0_END,
+>>>>>> +                            "top_2");
+>>>>>> +        } else {
+>>>>>> +            msm_disp_snapshot_add_block(disp_state, top->len, 
+>>>>>> mmio + top->base, "top");
+>>>>>> +        }
+>>>>>> +        break;
+>>>>>> +    }
+>>>>>> +    case DPU_HW_BLK_LM:
+>>>>>> +    {
+>>>>>> +        struct dpu_lm_cfg *mixer = (struct dpu_lm_cfg *)blk;
+>>>>>> +
+>>>>>> +        msm_disp_snapshot_add_block(disp_state, mixer->len, mmio 
+>>>>>> + mixer->base, "%s",
+>>>>>> +                        mixer->name);
+>>>>>> +        break;
+>>>>>> +    }
+>>>>>> +    case DPU_HW_BLK_CTL:
+>>>>>> +    {
+>>>>>> +        struct dpu_ctl_cfg *ctl = (struct dpu_ctl_cfg *)blk;
+>>>>>> +
+>>>>>> +        msm_disp_snapshot_add_block(disp_state, ctl->len, mmio + 
+>>>>>> ctl->base, "%s",
+>>>>>> +                        ctl->name);
+>>>>>> +        break;
+>>>>>> +    }
+>>>>>> +    case DPU_HW_BLK_INTF:
+>>>>>> +    {
+>>>>>> +        struct dpu_intf_cfg *intf = (struct dpu_intf_cfg *)blk;
+>>>>>> +
+>>>>>> +        msm_disp_snapshot_add_block(disp_state, intf->len, mmio + 
+>>>>>> intf->base, "%s",
+>>>>>> +                        intf->name);
+>>>>>> +        break;
+>>>>>> +    }
+>>>>>> +    case DPU_HW_BLK_WB:
+>>>>>> +    {
+>>>>>> +        struct dpu_wb_cfg *wb = (struct dpu_wb_cfg *)blk;
+>>>>>> +
+>>>>>> +        msm_disp_snapshot_add_block(disp_state, wb->len, mmio + 
+>>>>>> wb->base, "%s",
+>>>>>> +                        wb->name);
+>>>>>> +        break;
+>>>>>> +    }
+>>>>>> +    case DPU_HW_BLK_SSPP:
+>>>>>> +    {
+>>>>>> +        struct dpu_sspp_cfg *sspp_block = (struct dpu_sspp_cfg 
+>>>>>> *)blk;
+>>>>>> +        const struct dpu_sspp_sub_blks *sblk = sspp_block->sblk;
+>>>>>> +
+>>>>>> +        base = sspp_block->base;
+>>>>>> +
+>>>>>> +        msm_disp_snapshot_add_block(disp_state, sspp_block->len, 
+>>>>>> mmio + base, "%s",
+>>>>>> +                        sspp_block->name);
+>>>>>> +
+>>>>>> +        if (sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
+>>>>>> +            sspp_block->features & 
+>>>>>> BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
+>>>>>> +            sspp_block->features & BIT(DPU_SSPP_SCALER_QSEED4))
+>>>>>> +            msm_disp_snapshot_add_block(disp_state, 
+>>>>>> sblk->scaler_blk.len,
+>>>>>> +                            mmio + base + sblk->scaler_blk.base, 
+>>>>>> "%s_%s",
+>>>>>> +                            sspp_block->name, 
+>>>>>> sblk->scaler_blk.name);
+>>>>>
+>>>>> Actually, it would be better to:
+>>>>> - drop name from all sblk instances (and use known string instead 
+>>>>> of the sblk name here)
+>>>>> - Use sblk->foo_blk.len to check if it should be printed or not.
+>>>>>
+>>>>
+>>>> No, I dont agree. If we drop the names from the sub_blk in the 
+>>>> catalog, we will end up using "sub_blk_name" string here in the code 
+>>>> to indicate which blk that is in the dump.
+>>>>
+>>>> If we add more sub_blks in the catalog in the future we need to keep 
+>>>> changing the code over here. Thats not how it should be.
+>>>>
+>>>> Leaving the names in the catalog ensures that this code wont change 
+>>>> and only catalog changes when we add a new sub_blk either for an 
+>>>> existing or new chipset.
+>>>>
+>>>> catalog is indicating the new blk, and dumping code just prints it.
+>>>>
+>>>> with your approach, dumping code will or can keep changing with 
+>>>> chipsets or sub_blks. Thats not how it should be.
+>>>
+>>> Well, we do not enumerate sub-blocks in any way, they are not 
+>>> indexed. So even with sblk->blk.name in place, adding new sub-block 
+>>> would require adding new code here. That's why I wrote that the 
+>>> calling code knows which sub-block it refers to.
+>>>
+>>
+>> Today, unfortunately each sub_blk type is different so we have to do 
+>> this case by case.
+>>
+>> Ideally, this should have just been
+>>
+>> -> print main blk
+>> -> print all sub-blks of the main blk
+>>
+>> Without having to handle each main blk's sub-blks separately.
+>>
+>> That way the dumping code would have remained generic without having 
+>> to do even the multiplexer in the first place.
+>>
+>> Need to explore if somehow we can come up with a generic sub-blk 
+>> struct and make this possible. Then this code will become much easier 
+>> and what I am saying will make total sense.
+> 
+> In such case, yes. However I'd warn about having a generic array of 
+> subblocks. Having named subblock entries might complicate snapshotting, 
+> but it makes the rest of the DPU driver smaller.
+> 
 
-  1065	
-  1066	static int atomisp_dqbuf_wrapper(struct file *file, void *fh, struct v4l2_buffer *buf)
-  1067	{
-  1068		struct video_device *vdev = video_devdata(file);
-  1069		struct atomisp_video_pipe *pipe = atomisp_to_video_pipe(vdev);
-  1070		struct atomisp_sub_device *asd = pipe->asd;
-  1071		struct atomisp_device *isp = video_get_drvdata(vdev);
-  1072		struct ia_css_frame *frame;
-  1073		struct vb2_buffer *vb;
-  1074		int ret;
-  1075	
-  1076		ret = vb2_ioctl_dqbuf(file, fh, buf);
-  1077		if (ret)
-  1078			return ret;
-  1079	
-> 1080		vb = vb2_get_buffer(pipe->vb_queue, buf->index);
-  1081		frame = vb_to_frame(vb);
-  1082	
-  1083		buf->reserved = asd->frame_status[buf->index];
-  1084	
-  1085		/*
-  1086		 * Hack:
-  1087		 * Currently frame_status in the enum type which takes no more lower
-  1088		 * 8 bit.
-  1089		 * use bit[31:16] for exp_id as it is only in the range of 1~255
-  1090		 */
-  1091		buf->reserved &= 0x0000ffff;
-  1092		if (!(buf->flags & V4L2_BUF_FLAG_ERROR))
-  1093			buf->reserved |= frame->exp_id;
-  1094		buf->reserved2 = pipe->frame_config_id[buf->index];
-  1095	
-  1096		dev_dbg(isp->dev,
-  1097			"dqbuf buffer %d (%s) with exp_id %d, isp_config_id %d\n",
-  1098			buf->index, vdev->name, buf->reserved >> 16, buf->reserved2);
-  1099		return 0;
-  1100	}
-  1101	
+Need to explore this. But not immediately.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+>>
+>> Even without that, conceptually these sub-blk names are reflecting 
+>> whats in our software document. So its not a random name but reflects 
+>> the actual sub-blk name from the hardware.
+> 
+> Yes
+> 
+>> So this belongs in the catalog.
+> 
+> But the sub-block field already has a correct name: scaler_blk, csc_blk, 
+> etc. Having both sub-block field name and the .name inside results in 
+> kind of duplication, which seems unnecessary to me.
+> 
+
+No, there is a difference and not duplicated. One is the name of the 
+struct so it can really be anything and doesnt need to match the hw doc 
+name. But the other is the string name which we can give exactly to 
+match software interface doc and makes parsing such a dump much much easier.
+
+One point I dont see you have considered is the block index of the sub_blk.
+
+Today, yes I see only a "pcc" or a "dither" etc
+
+What if there are two PCCs or two dithers.
+
+Then their names can just be "pcc_0" and "pcc_1" or "dither_0" and 
+"dither_1".
+
+Having name gives us the ability to easily incorporate even unsequential 
+indices.
+
+For example, every sspp's name today is not sequential. it can be 
+"sspp_3" then "sspp_8" etc
+
+By having names reflect the correct indices, dumping code becomes less 
+complex as the catalog will still have the right names as dumping code 
+will just use that.
+
+
+>> Dumping code should not change or know whats the name of each block. 
+>> It should just use whats in the catalog. thats why even conceptually I 
+>> am not okay with your idea.
+> 
+> Dumping code itself (msm_disp_snapshot_*) doesn't. But the caller code 
+> knows what is the subblock.
+> 
+
+But this is the dumping code because we are adding which blocks to dump.
+
+> Let me pick a definition from the patch:
+> 
+> static const struct dpu_dspp_sub_blks msm8998_dspp_sblk = {
+>      .pcc = {.name = "pcc", .id = DPU_DSPP_PCC, .base = 0x1700,
+>          .len = 0x90, .version = 0x10007},
+> };
+> 
+> the "pcc" is repeated three times. When the code looks at this block, it 
+> already knows that it is a PCC block.
+> 
+
+I agree with you about the "id" though. From what I can see in this 
+patch, "id" is not used and we can drop that. So that change from your 
+series is fine with me.
+
+But the pcc is the struct name which doesnt really need to reflect the 
+hw name but the name field of the PCC should IMO.
+
+> Compare this with:
+> 
+> static const struct dpu_dspp_sub_blks msm8998_dspp_sblk = {
+>      .pcc = {
+>          .base = 0x1700,
+>          .len = 0x90,
+>          .version = 0x10007,
+>      },
+> };
+> 
+> Nothing is repeated, but we still know that this is the DSPPn_PCC 
+> sub-block description.
+> 
+> Calling code does:
+> 
+> u32 base;
+> base = ctx->cap->sblk->pcc.base;
+> 
+> 
+>>
+>>> Let me extract the relevant code (skipping all the conditions for now):
+>>>
+>>> msm_disp_snapshot_add_block(disp_state, sspp_block->len, mmio + base, 
+>>> "%s",
+>>>                  sspp_block->name);
+>>>
+>>> if (have_scaler)
+>>>      msm_disp_snapshot_add_block(disp_state, sblk->scaler_blk.len,
+>>>                      mmio + base + sblk->scaler_blk.base, "%s_%s",
+>>>                      sspp_block->name, sblk->scaler_blk.name);
+>>>
+>>> if (have_csc)
+>>>      msm_disp_snapshot_add_block(disp_state, sblk->csc_blk.len,
+>>>                      mmio + base + sblk->csc_blk.base, "%s_%s",
+>>>                      sspp_block->name, sblk->csc_blk.name);
+>>>
+>>> Consider adding new sub-block, "baz". We would still require manual 
+>>> addition of the following code:
+>>>
+>>>      msm_disp_snapshot_add_block(disp_state, sblk->baz_blk.len,
+>>>                      mmio + base + sblk->baz_blk.base, "%s_%s",
+>>>                      sspp_block->name, sblk->baz_blk.name);
+>>>
+>>>
+>>> Compare this with:
+>>>
+>>>      msm_disp_snapshot_add_block(disp_state, sblk->baz_blk.len,
+>>>                      mmio + base + sblk->baz_blk.base, "%s_baz",
+>>>                      sspp_block->name);
+>>>
+>>
+>> Basically you are saying why not make the one line change here instead 
+>> of using the name from the catalog.
+>>
+>> I think it will be better to use from the catalog for the reason I 
+>> wrote above that dumping code should just "use" the catalog's 
+>> information and not become a catalog itself.
+>>
+>> You are not saving much by dropping the sub-blk name from catalog anyway.
+>>
+>>> Moreover, if we follow the style of dpu_kms_mdp_snapshot() (which 
+>>> doesn't use name), it should be:
+>>>
+>>>      msm_disp_snapshot_add_block(disp_state, sblk->baz_blk.len,
+>>>                      mmio + base + sblk->baz_blk.base, "sspp%d_baz", 
+>>> idx);
+>>>
+>>>
+>> tbh, after looking at this series, it made me think why I didnt use 
+>> the name from the catalog even for the dpu_kms_mdp_snapshot()
+>>>
+>>>>
+>>
+>> <snipped>
+> 
