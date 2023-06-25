@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFC1F73D33D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 21:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1392F73D351
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 21:37:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjFYTSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Jun 2023 15:18:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
+        id S229452AbjFYTg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jun 2023 15:36:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230003AbjFYTSg (ORCPT
+        with ESMTP id S229996AbjFYTg4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Jun 2023 15:18:36 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2693DE0;
-        Sun, 25 Jun 2023 12:18:34 -0700 (PDT)
+        Sun, 25 Jun 2023 15:36:56 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0443919F;
+        Sun, 25 Jun 2023 12:36:52 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 1F2803EEF7;
-        Sun, 25 Jun 2023 21:18:31 +0200 (CEST)
-Date:   Sun, 25 Jun 2023 21:18:29 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 00A623EECD;
+        Sun, 25 Jun 2023 21:36:49 +0200 (CEST)
+Date:   Sun, 25 Jun 2023 21:36:48 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -47,15 +47,16 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-Subject: Re: [PATCH 00/15] drm/msm: Add SM6125 MDSS/DPU hardware and enable
- Sony Xperia 10 II panel
-Message-ID: <i5xxzhfhlwzoxlnezzgg42hzwzwfcgxv5gopqhb6vd3udz252b@wpznuvoleeta>
+Subject: Re: [PATCH 14/15] arm64: dts: qcom: sm6125: Add display hardware
+ nodes
+Message-ID: <m6lxgnupiymr4ffmds6lcpn2ya63bpdkmubfnoyccubapguvun@ryhmw7dogzxu>
 References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <035ffdd2-27e3-99bc-f8a4-41e66685db09@linaro.org>
+ <20230624-sm6125-dpu-v1-14-1d5a638cebf2@somainline.org>
+ <d8f4e665-984a-5a36-3ffe-14e33d09f031@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <035ffdd2-27e3-99bc-f8a4-41e66685db09@linaro.org>
+In-Reply-To: <d8f4e665-984a-5a36-3ffe-14e33d09f031@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
@@ -65,82 +66,284 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-24 03:42:46, Konrad Dybcio wrote:
-> On 24.06.2023 02:40, Marijn Suijten wrote:
-> > Bring up the SM6125 DPU now that all preliminary series (such as INTF
-> > TE) have been merged (for me to test the hardware properly)
-> We should not repeat the same mistake in the future.. Finding a
-> balance between releasing early and releasing what we can declare
-> working and tested code is hard, but we waaaaaaaay overstayed on
-> this one..
+On 2023-06-24 04:05:07, Konrad Dybcio wrote:
+> On 24.06.2023 02:41, Marijn Suijten wrote:
+> > Add the DT nodes that describe the MDSS hardware on SM6125, containing
+> > one MDP (display controller) together with a single DSI and DSI PHY.  No
+> > DisplayPort support is added for now.
+> > 
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm6125.dtsi | 190 ++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 186 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > index 7d78b4e48ebe..6852dacf54e6 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > @@ -1204,16 +1204,198 @@ sram@4690000 {
+> >  			reg = <0x04690000 0x10000>;
+> >  		};
+> >  
+> > +		mdss: display-subsystem@5e00000 {
+> > +			compatible = "qcom,sm6125-mdss";
+> > +			reg = <0x05e00000 0x1000>;
+> > +			reg-names = "mdss";
+> > +
+> > +			power-domains = <&dispcc MDSS_GDSC>;
+> > +
+> > +			clocks = <&gcc GCC_DISP_AHB_CLK>,
+> > +				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> > +				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> > +			clock-names = "iface", "ahb", "core";
+> One per line would be nice
 
-I don't understand what you mean by "mistake" at all.  Yes the DPU
-catalog portion of this series sat in my local branch for a very long
-time.  Yes it had to be rebased on top of conflicts many many times.
+Sure, it's all over the place elsewhere though.
 
-However, that time has also been used to fix and extend DPU where
-necessary, instead of submitting a half-broken or half-incomplete
-catalog entry...
-
-Re "we overstayed": you could have asked to clean up and send my patch,
-so I don't take this as a mistake on my part as you are completely aware
-of my time schedule ;)
-
-> Konrad
-> , and most
-
-Also here, don't forget to re-quote my message if you break half-way in
-the line.
-
-> > other conflicting work (barring ongoing catalog *improvements*) has made
-> > its way in as well or is still being discussed.
+> > +
+> > +			interrupts = <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>;
+> > +			interrupt-controller;
+> > +			#interrupt-cells = <1>;
+> > +
+> > +			iommus = <&apps_smmu 0x400 0x0>;
+> > +
+> Every node has a different scramble of property orders :P
 > 
+> To roughly align with what I ask most people to do (and what I should
+> work on codifying and automating ehhh) would be:
+
+Exactly.  Until this automated - or even documented - there is barely
+any point to manually deal with this.
+
+> [compat]
+> [reg]
+> 
+> [interrupt]
+
+Also interrupt-cells here, since that's only related to
+interrupt-controller; and not interrupts=<>;?
+
+> 
+> [clock]
+> 
+> [reset]
+> (btw there should be a MDSS_CORE reset at DISP_CC+0x2000, try writing 1 there
+> and see if MDSS dies)
+> 
+> [opp]
+> [pd]
+> 
+> [iommus]
+> [icc]
+> 
+> [phy]
+> 
+> [addresssizeranges]
+> 
+> [status]
+
+Sure, have reordered them like this for v2.
+
+> 
+> > +			status = "disabled";
+> > +
+> > +			#address-cells = <1>;
+> > +			#size-cells = <1>;
+> > +			ranges;
+> > +
+> > +			mdss_mdp: display-controller@5e01000 {
+> > +				compatible = "qcom,sm6125-dpu";
+> > +				reg = <0x05e01000 0x83208>,
+> > +				      <0x05eb0000 0x2008>;
+> > +				reg-names = "mdp", "vbif";
+> > +
+> > +				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_ROT_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> > +				clock-names = "bus",
+> > +					      "iface",
+> > +					      "rot",
+> > +					      "lut",
+> > +					      "core",
+> > +					      "vsync";
+> > +				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> > +				assigned-clock-rates = <19200000>;
+> > +
+> > +				operating-points-v2 = <&mdp_opp_table>;
+> > +				power-domains = <&rpmpd SM6125_VDDCX>;
+> > +
+> > +				interrupt-parent = <&mdss>;
+> > +				interrupts = <0>;
+> > +
+> > +				ports {
+> > +					#address-cells = <1>;
+> > +					#size-cells = <0>;
+> > +
+> > +					port@0 {
+> > +						reg = <0>;
+> > +						dpu_intf1_out: endpoint {
+> > +							remote-endpoint = <&mdss_dsi0_in>;
+> > +						};
+> > +					};
+> > +				};
+> > +
+> > +				mdp_opp_table: opp-table {
+> > +					compatible = "operating-points-v2";
+> > +
+> > +					opp-192000000 {
+> > +						opp-hz = /bits/ 64 <192000000>;
+> > +						required-opps = <&rpmpd_opp_low_svs>;
+> > +					};
+> > +
+> > +					opp-256000000 {
+> > +						opp-hz = /bits/ 64 <256000000>;
+> > +						required-opps = <&rpmpd_opp_svs>;
+> > +					};
+> > +
+> > +					opp-307200000 {
+> > +						opp-hz = /bits/ 64 <307200000>;
+> > +						required-opps = <&rpmpd_opp_svs_plus>;
+> > +					};
+> > +
+> > +					opp-384000000 {
+> > +						opp-hz = /bits/ 64 <384000000>;
+> > +						required-opps = <&rpmpd_opp_nom>;
+> > +					};
+> > +
+> > +					opp-400000000 {
+> > +						opp-hz = /bits/ 64 <400000000>;
+> > +						required-opps = <&rpmpd_opp_turbo>;
+> > +					};
+> > +				};
+> > +			};
+> > +
+> > +			mdss_dsi0: dsi@5e94000 {
+> > +				compatible = "qcom,sm6125-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+> > +				reg = <0x05e94000 0x400>;
+> > +				reg-names = "dsi_ctrl";
+> > +
+> > +				interrupt-parent = <&mdss>;
+> > +				interrupts = <4>;
+> > +
+> > +				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
+> > +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> > +					 <&gcc GCC_DISP_HF_AXI_CLK>;
+> > +				clock-names = "byte",
+> > +					      "byte_intf",
+> > +					      "pixel",
+> > +					      "core",
+> > +					      "iface",
+> > +					      "bus";
+> > +
+> > +				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
+> > +						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
+> > +				assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
+> > +
+> > +				operating-points-v2 = <&dsi_opp_table>;
+> > +				power-domains = <&rpmpd SM6125_VDDMX>;
+> CX
+
+Downstream says MX (and only on the phy... but it is the dsi node that
+defines the corresponding rpmpd opps).
+
+Do you have a source to back this up?
+
+> 
+> > +
+> > +				phys = <&mdss_dsi0_phy>;
+> > +				phy-names = "dsi";
+> > +
+> > +				status = "disabled";
+> > +
+> > +				#address-cells = <1>;
+> > +				#size-cells = <0>;
+> > +
+> > +				ports {
+> > +					#address-cells = <1>;
+> > +					#size-cells = <0>;
+> > +
+> > +					port@0 {
+> > +						reg = <0>;
+> > +						mdss_dsi0_in: endpoint {
+> > +							remote-endpoint = <&dpu_intf1_out>;
+> > +						};
+> > +					};
+> > +
+> > +					port@1 {
+> > +						reg = <1>;
+> > +						mdss_dsi0_out: endpoint {
+> > +						};
+> > +					};
+> > +				};
+> > +
+> > +				dsi_opp_table: opp-table {
+> > +					compatible = "operating-points-v2";
+> > +
+> > +					opp-164000000 {
+> > +						opp-hz = /bits/ 64 <164000000>;
+> > +						required-opps = <&rpmpd_opp_low_svs>;
+> > +					};
+> > +
+> > +					opp-187500000 {
+> > +						opp-hz = /bits/ 64 <187500000>;
+> > +						required-opps = <&rpmpd_opp_svs>;
+> > +					};
+> > +				};
+> > +			};
+> > +
+> > +			mdss_dsi0_phy: phy@5e94400 {
+> > +				compatible = "qcom,dsi-phy-14nm-6125";
+> > +				reg = <0x05e94400 0x100>,
+> > +				      <0x05e94500 0x300>,
+> > +				      <0x05e94800 0x188>;
+> > +				reg-names = "dsi_phy",
+> > +					    "dsi_phy_lane",
+> > +					    "dsi_pll";
+> > +
+> > +				#clock-cells = <1>;
+> > +				#phy-cells = <0>;
+> > +
+> > +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> > +					 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+> > +				clock-names = "iface", "ref";
+> > +
+> > +				status = "disabled";
+> > +			};
+> > +		};
+> > +
+> >  		dispcc: clock-controller@5f00000 {
+> >  			compatible = "qcom,sm6125-dispcc";
+> >  			reg = <0x05f00000 0x20000>;
+> >  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> > +				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>,
+> > +				 <&mdss_dsi0_phy 0>,
+> > +				 <&mdss_dsi0_phy 1>,
+> >  				 <0>,
+> >  				 <0>,
+> > -				 <0>,
+> > -				 <0>,
+> > -				 <0>,
+> > -				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>;
+> > +				 <0>;
+> >  			clock-names = "bi_tcxo",
+> Wrong patch
+
+Yup, as said by many folks in many places.  It seems the --fixup went to
+the wrong commit, even though the clock-names were fixup'ed into the
+right one...
+
+Have fixed this for v2.
+
+- Marijn
+
+> 
+> Konrad
+> >  				      "gcc_disp_gpll0_div_clk_src",
+> >  				      "dsi0_phy_pll_out_byteclk",
 > > 
-> > The second part of the series complements that by immediately utilizing
-> > this hardware in DT, and even enabling the MDSS/DSI nodes complete with
-> > a 6.0" 1080x2520 panel for Sony's Seine PDX201 (Xperia 10 II).
-> > 
-> > The last patch ("sm6125-seine: Configure MDSS, DSI and panel") depends
-> > on (an impending v2 of) my Sony panel collection series [1].
-> > 
-> > [1]: https://lore.kernel.org/linux-arm-msm/20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org/
-> > 
-> > ---
-> > Marijn Suijten (15):
-> >       arm64: dts: qcom: sm6125: Sort spmi_bus node numerically by reg
-> >       dt-bindings: clock: qcom,dispcc-sm6125: Remove unused GCC_DISP_AHB_CLK
-> >       dt-bindings: clock: qcom,dispcc-sm6125: Require GCC PLL0 DIV clock
-> >       dt-bindings: clock: qcom,dispcc-sm6125: Allow power-domains property
-> >       dt-bindings: display/msm: dsi-controller-main: Document SM6125
-> >       dt-bindings: display/msm: sc7180-dpu: Describe SM6125
-> >       dt-bindings: display/msm: Add SM6125 MDSS
-> >       drm/msm/dpu: Add SM6125 support
-> >       drm/msm/mdss: Add SM6125 support
-> >       dt-bindings: msm: dsi-phy-14nm: Document SM6125 variant
-> >       drm/msm/dsi: Add 14nm phy configuration for SM6125
-> >       arm64: dts: qcom: sm6125: Switch fixed xo_board clock to RPM XO clock
-> >       arm64: dts: qcom: sm6125: Add dispcc node
-> >       arm64: dts: qcom: sm6125: Add display hardware nodes
-> >       arm64: dts: qcom: sm6125-seine: Configure MDSS, DSI and panel
-> > 
-> >  .../bindings/clock/qcom,dispcc-sm6125.yaml         |  17 +-
-> >  .../bindings/display/msm/dsi-controller-main.yaml  |   2 +
-> >  .../bindings/display/msm/dsi-phy-14nm.yaml         |   1 +
-> >  .../bindings/display/msm/qcom,sc7180-dpu.yaml      |   1 +
-> >  .../bindings/display/msm/qcom,sm6125-mdss.yaml     | 206 +++++++++++++++++
-> >  .../dts/qcom/sm6125-sony-xperia-seine-pdx201.dts   |  59 +++++
-> >  arch/arm64/boot/dts/qcom/sm6125.dtsi               | 244 +++++++++++++++++++--
-> >  .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h | 173 +++++++++++++++
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   6 +
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  15 ++
-> >  drivers/gpu/drm/msm/msm_mdss.c                     |   8 +
-> >  15 files changed, 712 insertions(+), 25 deletions(-)
-> > ---
-> > base-commit: 8d2be868b42c08290509c60515865f4de24ea704
-> > change-id: 20230624-sm6125-dpu-aedc9637ee7b
-> > 
-> > Best regards,
