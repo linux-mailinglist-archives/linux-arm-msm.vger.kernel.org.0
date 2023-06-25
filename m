@@ -2,127 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 541D473CEDD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 09:16:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F55073D04C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 13:11:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230458AbjFYHQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Jun 2023 03:16:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43670 "EHLO
+        id S231472AbjFYLLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jun 2023 07:11:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230058AbjFYHQa (ORCPT
+        with ESMTP id S230029AbjFYLLs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Jun 2023 03:16:30 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA52E7A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 00:16:28 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-51d9124e1baso1001716a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 00:16:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687677386; x=1690269386;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uIrahwiJfRblkW3SQe71HLoNxiAeifXwVotzPF1COO8=;
-        b=SLN/+lBuA+L4hOibaG99ROPhT2q+4Zk1BkcUiRXl4SmMBXbIW7ZDZeuRWDY1cBg38Z
-         ds8IN6Tf2v7H77bI5N82BPsA6p+sb1Lj+PSR0P8pInIDV1RTT6vqMpSWO9KEJ0hHzfC9
-         PstfvAk+/fjKU2B0e7eYYEH2W3iBHla9soKb01tYlDCjDXbBy2hscxufKR4AS0Pqb0fw
-         xW/pU4+OdDUQISR5H5kuYf4bnneam72K/FNMC6qv8UwrAGSJsMpE/MizlpDV4DdZLRUJ
-         CLXPt0bN46dNwZB1ey2SqK6RPM+T8D3l2FMCfWMHk6CSE+YuPcm2jgpBH2tceoFZhhEK
-         CXig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687677386; x=1690269386;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uIrahwiJfRblkW3SQe71HLoNxiAeifXwVotzPF1COO8=;
-        b=Mb9tf7EAc6HqQX15ULOvq3yuaPP4ZuPWm7fy28dUWOkRp1twWh57C/qMbyvY7K9ZBB
-         JwD0tL16RlIdI6AyRHfj9eadi7weoxV33kwh/SFCgvYlgm1kpFifCuNe7Z0h7uiCeqeY
-         /MH9ftyotLR9s+hBv3+odOCPwfffqy3QkE43+ZgyqgPsXfI+RHOYpaCByoPcBI9Plrrq
-         zKCMICkh90YriMOnYhy61yXEwTbGA9721xJ2glQ1PHpj+JgbQc64ePHOMOKYZKWchMYd
-         QV48WtTjJ1BgjDmVAz81+PEApQZDtIsNeE8VdRoPQJ/yD1c+JEryQYzOpE9feVFXYTyt
-         ouzQ==
-X-Gm-Message-State: AC+VfDxZxbislJPHMYL/iM3WRrozHO9t/KjFWJmmF6Xuj5J6317NvZrR
-        h+4L0gslOEjEcQqxE9zIZmOS9wdcN7erGCKNdQ0=
-X-Google-Smtp-Source: ACHHUZ7yWmteCJ2ASXP6XlOddI/EKOWOLbTyVMMVtsIAE32VSvu1Ve67QKpbz2Drqglycme6vQHnYQ==
-X-Received: by 2002:a05:6402:517:b0:51a:53e0:843f with SMTP id m23-20020a056402051700b0051a53e0843fmr15138396edv.37.1687677386589;
-        Sun, 25 Jun 2023 00:16:26 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id k21-20020aa7d8d5000000b0051bf6318fd7sm1440765eds.97.2023.06.25.00.16.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 Jun 2023 00:16:25 -0700 (PDT)
-Message-ID: <6be00ec7-2fab-7da0-ab47-fcaf3a1ce042@linaro.org>
-Date:   Sun, 25 Jun 2023 09:16:22 +0200
+        Sun, 25 Jun 2023 07:11:48 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12A97118;
+        Sun, 25 Jun 2023 04:11:47 -0700 (PDT)
+Received: from [192.168.178.23] (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 30E97CEF26;
+        Sun, 25 Jun 2023 11:11:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1687691505; bh=J9jEPcx35Z5VZe9C9tWJdEOLs/nTvAKqqUQBcM//nqs=;
+        h=From:Date:Subject:To:Cc;
+        b=ZTaOJvnWvHNVZZOo5ByIpJ4x+KlTSI7Sj95fBInT9p8MxgFqDh5iqFooy4Jr55H7I
+         gHBS2vyubRfhHkRfp6A3mvYVVcDw5p4o809SZUTVNWM177RRKmdicis1CdMG+HG1wn
+         PQ6QwdKryccfHWB6zFiqc2ZgxLrIV985lUsN7Uis=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Date:   Sun, 25 Jun 2023 13:11:33 +0200
+Subject: [PATCH] thermal/drivers/qcom/temp-alarm: Use dev_err_probe
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 10/15] dt-bindings: msm: dsi-phy-14nm: Document SM6125
- variant
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230625-spmi-temp-alarm-defer-v1-1-2d57acf36855@z3ntu.xyz>
+X-B4-Tracking: v=1; b=H4sIAOQgmGQC/x2N0QrCMAwAf2Xk2UDtNqn+iviQbpkLtLWkU4Sxf
+ zf4eAfH7dBYhRvcuh2UP9LkVQzOpw6mlcqTUWZj8M737uJHbDULbpwrUiLNOPPCii6EawxuHAb
+ uwdpIjTEqlWm1urxTMlmVF/n+Z/fHcfwABt/pPnwAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-10-1d5a638cebf2@somainline.org>
- <1b40b16e-025a-c10b-e99b-404246de73fe@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1b40b16e-025a-c10b-e99b-404246de73fe@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2434; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=J9jEPcx35Z5VZe9C9tWJdEOLs/nTvAKqqUQBcM//nqs=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkmCDtc1cXyq8Q5wrREWnpoRf9hEL/1VSO6b6NE
+ xzAuZiyZQeJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZJgg7QAKCRBy2EO4nU3X
+ VomyEAC1VhrEgpBghMAwvSNzEy1D7IPcSBEygZuyinpKla3Kok+wCKdAoQeOAXT6XJoqQ+fkYm1
+ yCMbX/KYKloLmmk7jFJE2lD9acv6hv6DJJMQ5jVgzNBDY4V7dbYt2KtVwrkCrraPM25XPHFP6EF
+ VAjoAYW8+i0TPdh9avP8L+95CfVen0Wm4TidFN/mXBIB39cfBNAn36vtfBYqocEwqPJX/IFLrNa
+ pNRAXlrPysutQq7GMoXzChiy65N7NlYIKf8yxEys/9fP3kkwlRNRY78rmaT0O8zfZHKno0vRNVO
+ wcNOQ1sP9RbQb2ESpqL3o249aC9z0Dgk4HmRBENVnuAtCpe0Kk3Kn15gxF7i0UCauUr/VUEe3rj
+ YD+3NKew3yxQTxqgLW8uhaUVAA4PIkscUxM8DNFfKYCO1CAvijlVJKAgfQIhs1n6I2q127bCogW
+ S5eNExxx+QnEc1I58G1YOKzFGq3FTy5Vtkv2PqzBoIySagUEWjKnjR4KwfuEG8yK4Tp7TKBS1js
+ 1R3g7CPnePZMskrsERKbegPYhJ51yUk5Qr4VVqngagXXesJI/T4IQ4+Gz1/bSx42ulxxpQUptkQ
+ gMcYYFElPet5P5sdoPQbozjzliP9/8/38A7tvKvc227JPAl3krsRIEffKC6Nioq4d6CnWDVIdv8
+ imLJ3uPndRAWc9Q==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/06/2023 15:48, Dmitry Baryshkov wrote:
-> On 24/06/2023 03:41, Marijn Suijten wrote:
->> Document availability of the 14nm DSI PHY on SM6125.
->>
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> ---
->>   Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
->> index a43e11d3b00d..60b590f21138 100644
->> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
->> @@ -18,6 +18,7 @@ properties:
->>         - qcom,dsi-phy-14nm
->>         - qcom,dsi-phy-14nm-2290
->>         - qcom,dsi-phy-14nm-660
->> +      - qcom,dsi-phy-14nm-6125
-> 
-> Should we start using standard scheme, so "qcom,sm6125-dsi-phy-14nm" ?
+Use the dev_err_probe function instead of dev_err in the probe function
+so that the printed message includes the return value and also handles
+-EPROBE_DEFER nicely.
 
-I guess the earlier the better.
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 34 ++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index 2a3b3e21260f..0e8ebfcd84c5 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -411,22 +411,19 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+ 	chip->base = res;
+ 
+ 	ret = qpnp_tm_read(chip, QPNP_TM_REG_TYPE, &type);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "could not read type\n");
+-		return ret;
+-	}
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret,
++				     "could not read type\n");
+ 
+ 	ret = qpnp_tm_read(chip, QPNP_TM_REG_SUBTYPE, &subtype);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "could not read subtype\n");
+-		return ret;
+-	}
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret,
++				     "could not read subtype\n");
+ 
+ 	ret = qpnp_tm_read(chip, QPNP_TM_REG_DIG_MAJOR, &dig_major);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "could not read dig_major\n");
+-		return ret;
+-	}
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret,
++				     "could not read dig_major\n");
+ 
+ 	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
+ 				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
+@@ -448,16 +445,13 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+ 	 */
+ 	chip->tz_dev = devm_thermal_of_zone_register(
+ 		&pdev->dev, 0, chip, &qpnp_tm_sensor_ops);
+-	if (IS_ERR(chip->tz_dev)) {
+-		dev_err(&pdev->dev, "failed to register sensor\n");
+-		return PTR_ERR(chip->tz_dev);
+-	}
++	if (IS_ERR(chip->tz_dev))
++		return dev_err_probe(&pdev->dev, PTR_ERR(chip->tz_dev),
++				     "failed to register sensor\n");
+ 
+ 	ret = qpnp_tm_init(chip);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "init failed\n");
+-		return ret;
+-	}
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret, "init failed\n");
+ 
+ 	devm_thermal_add_hwmon_sysfs(&pdev->dev, chip->tz_dev);
+ 
+
+---
+base-commit: 8d2be868b42c08290509c60515865f4de24ea704
+change-id: 20230625-spmi-temp-alarm-defer-0889b80544e3
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca@z3ntu.xyz>
 
