@@ -2,84 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEC3973CE2E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 05:15:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 541D473CEDD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 09:16:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231214AbjFYDPT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jun 2023 23:15:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
+        id S230458AbjFYHQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jun 2023 03:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230506AbjFYDPN (ORCPT
+        with ESMTP id S230058AbjFYHQa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jun 2023 23:15:13 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75939E7A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 20:15:11 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-657c4bcad0bso494640b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jun 2023 20:15:11 -0700 (PDT)
+        Sun, 25 Jun 2023 03:16:30 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA52E7A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 00:16:28 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-51d9124e1baso1001716a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 00:16:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1687662910; x=1690254910;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1687677386; x=1690269386;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TKI5JnbDIC0GxIDWgHq4O/cOoJK+mFi4lHzSLMfVTqU=;
-        b=ZAMx9Z9f9sidua+INHohqUOzi6qohVG8u4jVCH5kW+5KNZXm213btXme0+oY3eiFas
-         kJ1eg2nzkYdYzNdOe7oa9qHmaJUnXCYxjS+yzRkh4fKBRaJsJ8sThwNTH8lHQfNkQNAM
-         VzcFUF7+yXpjBTL7GbZNoITLErtoJw0Vjk1rTp/DbKRrvAbdhI1W9mMFrodUhQiTOgU4
-         x87qi5B+whZkF6jL19/UUqYgrCxdv27BCv4u4d4gCY3C0TEpHKxxaHXbF0gjifwSN242
-         21vqEHW8Cm8PCiF/LjQeQL8d9CMETY+gbtFossFoUbQJa5ZrwnE/J5ioBpxXDyTlqBxM
-         qigg==
+        bh=uIrahwiJfRblkW3SQe71HLoNxiAeifXwVotzPF1COO8=;
+        b=SLN/+lBuA+L4hOibaG99ROPhT2q+4Zk1BkcUiRXl4SmMBXbIW7ZDZeuRWDY1cBg38Z
+         ds8IN6Tf2v7H77bI5N82BPsA6p+sb1Lj+PSR0P8pInIDV1RTT6vqMpSWO9KEJ0hHzfC9
+         PstfvAk+/fjKU2B0e7eYYEH2W3iBHla9soKb01tYlDCjDXbBy2hscxufKR4AS0Pqb0fw
+         xW/pU4+OdDUQISR5H5kuYf4bnneam72K/FNMC6qv8UwrAGSJsMpE/MizlpDV4DdZLRUJ
+         CLXPt0bN46dNwZB1ey2SqK6RPM+T8D3l2FMCfWMHk6CSE+YuPcm2jgpBH2tceoFZhhEK
+         CXig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687662910; x=1690254910;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1687677386; x=1690269386;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TKI5JnbDIC0GxIDWgHq4O/cOoJK+mFi4lHzSLMfVTqU=;
-        b=FN0b8A6aC8eijvidx+AVowuLtp+gwQOax4lohyYu/FWYDsTMVLl9mC2f+MPn60YfWu
-         PNaTuGmHgXgIJG8XOb9QsRvkAKkkoxDUkiKC6Oz29TkgNTi1N5FxAhtkRMTFfc8/o6q1
-         ixWus2Pcp/xrY86AOHF0+WLEZDs60J3CiWyT6l69S6e+vpVdeTZ9e88eESq1IyVgRBrc
-         SBuOa6Xb8R8nsXZ4yfVWhbN8kFGuUob+Cb5hdf9yx9n6hIFqhFcMUPGSzrPDGfXg9FcC
-         ijYaWPTtUzx7eiQHyRJ47LzrA+ENViP0Zab63Ex8vRbJoKAg/wa2uTN2SjQsntRBCQb5
-         Kwyg==
-X-Gm-Message-State: AC+VfDwE20s0/ZocQ+VRd/hJkJbDB3YGS6eJ1bdEw3doMpiI9RCb3LBR
-        1M0NItzSWb0Bi78cpvIdYKE/rQ==
-X-Google-Smtp-Source: ACHHUZ4cDGND46+rMO/jpoItKK6gyWoVPMpHTImOruhTgKiq3D9MdRMxw7KZsaNY9vtDgu3MtWReMw==
-X-Received: by 2002:a05:6a20:8426:b0:11f:7829:6d6c with SMTP id c38-20020a056a20842600b0011f78296d6cmr28507253pzd.3.1687662910560;
-        Sat, 24 Jun 2023 20:15:10 -0700 (PDT)
-Received: from [10.70.252.135] ([203.208.167.146])
-        by smtp.gmail.com with ESMTPSA id r9-20020a62e409000000b0066642f95bc5sm1648412pfh.35.2023.06.24.20.15.03
+        bh=uIrahwiJfRblkW3SQe71HLoNxiAeifXwVotzPF1COO8=;
+        b=Mb9tf7EAc6HqQX15ULOvq3yuaPP4ZuPWm7fy28dUWOkRp1twWh57C/qMbyvY7K9ZBB
+         JwD0tL16RlIdI6AyRHfj9eadi7weoxV33kwh/SFCgvYlgm1kpFifCuNe7Z0h7uiCeqeY
+         /MH9ftyotLR9s+hBv3+odOCPwfffqy3QkE43+ZgyqgPsXfI+RHOYpaCByoPcBI9Plrrq
+         zKCMICkh90YriMOnYhy61yXEwTbGA9721xJ2glQ1PHpj+JgbQc64ePHOMOKYZKWchMYd
+         QV48WtTjJ1BgjDmVAz81+PEApQZDtIsNeE8VdRoPQJ/yD1c+JEryQYzOpE9feVFXYTyt
+         ouzQ==
+X-Gm-Message-State: AC+VfDxZxbislJPHMYL/iM3WRrozHO9t/KjFWJmmF6Xuj5J6317NvZrR
+        h+4L0gslOEjEcQqxE9zIZmOS9wdcN7erGCKNdQ0=
+X-Google-Smtp-Source: ACHHUZ7yWmteCJ2ASXP6XlOddI/EKOWOLbTyVMMVtsIAE32VSvu1Ve67QKpbz2Drqglycme6vQHnYQ==
+X-Received: by 2002:a05:6402:517:b0:51a:53e0:843f with SMTP id m23-20020a056402051700b0051a53e0843fmr15138396edv.37.1687677386589;
+        Sun, 25 Jun 2023 00:16:26 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id k21-20020aa7d8d5000000b0051bf6318fd7sm1440765eds.97.2023.06.25.00.16.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Jun 2023 20:15:10 -0700 (PDT)
-Message-ID: <00641d5b-86a3-f5d1-02ee-13b4f815df75@bytedance.com>
-Date:   Sun, 25 Jun 2023 11:15:01 +0800
+        Sun, 25 Jun 2023 00:16:25 -0700 (PDT)
+Message-ID: <6be00ec7-2fab-7da0-ab47-fcaf3a1ce042@linaro.org>
+Date:   Sun, 25 Jun 2023 09:16:22 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH 24/29] mm: vmscan: make global slab shrink lockless
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 10/15] dt-bindings: msm: dsi-phy-14nm: Document SM6125
+ variant
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
+ <20230624-sm6125-dpu-v1-10-1d5a638cebf2@somainline.org>
+ <1b40b16e-025a-c10b-e99b-404246de73fe@linaro.org>
 Content-Language: en-US
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-To:     Dave Chinner <david@fromorbit.com>, paulmck@kernel.org
-Cc:     Vlastimil Babka <vbabka@suse.cz>, akpm@linux-foundation.org,
-        tkhai@ya.ru, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, tytso@mit.edu, linux-kernel@vger.kernel.org,
-        linux-mm@kvack.org, intel-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dm-devel@redhat.com, linux-raid@vger.kernel.org,
-        linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, RCU <rcu@vger.kernel.org>
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-25-zhengqi.arch@bytedance.com>
- <cf0d9b12-6491-bf23-b464-9d01e5781203@suse.cz>
- <ZJU708VIyJ/3StAX@dread.disaster.area>
- <a21047bb-3b87-a50a-94a7-f3fa4847bc08@bytedance.com>
- <ZJYaYv4pACmCaBoT@dread.disaster.area>
- <a7baf44a-1eb8-d4e1-d112-93cf9cdb7beb@bytedance.com>
-In-Reply-To: <a7baf44a-1eb8-d4e1-d112-93cf9cdb7beb@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1b40b16e-025a-c10b-e99b-404246de73fe@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -90,93 +100,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2023/6/24 19:08, Qi Zheng wrote:
-> Hi Dave,
-> 
-> On 2023/6/24 06:19, Dave Chinner wrote:
->> On Fri, Jun 23, 2023 at 09:10:57PM +0800, Qi Zheng wrote:
->>> On 2023/6/23 14:29, Dave Chinner wrote:
->>>> On Thu, Jun 22, 2023 at 05:12:02PM +0200, Vlastimil Babka wrote:
->>>>> On 6/22/23 10:53, Qi Zheng wrote:
->>>> Yes, I suggested the IDR route because radix tree lookups under RCU
->>>> with reference counted objects are a known safe pattern that we can
->>>> easily confirm is correct or not.  Hence I suggested the unification
->>>> + IDR route because it makes the life of reviewers so, so much
->>>> easier...
->>>
->>> In fact, I originally planned to try the unification + IDR method you
->>> suggested at the beginning. But in the case of CONFIG_MEMCG disabled,
->>> the struct mem_cgroup is not even defined, and root_mem_cgroup and
->>> shrinker_info will not be allocated.  This required more code 
->>> changes, so
->>> I ended up keeping the shrinker_list and implementing the above pattern.
+On 24/06/2023 15:48, Dmitry Baryshkov wrote:
+> On 24/06/2023 03:41, Marijn Suijten wrote:
+>> Document availability of the 14nm DSI PHY on SM6125.
 >>
->> Yes. Go back and read what I originally said needed to be done
->> first. In the case of CONFIG_MEMCG=n, a dummy root memcg still needs
->> to exist that holds all of the global shrinkers. Then shrink_slab()
->> is only ever passed a memcg that should be iterated.
+>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> ---
+>>   Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->> Yes, it needs changes external to the shrinker code itself to be
->> made to work. And even if memcg's are not enabled, we can still use
->> the memcg structures to ensure a common abstraction is used for the
->> shrinker tracking infrastructure....
+>> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+>> index a43e11d3b00d..60b590f21138 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+>> @@ -18,6 +18,7 @@ properties:
+>>         - qcom,dsi-phy-14nm
+>>         - qcom,dsi-phy-14nm-2290
+>>         - qcom,dsi-phy-14nm-660
+>> +      - qcom,dsi-phy-14nm-6125
 > 
-> Yeah, what I imagined before was to define a more concise struct
-> mem_cgroup in the case of CONFIG_MEMCG=n, then allocate a dummy root
-> memcg on system boot:
-> 
-> #ifdef !CONFIG_MEMCG
-> 
-> struct shrinker_info {
->      struct rcu_head rcu;
->      atomic_long_t *nr_deferred;
->      unsigned long *map;
->      int map_nr_max;
-> };
-> 
-> struct mem_cgroup_per_node {
->      struct shrinker_info __rcu    *shrinker_info;
-> };
-> 
-> struct mem_cgroup {
->      struct mem_cgroup_per_node *nodeinfo[];
-> };
-> 
-> #endif
-> 
-> But I have a concern: if all global shrinkers are tracking with the
-> info->map of root memcg, a shrinker->id needs to be assigned to them,
-> which will cause info->map_nr_max to become larger than before, then
-> making the traversal of info->map slower.
+> Should we start using standard scheme, so "qcom,sm6125-dsi-phy-14nm" ?
 
-But most of the system is 'sb-xxx' shrinker instances, they all have
-the SHRINKER_MEMCG_AWARE flag, so it should have little impact on the
-speed of traversing info->map. ;)
+I guess the earlier the better.
 
-> 
->>
->>> If the above pattern is not safe, I will go back to the unification +
->>> IDR method.
->>
->> And that is exactly how we got into this mess in the first place....
-> 
-> I only found one similar pattern in the kernel:
-> 
-> fs/smb/server/oplock.c:find_same_lease_key/smb_break_all_levII_oplock/lookup_lease_in_table
-> 
-> But IIUC, the refcount here needs to be decremented after holding
-> rcu lock as I did above.
-> 
-> So regardless of whether we choose unification + IDR in the end, I still
-> want to confirm whether the pattern I implemented above is safe. :)
+Best regards,
+Krzysztof
 
-Also + RCU mailing list.
-
-> 
-> Thanks,
-> Qi
-> 
->>
->> -Dave
