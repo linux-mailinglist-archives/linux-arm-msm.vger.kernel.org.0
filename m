@@ -2,60 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA1E473D302
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 20:35:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4915073D322
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jun 2023 21:11:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229781AbjFYSfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Jun 2023 14:35:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36056 "EHLO
+        id S229841AbjFYTLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jun 2023 15:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbjFYSfA (ORCPT
+        with ESMTP id S229452AbjFYTLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Jun 2023 14:35:00 -0400
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB1AF184;
-        Sun, 25 Jun 2023 11:34:55 -0700 (PDT)
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1b801e6ce85so1641325ad.1;
-        Sun, 25 Jun 2023 11:34:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687718095; x=1690310095;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k7KVQuIv0V8DtSvRNaFYpILs9gFNdEYiZqxK/tch1DY=;
-        b=le3DMjnLTiI1tJeW5Z395WWR/8pT2tvnTmX7dJotvubkWPcDMZosjc3D/xIOxzruC9
-         5zUYBUVap5CbNsRkTCAZw22tw/STOGWIA+NfFbnZ6D0GRLLucyHC0MYe3L6gNodGmJlb
-         FH52LV+KANI7mf/39sbTABJNoooe2CNtWtVYB2vEoXWJeCpq3NOr6hAa51a6r9zvTopQ
-         NvcY0kCJUctiUmU6l6zSQGNu76PMzp7GXg98Gewrn8o32RFtKvhfc3tPKWgr++B763PZ
-         7xeMY67rZwngBQY5f3OugwDnprxbJ9a84f2tpOVZmd/9kxREECQ9/F5+X16rppJCG6+e
-         33Aw==
-X-Gm-Message-State: AC+VfDw90Ely0Stbl/jroM+eH6hYuZVAVEwucbk6HAM14olpjQOlHOxa
-        kHyTipSgxmT5BY1VgAL20UM=
-X-Google-Smtp-Source: ACHHUZ6CRTVKAAtFbxfwopL29P5NT7jjm5c8z99T4uJtIqzdlfkJtfqi9PwMu2VcDoyjYqpPn1R97w==
-X-Received: by 2002:a17:902:ab05:b0:1b6:6751:95f5 with SMTP id ik5-20020a170902ab0500b001b6675195f5mr5327376plb.25.1687718095267;
-        Sun, 25 Jun 2023 11:34:55 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id kp16-20020a170903281000b001b4f77d4e7csm2742744plb.115.2023.06.25.11.34.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jun 2023 11:34:54 -0700 (PDT)
-Date:   Mon, 26 Jun 2023 03:34:53 +0900
-From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To:     Yang Li <yang.lee@linux.alibaba.com>
-Cc:     mani@kernel.org, lpieralisi@kernel.org, kishon@kernel.org,
-        bhelgaas@google.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Abaci Robot <abaci@linux.alibaba.com>
-Subject: Re: [PATCH -next] PCI: endpoint: Remove redundant dev_err().
-Message-ID: <20230625183453.GB2459283@rocinante>
-References: <20230607093514.104012-1-yang.lee@linux.alibaba.com>
+        Sun, 25 Jun 2023 15:11:03 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E7901B3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jun 2023 12:11:00 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 1CF463EEB8;
+        Sun, 25 Jun 2023 21:10:56 +0200 (CEST)
+Date:   Sun, 25 Jun 2023 21:10:54 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+Subject: Re: [PATCH 01/15] arm64: dts: qcom: sm6125: Sort spmi_bus node
+ numerically by reg
+Message-ID: <yjc63sxypg3zwju3vudyogexxnng6sgjxxf4fhibid6ifunexc@k2ieeqh23ncm>
+References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
+ <20230624-sm6125-dpu-v1-1-1d5a638cebf2@somainline.org>
+ <a2a79b58-c7a9-9099-028c-5ca79cf8f711@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230607093514.104012-1-yang.lee@linux.alibaba.com>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+In-Reply-To: <a2a79b58-c7a9-9099-028c-5ca79cf8f711@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,17 +66,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+On 2023-06-24 03:43:21, Konrad Dybcio wrote:
+> On 24.06.2023 02:40, Marijn Suijten wrote:
+> > This node has always resided in the wrong spot, making it somewhat
+> > harder to contribute new node entries while maintaining proper sorting
+> > around it.  Move the node up to sit after hsusb_phy1 where it maintains
+> > proper numerial
+> numerical
 
-> There is no need to call the dev_err() function directly to print a
-> custom message when handling an error from either the platform_get_irq()
-> or platform_get_irq_byname() functions as both are going to display an
-> appropriate error message in case of a failure.
+Thanks.
 
-This extra dev_err() appears to have since been removed, per:
+> sorting on the (first of its many) reg address property.
 
-  https://git.kernel.org/pci/pci/c/1bf5f25324f7
+Why was this continuation of the line not re-quoted?  Makes your reply
+super-hard to read.
 
-Nevertheless, thank you for sending the patch over!
+- Marijn
 
-	Krzysztof
+> > 
+> > Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> Konrad
+> >  arch/arm64/boot/dts/qcom/sm6125.dtsi | 38 ++++++++++++++++++------------------
+> >  1 file changed, 19 insertions(+), 19 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > index a596baa6ce3e..722dde560bec 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> > @@ -679,6 +679,24 @@ hsusb_phy1: phy@1613000 {
+> >  			status = "disabled";
+> >  		};
+> >  
+> > +		spmi_bus: spmi@1c40000 {
+> > +			compatible = "qcom,spmi-pmic-arb";
+> > +			reg = <0x01c40000 0x1100>,
+> > +			      <0x01e00000 0x2000000>,
+> > +			      <0x03e00000 0x100000>,
+> > +			      <0x03f00000 0xa0000>,
+> > +			      <0x01c0a000 0x26000>;
+> > +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+> > +			interrupt-names = "periph_irq";
+> > +			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
+> > +			qcom,ee = <0>;
+> > +			qcom,channel = <0>;
+> > +			#address-cells = <2>;
+> > +			#size-cells = <0>;
+> > +			interrupt-controller;
+> > +			#interrupt-cells = <4>;
+> > +		};
+> > +
+> >  		rpm_msg_ram: sram@45f0000 {
+> >  			compatible = "qcom,rpm-msg-ram";
+> >  			reg = <0x045f0000 0x7000>;
+> > @@ -1184,27 +1202,9 @@ sram@4690000 {
+> >  			reg = <0x04690000 0x10000>;
+> >  		};
+> >  
+> > -		spmi_bus: spmi@1c40000 {
+> > -			compatible = "qcom,spmi-pmic-arb";
+> > -			reg = <0x01c40000 0x1100>,
+> > -			      <0x01e00000 0x2000000>,
+> > -			      <0x03e00000 0x100000>,
+> > -			      <0x03f00000 0xa0000>,
+> > -			      <0x01c0a000 0x26000>;
+> > -			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+> > -			interrupt-names = "periph_irq";
+> > -			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
+> > -			qcom,ee = <0>;
+> > -			qcom,channel = <0>;
+> > -			#address-cells = <2>;
+> > -			#size-cells = <0>;
+> > -			interrupt-controller;
+> > -			#interrupt-cells = <4>;
+> > -		};
+> > -
+> >  		apps_smmu: iommu@c600000 {
+> >  			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+> > -			reg = <0xc600000 0x80000>;
+> > +			reg = <0x0c600000 0x80000>;
+> >  			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>,
+> >  				     <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
+> >  				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
+> > 
