@@ -2,89 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4548573E5AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:47:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55B0373E5E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:58:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229806AbjFZQrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 12:47:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
+        id S230070AbjFZQ6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 12:58:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbjFZQrP (ORCPT
+        with ESMTP id S229631AbjFZQ6G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:47:15 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B72183
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:47:14 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f973035d60so4381263e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:47:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687798032; x=1690390032;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GJHRCqbPQl3JXucRV3xxhvcZkkYuFqIldcmWxCebc90=;
-        b=MoJKCGuIm1R9wp/YsJ8kR6VDcvEsqk91+YIBYg6vwBD56U6MmXtWdprFSqSmAXQqB9
-         FX/FvU/DFBxvl8//Ar+p934THx2BPt/grS+J5ZZbINCSWweJfRhR1Hq6LinfcY2alkFs
-         rLRJLEtyVmV1RE2lNYbc4tU0qBjLEriPle4vuDC8TZSHqcskQEM1kyh/10h5AYjci3uy
-         1DP2yxZiuBNJyDaaOt2eIn81pGX6uFCcOrhXK29MVIvOSYesCQ0LUP+royE6VRoUKZJi
-         jYEfe/LogE8LAoJmKEWfdj/jX6FGvwzI2+kvM4cmJn2tJgZnGKVz4OK+Qe+jTPwMeyQc
-         dxBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687798032; x=1690390032;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GJHRCqbPQl3JXucRV3xxhvcZkkYuFqIldcmWxCebc90=;
-        b=JGgcXuuY7PGmMoh+PgN3eusOolmEoU8Bs07vnvVOvSswUwWEjSRaPp2WKenE5Odn2X
-         3gjZmw1Cdjfl4kbhDmh05M4Xc/8U0LOqPNh6EfKXepv/PDIccAErd56rL+Exf6xflCbx
-         e9aXvytjCT7YkcqgSILfxzXdfWwS1A8DicitaVBAJ7GPxceCz+uepPVmSiHwzihRoInp
-         UgqS1XKvf1TdYTcF8RMd8SyCU5hJlPlJkqk0yuYo4PGBKba3aeQab4Gp9D/ssoEKMMF4
-         dopmXqWhHgE2byOeHQQb1flNKf8nWN1VWukTeB0Rh6w59i7UVt8klcP2v1xmL+QilwFV
-         EvsA==
-X-Gm-Message-State: AC+VfDyP5Y8FopSVV5Xj/Kk/ANiS1hOlto52UFUr6JwZGfKymf9NRhli
-        /34jSN8MfvAya4SZouhrrQT4rA==
-X-Google-Smtp-Source: ACHHUZ57sFI0hqUuY6mKNExqPzLRhumqKwnyqMeR14dftScyrbGTcK3poygc/sfyxNkxDOhzLApa/A==
-X-Received: by 2002:a05:6512:3d16:b0:4f8:7325:bcd4 with SMTP id d22-20020a0565123d1600b004f87325bcd4mr3493071lfv.0.1687798032700;
-        Mon, 26 Jun 2023 09:47:12 -0700 (PDT)
-Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
-        by smtp.gmail.com with ESMTPSA id t24-20020ac243b8000000b004f625831d85sm1177503lfl.126.2023.06.26.09.47.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 09:47:12 -0700 (PDT)
-Message-ID: <4eaecc96-2d54-f6f2-8034-0c83ea1d1504@linaro.org>
-Date:   Mon, 26 Jun 2023 18:47:10 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 06/26] interconnect: icc-clk: add support for scaling
- using OPP
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mon, 26 Jun 2023 12:58:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9108EE70;
+        Mon, 26 Jun 2023 09:58:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 24B5B60F03;
+        Mon, 26 Jun 2023 16:58:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB6CC433C0;
+        Mon, 26 Jun 2023 16:58:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687798684;
+        bh=/6I63s7oZUF/1wqTNsxPn1YgT6ZobbD3eXioGmc3G/c=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=o83I7RypfgU8zTzvTx88NpFp0ncROj1AIGY2xPjTLo9lq5ZovSrkJ+qXQI+oOLWS7
+         F+7lc5dnMBj2bX3HRGwoeWczvyWcJNPejITz9faSFfZsfPnUNI0xITp7WqDbTvx3Vy
+         FmtgLyIPFf3k5QfUbwNKBsuX+en4CX1AKRBgF3r5mzqTRw5b8+MajnqO6pvOsT30sQ
+         oqUhgT7W/tH4ctHEhHYG6VbTTvDulIrmwpVGouFSKAZRqCmLfjIEVT2Pm8x/ZRfqPJ
+         drs/77U/uiXaETX/tEqjuVBnH6ndXcSZJg+w+rntr1BX2N2NzFAKL8jtMEuishXFCZ
+         pIvZd54KS2Qfw==
+Date:   Mon, 26 Jun 2023 17:57:59 +0100
+From:   Conor Dooley <conor@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
- <20230625202547.174647-7-dmitry.baryshkov@linaro.org>
- <b5ff346b-cbde-68fe-a08a-3b3331439309@linaro.org>
- <d9e4fd75-310a-7fe8-879e-651011873199@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <d9e4fd75-310a-7fe8-879e-651011873199@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: dma: qcom,bam: require one of control
+ methods
+Message-ID: <20230626-prewashed-maximum-8402dffe790a@spud>
+References: <20230626145645.646136-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="an2WmpP2EaKyfAAz"
+Content-Disposition: inline
+In-Reply-To: <20230626145645.646136-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,93 +64,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.06.2023 15:44, Dmitry Baryshkov wrote:
-> On 26/06/2023 14:28, Konrad Dybcio wrote:
->> On 25.06.2023 22:25, Dmitry Baryshkov wrote:
->>> Sometimes it might be required to scale the clock using the OPP
->>> framework (e.g. to scale regulators following the required clock rate).
->>> Extend the interconnec
->> 't'
->>
->>> -clk framework to handle OPP case in addition to
->>> scaling the clock.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->> I think we should check for OPP at the icc-clk registration time,
->> instead of passing it as a parameter, e.g.:
->>
->> qn.opp = IS_ERR(dev_pm_opp_get_opp_count)
->>
->> Not sure if there's a more idiomatic way.
-> 
-> No. icc-clk is not limited to a single clock->icc conversion. So it is possible to create several interconnect links, only one of which should be the OPP-based one.
-Ugh. Right.
 
-Konrad
-> 
->>
->> Konrad
->>>   drivers/interconnect/icc-clk.c   | 13 +++++++++++--
->>>   include/linux/interconnect-clk.h |  1 +
->>>   2 files changed, 12 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
->>> index 4d43ebff4257..c7962acdcee7 100644
->>> --- a/drivers/interconnect/icc-clk.c
->>> +++ b/drivers/interconnect/icc-clk.c
->>> @@ -7,10 +7,13 @@
->>>   #include <linux/device.h>
->>>   #include <linux/interconnect-clk.h>
->>>   #include <linux/interconnect-provider.h>
->>> +#include <linux/pm_opp.h>
->>>     struct icc_clk_node {
->>> +    struct device *dev;
->>>       struct clk *clk;
->>>       bool enabled;
->>> +    bool opp;
->>>   };
->>>     struct icc_clk_provider {
->>> @@ -25,12 +28,16 @@ struct icc_clk_provider {
->>>   static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
->>>   {
->>>       struct icc_clk_node *qn = src->data;
->>> +    unsigned long rate = icc_units_to_bps(src->peak_bw);
->>>       int ret;
->>>         if (!qn || !qn->clk)
->>>           return 0;
->>>   -    if (!src->peak_bw) {
->>> +    if (qn->opp)
->>> +        return dev_pm_opp_set_rate(qn->dev, rate);
->>> +
->>> +    if (!rate) {
->>>           if (qn->enabled)
->>>               clk_disable_unprepare(qn->clk);
->>>           qn->enabled = false;
->>> @@ -45,7 +52,7 @@ static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
->>>           qn->enabled = true;
->>>       }
->>>   -    return clk_set_rate(qn->clk, icc_units_to_bps(src->peak_bw));
->>> +    return clk_set_rate(qn->clk, rate);
->>>   }
->>>     static int icc_clk_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
->>> @@ -106,7 +113,9 @@ struct icc_provider *icc_clk_register(struct device *dev,
->>>       icc_provider_init(provider);
->>>         for (i = 0, j = 0; i < num_clocks; i++) {
->>> +        qp->clocks[i].dev = dev;
->>>           qp->clocks[i].clk = data[i].clk;
->>> +        qp->clocks[i].opp = data[i].opp;
->>>             node = icc_node_create(first_id + j);
->>>           if (IS_ERR(node)) {
->>> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
->>> index 0cd80112bea5..c695e5099901 100644
->>> --- a/include/linux/interconnect-clk.h
->>> +++ b/include/linux/interconnect-clk.h
->>> @@ -11,6 +11,7 @@ struct device;
->>>   struct icc_clk_data {
->>>       struct clk *clk;
->>>       const char *name;
->>> +    bool opp;
->>>   };
->>>     struct icc_provider *icc_clk_register(struct device *dev,
-> 
+--an2WmpP2EaKyfAAz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jun 26, 2023 at 04:56:45PM +0200, Krzysztof Kozlowski wrote:
+> The BAM DMA resources can be controlled remotely (e.g. by trusted
+> environment; needs qcom,powered-remotely or qcom,controlled-remotely
+> properties) or locally.  In the latter case we need to provide its
+> clock.
+>=20
+> Require one of methods of such control to properly validate DTS.
+
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+
+Cheers,
+Conor.
+
+--an2WmpP2EaKyfAAz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZJnDlwAKCRB4tDGHoIJi
+0qvEAQCi8S8dOZMpZcg0mY35taaqCaat6zIesocGIE3Hb2Tv9QD/Qzv3V3PMb6UR
+WAHy4wxo3ps6MrCkwY06Fu9ADJt+PQk=
+=q2cz
+-----END PGP SIGNATURE-----
+
+--an2WmpP2EaKyfAAz--
