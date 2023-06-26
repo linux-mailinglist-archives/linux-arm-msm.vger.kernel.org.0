@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4499273EB68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 22:05:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5193773EB70
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 22:05:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229726AbjFZUAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 16:00:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51122 "EHLO
+        id S229516AbjFZUAo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 16:00:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbjFZUAm (ORCPT
+        with ESMTP id S229647AbjFZUAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 16:00:42 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE6A1715
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 13:00:40 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fb761efa7aso1946603e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 13:00:40 -0700 (PDT)
+        Mon, 26 Jun 2023 16:00:43 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23783170D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 13:00:42 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4faaaa476a9so2833662e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 13:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687809638; x=1690401638;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MsirXe6F0XKcfpoI+mPFBbyk07gurBlFwHC8qBI/sU8=;
-        b=Q/WGo3McwEk59cszkwupzJcRO9xyOSy+utaXON8ApCzhym4ChsXJ+rT3OtJE6MFFgj
-         nUx9OD3TkzQ9SoiT2JtOIXza8B8ItW+jxeWsZkvxazdSyLI4FBg4zRkxxPe87QlYlCIE
-         KIN3Zu2EcQO7Vhs42Lzp1G7oqcwBY+JWidRD6hryz6WSpc3dvq6CYsRJ+sTfWTnjOAdh
-         6Wwl7NCMImN/vPA9CgUREEhiSKFSX64C0VfhOzc83GI/6g7akuzYIpRWz8m3rTlJuvrR
-         lJKV2CvCJeG8LXW9py4y3kmcyyfN11kAtUR3yOFwhz22u4USKIMTn3ukpIjju31TYt+E
-         fmLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687809638; x=1690401638;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1687809640; x=1690401640;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MsirXe6F0XKcfpoI+mPFBbyk07gurBlFwHC8qBI/sU8=;
-        b=gZC0GH2GBP3aD6kpz4q4UXaUSq/pGyJQ6nrbNzXfuhS9c4x+ublsYy+dhGZC/er39M
-         AIY2XdxrHF6QsSxQSmwrCHnovyHo3kjRTtzdYjKcSepCKhcGGCeaGIl5zbzZFY+8czci
-         sC3N0xqQS2RyBfq3gBQkSWw4RILHowZYspZg6YXHfMi7Np85WNf69VNXiqwkcjQwN3Oi
-         SJm9SuwTJNtpesMRUtrWGy/kjDfYXmIK8idWT3YIbiI3XTcLlAG4RuFlHYorcixjC6Xi
-         fD0kV8DkXSxtwXnNkaKwtZXMqOGssV5mjrosNohUA+qa9Z6Q58Dfzh0OvL6/S2aKnHho
-         xZAg==
-X-Gm-Message-State: AC+VfDwdgzX4Yk9YEHiegQmKgQn8H6TpuGrpLucA6gNEr/9AlmDBLdHe
-        QLoJROFdUm8p9vgDzOan9OpOgQ==
-X-Google-Smtp-Source: ACHHUZ4ATesustUL/xAV8LHcUVMG7FtETK7Yna7fm5Eluo+f67Ecu8epVQdSXXT6d2/XgnTgdEGgNQ==
-X-Received: by 2002:a05:6512:3483:b0:4fb:78a0:dd34 with SMTP id v3-20020a056512348300b004fb78a0dd34mr1564096lfr.42.1687809638646;
-        Mon, 26 Jun 2023 13:00:38 -0700 (PDT)
+        bh=+ew8UatElinQVBbDWQGC104jo5vUD1VtlF84hGFnzhg=;
+        b=EAe6QtmYYgTZelseWCLZ5EjotNUhXYzKz6i2W5LPHuT7Fgx6BY0Er7F5edr6pkkfQb
+         8LJk2y+JZTunXE48IGHcFmw4j5aR5Ic4+SwYC9bRTRk3WM2jDFrsyariapKF+VyvegTo
+         JJt/yVtrTTPBgPA1jjlR0sJhKXJDOStinipwR5qDOFSOtW6kGT7a1mL6PhTFKxF1Qqby
+         jh8SdD0LH7clWQ7lEhrfTihibtQyJshXCRA5J1SVc1Dmhy4qXpuyMSUWkz1WJUkrNcnb
+         1ZlV07l/cxsFBYUBmxgxvs3yZAcpCGUMXcKtiFtwSZzICpjgtxC5dqNTUVbdR3XBE84D
+         Gofw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687809640; x=1690401640;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+ew8UatElinQVBbDWQGC104jo5vUD1VtlF84hGFnzhg=;
+        b=f1YHeyb7JgpXGStdphRYmLjr+XtYSV4LXo54Ddqw7c93BtKIiDcJJ/x3cEC3hZulpY
+         fpqWMkupaP4xfLYa4o8As3+resHYyuKa34NhF32iWQXj2Xz2I/zVeZrthLiRwGv0hCln
+         b5gkgor4NCK+n0mS/i/gtWjuLM/AIjeNR3cKB243wtsCg7U3+1GXQU4YmYP5Lv5jur6f
+         rrJO9m8rYvOmC4aE77DhtuiU0oR2q7FVeG+7kouG/Gw73EmXXm807qOewr35YTibMn53
+         OXfDX/3TgFNO+TT6btuLWTXESzO0mlcpc63d/ZuRKnukiZgVpyK00HyuhLWijDiQQDpb
+         gnzw==
+X-Gm-Message-State: AC+VfDxoUoT1i6LIpYwFJ7Zux3R764ZosEMfPvflV86wQTuv7A3ZxmP4
+        HnFsSOT3SFnvZOYFLCcsOlHvWw==
+X-Google-Smtp-Source: ACHHUZ48rX088vH0dhMGHftvtlxvi1YK3Clds1VpB2F/cRhWAq/7GpE+v7k0g0C/xt0AZckG9Iywcw==
+X-Received: by 2002:ac2:5f4c:0:b0:4fb:7666:3bbf with SMTP id 12-20020ac25f4c000000b004fb76663bbfmr1813808lfz.26.1687809640337;
+        Mon, 26 Jun 2023 13:00:40 -0700 (PDT)
 Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
-        by smtp.gmail.com with ESMTPSA id o11-20020ac2494b000000b004fb74cb9670sm628082lfi.125.2023.06.26.13.00.37
+        by smtp.gmail.com with ESMTPSA id o11-20020ac2494b000000b004fb74cb9670sm628082lfi.125.2023.06.26.13.00.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 13:00:38 -0700 (PDT)
+        Mon, 26 Jun 2023 13:00:40 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 0/7] random msm bindings fixes
-Date:   Mon, 26 Jun 2023 22:00:22 +0200
-Message-Id: <20230626-topic-bindingsfixups-v1-0-254ae8642e69@linaro.org>
+Date:   Mon, 26 Jun 2023 22:00:23 +0200
+Subject: [PATCH 1/7] dt-bindings: qcom: Allow SoC names ending in "pro"
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFbumWQC/x2NSwrDMAwFrxK0rsC124T2KqULf5REEBRjJaUQc
- veKLmd4wztAqTEpPLsDGn1YeRWD66WDPEeZCLkYg3c+uN73uK2VMyaWwjLpyN+9Kj5CGcJQ0uj
- uN7A0RSVMLUqeLZZ9WUzWRjb/f73e5/kDVNEqdHsAAAA=
+Message-Id: <20230626-topic-bindingsfixups-v1-1-254ae8642e69@linaro.org>
+References: <20230626-topic-bindingsfixups-v1-0-254ae8642e69@linaro.org>
+In-Reply-To: <20230626-topic-bindingsfixups-v1-0-254ae8642e69@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -81,16 +81,16 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687809636; l=1303;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687809636; l=1157;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=3wIlxdysNDx1S4zitAfCftwhXW5BSqJ8vJhHAM8IWMs=;
- b=ITP1xvCp9uv79ZAHCNFGu/TF4jdTjkj3S4K0O8ZBP20yFazofvjfaai3MusmfJj4Mr68VbtW7
- RDY+A2lYeZZB6zsQ/weoSrwbw3yNzIFFmu+C+3aXMr1tSu77O5Bjwtm
+ bh=MDTupbJX2laygjY7lrmHa0kx1X7wxMzcrvh+5JykFVY=;
+ b=kC6o6929j1t55J2hnXYqgbd4NnLclYK9YjNA7k63aZI53tl69GPgQjtg6jgH3tEMmNjunfaA8
+ 7HVChW9ztcNCPrB45d9eIuq/BqcLZKrjrJ7r7CvYser9Twh0m02WwCu
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -98,30 +98,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+There are a couple of SoCs whose names end in "pro", with the currently-
+upstream examples being msm8974pro and msm8996pro. Allow such suffix in
+SoC-specific compatibles.
+
+Fixes: 5aa332c5e7ca ("dt-bindings: qcom: document preferred compatible naming")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (7):
-      dt-bindings: qcom: Allow SoC names ending in "pro"
-      dt-bindings: remoteproc: qcom,msm8996-mss-pil: Fix 8996 clocks
-      arm64: dts: qcom: pm6150l: Add missing short interrupt
-      arm64: dts: qcom: pm660l: Add missing short interrupt
-      arm64: dts: qcom: pmi8950: Add missing OVP interrupt
-      arm64: dts: qcom: pmi8994: Add missing OVP interrupt
-      arm64: dts: qcom: sc8180x: Add missing 'cache-unified' to L3
+ Documentation/devicetree/bindings/arm/qcom-soc.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- Documentation/devicetree/bindings/arm/qcom-soc.yaml                | 2 +-
- .../devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml       | 7 +++----
- arch/arm64/boot/dts/qcom/pm6150l.dtsi                              | 5 +++--
- arch/arm64/boot/dts/qcom/pm660l.dtsi                               | 5 +++--
- arch/arm64/boot/dts/qcom/pmi8950.dtsi                              | 5 +++--
- arch/arm64/boot/dts/qcom/pmi8994.dtsi                              | 5 +++--
- arch/arm64/boot/dts/qcom/sc8180x.dtsi                              | 1 +
- 7 files changed, 17 insertions(+), 13 deletions(-)
----
-base-commit: 3eedd211ad93c322fb360b83a3d76a2c6cd622dc
-change-id: 20230626-topic-bindingsfixups-93d737dbf054
+diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+index e333ec4a9c5f..607a1cf1ef94 100644
+--- a/Documentation/devicetree/bindings/arm/qcom-soc.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+@@ -31,7 +31,7 @@ properties:
+   compatible:
+     oneOf:
+       # Preferred naming style for compatibles of SoC components:
+-      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$"
++      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+(pro|)-.*$"
+       - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
+ 
+       # Legacy namings - variations of existing patterns/compatibles are OK,
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.41.0
 
