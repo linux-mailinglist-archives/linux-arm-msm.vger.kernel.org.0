@@ -2,85 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3797F73DD1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:17:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CD4573DD34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:20:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbjFZLRd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 07:17:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55008 "EHLO
+        id S229983AbjFZLUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 07:20:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjFZLRc (ORCPT
+        with ESMTP id S229984AbjFZLUT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 07:17:32 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 816B5101;
-        Mon, 26 Jun 2023 04:17:31 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35QAYZKt031238;
-        Mon, 26 Jun 2023 11:17:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qap+wPmI/4+wGpj6QeslGGidlg50iUr9wMK2Z0CGYrI=;
- b=iaGbtV6avyOP9diL5BtFS+vazmz20s8owQUZ3fsi8cdmLwbmBpSdc2hQyZeSZyTAhr+7
- TyatBb1KKh/9KJ17GwbUpIbTyiqWopSd7crwl68+2cnlF7YfclnNF15ylCJxLuwTJtPm
- 5+EAbRY+wEc6TEovpa997v6g56qnDjGqFQ8DBJiyMZ0MEu8JzxNiqYgBhSlmT2ztJgCT
- /BXRIWl1X97ehaV0SaEUURFYJbxMdl0sSCinEzAzXXZK2tl5080pi6jpDDhq3vE3Tx/Z
- SqpFdv9nW/Dg/7a6XcsQIeF6MavwH5+ZZKFsTao3r2r/KfW7GLyD48A/DAHfnix75p7p Ng== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdqew3uwc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 11:17:27 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35QBHQcw010406
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 11:17:26 GMT
-Received: from [10.216.37.195] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
- 2023 04:17:21 -0700
-Message-ID: <20ec31b3-667a-0617-71d4-586789e2c2a4@quicinc.com>
-Date:   Mon, 26 Jun 2023 16:47:18 +0530
+        Mon, 26 Jun 2023 07:20:19 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F7610D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:20:17 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b698937f85so23880141fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:20:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687778416; x=1690370416;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aNjOODuL5422gkiTKfRjAGrAZ8RslF/0UlA/xkBh0eg=;
+        b=YTDhOchwJomu7xbnPSJ5jeT0jdFl4uO7FV39DW1ewjNEIkpHuzpLJBc6xa/0oWDycx
+         t+9GWxKmYHVfOR8p/q2dSu+8wA/rJ6vULulSg6S4ojVrS6k2EvM522sE2HbRpWaH5eDo
+         7CPUWDtd+aHmplbyEhTHWzQX/q+xYE882RTUvRZbP3bpXD2rpWAJILX0h5psdmUFx1O4
+         FznAezHoyNw7c/7YAFesHvY4g8MP2u1tEB92X07C3HNk4JKQSoBkEYPdHSj+51r4udYh
+         Tp7q3TG2OS/jv1JQePio1FqWASZnx669oaY3k2P5mNCrZCeN5vODo8hFI3O2YWwyiVa9
+         ASxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687778416; x=1690370416;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aNjOODuL5422gkiTKfRjAGrAZ8RslF/0UlA/xkBh0eg=;
+        b=ObMwpux6ED44i35uEIK0ehnDFa9ivAdT3vfNLSSvU78/ammLVUUW07BJxkavDoWDBI
+         b9E60yjF3fJaMeJ42AMMHtvihPCj4B3ikx/K+DlgHC5vk8c+WjiWm1Z3m2R7LP0rKZL7
+         crkvJuyEPwLXo2Zg/5OOWg9I9LvgDhtC2ytc4wjjKmXnkGDj5SRxdGzqgzr0JBbxruWx
+         Z2iyQikIU3njFuz8VYij+nxzyUcUtrk06RXrauTgZ55AJLkAS9V56y5a8RiRzwLVzoIR
+         oo3ITi+/nxNRUDAFv2ZxRLMj/Z9aXzOccc47icIcNSVg/RowrAHn/RrFnU3MBTs9oZ7E
+         x0JA==
+X-Gm-Message-State: AC+VfDyOiAYJSNBnHGSKfU2Ky9VmXTiBAaRQh3uctBoIWASsS3+GyZtH
+        5gjz7Cj/PczsLn9Cn0dZicNM7Q==
+X-Google-Smtp-Source: ACHHUZ5FL8aC9JGkP8UZl5LCVlR/iV7/pxyO01K4X4g/zl6JvfAYsYgV1CtQxBK6JkrDExnBmyq62g==
+X-Received: by 2002:a19:6503:0:b0:4f8:7960:f72 with SMTP id z3-20020a196503000000b004f879600f72mr10649932lfb.44.1687778415821;
+        Mon, 26 Jun 2023 04:20:15 -0700 (PDT)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id k1-20020a05600c0b4100b003fa82210e7asm7492485wmr.14.2023.06.26.04.20.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jun 2023 04:20:15 -0700 (PDT)
+Message-ID: <f1340d0e-3379-2d2b-e4df-5a182a2c5440@linaro.org>
+Date:   Mon, 26 Jun 2023 13:20:14 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RESEND v6 8/8] arm64: dts: qcom: sc7280: Add qcom,adsp-pil-mode
- property in clock nodes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] thermal/drivers/qcom/temp-alarm: Use dev_err_probe
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <swboyd@chromium.org>,
-        <andersson@kernel.org>, <broonie@kernel.org>, <agross@kernel.org>
-CC:     <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <judyhsiao@chromium.org>,
-        <quic_visr@quicinc.com>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-References: <20230616103534.4031331-1-quic_mohs@quicinc.com>
- <20230616103534.4031331-9-quic_mohs@quicinc.com>
- <b2553058-bd78-6d9f-dcd0-d1c086b4fc3b@linaro.org>
-From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <b2553058-bd78-6d9f-dcd0-d1c086b4fc3b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RkwcKsH3F9QMLdzy3Oms6uVj14Hr-Cp3
-X-Proofpoint-GUID: RkwcKsH3F9QMLdzy3Oms6uVj14Hr-Cp3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-26_08,2023-06-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 mlxlogscore=999 adultscore=0 phishscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306260101
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230625-spmi-temp-alarm-defer-v1-1-2d57acf36855@z3ntu.xyz>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20230625-spmi-temp-alarm-defer-v1-1-2d57acf36855@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,72 +82,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25/06/2023 13:11, Luca Weiss wrote:
+> Use the dev_err_probe function instead of dev_err in the probe function
+> so that the printed message includes the return value and also handles
+> -EPROBE_DEFER nicely.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
 
-On 6/16/2023 5:06 PM, Konrad Dybcio wrote:
-> On 16.06.2023 12:35, Mohammad Rafi Shaik wrote:
->> From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->>
->> Add "qcom,adsp-pil-mode" property in clock nodes for herobrine
->> crd revision 3 board specific device tree.
->> This is to register clocks conditionally by differentiating ADSP
->> based platforms and legacy path platforms.
->> Also disable lpass_core clock, as it is creating conflict
->> with ADSP clocks and it is not required for ADSP based platforms.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->> ---
->>   .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi    | 12 ++++++++++++
->>   1 file changed, 12 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->> index c02ca393378f..876a29178d46 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->> @@ -197,6 +197,14 @@ q6prmcc: clock-controller {
->>   	};
->>   };
->>   
->> +&lpass_aon {
->> +	qcom,adsp-pil-mode;
-> That's a whole bunch of hacky bindings that makes no sense..
->
-> What should have been done from the beginning is:
->
-> - all clocks should be registered inside the clock driver, unconditionally
->    as far as .c code is concerned
->
-> - the regmap properties within should reflect the actual max register
->    range within the hardware block
->
-> - device-tree should contain protected-clocks, which omits registering
->    specified clks (I guess in the ADSP-less case you could probably even
->    register all of them and it wouldn't hurt)
->
-For AR solution, it is required to add "qcom,adsp-pil-mode" flag to 
-enable ahbm and ahbs clocks.
-Please refer: 
-https://elixir.bootlin.com/linux/v6.4-rc7/source/drivers/clk/qcom/lpassaudiocc-sc7280.c
->> +};
->> +
->> +&lpass_core {
->> +	status = "disabled";
-> status = "reserved";
->
-> Konrad
-Okay, will change status flag.
+Applied, thanks
 
-Rafi
->> +};
->> +
->>   &lpass_rx_macro {
->>   	/delete-property/ power-domains;
->>   	/delete-property/ power-domain-names;
->> @@ -239,3 +247,7 @@ &lpass_va_macro {
->>   
->>   	status = "okay";
->>   };
->> +
->> +&lpasscc {
->> +	qcom,adsp-pil-mode;
->> +};
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
