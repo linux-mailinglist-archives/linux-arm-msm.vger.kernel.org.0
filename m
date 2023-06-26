@@ -2,76 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CD4573DD34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:20:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE84573DD57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:22:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229983AbjFZLUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 07:20:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55874 "EHLO
+        id S229689AbjFZLWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 07:22:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229984AbjFZLUT (ORCPT
+        with ESMTP id S229729AbjFZLWO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 07:20:19 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F7610D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:20:17 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b698937f85so23880141fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:20:17 -0700 (PDT)
+        Mon, 26 Jun 2023 07:22:14 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CAA610C8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:21:50 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fb7589b187so1084353e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687778416; x=1690370416;
+        d=linaro.org; s=google; t=1687778491; x=1690370491;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aNjOODuL5422gkiTKfRjAGrAZ8RslF/0UlA/xkBh0eg=;
-        b=YTDhOchwJomu7xbnPSJ5jeT0jdFl4uO7FV39DW1ewjNEIkpHuzpLJBc6xa/0oWDycx
-         t+9GWxKmYHVfOR8p/q2dSu+8wA/rJ6vULulSg6S4ojVrS6k2EvM522sE2HbRpWaH5eDo
-         7CPUWDtd+aHmplbyEhTHWzQX/q+xYE882RTUvRZbP3bpXD2rpWAJILX0h5psdmUFx1O4
-         FznAezHoyNw7c/7YAFesHvY4g8MP2u1tEB92X07C3HNk4JKQSoBkEYPdHSj+51r4udYh
-         Tp7q3TG2OS/jv1JQePio1FqWASZnx669oaY3k2P5mNCrZCeN5vODo8hFI3O2YWwyiVa9
-         ASxA==
+        bh=Ndfuu4K/62Z1mfzAu2i/EV3jgAx+UABuEd2Nf19BUW4=;
+        b=YcJrp5YFigR4LueFKp+qCR3K6RaSCBiMFZyVVjlxJ7TuCTeAo4e8Ezhn87lF9XL2/B
+         FAw/cpbALReCkZ98VsOGOvCV1/GZXr51SOSq0GfxvkL0ldPMlKC4KougpTdYCWLTDowS
+         4J3wSUGcOac3IvECD5DqHo4iyNEt7F4TznEiiCgTjzLoi1KsOLUYQQIX5x4Jo1sDcxF+
+         3/hOIWQ0i4KS6g5f33jufDRR5ute7rbHO/5Wf/be3bM7tZw2s7LDMkkab9viUO+oA3Y7
+         SjhdXAbRFAuykNqCuVqJRNKG8T3RLnEEo3me6pbhLpxpSakeueFt28sqefCknzqtC9lJ
+         H23w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687778416; x=1690370416;
+        d=1e100.net; s=20221208; t=1687778491; x=1690370491;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aNjOODuL5422gkiTKfRjAGrAZ8RslF/0UlA/xkBh0eg=;
-        b=ObMwpux6ED44i35uEIK0ehnDFa9ivAdT3vfNLSSvU78/ammLVUUW07BJxkavDoWDBI
-         b9E60yjF3fJaMeJ42AMMHtvihPCj4B3ikx/K+DlgHC5vk8c+WjiWm1Z3m2R7LP0rKZL7
-         crkvJuyEPwLXo2Zg/5OOWg9I9LvgDhtC2ytc4wjjKmXnkGDj5SRxdGzqgzr0JBbxruWx
-         Z2iyQikIU3njFuz8VYij+nxzyUcUtrk06RXrauTgZ55AJLkAS9V56y5a8RiRzwLVzoIR
-         oo3ITi+/nxNRUDAFv2ZxRLMj/Z9aXzOccc47icIcNSVg/RowrAHn/RrFnU3MBTs9oZ7E
-         x0JA==
-X-Gm-Message-State: AC+VfDyOiAYJSNBnHGSKfU2Ky9VmXTiBAaRQh3uctBoIWASsS3+GyZtH
-        5gjz7Cj/PczsLn9Cn0dZicNM7Q==
-X-Google-Smtp-Source: ACHHUZ5FL8aC9JGkP8UZl5LCVlR/iV7/pxyO01K4X4g/zl6JvfAYsYgV1CtQxBK6JkrDExnBmyq62g==
-X-Received: by 2002:a19:6503:0:b0:4f8:7960:f72 with SMTP id z3-20020a196503000000b004f879600f72mr10649932lfb.44.1687778415821;
-        Mon, 26 Jun 2023 04:20:15 -0700 (PDT)
-Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id k1-20020a05600c0b4100b003fa82210e7asm7492485wmr.14.2023.06.26.04.20.15
+        bh=Ndfuu4K/62Z1mfzAu2i/EV3jgAx+UABuEd2Nf19BUW4=;
+        b=YnF4Eo6qNQKflJvOsf5+M2jNj4x/qKBqk7l240/3i+c2MA7Um8tDXdA0/9m1X5hMbi
+         Pe+V1/zniudZzY/msvrRkVLQgxnIZlgMe6w9a8QPpEJzZxd3Suw+0lD4cyhilA36Fq/e
+         05RsBxT403KwczuKi4ZjfIk3xHceqeOXwuGdXGzdvMOsTf973EDwIasJGMKEnTxgHAH9
+         OCrYOvC8PR32+jd0ilvGqoJAaMEgkcT7dbgkzVLH2XiPvzNMYUu8Ac9Me+wRRwfBvLwL
+         xJrevl+rqu4FgkvTEi6uT3oVs0/KUqk51iVEFjyZItbzQY3uEPPAaoGQaktz/hB7eW7D
+         TiAw==
+X-Gm-Message-State: AC+VfDxQ1ZI59etPcccDbp3WyXQu1zVQW3vRLLZAUu096bsIDoj9rVXZ
+        BhcTKRlUu17CXOlHUO0i0C+gWA==
+X-Google-Smtp-Source: ACHHUZ5jjMSGqQWh0ZyXeLq9y5h1wTHubohcNdf3bOs+0UhnEHPd8HPrx+Z6epBGo0it/nrOaVktlA==
+X-Received: by 2002:a19:ca02:0:b0:4f9:586b:dba1 with SMTP id a2-20020a19ca02000000b004f9586bdba1mr7603115lfg.4.1687778490946;
+        Mon, 26 Jun 2023 04:21:30 -0700 (PDT)
+Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
+        by smtp.gmail.com with ESMTPSA id q10-20020ac2528a000000b004f867f8d157sm1063570lfm.124.2023.06.26.04.21.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 04:20:15 -0700 (PDT)
-Message-ID: <f1340d0e-3379-2d2b-e4df-5a182a2c5440@linaro.org>
-Date:   Mon, 26 Jun 2023 13:20:14 +0200
+        Mon, 26 Jun 2023 04:21:30 -0700 (PDT)
+Message-ID: <40e70fff-88dc-683e-0016-1a24389b75b8@linaro.org>
+Date:   Mon, 26 Jun 2023 13:21:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] thermal/drivers/qcom/temp-alarm: Use dev_err_probe
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 04/26] dt-bindings: clock: qcom,krait-cc: Krait core
+ clock controller
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230625-spmi-temp-alarm-defer-v1-1-2d57acf36855@z3ntu.xyz>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230625-spmi-temp-alarm-defer-v1-1-2d57acf36855@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
+ <20230625202547.174647-5-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230625202547.174647-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -82,20 +90,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/06/2023 13:11, Luca Weiss wrote:
-> Use the dev_err_probe function instead of dev_err in the probe function
-> so that the printed message includes the return value and also handles
-> -EPROBE_DEFER nicely.
+On 25.06.2023 22:25, Dmitry Baryshkov wrote:
+> Define bindings for the Qualcomm Krait CPU and L2 clock controller. This
+> device is used on old Qualcomm SoCs (APQ8064, MSM8960) and supports up
+> to 4 core clocks and a separate L2 clock. Furthermore, L2 clock is
+> represented as the interconnect to facilitate L2 frequency scaling
+> together with scaling the CPU frequencies.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+Worth noting that there's no Krait cluster containing more than 4
+cores and the last SoC using this uarch was released 10y ago, so
+we can quite confidently say that the max cpu no won't change.
 
-Applied, thanks
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
-
+Konrad
+>  include/dt-bindings/clock/qcom,krait-cc.h | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>  create mode 100644 include/dt-bindings/clock/qcom,krait-cc.h
+> 
+> diff --git a/include/dt-bindings/clock/qcom,krait-cc.h b/include/dt-bindings/clock/qcom,krait-cc.h
+> new file mode 100644
+> index 000000000000..ff69a0a968d8
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,krait-cc.h
+> @@ -0,0 +1,17 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Copyright (C) 2023 Linaro Ltd. All rights reserved.
+> + */
+> +
+> +#ifndef __DT_BINDINGS_CLOCK_QCOM_KRAIT_CC_H
+> +#define __DT_BINDINGS_CLOCK_QCOM_KRAIT_CC_H
+> +
+> +#define KRAIT_CPU_0		0
+> +#define KRAIT_CPU_1		1
+> +#define KRAIT_CPU_2		2
+> +#define KRAIT_CPU_3		3
+> +#define KRAIT_L2		4
+> +
+> +#define KRAIT_NUM_CLOCKS	5
+> +
+> +#endif
