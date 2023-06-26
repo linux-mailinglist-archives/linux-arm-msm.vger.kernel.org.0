@@ -2,29 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ADC773E6FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 19:54:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1882C73E8D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 20:30:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjFZRyc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 13:54:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49208 "EHLO
+        id S231614AbjFZSaa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 14:30:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230349AbjFZRy3 (ORCPT
+        with ESMTP id S232054AbjFZS3s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 13:54:29 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4895E186;
-        Mon, 26 Jun 2023 10:54:26 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3CB883E7AF;
-        Mon, 26 Jun 2023 19:54:23 +0200 (CEST)
-Date:   Mon, 26 Jun 2023 19:54:21 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 26 Jun 2023 14:29:48 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB441BE9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 11:29:42 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fa7cd95dacso44905085e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 11:29:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687804181; x=1690396181;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ciOBPyu+sPG/PKmYcGSQsv3KkzCK7Nt7aYmMhEDjDGY=;
+        b=j4CEk6ctLOsGMGmJWmlUl/9qeH9Ix3rM02o9HB2xpYBYHlFD7BQ5v4L1g7VKorj0eS
+         u+UQ1Q4HEzTwSLikfOUzA4HNfR5a2NOxXMyXV8RhBIjpxxqFpYLTbbQR1r3xoE3IvS9O
+         yT6JTc8aBedyR0boA3VZ0O/M9smdhh8yA0Egk8WSz5j0cX/WMinxVhqOfHN/x9XQqbSV
+         vk5ZKzNueC/weR+IyeNOCGT74B86kM9gGqBQ7Ek/jkgdvsTe1PQX7Fb9AjhkmTBTS82z
+         MsWn0oRUD0wntafSTc5sn1Wt+HHtxP6dg2PuNuVlBfiqbhr1MfUrDYM35dmwIoIyApw9
+         57pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687804181; x=1690396181;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ciOBPyu+sPG/PKmYcGSQsv3KkzCK7Nt7aYmMhEDjDGY=;
+        b=CtRh2PnuMXd9Gd28/eO0oPZBa6UGUE5fkShwWx743dmpV8nT2ifY1nx3wMNkl+iO3b
+         sj0erBoG17tQrMPNWK4OB7peQVCRMDUE8M44/w1W2XGFnCjK3bsBU/BQ796EojxS+ukU
+         n8YmwfihwZtJg+ZNEIOb/tJOsGCIwtjBJ4xG2+pc/XE+E7VebX8Neou2LHBEVcjkdoCQ
+         oBD+Miy6H4/eIJKcMEJgr/edPHlGIJe2tSCWEHZxqiS5EHxjuaokOumZiCWWBbzcm3CK
+         86G9bNLzn2Sgdi3DIUzd0Zwibi9erLyFY/PGuvTJXyZLxD1Yua0dbcnTHJWbzdlPf4cK
+         sA9Q==
+X-Gm-Message-State: AC+VfDwZoQ0RIXP8DKO/o1xSSerMZYVT1Whx1Nrxz638YN7/BCh4Ik+r
+        6ebSd9Ey5I1vSUMs8QF80j9CzA==
+X-Google-Smtp-Source: ACHHUZ6SiiVfSIYwx/dCsp5tW8i7z1sIDCnOdX5N2PHNcEVe4w7x5ZWmNvzNg1eUdrPkf/HUzHz1ZQ==
+X-Received: by 2002:a7b:c7c9:0:b0:3fa:7d11:ad00 with SMTP id z9-20020a7bc7c9000000b003fa7d11ad00mr7893257wmk.25.1687804180787;
+        Mon, 26 Jun 2023 11:29:40 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id c25-20020a7bc019000000b003f819faff24sm11383213wmb.40.2023.06.26.11.29.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jun 2023 11:29:40 -0700 (PDT)
+Message-ID: <6311f26f-79ee-c471-649f-5e0b4629cfcc@linaro.org>
+Date:   Mon, 26 Jun 2023 20:29:37 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 03/15] dt-bindings: clock: qcom,dispcc-sm6125: Require GCC
+ PLL0 DIV clock
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -40,7 +76,6 @@ Cc:     Andy Gross <agross@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
@@ -48,76 +83,62 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-Subject: Re: [PATCH 06/15] dt-bindings: display/msm: sc7180-dpu: Describe
- SM6125
-Message-ID: <w3bbdq72thnerbyglb4dyshzg4vu5go2wpsciprk27vah6w2ms@yc4eqclct24a>
 References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-6-1d5a638cebf2@somainline.org>
- <6bbf239f-d530-2f1e-ff52-361f7c9cc951@linaro.org>
- <75d64lixeawfoqbrctm4thzh73cxkvnlmnh5xgbpf277pmh3gz@zthnqvvuxmeq>
- <a6f3906a-98a7-de7a-3e26-4b8c45fe93f7@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a6f3906a-98a7-de7a-3e26-4b8c45fe93f7@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+ <20230624-sm6125-dpu-v1-3-1d5a638cebf2@somainline.org>
+ <c9681bce-efa8-9b79-4bf6-837dd6a2dc12@linaro.org>
+ <55b0ca89-8f2e-5383-59d4-6809e813abf8@linaro.org>
+ <vnp263d43flny2ibt3n7fbloyi26enqrejnobogplfu5fcj6l3@s7zkxrsi2rde>
+ <52c57cab-10cf-2e7e-2c1d-fa6506786d45@linaro.org>
+ <jmtjuya4c423rmdlo4ubvvqndbxvgapal5otjqnejdpdd25izp@kewbjmqdu2xs>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <jmtjuya4c423rmdlo4ubvvqndbxvgapal5otjqnejdpdd25izp@kewbjmqdu2xs>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-26 18:16:58, Krzysztof Kozlowski wrote:
-> On 25/06/2023 21:52, Marijn Suijten wrote:
-> > On 2023-06-24 11:12:52, Krzysztof Kozlowski wrote:
-> >> On 24/06/2023 02:41, Marijn Suijten wrote:
-> >>> SM6125 is identical to SM6375 except that while downstream also defines
-> >>> a throttle clock, its presence results in timeouts whereas SM6375
-> >>> requires it to not observe any timeouts.
-> >>
-> >> Then it should not be allowed, so you need either "else:" block or
-> >> another "if: properties: compatible:" to disallow it. Because in current
-> >> patch it would be allowed.
-> > 
-> > That means this binding is wrong/incomplete for all other SoCs then.
-> > clock(-name)s has 6 items, and sets `minItems: 6`.  Only for sm6375-dpu
-
-Of course meant to say that clock(-name)s has **7** items, not 6.
-
-> > does it set `minItems: 7`, but an else case is missing.
+On 26/06/2023 19:49, Marijn Suijten wrote:
+> On 2023-06-26 18:10:44, Krzysztof Kozlowski wrote:
+>> On 25/06/2023 21:48, Marijn Suijten wrote:
+>>> On 2023-06-24 11:08:54, Krzysztof Kozlowski wrote:
+>>>> On 24/06/2023 03:45, Konrad Dybcio wrote:
+>>>>> On 24.06.2023 02:41, Marijn Suijten wrote:
+>>>>>> The "gcc_disp_gpll0_div_clk_src" clock is consumed by the driver, will
+>>>>>> be passed from DT, and should be required by the bindings.
+>>>>>>
+>>>>>> Fixes: 8397c9c0c26b ("dt-bindings: clock: add QCOM SM6125 display clock bindings")
+>>>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>>>> ---
+>>>>> Ideally, you'd stick it at the bottom of the list, as the items: order
+>>>>> is part of the ABI
+>>>>
+>>>> Yes, please add them to the end. Order is fixed.
+>>>
+>>> Disagreed for bindings that declare clock-names and when the driver
+>>> adheres to it, see my reply to Konrad's message.
+>>
+>> That's the generic rule, with some exceptions of course. Whether one
+>> chosen driver (chosen system and chosen version of that system) adheres
+>> or not, does not change it. Other driver behaves differently and ABI is
+>> for everyone, not only for your specific version of Linux driver.
+>>
+>> Follow the rule.
 > 
-> Ask the author why it is done like this.
+> This has no relation to the driver (just that our driver adheres to the
+> bindings, as it is supposed to be).  The bindings define a mapping from
+> a clock-names=<> entry to a clock on the same index in the clocks=<>
+> array.  That relation remains the same with this change.
 
-Konrad, can you clarify why other 
+Not really, binding also defines the list of clocks - their order and
+specific entries. This changes.
 
-> > Shall I send a Fixes: ed41005f5b7c ("dt-bindings: display/msm:
-> > sc7180-dpu: Describe SM6350 and SM6375") for that, and should maxItems:
-> > 6 be the default under clock(-name)s or in an else:?
-> 
-> There is no bug to fix. Or at least it is not yet known. Whether other
-> devices should be constrained as well - sure, sounds reasonable, but I
-> did not check the code exactly.
+Best regards,
+Krzysztof
 
-I don't know either, but we need this information to decide whether to
-use `maxItems: 6`:
-
-1. Directly on the property;
-2. In an `else:` case on the current `if: sm6375-dpu` (should have the
-   same effect as 1., afaik);
-3. In a second `if:` case that lists all SoCS explicitly.
-
-Since we don't have this information, I think option 3. is the right way
-to go, setting `maxItems: 6` for qcom,sm6125-dpu.
-
-However, it is not yet understood why downstream is able to use the
-throttle clock without repercussions.
-
-> We talk here about this patch.
-
-We used this patch to discover that other SoCs are similarly
-unconstrained.  But if you don't want me to look into it, by all means!
-Saves me a lot of time.  So I will go with option 3.
-
-- Marijn
