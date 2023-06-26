@@ -2,86 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6048E73D9A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 10:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1190E73D9A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 10:28:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbjFZI2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 04:28:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32830 "EHLO
+        id S229910AbjFZI20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 04:28:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbjFZI2A (ORCPT
+        with ESMTP id S229786AbjFZI2Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 04:28:00 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F9DA1B6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 01:27:58 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-51d80c5c834so3190756a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 01:27:58 -0700 (PDT)
+        Mon, 26 Jun 2023 04:28:25 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5287E4A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 01:28:23 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-98e0c1d5289so211664566b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 01:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687768077; x=1690360077;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GwqkeW3ZZPTqJTIZ+Cl9YLyxmGvASz7QiyF2BwVpXM8=;
-        b=Nug96dyPAlYxDtafDI1vphRxcWndEbB4hVfXnHWQkRWtHgovThjDgOiAKTzUV0Wtm0
-         2GZt9q+yKd6FfzoXGHGiSJcC6//2Sn07k71QxQCo99Xf/kAR+CgeClj//upGyyzvKcEc
-         tHLjtAzQIkz/aUnf/D1H3LCeSx6gndzGQB5vR+1dl/wLYMYFJ2sOHTkC/HoaqBBTyZ/r
-         x5+5IdY8vYi1/LDXNcXk601HbjLvnE7Qgc/nu1G2Rjkir6fBb5EOSj8jps3nHdCWLJFb
-         K9ghClL4SG57+NQEl+aWWB/IoV6GmG0ul3fgD/dyLmOGmUCjtU923LNO8PCylZ1c8CKw
-         i/0Q==
+        d=fairphone.com; s=fair; t=1687768102; x=1690360102;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/z2l2uTy/cBaqn0Tj/q1FNG0VhYAlt0fDLzRyz8E7k8=;
+        b=JK5Nbe7Dt4FaRC3i+ebjZ+e0vhMzQx2cFFP5o267c/8rnB6/rAqolMs+Y4JVh2qRCx
+         EkRV2ih17UcjtBT5pMKWqiDGo60x6hNYBCvyMqPxY3wV8O3z6gNzZFHJwG0BTJlIrIbT
+         m4+Kja0R+lw+EZMJp1et/dsUO+ZgUSEqr8qiPmpb4OTu1iMxZcs0smriM//JFJ834qPn
+         lwhRtgd0+CmMdp9gWVWEnM5jFhE3oWR7ywGIG5tX2UgyO6ZumUGh3xtfWekJLYCW3bY8
+         CA02vwhK0y1kB2qvp7smxHSy8EKSJEphhxtz4xANhkFN1iddgX0WEAI3Thre7JYtepuI
+         T1yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687768077; x=1690360077;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GwqkeW3ZZPTqJTIZ+Cl9YLyxmGvASz7QiyF2BwVpXM8=;
-        b=EhoQvQnjs85d1cXKM3MpVbwrV6IWEkKmOiW6bM/paIdzkNyCENWrRsNXRz2JOmIE7x
-         V6LjDx+cqePH15JYGkxK89+THcZvMLWC4QBNcJukzwo2SO3fRBLBAudaNOg40XtPxzgi
-         kmiFBKs/zrBtKD4xIvMFri/lyflJjgjsW1d6J6rV5D6i/HRvR4ZnPlkUoquLHmQ9B1sN
-         NsGB44sGmLdgLsy6BTbSTBZX9/j0JR6dkxF7uCFtSlCFdfjRvAhIopYeNt66u7wiA2KG
-         CkphxY25VknwiR8g5nyU4fxY4pb/HY+kqiSCKxSSzJuUCRSO93jUk6Z/dILh0s6+tALT
-         xxDQ==
-X-Gm-Message-State: AC+VfDzPzykL9S/BrWGa8k1Df58wb7QLKlS2GWBArwGy4N+Q4lgw47tE
-        2hdZvCS39zFhROoHMoqVyAgfnA==
-X-Google-Smtp-Source: ACHHUZ6fEabVoAwNUS000CCde+ym+chv0Y7mKGE+yH+pF5sWW2DTTMjfHilixGBCTNreb2TYXlZQLw==
-X-Received: by 2002:a05:6402:5207:b0:51b:c7fe:970 with SMTP id s7-20020a056402520700b0051bc7fe0970mr17105368edd.7.1687768076787;
-        Mon, 26 Jun 2023 01:27:56 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id dy12-20020a05640231ec00b0051d95294583sm1467415edb.70.2023.06.26.01.27.54
+        d=1e100.net; s=20221208; t=1687768102; x=1690360102;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/z2l2uTy/cBaqn0Tj/q1FNG0VhYAlt0fDLzRyz8E7k8=;
+        b=P/j406xX0b5TPL2LvHc27jFuxzuFggVqViYGPnbDtw/3U9l1MFzlWflk22zCskzPsd
+         dLl2DQnjigrJY05zpcjLLoB2W5B8f7QKxqM439cK1yCNYyMynLFFvNgOxQDuNSup+L9l
+         +qDK61TkSMwqAzpKWKLBD1qDQYOBStXgj/NDmrMQh7m7KkdRyryoWsALUHtKLfSoWco2
+         FBGmSFgB5zSWJ0BuLQ+2pQR2ImTPCH8RgMcLqplBEu9u8nz3Mp4diP48D8T7wsypf66E
+         0Okv4Ri9HwCtofhuB15umHv+zWEa2wmgQFj4q11Effcm0Lf3arz3jYXjL8IgP4mCTqX2
+         wVDA==
+X-Gm-Message-State: AC+VfDw8fcD5IyOuaiFzWovrhMHVyvGR/RYj/g71IYrLP/mkIGykALjw
+        AlzEYy9u56/VhMfhMGxCp0ZoIQ==
+X-Google-Smtp-Source: ACHHUZ55jsXkC5JC4+uTvSts1tb2kV+vphkAvEWRrtvIWOryFAfdpEri5J0hl9YafwrnH52f1kpHBw==
+X-Received: by 2002:a17:907:9450:b0:989:3670:3696 with SMTP id dl16-20020a170907945000b0098936703696mr14285227ejc.58.1687768102200;
+        Mon, 26 Jun 2023 01:28:22 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id lc6-20020a170906f90600b0096637a19dccsm2956929ejb.210.2023.06.26.01.28.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 01:27:56 -0700 (PDT)
-Message-ID: <1f94de94-c5bd-738d-5fbe-907558333cb2@linaro.org>
-Date:   Mon, 26 Jun 2023 10:27:54 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v4 3/3] dt-bindings: ufs: qcom: Fix sm8450 bindings
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Iskren Chernev <me@iskren.info>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Eric Biggers <ebiggers@google.com>
-References: <20221209-dt-binding-ufs-v4-0-14ced60f3d1b@fairphone.com>
- <20221209-dt-binding-ufs-v4-3-14ced60f3d1b@fairphone.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221209-dt-binding-ufs-v4-3-14ced60f3d1b@fairphone.com>
+        Mon, 26 Jun 2023 01:28:21 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Date:   Mon, 26 Jun 2023 10:28:21 +0200
+Message-Id: <CTMFUY0GPRNK.532E4O05LWKW@otso>
+Cc:     <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>
+Subject: Re: [PATCH 0/7] Add support for LUT PPG
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Anjelique Melendez" <quic_amelende@quicinc.com>, <pavel@ucw.cz>,
+        <lee@kernel.org>, <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>
+X-Mailer: aerc 0.15.1
+References: <20230621185949.2068-1-quic_amelende@quicinc.com>
+In-Reply-To: <20230621185949.2068-1-quic_amelende@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,17 +78,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/06/2023 10:15, Luca Weiss wrote:
-> SM8450 actually supports ICE (Inline Crypto Engine) so adjust the
-> bindings and the example to match.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Eric Biggers <ebiggers@google.com>
-> Reviewed-by: Iskren Chernev <me@iskren.info>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Hi Anjelique,
 
-SM8450 should be rather converted to qcom,ice.
+On Wed Jun 21, 2023 at 8:59 PM CEST, Anjelique Melendez wrote:
+> In certain PMICs, LUT pattern and LPG configuration can be stored in SDAM
+> modules instead of LUT peripheral. This feature is called PPG.
+>
+> This change series adds support for PPG. Thanks!
 
-Best regards,
-Krzysztof
+Thanks for sending this series!
+
+I've tested this on SDM632 Fairphone 3 and everything appears to work
+fine with setting the pattern. Using fbcli from feedbackd[0] the pattern
+shows up correctly.
+
+The only thing missing really is the addition of the pbs node and adding
+the nvmem/nvmem-names & qcom,pbs-client to the lpg node in pmi632.dtsi -
+something like the patch below.
+
+Are you planning to include this in the next revision? Otherwise I can
+also send a patch for the pmi632.dtsi after this series has landed.
+
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3 (pm=
+i632)
+
+[0] https://source.puri.sm/Librem5/feedbackd
+
+Regards
+Luca
+
+diff --git a/arch/arm64/boot/dts/qcom/pmi632.dtsi b/arch/arm64/boot/dts/qco=
+m/pmi632.dtsi
+index add206dee01d2e..92ddb7ac6bf311 100644
+--- a/arch/arm64/boot/dts/qcom/pmi632.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi632.dtsi
+@@ -127,6 +127,11 @@
+ 			status =3D "disabled";
+ 		};
+=20
++		pmi632_pbs_client3: qcom,pbs@7400 { // TODO: generic node name
++			compatible =3D "qcom,pbs";
++			reg =3D <0x7400>;
++		};
++
+ 		pmi632_sdam_7: nvram@b600 {
+ 			compatible =3D "qcom,spmi-sdam";
+ 			reg =3D <0xb600>;
+@@ -155,6 +160,10 @@
+ 		pmi632_lpg: pwm {
+ 			compatible =3D "qcom,pmi632-lpg";
+=20
++			nvmem =3D <&pmi632_sdam_7>;
++			nvmem-names =3D "lpg_chan_sdam";
++			qcom,pbs-client =3D <&pmi632_pbs_client3>;
++
+ 			#address-cells =3D <1>;
+ 			#size-cells =3D <0>;
+ 			#pwm-cells =3D <2>;
+
+>
+> Anjelique Melendez (7):
+>   dt-bindings: soc: qcom: Add qcom-pbs bindings
+>   dt-bindings: leds: leds-qcom-lpg: Add support for LUT through NVMEM
+>     devices
+>   soc: qcom: add QCOM PBS driver
+>   leds: rgb: leds-qcom-lpg: Add support for LUT pattern through single
+>     SDAM
+>   leds: rgb: leds-qcom-lpg: Update PMI632 lpg_data to support PPG
+>   leds: rgb: leds-qcom-lpg: Support two-nvmem PPG Scheme
+>   leds: rgb: Update PM8350C lpg_data to support two-nvmem PPG Scheme
+>
+>  .../bindings/leds/leds-qcom-lpg.yaml          |  85 ++++
+>  .../bindings/soc/qcom/qcom-pbs.yaml           |  41 ++
+>  drivers/leds/rgb/leds-qcom-lpg.c              | 393 ++++++++++++++++--
+>  drivers/soc/qcom/Kconfig                      |   9 +
+>  drivers/soc/qcom/Makefile                     |   1 +
+>  drivers/soc/qcom/qcom-pbs.c                   | 343 +++++++++++++++
+>  include/linux/soc/qcom/qcom-pbs.h             |  36 ++
+>  7 files changed, 877 insertions(+), 31 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-pbs.y=
+aml
+>  create mode 100644 drivers/soc/qcom/qcom-pbs.c
+>  create mode 100644 include/linux/soc/qcom/qcom-pbs.h
 
