@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5A3073E0C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 15:36:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E6B573E0CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 15:37:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229799AbjFZNgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 09:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42620 "EHLO
+        id S229892AbjFZNhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 09:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbjFZNgR (ORCPT
+        with ESMTP id S229835AbjFZNhi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 09:36:17 -0400
+        Mon, 26 Jun 2023 09:37:38 -0400
 Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9100AE7A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:36:15 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fb761efa7aso1252464e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:36:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 474D8F4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:37:36 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fa48b5dc2eso2513111e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:37:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687786574; x=1690378574;
+        d=linaro.org; s=google; t=1687786654; x=1690378654;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CUaOVbGrLmUdKtbdRSelS8yeyVs/S2d4eFpINDGmx+s=;
-        b=VPdYu1/kNJQEDNNFz/pDyAWlF+Hr7rG/NFFgvctw1MMosXDz3aYEunah1cgAGYpS2o
-         B5IDZ8/1WfrRmAfmXzrhnZuHOnwUyzKpenc6/S+u+H7Lvor8KbFZB1hfqYlF0xkA8OQ+
-         QHf4luiEKgP3L5ZZ8h4PfynG30jXovv3483jWuENaTNJrzbjiKLdzQKCSFGG/w4kH4v0
-         Y4ezLsQc1g5R5ZKg6mv6rHeH5p7f3So2PKOiF121+9CmTYVUBivuyqqObnWgk2Ask6fj
-         Gq2RQM4MAILH676BIPG2POZwC8E4jfMG431pf8UMtmHRdzD3BthdGn2d4dw+UnWp5N4d
-         jvsw==
+        bh=b70tBBR+s8g2FHbpppaXz0s6vjnEtUV8jPD3BAkiQPw=;
+        b=Ypgop4Hyx2XTkJeQ98hu4g0UYIXqXOYHp0u8VHuoYR8gEBs+OmDgQgcD2KALQ59jGB
+         hmxPecHNRYlyNhSX6wjOKUurdZOByrQY1Ornx3wzjLs9RAj9xAlmzVbMRCubb3xkT6zB
+         yM0ENGEmfwhzhRQiisjQU8On54q2E3Q7UddYTGOefFFZPq+zvKBtV7RP3hctLK3ZdaTc
+         /di7vtNhhvZlYCIOPTd/m3nZbtvQBC4YIg4YRylgUXuRbrlocAyB10XtBMSpv+4ku9mt
+         QZBw6x2pjgIf95A4Zp01dbRY9w5Mtsc1T4B29xUhZbGAHwTalwLglpt4pdiTULUTCtjA
+         E/Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687786574; x=1690378574;
+        d=1e100.net; s=20221208; t=1687786654; x=1690378654;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CUaOVbGrLmUdKtbdRSelS8yeyVs/S2d4eFpINDGmx+s=;
-        b=fzPhelRoJL0jl5jV8B3vnhW8zOmqYgmxmT+4DLi/bSzQ25Poi1beU7h2g/YOk75I0J
-         APtiq9Yf6d9nWKA0L3VthRzEDxVHLLrWEELUxFrETH1QlFS0yRhf+5xSzkuUDdmkBU5q
-         N/XPdqoFMTsJ8lBcsLPP47UpOtmqgXgNIt1u2ENbLi9S6fc2Jbi0AzprRXo/xwZexziL
-         tdL/I1t2zUGi5YYBHNj4ay3GwmZr9HxQy6hUjIvyYAx1l4dKpCNVnLGAsMQyojl3Ch+I
-         7YClpij7Ljgs1vzBAoK1lNp/29xr6MHGlKCXU+ctx1fiEO9oZoFxHG3fo+sG2Ytz9+hg
-         w3YQ==
-X-Gm-Message-State: AC+VfDwRPKx3Sf6JVwzU/n7lhVbOadgf7rkyiK5iSLPaVSUHFiGu70vZ
-        gK0Ljp2W4uUtyqCw59wG/5B1ZA==
-X-Google-Smtp-Source: ACHHUZ6+l1Qzmq7jLH9MIL0J4iG3m5HOKc0Yu2i2BkiHU3OsTZNqfFo17ZAAHXXbDuZnwOPaVZNzSw==
-X-Received: by 2002:a19:434a:0:b0:4f8:6e1d:cf98 with SMTP id m10-20020a19434a000000b004f86e1dcf98mr12315894lfj.66.1687786573678;
-        Mon, 26 Jun 2023 06:36:13 -0700 (PDT)
+        bh=b70tBBR+s8g2FHbpppaXz0s6vjnEtUV8jPD3BAkiQPw=;
+        b=hiUwIOnjdG/nienmpSk3mbFiz+FoBRkrscvT7c79jqZ9/vJf46xpphKNgnE1eyJmhv
+         ohdxFHvsNIzyzPcx0g0whXCsA1w2YJzZLBkSIOsvsUEdakMeMD3IGlDRNjNeZmoJXj9P
+         pSpM2gXDuTy/sfOUHb+Mv8hwOuVYzUwVO5Y8Z3RbkeHkDS2o5xG42v8JO4TLK5f6qgKb
+         FaIXUiQxnt3mBHuVMVVIRNj0BzPanvLa6rWtJm7IcoxJ8W9GH0zHcWy07tp6m+ZWSjeX
+         DNG/UvECwPCmr4ecTY4foMctYfhtnjaeehqQy+3KWMdLBe/Vh6npV+HSvYxaFd/8s1s/
+         X75A==
+X-Gm-Message-State: AC+VfDzxuA7Jr+3eTc44aezRj/8r+3IgtzMFcxSirntMjBsSU8XU7hwC
+        Er8T+Vv4HXIkjYtWfnuLjDXqSQ==
+X-Google-Smtp-Source: ACHHUZ5QAMzrbfEKpDdFBklC58HqvaRJMzfo4fBLrlBMnQXzV4bt88s5RWJN7aPg6hsGLkpylGPK2A==
+X-Received: by 2002:a19:5e48:0:b0:4f6:29cf:c0dd with SMTP id z8-20020a195e48000000b004f629cfc0ddmr15141802lfi.8.1687786654409;
+        Mon, 26 Jun 2023 06:37:34 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id u26-20020ac2519a000000b004f4b42e2d7dsm1109822lfi.230.2023.06.26.06.36.12
+        by smtp.gmail.com with ESMTPSA id m9-20020a195209000000b004f86943d11fsm1105226lfb.49.2023.06.26.06.37.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 06:36:13 -0700 (PDT)
-Message-ID: <ad2244a3-20b6-e126-c427-d535382d7d79@linaro.org>
-Date:   Mon, 26 Jun 2023 16:36:12 +0300
+        Mon, 26 Jun 2023 06:37:33 -0700 (PDT)
+Message-ID: <363c3902-a91a-a3a1-b721-65c10ac88421@linaro.org>
+Date:   Mon, 26 Jun 2023 16:37:33 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2 09/26] cpufreq: qcom-nvmem: create L2 cache device
+Subject: Re: [PATCH v2 04/26] dt-bindings: clock: qcom,krait-cc: Krait core
+ clock controller
 Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -74,10 +75,10 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Christian Marangi <ansuelsmth@gmail.com>,
         Stephan Gerhold <stephan@gerhold.net>
 References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
- <20230625202547.174647-10-dmitry.baryshkov@linaro.org>
- <a15a2564-3b48-4592-1e40-2187ee89af1c@linaro.org>
+ <20230625202547.174647-5-dmitry.baryshkov@linaro.org>
+ <40e70fff-88dc-683e-0016-1a24389b75b8@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <a15a2564-3b48-4592-1e40-2187ee89af1c@linaro.org>
+In-Reply-To: <40e70fff-88dc-683e-0016-1a24389b75b8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,66 +91,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/06/2023 14:50, Konrad Dybcio wrote:
+On 26/06/2023 14:21, Konrad Dybcio wrote:
 > On 25.06.2023 22:25, Dmitry Baryshkov wrote:
->> Scaling the frequencies on some of Qualcomm Krait platforms (e.g.
->> APQ8064) also requires scaling of the L2 cache frequency. As the
->> l2-cache device node is places under /cpus/ path, it is not created by
->> default by the OF code. Create corresponding device here.
+>> Define bindings for the Qualcomm Krait CPU and L2 clock controller. This
+>> device is used on old Qualcomm SoCs (APQ8064, MSM8960) and supports up
+>> to 4 core clocks and a separate L2 clock. Furthermore, L2 clock is
+>> represented as the interconnect to facilitate L2 frequency scaling
+>> together with scaling the CPU frequencies.
 >>
 >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> ---
-> I think a generic solution (i.e. for each cpu node call
-> of_platform_populate in drivers/of/platform.c :
-> of_platform_default_populate_init) could be beneficial
+> Worth noting that there's no Krait cluster containing more than 4
+> cores and the last SoC using this uarch was released 10y ago, so
+> we can quite confidently say that the max cpu no won't change.
 
-Yep. I thought about it, but I saw no direct benefit for it. Note, that 
-we do not instantiate cpu devices directly. But, maybe something like 
-/devices/system/cache/foo would make sense.
+Yep. It it were new bindings, I'd probably use a different order: L2, 
+then CPUs. But here I'm just documenting what is already done by the driver.
 
 > 
 > Konrad
->>   drivers/cpufreq/qcom-cpufreq-nvmem.c | 20 ++++++++++++++++++++
->>   1 file changed, 20 insertions(+)
+>>   include/dt-bindings/clock/qcom,krait-cc.h | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>>   create mode 100644 include/dt-bindings/clock/qcom,krait-cc.h
 >>
->> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->> index a88b6fe5db50..ab78ef1531d0 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->> @@ -380,6 +380,7 @@ static int __init qcom_cpufreq_init(void)
->>   {
->>   	struct device_node *np = of_find_node_by_path("/");
->>   	const struct of_device_id *match;
->> +	unsigned int cpu;
->>   	int ret;
->>   
->>   	if (!np)
->> @@ -390,6 +391,25 @@ static int __init qcom_cpufreq_init(void)
->>   	if (!match)
->>   		return -ENODEV;
->>   
->> +	for_each_possible_cpu(cpu) {
->> +		struct device *dev = get_cpu_device(cpu);
->> +		struct device_node *cache;
->> +		struct platform_device *pdev;
+>> diff --git a/include/dt-bindings/clock/qcom,krait-cc.h b/include/dt-bindings/clock/qcom,krait-cc.h
+>> new file mode 100644
+>> index 000000000000..ff69a0a968d8
+>> --- /dev/null
+>> +++ b/include/dt-bindings/clock/qcom,krait-cc.h
+>> @@ -0,0 +1,17 @@
+>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+>> +/*
+>> + * Copyright (C) 2023 Linaro Ltd. All rights reserved.
+>> + */
 >> +
->> +		cache = of_find_next_cache_node(dev->of_node);
->> +		if (!cache)
->> +			continue;
+>> +#ifndef __DT_BINDINGS_CLOCK_QCOM_KRAIT_CC_H
+>> +#define __DT_BINDINGS_CLOCK_QCOM_KRAIT_CC_H
 >> +
->> +		if (of_device_is_compatible(cache, "qcom,krait-l2-cache")) {
->> +			pdev = of_platform_device_create(cache, NULL, NULL);
->> +			if (IS_ERR(pdev))
->> +				pr_err("%s: %pe, failed to create L2 cache node\n", __func__, pdev);
->> +			/* the error is not fatal */
->> +		}
+>> +#define KRAIT_CPU_0		0
+>> +#define KRAIT_CPU_1		1
+>> +#define KRAIT_CPU_2		2
+>> +#define KRAIT_CPU_3		3
+>> +#define KRAIT_L2		4
 >> +
->> +		of_node_put(cache);
->> +	}
+>> +#define KRAIT_NUM_CLOCKS	5
 >> +
->>   	ret = platform_driver_register(&qcom_cpufreq_driver);
->>   	if (unlikely(ret < 0))
->>   		return ret;
+>> +#endif
 
 -- 
 With best wishes
