@@ -2,74 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CD0473ECDF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 23:28:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81C0373EE83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 00:12:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230400AbjFZV2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 17:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60956 "EHLO
+        id S230318AbjFZWMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 18:12:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230383AbjFZV2J (ORCPT
+        with ESMTP id S230399AbjFZWLv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 17:28:09 -0400
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F14BD;
-        Mon, 26 Jun 2023 14:28:02 -0700 (PDT)
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-345ad94db0aso4943795ab.1;
-        Mon, 26 Jun 2023 14:28:02 -0700 (PDT)
+        Mon, 26 Jun 2023 18:11:51 -0400
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A20198A;
+        Mon, 26 Jun 2023 15:10:05 -0700 (PDT)
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-77e3267477cso201184839f.2;
+        Mon, 26 Jun 2023 15:10:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687814882; x=1690406882;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0zK2Mav2vb8JF0Fy3zgYjfX71+8hxBKQuHXPFvrmmGM=;
-        b=Hd+BH7wAj6/Qkt/W3FH1UPfkVqI143iLcftpY7immNTRg768tmP3aFl/O7YkfUjAFF
-         PmXksPtm2klYIVPl/WW2awOkkbrZSpxSSxwqvdu7PBTtpswlSoM77nS9B3HsJhI0u/GV
-         td8t8e3+dyjTBEGV2tTO0zs3ZDjWIC3j3yeH12b1sZmJ7zBoh1DCVWuAx+zoklMXpSYU
-         wftz839YEmaQZ7VMQ4nznCwd3LihFMEmtkB0MEp5drLJGAQZ3ey4a8zbhkvRnr+OtOR8
-         wlElwNRS8FQJFRwOlFb1jkIAvdpiXXfCAcHfgBhyNWZFGI/+VhPIbnnRMLghg0XkBBjr
-         IZqw==
-X-Gm-Message-State: AC+VfDz+fuyT/pge2QYIQzUgDXjPu4HYAtnePyXy41J+8GCbeZa7EmmZ
-        RNy5/bMDahjHEkI+lfPvmA==
-X-Google-Smtp-Source: ACHHUZ7jHnb/zyrVLJqne0rdhbKBqgq5BwI/rrAQp52zF8/hXNAaImKe9kC5laVUV6/ht3rofQVxug==
-X-Received: by 2002:a92:c141:0:b0:345:97a9:48bf with SMTP id b1-20020a92c141000000b0034597a948bfmr5117562ilh.26.1687814881973;
-        Mon, 26 Jun 2023 14:28:01 -0700 (PDT)
-Received: from robh_at_kernel.org ([199.114.228.113])
-        by smtp.gmail.com with ESMTPSA id dx1-20020a0566381d0100b00411b4acc990sm2060972jab.7.2023.06.26.14.28.00
+        d=1e100.net; s=20221208; t=1687817404; x=1690409404;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ROzIJ+1thxe8s7JVMFhecrcUJDNhOkxxIlboXqUIBDg=;
+        b=GGeo4rKhdM2kzlwrUbWdghKtCtSYbaP8DmOnCC4ASGTiC5f2okgV7tJywwqPy4ye15
+         dW92EpHeL1siY7f+FL25d4FUUAZT+dYUsXjEBlbK5IWq1sngBrenhIOOG3+9eVbVViNX
+         nqX3K26kh3r6I3pDZ00a9+9BMbvmqMXlvc4tO6ODhY06YDW2RkHRRl94C5NfGfwtzu6P
+         bTb8v4vYkgULMw0i+2q0+R6xC+xTaryQUyAhrRClKC64XvsMXyhnsrGxbOdpCvwgKoKr
+         mdtBec5Juo4pxKnwAhUt2i5w4yrRgk7aVL069hCJhz9LL09pT1W+oDnuVCxReItQWetg
+         B/7g==
+X-Gm-Message-State: AC+VfDwAxfjfo61A2He1inIMjzbDR6TFUQMDHGo+gLgaU573oMiXsZS0
+        eOJ/Loz0/WolLNgNyikjMaPVMXxtgg==
+X-Google-Smtp-Source: ACHHUZ4e5M/g1dJ8hzIsA84Iy4TBNFuCsurSlKOujI2ZiY5ZOiiGyX1dhHWIDQ4qrXi7sFxM/xmnZg==
+X-Received: by 2002:a5d:9612:0:b0:77e:3e85:34ee with SMTP id w18-20020a5d9612000000b0077e3e8534eemr22241703iol.13.1687817404431;
+        Mon, 26 Jun 2023 15:10:04 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id a25-20020a029f99000000b0042acc4b0831sm813621jam.82.2023.06.26.15.10.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 14:28:01 -0700 (PDT)
-Received: (nullmailer pid 3928119 invoked by uid 1000);
-        Mon, 26 Jun 2023 21:28:00 -0000
-Date:   Mon, 26 Jun 2023 15:28:00 -0600
+        Mon, 26 Jun 2023 15:10:03 -0700 (PDT)
+Received: (nullmailer pid 3946085 invoked by uid 1000);
+        Mon, 26 Jun 2023 22:10:02 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>, Vinod Koul <vkoul@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 2/7] dt-bindings: remoteproc: qcom,msm8996-mss-pil: Fix
- 8996 clocks
-Message-ID: <20230626212800.GB3924052-robh@kernel.org>
-References: <20230626-topic-bindingsfixups-v1-0-254ae8642e69@linaro.org>
- <20230626-topic-bindingsfixups-v1-2-254ae8642e69@linaro.org>
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: Fix "status" value
+Date:   Mon, 26 Jun 2023 16:09:57 -0600
+Message-Id: <20230626220957.3945972-1-robh@kernel.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230626-topic-bindingsfixups-v1-2-254ae8642e69@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -81,15 +65,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 26, 2023 at 10:00:24PM +0200, Konrad Dybcio wrote:
-> Change RPMH to RPM (as RPMh was introduced 2 generations later) and drop
-> the prng reference, which made ARRAY_SIZE(clocks) !=
-> ARRAY_SIZE(clock-names).
-> 
-> Fixes: bdea142295ff ("dt-bindings: remoteproc: qcom,q6v5: Move MSM8996 to schema")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml       | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
+The defined value for "status" is "disabled", not "disable".
 
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index cfbc4fc1eba9..c6914db7dc6d 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -779,5 +779,5 @@ &wifi {
+ 
+ &crypto {
+ 	/* FIXME: qce_start triggers an SError */
+-	status = "disable";
++	status = "disabled";
+ };
+-- 
+2.40.1
+
