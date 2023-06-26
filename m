@@ -2,196 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A3DD73DBBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 11:50:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E6EC73DC06
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 12:09:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229947AbjFZJuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 05:50:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47356 "EHLO
+        id S229625AbjFZKJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 06:09:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjFZJuH (ORCPT
+        with ESMTP id S229501AbjFZKJI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 05:50:07 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0A09AC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 02:50:05 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fafe87c6fbso1592328e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 02:50:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687773004; x=1690365004;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r48qhWy74bZBBa7bMcUvYWqc1h0+KVW4IUCOHacmlpM=;
-        b=qV1mIEwHOGw5gY7390ETBIZaF9GKYobrrLXpVWevs0+byXiuoEJ29jFm+B8QBsbsdS
-         je7AB1mQGEjNSC6D1F4+N4MDLnvU4O3A2+1cggsJ9iHtgYJNQtpdyp9iaLVjfl+Ni8kG
-         hjMr+lBP0T7MJ9Xd5ZlNRrJR7Be6IwtJcSaCKgy5YggT8aa4LclwAPufocODFHNFJl28
-         +pPg90W4dj/VcooFn0qJAuCrfRPKnkJgIwgVh1XAdDhLKOaO/CN1IR2blqHpCi0cTgA4
-         ywYwlcltNY6GyxCUt8Fd6HywhS9Ogi7l/RCpndLwfapJdGbd0ABGJ21JlHCBQQaqW1WU
-         HL6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687773004; x=1690365004;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r48qhWy74bZBBa7bMcUvYWqc1h0+KVW4IUCOHacmlpM=;
-        b=VgkQ5or71e9PCQo+NqnTrfq5ZWlQhACJFwTkafXw5uCh7XiSogtyo1enHgYaX/PlZL
-         KpWtyyoljOEkYSpDIswuGECIXVJ1dlIx+1Zls8X47DJacTRfXKk0Cq3vjQAC+yp2zsCV
-         7FwZgt5C/V0Q6+SoNER3uauXy4I+97cKqAseTBWw9pMlgTjeqojy85dnBsMR+miLaEAr
-         ZbOFRYnCwKm9iXySVH58OlGuPsNKP05CapqgXXCuNxr9LHdRT+pOTQRR/BazPDwOFab6
-         UW1wnq8Qcp0FxIbbEfB4YmGsouGTPARaiPr3GPIFyTERNwKLS8TjqI6unbZIrr3gDwKA
-         KOPQ==
-X-Gm-Message-State: AC+VfDxj/8TAjAWU/XcjgmlyAZf9WLMm/EiEAFeGEaqg7UJTgIU5RD5R
-        5HkHKemYRqNdT4QOnsxwDtnT5Q==
-X-Google-Smtp-Source: ACHHUZ7hTovAqUp5UnE6VLhes9zqA0lA31zfJhvcxKrA/PaCx+BCGRop8CXI/UCD382peuIof/GzBw==
-X-Received: by 2002:a19:3813:0:b0:4f8:7697:5207 with SMTP id f19-20020a193813000000b004f876975207mr11276238lfa.23.1687773003856;
-        Mon, 26 Jun 2023 02:50:03 -0700 (PDT)
-Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
-        by smtp.gmail.com with ESMTPSA id b2-20020a056512024200b004f87726f531sm1033542lfo.174.2023.06.26.02.50.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 02:50:03 -0700 (PDT)
-Message-ID: <72915ade-7bd5-2f82-b294-e96fd1e71569@linaro.org>
-Date:   Mon, 26 Jun 2023 11:50:01 +0200
+        Mon, 26 Jun 2023 06:09:08 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B10211C;
+        Mon, 26 Jun 2023 03:09:06 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35Q8KZVg002100;
+        Mon, 26 Jun 2023 10:09:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=eOpCYF6zAWuabH0/d/IYnQA8vhrFtttjs0v+cTd4l6Q=;
+ b=OqXxbCuCZkhW78nXztG6+xOR+hxlTM6vTXJSqZhTVvyI/cIBPTFX1nA6yIbR/plKTz8x
+ 7NKVvCO7o1aI57nx9lM2b9wZlfWLAhx3MKpSHqlMC0kloO5L9+jzjRmBZCOJ38hEp0Ib
+ DAS3ebQ29g81JfYDunI95zll9ZZlKATtvTRYSp4uGu/KKDKokqX6qajv3FG8BOMJecNV
+ 8EgN1OPBYMY8/dsgwhA7Ac2KtmfKO7yfhmClSIL43Zwa3zQT/QGsdaq/8QqLHX66nj6E
+ MOT8BpiWSgzr48f5LdMdj361DkIZL6MHRi52NqadGJTMtAzJ0pJwzEjN6e3cks2w6Lxm aw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdqgdbquk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Jun 2023 10:09:02 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35QA8xQ9015589
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Jun 2023 10:08:59 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
+ 2023 03:08:55 -0700
+Message-ID: <23a7f281-ccd3-a00e-0667-dd86673d2f9f@quicinc.com>
+Date:   Mon, 26 Jun 2023 15:38:51 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 11/15] drm/msm/dsi: Add 14nm phy configuration for SM6125
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v4 1/6] dt-bindings: nvmem: sec-qfprom: Add bindings for
+ secure qfprom
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-11-1d5a638cebf2@somainline.org>
- <18d969bb-69b5-0d42-1518-e8a3b92859b7@linaro.org>
- <sdz26twflxyew2ejqkpqpe4eaz57hcsphi2so2wjndqxsh3q5c@diksxdwico33>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <sdz26twflxyew2ejqkpqpe4eaz57hcsphi2so2wjndqxsh3q5c@diksxdwico33>
-Content-Type: text/plain; charset=UTF-8
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
+ <20230623141806.13388-2-quic_kbajaj@quicinc.com>
+ <cea67754-6bc0-f8ee-3cba-8713b10b0c69@linaro.org>
+ <d9cde55b-fc96-b024-8048-1de1fa1bd89e@quicinc.com>
+ <d0b6f2c9-8e85-a38b-e2b1-14f197ca1ea0@linaro.org>
+ <c8909dcb-143c-c2d7-513d-625e9ce00c0c@quicinc.com>
+ <9f9afa24-ecfc-2fb2-3d47-80c250fcb8fe@linaro.org>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <9f9afa24-ecfc-2fb2-3d47-80c250fcb8fe@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aBFTNpPV875pUutWXteeG-pEG8KJj_DS
+X-Proofpoint-GUID: aBFTNpPV875pUutWXteeG-pEG8KJj_DS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-26_06,2023-06-22_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=674 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306260090
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.06.2023 22:23, Marijn Suijten wrote:
-> On 2023-06-24 03:49:25, Konrad Dybcio wrote:
->> On 24.06.2023 02:41, Marijn Suijten wrote:
->>> SM6125 features only a single PHY (despite a secondary PHY PLL source
->>> being available to the disp_cc_mdss_pclk0_clk_src clock), and downstream
->>> sources for this "trinket" SoC do not define the typical "vcca"
->>> regulator to be available nor used.
->>>
->>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>> ---
->> The introduced ops are identical to 2290, modulo regulator..
-> 
-> Sure, I can create a "drop unused regulators from 14nm qcm2290 config"
-> and a second "reuse qcm2290 14nm dsi phy for sm6125" patch, instead of
-> this one.
-Please do.
 
-> 
->> But the regulator is absent on both (VDD_MX powers it instead), so
-> 
-> In the DT patch you requested me to use CX instead of MX... Which one is
-> it?
-You're confusing DSI host with DSI PHY.
 
-> 
-> Also note that I moved it from DSI PHY to DSI0 because that's where the
-> rpmpd opps reside.
-Both of them need their separate power lines to be active!
-
-Also, OPP is not necessary for genpd activation.
-
-Konrad
-> 
-> - Marijn
-> 
->> feel free to clean that up and reuse it ;)
-> 
+On 6/26/2023 3:16 PM, Krzysztof Kozlowski wrote:
+> On 26/06/2023 11:02, Komal Bajaj wrote:
 >>
->> Konrad
->>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c      |  2 ++
->>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h      |  1 +
->>>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 15 +++++++++++++++
->>>  3 files changed, 18 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->>> index 9d5795c58a98..8688ed502dcf 100644
->>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->>> @@ -559,6 +559,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
->>>  	  .data = &dsi_phy_14nm_2290_cfgs },
->>>  	{ .compatible = "qcom,dsi-phy-14nm-660",
->>>  	  .data = &dsi_phy_14nm_660_cfgs },
->>> +	{ .compatible = "qcom,dsi-phy-14nm-6125",
->>> +	  .data = &dsi_phy_14nm_6125_cfgs },
->>>  	{ .compatible = "qcom,dsi-phy-14nm-8953",
->>>  	  .data = &dsi_phy_14nm_8953_cfgs },
->>>  #endif
->>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->>> index 8b640d174785..ebf915f5e6c6 100644
->>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->>> @@ -52,6 +52,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
->>>  extern const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs;
->>>  extern const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs;
->>>  extern const struct msm_dsi_phy_cfg dsi_phy_14nm_2290_cfgs;
->>> +extern const struct msm_dsi_phy_cfg dsi_phy_14nm_6125_cfgs;
->>>  extern const struct msm_dsi_phy_cfg dsi_phy_14nm_8953_cfgs;
->>>  extern const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs;
->>>  extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
->>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->>> index 3ce45b023e63..5d43c9ec69ae 100644
->>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->>> @@ -1068,6 +1068,21 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs = {
->>>  	.num_dsi_phy = 2,
->>>  };
->>>  
->>> +const struct msm_dsi_phy_cfg dsi_phy_14nm_6125_cfgs = {
->>> +	.has_phy_lane = true,
->>> +	.ops = {
->>> +		.enable = dsi_14nm_phy_enable,
->>> +		.disable = dsi_14nm_phy_disable,
->>> +		.pll_init = dsi_pll_14nm_init,
->>> +		.save_pll_state = dsi_14nm_pll_save_state,
->>> +		.restore_pll_state = dsi_14nm_pll_restore_state,
->>> +	},
->>> +	.min_pll_rate = VCO_MIN_RATE,
->>> +	.max_pll_rate = VCO_MAX_RATE,
->>> +	.io_start = { 0x5e94400 },
->>> +	.num_dsi_phy = 1,
->>> +};
->>> +
->>>  const struct msm_dsi_phy_cfg dsi_phy_14nm_8953_cfgs = {
->>>  	.has_phy_lane = true,
->>>  	.regulator_data = dsi_phy_14nm_17mA_regulators,
->>>
+>> On 6/26/2023 2:00 PM, Krzysztof Kozlowski wrote:
+>>> On 26/06/2023 10:22, Komal Bajaj wrote:
+>>>>>> +
+>>>>>> +allOf:
+>>>>>> +  - $ref: nvmem.yaml#
+>>>>>> +
+>>>>>> +properties:
+>>>>>> +  compatible:
+>>>>>> +    items:
+>>>>>> +      - enum:
+>>>>>> +          - qcom,qdu1000-sec-qfprom
+>>>>>> +      - const: qcom,sec-qfprom
+>>>>>> +
+>>>>>> +  reg:
+>>>>>> +    items:
+>>>>>> +      - description: The secure qfprom corrected region.
+>>>>>> +
+>>>>>> +  # Needed if any child nodes are present.
+>>>>>> +  "#address-cells":
+>>>>>> +    const: 1
+>>>>>> +  "#size-cells":
+>>>>>> +    const: 1
+>>>>> Drop both, they are not needed.
+>>>> I didn't get it. Can you please explain why these are not needed as this
+>>>> node will have child nodes which will use single value for address and size.
+>>> I suspect they are already defined. Do other bindings (for cases with
+>>> children) have them? If not, why here it would be different?
+>> Yes, I see there are bindings that has these properties, listed a few of
+>> them below -
+>>
+>> [1]
+>> https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> Please work on current development. It's a bit of waste of time to
+> review old code...
+
+Okay sorry for that, will work on this.
+
+Thanks
+Komal
+>
+> https://lore.kernel.org/all/20230611140330.154222-16-srinivas.kandagatla@linaro.org/
+>
+>> [2]
+>> https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> That's not a nvmem provider.
+>
+>> [3]
+>> https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/timer/arm,arch_timer_mmio.yaml
+> That's not a nvmem provider.
+>
+>
+> Best regards,
+> Krzysztof
+>
+
