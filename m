@@ -2,86 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DF2A73DD74
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:28:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3E9273DD8F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:32:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229643AbjFZL2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 07:28:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33462 "EHLO
+        id S229729AbjFZLcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 07:32:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjFZL2w (ORCPT
+        with ESMTP id S229550AbjFZLcJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 07:28:52 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14B3BB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:28:50 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f86e6e4038so3893937e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:28:50 -0700 (PDT)
+        Mon, 26 Jun 2023 07:32:09 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C81AD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:32:08 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-991b7a4d2e8so115829266b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687778929; x=1690370929;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6+m+HWADuI8txJr+WXtBskYCNdGlGOVr46UsKfQM6Lo=;
-        b=JHsOfKu/1tn3pBMyBbDbZtg93k81jEr6Xb707421GZsbsNEZVsNQLaKSxlLW13k+PM
-         Q0Klfy5TpI6yL2yUhMyvhUfWf21muYHIYR6sya6ICj+usZHoBzdsU0PP6oNVRjQCAzZn
-         rdbfB52aWb88aU/fJzYtt52Dea2+t1LB8bsgVYkjXvOaz6suXQlYWXUn34IjjzmGKN4L
-         NHD+y6c53hwOKRemPQUM4aG+fu1hcSavMoOGCrj6iYy2e5w8UctwjPXLIHe8glhkuJoI
-         GJGHFEAqsupiNzpC7Stp8ntASaifC7H7fCzBRBxRAjodUZrFArJnLzNo7xcb9nmX6beA
-         AjaA==
+        d=fairphone.com; s=fair; t=1687779127; x=1690371127;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ndfzfcsjUka4AnwkvirKlt5NBE8AOPnlUgXPUv0HxPw=;
+        b=dnRGK93bGYnGjkVwATj8flmAG92arzZyab6WqQRN5oa3xv8MIM5L6fpD85cksQtXHO
+         G0yaID8rmZgEPZfRjXR79KtjOdNrNR9cyYx+UBfJElYkvFfXX3DjxCnE4RnAN2RQTdqA
+         YnTNNp0jYbVB7K5aYX43EdeuiTk22FUTbbvBkltzmFpjj+4s9YlsBties+KOlnVaZEjN
+         07LPySspp6bJUeJN3RIXC3cx7IGKwrUnSZcSFyCBzU+ktQoQ4S6I1/a11kqBSHWCZgt/
+         JyVKwldjwZK26k1jcimiGoN+Se8Tf5e7sNvVMQa01oRPEH6uR50FzssJVqFExS12taXq
+         HUQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687778929; x=1690370929;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6+m+HWADuI8txJr+WXtBskYCNdGlGOVr46UsKfQM6Lo=;
-        b=cnQuAS4Car2ltzOMzujy7sznfcJ6Vo6uWhVhQEMRFe8TS0cgLK4dgD2WxRD+zxgfbj
-         0lZwi2S5Q30AjaxfcbJS3jNJxWlAaQfAd6idcMsUDEemva0877hi/StBMIQ3QmK0PGXo
-         jrbZMjfNG2KHMwTwcyN1zPuDLl6o3NwfpWTGwYqz53u7orwwHbmDWOo03I4NygKYB/Is
-         QzTLoYUG0gw+YqgJ3viDaAukom9qmEfMmM8g4+wlfqQ+v88H420OCdEj4tOA6cVCww9v
-         xD2Y7wQtX/YYe/KRMML0aeZhCo3LmZijVtlNlJt+xPau4nJjlq3cEPSLyHx/t59gk8Wp
-         cbww==
-X-Gm-Message-State: AC+VfDxilB9LTqSyp/E8YCLvE1RwKWmB8XzfvCn51IJzNZg9mQPADaM0
-        CY9L/eJrv4vP5vQu/BvUxrIyXw==
-X-Google-Smtp-Source: ACHHUZ7438MroKqR9FP0KLt4s2rTxYZzkx4y2B8xUzluztptmO3AtSJv6bRClIvFv6wjvfWD57lxWQ==
-X-Received: by 2002:a19:2d4e:0:b0:4f8:453f:732f with SMTP id t14-20020a192d4e000000b004f8453f732fmr9481734lft.2.1687778928872;
-        Mon, 26 Jun 2023 04:28:48 -0700 (PDT)
-Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
-        by smtp.gmail.com with ESMTPSA id a22-20020a19f816000000b004fb77d6cab3sm235002lff.261.2023.06.26.04.28.47
+        d=1e100.net; s=20221208; t=1687779127; x=1690371127;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ndfzfcsjUka4AnwkvirKlt5NBE8AOPnlUgXPUv0HxPw=;
+        b=cCI+xi+TGi3red1MGllmie20xaCJUOkyaw0KEMBl4WGValTzKVumu/zNPviypBVAaS
+         4GMjpH/5dG+LvqB8F1MExzCpEAGWui8EopG4ZieTRfFw36QtNwWVHYDxsdl5lFIvg1Ar
+         8zBq/AeLtNHeLGBFJs0H6aVD9KdLrQUneWzou1n4ltJcTlpwslNJHAw/N/SO7PKQ1BQw
+         7jLTGom2IJMJTopy9kIfcL7owZh1nNUctvV+lZ29Bl3JpzRr3sCrwGerVysmoBWqYufu
+         H1dBGSSTsV0r/5QAKsWSuQy6UAS5UDA02vSNqGMhli1apKDJIGfXm6PWbURL5atJ7GXo
+         pMSQ==
+X-Gm-Message-State: AC+VfDyV33Xs2sAam6uufd7cZPPFmxkUkVR9FobWUXlJRqBSL7qF3/5k
+        LYaBzAQxNwYfyz3mSJv/oAZxBQ==
+X-Google-Smtp-Source: ACHHUZ5c5Mkmov5zk/+/pODcO2qHMG954BP+zPgMlfk74aOv4LJg2R4RL0nv0wRCdcTCj0jepBblBg==
+X-Received: by 2002:a17:906:fe4c:b0:977:e87c:e633 with SMTP id wz12-20020a170906fe4c00b00977e87ce633mr23056328ejb.23.1687779126713;
+        Mon, 26 Jun 2023 04:32:06 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id ot6-20020a170906ccc600b0098df7d0e096sm2858994ejb.54.2023.06.26.04.32.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 04:28:48 -0700 (PDT)
-Message-ID: <b5ff346b-cbde-68fe-a08a-3b3331439309@linaro.org>
-Date:   Mon, 26 Jun 2023 13:28:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
- <20230625202547.174647-7-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v2 06/26] interconnect: icc-clk: add support for scaling
- using OPP
-In-Reply-To: <20230625202547.174647-7-dmitry.baryshkov@linaro.org>
+        Mon, 26 Jun 2023 04:32:06 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Date:   Mon, 26 Jun 2023 13:32:06 +0200
+Message-Id: <CTMJRMN2K8AY.20TQJE584A453@otso>
+Cc:     "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Bhupesh Sharma" <bhupesh.sharma@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.15.1
+References: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,93 +81,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.06.2023 22:25, Dmitry Baryshkov wrote:
-> Sometimes it might be required to scale the clock using the OPP
-> framework (e.g. to scale regulators following the required clock rate).
-> Extend the interconnec
-'t'
+Hi Krzysztof,
 
->-clk framework to handle OPP case in addition to
-> scaling the clock.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Wed Jun 21, 2023 at 4:36 PM CEST, Krzysztof Kozlowski wrote:
+> SM8350 HDK and MTP boards were silently dying and rebooting during BAM
+> DMA probe:
+>
+>   [    1.574304] vreg_bob: Setting 3008000-3960000uV
+>   [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
+>   Optional Info
+>   Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+>   S - QC_IMAGE_VERSION_STRING=3DBOOT.MXF.1.0-00637.1-LAHAINA-1
+>   S - IMAGE_VARIANT_STRING=3DSocLahainaLAA
+>   S - OEM_IMAGE_VERSION_STRING=3Dcrm-ubuntu77
+>   S - Boot Interface: UFS
+>
+> It seems that BAM DMA is locally controller (not by firmware) and
+> requires proper initialization by the driver prior to use, at least on
+> HDK8350 and MTP8350, but probably on all boards.
+
+Are you sure that the bam (and subsequent the qce) actually probes with
+this change? From reading the code I don't see how the bam should probe
+without either qcom,controlled-remotely or qcom,powered-remotely but no
+clocks supplied. I think the probe just fails with this change, right?
+
+Regards
+Luca
+
+>
+> Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support=
+")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
 > ---
-I think we should check for OPP at the icc-clk registration time,
-instead of passing it as a parameter, e.g.:
+>
+> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/q=
+com/sm8350.dtsi
+> index 88ef478cb5cc..b382ce66387e 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -1741,7 +1741,6 @@ cryptobam: dma-controller@1dc4000 {
+>  			interrupts =3D <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+>  			#dma-cells =3D <1>;
+>  			qcom,ee =3D <0>;
+> -			qcom,controlled-remotely;
+>  			iommus =3D <&apps_smmu 0x594 0x0011>,
+>  				 <&apps_smmu 0x596 0x0011>;
+>  		};
 
-qn.opp = IS_ERR(dev_pm_opp_get_opp_count)
-
-Not sure if there's a more idiomatic way.
-
-Konrad
->  drivers/interconnect/icc-clk.c   | 13 +++++++++++--
->  include/linux/interconnect-clk.h |  1 +
->  2 files changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
-> index 4d43ebff4257..c7962acdcee7 100644
-> --- a/drivers/interconnect/icc-clk.c
-> +++ b/drivers/interconnect/icc-clk.c
-> @@ -7,10 +7,13 @@
->  #include <linux/device.h>
->  #include <linux/interconnect-clk.h>
->  #include <linux/interconnect-provider.h>
-> +#include <linux/pm_opp.h>
->  
->  struct icc_clk_node {
-> +	struct device *dev;
->  	struct clk *clk;
->  	bool enabled;
-> +	bool opp;
->  };
->  
->  struct icc_clk_provider {
-> @@ -25,12 +28,16 @@ struct icc_clk_provider {
->  static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
->  {
->  	struct icc_clk_node *qn = src->data;
-> +	unsigned long rate = icc_units_to_bps(src->peak_bw);
->  	int ret;
->  
->  	if (!qn || !qn->clk)
->  		return 0;
->  
-> -	if (!src->peak_bw) {
-> +	if (qn->opp)
-> +		return dev_pm_opp_set_rate(qn->dev, rate);
-> +
-> +	if (!rate) {
->  		if (qn->enabled)
->  			clk_disable_unprepare(qn->clk);
->  		qn->enabled = false;
-> @@ -45,7 +52,7 @@ static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
->  		qn->enabled = true;
->  	}
->  
-> -	return clk_set_rate(qn->clk, icc_units_to_bps(src->peak_bw));
-> +	return clk_set_rate(qn->clk, rate);
->  }
->  
->  static int icc_clk_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
-> @@ -106,7 +113,9 @@ struct icc_provider *icc_clk_register(struct device *dev,
->  	icc_provider_init(provider);
->  
->  	for (i = 0, j = 0; i < num_clocks; i++) {
-> +		qp->clocks[i].dev = dev;
->  		qp->clocks[i].clk = data[i].clk;
-> +		qp->clocks[i].opp = data[i].opp;
->  
->  		node = icc_node_create(first_id + j);
->  		if (IS_ERR(node)) {
-> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
-> index 0cd80112bea5..c695e5099901 100644
-> --- a/include/linux/interconnect-clk.h
-> +++ b/include/linux/interconnect-clk.h
-> @@ -11,6 +11,7 @@ struct device;
->  struct icc_clk_data {
->  	struct clk *clk;
->  	const char *name;
-> +	bool opp;
->  };
->  
->  struct icc_provider *icc_clk_register(struct device *dev,
