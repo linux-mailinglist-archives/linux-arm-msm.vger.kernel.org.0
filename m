@@ -2,86 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D5EF73E072
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 15:20:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A545973E089
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 15:23:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229477AbjFZNUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 09:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35162 "EHLO
+        id S229681AbjFZNXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 09:23:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbjFZNUo (ORCPT
+        with ESMTP id S229800AbjFZNXQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 09:20:44 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88AE31B3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:20:39 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3fb4146e8deso1602815e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:20:39 -0700 (PDT)
+        Mon, 26 Jun 2023 09:23:16 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92CE41A2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:23:14 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f122ff663eso4190031e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687785638; x=1690377638;
+        d=linaro.org; s=google; t=1687785793; x=1690377793;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rzH/phEV5FFH4VJebivIaHv6IvSXO334jauJCGgoVNw=;
-        b=OjeVPFBYXxz83MG1Y+zMagxiBHQuuC88K7CNfaQno7uAPvU9HqktQRw2j1LEQHSv6L
-         38uRhT7/oOdOmRi6A3bL4g0b/dLSJOxJXjBQE1grKu4GECEyB9gmmooY1yT5WX0qppAR
-         uTNn91nF7UNQPqutWSt4gqF0mc/qWOW/lTpSoTXy5fyyWjr/QBMzpc9f/0h17AzonFat
-         TZuMsPB+Ybb0FVhLV0pHnsIpTxrysJtseV6BY8giitGb6XFpm6Y1D10EdgXFX9sCo6Yi
-         LFkDWfkSpAKFod7hyoiFcLMYB3X8Ov6tAOuz42LLJ06EWWhS2KdJTI/mErXIbCuRuJiU
-         UUjg==
+        bh=FX52cR42UjsCJaM68RlRM+9U+7DEs1rV1cvkX/J08Rg=;
+        b=lW8CiMt8OoOEdsnfIH/829zvDo9LhMmt9uwOZByFaoqoTSTnFf1/9zLumViORWwvzL
+         V+1Asd9cQXswC4xk+NAzUMZQiqZBw9xxPWy3dFScUSqc+GPfaknQ6QJ6JXSR3HfvTB7r
+         HN5lwHmSOBD8R8bsl8QD4WwByW4BsSigr0/IG2ffOHmBvtFkZN8wB6MhvSvNijEi45PX
+         tUZc7ttHb1GIHkWbV8u+yHJxW5Jtc8U2IXT5nmtMJegkI/KkUNVzlALNJNCORigIwAiU
+         Yq2c/9LSoe4DsSThii8uc///p3NjJB77dk2bUVnPMvwxUP1EkFXAiYnBgWy2zsJykFV+
+         5SpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687785638; x=1690377638;
+        d=1e100.net; s=20221208; t=1687785793; x=1690377793;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rzH/phEV5FFH4VJebivIaHv6IvSXO334jauJCGgoVNw=;
-        b=Hy75Q5AbX0/JaXVUSP63lRKhdD89fgCQuHvkeCyf2NzLQOJrO9S3ofaeSdHmhA5T71
-         p8QRw0ReDVFrsy4OysEfkKhwgPy1UUG6h+g0OLXrSBjqiDstW9Angp9Fj53BfuGC61P7
-         MEou+p6+w+htmY354C2m/836egcYAFkOh3Qul0ADFd1oSQeeoYTkg6llgS22MllSaGJU
-         y9DbmjTDssoaLKMyEqWI5DsuHxSrxvfayyIa+R4ThflvNN6vOpKtMfm2VsIv9I9zRF8q
-         6YJdct1x5v5H45vGefFYF8iCuN1kuX2l4Ry0GeBE/2zPow6dbdTLqHLDqVCO28jMacFi
-         8SCQ==
-X-Gm-Message-State: AC+VfDwnnDV323sjZk6WD44oPsFdgXvgEngkZiduUB9LpSVqo9T/reRI
-        yvjZnONo0PNO9BEb3bivI2EHZg==
-X-Google-Smtp-Source: ACHHUZ6VAv9Ii8BNvTiNZE1BmxRf1Dmrc1N5HfUif3fDB6cBlSktml54K6be0NfHwO3e1lny1iG1+g==
-X-Received: by 2002:a05:600c:3645:b0:3f9:255e:ee3b with SMTP id y5-20020a05600c364500b003f9255eee3bmr27690199wmq.30.1687785637888;
-        Mon, 26 Jun 2023 06:20:37 -0700 (PDT)
+        bh=FX52cR42UjsCJaM68RlRM+9U+7DEs1rV1cvkX/J08Rg=;
+        b=YHFsT6D9qvy0HPYsv4Mk3EnZhha6iWI2P9gqqwYE/rXVL1A3Sy4pSUNwRaqBynv20M
+         RCwlkbMfcOaXVAtvjA69mf4aFHls5xYOkPZkiMQp2ZtvWSNWdl1gGpzSfaLBjzlTs9tY
+         eyQOYf5pV2mCPGAhSeH+xuxvg6JoMGvYcnwAWbgDMJMC1N4DALpfOGy5iG3mVkFJBHO3
+         2eHGVrVRyhT/O20/N8J201koduN8w60oGqqCIBixWqlfS3h6MyNaF0eXztrizbw7gxHp
+         kFvUOs86xEk6y0ezgiXZiQqeJM8wlm6teBI+AybU/2TmfJnQ316dAMBM4c8xiiAUztHR
+         cnRw==
+X-Gm-Message-State: AC+VfDzwbhThB4huV/mSUwQXirH/tUNtyrJCvyOVreOl1GU9KNZGSJw6
+        0TdxS5TEwbKbNOrv12zexx172w==
+X-Google-Smtp-Source: ACHHUZ6ThfhatPMJ0vxDsoclNGj83u9LNnGVVi4gVS3IPbj6ktLOHHmeDqsmxik2zI19UoDqnGGvWg==
+X-Received: by 2002:a19:ca02:0:b0:4f9:586b:dba1 with SMTP id a2-20020a19ca02000000b004f9586bdba1mr7763330lfg.4.1687785792656;
+        Mon, 26 Jun 2023 06:23:12 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:b25a:b26e:71f3:870c? ([2a01:e0a:982:cbb0:b25a:b26e:71f3:870c])
-        by smtp.gmail.com with ESMTPSA id 21-20020a05600c22d500b003f9cb3c8958sm10755952wmg.3.2023.06.26.06.20.36
+        by smtp.gmail.com with ESMTPSA id h11-20020a1ccc0b000000b003fa8158135esm8427591wmb.11.2023.06.26.06.23.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 06:20:37 -0700 (PDT)
-Message-ID: <94e80a49-11ae-e5b0-7eea-6ed4ec6d2ac8@linaro.org>
-Date:   Mon, 26 Jun 2023 15:20:35 +0200
+        Mon, 26 Jun 2023 06:23:12 -0700 (PDT)
+Message-ID: <c0bb8255-db4f-e93b-5593-0faa32e44410@linaro.org>
+Date:   Mon, 26 Jun 2023 15:23:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 4/4] input: touchscreen: add SPI support for Goodix
- Berlin Touchscreen IC
+Subject: Re: [PATCH 1/3] usb: typec: ucsi: call typec_set_mode on non-altmode
+ partner change
 Content-Language: en-US
-To:     Jeff LaBundy <jeff@labundy.com>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230606-topic-goodix-berlin-upstream-initial-v3-0-f0577cead709@linaro.org>
- <20230606-topic-goodix-berlin-upstream-initial-v3-4-f0577cead709@linaro.org>
- <ZJiXopmFr4dPbqll@nixie71> <e36a697f-a54d-7bdf-1e18-38f72ec2966c@linaro.org>
- <ZJmMJxXxLrC9Xevi@nixie71>
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230614-topic-sm8550-upstream-type-c-audio-v1-0-15a92565146b@linaro.org>
+ <20230614-topic-sm8550-upstream-type-c-audio-v1-1-15a92565146b@linaro.org>
+ <ZJlIViwb9sfNrgjH@kuha.fi.intel.com>
 Organization: Linaro Developer Services
-In-Reply-To: <ZJmMJxXxLrC9Xevi@nixie71>
+In-Reply-To: <ZJlIViwb9sfNrgjH@kuha.fi.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,49 +85,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On 26/06/2023 15:01, Jeff LaBundy wrote:
+On 26/06/2023 10:12, Heikki Krogerus wrote:
 > Hi Neil,
 > 
-> On Mon, Jun 26, 2023 at 09:02:16AM +0200, Neil Armstrong wrote:
-> 
-> [...]
-> 
->>>> +static int goodix_berlin_spi_probe(struct spi_device *spi)
->>>> +{
->>>> +	struct regmap_config *regmap_config;
->>>> +	struct regmap *regmap;
->>>> +	size_t max_size;
->>>> +	int error = 0;
->>>> +
->>>> +	regmap_config = devm_kmemdup(&spi->dev, &goodix_berlin_spi_regmap_conf,
->>>> +				     sizeof(*regmap_config), GFP_KERNEL);
->>>> +	if (!regmap_config)
->>>> +		return -ENOMEM;
->>>
->>> Is there any reason we cannot simply pass goodix_berlin_spi_regmap_conf to
->>> devm_regmap_init() below? Why to duplicate and pass the copy?
->>>
->>> For reference, BMP280 in IIO is a similar example of a device with regmap
->>> sitting atop a bespoke SPI protocol; it does not seem to take this extra
->>> step.
->>
->> The goodix_berlin_spi_regmap_conf copy is modified after with the correct
->> max raw read/write size, and I'm not a fan of modifying a global structure
->> that could be use for multiple probes, I can make a copy in a stack variable
->> if it feels simpler.
-> 
-> Ah, that makes sense; in that case, the existing implementation seems fine
-> to me. No changes necessary.
-> 
-> Correct me if I'm wrong, but the stack variable method wouldn't work since
-> that memory is gone after goodix_berlin_spi_probe() returns.
+> Sorry to keep you waiting.
 
-The config is only needed for the devm_regmap_init() duration, so keeping
-the memory allocated for the whole lifetime of the device seems useless.
+No problem, thanks for reviewing my patches!
+
+> 
+> On Wed, Jun 14, 2023 at 03:10:39PM +0200, Neil Armstrong wrote:
+>> Add support for calling typec_set_mode() for the DEBUG, AUDIO
+>> accessory modes.
+>>
+>> Let's also call typec_set_mode() for USB as default and SAFE
+>> when partner is disconnected.
+>>
+>> The USB state is only called when ALT mode is specifically
+>> not specified by the partner status flags in order
+>> to leave the altmode handlers setup the proper mode to
+>> switches, muxes and retimers.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/usb/typec/ucsi/ucsi.c | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>>
+>> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+>> index 2b472ec01dc4..44f43cdea5c1 100644
+>> --- a/drivers/usb/typec/ucsi/ucsi.c
+>> +++ b/drivers/usb/typec/ucsi/ucsi.c
+>> @@ -809,6 +809,23 @@ static void ucsi_partner_change(struct ucsi_connector *con)
+>>   		break;
+>>   	}
+>>   
+>> +	if (con->status.flags & UCSI_CONSTAT_CONNECTED) {
+>> +		switch (UCSI_CONSTAT_PARTNER_TYPE(con->status.flags)) {
+>> +		case UCSI_CONSTAT_PARTNER_TYPE_DEBUG:
+>> +			typec_set_mode(con->port, TYPEC_MODE_DEBUG);
+>> +			break;
+>> +		case UCSI_CONSTAT_PARTNER_TYPE_AUDIO:
+>> +			typec_set_mode(con->port, TYPEC_MODE_AUDIO);
+>> +			break;
+>> +		default:
+>> +			if (UCSI_CONSTAT_PARTNER_FLAGS(con->status.flags) ==
+>> +					UCSI_CONSTAT_PARTNER_FLAG_USB)
+>> +				typec_set_mode(con->port, TYPEC_STATE_USB);
+>> +		}
+>> +	} else {
+>> +		typec_set_mode(con->port, TYPEC_STATE_SAFE);
+>> +	}
+> 
+> Can you do that (set safe mode) in ucsi_unregister_partner() instead?
+
+It seems greg already landed the patch into usb-next, but I can send a fix to
+move it to unregister
 
 Neil
 
 > 
-> Kind regards,
-> Jeff LaBundy
+> thanks,
+> 
 
