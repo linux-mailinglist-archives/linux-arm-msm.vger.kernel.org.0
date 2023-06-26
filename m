@@ -2,69 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DABF73EE8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 00:16:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2840573EEBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 00:45:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbjFZWQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 18:16:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32802 "EHLO
+        id S229986AbjFZWpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 18:45:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbjFZWQa (ORCPT
+        with ESMTP id S229635AbjFZWpt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 18:16:30 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 646CCE5A;
-        Mon, 26 Jun 2023 15:16:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E9CFF60EF2;
-        Mon, 26 Jun 2023 22:16:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C4BC433C8;
-        Mon, 26 Jun 2023 22:16:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687817784;
-        bh=1fb5kx18XxdnYgvO4fpROF+3cipTjE+jCQd55iaN6K8=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=BBmK6ynqWp3FK3VFYG6IX2mmmeICTKJYwBlm73h5iW4aagvIB5Tt5ymvzkulw62UI
-         9fdd/88fpqkB4/y221op6Sgaf8KqneQZfkMNC5vb7LcCK0q6//GQzHhWR7dACtjy4S
-         c8GftRfli4iUmlqndpd1uGFlRU7omssS5Tk+hTeWBCOzlmHb5mE26VClVj9rjbN0VW
-         91yxTEyeBNY96LBJ7ls1P4vOJcET6dByB4jZhD3EQGP/z2POgYLdsk3OlMDkCus3U2
-         1yPBnQI9neApqShgJ46zV9embTSepOGMoArEZMZQPU3Ok+IWshIx3zkFLndI4pn0e8
-         GEsH+ez2AXSiQ==
-Message-ID: <12bc6772862528dce110b50043b58dd3.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Mon, 26 Jun 2023 18:45:49 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53755131
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 15:45:47 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b69ea3b29fso27295281fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 15:45:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687819545; x=1690411545;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=u5bCPFlR0nu3jWbwFkLqvSTjglnwST8IppmOFOBlz+8=;
+        b=qJaoDjzNpYqpEsQQchoys5kprXHinuZsVAbE7N7V/tlJf7exDUN9nXheqBQ3Wt5HZX
+         qLHbwWjeDphPHrkLxuJCXCOraN0phIUtTIJrqMu9VRDQgCyVDC2y5RcQIkkpKXEZT9cO
+         l0HDCIfP2hsnDGXj5vf5/7hYBcWcDPddrEoOo1m7AYUN2dDi2/8vJ4EwmK85Anpy+Bja
+         ivq+Z4hE8BVoQxwlFibrDQKyAl6Giwh2hdpyOyaQQR1HzirVjHQa6kA2Ar+GUOeFHGUN
+         cqQy3iqzLN/7Diix2rDuE3D9eGh6d5dWByWnv3Fwl04aCtuzNi0U7gMUVulLL6tw1yJ/
+         4b4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687819545; x=1690411545;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u5bCPFlR0nu3jWbwFkLqvSTjglnwST8IppmOFOBlz+8=;
+        b=I36dfBgOM70ZkyQZA3Dx0ePXCvBTfvj/A3AwKDoj660/hn0Scll5W5D8AucrS7iNXU
+         +9t+qQyY3MeonhjhmBuQONXT5XiUboVBZ6iDYq/jZKehybvr5x6KLPCMz9jnDmDAbGVp
+         ClO0rciwMaAC+56+1ISQTNHDozN/QQRSMZfp4SxH4lSF6/loIZCWDHfUHYu/drZ7CvJI
+         DIWoIcV87mDH4w+u8RjLAuFjhxvUlIjLe2uctEgtKizpv1LKitUsdk80LXlS2d01JZEe
+         w/n4J4XbYmd2X1OwhyweLtlhHFVs0wh0DcKM6+ASwqkDom4B6SNrBBMkJXvpDrELDDZC
+         xKzQ==
+X-Gm-Message-State: AC+VfDwEcdYunRSolNg/tyHDlB82zJfKIRjAFG9lBh3KRtemlvx1xFXH
+        zIxmO5Ret7QYsD+d4lVg5viG6g==
+X-Google-Smtp-Source: ACHHUZ4MkezrTg7Z9UArmCvbs17mEfFgUWI0FF/DGZkDKPVqQnLigk+6CZEVrjsFa5tbSdDqhTREeg==
+X-Received: by 2002:a2e:9107:0:b0:2b5:9b3b:f7ea with SMTP id m7-20020a2e9107000000b002b59b3bf7eamr6470282ljg.41.1687819545471;
+        Mon, 26 Jun 2023 15:45:45 -0700 (PDT)
+Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
+        by smtp.gmail.com with ESMTPSA id b6-20020a2e9886000000b002b69f44646bsm938501ljj.17.2023.06.26.15.45.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jun 2023 15:45:45 -0700 (PDT)
+Message-ID: <ab41462a-330f-263d-718f-e449e9ca8c5c@linaro.org>
+Date:   Tue, 27 Jun 2023 00:45:43 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230626171736.2494708-1-andersson@kernel.org>
-References: <20230626171736.2494708-1-andersson@kernel.org>
-Subject: Re: [GIT PULL] Qualcomm clock updates for v6.5, second attempt
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Devi Priya <quic_devipriy@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kathiravan T <quic_kathirav@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Robert Marko <robimarko@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Mantas Pucka <mantas@8devices.com>
-To:     Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
-Date:   Mon, 26 Jun 2023 15:16:21 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] arm64: dts: qcom: Fix "status" value
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230626220957.3945972-1-robh@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230626220957.3945972-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,32 +78,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2023-06-26 10:17:36)
-> As reported by Stephen, the first v6.5 pull request was missing the SC828=
-0XP
-> LPASS DeviceTree binding include, which was supposed to be brought in thr=
-ough a
-> topic branch. Merged this branch top of the previous pull request to avoid
-> rebasing the branch at this time.
->=20
-> Regards,
-> Bjorn
->=20
-> The following changes since commit ac9a78681b921877518763ba0e89202254349d=
-1b:
->=20
->   Linux 6.4-rc1 (2023-05-07 13:34:35 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-for-6.5-2
->=20
-> for you to fetch changes up to e5d10d1d1aa4c7274bf7ff54660832004800655a:
->=20
->   Merge branch '20230608125315.11454-2-srinivas.kandagatla@linaro.org' in=
-to clk-for-6.5 (2023-06-26 09:26:48 -0700)
->=20
-> ----------------------------------------------------------------
+On 27.06.2023 00:09, Rob Herring wrote:
+> The defined value for "status" is "disabled", not "disable".
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Thanks. Pulled into clk-next
+Konrad
+>  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> index cfbc4fc1eba9..c6914db7dc6d 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> @@ -779,5 +779,5 @@ &wifi {
+>  
+>  &crypto {
+>  	/* FIXME: qce_start triggers an SError */
+> -	status = "disable";
+> +	status = "disabled";
+>  };
