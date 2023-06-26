@@ -2,122 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 964E673DFB5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 14:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FE7B73DFFB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 15:01:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231356AbjFZMrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 08:47:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40706 "EHLO
+        id S229964AbjFZNBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 09:01:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229792AbjFZMrU (ORCPT
+        with ESMTP id S230154AbjFZNBg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 08:47:20 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCC572129
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 05:46:29 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fa99b57a38so6614875e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 05:46:29 -0700 (PDT)
+        Mon, 26 Jun 2023 09:01:36 -0400
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2061.outbound.protection.outlook.com [40.107.102.61])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C69210C;
+        Mon, 26 Jun 2023 06:01:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LpOVF+0gve0eaSz1OCvo+O7C+tIlCxskxdHQHVC32ti2h2XD+e3ejKnhVSs3pVIXBk9MFdy9XNl7foUj0o0+lv4eQJXZopTdL7+yhtyK15osYSwHZVqv67k1WysBorGPAhDzpnl7EgBeIxfJ5u02hWKkwW0vMOGnkp8jQHu1Oz2VV06cSBZXomsfJSvjkLiguaHftTQQ0mVzsFWO9KdygBy+/JtK588sWj3tth7wBMcwqCPGtG78dyogJMpc/6DkEb2f5kN4SOf9xbY68dPDD0xQr0XJPlcQOQQNpeDO7dYNGpJQyYMeNzmc+eYsYaFX55JV/+gGXpgREpjF+xJ7Zg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Rvv+Aje8S9KaBfZgkcTuxlqjLhOjQx2V9fpFkd41NkU=;
+ b=eYh2j1WA04aTlXdUyChPh7JFj5fUwtIVOkTX/B7MZe8LObrNFfwdq95Cn1VHkjhj3JtFP3UC3QLNTjrpsBnZFD3vzSfWA7FWZA0BVE3Lc1sfk2ry+NAAtjt3jTESHq3B9ymd7TCUdA3O6rV0GB0E1YJfYy8IHZDItNB6t2praUXSt+P4bXg2FEO9XSHz5GZqdIGib4tw3Gc6hWWTDWwwuiv8AB2RC5d1iR0VcBMSLUsPwPetyKfcJRHwX7cf9c4TN41GC4X/0rfeeA83vcW+URsNBdJnbw0fmTCr9b1FQmfu5DiFZdOlKO/dsDOD7D9YnLIDH6h5zBbrBXY9zoeJJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=labundy.com; dmarc=pass action=none header.from=labundy.com;
+ dkim=pass header.d=labundy.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687783583; x=1690375583;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5U82YOAZDYPyrN/dkGhB4WlxPaaJ5TYlLh0PEWA0G34=;
-        b=BpB+X19vNnGSaXQ1f/jI6MKnwETXPmNP/AbUPwUOiw93wVA4Ws/ohU1qqaJp65RlOE
-         wQ1gz/t/jbAGapccMR6W+aKYK/5z7P7DTVFFfsC85+76xgqG2S3NZwVaBvuJpvzOfKvE
-         toKw8UDWLYjNs9ZOzu5JzdI6fTRKuOMgdYDWoUZwspQmRz79xERB3iFfIkWO5Zj3Do89
-         yMo7kWHEun19RJSr+k+uC4g07nPzOtvcGqin6RdQEvDgf7+AWGd72nroinoYF4/IwF0N
-         1KLrxbchEXoYPj3fGIKeDt19NU7Ugm43QaJH3p6D+yG+xY3l6G6rRA5j6yc/cvUjaF1+
-         wevQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687783583; x=1690375583;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5U82YOAZDYPyrN/dkGhB4WlxPaaJ5TYlLh0PEWA0G34=;
-        b=SJNpb7JF+b/no+fXYQ7QWfQJPsKJo3eIY8m4gz/ZJ7JMrK4IdwTnUgBqrMh7zueZvZ
-         aA4IpKKrqDxDd8wc+1ebE6mR9bRDeNJQiMx6ttPDk7D30Fq50Qc/IuEayUtoPLv/LJfe
-         C0Wf24fI6/CXZZz05aP47l9ywrRxon9PqdBXfM+grz8VjfbPCVcnQxGtlIIaq3VCkOoF
-         6Hv7PQ/yCoyT4W4F3EdmuNmaYpoj3AMBncIMPeRoyq4RODPEyzRli4FDfv0HqVvFTmlU
-         PvKUqLVG5vFIMItjuKrQKe4c7W27kM2wCU03Mk9Y4wa8aV/0V8QHrfoOdaDciMywHELe
-         jjOg==
-X-Gm-Message-State: AC+VfDyI+ALJoBjSFycxC2rudi4Wqv/nWTC8ttmes48JqZMUPSjqGcJR
-        74s/M0/JU+QzaJcXxjOBQ4kkWA==
-X-Google-Smtp-Source: ACHHUZ6DW6Wg0F+Tewscf7xVbXFLxWQfWf0srEoFBzX3rTH3U3MkNhnZv9qxjm/FN7b7cm30qiJPoQ==
-X-Received: by 2002:a7b:ce0b:0:b0:3f9:b7cc:723 with SMTP id m11-20020a7bce0b000000b003f9b7cc0723mr12953150wmc.21.1687783582958;
-        Mon, 26 Jun 2023 05:46:22 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id d9-20020a5d6dc9000000b0030ae53550f5sm7281468wrz.51.2023.06.26.05.46.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 05:46:22 -0700 (PDT)
-Message-ID: <7b909a56-1b3d-79fb-0286-b10117982dc3@linaro.org>
-Date:   Mon, 26 Jun 2023 14:46:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+ d=NETORG5796793.onmicrosoft.com; s=selector1-NETORG5796793-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Rvv+Aje8S9KaBfZgkcTuxlqjLhOjQx2V9fpFkd41NkU=;
+ b=p/preC1WznjfcDRWz+YPYDVB3KkO+zMLBSsZNJwwk6SkcloqKN3toT8J5RhkLSq7mJXyukPE8fSvYUvrRS9ZT8k8T4IgKxXmxNMvKnuoeZu0t5JybSuEk+ZEDPiT2HdHqnzA50jSH3NAtu9KAlf3pxsjP4upPKJM3VajqGDmo9A=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=labundy.com;
+Received: from SN4PR0801MB3774.namprd08.prod.outlook.com
+ (2603:10b6:803:43::21) by PH0PR08MB8446.namprd08.prod.outlook.com
+ (2603:10b6:510:29c::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.23; Mon, 26 Jun
+ 2023 13:01:30 +0000
+Received: from SN4PR0801MB3774.namprd08.prod.outlook.com
+ ([fe80::b94e:6032:56d4:35b2]) by SN4PR0801MB3774.namprd08.prod.outlook.com
+ ([fe80::b94e:6032:56d4:35b2%6]) with mapi id 15.20.6521.024; Mon, 26 Jun 2023
+ 13:01:30 +0000
+Date:   Mon, 26 Jun 2023 08:01:27 -0500
+From:   Jeff LaBundy <jeff@labundy.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
- <CTMJRMN2K8AY.20TQJE584A453@otso>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CTMJRMN2K8AY.20TQJE584A453@otso>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Bastien Nocera <hadess@hadess.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] input: touchscreen: add SPI support for Goodix
+ Berlin Touchscreen IC
+Message-ID: <ZJmMJxXxLrC9Xevi@nixie71>
+References: <20230606-topic-goodix-berlin-upstream-initial-v3-0-f0577cead709@linaro.org>
+ <20230606-topic-goodix-berlin-upstream-initial-v3-4-f0577cead709@linaro.org>
+ <ZJiXopmFr4dPbqll@nixie71>
+ <e36a697f-a54d-7bdf-1e18-38f72ec2966c@linaro.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e36a697f-a54d-7bdf-1e18-38f72ec2966c@linaro.org>
+X-ClientProxiedBy: SN6PR16CA0059.namprd16.prod.outlook.com
+ (2603:10b6:805:ca::36) To SN4PR0801MB3774.namprd08.prod.outlook.com
+ (2603:10b6:803:43::21)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN4PR0801MB3774:EE_|PH0PR08MB8446:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9776e50e-020d-4199-640e-08db764575a5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: fxnSZEXCHnRQVHAHMhbFJvVvF/NmyGrjifrhqAkCETUaAIbrHbKrXgROk3wdsQCMlaSYk5DN0De50klAJ8sCafaOZdN8Y6cjNzwIgCP3CkqGbkUaXlXZ9iSl+uUwzHpaCkIPw0fPCDYzwwR2bMzSxV0XyT6bTSePSb/pDsWuTTzbxdeyyMCjk0MWN4yKM2QdAfc8DySj8uqwNVxFIHROWCsaeiEapireaAA8Q5rEoz3qfBE2Cqa1ffBVZS8hhpC9Sovq2b8z0xF2Qhp/Sj65AAWWWeYSHeKyuEBuP7N9mnHt20IKmVcH5VLvM/TOuzxobV0yGZZEAEX4gPkmjRCB3FU2IGjhP+Jtj8ZB17yaXDROW2cEn2Ah8JcmQEF6HWbdNfiTQBQ7heNYas8k1NGcCnUVqk6N6dNSFn5cPe3m7Owr5Jfoi0WGmB5YHJI9ElGGkwharVDGXKMfvG2xF2T3o7gN9KEtNdAfNTfBEt3tfRsyJul33Eu7D50moitpcMxuS1Qtiv16cesRxqgXDkVzSIkLSafmjv8GC24KWKAt3PLUrsH0S6rtd8ReDwUNebkL
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR0801MB3774.namprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(7916004)(346002)(39830400003)(366004)(376002)(396003)(136003)(451199021)(2906002)(33716001)(6486002)(6666004)(38100700002)(6512007)(6506007)(26005)(9686003)(186003)(41300700001)(54906003)(86362001)(478600001)(316002)(66556008)(4326008)(66946007)(6916009)(66476007)(7416002)(5660300002)(8676002)(8936002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3K1eXE+scBNEU0OV9uz0hk+XXeCzRyT4i6upxfL6a6lH0QwGZXBpVw6pU485?=
+ =?us-ascii?Q?t/4RvEdGk4fKrUnS9KyDLJTj2OXLdkCqrLbjuNTJSxufRoth81Shg1Dyk5V3?=
+ =?us-ascii?Q?HMD+39Vr2o3aj3pNbtcNyFkevVOKdA0ZTYTacUIj+sOdH12IexADw9Tbryu+?=
+ =?us-ascii?Q?dVugOVT98vCfh4GeWyVsDmaGyvbGbIj1v2Zuw/VmPKSZ5WKJ7s1J24TJY/E7?=
+ =?us-ascii?Q?+0sKCWimyu9gcPGmp+F9PYgQ0Ni8aejRGrtilPe9SvZaRKaKmXwi5vs8Fu1y?=
+ =?us-ascii?Q?6oXLK3n5tX3QXBC463d/GLu0Kj6ggdlGGN4tjONLv/iXII6neYnXzYjzynLD?=
+ =?us-ascii?Q?wnbAR0G2cygKOzFjcw3zSAV86CuNODO281aKKkZkyn1+lkCjYwFKqeNhBpFb?=
+ =?us-ascii?Q?ejrRaCnoaTfOdO6I7E4Yj7vEh/eDVBIZwPDpJztn8ui6qm1CNjRpO3ypGkPx?=
+ =?us-ascii?Q?y7D8PxYsdNvfcy37e9gLhX7U5EXSLZw6htjeV268UeFWyMdtg19Sv+1QuvgF?=
+ =?us-ascii?Q?nXgaDOTgIhejUuFD/RfXNUOX0ZNh6ESFsawMqBbYQphblBIuVeUscy5l6e+S?=
+ =?us-ascii?Q?kMWHDuLZdKs+PBoeZUq8bNiFpBkQzVdyEDzGll3ljifbMdznuZO3TT/712R2?=
+ =?us-ascii?Q?FgewpBr3e6yI7ORMtT3XJ5n/Fe9IEYQejLNdEkbQO8G74vkD8p+e6bib/LyW?=
+ =?us-ascii?Q?iB9tXPRd/XkMwKTO9+tuWHZrIwzjKw2ZWYYrwwGPCPDa/akb5xzUGp9FfivG?=
+ =?us-ascii?Q?D54aAqNh24JH401kik6HVe+9UgAdnMXFLCt3n7f8QLYff3KjFJQiXusRaaZV?=
+ =?us-ascii?Q?1YY7BIPrcSmDDaxD4Ck9j+Thsw7JVQQPJrL/2YeJH73eIhHsOoWJzux4nrSB?=
+ =?us-ascii?Q?lfvfurS/YsAnzrhuRtVOgRR0hfrdxrHG+xSxopSwLTPJuuHFwHSoD5vtGz17?=
+ =?us-ascii?Q?JKWepeYyW+gi9ZOchgHyG0OnBih++XHznmqN/1TeCJPYfXCJEr6soLPKk3d2?=
+ =?us-ascii?Q?CVaQue+XBOTZxkGzZWak0na8Jo1KslqflbC+VzHjTYJDxXZjc7T2puxdu69R?=
+ =?us-ascii?Q?N85GPfMVfJTmCupqiP7Z28OUZDiAED/IK6P83EwB1mH/8r2P3lHzykpRTXur?=
+ =?us-ascii?Q?OZt3O0TJiOSjl7PM3q0qyAbWZdV0MV7Nftyz2Wh2jaZnZv9ds5wtVhK6doyZ?=
+ =?us-ascii?Q?G89D+l7Z+WqDMTATd5deKdlXsDYlvLAar7TxZcYN4vzHaPfSsdUqr8IOODwA?=
+ =?us-ascii?Q?MlzD4O2BrthmFvUCH6qRdS5KLbRrxL4pYm3BAtZYVQ+AwyQXsd2YHZvCbs/U?=
+ =?us-ascii?Q?+XRtFCUZFDhGNkqNBpmdpXgYifPLt2m4FcF+U8Xv4xHt77IZHCSanozfWiWJ?=
+ =?us-ascii?Q?oC3P6wIzKvVtKvDb62vAy3gEKM3bWLA1uRPtIXoX5UcfzWpJ4zaXCCfy5jvo?=
+ =?us-ascii?Q?bZC37cThYwF52Gm2xuIbza7+jotAgeyTZe+ou3j4vJ0udOj+rPNuWkSWjp/g?=
+ =?us-ascii?Q?EbpcSXBQSqil/GlmCuknrsmiyUzOMLjMfTDZlHc42cu4CAas+VCNN4aPrywN?=
+ =?us-ascii?Q?4k/Fns/L74vAhD6AxDkz+yuf09F7s4NSPVPEOkg3?=
+X-OriginatorOrg: labundy.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9776e50e-020d-4199-640e-08db764575a5
+X-MS-Exchange-CrossTenant-AuthSource: SN4PR0801MB3774.namprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2023 13:01:30.2951
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 00b69d09-acab-4585-aca7-8fb7c6323e6f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FMo3J3K/5FTb9HJmSX+MXFePupUBF1UFyYyiMSutQAqSB5faB4XHyOjZ6SgrFJdIQSJWvch1Jh6bVxiCP/U0+A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR08MB8446
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/06/2023 13:32, Luca Weiss wrote:
-> Hi Krzysztof,
+Hi Neil,
+
+On Mon, Jun 26, 2023 at 09:02:16AM +0200, Neil Armstrong wrote:
+
+[...]
+
+> > > +static int goodix_berlin_spi_probe(struct spi_device *spi)
+> > > +{
+> > > +	struct regmap_config *regmap_config;
+> > > +	struct regmap *regmap;
+> > > +	size_t max_size;
+> > > +	int error = 0;
+> > > +
+> > > +	regmap_config = devm_kmemdup(&spi->dev, &goodix_berlin_spi_regmap_conf,
+> > > +				     sizeof(*regmap_config), GFP_KERNEL);
+> > > +	if (!regmap_config)
+> > > +		return -ENOMEM;
+> > 
+> > Is there any reason we cannot simply pass goodix_berlin_spi_regmap_conf to
+> > devm_regmap_init() below? Why to duplicate and pass the copy?
+> > 
+> > For reference, BMP280 in IIO is a similar example of a device with regmap
+> > sitting atop a bespoke SPI protocol; it does not seem to take this extra
+> > step.
 > 
-> On Wed Jun 21, 2023 at 4:36 PM CEST, Krzysztof Kozlowski wrote:
->> SM8350 HDK and MTP boards were silently dying and rebooting during BAM
->> DMA probe:
->>
->>   [    1.574304] vreg_bob: Setting 3008000-3960000uV
->>   [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
->>   Optional Info
->>   Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
->>   S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
->>   S - IMAGE_VARIANT_STRING=SocLahainaLAA
->>   S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
->>   S - Boot Interface: UFS
->>
->> It seems that BAM DMA is locally controller (not by firmware) and
->> requires proper initialization by the driver prior to use, at least on
->> HDK8350 and MTP8350, but probably on all boards.
-> 
-> Are you sure that the bam (and subsequent the qce) actually probes with
-> this change? From reading the code I don't see how the bam should probe
-> without either qcom,controlled-remotely or qcom,powered-remotely but no
+> The goodix_berlin_spi_regmap_conf copy is modified after with the correct
+> max raw read/write size, and I'm not a fan of modifying a global structure
+> that could be use for multiple probes, I can make a copy in a stack variable
+> if it feels simpler.
 
-Why the binding does not require either this or that? Eh, buggy stuff...
+Ah, that makes sense; in that case, the existing implementation seems fine
+to me. No changes necessary.
 
+Correct me if I'm wrong, but the stack variable method wouldn't work since
+that memory is gone after goodix_berlin_spi_probe() returns.
 
-> clocks supplied. I think the probe just fails with this change, right?
-
-I will need to double check. I was happy enough to be able to boot my
-device instead of having crashes, but indeed it would be nice to fix it
-fully.
-
-
-Best regards,
-Krzysztof
-
+Kind regards,
+Jeff LaBundy
