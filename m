@@ -2,219 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65C9D73E505
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:29:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04EC973E54A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:37:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230308AbjFZQ3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 12:29:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55246 "EHLO
+        id S229783AbjFZQhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 12:37:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230179AbjFZQ3W (ORCPT
+        with ESMTP id S230016AbjFZQhc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:29:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E917230E7;
-        Mon, 26 Jun 2023 09:28:16 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35QE0vr8016114;
-        Mon, 26 Jun 2023 16:28:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=71P9kkKjmHcIHJCwCMhSnLjhjtNBY9RZBfPWrRB0XN4=;
- b=Y8dJzzBePblKSosfDQgoFn3EwEbRFkTSz407E53naa+MdPq08X07l9cXCBqq51tG2T32
- TLNuPN5R6CNnaCeJqNknQoIoUYQc5KaC2PQaLxutqaffEF9+bQ6X9mfcrlFq7m2MMGOm
- D3WW17mwt3zIHQ7Ag6Rxb5WI8AFS0ET/tTGPxV6BnG6ik6DJZgifNyWONmce+6FhhAno
- xCzmD7OXZXaEzQ8HqN8TC2J9VMoSIkTY3a6kKvmUQejLA9pMViFgcFk/AfxKb2sHspw+
- Pcoq0X5EumDsBrgdkRW+RfZUCOF8jyQ0Q5houHZwhHclQNZXbclr6MMhdAeV1QHWkbFK gw== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdqgdcmma-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 16:28:11 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35QGSAxI026462
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 16:28:10 GMT
-Received: from [10.216.59.223] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
- 2023 09:28:07 -0700
-Message-ID: <6d9f251e-2c1a-ed50-638e-a052404ffc64@quicinc.com>
-Date:   Mon, 26 Jun 2023 21:57:56 +0530
+        Mon, 26 Jun 2023 12:37:32 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027ABC5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:37:30 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b6a152a933so19040411fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:37:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687797448; x=1690389448;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2S+hgq49/8PMX2Sw/UBHkH7erVlWQird49ywR0DgC6c=;
+        b=iQ2dtnRGO6sLFagFN121tgVoN6ddSFa0Dope7pddodC6ZlBIAZ1HG22rBPMMEjSbOm
+         +FyoS3AR5dUbury98Hsx6aYVcVJOmwjKjiuKmWZ2GuOV5ZQX5wyMhtzfdXr5KXy+/Juz
+         eWOYy1WKOF2f5P+OqZhRsHsdKX8b3Skvly7aHAw6XURFfdBRFu4zmj3D7gsdu9cFKX8B
+         3Rz7jPuDvOz+d+Ldua7x1pXu1wyd0KfSeQg5W8E3Xn1ggAOxy679U8yckLgTeWsxRyE1
+         6sPuBBONv5mIHuFkFgGWWWYO5YV8s8/negKxD6L4GUXlz6VrMEB7cfEavtlWxrU0Ue1X
+         C6gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687797448; x=1690389448;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2S+hgq49/8PMX2Sw/UBHkH7erVlWQird49ywR0DgC6c=;
+        b=QEDWCJT0NHUTFFQSM+jFMQEzXfGD24uoEZzctyDyWeTUrng/a86MGL33fzzY2/Edgz
+         0IM8gAyTMPNos2Uj8zpaL1Rvo/RErLdk+5vamSxmIXgBoBFWSThej9Fsmcr8MOKoDouC
+         nwIih4gEu1l+kEMHOZmGzj23IF3tpbrbUI4ao9bYnWT0g/+uMdKpRp27K5sRnj9MrVJd
+         PM6uba+RQG2B+LZScMy8uxNg+uLXwrBERCQu2L63LgIlV3Atm4VhjWXbOpL7aiBnBQ19
+         fRrfmPT0YHvnhUHko8HYnJJgpmEYpvt0ALZi1jDvffp9SPskJ6XYe4RtrU55Alhz1a/6
+         Ebag==
+X-Gm-Message-State: AC+VfDwX0+p5h+KsoEPAc+gk5wuokH+XqzXgRdPbx1jwnq/SVSZ/2jz7
+        mk8mhOOyuIVSCPG5QMo0cIYD/Q==
+X-Google-Smtp-Source: ACHHUZ7C+GL0ranNAERCN38ZVhW8Vq/IFa+uUnBjkLu55WYsM8tGdVHsOLP9P7uZAR+EGiaH52FJDg==
+X-Received: by 2002:a2e:8747:0:b0:2b5:8eae:7848 with SMTP id q7-20020a2e8747000000b002b58eae7848mr8242640ljj.44.1687797448138;
+        Mon, 26 Jun 2023 09:37:28 -0700 (PDT)
+Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
+        by smtp.gmail.com with ESMTPSA id x12-20020a2e9dcc000000b002b0488ef239sm1313392ljj.93.2023.06.26.09.37.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jun 2023 09:37:27 -0700 (PDT)
+Message-ID: <9d49ecb6-1efd-0f19-c787-9baca79846fe@linaro.org>
+Date:   Mon, 26 Jun 2023 18:37:25 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v6 4/5] firmware: qcom_scm: Refactor code to support
- multiple download mode
-To:     <andy.shevchenko@gmail.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>
-References: <1680076012-10785-1-git-send-email-quic_mojha@quicinc.com>
- <1680076012-10785-5-git-send-email-quic_mojha@quicinc.com>
- <ZHEt2mrYpSMKBuIX@surfacebook>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 16/26] ARM: dts: qcom: apq8064: add L2 cache scaling
 Content-Language: en-US
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <ZHEt2mrYpSMKBuIX@surfacebook>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
+ <20230625202547.174647-17-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230625202547.174647-17-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YQjCSbztMZOiJDGeGxZzkvEGMsJNfE3-
-X-Proofpoint-GUID: YQjCSbztMZOiJDGeGxZzkvEGMsJNfE3-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-26_09,2023-06-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
- suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306260121
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25.06.2023 22:25, Dmitry Baryshkov wrote:
+> Populate L2 cache node with clock, supplies and OPP information to
+> facilitate scaling L2 frequency.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Are the L2 voltage ranges independent of speedbin?
 
-
-On 5/27/2023 3:38 AM, andy.shevchenko@gmail.com wrote:
-> Wed, Mar 29, 2023 at 01:16:51PM +0530, Mukesh Ojha kirjoitti:
->> Currently on Qualcomm SoC, download_mode is enabled if
->> CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is selected.
->>
->> Refactor the code such that it supports multiple download
->> modes and drop CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT config
->> instead, give interface to set the download mode from
->> module parameter.
+Konrad
+>  arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 101 ++++++++++++++++++++++-
+>  1 file changed, 100 insertions(+), 1 deletion(-)
 > 
-> ...
-> 
->>   #include <linux/clk.h>
->>   #include <linux/reset-controller.h>
->>   #include <linux/arm-smccc.h>
-> 
->> +#include <linux/kstrtox.h>
-> 
-> Can this be located after clk.h which makes (some) order in this block?
-
-Sure.
-
-> 
-> ...
-> 
->>   #define QCOM_DOWNLOAD_MODE_MASK 0x30
->>   #define QCOM_DOWNLOAD_FULLDUMP	0x1
->> +#define QCOM_DOWNLOAD_NODUMP	0x0
-> 
-> Okay, so you start backward ordering.
-> But see comments to the next patch.
-
-Will fix this by doing it in ascending order..
-
-
-> 
-> ...
-> 
->>   		ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
->> -				QCOM_DOWNLOAD_MODE_MASK,
->> -				enable ? QCOM_DOWNLOAD_FULLDUMP : 0);
->> +				QCOM_DOWNLOAD_MODE_MASK, download_mode);
-> 
-> Can ping-pong style be avoided? I.e. do the right thing in the previous patch,
-> so you won't change lines that were introduced just before.
-
-If you notice, I have just converted download mode data type from bool
-to int in this patch and hence the changing the line here. Last patch 
-was about just using the exported API, so i hope you would be fine here.
-
-> 
-> ...
-> 
->>   }
->>   
->> +
-> 
-> Stray change.
-> 
->> +static int get_download_mode(char *buffer, const struct kernel_param *kp)
->> +{
->> +	int len = 0;
->> +
->> +	if (download_mode == QCOM_DOWNLOAD_FULLDUMP)
->> +		len = sysfs_emit(buffer, "full\n");
->> +	else if (download_mode == QCOM_DOWNLOAD_NODUMP)
->> +		len = sysfs_emit(buffer, "off\n");
->> +
->> +	return len;
-> 
-> You can return directly.
-
-Ok.
-
->  > Also, what about download_mode that doesn't fit to the above two?
-
-return sysfs_emit(buffer, "unknown\n"); ?
-
-> 
->> +}
-> 
-> ...
-> 
->> +static int set_download_mode(const char *val, const struct kernel_param *kp)
->> +{
->> +	u32 old = download_mode;
->> +
->> +	if (sysfs_streq(val, "full")) {
->> +		download_mode = QCOM_DOWNLOAD_FULLDUMP;
->> +	} else if (sysfs_streq(val, "off")) {
->> +		download_mode = QCOM_DOWNLOAD_NODUMP;
-> 
-> NIH sysfs_match_string().
-
-NIH ?
-
-My apology, if i did not get this..
-Do you want me to use sysfs_match_string()
-and how would that help compare to what is present now ?
-
-> 
->> +	} else if (kstrtouint(val, 0, &download_mode) ||
->> +		   !(download_mode == 0 || download_mode == 1)) {
->> +		download_mode = old;
->> +		pr_err("qcom_scm: unknown download mode: %s\n", val);
-> 
->> +		return -EINVAL;
-> 
-> Do not shadow the error code from kstrtouint() it can be different to this one.
-
-Will fix this.
-
-> 
->> +	}
->> +
->> +	if (__scm)
->> +		qcom_scm_set_download_mode(download_mode);
->> +
->> +	return 0;
->> +}
-> 
-> ...
-> 
-> Have you updated corresponding documentation about this parameter?
-> Or there is none?
-
-There is none as of yet outside this file; should that be good what i 
-have added in 5/5..
-
-> 
-
--Mukesh
+> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+> index 1eb6d752ebae..ac07170c702f 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+> @@ -81,9 +81,108 @@ CPU3: cpu@3 {
+>  		};
+>  
+>  		L2: l2-cache {
+> -			compatible = "cache";
+> +			compatible = "qcom,krait-l2-cache", "cache";
+>  			cache-level = <2>;
+>  			cache-unified;
+> +			vdd-mem-supply = <&pm8921_l24>;
+> +			vdd-dig-supply = <&pm8921_s3>;
+> +			clocks = <&kraitcc KRAIT_L2>;
+> +			#interconnect-cells = <1>;
+> +			operating-points-v2 = <&l2_opp_table>;
+> +
+> +			l2_opp_table: opp-table-l2 {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-384000000 {
+> +					opp-hz = /bits/ 64 <384000000>;
+> +					opp-microvolt = <1050000 1050000 1150000>,
+> +							<950000 950000 1150000>;
+> +				};
+> +
+> +				opp-432000000 {
+> +					opp-hz = /bits/ 64 <432000000>;
+> +					opp-microvolt = <1050000 1050000 1150000>,
+> +							<1050000 1050000 1150000>;
+> +				};
+> +
+> +				opp-486000000 {
+> +					opp-hz = /bits/ 64 <486000000>;
+> +					opp-microvolt = <1050000 1050000 1150000>,
+> +							<1050000 1050000 1150000>;
+> +				};
+> +
+> +				opp-540000000 {
+> +					opp-hz = /bits/ 64 <540000000>;
+> +					opp-microvolt = <1050000 1050000 1150000>,
+> +							<1050000 1050000 1150000>;
+> +				};
+> +
+> +				opp-594000000 {
+> +					opp-hz = /bits/ 64 <594000000>;
+> +					opp-microvolt = <1050000 1050000 1150000>,
+> +							<1050000 1050000 1150000>;
+> +				};
+> +
+> +				opp-648000000 {
+> +					opp-hz = /bits/ 64 <648000000>;
+> +					opp-microvolt = <1050000 1050000 1150000>,
+> +							<1050000 1050000 1150000>;
+> +				};
+> +
+> +				opp-702000000 {
+> +					opp-hz = /bits/ 64 <702000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-756000000 {
+> +					opp-hz = /bits/ 64 <756000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-810000000 {
+> +					opp-hz = /bits/ 64 <810000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-864000000 {
+> +					opp-hz = /bits/ 64 <864000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-918000000 {
+> +					opp-hz = /bits/ 64 <918000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-972000000 {
+> +					opp-hz = /bits/ 64 <972000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-1026000000 {
+> +					opp-hz = /bits/ 64 <1026000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-1080000000 {
+> +					opp-hz = /bits/ 64 <1080000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +
+> +				opp-1134000000 {
+> +					opp-hz = /bits/ 64 <1134000000>;
+> +					opp-microvolt = <1150000 1150000 1150000>,
+> +							<1150000 1150000 1150000>;
+> +				};
+> +			};
+>  		};
+>  
+>  		idle-states {
