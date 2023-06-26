@@ -2,407 +2,851 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A04473DE58
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 14:00:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E130B73DE73
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 14:06:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbjFZMAV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 08:00:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44434 "EHLO
+        id S229526AbjFZMGq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 08:06:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjFZMAU (ORCPT
+        with ESMTP id S229472AbjFZMGp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 08:00:20 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32962E44;
-        Mon, 26 Jun 2023 05:00:19 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35QAYCuE024933;
-        Mon, 26 Jun 2023 12:00:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6DRLqzPUZZ+XglBXAvaJTmUVYlu8d6+SvRU0rRU1AqY=;
- b=GDaIJYXlnCS0TxJT2PdUNKmuQtZTlDfoEAj1IALmcxVDLxofUMp9qX2oiqJeX/ueznFd
- IfjzCN8/g5OFK9VJOM5KFf+42nXRZBvcQYjiGPcJgreOmssnHwVXEAg7KIb06ihsl0nL
- karDdGHfXjxMcFa0LesxPq1n7k4RLpMgolXI79FtznVxkbaD5kI5zwstO/Vn5M79hEp/
- praLr/0gFWEN4O8lL+NTEfWJkXzi85QGUQlaLpHlHoiG/tOIR6T9aDwEqGUlPp4Dgykg
- 0bSOqEyuVE4RoPmy1TR1m03OfvMdo5sUD8rZoxNmyAKD5dUvHPlef/nlgFNRxp4QLdAh oA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdqtr3wwx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 12:00:12 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35QC0AWs000701
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 12:00:11 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
- 2023 05:00:05 -0700
-Message-ID: <99aebcb3-89d4-993b-5bc1-abc475b94843@quicinc.com>
-Date:   Mon, 26 Jun 2023 17:29:53 +0530
+        Mon, 26 Jun 2023 08:06:45 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19DD51B7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 05:06:42 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b6a675743dso5842141fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 05:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687781200; x=1690373200;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iFvDHdE+E4ebpoenEHV9zlHSfy8p8BTczqjB+kJdiLo=;
+        b=DSGuCTu1Dmfr6HAKsE9vi2AVSbNoNCbJ+FSKvglLf93pHrhYSH1rJLq2KtVowOe6NB
+         VegrgKyezlJSggar7La91Y3oy10q1WfzCj9DhdxR6n7XA86+Br4q4i+UZjUjabBENUCR
+         a3CvlKqsGoXGeSs8reSY7k/j+yphSVy+neIbuN9tSdHVLumFUs5qFbo9Y60QjmFhWokD
+         +Xg7aGMDrT64mY1fK3rBP/SXL4fhKh7zs9jK/AVhsErASdMgWBK4LHZCd2P5q53CZ1w1
+         BDVZvm7fLgZrdGVTldL7sCHhZ9zDzrJ/H/YbSPIGAvP8ue+0duS99u2ZoHQgyvWUDOkg
+         PMVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687781200; x=1690373200;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iFvDHdE+E4ebpoenEHV9zlHSfy8p8BTczqjB+kJdiLo=;
+        b=WImT+fNQ0qQllbLUuJD8aE+riuHODlbeTxcYeGWQrSCKvjm2WL0e+eaW5pLSDtebv0
+         d3qRn5novhYw+DhWoLS0qhgPY2eA+O9mQrZY5H+1fN/DVwWGRnI944uxz3RX3MvUeR1Q
+         jbaOc/EpsT/r3r9fMYlaQPSd6KwEI9RW5FSXITVRvQdgApx9USwjyD5hudCu5EpBUeH/
+         mYGWygEFMiPrBYn8+e4Ml7indvKpBUoWCh/d5gCtd3hJkAljJvidJuQRWDBTf3JWX+5m
+         MVv3256NUO9rqhF0qxlgxqgZN/lc1wOJBB7DP7VYUIyNS2BUt8EBfLNsUQWS1l5FhiPq
+         JI5Q==
+X-Gm-Message-State: AC+VfDySCqEQgGFH1e7SnqLFTDPdV123DVHDUqxN8J+r0UDEDPm3PhCr
+        X28TQLPWVoqsjWgPMI9RHgekwg==
+X-Google-Smtp-Source: ACHHUZ4oS5zejTHtP+Rs3l8FcwLkuHjFLyjkve0ESWA1mf5wmeIXXPp+UsFn0DruoeFLkiOTzGtaQw==
+X-Received: by 2002:a2e:8296:0:b0:2b5:a31d:499 with SMTP id y22-20020a2e8296000000b002b5a31d0499mr3914499ljg.52.1687781200164;
+        Mon, 26 Jun 2023 05:06:40 -0700 (PDT)
+Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
+        by smtp.gmail.com with ESMTPSA id v23-20020a2e9617000000b002aeeda05382sm1194217ljh.29.2023.06.26.05.06.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jun 2023 05:06:39 -0700 (PDT)
+Message-ID: <1513ea17-2807-4f7c-30f2-6158b5f3e55e@linaro.org>
+Date:   Mon, 26 Jun 2023 14:06:38 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH V5 4/5] clk: qcom: camcc-sm8550: Add support for qdss,
- sleep and xo clocks
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Satya Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230623164619.11464-1-quic_jkona@quicinc.com>
- <20230623164619.11464-5-quic_jkona@quicinc.com>
- <11b3058c-2261-95a4-2347-b0a33fdeb1e3@linaro.org>
 Content-Language: en-US
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <11b3058c-2261-95a4-2347-b0a33fdeb1e3@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
+References: <20230625114222.96689-1-dmitry.baryshkov@linaro.org>
+ <20230625114222.96689-3-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2 02/15] phy: qualcomm: add QMP HDMI PHY driver
+In-Reply-To: <20230625114222.96689-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eSYt05f620-QocfIb6sGF8p6LqJ5BxkE
-X-Proofpoint-ORIG-GUID: eSYt05f620-QocfIb6sGF8p6LqJ5BxkE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-26_08,2023-06-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501
- suspectscore=0 mlxscore=0 adultscore=0 spamscore=0 clxscore=1015
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306260107
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/24/2023 5:49 PM, Konrad Dybcio wrote:
-> On 23.06.2023 18:46, Jagadeesh Kona wrote:
->> Add support for camera qdss, sleep and xo clocks.
->>
->> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->> ---
->> Changes since v4:
->>   - No changes.
->> Changes since v3:
->>   - No changes.
->> Changes since v2:
->>   - No changes.
->> Changes since v1:
->>   - Newly added.
->>
->>   drivers/clk/qcom/camcc-sm8550.c | 180 ++++++++++++++++++++++++++++++++
->>   1 file changed, 180 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
->> index 075bea32087c..7b4882444d58 100644
->> --- a/drivers/clk/qcom/camcc-sm8550.c
->> +++ b/drivers/clk/qcom/camcc-sm8550.c
->> @@ -22,6 +22,8 @@
->>   enum {
->>   	DT_IFACE,
->>   	DT_BI_TCXO,
->> +	DT_BI_TCXO_AO,
->> +	DT_SLEEP_CLK,
->>   };
->>   
->>   enum {
->> @@ -43,6 +45,7 @@ enum {
->>   	P_CAM_CC_PLL10_OUT_EVEN,
->>   	P_CAM_CC_PLL11_OUT_EVEN,
->>   	P_CAM_CC_PLL12_OUT_EVEN,
->> +	P_SLEEP_CLK,
->>   };
->>   
->>   static const struct pll_vco lucid_ole_vco[] = {
->> @@ -881,6 +884,22 @@ static const struct clk_parent_data cam_cc_parent_data_11[] = {
->>   	{ .hw = &cam_cc_pll7_out_even.clkr.hw },
->>   };
->>   
->> +static const struct parent_map cam_cc_parent_map_12[] = {
->> +	{ P_SLEEP_CLK, 0 },
->> +};
->> +
->> +static const struct clk_parent_data cam_cc_parent_data_12[] = {
->> +	{ .index = DT_SLEEP_CLK },
->> +};
->> +
->> +static const struct parent_map cam_cc_parent_map_13[] = {
->> +	{ P_BI_TCXO, 0 },
->> +};
->> +
->> +static const struct clk_parent_data cam_cc_parent_data_13_ao[] = {
->> +	{ .index = DT_BI_TCXO_AO },
->> +};
->> +
->>   static const struct freq_tbl ftbl_cam_cc_bps_clk_src[] = {
->>   	F(19200000, P_BI_TCXO, 1, 0, 0),
->>   	F(200000000, P_CAM_CC_PLL8_OUT_EVEN, 1, 0, 0),
->> @@ -1565,6 +1584,29 @@ static struct clk_rcg2 cam_cc_mclk7_clk_src = {
->>   	},
->>   };
->>   
->> +static const struct freq_tbl ftbl_cam_cc_qdss_debug_clk_src[] = {
->> +	F(19200000, P_BI_TCXO, 1, 0, 0),
->> +	F(75000000, P_CAM_CC_PLL0_OUT_EVEN, 8, 0, 0),
->> +	F(150000000, P_CAM_CC_PLL0_OUT_EVEN, 4, 0, 0),
->> +	F(300000000, P_CAM_CC_PLL0_OUT_MAIN, 4, 0, 0),
->> +	{ }
->> +};
->> +
->> +static struct clk_rcg2 cam_cc_qdss_debug_clk_src = {
->> +	.cmd_rcgr = 0x13f24,
->> +	.mnd_width = 0,
->> +	.hid_width = 5,
->> +	.parent_map = cam_cc_parent_map_0,
->> +	.freq_tbl = ftbl_cam_cc_qdss_debug_clk_src,
->> +	.clkr.hw.init = &(const struct clk_init_data) {
->> +		.name = "cam_cc_qdss_debug_clk_src",
->> +		.parent_data = cam_cc_parent_data_0,
->> +		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->> +		.flags = CLK_SET_RATE_PARENT,
->> +		.ops = &clk_rcg2_shared_ops,
->> +	},
->> +};
->> +
->>   static const struct freq_tbl ftbl_cam_cc_sfe_0_clk_src[] = {
->>   	F(466000000, P_CAM_CC_PLL6_OUT_EVEN, 1, 0, 0),
->>   	F(594000000, P_CAM_CC_PLL6_OUT_EVEN, 1, 0, 0),
->> @@ -1611,6 +1653,26 @@ static struct clk_rcg2 cam_cc_sfe_1_clk_src = {
->>   	},
->>   };
->>   
->> +static const struct freq_tbl ftbl_cam_cc_sleep_clk_src[] = {
->> +	F(32000, P_SLEEP_CLK, 1, 0, 0),
->> +	{ }
->> +};
->> +
->> +static struct clk_rcg2 cam_cc_sleep_clk_src = {
->> +	.cmd_rcgr = 0x141a0,
->> +	.mnd_width = 0,
->> +	.hid_width = 5,
->> +	.parent_map = cam_cc_parent_map_12,
->> +	.freq_tbl = ftbl_cam_cc_sleep_clk_src,
->> +	.clkr.hw.init = &(const struct clk_init_data) {
->> +		.name = "cam_cc_sleep_clk_src",
->> +		.parent_data = cam_cc_parent_data_12,
->> +		.num_parents = ARRAY_SIZE(cam_cc_parent_data_12),
->> +		.flags = CLK_SET_RATE_PARENT,
->> +		.ops = &clk_rcg2_shared_ops,
->> +	},
->> +};
->> +
->>   static const struct freq_tbl ftbl_cam_cc_slow_ahb_clk_src[] = {
->>   	F(19200000, P_BI_TCXO, 1, 0, 0),
->>   	F(80000000, P_CAM_CC_PLL0_OUT_EVEN, 7.5, 0, 0),
->> @@ -1632,6 +1694,26 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
->>   	},
->>   };
->>   
->> +static const struct freq_tbl ftbl_cam_cc_xo_clk_src[] = {
->> +	F(19200000, P_BI_TCXO, 1, 0, 0),
-> You're overloading P_BI_TCXO with a different parent clock (XO_A).
+On 25.06.2023 13:42, Dmitry Baryshkov wrote:
+> Port Qualcomm QMP HDMI PHY to the generic PHY framework. Split the
+> generic part and the msm8996 part. When adding support for msm8992/4 and
+> msm8998 (which also employ QMP for HDMI PHY), one will have to provide
+> the PLL programming part only.
 > 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+[...]
 
-This RCG just requires active only voting, hence using XO_A as its parent.
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-hdmi-base.c
+> @@ -0,0 +1,184 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Linaro Ltd.
+> + */
+> +
+> +#include <linux/of_device.h>
+> +#include <linux/phy/phy.h>
+> +#include <linux/platform_device.h>
+> +
+> +#include "phy-qcom-qmp-hdmi.h"
+> +
+> +int qmp_hdmi_phy_init(struct phy *phy)
+> +{
+> +	struct qmp_hdmi_phy *hdmi_phy = phy_get_drvdata(phy);
+> +
+> +	return pm_runtime_resume_and_get(hdmi_phy->dev);
+> +}
+> +
+> +int qmp_hdmi_phy_configure(struct phy *phy, union phy_configure_opts *opts)
+> +{
+> +        const struct phy_configure_opts_hdmi *hdmi_opts = &opts->hdmi;
+> +	struct qmp_hdmi_phy *hdmi_phy = phy_get_drvdata(phy);
+Misaligned
 
-Both XO and XO_A are same clock in HW (BI_TCXO), hence we can reuse 
-P_BI_TCXO in frequency table for XO_A parent as well.
+> +        int ret = 0;
+> +
+> +        memcpy(&hdmi_phy->hdmi_opts, hdmi_opts, sizeof(*hdmi_opts));
+> +
+> +        return ret;
+> +}
+> +
+> +int qmp_hdmi_phy_exit(struct phy *phy)
+> +{
+> +	struct qmp_hdmi_phy *hdmi_phy = phy_get_drvdata(phy);
+> +
+> +	pm_runtime_put_noidle(hdmi_phy->dev);
+> +
+> +	return 0;
+> +}
+> +
+> +static int __maybe_unused qmp_hdmi_runtime_resume(struct device *dev)
+> +{
+> +	struct qmp_hdmi_phy *hdmi_phy = dev_get_drvdata(dev);
+> +	int ret;
+> +
+> +	ret = regulator_bulk_enable(ARRAY_SIZE(hdmi_phy->supplies), hdmi_phy->supplies);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(hdmi_phy->clks), hdmi_phy->clks);
+> +	if (ret)
+> +		goto out_disable_supplies;
+> +
+> +	return 0;
+> +
+> +out_disable_supplies:
+> +	regulator_bulk_disable(ARRAY_SIZE(hdmi_phy->supplies), hdmi_phy->supplies);
+> +
+> +	return ret;
+> +}
+> +
+> +static int __maybe_unused qmp_hdmi_runtime_suspend(struct device *dev)
+> +{
+> +	struct qmp_hdmi_phy *hdmi_phy = dev_get_drvdata(dev);
+> +
+> +	clk_bulk_disable_unprepare(ARRAY_SIZE(hdmi_phy->clks), hdmi_phy->clks);
+> +	regulator_bulk_disable(ARRAY_SIZE(hdmi_phy->supplies), hdmi_phy->supplies);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qmp_hdmi_probe(struct platform_device *pdev)
+> +{
+> +	struct clk_init_data init = {
+> +		.name = "hdmipll",
+> +		.parent_data = (const struct clk_parent_data[]) {
+> +			{ .fw_name = "xo", .name = "xo_board" },
+> +		},
+> +		.flags = CLK_GET_RATE_NOCACHE,
+> +		.num_parents = 1,
+> +	};
+> +	const struct qmp_hdmi_cfg *cfg = of_device_get_match_data(&pdev->dev);
+> +	struct phy_provider *phy_provider;
+> +	struct device *dev = &pdev->dev;
+> +	struct qmp_hdmi_phy *hdmi_phy;
+> +	int ret, i;
+> +
+> +	hdmi_phy = devm_kzalloc(dev, sizeof(*hdmi_phy), GFP_KERNEL);
+> +	if (!hdmi_phy)
+> +		return -ENOMEM;
+> +
+> +	hdmi_phy->dev = dev;
+> +
+> +	hdmi_phy->serdes = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(hdmi_phy->serdes))
+> +		return PTR_ERR(hdmi_phy->serdes);
+> +
+> +	for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++) {
+> +		hdmi_phy->tx[i] = devm_platform_ioremap_resource(pdev, 1 + i);
+> +		if (IS_ERR(hdmi_phy->tx[i]))
+> +			return PTR_ERR(hdmi_phy->tx[i]);
+> +	}
+> +
+> +	hdmi_phy->phy_reg = devm_platform_ioremap_resource(pdev, 5);
+Please create an enum with all the reg indices
 
-Thanks,
-Jagadeesh
+> +	if (IS_ERR(hdmi_phy->phy_reg))
+> +		return PTR_ERR(hdmi_phy->phy_reg);
+> +
+> +	hdmi_phy->clks[0].id = "iface";
+> +	hdmi_phy->clks[1].id = "ref";
+> +	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(hdmi_phy->clks), hdmi_phy->clks);
+> +	if (ret)
+> +		return ret;
+> +
+> +	hdmi_phy->supplies[0].supply = "vddio";
+> +	hdmi_phy->supplies[0].init_load_uA = 100000;
+> +	hdmi_phy->supplies[1].supply = "vcca";
+> +	hdmi_phy->supplies[1].init_load_uA = 10000;
+> +	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(hdmi_phy->supplies), hdmi_phy->supplies);
+> +	if (ret)
+> +		return ret;
+> +
+> +	platform_set_drvdata(pdev, hdmi_phy);
+> +
+> +	ret = devm_pm_runtime_enable(&pdev->dev);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = pm_runtime_resume_and_get(&pdev->dev);
+> +	if (ret)
+> +		return ret;
+> +
+> +	init.ops = cfg->pll_ops;
+> +	hdmi_phy->pll_hw.init = &init;
+> +	ret = devm_clk_hw_register(hdmi_phy->dev, &hdmi_phy->pll_hw);
+> +	if (ret)
+> +		goto err;
+> +
+> +	ret = devm_of_clk_add_hw_provider(hdmi_phy->dev, of_clk_hw_simple_get, &hdmi_phy->pll_hw);
+> +	if (ret)
+> +		goto err;
+> +
+> +	hdmi_phy->phy = devm_phy_create(dev, pdev->dev.of_node, cfg->phy_ops);
+> +	if (IS_ERR(hdmi_phy->phy)) {
+> +		ret = PTR_ERR(hdmi_phy->phy);
+> +		goto err;
+> +	}
+> +
+> +	phy_set_drvdata(hdmi_phy->phy, hdmi_phy);
+> +
+> +	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+> +	pm_runtime_put_noidle(&pdev->dev);
+> +	return PTR_ERR_OR_ZERO(phy_provider);
+> +
+> +err:
+> +	pm_runtime_put_noidle(&pdev->dev);
+> +	return ret;
+> +}
+> +
+> +static const struct of_device_id qmp_hdmi_of_match_table[] = {
+> +	{
+> +		.compatible = "qcom,hdmi-phy-8996", .data = &qmp_hdmi_8996_cfg,
+> +	},
+{ .compatible ... },
+?
 
-> The rest lgtm
-> 
-> Konrad
->> +	{ }
->> +};
->> +
->> +static struct clk_rcg2 cam_cc_xo_clk_src = {
->> +	.cmd_rcgr = 0x14070,
->> +	.mnd_width = 0,
->> +	.hid_width = 5,
->> +	.parent_map = cam_cc_parent_map_13,
->> +	.freq_tbl = ftbl_cam_cc_xo_clk_src,
->> +	.clkr.hw.init = &(const struct clk_init_data) {
->> +		.name = "cam_cc_xo_clk_src",
->> +		.parent_data = cam_cc_parent_data_13_ao,
->> +		.num_parents = ARRAY_SIZE(cam_cc_parent_data_13_ao),
->> +		.flags = CLK_SET_RATE_PARENT,
->> +		.ops = &clk_rcg2_shared_ops,
->> +	},
->> +};
->> +
->>   static struct clk_branch cam_cc_bps_ahb_clk = {
->>   	.halt_reg = 0x10274,
->>   	.halt_check = BRANCH_HALT,
->> @@ -1704,6 +1786,42 @@ static struct clk_branch cam_cc_camnoc_axi_clk = {
->>   	},
->>   };
->>   
->> +static struct clk_branch cam_cc_camnoc_dcd_xo_clk = {
->> +	.halt_reg = 0x13f18,
->> +	.halt_check = BRANCH_HALT,
->> +	.clkr = {
->> +		.enable_reg = 0x13f18,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(const struct clk_init_data) {
->> +			.name = "cam_cc_camnoc_dcd_xo_clk",
->> +			.parent_hws = (const struct clk_hw*[]) {
->> +				&cam_cc_xo_clk_src.clkr.hw,
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->> +static struct clk_branch cam_cc_camnoc_xo_clk = {
->> +	.halt_reg = 0x13f1c,
->> +	.halt_check = BRANCH_HALT,
->> +	.clkr = {
->> +		.enable_reg = 0x13f1c,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(const struct clk_init_data) {
->> +			.name = "cam_cc_camnoc_xo_clk",
->> +			.parent_hws = (const struct clk_hw*[]) {
->> +				&cam_cc_xo_clk_src.clkr.hw,
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->>   static struct clk_branch cam_cc_cci_0_clk = {
->>   	.halt_reg = 0x13a2c,
->>   	.halt_check = BRANCH_HALT,
->> @@ -2370,6 +2488,24 @@ static struct clk_branch cam_cc_drv_ahb_clk = {
->>   	},
->>   };
->>   
->> +static struct clk_branch cam_cc_drv_xo_clk = {
->> +	.halt_reg = 0x142d4,
->> +	.halt_check = BRANCH_HALT,
->> +	.clkr = {
->> +		.enable_reg = 0x142d4,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(const struct clk_init_data) {
->> +			.name = "cam_cc_drv_xo_clk",
->> +			.parent_hws = (const struct clk_hw*[]) {
->> +				&cam_cc_xo_clk_src.clkr.hw,
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->>   static struct clk_branch cam_cc_icp_ahb_clk = {
->>   	.halt_reg = 0x138fc,
->>   	.halt_check = BRANCH_HALT,
->> @@ -2910,6 +3046,42 @@ static struct clk_branch cam_cc_mclk7_clk = {
->>   	},
->>   };
->>   
->> +static struct clk_branch cam_cc_qdss_debug_clk = {
->> +	.halt_reg = 0x14050,
->> +	.halt_check = BRANCH_HALT,
->> +	.clkr = {
->> +		.enable_reg = 0x14050,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(const struct clk_init_data) {
->> +			.name = "cam_cc_qdss_debug_clk",
->> +			.parent_hws = (const struct clk_hw*[]) {
->> +				&cam_cc_qdss_debug_clk_src.clkr.hw,
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->> +static struct clk_branch cam_cc_qdss_debug_xo_clk = {
->> +	.halt_reg = 0x14054,
->> +	.halt_check = BRANCH_HALT,
->> +	.clkr = {
->> +		.enable_reg = 0x14054,
->> +		.enable_mask = BIT(0),
->> +		.hw.init = &(const struct clk_init_data) {
->> +			.name = "cam_cc_qdss_debug_xo_clk",
->> +			.parent_hws = (const struct clk_hw*[]) {
->> +				&cam_cc_xo_clk_src.clkr.hw,
->> +			},
->> +			.num_parents = 1,
->> +			.flags = CLK_SET_RATE_PARENT,
->> +			.ops = &clk_branch2_ops,
->> +		},
->> +	},
->> +};
->> +
->>   static struct clk_branch cam_cc_sbi_clk = {
->>   	.halt_reg = 0x10540,
->>   	.halt_check = BRANCH_HALT,
->> @@ -3133,6 +3305,8 @@ static struct clk_regmap *cam_cc_sm8550_clocks[] = {
->>   	[CAM_CC_BPS_FAST_AHB_CLK] = &cam_cc_bps_fast_ahb_clk.clkr,
->>   	[CAM_CC_CAMNOC_AXI_CLK] = &cam_cc_camnoc_axi_clk.clkr,
->>   	[CAM_CC_CAMNOC_AXI_CLK_SRC] = &cam_cc_camnoc_axi_clk_src.clkr,
->> +	[CAM_CC_CAMNOC_DCD_XO_CLK] = &cam_cc_camnoc_dcd_xo_clk.clkr,
->> +	[CAM_CC_CAMNOC_XO_CLK] = &cam_cc_camnoc_xo_clk.clkr,
->>   	[CAM_CC_CCI_0_CLK] = &cam_cc_cci_0_clk.clkr,
->>   	[CAM_CC_CCI_0_CLK_SRC] = &cam_cc_cci_0_clk_src.clkr,
->>   	[CAM_CC_CCI_1_CLK] = &cam_cc_cci_1_clk.clkr,
->> @@ -3184,6 +3358,7 @@ static struct clk_regmap *cam_cc_sm8550_clocks[] = {
->>   	[CAM_CC_CSIPHY6_CLK] = &cam_cc_csiphy6_clk.clkr,
->>   	[CAM_CC_CSIPHY7_CLK] = &cam_cc_csiphy7_clk.clkr,
->>   	[CAM_CC_DRV_AHB_CLK] = &cam_cc_drv_ahb_clk.clkr,
->> +	[CAM_CC_DRV_XO_CLK] = &cam_cc_drv_xo_clk.clkr,
->>   	[CAM_CC_FAST_AHB_CLK_SRC] = &cam_cc_fast_ahb_clk_src.clkr,
->>   	[CAM_CC_ICP_AHB_CLK] = &cam_cc_icp_ahb_clk.clkr,
->>   	[CAM_CC_ICP_CLK] = &cam_cc_icp_clk.clkr,
->> @@ -3260,6 +3435,9 @@ static struct clk_regmap *cam_cc_sm8550_clocks[] = {
->>   	[CAM_CC_PLL11_OUT_EVEN] = &cam_cc_pll11_out_even.clkr,
->>   	[CAM_CC_PLL12] = &cam_cc_pll12.clkr,
->>   	[CAM_CC_PLL12_OUT_EVEN] = &cam_cc_pll12_out_even.clkr,
->> +	[CAM_CC_QDSS_DEBUG_CLK] = &cam_cc_qdss_debug_clk.clkr,
->> +	[CAM_CC_QDSS_DEBUG_CLK_SRC] = &cam_cc_qdss_debug_clk_src.clkr,
->> +	[CAM_CC_QDSS_DEBUG_XO_CLK] = &cam_cc_qdss_debug_xo_clk.clkr,
->>   	[CAM_CC_SBI_CLK] = &cam_cc_sbi_clk.clkr,
->>   	[CAM_CC_SBI_FAST_AHB_CLK] = &cam_cc_sbi_fast_ahb_clk.clkr,
->>   	[CAM_CC_SFE_0_CLK] = &cam_cc_sfe_0_clk.clkr,
->> @@ -3268,7 +3446,9 @@ static struct clk_regmap *cam_cc_sm8550_clocks[] = {
->>   	[CAM_CC_SFE_1_CLK] = &cam_cc_sfe_1_clk.clkr,
->>   	[CAM_CC_SFE_1_CLK_SRC] = &cam_cc_sfe_1_clk_src.clkr,
->>   	[CAM_CC_SFE_1_FAST_AHB_CLK] = &cam_cc_sfe_1_fast_ahb_clk.clkr,
->> +	[CAM_CC_SLEEP_CLK_SRC] = &cam_cc_sleep_clk_src.clkr,
->>   	[CAM_CC_SLOW_AHB_CLK_SRC] = &cam_cc_slow_ahb_clk_src.clkr,
->> +	[CAM_CC_XO_CLK_SRC] = &cam_cc_xo_clk_src.clkr,
->>   };
->>   
->>   static struct gdsc *cam_cc_sm8550_gdscs[] = {
+> +	{ },
+> +};
+> +MODULE_DEVICE_TABLE(of, qmp_hdmi_of_match_table);
+> +
+> +DEFINE_RUNTIME_DEV_PM_OPS(qmp_hdmi_pm_ops,
+> +			  qmp_hdmi_runtime_suspend,
+> +			  qmp_hdmi_runtime_resume,
+> +			  NULL);
+> +
+> +static struct platform_driver qmp_hdmi_driver = {
+> +	.probe		= qmp_hdmi_probe,
+> +	.driver = {
+> +		.name	= "qcom-qmp-hdmi-phy",
+> +		.of_match_table = qmp_hdmi_of_match_table,
+> +		.pm     = &qmp_hdmi_pm_ops,
+> +	},
+> +};
+> +
+> +module_platform_driver(qmp_hdmi_driver);
+> +
+> +MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
+> +MODULE_DESCRIPTION("Qualcomm QMP HDMI PHY driver");
+> +MODULE_LICENSE("GPL");
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-hdmi-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-hdmi-msm8996.c
+> new file mode 100644
+> index 000000000000..27ffa70d0faa
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-hdmi-msm8996.c
+> @@ -0,0 +1,441 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Linaro Ltd.
+> + */
+> +
+> +#include <linux/delay.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/phy/phy.h>
+> +
+> +#include "phy-qcom-qmp-hdmi.h"
+> +#include "phy-qcom-qmp-qserdes-com.h"
+> +#include "phy-qcom-qmp-qserdes-txrx.h"
+> +
+> +#define HDMI_VCO_MAX_FREQ			12000000000UL
+> +#define HDMI_VCO_MIN_FREQ			8000000000UL
+> +
+> +#define HDMI_PCLK_MAX_FREQ			600000000UL
+> +#define HDMI_PCLK_MIN_FREQ			25000000UL
+> +
+> +#define HDMI_HIGH_FREQ_BIT_CLK_THRESHOLD	3400000000UL
+> +#define HDMI_DIG_FREQ_BIT_CLK_THRESHOLD		1500000000UL
+> +#define HDMI_MID_FREQ_BIT_CLK_THRESHOLD		750000000UL
+> +#define HDMI_DEFAULT_REF_CLOCK			19200000
+> +#define HDMI_PLL_CMP_CNT			1024
+> +
+> +#define HDMI_PLL_POLL_MAX_READS			100
+> +#define HDMI_PLL_POLL_TIMEOUT_US		150
+> +
+> +#define REG_HDMI_8996_PHY_CFG					0x00000000
+> +#define REG_HDMI_8996_PHY_PD_CTL				0x00000004
+> +#define REG_HDMI_8996_PHY_MODE					0x00000008
+> +#define REG_HDMI_8996_PHY_MISR_CLEAR				0x0000000c
+> +#define REG_HDMI_8996_PHY_TX0_TX1_BIST_CFG0			0x00000010
+> +#define REG_HDMI_8996_PHY_TX0_TX1_BIST_CFG1			0x00000014
+> +#define REG_HDMI_8996_PHY_TX0_TX1_PRBS_SEED_BYTE0		0x00000018
+> +#define REG_HDMI_8996_PHY_TX0_TX1_PRBS_SEED_BYTE1		0x0000001c
+> +#define REG_HDMI_8996_PHY_TX0_TX1_BIST_PATTERN0			0x00000020
+> +#define REG_HDMI_8996_PHY_TX0_TX1_BIST_PATTERN1			0x00000024
+> +#define REG_HDMI_8996_PHY_TX2_TX3_BIST_CFG0			0x00000028
+> +#define REG_HDMI_8996_PHY_TX2_TX3_BIST_CFG1			0x0000002c
+> +#define REG_HDMI_8996_PHY_TX2_TX3_PRBS_SEED_BYTE0		0x00000030
+> +#define REG_HDMI_8996_PHY_TX2_TX3_PRBS_SEED_BYTE1		0x00000034
+> +#define REG_HDMI_8996_PHY_TX2_TX3_BIST_PATTERN0			0x00000038
+> +#define REG_HDMI_8996_PHY_TX2_TX3_BIST_PATTERN1			0x0000003c
+> +#define REG_HDMI_8996_PHY_DEBUG_BUS_SEL				0x00000040
+> +#define REG_HDMI_8996_PHY_TXCAL_CFG0				0x00000044
+> +#define REG_HDMI_8996_PHY_TXCAL_CFG1				0x00000048
+> +#define REG_HDMI_8996_PHY_TX0_TX1_LANE_CTL			0x0000004c
+> +#define REG_HDMI_8996_PHY_TX2_TX3_LANE_CTL			0x00000050
+> +#define REG_HDMI_8996_PHY_LANE_BIST_CONFIG			0x00000054
+> +#define REG_HDMI_8996_PHY_CLOCK					0x00000058
+> +#define REG_HDMI_8996_PHY_MISC1					0x0000005c
+> +#define REG_HDMI_8996_PHY_MISC2					0x00000060
+> +#define REG_HDMI_8996_PHY_TX0_TX1_BIST_STATUS0			0x00000064
+> +#define REG_HDMI_8996_PHY_TX0_TX1_BIST_STATUS1			0x00000068
+> +#define REG_HDMI_8996_PHY_TX0_TX1_BIST_STATUS2			0x0000006c
+> +#define REG_HDMI_8996_PHY_TX2_TX3_BIST_STATUS0			0x00000070
+> +#define REG_HDMI_8996_PHY_TX2_TX3_BIST_STATUS1			0x00000074
+> +#define REG_HDMI_8996_PHY_TX2_TX3_BIST_STATUS2			0x00000078
+> +#define REG_HDMI_8996_PHY_PRE_MISR_STATUS0			0x0000007c
+> +#define REG_HDMI_8996_PHY_PRE_MISR_STATUS1			0x00000080
+> +#define REG_HDMI_8996_PHY_PRE_MISR_STATUS2			0x00000084
+> +#define REG_HDMI_8996_PHY_PRE_MISR_STATUS3			0x00000088
+> +#define REG_HDMI_8996_PHY_POST_MISR_STATUS0			0x0000008c
+> +#define REG_HDMI_8996_PHY_POST_MISR_STATUS1			0x00000090
+> +#define REG_HDMI_8996_PHY_POST_MISR_STATUS2			0x00000094
+> +#define REG_HDMI_8996_PHY_POST_MISR_STATUS3			0x00000098
+> +#define REG_HDMI_8996_PHY_STATUS				0x0000009c
+> +#define REG_HDMI_8996_PHY_MISC3_STATUS				0x000000a0
+> +#define REG_HDMI_8996_PHY_MISC4_STATUS				0x000000a4
+> +#define REG_HDMI_8996_PHY_DEBUG_BUS0				0x000000a8
+> +#define REG_HDMI_8996_PHY_DEBUG_BUS1				0x000000ac
+> +#define REG_HDMI_8996_PHY_DEBUG_BUS2				0x000000b0
+> +#define REG_HDMI_8996_PHY_DEBUG_BUS3				0x000000b4
+> +#define REG_HDMI_8996_PHY_PHY_REVISION_ID0			0x000000b8
+> +#define REG_HDMI_8996_PHY_PHY_REVISION_ID1			0x000000bc
+> +#define REG_HDMI_8996_PHY_PHY_REVISION_ID2			0x000000c0
+> +#define REG_HDMI_8996_PHY_PHY_REVISION_ID3			0x000000c4
+> +
+> +struct qmp_hdmi_8996_post_divider {
+> +	u64 vco_freq;
+> +	int hsclk_divsel;
+> +	int vco_ratio;
+> +	int tx_band_sel;
+> +};
+> +
+> +static inline u32 qmp_hdmi_8996_pll_get_pll_cmp(u64 fdata, unsigned long ref_clk)
+> +{
+> +	u64 dividend = HDMI_PLL_CMP_CNT * fdata;
+HDMI_PLL_CMP_CNT should be ULL
+
+> +	u32 divisor = ref_clk * 10;
+> +	u32 rem;
+> +
+> +	rem = do_div(dividend, divisor);
+> +	if (rem > (divisor >> 1))
+> +		dividend++;
+> +
+> +	return dividend - 1;
+> +}
+> +
+> +static int qmp_hdmi_8996_pll_get_post_div(struct qmp_hdmi_8996_post_divider *pd, u64 bclk)
+> +{
+> +	int ratio[] = { 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 20, 21, 25, 28, 35 };
+> +	int hs_divsel[] = { 0, 4, 8, 12, 1, 5, 2, 9, 3, 13, 10, 7, 14, 11, 15 };
+> +	int tx_band_sel[] = { 0, 1, 2, 3 };
+> +	u64 vco_freq[60];
+60 -> ARRAY_SIZE() * ARRAY_SIZE()?
+
+> +	u64 vco, vco_optimal;
+> +	int half_rate_mode = 0;
+> +	int vco_optimal_index, vco_freq_index;
+> +	int i, j;
+Reverse-Christmas-tree?
+
+> +
+> +retry:
+> +	vco_optimal = HDMI_VCO_MAX_FREQ;
+> +	vco_optimal_index = -1;
+> +	vco_freq_index = 0;
+> +	for (i = 0; i < 15; i++) {
+> +		for (j = 0; j < 4; j++) {
+> +			u32 ratio_mult = ratio[i] << tx_band_sel[j];
+> +
+> +			vco = bclk >> half_rate_mode;
+> +			vco *= ratio_mult;
+> +			vco_freq[vco_freq_index++] = vco;
+> +		}
+> +	}
+> +
+> +	for (i = 0; i < 60; i++) {
+> +		u64 vco_tmp = vco_freq[i];
+> +
+> +		if ((vco_tmp >= HDMI_VCO_MIN_FREQ) &&
+> +		    (vco_tmp <= vco_optimal)) {
+> +			vco_optimal = vco_tmp;
+> +			vco_optimal_index = i;
+> +		}
+> +	}
+> +
+> +	if (vco_optimal_index == -1) {
+> +		if (!half_rate_mode) {
+> +			half_rate_mode = 1;
+> +			goto retry;
+> +		}
+> +
+> +		return -EINVAL;
+> +	}
+> +
+> +	pd->vco_freq = vco_optimal;
+> +	pd->tx_band_sel = tx_band_sel[vco_optimal_index % 4];
+> +	pd->vco_ratio = ratio[vco_optimal_index / 4];
+> +	pd->hsclk_divsel = hs_divsel[vco_optimal_index / 4];
+> +
+> +	return 0;
+> +}
+> +
+> +static int qmp_hdmi_8996_phy_set_rate(struct qmp_hdmi_phy *hdmi_phy)
+> +{
+> +	unsigned long parent_rate = HDMI_DEFAULT_REF_CLOCK;
+HDMI_DEFAULT_REF_CLOCK could be UL for completeness
+
+> +	unsigned long rate = hdmi_phy->hdmi_opts.pixel_clk_rate * 1000;
+> +	struct qmp_hdmi_8996_post_divider pd;
+> +	bool gen_ssc = false;
+> +	u64 bclk;
+> +	u64 dec_start;
+> +	u64 frac_start;
+> +	u64 fdata;
+> +	u32 pll_divisor;
+> +	u32 rem;
+> +	u32 integloop_gain;
+> +	u32 pll_cmp;
+> +	int i, ret;
+This list is very long, perhaps collapse some common-type var definitions
+
+> +
+> +	bclk = ((u64)rate) * 10;
+19.2 mil * 10 will not overflow u32
+
+> +	ret = qmp_hdmi_8996_pll_get_post_div(&pd, bclk);
+> +	if (ret) {
+> +		dev_err(hdmi_phy->dev, "PLL calculation failed\n");
+> +		return ret;
+> +	}
+> +
+> +	dec_start = pd.vco_freq;
+> +	pll_divisor = 4 * parent_rate;
+> +	do_div(dec_start, pll_divisor);
+> +
+> +	frac_start = pd.vco_freq * (1 << 20);
+> +
+> +	rem = do_div(frac_start, pll_divisor);
+> +	frac_start -= dec_start * (1 << 20);
+> +	if (rem > (pll_divisor >> 1))
+> +		frac_start++;
+> +
+> +	fdata = pd.vco_freq;
+> +	do_div(fdata, pd.vco_ratio);
+> +
+> +	pll_cmp = qmp_hdmi_8996_pll_get_pll_cmp(fdata, parent_rate);
+> +
+> +	/* Initially shut down PHY */
+> +	dev_dbg(hdmi_phy->dev, "Disabling PHY");
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_PD_CTL, 0x0);
+> +	udelay(500);
+usleep_range
+
+https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
+
+> +
+> +	/* Power up sequence */
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_BG_CTRL, 0x04);
+> +
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_PD_CTL, 0x1);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_RESETSM_CNTRL, 0x20);
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_TX0_TX1_LANE_CTL, 0x0f);
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_TX2_TX3_LANE_CTL, 0x0f);
+> +
+> +	hdmi_tx_chan_write(hdmi_phy, 0, QSERDES_TX_LANE_MODE, 0x43);
+> +	hdmi_tx_chan_write(hdmi_phy, 2, QSERDES_TX_LANE_MODE, 0x43);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SYSCLK_BUF_ENABLE, 0x1e);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x07);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SYSCLK_EN_SEL, 0x37);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SYS_CLK_CTRL, 0x02);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_CLK_ENABLE1, 0x0e);
+> +
+> +	if (frac_start != 0 || gen_ssc) {
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_PLL_CCTRL_MODE0, 0x28);
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_PLL_RCTRL_MODE0, 0x16);
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_CP_CTRL_MODE0,
+> +			       11000000 / (parent_rate/ 20));
+> +		integloop_gain = (64 * parent_rate) / HDMI_DEFAULT_REF_CLOCK;
+do_div
+
+> +	} else {
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_PLL_CCTRL_MODE0, 0x01);
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_PLL_RCTRL_MODE0, 0x10);
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_CP_CTRL_MODE0, 0x23);
+> +		integloop_gain = (1022 * parent_rate) / (100 * 1000 * 1000);
+> +	}
+> +
+> +	/* Bypass VCO calibration */
+> +	if (bclk > HDMI_DIG_FREQ_BIT_CLK_THRESHOLD) {
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_SVS_MODE_CLK_SEL, 1);
+> +		integloop_gain <<= 1;
+> +	} else {
+> +		hdmi_pll_write(hdmi_phy, QSERDES_COM_SVS_MODE_CLK_SEL, 2);
+> +		integloop_gain <<= 2;
+> +	}
+> +
+> +	integloop_gain = min_t(u32, integloop_gain, 2046);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_BG_TRIM, 0x0f);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_PLL_IVCO, 0x0f);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_VCO_TUNE_CTRL, 0);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_BG_CTRL, 0x06);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_CLK_SELECT, 0x30);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_HSCLK_SEL, 0x20 | pd.hsclk_divsel);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_LOCK_CMP_EN, 0x0);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_DEC_START_MODE0, dec_start);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_DIV_FRAC_START1_MODE0,
+> +		       frac_start & 0xff);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_DIV_FRAC_START2_MODE0,
+> +		       (frac_start >> 8) & 0xff);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_DIV_FRAC_START3_MODE0,
+> +		       (frac_start >> 16) & 0xf);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_INTEGLOOP_GAIN0_MODE0,
+> +		       integloop_gain & 0xff);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_INTEGLOOP_GAIN1_MODE0,
+> +		       (integloop_gain >> 8) & 0xff);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_LOCK_CMP1_MODE0,
+> +		       pll_cmp & 0xff);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_LOCK_CMP2_MODE0,
+> +		       (pll_cmp >> 8) & 0xff);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_LOCK_CMP3_MODE0,
+> +		       (pll_cmp >> 16) & 0x3);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_VCO_TUNE_MAP, 0x00);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_CORE_CLK_EN, 0x2c);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_CORECLK_DIV, 5);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_CMN_CONFIG, 0x02);
+> +
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_RESCODE_DIV_NUM, 0x15);
+> +
+> +	/* TX lanes setup (TX 0/1/2/3) */
+> +	for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++) {
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_CLKBUF_ENABLE, 0x03);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_BAND, pd.tx_band_sel + 4);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_RESET_TSYNC_EN, 0x03);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_VMODE_CTRL1, 0x00);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_DRV_LVL_OFFSET, 0x00);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_RES_CODE_LANE_OFFSET, 0x00);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TRAN_DRVR_EMP_EN, 0x03);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_PARRATE_REC_DETECT_IDLE_EN, 0x40);
+> +		hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_HP_PD_ENABLES,
+is this a misspelt 'ENABLED'?
+
+> +				   i != 3 ? 0xc : 0x3);
+> +	}
+> +
+> +	if (bclk > HDMI_HIGH_FREQ_BIT_CLK_THRESHOLD) {
+> +		for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++) {
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_DRV_LVL,
+> +					   i != 3 ? 0x25 : 0x22);
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_EMP_POST1_LVL,
+> +					   i != 3 ? 0x23 : 0x27);
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_VMODE_CTRL2,
+> +					   i != 3 ? 0x0d : 0x00);
+> +		}
+> +	} else if (bclk > HDMI_MID_FREQ_BIT_CLK_THRESHOLD) {
+> +		for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++) {
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_DRV_LVL, 0x25);
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_EMP_POST1_LVL, 0x23);
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_VMODE_CTRL2,
+> +					   i != 3 ? 0x0d : 0x00);
+> +		}
+> +	} else {
+> +		for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++) {
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_DRV_LVL, 0x20);
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_TX_EMP_POST1_LVL, 0x20);
+> +			hdmi_tx_chan_write(hdmi_phy, i, QSERDES_TX_VMODE_CTRL2, 0x0e);
+> +		}
+> +	}
+> +
+> +	if (bclk > HDMI_HIGH_FREQ_BIT_CLK_THRESHOLD)
+> +		hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_MODE, 0x10);
+> +	else
+> +		hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_MODE, 0x00);
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_PD_CTL, 0x1f);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qmp_hdmi_8996_phy_power_on(struct phy *phy)
+> +{
+> +	struct qmp_hdmi_phy *hdmi_phy = phy_get_drvdata(phy);
+> +	u32 status;
+> +	int i, ret = 0;
+Reverse-Christmas-tree?
+
+> +
+> +	ret = qmp_hdmi_8996_phy_set_rate(hdmi_phy);
+> +	if (ret) {
+> +		dev_err(hdmi_phy->dev, "Setting pixel clock rate failed\n");
+> +		return ret;
+> +	}
+> +
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_CFG, 0x1);
+> +	udelay(100);
+usleep_range
+
+> +
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_CFG, 0x19);
+> +	udelay(100);
+usleep_range
+
+> +
+> +	ret = readl_poll_timeout(hdmi_phy->serdes + QSERDES_COM_C_READY_STATUS,
+> +				 status, status & BIT(0),
+> +				 HDMI_PLL_POLL_TIMEOUT_US,
+> +				 HDMI_PLL_POLL_MAX_READS * HDMI_PLL_POLL_TIMEOUT_US);
+> +
+> +	if (ret) {
+> +		dev_warn(hdmi_phy->dev, "HDMI PLL is not locked\n");
+> +		return ret;
+> +	}
+> +
+> +	for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++)
+> +		hdmi_tx_chan_write(hdmi_phy, i,
+> +				   QSERDES_TX_HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN,
+> +				   0x6f);
+> +
+> +	/* Disable SSC */
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SSC_PER1, 0x0);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SSC_PER2, 0x0);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SSC_STEP_SIZE1, 0x0);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SSC_STEP_SIZE2, 0x0);
+> +	hdmi_pll_write(hdmi_phy, QSERDES_COM_SSC_EN_CENTER, 0x2);
+> +
+> +	ret = readl_poll_timeout(hdmi_phy->phy_reg + REG_HDMI_8996_PHY_STATUS,
+> +				 status, status & BIT(0),
+> +				 HDMI_PLL_POLL_TIMEOUT_US,
+> +				 HDMI_PLL_POLL_MAX_READS * HDMI_PLL_POLL_TIMEOUT_US);
+> +	if (ret) {
+> +		dev_warn(hdmi_phy->dev, "HDMI PLL is not locked\n");
+> +		return ret;
+> +	}
+> +
+> +	/* Restart the retiming buffer */
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_CFG, 0x18);
+> +	udelay(1);
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_CFG, 0x19);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qmp_hdmi_8996_phy_power_off(struct phy *phy)
+> +{
+> +	struct qmp_hdmi_phy *hdmi_phy = phy_get_drvdata(phy);
+> +
+> +	hdmi_phy_write(hdmi_phy, REG_HDMI_8996_PHY_CFG, 0x6);
+> +	usleep_range(100, 150);
+> +
+> +	return 0;
+> +}
+> +
+> +static long qmp_hdmi_8996_pll_round_rate(struct clk_hw *hw,
+> +				     unsigned long rate,
+> +				     unsigned long *parent_rate)
+> +{
+> +	return clamp(rate, HDMI_PCLK_MIN_FREQ, HDMI_PCLK_MAX_FREQ);
+> +}
+> +
+> +static unsigned long qmp_hdmi_8996_pll_recalc_rate(struct clk_hw *hw,
+> +					       unsigned long parent_rate)
+> +{
+> +	struct qmp_hdmi_phy *phy = hw_clk_to_pll(hw);
+> +	u32 cmp1, cmp2, cmp3, pll_cmp;
+> +
+> +	cmp1 = hdmi_pll_read(phy, QSERDES_COM_LOCK_CMP1_MODE0);
+> +	cmp2 = hdmi_pll_read(phy, QSERDES_COM_LOCK_CMP2_MODE0);
+> +	cmp3 = hdmi_pll_read(phy, QSERDES_COM_LOCK_CMP3_MODE0);
+> +
+> +	pll_cmp = cmp1 | (cmp2 << 8) | (cmp3 << 16);
+FIELD_PREP to avoid overflows if hw returns garbage?
+Or is it supposed to overflow by design?
+
+> +
+> +	return mult_frac(pll_cmp + 1, parent_rate, HDMI_PLL_CMP_CNT);
+> +}
+> +
+> +static int qmp_hdmi_8996_pll_is_enabled(struct clk_hw *hw)
+> +{
+> +	struct qmp_hdmi_phy *phy = hw_clk_to_pll(hw);
+> +	u32 status;
+> +	int pll_locked;
+Reverse-Christmas-tree?
+
+Konrad
+> +
+> +	status = hdmi_pll_read(phy, QSERDES_COM_C_READY_STATUS);
+> +	pll_locked = status & BIT(0);
+> +
+> +	return pll_locked;
+> +}
+> +
+> +static const struct clk_ops qmp_hdmi_8996_pll_ops = {
+> +	.recalc_rate = qmp_hdmi_8996_pll_recalc_rate,
+> +	.round_rate = qmp_hdmi_8996_pll_round_rate,
+> +	.is_enabled = qmp_hdmi_8996_pll_is_enabled,
+> +};
+> +
+> +static const struct phy_ops qmp_hdmi_8996_phy_ops = {
+> +	.init		= qmp_hdmi_phy_init,
+> +	.configure	= qmp_hdmi_phy_configure,
+> +	.power_on	= qmp_hdmi_8996_phy_power_on,
+> +	.power_off	= qmp_hdmi_8996_phy_power_off,
+> +	.exit		= qmp_hdmi_phy_exit,
+> +	.owner		= THIS_MODULE,
+> +};
+> +
+> +const struct qmp_hdmi_cfg qmp_hdmi_8996_cfg = {
+> +	.pll_ops = &qmp_hdmi_8996_pll_ops,
+> +	.phy_ops = &qmp_hdmi_8996_phy_ops,
+> +};
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-hdmi.h b/drivers/phy/qualcomm/phy-qcom-qmp-hdmi.h
+> new file mode 100644
+> index 000000000000..25d307a8f287
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-hdmi.h
+> @@ -0,0 +1,75 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Linaro Ltd.
+> + */
+> +
+> +#ifndef PHY_QCOM_QMP_HDMI_H
+> +#define PHY_QCOM_QMP_HDMI_H
+> +
+> +#include <linux/clk.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/regulator/consumer.h>
+> +#include <linux/phy/phy-hdmi.h>
+> +
+> +#define MAX_CLKS 2
+> +#define MAX_SUPPLIES 2
+> +
+> +#define HDMI_NUM_TX_CHANNEL 4
+> +
+> +struct qmp_hdmi_phy {
+> +	struct device *dev;
+> +	struct phy *phy;
+> +	void __iomem *serdes;
+> +	void __iomem *tx[HDMI_NUM_TX_CHANNEL];
+> +	void __iomem *phy_reg;
+> +
+> +	struct phy_configure_opts_hdmi hdmi_opts;
+> +
+> +	struct clk_hw pll_hw;
+> +	struct clk_bulk_data clks[MAX_CLKS];
+> +	struct regulator_bulk_data supplies[MAX_SUPPLIES];
+> +};
+> +
+> +struct qmp_hdmi_cfg {
+> +	const struct clk_ops *pll_ops;
+> +	const struct phy_ops *phy_ops;
+> +};
+> +
+> +#define hw_clk_to_pll(x) container_of(x, struct qmp_hdmi_phy, pll_hw)
+> +
+> +static inline void hdmi_phy_write(struct qmp_hdmi_phy *phy, int offset,
+> +				  u32 data)
+> +{
+> +	writel(data, phy->phy_reg + offset);
+> +}
+> +
+> +static inline u32 hdmi_phy_read(struct qmp_hdmi_phy *phy, int offset)
+> +{
+> +	return readl(phy->phy_reg + offset);
+> +}
+> +
+> +static inline void hdmi_pll_write(struct qmp_hdmi_phy *phy, int offset,
+> +				  u32 data)
+> +{
+> +	writel(data, phy->serdes + offset);
+> +}
+> +
+> +static inline u32 hdmi_pll_read(struct qmp_hdmi_phy *phy, int offset)
+> +{
+> +	return readl(phy->serdes + offset);
+> +}
+> +
+> +static inline void hdmi_tx_chan_write(struct qmp_hdmi_phy *phy, int channel,
+> +				      int offset, int data)
+> +{
+> +	writel(data, phy->tx[channel] + offset);
+> +}
+> +
+> +int qmp_hdmi_phy_init(struct phy *phy);
+> +int qmp_hdmi_phy_configure(struct phy *phy, union phy_configure_opts *opts);
+> +int qmp_hdmi_phy_exit(struct phy *phy);
+> +
+> +extern const struct qmp_hdmi_cfg qmp_hdmi_8996_cfg;
+> +
+> +#endif
