@@ -2,191 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B793C73DB40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 11:22:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 531BA73DB6C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 11:30:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230247AbjFZJWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 05:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34564 "EHLO
+        id S229482AbjFZJaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 05:30:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbjFZJVt (ORCPT
+        with ESMTP id S230385AbjFZJaI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 05:21:49 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3DE22951;
-        Mon, 26 Jun 2023 02:19:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687771190; x=1719307190;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4iirlHjDQFEOmwfWu25Zqlp+FjDKn3qrPL7a4DX2oxs=;
-  b=A+M/UZFQUjCFGzotGIOlX78dhQTyVY+i+g9bUJod9QSCk/SXAT349Eb/
-   BxPiBp7u64yhfgINjY9T+ZdmeKTB4BRd/SB+GCmdqJZa4zS4oj5AFrxGs
-   WA1IFVhpfD+wkUcKZACJ5nNq7s798pJgK34APhCgnEsA1XTZNrFyu/SkT
-   OxIytmIvMql3Bb/ztYetu+t1QvKM9pryDGygQKAsTkp7VsCm9Y6xkiAAK
-   2uCAKhQ8QBzUcKqLl82YL8sJZ4zaH7euvc0W7XbgkwJBl/8B+TlDRnriu
-   eJOMYYQFUsOd54K/PZi05qItPEPVtUHX9frtuyoYDKP8dorls1u7RQzxR
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10752"; a="447605392"
-X-IronPort-AV: E=Sophos;i="6.01,159,1684825200"; 
-   d="scan'208";a="447605392"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2023 02:19:36 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10752"; a="860618521"
-X-IronPort-AV: E=Sophos;i="6.01,159,1684825200"; 
-   d="scan'208";a="860618521"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 26 Jun 2023 02:19:31 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 26 Jun 2023 12:19:31 +0300
-Date:   Mon, 26 Jun 2023 12:19:31 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mon, 26 Jun 2023 05:30:08 -0400
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3453B9;
+        Mon, 26 Jun 2023 02:30:05 -0700 (PDT)
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-345a0cf5b3bso8682275ab.0;
+        Mon, 26 Jun 2023 02:30:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687771805; x=1690363805;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+OtaETWb24m97Ds/UuSIviPp/udpUqkFteTCOvggmng=;
+        b=HjEhtpSZrlJBIXPBgyEwMzVVrssHF6MJZQ8i6vFqvk5jMqR40EyvKIrqyI33FTi9NZ
+         6bonRSu7Q0ATA8TVDeTsp7UOIRn/BtmQky8wNVACxRxacQdL6DW6tbU1QPmh7ZYF8bNT
+         49AWd+WiqLtWDsRB/aKQta6hfrlfpfmQscZZj1orPhMMjL2jJCQ/tfHHKmZZRaWXoysf
+         G3CfGop70rxEYw9bGr24bXyMXYvTqKcQXLOa4HYo8XlUnPvw1B0sQNQs7dh7uiCL3/bN
+         HuoXrJ6EmbehYPtA8sBDGm8i8LXVXsrWD2q1+g6f7+JeO/lQ59Fg/oA3mVNw+53JbOBp
+         1/qw==
+X-Gm-Message-State: AC+VfDx/2L2sbfkXFpOsWnFoTriIgnJtsIdH3YMK2MT8XOyXwGP1h6q9
+        SvKPoPsD0yet8vLQviJYog==
+X-Google-Smtp-Source: ACHHUZ7ma3u80z5g13zdtQF0PPsMHvxWrDwncZTbHWyQ5p5pXLKxhjX3k1XvOGgqqkWOSND7WCI3Qg==
+X-Received: by 2002:a92:d309:0:b0:33d:3b69:2d23 with SMTP id x9-20020a92d309000000b0033d3b692d23mr22947121ila.19.1687771804923;
+        Mon, 26 Jun 2023 02:30:04 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id p17-20020a056e0206d100b00341fa29aaf4sm1886925ils.39.2023.06.26.02.30.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jun 2023 02:30:04 -0700 (PDT)
+Received: (nullmailer pid 2436844 invoked by uid 1000);
+        Mon, 26 Jun 2023 09:30:02 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     phone-devel@vger.kernel.org, Bart Van Assche <bvanassche@acm.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
+        Iskren Chernev <me@iskren.info>,
+        Avri Altman <avri.altman@wdc.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v3 4/8] qcom: pmic_glink_altmode: add retimer-switch
- support
-Message-ID: <ZJlYI+Ked1gA8NOh@kuha.fi.intel.com>
-References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
- <20230601-topic-sm8550-upstream-type-c-v3-4-22c9973012b6@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v3-4-22c9973012b6@linaro.org>
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Eric Biggers <ebiggers@google.com>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-scsi@vger.kernel.org
+In-Reply-To: <20221209-dt-binding-ufs-v4-3-14ced60f3d1b@fairphone.com>
+References: <20221209-dt-binding-ufs-v4-0-14ced60f3d1b@fairphone.com>
+ <20221209-dt-binding-ufs-v4-3-14ced60f3d1b@fairphone.com>
+Message-Id: <168777180225.2436813.12641828486385303318.robh@kernel.org>
+Subject: Re: [PATCH v4 3/3] dt-bindings: ufs: qcom: Fix sm8450 bindings
+Date:   Mon, 26 Jun 2023 03:30:02 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 09:55:57AM +0200, Neil Armstrong wrote:
-> Some boards have a retimer/redriver between the SuperSpeed
-> PHY and the USB-C connector to compensates signal integrity
-> losses mainly due to PCB & transmission cables.
-> 
-> Add support for an optional retimer-switch in the USB-C
-> connector graph.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-
+On Mon, 26 Jun 2023 10:15:59 +0200, Luca Weiss wrote:
+> SM8450 actually supports ICE (Inline Crypto Engine) so adjust the
+> bindings and the example to match.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Eric Biggers <ebiggers@google.com>
+> Reviewed-by: Iskren Chernev <me@iskren.info>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/soc/qcom/pmic_glink_altmode.c | 43 +++++++++++++++++++++++++++++++++++
->  1 file changed, 43 insertions(+)
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-> index 007d308e2f15..41d732f5b647 100644
-> --- a/drivers/soc/qcom/pmic_glink_altmode.c
-> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
-> @@ -15,6 +15,7 @@
->  #include <linux/usb/typec_altmode.h>
->  #include <linux/usb/typec_dp.h>
->  #include <linux/usb/typec_mux.h>
-> +#include <linux/usb/typec_retimer.h>
->  
->  #include <linux/soc/qcom/pmic_glink.h>
->  
-> @@ -68,6 +69,8 @@ struct pmic_glink_altmode_port {
->  	struct typec_switch *typec_switch;
->  	struct typec_mux *typec_mux;
->  	struct typec_mux_state state;
-> +	struct typec_retimer *typec_retimer;
-> +	struct typec_retimer_state retimer_state;
->  	struct typec_altmode dp_alt;
->  
->  	struct work_struct work;
-> @@ -157,6 +160,14 @@ static void pmic_glink_altmode_enable_dp(struct pmic_glink_altmode *altmode,
->  	ret = typec_mux_set(port->typec_mux, &port->state);
->  	if (ret)
->  		dev_err(altmode->dev, "failed to switch mux to DP\n");
-> +
-> +	port->retimer_state.alt = &port->dp_alt;
-> +	port->retimer_state.data = &dp_data;
-> +	port->retimer_state.mode = TYPEC_MODAL_STATE(mode);
-> +
-> +	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
-> +	if (ret)
-> +		dev_err(altmode->dev, "failed to setup retimer to DP\n");
->  }
->  
->  static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
-> @@ -171,6 +182,14 @@ static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
->  	ret = typec_mux_set(port->typec_mux, &port->state);
->  	if (ret)
->  		dev_err(altmode->dev, "failed to switch mux to USB\n");
-> +
-> +	port->retimer_state.alt = NULL;
-> +	port->retimer_state.data = NULL;
-> +	port->retimer_state.mode = TYPEC_STATE_USB;
-> +
-> +	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
-> +	if (ret)
-> +		dev_err(altmode->dev, "failed to setup retimer to USB\n");
->  }
->  
->  static void pmic_glink_altmode_safe(struct pmic_glink_altmode *altmode,
-> @@ -185,6 +204,14 @@ static void pmic_glink_altmode_safe(struct pmic_glink_altmode *altmode,
->  	ret = typec_mux_set(port->typec_mux, &port->state);
->  	if (ret)
->  		dev_err(altmode->dev, "failed to switch mux to safe mode\n");
-> +
-> +	port->retimer_state.alt = NULL;
-> +	port->retimer_state.data = NULL;
-> +	port->retimer_state.mode = TYPEC_STATE_SAFE;
-> +
-> +	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
-> +	if (ret)
-> +		dev_err(altmode->dev, "failed to setup retimer to USB\n");
->  }
->  
->  static void pmic_glink_altmode_worker(struct work_struct *work)
-> @@ -347,6 +374,11 @@ static const struct drm_bridge_funcs pmic_glink_altmode_bridge_funcs = {
->  	.attach = pmic_glink_altmode_attach,
->  };
->  
-> +static void pmic_glink_altmode_put_retimer(void *data)
-> +{
-> +	typec_retimer_put(data);
-> +}
-> +
->  static void pmic_glink_altmode_put_mux(void *data)
->  {
->  	typec_mux_put(data);
-> @@ -453,6 +485,17 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->  		if (ret)
->  			return ret;
->  
-> +		alt_port->typec_retimer = fwnode_typec_retimer_get(fwnode);
-> +		if (IS_ERR(alt_port->typec_retimer))
-> +			return dev_err_probe(dev, PTR_ERR(alt_port->typec_retimer),
-> +					     "failed to acquire retimer-switch for port: %d\n",
-> +					     port);
-> +
-> +		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_retimer,
-> +					       alt_port->typec_retimer);
-> +		if (ret)
-> +			return ret;
-> +
->  		alt_port->typec_switch = fwnode_typec_switch_get(fwnode);
->  		if (IS_ERR(alt_port->typec_switch))
->  			return dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
-> 
-> -- 
-> 2.34.1
 
--- 
-heikki
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: Unevaluated properties are not allowed ('reg-names' was unexpected)
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221209-dt-binding-ufs-v4-3-14ced60f3d1b@fairphone.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
