@@ -2,101 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBD3573EEC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 00:46:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0BF673EECD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 00:50:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbjFZWqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 18:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45576 "EHLO
+        id S229567AbjFZWua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 18:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229974AbjFZWqd (ORCPT
+        with ESMTP id S230004AbjFZWuT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 18:46:33 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38989134
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 15:46:32 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f954d7309fso4762797e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 15:46:32 -0700 (PDT)
+        Mon, 26 Jun 2023 18:50:19 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056A011D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 15:50:11 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f866a3d8e4so5340746e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 15:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687819590; x=1690411590;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=g/HbI+tlHDdTUjnW9h4L8w2WP0zE6rcb9swUHefgPkU=;
-        b=SOpWDX2f3Sf5+j1ArGQZP/YJvY47JwcAoGYiM0PA4TdvZKjtFHVL7C79r1CKa+9sGP
-         HWgavLF/CMaFsyMfN/W86D/ZXSxdwaJPt/BrHnQNRwuGVfQ9/jBuaGtYqUajNZkySabX
-         QeMwlAvoCXvJvAXEFusyEhfl3n55Wma/kqU+EeGxJG40KTzI7GOWz59muJfsxcvOfjD5
-         8FH1S9PCEg3xvcgsRaT8fmXZUiL0qM/bwlOCfs/XSkg8CwXE40RPNLZXuEVlXskGIvm4
-         xjbAf79YnLLFuDnKELitkEf3Wq6RvTrYH9wrHb7Aml7w2g0wc0uwK6D0ty8zRu9pj0mE
-         HRuw==
+        d=chromium.org; s=google; t=1687819808; x=1690411808;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6dAnLf/XZMv1d7lTmYjxhUjdD/xdtixhtUmJbq4ft4k=;
+        b=jW3hGKmotgG9xuleEzYQcAFfqWEoDh29w2WI2TqWeC3qjBzOpD5UCBr0NxIOKeVJrP
+         RhxJWJ9JpVS2E8eS2g3I6lNOMNbvYaOqnz1x2Bn2VpJ0ILtMLYUhrIa8qt7JXhNjgJaD
+         avmVo3vVCp/yU4edsb14uXQ38OalPa+kdkMbY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687819590; x=1690411590;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g/HbI+tlHDdTUjnW9h4L8w2WP0zE6rcb9swUHefgPkU=;
-        b=O6fDP6XNLz8puWQaU+uZSKNijAPlTBA+LLc2iHSN0jesF8Gamc1kl3qx9CgI/PZb2B
-         Rr+KxAtvBUfPmIMp37ibVW17AOu6qwdodqbdmE6I0nXuOjH7iEVPh7k9Rjby7Pze8QUR
-         lxhpHQpgLjGfcVnyuGiu1oiY8M/set6JgKCGjc0C8wv3vvCwWKwnIqDCLukOm5loKK1i
-         GNKQ5Vcqm7laCYZcs4KLGghNnFRYlxkh8Wt7MtG+EjHntg134WjrEb6GNmECj2OBQ193
-         xwGnISf/NiQOqdZKvYl3Dtr4d+907i4FSqDwnk9yKB/o5bJ1vYrR683rTQZeLhc1SWlv
-         OBlw==
-X-Gm-Message-State: AC+VfDxATiccT2DcCXLujxq+QxSKK518e2M6igX42u14lhRpNSk0F1Q6
-        Wzq31TwzR4V/aUf0EdMRtzDhSw==
-X-Google-Smtp-Source: ACHHUZ7orXO0/gHnY40bHHASzmg4vD9JU29mG9WnTHLbvrh5LxgCuKRDdOKL+vDSA5TiHT1i6pW4ZA==
-X-Received: by 2002:a05:6512:3088:b0:4f6:2d47:274c with SMTP id z8-20020a056512308800b004f62d47274cmr12489431lfd.15.1687819590412;
-        Mon, 26 Jun 2023 15:46:30 -0700 (PDT)
-Received: from [192.168.1.101] (abyk179.neoplus.adsl.tpnet.pl. [83.9.30.179])
-        by smtp.gmail.com with ESMTPSA id q1-20020ac25101000000b004f858249932sm1277950lfb.90.2023.06.26.15.46.28
+        d=1e100.net; s=20221208; t=1687819808; x=1690411808;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6dAnLf/XZMv1d7lTmYjxhUjdD/xdtixhtUmJbq4ft4k=;
+        b=Z2NiqlSHNYRNzGaAJSBR3yfXNSiLqybnr3N4kx8SbfyA6utzqUcmIhV93fXM1jUUc2
+         vL88vVUvAs3BQDN82EURtcEC2Rsa7SLeSYH7u88hbGDbejEi0eFmKaUdZs9Eu6mavWq4
+         evNaIieXkdPjVot1xQnoctsMMyn/EI0TK5UiVEysDAS+tLRgrv67Ofjb/tkY/eJyCkAj
+         asoA2wSVUoltwyUfQsBMskwZN5NC6T3g4za2zx2+TFeq5vFjL4F3G5pZ3UQU4zBSmsz9
+         rBKUHrpQiCdPnlLoyK1x6KcF2jVYz/8cBe5lO3YSgM70G9P6YUBH/bL5waZ3SthSnpiU
+         sHUA==
+X-Gm-Message-State: AC+VfDzns8NYh3LmjNFzBlNKivqkF34ku6/OwO3KiMcSnWRfUkHX32vE
+        ps/7v0twYsy4asCAXwTIn3KsR79z9BVyMwnbRhYFHBfL
+X-Google-Smtp-Source: ACHHUZ4a1ylk18fgO/rPrH4l5CaAzD1WQM7ss237XR+c2Ehg8xSWP+dFtCYGy1ef2NqaDkdMwe7JCQ==
+X-Received: by 2002:a19:641e:0:b0:4f9:5580:1894 with SMTP id y30-20020a19641e000000b004f955801894mr11328913lfb.15.1687819808357;
+        Mon, 26 Jun 2023 15:50:08 -0700 (PDT)
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com. [209.85.167.49])
+        by smtp.gmail.com with ESMTPSA id q2-20020ac25a02000000b004f122a378d4sm1291740lfn.163.2023.06.26.15.50.08
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 15:46:30 -0700 (PDT)
-Message-ID: <1808f43b-5a76-d4e6-a36d-88779ecd3836@linaro.org>
-Date:   Tue, 27 Jun 2023 00:46:28 +0200
+        Mon, 26 Jun 2023 15:50:08 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-4f14865fcc0so1484e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 15:50:08 -0700 (PDT)
+X-Received: by 2002:a50:9fa4:0:b0:51a:1f15:9ddc with SMTP id
+ c33-20020a509fa4000000b0051a1f159ddcmr207492edf.6.1687819787201; Mon, 26 Jun
+ 2023 15:49:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 06/15] dt-bindings: display/msm: sc7180-dpu: Describe
- SM6125
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20230607215224.2067679-1-dianders@chromium.org>
+ <20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid> <y3l4x3kv7jgog3miexati5wbveaynnryzqvj6sc4ul6625f2if@w7nqgojfavfw>
+In-Reply-To: <y3l4x3kv7jgog3miexati5wbveaynnryzqvj6sc4ul6625f2if@w7nqgojfavfw>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 26 Jun 2023 15:49:34 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com>
+Message-ID: <CAD=FV=VbdeomBGbWhppY+5TOSwt64GWBHga68OXFwsnO4gg4UA@mail.gmail.com>
+Subject: Re: [PATCH v2 08/10] HID: i2c-hid: Support being a panel follower
+To:     Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc:     Jiri Kosina <jikos@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-6-1d5a638cebf2@somainline.org>
- <6bbf239f-d530-2f1e-ff52-361f7c9cc951@linaro.org>
- <75d64lixeawfoqbrctm4thzh73cxkvnlmnh5xgbpf277pmh3gz@zthnqvvuxmeq>
- <a6f3906a-98a7-de7a-3e26-4b8c45fe93f7@linaro.org>
- <w3bbdq72thnerbyglb4dyshzg4vu5go2wpsciprk27vah6w2ms@yc4eqclct24a>
- <3daf9990-79da-9adf-af6a-d9007c186557@linaro.org>
- <26pqxmuuyznb4qbi4wkiexr5excxenfmiuojrqgrz5k5t5palm@ttlk6m2zuokm>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <26pqxmuuyznb4qbi4wkiexr5excxenfmiuojrqgrz5k5t5palm@ttlk6m2zuokm>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org, hsinyi@google.com,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        linux-arm-msm@vger.kernel.org,
+        Chris Morgan <macroalpha82@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -105,77 +95,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.06.2023 22:28, Marijn Suijten wrote:
-> On 2023-06-26 20:57:51, Konrad Dybcio wrote:
->> On 26.06.2023 19:54, Marijn Suijten wrote:
->>> On 2023-06-26 18:16:58, Krzysztof Kozlowski wrote:
->>>> On 25/06/2023 21:52, Marijn Suijten wrote:
->>>>> On 2023-06-24 11:12:52, Krzysztof Kozlowski wrote:
->>>>>> On 24/06/2023 02:41, Marijn Suijten wrote:
->>>>>>> SM6125 is identical to SM6375 except that while downstream also defines
->>>>>>> a throttle clock, its presence results in timeouts whereas SM6375
->>>>>>> requires it to not observe any timeouts.
->>>>>>
->>>>>> Then it should not be allowed, so you need either "else:" block or
->>>>>> another "if: properties: compatible:" to disallow it. Because in current
->>>>>> patch it would be allowed.
->>>>>
->>>>> That means this binding is wrong/incomplete for all other SoCs then.
->>>>> clock(-name)s has 6 items, and sets `minItems: 6`.  Only for sm6375-dpu
->>>
->>> Of course meant to say that clock(-name)s has **7** items, not 6.
->>>
->>>>> does it set `minItems: 7`, but an else case is missing.
->>>>
->>>> Ask the author why it is done like this.
->>>
->>> Konrad, can you clarify why other 
-> 
-> (Looks like I forgot to complete this sentence before sending,
-> apologies)
-> 
->> 6375 needs the throttle clk and the clock(-names) are strongly ordered
->> so having minItems: 6 discards the last entry
-> 
-> The question is whether or not we should have maxItems: 6 to disallow
-> the clock from being passed: right now it is optional and either is
-> allowed for any !6375 SoC.
-That's a very good question. I don't have a 7180 to test, but for
-you it seems to cause inexplicable issues on 6125..
+Benjamin,
 
-Konrad
-> 
-> - Marijn
-> 
->>
->> Konrad
->>>
->>>>> Shall I send a Fixes: ed41005f5b7c ("dt-bindings: display/msm:
->>>>> sc7180-dpu: Describe SM6350 and SM6375") for that, and should maxItems:
->>>>> 6 be the default under clock(-name)s or in an else:?
->>>>
->>>> There is no bug to fix. Or at least it is not yet known. Whether other
->>>> devices should be constrained as well - sure, sounds reasonable, but I
->>>> did not check the code exactly.
->>>
->>> I don't know either, but we need this information to decide whether to
->>> use `maxItems: 6`:
->>>
->>> 1. Directly on the property;
->>> 2. In an `else:` case on the current `if: sm6375-dpu` (should have the
->>>    same effect as 1., afaik);
->>> 3. In a second `if:` case that lists all SoCS explicitly.
->>>
->>> Since we don't have this information, I think option 3. is the right way
->>> to go, setting `maxItems: 6` for qcom,sm6125-dpu.
->>>
->>> However, it is not yet understood why downstream is able to use the
->>> throttle clock without repercussions.
->>>
->>>> We talk here about this patch.
->>>
->>> We used this patch to discover that other SoCs are similarly
->>> unconstrained.  But if you don't want me to look into it, by all means!
->>> Saves me a lot of time.  So I will go with option 3.
->>>
->>> - Marijn
+On Thu, Jun 8, 2023 at 8:37=E2=80=AFAM Benjamin Tissoires
+<benjamin.tissoires@redhat.com> wrote:
+>
+> > +static const struct drm_panel_follower_funcs i2c_hid_core_panel_follow=
+er_funcs =3D {
+> > +     .panel_prepared =3D i2c_hid_core_panel_prepared,
+> > +     .panel_unpreparing =3D i2c_hid_core_panel_unpreparing,
+> > +};
+>
+> Can we make that above block at least behind a Kconfig?
+>
+> i2c-hid is often used for touchpads, and the notion of drm panel has
+> nothing to do with them. So I'd be more confident if we could disable
+> that code if not required.
+
+Now that other concerns are addressed, I started trying to write up a
+v3 and I found myself writing this as the description of the Kconfig
+entry:
+
+--
+config I2C_HID_SUPPORT_PANEL_FOLLOWER
+bool "Support i2c-hid devices that must be power sequenced with a panel"
+
+Say Y here if you want support for i2c-hid devices that need to
+coordinate power sequencing with a panel. This is typically important
+when you have a panel and a touchscreen that share power rails or
+reset GPIOs. If you say N here then the kernel will not try to honor
+any shared power sequencing for your hardware. In the best case,
+ignoring power sequencing when it's needed will draw extra power. In
+the worst case this will prevent your hardware from functioning or
+could even damage your hardware.
+
+If unsure, say Y.
+
+--
+
+I can certainly go that way, but I just wanted to truly make sure
+that's what we want. Specifically:
+
+1. If we put the panel follower code behind a Kconfig then we actually
+have no idea if a touchscreen was intended to be a panel follower.
+Specifically the panel follower API is the one that detects the
+connection between the panel and the i2c-hid device, so without being
+able to call the panel follower API we have no idea that an i2c-hid
+device was supposed to be a panel follower.
+
+2. It is conceivable that power sequencing a device incorrectly could
+truly cause hardware damage.
+
+Together, those points mean that if you turn off the Kconfig entry and
+then try to boot on a device that needed that Kconfig setting that you
+might damage hardware. I can code it up that way if you want, but it
+worries me...
+
+
+Alternatives that I can think of:
+
+a) I could change the panel follower API so that panel followers are
+in charge of detecting the panel that they follow. Today, that looks
+like:
+
+       panel_np =3D of_parse_phandle(dev->of_node, "panel", 0);
+       if (panel_np)
+               /* It's a panel follower */
+       of_node_put(panel_np);
+
+...so we could put that code in each touchscreen driver and then fail
+to probe i2c-hid if we detect that we're supposed to be a panel
+follower but the Kconfig is turned off. The above doesn't seem
+massively ideal since it duplicates code. Also, one reason why I put
+that code in drm_panel_add_follower() is that I think this concept
+will eventually be needed even for non-DT cases. I don't know how to
+write the non-DT code right now, though...
+
+
+b) I could open-code detect the panel follower case but leave the
+actual linking to the panel follower API. AKA add to i2c-hid:
+
+       if (of_property_read_bool(dev->of_node, "panel"))
+               /* It's a panel follower */
+
+...that's a smaller bit of code, but feels like an abstraction
+violation. It also would need to be updated if/when we added support
+for non-DT panel followers.
+
+
+c) I could add a "static inline" implementation of b) to "drm_panel.h".
+
+That sounds great and I started doing it. ...but then realized that it
+means adding to drm_panel.h:
+
+#include <linux/device.h>
+#include <linux/of.h>
+
+...because otherwise of_property_read_bool() isn't defined and "struct
+device" can't be dereferenced. That might be OK, but it looks as if
+folks have been working hard to avoid things like this in header
+files. Presumably it would get uglier if/when we added the non-DT
+case, as well. That being said, I can give it a shot...
+
+--
+
+At this point, I'm hoping for some advice. How important is it for you
+to have a Kconfig for "I2C_HID_SUPPORT_PANEL_FOLLOWER"?
+
+NOTE: even if I don't add the Kconfig, I could at least create a
+function for registering the panel follower that would get most of the
+panel follower logic out of the probe function. Would that be enough?
+
+Thanks!
+
+-Doug
