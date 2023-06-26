@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97BFB73E4C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:18:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C891173E4CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:20:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231886AbjFZQSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 12:18:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48902 "EHLO
+        id S231936AbjFZQU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 12:20:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231932AbjFZQRM (ORCPT
+        with ESMTP id S232122AbjFZQUG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:17:12 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 821111987
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:15:18 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3112f256941so3144676f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:15:18 -0700 (PDT)
+        Mon, 26 Jun 2023 12:20:06 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13AA73C35
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:17:06 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fa8cd4a1c0so16764835e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687796117; x=1690388117;
+        d=linaro.org; s=google; t=1687796222; x=1690388222;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QXdcqnvtNLyYu0+DzoP64iL7BfxCUJXqKjjg/aEjYQI=;
-        b=BQyAxkXZ/Pm8o888uBT0Y2kNK2mhYizFhK3HVzRIdqmzuAn6Gs2D3LsYIOBLcl+svX
-         i9Wz2xn/4cYfe4gR0ISAEeUPFbRmu0pfQcC3OsUiNW5b+irGTbPSXOOYQ0NN0d+VAP4g
-         I9NtpShUSCTrVjXqUTS/qhaxNVIsW91WNpkYLkRKPw7HIIrkhx1zivzDNqClkkLCyjF9
-         mguDvcohXv41IN1B/trN9Nzi6S/Fa9cWQA0Qx29ANAysYN2Mqc8aHcbxCmXwdCdhsshu
-         1+mFtTnuFPIBZpps1BIJP/pMEEGSQLlF2xivddDPAd7v/kR8RYD1MbOF8Vw0vBp7YxlG
-         cuFw==
+        bh=JXeypSA36Qg27xwQK6BwDtx9kWu+FNhZhOD5YziOszI=;
+        b=sPsZ86m5T5T04cUPJ6T5/9291QbjPMFyaSlceLp+6Z3VkTseFFaRaaj41GdRaDMyKW
+         AvmGwchSI6OBo/R40KeXNU5aHaqvZvg0lsACalGibHKNU+CNWuFw1mvHO/nh0DKSi9a0
+         4bS3YQTuGx565//jrqHhGQlMAG8aZv1g8XI2BA12PuebSxfmh6hdCsToQiU7W6v0XrZZ
+         8FPHh/SQoESnw4D6xAaMCB6CFHo+5T5YfwNWcymt+52ohKUxeXvttYBts30DvDz1SqJ1
+         BuzYc+04nuOYWdh7C96S21OoNlqBBJiFS3mSwLElfEbgAGB8EKt0oDV1Lviql/E0lEQa
+         8pGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687796117; x=1690388117;
+        d=1e100.net; s=20221208; t=1687796222; x=1690388222;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QXdcqnvtNLyYu0+DzoP64iL7BfxCUJXqKjjg/aEjYQI=;
-        b=aPcfbV6iLfb0CMH7Z/eKBZHO+MKcBpRsSh/+B+TygfKf5+phpMul0EVaTcXrBN3U3U
-         r7EEK9k9nfPv0Ii49m7jmaXnFUPeftjB4t2K/9Nrt6OYWE7qmHshPgy96d9yXisoz5jN
-         KSmN8/l3JdXGuZL+u97j/iofAwapWfsgo+Vii3N9RkRwXM3eWk1yq7eGP/NaXPHi7LNc
-         5TifZkBzXKpyUJsIeUO5ghZz/BD0Xtt66SxjO0DvfN6+MhbNPvQ6+xj0q6fpl1myynPF
-         h0UVBwUYj4KfoxT1a4ri7i5LkVHMzrtfYQPhWY/4U7MFG4Mt4g9s9ZYrSmOY37bE7A3B
-         iy9w==
-X-Gm-Message-State: AC+VfDzvtjFpWzrtKFWSlG6NX0hhLzshWpaXjWoFvvebJtVp6o/mwoer
-        MuSw9vpC9DLyXDqC/+jwGyaLBg==
-X-Google-Smtp-Source: ACHHUZ6L7+dXpjqr2EV3aL4IlTsw7dGgISi6PqeOrudMedtpUkBoHht2nG3bZmc6aUVxu1ixi0dDDw==
-X-Received: by 2002:adf:e684:0:b0:30e:5284:cbc4 with SMTP id r4-20020adfe684000000b0030e5284cbc4mr20071341wrm.68.1687796116886;
-        Mon, 26 Jun 2023 09:15:16 -0700 (PDT)
+        bh=JXeypSA36Qg27xwQK6BwDtx9kWu+FNhZhOD5YziOszI=;
+        b=A/LqRQeSTAh465I1DtHb4Zg73pHkSbnEJtEDqe2bNNyIgqSaSxZRwB1/qJsSmsNRPl
+         x2Ctb/mFSfUe/o0/2QBSONcwVFo/jAWWm1Vqi+cCtA/qdkXIgxHCe8NLBIhc7EdHwsD4
+         KRJoxa/YH/534vi7JmtKoA42FHmHE1kOlFMOzHffCZ3kXxd/3I6v3lPl7K55cBdVswAm
+         zhVHg+t0iU55hNs7s5r/zQomBnbbTv4X9JEbiaPbklK6tzItyd1d2b5zdNYGwWYWgeMS
+         NkjsMxg4nOGbALCDVpwX3EQ2L3KxjobkQH9Of9PZsck42gll1RqWPcXGzlUMuExdMviB
+         zXAA==
+X-Gm-Message-State: AC+VfDxwVLW1h0DjunLfp62mHdi88p5WUX57gmhdHRq2usd7ZzJ5HH3V
+        C1CKQL7Mf19Du+RCzJ16g8AlXw==
+X-Google-Smtp-Source: ACHHUZ5D7uHptdZqFo2PIkF6RpQXHdVAueCcOlxaXh158opWn01xLXfxyk7SpixUISeHvjWi2z+a3Q==
+X-Received: by 2002:a7b:cd1a:0:b0:3fb:7184:53eb with SMTP id f26-20020a7bcd1a000000b003fb718453ebmr127490wmj.18.1687796221657;
+        Mon, 26 Jun 2023 09:17:01 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id m16-20020a5d6250000000b003068f5cca8csm7755235wrv.94.2023.06.26.09.15.14
+        by smtp.gmail.com with ESMTPSA id 7-20020a05600c230700b003fa968e9c27sm3404076wmo.9.2023.06.26.09.16.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 09:15:16 -0700 (PDT)
-Message-ID: <c3c79634-b4d3-84a4-4c41-8d74d8648313@linaro.org>
-Date:   Mon, 26 Jun 2023 18:15:13 +0200
+        Mon, 26 Jun 2023 09:17:01 -0700 (PDT)
+Message-ID: <a6f3906a-98a7-de7a-3e26-4b8c45fe93f7@linaro.org>
+Date:   Mon, 26 Jun 2023 18:16:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 03/15] dt-bindings: clock: qcom,dispcc-sm6125: Require GCC
- PLL0 DIV clock
+Subject: Re: [PATCH 06/15] dt-bindings: display/msm: sc7180-dpu: Describe
+ SM6125
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -76,6 +75,7 @@ Cc:     Andy Gross <agross@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
@@ -84,15 +84,13 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
 References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-3-1d5a638cebf2@somainline.org>
- <c9681bce-efa8-9b79-4bf6-837dd6a2dc12@linaro.org>
- <edrftxqhywiaxvbonyh25cmubrg77y4dryqoy7id4ndan2lfa7@rhvcoavtg5vl>
- <f62d750e-da73-fece-c3de-0dac1fbb9827@linaro.org>
- <dp2ucgmql2jff52nbxti2hwjchtgjkbrwcgpx3p7ruodz7adnj@635pcqr6fv4x>
+ <20230624-sm6125-dpu-v1-6-1d5a638cebf2@somainline.org>
+ <6bbf239f-d530-2f1e-ff52-361f7c9cc951@linaro.org>
+ <75d64lixeawfoqbrctm4thzh73cxkvnlmnh5xgbpf277pmh3gz@zthnqvvuxmeq>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <dp2ucgmql2jff52nbxti2hwjchtgjkbrwcgpx3p7ruodz7adnj@635pcqr6fv4x>
+In-Reply-To: <75d64lixeawfoqbrctm4thzh73cxkvnlmnh5xgbpf277pmh3gz@zthnqvvuxmeq>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -103,58 +101,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/06/2023 16:26, Marijn Suijten wrote:
-> On 2023-06-26 11:43:39, Konrad Dybcio wrote:
->> On 25.06.2023 21:48, Marijn Suijten wrote:
->>> On 2023-06-24 03:45:02, Konrad Dybcio wrote:
->>>> On 24.06.2023 02:41, Marijn Suijten wrote:
->>>>> The "gcc_disp_gpll0_div_clk_src" clock is consumed by the driver, will
->>>>> be passed from DT, and should be required by the bindings.
->>>>>
->>>>> Fixes: 8397c9c0c26b ("dt-bindings: clock: add QCOM SM6125 display clock bindings")
->>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>>> ---
->>>> Ideally, you'd stick it at the bottom of the list, as the items: order
->>>> is part of the ABI
->>>
->>> This isn't an ABI break, as this driver nor its bindings require/declare
->>> a fixed order: they declare a relation between clocks and clock-names.
->> Bindings describe the ABI, drivers implement compliant code flow.
+On 25/06/2023 21:52, Marijn Suijten wrote:
+> On 2023-06-24 11:12:52, Krzysztof Kozlowski wrote:
+>> On 24/06/2023 02:41, Marijn Suijten wrote:
+>>> SM6125 is identical to SM6375 except that while downstream also defines
+>>> a throttle clock, its presence results in timeouts whereas SM6375
+>>> requires it to not observe any timeouts.
+>>
+>> Then it should not be allowed, so you need either "else:" block or
+>> another "if: properties: compatible:" to disallow it. Because in current
+>> patch it would be allowed.
 > 
-> That is how bindings are supposed to be...  However typically the driver
-> is written/ported first and then the bindings are simply created to
+> That means this binding is wrong/incomplete for all other SoCs then.
+> clock(-name)s has 6 items, and sets `minItems: 6`.  Only for sm6375-dpu
+> does it set `minItems: 7`, but an else case is missing.
 
-Your development process does not matter for the bindings. Whatever you
-decide to do "typically" is your choice, although of course I understand
-why you do it like that. You can argument the same that "I never create
-bindings in my process, so the driver defines the ABI".
-
-> reflect this, and sometimes (as is the case with this patch)
-> incorrectly.
-> 
-> That, together with a lack of DTS and known-working device with it
-> (which is why I'm submitting driver+bindings+dts in one series now!)
-> makes us shoot ourselves in the foot by locking everyone into an ABI
-> that makes no sense.
-
-No one is locked into the ABI. SoC maintainer decides on this. However
-unjustified ABI breaking or not caring about it at all is not the way to
-go. It is not the correct process.
+Ask the author why it is done like this.
 
 > 
->>> This orders the GCC clock just like other dispccs.  And the previous
->>> patch dropped the unused cfg_ahb_clk from the bindings, so all bets are
->>> off anyway.
->> Thinking about it again, the binding has not been consumed by any upstream
->> DT to date, so it should (tm) be fine to let it slide..
-> 
-> Exactly, I hope/doubt anyone was already using these incomplete
-> bindings.  And again: the ABI here is the name->phandle mapping, the
-> order Does Not Matter™.
+> Shall I send a Fixes: ed41005f5b7c ("dt-bindings: display/msm:
+> sc7180-dpu: Describe SM6350 and SM6375") for that, and should maxItems:
+> 6 be the default under clock(-name)s or in an else:?
 
-No, it's not. Your one driver does not define the ABI. There are many
-different drivers, many different operating systems and other software
-components.
+There is no bug to fix. Or at least it is not yet known. Whether other
+devices should be constrained as well - sure, sounds reasonable, but I
+did not check the code exactly.
+
+We talk here about this patch.
 
 Best regards,
 Krzysztof
