@@ -2,133 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C891173E4CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:20:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65C9D73E505
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 18:29:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231936AbjFZQU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 12:20:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49044 "EHLO
+        id S230308AbjFZQ3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 12:29:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232122AbjFZQUG (ORCPT
+        with ESMTP id S230179AbjFZQ3W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 12:20:06 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13AA73C35
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:17:06 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fa8cd4a1c0so16764835e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 09:17:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687796222; x=1690388222;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JXeypSA36Qg27xwQK6BwDtx9kWu+FNhZhOD5YziOszI=;
-        b=sPsZ86m5T5T04cUPJ6T5/9291QbjPMFyaSlceLp+6Z3VkTseFFaRaaj41GdRaDMyKW
-         AvmGwchSI6OBo/R40KeXNU5aHaqvZvg0lsACalGibHKNU+CNWuFw1mvHO/nh0DKSi9a0
-         4bS3YQTuGx565//jrqHhGQlMAG8aZv1g8XI2BA12PuebSxfmh6hdCsToQiU7W6v0XrZZ
-         8FPHh/SQoESnw4D6xAaMCB6CFHo+5T5YfwNWcymt+52ohKUxeXvttYBts30DvDz1SqJ1
-         BuzYc+04nuOYWdh7C96S21OoNlqBBJiFS3mSwLElfEbgAGB8EKt0oDV1Lviql/E0lEQa
-         8pGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687796222; x=1690388222;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JXeypSA36Qg27xwQK6BwDtx9kWu+FNhZhOD5YziOszI=;
-        b=A/LqRQeSTAh465I1DtHb4Zg73pHkSbnEJtEDqe2bNNyIgqSaSxZRwB1/qJsSmsNRPl
-         x2Ctb/mFSfUe/o0/2QBSONcwVFo/jAWWm1Vqi+cCtA/qdkXIgxHCe8NLBIhc7EdHwsD4
-         KRJoxa/YH/534vi7JmtKoA42FHmHE1kOlFMOzHffCZ3kXxd/3I6v3lPl7K55cBdVswAm
-         zhVHg+t0iU55hNs7s5r/zQomBnbbTv4X9JEbiaPbklK6tzItyd1d2b5zdNYGwWYWgeMS
-         NkjsMxg4nOGbALCDVpwX3EQ2L3KxjobkQH9Of9PZsck42gll1RqWPcXGzlUMuExdMviB
-         zXAA==
-X-Gm-Message-State: AC+VfDxwVLW1h0DjunLfp62mHdi88p5WUX57gmhdHRq2usd7ZzJ5HH3V
-        C1CKQL7Mf19Du+RCzJ16g8AlXw==
-X-Google-Smtp-Source: ACHHUZ5D7uHptdZqFo2PIkF6RpQXHdVAueCcOlxaXh158opWn01xLXfxyk7SpixUISeHvjWi2z+a3Q==
-X-Received: by 2002:a7b:cd1a:0:b0:3fb:7184:53eb with SMTP id f26-20020a7bcd1a000000b003fb718453ebmr127490wmj.18.1687796221657;
-        Mon, 26 Jun 2023 09:17:01 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id 7-20020a05600c230700b003fa968e9c27sm3404076wmo.9.2023.06.26.09.16.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 09:17:01 -0700 (PDT)
-Message-ID: <a6f3906a-98a7-de7a-3e26-4b8c45fe93f7@linaro.org>
-Date:   Mon, 26 Jun 2023 18:16:58 +0200
+        Mon, 26 Jun 2023 12:29:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E917230E7;
+        Mon, 26 Jun 2023 09:28:16 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35QE0vr8016114;
+        Mon, 26 Jun 2023 16:28:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=71P9kkKjmHcIHJCwCMhSnLjhjtNBY9RZBfPWrRB0XN4=;
+ b=Y8dJzzBePblKSosfDQgoFn3EwEbRFkTSz407E53naa+MdPq08X07l9cXCBqq51tG2T32
+ TLNuPN5R6CNnaCeJqNknQoIoUYQc5KaC2PQaLxutqaffEF9+bQ6X9mfcrlFq7m2MMGOm
+ D3WW17mwt3zIHQ7Ag6Rxb5WI8AFS0ET/tTGPxV6BnG6ik6DJZgifNyWONmce+6FhhAno
+ xCzmD7OXZXaEzQ8HqN8TC2J9VMoSIkTY3a6kKvmUQejLA9pMViFgcFk/AfxKb2sHspw+
+ Pcoq0X5EumDsBrgdkRW+RfZUCOF8jyQ0Q5houHZwhHclQNZXbclr6MMhdAeV1QHWkbFK gw== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdqgdcmma-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Jun 2023 16:28:11 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35QGSAxI026462
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Jun 2023 16:28:10 GMT
+Received: from [10.216.59.223] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
+ 2023 09:28:07 -0700
+Message-ID: <6d9f251e-2c1a-ed50-638e-a052404ffc64@quicinc.com>
+Date:   Mon, 26 Jun 2023 21:57:56 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 06/15] dt-bindings: display/msm: sc7180-dpu: Describe
- SM6125
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v6 4/5] firmware: qcom_scm: Refactor code to support
+ multiple download mode
+To:     <andy.shevchenko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>
+References: <1680076012-10785-1-git-send-email-quic_mojha@quicinc.com>
+ <1680076012-10785-5-git-send-email-quic_mojha@quicinc.com>
+ <ZHEt2mrYpSMKBuIX@surfacebook>
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-References: <20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org>
- <20230624-sm6125-dpu-v1-6-1d5a638cebf2@somainline.org>
- <6bbf239f-d530-2f1e-ff52-361f7c9cc951@linaro.org>
- <75d64lixeawfoqbrctm4thzh73cxkvnlmnh5xgbpf277pmh3gz@zthnqvvuxmeq>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <75d64lixeawfoqbrctm4thzh73cxkvnlmnh5xgbpf277pmh3gz@zthnqvvuxmeq>
-Content-Type: text/plain; charset=UTF-8
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <ZHEt2mrYpSMKBuIX@surfacebook>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: YQjCSbztMZOiJDGeGxZzkvEGMsJNfE3-
+X-Proofpoint-GUID: YQjCSbztMZOiJDGeGxZzkvEGMsJNfE3-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-26_09,2023-06-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
+ suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306260121
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/06/2023 21:52, Marijn Suijten wrote:
-> On 2023-06-24 11:12:52, Krzysztof Kozlowski wrote:
->> On 24/06/2023 02:41, Marijn Suijten wrote:
->>> SM6125 is identical to SM6375 except that while downstream also defines
->>> a throttle clock, its presence results in timeouts whereas SM6375
->>> requires it to not observe any timeouts.
+
+
+On 5/27/2023 3:38 AM, andy.shevchenko@gmail.com wrote:
+> Wed, Mar 29, 2023 at 01:16:51PM +0530, Mukesh Ojha kirjoitti:
+>> Currently on Qualcomm SoC, download_mode is enabled if
+>> CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is selected.
 >>
->> Then it should not be allowed, so you need either "else:" block or
->> another "if: properties: compatible:" to disallow it. Because in current
->> patch it would be allowed.
+>> Refactor the code such that it supports multiple download
+>> modes and drop CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT config
+>> instead, give interface to set the download mode from
+>> module parameter.
 > 
-> That means this binding is wrong/incomplete for all other SoCs then.
-> clock(-name)s has 6 items, and sets `minItems: 6`.  Only for sm6375-dpu
-> does it set `minItems: 7`, but an else case is missing.
+> ...
+> 
+>>   #include <linux/clk.h>
+>>   #include <linux/reset-controller.h>
+>>   #include <linux/arm-smccc.h>
+> 
+>> +#include <linux/kstrtox.h>
+> 
+> Can this be located after clk.h which makes (some) order in this block?
 
-Ask the author why it is done like this.
+Sure.
 
 > 
-> Shall I send a Fixes: ed41005f5b7c ("dt-bindings: display/msm:
-> sc7180-dpu: Describe SM6350 and SM6375") for that, and should maxItems:
-> 6 be the default under clock(-name)s or in an else:?
+> ...
+> 
+>>   #define QCOM_DOWNLOAD_MODE_MASK 0x30
+>>   #define QCOM_DOWNLOAD_FULLDUMP	0x1
+>> +#define QCOM_DOWNLOAD_NODUMP	0x0
+> 
+> Okay, so you start backward ordering.
+> But see comments to the next patch.
 
-There is no bug to fix. Or at least it is not yet known. Whether other
-devices should be constrained as well - sure, sounds reasonable, but I
-did not check the code exactly.
+Will fix this by doing it in ascending order..
 
-We talk here about this patch.
 
-Best regards,
-Krzysztof
+> 
+> ...
+> 
+>>   		ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
+>> -				QCOM_DOWNLOAD_MODE_MASK,
+>> -				enable ? QCOM_DOWNLOAD_FULLDUMP : 0);
+>> +				QCOM_DOWNLOAD_MODE_MASK, download_mode);
+> 
+> Can ping-pong style be avoided? I.e. do the right thing in the previous patch,
+> so you won't change lines that were introduced just before.
 
+If you notice, I have just converted download mode data type from bool
+to int in this patch and hence the changing the line here. Last patch 
+was about just using the exported API, so i hope you would be fine here.
+
+> 
+> ...
+> 
+>>   }
+>>   
+>> +
+> 
+> Stray change.
+> 
+>> +static int get_download_mode(char *buffer, const struct kernel_param *kp)
+>> +{
+>> +	int len = 0;
+>> +
+>> +	if (download_mode == QCOM_DOWNLOAD_FULLDUMP)
+>> +		len = sysfs_emit(buffer, "full\n");
+>> +	else if (download_mode == QCOM_DOWNLOAD_NODUMP)
+>> +		len = sysfs_emit(buffer, "off\n");
+>> +
+>> +	return len;
+> 
+> You can return directly.
+
+Ok.
+
+>  > Also, what about download_mode that doesn't fit to the above two?
+
+return sysfs_emit(buffer, "unknown\n"); ?
+
+> 
+>> +}
+> 
+> ...
+> 
+>> +static int set_download_mode(const char *val, const struct kernel_param *kp)
+>> +{
+>> +	u32 old = download_mode;
+>> +
+>> +	if (sysfs_streq(val, "full")) {
+>> +		download_mode = QCOM_DOWNLOAD_FULLDUMP;
+>> +	} else if (sysfs_streq(val, "off")) {
+>> +		download_mode = QCOM_DOWNLOAD_NODUMP;
+> 
+> NIH sysfs_match_string().
+
+NIH ?
+
+My apology, if i did not get this..
+Do you want me to use sysfs_match_string()
+and how would that help compare to what is present now ?
+
+> 
+>> +	} else if (kstrtouint(val, 0, &download_mode) ||
+>> +		   !(download_mode == 0 || download_mode == 1)) {
+>> +		download_mode = old;
+>> +		pr_err("qcom_scm: unknown download mode: %s\n", val);
+> 
+>> +		return -EINVAL;
+> 
+> Do not shadow the error code from kstrtouint() it can be different to this one.
+
+Will fix this.
+
+> 
+>> +	}
+>> +
+>> +	if (__scm)
+>> +		qcom_scm_set_download_mode(download_mode);
+>> +
+>> +	return 0;
+>> +}
+> 
+> ...
+> 
+> Have you updated corresponding documentation about this parameter?
+> Or there is none?
+
+There is none as of yet outside this file; should that be good what i 
+have added in 5/5..
+
+> 
+
+-Mukesh
