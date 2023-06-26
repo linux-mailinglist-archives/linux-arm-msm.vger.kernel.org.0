@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EEDC73E297
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 16:56:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25AC473E2A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 17:00:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbjFZO4x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 10:56:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59246 "EHLO
+        id S229663AbjFZPAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 11:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbjFZO4w (ORCPT
+        with ESMTP id S229922AbjFZPAI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 10:56:52 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D552AC6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 07:56:50 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f76a0a19d4so4537441e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 07:56:50 -0700 (PDT)
+        Mon, 26 Jun 2023 11:00:08 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9890D10A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 08:00:05 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3112c11fdc9so2906404f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 08:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687791409; x=1690383409;
+        d=linaro.org; s=google; t=1687791604; x=1690383604;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=27Hbm1nSTxidmaHo4Rsegreg1V1tH8Gk8PNfLl0C8PA=;
-        b=yP0c98lED55xbAKz8zbKU1ATE3K32QLBopwmRpSh8g1Y1Ojq8YClIoGm4+vYsfDFq8
-         ggIT1Qu2kJ0+KUNB0Me+LyObyRutbVBuRbfZXe1Jguah+T60OAoQWMA0O6w6HMP8HuU+
-         DGnxXZ2h1qqG4TCTgMeekRp0ORKF+L76Cskmrf3OLXIVoscwkY5hS4B0KrVo1euF3OJL
-         yH/VPdDAuhlD6fkNmMvX5xUSXioRpTjxEi7z/0ZwBJ2M8yEywwhWKdyE0ef7nsxE72lJ
-         C1dsPkqMDgcfrrjRJpVKxEnIMuFpI9EKvfl2KtTcoomhOyEv831f+hcbGqd/gC3k1XDp
-         rqLA==
+        bh=ysbiVMlRUPpmijvxEgiqELqD4pocrI8KujWeqKckrNk=;
+        b=rxS+vi8VhGBDXLjpUQcsEhtzPnyVlg1GpEc72GOwk1v07t5i1xxdc4FvqFuJPThvnc
+         6tw0DaAPUYNCpOVkWW1maSwwu4be/ugnVKpuYrQtw7mYqtLCRnLYstsXEGgz1/zG0R6i
+         JrEPstX17B7jx2V/aJbePsMziYnB+26omlQ0wbAABSllNmOIo44VDPFrOR+Dra9XQHZE
+         PblvkvD/5/bogBc6PrYgJ1x3bahrGFlEhPBmlX8hhMbxhDpRtrQ8vYrqtxzwFJ98UoUx
+         zfBycvUU0ukCpc2xTKq4M7932LqCa9ob01W3o3QVpFn7Bs/RLthho8a6Rg1EisyGfkI2
+         lrww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687791409; x=1690383409;
+        d=1e100.net; s=20221208; t=1687791604; x=1690383604;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=27Hbm1nSTxidmaHo4Rsegreg1V1tH8Gk8PNfLl0C8PA=;
-        b=AbJYgANO+r18XQudwEWyXRY3JbJOXcIyIQznTnZS5Z2gaF7nP4CLmT5iDxFGcAXC7r
-         wlguwMJhgE7A1TzK6RUbstO61YFYbxGuuURq6C1VMVG/KC+Sfuy5v/2e8WBCBU6wf4rh
-         aFkPSGcSiC3nhHBXzLlrY7zzTuQI99ghbM8eonuADjmO25s4Mph3gYjAYNx8G9PJEIy5
-         +zRX00QjYuMQBgqttI08UCday7e3khMcsRl9ev+XCfwVkKJZPBKJy+OZwXfQ4m9t+Y4Q
-         fzSMqkfTP+c9ld35cAZ3+EUczPP65aHnq+vzh/QNTn917P3jh3Gwntu6kyzqdWO01ydS
-         dGMw==
-X-Gm-Message-State: AC+VfDyi/PFHqoBgRiTfee4wXAQ2jqAUtvtpTNRpqaGp6yxIVCg0rV+m
-        lASvB8Ac/inmhvFzRODsPI2VoQ==
-X-Google-Smtp-Source: ACHHUZ6P7QfhEqbtbj9aseFYQVWHwwnAwptFktv1oZjineiJeroop5wpb3fzQZhk2mVjtmuWOBq71Q==
-X-Received: by 2002:a05:6512:3b95:b0:4f9:5d2a:e0f5 with SMTP id g21-20020a0565123b9500b004f95d2ae0f5mr12270695lfv.19.1687791409014;
-        Mon, 26 Jun 2023 07:56:49 -0700 (PDT)
+        bh=ysbiVMlRUPpmijvxEgiqELqD4pocrI8KujWeqKckrNk=;
+        b=IC+Xc/ZEM9tHpSTi6x9AVX6at/HhmQrRtEoJupkrgo8jvUCjez16fA391it7OFV43T
+         MXB7Y48RziIgoGx39sqhYK+zrijVH11QVK/5SY/hxEOxPlV73sJuPQh8FQC06qhKhZEr
+         6iOfMRFQgDcgSqQdBspXjsVIBsGoF3IzSGWnKn5VV1KphdbKN6sfEAF2lj/a9lb7I4Do
+         nVF5MRDDK4z1ut9FYRc6OFYUKEDplIzsO3408xHBXXEeEvfKyjyBg6yWsq8eQNgHuWQO
+         4lSysait5mR47vtlKffImz/5yd7MzX9eHjUr+20oFp18E/rOJa2j1Uv0IO8d2d1OJX71
+         zK9A==
+X-Gm-Message-State: AC+VfDxNDv4dZvNaQ4fNyCf5SsvcVuh8/5v/yTbuq/KfvhQxkcXt2cg9
+        bWr2ZlOQGDu0bniLLlmPaiPpkw==
+X-Google-Smtp-Source: ACHHUZ7udFgKBee119WAQc9HfTv87IIlEp5QgIr91900E3CZgGj828TfAtq4gdInkQIw8Q/mNE+WyQ==
+X-Received: by 2002:a5d:4ad0:0:b0:313:f98a:1fd3 with SMTP id y16-20020a5d4ad0000000b00313f98a1fd3mr29021wrs.27.1687791603958;
+        Mon, 26 Jun 2023 08:00:03 -0700 (PDT)
 Received: from krzk-bin.. ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id w10-20020a1cf60a000000b003f9bd9e3226sm7945737wmc.7.2023.06.26.07.56.47
+        by smtp.gmail.com with ESMTPSA id m16-20020a5d6250000000b003068f5cca8csm7585484wrv.94.2023.06.26.08.00.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jun 2023 07:56:48 -0700 (PDT)
+        Mon, 26 Jun 2023 08:00:03 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: dma: qcom,bam: require one of control methods
-Date:   Mon, 26 Jun 2023 16:56:45 +0200
-Message-Id: <20230626145645.646136-1-krzysztof.kozlowski@linaro.org>
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
+Date:   Mon, 26 Jun 2023 16:59:59 +0200
+Message-Id: <20230626145959.646747-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,38 +78,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The BAM DMA resources can be controlled remotely (e.g. by trusted
-environment; needs qcom,powered-remotely or qcom,controlled-remotely
-properties) or locally.  In the latter case we need to provide its
-clock.
+SM8350 HDK and MTP boards were silently dying and rebooting during BAM
+DMA probe, probably during reading BAM_REVISION register:
 
-Require one of methods of such control to properly validate DTS.
+  [    1.574304] vreg_bob: Setting 3008000-3960000uV
+  [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
+  Optional Info
+  Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+  S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.0-00637.1-LAHAINA-1
+  S - IMAGE_VARIANT_STRING=SocLahainaLAA
+  S - OEM_IMAGE_VERSION_STRING=crm-ubuntu77
+  S - Boot Interface: UFS
 
+It seems that BAM DMA is not yet operational, thus mark it as failed and
+disable also QCE because it won't work without BAM DMA.
+
+Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 9 +++++++++
- 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-index c9c34f7cdf5b..a0af90ec86f1 100644
---- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-@@ -95,6 +95,15 @@ required:
-   - qcom,ee
-   - reg
+---
+
+Changes in v2:
+1. Disable the nodes instead of failing the probe. Due to this change,
+   no Reviewed/Tested tags.
+
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 88ef478cb5cc..ec451c616f3e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1744,6 +1744,8 @@ cryptobam: dma-controller@1dc4000 {
+ 			qcom,controlled-remotely;
+ 			iommus = <&apps_smmu 0x594 0x0011>,
+ 				 <&apps_smmu 0x596 0x0011>;
++			/* FIXME: Probing BAM DMA causes some abort and system hang */
++			status = "fail";
+ 		};
  
-+anyOf:
-+  - required:
-+      - qcom,powered-remotely
-+  - required:
-+      - qcom,controlled-remotely
-+  - required:
-+      - clocks
-+      - clock-names
-+
- additionalProperties: false
+ 		crypto: crypto@1dfa000 {
+@@ -1755,6 +1757,8 @@ crypto: crypto@1dfa000 {
+ 				 <&apps_smmu 0x596 0x0011>;
+ 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+ 			interconnect-names = "memory";
++			/* FIXME: dependency BAM DMA is disabled */
++			status = "disabled";
+ 		};
  
- examples:
+ 		ipa: ipa@1e40000 {
 -- 
 2.34.1
 
