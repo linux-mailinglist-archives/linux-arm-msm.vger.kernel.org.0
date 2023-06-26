@@ -2,78 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3E9273DD8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:32:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 058AA73DDFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 13:46:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjFZLcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 07:32:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34210 "EHLO
+        id S229479AbjFZLqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 07:46:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbjFZLcJ (ORCPT
+        with ESMTP id S229636AbjFZLqn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 07:32:09 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C81AD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:32:08 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-991b7a4d2e8so115829266b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:32:08 -0700 (PDT)
+        Mon, 26 Jun 2023 07:46:43 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C0D118E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:46:41 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fa8692a006so23285945e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 04:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1687779127; x=1690371127;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ndfzfcsjUka4AnwkvirKlt5NBE8AOPnlUgXPUv0HxPw=;
-        b=dnRGK93bGYnGjkVwATj8flmAG92arzZyab6WqQRN5oa3xv8MIM5L6fpD85cksQtXHO
-         G0yaID8rmZgEPZfRjXR79KtjOdNrNR9cyYx+UBfJElYkvFfXX3DjxCnE4RnAN2RQTdqA
-         YnTNNp0jYbVB7K5aYX43EdeuiTk22FUTbbvBkltzmFpjj+4s9YlsBties+KOlnVaZEjN
-         07LPySspp6bJUeJN3RIXC3cx7IGKwrUnSZcSFyCBzU+ktQoQ4S6I1/a11kqBSHWCZgt/
-         JyVKwldjwZK26k1jcimiGoN+Se8Tf5e7sNvVMQa01oRPEH6uR50FzssJVqFExS12taXq
-         HUQQ==
+        d=linaro.org; s=google; t=1687780000; x=1690372000;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8uLRq7795u4+vU/HBiNzObZsPTqHBcq4PBCGfIyiv8U=;
+        b=tfenV3K/5msWzUWIJDSY0OWhthXuDD3ucDJAjhgFk0dR+QhiGUeDxYgKxmgxYaldI9
+         o4b32YKaZ40pFe6w6XBfOz9qF5oFP9Qcu+yvjxCdKH50ZBrODL1jcuWUnKGF6VOaW9ON
+         uDCc4/2ZhSQAlVDHx0/jqkIdm3xGlE8h6cKoUMloFmwbICvo9/hMw2zTwy4NmoZXPEpV
+         0TPVIpFmHOxwgR18a4d9ggAreHiCxAMRKZJteekdudKdgilHhS5hvVlPqQxX9oCFNzvN
+         84SOjJDzPr7y6EC962FNUpm9y0ksFAAMgji5AO3UO8pWcM2s7jd8V5p6HAwoQspNzgb6
+         OYQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687779127; x=1690371127;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ndfzfcsjUka4AnwkvirKlt5NBE8AOPnlUgXPUv0HxPw=;
-        b=cCI+xi+TGi3red1MGllmie20xaCJUOkyaw0KEMBl4WGValTzKVumu/zNPviypBVAaS
-         4GMjpH/5dG+LvqB8F1MExzCpEAGWui8EopG4ZieTRfFw36QtNwWVHYDxsdl5lFIvg1Ar
-         8zBq/AeLtNHeLGBFJs0H6aVD9KdLrQUneWzou1n4ltJcTlpwslNJHAw/N/SO7PKQ1BQw
-         7jLTGom2IJMJTopy9kIfcL7owZh1nNUctvV+lZ29Bl3JpzRr3sCrwGerVysmoBWqYufu
-         H1dBGSSTsV0r/5QAKsWSuQy6UAS5UDA02vSNqGMhli1apKDJIGfXm6PWbURL5atJ7GXo
-         pMSQ==
-X-Gm-Message-State: AC+VfDyV33Xs2sAam6uufd7cZPPFmxkUkVR9FobWUXlJRqBSL7qF3/5k
-        LYaBzAQxNwYfyz3mSJv/oAZxBQ==
-X-Google-Smtp-Source: ACHHUZ5c5Mkmov5zk/+/pODcO2qHMG954BP+zPgMlfk74aOv4LJg2R4RL0nv0wRCdcTCj0jepBblBg==
-X-Received: by 2002:a17:906:fe4c:b0:977:e87c:e633 with SMTP id wz12-20020a170906fe4c00b00977e87ce633mr23056328ejb.23.1687779126713;
-        Mon, 26 Jun 2023 04:32:06 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id ot6-20020a170906ccc600b0098df7d0e096sm2858994ejb.54.2023.06.26.04.32.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jun 2023 04:32:06 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 26 Jun 2023 13:32:06 +0200
-Message-Id: <CTMJRMN2K8AY.20TQJE584A453@otso>
-Cc:     "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Bhupesh Sharma" <bhupesh.sharma@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.15.1
-References: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230621143627.189134-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20221208; t=1687780000; x=1690372000;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8uLRq7795u4+vU/HBiNzObZsPTqHBcq4PBCGfIyiv8U=;
+        b=QdSlO9/XpaUMprgeUeer2tLVxvdyFK2cm/Vj9eUK5SY7KefxMPqWMMpDlogho9uRsK
+         UUGU8yaKMxBdv1wd3l3cxH/i94ZueeSLTRNYCSEoNp3D0oFuiJNN8rv/1d0FkdkdOA1t
+         FZZ6hljBQnlfnHhWarYAYjyyi/k3IXtFVkGydyqlNXA7MhyarmU3XXE2zxYN8kgYxS5J
+         8ZzKxxzqOvL1H//sNsA66cca6rx434bvsbbPcqR/FrVzePWiLrhuEopE2p4C10PIAAUg
+         Ajj17JJNNakpytDxqsYHrexoV8NzVLXiX3vHrJjseboWJefBbdwrijCPW1ujvrTK3xnf
+         gO2w==
+X-Gm-Message-State: AC+VfDxdneWTNYD+VZ9CH7ZBVEmM5Q3DUjdkP+TgUem39T/B4ySW49hE
+        agyDw8otjnXQVEORZyRG/ARL9Q==
+X-Google-Smtp-Source: ACHHUZ7WNyF3ul5N2txN+WskY9mQAIhRpA72QramL2D9DR0QWsJ4McpAL8WrYx1uZQVXdo3iQz4lgQ==
+X-Received: by 2002:a05:600c:2152:b0:3f9:a6f3:8a53 with SMTP id v18-20020a05600c215200b003f9a6f38a53mr18239381wml.20.1687779999962;
+        Mon, 26 Jun 2023 04:46:39 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id h15-20020a05600004cf00b0030e52d4c1bcsm7221461wri.71.2023.06.26.04.46.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jun 2023 04:46:38 -0700 (PDT)
+Date:   Mon, 26 Jun 2023 14:46:35 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     Julia Lawall <Julia.Lawall@inria.fr>,
+        Manivannan Sadhasivam <mani@kernel.org>, keescook@chromium.org,
+        kernel-janitors@vger.kernel.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 10/26] bus: mhi: host: use array_size
+Message-ID: <aaa1bf4b-c546-402f-8ad2-667fd35caa74@kadam.mountain>
+References: <20230623211457.102544-1-Julia.Lawall@inria.fr>
+ <20230623211457.102544-11-Julia.Lawall@inria.fr>
+ <3b4ff79b-93b4-cf56-1488-113905b3981d@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3b4ff79b-93b4-cf56-1488-113905b3981d@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,56 +75,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+On Fri, Jun 23, 2023 at 03:30:36PM -0600, Jeffrey Hugo wrote:
+> On 6/23/2023 3:14 PM, Julia Lawall wrote:
+> > Use array_size to protect against multiplication overflows.
+> > 
+> > The changes were done using the following Coccinelle semantic patch:
+> > 
+> > // <smpl>
+> > @@
+> >      expression E1, E2;
+> >      constant C1, C2;
+> >      identifier alloc = {vmalloc,vzalloc};
+> > @@
+> > (
+> >        alloc(C1 * C2,...)
+> > |
+> >        alloc(
+> > -           (E1) * (E2)
+> > +           array_size(E1, E2)
+> >        ,...)
+> > )
+> > // </smpl>
+> > 
+> > Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+> > 
+> > ---
+> >   drivers/bus/mhi/host/init.c |    4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> > index f72fcb66f408..34a543a67068 100644
+> > --- a/drivers/bus/mhi/host/init.c
+> > +++ b/drivers/bus/mhi/host/init.c
+> > @@ -759,8 +759,8 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+> >   	 * so to avoid any memory possible allocation failures, vzalloc is
+> >   	 * used here
+> >   	 */
+> > -	mhi_cntrl->mhi_chan = vzalloc(mhi_cntrl->max_chan *
+> > -				      sizeof(*mhi_cntrl->mhi_chan));
+> > +	mhi_cntrl->mhi_chan = vzalloc(array_size(mhi_cntrl->max_chan,
+> > +				      sizeof(*mhi_cntrl->mhi_chan)));
+> >   	if (!mhi_cntrl->mhi_chan)
+> >   		return -ENOMEM;
+> > 
+> > 
+> 
+> This doesn't seem like a good fix.
+> 
+> If we've overflowed the multiplication, I don't think we should continue,
+> and the function should return an error.  array_size() is going to return
+> SIZE_MAX, and it looks like it is possible that vzalloc() may be able to
+> allocate that successfully in some scenarios.
 
-On Wed Jun 21, 2023 at 4:36 PM CEST, Krzysztof Kozlowski wrote:
-> SM8350 HDK and MTP boards were silently dying and rebooting during BAM
-> DMA probe:
->
->   [    1.574304] vreg_bob: Setting 3008000-3960000uV
->   [    1.576918] bam-dFormat: Log Type - Time(microsec) - Message -
->   Optional Info
->   Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
->   S - QC_IMAGE_VERSION_STRING=3DBOOT.MXF.1.0-00637.1-LAHAINA-1
->   S - IMAGE_VARIANT_STRING=3DSocLahainaLAA
->   S - OEM_IMAGE_VERSION_STRING=3Dcrm-ubuntu77
->   S - Boot Interface: UFS
->
-> It seems that BAM DMA is locally controller (not by firmware) and
-> requires proper initialization by the driver prior to use, at least on
-> HDK8350 and MTP8350, but probably on all boards.
+Nope.  You can never allocate more that size_t because that's the
+highest number that the kernel allocation functions can accept.
 
-Are you sure that the bam (and subsequent the qce) actually probes with
-this change? From reading the code I don't see how the bam should probe
-without either qcom,controlled-remotely or qcom,powered-remotely but no
-clocks supplied. I think the probe just fails with this change, right?
+Obviously on 64bit size_t is unbelievably large.  If I remember right,
+on 32bit you didn't used to be able to allocate more than 2GB without
+doing all sorts of tricks.  And everyone deleted those tricks when 64bit
+machines became super common.
 
-Regards
-Luca
-
->
-> Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support=
-")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> ---
->
-> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/q=
-com/sm8350.dtsi
-> index 88ef478cb5cc..b382ce66387e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -1741,7 +1741,6 @@ cryptobam: dma-controller@1dc4000 {
->  			interrupts =3D <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
->  			#dma-cells =3D <1>;
->  			qcom,ee =3D <0>;
-> -			qcom,controlled-remotely;
->  			iommus =3D <&apps_smmu 0x594 0x0011>,
->  				 <&apps_smmu 0x596 0x0011>;
->  		};
+regards,
+dan carpenter
 
