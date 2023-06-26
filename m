@@ -2,85 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98F3873E0DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 15:41:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A31173E0EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jun 2023 15:44:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbjFZNlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 09:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44736 "EHLO
+        id S229578AbjFZNoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 09:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbjFZNlM (ORCPT
+        with ESMTP id S229706AbjFZNoo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 09:41:12 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043FBB1;
-        Mon, 26 Jun 2023 06:41:10 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35QCJKH3022110;
-        Mon, 26 Jun 2023 13:41:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uwSY6gRpDVb91XporXxBIWrVp0dHiwcLnx3HQdjjDb0=;
- b=XZ1vmsiniq4cgL9idyltEgpu/vprKjtra/HvPplUBKbzuBjdlh0FoiOymH060NLAu4iW
- nU2QBbKNJNRfaQ7T5ojtwGRxLxRicMroafYqXq8V1YGXolQZUg7zkS2/Dp/xDiL8EyNA
- LQqzA1pWEqf6RcdMpycyBqgM3saipcJlA4owYwUJV1K857hK6+CVHSOqL72wKes02T55
- qTpoZXYrNMp+lFs27qyvb0Qi7RDc46mTUTEorCTaFFYdLkkutW+rsIHFcAZ4VRNo939c
- 8vv8JEg3H5XjdN+y/tjARFo/FWffDD3goJ7cNTb8aj8X1gtqykDrkPN6xfXpx2FANqI6 nw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdrq845c4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 13:41:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35QDf2lQ023536
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Jun 2023 13:41:03 GMT
-Received: from [10.216.43.155] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
- 2023 06:40:58 -0700
-Message-ID: <3291d4f1-1cb8-ad7e-3dd4-5b9cab9e22c7@quicinc.com>
-Date:   Mon, 26 Jun 2023 19:10:53 +0530
+        Mon, 26 Jun 2023 09:44:44 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 656ADE73
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:44:42 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f8689fbf59so5411072e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 06:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687787080; x=1690379080;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Z182+Q4uKJie6Rxr4pwKFm/7JzYn7OU/lRN6E75YsLU=;
+        b=eXQV8HOG8X7LkEP0FGaLvSgKFbx5frQztyredVZnH3azpB0e/MWxX/OvIesjczaWTD
+         sbyN1HTNgbA98LWHmikLcIJuJ88TSUAAGZns00Lo4oboSKnvQQoFooYapW04pDeIipeB
+         xl8pyVivBRsCC1akqSDBp76Ut37ukgIFoDPVWTe8WSQuf6VGvXZNyraZGv5uodCCnahk
+         C9Lb/dkyYimWqVtCR3aKir/5u/0FJQkKygo9pXK4/CrE3jLXKfXPsP6oK9UuqfLGzzgJ
+         Em2yzd089u1gW8F1VvTEH1xwgUJI7nf4nlFAIAHqzjkvbGoqu8dmpR9y8H7jKRzVcpwI
+         aWDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687787080; x=1690379080;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z182+Q4uKJie6Rxr4pwKFm/7JzYn7OU/lRN6E75YsLU=;
+        b=F13vwfZ/IJsdMXGiHGbxIZBt0ZwC0Qk8TaeY63bomSALggm6idK6fMJ1gFpE8faUP+
+         cdtcU5Rr0xFqtcfZ+jW5T5pDen6LUi364rOAwvtiMRxo01Y8Ef72fFPeXU6BI/d7LDz6
+         g+wDDsY4Y12sSucfXPKhdwd2LToai2nxzswkSs41SAZOhZqJQyv9qrbAI2sPjSFlLgty
+         vssAgm2UmnsjhIKDQgM9kqImboB20cupn1KnXnR/D8fAoEl1Rnirr6mcYlQtNREpkbxs
+         WyOTfBiR/PepNmwXF0sIoyS1uJ39Eq+VcHS6q7B8UmrWfNm2C2kb1pkUO1hGmyfCP2NU
+         l86A==
+X-Gm-Message-State: AC+VfDw6k5V8TedbyroaVX49Z7HaPwxR8PHqwjA9/oQdPb4C1Xg0xipl
+        52CEJgSmZRCSK25WlaMfbXBmlA==
+X-Google-Smtp-Source: ACHHUZ4tMRepmhfl1tjS3N4io66eAdL2IcMharuAdzXvUqx4OEu4BAmMjhy8W1VXaGhJtB56aq84oA==
+X-Received: by 2002:a05:6512:33c7:b0:4f8:4b19:9533 with SMTP id d7-20020a05651233c700b004f84b199533mr9837735lfg.19.1687787080554;
+        Mon, 26 Jun 2023 06:44:40 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id d30-20020ac25ede000000b004f252003071sm1126500lfq.37.2023.06.26.06.44.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jun 2023 06:44:39 -0700 (PDT)
+Message-ID: <d9e4fd75-310a-7fe8-879e-651011873199@linaro.org>
+Date:   Mon, 26 Jun 2023 16:44:39 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH RFC v1 1/3] PCI: endpoint: Add wakeup host API to EPC core
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <manivannan.sadhasivam@linaro.org>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCI ENDPOINT SUBSYSTEM" <linux-pci@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1686754850-29817-1-git-send-email-quic_krichai@quicinc.com>
- <1686754850-29817-2-git-send-email-quic_krichai@quicinc.com>
- <20230623054313.GB5611@thinkpad>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20230623054313.GB5611@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 06/26] interconnect: icc-clk: add support for scaling
+ using OPP
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
+ <20230625202547.174647-7-dmitry.baryshkov@linaro.org>
+ <b5ff346b-cbde-68fe-a08a-3b3331439309@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <b5ff346b-cbde-68fe-a08a-3b3331439309@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: f7_yjaIP6b38NVlZ-zlQ6g_dw1eh-xJA
-X-Proofpoint-GUID: f7_yjaIP6b38NVlZ-zlQ6g_dw1eh-xJA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-26_10,2023-06-26_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=842 clxscore=1015
- lowpriorityscore=0 adultscore=0 suspectscore=0 phishscore=0
- impostorscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306260122
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,110 +91,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 6/23/2023 11:13 AM, Manivannan Sadhasivam wrote:
-> On Wed, Jun 14, 2023 at 08:30:47PM +0530, Krishna chaitanya chundru wrote:
->> Endpoint cannot send any data/MSI when the device state is in
->> D3cold or D3hot. Endpoint needs to bring the device back to D0
->> to send any kind of data.
+On 26/06/2023 14:28, Konrad Dybcio wrote:
+> On 25.06.2023 22:25, Dmitry Baryshkov wrote:
+>> Sometimes it might be required to scale the clock using the OPP
+>> framework (e.g. to scale regulators following the required clock rate).
+>> Extend the interconnec
+> 't'
+> 
+>> -clk framework to handle OPP case in addition to
+>> scaling the clock.
 >>
->> For this endpoint can send inband PME the device is in D3hot or
->> toggle wake when the device is D3 cold.
->>
-> Are you referring to "host" as the "device"? If so, then it is a wrong
-> terminology.
-I will correct this in next series.
->
->> To support this adding wake up host to epc core.
->>
-> Commit message should be imperative.
->
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> ---
->>   drivers/pci/endpoint/pci-epc-core.c | 29 +++++++++++++++++++++++++++++
->>   include/linux/pci-epc.h             |  3 +++
->>   2 files changed, 32 insertions(+)
+> I think we should check for OPP at the icc-clk registration time,
+> instead of passing it as a parameter, e.g.:
+> 
+> qn.opp = IS_ERR(dev_pm_opp_get_opp_count)
+> 
+> Not sure if there's a more idiomatic way.
+
+No. icc-clk is not limited to a single clock->icc conversion. So it is 
+possible to create several interconnect links, only one of which should 
+be the OPP-based one.
+
+> 
+> Konrad
+>>   drivers/interconnect/icc-clk.c   | 13 +++++++++++--
+>>   include/linux/interconnect-clk.h |  1 +
+>>   2 files changed, 12 insertions(+), 2 deletions(-)
 >>
->> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
->> index 46c9a5c..d203947 100644
->> --- a/drivers/pci/endpoint/pci-epc-core.c
->> +++ b/drivers/pci/endpoint/pci-epc-core.c
->> @@ -167,6 +167,35 @@ const struct pci_epc_features *pci_epc_get_features(struct pci_epc *epc,
->>   EXPORT_SYMBOL_GPL(pci_epc_get_features);
+>> diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+>> index 4d43ebff4257..c7962acdcee7 100644
+>> --- a/drivers/interconnect/icc-clk.c
+>> +++ b/drivers/interconnect/icc-clk.c
+>> @@ -7,10 +7,13 @@
+>>   #include <linux/device.h>
+>>   #include <linux/interconnect-clk.h>
+>>   #include <linux/interconnect-provider.h>
+>> +#include <linux/pm_opp.h>
 >>   
->>   /**
->> + * pci_epc_wakeup_host() - interrupt the host system
-> s/interrupt the host system/Wakeup the host
->
->> + * @epc: the EPC device which has to interrupt the host
-> s/interrupt/wake
->
->> + * @func_no: the physical endpoint function number in the EPC device
->> + * @vfunc_no: the virtual endpoint function number in the physical function
->> + *
->> + * Invoke to wakeup host
->> + */
->> +int pci_epc_wakeup_host(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
->> +{
->> +	int ret;
->> +
->> +	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
->> +		return -EINVAL;
->> +
->> +	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
->> +		return -EINVAL;
->> +
-> Use proper errno for both of the above.
->
-> - Mani
-
-raise_irq functions also using errno can you please suggest correct value.
-
-- KC
-
->> +	if (!epc->ops->wakeup_host)
->> +		return 0;
->> +
->> +	mutex_lock(&epc->lock);
->> +	ret = epc->ops->wakeup_host(epc, func_no, vfunc_no);
->> +	mutex_unlock(&epc->lock);
->> +
->> +	return ret;
->> +}
->> +EXPORT_SYMBOL_GPL(pci_epc_wakeup_host);
->> +
->> +/**
->>    * pci_epc_stop() - stop the PCI link
->>    * @epc: the link of the EPC device that has to be stopped
->>    *
->> diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
->> index 301bb0e..a8496be 100644
->> --- a/include/linux/pci-epc.h
->> +++ b/include/linux/pci-epc.h
->> @@ -59,6 +59,7 @@ pci_epc_interface_string(enum pci_epc_interface_type type)
->>    * @start: ops to start the PCI link
->>    * @stop: ops to stop the PCI link
->>    * @get_features: ops to get the features supported by the EPC
->> + * @wakeup_host: ops to wakeup the host
->>    * @owner: the module owner containing the ops
->>    */
->>   struct pci_epc_ops {
->> @@ -88,6 +89,7 @@ struct pci_epc_ops {
->>   	void	(*stop)(struct pci_epc *epc);
->>   	const struct pci_epc_features* (*get_features)(struct pci_epc *epc,
->>   						       u8 func_no, u8 vfunc_no);
->> +	int	(*wakeup_host)(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
->>   	struct module *owner;
+>>   struct icc_clk_node {
+>> +	struct device *dev;
+>>   	struct clk *clk;
+>>   	bool enabled;
+>> +	bool opp;
 >>   };
 >>   
->> @@ -232,6 +234,7 @@ int pci_epc_start(struct pci_epc *epc);
->>   void pci_epc_stop(struct pci_epc *epc);
->>   const struct pci_epc_features *pci_epc_get_features(struct pci_epc *epc,
->>   						    u8 func_no, u8 vfunc_no);
->> +int pci_epc_wakeup_host(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
->>   enum pci_barno
->>   pci_epc_get_first_free_bar(const struct pci_epc_features *epc_features);
->>   enum pci_barno pci_epc_get_next_free_bar(const struct pci_epc_features
->> -- 
->> 2.7.4
->>
+>>   struct icc_clk_provider {
+>> @@ -25,12 +28,16 @@ struct icc_clk_provider {
+>>   static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
+>>   {
+>>   	struct icc_clk_node *qn = src->data;
+>> +	unsigned long rate = icc_units_to_bps(src->peak_bw);
+>>   	int ret;
+>>   
+>>   	if (!qn || !qn->clk)
+>>   		return 0;
+>>   
+>> -	if (!src->peak_bw) {
+>> +	if (qn->opp)
+>> +		return dev_pm_opp_set_rate(qn->dev, rate);
+>> +
+>> +	if (!rate) {
+>>   		if (qn->enabled)
+>>   			clk_disable_unprepare(qn->clk);
+>>   		qn->enabled = false;
+>> @@ -45,7 +52,7 @@ static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
+>>   		qn->enabled = true;
+>>   	}
+>>   
+>> -	return clk_set_rate(qn->clk, icc_units_to_bps(src->peak_bw));
+>> +	return clk_set_rate(qn->clk, rate);
+>>   }
+>>   
+>>   static int icc_clk_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
+>> @@ -106,7 +113,9 @@ struct icc_provider *icc_clk_register(struct device *dev,
+>>   	icc_provider_init(provider);
+>>   
+>>   	for (i = 0, j = 0; i < num_clocks; i++) {
+>> +		qp->clocks[i].dev = dev;
+>>   		qp->clocks[i].clk = data[i].clk;
+>> +		qp->clocks[i].opp = data[i].opp;
+>>   
+>>   		node = icc_node_create(first_id + j);
+>>   		if (IS_ERR(node)) {
+>> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
+>> index 0cd80112bea5..c695e5099901 100644
+>> --- a/include/linux/interconnect-clk.h
+>> +++ b/include/linux/interconnect-clk.h
+>> @@ -11,6 +11,7 @@ struct device;
+>>   struct icc_clk_data {
+>>   	struct clk *clk;
+>>   	const char *name;
+>> +	bool opp;
+>>   };
+>>   
+>>   struct icc_provider *icc_clk_register(struct device *dev,
+
+-- 
+With best wishes
+Dmitry
+
