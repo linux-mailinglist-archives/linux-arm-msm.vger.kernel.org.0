@@ -2,83 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 650F773EFD5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 02:45:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 010F173F00D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 03:01:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229478AbjF0ApN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 20:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51846 "EHLO
+        id S229657AbjF0BBw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 21:01:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjF0ApM (ORCPT
+        with ESMTP id S229623AbjF0BBv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 20:45:12 -0400
+        Mon, 26 Jun 2023 21:01:51 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 983B9172A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 17:45:10 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35R0hQs3006089;
-        Tue, 27 Jun 2023 00:45:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qTb48BcmlziyIws7Zt/lwTT9YOGz66PpgYQ4i1u7+Vs=;
- b=nxU2rkqGR18mRrof4YZAIMNCIXRlMVPpIYpW+E2JQPXSKkg2aJH6N5sVMpdvtmn6rZq7
- AYcwmzzb8fqiBqb/xUrlCbqMWtvgr+kDo1UQJrcjhZF+VFxBQyXHmRivH+5rkmwknr83
- 5PHtzMsLjSUaYvD9/PS1UUpYTLdPcBdUYU2XhH3f+8hyPnDxmmZRPqcaVkw7GCaSH/fp
- +Q9KMxNtnop5vFC+2nAwTHrpdVTo5uW0ZE4hIjlGdZwpaCR0JZgXsv/g32kqeBzo+sK5
- W3inBQRFQWG9GeVeggouvCByKiG0qdZxNhHuXcZMlpZlhSEjl5olA0dhnpfsvvp3JcsU iw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rfbfc9942-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A21BC12E;
+        Mon, 26 Jun 2023 18:01:50 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35R0olZk026161;
+        Tue, 27 Jun 2023 01:01:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=qhnhRqi0nFLzXr+49PYiC7nGp/gXo7EQd1cvpHDh3/w=;
+ b=fMFW5jZGJav7Bfh1p7iEAyPjf9Zy36dp9fOdSgItQAtBURU2rrkMFOUpN89vuokzZtHS
+ QWg1zftKD1lU6OTlykhwmOfnTb/9mX98clufaERCEj51FdygYb4dJwnvSZeYL1QmDjMj
+ 4GcTtloONitP6Yy18iz0A64PAuDSa5li5Ogd6zjg9QmoXUO7j9RpVt3XdY/GzJXXw+HE
+ SgMyFcE0SuxNKPhSMGEOZU2vs+AwZ3xtiRbrCPpwciW3xaJYbzlkh26Qx4QCwjmrC+W6
+ BM1QALSJ5aOiYA/33ymrv4NwUQpTNusA2VpkBAsloQnZAA6N85WnY+O+uYwJyJM+I9n/ hg== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rfgmp0f6k-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 00:45:02 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35R0j1KH026594
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 00:45:01 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
- 2023 17:45:01 -0700
-Message-ID: <5879e5c1-3f78-995b-b5ef-bbdf31019693@quicinc.com>
-Date:   Mon, 26 Jun 2023 17:45:00 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [RFC PATCH 0/3] Support for Solid Fill Planes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_abhinavk@quicinc.com>, <dri-devel@lists.freedesktop.org>,
-        <swboyd@chromium.org>, <daniel.vetter@ffwll.ch>,
-        <seanpaul@chromium.org>, <laurent.pinchart@ideasonboard.com>,
-        <wayland-devel@lists.freedesktop.org>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <Y2leZDfLj/5963wl@intel.com>
- <d0b5abdc-85ad-fee2-9760-866c32bab111@quicinc.com>
- <d8b1e910-6943-d7b7-5433-71f8b350bfcb@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <d8b1e910-6943-d7b7-5433-71f8b350bfcb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+        Tue, 27 Jun 2023 01:01:46 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 35R11hOf006793;
+        Tue, 27 Jun 2023 01:01:43 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3rdsjkh3c1-1;
+        Tue, 27 Jun 2023 01:01:43 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35R11hjh006712;
+        Tue, 27 Jun 2023 01:01:43 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 35R11hNQ006663;
+        Tue, 27 Jun 2023 01:01:43 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id 865594AA5; Tue, 27 Jun 2023 06:31:42 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v5 0/3] PCI: qcom: ep: Add basic interconnect support
+Date:   Tue, 27 Jun 2023 06:31:28 +0530
+Message-Id: <1687827692-6181-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TU4H4CJqOFOm7w7qFs44yO35n91a7CZD
-X-Proofpoint-GUID: TU4H4CJqOFOm7w7qFs44yO35n91a7CZD
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mo9TVmwqt8Dhcet6mh4jdMkpnyAT_A1c
+X-Proofpoint-ORIG-GUID: mo9TVmwqt8Dhcet6mh4jdMkpnyAT_A1c
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-06-26_20,2023-06-26_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- phishscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306270003
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ impostorscore=0 mlxscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=552 phishscore=0 suspectscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306270007
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,173 +80,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add basic support for managing "pcie-mem" interconnect path by setting
+a low constraint before enabling clocks and updating it after the link
+is up based on link speed and width the device got enumerated.
+
+changes from v4:
+	- rebased with linux-next.
+	- Added comments as suggested by mani.
+	- removed the arm: dts: qcom: sdx55: Add interconnect path
+	  as that patch is already applied.
+changes from v3:
+        - ran make DT_CHECKER_FLAGS=-m dt_binding_check and fixed
+         errors.
+        - Added macros in the qcom ep driver patch as suggested by Dmitry
+changes from v2:
+        - changed the logic for getting speed and width as suggested
+         by bjorn.
+        - fixed compilation errors.
 
 
-On 6/26/2023 5:06 PM, Dmitry Baryshkov wrote:
-> On 27/06/2023 02:02, Jessica Zhang wrote:
->>
->>
->> On 11/7/2022 11:37 AM, Ville Syrjälä wrote:
->>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
->>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
->>>> properties. When the color fill value is set, and the framebuffer is 
->>>> set
->>>> to NULL, memory fetch will be disabled.
->>>
->>> Thinking a bit more universally I wonder if there should be
->>> some kind of enum property:
->>>
->>> enum plane_pixel_source {
->>>     FB,
->>>     COLOR,
->>>     LIVE_FOO,
->>>     LIVE_BAR,
->>>     ...
->>> }
->>
->> Reviving this thread as this was the initial comment suggesting to 
->> implement pixel_source as an enum.
->>
->> I think the issue with having pixel_source as an enum is how to decide 
->> what counts as a NULL commit.
->>
->> Currently, setting the FB to NULL will disable the plane. So I'm 
->> guessing we will extend that logic to "if there's no pixel_source set 
->> for the plane, then it will be a NULL commit and disable the plane".
->>
->> In that case, the question then becomes when to set the pixel_source 
->> to NONE. Because if we do that when setting a NULL FB (or NULL 
->> solid_fill blob), it then forces userspace to set one property before 
->> the other.
-> 
-> Why? The userspace should use atomic commits and as such it should all 
-> properties at the same time.
+Krishna chaitanya chundru (3):
+  dt-bindings: PCI: qcom: ep: Add interconnects path
+  arm: dts: qcom: sdx65: Add interconnect path
+  PCI: qcom-ep: Add ICC bandwidth voting support
 
-Correct, userspace will set all the properties within the same atomic 
-commit. The issue happens when the driver iterates through each property 
-within the MODE_ATOMIC ioctl [1].
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 13 ++++
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |  3 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          | 73 ++++++++++++++++++++++
+ 3 files changed, 89 insertions(+)
 
-For reference, I'm thinking of an implementation where we're setting the 
-pixel_source within drm_atomic_plane_set_property().
+-- 
+2.7.4
 
-So something like:
-
-drm_atomic_plane_set_property( ... )
-{
-     if (property == config->prop_fb_id) {
-         if (fb)
-             state->pixel_source = FB;
-         else
-             state->pixel_source = NONE;
-     } else if (property == config->prop_solid_fill) {
-         if (solid_fill_blob)
-             state->pixel_source = SOLID_FILL;
-     }
-
-     // ...
-}
-
-If userspace sets solid_fill to a valid blob and FB to NULL, it's 
-possible for driver to first set the solid_fill property then set the 
-fb_id property later. This would cause pixel_source to be set to NONE 
-after all properties have been set.
-
-I've also considered an implementation without the `pixel_source = NONE` 
-line in the prop_fb_id case, but we would still need to find somewhere 
-to set the pixel_source to NONE in order to allow userspace to disable a 
-plane.
-
-[1] 
-https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/drm_atomic_uapi.c#L1385
-
-> 
->> Because of that, I'm thinking of having pixel_source be represented by 
->> a bitmask instead. That way, we will simply unset the corresponding 
->> pixel_source bit when passing in a NULL FB/solid_fill blob. Then, in 
->> order to detect whether a commit is NULL or has a valid pixel source, 
->> we can just check if pixel_source == 0.
->>
->> Would be interested in any feedback on this.
-> 
-> This is an interesting idea. Frankly speaking, I'd consider it 
-> counter-intuitive at the first glance.
-> 
-> Consider it to act as a curtain. Setup the curtain (by writing the fill 
-> colour property). Then one can close the curtain (by switching source to 
-> colour), or open it (by switching to any other source). Bitmask wouldn't 
-> complicate this.
-
-So if I'm understanding your analogy correctly, pixel_source won't 
-necessarily be set whenever the FB or solid_fill properties are set. So 
-that way we can have both FB *and* solid_fill set at the same time, but 
-only the source that pixel_source is set to would be displayed.
-
-Thanks,
-
-Jessica Zhang
-
-> 
->>
->> Thanks,
->>
->> Jessica Zhang
->>
->>>
->>>> In addition, loosen the NULL FB checks within the atomic commit 
->>>> callstack
->>>> to allow a NULL FB when color_fill is nonzero and add FB checks in
->>>> methods where the FB was previously assumed to be non-NULL.
->>>>
->>>> Finally, have the DPU driver use drm_plane_state.color_fill and
->>>> drm_plane_state.color_fill_format instead of 
->>>> dpu_plane_state.color_fill,
->>>> and add extra checks in the DPU atomic commit callstack to account 
->>>> for a
->>>> NULL FB in cases where color_fill is set.
->>>>
->>>> Some drivers support hardware that have optimizations for solid fill
->>>> planes. This series aims to expose these capabilities to userspace as
->>>> some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
->>>> hardware composer HAL) that can be set by apps like the Android Gears
->>>> app.
->>>>
->>>> Userspace can set the color_fill value by setting COLOR_FILL_FORMAT 
->>>> to a
->>>> DRM format, setting COLOR_FILL to a color fill value, and setting the
->>>> framebuffer to NULL.
->>>
->>> Is there some real reason for the format property? Ie. why not
->>> just do what was the plan for the crttc background color and
->>> specify the color in full 16bpc format and just pick as many
->>> msbs from that as the hw can use?
->>>
->>>>
->>>> Jessica Zhang (3):
->>>>    drm: Introduce color fill properties for drm plane
->>>>    drm: Adjust atomic checks for solid fill color
->>>>    drm/msm/dpu: Use color_fill property for DPU planes
->>>>
->>>>   drivers/gpu/drm/drm_atomic.c              | 68 
->>>> ++++++++++++-----------
->>>>   drivers/gpu/drm/drm_atomic_helper.c       | 34 +++++++-----
->>>>   drivers/gpu/drm/drm_atomic_uapi.c         |  8 +++
->>>>   drivers/gpu/drm/drm_blend.c               | 38 +++++++++++++
->>>>   drivers/gpu/drm/drm_plane.c               |  8 +--
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  7 ++-
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 66 ++++++++++++++--------
->>>>   include/drm/drm_atomic_helper.h           |  5 +-
->>>>   include/drm/drm_blend.h                   |  2 +
->>>>   include/drm/drm_plane.h                   | 28 ++++++++++
->>>>   10 files changed, 188 insertions(+), 76 deletions(-)
->>>>
->>>> -- 
->>>> 2.38.0
->>>
->>> -- 
->>> Ville Syrjälä
->>> Intel
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
