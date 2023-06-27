@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 508C973FFE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:38:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9239073FFF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:43:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230158AbjF0Pip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 11:38:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51660 "EHLO
+        id S231345AbjF0Pnl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 11:43:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjF0Pio (ORCPT
+        with ESMTP id S231395AbjF0Pnk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 11:38:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701D7113;
-        Tue, 27 Jun 2023 08:38:43 -0700 (PDT)
+        Tue, 27 Jun 2023 11:43:40 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1B31708;
+        Tue, 27 Jun 2023 08:43:37 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EE2F0611D7;
-        Tue, 27 Jun 2023 15:38:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F2DC433C8;
-        Tue, 27 Jun 2023 15:38:42 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5A2F7611D8;
+        Tue, 27 Jun 2023 15:43:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87BFC433C0;
+        Tue, 27 Jun 2023 15:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687880322;
-        bh=PmrK36dDdd2L2+DlUioVyo1zm8aKUBPdauoPttVDtZE=;
+        s=k20201202; t=1687880616;
+        bh=0fBukbKw42+OuKPjJbx21dnFmVOG7Y0lihmjoL0ewuA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=krDmM+So1ReT1wPk/1mMSMhMV+PkkUZQAWbaxZ8foAwJD+sGeDVjBLjfi5HLQ/+1n
-         6cOlsm3k5MkbM15rinhcKnb0e8flPgBV5bNeCUqpn6DFfSBgm+pNk7p6aUoDQQHxsz
-         uQWVgQqGyUPf64ypnqYTDabey/DKFu3LtGFujX47SrW5mK1OHCeZplfGr7pFwpskl6
-         HpSvVayKqhZiMcbjt6/kRQhJ+pW907iBBiuwCaC73tjol9rITB4AISrLwk/mRHAsSo
-         4E0sMGzaTFnhHcq12naZw51rGTTmN90Hd7zwNA4sOO1ppKgad3SSPyEZ5I4dA0P1BM
-         pvy62d28nw68A==
+        b=bTl8QjErWT1K1J87W8py6flm8zjHzWbeY1vmREGIGAr2nWVtmBRg7ZpIWDYiVeJAo
+         /5X8XyvwK/Rakh9oQScdaPOLiFXFVQYAhNygfLGDIgJRe53GaBaddWG7sQmKwS+Y+p
+         7brm146EPtVCmAerDaWHdq69W/62GmsGSTppb8xzWpz29KXXzXQ7gluAx9rsjtYCvj
+         JV33Y8zwaZ1vNDo5G2a82hL1HzbHS77Ctq0EeLeQFzk4ZCuwT56gURx+W2prK6ZoKn
+         3rcPazOkVo3e2Nczgtyk4qiEzka9CkIDjDI59YCX38ey/UwUr945E6aTbvvLFc/so5
+         NkSrXOzmOSkKA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1qEAm7-0004DS-6N; Tue, 27 Jun 2023 17:38:39 +0200
-Date:   Tue, 27 Jun 2023 17:38:39 +0200
+        id 1qEAqs-0004FT-CZ; Tue, 27 Jun 2023 17:43:34 +0200
+Date:   Tue, 27 Jun 2023 17:43:34 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
@@ -47,25 +47,24 @@ Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
         quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 01/10] dt-bindings: usb: qcom,dwc3: Add bindings for
- SC8280 Multiport
-Message-ID: <ZJsCf3nYrikF7nZc@hovoldconsulting.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-2-quic_kriskura@quicinc.com>
- <ZJrGG6FXWLacRLbg@hovoldconsulting.com>
+        ahalaney@redhat.com
+Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
+ for qcom wrapper
+Message-ID: <ZJsDpqttBYtbQ0yg@hovoldconsulting.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-7-quic_kriskura@quicinc.com>
+ <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZJrGG6FXWLacRLbg@hovoldconsulting.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,72 +73,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 27, 2023 at 01:20:59PM +0200, Johan Hovold wrote:
-> On Wed, Jun 21, 2023 at 10:06:19AM +0530, Krishna Kurapati wrote:
+Hi Krishna,
 
-> > +          items:
-> > +            - const: dp1_hs_phy_irq
-> > +            - const: dm1_hs_phy_irq
-> > +            - const: dp2_hs_phy_irq
-> > +            - const: dm2_hs_phy_irq
-> > +            - const: dp3_hs_phy_irq
-> > +            - const: dm4_hs_phy_irq
-> > +            - const: dp4_hs_phy_irq
-> > +            - const: dm4_hs_phy_irq
-> > +            - const: ss1_phy_irq
-> > +            - const: ss2_phy_irq
-> > +            - const: pwr_event_1
-> > +            - const: pwr_event_2
-> > +            - const: pwr_event_3
-> > +            - const: pwr_event_4
-> 
-> The naming here is inconsistent and interrupts should not have "_irq"
-> suffixes (even if some of the current ones do for historical reasons).
-> 
-> I believe these should be named
-> 
-> 	pwr_event_1
-> 	dp_hs_phy_1
-> 	dm_hs_phy_1
-> 	ss_phy_1
-> 
-> 	pwr_event_2
-> 	dp_hs_phy_2
-> 	dm_hs_phy_2
-> 	ss_phy_2
-> 
-> 	pwr_event_3
-> 	dp_hs_phy_3
-> 	dm_hs_phy_3
-> 
-> 	pwr_event_4
-> 	dp_hs_phy_4
-> 	dm_hs_phy_4
-> 
-> or similar and be grouped by port while using the the
-> qcom,sc8280xp-dwc ordering for the individual lines.
+On Wed, Jun 07, 2023 at 02:16:37PM +0200, Johan Hovold wrote:
+> On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
 
-Perhaps the ordering you suggested is fine too, but I'd probably move
-the pwr_event ones first to match qcom,sc8280xp-dwc then, that is:
+> >  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
+> >  {
+> >  	u32 reg;
+> > @@ -413,13 +423,16 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+> >  {
+> >  	u32 val;
+> >  	int i, ret;
+> > +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> >  
+> >  	if (qcom->is_suspended)
+> >  		return 0;
+> >  
+> > -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
+> > -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
+> > -		dev_err(qcom->dev, "HS-PHY not in L2\n");
+> > +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+> > +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
+> > +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
+> > +			dev_err(qcom->dev, "HS-PHY%d not in L2\n", i);
+> > +	}
 
- 	pwr_event_1
- 	pwr_event_2
- 	pwr_event_3
- 	pwr_event_4
- 	dp_hs_phy_1
- 	dm_hs_phy_1
- 	dp_hs_phy_2
- 	dm_hs_phy_2
- 	dp_hs_phy_3
- 	dm_hs_phy_3
- 	dp_hs_phy_4
- 	dm_hs_phy_4
- 	ss_phy_1
- 	ss_phy_2
+> When testing this on the X13s I get:
+> 
+> 	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
+> 
+> for the third port, whose status registers always seems to return zero
+> (e.g. as if we're checking the wrong register?):
+> 
+> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 0, pwr_event_stat = 38103c
+> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 1, pwr_event_stat = 38103c
+> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 2, pwr_event_stat = 00
+> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 3, pwr_event_stat = 140030
+> 
+> I verified that everything appears to work as expected on sa8295p-adp.
+> 
+> Do you have any idea of what may be causing this?
 
-so we have them grouped as pwr_event followed by HS and with SS last.
-
-> Side note: Please note how the above interrupt properties can also be
-> used to infer the number of HS and SS ports.
+You never replied to this; do you have any idea why the status register
+for the second port seemingly always read back as 0 on the X13s?
 
 Johan
