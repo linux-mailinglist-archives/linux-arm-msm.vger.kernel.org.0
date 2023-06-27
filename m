@@ -2,69 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C324B73FF3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:05:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B622D73FF48
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:07:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231137AbjF0PFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 11:05:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34106 "EHLO
+        id S230249AbjF0PHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 11:07:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbjF0PFX (ORCPT
+        with ESMTP id S230019AbjF0PHh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 11:05:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD94010C;
-        Tue, 27 Jun 2023 08:05:22 -0700 (PDT)
+        Tue, 27 Jun 2023 11:07:37 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8D1D26B3;
+        Tue, 27 Jun 2023 08:07:34 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6AB77611D0;
-        Tue, 27 Jun 2023 15:05:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43D5C433C0;
-        Tue, 27 Jun 2023 15:05:21 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 10EC4611D4;
+        Tue, 27 Jun 2023 15:07:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C32C433C0;
+        Tue, 27 Jun 2023 15:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687878321;
-        bh=Igz0+zgGNJxPGQdFDxdiXQoZkx8c/w5HnwZQxadYHqo=;
+        s=k20201202; t=1687878453;
+        bh=AXF7IKf4qXT069zemU/G/IVo2cZThyfn1QvsJuPHDDo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sY5xqp8KFH5K2TytOrPvOSlVZUDMVlxctCX4GF6T64MVLMsOd5DqbrxsxdQaTRwnl
-         jyHY1brJ5qHPBMiPykAtJ4pW+Pflt02M35IaTR5OhHa7F4lWVEVTthnb0L1A7BpBHJ
-         +Za71JzLRBawLG65EUWaW6Fq501xbbsxSWTD9H4H+/APsrMA6TbC5JqaGZc4gRhFhc
-         +PB4vjjeNlthwBVGUtrd+LRMoYqiA72vbI0XCWvPCfcoRtwlGRkTcg0yGjNQ8QfVve
-         zfJdYOdhp6NLKsQ3O0GWCFFABlXQ1Ej2Vwvk6zyKzfgz673YDnpQRrwNtNKru1icXm
-         P7tTmsZAUB/JA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1qEAFr-0003xi-H7; Tue, 27 Jun 2023 17:05:19 +0200
-Date:   Tue, 27 Jun 2023 17:05:19 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 07/10] usb: dwc3: qcom: Add multiport suspend/resume
- support for wrapper
-Message-ID: <ZJr6r-cdDCFDc89R@hovoldconsulting.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-8-quic_kriskura@quicinc.com>
+        b=YEyh9e1eJ7A5at0AaLuc5T2nw8P2JF0HnTcofe2s3RIZuABuSFU0NWwUvY7OFBaJM
+         123XtMWzzljGeH+aBO04CMeGqeC9uMgzSl8CrUVsLpEuLZxM1uKZbzCqmBYppRI3ex
+         21cvQmzogEpH+cfgqJHiR8NpHnpGOLIfNsoF2toqOWmuyUu0dYCfzq6ItGQHNSa0y8
+         3x5rBlVOsIJG9A39ZcjgB4Z3Wn12RP5IzlOY8QpqWP+t3tbAEXmTX+RblhDNu3wKKB
+         +6O/cxMOpN7WVdywyzY6bR40i/CBv822KIXbh+q+0UI48yO9AokkFdgJt5tvBMOw2C
+         BttIy7JbfJ8Ig==
+Date:   Tue, 27 Jun 2023 20:37:18 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v5 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
+Message-ID: <20230627150718.GJ5490@thinkpad>
+References: <1687827692-6181-1-git-send-email-quic_krichai@quicinc.com>
+ <1687827692-6181-4-git-send-email-quic_krichai@quicinc.com>
+ <bdce0719-4f12-4e75-a8e7-1b38d269ac15@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230621043628.21485-8-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bdce0719-4f12-4e75-a8e7-1b38d269ac15@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,150 +66,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 10:06:25AM +0530, Krishna Kurapati wrote:
-> QCOM SoC SA8295P's tertiary quad port controller supports 2 HS+SS
-> ports and 2 HS only ports. Add support for configuring PWR_EVENT_IRQ's
-> for all the ports during suspend/resume.
-
-Please be more specific here. You don't seem to be configuring anything.
-
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 48 +++++++++++++++++++++++++++++++-----
->  1 file changed, 42 insertions(+), 6 deletions(-)
+On Tue, Jun 27, 2023 at 12:05:23PM +0530, Pavan Kondeti wrote:
+> On Tue, Jun 27, 2023 at 06:31:31AM +0530, Krishna chaitanya chundru wrote:
+> > +static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
+> > +{
+> > +	struct dw_pcie *pci = &pcie_ep->pci;
+> > +	u32 offset, status, bw;
+> > +	int speed, width;
+> > +	int ret;
+> > +
+> > +	if (!pcie_ep->icc_mem)
+> > +		return;
+> > +
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 3ab48a6925fe..699485a85233 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -37,7 +37,11 @@
->  #define PIPE3_PHYSTATUS_SW			BIT(3)
->  #define PIPE_UTMI_CLK_DIS			BIT(8)
->  
-> -#define PWR_EVNT_IRQ_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
-> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
-> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
-> +
->  #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
->  #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
->  
-> @@ -93,6 +97,13 @@ struct dwc3_qcom {
->  	struct icc_path		*icc_path_apps;
->  };
->  
-> +static u32 pwr_evnt_irq_stat_reg_offset[4] = {
-> +	PWR_EVNT_IRQ1_STAT_REG,
-> +	PWR_EVNT_IRQ2_STAT_REG,
-> +	PWR_EVNT_IRQ3_STAT_REG,
-> +	PWR_EVNT_IRQ4_STAT_REG,
-> +};
-> +
->  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
->  {
->  	u32 reg;
-> @@ -417,17 +428,37 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  	dwc3_qcom_enable_wakeup_irq(qcom->ss_phy_irq[0], 0);
->  }
->  
-> +static u8 dwc3_qcom_get_port_info(struct dwc3_qcom *qcom)
+> Is this check needed? interconnect is added as required property and
+> probe is failed if interconnect get fails. qcom_pcie_enable_resources()
+> which gets called before enabling this interrupt is assuming that
+> interconnect available.
+> 
 
-"port_info" is not very specific, call it get_num_ports() or similar.
+Even though the current binding requires interconnect, driver needs to be
+backwards compatible with old dts where there was no interconnect.
 
-> +{
-> +	struct dwc3 __maybe_unused *dwc = platform_get_drvdata(qcom->dwc3);
+Also, devm_of_icc_get() will return NULL if the property is missing in dts. But
+we are just checking for IS_ERR not IS_ERR_OR_NULL. So this check is required.
 
-__maybe unused makes no sense here.
+- Mani
 
-> +
-> +	if (dwc3_qcom_is_host(qcom))
-> +		return dwc->num_usb2_ports;
+> 
+> > +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> > +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> > +
+> > +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> > +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> > +
+> > +	switch (speed) {
+> > +	case 1:
+> > +		bw = MBps_to_icc(PCIE_GEN1_BW_MBPS);
+> > +		break;
+> > +	case 2:
+> > +		bw = MBps_to_icc(PCIE_GEN2_BW_MBPS);
+> > +		break;
+> > +	case 3:
+> > +		bw = MBps_to_icc(PCIE_GEN3_BW_MBPS);
+> > +		break;
+> > +	default:
+> > +		dev_warn(pci->dev, "using default GEN4 bandwidth\n");
+> > +		fallthrough;
+> > +	case 4:
+> > +		bw = MBps_to_icc(PCIE_GEN4_BW_MBPS);
+> > +		break;
+> > +	}
+> > +
+> > +	ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
+> > +	if (ret) {
+> > +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> > +			ret);
+> > +	}
+> 
+> Are you not seeing the below warning from checkpatch?
+> 
+> WARNING: braces {} are not necessary for single statement blocks
+> 
+> > +}
+> > +
+> >  static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+> >  {
+> >  	int ret;
+> > +	struct dw_pcie *pci = &pcie_ep->pci;
+> >  
+> >  	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
+> >  	if (ret)
+> > @@ -277,6 +331,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+> >  	if (ret)
+> >  		goto err_phy_exit;
+> >  
+> > +	/*
+> > +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> > +	 * to be set before enabling interconnect clocks.
+> > +	 *
+> > +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> > +	 * for the pcie-mem path.
+> > +	 */
+> > +	ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(PCIE_GEN1_BW_MBPS));
+> > +	if (ret) {
+> > +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> > +			ret);
+> > +		goto err_phy_exit;
+> > +	}
+> > +
+> >  	return 0;
+> 
+> Thanks,
+> Pavan
 
-Here you're accessing the core driver data again, which we want to
-avoid going forward so this at least warrants a FIXME to rework this as
-well.
-
-> +
-> +	/*
-> +	 * If not in host mode, either dwc was not probed
-> +	 * or we are in device mode, either case checking for
-> +	 * only first pwr event irq would suffice.
-
-Rewrap comment at 80 columns.
-
-> +	 */
-> +
-> +	return 1;
-> +}
-> +
->  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->  {
->  	u32 val;
->  	int i, ret;
-> +	u8 num_ports;
-
-Move first.
-
->  	if (qcom->is_suspended)
->  		return 0;
->  
-> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
-> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> +	num_ports = dwc3_qcom_get_port_info(qcom);
-> +	for (i = 0; i < num_ports; i++) {
-> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
-> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
->  		dev_err(qcom->dev, "HS-PHY not in L2\n");
-
-This line is not indented properly.
-
-Make sure to run checkpatch before submitting so that I don't have to
-point out things like this again.
-
-> +	}
->  
->  	for (i = qcom->num_clocks - 1; i >= 0; i--)
->  		clk_disable_unprepare(qcom->clks[i]);
-> @@ -452,12 +483,14 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->  
->  static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
->  {
-> +	int num_ports;
->  	int ret;
->  	int i;
->  
->  	if (!qcom->is_suspended)
->  		return 0;
->  
-> +	num_ports = dwc3_qcom_get_port_info(qcom);
-
-Move below to where you use num_ports.
-
->  	if (dwc3_qcom_is_host(qcom) && wakeup)
->  		dwc3_qcom_disable_interrupts(qcom);
->  
-> @@ -474,9 +507,12 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
->  	if (ret)
->  		dev_warn(qcom->dev, "failed to enable interconnect: %d\n", ret);
->  
-> -	/* Clear existing events from PHY related to L2 in/out */
-
-No need to move the comment.
-
-> -	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
-> -			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-> +	for (i = 0; i < num_ports; i++) {
-> +		/* Clear existing events from PHY related to L2 in/out */
-> +		dwc3_qcom_setbits(qcom->qscratch_base,
-> +			pwr_evnt_irq_stat_reg_offset[i],
-> +			PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-
-Indent continuation lines at least two tabs further than the previous
-line.
-
-> +	}
->  
->  	qcom->is_suspended = false;
-
-Johan
+-- 
+மணிவண்ணன் சதாசிவம்
