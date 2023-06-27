@@ -2,82 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7767473FD5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:07:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7666F73FD65
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:08:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjF0OHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 10:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52242 "EHLO
+        id S230344AbjF0OIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 10:08:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbjF0OHs (ORCPT
+        with ESMTP id S230493AbjF0OIo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 10:07:48 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A04B2129
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:07:43 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b699a2fe86so45589631fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:07:43 -0700 (PDT)
+        Tue, 27 Jun 2023 10:08:44 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B615D30E3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:08:31 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-312824aa384so4063073f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687874861; x=1690466861;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RdJObOgvpAtWcviOs9VvRQlqG45niW1BqgpRqny2SRI=;
-        b=YxCKqXrr+yIYc/KOcWWKFK4OwXQFk1egKOmLrF3UMjonSLl0bL07kVSKQR6oAXcWdW
-         mOfxYDmb2dnZmwWOU6QweaVtyxTsVYKiyHETvNkPGUXlgi+IRtwnSUf2cXOPk50nPCO8
-         R3I0zKwI8djZvxvjeevwR+OFM5Cy0QiQ6nqSWDf13S66nUUVFHMmCRwTah/X0Wwyfzul
-         RtdxH8KNJ83cYK6DcM2ORyngWdA93nyN5jIB8KCLG1wT4t4tG4LvSPOVb9w3tkmHZO3a
-         JBj1rHzriz5hp6XW0eeGWxh+hLRVrv2+Wshbt8AqOl2zIFtQX7NK9/ckSRQ4QlddAxQI
-         TYpQ==
+        d=linaro.org; s=google; t=1687874910; x=1690466910;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=BAc/hkkt4MGceXCskuJJ2M2wZrdjzN2VaeA5KmvNMbU=;
+        b=YR4Nk2SdOpkklxr/Wuv2Ta00MjSeVguU80TK076+fHMy988kaEdMJiD6t/40+tHnmM
+         QQBrynHNu/91tDX1NmgeDiOLQFW1zVuzaFF3OOMMP1kGFX99o+mx5LPepLSWD7OrofyW
+         CTfuGM4lSTCsQbYrQlmvPvVizKWCoWY4N2iuMye6anZ2BBeqJwqEa2ksE6wPLzv3xn6d
+         VOEQ2/200fv2dytTp8+YNjKIatm8hyfkST78I5GnK3xXIFPs6IHwfg5sIKCTgM2pMJR3
+         jDqppjCzwOGfoHaooitrttGCtahdSqww0pU/l5dW/+5Br0iYrrmlykhuGcjQzZTlpzhS
+         i6pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687874861; x=1690466861;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RdJObOgvpAtWcviOs9VvRQlqG45niW1BqgpRqny2SRI=;
-        b=V4YesBmmXdpS/ggLHERAAxnmjyg7D/hPhxhPcR1ZzhX26X8zuXbVetopaisQfPLkFO
-         Zfjrd7eK5xntHFVv4espg3BKbDBVRci+B2xHGfLINRRl7ex1iJmXURd1FvFqlMNNGHpZ
-         HsNveWuNXjeQDWYBTX2dvCcR9ABgZsS+FwnyB+QfNG9MAOyaPBFLXu//K4S+bnJRH5W7
-         /ULE3KKpESTm6zYTbxasOZXjBSkxE8wAB7pEqcC9JslZceJDvVkOBBPnvcT5mOlyrbgP
-         9V318f4Yx3NpIYI2ZG/xJehw2kStlADtOJ3BOnXeZZmwywupLydvkhnQwLKDbNFD9lKw
-         BP8w==
-X-Gm-Message-State: AC+VfDwf1p3jpSSh2QL5eotKBRfv/7h4TICHg/6Zt8fw7qs4uBjZX6x6
-        DRWHJoqGZyyRwkuoV7BRUWC55UNerDI5AlfbKI0=
-X-Google-Smtp-Source: ACHHUZ7yyZ8kw35CqRjD9NGeShe50fXTentEo8Vxu8cwLuRVgH9pupTh6TFlpDxe0ShR8U6ofi+8Qg==
-X-Received: by 2002:a2e:9d89:0:b0:2b6:999e:d53c with SMTP id c9-20020a2e9d89000000b002b6999ed53cmr4924936ljj.21.1687874860110;
-        Tue, 27 Jun 2023 07:07:40 -0700 (PDT)
-Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
-        by smtp.gmail.com with ESMTPSA id j10-20020a2e850a000000b002b6b5c1bfcfsm187821lji.104.2023.06.27.07.07.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jun 2023 07:07:39 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 27 Jun 2023 16:07:37 +0200
-Subject: [PATCH] arm64: dts: qcom: sm6375: Set up L3 scaling
+        d=1e100.net; s=20221208; t=1687874910; x=1690466910;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BAc/hkkt4MGceXCskuJJ2M2wZrdjzN2VaeA5KmvNMbU=;
+        b=aQfyfRciIlcpb6RjNaBfkbok2wPncrI36Q4x9DpvJMJavqzal687BvFftyV6q7nxfy
+         aNe5z+iC/o5ObOB7aQ2fdsVrrX0yKzRx344N3PTCAbd+HDLcSHyfvYsvEzRaucfslFRr
+         x4GDdHG/WfvDH4Hm/zbOG4AfOJyi2NicNkZfTYug0aAie2eJ4QxApUNXiepVWgaAQAWA
+         0k9U4QFlu4ZPscSKakB98B4xGTUwF13KHTFPtcP/5bTJLkTXCYJTIxE+LzpqAWPdMFGI
+         TBS/QhNy/0RE0I3DaTEfT/1j2e54BCC2AW+0MyU6W/0ydADEpeEqDxt8fnpX6b2OaDCQ
+         qPeA==
+X-Gm-Message-State: AC+VfDzY4TUPy1POimWZmtDvPQ3yj+hpE1ptfx+ZEIvXjhLidxuArmfa
+        fzZSU7uIdfHddp+pg1CbLZ+89Q==
+X-Google-Smtp-Source: ACHHUZ4r+OHok1szuS/TYzNzqUULOILscOxN6x3OV6V+9sY5zmkWk3YeTHCtatZ14YKuQMseY63cfQ==
+X-Received: by 2002:a5d:4ad0:0:b0:313:f98a:1fd3 with SMTP id y16-20020a5d4ad0000000b00313f98a1fd3mr2571971wrs.27.1687874910010;
+        Tue, 27 Jun 2023 07:08:30 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:cec9:2929:7a19:7afa? ([2a01:e0a:982:cbb0:cec9:2929:7a19:7afa])
+        by smtp.gmail.com with ESMTPSA id b3-20020a056000054300b002c70ce264bfsm10623578wrf.76.2023.06.27.07.08.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jun 2023 07:08:29 -0700 (PDT)
+Message-ID: <37c647d8-8957-e6d4-f1bb-7e6de4c9df34@linaro.org>
+Date:   Tue, 27 Jun 2023 16:08:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230627-topic-6375_l3-v1-1-9cb03ef05150@linaro.org>
-X-B4-Tracking: v=1; b=H4sIACjtmmQC/x2NWwqDMBAAryL73YWYqBGvUkrJY9WFECWpUhDv3
- qWfMzDMBZUKU4WpuaDQyZW3LNA+GgirywshR2HQShs1aIufbeeAg7H9OxnsRq9MVNTZ6EEa7yq
- hLy6HVap8pCRyLzTz9z95vu77B9i+DRt0AAAA
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 08/15] ARM: dts: qcom: mdm9615: split PMIC to separate
+ dtsi files
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687874858; l=6896;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=D2QJK2zKd3+cRQgReUYE+6MsW3+94+0zmQi3s4xbGSA=;
- b=PrYT6oOUukC9gPxQUK90j704JUQ8yGNqFwsVY34WpYZdiFTRzMtF8SxuvUKZ0s36rIgpMn8DI
- 3cpJ3Gh9uNNAm6iUZ5KlAyRm/EU0JAb5uy8ZY9oHsOUcjwmhhTAX9qv
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230627012422.206077-1-dmitry.baryshkov@linaro.org>
+ <20230627012422.206077-9-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230627012422.206077-9-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,237 +84,165 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the CPU OPP tables including core frequency and L3 bus frequency.
-The L3 throughput values were chosen by studying the frequencies
-available in HW LUT and picking the highest one that's less than the
-CPU frequency. They will be replaced with a dynamic, bwmon-style
-decision maker once support for MEMLAT is introduced upstream.
+On 27/06/2023 03:24, Dmitry Baryshkov wrote:
+> The PMIC is not a part of the SoC, so move PMIC to a separate file and
+> include it from the board files.
+> 
+> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   arch/arm/boot/dts/qcom/pm8018.dtsi            | 57 +++++++++++++++++++
+>   .../boot/dts/qcom/qcom-mdm9615-wp8548.dtsi    |  3 +-
+>   arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi      | 46 +--------------
+>   3 files changed, 61 insertions(+), 45 deletions(-)
+>   create mode 100644 arch/arm/boot/dts/qcom/pm8018.dtsi
+> 
+> diff --git a/arch/arm/boot/dts/qcom/pm8018.dtsi b/arch/arm/boot/dts/qcom/pm8018.dtsi
+> new file mode 100644
+> index 000000000000..81c0ad29fe60
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom/pm8018.dtsi
+> @@ -0,0 +1,57 @@
+> +// SPDX-License-Identifier: GPL-2.0+ OR MIT
+> +/*
+> + * Device Tree Source for Qualcomm PM8018
+> + *
+> + * Copyright (C) 2016 BayLibre, SAS.
+> + * Author : Neil Armstrong <narmstrong@baylibre.com>
+> + */
+> +
+> +&ssbi {
+> +	pm8018: pmic {
+> +		compatible = "qcom,pm8018", "qcom,pm8921";
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pwrkey@1c {
+> +			compatible = "qcom,pm8018-pwrkey",
+> +				     "qcom,pm8921-pwrkey";
+> +			reg = <0x1c>;
+> +			interrupt-parent = <&pm8018>;
+> +			interrupts = <50 IRQ_TYPE_EDGE_RISING>,
+> +				     <51 IRQ_TYPE_EDGE_RISING>;
+> +			debounce = <15625>;
+> +			pull-up;
+> +		};
+> +
+> +		pm8018_mpps: mpps@50 {
+> +			compatible = "qcom,pm8018-mpp", "qcom,ssbi-mpp";
+> +			reg = <0x50>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			gpio-ranges = <&pm8018_mpps 0 0 6>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +
+> +		rtc@11d {
+> +			compatible = "qcom,pm8018-rtc", "qcom,pm8921-rtc";
+> +			reg = <0x11d>;
+> +			interrupt-parent = <&pm8018>;
+> +			interrupts = <39 IRQ_TYPE_EDGE_RISING>;
+> +			allow-set-time;
+> +		};
+> +
+> +		pm8018_gpio: gpio@150 {
+> +			compatible = "qcom,pm8058-gpio",
+> +				     "qcom,ssbi-gpio";
+> +			reg = <0x150>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			gpio-ranges = <&pm8018_gpio 0 0 6>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi b/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi
+> index 92c8003dac25..cc264861afe5 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi
+> @@ -7,6 +7,7 @@
+>    */
+>   
+>   #include "qcom-mdm9615.dtsi"
+> +#include "pm8018.dtsi"
+>   
+>   / {
+>   	model = "Sierra Wireless WP8548 Module";
+> @@ -76,7 +77,7 @@ reset-out-pins {
+>   	};
+>   };
+>   
+> -&pmicgpio {
+> +&pm8018_gpio {
+>   	usb_vbus_5v_pins: usb-vbus-5v-state {
+>   		pins = "gpio4";
+>   		function = "normal";
+> diff --git a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
+> index b40c52ddf9b4..ac2327bc4ec5 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
+> @@ -241,56 +241,14 @@ gsbi5_serial: serial@16440000 {
+>   			};
+>   		};
+>   
+> -		qcom,ssbi@500000 {
+> +		ssbi: qcom,ssbi@500000 {
+>   			compatible = "qcom,ssbi";
+>   			reg = <0x500000 0x1000>;
+>   			qcom,controller-type = "pmic-arbiter";
+>   
+> -			pmicintc: pmic {
+> -				compatible = "qcom,pm8018", "qcom,pm8921";
+> +			pmic {
+>   				interrupts = <GIC_PPI 226 IRQ_TYPE_LEVEL_HIGH>;
+>   				#interrupt-cells = <2>;
+> -				interrupt-controller;
+> -				#address-cells = <1>;
+> -				#size-cells = <0>;
+> -
+> -				pwrkey@1c {
+> -					compatible = "qcom,pm8018-pwrkey", "qcom,pm8921-pwrkey";
+> -					reg = <0x1c>;
+> -					interrupt-parent = <&pmicintc>;
+> -					interrupts = <50 IRQ_TYPE_EDGE_RISING>,
+> -						     <51 IRQ_TYPE_EDGE_RISING>;
+> -					debounce = <15625>;
+> -					pull-up;
+> -				};
+> -
+> -				pmicmpp: mpps@50 {
+> -					compatible = "qcom,pm8018-mpp", "qcom,ssbi-mpp";
+> -					interrupt-controller;
+> -					#interrupt-cells = <2>;
+> -					reg = <0x50>;
+> -					gpio-controller;
+> -					#gpio-cells = <2>;
+> -					gpio-ranges = <&pmicmpp 0 0 6>;
+> -				};
+> -
+> -				rtc@11d {
+> -					compatible = "qcom,pm8018-rtc", "qcom,pm8921-rtc";
+> -					interrupt-parent = <&pmicintc>;
+> -					interrupts = <39 IRQ_TYPE_EDGE_RISING>;
+> -					reg = <0x11d>;
+> -					allow-set-time;
+> -				};
+> -
+> -				pmicgpio: gpio@150 {
+> -					compatible = "qcom,pm8018-gpio", "qcom,ssbi-gpio";
+> -					reg = <0x150>;
+> -					interrupt-controller;
+> -					#interrupt-cells = <2>;
+> -					gpio-controller;
+> -					gpio-ranges = <&pmicgpio 0 0 6>;
+> -					#gpio-cells = <2>;
+> -				};
+>   			};
+>   		};
+>   
 
-Available values from the HW LUT:
-300000
-556800
-652800
-768000
-844800
-921600
-1171200
-1382400
-1497600
-
-This commit dramatically improves overall performance of the system.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6375.dtsi | 127 +++++++++++++++++++++++++++++++++++
- 1 file changed, 127 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index 3dba34210a6d..927aa59d4a07 100644
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,sm6375-gpucc.h>
- #include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/firmware/qcom,scm.h>
-+#include <dt-bindings/interconnect/qcom,osm-l3.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-@@ -45,6 +46,8 @@ CPU0: cpu@0 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD0>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -69,6 +72,8 @@ CPU1: cpu@100 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_100>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD1>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -88,6 +93,8 @@ CPU2: cpu@200 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_200>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD2>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -107,6 +114,8 @@ CPU3: cpu@300 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_300>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD3>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -126,6 +135,8 @@ CPU4: cpu@400 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_400>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD4>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -145,6 +156,8 @@ CPU5: cpu@500 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_500>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			operating-points-v2 = <&cpu0_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD5>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -164,6 +177,8 @@ CPU6: cpu@600 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_600>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			operating-points-v2 = <&cpu6_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD6>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -183,6 +198,8 @@ CPU7: cpu@700 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_700>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			operating-points-v2 = <&cpu6_opp_table>;
-+			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
- 			power-domains = <&CPU_PD7>;
- 			power-domain-names = "psci";
- 			#cooling-cells = <2>;
-@@ -300,6 +317,116 @@ memory@80000000 {
- 		reg = <0x0 0x80000000 0x0 0x0>;
- 	};
- 
-+	cpu0_opp_table: opp-table-cpu0 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-300000000 {
-+			opp-hz = /bits/ 64 <300000000>;
-+			opp-peak-kBps = <(300000 * 32)>;
-+		};
-+
-+		opp-576000000 {
-+			opp-hz = /bits/ 64 <576000000>;
-+			opp-peak-kBps = <(556800 * 32)>;
-+		};
-+
-+		opp-691200000 {
-+			opp-hz = /bits/ 64 <691200000>;
-+			opp-peak-kBps = <(652800 * 32)>;
-+		};
-+
-+		opp-940800000 {
-+			opp-hz = /bits/ 64 <940800000>;
-+			opp-peak-kBps = <(921600 * 32)>;
-+		};
-+
-+		opp-1113600000 {
-+			opp-hz = /bits/ 64 <1113600000>;
-+			opp-peak-kBps = <(921600 * 32)>;
-+		};
-+
-+		opp-1324800000 {
-+			opp-hz = /bits/ 64 <1324800000>;
-+			opp-peak-kBps = <(1171200 * 32)>;
-+		};
-+
-+		opp-1516800000 {
-+			opp-hz = /bits/ 64 <1516800000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-1651200000 {
-+			opp-hz = /bits/ 64 <1651200000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-1708800000 {
-+			opp-hz = /bits/ 64 <1708800000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-1804800000 {
-+			opp-hz = /bits/ 64 <1804800000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+	};
-+
-+	cpu6_opp_table: opp-table-cpu6 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-691200000 {
-+			opp-hz = /bits/ 64 <691200000>;
-+			opp-peak-kBps = <(556800 * 32)>;
-+		};
-+
-+		opp-940800000 {
-+			opp-hz = /bits/ 64 <940800000>;
-+			opp-peak-kBps = <(921600 * 32)>;
-+		};
-+
-+		opp-1228800000 {
-+			opp-hz = /bits/ 64 <1228800000>;
-+			opp-peak-kBps = <(1171200 * 32)>;
-+		};
-+
-+		opp-1401600000 {
-+			opp-hz = /bits/ 64 <1401600000>;
-+			opp-peak-kBps = <(1382400 * 32)>;
-+		};
-+
-+		opp-1516800000 {
-+			opp-hz = /bits/ 64 <1516800000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-1651200000 {
-+			opp-hz = /bits/ 64 <1651200000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-1804800000 {
-+			opp-hz = /bits/ 64 <1804800000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-1900800000 {
-+			opp-hz = /bits/ 64 <1900800000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-2054400000 {
-+			opp-hz = /bits/ 64 <2054400000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+
-+		opp-2208000000 {
-+			opp-hz = /bits/ 64 <2208000000>;
-+			opp-peak-kBps = <(1497600 * 32)>;
-+		};
-+	};
-+
- 	pmu {
- 		compatible = "arm,armv8-pmuv3";
- 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-
----
-base-commit: 53cdf865f90ba922a854c65ed05b519f9d728424
-change-id: 20230627-topic-6375_l3-48b03d0e47db
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
