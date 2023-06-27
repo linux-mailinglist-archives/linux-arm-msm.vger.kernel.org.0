@@ -2,267 +2,282 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D0B574058D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 23:28:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 953027405B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 23:36:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbjF0V2g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 17:28:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36110 "EHLO
+        id S230400AbjF0VgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 17:36:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjF0V2f (ORCPT
+        with ESMTP id S229877AbjF0VgN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 17:28:35 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D13F5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 14:28:34 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35RL006N029287;
-        Tue, 27 Jun 2023 21:27:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=32v8zUpAns1bpbcoTXrIfgJK1uukHAZqxRfEdRFtVBE=;
- b=LwTZbsAP6C+aNk3llfyOvxTKeARq+WpN906JLR1OCbWYQgwEKqhrodEq0MpYHRiLOjrU
- T8wc75uagy5Hi0RnS+Q/Fd3QaF6CwxEnHGOYQZvObcAbBD6kXJgb7+3hlwCeaIrSy4ZO
- jXQnnPpD/IL1wPnapigAYgNqOLWFndCdPM486Fr4F87wzcC7tQfKFV2NjSI2sqnDHjwg
- fDVRIQJwf1Q/upBZxqqSJo2CBpT/d8sOWfGM6aEhZe+D+gDkYUELwrhtlgisKF23ApMj
- P2r0EDmfUmOkSpP3BZIiO9ls0msEOI8pLDqRsuRp9wmFZFDiC0Yq3jve35mvM1f4UsdK kA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rfpd8ae6r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 21:27:46 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35RLRjTl025904
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 21:27:45 GMT
-Received: from [10.110.54.235] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 27 Jun
- 2023 14:27:45 -0700
-Message-ID: <5e60fe99-76d5-c242-608e-b74bf6f0e7bd@quicinc.com>
-Date:   Tue, 27 Jun 2023 14:27:44 -0700
+        Tue, 27 Jun 2023 17:36:13 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE0FF2D69
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 14:36:05 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b5c2433134so4284311fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 14:36:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687901764; x=1690493764;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gQoEUdCQmhCVof+x1iaXcNraVfHd+tkSB3JbLT+sqI0=;
+        b=UjOnMKo9T609SHgU+7jwWFLWlcpzeb5RV/VhQzzvv/l25urjB4wdEdxBpgt9YCPzYS
+         spphxOavZyAHJ7X2ilW5u8OZmlcoZyRFjhDDOh4NeVjtcLgMTHpALXivQBqqrlavRH7N
+         cu9mM4ibaEnkDSyBFhWfvfpWbsS1W6cIJbgSVC9K28YBL3ykdEOZuaDVZlia41cDq+1T
+         FDSaUfb2BZHfKhjp6E+2gvFt8VBgNzWHf3DQVNjluCw0gWbaQraruZBrcYC0IKptfBHv
+         lJOjjF9SPkArRRN2Vv90T61+Kg0JbyC9/iOMszXbU79Iwq2DUFXDjY/r1OZqUojZC6mg
+         1CUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687901764; x=1690493764;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gQoEUdCQmhCVof+x1iaXcNraVfHd+tkSB3JbLT+sqI0=;
+        b=ZNSCS7VRdypqZxBx0gg21n5GFNMknbsTsPbkgTGKY3O1YM8vlh1s+I6tGmujOcQVTU
+         oyFSyFFETcQdn8TkVLYz/woEQDatFV7yTfHTaXWD4NJAqndkuF5avi7sxzKsiY6BY7Bt
+         IkLtwxRTH8TfZYokzqK+iyacNdovtof5bQw/dBcMz5YdmHwWfpHyPDA4kGMzuaZV5sgu
+         4xErk+cWOnEcsURx2FyxJI4cU0ogBCGuayqaVjwfRGbtEGBQBU1gEH2BxleHTYzMqqy1
+         BzKpiWbDZEaSSd7xhntJQfciP6IoLzK6fMelwf7zG/4I2kfh3E4waQX25yEtE7FIl9XZ
+         ZSLQ==
+X-Gm-Message-State: AC+VfDyJAvhdkPfhNi886RvoKUwAbI0rtgDxuEoROnBq48TbY5S4y/Pe
+        /hoLtZqshLrzLlnswAJIbVFUAIvdC8HQrOnh3I0=
+X-Google-Smtp-Source: ACHHUZ6D+WW+X1zs/JP/pvR0q99L6cNp8JX8nUK4jGjYd7ThqXjfNA7WQwosEi2wc+Rxi1f1sL02VQ==
+X-Received: by 2002:a2e:9d1a:0:b0:2b4:7d45:7654 with SMTP id t26-20020a2e9d1a000000b002b47d457654mr8576663lji.21.1687901763792;
+        Tue, 27 Jun 2023 14:36:03 -0700 (PDT)
+Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
+        by smtp.gmail.com with ESMTPSA id t9-20020a2e9d09000000b002b6a0ccc106sm1251597lji.12.2023.06.27.14.36.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jun 2023 14:36:03 -0700 (PDT)
+Message-ID: <b250540c-ce64-471e-4224-dc9ea6814d77@linaro.org>
+Date:   Tue, 27 Jun 2023 23:36:01 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [RFC PATCH 0/3] Support for Solid Fill Planes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v11 0/9] Add support for Core Power Reduction v3, v4 and
+ Hardened
 Content-Language: en-US
-To:     Pekka Paalanen <ppaalanen@gmail.com>, <dmitry.baryshkov@linaro.org>
-CC:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        <daniel.vetter@ffwll.ch>, <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
-        <seanpaul@chromium.org>, <laurent.pinchart@ideasonboard.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        <wayland-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <Y2leZDfLj/5963wl@intel.com>
- <d0b5abdc-85ad-fee2-9760-866c32bab111@quicinc.com>
- <20230627105849.004050b3@eldfell>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20230627105849.004050b3@eldfell>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WQhEwbghHdy9XqxkV5HbaVdAc5VtSfMw
-X-Proofpoint-GUID: WQhEwbghHdy9XqxkV5HbaVdAc5VtSfMw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-27_14,2023-06-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 mlxscore=0 mlxlogscore=999 phishscore=0 impostorscore=0
- bulkscore=0 suspectscore=0 clxscore=1011 spamscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306270195
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+References: <20230217-topic-cpr3h-v11-0-ba22b4daa5d6@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230217-topic-cpr3h-v11-0-ba22b4daa5d6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 27.06.2023 20:30, Konrad Dybcio wrote:
+> Changes in v11:
+> 
+> CPR COMMON:
+> - split the commonizing patch, make it actually do what it says on the
+>   tin..
+> - fix some overflow bugs
+> 
+> CPR3:
+> - fix some overflow bugs
+> - don't assume "lack of qcom,opp-?loop-vadj" means val=0"
+> 
+> CPR BINDINGS:
+> - drop quotes in items
+> - drop clock-names (there's just a single one)
+> - rewrite the description a bit
+> - fix up the example
+> - drop bogus minItems
+> - "acc-syscon" -> "qcom,acc"
+> 
+> DTS:
+> - fix qfprom children so that the bits=<> doesn't overflow reg[size]
+> - drop unrelated changes
+> - place one reg entry per line
+I managed to send the wrong revision. Will send a new one, with more
+fixes soon.
 
-
-On 6/27/2023 12:58 AM, Pekka Paalanen wrote:
-> On Mon, 26 Jun 2023 16:02:50 -0700
-> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+Konrad
 > 
->> On 11/7/2022 11:37 AM, Ville Syrjälä wrote:
->>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
->>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
->>>> properties. When the color fill value is set, and the framebuffer is set
->>>> to NULL, memory fetch will be disabled.
->>>
->>> Thinking a bit more universally I wonder if there should be
->>> some kind of enum property:
->>>
->>> enum plane_pixel_source {
->>> 	FB,
->>> 	COLOR,
->>> 	LIVE_FOO,
->>> 	LIVE_BAR,
->>> 	...
->>> }
->>
->> Reviving this thread as this was the initial comment suggesting to
->> implement pixel_source as an enum.
->>
->> I think the issue with having pixel_source as an enum is how to decide
->> what counts as a NULL commit.
->>
->> Currently, setting the FB to NULL will disable the plane. So I'm
->> guessing we will extend that logic to "if there's no pixel_source set
->> for the plane, then it will be a NULL commit and disable the plane".
->>
->> In that case, the question then becomes when to set the pixel_source to
->> NONE. Because if we do that when setting a NULL FB (or NULL solid_fill
->> blob), it then forces userspace to set one property before the other.
+> Link to v10: https://lore.kernel.org/r/20230217-topic-cpr3h-v10-0-67aed8fdfa61@linaro.org
 > 
-> Right, that won't work.
+> Changes in v10:
+> - Skip "Let qcom,opp-fuse-level be a 2-long array" (Applied by Viresh)
+> - Use b4 (it may be the first time you're receiving this if git send-email
+>   omitted you before..)
+> - +Cc Robert Marko (expressed interest in previous revisions)
+> - Add "Document CPR3 open/closed loop volt adjustment"
+> CPR:
+> - %hhu -> %u (checkpatch)
+> CPR BINDINGS:
+> - Drop QCS404 fuse set (it doesn't use this driver, what did I even think..)
+>   but leave the allOf:if: block for expansion (sdm660, msm8996, ipqABCD should
+>   follow soon..)
+> - Drop Rob's R-b (as things changed *again*, please take one more look to make
+>   sure you're okay with this file, Rob..)
 > 
-> There is no ordering between each property being set inside a single
-> atomic commit. They can all be applied to kernel-internal state
-> theoretically simultaneously, or any arbitrary random order, and the
-> end result must always be the same. Hence, setting one property cannot
-> change the state of another mutable property. I believe that doing
-> otherwise would make userspace fragile and hard to get right.
+> Link to v9:
+> https://lore.kernel.org/linux-arm-msm/20230116093845.72621-1-konrad.dybcio@linaro.org/
 > 
-> I guess there might be an exception to that rule when the same property
-> is set multiple times in a single atomic commit; the last setting in
-> the array prevails. That's universal and not a special-case between two
-> specific properties.
+> Changes in v9:
+> - Restore forgotten MAINTAINERS patch (oops)
+> CPR:
+> - Include the missing header (big oops!)
+> - Fix kconfig dependencies
+> CPR bindings:
+> - Fix cpu reg in example (why didn't dt_binding_check scream at that)
+> - Add newlines between nodes in example
+> - Change opp table node names to opp-table-cpu[04]
+> - Change opp table labels to cpu[04]_opp_table
+> - Change CPRh opp subnode names to opp-N from oppN
+> - Remove some stray newlines
+> - Bring back nvmem-cell-names and add the 8998's set
+> - Allow power-domains for VDDCX_AO voting
+> - Remove Rob's r-b, there's been quite a bit of changes..
+> CPR DT:
+> - Send the correct revision of the patch this time around..
+> OPP bindings:
+> - Add Rob's ack
 > 
->> Because of that, I'm thinking of having pixel_source be represented by a
->> bitmask instead. That way, we will simply unset the corresponding
->> pixel_source bit when passing in a NULL FB/solid_fill blob. Then, in
->> order to detect whether a commit is NULL or has a valid pixel source, we
->> can just check if pixel_source == 0.
+> Link to v8:
+> https://lore.kernel.org/linux-arm-msm/20230110175605.1240188-1-konrad.dybcio@linaro.org/
 > 
-> Sounds fine to me at first hand, but isn't there the enum property that
-> says if the kernel must look at solid_fill blob *or* FB_ID?
+> Changes in v8:
+> - Overtake this series from AGdR
+> - Apply all review comments from v7 except Vladimir's request to
+>   not create the include/ header; it will be strictly necessary for
+>   OSM-aware cpufreq_hw programming, which this series was more or
+>   less created just for..
+> - Drop QCS404 dtsi change, account for not breaking backwards compat
+>   in [3/5]
+> - Add type phandle type reference to acc-syscon in [1/5]
+> - Update AGdR's email addresses for maintainer entries
+> - Add [2/5] to make dt_binding_check happy
+> - Separate the CPRh DT addition from cpufreq_hw addition, sort and
+>   properly indent new nodes
+> - Drop CPR yaml conversion, that happened in meantime
+> - Reorder the patches to make a bit more sense
+> - Tested again on MSM8998 Xperia XZ Premium (Maple)
+> - I take no responsibility for AGdR's cheeky jokes, only the code!
 > 
-> If enum prop says "use solid_fill prop", the why would changes to FB_ID
-> do anything? Is it for backwards-compatibility with KMS clients that do
-> not know about the enum prop?
+> Link to v7:
+> https://lore.kernel.org/lkml/20210901155735.629282-1-angelogioacchino.delregno@somainline.org/
 > 
-> It seems like that kind of backwards-compatiblity will cause problems
-> in trying to reason about the atomic state, as explained above, leading
-> to very delicate and fragile conditions where things work intuitively.
-> Hence, I'm not sure backwards-compatibility is wanted. This won't be
-> the first or the last KMS property where an unexpected value left over
-> will make old atomic KMS clients silently malfunction up to showing no
-> recognisable picture at all. *If* that problem needs solving, there
-> have been ideas floating around about resetting everything to nice
-> values so that userspace can ignore what it does not understand. So far
-> there has been no real interest in solving that problem in the kernel
-> though.
+> Changes in v7:
+> - Rebased on linux-next as of 210901
+> - Changed cpr_read_efuse calls to nvmem_cell_read_variable_le_u32,
+>   following what was done in commit c77634b9d916
 > 
-> Legacy non-atomic UAPI wrappers can do whatever they want, and program
-> any (new) properties they want in order to implement the legacy
-> expectations, so that does not seem to be a problem.
-
-Hi Pekka and Dmitry,
-
-After reading through both of your comments, I think I have a better 
-understanding of the pixel_source implementation now.
-
-So to summarize, we want to expose another property called 
-"pixel_source" to userspace that will default to FB (as to not break 
-legacy userspace).
-
-If userspace wants to use solid fill planes, it will set both the 
-solid_fill *and* pixel_source properties to a valid blob and COLOR 
-respectively. If it wants to use FB, it will set FB_ID and pixel_source 
-to a valid FB and FB.
-
-Here's a table illustrating what I've described above:
-
-+-----------------+-------------------------+-------------------------+
-| Use Case        | Legacy Userspace        | solid_fill-aware        |
-|                 |                         | Userspace               |
-+=================+=========================+=========================+
-| Valid FB        | pixel_source = FB       | pixel_source = FB       |
-|                 | FB_ID = valid FB        | FB_ID = valid FB        |
-+-----------------+-------------------------+-------------------------+
-| Valid           | pixel_source = COLOR    | N/A                     |
-| solid_fill blob | solid_fill = valid blob |                         |
-+-----------------+-------------------------+-------------------------+
-| NULL commit     | pixel_source = FB       | pixel_source = FB       |
-|                 | FB_ID = NULL            | FB_ID = NULL            |
-+-----------------+-------------------------+-------------------------+
-
-Is there anything I'm missing or needs to be clarified?
-
-Thanks,
-
-Jessica Zhang
-
+> Changes in v6:
+> - Fixes from Bjorn's review
+> - After a conversation with Viresh, it turned out I was abusing the
+>   OPP API to pass the APM and MEM-ACC thresholds to qcom-cpufreq-hw,
+>   so now the driver is using the genpd created virtual device and
+>   passing drvdata instead to stop the abuse
+> - Since the CPR commonization was ignored for more than 6 months,
+>   it is now included in the CPRv3/4/h series, as there is no point
+>   in commonizing without having this driver
+> - Rebased on v5.13
 > 
+> Changes in v5:
+> - Fixed getting OPP table when not yet installed by the caller
+>   of power domain attachment
 > 
-> Thanks,
-> pq
+> Changes in v4:
+> - Huge patch series has been split for better reviewability,
+>   as suggested by Bjorn
 > 
+> Changes in v3:
+> - Fixed YAML doc issues
+> - Removed unused variables and redundant if branch
 > 
->>
->> Would be interested in any feedback on this.
->>
->> Thanks,
->>
->> Jessica Zhang
->>
->>>    
->>>> In addition, loosen the NULL FB checks within the atomic commit callstack
->>>> to allow a NULL FB when color_fill is nonzero and add FB checks in
->>>> methods where the FB was previously assumed to be non-NULL.
->>>>
->>>> Finally, have the DPU driver use drm_plane_state.color_fill and
->>>> drm_plane_state.color_fill_format instead of dpu_plane_state.color_fill,
->>>> and add extra checks in the DPU atomic commit callstack to account for a
->>>> NULL FB in cases where color_fill is set.
->>>>
->>>> Some drivers support hardware that have optimizations for solid fill
->>>> planes. This series aims to expose these capabilities to userspace as
->>>> some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
->>>> hardware composer HAL) that can be set by apps like the Android Gears
->>>> app.
->>>>
->>>> Userspace can set the color_fill value by setting COLOR_FILL_FORMAT to a
->>>> DRM format, setting COLOR_FILL to a color fill value, and setting the
->>>> framebuffer to NULL.
->>>
->>> Is there some real reason for the format property? Ie. why not
->>> just do what was the plan for the crttc background color and
->>> specify the color in full 16bpc format and just pick as many
->>> msbs from that as the hw can use?
->>>    
->>>>
->>>> Jessica Zhang (3):
->>>>     drm: Introduce color fill properties for drm plane
->>>>     drm: Adjust atomic checks for solid fill color
->>>>     drm/msm/dpu: Use color_fill property for DPU planes
->>>>
->>>>    drivers/gpu/drm/drm_atomic.c              | 68 ++++++++++++-----------
->>>>    drivers/gpu/drm/drm_atomic_helper.c       | 34 +++++++-----
->>>>    drivers/gpu/drm/drm_atomic_uapi.c         |  8 +++
->>>>    drivers/gpu/drm/drm_blend.c               | 38 +++++++++++++
->>>>    drivers/gpu/drm/drm_plane.c               |  8 +--
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  7 ++-
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 66 ++++++++++++++--------
->>>>    include/drm/drm_atomic_helper.h           |  5 +-
->>>>    include/drm/drm_blend.h                   |  2 +
->>>>    include/drm/drm_plane.h                   | 28 ++++++++++
->>>>    10 files changed, 188 insertions(+), 76 deletions(-)
->>>>
->>>> -- 
->>>> 2.38.0
->>>
->>> -- 
->>> Ville Syrjälä
->>> Intel
+> Changes in v2:
+> - Implemented dynamic Memory Accelerator corners support, needed
+>   by MSM8998
+> - Added MSM8998 Silver/Gold parameters
 > 
+> This commit introduces a new driver, based on the one for cpr v1,
+> to enable support for the newer Qualcomm Core Power Reduction
+> hardware, known downstream as CPR3, CPR4 and CPRh, and support
+> for MSM8998 and SDM630 CPU power reduction.
+> 
+> In these new versions of the hardware, support for various new
+> features was introduced, including voltage reduction for the GPU,
+> security hardening and a new way of controlling CPU DVFS,
+> consisting in internal communication between microcontrollers,
+> specifically the CPR-Hardened and the Operating State Manager.
+> 
+> The CPR v3, v4 and CPRh are present in a broad range of SoCs,
+> from the mid-range to the high end ones including, but not limited
+> to, MSM8953/8996/8998, SDM630/636/660/845.
+> 
+> As to clarify, SDM845 does the CPR/SAW/OSM setup in TZ firmware, but
+> this is limited to the CPU context; despite GPU CPR support being not
+> implemented in this series, it is planned for the future, and some
+> SDM845 need the CPR (in the context of GPU CPR) to be configured from
+> this driver.
+> 
+> It is also planned to add the CPR data for MSM8996, since this driver
+> does support the CPRv4 found on that SoC, but I currently have no time
+> to properly test that on a real device, so I prefer getting this big
+> implementation merged before adding more things on top.
+> 
+> As for MSM8953, we (read: nobody from SoMainline) have no device with
+> this chip: since we are unable to test the cpr data and the entire
+> driver on that one, we currently have no plans to do this addition
+> in the future. This is left to other nice developers: I'm sure that
+> somebody will come up with that, sooner or later
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> AngeloGioacchino Del Regno (7):
+>       MAINTAINERS: Add entry for Qualcomm CPRv3/v4/Hardened driver
+>       dt-bindings: soc: qcom: cpr3: Add bindings for CPR3 driver
+>       soc: qcom: cpr: Move common functions to new file
+>       soc: qcom: cpr-common: Add support for flat fuse adjustment
+>       soc: qcom: cpr-common: Add threads support
+>       soc: qcom: Add support for Core Power Reduction v3, v4 and Hardened
+>       arm64: dts: qcom: msm8998: Configure CPRh
+> 
+> Konrad Dybcio (2):
+>       dt-bindings: opp: v2-qcom-level: Document CPR3 open/closed loop volt adjustment
+>       soc: qcom: cpr: Use u64 for frequency
+> 
+>  .../devicetree/bindings/opp/opp-v2-qcom-level.yaml |   14 +
+>  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    |  289 ++
+>  MAINTAINERS                                        |    6 +
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi              |  757 +++++
+>  drivers/soc/qcom/Kconfig                           |   22 +
+>  drivers/soc/qcom/Makefile                          |    2 +
+>  drivers/soc/qcom/cpr-common.c                      |  362 +++
+>  drivers/soc/qcom/cpr-common.h                      |  109 +
+>  drivers/soc/qcom/cpr.c                             |  392 +--
+>  drivers/soc/qcom/cpr3.c                            | 2932 ++++++++++++++++++++
+>  include/soc/qcom/cpr.h                             |   17 +
+>  11 files changed, 4535 insertions(+), 367 deletions(-)
+> ---
+> base-commit: 53cdf865f90ba922a854c65ed05b519f9d728424
+> change-id: 20230217-topic-cpr3h-de232bfb47ec
+> 
+> Best regards,
