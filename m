@@ -2,181 +2,321 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1F6973FD40
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 15:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7767473FD5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:07:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230356AbjF0NyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 09:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48260 "EHLO
+        id S229957AbjF0OHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 10:07:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbjF0NyI (ORCPT
+        with ESMTP id S229888AbjF0OHs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 09:54:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A29E1FCD;
-        Tue, 27 Jun 2023 06:54:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9A54C611A6;
-        Tue, 27 Jun 2023 13:54:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A24C433C8;
-        Tue, 27 Jun 2023 13:54:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687874046;
-        bh=/HQnZQKURnGKmqEgu7P1WBowtPThMVBdYKbYAVomb5I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=s2my69PqoyneG/zr+hhc4NIu7Kb/nEfBFq4QqrmGu56nU93cDaaMCa0XoTGi17mcb
-         zVGDlYHtEIurnvmIMZRulTSHeGFqH2JtZvTPqDTJKAYFubWJvy3eWjB37UW1pr49Bp
-         LnDGe6dEGOUUSCY+DdJozEmdGE2Yz0orTGsLaaZAOxJvBUBnRrjFDMT4jPsUea+Dpi
-         2Fe48prUuamswwqs+irJKXlfuYSyjdLj+dnxzI15sSWlcpVwFgQH3fuDiOzdR3y/RG
-         zNvbKosqhPAZIpGZxyFQPHITSp9a4Tu8L5qrVpir87BXlf81vQrp9T+N5DQ1ou11Lb
-         ZUM+YtmOnRgIA==
-Date:   Tue, 27 Jun 2023 19:23:51 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
-        quic_ramkri@quicinc.com, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@linaro.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-pci@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH RFC v1 3/3] PCI: qcom: ep: Add wake up host op to
- dw_pcie_ep_ops
-Message-ID: <20230627135351.GE5490@thinkpad>
-References: <1686754850-29817-1-git-send-email-quic_krichai@quicinc.com>
- <1686754850-29817-4-git-send-email-quic_krichai@quicinc.com>
- <20230623061839.GC5611@thinkpad>
- <1b41ba64-51e2-7c66-104d-bc60ac131a0f@quicinc.com>
+        Tue, 27 Jun 2023 10:07:48 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A04B2129
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:07:43 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b699a2fe86so45589631fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:07:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687874861; x=1690466861;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RdJObOgvpAtWcviOs9VvRQlqG45niW1BqgpRqny2SRI=;
+        b=YxCKqXrr+yIYc/KOcWWKFK4OwXQFk1egKOmLrF3UMjonSLl0bL07kVSKQR6oAXcWdW
+         mOfxYDmb2dnZmwWOU6QweaVtyxTsVYKiyHETvNkPGUXlgi+IRtwnSUf2cXOPk50nPCO8
+         R3I0zKwI8djZvxvjeevwR+OFM5Cy0QiQ6nqSWDf13S66nUUVFHMmCRwTah/X0Wwyfzul
+         RtdxH8KNJ83cYK6DcM2ORyngWdA93nyN5jIB8KCLG1wT4t4tG4LvSPOVb9w3tkmHZO3a
+         JBj1rHzriz5hp6XW0eeGWxh+hLRVrv2+Wshbt8AqOl2zIFtQX7NK9/ckSRQ4QlddAxQI
+         TYpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687874861; x=1690466861;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RdJObOgvpAtWcviOs9VvRQlqG45niW1BqgpRqny2SRI=;
+        b=V4YesBmmXdpS/ggLHERAAxnmjyg7D/hPhxhPcR1ZzhX26X8zuXbVetopaisQfPLkFO
+         Zfjrd7eK5xntHFVv4espg3BKbDBVRci+B2xHGfLINRRl7ex1iJmXURd1FvFqlMNNGHpZ
+         HsNveWuNXjeQDWYBTX2dvCcR9ABgZsS+FwnyB+QfNG9MAOyaPBFLXu//K4S+bnJRH5W7
+         /ULE3KKpESTm6zYTbxasOZXjBSkxE8wAB7pEqcC9JslZceJDvVkOBBPnvcT5mOlyrbgP
+         9V318f4Yx3NpIYI2ZG/xJehw2kStlADtOJ3BOnXeZZmwywupLydvkhnQwLKDbNFD9lKw
+         BP8w==
+X-Gm-Message-State: AC+VfDwf1p3jpSSh2QL5eotKBRfv/7h4TICHg/6Zt8fw7qs4uBjZX6x6
+        DRWHJoqGZyyRwkuoV7BRUWC55UNerDI5AlfbKI0=
+X-Google-Smtp-Source: ACHHUZ7yyZ8kw35CqRjD9NGeShe50fXTentEo8Vxu8cwLuRVgH9pupTh6TFlpDxe0ShR8U6ofi+8Qg==
+X-Received: by 2002:a2e:9d89:0:b0:2b6:999e:d53c with SMTP id c9-20020a2e9d89000000b002b6999ed53cmr4924936ljj.21.1687874860110;
+        Tue, 27 Jun 2023 07:07:40 -0700 (PDT)
+Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
+        by smtp.gmail.com with ESMTPSA id j10-20020a2e850a000000b002b6b5c1bfcfsm187821lji.104.2023.06.27.07.07.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jun 2023 07:07:39 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Tue, 27 Jun 2023 16:07:37 +0200
+Subject: [PATCH] arm64: dts: qcom: sm6375: Set up L3 scaling
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1b41ba64-51e2-7c66-104d-bc60ac131a0f@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230627-topic-6375_l3-v1-1-9cb03ef05150@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACjtmmQC/x2NWwqDMBAAryL73YWYqBGvUkrJY9WFECWpUhDv3
+ qWfMzDMBZUKU4WpuaDQyZW3LNA+GgirywshR2HQShs1aIufbeeAg7H9OxnsRq9MVNTZ6EEa7yq
+ hLy6HVap8pCRyLzTz9z95vu77B9i+DRt0AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687874858; l=6896;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=D2QJK2zKd3+cRQgReUYE+6MsW3+94+0zmQi3s4xbGSA=;
+ b=PrYT6oOUukC9gPxQUK90j704JUQ8yGNqFwsVY34WpYZdiFTRzMtF8SxuvUKZ0s36rIgpMn8DI
+ 3cpJ3Gh9uNNAm6iUZ5KlAyRm/EU0JAb5uy8ZY9oHsOUcjwmhhTAX9qv
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 26, 2023 at 07:18:49PM +0530, Krishna Chaitanya Chundru wrote:
-> 
-> On 6/23/2023 11:48 AM, Manivannan Sadhasivam wrote:
-> > On Wed, Jun 14, 2023 at 08:30:49PM +0530, Krishna chaitanya chundru wrote:
-> > > Add wakeup host op to dw_pcie_ep_ops to wake up host from D3cold
-> > > or D3hot.
-> > > 
-> > Commit message should describe how the wakeup is implemented in the driver.
-> I will correct this in next series.
-> > 
-> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > ---
-> > >   drivers/pci/controller/dwc/pcie-qcom-ep.c | 34 +++++++++++++++++++++++++++++++
-> > >   1 file changed, 34 insertions(+)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > index 5d146ec..916a138 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > @@ -91,6 +91,7 @@
-> > >   /* PARF_PM_CTRL register fields */
-> > >   #define PARF_PM_CTRL_REQ_EXIT_L1		BIT(1)
-> > >   #define PARF_PM_CTRL_READY_ENTR_L23		BIT(2)
-> > > +#define PARF_PM_CTRL_XMT_PME			BIT(4)
-> > >   #define PARF_PM_CTRL_REQ_NOT_ENTR_L1		BIT(5)
-> > >   /* PARF_MHI_CLOCK_RESET_CTRL fields */
-> > > @@ -794,10 +795,43 @@ static void qcom_pcie_ep_init(struct dw_pcie_ep *ep)
-> > >   		dw_pcie_ep_reset_bar(pci, bar);
-> > >   }
-> > > +static int qcom_pcie_ep_wakeup_host(struct dw_pcie_ep *ep, u8 func_no)
-> > > +{
-> > > +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-> > > +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
-> > > +	struct device *dev = pci->dev;
-> > > +	u32 perst, dstate, val;
-> > > +
-> > > +	perst = gpiod_get_value(pcie_ep->reset);
-> > > +	/* Toggle wake GPIO when device is in D3 cold */
-> > > +	if (perst) {
-> > > +		dev_info(dev, "Device is in D3 cold toggling wake\n");
-> > dev_dbg(). "Waking up the host by toggling WAKE#"
-> > 
-> > > +		gpiod_set_value_cansleep(pcie_ep->wake, 1);
-> > Waking a device from D3cold requires power-on sequence by the host and in the
-> > presence of Vaux, the EPF should be prepared for that. In that case, the mode of
-> > wakeup should be decided by the EPF driver. So the wakeup API should have an
-> > argument to decide whether the wakeup is through PME or sideband WAKE#.
-> > 
-> > Also note that as per PCIe Spec 3.0, the devices can support PME generation from
-> > D3cold provided that the Vaux is supplied to the device. I do not know if that
-> > is supported by Qcom devices but API should honor the spec. So the wakeup
-> > control should come from EPF driver as I suggested above.
-> 
-> I aggre with you, but how will EPF know the PCI device state is in D3cold or
-> D3hot.
-> 
+Add the CPU OPP tables including core frequency and L3 bus frequency.
+The L3 throughput values were chosen by studying the frequencies
+available in HW LUT and picking the highest one that's less than the
+CPU frequency. They will be replaced with a dynamic, bwmon-style
+decision maker once support for MEMLAT is introduced upstream.
 
-We should add a notifier in the controller driver which signals EPF when it
-receives the DState events.. Take a look at pci_epc_linkdown().
+Available values from the HW LUT:
+300000
+556800
+652800
+768000
+844800
+921600
+1171200
+1382400
+1497600
 
-> And how the EPF knows whether Vaux is supported or not in D3cold?
-> 
-> If there is any existing mechanism can you please point me that.
-> 
-> FYI Qcom does not support vaux power in D3 cold.
-> 
+This commit dramatically improves overall performance of the system.
 
-If the EPF can trigger wakeup event during D3Cold then it means it is powered
-by Vaux, isn't it?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm6375.dtsi | 127 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 127 insertions(+)
 
-- Mani
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index 3dba34210a6d..927aa59d4a07 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/clock/qcom,sm6375-gpucc.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
+ #include <dt-bindings/firmware/qcom,scm.h>
++#include <dt-bindings/interconnect/qcom,osm-l3.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+@@ -45,6 +46,8 @@ CPU0: cpu@0 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD0>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -69,6 +72,8 @@ CPU1: cpu@100 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_100>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD1>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -88,6 +93,8 @@ CPU2: cpu@200 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_200>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD2>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -107,6 +114,8 @@ CPU3: cpu@300 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_300>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD3>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -126,6 +135,8 @@ CPU4: cpu@400 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_400>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD4>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -145,6 +156,8 @@ CPU5: cpu@500 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_500>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD5>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -164,6 +177,8 @@ CPU6: cpu@600 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_600>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			operating-points-v2 = <&cpu6_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD6>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -183,6 +198,8 @@ CPU7: cpu@700 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_700>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			operating-points-v2 = <&cpu6_opp_table>;
++			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			power-domains = <&CPU_PD7>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+@@ -300,6 +317,116 @@ memory@80000000 {
+ 		reg = <0x0 0x80000000 0x0 0x0>;
+ 	};
+ 
++	cpu0_opp_table: opp-table-cpu0 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp-300000000 {
++			opp-hz = /bits/ 64 <300000000>;
++			opp-peak-kBps = <(300000 * 32)>;
++		};
++
++		opp-576000000 {
++			opp-hz = /bits/ 64 <576000000>;
++			opp-peak-kBps = <(556800 * 32)>;
++		};
++
++		opp-691200000 {
++			opp-hz = /bits/ 64 <691200000>;
++			opp-peak-kBps = <(652800 * 32)>;
++		};
++
++		opp-940800000 {
++			opp-hz = /bits/ 64 <940800000>;
++			opp-peak-kBps = <(921600 * 32)>;
++		};
++
++		opp-1113600000 {
++			opp-hz = /bits/ 64 <1113600000>;
++			opp-peak-kBps = <(921600 * 32)>;
++		};
++
++		opp-1324800000 {
++			opp-hz = /bits/ 64 <1324800000>;
++			opp-peak-kBps = <(1171200 * 32)>;
++		};
++
++		opp-1516800000 {
++			opp-hz = /bits/ 64 <1516800000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-1651200000 {
++			opp-hz = /bits/ 64 <1651200000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-1708800000 {
++			opp-hz = /bits/ 64 <1708800000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-1804800000 {
++			opp-hz = /bits/ 64 <1804800000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++	};
++
++	cpu6_opp_table: opp-table-cpu6 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp-691200000 {
++			opp-hz = /bits/ 64 <691200000>;
++			opp-peak-kBps = <(556800 * 32)>;
++		};
++
++		opp-940800000 {
++			opp-hz = /bits/ 64 <940800000>;
++			opp-peak-kBps = <(921600 * 32)>;
++		};
++
++		opp-1228800000 {
++			opp-hz = /bits/ 64 <1228800000>;
++			opp-peak-kBps = <(1171200 * 32)>;
++		};
++
++		opp-1401600000 {
++			opp-hz = /bits/ 64 <1401600000>;
++			opp-peak-kBps = <(1382400 * 32)>;
++		};
++
++		opp-1516800000 {
++			opp-hz = /bits/ 64 <1516800000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-1651200000 {
++			opp-hz = /bits/ 64 <1651200000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-1804800000 {
++			opp-hz = /bits/ 64 <1804800000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-1900800000 {
++			opp-hz = /bits/ 64 <1900800000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-2054400000 {
++			opp-hz = /bits/ 64 <2054400000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++
++		opp-2208000000 {
++			opp-hz = /bits/ 64 <2208000000>;
++			opp-peak-kBps = <(1497600 * 32)>;
++		};
++	};
++
+ 	pmu {
+ 		compatible = "arm,armv8-pmuv3";
+ 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
 
-> > > +		usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
-> > > +		gpiod_set_value_cansleep(pcie_ep->wake, 0);
-> > > +		return 0;
-> > > +	}
-> > > +
-> > > +	dstate = dw_pcie_readl_dbi(pci, DBI_CON_STATUS) &
-> > > +				   DBI_CON_STATUS_POWER_STATE_MASK;
-> > > +	if (dstate == 3) {
-> > > +		dev_info(dev, "Device is in D3 hot sending inband PME\n");
-> > dev_dbg(). As I said, the device can sent PME from D3cold also. So the log could
-> > be "Waking up the host using PME".
-> > 
-> > > +		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
-> > > +		val |= PARF_PM_CTRL_XMT_PME;
-> > > +		writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
-> > > +	} else {
-> > > +		dev_err(dev, "Device is not in D3 state wakeup is not supported\n");
-> > > +		return -EPERM;
-> > -ENOTSUPP
-> > 
-> > - Mani
-> > 
-> > > +	}
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > >   static const struct dw_pcie_ep_ops pci_ep_ops = {
-> > >   	.ep_init = qcom_pcie_ep_init,
-> > >   	.raise_irq = qcom_pcie_ep_raise_irq,
-> > >   	.get_features = qcom_pcie_epc_get_features,
-> > > +	.wakeup_host = qcom_pcie_ep_wakeup_host,
-> > >   };
-> > >   static int qcom_pcie_ep_probe(struct platform_device *pdev)
-> > > -- 
-> > > 2.7.4
-> > > 
+---
+base-commit: 53cdf865f90ba922a854c65ed05b519f9d728424
+change-id: 20230627-topic-6375_l3-48b03d0e47db
 
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
