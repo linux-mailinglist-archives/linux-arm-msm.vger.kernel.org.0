@@ -2,244 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10E5673FB4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 13:45:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DDB573FB59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 13:48:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230479AbjF0Lps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 07:45:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
+        id S231582AbjF0Lsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 07:48:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbjF0Lpr (ORCPT
+        with ESMTP id S231682AbjF0Ls1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 07:45:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD050F4;
-        Tue, 27 Jun 2023 04:45:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4452661166;
-        Tue, 27 Jun 2023 11:45:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E79FC433C0;
-        Tue, 27 Jun 2023 11:45:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687866344;
-        bh=1hnYTqMzhlhytwgb/6vjrVjvJJ91r+9AWszFEARG5vw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q5KUs9BF50Gr9OBt+4gfgvGUWeIe8DIeta9/O/XtmP6gecIhJOc6C3VuXgF/u+qE0
-         ACLxga2WT6GhMLd27ObnNT/U5S2BKB9fiavY/eU+Z4+0Jin0cna+0dw2KpYpxKTzgR
-         uSXwJK9DGzZIi5rgG+KZSka/9XRKbqwLzY8Edhco1d1d3GmspUOlQz7xNqOaBJyXqQ
-         1ShrAv3C7iHnZTKUbcD8s13BRxSDA4JTTRSB3/tJMwwa9TXbqHqb6ouDDPzZumwCsE
-         qwgKDF22VFW1yJ0ylPuyq+AGigdbz8JehfWb4UxMVv8fFTND4KHr3Ra79gftNyC6iL
-         PYXCJ55tCb6yA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1qE78f-0003E8-1K; Tue, 27 Jun 2023 13:45:41 +0200
-Date:   Tue, 27 Jun 2023 13:45:41 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 27 Jun 2023 07:48:27 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB3526BA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 04:48:23 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b69f71a7easo34830931fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 04:48:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687866502; x=1690458502;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TqtZzMODsbge3FzH7PvLUrnH/SiLk9B9uttmIxMRB9A=;
+        b=h8yr8dvOrJ0iH5h7MIU7WDJH3arIKIdGOmrnsLpZMg2N6kIkWB5bXWRQEFVlIVHYhl
+         vERaRnYF3SezsIw2nNT2qHPe/3gryu+PKF2+tgATGrNvZtdhpEahyfNGB2FwvY4bpzKQ
+         2A7PCXdoYZLeABDjxg/I0N2LBJW8BfBF9dYbBm8DLlWkgo4pXILEoeHrYAaD1Ra7kDZt
+         pCW22/XG4Q+53wxduia/TNszRjihMEzJzeXKXrKvrlLfNJ/y7jvgnPKHH86z/6pSdf/R
+         tkpSFw3eYJWYJZPxFCMbJN5U/P33dz3bpHAs5ewVvFWyCUv8lE6ndtwLCDaj/k6Wh8+B
+         Cvig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687866502; x=1690458502;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TqtZzMODsbge3FzH7PvLUrnH/SiLk9B9uttmIxMRB9A=;
+        b=KC9vVDs+IYnn8ivWKeSMYkqY2eEamdwP9uC76qgNyXx3eMSPLNIRoSukfy2uiI2fA6
+         XCDvGDCYobEXQyT/x1+kCRFjQcc5JV2IU1VzFWWtLSVZRSJRbJG9tJxUsWPiaG6zICPj
+         1Qnlnqwow0j5afecMzv4oZAAw9Imn3t7CbD0FhBRv6DJS92Fxjbir3QVBx0/U9ivk8YY
+         Z9Du0QVYevViTlxXNbgAwihv2KIHTkJbFQDsRYzYNeeo+3rxRcxNwILCAM8CJ76dUkFw
+         AcSKDM4B9qL6FjdvUtXQCk0BumMnTsz/HzXyPzPFwhsus2tMNYkJR34dC3n4Iru6yDgj
+         hVHA==
+X-Gm-Message-State: AC+VfDxknrk/ZjT7d84JMBE5uaTDchfwKkN+T5nYZwu2WqycFxLK66uS
+        zVuSJvXx5I+lrh30XFtabQXtTw==
+X-Google-Smtp-Source: ACHHUZ5jX/9fIQBU4Yh+tw4SLl9c7pvuSEWOqS1dGPgDoJHSSLoURkOcwnvfv30ESG0kb0+EZH+a2w==
+X-Received: by 2002:a05:6512:455:b0:4fb:8939:d962 with SMTP id y21-20020a056512045500b004fb8939d962mr543348lfk.19.1687866501847;
+        Tue, 27 Jun 2023 04:48:21 -0700 (PDT)
+Received: from linaro.org ([62.231.110.100])
+        by smtp.gmail.com with ESMTPSA id 14-20020a05600c020e00b003f8d6647661sm13413655wmi.15.2023.06.27.04.48.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jun 2023 04:48:21 -0700 (PDT)
+Date:   Tue, 27 Jun 2023 14:48:19 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        avel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 03/10] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-Message-ID: <ZJrL5SXrSiYbvq2o@hovoldconsulting.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-4-quic_kriskura@quicinc.com>
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] PM: domains: Allow devices attached to genpd to
+ be managed by HW
+Message-ID: <ZJrMg7EXzfVP0oBz@linaro.org>
+References: <20230627104033.3345659-1-abel.vesa@linaro.org>
+ <2023062741-passion-scarcity-2390@gregkh>
+ <ZJq/zgFC+O2MoiEw@linaro.org>
+ <2023062711-unwitting-unwomanly-aa55@gregkh>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230621043628.21485-4-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <2023062711-unwitting-unwomanly-aa55@gregkh>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 10:06:21AM +0530, Krishna Kurapati wrote:
-> Currently host-only capable DWC3 controllers support Multiport.
-> Temporarily map XHCI address space for host-only controllers and parse
-> XHCI Extended Capabilities registers to read number of usb2 ports and
-> usb3 ports present on multiport controller. Each USB Port is at least HS
-> capable.
+On 23-06-27 13:02:50, Greg Kroah-Hartman wrote:
+> On Tue, Jun 27, 2023 at 01:54:06PM +0300, Abel Vesa wrote:
+> > On 23-06-27 12:46:28, Greg Kroah-Hartman wrote:
+> > > Also, why is this a RFC series?  What is left to do with it to get it
+> > > into a state which you feel comfortable having us review it "for real"?
+> > 
+> > There is a bit of back story here. This HW control support is something
+> > that Qualcomm platforms support for some of the PDs. Sent this as RFC
+> > as I thought it might open up a discussion of such a generic need at
+> > first. But now that I think of it, it might've been a non-RFC patch as
+> > well.
 > 
-> The port info for usb2 and usb3 phy are identified as num_usb2_ports
-> and num_usb3_ports. The intention is as follows:
+> You need to provide that information, otherwise what are we supposed to
+> do with this patch series?  What would you do if you got it in your
+> inbox?
+
+Will do in the next version.
+
+Thanks.
+
 > 
-> Wherever we need to perform phy operations like:
+> thanks,
 > 
-> LOOP_OVER_NUMBER_OF_AVAILABLE_PORTS()
-> {
-> 	phy_set_mode(dwc->usb2_generic_phy[i], PHY_MODE_USB_HOST);
-> 	phy_set_mode(dwc->usb3_generic_phy[i], PHY_MODE_USB_HOST);
-> }
-> 
-> If number of usb2 ports is 3, loop can go from index 0-2 for
-> usb2_generic_phy. If number of usb3-ports is 2, we don't know for sure,
-> if the first 2 ports are SS capable or some other ports like (2 and 3)
-> are SS capable. So instead, num_usb2_ports is used to loop around all
-> phy's (both hs and ss) for performing phy operations. If any
-> usb3_generic_phy turns out to be NULL, phy operation just bails out.
-> 
-> num_usb3_ports is used to modify GUSB3PIPECTL registers while setting up
-> phy's as we need to know how many SS capable ports are there for this.
-> 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/usb/dwc3/core.c | 62 +++++++++++++++++++++++++++++++++++++++++
->  drivers/usb/dwc3/core.h |  9 ++++++
->  2 files changed, 71 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index f6689b731718..32ec05fc242b 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -39,6 +39,7 @@
->  #include "io.h"
->  
->  #include "debug.h"
-> +#include "../host/xhci-ext-caps.h"
->  
->  #define DWC3_DEFAULT_AUTOSUSPEND_DELAY	5000 /* ms */
->  
-> @@ -1767,6 +1768,52 @@ static int dwc3_get_clocks(struct dwc3 *dwc)
->  	return 0;
->  }
->  
-> +static int dwc3_read_port_info(struct dwc3 *dwc)
-> +{
-> +	void __iomem *base;
-> +	u8 major_revision;
-> +	u32 offset = 0;
-> +	int ret = 0;
-
-ret is never modified, so drop and return 0 unconditionally below.
-
-You can add it back later in the series when you start using it.
-
-> +	u32 val;
-> +
-> +	/*
-> +	 * Remap xHCI address space to access XHCI ext cap regs,
-> +	 * since it is needed to get port info.
-> +	 */
-> +	base = ioremap(dwc->xhci_resources[0].start,
-> +				resource_size(&dwc->xhci_resources[0]));
-> +	if (IS_ERR(base))
-> +		return PTR_ERR(base);
-> +
-> +	do {
-> +		offset = xhci_find_next_ext_cap(base, offset,
-> +				XHCI_EXT_CAPS_PROTOCOL);
-> +
-
-You can drop this newline.
-
-> +		if (!offset)
-> +			break;
-> +
-> +		val = readl(base + offset);
-> +		major_revision = XHCI_EXT_PORT_MAJOR(val);
-> +
-> +		val = readl(base + offset + 0x08);
-> +		if (major_revision == 0x03) {
-> +			dwc->num_usb3_ports += XHCI_EXT_PORT_COUNT(val);
-> +		} else if (major_revision <= 0x02) {
-> +			dwc->num_usb2_ports += XHCI_EXT_PORT_COUNT(val);
-> +		} else {
-> +			dev_err(dwc->dev,
-> +				"Unrecognized port major revision %d\n",
-> +							major_revision);
-> +		}
-> +	} while (1);
-> +
-> +	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
-> +			dwc->num_usb2_ports, dwc->num_usb3_ports);
-> +
-> +	iounmap(base);
-
-Nit: I'd add a newline here.
-
-> +	return ret;
-> +}
-> +
->  static int dwc3_probe(struct platform_device *pdev)
->  {
->  	struct device		*dev = &pdev->dev;
-> @@ -1774,6 +1821,7 @@ static int dwc3_probe(struct platform_device *pdev)
->  	void __iomem		*regs;
->  	struct dwc3		*dwc;
->  	int			ret;
-> +	unsigned int		hw_mode;
->  
->  	dwc = devm_kzalloc(dev, sizeof(*dwc), GFP_KERNEL);
->  	if (!dwc)
-> @@ -1854,6 +1902,20 @@ static int dwc3_probe(struct platform_device *pdev)
->  			goto err_disable_clks;
->  	}
->  
-> +	/*
-> +	 * Currently only DWC3 controllers that are host-only capable
-> +	 * support Multiport.
-> +	 */
-> +	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
-> +	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
-> +		ret = dwc3_read_port_info(dwc);
-> +		if (ret)
-> +			goto err_disable_clks;
-> +	} else {
-> +		dwc->num_usb2_ports = 1;
-> +		dwc->num_usb3_ports = 1;
-> +	}
-> +
->  	spin_lock_init(&dwc->lock);
->  	mutex_init(&dwc->mutex);
->  
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 8b1295e4dcdd..42fb17aa66fa 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -33,6 +33,10 @@
->  
->  #include <linux/power_supply.h>
->  
-> +#define XHCI_EXT_PORT_MAJOR(x)	(((x) >> 24) & 0xff)
-> +#define XHCI_EXT_PORT_MINOR(x)	(((x) >> 16) & 0xff)
-> +#define XHCI_EXT_PORT_COUNT(x)	(((x) >> 8) & 0xff)
-
-Again, don't copy defines from xhci.
-
-Looks like these should be moved to the xhci-ext-caps.h header along
-with struct xhci_protocol_caps.
-
-> +
->  #define DWC3_MSG_MAX	500
->  
->  /* Global constants */
-> @@ -1029,6 +1033,8 @@ struct dwc3_scratchpad_array {
->   * @usb3_phy: pointer to USB3 PHY
->   * @usb2_generic_phy: pointer to USB2 PHY
->   * @usb3_generic_phy: pointer to USB3 PHY
-> + * @num_usb2_ports: number of USB2 ports.
-> + * @num_usb3_ports: number of USB3 ports.
-
-Again, please drop the full stops ('.').
-
-Johan
+> greg k-h
