@@ -2,176 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 559EF73FD7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:12:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A90773FD81
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:13:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbjF0OMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 10:12:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55210 "EHLO
+        id S229513AbjF0ONb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 10:13:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231421AbjF0OMM (ORCPT
+        with ESMTP id S229454AbjF0ONa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 10:12:12 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 912212D68
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:11:47 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-c01e1c0402cso3137023276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 07:11:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687875106; x=1690467106;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WXrJhVf+jnZIfJ+cq7/++Rt0kUOtjIR654ZWVYK8IXA=;
-        b=muMy6ccIPvOVieHq3jydY3E+pk7Ux7eU+8fTqZc64cbKAXPQn9G7P9CLs49Km6ZNLH
-         +og5pE5dYoTSo4Nv0G9IuKJxLxYT/3kR4daUo9KSmpcrqnCZEpirJpdO4bhhDz4viIeW
-         a6kr2p8yLGcr0LFje5IlBM9yAMKXINXjr7d7oJSW0RhWpDH/i1wAz39HiojB0lh54hqM
-         uHL0HHBzjWTYe36pue47SQ7vwC/ejhmkYHexaE/mv9RDPVPfX9EgSFWDPArb1eCM/71O
-         NQXSsv28l7DJwmFDtp1RLWlnXdeIAbU66JY4JQdEp6MqgMz+lplOX7EUq0EXcUzAln0e
-         L1LQ==
+        Tue, 27 Jun 2023 10:13:30 -0400
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE56E74;
+        Tue, 27 Jun 2023 07:13:29 -0700 (PDT)
+Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-345b231322fso5962595ab.2;
+        Tue, 27 Jun 2023 07:13:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687875106; x=1690467106;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WXrJhVf+jnZIfJ+cq7/++Rt0kUOtjIR654ZWVYK8IXA=;
-        b=Y/OdVgcm/CbX3vTBhPfroecvDiylrPlPfSadrWLGg6T9aT+7fMt78h+PnCXoHwyMHs
-         hZXp14NZtrc2tyEpMWHSwG2YzM7069VbWCBwMvoZ6TmONyMZP5FPmX94azw04D4X86DO
-         OXHpMh2yzpoQPsrYA2rBqsRrMnnOH+YEI6AbaZ/s4STfd7xcaWQMn2qGfXqtq/fjWZxT
-         A2Q+X9Er/9sD0ZKNeJhmfeX9WFoGSGMEz5qHxamkK58XAH0xcSCIwaE6wqYH3ExMklpY
-         +LzEgKIKLY6gBba3Ebge0aPNvdrW/iUNBWFVhWRlPj5YB4W61+AlO4vioKvJbL+mh3H6
-         uyxg==
-X-Gm-Message-State: AC+VfDwrGUjzSJwHnlWyW0hDlpkScFBhNmrqRML01hdHD6tvVplVi2Ik
-        Wx41Hes1CFb7rb/NrbpaZCxqvIPZTHtaZZfz51QTlg==
-X-Google-Smtp-Source: ACHHUZ70lgoIJLXZa0oFwfw4edZsuXErq+66PpsBrsvx2dF/b15nid3DcEG0tPlISlTBDYPEdt1KKo8KpAHjIj4O1Dw=
-X-Received: by 2002:a25:3d81:0:b0:c1c:9285:64c2 with SMTP id
- k123-20020a253d81000000b00c1c928564c2mr4483834yba.50.1687875106693; Tue, 27
- Jun 2023 07:11:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
- <20230625202547.174647-18-dmitry.baryshkov@linaro.org> <0f139da8-ae01-fc28-d14c-0ea207cf760e@linaro.org>
- <2232c6e7-cbca-30c1-9ec5-1cea7f759daf@linaro.org> <8217b8db-cd27-185d-c6b5-e32009202c21@linaro.org>
-In-Reply-To: <8217b8db-cd27-185d-c6b5-e32009202c21@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 27 Jun 2023 17:11:35 +0300
-Message-ID: <CAA8EJpq8J4fQoqrt3Jdf3C_mGUQdqaNbybdPD-zhEYxmB7DTcg@mail.gmail.com>
-Subject: Re: [PATCH v2 17/26] ARM: dts: qcom: apq8064: add simple CPUFreq support
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        d=1e100.net; s=20221208; t=1687875208; x=1690467208;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+34dOqwiPYr04E0G4Xm/yOYM4qu798aPWQjNtLw1CjI=;
+        b=kRxOfX+Tz1dw+6ggsX1elYaytaNNzpnjd2Cwtzzxl7S+9GKgFDSchmWgZo53Wyk48W
+         NUZ2ONQygFeJ6Xwlk1+By80R6dLrm0Ci/1gQOmM334xWzsJZjrpPzM2weC1bu/edysQ+
+         FVxGR6orgyRQZ7vqdp+7YoqssidNUOVyKyWQGBi4EaVjig1u8LrbS7wQQWCId/cWlERN
+         e09R8P6zaZWakgVDBgYzEZnHmdodb+qQv8GXkU51XTYKra/7xkBuZrSoYi2QdggciZId
+         BhvEl4vUS0JWCLwpA4fuhk1Wu2It4H2m3CTbRs7tHkTPLm1qZse29AmLICHfAxQm8cKP
+         cOoA==
+X-Gm-Message-State: AC+VfDx6shN+Ydly0aic4bkbeNnXtT924oVSAv3o+boZCAzglI86YXgV
+        kWhPEEf2GCgkzPFHuC6ZdikMFfy0kg==
+X-Google-Smtp-Source: ACHHUZ4wRY2cU/zuyjuVAsmGPISWFZVleu8/CVMKM4HfKZ24n0tENdP0Afc+q+NMVSthuvPOYuL/gw==
+X-Received: by 2002:a92:d350:0:b0:345:c2ab:2394 with SMTP id a16-20020a92d350000000b00345c2ab2394mr542941ilh.15.1687875208646;
+        Tue, 27 Jun 2023 07:13:28 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id t9-20020a92c909000000b00345b53bdea4sm695274ilp.37.2023.06.27.07.13.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jun 2023 07:13:27 -0700 (PDT)
+Received: (nullmailer pid 1834159 invoked by uid 1000);
+        Tue, 27 Jun 2023 14:13:25 -0000
+Date:   Tue, 27 Jun 2023 08:13:25 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     linux-scsi@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+        Iskren Chernev <me@iskren.info>,
+        Avri Altman <avri.altman@wdc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Bart Van Assche <bvanassche@acm.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>
+Subject: Re: [PATCH v5 3/5] dt-bindings: ufs: qcom: Add ICE to sm8450 example
+Message-ID: <168787520491.1834121.2564277926008455539.robh@kernel.org>
+References: <20221209-dt-binding-ufs-v5-0-c9a58c0a53f5@fairphone.com>
+ <20221209-dt-binding-ufs-v5-3-c9a58c0a53f5@fairphone.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221209-dt-binding-ufs-v5-3-c9a58c0a53f5@fairphone.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Jun 2023 at 15:13, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 26.06.2023 21:49, Dmitry Baryshkov wrote:
-> > On 26/06/2023 19:40, Konrad Dybcio wrote:
-> >> On 25.06.2023 22:25, Dmitry Baryshkov wrote:
-> >>> Declare CPU frequency-scaling properties. Each CPU has its own clock,
-> >>> how
-> >> however?
-> >
-> > yes
-> >
-> >>
-> >>> all CPUs have the same OPP table. Voltage scaling is not (yet)
-> >>> enabled with this patch. It will be enabled later.
-> >> Risky business.
-> >
-> > But it works :D
-> On your machine ;)
 
-On two nexus-7 and one ifc6410.
+On Tue, 27 Jun 2023 10:28:03 +0200, Luca Weiss wrote:
+> SM8450 actually supports ICE (Inline Crypto Engine) so adjust the
+> example to match.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
->
-> [...]
->
-> >>>   +    kraitcc: clock-controller {
-> >>> +        compatible = "qcom,krait-cc-v1";
-> >> Are we sure we don't wanna rework this compatible? Check the comment in
-> >> drivers/clk/qcom/krait-cc.c : krait_add_sec_mux()
-> >
-> > I remember that comment. I'd rather not introduce another compat string for such old hw. Would there be any direct benefits?
-> >
-> I'd say that the one we have here never made much sense.. Perhaps (since
-> nobody used it for 10 years) it would make sense to remodel it..
+Acked-by: Rob Herring <robh@kernel.org>
 
-Well we have the bindings for this driver. And also it was used by the
-OpenWRT people, IIRC.
-Thus I don't feel comfortable with throwing out old compat strings.
-
->
-> Konrad
-> >>
-> >>
-> >>> +        clocks = <&gcc PLL9>, /* hfpll0 */
-> >>> +             <&gcc PLL10>, /* hfpll1 */
-> >>> +             <&gcc PLL16>, /* hfpll2 */
-> >>> +             <&gcc PLL17>, /* hfpll3 */
-> >>> +             <&gcc PLL12>, /* hfpll_l2 */
-> >>> +             <&acc0>,
-> >>> +             <&acc1>,
-> >>> +             <&acc2>,
-> >>> +             <&acc3>,
-> >>> +             <&l2cc>;
-> >>> +        clock-names = "hfpll0",
-> >>> +                  "hfpll1",
-> >>> +                  "hfpll2",
-> >>> +                  "hfpll3",
-> >>> +                  "hfpll_l2",
-> >>> +                  "acpu0_aux",
-> >>> +                  "acpu1_aux",
-> >>> +                  "acpu2_aux",
-> >>> +                  "acpu3_aux",
-> >>> +                  "acpu_l2_aux";
-> >>> +        #clock-cells = <1>;
-> >>> +        #interconnect-cells = <1>;
-> >>> +    };
-> >>> +
-> >>>       sfpb_mutex: hwmutex {
-> >>>           compatible = "qcom,sfpb-mutex";
-> >>>           syscon = <&sfpb_wrapper_mutex 0x604 0x4>;
-> >>> @@ -933,6 +1100,9 @@ qfprom: qfprom@700000 {
-> >>>               #address-cells = <1>;
-> >>>               #size-cells = <1>;
-> >>>               ranges;
-> >>> +            speedbin_efuse: speedbin@c0 {
-> >>> +                reg = <0x0c0 0x4>;
-> >>> +            };
-> >> Newline between properties and subnodes & between individual subnodes,
-> >> please
-> >
-> > ack.
-> >
-> >>
-> >> Konrad
-> >>>               tsens_calib: calib@404 {
-> >>>                   reg = <0x404 0x10>;
-> >>>               };
-> >
-
-
-
--- 
-With best wishes
-Dmitry
