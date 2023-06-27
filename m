@@ -2,81 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEE2173FF81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:18:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 713CE73FF88
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:19:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232305AbjF0PSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 11:18:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41570 "EHLO
+        id S232292AbjF0PT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 11:19:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232292AbjF0PSr (ORCPT
+        with ESMTP id S232342AbjF0PTt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 11:18:47 -0400
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EFF139;
-        Tue, 27 Jun 2023 08:18:46 -0700 (PDT)
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3427426f2ddso17563435ab.3;
-        Tue, 27 Jun 2023 08:18:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687879126; x=1690471126;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ijvb8ydCjVx69xo9+vKY/Fihoj6jCn6HLLMClNeKu1Y=;
-        b=fopIXnDGcoxH0NVYoV55zHfYTgKIQMhD8yqY4dCLY1RfZ7azeFMGgSuz1jSeDNDUtR
-         U2yo37rp9VuEITPDDvPKzsrGYK8J8lSz1/BAmB+5EBDpD+bcn+fBINFQu0OeVvhYsewb
-         cgNwlq98Jw6LDKDDLDGvavDAMldPIWG3Xg3rFI7RVWV7ZwF64RzAyG8sT0uAqGnhjst1
-         YCtW78O2JDy6rocVCWs7oU/rUukvwtRJeLbYRMECTsicio6DDSwVbdtm9QEuzxRZW62m
-         gWqf/lWL91cTP8ILkZ5LoeCNt2oksOU433bsiYLVG6qd3OMUkqKSbXTgCuRIX2ySybna
-         ahaA==
-X-Gm-Message-State: AC+VfDz3OFd1Q1QjRZE+sQc4ACISk+gUj0khsK0l2GD1L0ygUUJ0Vx78
-        S8pK/e0iM1KnkpaeojTQVg==
-X-Google-Smtp-Source: ACHHUZ5+u6YK1dd/NS+7qcjA0Vmzepc5iGw59nl8ff+an8BSu5Z6+ijf/GnTk3jYyxo+5wioMbUn5A==
-X-Received: by 2002:a92:c841:0:b0:345:bfc7:d527 with SMTP id b1-20020a92c841000000b00345bfc7d527mr1335127ilq.7.1687879125686;
-        Tue, 27 Jun 2023 08:18:45 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id h13-20020a056638062d00b004290a22e4cdsm1954955jar.108.2023.06.27.08.18.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jun 2023 08:18:45 -0700 (PDT)
-Received: (nullmailer pid 1933897 invoked by uid 1000);
-        Tue, 27 Jun 2023 15:18:42 -0000
-Date:   Tue, 27 Jun 2023 09:18:42 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
+        Tue, 27 Jun 2023 11:19:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCBC1735;
+        Tue, 27 Jun 2023 08:19:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F1D7F611B5;
+        Tue, 27 Jun 2023 15:19:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2B3C433C0;
+        Tue, 27 Jun 2023 15:19:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687879187;
+        bh=lVWplkh8U/rtw5laIs2YyXP5mG+eDZDGoYnqUxrwS4k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Q5TmZ6xn2YYy+K9DIrVHxqng95klWdB7m7T0I7jI0pQvvfRJz5uMHDViWO7XvrlsF
+         Hj7sfUIBs5Akk20UnTLPHTioO+9ePGKg8NMROhhpEaWjfl+Ay52mbUj1ugXMozx4OL
+         pviPLrMhe6A+Rl4KN3mRU/qbs4JO+6Fhahewp7YYvsi3tQ19ThP8B6yTFjWMYKs2w+
+         ZCSz3khQctEd5g5mKNHHfhFV6AJaHz/3+m1VQfXt+PbmutlT5/6+OyzPGo0QNFhiqH
+         2hIUIThRVt0P87xykwgEY0Aj7nxEvBnZfUZr6W5vOHHcjNyxeyNt2e5v/5YIisoyEc
+         PN/YHbBaTbdug==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1qEATp-00046p-3i; Tue, 27 Jun 2023 17:19:45 +0200
+Date:   Tue, 27 Jun 2023 17:19:45 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 5/5] scsi: dt-bindings: ufs: qcom: Fix warning for sdm845
- by adding reg-names
-Message-ID: <20230627151842.GB1918927-robh@kernel.org>
-References: <20230623113009.2512206-1-abel.vesa@linaro.org>
- <20230623113009.2512206-6-abel.vesa@linaro.org>
- <cd84b8c6-fac7-ecef-26be-792a1b04a102@linaro.org>
- <CTK1AI4TVYRZ.F77OZB62YYC0@otso>
- <20230623211746.GA1128583-robh@kernel.org>
- <CTMDIQGOYMKD.1BP88GSB03U54@otso>
- <d3970163-b8e8-9665-3761-8942c28adaa8@linaro.org>
- <CTMFNWKMSCJP.DBPZEW25594L@otso>
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v9 00/10] Add multiport support for DWC3 controllers
+Message-ID: <ZJr-EbunGzNopVj0@hovoldconsulting.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CTMFNWKMSCJP.DBPZEW25594L@otso>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,37 +71,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 26, 2023 at 10:19:09AM +0200, Luca Weiss wrote:
-> On Mon Jun 26, 2023 at 9:41 AM CEST, Krzysztof Kozlowski wrote:
-> > On 26/06/2023 08:38, Luca Weiss wrote:
-> > >>>> but I guess no resends and it can be superseded.
-> > >>>
-> > >>> Right, the patches got reviews but was never applied... I really need to
-> > >>> find a strategy to keep track of sent patches until they're applied with
-> > >>> my work mailbox, it's not the first time that a patch has gotten
-> > >>> forgotten.
-> > >>
-> > >> There was an error reported on the above series. Why would it be 
-> > >> applied?
-> > > 
-> > > The error report at [0] complains about reg-names but I'm quite sure
-> > > that patch 2/3 resolves this error. Does your bot only apply one patch
-> > > at a time and run the check or apply all of them and then run it? It's
-> > > been a while but I'm fairly sure I ran all of the checks before sending
-> > > since I also documented some other patches in the cover letter there.
-> >
-> > You did it in cover letter, not in the patch, so there is no dependency
-> > for bots recorded.
+On Wed, Jun 21, 2023 at 10:06:18AM +0530, Krishna Kurapati wrote:
+> Currently the DWC3 driver supports only single port controller which
+> requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
+> DWC3 controller with multiple ports that can operate in host mode.
+> Some of the port supports both SS+HS and other port supports only HS
+> mode.
 > 
-> I'm not aware how to put extra comments into a patch in a series with
-> b4, at least last time I checked I don't think it was possible? But I
-> also thought the cover letter was exactly there for giving some
-> background of the series and documenting any dependencies on other
-> patches.
+> This change primarily refactors the Phy logic in core driver to allow
+> multiport support with Generic Phy's.
+> 
+> Chananges have been tested on  QCOM SoC SA8295P which has 4 ports (2
+> are HS+SS capable and 2 are HS only capable).
+> 
+> Changes in v9:
+> Added IRQ support for DP/DM/SS MP Irq's of SC8280
+> Refactored code to read port count by accessing xhci registers
+> 
 
-I just put a '---' line and comments after that in the commit messages. 
-That works fine unless your git branch is going upstream directly (i.e. 
-via a pull request). Even when I apply my own patches, I get them from 
-lore and apply so the comments are dropped.
+You obviously did many more changes in v9. Please amend this list for v9
+and be more specific when submitting v10.
 
-Rob
+Johan
