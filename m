@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4D13740103
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 18:26:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 560DF74010D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 18:26:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231743AbjF0QZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 12:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46406 "EHLO
+        id S232526AbjF0Q0u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 12:26:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232011AbjF0QYs (ORCPT
+        with ESMTP id S232078AbjF0QYu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 12:24:48 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B307130F6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:24:46 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b6a1245542so40105571fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:24:46 -0700 (PDT)
+        Tue, 27 Jun 2023 12:24:50 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C80E2D7D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:24:49 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fa08687246so4694983e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687883085; x=1690475085;
+        d=linaro.org; s=google; t=1687883087; x=1690475087;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FYaFF944CBPpPI3xTGK+ozEDUtWhjiR1kLsCUSq/tTw=;
-        b=LWoWb4vsMHyG2qkazpfTdhW+UQTZZaP+KpW9Fxat/1VZee4W/NKGQEWMqYGZ9NuW/D
-         m4BE+3+7lpPfy7kORXnMMu1bSeSKlt7jNRaY8TrFsqHaqL0z4walAIeqcpnYaKEdplVD
-         zVKYjMwT9B0tBR/Yd8IcB2nEJlj+n1AoGd3HfdLlKut5f+FuYu/F/MQmAtY2E/ouKsOE
-         PUJXqfkz1gHFvCGlVLAU71YT9nrR83dOoYgMvVHd7rBfptkSLO6f5JfCr1/rAq3A0XyZ
-         QdODVO8drrPTl7R2Ewo+g5Mm4pgMbt4oi10DHPO9L4FxaqOWf3jd0jHw3mWBZFRgiT4A
-         WlWw==
+        bh=kCywy6cYyFYFI8kb//sHM+EK5WqBRRu8/iqRaDkQ84M=;
+        b=XyWyHIoH2Ze407Yj6nB28IeDN1CDtgfv8AZnJhnbW2U++0ntJoYl3/QVHOKlr0ugmN
+         o6vqww24W07lweLE9ksjl1AFLoMK4ShQBmEr1zNIq0EoyAnN9vej5YV2E951JkQg/mj6
+         f2be8GMogkEAs23/fSmFJvgtXz/EWJRnx72oJgzg7t4GlH7aGGXtbYQyLDT7IEdCqSqo
+         DVYVJAMNjin1r7Ia2V7ZXhY5pJcfcejnwajh9n3V0xWXb6BLAr6EsO0FSIo+81Lam1J+
+         dX9zLDenkoPZH6PhWyeFQ7e6lwaX3pCRTuLZDTvb0GJrasYd9Ow7d4TVrxni4hfHa5GJ
+         x6/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687883085; x=1690475085;
+        d=1e100.net; s=20221208; t=1687883087; x=1690475087;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FYaFF944CBPpPI3xTGK+ozEDUtWhjiR1kLsCUSq/tTw=;
-        b=hk2AWiEk2uOcn/jtJn2EVbcgPDZQvVDKs6psiZk0hde5dlMfD7hcw/Y3fUEFfqrfFL
-         7Y47c6X/5qU5EgpairDL2GwLKYiRf9WHhXpOJ53lp8k8Rpy++xj+XClzYgm14jg2BaXF
-         4HC2/PJMEbeJWqOyUeGi1jzM6Mn00k3vzEaklCVKNjx/05AOg3ze/EY+6IDn7cdxjJ6X
-         GAMnGe/Koj5jWIaMh3FqhSJ9D4LOuwoT6zLHMxFJ/S5h026+4aUnJxcnsgIHzzuBm1Gb
-         c9H5ues0vMIQUVhPQ8V3czLdY101lsw5ALoXFTuGMyAhWq2D8oydD0ihe4L3/eDptgFZ
-         E7Yg==
-X-Gm-Message-State: AC+VfDyT5VGwl0oG1eClD+4bMt/gi+JjkNnEg+GaLQ3rl2lLiRfmEI5G
-        NbBTQJz999GkoUUKvVuOzWBrjg==
-X-Google-Smtp-Source: ACHHUZ4ythlTwuN1ng1WKH85xShFqna5kY+HIIDyB4fmlolvggLWrCYvWnSmKrP/dkJwFLHJqDS+fA==
-X-Received: by 2002:a19:3807:0:b0:4f6:6b:a43b with SMTP id f7-20020a193807000000b004f6006ba43bmr18574040lfa.52.1687883085080;
-        Tue, 27 Jun 2023 09:24:45 -0700 (PDT)
+        bh=kCywy6cYyFYFI8kb//sHM+EK5WqBRRu8/iqRaDkQ84M=;
+        b=DR38FJxw0fjh5TJo+v6ZuF+9chT57v0mOUXxIZ+DZmjGHT+f0HDhlYIv3Jz3CiYfuL
+         7vgcdTS8RhLLalssTI7vhWSH3ZBHNoiWivLaBWUPKOa4unhqCjejKNqfVyWooJf1eLTg
+         /tOPzVu2KW6+FCXgCRFlZgvrwOw5aLUqP4Ie+qx4v+meDTCVY5U+u9xK/Kk3J+B2d7+Z
+         IgdNel3TYcHem58dand0hv9jNfvNtGZ1tqw6ea03kbzRbkw4mo1HOZdNZ4Z4pYb0UIyk
+         ZRtjL7QlFkOqmjDaqgYid3O818aTk3Htgw/hXL4BqLOUcCoqz2rn6Lfb+EmpbmzEOdly
+         +4oQ==
+X-Gm-Message-State: AC+VfDwCl3hTqv5PBqlTFeMZXGq83XVAfTbKsolw0ZxoU2pe9ig/276e
+        C+UbhWfLEcHlFkWFtWHUeEdFnA==
+X-Google-Smtp-Source: ACHHUZ6LwrqrxKXfB30IuTt/FkjnhAznIHKgmo2XPru91QszdrHpLXOaCrfYFLxXQmjHKGnPvCbFNA==
+X-Received: by 2002:a19:4f52:0:b0:4f8:66e1:14e3 with SMTP id a18-20020a194f52000000b004f866e114e3mr15836081lfk.17.1687883087477;
+        Tue, 27 Jun 2023 09:24:47 -0700 (PDT)
 Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
-        by smtp.gmail.com with ESMTPSA id g7-20020a19ac07000000b004fb259a5589sm1190508lfc.104.2023.06.27.09.24.42
+        by smtp.gmail.com with ESMTPSA id g7-20020a19ac07000000b004fb259a5589sm1190508lfc.104.2023.06.27.09.24.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jun 2023 09:24:44 -0700 (PDT)
+        Tue, 27 Jun 2023 09:24:47 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 27 Jun 2023 18:24:19 +0200
-Subject: [PATCH 03/11] arm64: dts: qcom: msm8939: Add missing
- 'cache-unified' to L2
+Date:   Tue, 27 Jun 2023 18:24:20 +0200
+Subject: [PATCH 04/11] arm64: dts: qcom: apq8039-t2: Drop inexistent
+ property
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230627-topic-more_bindings-v1-3-6b4b6cd081e5@linaro.org>
+Message-Id: <20230627-topic-more_bindings-v1-4-6b4b6cd081e5@linaro.org>
 References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
 In-Reply-To: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
 To:     cros-qcom-dts-watchers@chromium.org,
@@ -99,11 +99,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Andy Gross <andy.gross@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687883074; l=872;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687883074; l=689;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=y9aAPQNrTt4WUn0fdGxJxPfCCX9Hk5OUZHkmKm33hlo=;
- b=w488Qve8orkSmgHUwwh9oyM25h1xdVtgnB4Ys0LYV1nlQjCqgKtAhax7MUl7l8I5KTts0L1Ss
- gOcd0DAg1r7Algsiwe2DbhrC3vv080aTNk+DR8kKIxjAULvaSd4hkI+
+ bh=apph7LSM6ElNjbIp4Sa6AEpFAvPu59qNl9eL4vnUenE=;
+ b=LRBHRbniws8u4a1P+s6dSMgJ58xXojZSxnIPFilY8FRHxj7kwk+9c9/vrMndrQrYkMe6HLBA1
+ qsSb3Hqz11BDWo/hVkufLbnuhTmhrQ/zLN4kTfHuIj/Obe2lz0rA+wR
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,35 +116,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the missing property to fix the dt checker warning:
+'pin-switch-delay-us' is not used anywhere in the mainline kernel.
+Drop it.
 
-qcom/apq8039-t2.dtb: l2-cache: 'cache-unified' is a required property
-
-Fixes: 61550c6c156c ("arm64: dts: qcom: Add msm8939 SoC")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8939.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/apq8039-t2.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index 38fc22e66bda..664ae303afae 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -55,6 +55,7 @@ CPU0: cpu@100 {
- 			L2_1: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-unified;
- 			};
- 		};
- 
-@@ -111,6 +112,7 @@ CPU4: cpu@0 {
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-unified;
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2.dts b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+index 43686bbd87f4..027d1da7e81d 100644
+--- a/arch/arm64/boot/dts/qcom/apq8039-t2.dts
++++ b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+@@ -374,7 +374,6 @@ &usb {
+ 	pinctrl-0 = <&pinctrl_otg_default>;
+ 	pinctrl-1 = <&pinctrl_otg_host>;
+ 	pinctrl-2 = <&pinctrl_otg_device>;
+-	pin-switch-delay-us = <100000>;
+ 	usb-role-switch;
+ 	status = "okay";
  
 
 -- 
