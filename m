@@ -2,129 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DE8A74014F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 18:34:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19EC874015D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 18:35:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232502AbjF0QeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 12:34:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
+        id S230007AbjF0QfW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 12:35:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232008AbjF0Qd5 (ORCPT
+        with ESMTP id S232614AbjF0Qem (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 12:33:57 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5FC326BD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:33:34 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b6a662b9adso31599861fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:33:34 -0700 (PDT)
+        Tue, 27 Jun 2023 12:34:42 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04DF1FE0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:34:21 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b69923a715so46503621fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:34:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687883610; x=1690475610;
+        d=linaro.org; s=google; t=1687883655; x=1690475655;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Um1a8Di8IY3rLUktjDo7U5c6Z65JFohHK/V4Nx6QANs=;
-        b=BGUZxcUxoexnlvX8ixsryCG1nbEQMg9k9DofDayzFEf0pJBrZ5M01orNSMl7peKN1M
-         OXk2Bd0HPISEQLmlgOzIAbJnuDJhgszt3JBzHHktSHQpC7HTh3/qI1B7q5OCuoDHKr1q
-         o8W0OOTNCjnLhvtXAVCuF3ayQIdk17/H1OWWrQDNXU+6w1UX9MOFv1k8BhVVH3pE71f4
-         CXN9Sf4Nz9QxTjps1HqpVSHrzALgMxoaEKocYyAzBppF/HpwquiDgVqrVJU/C66iHlLA
-         MbUBXlo/34Gp9dLzje7nukrhiiOGOzYBLcHKfiq9T6+Ii2umWOAnvKpAKQfGS8RgwiLq
-         hfYw==
+        bh=ff9pjKl2q4eHTKuAX2lYIQZCeKYxi6bK6im7HAgmKWY=;
+        b=NclSazdNKNrmEAtS2NuCIf0AxXRmHZlJJF0xMew+V+MXMUDYIaIwyaignBS/QZ7KmW
+         MF8ayCpieSfYysc8aHOOVyrYS4sNAJVstkrsWA1Fyd7umsLpm+6t6L80jtxMnl4cSqU5
+         RFbT3p9tNIqJroB45JaN6KGiFNve/bHP0c+KGagi5KzLUYvGbxQMXGC4iyOfmNveGcaa
+         /2zzSxpkN3UyWFaNTSD4kyoateTAoUDhjbHWytizGoN/ozU9RI8vYI1+9gEkMTgOJQfl
+         AKNsbz/hCHGf+0lhhHf3t5h8o9b8CuI4xu13brI1eA1V3Nb2B6MKp8YWvXP9MRvyo/AN
+         HAvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687883610; x=1690475610;
+        d=1e100.net; s=20221208; t=1687883655; x=1690475655;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Um1a8Di8IY3rLUktjDo7U5c6Z65JFohHK/V4Nx6QANs=;
-        b=LNHeRoQ8srYL1yWRQXQKLQACAo2dfD+m29NGX9E73ngxDgv+YwGuNwlOgMtL10W6Pn
-         LHJUFXjz9L2WhcT91WuDcVC1haFS3C/S12Lw4GDPgqWk73dFKVGLwpIL5Gf90dFNQQnQ
-         1eQWEJoL0FHvCyaDdCiVxOGL5GHnY8u7/cifwwgQ8yzaEefCVwSh4MbZf6rlNOoVkwQv
-         ShY35BVSEAGgW53sz0s7UbEThDhBp9FD08E6A/K7xWAPqjf1kHErsbaprSC5pr9XwuXX
-         5SkoSNLF9S4OuNEQSHqn4obaJcSTCLiToM2a/3LQjix1wkcfENnSEGavUDEGRmuoPqAv
-         nFqg==
-X-Gm-Message-State: AC+VfDzMp0Ci0e3fpmbydLxAsNP1CDSNFxULc0S5iLOEe4mlK+vjgAGq
-        jaWZLBSidL5bEvxb6ehTBop9TA==
-X-Google-Smtp-Source: ACHHUZ6i8gT3Uh61AFhzJhn90PzjFM8Pd/4izuKEFt8ksKV/UAmA+veBM9rcMDZY+A7Fk4xWHFSiqQ==
-X-Received: by 2002:a2e:b3c9:0:b0:2b5:9d78:2143 with SMTP id j9-20020a2eb3c9000000b002b59d782143mr7470933lje.28.1687883610030;
-        Tue, 27 Jun 2023 09:33:30 -0700 (PDT)
+        bh=ff9pjKl2q4eHTKuAX2lYIQZCeKYxi6bK6im7HAgmKWY=;
+        b=jmUVovMGzQst4ifzAOyDB4ruLFQEerCNdGOz2C8qN15T2I3t/qd2taEyNQUswdUoQH
+         4IkWRC+g5hdzyBqbN1yvxzteNZEqBR+ELmjopZQ/9cHUpo18M1aIYm1WlpiIr6cU8zFH
+         JB+IaGOVN/P8c5+g3AtZdGQs/z/vatwp3JOTTqgldBZENlPPvCVMdbM7E1CxOHfh4YS8
+         reYih9hg1L29bdJY0aynQRFekOksxA8j5nqtVN1psuKGvlFpeImwAQJQxx+TK/WoPkzo
+         INAIKA1znNvHhIaPNEHpJZiokCE6rmq8m5ljdTxqMnOw3iUVEXTuzdo+CY3BUdVWllEk
+         X+FA==
+X-Gm-Message-State: AC+VfDx7sv3CSRRYizQR+7z4yCMvWNu/lKAIiQ/JNS/p1xCQ10yFxf0x
+        tZkXN+AJOgYZaQyZX6nTgPme0A==
+X-Google-Smtp-Source: ACHHUZ7LVhAwSbtCo/gLWLb/gfGIhWH6n3nwZUR7RuQ1M9SqpG1hNGXy+SIpdfY7Leaozk3IkKOVrQ==
+X-Received: by 2002:a2e:848a:0:b0:2b4:6c76:332f with SMTP id b10-20020a2e848a000000b002b46c76332fmr22560841ljh.9.1687883655046;
+        Tue, 27 Jun 2023 09:34:15 -0700 (PDT)
 Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
-        by smtp.gmail.com with ESMTPSA id o22-20020a2e7316000000b002b69e504a38sm1366854ljc.99.2023.06.27.09.33.29
+        by smtp.gmail.com with ESMTPSA id z20-20020a2e8e94000000b002af8aaebce4sm1801500ljk.8.2023.06.27.09.34.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jun 2023 09:33:29 -0700 (PDT)
-Message-ID: <266d3cfa-f72d-fc08-c283-19bebbd3ef4c@linaro.org>
-Date:   Tue, 27 Jun 2023 18:33:28 +0200
+        Tue, 27 Jun 2023 09:34:14 -0700 (PDT)
+Message-ID: <443b84f3-7e9d-301b-c9c0-44b9360563f7@linaro.org>
+Date:   Tue, 27 Jun 2023 18:34:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm850-*: fix uart6 aliases
+Subject: Re: [PATCH v2 17/26] ARM: dts: qcom: apq8064: add simple CPUFreq
+ support
 Content-Language: en-US
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230627-c630-uart-and-1p2-reg-v1-0-b48bfb47639b@linaro.org>
- <20230627-c630-uart-and-1p2-reg-v1-3-b48bfb47639b@linaro.org>
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
+ <20230625202547.174647-18-dmitry.baryshkov@linaro.org>
+ <0f139da8-ae01-fc28-d14c-0ea207cf760e@linaro.org>
+ <2232c6e7-cbca-30c1-9ec5-1cea7f759daf@linaro.org>
+ <8217b8db-cd27-185d-c6b5-e32009202c21@linaro.org>
+ <CAA8EJpq8J4fQoqrt3Jdf3C_mGUQdqaNbybdPD-zhEYxmB7DTcg@mail.gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230627-c630-uart-and-1p2-reg-v1-3-b48bfb47639b@linaro.org>
+In-Reply-To: <CAA8EJpq8J4fQoqrt3Jdf3C_mGUQdqaNbybdPD-zhEYxmB7DTcg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.06.2023 17:32, Caleb Connolly wrote:
-> This is a follow up on a previous patch
-Either copy the commit message or reference it by hash, there have
-probably been 12341234 commits between the landing of that one and
-this one.
-
-For the content:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 27.06.2023 16:11, Dmitry Baryshkov wrote:
+> On Tue, 27 Jun 2023 at 15:13, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> On 26.06.2023 21:49, Dmitry Baryshkov wrote:
+>>> On 26/06/2023 19:40, Konrad Dybcio wrote:
+>>>> On 25.06.2023 22:25, Dmitry Baryshkov wrote:
+>>>>> Declare CPU frequency-scaling properties. Each CPU has its own clock,
+>>>>> how
+>>>> however?
+>>>
+>>> yes
+>>>
+>>>>
+>>>>> all CPUs have the same OPP table. Voltage scaling is not (yet)
+>>>>> enabled with this patch. It will be enabled later.
+>>>> Risky business.
+>>>
+>>> But it works :D
+>> On your machine ;)
+> 
+> On two nexus-7 and one ifc6410.
+> 
+>>
+>> [...]
+>>
+>>>>>   +    kraitcc: clock-controller {
+>>>>> +        compatible = "qcom,krait-cc-v1";
+>>>> Are we sure we don't wanna rework this compatible? Check the comment in
+>>>> drivers/clk/qcom/krait-cc.c : krait_add_sec_mux()
+>>>
+>>> I remember that comment. I'd rather not introduce another compat string for such old hw. Would there be any direct benefits?
+>>>
+>> I'd say that the one we have here never made much sense.. Perhaps (since
+>> nobody used it for 10 years) it would make sense to remodel it..
+> 
+> Well we have the bindings for this driver. And also it was used by the
+> OpenWRT people, IIRC.
+> Thus I don't feel comfortable with throwing out old compat strings.
+Oh, OK
 
 Konrad
-> fixing the aliases for
-> sdm845 devices, fix them here too.
 > 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 +-
->  arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts     | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> Konrad
+>>>>
+>>>>
+>>>>> +        clocks = <&gcc PLL9>, /* hfpll0 */
+>>>>> +             <&gcc PLL10>, /* hfpll1 */
+>>>>> +             <&gcc PLL16>, /* hfpll2 */
+>>>>> +             <&gcc PLL17>, /* hfpll3 */
+>>>>> +             <&gcc PLL12>, /* hfpll_l2 */
+>>>>> +             <&acc0>,
+>>>>> +             <&acc1>,
+>>>>> +             <&acc2>,
+>>>>> +             <&acc3>,
+>>>>> +             <&l2cc>;
+>>>>> +        clock-names = "hfpll0",
+>>>>> +                  "hfpll1",
+>>>>> +                  "hfpll2",
+>>>>> +                  "hfpll3",
+>>>>> +                  "hfpll_l2",
+>>>>> +                  "acpu0_aux",
+>>>>> +                  "acpu1_aux",
+>>>>> +                  "acpu2_aux",
+>>>>> +                  "acpu3_aux",
+>>>>> +                  "acpu_l2_aux";
+>>>>> +        #clock-cells = <1>;
+>>>>> +        #interconnect-cells = <1>;
+>>>>> +    };
+>>>>> +
+>>>>>       sfpb_mutex: hwmutex {
+>>>>>           compatible = "qcom,sfpb-mutex";
+>>>>>           syscon = <&sfpb_wrapper_mutex 0x604 0x4>;
+>>>>> @@ -933,6 +1100,9 @@ qfprom: qfprom@700000 {
+>>>>>               #address-cells = <1>;
+>>>>>               #size-cells = <1>;
+>>>>>               ranges;
+>>>>> +            speedbin_efuse: speedbin@c0 {
+>>>>> +                reg = <0x0c0 0x4>;
+>>>>> +            };
+>>>> Newline between properties and subnodes & between individual subnodes,
+>>>> please
+>>>
+>>> ack.
+>>>
+>>>>
+>>>> Konrad
+>>>>>               tsens_calib: calib@404 {
+>>>>>                   reg = <0x404 0x10>;
+>>>>>               };
+>>>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> index 090f73251994..62f503508dea 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> @@ -34,7 +34,7 @@ / {
->  
->  	aliases {
->  		serial0 = &uart9;
-> -		hsuart0 = &uart6;
-> +		serial1 = &uart6;
->  	};
->  
->  	gpio-keys {
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> index 41f59e32af64..543837316001 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> @@ -56,7 +56,7 @@ framebuffer0: framebuffer@80400000 {
->  	};
->  
->  	aliases {
-> -		hsuart0 = &uart6;
-> +		serial1 = &uart6;
->  	};
->  
->  	/* Reserved memory changes */
+> 
 > 
