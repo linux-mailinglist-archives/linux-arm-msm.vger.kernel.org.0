@@ -2,142 +2,1208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B93E873F746
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 10:32:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A6F273F75A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 10:34:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229780AbjF0Iby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 04:31:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36978 "EHLO
+        id S229628AbjF0Ied (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 04:34:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230088AbjF0IbW (ORCPT
+        with ESMTP id S229884AbjF0IeI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 04:31:22 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B46330F8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:30:06 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-988a076a7d3so627905966b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1687854603; x=1690446603;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mThrgyARyedryNmjWfnH4cpZ5pepRN8cVLn3M8pGEJY=;
-        b=2nvDVQEZUxNnVZ2cn0fsA8A0oh1DdvDZvaBPZYQEH+YcsDB8ssrVIV4GaFC60NcHhL
-         HyGKYzgOy/ChvDJU+qRDmPAgfLXtAMJWk37ekLsrOfHfO36JecHazPE4cHDos+XezL4G
-         Fy8eZTTAkpKGGau29aB6cbehqHFr7rNwf+6MyrO4rmqZdU/giXS8d2s0WLUoqitCvUSu
-         DpliyDGaJOMx+LdhtiIc2N+4rG1CgvTcyJEN2wDDgR7Cl9cWFIY+y0pYkotcO8aNExEd
-         k6KYtDvWR1u/zrNFAc1Ox7aEw99qxLqlBszPwVD9Ye8s/8fZSRxcxHPgjnrw+nF9ctLW
-         6rjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687854603; x=1690446603;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mThrgyARyedryNmjWfnH4cpZ5pepRN8cVLn3M8pGEJY=;
-        b=XtMI7zdK1FrY+AOzObRS9azRaFeclOmBzucB5zuIn8Eb26zeL3hQCP2V8O/8Acei7g
-         XbI+FdyMB6UV3nbGDAHEo3780pZniVqpU8jVR0cdmVMYIgc1FEtBH0QTPH1ypop4DN45
-         CSawGHXT9lgNPBlY71y2o8JtIQqwdJ777PW03tRNIoU3UOSO6y5rB/nviXtIp+eGbOn3
-         7N4hFkTXpnXZucY506E0Y0QusoiQitjs+OXnZpyld7yJp+PhLItOhwcQABcIi7nHKxiJ
-         eOMz2DNYLFbJu0S60f7zcDZ+5wn08FWw/HZRkpQh4N4KXBz2U4OQE8yqQATdDgBtXN82
-         +t2g==
-X-Gm-Message-State: AC+VfDys+Mt5sNHapwwnjTSedwDLV1UzkO5LFR6aqnHVuF1HCoqIKbCb
-        u1HP9hNW6gcNB2yiNcf9ajziKA==
-X-Google-Smtp-Source: ACHHUZ5Gd8wXkVemQElq8PbfvR+hM+lFW1Yl6baf3RwARcEPbCvXGdlVnJBe7lQN8mKIJavn5lW7aw==
-X-Received: by 2002:a17:907:983:b0:94e:2db:533e with SMTP id bf3-20020a170907098300b0094e02db533emr30833010ejc.49.1687854602813;
-        Tue, 27 Jun 2023 01:30:02 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id pv18-20020a170907209200b0098dc18c1429sm4246134ejb.209.2023.06.27.01.30.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jun 2023 01:30:02 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 27 Jun 2023 10:30:01 +0200
-Message-Id: <CTNAIROO2XIU.3FFYTSQL4OIM7@otso>
-Subject: Re: [PATCH v4 2/3] dt-bindings: ufs: qcom: Add reg-names property
- for ICE
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Alim Akhtar" <alim.akhtar@samsung.com>,
-        "Avri Altman" <avri.altman@wdc.com>,
-        "Bart Van Assche" <bvanassche@acm.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Iskren Chernev" <me@iskren.info>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        "Conor Dooley" <conor+dt@kernel.org>
-Cc:     <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, "Eric Biggers" <ebiggers@google.com>
-X-Mailer: aerc 0.15.1
-References: <20221209-dt-binding-ufs-v4-0-14ced60f3d1b@fairphone.com>
- <20221209-dt-binding-ufs-v4-2-14ced60f3d1b@fairphone.com>
- <c0ce5ce7-d18f-15b9-176e-822d99c638e2@linaro.org>
-In-Reply-To: <c0ce5ce7-d18f-15b9-176e-822d99c638e2@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Tue, 27 Jun 2023 04:34:08 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A82CB8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:34:02 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 3ECF81F4E1;
+        Tue, 27 Jun 2023 10:34:00 +0200 (CEST)
+Date:   Tue, 27 Jun 2023 10:33:58 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 10/19] drm/msm/dpu: inline SSPP_BLK macros
+Message-ID: <hc2p4ivch57mnkes6tkfw47l6ymdzupp63r6idjqwfoj4davna@cop4kzqyvng4>
+References: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
+ <20230619212519.875673-11-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230619212519.875673-11-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon Jun 26, 2023 at 10:26 AM CEST, Krzysztof Kozlowski wrote:
-> On 26/06/2023 10:15, Luca Weiss wrote:
-> > The code in ufs-qcom-ice.c needs the ICE reg to be named "ice". Add thi=
-s
-> > in the bindings so the existing dts can validate successfully.
-> >=20
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Reviewed-by: Eric Biggers <ebiggers@google.com>
-> > Reviewed-by: Iskren Chernev <me@iskren.info>
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> >  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 20 +++++++++++++=
-+++++++
-> >  1 file changed, 20 insertions(+)
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Docu=
-mentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> > index eb3de2fde6b0..b5fc686cb3a1 100644
-> > --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> > +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> > @@ -80,6 +80,10 @@ properties:
-> >      minItems: 1
-> >      maxItems: 2
-> > =20
-> > +  reg-names:
-> > +    minItems: 1
-> > +    maxItems: 2
-> > +
-> >    required-opps:
-> >      maxItems: 1
-> > =20
-> > @@ -135,6 +139,8 @@ allOf:
-> >          reg:
-> >            minItems: 1
-> >            maxItems: 1
-> > +        reg-names:
-> > +          maxItems: 1
->
-> I see I reviewed, but I don't think the patch is correct. It allows any
-> reg-names. I think my advice from v1 was not understood. The names
-> should be defined in top-level.
+On 2023-06-20 00:25:10, Dmitry Baryshkov wrote:
+> To simplify making changes to the hardware block definitions, expand
+> corresponding macros. This way making all the changes are more obvious
+> and visible in the source files.
+> 
+> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks for your review, I hope it's resolved in v5 of this series.
-Please check :)
+Validated that this incurs no changes by checksumming a stripped
+dpu_hw_catalog.o.
 
-Regards
-Luca
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
->
-> Best regards,
-> Krzysztof
-
+> ---
+>  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  41 +++++--
+>  .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  21 +++-
+>  .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |  41 +++++--
+>  .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  21 +++-
+>  .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |  21 +++-
+>  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  41 +++++--
+>  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  81 +++++++++++---
+>  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    | 101 ++++++++++++++----
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  12 ---
+>  16 files changed, 751 insertions(+), 196 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> index 6660a55909e7..fd0081469a82 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> @@ -71,22 +71,71 @@ static const struct dpu_ctl_cfg msm8998_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg msm8998_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1ac, VIG_MSM8998_MASK,
+> -		msm8998_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1ac, VIG_MSM8998_MASK,
+> -		msm8998_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1ac, VIG_MSM8998_MASK,
+> -		msm8998_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1ac, VIG_MSM8998_MASK,
+> -		msm8998_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1ac, DMA_MSM8998_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1ac, DMA_MSM8998_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1ac, DMA_CURSOR_MSM8998_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1ac, DMA_CURSOR_MSM8998_MASK,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1ac,
+> +		.features = VIG_MSM8998_MASK,
+> +		.sblk = &msm8998_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x1ac,
+> +		.features = VIG_MSM8998_MASK,
+> +		.sblk = &msm8998_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x1ac,
+> +		.features = VIG_MSM8998_MASK,
+> +		.sblk = &msm8998_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x1ac,
+> +		.features = VIG_MSM8998_MASK,
+> +		.sblk = &msm8998_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1ac,
+> +		.features = DMA_MSM8998_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1ac,
+> +		.features = DMA_MSM8998_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1ac,
+> +		.features = DMA_CURSOR_MSM8998_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x1ac,
+> +		.features = DMA_CURSOR_MSM8998_MASK,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg msm8998_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> index 8f96a9e4ee4c..7ba99060d13d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> @@ -69,22 +69,71 @@ static const struct dpu_ctl_cfg sdm845_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sdm845_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1c8, VIG_SDM845_MASK_SDMA,
+> -		sdm845_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1c8, VIG_SDM845_MASK_SDMA,
+> -		sdm845_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1c8, VIG_SDM845_MASK_SDMA,
+> -		sdm845_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1c8, VIG_SDM845_MASK_SDMA,
+> -		sdm845_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1c8, DMA_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1c8, DMA_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1c8, DMA_CURSOR_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1c8, DMA_CURSOR_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1c8,
+> +		.features = VIG_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x1c8,
+> +		.features = VIG_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x1c8,
+> +		.features = VIG_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x1c8,
+> +		.features = VIG_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1c8,
+> +		.features = DMA_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1c8,
+> +		.features = DMA_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1c8,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x1c8,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sdm845_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> index 7a37e9ef3085..13d86229219e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> @@ -78,22 +78,71 @@ static const struct dpu_ctl_cfg sm8150_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm8150_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f0, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f0, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f0, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1f0, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f0,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1f0,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1f0,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x1f0,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm8150_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> index 9e288d849a8a..76b59b27d1ee 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> @@ -77,22 +77,71 @@ static const struct dpu_ctl_cfg sc8180x_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1f0, VIG_SDM845_MASK,
+> -		sdm845_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f0, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f0, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f0, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1f0, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x1f0,
+> +		.features = VIG_SDM845_MASK,
+> +		.sblk = &sdm845_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f0,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1f0,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1f0,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x1f0,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sc8180x_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> index 82adbdaba472..5d9718f20429 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> @@ -78,22 +78,71 @@ static const struct dpu_ctl_cfg sm8250_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm8250_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK_SDMA,
+> -		sm8250_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1f8, VIG_SC7180_MASK_SDMA,
+> -		sm8250_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1f8, VIG_SC7180_MASK_SDMA,
+> -		sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1f8, VIG_SC7180_MASK_SDMA,
+> -		sm8250_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1f8, DMA_CURSOR_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK_SDMA,
+> +		.sblk = &sm8250_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK_SDMA,
+> +		.sblk = &sm8250_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK_SDMA,
+> +		.sblk = &sm8250_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK_SDMA,
+> +		.sblk = &sm8250_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm8250_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> index a7f067f4c4ba..cd76e17a8501 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> @@ -54,14 +54,39 @@ static const struct dpu_ctl_cfg sc7180_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sc7180_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
+> -		sc7180_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sc7180_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sc7180_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> index 2cf3ed980582..dfba4efe5f39 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> @@ -42,10 +42,23 @@ static const struct dpu_ctl_cfg sm6115_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm6115_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
+> -		sm6115_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm6115_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm6115_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+> index 4ba2f7acf8b7..602197844580 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+> @@ -62,14 +62,39 @@ static const struct dpu_ctl_cfg sm6350_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm6350_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
+> -		sc7180_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sc7180_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm6350_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> index 3094f4dc6a76..8d766236b459 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> @@ -39,10 +39,23 @@ static const struct dpu_ctl_cfg qcm2290_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg qcm2290_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_QCM2290_MASK,
+> -		 qcm2290_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
+> -		 qcm2290_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_QCM2290_MASK,
+> +		.sblk = &qcm2290_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &qcm2290_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg qcm2290_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+> index e9c63eeb280f..9864f649113c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+> @@ -43,10 +43,23 @@ static const struct dpu_ctl_cfg sm6375_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm6375_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
+> -		sm6115_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm6115_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm6375_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 8e63d6f310c2..16b46c045706 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -76,22 +76,71 @@ static const struct dpu_ctl_cfg sm8350_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm8350_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1f8, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1f8, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1f8, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1f8, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x1f8,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm8350_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> index 783deae7c1c4..2901c96f3587 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> @@ -60,14 +60,39 @@ static const struct dpu_ctl_cfg sc7280_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sc7280_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7280_MASK_SDMA,
+> -		sc7280_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_CURSOR_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK_SDMA,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x1f8,
+> +		.features = VIG_SC7280_MASK_SDMA,
+> +		.sblk = &sc7280_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x1f8,
+> +		.features = DMA_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x1f8,
+> +		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sc7280_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index db4d6643c0dd..9c4ec2d5ab14 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -78,22 +78,71 @@ static const struct dpu_ctl_cfg sc8280xp_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x2ac, VIG_SC7180_MASK,
+> -		 sm8250_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x2ac, VIG_SC7180_MASK,
+> -		 sm8250_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x2ac, VIG_SC7180_MASK,
+> -		 sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x2ac, VIG_SC7180_MASK,
+> -		 sm8250_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x2ac, DMA_SDM845_MASK,
+> -		 sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x2ac, DMA_SDM845_MASK,
+> -		 sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x2ac, DMA_CURSOR_SDM845_MASK,
+> -		 sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x2ac, DMA_CURSOR_SDM845_MASK,
+> -		 sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x2ac,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x2ac,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x2ac,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x2ac,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x2ac,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x2ac,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x2ac,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x2ac,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sc8280xp_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index 8fdf55c25b9f..39534de5472c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -78,22 +78,71 @@ static const struct dpu_ctl_cfg sm8450_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm8450_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x32c, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x32c, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x32c, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x32c, VIG_SC7180_MASK,
+> -		sm8250_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x32c, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x32c, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x32c, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x32c, DMA_CURSOR_SDM845_MASK,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x32c,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x32c,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x32c,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x32c,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8250_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x32c,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x32c,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x32c,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x32c,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm8450_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 8d733ef606b9..8ddf398d7f54 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -79,26 +79,87 @@ static const struct dpu_ctl_cfg sm8550_ctl[] = {
+>  };
+>  
+>  static const struct dpu_sspp_cfg sm8550_sspp[] = {
+> -	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x344, VIG_SC7180_MASK,
+> -		sm8550_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> -	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x344, VIG_SC7180_MASK,
+> -		sm8550_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+> -	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x344, VIG_SC7180_MASK,
+> -		sm8550_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+> -	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x344, VIG_SC7180_MASK,
+> -		sm8550_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+> -	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x344, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> -	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x344, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+> -	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x344, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+> -	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x344, DMA_SDM845_MASK,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+> -	SSPP_BLK("sspp_12", SSPP_DMA4, 0x2c000, 0x344, DMA_CURSOR_SDM845_MASK,
+> -		sm8550_dma_sblk_4, 14, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA4),
+> -	SSPP_BLK("sspp_13", SSPP_DMA5, 0x2e000, 0x344, DMA_CURSOR_SDM845_MASK,
+> -		sm8550_dma_sblk_5, 15, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA5),
+> +	{
+> +		.name = "sspp_0", .id = SSPP_VIG0,
+> +		.base = 0x4000, .len = 0x344,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8550_vig_sblk_0,
+> +		.xin_id = 0,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+> +	}, {
+> +		.name = "sspp_1", .id = SSPP_VIG1,
+> +		.base = 0x6000, .len = 0x344,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8550_vig_sblk_1,
+> +		.xin_id = 4,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+> +	}, {
+> +		.name = "sspp_2", .id = SSPP_VIG2,
+> +		.base = 0x8000, .len = 0x344,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8550_vig_sblk_2,
+> +		.xin_id = 8,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+> +	}, {
+> +		.name = "sspp_3", .id = SSPP_VIG3,
+> +		.base = 0xa000, .len = 0x344,
+> +		.features = VIG_SC7180_MASK,
+> +		.sblk = &sm8550_vig_sblk_3,
+> +		.xin_id = 12,
+> +		.type = SSPP_TYPE_VIG,
+> +		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+> +	}, {
+> +		.name = "sspp_8", .id = SSPP_DMA0,
+> +		.base = 0x24000, .len = 0x344,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_0,
+> +		.xin_id = 1,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA0,
+> +	}, {
+> +		.name = "sspp_9", .id = SSPP_DMA1,
+> +		.base = 0x26000, .len = 0x344,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_1,
+> +		.xin_id = 5,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA1,
+> +	}, {
+> +		.name = "sspp_10", .id = SSPP_DMA2,
+> +		.base = 0x28000, .len = 0x344,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_2,
+> +		.xin_id = 9,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA2,
+> +	}, {
+> +		.name = "sspp_11", .id = SSPP_DMA3,
+> +		.base = 0x2a000, .len = 0x344,
+> +		.features = DMA_SDM845_MASK,
+> +		.sblk = &sdm845_dma_sblk_3,
+> +		.xin_id = 13,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA3,
+> +	}, {
+> +		.name = "sspp_12", .id = SSPP_DMA4,
+> +		.base = 0x2c000, .len = 0x344,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sm8550_dma_sblk_4,
+> +		.xin_id = 14,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA4,
+> +	}, {
+> +		.name = "sspp_13", .id = SSPP_DMA5,
+> +		.base = 0x2e000, .len = 0x344,
+> +		.features = DMA_CURSOR_SDM845_MASK,
+> +		.sblk = &sm8550_dma_sblk_5,
+> +		.xin_id = 15,
+> +		.type = SSPP_TYPE_DMA,
+> +		.clk_ctrl = DPU_CLK_CTRL_DMA5,
+> +	},
+>  };
+>  
+>  static const struct dpu_lm_cfg sm8550_lm[] = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 30fb5b1f3966..9661dc7a4570 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -328,18 +328,6 @@ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK("9", 2);
+>  static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK("10", 3);
+>  static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK("11", 4);
+>  
+> -#define SSPP_BLK(_name, _id, _base, _len, _features, \
+> -		_sblk, _xinid, _type, _clkctrl) \
+> -	{ \
+> -	.name = _name, .id = _id, \
+> -	.base = _base, .len = _len, \
+> -	.features = _features, \
+> -	.sblk = &_sblk, \
+> -	.xin_id = _xinid, \
+> -	.type = _type, \
+> -	.clk_ctrl = _clkctrl \
+> -	}
+> -
+>  static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
+>  				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4);
+>  
+> -- 
+> 2.39.2
+> 
