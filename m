@@ -2,412 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A314673FBC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 14:09:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1F673FBCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 14:13:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230099AbjF0MJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 08:09:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35434 "EHLO
+        id S229835AbjF0MNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 08:13:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231841AbjF0MJj (ORCPT
+        with ESMTP id S229667AbjF0MNU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 08:09:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C7971BCB;
-        Tue, 27 Jun 2023 05:09:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 842DE60F56;
-        Tue, 27 Jun 2023 12:09:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFB9C433CA;
-        Tue, 27 Jun 2023 12:09:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687867774;
-        bh=o/NmjEG+5s686IfEFNzrvwqoyugmv7rCTYWZI4R95Es=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uIsQTa4zihp51cJM/gA0L9IfnedQoY2cY2y1+KGNAJhh8ddEXHu9W+OGF2pn1gWpt
-         n/PmVnyB4smAVe2ZOUqdC/suqNljeWt5Ienf98x29va5zSoWJEf8lsPcZwzZP+5HOX
-         5aWwR3jCn8OuK/aJiUEaLhwVfvOlAjJhmdQVZmugt7dj2VmTIL1Kj8gQBH5r9XUchA
-         OrYNRhqT9f1y7oC3R//KZUPfrfY4cq8bPbSg2VpCu+P6e0TzVXCHCWQUOI8HMToS86
-         B0tUzz0pWEMZNqgq8ikgouDyv9oluTRByDlaPxERhfXlg4byOWzhLr8Fh4gHEKMH/w
-         leQAMO+uXtTrA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1qE7Vj-0003MX-Dm; Tue, 27 Jun 2023 14:09:32 +0200
-Date:   Tue, 27 Jun 2023 14:09:31 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Tue, 27 Jun 2023 08:13:20 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7125F19B0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 05:13:18 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fb8574a3a1so906609e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 05:13:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687867996; x=1690459996;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FR5rzArc9VADnvY1rG5yKtlG15Q5l959I+GAPWhUE9c=;
+        b=gLvNtTPACbA5Bl4vEPMFbdQW/4hvOyF3pp/00a3lZqzewn6UU2dmOwuvdB7efmlGTY
+         6gi1ETMvzUb2Y4ey8rr+8cARws6uq/1S/06Ee73HjWwQ1tw95DQwI9i7CpCoIUULajbC
+         4PXRm/qbEzGYJzLBTOWm2hlb5+QbKrquQsJzWBs3e6YtpSowtaH8NfJCV39V6FiRvAyK
+         q+1654Gp4FlP+qoJ8kF0uaK6CEfcz4l3t7DDYA79nm7/4KAgouG1JmibpnZ/Gjy69tae
+         dn+N46NnrP8iXGIgiwg+rC3aWnMefH2ysCGdEBoQpX5XthsUr3beSathItyVEy0NUN8b
+         a2Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687867996; x=1690459996;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FR5rzArc9VADnvY1rG5yKtlG15Q5l959I+GAPWhUE9c=;
+        b=YaMYFNfhnKBKBFZ3/GGAXtc/tSZVxgXqk6u0SzRL4++tPtFWeQjQ/uAgzrnkhWqchu
+         B1KPp6TOFfxKK6DHRAa5SLhmg7cTc8RAu1gzjxgBTDFUetZQdsBl6jvAvQ0xub+TdXRq
+         dlgQ0qaQfj7l9ZNJPrg7VvdhFc66cVzfnMO1CFjPFHeAxtZ0IthzoVN0oEIsUxDmTvRu
+         5lzD3OuUShR84n4NSqiM+ijEwiyF8uMiM5C48o/iwygSeOL/xyxweLvzi3o/49HUWDmP
+         tDCPlDv9KcaliN5Sm176iIW2cUK/ngjWqC3uvm+1UQ/17UWBhKCAQvVOBUPrK1Hi52gm
+         3lOw==
+X-Gm-Message-State: AC+VfDzhKV4xtg5fbgcS7OUTx25fnnfzxVzK3a4GItj0om8XUK1QxvbN
+        zBHdHSOVpco4Afc+WoZJ32KFVQ==
+X-Google-Smtp-Source: ACHHUZ4q34rv+txfjWN8Rc7eKRSQSIsPu5VMHaAfloViYeJaxh5TBKafuQ+6KBcliQ7vPgFAQWYwvQ==
+X-Received: by 2002:a19:4409:0:b0:4f8:7556:23e6 with SMTP id r9-20020a194409000000b004f8755623e6mr13534815lfa.54.1687867996549;
+        Tue, 27 Jun 2023 05:13:16 -0700 (PDT)
+Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
+        by smtp.gmail.com with ESMTPSA id j2-20020ac253a2000000b004fb2c1e33b3sm1119853lfh.243.2023.06.27.05.13.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jun 2023 05:13:16 -0700 (PDT)
+Message-ID: <8217b8db-cd27-185d-c6b5-e32009202c21@linaro.org>
+Date:   Tue, 27 Jun 2023 14:13:14 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 17/26] ARM: dts: qcom: apq8064: add simple CPUFreq
+ support
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 05/10] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Message-ID: <ZJrRe7HtMs0KbsCy@hovoldconsulting.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-6-quic_kriskura@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230621043628.21485-6-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
+ <20230625202547.174647-18-dmitry.baryshkov@linaro.org>
+ <0f139da8-ae01-fc28-d14c-0ea207cf760e@linaro.org>
+ <2232c6e7-cbca-30c1-9ec5-1cea7f759daf@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <2232c6e7-cbca-30c1-9ec5-1cea7f759daf@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 10:06:23AM +0530, Krishna Kurapati wrote:
-> Currently the DWC3 driver supports only single port controller
-> which requires at most one HS and one SS PHY.
+On 26.06.2023 21:49, Dmitry Baryshkov wrote:
+> On 26/06/2023 19:40, Konrad Dybcio wrote:
+>> On 25.06.2023 22:25, Dmitry Baryshkov wrote:
+>>> Declare CPU frequency-scaling properties. Each CPU has its own clock,
+>>> how
+>> however?
 > 
-> But the DWC3 USB controller can be connected to multiple ports and
-> each port can have their own PHYs. Each port of the multiport
-> controller can either be HS+SS capable or HS only capable
-> Proper quantification of them is required to modify GUSB2PHYCFG
-> and GUSB3PIPECTL registers appropriately.
+> yes
 > 
-> Add support for detecting, obtaining and configuring phy's supported
-> by a multiport controller and limit the max number of ports
-> supported to 4.
+>>
+>>> all CPUs have the same OPP table. Voltage scaling is not (yet)
+>>> enabled with this patch. It will be enabled later.
+>> Risky business.
 > 
-> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> [Krishna: Modifed logic for generic phy and rebased the patch]
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> But it works :D
+On your machine ;)
 
-As I already said:
+[...]
 
-	If Harsh is the primary author you need to add a From: line at
-	the beginning of the patch.
-
-	Either way, you need his SoB as well as your Co-developed-by tag.
-
-	All this is documented under Documentation/process/ somewhere.
-
-The above is missing a From line and two Co-developed-by tags at least.
-
-> ---
->  drivers/usb/dwc3/core.c | 252 ++++++++++++++++++++++++++++------------
->  drivers/usb/dwc3/core.h |  11 +-
->  drivers/usb/dwc3/drd.c  |  15 ++-
->  3 files changed, 192 insertions(+), 86 deletions(-)
+>>>   +    kraitcc: clock-controller {
+>>> +        compatible = "qcom,krait-cc-v1";
+>> Are we sure we don't wanna rework this compatible? Check the comment in
+>> drivers/clk/qcom/krait-cc.c : krait_add_sec_mux()
 > 
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index e1ebae54454f..2ac72525de7d 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -120,10 +120,11 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
->  static void __dwc3_set_mode(struct work_struct *work)
->  {
->  	struct dwc3 *dwc = work_to_dwc(work);
-> +	u32 desired_dr_role;
->  	unsigned long flags;
->  	int ret;
->  	u32 reg;
-> -	u32 desired_dr_role;
+> I remember that comment. I'd rather not introduce another compat string for such old hw. Would there be any direct benefits?
+> 
+I'd say that the one we have here never made much sense.. Perhaps (since
+nobody used it for 10 years) it would make sense to remodel it..
 
-This is an unrelated change. Just add int i at the end.
-
-> +	int i;
->  
->  	mutex_lock(&dwc->mutex);
->  	spin_lock_irqsave(&dwc->lock, flags);
-
-> @@ -746,23 +779,34 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->  static int dwc3_phy_init(struct dwc3 *dwc)
->  {
->  	int ret;
-> +	int i;
-> +	int j;
->  
->  	usb_phy_init(dwc->usb2_phy);
->  	usb_phy_init(dwc->usb3_phy);
->  
-> -	ret = phy_init(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_shutdown_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_init(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_exit_usb2_phy;
-> +	}
->  
-> -	ret = phy_init(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_exit_usb2_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_init(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_exit_usb3_phy;
-> +	}
->  
->  	return 0;
->  
-> +err_exit_usb3_phy:
-> +	for (j = i-1; j >= 0; j--)
-
-Missing spaces around - here and below.
-
-> +		phy_exit(dwc->usb3_generic_phy[j]);
-> +	i = dwc->num_usb2_ports;
->  err_exit_usb2_phy:
-> -	phy_exit(dwc->usb2_generic_phy);
-> -err_shutdown_usb3_phy:
-> +	for (j = i-1; j >= 0; j--)
-> +		phy_exit(dwc->usb2_generic_phy[j]);
-> +
-
-Again:
-
-	The above is probably better implemented as a *single* loop over
-	num_usb2_ports where you enable each USB2 and USB3 PHY. On
-	errors you use the loop index to disable the already enabled
-	PHYs in reverse order below (after disabling the USB2 PHY if
-	USB3 phy init fails).
-
-with emphasis on "single" added.
-
->  	usb_phy_shutdown(dwc->usb3_phy);
->  	usb_phy_shutdown(dwc->usb2_phy);
-
-> @@ -781,23 +829,34 @@ static void dwc3_phy_exit(struct dwc3 *dwc)
->  static int dwc3_phy_power_on(struct dwc3 *dwc)
->  {
->  	int ret;
-> +	int i;
-> +	int j;
->  
->  	usb_phy_set_suspend(dwc->usb2_phy, 0);
->  	usb_phy_set_suspend(dwc->usb3_phy, 0);
->  
-> -	ret = phy_power_on(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_suspend_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_power_off_usb2_phy;
-> +	}
->  
-> -	ret = phy_power_on(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_power_off_usb2_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_power_off_usb3_phy;
-> +	}
-
-Again: These loops should be merged too as for phy_init.
-
->  	return 0;
->  
-> +err_power_off_usb3_phy:
-> +	for (j = i-1; j >= 0; j--)
-> +		phy_power_off(dwc->usb3_generic_phy[i]);
-> +	i = dwc->num_usb2_ports;
->  err_power_off_usb2_phy:
-> -	phy_power_off(dwc->usb2_generic_phy);
-> -err_suspend_usb3_phy:
-> +	for (j = i-1; j >= 0; j--)
-> +		phy_power_off(dwc->usb2_generic_phy[i]);
-> +
->  	usb_phy_set_suspend(dwc->usb3_phy, 1);
->  	usb_phy_set_suspend(dwc->usb2_phy, 1);
->  
-
-> @@ -1290,7 +1358,9 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
->  {
->  	struct device		*dev = dwc->dev;
->  	struct device_node	*node = dev->of_node;
-> +	char phy_name[11];
->  	int ret;
-> +	int i;
->  
->  	if (node) {
->  		dwc->usb2_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 0);
-> @@ -1316,22 +1386,36 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
->  			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
->  	}
->  
-> -	dwc->usb2_generic_phy = devm_phy_get(dev, "usb2-phy");
-> -	if (IS_ERR(dwc->usb2_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb2_generic_phy);
-> -		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb2_generic_phy = NULL;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		if (dwc->num_usb2_ports == 1)
-> +			sprintf(phy_name, "usb2-phy");
->  		else
-> -			return dev_err_probe(dev, ret, "no usb2 phy configured\n");
-> -	}
-> +			sprintf(phy_name, "usb2-port%d", i);
-> +
-> +		dwc->usb2_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb2_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb2_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb2_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret,
-> +					"no %s phy configured\n", phy_name);
-
-I still believe
-
-	"failed to lookup phy %s"
-
-is better.
-
-> +		}
->  
-> -	dwc->usb3_generic_phy = devm_phy_get(dev, "usb3-phy");
-> -	if (IS_ERR(dwc->usb3_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb3_generic_phy);
-> -		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb3_generic_phy = NULL;
-> +		if (dwc->num_usb2_ports == 1)
-> +			sprintf(phy_name, "usb3-phy");
->  		else
-> -			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
-> +			sprintf(phy_name, "usb3-port%d", i);
-> +
-> +		dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb3_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb3_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb3_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret,
-> +					"no %s phy configured\n", phy_name);
-
-Same here.
-
-> +		}
->  	}
->  
->  	return 0;
-
-> @@ -1821,6 +1908,9 @@ static int dwc3_read_port_info(struct dwc3 *dwc)
->  	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
->  			dwc->num_usb2_ports, dwc->num_usb3_ports);
->  
-> +	if (dwc->num_usb2_ports > DWC3_MAX_PORTS)
-> +		ret = -ENOMEM;
-
-You also need to add a check for num_usb3_ports as I already mentioned.
-
-> +
->  	iounmap(base);
->  	return ret;
->  }
-
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 42fb17aa66fa..b2bab23ca22b 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -37,6 +37,9 @@
->  #define XHCI_EXT_PORT_MINOR(x)	(((x) >> 16) & 0xff)
->  #define XHCI_EXT_PORT_COUNT(x)	(((x) >> 8) & 0xff)
->  
-> +/* Number of ports supported by a multiport controller */
-> +#define DWC3_MAX_PORTS 4
-
-You did not answer my question about whether this was an arbitrary
-implementation limit (i.e. just reflecting the only currently supported
-multiport controller)?
-
-> +
->  #define DWC3_MSG_MAX	500
->  
->  /* Global constants */
-> @@ -1031,8 +1034,8 @@ struct dwc3_scratchpad_array {
->   * @usb_psy: pointer to power supply interface.
->   * @usb2_phy: pointer to USB2 PHY
->   * @usb3_phy: pointer to USB3 PHY
-> - * @usb2_generic_phy: pointer to USB2 PHY
-> - * @usb3_generic_phy: pointer to USB3 PHY
-> + * @usb2_generic_phy: pointer to array of USB2 PHY
-> + * @usb3_generic_phy: pointer to array of USB3 PHY
->   * @num_usb2_ports: number of USB2 ports.
->   * @num_usb3_ports: number of USB3 ports.
->   * @phys_ready: flag to indicate that PHYs are ready
-> @@ -1171,8 +1174,8 @@ struct dwc3 {
->  	struct usb_phy		*usb2_phy;
->  	struct usb_phy		*usb3_phy;
->  
-> -	struct phy		*usb2_generic_phy;
-> -	struct phy		*usb3_generic_phy;
-> +	struct phy		*usb2_generic_phy[DWC3_MAX_PORTS];
-> +	struct phy		*usb3_generic_phy[DWC3_MAX_PORTS];
->  
->  	u8			num_usb2_ports;
->  	u8			num_usb3_ports;
-> diff --git a/drivers/usb/dwc3/drd.c b/drivers/usb/dwc3/drd.c
-> index 039bf241769a..18a247ff75ac 100644
-> --- a/drivers/usb/dwc3/drd.c
-> +++ b/drivers/usb/dwc3/drd.c
-> @@ -327,10 +327,11 @@ static void dwc3_otg_device_exit(struct dwc3 *dwc)
->  
->  void dwc3_otg_update(struct dwc3 *dwc, bool ignore_idstatus)
->  {
-> +	unsigned long flags;
->  	int ret;
->  	u32 reg;
->  	int id;
-> -	unsigned long flags;
-> +	int i;
->  
->  	if (dwc->dr_mode != USB_DR_MODE_OTG)
->  		return;
-> @@ -386,9 +387,11 @@ void dwc3_otg_update(struct dwc3 *dwc, bool ignore_idstatus)
->  		} else {
->  			if (dwc->usb2_phy)
->  				otg_set_vbus(dwc->usb2_phy->otg, true);
-> -			if (dwc->usb2_generic_phy)
-> -				phy_set_mode(dwc->usb2_generic_phy,
-> -					     PHY_MODE_USB_HOST);
-> +			for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +				if (dwc->usb2_generic_phy[i])
-> +					phy_set_mode(dwc->usb2_generic_phy[i],
-> +						     PHY_MODE_USB_HOST);
-
-While not strictly necessary, adding bracket around multiline statements
-is usually preferred as it improves readability.
-
-> +			}
->  		}
->  		break;
->  	case DWC3_OTG_ROLE_DEVICE:
-> @@ -400,8 +403,8 @@ void dwc3_otg_update(struct dwc3 *dwc, bool ignore_idstatus)
->  
->  		if (dwc->usb2_phy)
->  			otg_set_vbus(dwc->usb2_phy->otg, false);
-> -		if (dwc->usb2_generic_phy)
-> -			phy_set_mode(dwc->usb2_generic_phy,
-> +		if (dwc->usb2_generic_phy[0])
-> +			phy_set_mode(dwc->usb2_generic_phy[0],
->  				     PHY_MODE_USB_DEVICE);
-
-Same here, but this is probably better just left at 85 columns after
-removing the line break.
-
->  		ret = dwc3_gadget_init(dwc);
->  		if (ret)
-
-Johan
+Konrad
+>>
+>>
+>>> +        clocks = <&gcc PLL9>, /* hfpll0 */
+>>> +             <&gcc PLL10>, /* hfpll1 */
+>>> +             <&gcc PLL16>, /* hfpll2 */
+>>> +             <&gcc PLL17>, /* hfpll3 */
+>>> +             <&gcc PLL12>, /* hfpll_l2 */
+>>> +             <&acc0>,
+>>> +             <&acc1>,
+>>> +             <&acc2>,
+>>> +             <&acc3>,
+>>> +             <&l2cc>;
+>>> +        clock-names = "hfpll0",
+>>> +                  "hfpll1",
+>>> +                  "hfpll2",
+>>> +                  "hfpll3",
+>>> +                  "hfpll_l2",
+>>> +                  "acpu0_aux",
+>>> +                  "acpu1_aux",
+>>> +                  "acpu2_aux",
+>>> +                  "acpu3_aux",
+>>> +                  "acpu_l2_aux";
+>>> +        #clock-cells = <1>;
+>>> +        #interconnect-cells = <1>;
+>>> +    };
+>>> +
+>>>       sfpb_mutex: hwmutex {
+>>>           compatible = "qcom,sfpb-mutex";
+>>>           syscon = <&sfpb_wrapper_mutex 0x604 0x4>;
+>>> @@ -933,6 +1100,9 @@ qfprom: qfprom@700000 {
+>>>               #address-cells = <1>;
+>>>               #size-cells = <1>;
+>>>               ranges;
+>>> +            speedbin_efuse: speedbin@c0 {
+>>> +                reg = <0x0c0 0x4>;
+>>> +            };
+>> Newline between properties and subnodes & between individual subnodes,
+>> please
+> 
+> ack.
+> 
+>>
+>> Konrad
+>>>               tsens_calib: calib@404 {
+>>>                   reg = <0x404 0x10>;
+>>>               };
+> 
