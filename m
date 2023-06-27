@@ -2,84 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E50173F6CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 10:18:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3525E73F6D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 10:21:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229987AbjF0ISi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 04:18:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57468 "EHLO
+        id S231588AbjF0IVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 04:21:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231547AbjF0ISd (ORCPT
+        with ESMTP id S231578AbjF0IVT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 04:18:33 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09301FC7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:18:30 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-3113da5260dso3704779f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:18:30 -0700 (PDT)
+        Tue, 27 Jun 2023 04:21:19 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8111B172E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:21:17 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fa70ec8d17so46322535e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687853909; x=1690445909;
+        d=linaro.org; s=google; t=1687854076; x=1690446076;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=K34bnht8Jd/JQKi4h2jRXCe+XjDeThvGgw8NweExUwo=;
-        b=ADdCRT4uh00j/gCdklmQQ3rkf+FzUuaTsVP444BwN8a1liUkGHsfc4KEL7Xa5Lamfw
-         W5oDABx9betLr6EvHDtvDhsHVuElup3vYjQtc4EYiyiwZ7Jo/jnybaAjkYeA7fqGGYS7
-         Jdtsc88+sPn2pKyi8pf/1L56brslROr5GniLgjRtbakjlft/SSIh8Bd1/YTfjrrqonUt
-         WrHzYGtz4UqbCMRxBDj4NrB3xblxGcyOZvbcGWiA7XzMvGdcZ/HFsovYBZReUvISPecv
-         3UlkFTJvyc3+UMf4DscY3vz64ogcAiOUXTpozvhiCM4jSgpGJjjJSXSlVC7cg2gDTxsf
-         zZpQ==
+        bh=62PvuKpVR4vvVJ+czbvONPwN6io0eLrvuJxR3ESd9KA=;
+        b=GWJ9ONMSJlMwyYXp0QaRKdaJtu5jZBcNxzdkPKUwRpJhwrwX8c1oqud662S6O4ihKq
+         F12QXcEAEIpIvy36KrpOXKMDntQowJdz9/xuPNmmzcv92GGCXuAMA4OGjXTlWB2cr0zj
+         htXt7F/EKv+oWankZqOEy+DVMFKw0Edbljrb8IPfWM3xTyKxrrD+IqCiiJ6AY9o4RZXa
+         MeWxAjQ09kxu5VA6De4g7ejM4B5ySaVEnB02kj/YjkbXYjr4VqSqSQ3fn5FWb9NuvRYn
+         QB7lpctHLQPZLpQZn5XtQow9S4KY7bdecScKLdGxXOvNbzLL0apf6pIWdZY+Kla/eNep
+         uB/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687853909; x=1690445909;
+        d=1e100.net; s=20221208; t=1687854076; x=1690446076;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K34bnht8Jd/JQKi4h2jRXCe+XjDeThvGgw8NweExUwo=;
-        b=I4SbjZgbAik0BNNZqFg4WM1/e8RRI3GERJjS1I1QZ/PUPmlHwiPowj1MKeruPwoGEh
-         pTkDxMHjNqC5DbPf23M+1lvmqY8ZfMDRVPhM6+S9Nxu5GAko1B650T6Yi4jqT7rWeAch
-         zW97J+lFmKTa1nFQSbdqTjxYJA0ddtTrFG+PHB1hsAGiCqbaWeUIyeH+RyetHKMgRGL0
-         bOCF9566CsKsUa2eUtf8Pu8ZPWmjC9jFoXsWbaoGky5jA7rrSU3cOl9F1soryGObQTXf
-         Xbveg1YfpxHpcVYXKfosJ9kZy88UeFVclx8mjb2WpOpagOwcLFzFTWffAx0tN/Rymyac
-         WcrQ==
-X-Gm-Message-State: AC+VfDydjFMv1iTIK12YZqkbyvEbTo7x/NmUFB3JDMRL1Zk5Fb8mk0xf
-        4OXSsaxk64yOLviKxjUxsy2GyQ==
-X-Google-Smtp-Source: ACHHUZ4PSkTq5b7DNXq0w2I0MupcdIteZzfGaCe9jZeOcNFisiPB6rDLfRYEiVPSH2kr7xZ7nLN5Ug==
-X-Received: by 2002:adf:e8c1:0:b0:30f:bcf3:9a30 with SMTP id k1-20020adfe8c1000000b0030fbcf39a30mr11073445wrn.17.1687853909440;
-        Tue, 27 Jun 2023 01:18:29 -0700 (PDT)
+        bh=62PvuKpVR4vvVJ+czbvONPwN6io0eLrvuJxR3ESd9KA=;
+        b=DzMBbn/8neljbnyKuVyTn64KR5K1xfrt46w02Fx8Q/Ze1uVqLZuOaTPpBwA3Nv830m
+         m0716O1hmoU4tPbL1syuyplfPuF8V64hFOYPch42vBpBS7xbOJtBr7GUFEUmwVmt4XcE
+         mSp1dG40hjSwuNekrhZPQYPpq9/a/6gq8wuDFDt9qpDUKamqgCxJD1ipFeabJpBqrmpQ
+         8DM2cdR0dKTK+qEVFZo15tQ0zX91LS1Tl1T0YOqVa7vlldUYJKG4UF+oGLbdRjtLRaW1
+         CVT1r4a/Iu+YNimmXuGdj4Uyerr5ncNIUKJlWMYJvRWchE3A3ZMAFUpI2cYcK7VjgNBB
+         DONQ==
+X-Gm-Message-State: AC+VfDzo298J9c8F1WLUt38G8KkgTfb8h7JLdaVg8T//8yB1wRtsSoTR
+        lCLjFYwl5P0cn1iQI4/305fghQ==
+X-Google-Smtp-Source: ACHHUZ4PvmNA0F8Q+dsc+125+loCwPVtHMhlTOLwsM5Ei8GYIzO5r9zAz/2rQpnzolZP8rtVPJDjVA==
+X-Received: by 2002:a05:600c:3657:b0:3f6:8ba:6ea2 with SMTP id y23-20020a05600c365700b003f608ba6ea2mr29015214wmq.15.1687854075903;
+        Tue, 27 Jun 2023 01:21:15 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id u14-20020adfed4e000000b00313f100c2aasm5294396wro.21.2023.06.27.01.18.27
+        by smtp.gmail.com with ESMTPSA id l1-20020a1ced01000000b003f9b0830107sm12942303wmh.41.2023.06.27.01.21.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jun 2023 01:18:28 -0700 (PDT)
-Message-ID: <a68e6008-68b2-093c-45b9-6c7d1f1c5bf9@linaro.org>
-Date:   Tue, 27 Jun 2023 10:18:26 +0200
+        Tue, 27 Jun 2023 01:21:15 -0700 (PDT)
+Message-ID: <145ab255-b3f8-1c6c-824d-5f1b40568d30@linaro.org>
+Date:   Tue, 27 Jun 2023 10:21:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v2 4/5] arm64: dts: qcom: sm8550: add UART14 nodes
+Subject: Re: [PATCH 03/15] dt-bindings: clock: qcom,dispcc-sm6125: Require GCC
+ PLL0 DIV clock
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230620-topic-sm8550-upstream-bt-v2-0-98b0043d31a4@linaro.org>
- <20230620-topic-sm8550-upstream-bt-v2-4-98b0043d31a4@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+References: <55b0ca89-8f2e-5383-59d4-6809e813abf8@linaro.org>
+ <vnp263d43flny2ibt3n7fbloyi26enqrejnobogplfu5fcj6l3@s7zkxrsi2rde>
+ <52c57cab-10cf-2e7e-2c1d-fa6506786d45@linaro.org>
+ <jmtjuya4c423rmdlo4ubvvqndbxvgapal5otjqnejdpdd25izp@kewbjmqdu2xs>
+ <6311f26f-79ee-c471-649f-5e0b4629cfcc@linaro.org>
+ <uuy5prkjhhs66te7h6z3pu4lzj2cfbiqk6ftjijwoeqpw573av@ogs6cboanvzc>
+ <ziykmixskqkgheigefvyo4q3katbc4uix6jtcg7mncs25z4tj5@5gykrfgns4bm>
+ <16731023-7dc7-d43d-1b16-fda44c0948ed@linaro.org>
+ <yofju7jp7vmv33x7dzvzoelpumfsz3fjqy2ozakfphsuysunon@pglt2wzlsjex>
+ <683a6f7e-bf1a-aff2-070b-472fb14e0353@linaro.org>
+ <3nnk4xvmpnum2q6g6c6crjlqq3ra7j2z5zis53xcqbvevymuhz@mkffvs45n6ut>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230620-topic-sm8550-upstream-bt-v2-4-98b0043d31a4@linaro.org>
+In-Reply-To: <3nnk4xvmpnum2q6g6c6crjlqq3ra7j2z5zis53xcqbvevymuhz@mkffvs45n6ut>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -92,27 +108,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/06/2023 10:15, Neil Armstrong wrote:
-> Add the Geni High Speed UART QUP instance 2 element 6
-> node and associated default pinctrl.
+On 27/06/2023 09:49, Marijn Suijten wrote:
+> On 2023-06-27 09:29:53, Krzysztof Kozlowski wrote:
+>> On 27/06/2023 08:54, Marijn Suijten wrote:
+>>> On 2023-06-27 08:24:41, Krzysztof Kozlowski wrote:
+>>>> On 26/06/2023 20:53, Marijn Suijten wrote:
+>>>>> On 2023-06-26 20:51:38, Marijn Suijten wrote:
+>>>>> <snip>
+>>>>>>> Not really, binding also defines the list of clocks - their order and
+>>>>>>> specific entries. This changes.
+>>>>>>
+>>>>>> And so it does in "dt-bindings: clock: qcom,dispcc-sm6125: Remove unused
+>>>>>> GCC_DISP_AHB_CLK"?
+>>>>>
+>>>>> Never mind: it is the last item so the order of the other items doesn't
+>>>>> change.  The total number of items decreases though, which sounds like
+>>>>> an ABI-break too?
+>>>>
+>>>> How does it break? Old DTS works exactly the same, doesn't it?
+>>>
+>>> So deleting a new item at the end does not matter.  But what if I respin
+>>> this patch to add the new clock _at the end_, which will then be at the
+>>> same index as the previous GCC_DISP_AHB_CLK?
+>>
+>> I think you know the answer, right? What do you want to prove? That two
+>> independent changes can have together negative effect? We know this.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 75cd374943eb..252e3863322c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1053,6 +1053,20 @@ spi13: spi@894000 {
->  				status = "disabled";
->  			};
->  
-> +			uart14: uart@898000 {
+> The question is whether this is allowed?
 
-The node name should be "serial" (dtbs_check will complain)
-
+That would be an ABI break and I already explained if it is or is not
+allowed.
 
 Best regards,
 Krzysztof
