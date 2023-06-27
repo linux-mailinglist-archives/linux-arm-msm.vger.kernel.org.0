@@ -2,134 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80CDF73FE86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:41:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D5B773FEAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:45:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230131AbjF0Olv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 10:41:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42984 "EHLO
+        id S231747AbjF0Op0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 10:45:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjF0Olu (ORCPT
+        with ESMTP id S232067AbjF0Ooz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 10:41:50 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F94D3583;
-        Tue, 27 Jun 2023 07:41:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8FF37611C5;
-        Tue, 27 Jun 2023 14:41:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A701C433C0;
-        Tue, 27 Jun 2023 14:41:15 +0000 (UTC)
-Date:   Tue, 27 Jun 2023 20:11:05 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v5 1/3] dt-bindings: PCI: qcom: ep: Add interconnects path
-Message-ID: <20230627144105.GH5490@thinkpad>
-References: <1687827692-6181-1-git-send-email-quic_krichai@quicinc.com>
- <1687827692-6181-2-git-send-email-quic_krichai@quicinc.com>
+        Tue, 27 Jun 2023 10:44:55 -0400
+Received: from mail2-relais-roc.national.inria.fr (mail2-relais-roc.national.inria.fr [192.134.164.83])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD33358A;
+        Tue, 27 Jun 2023 07:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=inria.fr; s=dc;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=lz+eaKXjltZfgC96+KOEH+DiV357kqzsKaP1ME9j9JM=;
+  b=YpuufV72ER5dSm9wrYSnJ+nyISX1oQx33v1s2pGZoMDoTbTZApc/Qnr+
+   jWRuBVmLvwZwmibFQ5jrR1vtZ5noOKi7DSKRNrP0U1BZ9FCltFGcibx6p
+   ck1ThN0OMstSb7PrPLh1Mq91rYGjkQ4mlVR9Zej3KEIn+kL4eNkAXPzxE
+   c=;
+Authentication-Results: mail2-relais-roc.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=Julia.Lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.01,162,1684792800"; 
+   d="scan'208";a="114936315"
+Received: from i80.paris.inria.fr (HELO i80.paris.inria.fr.) ([128.93.90.48])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2023 16:43:51 +0200
+From:   Julia Lawall <Julia.Lawall@inria.fr>
+To:     linux-hyperv@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, keescook@chromium.org,
+        christophe.jaillet@wanadoo.fr, kuba@kernel.org,
+        kasan-dev@googlegroups.com,
+        Andrey Konovalov <andreyknvl@gmail.com>,
+        Dmitry Vyukov <dvyukov@google.com>, iommu@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        virtualization@lists.linux-foundation.org,
+        Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+        linux-scsi@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        linux-media@vger.kernel.org, John Stultz <jstultz@google.com>,
+        Brian Starkey <Brian.Starkey@arm.com>,
+        Laura Abbott <labbott@redhat.com>,
+        Liam Mark <lmark@codeaurora.org>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, Shailend Chand <shailend@google.com>,
+        linux-rdma@vger.kernel.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-btrfs@vger.kernel.org,
+        intel-gvt-dev@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org,
+        Dave Hansen <dave.hansen@linux.intel.com>,
+        "H. Peter Anvin" <hpa@zytor.com>, linux-sgx@vger.kernel.org
+Subject: [PATCH v2 00/24] use vmalloc_array and vcalloc
+Date:   Tue, 27 Jun 2023 16:43:15 +0200
+Message-Id: <20230627144339.144478-1-Julia.Lawall@inria.fr>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1687827692-6181-2-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 27, 2023 at 06:31:29AM +0530, Krishna chaitanya chundru wrote:
-> Some platforms may not boot if a device driver doesn't
-> initialize the interconnect path. Mostly it is handled
-> by the bootloader but we have starting to see cases
-> where bootloader simply ignores them.
-> 
-> Add the "pcie-mem" interconnect path as a required property
-> to the bindings.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+The functions vmalloc_array and vcalloc were introduced in
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+commit a8749a35c399 ("mm: vmalloc: introduce array allocation functions")
 
-- Mani
+but are not used much yet.  This series introduces uses of
+these functions, to protect against multiplication overflows.
 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> index 8111122..bc32e13 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -71,6 +71,13 @@ properties:
->      description: GPIO used as WAKE# output signal
->      maxItems: 1
->  
-> +  interconnects:
-> +    maxItems: 1
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: pcie-mem
-> +
->    resets:
->      maxItems: 1
->  
-> @@ -98,6 +105,8 @@ required:
->    - interrupts
->    - interrupt-names
->    - reset-gpios
-> +  - interconnects
-> +  - interconnect-names
->    - resets
->    - reset-names
->    - power-domains
-> @@ -167,7 +176,9 @@ examples:
->    - |
->      #include <dt-bindings/clock/qcom,gcc-sdx55.h>
->      #include <dt-bindings/gpio/gpio.h>
-> +    #include <dt-bindings/interconnect/qcom,sdx55.h>
->      #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
->      pcie_ep: pcie-ep@1c00000 {
->          compatible = "qcom,sdx55-pcie-ep";
->          reg = <0x01c00000 0x3000>,
-> @@ -194,6 +205,8 @@ examples:
->          interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
->                       <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
->          interrupt-names = "global", "doorbell";
-> +        interconnects = <&system_noc MASTER_PCIE &mc_virt SLAVE_EBI_CH0>;
-> +        interconnect-names = "pcie-mem";
->          reset-gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
->          wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
->          resets = <&gcc GCC_PCIE_BCR>;
-> -- 
-> 2.7.4
-> 
+The changes were done using the following Coccinelle semantic
+patch.
 
--- 
-மணிவண்ணன் சதாசிவம்
+@initialize:ocaml@
+@@
+
+let rename alloc =
+  match alloc with
+    "vmalloc" -> "vmalloc_array"
+  | "vzalloc" -> "vcalloc"
+  | _ -> failwith "unknown"
+
+@@
+    size_t e1,e2;
+    constant C1, C2;
+    expression E1, E2, COUNT, x1, x2, x3;
+    typedef u8;
+    typedef __u8;
+    type t = {u8,__u8,char,unsigned char};
+    identifier alloc = {vmalloc,vzalloc};
+    fresh identifier realloc = script:ocaml(alloc) { rename alloc };
+@@
+
+(
+      alloc(x1*x2*x3)
+|
+      alloc(C1 * C2)
+|
+      alloc((sizeof(t)) * (COUNT), ...)
+|
+-     alloc((e1) * (e2))
++     realloc(e1, e2)
+|
+-     alloc((e1) * (COUNT))
++     realloc(COUNT, e1)
+|
+-     alloc((E1) * (E2))
++     realloc(E1, E2)
+)
+
+v2: This series uses vmalloc_array and vcalloc instead of
+array_size.  It also leaves a multiplication of a constant by a
+sizeof as is.  Two patches are thus dropped from the series.
+
+---
+
+ arch/x86/kernel/cpu/sgx/main.c                    |    2 +-
+ drivers/accel/habanalabs/common/device.c          |    3 ++-
+ drivers/accel/habanalabs/common/state_dump.c      |    7 ++++---
+ drivers/bus/mhi/host/init.c                       |    2 +-
+ drivers/comedi/comedi_buf.c                       |    4 ++--
+ drivers/dma-buf/heaps/system_heap.c               |    2 +-
+ drivers/gpu/drm/gud/gud_pipe.c                    |    2 +-
+ drivers/gpu/drm/i915/gvt/gtt.c                    |    6 ++++--
+ drivers/infiniband/hw/bnxt_re/qplib_res.c         |    4 ++--
+ drivers/infiniband/hw/erdma/erdma_verbs.c         |    4 ++--
+ drivers/infiniband/sw/siw/siw_qp.c                |    4 ++--
+ drivers/infiniband/sw/siw/siw_verbs.c             |    6 +++---
+ drivers/iommu/tegra-gart.c                        |    4 ++--
+ drivers/net/ethernet/amd/pds_core/core.c          |    4 ++--
+ drivers/net/ethernet/freescale/enetc/enetc.c      |    4 ++--
+ drivers/net/ethernet/google/gve/gve_tx.c          |    2 +-
+ drivers/net/ethernet/marvell/octeon_ep/octep_rx.c |    2 +-
+ drivers/net/ethernet/microsoft/mana/hw_channel.c  |    2 +-
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c   |    4 ++--
+ drivers/scsi/fnic/fnic_trace.c                    |    2 +-
+ drivers/scsi/qla2xxx/qla_init.c                   |    4 ++--
+ drivers/vdpa/vdpa_user/iova_domain.c              |    4 ++--
+ drivers/virtio/virtio_mem.c                       |    6 +++---
+ fs/btrfs/zoned.c                                  |    4 ++--
+ kernel/kcov.c                                     |    2 +-
+ lib/test_vmalloc.c                                |    9 +++++----
+ 26 files changed, 52 insertions(+), 47 deletions(-)
