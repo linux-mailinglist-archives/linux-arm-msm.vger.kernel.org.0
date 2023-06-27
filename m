@@ -2,85 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0364D73F01A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 03:03:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3409E73F059
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 03:24:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbjF0BDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 21:03:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
+        id S230086AbjF0BY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jun 2023 21:24:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229986AbjF0BDe (ORCPT
+        with ESMTP id S229789AbjF0BY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 21:03:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 036DC1737;
-        Mon, 26 Jun 2023 18:03:17 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35R0gCJM027773;
-        Tue, 27 Jun 2023 01:03:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vgLXF3puKzupPauOeKZ/hVo1WXrx7ULPGmpt8KheOeo=;
- b=Hq0bVOpqCVV1Hzhjf8uOFS6rLqC6kVsPhGnsPrKBut4wFeZRRR6tyqBYs+mN6Yrtl3s1
- rkyDjSoQE3MAMlias/pbzZdK95C0Zh049LCN9PhxcqLEYatb7pje6/Nxc1PJwAOcdK84
- RFiiwgZSYsWphlzy4H+MPTiFhBl/uSKoxpi3Et5QTPm6MVHy7kkx3Y1Kco8qL50QNR2+
- 0dkt1k16tbh/mrM5INuO/6knRBYJvkGR2j3TcXc4H28jLhBWuPN8sO4Vwe06Jc2MYZWO
- lnkRHmqQ4fyKPSBMnA13Y8ZiwWAkpRt2lvr+tX84ZNJL5oJ4RC79YbvulOyNko3QaFaa tg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rdssdnc2p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 01:03:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35R13Ael008146
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 01:03:10 GMT
-Received: from [10.216.43.155] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 26 Jun
- 2023 18:03:05 -0700
-Message-ID: <9495a254-a219-fdd8-2c6e-ac147075813e@quicinc.com>
-Date:   Tue, 27 Jun 2023 06:33:01 +0530
+        Mon, 26 Jun 2023 21:24:26 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 358C7E4C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 18:24:25 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f8735ac3e3so5550173e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 18:24:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687829063; x=1690421063;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZA4cawoZRNgrqzAENjP01rJKcNc9B6zeDmJj+ATh09U=;
+        b=r54wxMwZpOFc5UJLxh5fYB9ukPpCefKzcBodyQw0bjt4EJC3289D+8aGWWNcZzDNH7
+         q7mHqppR9uJi/lCf4275wuKz7VWVbc+jHzjuUFtQIv25KooLYqsZhxbTb5yvbQw1Zz3q
+         207Zmy1Rj5/fXwXkl24l0anKGwCyIx2t0wsh1zqB3BQRHfjCY6tdb2ern7WfipCfMQKg
+         KT22UflLcwObzJOBl5oXV4YYACDjXQhqhEjoBLrx77L6R/bRTpAle+wt/WjCAnXDCcYD
+         9rAIIg1B9dbk+XPRUSH1FNIniYrcEtmXpB3aUmrHcMJIPj4zDNZZIEk9/vbIeXCZBgwy
+         BOyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687829063; x=1690421063;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZA4cawoZRNgrqzAENjP01rJKcNc9B6zeDmJj+ATh09U=;
+        b=Vg0VdhpMGwQAKsQHLyGiQiqukieulmV4boVsk9t6OE8WXanTEerz7SJHFAP/26wAOG
+         umW/sBvg1aQz4QXhP2wHWNfosn4rnLMFm9c06nRi2Ol0fW3/Os4EyuMYhhGJknUUdELQ
+         MfKS2ocFOXMIUnbg6bP0jBqN11kF+bL2BimEgbgYvuh7GQBs2AELUW7cK5ATlvWLATR0
+         QPlHtABx7fC2I/IOxB4lWseTS7162bbWm9iZMnnRwxaHTPT1WQjsIZhzADXwjf2hfYW6
+         cARKV2CR+hvxEbd4IEuwTFthS+eY3wKyRAUZ8o2Cmo1DCrETyuoyxGBTZ/2kicGYduVX
+         05yA==
+X-Gm-Message-State: AC+VfDyUq6noFiafIeU0DtqNyB4+y/9bXLJtMEEgrFEdc6XdLvU/qqJn
+        ykHRuWO5xiJk7l+pgg+PQJIAwQ==
+X-Google-Smtp-Source: ACHHUZ5CpI4vZEGpB7oisPKttFApFtuxRtPklAiE6EywRqGxcAmnfCiPczi8BgBu/MLbyHtCvisiLw==
+X-Received: by 2002:a19:f201:0:b0:4f6:25ca:f147 with SMTP id q1-20020a19f201000000b004f625caf147mr16300353lfh.63.1687829063430;
+        Mon, 26 Jun 2023 18:24:23 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id z7-20020ac24187000000b004cc9042c9cfsm1331301lfh.158.2023.06.26.18.24.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jun 2023 18:24:23 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 00/15] ARM: dts: qcom: cleanup PMIC usage
+Date:   Tue, 27 Jun 2023 04:24:07 +0300
+Message-Id: <20230627012422.206077-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v4 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-pci@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1686752666-13426-1-git-send-email-quic_krichai@quicinc.com>
- <1686752666-13426-4-git-send-email-quic_krichai@quicinc.com>
- <20230623053448.GA5611@thinkpad>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20230623053448.GA5611@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8QeUwreOdqK2CDEUgGaUqEvd4HdPQ2JX
-X-Proofpoint-ORIG-GUID: 8QeUwreOdqK2CDEUgGaUqEvd4HdPQ2JX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-26_20,2023-06-26_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- phishscore=0 suspectscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306270007
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,180 +72,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+While reviewing APQ8064 CPUFreq patchset, Konrad pointed out that PMICs
+are not a part of SoC and as such do not belong to the per-SoC files.
 
-On 6/23/2023 11:04 AM, Manivannan Sadhasivam wrote:
-> On Wed, Jun 14, 2023 at 07:54:26PM +0530, Krishna chaitanya chundru wrote:
->> Add support to vote for ICC bandwidth based on the link
->> speed and width.
->>
->> This patch is inspired from pcie-qcom driver to add basic
->> interconnect support.
->>
->> Reference: commit c4860af88d0c ("PCI: qcom: Add basic interconnect
->> support").
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-qcom-ep.c | 73 +++++++++++++++++++++++++++++++
->>   1 file changed, 73 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> index 19b3283..5d146ec 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> @@ -13,6 +13,7 @@
->>   #include <linux/debugfs.h>
->>   #include <linux/delay.h>
->>   #include <linux/gpio/consumer.h>
->> +#include <linux/interconnect.h>
->>   #include <linux/mfd/syscon.h>
->>   #include <linux/phy/pcie.h>
->>   #include <linux/phy/phy.h>
->> @@ -28,6 +29,7 @@
->>   #define PARF_SYS_CTRL				0x00
->>   #define PARF_DB_CTRL				0x10
->>   #define PARF_PM_CTRL				0x20
->> +#define PARF_PM_STTS				0x24
->>   #define PARF_MHI_CLOCK_RESET_CTRL		0x174
->>   #define PARF_MHI_BASE_ADDR_LOWER		0x178
->>   #define PARF_MHI_BASE_ADDR_UPPER		0x17c
->> @@ -128,11 +130,19 @@
->>   /* DBI register fields */
->>   #define DBI_CON_STATUS_POWER_STATE_MASK		GENMASK(1, 0)
->>   
->> +#define DBI_LINKCTRLSTATUS			0x80
->> +#define DBI_LINKCTRLSTATUS_SHIFT		16
->> +
->>   #define XMLH_LINK_UP				0x400
->>   #define CORE_RESET_TIME_US_MIN			1000
->>   #define CORE_RESET_TIME_US_MAX			1005
->>   #define WAKE_DELAY_US				2000 /* 2 ms */
->>   
->> +#define PCIE_GEN1_BW_MBPS			250
->> +#define PCIE_GEN2_BW_MBPS			500
->> +#define PCIE_GEN3_BW_MBPS			985
->> +#define PCIE_GEN4_BW_MBPS			1969
->> +
->>   #define to_pcie_ep(x)				dev_get_drvdata((x)->dev)
->>   
->>   enum qcom_pcie_ep_link_status {
->> @@ -178,6 +188,8 @@ struct qcom_pcie_ep {
->>   	struct phy *phy;
->>   	struct dentry *debugfs;
->>   
->> +	struct icc_path *icc_mem;
->> +
->>   	struct clk_bulk_data *clks;
->>   	int num_clks;
->>   
->> @@ -253,9 +265,51 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
->>   	disable_irq(pcie_ep->perst_irq);
->>   }
->>   
->> +static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
->> +{
->> +	struct dw_pcie *pci = &pcie_ep->pci;
->> +	u32 offset, status, bw;
->> +	int speed, width;
->> +	int ret;
->> +
->> +	if (!pcie_ep->icc_mem)
->> +		return;
->> +
->> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
->> +
->> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
->> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
->> +
->> +	switch (speed) {
->> +	case 1:
->> +		bw = MBps_to_icc(PCIE_GEN1_BW_MBPS);
->> +		break;
->> +	case 2:
->> +		bw = MBps_to_icc(PCIE_GEN2_BW_MBPS);
->> +		break;
->> +	case 3:
->> +		bw = MBps_to_icc(PCIE_GEN3_BW_MBPS);
->> +		break;
->> +	default:
->> +		WARN_ON_ONCE(1);
-> We can drop WARN_ON_ONCE and print a warning saying that default GEN4 bandwidth
-> is being used.
-done
->
->> +		fallthrough;
->> +	case 4:
->> +		bw = MBps_to_icc(PCIE_GEN4_BW_MBPS);
->> +		break;
->> +	}
->> +
->> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
->> +	if (ret) {
->> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
->> +			ret);
->> +	}
->> +}
->> +
->>   static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->>   {
->>   	int ret;
->> +	struct dw_pcie *pci = &pcie_ep->pci;
->>   
->>   	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
->>   	if (ret)
->> @@ -277,6 +331,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->>   	if (ret)
->>   		goto err_phy_exit;
->>   
->> +	/*
->> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
->> +	 * to be set before enabling interconnect clocks.
->> +	 *
->> +	 * Set an initial average bandwidth corresponding to GEN1x1
-> Keep the comment same as the other driver.
-done
->> +	 * for the pcie to mem path.
->> +	 */
->> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(PCIE_GEN1_BW_MBPS));
->> +	if (ret) {
->> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
->> +			ret);
->> +		goto err_phy_exit;
-> PHY should be powered off in the case of error.
->
-> Rest looks good.
->
-> - Mani
+Cleanup the way 32-bit Qualcomm platforms treat PMICs:
 
-For platforms which need ICC it is must to vote for interconnect so 
-better to power off in case of error.
+- Move SSBI PMICs to separate files (as a bonus merging two different
+  instances of PM8921, benefitting both platforms).
 
--KC
+- Include such PMIC files only from the board files, keeping SoC file
+  generic.
 
->> +	}
->> +
->>   	return 0;
->>   
->>   err_phy_exit:
->> @@ -550,6 +618,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
->>   	if (IS_ERR(pcie_ep->phy))
->>   		ret = PTR_ERR(pcie_ep->phy);
->>   
->> +	pcie_ep->icc_mem = devm_of_icc_get(dev, "pcie-mem");
->> +	if (IS_ERR(pcie_ep->icc_mem))
->> +		ret = PTR_ERR(pcie_ep->icc_mem);
->> +
->>   	return ret;
->>   }
->>   
->> @@ -572,6 +644,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
->>   	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
->>   		dev_dbg(dev, "Received BME event. Link is enabled!\n");
->>   		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
->> +		qcom_pcie_ep_icc_update(pcie_ep);
->>   	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
->>   		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
->>   		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
->> -- 
->> 2.7.4
->>
+- Move RPM regulator definitions to board files too. They do not belong
+  to the SoC dtsi files for the same reason.
+
+- Move PMIC-specific GPIOs and supply properties to individual board
+  files.
+
+Dmitry Baryshkov (15):
+  ARM: dts: qcom: apq8064: correct XOADC register address
+  ARM: dts: qcom: msm8960: introduce label for PMIC keypad
+  ARM: dts: qcom: msm8660-surf: use keypad label directly
+  ARM: dts: qcom: apq8064-nexus7: move sdcc1 node to proper place
+  ARM: dts: qcom: mdm9615-wp8548-mangoh-green: group include clauses
+  ARM: dts: qcom: strip prefix from PMIC files
+  ARM: dts: qcom: apq8064: split PMICs to separate dtsi files
+  ARM: dts: qcom: mdm9615: split PMIC to separate dtsi files
+  ARM: dts: qcom: msm8660: split PMIC to separate dtsi files
+  ARM: dts: qcom: msm8960: split PMIC to separate dtsi files
+  ARM: dts: qcom: msm8974: move vreg-boost GPIO to board files
+  ARM: dts: qcom: apq8064: move RPM regulators to board files
+  ARM: dts: qcom: mdm9615: move RPM regulators to board files
+  ARM: dts: qcom: msm8660: move RPM regulators to board files
+  ARM: dts: qcom: msm8960: drop useless rpm regulators node
+
+ arch/arm/boot/dts/qcom/pm8018.dtsi            |  57 +++++
+ arch/arm/boot/dts/qcom/pm8058.dtsi            | 162 +++++++++++++
+ .../qcom/{qcom-pm8226.dtsi => pm8226.dtsi}    |   0
+ arch/arm/boot/dts/qcom/pm8821.dtsi            |  22 ++
+ .../qcom/{qcom-pm8841.dtsi => pm8841.dtsi}    |   0
+ arch/arm/boot/dts/qcom/pm8921.dtsi            | 137 +++++++++++
+ .../qcom/{qcom-pm8941.dtsi => pm8941.dtsi}    |   0
+ .../qcom/{qcom-pma8084.dtsi => pma8084.dtsi}  |   0
+ .../dts/qcom/{qcom-pmx55.dtsi => pmx55.dtsi}  |   0
+ .../dts/qcom/{qcom-pmx65.dtsi => pmx65.dtsi}  |   0
+ .../dts/qcom/qcom-apq8026-asus-sparrow.dts    |   2 +-
+ .../dts/qcom/qcom-apq8026-huawei-sturgeon.dts |   2 +-
+ .../boot/dts/qcom/qcom-apq8026-lg-lenok.dts   |   2 +-
+ .../qcom-apq8026-samsung-matisse-wifi.dts     |   2 +-
+ .../dts/qcom/qcom-apq8060-dragonboard.dts     | 146 +++++++-----
+ .../dts/qcom/qcom-apq8064-asus-nexus7-flo.dts |  69 +++---
+ .../boot/dts/qcom/qcom-apq8064-cm-qs600.dts   |  31 +--
+ .../boot/dts/qcom/qcom-apq8064-ifc6410.dts    |  38 ++--
+ .../qcom-apq8064-sony-xperia-lagan-yuga.dts   | 110 +++++----
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi      | 195 +---------------
+ .../dts/qcom/qcom-apq8074-dragonboard.dts     |   4 +-
+ .../boot/dts/qcom/qcom-apq8084-ifc6540.dts    |   2 +-
+ arch/arm/boot/dts/qcom/qcom-apq8084-mtp.dts   |   2 +-
+ .../qcom/qcom-mdm9615-wp8548-mangoh-green.dts |   4 +-
+ .../boot/dts/qcom/qcom-mdm9615-wp8548.dtsi    | 139 +++++++++++-
+ arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi      | 180 +--------------
+ arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts  |  59 +++--
+ arch/arm/boot/dts/qcom/qcom-msm8660.dtsi      | 214 +-----------------
+ arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts   |  21 +-
+ .../qcom/qcom-msm8960-samsung-expressatt.dts  |   3 +-
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi      |  42 +---
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    |   8 +-
+ .../qcom/qcom-msm8974-sony-xperia-rhine.dtsi  |   8 +-
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi      |   1 -
+ .../qcom/qcom-msm8974pro-fairphone-fp2.dts    |   8 +-
+ .../qcom/qcom-msm8974pro-oneplus-bacon.dts    |   8 +-
+ .../dts/qcom/qcom-msm8974pro-samsung-klte.dts |   2 +-
+ ...-msm8974pro-sony-xperia-shinano-castor.dts |   8 +-
+ arch/arm/boot/dts/qcom/qcom-sdx55-mtp.dts     |   2 +-
+ arch/arm/boot/dts/qcom/qcom-sdx55-t55.dts     |   2 +-
+ .../dts/qcom/qcom-sdx55-telit-fn980-tlb.dts   |   2 +-
+ arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts     |   2 +-
+ 42 files changed, 851 insertions(+), 845 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8018.dtsi
+ create mode 100644 arch/arm/boot/dts/qcom/pm8058.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8226.dtsi => pm8226.dtsi} (100%)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8821.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8841.dtsi => pm8841.dtsi} (100%)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8921.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8941.dtsi => pm8941.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pma8084.dtsi => pma8084.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pmx55.dtsi => pmx55.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pmx65.dtsi => pmx65.dtsi} (100%)
+
+-- 
+2.39.2
+
