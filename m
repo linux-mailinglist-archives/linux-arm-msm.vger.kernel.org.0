@@ -2,135 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A4CD73FEF9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 16:52:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28BE273FF29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:01:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231933AbjF0OwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 10:52:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49334 "EHLO
+        id S231993AbjF0PBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 11:01:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231993AbjF0Ovs (ORCPT
+        with ESMTP id S231972AbjF0PBg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 10:51:48 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DBA04C1B;
-        Tue, 27 Jun 2023 07:49:27 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35RDVfNM000853;
-        Tue, 27 Jun 2023 14:48:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hFqgsytwO7YkPhtAzxumxYOYePgrq4GqYMK6wBUKkqU=;
- b=GwQacHVqAsyMaBPm0rNrGOAnrndoR4OvsstRvd51fRXGEXVv9lAEq7VmBdhhzGQs7q7U
- Rlh2aQn2gTBH0N2iJE88Z8hIi3QEJW30Vep+ODOlj6LjThQSSR2nSzIy1vtQQgBls1Mi
- istsCrrnotnMiIVEmvyHVJfYyMVmkVktLv4bgqEwR/5d3lZfAgMYLHOC+gafP0F1+g2/
- Q1WfJsDJ6VDk8OLmup3txDq4/gV7G6tpMXq0OOCoUOl0VLtBUCsLLEXnFdUETTFBPibC
- YBHO46JDDEze6RuFfdtkO1iv0dwMJjnWE74KXRQio2t2GI8Fh8KErI7v64mn99Lyyk3A Jg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rfc02aqqw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 14:48:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35REmW27011345
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Jun 2023 14:48:32 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 27 Jun
- 2023 07:48:31 -0700
-Message-ID: <dd87f23b-d559-f544-c9bc-69ee592c17e8@quicinc.com>
-Date:   Tue, 27 Jun 2023 08:48:30 -0600
+        Tue, 27 Jun 2023 11:01:36 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CBC1A2;
+        Tue, 27 Jun 2023 08:01:34 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 27A53611CE;
+        Tue, 27 Jun 2023 15:01:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488C6C433C0;
+        Tue, 27 Jun 2023 15:01:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687878093;
+        bh=u8Fu1ii2Wu0qFPl2ucIu36KR7dRPnenXA6Y1Ih8OBSA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QuSa27+Vpx+7TWKHR+Alj1db884hAyAR+IafE4ucqGibCOR7EfN9lucyeJU8pLTaT
+         jRPof+0sA8k7AyLOsl5LvpoqpnfIEKDSsPSazX1DuLrpvwEZ4Wy8JrfNm+iQsczmzp
+         CWNC1kLwRDOAs+fX2WpxIeUADOxY7ZSMBnMQWFT+SSXVYClMG70EoaZBGGGZRyygaw
+         wkihUTNR3LniYzt9kOp11jRqxZDYaSmGsgkW+vlpPUZXUxgtSQfFb42hreZRhBHmTW
+         /ZxvgOLpzqYpw8JYt5iKfZ97ttGF66EVMfMgjrbBsqE1E33azLAcFsE6qVZT8hF/CN
+         V3/+iQTMHvETg==
+Date:   Tue, 27 Jun 2023 20:31:18 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v5 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
+Message-ID: <20230627150118.GI5490@thinkpad>
+References: <1687827692-6181-1-git-send-email-quic_krichai@quicinc.com>
+ <1687827692-6181-4-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 10/24] bus: mhi: host: use vmalloc_array and vcalloc
-Content-Language: en-US
-To:     Julia Lawall <Julia.Lawall@inria.fr>,
-        Manivannan Sadhasivam <mani@kernel.org>
-CC:     <kernel-janitors@vger.kernel.org>, <keescook@chromium.org>,
-        <christophe.jaillet@wanadoo.fr>, <kuba@kernel.org>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230627144339.144478-1-Julia.Lawall@inria.fr>
- <20230627144339.144478-11-Julia.Lawall@inria.fr>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20230627144339.144478-11-Julia.Lawall@inria.fr>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aLe5CmSgeSsnVXgSXq5v5pCSDBN7aPz5
-X-Proofpoint-GUID: aLe5CmSgeSsnVXgSXq5v5pCSDBN7aPz5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-27_09,2023-06-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=746
- spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 suspectscore=0
- phishscore=0 bulkscore=0 clxscore=1011 impostorscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306270137
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1687827692-6181-4-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/27/2023 8:43 AM, Julia Lawall wrote:
-> Use vmalloc_array and vcalloc to protect against
-> multiplication overflows.
+On Tue, Jun 27, 2023 at 06:31:31AM +0530, Krishna chaitanya chundru wrote:
+> Add support to vote for ICC bandwidth based on the link
+> speed and width.
 > 
-> The changes were done using the following Coccinelle
-> semantic patch:
+> This patch is inspired from pcie-qcom driver to add basic
+> interconnect support.
 > 
-> // <smpl>
-> @initialize:ocaml@
-> @@
+> Reference: commit c4860af88d0c ("PCI: qcom: Add basic interconnect
+> support").
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 73 +++++++++++++++++++++++++++++++
+>  1 file changed, 73 insertions(+)
 > 
-> let rename alloc =
->    match alloc with
->      "vmalloc" -> "vmalloc_array"
->    | "vzalloc" -> "vcalloc"
->    | _ -> failwith "unknown"
-> 
-> @@
->      size_t e1,e2;
->      constant C1, C2;
->      expression E1, E2, COUNT, x1, x2, x3;
->      typedef u8;
->      typedef __u8;
->      type t = {u8,__u8,char,unsigned char};
->      identifier alloc = {vmalloc,vzalloc};
->      fresh identifier realloc = script:ocaml(alloc) { rename alloc };
-> @@
-> 
-> (
->        alloc(x1*x2*x3)
-> |
->        alloc(C1 * C2)
-> |
->        alloc((sizeof(t)) * (COUNT), ...)
-> |
-> -     alloc((e1) * (e2))
-> +     realloc(e1, e2)
-> |
-> -     alloc((e1) * (COUNT))
-> +     realloc(COUNT, e1)
-> |
-> -     alloc((E1) * (E2))
-> +     realloc(E1, E2)
-> )
-> // </smpl>
-> 
-> Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 1435f51..b613817 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -13,6 +13,7 @@
+>  #include <linux/debugfs.h>
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/mfd/syscon.h>
+>  #include <linux/phy/pcie.h>
+>  #include <linux/phy/phy.h>
+> @@ -28,6 +29,7 @@
+>  #define PARF_SYS_CTRL				0x00
+>  #define PARF_DB_CTRL				0x10
+>  #define PARF_PM_CTRL				0x20
+> +#define PARF_PM_STTS				0x24
+>  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+>  #define PARF_MHI_BASE_ADDR_LOWER		0x178
+>  #define PARF_MHI_BASE_ADDR_UPPER		0x17c
+> @@ -128,11 +130,19 @@
+>  /* DBI register fields */
+>  #define DBI_CON_STATUS_POWER_STATE_MASK		GENMASK(1, 0)
+>  
+> +#define DBI_LINKCTRLSTATUS			0x80
+> +#define DBI_LINKCTRLSTATUS_SHIFT		16
+
+not used?
+
+> +
+>  #define XMLH_LINK_UP				0x400
+>  #define CORE_RESET_TIME_US_MIN			1000
+>  #define CORE_RESET_TIME_US_MAX			1005
+>  #define WAKE_DELAY_US				2000 /* 2 ms */
+>  
+> +#define PCIE_GEN1_BW_MBPS			250
+> +#define PCIE_GEN2_BW_MBPS			500
+> +#define PCIE_GEN3_BW_MBPS			985
+> +#define PCIE_GEN4_BW_MBPS			1969
+> +
+>  #define to_pcie_ep(x)				dev_get_drvdata((x)->dev)
+>  
+>  enum qcom_pcie_ep_link_status {
+> @@ -178,6 +188,8 @@ struct qcom_pcie_ep {
+>  	struct phy *phy;
+>  	struct dentry *debugfs;
+>  
+> +	struct icc_path *icc_mem;
+> +
+>  	struct clk_bulk_data *clks;
+>  	int num_clks;
+>  
+> @@ -253,9 +265,51 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
+>  	disable_irq(pcie_ep->perst_irq);
+>  }
+>  
+> +static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
+> +{
+> +	struct dw_pcie *pci = &pcie_ep->pci;
+> +	u32 offset, status, bw;
+> +	int speed, width;
+> +	int ret;
+> +
+> +	if (!pcie_ep->icc_mem)
+> +		return;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +
+> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> +
+> +	switch (speed) {
+> +	case 1:
+> +		bw = MBps_to_icc(PCIE_GEN1_BW_MBPS);
+> +		break;
+> +	case 2:
+> +		bw = MBps_to_icc(PCIE_GEN2_BW_MBPS);
+> +		break;
+> +	case 3:
+> +		bw = MBps_to_icc(PCIE_GEN3_BW_MBPS);
+> +		break;
+> +	default:
+> +		dev_warn(pci->dev, "using default GEN4 bandwidth\n");
+> +		fallthrough;
+> +	case 4:
+> +		bw = MBps_to_icc(PCIE_GEN4_BW_MBPS);
+> +		break;
+> +	}
+> +
+> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+
+No need of braces for single line.
+
+> +	}
+> +}
+> +
+>  static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>  {
+>  	int ret;
+> +	struct dw_pcie *pci = &pcie_ep->pci;
+>  
+>  	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
+>  	if (ret)
+> @@ -277,6 +331,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>  	if (ret)
+>  		goto err_phy_exit;
+>  
+> +	/*
+> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> +	 * to be set before enabling interconnect clocks.
+> +	 *
+> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> +	 * for the pcie-mem path.
+> +	 */
+> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(PCIE_GEN1_BW_MBPS));
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +		goto err_phy_exit;
+
+Again, you should power off the PHY in the case of error. err_phy_exit is not
+doing that for you.
+
+- Mani
+
+> +	}
+> +
+>  	return 0;
+>  
+>  err_phy_exit:
+> @@ -550,6 +618,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
+>  	if (IS_ERR(pcie_ep->phy))
+>  		ret = PTR_ERR(pcie_ep->phy);
+>  
+> +	pcie_ep->icc_mem = devm_of_icc_get(dev, "pcie-mem");
+> +	if (IS_ERR(pcie_ep->icc_mem))
+> +		ret = PTR_ERR(pcie_ep->icc_mem);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -573,6 +645,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+>  	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
+>  		dev_dbg(dev, "Received BME event. Link is enabled!\n");
+>  		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
+> +		qcom_pcie_ep_icc_update(pcie_ep);
+>  		pci_epc_bme_notify(pci->ep.epc);
+>  	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
+>  		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
+> -- 
+> 2.7.4
 > 
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-
+-- 
+மணிவண்ணன் சதாசிவம்
