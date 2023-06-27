@@ -2,46 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4C2A73F76C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 10:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1C2173F781
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 10:37:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbjF0Iff (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 04:35:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40858 "EHLO
+        id S231851AbjF0Ihl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 04:37:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231476AbjF0Iex (ORCPT
+        with ESMTP id S231854AbjF0IhU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 04:34:53 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 236A426A4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 01:34:49 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DD8F920079;
-        Tue, 27 Jun 2023 10:34:47 +0200 (CEST)
-Date:   Tue, 27 Jun 2023 10:34:46 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v4 14/19] drm/msm/dpu: inline MERGE_3D_BLK macros
-Message-ID: <hme5byfn2ym2wm5qd2qfuz7fenqccto2deod4nk2bmzi43zulp@vddfyix3xuro>
-References: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
- <20230619212519.875673-15-dmitry.baryshkov@linaro.org>
+        Tue, 27 Jun 2023 04:37:20 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B0630F8;
+        Tue, 27 Jun 2023 01:36:08 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35R7uLnO004161;
+        Tue, 27 Jun 2023 08:35:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=scRnmZdC3LxLJQfNHangg3IyZBFzbHCuY7++fQr/ZVY=;
+ b=Y4hB2h7P3J3g78yB3sSFu9MzsD2KsoZJlDb4I1eYDTz4vNoxRk9tvWF9u9t608DKUpUV
+ cXD5QomPvudB5IK9zeDoJQXqUIYzMQR3QjPNM4D2iuwivMFXyj9leoIcp79wRokAItvs
+ IEuWN/pZCPn319+IwrIehgqHIhAYQI5r3MaK+Kh6jyhk/548mVpGT/PcbYElIM57Hfpf
+ X+DX1LTpQ6DNvIN3qx9FbYsBrqG21iaQr1yHyQ775vlwgqQpy4XK63VhKELtVm1qYPCz
+ CDIW3OMb//5IN52pqwMAkhUzYnmBBicvst0L+jA9t9R/pRAs0hwmJTEBNBismfx4Nm67 aw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rfc0da0r4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Jun 2023 08:35:57 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35R8ZKFZ029935
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Jun 2023 08:35:21 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 27 Jun
+ 2023 01:34:54 -0700
+Message-ID: <bf9d701e-a9ec-9f1d-efe9-e37f9b18fc1a@quicinc.com>
+Date:   Tue, 27 Jun 2023 14:04:51 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230619212519.875673-15-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v4 3/6] nvmem: sec-qfprom: Add Qualcomm secure QFPROM
+ support.
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
+ <20230623141806.13388-4-quic_kbajaj@quicinc.com>
+ <ea4c49cd-17d1-6921-a447-5debaebb0cfd@linaro.org>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <ea4c49cd-17d1-6921-a447-5debaebb0cfd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pie6Hivk_wywL97nGjLGr3U0_l8W4grK
+X-Proofpoint-ORIG-GUID: pie6Hivk_wywL97nGjLGr3U0_l8W4grK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-27_05,2023-06-26_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306270081
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,251 +88,227 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-20 00:25:14, Dmitry Baryshkov wrote:
-> To simplify making changes to the hardware block definitions, expand
-> corresponding macros. This way making all the changes are more obvious
-> and visible in the source files.
-> 
-> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Validated that this incurs no changes by checksumming a stripped
-dpu_hw_catalog.o.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+On 6/23/2023 8:23 PM, Konrad Dybcio wrote:
+> On 23.06.2023 16:18, Komal Bajaj wrote:
+>> For some of the Qualcomm SoC's, it is possible that
+>> some of the fuse regions or entire qfprom region is
+>> protected from non-secure access. In such situations,
+>> linux will have to use secure calls to read the region.
+>> With that motivation, add secure qfprom driver. Ensuring
+>> the address to read is word aligned since our secure I/O
+>> only supports word size I/O.
+>>
+>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>> ---
+>>   drivers/nvmem/Kconfig      |  12 ++++
+>>   drivers/nvmem/Makefile     |   2 +
+>>   drivers/nvmem/sec-qfprom.c | 116 +++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 130 insertions(+)
+>>   create mode 100644 drivers/nvmem/sec-qfprom.c
+>>
+>> diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
+>> index b291b27048c7..2b0dd73d899e 100644
+>> --- a/drivers/nvmem/Kconfig
+>> +++ b/drivers/nvmem/Kconfig
+>> @@ -216,6 +216,18 @@ config NVMEM_QCOM_QFPROM
+>>   	  This driver can also be built as a module. If so, the module
+>>   	  will be called nvmem_qfprom.
+>>   
+>> +config NVMEM_QCOM_SEC_QFPROM
+>> +        tristate "QCOM SECURE QFPROM Support"
+>> +        depends on ARCH_QCOM || COMPILE_TEST
+>> +        depends on HAS_IOMEM
+>> +        select QCOM_SCM
+> You also need OF
 
-> ---
->  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    | 16 +++++++++++---
->  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   | 16 +++++++++++---
->  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    | 16 +++++++++++---
->  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    | 16 +++++++++++---
->  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  | 16 +++++++++++---
->  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    | 21 +++++++++++++++----
->  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    | 21 +++++++++++++++----
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 11 ----------
->  8 files changed, 99 insertions(+), 34 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> index 9b2de5986e82..0e09e759dc99 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> @@ -239,9 +239,19 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
->  };
->  
->  static const struct dpu_merge_3d_cfg sm8150_merge_3d[] = {
-> -	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x83000),
-> -	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x83100),
-> -	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x83200),
-> +	{
-> +		.name = "merge_3d_0", .id = MERGE_3D_0,
-> +		.base = 0x83000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_1", .id = MERGE_3D_1,
-> +		.base = 0x83100, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_2", .id = MERGE_3D_2,
-> +		.base = 0x83200, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	},
->  };
->  
->  static const struct dpu_dsc_cfg sm8150_dsc[] = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index 683602e54c0e..4d2b0409a244 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -238,9 +238,19 @@ static const struct dpu_pingpong_cfg sc8180x_pp[] = {
->  };
->  
->  static const struct dpu_merge_3d_cfg sc8180x_merge_3d[] = {
-> -	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x83000),
-> -	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x83100),
-> -	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x83200),
-> +	{
-> +		.name = "merge_3d_0", .id = MERGE_3D_0,
-> +		.base = 0x83000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_1", .id = MERGE_3D_1,
-> +		.base = 0x83100, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_2", .id = MERGE_3D_2,
-> +		.base = 0x83200, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	},
->  };
->  
->  static const struct dpu_dsc_cfg sc8180x_dsc[] = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> index a98d63f6c47c..50f857565dbf 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> @@ -239,9 +239,19 @@ static const struct dpu_pingpong_cfg sm8250_pp[] = {
->  };
->  
->  static const struct dpu_merge_3d_cfg sm8250_merge_3d[] = {
-> -	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x83000),
-> -	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x83100),
-> -	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x83200),
-> +	{
-> +		.name = "merge_3d_0", .id = MERGE_3D_0,
-> +		.base = 0x83000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_1", .id = MERGE_3D_1,
-> +		.base = 0x83100, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_2", .id = MERGE_3D_2,
-> +		.base = 0x83200, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	},
->  };
->  
->  static const struct dpu_dsc_cfg sm8250_dsc[] = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index 8a9bfc4af72a..0added438239 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -237,9 +237,19 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
->  };
->  
->  static const struct dpu_merge_3d_cfg sm8350_merge_3d[] = {
-> -	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x4e000),
-> -	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x4f000),
-> -	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
-> +	{
-> +		.name = "merge_3d_0", .id = MERGE_3D_0,
-> +		.base = 0x4e000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_1", .id = MERGE_3D_1,
-> +		.base = 0x4f000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_2", .id = MERGE_3D_2,
-> +		.base = 0x50000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	},
->  };
->  
->  /*
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index b676819db42c..0b4915dabe7a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -235,9 +235,19 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
->  };
->  
->  static const struct dpu_merge_3d_cfg sc8280xp_merge_3d[] = {
-> -	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x4e000),
-> -	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x4f000),
-> -	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
-> +	{
-> +		.name = "merge_3d_0", .id = MERGE_3D_0,
-> +		.base = 0x4e000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_1", .id = MERGE_3D_1,
-> +		.base = 0x4f000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_2", .id = MERGE_3D_2,
-> +		.base = 0x50000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	},
->  };
->  
->  /*
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 568523abc1d0..45cda9162685 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -247,10 +247,23 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
->  };
->  
->  static const struct dpu_merge_3d_cfg sm8450_merge_3d[] = {
-> -	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x4e000),
-> -	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x4f000),
-> -	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
-> -	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x65f00),
-> +	{
-> +		.name = "merge_3d_0", .id = MERGE_3D_0,
-> +		.base = 0x4e000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_1", .id = MERGE_3D_1,
-> +		.base = 0x4f000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_2", .id = MERGE_3D_2,
-> +		.base = 0x50000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_3", .id = MERGE_3D_3,
-> +		.base = 0x65f00, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	},
->  };
->  
->  /*
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 419624948e83..66dd414253f1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -261,10 +261,23 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
->  };
->  
->  static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
-> -	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x4e000),
-> -	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x4f000),
-> -	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
-> -	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x66700),
-> +	{
-> +		.name = "merge_3d_0", .id = MERGE_3D_0,
-> +		.base = 0x4e000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_1", .id = MERGE_3D_1,
-> +		.base = 0x4f000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_2", .id = MERGE_3D_2,
-> +		.base = 0x50000, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	}, {
-> +		.name = "merge_3d_3", .id = MERGE_3D_3,
-> +		.base = 0x66700, .len = 0x8,
-> +		.features = MERGE_3D_SM8150_MASK,
-> +	},
->  };
->  
->  /*
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index ee24402bf253..72634a8109e8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -471,17 +471,6 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
->  	.intr_rdptr = _rdptr, \
->  	}
->  
-> -/*************************************************************
-> - * MERGE_3D sub blocks config
-> - *************************************************************/
-> -#define MERGE_3D_BLK(_name, _id, _base) \
-> -	{\
-> -	.name = _name, .id = _id, \
-> -	.base = _base, .len = 0x8, \
-> -	.features = MERGE_3D_SM8150_MASK, \
-> -	.sblk = NULL \
-> -	}
-> -
->  /*************************************************************
->   * DSC sub blocks config
->   *************************************************************/
-> -- 
-> 2.39.2
-> 
+Noted.
+
+>
+>> +        help
+>> +          Say y here to enable secure QFPROM support. The secure QFPROM provides access
+>> +          functions for QFPROM data to rest of the drivers via nvmem interface.
+>> +
+>> +          This driver can also be built as a module. If so, the module will be called
+>> +          nvmem_sec_qfprom.
+>> +
+>>   config NVMEM_RAVE_SP_EEPROM
+>>   	tristate "Rave SP EEPROM Support"
+>>   	depends on RAVE_SP_CORE
+>> diff --git a/drivers/nvmem/Makefile b/drivers/nvmem/Makefile
+>> index f82431ec8aef..4b4bf5880488 100644
+>> --- a/drivers/nvmem/Makefile
+>> +++ b/drivers/nvmem/Makefile
+>> @@ -44,6 +44,8 @@ obj-$(CONFIG_NVMEM_NINTENDO_OTP)	+= nvmem-nintendo-otp.o
+>>   nvmem-nintendo-otp-y			:= nintendo-otp.o
+>>   obj-$(CONFIG_NVMEM_QCOM_QFPROM)		+= nvmem_qfprom.o
+>>   nvmem_qfprom-y				:= qfprom.o
+>> +obj-$(CONFIG_NVMEM_QCOM_SEC_QFPROM)     += nvmem_sec_qfprom.o
+>> +nvmem_sec_qfprom-y                          := sec-qfprom.o
+>>   obj-$(CONFIG_NVMEM_RAVE_SP_EEPROM)	+= nvmem-rave-sp-eeprom.o
+>>   nvmem-rave-sp-eeprom-y			:= rave-sp-eeprom.o
+>>   obj-$(CONFIG_NVMEM_RMEM) 		+= nvmem-rmem.o
+>> diff --git a/drivers/nvmem/sec-qfprom.c b/drivers/nvmem/sec-qfprom.c
+>> new file mode 100644
+>> index 000000000000..47b2c71593dd
+>> --- /dev/null
+>> +++ b/drivers/nvmem/sec-qfprom.c
+>> @@ -0,0 +1,116 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/clk.h>
+>> +#include <linux/device.h>
+>> +#include <linux/firmware/qcom/qcom_scm.h>
+>> +#include <linux/io.h>
+>> +#include <linux/iopoll.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/module.h>
+>> +#include <linux/mod_devicetable.h>
+>> +#include <linux/nvmem-provider.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/pm_domain.h>
+>> +#include <linux/pm_runtime.h>
+>> +#include <linux/property.h>
+>> +#include <linux/regulator/consumer.h>
+>> +
+>> +
+>> +/**
+>> + * struct sec_sec_qfprom_priv - structure holding secure qfprom attributes
+>> + *
+>> + * @qfpseccorrected: iomapped memory space for secure qfprom corrected address space.
+>> + * @dev: qfprom device structure.
+>> + */
+>> +struct sec_qfprom_priv {
+>> +	phys_addr_t qfpseccorrected;
+>> +	struct device *dev;
+>> +};
+>> +
+>> +static int sec_qfprom_reg_read(void *context, unsigned int reg, void *_val, size_t bytes)
+>> +{
+>> +	struct sec_qfprom_priv *priv = context;
+>> +	u8 *val = _val;
+>> +	u8 *tmp;
+>> +	u32 read_val;
+>> +	unsigned int i;
+> Please sort this to look like a reverse-Christmas-tree
+
+Okay, will sort it in that way.
+
+>
+>
+>> +
+>> +	for (i = 0; i < bytes; i++, reg++) {
+>> +		if (i == 0 || reg % 4 == 0) {
+>> +			if (qcom_scm_io_readl(priv->qfpseccorrected + (reg & ~3), &read_val)) {
+>> +				dev_err(priv->dev, "Couldn't access fuse register\n");
+>> +				return -EINVAL;
+>> +			}
+>> +			tmp = (u8 *)&read_val;
+>> +		}
+> I don't understand this read-4-times dance.. qcom_scm_io_readl() reads
+> u32, so this should be as simple as:
+>
+> val[i + 0] = FIELD_GET(GENMASK(7, 0), reg);
+> val[i + 1] = ..
+> val[i + 2] = ..
+> val[i + 3] = ..
+
+Won't it get too complex, I type-casted 32-bit read_val into u8 pointer, 
+so that I can
+easily use it for the byte-level access of read_val's value.
+
+Doing the way that you mentioned would be something like below -
+val[i] = FIELD_GET(GENMASK((reg&3)*8+7, (reg&3)*8), read_val);
+
+Thanks
+Komal
+>
+>> +
+>> +		val[i] = tmp[reg & 3];
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void sec_qfprom_runtime_disable(void *data)
+>> +{
+>> +	pm_runtime_disable(data);
+>> +}
+>> +
+>> +static int sec_qfprom_probe(struct platform_device *pdev)
+>> +{
+>> +	struct nvmem_config econfig = {
+>> +		.name = "sec-qfprom",
+>> +		.stride = 1,
+>> +		.word_size = 1,
+>> +		.id = NVMEM_DEVID_AUTO,
+>> +		.reg_read = sec_qfprom_reg_read,
+>> +	};
+>> +	struct device *dev = &pdev->dev;
+>> +	struct resource *res;
+>> +	struct nvmem_device *nvmem;
+>> +	struct sec_qfprom_priv *priv;
+>> +	int ret;
+>> +
+>> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+>> +	if (!priv)
+>> +		return -ENOMEM;
+>> +
+>> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>> +	priv->qfpseccorrected = res->start;
+>> +	if (!priv->qfpseccorrected)
+>> +		return -ENOMEM;
+> While it works all the same, I think checking if(!res) would be more
+> logical
+>
+> Also, ENOMEM seems weird here.. Perhaps EINVAL?
+>
+>> +
+>> +	econfig.size = resource_size(res);
+>> +	econfig.dev = dev;
+>> +	econfig.priv = priv;
+>> +
+>> +	priv->dev = dev;
+>> +
+>> +	pm_runtime_enable(dev);
+>> +	ret = devm_add_action_or_reset(dev, sec_qfprom_runtime_disable, dev);
+>> +	if (ret)
+>> +		return ret;
+> Wouldn't devm_pm_runtime_enable() take care of this? Or do we need
+> for this block to be always-powered?
+>
+>> +
+>> +	nvmem = devm_nvmem_register(dev, &econfig);
+>> +
+>> +	return PTR_ERR_OR_ZERO(nvmem);
+>> +}
+>> +
+>> +static const struct of_device_id sec_qfprom_of_match[] = {
+>> +	{ .compatible = "qcom,sec-qfprom",},
+> The comma inside is unnecessary, replacing it with a space would also
+> make the whitespacing match
+>
+>> +	{/* sentinel */},
+>> +};
+>> +MODULE_DEVICE_TABLE(of, sec_qfprom_of_match);
+>> +
+>> +static struct platform_driver qfprom_driver = {
+>> +	.probe = sec_qfprom_probe,
+>> +	.driver = {
+>> +		.name = "qcom,sec_qfprom",
+> Commas in driver names are rather.. rare? Let's make it qcom_
+>
+>> +		.of_match_table = sec_qfprom_of_match,
+>> +	},
+>> +};
+>> +module_platform_driver(qfprom_driver);
+>> +MODULE_DESCRIPTION("Qualcomm Secure QFPROM driver");
+>> +MODULE_LICENSE("GPL v2");
+> Please run scripts/checkpatch.pl on your patches before sending.
+>
+> Konrad
+
