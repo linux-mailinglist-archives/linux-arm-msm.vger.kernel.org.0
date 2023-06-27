@@ -2,61 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A54B373F7E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 10:55:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C52273F808
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 11:02:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbjF0IzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 04:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52360 "EHLO
+        id S230361AbjF0JCj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 05:02:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbjF0IzC (ORCPT
+        with ESMTP id S229459AbjF0JCi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 04:55:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F2610CC;
-        Tue, 27 Jun 2023 01:55:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        Tue, 27 Jun 2023 05:02:38 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D021F7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 02:02:36 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CA46261030;
-        Tue, 27 Jun 2023 08:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CFDC433C0;
-        Tue, 27 Jun 2023 08:55:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687856100;
-        bh=s8NUZ3ksYv5mLj2yRtarpDvRohslNYcPlf0NKQbDRhc=;
-        h=From:To:Cc:Subject:Date:From;
-        b=ORlVk8K3VPq2wiNzuL6lPHqGT9sbQqF8HVCXZg2LGQ6usjE2HA2NtqBmPCiebL4bo
-         PK0m2JL/9bzi4ttrpxGNlrkW/2FlKZKknOUKn1BWEShBr7Ba0v2FxHMXoxGXSc6CjX
-         zMG8d+cryctWrZfEPNPgGt2kFSfyLR04OnYZ1Z/t/6NmPsAGAwiEW4WKx0Wxx1W8tU
-         d9w2XkYHYYGYU2BrKInwjs+LJoDKz8q78ulmumPN8D0bP14+mfeXPg9vJcR96zpXHH
-         R0cdvbC+vY283pmR62xzHchZZlR0YAXJyo2J4xMVlw8qkYhV7CUVYWiDxbKOKUOPse
-         F6Yh/ArZMVMdw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1qE4TQ-0001Zq-BO; Tue, 27 Jun 2023 10:54:57 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C0A7A3F792;
+        Tue, 27 Jun 2023 11:02:28 +0200 (CEST)
+Date:   Tue, 27 Jun 2023 11:02:27 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Patrick Wildt <patrick@blueri.se>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-pmics: add explicit rtc interrupt parent
-Date:   Tue, 27 Jun 2023 10:53:06 +0200
-Message-Id: <20230627085306.6033-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.3
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+Subject: Re: [PATCH 03/15] dt-bindings: clock: qcom,dispcc-sm6125: Require
+ GCC PLL0 DIV clock
+Message-ID: <makhh4ebdmoa5f6r4mbx4g2v2cpcsi74wqf3622dxuli4w7tb6@els2rvqcnvgz>
+References: <52c57cab-10cf-2e7e-2c1d-fa6506786d45@linaro.org>
+ <jmtjuya4c423rmdlo4ubvvqndbxvgapal5otjqnejdpdd25izp@kewbjmqdu2xs>
+ <6311f26f-79ee-c471-649f-5e0b4629cfcc@linaro.org>
+ <uuy5prkjhhs66te7h6z3pu4lzj2cfbiqk6ftjijwoeqpw573av@ogs6cboanvzc>
+ <ziykmixskqkgheigefvyo4q3katbc4uix6jtcg7mncs25z4tj5@5gykrfgns4bm>
+ <16731023-7dc7-d43d-1b16-fda44c0948ed@linaro.org>
+ <yofju7jp7vmv33x7dzvzoelpumfsz3fjqy2ozakfphsuysunon@pglt2wzlsjex>
+ <683a6f7e-bf1a-aff2-070b-472fb14e0353@linaro.org>
+ <3nnk4xvmpnum2q6g6c6crjlqq3ra7j2z5zis53xcqbvevymuhz@mkffvs45n6ut>
+ <145ab255-b3f8-1c6c-824d-5f1b40568d30@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <145ab255-b3f8-1c6c-824d-5f1b40568d30@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,38 +74,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Unless explicitly specified the interrupt-parent property is inherited
-from the parent node on Linux even though this may not be in full
-compliance with the devicetree specification.
+On 2023-06-27 10:21:12, Krzysztof Kozlowski wrote:
+> On 27/06/2023 09:49, Marijn Suijten wrote:
+> > On 2023-06-27 09:29:53, Krzysztof Kozlowski wrote:
+> >> On 27/06/2023 08:54, Marijn Suijten wrote:
+> >>> On 2023-06-27 08:24:41, Krzysztof Kozlowski wrote:
+> >>>> On 26/06/2023 20:53, Marijn Suijten wrote:
+> >>>>> On 2023-06-26 20:51:38, Marijn Suijten wrote:
+> >>>>> <snip>
+> >>>>>>> Not really, binding also defines the list of clocks - their order and
+> >>>>>>> specific entries. This changes.
+> >>>>>>
+> >>>>>> And so it does in "dt-bindings: clock: qcom,dispcc-sm6125: Remove unused
+> >>>>>> GCC_DISP_AHB_CLK"?
+> >>>>>
+> >>>>> Never mind: it is the last item so the order of the other items doesn't
+> >>>>> change.  The total number of items decreases though, which sounds like
+> >>>>> an ABI-break too?
+> >>>>
+> >>>> How does it break? Old DTS works exactly the same, doesn't it?
+> >>>
+> >>> So deleting a new item at the end does not matter.  But what if I respin
+> >>> this patch to add the new clock _at the end_, which will then be at the
+> >>> same index as the previous GCC_DISP_AHB_CLK?
+> >>
+> >> I think you know the answer, right? What do you want to prove? That two
+> >> independent changes can have together negative effect? We know this.
+> > 
+> > The question is whether this is allowed?
+> 
+> That would be an ABI break and I already explained if it is or is not
+> allowed.
 
-Following commit 2d5cab9232ba ("arm64: dts: qcom: sc8280xp-pmics:
-Specify interrupt parent explicitly"), add an explicit interrupt parent
-also for the PMIC RTC node for the benefit of other operating systems
-which may be confused by this omission.
+How should we solve it then, if we cannot remove GCC_DISP_AHB_CLK in one
+patch and add GCC_DISP_GPLL0_DIV_CLK_SRC **at the end** in the next
+patch?  Keep an empty spot at the original index of GCC_DISP_AHB_CLK?
 
-Note that any such OS must still implement a fallback to the root
-interrupt domain as most devicetrees are written under the assumption
-that the interrupt parent is inherited.
-
-Reported-by: Patrick Wildt <patrick@blueri.se>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-index a0ba535bb6c9..80ee12ded4f4 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-@@ -101,7 +101,7 @@ pmk8280_rtc: rtc@6100 {
- 			compatible = "qcom,pmk8350-rtc";
- 			reg = <0x6100>, <0x6200>;
- 			reg-names = "rtc", "alarm";
--			interrupts = <0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
-+			interrupts-extended = <&spmi_bus 0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
- 			wakeup-source;
- 			status = "disabled";
- 		};
--- 
-2.39.3
-
+- Marijn
