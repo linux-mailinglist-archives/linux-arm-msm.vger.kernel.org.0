@@ -2,65 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 713CE73FF88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:19:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CABA73FFA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:27:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232292AbjF0PT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 11:19:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
+        id S232369AbjF0P1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 11:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232342AbjF0PTt (ORCPT
+        with ESMTP id S232354AbjF0P1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 11:19:49 -0400
+        Tue, 27 Jun 2023 11:27:46 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCBC1735;
-        Tue, 27 Jun 2023 08:19:48 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685842976;
+        Tue, 27 Jun 2023 08:27:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F1D7F611B5;
-        Tue, 27 Jun 2023 15:19:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2B3C433C0;
-        Tue, 27 Jun 2023 15:19:47 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D4353611D6;
+        Tue, 27 Jun 2023 15:27:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF45C433C8;
+        Tue, 27 Jun 2023 15:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687879187;
-        bh=lVWplkh8U/rtw5laIs2YyXP5mG+eDZDGoYnqUxrwS4k=;
+        s=k20201202; t=1687879655;
+        bh=QJEP2hAFIWiHYLlxATb8rBMxuDVIppvzTaGsfqkN9pI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q5TmZ6xn2YYy+K9DIrVHxqng95klWdB7m7T0I7jI0pQvvfRJz5uMHDViWO7XvrlsF
-         Hj7sfUIBs5Akk20UnTLPHTioO+9ePGKg8NMROhhpEaWjfl+Ay52mbUj1ugXMozx4OL
-         pviPLrMhe6A+Rl4KN3mRU/qbs4JO+6Fhahewp7YYvsi3tQ19ThP8B6yTFjWMYKs2w+
-         ZCSz3khQctEd5g5mKNHHfhFV6AJaHz/3+m1VQfXt+PbmutlT5/6+OyzPGo0QNFhiqH
-         2hIUIThRVt0P87xykwgEY0Aj7nxEvBnZfUZr6W5vOHHcjNyxeyNt2e5v/5YIisoyEc
-         PN/YHbBaTbdug==
+        b=o8TxVYYJLovhn1bYP0bppqdQn35EJcczSduqWL6V4NiEenm/hQ8kIh3AiOkKfIyE9
+         ZcFiowMHLIhaiWWlDrknRk7hpxGIU4PDsMNbBdlTvvn+HMpL+EM9QBbfuucUWqA6xA
+         nN62mouD8cp6b3EHgFVpuXPOBAddLd8REsd9aY+Y4EmIMbMFeGfWqNcEimf86GBdST
+         S6Mgo/yXbYesJv9jT2LYGohrHMpl9JP5jpUQM1zFCP9idUSDZG0twMt81IJ6yoxkr/
+         ITGiOU6M7xAeO8VYhBQ/Im1F5M1NwewE1skeamSeqWILVyw6A0aTGI15mn9Llkg82H
+         rJ0F1lT0DQagw==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1qEATp-00046p-3i; Tue, 27 Jun 2023 17:19:45 +0200
-Date:   Tue, 27 Jun 2023 17:19:45 +0200
+        id 1qEAbM-00049C-FM; Tue, 27 Jun 2023 17:27:33 +0200
+Date:   Tue, 27 Jun 2023 17:27:32 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 00/10] Add multiport support for DWC3 controllers
-Message-ID: <ZJr-EbunGzNopVj0@hovoldconsulting.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+        linux-kernel@vger.kernel.org, Patrick Wildt <patrick@blueri.se>
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: add explicit rtc
+ interrupt parent
+Message-ID: <ZJr_5JIqWSGq-E-T@hovoldconsulting.com>
+References: <20230627085306.6033-1-johan+linaro@kernel.org>
+ <20230627132406.GA5490@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+In-Reply-To: <20230627132406.GA5490@thinkpad>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -71,25 +67,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 21, 2023 at 10:06:18AM +0530, Krishna Kurapati wrote:
-> Currently the DWC3 driver supports only single port controller which
-> requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
-> DWC3 controller with multiple ports that can operate in host mode.
-> Some of the port supports both SS+HS and other port supports only HS
-> mode.
+On Tue, Jun 27, 2023 at 06:54:06PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Jun 27, 2023 at 10:53:06AM +0200, Johan Hovold wrote:
+> > Unless explicitly specified the interrupt-parent property is inherited
+> > from the parent node on Linux even though this may not be in full
+> > compliance with the devicetree specification.
+> > 
+> > Following commit 2d5cab9232ba ("arm64: dts: qcom: sc8280xp-pmics:
+> > Specify interrupt parent explicitly"), add an explicit interrupt parent
+> > also for the PMIC RTC node for the benefit of other operating systems
+> > which may be confused by this omission.
+> > 
+> > Note that any such OS must still implement a fallback to the root
+> > interrupt domain as most devicetrees are written under the assumption
+> > that the interrupt parent is inherited.
+> > 
+> > Reported-by: Patrick Wildt <patrick@blueri.se>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > 
-> This change primarily refactors the Phy logic in core driver to allow
-> multiport support with Generic Phy's.
-> 
-> Chananges have been tested on  QCOM SoC SA8295P which has 4 ports (2
-> are HS+SS capable and 2 are HS only capable).
-> 
-> Changes in v9:
-> Added IRQ support for DP/DM/SS MP Irq's of SC8280
-> Refactored code to read port count by accessing xhci registers
-> 
+> It is good to encode this in the binding and fix other such instances.
 
-You obviously did many more changes in v9. Please amend this list for v9
-and be more specific when submitting v10.
+Not sure about that. Perhaps the spec should be updated to match reality
+instead... We have many more instances like this, even for this very
+SoC, but apparently OpenBSD or whatever OS needs this falls back to the
+root domain then.
+
+Changing this for the rtc node for consistency after you changed the
+others is a no-brainer, but not sure about trying to do this tree-wide.
+We already have too many of these one-line DT cleanups...
 
 Johan
