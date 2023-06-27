@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 999FA73FFC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:32:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B99573FFC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:32:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230493AbjF0PcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 11:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48626 "EHLO
+        id S229720AbjF0PcZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 11:32:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbjF0PcX (ORCPT
+        with ESMTP id S230429AbjF0PcY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 11:32:23 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0481D297E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 08:32:22 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fba64d9296so8533135e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 08:32:21 -0700 (PDT)
+        Tue, 27 Jun 2023 11:32:24 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6238F2D4F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 08:32:23 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f766777605so6348805e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 08:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687879940; x=1690471940;
+        d=linaro.org; s=google; t=1687879941; x=1690471941;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7Tj+a3jXCGO/E81fZis7hW50ypnf/qOkSsBlW7O+WyQ=;
-        b=q40X9tgSYRtJCgKGQLfvJZIjFblnYS7TTDOLIlos7XgMUwtk6erOMrg7J7/vryoZqT
-         hpFX9AjyocWYhoEdqW4w/zKiQoJZxhVg8vjoOUaPwf66mR8L9knQn3QPGR03mXRIGAbs
-         AzKkQR8uO05rI03YWl7OkVj3rZxVOZLisjyy30J6VGCUkubkUb+hEBPayyBXQThCd+ZM
-         JbIkV2QsonP8+9eSedqjtXFP1x43COo9fnzlJUsOWKy+TYwVbp9CR9rlH91HHhtC4LZ2
-         shNbsewDwv7RoUIcnYLmSucF1klLCgJCmetd0TX1x7MsuROjHe7J4bbEoc+hRGvqj5GG
-         b6tQ==
+        bh=C1gwQpREPz+0axDDVcXyrSCTCfHY3JnKCs9KFXnHp0c=;
+        b=zWVvcHAirhTYM8pVpb/rmnQizbZByCRLLZd0C5mjB6bVBt3R6kKRP4l6zIoJglZ+VB
+         QdOVzT00GK7ZPA8fpm8JTVIAUfU8BSqASN4S8UjsAeCdhR897F0qiogxnkT7P+JTnzsa
+         Zrc66r6BnUv6trED3U0z0BMH2butyV12hA34aBfThq/MXd7iBAR9VlLaGuYq/rnlALf8
+         N6/dH8MvPCo8X3iRX/efuIQ72qlxxoKTqlNoZKRHqk0yh+FWEHF/9lvXaLJt+az/Zk1M
+         WuAH4vZaX/AhvSkyu7QpcxVtOc6NvemwKVyP153YTnKAjm8z6Of78aA9kahWTh28Y4Uf
+         J85w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687879940; x=1690471940;
+        d=1e100.net; s=20221208; t=1687879941; x=1690471941;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7Tj+a3jXCGO/E81fZis7hW50ypnf/qOkSsBlW7O+WyQ=;
-        b=WR6aht4QiE2HDWcAXTPEJ1VDSl9mYbNufNhNftTr+Z8UfgQYq8wLlqI4mVcBZ/bxgc
-         tRIUGkdDD3AbyKrKIUnlPliatFFRq2JV0l3Mcd3LBt8TzYNcreiDUC28+EKnDCBBUt7T
-         xniHf1Eghmk99+wmKsGLpk78rBKEwiNKrguUfS9ZmfrIqD3Sv6Y+lOE4sqne+KBgoVIp
-         mG2TYXEgiOqXRnu0zAIbxtDZ2P249PY2lvZqDzSq1LgGOIJeeudRyPM8BvlRP6aABHYk
-         n7fztky3h6OQnQVMh18V1FUyMnzp8X0jqUotqsUwj4QtJ2+15l/f7HhSKchllAaKZLtO
-         BZsA==
-X-Gm-Message-State: AC+VfDymfP8nxSOivk8UBmh/p1ztMiMYG9DNWi5FNYjDwFlqCj38DKLR
-        QQDkgWTsjpQWYVo92CO/qDouUw==
-X-Google-Smtp-Source: ACHHUZ4+i1SeX23yz1QMLc4MB2CrgRSmfMwJzeeqEuckpZAL8cADXARaE8SDukDM3E3aobeqBF2Bog==
-X-Received: by 2002:a05:600c:210b:b0:3fb:739d:27b2 with SMTP id u11-20020a05600c210b00b003fb739d27b2mr2218266wml.8.1687879940580;
-        Tue, 27 Jun 2023 08:32:20 -0700 (PDT)
+        bh=C1gwQpREPz+0axDDVcXyrSCTCfHY3JnKCs9KFXnHp0c=;
+        b=BY8H3gRrMLGgNTxlGywFKUStc3xeu59CmA4Sc+aXaabbvbcdVGMzkFnsEfDpRRPmmK
+         sAjjGkGAFsb2woVGvUADQOl/ZgOquleHBzSMKloggGYy6YmA3BzgNtCG4rc3BcoRMjwR
+         BRf8QQaH+3nAyP9vQBqOc/P3QcVafHC5sAYXtW/02LndgRwlNSsodv/StZ8l1O1wSwsg
+         ZQrapyoLoJrNBe0Hyo/CTBAkgCDNnSjsx0tHQBYQr5F+w+M3NT+Q5Gb3cHVq2aMjM0bn
+         wdt/D5jKiAiKTl28Xyq9Rkoc+gcnV9ncgpQcuDrMoImRAsDxoEq79rEYf9FeFGV0Yy7i
+         sgLg==
+X-Gm-Message-State: AC+VfDxMvieSwYWJRERuvDnVOw0rz2t+k45LlZW5h0fzqexfmtSfHfB/
+        T6ovyH6kAfui21of7rHC+yId6kL4VG9Xe6kU66aV3A==
+X-Google-Smtp-Source: ACHHUZ4uREcV8g6UxeNFhcjAXrqb/j0dtYSMOU90QcXxyf84oV1ebuXjob5DUK4HvEPEUX7j5pblRw==
+X-Received: by 2002:a05:6512:239a:b0:4fb:744c:2e9a with SMTP id c26-20020a056512239a00b004fb744c2e9amr5443251lfv.32.1687879941464;
+        Tue, 27 Jun 2023 08:32:21 -0700 (PDT)
 Received: from lion.localdomain (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id c25-20020a7bc019000000b003f819faff24sm14089214wmb.40.2023.06.27.08.32.19
+        by smtp.gmail.com with ESMTPSA id c25-20020a7bc019000000b003f819faff24sm14089214wmb.40.2023.06.27.08.32.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jun 2023 08:32:20 -0700 (PDT)
+        Tue, 27 Jun 2023 08:32:21 -0700 (PDT)
 From:   Caleb Connolly <caleb.connolly@linaro.org>
-Date:   Tue, 27 Jun 2023 16:32:17 +0100
-Subject: [PATCH 2/3] arm64: dts: qcom: c630: add debug uart
+Date:   Tue, 27 Jun 2023 16:32:18 +0100
+Subject: [PATCH 3/3] arm64: dts: qcom: sdm850-*: fix uart6 aliases
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230627-c630-uart-and-1p2-reg-v1-2-b48bfb47639b@linaro.org>
+Message-Id: <20230627-c630-uart-and-1p2-reg-v1-3-b48bfb47639b@linaro.org>
 References: <20230627-c630-uart-and-1p2-reg-v1-0-b48bfb47639b@linaro.org>
 In-Reply-To: <20230627-c630-uart-and-1p2-reg-v1-0-b48bfb47639b@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -69,21 +69,21 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht,
         Caleb Connolly <caleb.connolly@linaro.org>
 X-Mailer: b4 0.13-dev-46309
-X-Developer-Signature: v=1; a=openpgp-sha256; l=788;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1201;
  i=caleb.connolly@linaro.org; h=from:subject:message-id;
- bh=hWR37olssv9o7C17E5MrA+bQTRMkpf7J0VqJVMSfEAA=;
- b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBkmwEBhB/ItK4b5jIvc9Xqfyhxf5tvuUZD/C5yP
- IicsdCerfaJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZJsBAQAKCRAFgzErGV9k
- tk0TD/4iJE/TQl/WU5m3SkRIaBJa+ZmIX/lDiSIlEA1fjgUIpk46yuEfnwziBeIGbIPwiNzjBZY
- 13rsM3fRCP1U08n+hcH3NxZecHYFwn4fUUbApb6YlFmwD33X+qM2Nr7eV0XdFRyMaiZkWcmsjwF
- iaIxIBMXBXlZEUAF0qZxXrTkPP/luGNx5C79oUdK4+gUyvqxz1wc0MMh4WGfR3eFdWtwXgwxtuR
- gvGYM/znnLrl8ihUiQvuE3WpKcmDg+jOtXK+/GPKpShAJByfA/QgACc/lKcJgXtKJiD4vv8Z5sP
- NI1LrmwhcUpHWSllX/mJIovbhOOzk2L4h8dasBhjQ+nKApfwH0brJAV0Xi6lmFH/5ZKSdDVhtZR
- pDJ2lcpmy/D+wXUO6ZIeR5TbClS6ZnufL2C4BtfY3e9lxT9DsGmtR8x8t+TqG/TYYyppoujTdSZ
- bf3ByO/VGRcWPSxiS76RKgWFcCZPr1uqSKSQDl3Fow85bBZoc6k+uenOm6swKay9tTrfrR3blmG
- /f8xiu7kyhCPNMcRE6wmZrIGK+MCUESvoT4fNgzBz0Da44VSRr4kRU68q5bmhy0tl1WMdpN3b/p
- CQDrTwrRKS3TW0dD36vf4er8ExHk5UlFK6FSPQqafR6loChQZMTuS+AkQJetGRlASrei6eoM+Rh
- vzcgzGrNyJK9l3w==
+ bh=ryeYX6u9uZGX9V3SjmKOE4Wgip5e+264DsrGeqvG6ys=;
+ b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBkmwEBYlSsOca3ElrQnrMt95bxiDTAbI9xg5faN
+ mLwiq269jGJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZJsBAQAKCRAFgzErGV9k
+ tu/BD/9KfPnnznilIvKcgQhLG3ICroCc5anwcWjjtxdCAh5x2tfQ7l324AlQJviOX+LQ4Tfzy3n
+ T4k9DnJMe1eZ6nsoLbu1rVbNWB8sCtGsUfmR948HpdO1Lfj9fENASrReMn7qPiTuQjUwy/wOCBd
+ NyJP1aMlTi72165OHAF6jjIu0TJW6gMB5lDw6Khl4kRhJz0119QkdHgySaD2J2+j19YzZJViEuP
+ SESunKnRjsJbzzEcy0GNd+35lBASEw2719Xj5NbjpDw3ssPEgwVNbP+JoIT0f/u2WVQVi07QymE
+ iwmp7gcIK52gA/+9B44679/D6DyV6Pygh2quXAH9KPxGeqbGs4yvMz5zo+wYSR6jUBMBO7yoZUm
+ zwUTJBxwE45Zm/4FKVAIp5YdeNdQCndilc3jr8if+XuyzNMFGVrkqXozHaY0YaJUL1uWr7VyWpY
+ JlqyqewJXBNbPOSYVYvEOrDkXFZZ76f2R+s/uZ/M77zjxWoKtethqXx44KV7hzdkpDG9TolG5FE
+ /1hXfLdsaMF/a5Lwha2rx+dajUdd7CbPYUOvjXoXkSo8+bYgF4Vz+cWZht4u3QH9Ubghizm5t+P
+ jAbTJB5tYLT1Ad1mzslmKj15GiBwLKNfJR3FPcFSI81DhCdcdXtSZUWRr3L2+aXB2fNSkI13TIr
+ d7MlbtRCTbw1miw==
 X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
  fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -96,36 +96,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The c630 exposes its debug UART via a connector on the PCB, enable it.
+This is a follow up on a previous patch fixing the aliases for
+sdm845 devices, fix them here too.
 
 Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 94e37e5d2177..090f73251994 100644
+index 090f73251994..62f503508dea 100644
 --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -33,6 +33,7 @@ / {
- 	chassis-type = "convertible";
+@@ -34,7 +34,7 @@ / {
  
  	aliases {
-+		serial0 = &uart9;
- 		hsuart0 = &uart6;
+ 		serial0 = &uart9;
+-		hsuart0 = &uart6;
++		serial1 = &uart6;
  	};
  
-@@ -708,6 +709,10 @@ bluetooth {
+ 	gpio-keys {
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+index 41f59e32af64..543837316001 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+@@ -56,7 +56,7 @@ framebuffer0: framebuffer@80400000 {
  	};
- };
  
-+&uart9 {
-+	status = "okay";
-+};
-+
- &ufs_mem_hc {
- 	status = "okay";
+ 	aliases {
+-		hsuart0 = &uart6;
++		serial1 = &uart6;
+ 	};
  
+ 	/* Reserved memory changes */
 
 -- 
 2.41.0
