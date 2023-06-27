@@ -2,72 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C74673FF79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:16:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEE2173FF81
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 17:18:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232225AbjF0PQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 11:16:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40366 "EHLO
+        id S232305AbjF0PSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 11:18:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230267AbjF0PQu (ORCPT
+        with ESMTP id S232292AbjF0PSr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 11:16:50 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37591735;
-        Tue, 27 Jun 2023 08:16:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8FCC0611CE;
-        Tue, 27 Jun 2023 15:16:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9746C433C8;
-        Tue, 27 Jun 2023 15:16:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687879009;
-        bh=zcg5VTHtV7nio5jd3NtBafSOvGTKTW5bNlR/bEqbIcI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=if16nDJdJKGrkct5P9OI/SaQ/Sx5SeEjD5dvafflrsul+ruUjSdJksYdmMNYWi6kC
-         FG9+Txe6R3g7UNU1xfaqlYE9YSAKPIBfjPIttpXCxu1dkK2SbwlPoiYukpjRLuc0LK
-         4j0q7SZ5wkve9JyX/1fnDaG+tKfAalIPjusK5M/G7UZeY31Dafmsu3jsGWVpeomwFz
-         FpzDPUtk3hITyS3PB4jrvT8p5nWxkOmhYoSlpApZ1/gXQG3LbZd6lDFt6lhCmNIwkp
-         TIw38VZnpk5b1HoTPQygFq0e8qHNohW4BJBROi9H+qmPy98LnoTTt5bg3WL+uFGVUK
-         KwVNCNXhAsbsA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1qEAQw-00045R-Gd; Tue, 27 Jun 2023 17:16:46 +0200
-Date:   Tue, 27 Jun 2023 17:16:46 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        Tue, 27 Jun 2023 11:18:47 -0400
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EFF139;
+        Tue, 27 Jun 2023 08:18:46 -0700 (PDT)
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3427426f2ddso17563435ab.3;
+        Tue, 27 Jun 2023 08:18:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687879126; x=1690471126;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ijvb8ydCjVx69xo9+vKY/Fihoj6jCn6HLLMClNeKu1Y=;
+        b=fopIXnDGcoxH0NVYoV55zHfYTgKIQMhD8yqY4dCLY1RfZ7azeFMGgSuz1jSeDNDUtR
+         U2yo37rp9VuEITPDDvPKzsrGYK8J8lSz1/BAmB+5EBDpD+bcn+fBINFQu0OeVvhYsewb
+         cgNwlq98Jw6LDKDDLDGvavDAMldPIWG3Xg3rFI7RVWV7ZwF64RzAyG8sT0uAqGnhjst1
+         YCtW78O2JDy6rocVCWs7oU/rUukvwtRJeLbYRMECTsicio6DDSwVbdtm9QEuzxRZW62m
+         gWqf/lWL91cTP8ILkZ5LoeCNt2oksOU433bsiYLVG6qd3OMUkqKSbXTgCuRIX2ySybna
+         ahaA==
+X-Gm-Message-State: AC+VfDz3OFd1Q1QjRZE+sQc4ACISk+gUj0khsK0l2GD1L0ygUUJ0Vx78
+        S8pK/e0iM1KnkpaeojTQVg==
+X-Google-Smtp-Source: ACHHUZ5+u6YK1dd/NS+7qcjA0Vmzepc5iGw59nl8ff+an8BSu5Z6+ijf/GnTk3jYyxo+5wioMbUn5A==
+X-Received: by 2002:a92:c841:0:b0:345:bfc7:d527 with SMTP id b1-20020a92c841000000b00345bfc7d527mr1335127ilq.7.1687879125686;
+        Tue, 27 Jun 2023 08:18:45 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id h13-20020a056638062d00b004290a22e4cdsm1954955jar.108.2023.06.27.08.18.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jun 2023 08:18:45 -0700 (PDT)
+Received: (nullmailer pid 1933897 invoked by uid 1000);
+        Tue, 27 Jun 2023 15:18:42 -0000
+Date:   Tue, 27 Jun 2023 09:18:42 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 08/10] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Message-ID: <ZJr9Xiv6_0nG0Pui@hovoldconsulting.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-9-quic_kriskura@quicinc.com>
- <2eab503f-fa0d-990e-bed2-2445c5496798@linaro.org>
- <b183a130-6237-7d15-5d5a-b56582b92b35@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 5/5] scsi: dt-bindings: ufs: qcom: Fix warning for sdm845
+ by adding reg-names
+Message-ID: <20230627151842.GB1918927-robh@kernel.org>
+References: <20230623113009.2512206-1-abel.vesa@linaro.org>
+ <20230623113009.2512206-6-abel.vesa@linaro.org>
+ <cd84b8c6-fac7-ecef-26be-792a1b04a102@linaro.org>
+ <CTK1AI4TVYRZ.F77OZB62YYC0@otso>
+ <20230623211746.GA1128583-robh@kernel.org>
+ <CTMDIQGOYMKD.1BP88GSB03U54@otso>
+ <d3970163-b8e8-9665-3761-8942c28adaa8@linaro.org>
+ <CTMFNWKMSCJP.DBPZEW25594L@otso>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b183a130-6237-7d15-5d5a-b56582b92b35@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <CTMFNWKMSCJP.DBPZEW25594L@otso>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,30 +84,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 24, 2023 at 12:43:23PM +0530, Krishna Kurapati PSSNV wrote:
-> > On 21.06.2023 06:36, Krishna Kurapati wrote:
-> >> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
-> >> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
-> >> platforms.
-> >>
-> >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+On Mon, Jun 26, 2023 at 10:19:09AM +0200, Luca Weiss wrote:
+> On Mon Jun 26, 2023 at 9:41 AM CEST, Krzysztof Kozlowski wrote:
+> > On 26/06/2023 08:38, Luca Weiss wrote:
+> > >>>> but I guess no resends and it can be superseded.
+> > >>>
+> > >>> Right, the patches got reviews but was never applied... I really need to
+> > >>> find a strategy to keep track of sent patches until they're applied with
+> > >>> my work mailbox, it's not the first time that a patch has gotten
+> > >>> forgotten.
+> > >>
+> > >> There was an error reported on the above series. Why would it be 
+> > >> applied?
+> > > 
+> > > The error report at [0] complains about reg-names but I'm quite sure
+> > > that patch 2/3 resolves this error. Does your bot only apply one patch
+> > > at a time and run the check or apply all of them and then run it? It's
+> > > been a while but I'm fairly sure I ran all of the checks before sending
+> > > since I also documented some other patches in the cover letter there.
+> >
+> > You did it in cover letter, not in the patch, so there is no dependency
+> > for bots recorded.
+> 
+> I'm not aware how to put extra comments into a patch in a series with
+> b4, at least last time I checked I don't think it was possible? But I
+> also thought the cover letter was exactly there for giving some
+> background of the series and documenting any dependencies on other
+> patches.
 
-> > Not a comment to the patch, but very nice that Qcom ensured every
-> > endpoint is wakeup-capable, this used not to be the case before :D
+I just put a '---' line and comments after that in the commit messages. 
+That works fine unless your git branch is going upstream directly (i.e. 
+via a pull request). Even when I apply my own patches, I get them from 
+lore and apply so the comments are dropped.
 
-> Yes wakeup is supported by all ports now, but I didn't make those 
-> changes now as I wanted to keep driver code diff minimal and don't need 
-> wakeup support for the product currently. But for sure, will update 
-> driver code to handle wakeup on all ports in near future.
-
-Why didn't you include it in v9? I thought you had a working
-implementation for this?
-
-Since wakeup will be another case where glue and core need to interact,
-it's good to have the wakeup implementation from the start to be able to
-evaluate your multiport implementation properly.
-
-Right now it looks like you only added wakeup interrupt lookup and
-request, but then you never actually enable them which is not very nice.
-
-Johan
+Rob
