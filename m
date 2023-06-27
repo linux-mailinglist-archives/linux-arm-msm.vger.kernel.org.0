@@ -2,129 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A9657402B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 19:55:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DA687402D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 20:09:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230415AbjF0RzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 13:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36308 "EHLO
+        id S229623AbjF0SJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 14:09:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbjF0RzC (ORCPT
+        with ESMTP id S229437AbjF0SJe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 13:55:02 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 210E52733
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 10:55:01 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-19674cab442so4076582fac.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 10:55:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=squareup.com; s=google; t=1687888499; x=1690480499;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KMDH1mlxwV2sLVWQuxFIR054U5xIxrFoM4b9Bswiao0=;
-        b=bhv2tUNU2iTGPX6FqlVo3PZZoWxpv2x8hi1srmfXdLDB+wA77R3xwpagLS02aKWGTu
-         nH44RpBB5uqk9mlUsTdQ3+BgRf0Wpx1uunj1YdPgGmlFkClfdGVqb7Zh0tG4SvCx9lvG
-         pavLbGTcnIF10qIrSKFpRaJU9moYBw1u1/GSc=
+        Tue, 27 Jun 2023 14:09:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C41187
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 11:08:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1687889325;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=XIzaMLEoZseg15rsHJ94wr9W2L80SXyc2pmPqG7NjnU=;
+        b=KRxG/Vs9StJ623EP04GS/u5tkac1V3Mb02Iep7H2DhNnowgmFSIptOPF7Hz4pM+VhYYp7f
+        4vXcgn9QVYfVUpHx42sazp+o+IvUMMnZl2sGyFW0gsbcAjzuwX0h2OLzYXHqt4v8akro3G
+        cleQ1aO6rkdQJtPGFsoV3o8sIpO0Muk=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-65-EFY3so1GNnCWbGsgdXu4UQ-1; Tue, 27 Jun 2023 14:08:44 -0400
+X-MC-Unique: EFY3so1GNnCWbGsgdXu4UQ-1
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-765a1a97103so306572485a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 11:08:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687888499; x=1690480499;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KMDH1mlxwV2sLVWQuxFIR054U5xIxrFoM4b9Bswiao0=;
-        b=bEvjl1urSLqf1cD29N4bHbRIgcK8yfhc5jQDxTQKJ5qS8XoWkucXJnF+jz0oX1l++v
-         r+MtxgZICYkq+C4CgWRWs1EwIBMiMuGd7Vq9hiTccUt4eLjoS4v9/7xZrsb8BYl2i+HU
-         d9NY+4rSiaXUgBCcdICtHWC+m286GYRckqbilaRt2wGWeH2kKG4QcawrhghY3p2NosBz
-         oRKaZl+i6I1KXoKYHLJAfP9xtpdHC+KIid7/xySNLoWfj02UpUDGV8WyiG7vCiUXETC+
-         HobisFbGQLU8/O8J+vr/UMFYjx3yopK/rJRwf+gQGKApaa5Wzi1YJ0VYtu3FIPq1I5LF
-         jp5Q==
-X-Gm-Message-State: AC+VfDxLBGvfqwI+pN+E9giqdk5b9ov910G9zjA33+HCIF3cb4NnfU8p
-        v+E5YKZaYH/Wropeo1U5KNiaKQ==
-X-Google-Smtp-Source: ACHHUZ5128JJUpofvc84U9QEvguT6ylxK0NPBUtGocO3qCpVL4swAAl6Xq4iRqzHQOelQG16lCO4FA==
-X-Received: by 2002:a05:6870:c812:b0:1ad:1ce0:c348 with SMTP id ee18-20020a056870c81200b001ad1ce0c348mr15263035oab.11.1687888499657;
-        Tue, 27 Jun 2023 10:54:59 -0700 (PDT)
-Received: from [10.96.32.61] (137-025-033-021.res.spectrum.com. [137.25.33.21])
-        by smtp.gmail.com with ESMTPSA id d88-20020a17090a6f6100b00253508d9145sm6879840pjk.46.2023.06.27.10.54.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jun 2023 10:54:59 -0700 (PDT)
-Message-ID: <30944ea8-d4aa-d0fd-7eaa-64b59e32eb6b@squareup.com>
-Date:   Tue, 27 Jun 2023 10:54:55 -0700
+        d=1e100.net; s=20221208; t=1687889324; x=1690481324;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XIzaMLEoZseg15rsHJ94wr9W2L80SXyc2pmPqG7NjnU=;
+        b=KSaApNDE8EgGRshbeE8IQdZMdejkQEoHZV4UkfmhxJSPpydNKftEGIOVS8XQEfmYeX
+         nSzXKuYD5/FeNJ+Jpjj1QCli2lBsSBOsMPBbWwbxNkhHLj7lqxGaF8Cmcrf0l3RpzNWC
+         9W1JmsnVCGEcSR8yi26pZVrj8+NfDot7eSyKo6x1M1Z9qWJVxPaPkEwCoq78AYB1AixU
+         pQ49x8nsfrpggiSHkOxP3luxIDMdvz9Wkd5nvY35/XjTdN1M2QbHOkVy5Dy4TNB4YUp7
+         8Ac9Igq5/GhWGyHN+jFyQkZsD74fngUXrUVnxaBZN6V/O+s1XE1HC/TtDMTLeA3jbjRE
+         OYyw==
+X-Gm-Message-State: AC+VfDyIUK6RRt3xnrOx4poytOvAOfHtmGEhb4ggybTNP6pYC3XqoLc6
+        474ofVn4CgitQvIq5Mr2q5+zgWyzE7wR1dxxwsZVh0BsmPMgm6BQgi4fVhzeFaM8Xv2U8WdL0VD
+        5Y9VczpyEFILy6ijfsO78TS5o7w==
+X-Received: by 2002:a05:620a:4087:b0:766:fbe6:ccbc with SMTP id f7-20020a05620a408700b00766fbe6ccbcmr5700133qko.29.1687889324173;
+        Tue, 27 Jun 2023 11:08:44 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ7TDVN2FeMGh6qcSDmZy8YGLhDuYZ5iNM3siut168C5HboPBzGXzZVtnAVC+3BFKsCrtFSPcQ==
+X-Received: by 2002:a05:620a:4087:b0:766:fbe6:ccbc with SMTP id f7-20020a05620a408700b00766fbe6ccbcmr5700109qko.29.1687889323884;
+        Tue, 27 Jun 2023 11:08:43 -0700 (PDT)
+Received: from fedora ([107.171.218.122])
+        by smtp.gmail.com with ESMTPSA id u12-20020ae9c00c000000b0076264532630sm4141287qkk.121.2023.06.27.11.08.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jun 2023 11:08:43 -0700 (PDT)
+Date:   Tue, 27 Jun 2023 14:08:41 -0400
+From:   Adrien Thierry <athierry@redhat.com>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v3 2/3] phy: qcom-snps-femto-v2: add system sleep PM ops
+Message-ID: <ZJslqaHZqdizSGbc@fedora>
+References: <20230622194021.80892-1-athierry@redhat.com>
+ <20230622194021.80892-3-athierry@redhat.com>
+ <52qapxj7sdearduro3iiqqpekrltc5zviwgq3gz4j4lne6cp5b@phikpenjras3>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.8.0
-Subject: Re: [PATCH 02/11] arm64: dts: qcom: msm8939: Drop
- "qcom,idle-state-spc" compatible
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        James Willcox <jwillcox@squareup.com>,
-        Joseph Gates <jgates@squareup.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Zac Crosby <zac@squareup.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Jun Nie <jun.nie@linaro.org>, Max Chen <mchen@squareup.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        alsa-devel@alsa-project.org, iommu@lists.linux.dev,
-        linux-usb@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh@kernel.org>,
-        Andy Gross <andy.gross@linaro.org>
-References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
- <20230627-topic-more_bindings-v1-2-6b4b6cd081e5@linaro.org>
-From:   Benjamin Li <benl@squareup.com>
-In-Reply-To: <20230627-topic-more_bindings-v1-2-6b4b6cd081e5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <52qapxj7sdearduro3iiqqpekrltc5zviwgq3gz4j4lne6cp5b@phikpenjras3>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/27/23 9:24 AM, Konrad Dybcio wrote:
-> As of today, the only cool and legal way to get ARM64 SMP going is
-> via PSCI (or spin tables). Sadly, not all chip and device vendors were
-> considerate of this in the early days of arm64. Qualcomm, for example
-> reused their tried-and-true spin-up method from MSM8974 and their Krait/
-> arm32 Cortex designs.
-> 
-> MSM8916 supports SMP with its arm32 dt overlay, as probably could 8939.
-> But the arm64 DT should not define non-PSCI SMP or CPUidle stuff.
-> 
-> Drop the qcom,idle-state-spc compatible (associated with Qualcomm-specific
-> CPUIdle) to make the dt checker happy:
-> 
-> apq8039-t2.dtb: idle-states: cpu-sleep-0:compatible:
-> ['qcom,idle-state-spc', 'arm,idle-state'] is too long
-> 
-> Fixes: 61550c6c156c ("arm64: dts: qcom: Add msm8939 SoC")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Hi Bjorn,
 
-Reviewed-by: Benjamin Li <benl@squareup.com>
+On Thu, Jun 22, 2023 at 02:43:07PM -0700, Bjorn Andersson wrote:
+> On Thu, Jun 22, 2023 at 03:40:19PM -0400, Adrien Thierry wrote:
+> > The downstream driver [1] implements set_suspend(), which deals with
+> > both runtime and system sleep/resume. The upstream driver already has
+> > runtime PM ops, so add the system sleep PM ops as well, reusing the same
+> > code as the runtime PM ops.
+> > 
+> > [1] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c
+> > 
+> > Signed-off-by: Adrien Thierry <athierry@redhat.com>
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 18 ++++++++++--------
+> >  1 file changed, 10 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > index ce1d2f8b568a..378a5029f61e 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > @@ -179,7 +179,7 @@ static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+> >  	readl_relaxed(base + offset);
+> >  }
+> >  
+> > -static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+> > +static int qcom_snps_hsphy_do_suspend(struct qcom_snps_hsphy *hsphy)
+> >  {
+> >  	dev_dbg(&hsphy->phy->dev, "Suspend QCOM SNPS PHY\n");
+> >  
+> > @@ -199,7 +199,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+> >  	return 0;
+> >  }
+> >  
+> > -static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+> > +static int qcom_snps_hsphy_do_resume(struct qcom_snps_hsphy *hsphy)
+> >  {
+> >  	int ret;
+> >  
+> > @@ -214,25 +214,25 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+> >  	return 0;
+> >  }
+> >  
+> > -static int __maybe_unused qcom_snps_hsphy_runtime_suspend(struct device *dev)
+> > +static int __maybe_unused qcom_snps_hsphy_suspend(struct device *dev)
+> >  {
+> >  	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
+> >  
+> >  	if (!hsphy->phy_initialized)
+> >  		return 0;
+> >  
+> > -	qcom_snps_hsphy_suspend(hsphy);
+> > +	qcom_snps_hsphy_do_suspend(hsphy);
+> >  	return 0;
+> >  }
+> >  
+> > -static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
+> > +static int __maybe_unused qcom_snps_hsphy_resume(struct device *dev)
+> >  {
+> >  	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
+> >  
+> >  	if (!hsphy->phy_initialized)
+> >  		return 0;
+> >  
+> > -	qcom_snps_hsphy_resume(hsphy);
+> > +	qcom_snps_hsphy_do_resume(hsphy);
+> >  	return 0;
+> >  }
+> >  
+> > @@ -518,8 +518,10 @@ static const struct of_device_id qcom_snps_hsphy_of_match_table[] = {
+> >  MODULE_DEVICE_TABLE(of, qcom_snps_hsphy_of_match_table);
+> >  
+> >  static const struct dev_pm_ops qcom_snps_hsphy_pm_ops = {
+> > -	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_runtime_suspend,
+> > -			   qcom_snps_hsphy_runtime_resume, NULL)
+> > +	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_suspend,
+> > +			   qcom_snps_hsphy_resume, NULL)
+> > +	SET_SYSTEM_SLEEP_PM_OPS(qcom_snps_hsphy_suspend,
+> > +				qcom_snps_hsphy_resume)
+> 
+> Won't this cause issues if you system suspend the device while it's
+> already runtime suspended?
+>
+
+I'm not sure if it would cause issues, but after reflexion and discussion
+with Andrew, I think it's unnecessary to add system PM ops in the femto
+PHY driver. 
+
+In the dwc3 core, both system and runtime suspend end up calling
+dwc3_suspend_common(). From there, what happens depends on the USB mode
+and whether the controller is entering system or runtime suspend.
+
+HOST mode:
+  (1) system suspend on a non-wakeup controller
+
+  The [1] if branch is taken. dwc3_core_exit() is called, which ends up
+  calling phy_power_off() and phy_exit(). Those two functions decrease the
+  PM runtime count at some point, so they will trigger the PHY runtime sleep
+  (assuming the count is right).
+
+  (2) runtime suspend / system suspend on a wakeup controller  
+
+  The [1] branch is not taken. dwc3_suspend_common() calls
+  phy_pm_runtime_put_sync(dwc->usb2_generic_phy). Assuming the ref count is
+  right, the PHY runtime suspend op is called.
+
+DEVICE mode:
+
+  dwc3_core_exit() is called on both runtime and system sleep
+  unless the controller is already runtime suspended.
+
+OTG mode:
+  (1) system suspend : dwc3_core_exit() is called
+
+  (2) runtime suspend : do nothing
+
+With that in mind:
+
+1) Does the PHY need to implement system sleep callbacks? 
+
+dwc3 core system sleep callback will already runtime suspend the PHY, and
+also call phy_power_off() and phy_exit() for non-wakeup controllers. So,
+adding system PM ops to the femto PHY driver would be redundant.
+
+2) Should the ref_clk be disabled for runtime sleep / wakeup controller
+system sleep, or only for non-wakeup controller system sleep?
+
+I'm a little hesitant here. In my submission I'm disabling it in both, but
+looking at the downstream code you provided, it seems it's only disabled
+for system sleep. ref_clk is disabled by phy->set_suspend() [2] which IIUC
+is only called in the system sleep path through dwc3_core_exit() [3].
+Moreover, in host mode the upstream code seems to make a distinction
+between 1) runtime sleep / system sleep for wakeup controller, and 2)
+system sleep for non-wakeup controller where phy_power_off() and
+phy_exit() are only called in the latter. This suggests the PHY is not
+supposed to be in a fully powered-off state for runtime sleep and system
+sleep for wakeup controller. So, it's possible the ref_clk should be kept
+enabled in this case. What is your take on this? I could only disable
+ref_clk in the femto phy->exit() callback to keep ref_clk enabled during
+runtime sleep and make sure it's only disabled on system sleep for
+non-wakeup controller.
+
+Hoping I'm not missing anything here.
+
+Best,
+
+Adrien
+
+[1] https://elixir.bootlin.com/linux/latest/source/drivers/usb/dwc3/core.c#L1988
+[2] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c#L524
+[3] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/dwc3/core.c#L1915
+
+> Regards,
+> Bjorn
+> 
+> >  };
+> >  
+> >  static void qcom_snps_hsphy_override_param_update_val(
+> > -- 
+> > 2.40.1
+> > 
+
