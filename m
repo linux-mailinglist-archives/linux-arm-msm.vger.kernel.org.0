@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E7B1740105
+	by mail.lfdr.de (Postfix) with ESMTP id BA92B740106
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 18:26:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231942AbjF0QZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 12:25:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46676 "EHLO
+        id S232323AbjF0QZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 12:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232345AbjF0QZD (ORCPT
+        with ESMTP id S232398AbjF0QZG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 12:25:03 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA04230D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:25:01 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fa16c6a85cso4820125e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:25:01 -0700 (PDT)
+        Tue, 27 Jun 2023 12:25:06 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 266CB30D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:25:04 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f9fdb0ef35so4657771e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 09:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687883100; x=1690475100;
+        d=linaro.org; s=google; t=1687883102; x=1690475102;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Q33POZnKUnc44DnNl9mQs414WVdMBUFcIaqMk7TwHgM=;
-        b=QYqAGssgz0Eg7BvDE9m0UQjkpMaZujlgUxNELGTmjD/MUVciTwQqEoa6l1YospPYtK
-         9RQXvrhYxwr7/oTsoUsYNvG996nx+nOAwJU/4w7mkXKc1u6gCJODyPi+N1RCjTrUBoHT
-         G9iqKDcKCSr8Tp5OT86Bf+Sbj4Ap0iFnrDivV0NFWY6HiPjy/vysASuy3DssXAjL6Q70
-         NtJaI/MD19Zj2FiWLhrRuLnqPI77AqLWTsRzGQYDC31x1m0Ov41R9rnU48UkL1od+hXN
-         gO3ZFvK3qr6OjgPRkphBhwnN7jzLsS3vm7o/d+TSkeXLXX7LBCXRe4l46p6vNfbq2Kzv
-         5Z/Q==
+        bh=iQgv+M2yvcOQU4FeOLMklrteeN9rCIkhqHWc6b1bMlw=;
+        b=kDAt9Yy2OlLY6IWaIgh8Bk9OfVdK25RlsrNuwLLMtXXbG397TVa8a3J+BE2Rthx19v
+         ohLNC/e5SJMBYIIx9zS2sFd/JWPzMOHoJq33iJVFsCwitbawpcYQxHixGIODdZjNyoBa
+         ZzskP4FEFk2ilEFEAaixuyH1WQha+2ExAWd6CEgTK1Y9lQ77j2gYVGYys3ECidK9mrHk
+         nvJj+DSJ2Zxm3GEMajsX81wBQieJ1d4ahWo9QmqJRXHZlDJLhMcjLkakBY8kA8KmjYwC
+         VFI7sMK3I0eHGPSZYa3fQRAeFm0je1CrG0P0NoPv5kecifNBI9VjBaa7iVbD/OGDkCea
+         ax8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687883100; x=1690475100;
+        d=1e100.net; s=20221208; t=1687883102; x=1690475102;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q33POZnKUnc44DnNl9mQs414WVdMBUFcIaqMk7TwHgM=;
-        b=OK7Cu9uC8W4EYQRoSBiAGJ9VddsUUe2zxiRcw9TtFw1n+pic7FqzAkru5sDAsEH6Nw
-         So+l4THtfG7w14y22x2s6wvl0hVOYVB7oQIVLaLcnCOszlHdl40gpG5etcoQZSqFYf51
-         0XAGnCgZZytAyBJYQ3lr8p65xt5kZ3312eXxWgqS2K32djcYSBUPrJpUpdZAqjMpthAo
-         UvQTpTE/IJ+7xB41rslX+Z9RIk6+tWZGtHOK5lJCvuT1xppLN0tNARMrin9ZdArf8W/r
-         jMqdGy3Jju7jBT3uMKyUdyU42U3tGcCknLhGneSr91bJzaNUz7Xkl23kC1xwpBxIhi/y
-         6edw==
-X-Gm-Message-State: AC+VfDwLrRtsVY5LU/n+h+qNkFXJ/9AkTI/4lvcuJqo8LBHsFY297OX1
-        9WGR6R9WYjvkAZDmOV0otViwRQ==
-X-Google-Smtp-Source: ACHHUZ6CFt+d+5Xq/e+nMds5v3rJtmCSaJmgAZcrHw7TSi73DKGhsgqOetWXrvYdZglDMZM5e2B0FA==
-X-Received: by 2002:a05:6512:3d26:b0:4fb:89c1:c209 with SMTP id d38-20020a0565123d2600b004fb89c1c209mr1281822lfv.62.1687883100008;
-        Tue, 27 Jun 2023 09:25:00 -0700 (PDT)
+        bh=iQgv+M2yvcOQU4FeOLMklrteeN9rCIkhqHWc6b1bMlw=;
+        b=g5Ye8cG6YtvylwOsiGnfKYlXxer3gpYZl6VaBccCNHLGghxHuE10xZMJoaZBN7834P
+         Yos5MlVHknV8l7Jl3jlnKAO8uMjvr5FAZG8Uz2/iXeqOI2Bv2/3G4RaQWo4JCJjCjx8c
+         /MAHDEy6zIHuM9l6X6QgnppaRIIgO3I9+EbNFx/ezt2N/End1GeAHCgwnhh33OROMrkZ
+         Ax6QXoEOYGbhVg2hpIP+OzMNSs4hHqAeEiyGmY6b93B7xd3SpyfRJSSuo4p6v4irZ6jD
+         1reag59UtT9NjThBGS6g70bp1yub7OgURwzgGi/t/jxajxzes5G8+GNqd+WLIp6QJXaB
+         Br7w==
+X-Gm-Message-State: AC+VfDxHnTdum0HTG6/dkvtJ8wsRNYReFTyGr60kzk4gLgd+ynnzRSxa
+        CC19O9Vf/vf4+LFUR8tYondXXQ==
+X-Google-Smtp-Source: ACHHUZ5yApBC4INNLgHvtxRRdunBBs9+0RduUnvVu4BrnfQlBcgFBMr/Gb/6J5qgvmBXvYAWuE6Fvw==
+X-Received: by 2002:a05:6512:3c9e:b0:4fb:7be5:46b3 with SMTP id h30-20020a0565123c9e00b004fb7be546b3mr3902801lfv.55.1687883102401;
+        Tue, 27 Jun 2023 09:25:02 -0700 (PDT)
 Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
-        by smtp.gmail.com with ESMTPSA id g7-20020a19ac07000000b004fb259a5589sm1190508lfc.104.2023.06.27.09.24.57
+        by smtp.gmail.com with ESMTPSA id g7-20020a19ac07000000b004fb259a5589sm1190508lfc.104.2023.06.27.09.25.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jun 2023 09:24:59 -0700 (PDT)
+        Tue, 27 Jun 2023 09:25:02 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 27 Jun 2023 18:24:25 +0200
-Subject: [PATCH 09/11] dt-bindings: arm: msm: kpss-acc: Make the optional
- reg truly optional
+Date:   Tue, 27 Jun 2023 18:24:26 +0200
+Subject: [PATCH 10/11] dt-bindings: usb: dwc3: Allow just 1 interrupt for
+ MSM8996
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230627-topic-more_bindings-v1-9-6b4b6cd081e5@linaro.org>
+Message-Id: <20230627-topic-more_bindings-v1-10-6b4b6cd081e5@linaro.org>
 References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
 In-Reply-To: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
 To:     cros-qcom-dts-watchers@chromium.org,
@@ -99,11 +99,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Andy Gross <andy.gross@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687883074; l=947;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687883074; l=1056;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=wt3diYHxaifCvK5Xl8Y/T0S8CL1BVeC3ZMzX71Qv7t0=;
- b=LUZZ9rw1io0j4EW3EhtpAO7GnVfigJDEYVe/+eZsBuOm+mcYfTwRC4+7VMCWlKK93ARSOPAoO
- RkmO+n5mJD7A/i1W37MwjkK+vgktyNsi+MknPe8Bf8NUXAKU42wjmD/
+ bh=uv1qnNvLB8G/rnBdtPGJ5lEE8zxGk1cKOrp6LALI2o0=;
+ b=CbB0RfIBkaHhb6P0sSoQoxoKLH0+Nroq3t9sxL+VfHWMFB3r3IxNmJNLNTbVFLUIegbeAFWQG
+ oue2RQYT9w3Ch9MjHPlF80d7+kumlsNMxdRcFp2gCaZ4O5ae5p95yJx
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,27 +116,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The description of reg[1] says that register is optional. Adjust
-minItems to make it truly optional.
+MSM8996, similarly to SDM660 has two DWC3 controllers: one for SS and
+another one for HS operation. Allow just specifying the HS interrupt
+in the latter case.
 
-Fixes: 12f40018b6a9 ("dt-bindings: arm: msm: Convert kpss-acc driver Documentation to yaml")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
-index 5e16121d9f0d..75b6287db2c9 100644
---- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
-+++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
-@@ -22,6 +22,7 @@ properties:
-       - qcom,kpss-acc-v2
- 
-   reg:
-+    minItems: 1
-     items:
-       - description: Base address and size of the register region
-       - description: Optional base address and size of the alias register region
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index aca20aa8f504..beaeba47a150 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -394,7 +394,6 @@ allOf:
+           contains:
+             enum:
+               - qcom,msm8953-dwc3
+-              - qcom,msm8996-dwc3
+               - qcom,msm8998-dwc3
+               - qcom,sm6115-dwc3
+     then:
+@@ -411,6 +410,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,msm8996-dwc3
+               - qcom,sdm660-dwc3
+     then:
+       properties:
 
 -- 
 2.41.0
