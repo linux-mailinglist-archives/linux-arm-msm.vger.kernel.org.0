@@ -2,271 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05CEB73F09B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 03:46:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A31AC73F336
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 06:13:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229913AbjF0BqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jun 2023 21:46:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44232 "EHLO
+        id S229895AbjF0ENl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 00:13:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjF0BqZ (ORCPT
+        with ESMTP id S230030AbjF0ENk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jun 2023 21:46:25 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A22F910F5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 18:46:22 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-bfee66a5db6so2528258276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jun 2023 18:46:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687830382; x=1690422382;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0bRgShizAyrq4ywTgGYbTsfOTVKcXWK3I643AU1+WOo=;
-        b=PiFAya7eepsENtFteEhdYxjkDQ2fR+5ZIqU7g8HlAcxiBbTASHNr4+puvS20O1mCID
-         VpKKpFjVakeiXMotVqKCLHAelCmuzZ0mGdF/2R68rQD4E1jFe/gCuGdw09+F1FUxKJ7y
-         ajEAz8nQTZGrv1bpahmqPYQfEctu7YvV27JwhnUVmBB47uqU+R+oVZhyJsUKhE2rX+Xk
-         HLFE9Yw/d15FrZmiz4D/aLK68P9Ar4+tl8OVgW8ulGEmEUfaI9lZ5O+YoCMDpVvdp3yf
-         SksNpmIcqg0ftjw04Ff+wxSu4F4nJcbkeZCYdstyrbsYiRn7dBqGAwihbtjvzWdnu+PL
-         asOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687830382; x=1690422382;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0bRgShizAyrq4ywTgGYbTsfOTVKcXWK3I643AU1+WOo=;
-        b=FbOgeenvfL5P762UiJs94/0lSU++RR8Hj1YSpD9/FsLHRYk5biHJOQIPqpCuhjaCa+
-         VqseY5I4hGGaYSU4YshXtYSnY0OMdQIFIFjYI3e+ykslMbctN6KNVEJff/471V9x1WaV
-         J2pOrdBC+ZDtnn7RAjmrKUMEwdlVWp/WoyVOKtv30epNQexcSbFAMLPbviyH4H6u5zkj
-         +L24y1onvAz9gzk0psscTTABMj/xGgEewSDDHkuozxQ3cergfe/5pgbZpp3f6JwkASnT
-         vc42+FAz+r0Ljkl8FSYLLjGmR5dVimS7IfPLJH1WRB4lr94hhQZ/MjOxmGnlcUi9W7o2
-         2PkA==
-X-Gm-Message-State: AC+VfDwTQUXmlVpLpsI29N/HUffW5dxk/qUTi0DDP0QX6LvLPxZ5c1zb
-        v4OuRXrb/HFM7zCD/kwQUD5AsPgt22jZUdKuGmaJag==
-X-Google-Smtp-Source: ACHHUZ5BQVAof3ACJ0RbwvuMHHQBnDo4hYsUHes6spt6mLpONQOpBBdX0oDMZJCj/4KBBKJTewAN/ehvZdkdSsLUMvA=
-X-Received: by 2002:a25:af04:0:b0:c21:88bd:3ffc with SMTP id
- a4-20020a25af04000000b00c2188bd3ffcmr3510612ybh.17.1687830381788; Mon, 26 Jun
- 2023 18:46:21 -0700 (PDT)
+        Tue, 27 Jun 2023 00:13:40 -0400
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75BEE10FC;
+        Mon, 26 Jun 2023 21:13:39 -0700 (PDT)
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35QMjDNN029311;
+        Tue, 27 Jun 2023 04:13:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding;
+ s=corp-2023-03-30; bh=qE1HJ292s3PXvLRoSr2Nw3hL8I7+kggKD9BrBYerbDA=;
+ b=a5t50CXV4q8mIIpAJq12aaDS/qBcZvmjsY+27MVXUsvUPmreAXKZ5Gu40e0RceaWryoP
+ 6jUsKdSxVQ6o9vqZF8AAyCptj/QH330OLUNFvGLsb0iEQg0anIe+AkQqNLQgHiJ00vVl
+ w6UDOrr7AFQzr6Ave5R9AnWibIJfNwnFYKmSXFMGXXnCf5wdYEIQZB0umN4Ae46UqhDH
+ Mumx9Ekv08CvodsXBk+deCrb1YA3kgAZ2LhVXTgdRFHIguMJ3Ri1MJPKMcgQNe62yO34
+ Nf0EPxwh44p4LHMlgY89Wq5qlLiYEK3Huv7JRo8F+K2i2YOI3R3E7O5c7rs392GbuUx5 4g== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3rds1u3yvr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 27 Jun 2023 04:13:22 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 35R1DS8U026348;
+        Tue, 27 Jun 2023 04:13:21 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3rdpxaehdq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 27 Jun 2023 04:13:21 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35R4DLTQ009154;
+        Tue, 27 Jun 2023 04:13:21 GMT
+Received: from ca-dev112.us.oracle.com (ca-dev112.us.oracle.com [10.129.136.47])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3rdpxaeh80-1;
+        Tue, 27 Jun 2023 04:13:21 +0000
+From:   Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc:     harshit.m.mogalapalli@oracle.com, error27@gmail.com,
+        dan.carpenter@linaro.org, kernel-janitors@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH next] drm/msm/a5xx: Fix a NULL dereference bug in a5xx_gpu_init()
+Date:   Mon, 26 Jun 2023 21:12:35 -0700
+Message-ID: <20230627041250.3899791-1-harshit.m.mogalapalli@oracle.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <Y2leZDfLj/5963wl@intel.com> <d0b5abdc-85ad-fee2-9760-866c32bab111@quicinc.com>
- <d8b1e910-6943-d7b7-5433-71f8b350bfcb@linaro.org> <5879e5c1-3f78-995b-b5ef-bbdf31019693@quicinc.com>
-In-Reply-To: <5879e5c1-3f78-995b-b5ef-bbdf31019693@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 27 Jun 2023 04:46:10 +0300
-Message-ID: <CAA8EJpp-W1rvV8Hb_HSmRn0aBdL_-jaxeWOnEeWguEAGBDeZug@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] Support for Solid Fill Planes
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        quic_abhinavk@quicinc.com, dri-devel@lists.freedesktop.org,
-        swboyd@chromium.org, daniel.vetter@ffwll.ch, seanpaul@chromium.org,
-        laurent.pinchart@ideasonboard.com,
-        wayland-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-27_01,2023-06-26_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 spamscore=0
+ mlxlogscore=999 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306270039
+X-Proofpoint-GUID: yfOpun_fnhTicgyspkhXL1luRak9scc_
+X-Proofpoint-ORIG-GUID: yfOpun_fnhTicgyspkhXL1luRak9scc_
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Jun 2023 at 03:45, Jessica Zhang <quic_jesszhan@quicinc.com> wro=
-te:
->
->
->
-> On 6/26/2023 5:06 PM, Dmitry Baryshkov wrote:
-> > On 27/06/2023 02:02, Jessica Zhang wrote:
-> >>
-> >>
-> >> On 11/7/2022 11:37 AM, Ville Syrj=C3=A4l=C3=A4 wrote:
-> >>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
-> >>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
-> >>>> properties. When the color fill value is set, and the framebuffer is
-> >>>> set
-> >>>> to NULL, memory fetch will be disabled.
-> >>>
-> >>> Thinking a bit more universally I wonder if there should be
-> >>> some kind of enum property:
-> >>>
-> >>> enum plane_pixel_source {
-> >>>     FB,
-> >>>     COLOR,
-> >>>     LIVE_FOO,
-> >>>     LIVE_BAR,
-> >>>     ...
-> >>> }
-> >>
-> >> Reviving this thread as this was the initial comment suggesting to
-> >> implement pixel_source as an enum.
-> >>
-> >> I think the issue with having pixel_source as an enum is how to decide
-> >> what counts as a NULL commit.
-> >>
-> >> Currently, setting the FB to NULL will disable the plane. So I'm
-> >> guessing we will extend that logic to "if there's no pixel_source set
-> >> for the plane, then it will be a NULL commit and disable the plane".
-> >>
-> >> In that case, the question then becomes when to set the pixel_source
-> >> to NONE. Because if we do that when setting a NULL FB (or NULL
-> >> solid_fill blob), it then forces userspace to set one property before
-> >> the other.
-> >
-> > Why? The userspace should use atomic commits and as such it should all
-> > properties at the same time.
->
-> Correct, userspace will set all the properties within the same atomic
-> commit. The issue happens when the driver iterates through each property
-> within the MODE_ATOMIC ioctl [1].
->
-> For reference, I'm thinking of an implementation where we're setting the
-> pixel_source within drm_atomic_plane_set_property().
->
-> So something like:
->
-> drm_atomic_plane_set_property( ... )
-> {
->      if (property =3D=3D config->prop_fb_id) {
->          if (fb)
->              state->pixel_source =3D FB;
->          else
->              state->pixel_source =3D NONE;
->      } else if (property =3D=3D config->prop_solid_fill) {
->          if (solid_fill_blob)
->              state->pixel_source =3D SOLID_FILL;
->      }
->
->      // ...
-> }
+Smatch complains:
+	drivers/gpu/drm/msm/adreno/a5xx_gpu.c:1753
+	a5xx_gpu_init() warn: variable dereferenced before
+	check 'pdev' (see line 1746)
 
-I think this is somewhat overcomplicated. Allow userspace to set these
-properties as it sees fit and then in
-drm_atomic_helper_check_plane_state() consider all of them to set
-plane_state->visible.
+When no device is defined, dereferencing pdev is a NULL dereference.
+Fix this by dereferencing pdev to get the config post the NULL check.
 
-We still have to remain compatible with older userspace (esp. with a
-non-atomic one). It expects that a plane is enabled after setting both
-CRTC and FB. So maybe you are right and we should force pixel_source
-to FB if FB is set.
-
->
-> If userspace sets solid_fill to a valid blob and FB to NULL, it's
-> possible for driver to first set the solid_fill property then set the
-> fb_id property later. This would cause pixel_source to be set to NONE
-> after all properties have been set.
->
-> I've also considered an implementation without the `pixel_source =3D NONE=
-`
-> line in the prop_fb_id case, but we would still need to find somewhere
-> to set the pixel_source to NONE in order to allow userspace to disable a
-> plane.
-
-Good point. I don't think we would need NONE (just setting CRTC to
-none or FB to none and pixel_source to FB would disable the plane),
-but I might be missing something here.
-
->
-> [1]
-> https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/drm_atomic=
-_uapi.c#L1385
->
-> >
-> >> Because of that, I'm thinking of having pixel_source be represented by
-> >> a bitmask instead. That way, we will simply unset the corresponding
-> >> pixel_source bit when passing in a NULL FB/solid_fill blob. Then, in
-> >> order to detect whether a commit is NULL or has a valid pixel source,
-> >> we can just check if pixel_source =3D=3D 0.
-> >>
-> >> Would be interested in any feedback on this.
-> >
-> > This is an interesting idea. Frankly speaking, I'd consider it
-> > counter-intuitive at the first glance.
-> >
-> > Consider it to act as a curtain. Setup the curtain (by writing the fill
-> > colour property). Then one can close the curtain (by switching source t=
-o
-> > colour), or open it (by switching to any other source). Bitmask wouldn'=
-t
-> > complicate this.
->
-> So if I'm understanding your analogy correctly, pixel_source won't
-> necessarily be set whenever the FB or solid_fill properties are set. So
-> that way we can have both FB *and* solid_fill set at the same time, but
-> only the source that pixel_source is set to would be displayed.
-
-Yes. And if the source is not configured, the plane will be marked as
-not visible.
-
->
-> Thanks,
->
-> Jessica Zhang
->
-> >
-> >>
-> >> Thanks,
-> >>
-> >> Jessica Zhang
-> >>
-> >>>
-> >>>> In addition, loosen the NULL FB checks within the atomic commit
-> >>>> callstack
-> >>>> to allow a NULL FB when color_fill is nonzero and add FB checks in
-> >>>> methods where the FB was previously assumed to be non-NULL.
-> >>>>
-> >>>> Finally, have the DPU driver use drm_plane_state.color_fill and
-> >>>> drm_plane_state.color_fill_format instead of
-> >>>> dpu_plane_state.color_fill,
-> >>>> and add extra checks in the DPU atomic commit callstack to account
-> >>>> for a
-> >>>> NULL FB in cases where color_fill is set.
-> >>>>
-> >>>> Some drivers support hardware that have optimizations for solid fill
-> >>>> planes. This series aims to expose these capabilities to userspace a=
-s
-> >>>> some compositors have a solid fill flag (ex. SOLID_COLOR in the Andr=
-oid
-> >>>> hardware composer HAL) that can be set by apps like the Android Gear=
-s
-> >>>> app.
-> >>>>
-> >>>> Userspace can set the color_fill value by setting COLOR_FILL_FORMAT
-> >>>> to a
-> >>>> DRM format, setting COLOR_FILL to a color fill value, and setting th=
-e
-> >>>> framebuffer to NULL.
-> >>>
-> >>> Is there some real reason for the format property? Ie. why not
-> >>> just do what was the plan for the crttc background color and
-> >>> specify the color in full 16bpc format and just pick as many
-> >>> msbs from that as the hw can use?
-> >>>
-> >>>>
-> >>>> Jessica Zhang (3):
-> >>>>    drm: Introduce color fill properties for drm plane
-> >>>>    drm: Adjust atomic checks for solid fill color
-> >>>>    drm/msm/dpu: Use color_fill property for DPU planes
-> >>>>
-> >>>>   drivers/gpu/drm/drm_atomic.c              | 68
-> >>>> ++++++++++++-----------
-> >>>>   drivers/gpu/drm/drm_atomic_helper.c       | 34 +++++++-----
-> >>>>   drivers/gpu/drm/drm_atomic_uapi.c         |  8 +++
-> >>>>   drivers/gpu/drm/drm_blend.c               | 38 +++++++++++++
-> >>>>   drivers/gpu/drm/drm_plane.c               |  8 +--
-> >>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  7 ++-
-> >>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 66 ++++++++++++++-----=
+Fixes: 736a93273656 ("drm/msm/a5xx: really check for A510 in a5xx_gpu_init")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 ---
-> >>>>   include/drm/drm_atomic_helper.h           |  5 +-
-> >>>>   include/drm/drm_blend.h                   |  2 +
-> >>>>   include/drm/drm_plane.h                   | 28 ++++++++++
-> >>>>   10 files changed, 188 insertions(+), 76 deletions(-)
+This is based on static analysis, only compile tested.
+---
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index a99310b68793..adaf8f8e7f2d 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1743,7 +1743,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ {
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct platform_device *pdev = priv->gpu_pdev;
+-	struct adreno_platform_config *config = pdev->dev.platform_data;
++	struct adreno_platform_config *config;
+ 	struct a5xx_gpu *a5xx_gpu = NULL;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
+@@ -1755,6 +1755,8 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ 		return ERR_PTR(-ENXIO);
+ 	}
+ 
++	config = pdev->dev.platform_data;
++
+ 	a5xx_gpu = kzalloc(sizeof(*a5xx_gpu), GFP_KERNEL);
+ 	if (!a5xx_gpu)
+ 		return ERR_PTR(-ENOMEM);
+-- 
+2.39.3
 
---=20
-With best wishes
-Dmitry
