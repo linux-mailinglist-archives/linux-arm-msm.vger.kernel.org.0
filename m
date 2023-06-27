@@ -2,92 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAA2673FA36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 12:28:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2B3173FA55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 12:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229884AbjF0K2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 06:28:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43878 "EHLO
+        id S231235AbjF0Kks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 06:40:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231387AbjF0K2X (ORCPT
+        with ESMTP id S230336AbjF0Kkr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 06:28:23 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84303109
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 03:28:21 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3fba545d743so5649085e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 03:28:21 -0700 (PDT)
+        Tue, 27 Jun 2023 06:40:47 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15498E5F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 03:40:45 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3113da5260dso3833858f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 03:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687861700; x=1690453700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gmf7swzBx3zmrorxZOdEgYZz3vMgCASZCN0hJOkIo00=;
-        b=C+BVtYn4jX0LRy0VrAz6Tpink6WrpV7gikawtc8z6OICC9zRejV4euVhEN7qDurUc4
-         I10v4x8VsvLNbjrUd0sigj2DP8SNn0yP4q3PpTmvlBr8qALYshj5BXKrSILx8V9DFiBz
-         4GvIQ3bQaSMtkaieP5dfIeXqPgQDS9KETd60dZ4ix3c/ckSMKh4Lyeq6OLsPB2tnVCVF
-         r8dEOPcgigBTLHy9fu59BNAsyRfs4OEh5LYoH4Qvx98EonKQ3VHEcOY29vpq2t+B5tTi
-         ywNEh7XU/A8bJQFbO3O/iFSoV3A/uMEFAEbntTtQ42fR777djBZbWkYChLlvgg+Bb4W1
-         QBNg==
+        d=linaro.org; s=google; t=1687862443; x=1690454443;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XNWf4XrzpOMeSduBCIvkxhctVOzqSSmAJ8R1LK8bH5w=;
+        b=v0kohGNzQndW2yQwqx2w8zwRIoXdd0x63JIBhZR/Qo1PuXH+wh4+0Vqs7AaTXb8vAH
+         tBlwNu76zMuSVaeWkKEVoV6AUIvN3mBi2M2bpMG3H5LQZyPBpPgtxwWx7Kby0/bm/1Pd
+         4wurTqEtwjL1R9QnX50LRsLPVET4OTGm43r/yftAsap1BE7kiz2XO+eRaQ6DnXsLkO6e
+         1m3/jDV2SokiIMCqdeQCb1xWVYEOA5mepuT9JhQSe38lAln9ZreztOarjZuSLm6gPh2k
+         Ph3wGYfXlSxmd7kd8iZvPmRJRpwlz9Z1lIDKH9zdpt6GQzGj7sA9MrcxPemGfUdQALCH
+         k/2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687861700; x=1690453700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gmf7swzBx3zmrorxZOdEgYZz3vMgCASZCN0hJOkIo00=;
-        b=fhqbA46ipiTMnbSQH3Pz76IC390XZ7Qj19huWWv3gxFuTASgmf75xXx2/Vq2LslIPR
-         7kLtCgpXUlsnaYLOrW5LcwmppiHVnEDtDM1oHzdkePa9fO+AXNTxE1r0yOxx36nLdkkA
-         +A/pu+zgiYjBBWpI+CtfPPYHmzZZyiaA5pCvPSfRb5zkwbPwZdYb6iKyg4oF0/TfplLi
-         DIhPcw5jwr/eHTrUsNPxhSqmGb865qrav5LRWHbKX+ybZhLf7SpPM+AfO6DkzUxBCYpW
-         9ON+IsGXljuoaQZrCuHh0owcq4OUpnHg9b4KKXw7wbODKg3md37JCvyImxwuNsG1lsdg
-         OP6g==
-X-Gm-Message-State: AC+VfDwCODaa7qkskst9FZK34xagoeAjKcjtt+73XgGdsjUq3YHp1pLq
-        BCvu8Ea6iSaj6Nr6+s51fAYoCA==
-X-Google-Smtp-Source: ACHHUZ5XMObNZEMfu2qUXIhZuLUJ2ha5NxMgYWPdt3EyCo1TufdxxWi8w5C9EWlJPCA81JQywXQslA==
-X-Received: by 2002:a7b:cc15:0:b0:3f9:846:d892 with SMTP id f21-20020a7bcc15000000b003f90846d892mr24473786wmh.9.1687861699917;
-        Tue, 27 Jun 2023 03:28:19 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id h2-20020a1ccc02000000b003fa74bff02asm10232352wmb.26.2023.06.27.03.28.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jun 2023 03:28:19 -0700 (PDT)
-Message-ID: <689ffb7b-9efb-ecec-61f5-9d8b00f9906b@linaro.org>
-Date:   Tue, 27 Jun 2023 12:28:14 +0200
+        d=1e100.net; s=20221208; t=1687862443; x=1690454443;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XNWf4XrzpOMeSduBCIvkxhctVOzqSSmAJ8R1LK8bH5w=;
+        b=bYNuI6CFMQ2BQkjhDzC8G2RHtj0CG8DdN20fWCcZFZwxc1WUP2fEqYmn4YnYohjM+c
+         mNaDLsmeUZ8kZjFqg+mTHFIkaZr6W8nBK9xd4k8B27MudrFMo7QQltbqkQFAc0hpk+bp
+         NJP3nJGWpQFgtamaRyTN+OTWUaR1gjeTAD24ymF58GZ1Ha9LgO9wz7i0J0H5FNW3Fsq2
+         PtayXFAo+i1A3B1SHHJsf40hEfwji/dgARmRFR3kkqBZYwuxf+T8cATJMwBz4C3WYJkx
+         2cIadOLDQpgzwacOEo71DQqdze+5kLilY02i7QXJMGgYQRPEVUR/n/pUroimSBnjHpIh
+         NgjA==
+X-Gm-Message-State: AC+VfDxp08kl2fj36OxWAS6M8UM+fOmc4KqL3kS9k6gtpumjhdf+h6pz
+        IK1pATTXgPQFVLpkeLuCK9AWhw==
+X-Google-Smtp-Source: ACHHUZ4RWdwlfmE4HxDH85NtG4N+3LRB9BQsLJLeEYH8wtwl67F/1B1j3/l4x4dNuo9wx0QB51ijpQ==
+X-Received: by 2002:a5d:4ad0:0:b0:313:f98a:1fd3 with SMTP id y16-20020a5d4ad0000000b00313f98a1fd3mr2072465wrs.27.1687862443390;
+        Tue, 27 Jun 2023 03:40:43 -0700 (PDT)
+Received: from hackbox.lan ([62.231.110.100])
+        by smtp.gmail.com with ESMTPSA id a10-20020adfdd0a000000b0030af15d7e41sm10203750wrm.4.2023.06.27.03.40.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jun 2023 03:40:42 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        avel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@qti.qualcomm.com>
+Cc:     linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [RFC PATCH 1/2] PM: domains: Allow devices attached to genpd to be managed by HW
+Date:   Tue, 27 Jun 2023 13:40:32 +0300
+Message-Id: <20230627104033.3345659-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 01/15] genirq/devres: Add error information printing
- for devm_request_threaded_irq()
-Content-Language: en-US
-To:     Yangtao Li <frank.li@vivo.com>, miquel.raynal@bootlin.com,
-        rafael@kernel.org, daniel.lezcano@linaro.org, amitk@kernel.org,
-        rui.zhang@intel.com, mmayer@broadcom.com,
-        bcm-kernel-feedback-list@broadcom.com,
-        florian.fainelli@broadcom.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, thara.gopinath@gmail.com,
-        heiko@sntech.de, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@foss.st.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, tglx@linutronix.de, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com,
-        srinivas.pandruvada@linux.intel.com,
-        DLG-Adam.Ward.opensource@dm.renesas.com, shangxiaojing@huawei.com,
-        bchihi@baylibre.com, wenst@chromium.org,
-        u.kleine-koenig@pengutronix.de, hayashi.kunihiko@socionext.com,
-        niklas.soderlund+renesas@ragnatech.se, chi.minghao@zte.com.cn,
-        johan+linaro@kernel.org, jernej.skrabec@gmail.com
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org
-References: <20230627101215.58798-1-frank.li@vivo.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230627101215.58798-1-frank.li@vivo.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -96,57 +80,150 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/06/2023 12:12, Yangtao Li wrote:
-> Ensure that all error handling branches print error information. In this
-> way, when this function fails, the upper-layer functions can directly
-> return an error code without missing debugging information. Otherwise,
-> the error message will be printed redundantly or missing.
-> 
-> There are more than 700 calls to the devm_request_threaded_irq method.
-> Most drivers only request one interrupt resource, and these error
-> messages are basically the same. If error messages are printed
-> everywhere, more than 1000 lines of code can be saved by removing the
-> msg in the driver.
-> 
-> Signed-off-by: Yangtao Li <frank.li@vivo.com>
-> ---
->  kernel/irq/devres.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/kernel/irq/devres.c b/kernel/irq/devres.c
-> index f6e5515ee077..fcb946ffb7ec 100644
-> --- a/kernel/irq/devres.c
-> +++ b/kernel/irq/devres.c
-> @@ -58,8 +58,10 @@ int devm_request_threaded_irq(struct device *dev, unsigned int irq,
->  
->  	dr = devres_alloc(devm_irq_release, sizeof(struct irq_devres),
->  			  GFP_KERNEL);
-> -	if (!dr)
-> +	if (!dr) {
-> +		dev_err(dev, "Failed to allocate device resource data\n");
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-I don't understand why did you send v2:
-1. Without responding to my comments - either by implementing them or
-continuing the discussion
-2. Without changelog explaining what happened here
+Some power-domains may be capable of relying on the HW to control the power
+for a device that's hooked up to it. Typically, for these kinds of
+configurations the device doesn't really need to be attached to a PM domain
+(genpd), from Linux point of view. However, in some cases the behaviour of
+the power-domain and its device can be changed in runtime.
 
-My comments for v1 stand. Please do not ignore them, respond. If sending
-new version, then usually one per day is max and of course provide
-changelog.
+To allow a consumer driver to change the behaviour of the PM domain for its
+device, let's provide a new function, dev_pm_genpd_set_hwmode(). Moreover,
+let's add a corresponding optional genpd callback, ->set_hwmode_dev(),
+which the genpd provider should implement if it can support switching
+between HW controlled mode and SW controlled mode.
 
->  		return -ENOMEM;
-> +	}
->  
->  	if (!devname)
->  		devname = dev_name(dev);
-> @@ -67,6 +69,7 @@ int devm_request_threaded_irq(struct device *dev, unsigned int irq,
->  	rc = request_threaded_irq(irq, handler, thread_fn, irqflags, devname,
->  				  dev_id);
->  	if (rc) {
-> +		dev_err_probe(dev, rc, "Failed to request threaded irq%d: %d\n", irq, rc);
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+---
+ drivers/base/power/domain.c | 66 +++++++++++++++++++++++++++++++++++++
+ include/linux/pm_domain.h   | 15 +++++++++
+ 2 files changed, 81 insertions(+)
 
-Why printing rc twice? Did you test this patch? Does not look like.
-
-Best regards,
-Krzysztof
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 5cb2023581d4..23286853d1d0 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -541,6 +541,72 @@ void dev_pm_genpd_synced_poweroff(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(dev_pm_genpd_synced_poweroff);
+ 
++/**
++ * dev_pm_genpd_set_hwmode - Set the HW mode for the device and its PM domain.
++ *
++ * @dev: Device for which the HW-mode should be changed.
++ * @enable: Value to set or unset the HW-mode.
++ *
++ * Some PM domains can rely on HW signals to control the power for a device. To
++ * allow a consumer driver to switch the behaviour for its device in runtime,
++ * which may be beneficial from a latency or energy point of view, this function
++ * may be called.
++ *
++ * It is assumed that the users guarantee that the genpd wouldn't be detached
++ * while this routine is getting called.
++ *
++ * Returns 0 on success and negative error values on failures.
++ */
++int dev_pm_genpd_set_hwmode(struct device *dev, bool enable)
++{
++	struct generic_pm_domain *genpd;
++	int ret = 0;
++
++	genpd = dev_to_genpd_safe(dev);
++	if (!genpd)
++		return -ENODEV;
++
++	if (!genpd->set_hwmode_dev)
++		return -EOPNOTSUPP;
++
++	genpd_lock(genpd);
++
++	if (dev_gpd_data(dev)->hw_mode == enable)
++		goto out;
++
++	ret = genpd->set_hwmode_dev(genpd, dev, enable);
++	if (!ret)
++		dev_gpd_data(dev)->hw_mode = enable;
++
++out:
++	genpd_unlock(genpd);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(dev_pm_genpd_set_hwmode);
++
++/**
++ * dev_pm_genpd_get_hwmode - Get the HW mode setting for the device.
++ *
++ * @dev: Device for which the current HW-mode setting should be fetched.
++ *
++ * This helper function allows consumer drivers to fetch the current HW mode
++ * setting of its the device.
++ *
++ * It is assumed that the users guarantee that the genpd wouldn't be detached
++ * while this routine is getting called.
++ */
++bool dev_pm_genpd_get_hwmode(struct device *dev)
++{
++	struct generic_pm_domain *genpd;
++
++	genpd = dev_to_genpd_safe(dev);
++	if (!genpd)
++		return false;
++
++	return dev_gpd_data(dev)->hw_mode;
++}
++EXPORT_SYMBOL_GPL(dev_pm_genpd_get_hwmode);
++
+ static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+ {
+ 	unsigned int state_idx = genpd->state_idx;
+diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+index f776fb93eaa0..8f60c36851d5 100644
+--- a/include/linux/pm_domain.h
++++ b/include/linux/pm_domain.h
+@@ -146,6 +146,8 @@ struct generic_pm_domain {
+ 	int (*set_performance_state)(struct generic_pm_domain *genpd,
+ 				     unsigned int state);
+ 	struct gpd_dev_ops dev_ops;
++	int (*set_hwmode_dev)(struct generic_pm_domain *domain,
++			      struct device *dev, bool enable);
+ 	int (*attach_dev)(struct generic_pm_domain *domain,
+ 			  struct device *dev);
+ 	void (*detach_dev)(struct generic_pm_domain *domain,
+@@ -208,6 +210,7 @@ struct generic_pm_domain_data {
+ 	unsigned int performance_state;
+ 	unsigned int default_pstate;
+ 	unsigned int rpm_pstate;
++	bool hw_mode;
+ 	void *data;
+ };
+ 
+@@ -237,6 +240,8 @@ int dev_pm_genpd_remove_notifier(struct device *dev);
+ void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
+ ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev);
+ void dev_pm_genpd_synced_poweroff(struct device *dev);
++int dev_pm_genpd_set_hwmode(struct device *dev, bool enable);
++bool dev_pm_genpd_get_hwmode(struct device *dev);
+ 
+ extern struct dev_power_governor simple_qos_governor;
+ extern struct dev_power_governor pm_domain_always_on_gov;
+@@ -305,6 +310,16 @@ static inline ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev)
+ static inline void dev_pm_genpd_synced_poweroff(struct device *dev)
+ { }
+ 
++static inline int dev_pm_genpd_set_hwmode(struct device *dev, bool enable)
++{
++	return -EOPNOTSUPP;
++}
++
++static inline bool dev_pm_genpd_get_hwmode(struct device *dev)
++{
++	return false;
++}
++
+ #define simple_qos_governor		(*(struct dev_power_governor *)(NULL))
+ #define pm_domain_always_on_gov		(*(struct dev_power_governor *)(NULL))
+ #endif
+-- 
+2.34.1
 
