@@ -2,154 +2,562 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB8B773FAFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 13:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F57673FAFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jun 2023 13:22:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231526AbjF0LV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 07:21:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39622 "EHLO
+        id S229720AbjF0LWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 07:22:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230383AbjF0LV0 (ORCPT
+        with ESMTP id S230308AbjF0LWE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 07:21:26 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C603A294A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 04:21:18 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-977e0fbd742so535622266b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 04:21:18 -0700 (PDT)
+        Tue, 27 Jun 2023 07:22:04 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EA12268D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 04:21:58 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b6a1245542so33483351fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 04:21:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1687864876; x=1690456876;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9xUCZlFod1gFIQWmLgn2mr25s7m8GFrqoNi5bt+JZdA=;
-        b=Fpvq6FzYjDUwnZuR/6hC50SsztpIKEOpSFfl+3rQ5kylgDP+xh8c3FdLy69HFzmd06
-         TgilgJCR0oTnzcA+KZBA5PFjmMze7blXMrsQlwZD6F6fHQB1kvJgkP0xBcXibM90AtYY
-         uroCYlM52w2btVeLUz5UN5dr0XKrKhDLT7o5+QmjADYVkaNMWEQewaqF85b3lvv98Z7J
-         TYPUAjsMs4Y2U2LwpnLu6Z1Hy9Td6TR5lbVwPKQdMnijqNfe9EKtNt7QnhuP2HA87Ire
-         rEqdGgbNsaWqd6tLjET19LlM267UyW7T+BJUVAXGeRUH5bJ5okp607LHADMzcYXULHci
-         g4OQ==
+        d=linaro.org; s=google; t=1687864916; x=1690456916;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=swfhp5yH0RnjoppI2nMfK+yE4pAadKe2W/xxWZJGHWk=;
+        b=QMs5H3LPz7pJc4Kll96ju0g7LmJK7hB5Qzm4OLmXTed5Yxxnr9IA9CIG4VABQzmIgu
+         QNx99p7X29VQtMqCYVolJVsRV0znZ9kag+WcP9synekdbHsQjqL5Pt0bkgE0HgyKVHiI
+         s4Lx3NyfhA14vEw1w6MznRt0ieGFtdv6afAn0xPZBX3TpPkVifVDfdQM3oBTzsOa7v/y
+         kCy3T92LSiwGW73JiC7xbmYZqtS0ToxMcQYJFCX8yBYkk+mO+W0su4H7WKQsGhWYUNCE
+         X2jmrsSpXCgXFNieikeaJMAAIxSZTEfQf4G6M9HXnxVimWb0styz2AepuGLE0rd1cN1F
+         SV2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687864876; x=1690456876;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9xUCZlFod1gFIQWmLgn2mr25s7m8GFrqoNi5bt+JZdA=;
-        b=XysH9YK+2o03/PsXDBi1gm7RfFEuZs8JYXLcf2N+7wvdoQBfeJIW921nPIGXsL4FHx
-         oLIadfILr45rgPx7KsdW0jBvsogpAdPkyaSGj57PTKrHPCRphmsz9g6rCWzm7kmJZXzQ
-         ewUy2izdJ4jn88XBmWRTJC1B3KzxFAQdlNWyBdPVFt+dn86p4CHzKqpOnXtSclLmnG+A
-         8kSCT8q3a9WpopXVTbiytrhoZoJh0Ex43EAA6iIFsjSfQl9okQdHZRGrtTUd7gjPP9En
-         7oNfLeeH8KhZW88z2H5B+tYlvg0nzZ0WobGO8mQE09OGFE2Qgp7Q4VCvCvCP+xNtKJ/e
-         lI1A==
-X-Gm-Message-State: AC+VfDyIXPuNc74HjZ/yjTCV1qApc16LOEJI4g+t6BMHiWc5I23uwZgu
-        ARi/GrD9ht2kyI6QqOTe5W6LFg==
-X-Google-Smtp-Source: ACHHUZ5m6Y1OOMJb0fGLWzPJIHuIjLljczo/77S4FcS2sEnrI3e8bDRG9eDJFOFwLvOEDqxEF7QQuQ==
-X-Received: by 2002:a17:907:26cb:b0:96f:e5af:ac5f with SMTP id bp11-20020a17090726cb00b0096fe5afac5fmr26590904ejc.47.1687864876657;
-        Tue, 27 Jun 2023 04:21:16 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id jt24-20020a170906dfd800b00988b8ff849csm4402034ejc.108.2023.06.27.04.21.16
+        d=1e100.net; s=20221208; t=1687864916; x=1690456916;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=swfhp5yH0RnjoppI2nMfK+yE4pAadKe2W/xxWZJGHWk=;
+        b=alwyuez9KLOpc19/rDG73HidrPstV607+pIy8+FOIp5w0QAlx8hjgvEoZ/4pAJwDuK
+         ki4TGbb/5yVquDc6EvYTtLo4Y8B2c22xJEG6gg4lLyKLt07e44WW+30/fdPgnCK4b/Ky
+         /Znyhcm6Sh4OyLpiNWViGdpaVKp081dgHPsWOrOmFFxkWpZXx8tSxt8JrBEe6hJJkBzo
+         xtAwfb2f59AP4jXMn2bI6f9AeWKoYBNtoTwXaUOTaZE12/QUAgMblDaaHMjpky0M90Nq
+         FRJoyGiQ5Fbe/rwVXSxYDOx2FiCVSMFTt7XWHB4jKWL5wUvK3scbkcJYfL3Q8Y1UtJhk
+         Wl9A==
+X-Gm-Message-State: AC+VfDwNcWTy8ptZHRYc6q3KlG1u1n3jbVgVlWmSAzXo7Mi7+NYpQO2l
+        p8cPGS57QksJJ+6SglEjjDBpbw==
+X-Google-Smtp-Source: ACHHUZ7WSCNa0kRS320C/alTPIABkaRIUtRIkxwk2IaNvUrm7tG2p/IA2CEd++PTyEkUATbfYnt1Uw==
+X-Received: by 2002:a2e:9243:0:b0:2b6:a79d:f5ad with SMTP id v3-20020a2e9243000000b002b6a79df5admr2419185ljg.52.1687864916644;
+        Tue, 27 Jun 2023 04:21:56 -0700 (PDT)
+Received: from [192.168.1.101] (abxj103.neoplus.adsl.tpnet.pl. [83.9.3.103])
+        by smtp.gmail.com with ESMTPSA id s19-20020a2e2c13000000b002b482823f73sm1703999ljs.11.2023.06.27.04.21.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jun 2023 04:21:16 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        Tue, 27 Jun 2023 04:21:56 -0700 (PDT)
+Message-ID: <54dd9007-9dc0-6023-bcb9-8be7835f3c5d@linaro.org>
+Date:   Tue, 27 Jun 2023 13:21:54 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 14/15] ARM: dts: qcom: msm8660: move RPM regulators to
+ board files
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230627012422.206077-1-dmitry.baryshkov@linaro.org>
+ <20230627012422.206077-15-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230627012422.206077-15-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 27 Jun 2023 13:21:15 +0200
-Message-Id: <CTNE5VJF78AJ.37DA4CKP3E6K6@otso>
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Luca Weiss" <luca.weiss@fairphone.com>,
-        "Rob Herring" <robh@kernel.org>
-Cc:     "Conor Dooley" <conor+dt@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Alim Akhtar" <alim.akhtar@samsung.com>,
-        <devicetree@vger.kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Iskren Chernev" <me@iskren.info>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        "Avri Altman" <avri.altman@wdc.com>, <linux-scsi@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <linux-arm-msm@vger.kernel.org>, <phone-devel@vger.kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Bart Van Assche" <bvanassche@acm.org>
-Subject: Re: [PATCH v5 3/5] dt-bindings: ufs: qcom: Add ICE to sm8450
- example
-X-Mailer: aerc 0.15.1
-References: <20221209-dt-binding-ufs-v5-0-c9a58c0a53f5@fairphone.com>
- <20221209-dt-binding-ufs-v5-3-c9a58c0a53f5@fairphone.com>
- <168785971145.1233664.7985274899454909326.robh@kernel.org>
- <CTNCLCWEUWJO.19I1NW2GL7QMZ@otso>
-In-Reply-To: <CTNCLCWEUWJO.19I1NW2GL7QMZ@otso>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue Jun 27, 2023 at 12:07 PM CEST, Luca Weiss wrote:
-> On Tue Jun 27, 2023 at 11:55 AM CEST, Rob Herring wrote:
-> >
-> > On Tue, 27 Jun 2023 10:28:03 +0200, Luca Weiss wrote:
-> > > SM8450 actually supports ICE (Inline Crypto Engine) so adjust the
-> > > example to match.
-> > >=20
-> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > > ---
-> > >  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > >=20
-> >
-> > My bot found errors running 'make DT_CHECKER_FLAGS=3D-m dt_binding_chec=
-k'
-> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> >
-> > yamllint warnings/errors:
-> >
-> > dtschema/dtc warnings/errors:
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings=
-/ufs/qcom,ufs.example.dtb: ufs@1d84000: Unevaluated properties are not allo=
-wed ('qcom,ice' was unexpected)
-> > 	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
->
-> qcom,ice should land with v5.4
+On 27.06.2023 03:24, Dmitry Baryshkov wrote:
+> The set of regulators available over the RPM requests is not a property
+> of the SoC. Move them to board files.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Sorry, obviously wrong version: I meant v6.5
-
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commi=
-t/?id=3D29a6d1215b7cd5fdff9c3c31ea26076a694ee0a3
->
-> And as mentioned in the cover letter, validation will still fail with
-> without the extra patch linked there (which is not in -next yet).
->
-> Regards
-> Luca
->
-> >
-> > doc reference errors (make refcheckdocs):
-> >
-> > See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/2022=
-1209-dt-binding-ufs-v5-3-c9a58c0a53f5@fairphone.com
-> >
-> > The base for the series is generally the latest rc1. A different depend=
-ency
-> > should be noted in *this* patch.
-> >
-> > If you already ran 'make dt_binding_check' and didn't see the above
-> > error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> > date:
-> >
-> > pip3 install dtschema --upgrade
-> >
-> > Please check and re-submit after running the above command yourself. No=
-te
-> > that DT_SCHEMA_FILES can be set to your schema file to speed up checkin=
-g
-> > your schema. However, it must be unset to test all examples with your s=
-chema.
-
+Konrad
+>  .../dts/qcom/qcom-apq8060-dragonboard.dts     | 141 ++++++++++++------
+>  arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts  |  10 ++
+>  arch/arm/boot/dts/qcom/qcom-msm8660.dtsi      |  66 --------
+>  3 files changed, 102 insertions(+), 115 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom/qcom-apq8060-dragonboard.dts
+> index 20de516a8deb..8a511f69d800 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-apq8060-dragonboard.dts
+> +++ b/arch/arm/boot/dts/qcom/qcom-apq8060-dragonboard.dts
+> @@ -449,6 +449,8 @@ &rpm {
+>  	 * that means
+>  	 */
+>  	regulators-0 {
+> +		compatible = "qcom,rpm-pm8901-regulators";
+> +
+>  		vdd_l0-supply = <&pm8901_s4>;
+>  		vdd_l1-supply = <&vph>;
+>  		vdd_l2-supply = <&vph>;
+> @@ -466,57 +468,63 @@ regulators-0 {
+>  		lvs3_in-supply = <&pm8058_s2>;
+>  		mvs_in-supply = <&pm8058_s3>;
+>  
+> -		l0 {
+> +		pm8901_l0: l0 {
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1200000>;
+>  			bias-pull-down;
+>  		};
+> -		l1 {
+> +
+> +		pm8901_l1: l1 {
+>  			regulator-min-microvolt = <3300000>;
+>  			regulator-max-microvolt = <3300000>;
+>  			bias-pull-down;
+>  		};
+> -		l2 {
+> +
+> +		pm8901_l2: l2 {
+>  			/* TMA340 requires strictly 3.3V */
+>  			regulator-min-microvolt = <3300000>;
+>  			regulator-max-microvolt = <3300000>;
+>  			bias-pull-down;
+>  		};
+> -		l3 {
+> +
+> +		pm8901_l3: l3 {
+>  			regulator-min-microvolt = <3300000>;
+>  			regulator-max-microvolt = <3300000>;
+>  			bias-pull-down;
+>  		};
+> -		l4 {
+> +
+> +		pm8901_l4: l4 {
+>  			regulator-min-microvolt = <2600000>;
+>  			regulator-max-microvolt = <2600000>;
+>  			bias-pull-down;
+>  		};
+> -		l5 {
+> +
+> +		pm8901_l5: l5 {
+>  			regulator-min-microvolt = <2850000>;
+>  			regulator-max-microvolt = <2850000>;
+>  			bias-pull-down;
+>  		};
+> -		l6 {
+> +
+> +		pm8901_l6: l6 {
+>  			regulator-min-microvolt = <2200000>;
+>  			regulator-max-microvolt = <2200000>;
+>  			bias-pull-down;
+>  		};
+>  
+>  		/* s0 and s1 are SAW regulators controlled over SPM */
+> -		s2 {
+> +		pm8901_s2: s2 {
+>  			regulator-min-microvolt = <1300000>;
+>  			regulator-max-microvolt = <1300000>;
+>  			qcom,switch-mode-frequency = <1600000>;
+>  			bias-pull-down;
+>  		};
+> -		s3 {
+> +		pm8901_s3: s3 {
+>  			regulator-min-microvolt = <1100000>;
+>  			regulator-max-microvolt = <1100000>;
+>  			qcom,switch-mode-frequency = <1600000>;
+>  			bias-pull-down;
+>  		};
+> -		s4 {
+> +		pm8901_s4: s4 {
+>  			regulator-min-microvolt = <1225000>;
+>  			regulator-max-microvolt = <1225000>;
+>  			qcom,switch-mode-frequency = <1600000>;
+> @@ -524,17 +532,22 @@ s4 {
+>  		};
+>  
+>  		/* LVS0 thru 3 and mvs are just switches */
+> -		lvs0 {
+> +		pm8901_lvs0: lvs0 {
+>  			regulator-always-on;
+>  		};
+> -		lvs1 { };
+> -		lvs2 { };
+> -		lvs3 { };
+> -		mvs { };
+>  
+> +		pm8901_lvs1: lvs1 { };
+> +
+> +		pm8901_lvs2: lvs2 { };
+> +
+> +		pm8901_lvs3: lvs3 { };
+> +
+> +		pm8901_mvs: mvs { };
+>  	};
+>  
+>  	regulators-1 {
+> +		compatible = "qcom,rpm-pm8058-regulators";
+> +
+>  		vdd_l0_l1_lvs-supply = <&pm8058_s3>;
+>  		vdd_l2_l11_l12-supply = <&vph>;
+>  		vdd_l3_l4_l5-supply = <&vph>;
+> @@ -556,144 +569,169 @@ regulators-1 {
+>  		vdd_s4-supply = <&vph>;
+>  		vdd_ncp-supply = <&vph>;
+>  
+> -		l0 {
+> +		pm8058_l0: l0 {
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1200000>;
+>  			bias-pull-down;
+>  		};
+> -		l1 {
+> +
+> +		pm8058_l1: l1 {
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1200000>;
+>  			bias-pull-down;
+>  		};
+> -		l2 {
+> +
+> +		pm8058_l2: l2 {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <2600000>;
+>  			bias-pull-down;
+>  		};
+> -		l3 {
+> +
+> +		pm8058_l3: l3 {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <1800000>;
+>  			bias-pull-down;
+>  		};
+> -		l4 {
+> +
+> +		pm8058_l4: l4 {
+>  			regulator-min-microvolt = <2850000>;
+>  			regulator-max-microvolt = <2850000>;
+>  			bias-pull-down;
+>  		};
+> -		l5 {
+> +
+> +		pm8058_l5: l5 {
+>  			regulator-min-microvolt = <2850000>;
+>  			regulator-max-microvolt = <2850000>;
+>  			bias-pull-down;
+>  		};
+> -		l6 {
+> +
+> +		pm8058_l6: l6 {
+>  			regulator-min-microvolt = <3000000>;
+>  			regulator-max-microvolt = <3600000>;
+>  			bias-pull-down;
+>  		};
+> -		l7 {
+> +
+> +		pm8058_l7: l7 {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <1800000>;
+>  			bias-pull-down;
+>  		};
+> -		l8 {
+> +
+> +		pm8058_l8: l8 {
+>  			regulator-min-microvolt = <2900000>;
+>  			regulator-max-microvolt = <3050000>;
+>  			bias-pull-down;
+>  		};
+> -		l9 {
+> +
+> +		pm8058_l9: l9 {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <1800000>;
+>  			bias-pull-down;
+>  		};
+> -		l10 {
+> +
+> +		pm8058_l10: l10 {
+>  			regulator-min-microvolt = <2600000>;
+>  			regulator-max-microvolt = <2600000>;
+>  			bias-pull-down;
+>  		};
+> -		l11 {
+> +
+> +		pm8058_l11: l11 {
+>  			regulator-min-microvolt = <1500000>;
+>  			regulator-max-microvolt = <1500000>;
+>  			bias-pull-down;
+>  		};
+> -		l12 {
+> +
+> +		pm8058_l12: l12 {
+>  			regulator-min-microvolt = <2900000>;
+>  			regulator-max-microvolt = <2900000>;
+>  			bias-pull-down;
+>  		};
+> -		l13 {
+> +
+> +		pm8058_l13: l13 {
+>  			regulator-min-microvolt = <2050000>;
+>  			regulator-max-microvolt = <2050000>;
+>  			bias-pull-down;
+>  		};
+> -		l14 {
+> +
+> +		pm8058_l14: l14 {
+>  			regulator-min-microvolt = <2850000>;
+>  			regulator-max-microvolt = <2850000>;
+>  		};
+> -		l15 {
+> +
+> +		pm8058_l15: l15 {
+>  			regulator-min-microvolt = <2850000>;
+>  			regulator-max-microvolt = <2850000>;
+>  			bias-pull-down;
+>  		};
+> -		l16 {
+> +
+> +		pm8058_l16: l16 {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <1800000>;
+>  			bias-pull-down;
+>  			regulator-always-on;
+>  		};
+> -		l17 {
+> +
+> +		pm8058_l17: l17 {
+>  			// 1.5V according to schematic
+>  			regulator-min-microvolt = <2600000>;
+>  			regulator-max-microvolt = <2600000>;
+>  			bias-pull-down;
+>  		};
+> -		l18 {
+> +
+> +		pm8058_l18: l18 {
+>  			regulator-min-microvolt = <2200000>;
+>  			regulator-max-microvolt = <2200000>;
+>  			bias-pull-down;
+>  		};
+> -		l19 {
+> +
+> +		pm8058_l19: l19 {
+>  			regulator-min-microvolt = <2500000>;
+>  			regulator-max-microvolt = <2500000>;
+>  			bias-pull-down;
+>  		};
+> -		l20 {
+> +
+> +		pm8058_l20: l20 {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <1800000>;
+>  			bias-pull-down;
+>  		};
+> -		l21 {
+> +
+> +		pm8058_l21: l21 {
+>  			// 1.1 V according to schematic
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1200000>;
+>  			bias-pull-down;
+>  			regulator-always-on;
+>  		};
+> -		l22 {
+> +
+> +		pm8058_l22: l22 {
+>  			// 1.2 V according to schematic
+>  			regulator-min-microvolt = <1150000>;
+>  			regulator-max-microvolt = <1150000>;
+>  			bias-pull-down;
+>  		};
+> -		l23 {
+> +
+> +		pm8058_l23: l23 {
+>  			// Unused
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1200000>;
+>  			bias-pull-down;
+>  		};
+> -		l24 {
+> +
+> +		pm8058_l24: l24 {
+>  			// Unused
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1200000>;
+>  			bias-pull-down;
+>  		};
+> -		l25 {
+> +
+> +		pm8058_l25: l25 {
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1200000>;
+>  			bias-pull-down;
+>  		};
+>  
+> -		s0 {
+> +		pm8058_s0: s0 {
+>  			// regulator-min-microvolt = <500000>;
+>  			// regulator-max-microvolt = <1325000>;
+>  			regulator-min-microvolt = <1100000>;
+> @@ -701,7 +739,8 @@ s0 {
+>  			qcom,switch-mode-frequency = <1600000>;
+>  			bias-pull-down;
+>  		};
+> -		s1 {
+> +
+> +		pm8058_s1: s1 {
+>  			// regulator-min-microvolt = <500000>;
+>  			// regulator-max-microvolt = <1250000>;
+>  			regulator-min-microvolt = <1100000>;
+> @@ -709,21 +748,24 @@ s1 {
+>  			qcom,switch-mode-frequency = <1600000>;
+>  			bias-pull-down;
+>  		};
+> -		s2 {
+> +
+> +		pm8058_s2: s2 {
+>  			// 1.3 V according to schematic
+>  			regulator-min-microvolt = <1200000>;
+>  			regulator-max-microvolt = <1400000>;
+>  			qcom,switch-mode-frequency = <1600000>;
+>  			bias-pull-down;
+>  		};
+> -		s3 {
+> +
+> +		pm8058_s3: s3 {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <1800000>;
+>  			qcom,switch-mode-frequency = <1600000>;
+>  			regulator-always-on;
+>  			bias-pull-down;
+>  		};
+> -		s4 {
+> +
+> +		pm8058_s4: s4 {
+>  			regulator-min-microvolt = <2200000>;
+>  			regulator-max-microvolt = <2200000>;
+>  			qcom,switch-mode-frequency = <1600000>;
+> @@ -732,14 +774,15 @@ s4 {
+>  		};
+>  
+>  		/* LVS0 and LVS1 are just switches */
+> -		lvs0 {
+> +		pm8058_lvs0: lvs0 {
+>  			bias-pull-down;
+>  		};
+> -		lvs1 {
+> +
+> +		pm8058_lvs1: lvs1 {
+>  			bias-pull-down;
+>  		};
+>  
+> -		ncp {
+> +		pm8058_ncp: ncp {
+>  			regulator-min-microvolt = <1800000>;
+>  			regulator-max-microvolt = <1800000>;
+>  			qcom,switch-mode-frequency = <1600000>;
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts b/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts
+> index 04dca0c93971..43e646ded7bd 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts
+> @@ -61,6 +61,16 @@ MATRIX_KEY(5, 4, KEY_MENU)
+>  	keypad,num-columns = <5>;
+>  };
+>  
+> +&rpm {
+> +	regulators-0 {
+> +		compatible = "qcom,rpm-pm8901-regulators";
+> +	};
+> +
+> +	regulators-1 {
+> +		compatible = "qcom,rpm-pm8058-regulators";
+> +	};
+> +};
+> +
+>  /* eMMC */
+>  &sdcc1 {
+>  	vmmc-supply = <&vsdcc_fixed>;
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi
+> index b8094b7c09fc..c2cb3abd5177 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8660.dtsi
+> @@ -352,72 +352,6 @@ rpmcc: clock-controller {
+>  				clocks = <&pxo_board>;
+>  				clock-names = "pxo";
+>  			};
+> -
+> -			regulators-0 {
+> -				compatible = "qcom,rpm-pm8901-regulators";
+> -
+> -				pm8901_l0: l0 {};
+> -				pm8901_l1: l1 {};
+> -				pm8901_l2: l2 {};
+> -				pm8901_l3: l3 {};
+> -				pm8901_l4: l4 {};
+> -				pm8901_l5: l5 {};
+> -				pm8901_l6: l6 {};
+> -
+> -				/* S0 and S1 Handled as SAW regulators by SPM */
+> -				pm8901_s2: s2 {};
+> -				pm8901_s3: s3 {};
+> -				pm8901_s4: s4 {};
+> -
+> -				pm8901_lvs0: lvs0 {};
+> -				pm8901_lvs1: lvs1 {};
+> -				pm8901_lvs2: lvs2 {};
+> -				pm8901_lvs3: lvs3 {};
+> -
+> -				pm8901_mvs: mvs {};
+> -			};
+> -
+> -			regulators-1 {
+> -				compatible = "qcom,rpm-pm8058-regulators";
+> -
+> -				pm8058_l0: l0 {};
+> -				pm8058_l1: l1 {};
+> -				pm8058_l2: l2 {};
+> -				pm8058_l3: l3 {};
+> -				pm8058_l4: l4 {};
+> -				pm8058_l5: l5 {};
+> -				pm8058_l6: l6 {};
+> -				pm8058_l7: l7 {};
+> -				pm8058_l8: l8 {};
+> -				pm8058_l9: l9 {};
+> -				pm8058_l10: l10 {};
+> -				pm8058_l11: l11 {};
+> -				pm8058_l12: l12 {};
+> -				pm8058_l13: l13 {};
+> -				pm8058_l14: l14 {};
+> -				pm8058_l15: l15 {};
+> -				pm8058_l16: l16 {};
+> -				pm8058_l17: l17 {};
+> -				pm8058_l18: l18 {};
+> -				pm8058_l19: l19 {};
+> -				pm8058_l20: l20 {};
+> -				pm8058_l21: l21 {};
+> -				pm8058_l22: l22 {};
+> -				pm8058_l23: l23 {};
+> -				pm8058_l24: l24 {};
+> -				pm8058_l25: l25 {};
+> -
+> -				pm8058_s0: s0 {};
+> -				pm8058_s1: s1 {};
+> -				pm8058_s2: s2 {};
+> -				pm8058_s3: s3 {};
+> -				pm8058_s4: s4 {};
+> -
+> -				pm8058_lvs0: lvs0 {};
+> -				pm8058_lvs1: lvs1 {};
+> -
+> -				pm8058_ncp: ncp {};
+> -			};
+>  		};
+>  
+>  		amba {
