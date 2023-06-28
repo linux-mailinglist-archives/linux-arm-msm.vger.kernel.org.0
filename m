@@ -2,143 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5745A7416C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 18:53:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 497C67416D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 18:57:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbjF1QxY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 12:53:24 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217]:46110 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbjF1QxW (ORCPT
+        id S231238AbjF1Q5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 12:57:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41808 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230507AbjF1Q5n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 12:53:22 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F100E6129B;
-        Wed, 28 Jun 2023 16:53:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC8EC433C8;
-        Wed, 28 Jun 2023 16:53:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1687971201;
-        bh=gozokXz2eVh6fctzR506kgwTFWCpOKR95WNjlihKjp0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XSAZJUru2/LERqubKZhN960vjbBGOsstoqQchktqgk2eAmAtD04A8rchUv6KtMPCO
-         bluJTB4rl9FsREuSLLbvkM+kuLVOwWaqtIpM5FPIWWt2zmRAH96RiEjex7HjZ2P52U
-         90KKlCAHvvTURFden0f0Wv5p/9azoOifGjIJdo/I=
-Date:   Wed, 28 Jun 2023 18:53:18 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     corbet@lwn.net, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        mathieu.poirier@linaro.org, catalin.marinas@arm.com,
-        will@kernel.org, linus.walleij@linaro.org,
-        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
- support
-Message-ID: <2023062812-exporter-facing-aaf9@gregkh>
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <2023062814-chance-flounder-f002@gregkh>
- <10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com>
+        Wed, 28 Jun 2023 12:57:43 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 493DB10F8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 09:57:41 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b698dd515dso299601fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 09:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687971459; x=1690563459;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/zCltrriS9+FwfYPkaoLx57nyP2zICnwZ3L4CTqa1o=;
+        b=syyZXBBk17JauNows5A2urMe/pcWTLphLlt4SnwA2w1ABVK5XugBET02VZTNZuT4nG
+         BDOc/kJ6ib1UvpjR32PSCHkft8ibj9934gCK2qvehWRrfkXF7XIf4m9a2w5Ob9dQ4t6m
+         YZ5YM2SzILcwULe1BPJAKAJIk+Pp/GFko0WMt29LldbbJK8E+rLLMRBjb2C03Ue8b75A
+         u7mMPttbXk1mjEURIFqk7RS7UbQLQ7z7WoDPAsVE6Q2SzvNwTuRfQw3Ojl1xWI2r0ocl
+         c+kPoqasBRouUlgkGGyrbERJppvjbFjiNYmcTRbdgXFDfJYEir3S3Im2G2WUV2XiPykH
+         lDBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687971459; x=1690563459;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/zCltrriS9+FwfYPkaoLx57nyP2zICnwZ3L4CTqa1o=;
+        b=NZmWCAky+LSaGWDVJHAXfAl8yNLkHuET8FoJW/kdDbV0PhkAmnQpp+fvXhILV5yksT
+         hwGBw5dP5Hi9r8CneQuZa8ofrk4a4i9y07jziCy1Pls+MaGrxeQKjvj6Kg31xXq+V0+Y
+         U8mC+oNf5eGUOeQOIw1Nx4PkdyoduEDWnuAWIjVrQOublmuANJaYRm+u+mziBgUxoVR3
+         jaHbrDDlsaWUlYdI7HF6pvhgZl/FQWC0Cfl+toqUTP6Bvug9lUugkjL3HUbXpXZsjF23
+         u/11oCwDbZlzMZXPDKHvow2pgyxiY0qbkknw6WEebqDR6VXffuzViug0cZAIQN4QOiQi
+         gbpA==
+X-Gm-Message-State: AC+VfDyIKJo+11TYO2bWY/2IkHF0Yy/XH+SIt8SDYEAu6OqpsTDATTVW
+        rNEtKELwQG/o2n2u0WFpkLr+xg==
+X-Google-Smtp-Source: ACHHUZ5O1WkcZQ+NAg+pK0OUsPsx/35pHTmfE+O/DSkG1d2UB7WiB+g4BQBT7/MHrfwy18PtV+CYew==
+X-Received: by 2002:a2e:7c09:0:b0:2b5:80c9:1266 with SMTP id x9-20020a2e7c09000000b002b580c91266mr17376124ljc.43.1687971459498;
+        Wed, 28 Jun 2023 09:57:39 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id t8-20020a2e9c48000000b002b6a824d65fsm1076904ljj.0.2023.06.28.09.57.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Jun 2023 09:57:39 -0700 (PDT)
+Message-ID: <73dce263-bee6-554f-9eb6-af4aa7badab1@linaro.org>
+Date:   Wed, 28 Jun 2023 19:57:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware
+ name from DT
+Content-Language: en-GB
+To:     Mark Brown <broonie@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, johan+linaro@kernel.org,
+        perex@perex.cz, tiwai@suse.com, lgirdwood@gmail.com,
+        ckeepax@opensource.cirrus.com, kuninori.morimoto.gx@renesas.com,
+        linux-kernel@vger.kernel.org, pierre-louis.bossart@linux.intel.com,
+        alsa-devel@alsa-project.org
+References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
+ <20230628102621.15016-3-srinivas.kandagatla@linaro.org>
+ <f71c8d2b-d5f4-42bb-932f-5b9ec6117ffc@sirena.org.uk>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f71c8d2b-d5f4-42bb-932f-5b9ec6117ffc@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 28, 2023 at 09:50:00PM +0530, Mukesh Ojha wrote:
+On 28/06/2023 14:53, Mark Brown wrote:
+> On Wed, Jun 28, 2023 at 11:26:20AM +0100, Srinivas Kandagatla wrote:
+>> Currently firmware file name is autogenerated based on card name and model number,
+>> however this imposed a restriction of finding firmware in a single firmware path.
+>> Platform specific firmwares are normally located in sub folders of the SoC.
+>>
+>> Provide more flexibity by reading firmware-name from DT.
 > 
-> 
-> On 6/28/2023 9:15 PM, Greg KH wrote:
-> > On Wed, Jun 28, 2023 at 06:04:27PM +0530, Mukesh Ojha wrote:
-> > > Minidump is a best effort mechanism to collect useful and predefined data
-> > > for first level of debugging on end user devices running on Qualcomm SoCs.
-> > > It is built on the premise that System on Chip (SoC) or subsystem part of
-> > > SoC crashes, due to a range of hardware and software bugs. Hence, the
-> > > ability to collect accurate data is only a best-effort. The data collected
-> > > could be invalid or corrupted, data collection itself could fail, and so on.
-> > > 
-> > > Qualcomm devices in engineering mode provides a mechanism for generating
-> > > full system ramdumps for post mortem debugging. But in some cases it's
-> > > however not feasible to capture the entire content of RAM. The minidump
-> > > mechanism provides the means for selecting which snippets should be
-> > > included in the ramdump.
-> > > 
-> > > Minidump kernel driver implementation is divided into two parts for
-> > > simplicity, one is minidump core which can also be called minidump
-> > > frontend(As API gets exported from this driver for registration with
-> > > backend) and the other part is minidump backend i.e, where the underlying
-> > > implementation of minidump will be there. There could be different way
-> > > how the backend is implemented like Shared memory, Memory mapped IO
-> > > or Resource manager(gunyah) based where the guest region information is
-> > > passed to hypervisor via hypercalls.
-> > > 
-> > >      Minidump Client-1     Client-2      Client-5    Client-n
-> > >               |               |              |             |
-> > >               |               |    ...       |   ...       |
-> > >               |               |              |             |
-> > >               |               |              |             |
-> > >               |               |              |             |
-> > >               |               |              |             |
-> > >               |               |              |             |
-> > >               |               |              |             |
-> > >               |           +---+--------------+----+        |
-> > >               +-----------+  qcom_minidump(core)  +--------+
-> > >                           |                       |
-> > >                           +------+-----+------+---+
-> > >                                  |     |      |
-> > >                                  |     |      |
-> > >                  +---------------+     |      +--------------------+
-> > >                  |                     |                           |
-> > >                  |                     |                           |
-> > >                  |                     |                           |
-> > >                  v                     v                           v
-> > >       +-------------------+      +-------------------+     +------------------+
-> > >       |qcom_minidump_smem |      |qcom_minidump_mmio |     | qcom_minidump_rm |
-> > >       |                   |      |                   |     |                  |
-> > >       +-------------------+      +-------------------+     +------------------+
-> > >         Shared memory              Memory mapped IO           Resource manager
-> > >          (backend)                   (backend)                   (backend)
-> > > 
-> > > 
-> > > Here, we will be giving all analogy of backend with SMEM as it is the
-> > > only implemented backend at present but general idea remains the same.
-> > 
-> > If you only have one "backend" then you don't need the extra compexity
-> > here at all, just remove that whole middle layer please and make this
-> > much simpler and smaller and easier to review and possibly accept.
-> > 
-> > We don't add layers when they are not needed, and never when there is no
-> > actual user.  If you need the extra "complexity" later, then add it
-> > later when it is needed as who knows when that will ever be.
-> > 
-> > Please redo this series based on that, thanks.
-> 
-> I already followed without this middle layer till v3 since without
-> the middle layer it will be end up with lot of code duplication if there
-> is another backend.
+> Why not try a series of firmware names/locations generated using the
+> identifying information for the card/system?  That way we don't have to
+> put a filename in the ABI which has fun scaling issues.
 
-But as this series does not have such a thing, only add it when needed
-please.  Don't make us review a whole bunch of stuff that is not
-actually used here.
+This is what was done by Srini in the initial (currently committed) 
+version. Unfortunately this easily results in the audio topology being 
+separated from the rest of the platform-specific firmware. For example, 
+for the mentioned X13s we already have a subdir under /lib/firmware/qcom 
+and several firmware-name DT properties pointing to the files in that 
+subdir:
 
-Would you want to review such a thing?
+$ grep firmware-name 
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+		firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn";
+	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
+	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn";
 
-> We already have other backend implementation in the downstream, if you
-> want to see them, i will try to post them in upcoming series..
+This is not unique to the X13s, other Qualcomm boards also use full paths.
 
-Ok, so if you already have it, yes, post it as part of the series,
-otherwise such a layer makes no sense.
+-- 
+With best wishes
+Dmitry
 
-thanks,
-
-greg k-h
