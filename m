@@ -2,97 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E82D74159B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 17:48:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F5BB7415A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 17:50:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232062AbjF1Prn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 11:47:43 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217]:57262 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231911AbjF1Prl (ORCPT
+        id S231497AbjF1PuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 11:50:25 -0400
+Received: from mail-io1-f44.google.com ([209.85.166.44]:46478 "EHLO
+        mail-io1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231252AbjF1PuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 11:47:41 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A6DC36134E;
-        Wed, 28 Jun 2023 15:47:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB56C433C8;
-        Wed, 28 Jun 2023 15:47:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1687967260;
-        bh=q4sj1d/zHjtV55wTmjMuAvgaAJrxbBFYlstGJuAK4tA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AfUNIFe7ech+WxtpaZnwbblUi4t+4Pe2nw9tCVBxD/U1v7/M/8uEJoEqSrkLCFRqC
-         fdqc02/XoevaQX4+77uSIJvjvOxIx7sQDfskQpiFjlIjb0Aw/OxlXfNCZtNuIyHEJ0
-         iQHZU7++nxQ4ZF05z3YNWCnfLdbgxLOEettVU5tA=
-Date:   Wed, 28 Jun 2023 17:47:37 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     corbet@lwn.net, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        mathieu.poirier@linaro.org, catalin.marinas@arm.com,
-        will@kernel.org, linus.walleij@linaro.org,
-        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v4 03/21] soc: qcom: Add qcom_minidump_smem module
-Message-ID: <2023062823-rimmed-payback-db87@gregkh>
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <1687955688-20809-4-git-send-email-quic_mojha@quicinc.com>
+        Wed, 28 Jun 2023 11:50:24 -0400
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-78363cc070aso2275739f.1;
+        Wed, 28 Jun 2023 08:50:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687967423; x=1690559423;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XLQv79sJE7S4tWUBkkIAujP4Kn0djoVfryatFW5MJhI=;
+        b=eoUl/V5Up32UJUomwpEzhjuCP0B67f/aJP34nCKktn8hZG6bsomO1pPUFX7CYUW9e+
+         9Uwt1XvAI4CuWDqwkdvtyaEFXJ8tJ3g8DReJ59XvI4wI123PHTtJzGGucjaTQri6t2mF
+         mRpctkatZPXbvZAzxCQam19p57SEdJGM7zNs6Wm/LPzBq22GqRJj/mWO2WBnWzc5yMdJ
+         jC/npk301hGcSg35CHvGxBAmwHGNBms+vlo7y0Y7H2QG6l3RQzKt/R3TeiHHxUbhFu2D
+         HHy1MMpCRLyje6gNpQeVAfHtoYMr2oLjLpftmCAd4jjm36PQZL85/s3BY/uSR5negPXS
+         RhXA==
+X-Gm-Message-State: AC+VfDyadaeaNoDCC0BMvfRr41gt6AyZ2s5RNgfSOsd46vnsDw0ZOZqv
+        NAiMzs9xmQPbe/YTMDK+1UyXthqIuQ==
+X-Google-Smtp-Source: ACHHUZ5RqzYAkoyGx9J9K9evNG0Il0MvfBax/rK0gOcUrtpBisU6MLQoliHUYiQ9BeL+y3KvCQM0Cw==
+X-Received: by 2002:a5e:c018:0:b0:786:2706:ecf6 with SMTP id u24-20020a5ec018000000b007862706ecf6mr1003351iol.11.1687967423001;
+        Wed, 28 Jun 2023 08:50:23 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id c17-20020a02a611000000b0040bb600eb81sm3247408jam.149.2023.06.28.08.50.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jun 2023 08:50:22 -0700 (PDT)
+Received: (nullmailer pid 536791 invoked by uid 1000);
+        Wed, 28 Jun 2023 15:50:20 -0000
+Date:   Wed, 28 Jun 2023 09:50:20 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Imran Shaik <quic_imrashai@quicinc.com>
+Cc:     Conor Dooley <conor+dt@kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Subject: Re: [PATCH V2 1/5] dt-bindings: clock: Update GCC clocks for QDU1000
+ and QRU1000 SoCs
+Message-ID: <168796741983.536728.7220713393187676699.robh@kernel.org>
+References: <20230628092837.3090801-1-quic_imrashai@quicinc.com>
+ <20230628092837.3090801-2-quic_imrashai@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1687955688-20809-4-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <20230628092837.3090801-2-quic_imrashai@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 28, 2023 at 06:04:30PM +0530, Mukesh Ojha wrote:
-> Add qcom_minidump_smem module in a preparation to remove smem
-> based minidump specific code from driver/remoteproc/qcom_common.c
-> and provide needed exported API, this abstract minidump specific
-> data layout from qualcomm's remoteproc driver.
+
+On Wed, 28 Jun 2023 14:58:33 +0530, Imran Shaik wrote:
+> Update the qcom GCC clock bindings for QDU1000 and QRU1000 SoCs.
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 > ---
->  drivers/soc/qcom/Kconfig              |   8 ++
->  drivers/soc/qcom/qcom_minidump_smem.c | 147 ++++++++++++++++++++++++++++++++++
->  include/soc/qcom/qcom_minidump.h      |  24 ++++++
->  3 files changed, 179 insertions(+)
->  create mode 100644 drivers/soc/qcom/qcom_minidump_smem.c
->  create mode 100644 include/soc/qcom/qcom_minidump.h
+> Chanes since v1:
+>  - Removed the v2 variant compatible string changes
+>  - Updated the maintainers list
 > 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index a491718f8064..982310b5a1cb 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -279,4 +279,12 @@ config QCOM_INLINE_CRYPTO_ENGINE
->  	tristate
->  	select QCOM_SCM
->  
-> +config QCOM_MINIDUMP_SMEM
-> +	tristate "QCOM Minidump SMEM (as backend) Support"
-> +	depends on ARCH_QCOM
-> +	depends on QCOM_SMEM
-> +	help
-> +	  Enablement of core minidump feature is controlled from boot firmware
-> +	  side, and this config allow linux to query minidump segments associated
-> +	  with the remote processor and check its validity.
+>  Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml | 3 ++-
+>  include/dt-bindings/clock/qcom,qdu1000-gcc.h                  | 4 +++-
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+> 
 
-I can not understand this help text, sorry.  Also, what is the module
-name?
+Acked-by: Rob Herring <robh@kernel.org>
 
-And why is this only with ARCH_QCOM?  Why are we doing ARCH_PLATFORM
-symbols still?  why is that a thing for a generic cpu type?
-
-And don't you want build coverage?  Why not allow that?
-
-thanks,
-
-greg k-h
