@@ -2,73 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 894FD740F83
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:00:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BDF8740F99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:04:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230480AbjF1LA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 07:00:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60978 "EHLO
+        id S231465AbjF1LEE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 07:04:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbjF1LA0 (ORCPT
+        with ESMTP id S230378AbjF1LEC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 07:00:26 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A616510EC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:00:23 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fa99f6a482so33634075e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:00:23 -0700 (PDT)
+        Wed, 28 Jun 2023 07:04:02 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E72B1FD8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:04:00 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fb761efa7aso4901002e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:04:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687950022; x=1690542022;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ulQFhef1Kx2adBzeAqktsDyeJX9bz1Y+UkfQ7ijM/Ag=;
-        b=BoP0vafJwKzZcasx5SKCJw34caNCIeOpL5jdLknwLn7E4x0VWgpS6vKXUlrHvjsif2
-         coeuyM30tuaMkCQxfM90fxJ/XhYKh4rBqXrjNrcDYPRe9E90SNmKHsbz8oNpIHvZpTyP
-         5T2yfJpjHIU/KGF1tviS//HiU6sLj2JeQYyFwdycNNHJnyyO3ijEckwCLUm99ec1jxRI
-         RoQqAZqmbH1CvDm0aG0tJuR42F0H250cYsFjfqLEn8sPX0tKNzWf43GGpUBkqMTD2ZJR
-         ETQmSawJei6Z2XfwVGB1VO8ZwfP+JibnqmlTwlbwshBgrjBxlqn3voXEWx31cES4Rp9t
-         4TqA==
+        d=linaro.org; s=google; t=1687950239; x=1690542239;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HUPPFuBKO9vOMiVIKyk5q3cgcsex7PRLitfEapTCn3s=;
+        b=qRfuMhHC8fRCoxwPNp2sg/o0Sazzv2owsgL38PlJwbt8aLKgJ/l1yx0fyKUoDaZEbs
+         B1IdL+VADzIqoPb1Ru6ius1faeg/kf20+tvk9Vw+wIfelhcUSylY55BiXCWpUtQe5xqG
+         yo9EY4L/eeZ2EjL1JdkiWhW38pFuC2XpSmQppHcjvLu80eFcVy9CXKV6sPnyWTmBqckS
+         ZlF1ptQ96ZkLPXmrfNQY1nHmcidQyYVER/l5lJYXqgsi9M0oR3kA9rnMfeSGsuBXakxA
+         1eKVqjQHIxV4QDR0WKQ1swDXAgHKchIuoaOfB3FnIS/CZrsR8Ufi/8Jlr+D16zm8wB/l
+         8FWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687950022; x=1690542022;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ulQFhef1Kx2adBzeAqktsDyeJX9bz1Y+UkfQ7ijM/Ag=;
-        b=KoVsrUMpL9yRz7Vt5YtI9gtl/xnAQOzFlicsppX5LcWKbmg05h+K51GALxeXhJLy9x
-         j0u899qplcId7or1Vkp74B+TV5ywGewS6fQJGGwWOsbeDS01/lqaY2fbxsogAF3ILSnk
-         4uR+f0tJC6DeVaieerAalNoZ7mF4daSQZ/viuYEYcKsSviW1emPBz7g37E006REHcLT9
-         Dx9BptWhxG2v63zIE5m+S22/szlQFJCNQvzNZw2Xeh6SkDYRqwthv5rhzMV1ItfZGXAm
-         z2c9nySu8vH6idRdiK8i8xJUGmeYMbCuGql/n9sHw16750zED9QzpmVHtcr/x71Jd0IN
-         2iTQ==
-X-Gm-Message-State: AC+VfDx7cI08WF7RUcMFhOM48z9R91GJTlzUz0hMVpeTz6dcvyv0LeVz
-        wJOjvLoN2o2i+kymTVswbmZI4w==
-X-Google-Smtp-Source: ACHHUZ5zvTRF+s6HV6oYBlU9nNHd550kzS3uEH7WrQ3meppPmFsimAxioPm8/AxGco/5BQpWpU1Jkg==
-X-Received: by 2002:a1c:7c04:0:b0:3fb:ac7b:4930 with SMTP id x4-20020a1c7c04000000b003fbac7b4930mr2125286wmc.3.1687950022162;
-        Wed, 28 Jun 2023 04:00:22 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id p4-20020a7bcc84000000b003f9c8c6bf53sm13454380wma.13.2023.06.28.04.00.21
+        d=1e100.net; s=20221208; t=1687950239; x=1690542239;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HUPPFuBKO9vOMiVIKyk5q3cgcsex7PRLitfEapTCn3s=;
+        b=IVf7Iy/KHNHkghFidGmmJxFRvti4YZrEmrw+TKpnbkqVeNYZy0GajMYF/0G4267krG
+         pAUftriUl/hnELqPjJHQ3dporO+svbfDUaA7yP2fliL0/r6wktzAWZ8lR6q8XOJn1hTK
+         Wtn1Pz1h/B+/pDY86qYEqnx/S+ZDoB2y4orIHalPF5JNygcuZd9nd5JNUtAvDhq5IXn9
+         ZIK02Hw5MAlAiq5VVoOsTDJPGLqJoOQcgGWE30zOfhpILcMlhgMY+tblLZf/pGfORnkh
+         E1/6DbVaBY/vYFYKVRdmD0bLixIF0kRWYCV7mIxlULHsbmnB3tA9csjE3+ckXR7izIg+
+         r5PQ==
+X-Gm-Message-State: AC+VfDz7o1LO9Z6qFJxrjD83vvL6EiJ1iLsf6xtzqLBvur6i30+TrG+1
+        tw2I+KTYb+Y1dxEPdttyvIX2WQ==
+X-Google-Smtp-Source: ACHHUZ64p6k1SQQCvQdz7hoW0BKm17SZqA5+P6NHHMQi/RxZCb5JCn9fnfZNSubNiaDqY0x4f0xurQ==
+X-Received: by 2002:a05:6512:2315:b0:4f9:6a74:d149 with SMTP id o21-20020a056512231500b004f96a74d149mr12309413lfu.15.1687950238618;
+        Wed, 28 Jun 2023 04:03:58 -0700 (PDT)
+Received: from [192.168.1.101] (abyj233.neoplus.adsl.tpnet.pl. [83.9.29.233])
+        by smtp.gmail.com with ESMTPSA id l5-20020a19c205000000b004f871c71827sm212702lfc.139.2023.06.28.04.03.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 04:00:21 -0700 (PDT)
-Message-ID: <9786de04-fd1c-b209-b7b8-0bdbd5a1e215@linaro.org>
-Date:   Wed, 28 Jun 2023 12:00:20 +0100
+        Wed, 28 Jun 2023 04:03:58 -0700 (PDT)
+Message-ID: <26be53d7-bcbd-618a-0d8a-f1c826dfd426@linaro.org>
+Date:   Wed, 28 Jun 2023 13:03:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
+ Thunderbird/102.12.0
+Subject: Re: [PATCH V2 2/5] clk: qcom: gcc-qdu1000: Fix
+ gcc_pcie_0_pipe_clk_src clock handling
 Content-Language: en-US
-To:     linux-firmware@kernel.org
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Brian Masney <bmasney@redhat.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [GIT PULL, v2] Add Audio topology firmware for Qualcomm SC8280XP X13s
- platform
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Imran Shaik <quic_imrashai@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Taniya Das <quic_tdas@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230628092837.3090801-1-quic_imrashai@quicinc.com>
+ <20230628092837.3090801-3-quic_imrashai@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230628092837.3090801-3-quic_imrashai@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,29 +89,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit ee91452dac5abfc4c5b9827cf55e701d8c0ca678:
+On 28.06.2023 11:28, Imran Shaik wrote:
+> Fix the gcc_pcie_0_pipe_clk_src clock handling for QDU1000 and
+> QRU1000 SoCs.
+> 
+> Fixes: 1c9efb0bc040 ("clk: qcom: Add QDU1000 and QRU1000 GCC support")
+> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> ---You could have explained that clk_regmap_phy_mux_ops doesn't implement
+any parent-related ops and switches parents implicitly in .enable/disable
 
-   Makefile, copy-firmware: support xz/zstd compressed firmware 
-(2023-06-25 12:18:57 -0400)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-are available in the Git repository at:
-
- 
-git://git.kernel.org/pub/scm/linux/kernel/git/srini/linux-firmware.git 
-sc8280xp-audio-fw
-
-for you to fetch changes up to f9a35b3f0779844aa686b76506344db70a72820d:
-
-   qcom: Add Audio firmware for SC8280XP X13s (2023-06-28 11:52:02 +0100)
-
-----------------------------------------------------------------
-Srinivas Kandagatla (1):
-       qcom: Add Audio firmware for SC8280XP X13s
-
-  LICENCE.linaro                                |  30 
-++++++++++++++++++++++++++++++
-  WHENCE                                        |   8 ++++++++
-  qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin | Bin 0 -> 24296 bytes
-  3 files changed, 38 insertions(+)
-  create mode 100644 LICENCE.linaro
-  create mode 100644 qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin
+Konrad
+> Changes since v1:
+>  - Newly added
+> 
+>  drivers/clk/qcom/gcc-qdu1000.c | 23 ++++++-----------------
+>  1 file changed, 6 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-qdu1000.c b/drivers/clk/qcom/gcc-qdu1000.c
+> index 5051769ad90c..c00d26a3e6df 100644
+> --- a/drivers/clk/qcom/gcc-qdu1000.c
+> +++ b/drivers/clk/qcom/gcc-qdu1000.c
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> - * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #include <linux/clk-provider.h>
+> @@ -370,16 +370,6 @@ static const struct clk_parent_data gcc_parent_data_6[] = {
+>  	{ .index = DT_TCXO_IDX },
+>  };
+>  
+> -static const struct parent_map gcc_parent_map_7[] = {
+> -	{ P_PCIE_0_PIPE_CLK, 0 },
+> -	{ P_BI_TCXO, 2 },
+> -};
+> -
+> -static const struct clk_parent_data gcc_parent_data_7[] = {
+> -	{ .index = DT_PCIE_0_PIPE_CLK_IDX },
+> -	{ .index = DT_TCXO_IDX },
+> -};
+> -
+>  static const struct parent_map gcc_parent_map_8[] = {
+>  	{ P_BI_TCXO, 0 },
+>  	{ P_GCC_GPLL0_OUT_MAIN, 1 },
+> @@ -439,16 +429,15 @@ static struct clk_regmap_mux gcc_pcie_0_phy_aux_clk_src = {
+>  	},
+>  };
+>  
+> -static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
+> +static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
+>  	.reg = 0x9d064,
+> -	.shift = 0,
+> -	.width = 2,
+> -	.parent_map = gcc_parent_map_7,
+>  	.clkr = {
+>  		.hw.init = &(const struct clk_init_data) {
+>  			.name = "gcc_pcie_0_pipe_clk_src",
+> -			.parent_data = gcc_parent_data_7,
+> -			.num_parents = ARRAY_SIZE(gcc_parent_data_7),
+> +			.parent_data = &(const struct clk_parent_data){
+> +				.index = DT_PCIE_0_PIPE_CLK_IDX,
+> +			},
+> +			.num_parents = 1,
+>  			.ops = &clk_regmap_phy_mux_ops,
+>  		},
+>  	},
