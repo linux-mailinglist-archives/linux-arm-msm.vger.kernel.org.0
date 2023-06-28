@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C187B740FBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:09:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52E15740FD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:13:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231803AbjF1LJH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 07:09:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33532 "EHLO
+        id S229626AbjF1LNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 07:13:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231749AbjF1LIz (ORCPT
+        with ESMTP id S229520AbjF1LNh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 07:08:55 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85661213B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:08:52 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fb96e2b573so3243e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:08:52 -0700 (PDT)
+        Wed, 28 Jun 2023 07:13:37 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CAD268F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:13:35 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b69ff54321so52359181fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687950531; x=1690542531;
+        d=linaro.org; s=google; t=1687950813; x=1690542813;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DZEEvwL/mGWHXhkyWVXKsnRaFccZ9iXGZJdLXdIu2mA=;
-        b=XVYyUVPNzAR/B4+bNh3iyg7gIIJ014NDMa5e3ydex6dgL1a9Hm6l9NDM1hayy55neX
-         aK8iELU3gUbG2Vpf/ZD6FzNvyW2gjlBmfx0WdhuT8X/kA6Wpw7+nwfMVzwHmkpZUJsvI
-         XCNYmvxX1IrrpRPSxvFTf8fOo63FgiZK12/LU74jc0jbg9JrpR+mUA+EDerxNVpW7GpO
-         n8DZ81r8aLJRE1rhD8xGW2du7F27u+SSkX7KMI3X6U36Im6ARMARMYxKnDKa9d3mwchC
-         m8+S1ka9L5HpKmghhEY7AEiE4kB385NcktqrPpYGOLd9FAXjX2hdyrZ4VQL4qWe8Gxj3
-         ZTtQ==
+        bh=mxUjDgbY/jNz54AC4sl2RIErcdWqb2mUuJILzEKOlqM=;
+        b=oaZ8tyOpIUvX+cCLzgWdNoY8qftM92bZWnYXHa1SrK1QcQPPtAxjE4Sc7rnvK6yo5E
+         jFxzIDIPHv1HMLWARS/EKHXuxZ9f68yYnLRJDWTHzN5NpL4IVaLRwAMDZUFahEw9yNBB
+         EWOP7DSP9oo5THMy3XEr08CZ+YzzpleUdQtab5olUQClRuBtSh7ZoTxbcfLjuYG//vYO
+         73p49yKQ52BpY3azzO+z4MqRj4kmOVgaT/TV1auN55Gf01WwYad489xm+1Jgih7tx2ko
+         S+Oc+Qi2zgCMmNQOpQxYjjZdb5XIejDQ7sGOQ0/mEA7peRKHrJlaiexutyvC62/xMhc4
+         LiNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687950531; x=1690542531;
+        d=1e100.net; s=20221208; t=1687950813; x=1690542813;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DZEEvwL/mGWHXhkyWVXKsnRaFccZ9iXGZJdLXdIu2mA=;
-        b=TRS/hv9nlxlBhBWM9muQO9qjtYpQI6+t4a5G4C7ZvZnRFQ/DqMqf5c+u2rqinVoR4E
-         Mj6j3V6ng21eK+MANGzmAmzUHOET9ckp5J1uiU28n6Rs6zUrtOEPLfK1aPcnhYOvDuVY
-         7ZuQBjxpWjVnxvv7wzvAeviCv/u7M0Z9g1ANXwPanta6Xx+BH1ZKXqOtTMpLiLszmgLz
-         +Cvb9iqQMu2/8fjZF7Rh4M8gOxV6SIxwJ8JHMVpxsgbmm90xbzl2qL2d0xiUpbGO9Wx1
-         amu086PTN2+FxlcG+gR89ndsrT0qxrfuUHZk7e5iFLXVLbtOPFPJHJuKCNlopznHFAZC
-         w7lA==
-X-Gm-Message-State: AC+VfDwCjuKMqSwvaT8L9nNze7SETIAG416VOg+sGYyyjIwagKkge6I4
-        w8Dbw/uuaz1qhpbNfsMXwOWEEA==
-X-Google-Smtp-Source: ACHHUZ6clyblrgBU+QGha+veEQGjoOpgvFjicxCWlS+zdHrZkC0EKJ660ba8bRhh3X/ZlSQlQmjbtQ==
-X-Received: by 2002:a19:500f:0:b0:4f8:6533:3341 with SMTP id e15-20020a19500f000000b004f865333341mr18264863lfb.20.1687950530699;
-        Wed, 28 Jun 2023 04:08:50 -0700 (PDT)
+        bh=mxUjDgbY/jNz54AC4sl2RIErcdWqb2mUuJILzEKOlqM=;
+        b=MnYOcrT5DCiz8NRUxekhH64AdoAmx9xtbCk464ncKdbMmdpy1C0fVp2SBuUYux/SPP
+         hsmo1B8qRwgbSaJUMOhZopWwRaFNUSi755bIt8mno4Qh7UkCSTcbb3+ArkpJbTcRw3k8
+         /I5t+QfKEuK2PuWXYDVswDMcLY/mm7sMfieAl3vGn6vT+RhSzmZ426cn1KKpq5/e9r13
+         SmRC5L0uTYfXy1ngL8naL+MHr5sbJ1n1zj9/8bAwBz63RRuMvZQWWCTfThCplVIDoaNO
+         gbWRTOsJQDBjl8816jdEfJlBwRRGuJ+f0ql3vpfc1z8LrP47HRej/r8PYF5PbSRjKx4i
+         ATtA==
+X-Gm-Message-State: AC+VfDw9FKI2GyTnBDYywyJV2mdTay/t00Re5RKnnNa1gDfDIPTTTMQu
+        9J+DOzBB7Q2qdKTjTs3yTA92Gw==
+X-Google-Smtp-Source: ACHHUZ7F1tJgooydEk02WTCZjUfRe7PKzXWFYzlX3R9hRMRIB9K95VGzrtXqoz4UshqPiLZ3IaK0qw==
+X-Received: by 2002:a2e:8e8a:0:b0:2b4:8239:b132 with SMTP id z10-20020a2e8e8a000000b002b48239b132mr18914904ljk.22.1687950813572;
+        Wed, 28 Jun 2023 04:13:33 -0700 (PDT)
 Received: from [192.168.1.101] (abyj233.neoplus.adsl.tpnet.pl. [83.9.29.233])
-        by smtp.gmail.com with ESMTPSA id k7-20020ac24567000000b004fb2244563csm1529190lfm.216.2023.06.28.04.08.49
+        by smtp.gmail.com with ESMTPSA id d19-20020a2e3313000000b002b1e6a78d3esm2165609ljc.82.2023.06.28.04.13.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 04:08:50 -0700 (PDT)
-Message-ID: <a2497c05-1aa5-1a75-5ae1-f8fc0551e04a@linaro.org>
-Date:   Wed, 28 Jun 2023 13:08:48 +0200
+        Wed, 28 Jun 2023 04:13:33 -0700 (PDT)
+Message-ID: <2dfa5bb8-3189-29f2-a85f-3dd392b27141@linaro.org>
+Date:   Wed, 28 Jun 2023 13:13:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH V2 5/5] clk: qcom: gcc-qdu1000: Update the RCGs ops
+Subject: Re: [PATCH v4 5/6] soc: qcom: Add LLCC support for multi channel DDR
 Content-Language: en-US
-To:     Imran Shaik <quic_imrashai@quicinc.com>,
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-Cc:     Taniya Das <quic_tdas@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230628092837.3090801-1-quic_imrashai@quicinc.com>
- <20230628092837.3090801-6-quic_imrashai@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
+ <20230623141806.13388-6-quic_kbajaj@quicinc.com>
+ <b84b2bfc-6f8f-f50f-27b5-52a982ae30f2@linaro.org>
+ <e80f0bd3-cf1e-dfed-bcc6-d22d4d934230@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230628092837.3090801-6-quic_imrashai@quicinc.com>
+In-Reply-To: <e80f0bd3-cf1e-dfed-bcc6-d22d4d934230@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -88,304 +84,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.06.2023 11:28, Imran Shaik wrote:
-> Update the SDCC clock RCG ops to floor_ops to avoid overclocking issues
-> and remaining RCGs to shared_ops to park them at safe clock(XO) during
-> disable.
+On 28.06.2023 10:52, Komal Bajaj wrote:
 > 
-> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> On 6/23/2023 8:28 PM, Konrad Dybcio wrote:
+>> On 23.06.2023 16:18, Komal Bajaj wrote:
+>>> Add LLCC support for multi channel DDR configuration
+>>> based on a feature register. Reading DDR channel
+>>> confiuration uses nvmem framework, so select the
+>>> dependency in Kconfig. Without this, there will be
+>>> errors while building the driver with COMPILE_TEST only.
+>>>
+>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>> ---
+>>>   drivers/soc/qcom/Kconfig     |  2 ++
+>>>   drivers/soc/qcom/llcc-qcom.c | 33 ++++++++++++++++++++++++++++++---
+>>>   2 files changed, 32 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>>> index a491718f8064..cc9ad41c63aa 100644
+>>> --- a/drivers/soc/qcom/Kconfig
+>>> +++ b/drivers/soc/qcom/Kconfig
+>>> @@ -64,6 +64,8 @@ config QCOM_LLCC
+>>>       tristate "Qualcomm Technologies, Inc. LLCC driver"
+>>>       depends on ARCH_QCOM || COMPILE_TEST
+>>>       select REGMAP_MMIO
+>>> +    select NVMEM
+>>> +    select QCOM_SCM
+>>>       help
+>>>         Qualcomm Technologies, Inc. platform specific
+>>>         Last Level Cache Controller(LLCC) driver for platforms such as,
+>>> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+>>> index 6cf373da5df9..3c29612da1c5 100644
+>>> --- a/drivers/soc/qcom/llcc-qcom.c
+>>> +++ b/drivers/soc/qcom/llcc-qcom.c
+>>> @@ -12,6 +12,7 @@
+>>>   #include <linux/kernel.h>
+>>>   #include <linux/module.h>
+>>>   #include <linux/mutex.h>
+>>> +#include <linux/nvmem-consumer.h>
+>>>   #include <linux/of.h>
+>>>   #include <linux/of_device.h>
+>>>   #include <linux/regmap.h>
+>>> @@ -943,6 +944,19 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
+>>>       return ret;
+>>>   }
+>>>   +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u8 *cfg_index)
+>>> +{
+>>> +    int ret;
+>>> +
+>>> +    ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
+>>> +    if (ret == -ENOENT) {
+>>> +        *cfg_index = 0;
+>>> +        return 0;
+>>> +    }
+>>> +
+>>> +    return ret;
+>>> +}
+>>> +
+>>>   static int qcom_llcc_remove(struct platform_device *pdev)
+>>>   {
+>>>       /* Set the global pointer to a error code to avoid referencing it */
+>>> @@ -975,11 +989,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>>>       struct device *dev = &pdev->dev;
+>>>       int ret, i;
+>>>       struct platform_device *llcc_edac;
+>>> -    const struct qcom_llcc_config *cfg;
+>>> +    const struct qcom_llcc_config *cfg, *entry;
+>>>       const struct llcc_slice_config *llcc_cfg;
+>>>       u32 sz;
+>>> +    u8 cfg_index;
+>>>       u32 version;
+>>>       struct regmap *regmap;
+>>> +    u32 num_entries = 0;
+>>>         drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
+>>>       if (!drv_data) {
+>>> @@ -1040,8 +1056,19 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>>>         drv_data->version = version;
+>>>   -    llcc_cfg = cfg[0]->sct_data;
+>>> -    sz = cfg[0]->size;
+>>> +    ret = qcom_llcc_get_cfg_index(pdev, &cfg_index);
+>>> +    if (ret)
+>>> +        goto err;
+>>> +
+>>
+>>> +    for (entry = cfg; entry->sct_data; entry++, num_entries++)
+>>> +        ;
+>>> +    if (cfg_index >= num_entries || cfg_index < 0) {
+>> cfg_index is an unsigned variable, it can never be < 0
+> 
+> Okay, will remove this condition.
+> 
+>>
+>>> +        ret = -EINVAL;
+>>> +        goto err;
+>>> +    }
+>>> +
+>> if (cfg_index >= entry->size)? With that, you can also keep the config
+>> entries non-0-terminated in the previous patch, saving a whole lot of RAM.
+> 
+> entry->size represents the size of sct table whereas num_entries represents the number
+> of sct tables that we can have. And by this check we are validating the value read from the
+> fuse register. Am I understanding your comment correctly?
+Oh you're right.
+
+I still see room for improvement, though.
+
+For example, you duplicate assigning need_llcc_cfg, reg_offset
+and edac_reg_offset. You can add a new struct, like "sct_config" and add
+a pointer to sct_config[] & the length of this array to qcom_llcc_config.
 
 Konrad
-> Changes since v1:
->  - Newly added
+
 > 
->  drivers/clk/qcom/gcc-qdu1000.c | 62 +++++++++++++++++-----------------
->  1 file changed, 31 insertions(+), 31 deletions(-)
+>>
+>> Konrad
+>>> +    llcc_cfg = cfg[cfg_index].sct_data;
+>>> +    sz = cfg[cfg_index].size;
+>>>         for (i = 0; i < sz; i++)
+>>>           if (llcc_cfg[i].slice_id > drv_data->max_slices)
 > 
-> diff --git a/drivers/clk/qcom/gcc-qdu1000.c b/drivers/clk/qcom/gcc-qdu1000.c
-> index 718c34dca6e8..de35cdc93732 100644
-> --- a/drivers/clk/qcom/gcc-qdu1000.c
-> +++ b/drivers/clk/qcom/gcc-qdu1000.c
-> @@ -475,7 +475,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_dma_clk_src = {
->  		.name = "gcc_aggre_noc_ecpri_dma_clk_src",
->  		.parent_data = gcc_parent_data_4,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -495,7 +495,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_gsi_clk_src = {
->  		.name = "gcc_aggre_noc_ecpri_gsi_clk_src",
->  		.parent_data = gcc_parent_data_5,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -514,7 +514,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
->  		.name = "gcc_gp1_clk_src",
->  		.parent_data = gcc_parent_data_1,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -528,7 +528,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
->  		.name = "gcc_gp2_clk_src",
->  		.parent_data = gcc_parent_data_1,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -542,7 +542,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
->  		.name = "gcc_gp3_clk_src",
->  		.parent_data = gcc_parent_data_1,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -561,7 +561,7 @@ static struct clk_rcg2 gcc_pcie_0_aux_clk_src = {
->  		.name = "gcc_pcie_0_aux_clk_src",
->  		.parent_data = gcc_parent_data_3,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -581,7 +581,7 @@ static struct clk_rcg2 gcc_pcie_0_phy_rchng_clk_src = {
->  		.name = "gcc_pcie_0_phy_rchng_clk_src",
->  		.parent_data = gcc_parent_data_0,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -600,7 +600,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
->  		.name = "gcc_pdm2_clk_src",
->  		.parent_data = gcc_parent_data_0,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -622,7 +622,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s0_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
-> @@ -638,7 +638,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s1_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
-> @@ -654,7 +654,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s2_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
-> @@ -670,7 +670,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s3_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
-> @@ -686,7 +686,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s4_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
-> @@ -707,7 +707,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s5_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
-> @@ -723,7 +723,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s6_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s6_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s6_clk_src = {
-> @@ -739,7 +739,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s7_clk_src_init = {
->  	.name = "gcc_qupv3_wrap0_s7_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap0_s7_clk_src = {
-> @@ -755,7 +755,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s0_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
-> @@ -771,7 +771,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s1_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
-> @@ -787,7 +787,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s2_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
-> @@ -803,7 +803,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s3_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
-> @@ -819,7 +819,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s4_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
-> @@ -835,7 +835,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s5_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
-> @@ -851,7 +851,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s6_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
-> @@ -867,7 +867,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
->  	.name = "gcc_qupv3_wrap1_s7_clk_src",
->  	.parent_data = gcc_parent_data_0,
->  	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -	.ops = &clk_rcg2_ops,
-> +	.ops = &clk_rcg2_shared_ops,
->  };
->  
->  static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
-> @@ -903,7 +903,7 @@ static struct clk_rcg2 gcc_sdcc5_apps_clk_src = {
->  		.name = "gcc_sdcc5_apps_clk_src",
->  		.parent_data = gcc_parent_data_8,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_8),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_floor_ops,
->  	},
->  };
->  
-> @@ -922,7 +922,7 @@ static struct clk_rcg2 gcc_sdcc5_ice_core_clk_src = {
->  		.name = "gcc_sdcc5_ice_core_clk_src",
->  		.parent_data = gcc_parent_data_2,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_floor_ops,
->  	},
->  };
->  
-> @@ -936,7 +936,7 @@ static struct clk_rcg2 gcc_sm_bus_xo_clk_src = {
->  		.name = "gcc_sm_bus_xo_clk_src",
->  		.parent_data = gcc_parent_data_2,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -955,7 +955,7 @@ static struct clk_rcg2 gcc_tsc_clk_src = {
->  		.name = "gcc_tsc_clk_src",
->  		.parent_data = gcc_parent_data_9,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -975,7 +975,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
->  		.name = "gcc_usb30_prim_master_clk_src",
->  		.parent_data = gcc_parent_data_0,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -989,7 +989,7 @@ static struct clk_rcg2 gcc_usb30_prim_mock_utmi_clk_src = {
->  		.name = "gcc_usb30_prim_mock_utmi_clk_src",
->  		.parent_data = gcc_parent_data_0,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
-> @@ -1003,7 +1003,7 @@ static struct clk_rcg2 gcc_usb3_prim_phy_aux_clk_src = {
->  		.name = "gcc_usb3_prim_phy_aux_clk_src",
->  		.parent_data = gcc_parent_data_3,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
->  	},
->  };
->  
