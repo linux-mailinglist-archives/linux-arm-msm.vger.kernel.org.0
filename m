@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B1EC741258
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 15:27:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EC02741282
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 15:33:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231966AbjF1N1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 09:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46592 "EHLO
+        id S231847AbjF1Ncx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 09:32:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232115AbjF1N1B (ORCPT
+        with ESMTP id S231740AbjF1Ncb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 09:27:01 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B82EF2D63;
-        Wed, 28 Jun 2023 06:25:26 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fb7769f15aso5061963e87.0;
-        Wed, 28 Jun 2023 06:25:26 -0700 (PDT)
+        Wed, 28 Jun 2023 09:32:31 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9FF61705;
+        Wed, 28 Jun 2023 06:31:39 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-51d9123a8abso4805820a12.2;
+        Wed, 28 Jun 2023 06:31:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687958725; x=1690550725;
+        d=gmail.com; s=20221208; t=1687959098; x=1690551098;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TWEQbN86A0uWHo7Mv0YHpWVtQH6MiF6zeRclnXOWRDQ=;
-        b=kIuz59to4JmWAP9SmF2819Scpgqe3vPA0S58LqpT08Mtg8b6YqDSMolY3qlaLqzBRq
-         gvLG7j6wRtDaAGBAHklKjZfH+0J+blLP/jkXFS8QsVCGJ1e0I/EACXFmi0JjXVPj4XzA
-         OPaqOFcgsMKK2HBjrUyRbPYvn0XuhJ5ZayHs2y95XwNMYjftFL3DzCflo4AZNKKYFOzJ
-         fVrJdfivRuDYoBZDeelb6yefdxuk25JHI5RxObWZrculOrPrfkV+mO8H11jnmOQhaHcz
-         AsYF8lIA5sf8Wq0+yopLJKmqrnsFltl8+5T7P6+IvlX7gY7Fk/+GgZ4q3YGgA6Ebns8Y
-         A6Zg==
+        bh=7FUnaW6Od3Yv31RkB8JAdBBWdogXZHwC3KylqgBdp8I=;
+        b=pZt0W2Ch5oOAafjon76+3AXSaQqYipdQahYl7hiTfj2uMPO5byT4CkSR6N/0LZafUO
+         IE+4ZvNP5BjxXieb3AdwDKd4nZJUTgeFMPJfT1sVPa1cziz8XcDCn0xX6h8b9igT5NbA
+         mJQagYG9VGy6pQDN33XTNlfe9e+9lxiTbBId9JXi/NoMiDfPE5VGOzgJtsoCQHEvSTAC
+         fNC7QrN0NJJkeDC4MLJWWyGTXhn9r9q4HxMiQ3dmjwgGUFBggjJtdjlaojfO8hNqlMIh
+         DomUMpWytZdIsKIxn5iaCZLgKfZqVYN76jWuBrMN6p3+G8MewpnrRWGrpx2LEbPjZh93
+         f7jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687958725; x=1690550725;
+        d=1e100.net; s=20221208; t=1687959098; x=1690551098;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TWEQbN86A0uWHo7Mv0YHpWVtQH6MiF6zeRclnXOWRDQ=;
-        b=J2LDG84st+wBKPxCB+MVDf4uLQqUo0F/eftevKNznG9GEsJl4HFtBYF2XlZdJP3fjs
-         0IUkUvkiQ8C5OD2l0k95+wErHYLo9LF51+OemV8RU1MbsIgZAL34Ntj2hCfqlaI0UC7n
-         xdknrGUxxVGQUCuicS7jw7OPebisdYL5hf2r2hIUKM0f1Pmj4mapi/jUk0IyzCcdt1qN
-         FTtQK/GIg/pLs+vuyTrueXU0JN1IrwRCvA4v79fY4+BsB+ckNtVyKeQq4pIPGZ67XBTD
-         dx7duUs79PHWeYr7dRABCdyCIiwF2Vg38iSAF/xzdk1lawtKOKEDqI34NrqtKiqGrW+G
-         +FNg==
-X-Gm-Message-State: AC+VfDzcz0tt2uMhXol1W4E77On/6u99xn/nqLqH5h42fGBa4QwkD/6l
-        nG/y0h6lgxKLn8dNxzSEdnzK4Nx2nf3BYaFKIwU=
-X-Google-Smtp-Source: ACHHUZ5hjUSVG5IQFaE93brCgNksZL03omVGBIEEyvY3Gusi6WFzibws1HkoznD+ij1D6/MEVxklMwZ9hULE7BQ8Bzo=
-X-Received: by 2002:ac2:5b83:0:b0:4f8:5472:7307 with SMTP id
- o3-20020ac25b83000000b004f854727307mr16840436lfn.31.1687958724653; Wed, 28
- Jun 2023 06:25:24 -0700 (PDT)
+        bh=7FUnaW6Od3Yv31RkB8JAdBBWdogXZHwC3KylqgBdp8I=;
+        b=KpLRf42EN+yy+J75xRUm6qWMj0uC/3yShlbmyBkC0WkDxASHB0NgGEBEdus8JmiHTG
+         3jNuyWPOrPeXGhyuYkpDRsh05+I2hMMOeQNqNIMrU022YriEGGY9b413Y1yeT7bJBXOv
+         4icatWTE0kjbzSjCk6mInxa/05MHHQe/cG+hTBvCiMAzr1rkK1IPuaGcUMjCvFYJKhMT
+         k24SHJIzCuxRCg07YTGxdsz4CbidH+WvCKIEkOJnZIFg1Ph6+LwJfJUVHNk9QY1VzVH6
+         e9eO2+2LDuWNWaboYFHrg6GDkvWECYhUL/22e9a79guxz6LX1KxjbOlG27JDBrPz5sxC
+         CcPA==
+X-Gm-Message-State: AC+VfDxQgV02kqe9LZHM+xuR5CsHtiR10yKNaRjiLzutRTIgA10pDCga
+        9Dl7OYx7G2xeKaIf8hAgcgdOY9GRtMZz3QZR1bs=
+X-Google-Smtp-Source: ACHHUZ4tJxtb9mtDVz05B6rx/caVQ80f6FNKZiZvs5KBgQj2R9xBIm9SvAJ8zNw1mIaeX7ncVTXV+oUnck/F3olR/bU=
+X-Received: by 2002:aa7:d4d5:0:b0:51d:3747:f88a with SMTP id
+ t21-20020aa7d4d5000000b0051d3747f88amr8767995edr.31.1687959098117; Wed, 28
+ Jun 2023 06:31:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com> <1687955688-20809-3-git-send-email-quic_mojha@quicinc.com>
-In-Reply-To: <1687955688-20809-3-git-send-email-quic_mojha@quicinc.com>
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com> <1687955688-20809-4-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <1687955688-20809-4-git-send-email-quic_mojha@quicinc.com>
 From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Wed, 28 Jun 2023 16:24:48 +0300
-Message-ID: <CAHp75Vcu6_Gr6Y8ThzOZdC34-sxOx9esYhpS2p22rAWjwv5Bkg@mail.gmail.com>
-Subject: Re: [PATCH v4 02/21] kallsyms: Export kallsyms_lookup_name
+Date:   Wed, 28 Jun 2023 16:31:01 +0300
+Message-ID: <CAHp75VeWEkEnBLgkk_xi633WP9hTegi3W-zh2nRim6JRz4V0mg@mail.gmail.com>
+Subject: Re: [PATCH v4 03/21] soc: qcom: Add qcom_minidump_smem module
 To:     Mukesh Ojha <quic_mojha@quicinc.com>
 Cc:     corbet@lwn.net, agross@kernel.org, andersson@kernel.org,
         konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -80,33 +80,63 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Wed, Jun 28, 2023 at 3:35=E2=80=AFPM Mukesh Ojha <quic_mojha@quicinc.com=
 > wrote:
 >
-> Module like minidump providing debugging support will need to
-> get the symbol information from the core kernel e.g to get
-> the linux_banner, kernel section addresses bss, data, ro etc.
->
-> commit 0bd476e6c671 ("kallsyms: unexport kallsyms_lookup_name()
-
-Commit
-
->  and kallsyms_on_each_symbol()") unexports kallsyms_lookup_name
-> due to lack of in-tree user of the symbol. Now, that minidump
-> will one of its user, export it.
-
-users
+> Add qcom_minidump_smem module in a preparation to remove smem
+> based minidump specific code from driver/remoteproc/qcom_common.c
+> and provide needed exported API, this abstract minidump specific
+> data layout from qualcomm's remoteproc driver.
 
 ...
 
-Is it a direct revert? Then make it visible by leaving pieces from `git rev=
-ert`.
+> +#include <linux/kernel.h>
+
+Why?
+
+Missing headers:
+err.h
+export.h
+string.h
+types.h
+
+byteorder/generic.h
+
+> +#include <linux/module.h>
+> +#include <linux/io.h>
+
+Can you have them ordered?
 
 ...
 
-> -
+> + * Return: On success, it returns iomapped base segment address, otherwi=
+se NULL on error.
 
-If not, drop this stray change.
+IO mapped (or MMIO?)
 
-> +EXPORT_SYMBOL_GPL(kallsyms_lookup_name);
+...
 
+> +       return ioremap((unsigned long)le64_to_cpu(subsystem->regions_base=
+ptr),
+
+Why casting?
+
+> +                       *seg_cnt * sizeof(struct minidump_region));
+
+Something from overflow.h?
+
+...
+
+> +       /* If it is not valid region, skip it */
+
+if region is not valid, skip it
+
+...
+
+> +#ifndef _QCOM_MINIDUMP_H_
+> +#define _QCOM_MINIDUMP_H_
+
+This header uses EINVAL, IS_ENABLED() and (to some extent) dma_addr_t.
+So do you need respective headers to be included?
+
+> +#endif /* _QCOM_MINIDUMP_H_ */
 
 --=20
 With Best Regards,
