@@ -2,151 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 316D1740FDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:15:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1C15740FEF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:19:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231826AbjF1LPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 07:15:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34206 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231824AbjF1LPL (ORCPT
+        id S231512AbjF1LS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 07:18:59 -0400
+Received: from mail-il1-f172.google.com ([209.85.166.172]:61571 "EHLO
+        mail-il1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230430AbjF1LSm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 07:15:11 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31A9E5B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:15:09 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fb7acaa7a5so4420339e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:15:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687950908; x=1690542908;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CRpDMlSOdjlWJCoFGMItwOJ9PaCH0eJrXnbwCOjqAQ8=;
-        b=B8aA7AwH5cdDsrTOl3ocBUZ75+yfTiKsMjDwcTuOXgFC/SClQlWhLdWIUHX5D91Y4j
-         uxYA2EwnDEIu1JepUhz9w+UprVffsoWk68PuHhXYYn71cj7l0D1tc3mFJVE30DN0i8IU
-         eSe+huJVNFOJ8FXoM11elPI4ZpIrjIOW7ANwcItSTjEsOJ/9R3liIak85ZbH/WQcuxJ7
-         /rOmyezc3KZAWmllAhzEn8Ai9vjvd74qhuMc7nrGKV+i8YfG7HJehub+ed9E8VkwQSeK
-         zNmOjkZxhiYssey1aDXKPL0wnhG17dAXajo06RaTnl79m4jF3y78KNam12PN7rhzPwMD
-         3gVg==
+        Wed, 28 Jun 2023 07:18:42 -0400
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3420dccf277so20698765ab.2;
+        Wed, 28 Jun 2023 04:18:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687950908; x=1690542908;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CRpDMlSOdjlWJCoFGMItwOJ9PaCH0eJrXnbwCOjqAQ8=;
-        b=OnKPMR5l+1BtOLdgw+nNnyfqCq+JFLULiclw2mY1MYWLXkIcVvxP4BA41vD+k+oZpy
-         3gl+iS8KPZoojk4jUmKTqJU47gxVVT9LmKsSzT818pnLRESpPoo1072Mxk9DcZn3yuYt
-         LlIzkWuf0vA+iHbqxK7WgfHGV2BpjCzLG1vp169HzUumKjMxHjhqi9nxZ5ryjSXngUlq
-         rZowrLFyi2OZG8bFrvU8eIP0+c006YoCRMTJK9OmFD9EJ32ISHqicNRCy5ZaaAUDpl5x
-         2iYE182WFThluee4besVGdmMWgbYbKJubhZSTdJmzd4TfvsUfu9qRcVhBkxIVIs0CwkT
-         ClNg==
-X-Gm-Message-State: AC+VfDzYZQ530A2Qpa7pMmovtU8Lwkbk04DdNcmYbugLHUm9kGRNKmff
-        kFgZ0yESLaItR6CD1xPwvbrpVQ==
-X-Google-Smtp-Source: ACHHUZ5BKDzsJlf5np3IFyFRLJfmAo1gnPmz2jehYTyTkbdTgjA5UsH8zb9DnsQxRJrN4GhaKrpImg==
-X-Received: by 2002:a05:6512:3d02:b0:4fb:7392:c72c with SMTP id d2-20020a0565123d0200b004fb7392c72cmr8117318lfv.57.1687950907897;
-        Wed, 28 Jun 2023 04:15:07 -0700 (PDT)
-Received: from [192.168.1.101] (abyj233.neoplus.adsl.tpnet.pl. [83.9.29.233])
-        by smtp.gmail.com with ESMTPSA id b12-20020a056512024c00b004f87571a5c8sm1872343lfo.48.2023.06.28.04.15.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 04:15:07 -0700 (PDT)
-Message-ID: <b02789ca-b6a0-d972-7e9e-fdddd3d15538@linaro.org>
-Date:   Wed, 28 Jun 2023 13:15:06 +0200
+        d=1e100.net; s=20221208; t=1687951122; x=1690543122;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+OzrKcgmF4GYT9x8rAn0YnzpplhYCV/29RHuP+s5ATo=;
+        b=hMPClJikIJ3XHe2IZ3y72wz+UTmS/kSWKCAL+4un1cgP0LgBZjH8RWL0cWRvZNeyJa
+         OVQupx0TUnqEyr7czTgCnEx+f97xs7h6MJmr49twV8C4kcpyw6d391QsbmqBlP5JD2i9
+         kWrFUwkZDWEQpaRKJmts3yRs5Bm3b+n+GGYOQIdjsoDKnn50Z4ZgDIWNTqehAuKanLV2
+         Az4yIDOO+Rx7XnNAQ2aD5nr5zsryubqsx9qn8bFcg3jE1nzYCRY/1B3yk9Czrv1mEBuh
+         F8ImOzldbIZkB1Y/TwD/AUYPDBK5ukSVy0cCERdOLPtqfnSRj86zgWfsQg7iwfAvZ8Yh
+         0a/g==
+X-Gm-Message-State: AC+VfDzieQwv5/hHhAIcoj3skImBuPHooqYyg3Dk9UUqkZH1ddM2Mdnt
+        jIQczFdJFU3/MiPbv7DUV2umXbQukA==
+X-Google-Smtp-Source: ACHHUZ6AYZNuSN4tF0PU+00RX3K30tGmRH38o4pmpRxf5cW/evpvI6SRJve74c/2y06ZclyUSNawZw==
+X-Received: by 2002:a5d:81c6:0:b0:77e:3598:e516 with SMTP id t6-20020a5d81c6000000b0077e3598e516mr26477428iol.2.1687951121957;
+        Wed, 28 Jun 2023 04:18:41 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id q15-20020a02c8cf000000b0042ad6abe0bbsm1474801jao.20.2023.06.28.04.18.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jun 2023 04:18:41 -0700 (PDT)
+Received: (nullmailer pid 154565 invoked by uid 1000);
+        Wed, 28 Jun 2023 11:18:36 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: add explicit rtc
- interrupt parent
-Content-Language: en-US
-To:     Patrick Wildt <patrick@blueri.se>, Johan Hovold <johan@kernel.org>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Mark Kettenis <kettenis@openbsd.org>
-References: <20230627085306.6033-1-johan+linaro@kernel.org>
- <20230627132406.GA5490@thinkpad> <ZJr_5JIqWSGq-E-T@hovoldconsulting.com>
- <20230628052557.GB20477@thinkpad> <ZJvXZDBGBSQfeBdh@hovoldconsulting.com>
- <ZJvv_bcum7nhrgrO@mone.fritz.box>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZJvv_bcum7nhrgrO@mone.fritz.box>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     ckeepax@opensource.cirrus.com, andersson@kernel.org,
+        dmitry.baryshkov@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kuninori.morimoto.gx@renesas.com,
+        pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org,
+        tiwai@suse.com, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org, perex@perex.cz,
+        johan+linaro@kernel.org, lgirdwood@gmail.com
+In-Reply-To: <20230628102621.15016-2-srinivas.kandagatla@linaro.org>
+References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
+ <20230628102621.15016-2-srinivas.kandagatla@linaro.org>
+Message-Id: <168795111610.154546.2388306127821623760.robh@kernel.org>
+Subject: Re: [PATCH 1/3] ASoC: dt-bindings: q6apm: add firmware-name
+ bindings
+Date:   Wed, 28 Jun 2023 05:18:36 -0600
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.06.2023 10:31, Patrick Wildt wrote:
-> On Wed, Jun 28, 2023 at 08:47:00AM +0200, Johan Hovold wrote:
->> On Wed, Jun 28, 2023 at 10:55:57AM +0530, Manivannan Sadhasivam wrote:
->>> On Tue, Jun 27, 2023 at 05:27:32PM +0200, Johan Hovold wrote:
->>>> On Tue, Jun 27, 2023 at 06:54:06PM +0530, Manivannan Sadhasivam wrote:
->>>>> On Tue, Jun 27, 2023 at 10:53:06AM +0200, Johan Hovold wrote:
->>>>>> Unless explicitly specified the interrupt-parent property is inherited
->>>>>> from the parent node on Linux even though this may not be in full
->>>>>> compliance with the devicetree specification.
->>>>>>
->>>>>> Following commit 2d5cab9232ba ("arm64: dts: qcom: sc8280xp-pmics:
->>>>>> Specify interrupt parent explicitly"), add an explicit interrupt parent
->>>>>> also for the PMIC RTC node for the benefit of other operating systems
->>>>>> which may be confused by this omission.
->>>>>>
->>>>>> Note that any such OS must still implement a fallback to the root
->>>>>> interrupt domain as most devicetrees are written under the assumption
->>>>>> that the interrupt parent is inherited.
->>>>>>
->>>>>> Reported-by: Patrick Wildt <patrick@blueri.se>
->>>>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>>>>
->>>>> It is good to encode this in the binding and fix other such instances.
->>>>
->>>> Not sure about that. Perhaps the spec should be updated to match reality
->>>> instead... We have many more instances like this, even for this very
->>>> SoC, but apparently OpenBSD or whatever OS needs this falls back to the
->>>> root domain then.
->>>>
->>>
->>> Just because linux is doing it in a different way doesn't warrant an amendment
->>> to the spec IMO.
->>
->> My point is that it's apparently not just Linux as most devicetrees work
->> this way at least for the root domain. And then it may be time to update
->> the spec in some way.
-> 
-> I'm not sure about the point you're trying to make.  In OpenBSD's
-> implementation, which I think complies with the spec, for non-extended
-> interrupts we check the node's (or all its parents') interrupt-parent
-> property.
-> 
-> Technically the SPMI arbiter could define an interrupt-parent that
-> points to itself, because it's using interrupts-extended anyway to
-> point to the PDC.  But that would feel a bit stupid and not really
-> correct.  Alternatively each child node could have interrupt-parent.
-> 
-> That said, I understand the point that it might make sense to amend
-> the spec so that if a parent node is an interrupt-controller, that's
-> most probably interrupt parent, unless an interrupt-parent property
-> shows up before.
-> 
-> I would like to add that OpenBSD supports a number of SoCs for quite
-> some years and this is the first time I've hit an issue with interrupts
-> that were not designed in a way for the current spec to work.  That said
-> we obviously support quite fewer SoCs/boards in total compared to Linux.
-Linux does something out of spec here. We should either comply or amend
-the dt spec. Perhaps that's a question for Rob Herring.
 
-Konrad
+On Wed, 28 Jun 2023 11:26:19 +0100, Srinivas Kandagatla wrote:
+> Add bindings to get firmare-name from DT, this will provide more flexibility
+> to specify platform specific firmware file name and location. Also this brings
+> tplg firmware name inline with other board specific firmware locations.
 > 
-> Cheers,
-> Patrick
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/sound/qcom,q6apm.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/clock/milbeaut-clock.example.dtb: /example-2/serial@1e700010: failed to match any schema with compatible: ['socionext,milbeaut-usio-uart']
+Documentation/devicetree/bindings/clock/sprd,sc9863a-clk.example.dtb: /example-1/syscon@20e00000: failed to match any schema with compatible: ['sprd,sc9863a-glbregs', 'syscon', 'simple-mfd']
+Documentation/devicetree/bindings/leds/common.example.dtb: /example-2/i2c/led-controller@30: failed to match any schema with compatible: ['panasonic,an30259a']
+Documentation/devicetree/bindings/sound/audio-graph-card2.example.dtb: /example-0/cpu: failed to match any schema with compatible: ['cpu-driver']
+Documentation/devicetree/bindings/sound/audio-graph-card2.example.dtb: /example-0/codec: failed to match any schema with compatible: ['codec-driver']
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6apm.example.dtb: service@1: 'firmware-name' is a required property
+	from schema $id: http://devicetree.org/schemas/sound/qcom,q6apm.yaml#
+Documentation/devicetree/bindings/thermal/brcm,avs-ro-thermal.example.dtb: /example-0/avs-monitor@7d5d2000: failed to match any schema with compatible: ['brcm,bcm2711-avs-monitor', 'syscon', 'simple-mfd']
+Documentation/devicetree/bindings/thermal/imx-thermal.example.dtb: /example-0/anatop@20c8000: failed to match any schema with compatible: ['fsl,imx6q-anatop', 'syscon', 'simple-mfd']
+Documentation/devicetree/bindings/i2c/qcom,i2c-cci.example.dtb: /example-0/cci@ac4a000/i2c-bus@1/camera@60: failed to match any schema with compatible: ['ovti,ov7251']
+Documentation/devicetree/bindings/iio/adc/ti,palmas-gpadc.example.dtb: /example-0/pmic: failed to match any schema with compatible: ['ti,twl6035-pmic', 'ti,palmas-pmic']
+Documentation/devicetree/bindings/iio/adc/ti,palmas-gpadc.example.dtb: /example-0/pmic: failed to match any schema with compatible: ['ti,twl6035-pmic', 'ti,palmas-pmic']
+Documentation/devicetree/bindings/input/mediatek,pmic-keys.example.dtb: /example-0/pmic: failed to match any schema with compatible: ['mediatek,mt6397']
+Documentation/devicetree/bindings/input/sprd,sc27xx-vibrator.example.dtb: /example-0/pmic@0: failed to match any schema with compatible: ['sprd,sc2731']
+Documentation/devicetree/bindings/dma/dma-controller.example.dtb: /example-0/dma-controller@48000000: failed to match any schema with compatible: ['ti,omap-sdma']
+Documentation/devicetree/bindings/dma/dma-router.example.dtb: /example-0/dma-router@4a002b78: failed to match any schema with compatible: ['ti,dra7-dma-crossbar']
+Documentation/devicetree/bindings/memory-controllers/ingenic,nemc.example.dtb: /example-0/memory-controller@13410000/ethernet@6: failed to match any schema with compatible: ['davicom,dm9000']
+Documentation/devicetree/bindings/arm/hisilicon/controller/cpuctrl.example.dtb: /example-0/cpuctrl@a22000/clock@0: failed to match any schema with compatible: ['hisilicon,hix5hd2-clock']
+Documentation/devicetree/bindings/arm/hisilicon/controller/hi3798cv200-perictrl.example.dtb: /example-0/peripheral-controller@8a20000/phy@850: failed to match any schema with compatible: ['hisilicon,hi3798cv200-combphy']
+Documentation/devicetree/bindings/arm/hisilicon/controller/sysctrl.example.dtb: /example-0/system-controller@802000/clock@0: failed to match any schema with compatible: ['hisilicon,hi3620-clock']
+Documentation/devicetree/bindings/media/rockchip-isp1.example.dtb: /example-0/parent/i2c/camera@36: failed to match any schema with compatible: ['ovti,ov5695']
+Documentation/devicetree/bindings/net/marvell,mvusb.example.dtb: /example-0/usb/mdio@1/switch@0: failed to match any schema with compatible: ['marvell,mv88e6190']
+Documentation/devicetree/bindings/net/qca,ar71xx.example.dtb: /example-0/ethernet@1a000000/mdio/switch@10: failed to match any schema with compatible: ['qca,ar9331-switch']
+Documentation/devicetree/bindings/reset/hisilicon,hi3660-reset.example.dtb: /example-0/iomcu@ffd7e000: failed to match any schema with compatible: ['hisilicon,hi3660-iomcu', 'syscon']
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb: service@1: 'firmware-name' is a required property
+	from schema $id: http://devicetree.org/schemas/sound/qcom,q6apm.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230628102621.15016-2-srinivas.kandagatla@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
