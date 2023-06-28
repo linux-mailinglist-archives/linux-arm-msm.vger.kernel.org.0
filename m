@@ -2,145 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D93EB741AD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 23:27:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54E07741B44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 23:57:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232252AbjF1V0u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 17:26:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59874 "EHLO
+        id S231908AbjF1V5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 17:57:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232395AbjF1V03 (ORCPT
+        with ESMTP id S232174AbjF1V44 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 17:26:29 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B562134;
-        Wed, 28 Jun 2023 14:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687987561; x=1719523561;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=M7aa333XpPNGYhk+GT02yvHRVbg6aw/odt14RBTj1RI=;
-  b=eVEP3igP/AlR4M0m/pRNdKrPH2bnEoBYV2Ov6sQ6f/8KXz5fMHH54rQy
-   2fIzOfyaKPhpid26dq127lz8KC+5hq6hpmEd/fcskyyvS3T9gVf8TR7yj
-   mZim+s8rAPXrC6DL14e7iV1DGvG6Mv4DrU49KgxARGputRlENch2HVPJ9
-   C+vIqNhExJsMbiOLmFXsJ78fcRsgOzN802j9EsWfuetBRtrVXNQ5SMCV2
-   x1xB6DqUTPKvGHOxHcxX6cIafHEPIHznCqD3NfESW9TuuPNNvA3RNIcXC
-   /7LuKdYQGzbGrgFJ4bWEsx8dB4cXV3Jbzn26qBcyUnfpPBZWUrPxTxvnh
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10755"; a="351756286"
-X-IronPort-AV: E=Sophos;i="6.01,166,1684825200"; 
-   d="scan'208";a="351756286"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2023 14:26:00 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10755"; a="861673519"
-X-IronPort-AV: E=Sophos;i="6.01,166,1684825200"; 
-   d="scan'208";a="861673519"
-Received: from lkp-server01.sh.intel.com (HELO 783282924a45) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 28 Jun 2023 14:25:54 -0700
-Received: from kbuild by 783282924a45 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qEcfh-000DVB-2t;
-        Wed, 28 Jun 2023 21:25:53 +0000
-Date:   Thu, 29 Jun 2023 05:25:25 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 2/4] regulator: Introduce Qualcomm REFGEN regulator driver
-Message-ID: <202306290533.nqqGHj1w-lkp@intel.com>
-References: <20230628-topic-refgen-v1-2-126e59573eeb@linaro.org>
+        Wed, 28 Jun 2023 17:56:56 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EC552D63
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 14:56:32 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-bd6d9d7da35so24093276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 14:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687989391; x=1690581391;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hnGMQOEnuXwr/opUEDGr/9OsjO1I6gHLazySPyM8Vng=;
+        b=CUQC9Y0eQtr0n5pjuu2Txm57WGoabBOUVRjQ5EHElC3JMNgpioNjrtlcoP5zbhWO1O
+         Rf/R60eeZb+7LKZt51pv+J/dMGFxdPoVwNgWW7x1+Ujl+EdwYo1VXnQsB/B5/SFvEfwq
+         AonYCd9uflcMdqxozOZbma0uz55i25/BhftkpLEeuCb1IF6AFoMwcrOIsv5+w1I57IO9
+         R8XtcQogCe0Z8jcrJnJTy2YOjXcfIWgqZWmr+UiPd+uXGX4QlVT/DOO5zTQt1IDGVmzY
+         i4TUL80wSMN4CpMrpnWxQDD/SlK6xBYsDK8+F1mKPfTGZfMMoskacTFx5N79B0551sox
+         JceQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687989391; x=1690581391;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hnGMQOEnuXwr/opUEDGr/9OsjO1I6gHLazySPyM8Vng=;
+        b=kcYpOIsJk6aODuiqt6paqG0cYSl8EJ3j+wSj/ZfPh07nGIhPPLjRFF6sfrCwC5XcRB
+         JEb/a4297FgidtkTwMB/8FBOnIvpjPGH/MwvsDI34rqq36ErfSvG7ItLYOyBs2gOTwUS
+         9NaGFfNJwM+K9mtVzkV9vBk2GarkqV9kmPYpzPnqK32n64vlsJdFE3vzH4kZ86OYty0l
+         ar/0I9iVS488m8r38apMTtndvOILK0DgI4hSkQnNFTOFHBo/4rQXpI3g/AUNWkEB6wH+
+         foNjMYcg04FyquU+Hhk2dP9fmpDJ6Z1084VZnxpve4Lzrt+rVQLBGzKEfBxzPJBMbNam
+         pmuw==
+X-Gm-Message-State: AC+VfDwJj2SpxvJzE/Fp54M9H36Zm3DcMeJ9Am5KsyFvVPjiObMkNpMz
+        0SQAzoOoNoOUnWDRsL5xbJb7w2JhKMSKbJx+BK3LRA==
+X-Google-Smtp-Source: ACHHUZ5wljNS/rozuIyPT6I2Z+jlk2Dv0uMmEMWXCme0AmmEZ66URZbi1CF/E0uJ5bJQocNix0qKBWxom4DQj52EsuA=
+X-Received: by 2002:a25:a4aa:0:b0:c00:e6c4:1812 with SMTP id
+ g39-20020a25a4aa000000b00c00e6c41812mr19609040ybi.63.1687989391111; Wed, 28
+ Jun 2023 14:56:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230628-topic-refgen-v1-2-126e59573eeb@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20230628105652.1670316-1-abel.vesa@linaro.org> <CAJZ5v0i-+b+oFOP92rhNw_UOKu3-QOy_-stQRa5X2HbaTq9XMA@mail.gmail.com>
+In-Reply-To: <CAJZ5v0i-+b+oFOP92rhNw_UOKu3-QOy_-stQRa5X2HbaTq9XMA@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 28 Jun 2023 23:55:54 +0200
+Message-ID: <CAPDyKFoO85-k38-eXzJ3wRK9tfS=DfUw8-jE6fXORTVSoRLXzQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] PM: domains: Add control for switching back and forth
+ to HW control
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>, avel Machek <pavel@ucw.cz>,
+        Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Wed, 28 Jun 2023 at 19:15, Rafael J. Wysocki <rafael@kernel.org> wrote:
+>
+> On Wed, Jun 28, 2023 at 12:57=E2=80=AFPM Abel Vesa <abel.vesa@linaro.org>=
+ wrote:
+> >
+> > This is just a resend of [1]. This resend just adds the back story behi=
+nd
+> > the need for such a generic API as a cover letter. Also added my SoB ta=
+g
+> > to Ulf's patch.
+> >
+> > Some of the newer Qualcomm platforms support handing of the control of
+> > some of the GDSCs (implemented as power domains in Linux) to some devic=
+e
+> > firmware. The idea behind such approach is that the firmware knows best
+> > when such a power domain can be powered off or not and leads most of th=
+e
+> > time to better power consumption.
+> >
+> > At this point, if such GDSC provides HW control support, the current
+> > implementation is switching to HW control right after the GDSC gets
+> > powered on and it is left in HW control mode until right before the
+> > request for power off is done. This needs to remain as is for now, as w=
+e
+> > do not know for sure what each firmware expects from its related GDSCs.
+> > For example, the venus driver expects the codec GDSCs to remain always
+> > in HW control mode, otherwise the firmware would crush.
+> >
+> > But in some cases, the consumer driver needs to switch back and forth.
+> > And the explanation for such case is when a driver needs to interract
+> > with the device (e.g. reading status bits) and the firmware doesn't
+> > guarantee the GDSC will be enabled when in HW mode. Therefore, the
+> > consumer would need to switch back to SW mode, do its thing, and then
+> > switch again back to HW mode.
+> >
+> > This is where the patch from Ulf comes in. It allows consumers that
+> > actually need to control the HW/SW mode to do so.
+> >
+> > The GDSC patch just implemets the set_hwmode op and sets it for each
+> > GDSC that provides HW control mode.
+> >
+> > [1] https://lore.kernel.org/all/20230627104033.3345659-1-abel.vesa@lina=
+ro.org/
+> >
+> > Abel Vesa (1):
+> >   clk: qcom: gdsc: Add support for set_hwmode_dev
+> >
+> > Ulf Hansson (1):
+> >   PM: domains: Allow devices attached to genpd to be managed by HW
+> >
+> >  drivers/base/power/domain.c | 66 +++++++++++++++++++++++++++++++++++++
+> >  drivers/clk/qcom/gdsc.c     | 22 +++++++++++++
+> >  include/linux/pm_domain.h   | 15 +++++++++
+> >  3 files changed, 103 insertions(+)
+> >
+> > --
+>
+> I can queue up this series if I get an ACK for the second patch.
 
-kernel test robot noticed the following build errors:
+Thanks, but please hold on until you get additional confirmation from me.
 
-[auto build test ERROR on 5c875096d59010cee4e00da1f9c7bdb07a025dc2]
+I would like the consumer APIs that are being added in patch1 to have
+a user. At least I want to see a plan for upstreaming one user of it,
+before I think we should move forward. FYI, there are discussions
+around this offlist too.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/dt-bindings-regulator-Describe-Qualcomm-REFGEN-regulator/20230629-003148
-base:   5c875096d59010cee4e00da1f9c7bdb07a025dc2
-patch link:    https://lore.kernel.org/r/20230628-topic-refgen-v1-2-126e59573eeb%40linaro.org
-patch subject: [PATCH 2/4] regulator: Introduce Qualcomm REFGEN regulator driver
-config: loongarch-allmodconfig (https://download.01.org/0day-ci/archive/20230629/202306290533.nqqGHj1w-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 12.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20230629/202306290533.nqqGHj1w-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202306290533.nqqGHj1w-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from include/linux/irqflags.h:17,
-                    from include/linux/spinlock.h:59,
-                    from include/linux/kref.h:16,
-                    from include/linux/mm_types.h:8,
-                    from include/linux/buildid.h:5,
-                    from include/linux/module.h:14,
-                    from drivers/regulator/qcom-refgen-regulator.c:7:
-   arch/loongarch/include/asm/percpu.h:20:4: error: #error compiler support for the model attribute is necessary when a recent assembler is used
-      20 | #  error compiler support for the model attribute is necessary when a recent assembler is used
-         |    ^~~~~
-   drivers/regulator/qcom-refgen-regulator.c: In function 'qcom_sdm845_refgen_is_enabled':
->> drivers/regulator/qcom-refgen-regulator.c:64:13: error: implicit declaration of function 'FIELD_GET' [-Werror=implicit-function-declaration]
-      64 |         if (FIELD_GET(REFGEN_BG_CTRL_MASK, val) != REFGEN_BG_CTRL_ENABLE)
-         |             ^~~~~~~~~
-   cc1: some warnings being treated as errors
-
-
-vim +/FIELD_GET +64 drivers/regulator/qcom-refgen-regulator.c
-
-    57	
-    58	static int qcom_sdm845_refgen_is_enabled(struct regulator_dev *rdev)
-    59	{
-    60		struct qcom_refgen *vreg = rdev_get_drvdata(rdev);
-    61		u32 val;
-    62	
-    63		regmap_read(vreg->base, REFGEN_REG_BG_CTRL, &val);
-  > 64		if (FIELD_GET(REFGEN_BG_CTRL_MASK, val) != REFGEN_BG_CTRL_ENABLE)
-    65			return 0;
-    66	
-    67		regmap_read(vreg->base, REFGEN_REG_BIAS_EN, &val);
-    68		if (FIELD_GET(REFGEN_BIAS_EN_MASK, val) != REFGEN_BIAS_EN_ENABLE)
-    69			return 0;
-    70	
-    71		return 1;
-    72	}
-    73	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Kind regards
+Uffe
