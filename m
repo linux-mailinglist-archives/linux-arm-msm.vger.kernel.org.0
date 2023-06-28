@@ -2,437 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09D2874168D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 18:37:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D936B741696
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 18:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231210AbjF1Qhf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 12:37:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39490 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230429AbjF1Qhe (ORCPT
+        id S231492AbjF1Qkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 12:40:39 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131]:32566 "EHLO
+        mx0b-0031df01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229732AbjF1Qki (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 12:37:34 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501FF19AF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 09:37:31 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fb7373dd35so1528701e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 09:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687970249; x=1690562249;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hLHc4J+ADpWt2Xa11myEzpN7gGtfSIaY83Llc3ZVuYY=;
-        b=CtpiHpBifLDAU22SDCdg6Bgqhdcvwd2FQ2MllqXHDC80kE5xyDpR0hGVR5HOCX4B69
-         ZTXvUzKYd2TU25qPpv50p05AuIXPNfBRxY6oi9JJXgF2mi5HsBvK4l/wtpmJEvMPfu4q
-         lDo9gbVGMD0XcQ8Lnm1u/kjW8E2hik69Lx9ypt6rA3priPFLSCPM5aYBscKQaQzScJTL
-         KuHAWPhyiJFjEji56eAr3Bdr5xK6KjH4O+mWcO1lRQboHUPOu5QyIA136evuXASt3fAZ
-         /vE93xsq04m7hKm47gajKAnZTqfF0A+6xn7adfFpjM0TGEhV1GnkDb1nMg4RDFxLOCE5
-         Q2aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687970249; x=1690562249;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hLHc4J+ADpWt2Xa11myEzpN7gGtfSIaY83Llc3ZVuYY=;
-        b=JXAN0Wy1BcIVlym3vVWxxQjX2RBltY55qzRq4gpfHnoFY2+28LnGFwl2i7ESzVU1JZ
-         QPIhoW65tFbQJ0F+wOJFDrSppHg7eEcaMG5pY1731WFAAMDr0ry5xa4QJXYGFcytg6Hd
-         2OWZ0vKmKKhbAX6u8lh5fFdJmc7uRHIO/icfovqvcmstnPnrKhNCvnB1nd2vRnLtnyrk
-         x3evqpXZCstxvsyWgOwl8WI9o9OIw/Y0E9lN8E0ekZWprsQwNiFELaxInN/9e0WpDsvz
-         4N0lFEiwsUpBqtThaUxRMiCPDgeYjUba/w+IsGzWP33+6pJNYL1h2zk4Y6MBe8vQb9FJ
-         3bEw==
-X-Gm-Message-State: AC+VfDwuVdizHb9omMAPueGd5xn04SASRJWhLqty42vNlvPp5a1QAfYJ
-        q7HxOahokn/lUszaeX6AEvyTxA==
-X-Google-Smtp-Source: ACHHUZ7zamKZbS1JJTrdfPo6WzNyQZw2Q/ionQs1ttufrvxqW8nIJpDqTbOu+cqEpQB51y6oYObDkA==
-X-Received: by 2002:a05:6512:31d4:b0:4f7:6462:e036 with SMTP id j20-20020a05651231d400b004f76462e036mr796240lfe.11.1687970249311;
-        Wed, 28 Jun 2023 09:37:29 -0700 (PDT)
-Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id l7-20020a19c207000000b004fb5bbc47cdsm1583424lfc.307.2023.06.28.09.37.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 09:37:28 -0700 (PDT)
-Message-ID: <cae642aa-026b-735a-d614-0e1343b5c30d@linaro.org>
-Date:   Wed, 28 Jun 2023 18:37:26 +0200
+        Wed, 28 Jun 2023 12:40:38 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35SGdedb001104;
+        Wed, 28 Jun 2023 16:40:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=OF22ya4/4QFrzKdWfyJ6Ml9MYRBr7gNmtn5yV5FLxGw=;
+ b=LQ+etRo8+CQonCAF740ipnzKSJUl46gcVJUGi8cgPolu3xPMQQQKErMe9evzJu4KOuRJ
+ xNrDvMDzhKUM/4Lm8JXuZ/BKdjjTGzeQRRtioOPfglq+BJz0Xa5Iz7mWheFRFH/SfGqk
+ VQ0s/nVrGmwQ+u/FSzEgw9kBx6699hEn6jc5/bMbjL1RMVhQIeZ/hDimcugHgucDiN+X
+ SOOcC889kwujLdwUdtSa06+3k7fRAC+TDkAePAcq7G+Cg8P0z/8frtC/4qgW0YjAaYdi
+ LsFx9UyD4xYYDoVeRF6o6NIuJsjysM08R4BBfKToyVg7lhxXteLVptb+33y/PiOD0Ws2 Tg== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgetphegr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Jun 2023 16:40:23 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35SGeLdn014550
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Jun 2023 16:40:22 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 28 Jun
+ 2023 09:40:21 -0700
+Message-ID: <af4058fb-9744-87c8-bf9c-85cf78a97095@quicinc.com>
+Date:   Wed, 28 Jun 2023 09:40:21 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v12 04/10] dt-bindings: soc: qcom: cpr3: Add bindings for
- CPR3 driver
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [RFC PATCH 0/3] Support for Solid Fill Planes
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20230217-topic-cpr3h-v12-0-1a4d050e1e67@linaro.org>
- <20230217-topic-cpr3h-v12-4-1a4d050e1e67@linaro.org>
- <20230628160314.GB542106-robh@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230628160314.GB542106-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+To:     Pekka Paalanen <ppaalanen@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        <daniel.vetter@ffwll.ch>, <dri-devel@lists.freedesktop.org>,
+        <swboyd@chromium.org>, <seanpaul@chromium.org>,
+        <laurent.pinchart@ideasonboard.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <wayland-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
+ <Y2leZDfLj/5963wl@intel.com>
+ <d0b5abdc-85ad-fee2-9760-866c32bab111@quicinc.com>
+ <20230627105849.004050b3@eldfell>
+ <5e60fe99-76d5-c242-608e-b74bf6f0e7bd@quicinc.com>
+ <54f194fe-ab7b-247d-600b-6da8f5c57dbf@linaro.org>
+ <1613cdd4-8d90-6589-97e8-c4e1810bde04@quicinc.com>
+ <20230628103451.118c0d76@eldfell>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20230628103451.118c0d76@eldfell>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: isAUbzNLj9-dUZB4-N5cDQS5nbW4dyzK
+X-Proofpoint-GUID: isAUbzNLj9-dUZB4-N5cDQS5nbW4dyzK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-28_12,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ mlxlogscore=999 spamscore=0 priorityscore=1501 suspectscore=0
+ clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306280147
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.06.2023 18:03, Rob Herring wrote:
-> On Wed, Jun 28, 2023 at 04:00:43PM +0200, Konrad Dybcio wrote:
->> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>
->> Add the bindings for the CPR3 driver to the documentation.
+
+
+On 6/28/2023 12:34 AM, Pekka Paalanen wrote:
+> On Tue, 27 Jun 2023 15:10:19 -0700
+> Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 > 
-> Bindings are for h/w, not drivers.
-This shows how ancient this patch is, from before it was
-common knowledge ;)
+>> On 6/27/2023 2:59 PM, Dmitry Baryshkov wrote:
+>>> On 28/06/2023 00:27, Jessica Zhang wrote:
+>>>>
+>>>>
+>>>> On 6/27/2023 12:58 AM, Pekka Paalanen wrote:
+>>>>> On Mon, 26 Jun 2023 16:02:50 -0700
+>>>>> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>>>>>   
+>>>>>> On 11/7/2022 11:37 AM, Ville Syrjälä wrote:
+>>>>>>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
+>>>>>>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
+>>>>>>>> properties. When the color fill value is set, and the framebuffer
+>>>>>>>> is set
+>>>>>>>> to NULL, memory fetch will be disabled.
+>>>>>>>
+>>>>>>> Thinking a bit more universally I wonder if there should be
+>>>>>>> some kind of enum property:
+>>>>>>>
+>>>>>>> enum plane_pixel_source {
+>>>>>>>      FB,
+>>>>>>>      COLOR,
+>>>>>>>      LIVE_FOO,
+>>>>>>>      LIVE_BAR,
+>>>>>>>      ...
+>>>>>>> }
+>>>>>>
+>>>>>> Reviving this thread as this was the initial comment suggesting to
+>>>>>> implement pixel_source as an enum.
+>>>>>>
+>>>>>> I think the issue with having pixel_source as an enum is how to decide
+>>>>>> what counts as a NULL commit.
+>>>>>>
+>>>>>> Currently, setting the FB to NULL will disable the plane. So I'm
+>>>>>> guessing we will extend that logic to "if there's no pixel_source set
+>>>>>> for the plane, then it will be a NULL commit and disable the plane".
+>>>>>>
+>>>>>> In that case, the question then becomes when to set the pixel_source to
+>>>>>> NONE. Because if we do that when setting a NULL FB (or NULL solid_fill
+>>>>>> blob), it then forces userspace to set one property before the other.
+>>>>>
+>>>>> Right, that won't work.
+>>>>>
+>>>>> There is no ordering between each property being set inside a single
+>>>>> atomic commit. They can all be applied to kernel-internal state
+>>>>> theoretically simultaneously, or any arbitrary random order, and the
+>>>>> end result must always be the same. Hence, setting one property cannot
+>>>>> change the state of another mutable property. I believe that doing
+>>>>> otherwise would make userspace fragile and hard to get right.
+>>>>>
+>>>>> I guess there might be an exception to that rule when the same property
+>>>>> is set multiple times in a single atomic commit; the last setting in
+>>>>> the array prevails. That's universal and not a special-case between two
+>>>>> specific properties.
+>>>>>   
+>>>>>> Because of that, I'm thinking of having pixel_source be represented
+>>>>>> by a
+>>>>>> bitmask instead. That way, we will simply unset the corresponding
+>>>>>> pixel_source bit when passing in a NULL FB/solid_fill blob. Then, in
+>>>>>> order to detect whether a commit is NULL or has a valid pixel
+>>>>>> source, we
+>>>>>> can just check if pixel_source == 0.
+>>>>>
+>>>>> Sounds fine to me at first hand, but isn't there the enum property that
+>>>>> says if the kernel must look at solid_fill blob *or* FB_ID?
+>>>>>
+>>>>> If enum prop says "use solid_fill prop", the why would changes to FB_ID
+>>>>> do anything? Is it for backwards-compatibility with KMS clients that do
+>>>>> not know about the enum prop?
+>>>>>
+>>>>> It seems like that kind of backwards-compatiblity will cause problems
+>>>>> in trying to reason about the atomic state, as explained above, leading
+>>>>> to very delicate and fragile conditions where things work intuitively.
+>>>>> Hence, I'm not sure backwards-compatibility is wanted. This won't be
+>>>>> the first or the last KMS property where an unexpected value left over
+>>>>> will make old atomic KMS clients silently malfunction up to showing no
+>>>>> recognisable picture at all. *If* that problem needs solving, there
+>>>>> have been ideas floating around about resetting everything to nice
+>>>>> values so that userspace can ignore what it does not understand. So far
+>>>>> there has been no real interest in solving that problem in the kernel
+>>>>> though.
+>>>>>
+>>>>> Legacy non-atomic UAPI wrappers can do whatever they want, and program
+>>>>> any (new) properties they want in order to implement the legacy
+>>>>> expectations, so that does not seem to be a problem.
+>>>>
+>>>> Hi Pekka and Dmitry,
+>>>>
+>>>> After reading through both of your comments, I think I have a better
+>>>> understanding of the pixel_source implementation now.
+>>>>
+>>>> So to summarize, we want to expose another property called
+>>>> "pixel_source" to userspace that will default to FB (as to not break
+>>>> legacy userspace).
+>>>>
+>>>> If userspace wants to use solid fill planes, it will set both the
+>>>> solid_fill *and* pixel_source properties to a valid blob and COLOR
+>>>> respectively. If it wants to use FB, it will set FB_ID and
+>>>> pixel_source to a valid FB and FB.
+>>>>
+>>>> Here's a table illustrating what I've described above:
+>>>>
+>>>> +-----------------+-------------------------+-------------------------+
+>>>> | Use Case        | Legacy Userspace        | solid_fill-aware        |
+>>>> |                 |                         | Userspace               |
+>>>> +=================+=========================+=========================+
+>>>> | Valid FB        | pixel_source = FB       | pixel_source = FB       |
+>>>> |                 | FB_ID = valid FB        | FB_ID = valid FB        |
+>>>> +-----------------+-------------------------+-------------------------+
+>>>> | Valid           | pixel_source = COLOR    | N/A                     |
+>>>> | solid_fill blob | solid_fill = valid blob |                         |
+>>>
+>>> Probably these two cells were swapped.
+>>>    
+>>
+>> Ack, yes they were swapped.
+>>
+>>>> +-----------------+-------------------------+-------------------------+
+>>>> | NULL commit     | pixel_source = FB       | pixel_source = FB       |
+>>>> |                 | FB_ID = NULL            | FB_ID = NULL            |
+>>>> +-----------------+-------------------------+-------------------------+
+>>>
+>>>                                                 | or:
+>>>                                                 | pixel_source = COLOR
+>>>                                                 | solid_fill = NULL
+>>>>
+>>>> Is there anything I'm missing or needs to be clarified?
+>>>>   
+>>>
+>>> LGTM otherwise
+>>>    
+>>
+>> LGTM too.
+> 
+> Hi,
+> 
+> yeah, that sounds fine to me, if everyone thinks that adding a new
+> property for pixel_source is a good idea. I just assumed it was already
+> agreed, and based my comments on that.
+> 
+> I don't really remember much of the discussion about a special FB that
+> is actually a solid fill vs. this two new properties design, so I
+> cannot currently give an opinion on that, or any other design.
+
+Hi Pekka,
+
+It was discussed in the v3 of this series, but we came to the conclusion 
+that allocating an FB for solid_fill was unnecessary since solid fill 
+does not require memory fetch.
+
+Thanks,
+
+Jessica Zhang
 
 > 
->>
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->> [Konrad: Make binding check pass; update AGdR's email]
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/soc/qcom/qcom,cpr3.yaml    | 289 +++++++++++++++++++++
->>  1 file changed, 289 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
->> new file mode 100644
->> index 000000000000..46b94dffaf85
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
->> @@ -0,0 +1,289 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,cpr3.yaml#"
->> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> Btw. there may be some confusion about "legacy userspace" which usually
+> refers to pre-atomic userspace, and old atomic userspace that does not
+> understand the new properties. That makes no difference in the table
+> here though, the legacy ioctls should just smash pixel_source.
 > 
-> Drop quotes
-Ack
-
 > 
->> +
->> +title: Qualcomm Core Power Reduction v3/v4/Hardened (CPR3, CPR4, CPRh)
->> +
->> +description:
->> +  CPR (Core Power Reduction) is a technology to reduce core power of a CPU
->> +  (or another device). Each OPP of a device corresponds to a "corner" that
->> +  has a range of valid voltages for a particular frequency.
->> +  The CPR monitors dynamic factors such as temperature, etc. and suggests
->> +  or (in the CPR-hardened case) applies voltage adjustments to save power
->> +  and meet silicon characteristic requirements for a given chip unit.
->> +
->> +maintainers:
->> +  - AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
->> +
->> +properties:
->> +  compatible:
->> +    oneOf:
->> +      - description: CPRv3 controller
->> +        items:
->> +          - const: qcom,cpr3
->> +      - description: CPRv4 controller
->> +        items:
->> +          - const: qcom,cpr4
->> +      - description: CPRv4-Hardened controller
->> +        items:
->> +          - enum:
->> +              - qcom,msm8998-cprh
->> +              - qcom,sdm630-cprh
->> +          - const: qcom,cprh
->> +
->> +  reg:
->> +    description: Base address and size of the CPR controller(s)
->> +    maxItems: 2
-> 
-> What is each entry?
-I thought the description was clear enough, but I'll add items:.
-
-> 
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    items:
->> +      - description: CPR reference clock
->> +
->> +  vdd-supply:
->> +    description: Autonomous Phase Control (APC) or other power supply
->> +
->> +  '#power-domain-cells':
->> +    const: 1
->> +
->> +  qcom,acc:
->> +    $ref: /schemas/types.yaml#/definitions/phandle
->> +    description: phandle to syscon for writing ACC settings
->> +
->> +  nvmem-cells:
->> +    description: Cells containing the fuse corners and revision data
->> +    maxItems: 32
->> +
->> +  nvmem-cell-names:
->> +    maxItems: 32
->> +
->> +  operating-points-v2: true
->> +
->> +  power-domains: true
-> 
-> Need to define how many.
-Ack
-
-> 
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - operating-points-v2
->> +  - "#power-domain-cells"
->> +  - nvmem-cells
->> +  - nvmem-cell-names
->> +
->> +additionalProperties: false
->> +
->> +allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,msm8998-cprh
->> +    then:
->> +      properties:
->> +        nvmem-cell-names:
->> +          items:
->> +            - const: cpr_speed_bin
->> +            - const: cpr_fuse_revision
->> +            - const: cpr0_quotient1
->> +            - const: cpr0_quotient2
->> +            - const: cpr0_quotient3
->> +            - const: cpr0_quotient4
->> +            - const: cpr0_quotient_offset2
->> +            - const: cpr0_quotient_offset3
->> +            - const: cpr0_quotient_offset4
->> +            - const: cpr0_init_voltage1
->> +            - const: cpr0_init_voltage2
->> +            - const: cpr0_init_voltage3
->> +            - const: cpr0_init_voltage4
->> +            - const: cpr0_ring_osc1
->> +            - const: cpr0_ring_osc2
->> +            - const: cpr0_ring_osc3
->> +            - const: cpr0_ring_osc4
->> +            - const: cpr1_quotient1
->> +            - const: cpr1_quotient2
->> +            - const: cpr1_quotient3
->> +            - const: cpr1_quotient4
->> +            - const: cpr1_quotient_offset2
->> +            - const: cpr1_quotient_offset3
->> +            - const: cpr1_quotient_offset4
->> +            - const: cpr1_init_voltage1
->> +            - const: cpr1_init_voltage2
->> +            - const: cpr1_init_voltage3
->> +            - const: cpr1_init_voltage4
->> +            - const: cpr1_ring_osc1
->> +            - const: cpr1_ring_osc2
->> +            - const: cpr1_ring_osc3
->> +            - const: cpr1_ring_osc4
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
->> +    #include <dt-bindings/interrupt-controller/irq.h>
->> +
->> +    cpus {
->> +        #address-cells = <2>;
->> +        #size-cells = <0>;
->> +
->> +        cpu@0 {
->> +            compatible = "qcom,kryo280";
->> +            device_type = "cpu";
->> +            reg = <0x0 0x0>;
->> +            operating-points-v2 = <&cpu0_opp_table>;
->> +            power-domains = <&apc_cprh 0>;
->> +            power-domain-names = "cprh";
-> 
-> The name should be local to the device, not based on the provider.
-> 
-> Do you really need a name here with only 1? 
-Yes, cpufreq drivers need to dance around the genpd and OPP frameworks,
-which requires a name.
-
-Konrad
-> 
->> +        };
->> +
->> +        cpu@100 {
->> +            compatible = "qcom,kryo280";
->> +            device_type = "cpu";
->> +            reg = <0x0 0x100>;
->> +            operating-points-v2 = <&cpu4_opp_table>;
->> +            power-domains = <&apc_cprh 1>;
->> +            power-domain-names = "cprh";
->> +        };
->> +    };
->> +
->> +    cpu0_opp_table: opp-table-cpu0 {
->> +        compatible = "operating-points-v2";
->> +        opp-shared;
->> +
->> +        opp-1843200000 {
->> +            opp-hz = /bits/ 64 <1843200000>;
->> +            required-opps = <&cprh_opp3>;
->> +        };
->> +
->> +        opp-1094400000 {
->> +            opp-hz = /bits/ 64 <1094400000>;
->> +            required-opps = <&cprh_opp2>;
->> +        };
->> +
->> +        opp-300000000 {
->> +            opp-hz = /bits/ 64 <300000000>;
->> +            required-opps = <&cprh_opp1>;
->> +        };
->> +    };
->> +
->> +    cpu4_opp_table: opp-table-cpu4 {
->> +        compatible = "operating-points-v2";
->> +        opp-shared;
->> +
->> +        opp-2208000000 {
->> +            opp-hz = /bits/ 64 <2208000000>;
->> +            required-opps = <&cprh_opp3>;
->> +        };
->> +
->> +        opp-1113600000 {
->> +            opp-hz = /bits/ 64 <1113600000>;
->> +            required-opps = <&cprh_opp2>;
->> +        };
->> +
->> +        opp-300000000 {
->> +            opp-hz = /bits/ 64 <300000000>;
->> +            required-opps = <&cprh_opp1>;
->> +        };
->> +    };
->> +
->> +    cprh_opp_table: opp-table-cprh {
->> +        compatible = "operating-points-v2-qcom-level";
->> +
->> +        cprh_opp1: opp-1 {
->> +            opp-level = <1>;
->> +            qcom,opp-fuse-level = <1>;
->> +            qcom,opp-cloop-vadj = <0>;
->> +            qcom,opp-oloop-vadj = <0>;
->> +        };
->> +
->> +        cprh_opp2: opp-2 {
->> +            opp-level = <2>;
->> +            qcom,opp-fuse-level = <2>;
->> +            qcom,opp-cloop-vadj = <0>;
->> +            qcom,opp-oloop-vadj = <0>;
->> +        };
->> +
->> +        cprh_opp3: opp-3 {
->> +            opp-level = <3>;
->> +            qcom,opp-fuse-level = <2 3>;
->> +            qcom,opp-cloop-vadj = <0>;
->> +            qcom,opp-oloop-vadj = <0>;
->> +        };
->> +    };
->> +
->> +    apc_cprh: power-controller@179c8000 {
->> +        compatible = "qcom,msm8998-cprh", "qcom,cprh";
->> +        reg = <0x0179c8000 0x4000>, <0x0179c4000 0x4000>;
->> +        clocks = <&gcc GCC_HMSS_RBCPR_CLK>;
->> +
->> +        operating-points-v2 = <&cprh_opp_table>;
->> +        #power-domain-cells = <1>;
->> +
->> +        nvmem-cells = <&cpr_efuse_speedbin>,
->> +                      <&cpr_fuse_revision>,
->> +                      <&cpr_quot0_pwrcl>,
->> +                      <&cpr_quot1_pwrcl>,
->> +                      <&cpr_quot2_pwrcl>,
->> +                      <&cpr_quot3_pwrcl>,
->> +                      <&cpr_quot_offset1_pwrcl>,
->> +                      <&cpr_quot_offset2_pwrcl>,
->> +                      <&cpr_quot_offset3_pwrcl>,
->> +                      <&cpr_init_voltage0_pwrcl>,
->> +                      <&cpr_init_voltage1_pwrcl>,
->> +                      <&cpr_init_voltage2_pwrcl>,
->> +                      <&cpr_init_voltage3_pwrcl>,
->> +                      <&cpr_ro_sel0_pwrcl>,
->> +                      <&cpr_ro_sel1_pwrcl>,
->> +                      <&cpr_ro_sel2_pwrcl>,
->> +                      <&cpr_ro_sel3_pwrcl>,
->> +                      <&cpr_quot0_perfcl>,
->> +                      <&cpr_quot1_perfcl>,
->> +                      <&cpr_quot2_perfcl>,
->> +                      <&cpr_quot3_perfcl>,
->> +                      <&cpr_quot_offset1_perfcl>,
->> +                      <&cpr_quot_offset2_perfcl>,
->> +                      <&cpr_quot_offset3_perfcl>,
->> +                      <&cpr_init_voltage0_perfcl>,
->> +                      <&cpr_init_voltage1_perfcl>,
->> +                      <&cpr_init_voltage2_perfcl>,
->> +                      <&cpr_init_voltage3_perfcl>,
->> +                      <&cpr_ro_sel0_perfcl>,
->> +                      <&cpr_ro_sel1_perfcl>,
->> +                      <&cpr_ro_sel2_perfcl>,
->> +                      <&cpr_ro_sel3_perfcl>;
->> +        nvmem-cell-names = "cpr_speed_bin",
->> +                           "cpr_fuse_revision",
->> +                           "cpr0_quotient1",
->> +                           "cpr0_quotient2",
->> +                           "cpr0_quotient3",
->> +                           "cpr0_quotient4",
->> +                           "cpr0_quotient_offset2",
->> +                           "cpr0_quotient_offset3",
->> +                           "cpr0_quotient_offset4",
->> +                           "cpr0_init_voltage1",
->> +                           "cpr0_init_voltage2",
->> +                           "cpr0_init_voltage3",
->> +                           "cpr0_init_voltage4",
->> +                           "cpr0_ring_osc1",
->> +                           "cpr0_ring_osc2",
->> +                           "cpr0_ring_osc3",
->> +                           "cpr0_ring_osc4",
->> +                           "cpr1_quotient1",
->> +                           "cpr1_quotient2",
->> +                           "cpr1_quotient3",
->> +                           "cpr1_quotient4",
->> +                           "cpr1_quotient_offset2",
->> +                           "cpr1_quotient_offset3",
->> +                           "cpr1_quotient_offset4",
->> +                           "cpr1_init_voltage1",
->> +                           "cpr1_init_voltage2",
->> +                           "cpr1_init_voltage3",
->> +                           "cpr1_init_voltage4",
->> +                           "cpr1_ring_osc1",
->> +                           "cpr1_ring_osc2",
->> +                           "cpr1_ring_osc3",
->> +                           "cpr1_ring_osc4";
->> +    };
->> +...
->>
->> -- 
->> 2.41.0
->>
+> Thanks,
+> pq
