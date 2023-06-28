@@ -2,62 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3E274192B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 22:01:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF6A3741953
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 22:11:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231142AbjF1UBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 16:01:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59240 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230480AbjF1UBI (ORCPT
+        id S232128AbjF1ULk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 16:11:40 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217]:54696 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232160AbjF1ULN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 16:01:08 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 458071FE7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:01:07 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-be3e2d172cbso114804276.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687982466; x=1690574466;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pH8fcOy6rMWZ3uve7XV8TBdo5xEMK41yysafMwoH2IE=;
-        b=qz9jHSQcQn2Eqv5Gcrj+63LutKi3Xyivczb45g2I/oid/NwcQYB2znuVTukvLXbnYh
-         dQ1yCw8Nl/3jRnxBEBKJkON41/9l/WA/O5Z4STYAaBQ/HI6MCloeJnqwq/FYEmtwOt9j
-         LqmsVf/132+dYgy+aDN8haLR3sHea+wzGg7ekrV4hr8JlpdLCIF9hvrbIuYX3l0xILNL
-         ZwCUwEFvkqy12tPJhIpKFmTabXkNF0FEZN/m1qeW6R1ieMsmBWuOOCHxEIvEqiWET/dL
-         WtAl1QYoLpy0eWsyqQIRbtUkAKjzJl/Qzr6uAb+o4Oft4N6JFgrNNltd3kSE5SCQZnvc
-         i6gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687982466; x=1690574466;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pH8fcOy6rMWZ3uve7XV8TBdo5xEMK41yysafMwoH2IE=;
-        b=TD/IcL9MsmzqErGaa9MWM+bczeRGF8TEUxvymp3CAqEV+lR9E4kFXp3wGRXmmXo+wd
-         mqV2GzVA5/VUW29uoh74CE449NxuIXrO3OR1WM8He8K11BmUtbmi5UrGNPZLTZNhioK+
-         VjpGvUin02nLb3DkQ49Dksiy3TCNmx3vHB47epFJJNRNSawgKdhkwUkLFi+0wsgPKywj
-         njIwGXpMjm8gGdc76vwye9du6+RVVrseiFiAl3bljpoGahZOjaC/hZRhhtOZjDIjUxpN
-         ZaLyLci0+HvOH3D2CFKpwgTSN9anMptkd5wrOsyUUXgcDtXovE83VZQB5ye2smjDxKZK
-         GFvg==
-X-Gm-Message-State: AC+VfDwCRHiYnKFyCWWBGyLuBxSH7biqMPq0U893JaDhNYveZJkhY4Ac
-        wGlYk2e0vNR7dVrolwzqXcp/McjIwlfR5gep/cwFvQ==
-X-Google-Smtp-Source: ACHHUZ6rTGYn4z21ozH/ZLqZuWscx/1Ssm6RMV9/o+OjoTbuk1Ka/cUauz/o8y4vIJHKAGz4vpE/C0fYCOszLgRZI54=
-X-Received: by 2002:a25:da96:0:b0:c1b:4078:b136 with SMTP id
- n144-20020a25da96000000b00c1b4078b136mr11126494ybf.63.1687982466408; Wed, 28
- Jun 2023 13:01:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
- <20230628102621.15016-3-srinivas.kandagatla@linaro.org> <f71c8d2b-d5f4-42bb-932f-5b9ec6117ffc@sirena.org.uk>
- <73dce263-bee6-554f-9eb6-af4aa7badab1@linaro.org> <c377aefe-2678-4ba7-96b3-2186e8f3f1b4@sirena.org.uk>
- <fabef33c-a8c7-af61-80b4-91e55081c977@linaro.org> <c5bbdaa9-43fb-4ec3-af7d-b1629d2d88f7@sirena.org.uk>
-In-Reply-To: <c5bbdaa9-43fb-4ec3-af7d-b1629d2d88f7@sirena.org.uk>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 28 Jun 2023 23:00:54 +0300
-Message-ID: <CAA8EJprRH6aFj17A-sJzzHJXG7vNWu-yznSh7oA3WBXRv19wvw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware
- name from DT
-To:     Mark Brown <broonie@kernel.org>
+        Wed, 28 Jun 2023 16:11:13 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D08F261466;
+        Wed, 28 Jun 2023 20:11:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DF5C433C0;
+        Wed, 28 Jun 2023 20:11:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687983072;
+        bh=LLcceKwXay+1+LZDqQSJ8DdnOTd9XJoa6qAnUlgbGhQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ny+Dig9eSI8aD48PEXYHzX0z4qqIyDFR4n9v6cCNGMCJIuUkM3THoCcDTZXFEo0iC
+         4pZSWDZDTu+NSJjYsR74RLvpclufEOOnYAMEzqs8y+O+w6t2DS/wwm7iXfJ50U74Py
+         tlWQZbEZEOsEHxp0xbcG4lpIzaiwo6CzLehq3g8WFubcVqyVMQqTM6cneR/1N/aOXf
+         DCfi7lw7VUlaKsMWs0zu3q9pfYNjCOCKH57v1bD+1bJqxYB8nkTPWAE3XF+YsheRNV
+         3nQjPTCxd/bNW4DvJNE4Dr7AFDTrxd2F/qF+4raCfkes3j7wvNuKhcOJb7MCCoE/Y5
+         J6DsMfu9kAncg==
+Date:   Wed, 28 Jun 2023 21:11:05 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
         robh+dt@kernel.org, devicetree@vger.kernel.org,
@@ -66,42 +41,65 @@ Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         ckeepax@opensource.cirrus.com, kuninori.morimoto.gx@renesas.com,
         linux-kernel@vger.kernel.org, pierre-louis.bossart@linux.intel.com,
         alsa-devel@alsa-project.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+Subject: Re: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware
+ name from DT
+Message-ID: <12c19702-9a0a-45b9-9dc0-6b62879fae81@sirena.org.uk>
+References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
+ <20230628102621.15016-3-srinivas.kandagatla@linaro.org>
+ <f71c8d2b-d5f4-42bb-932f-5b9ec6117ffc@sirena.org.uk>
+ <73dce263-bee6-554f-9eb6-af4aa7badab1@linaro.org>
+ <c377aefe-2678-4ba7-96b3-2186e8f3f1b4@sirena.org.uk>
+ <fabef33c-a8c7-af61-80b4-91e55081c977@linaro.org>
+ <c5bbdaa9-43fb-4ec3-af7d-b1629d2d88f7@sirena.org.uk>
+ <CAA8EJprRH6aFj17A-sJzzHJXG7vNWu-yznSh7oA3WBXRv19wvw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="YMXJcNcxLhYXGPw7"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJprRH6aFj17A-sJzzHJXG7vNWu-yznSh7oA3WBXRv19wvw@mail.gmail.com>
+X-Cookie: HELLO, everybody, I'm a HUMAN!!
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 28 Jun 2023 at 22:40, Mark Brown <broonie@kernel.org> wrote:
->
-> On Wed, Jun 28, 2023 at 10:33:16PM +0300, Dmitry Baryshkov wrote:
-> > On 28/06/2023 21:10, Mark Brown wrote:
->
-> > > If the goal here is to put all the firmwares for a given board in a
-> > > single place surely it would be better to factor this all out of the
-> > > individual drivers so that they ask some helper for a directory to use
-> > > for firmware?  Adding these device specific firmware node properties
-> > > doesn't seem to follow.
->
-> > This quickly becomes overcomplicated. Some platforms use different firmware
-> > naming structure. Some firmware goes into a generic location and other files
-> > go into device-specific location. So having a generic helper doesn't really
-> > help.
->
-> That sounds like a job for symlinks surely?
 
-Excuse me, but I don't understand the goal for such symlinks. In my
-opinion (and more importantly, in the opinion of qcom maintainers),
-firmware-name does the necessary job. It provides enough flexibility
-and doesn't require any additional dances around.
+--YMXJcNcxLhYXGPw7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Wed, Jun 28, 2023 at 11:00:54PM +0300, Dmitry Baryshkov wrote:
+> On Wed, 28 Jun 2023 at 22:40, Mark Brown <broonie@kernel.org> wrote:
+> > On Wed, Jun 28, 2023 at 10:33:16PM +0300, Dmitry Baryshkov wrote:
 
+> > > This quickly becomes overcomplicated. Some platforms use different firmware
+> > > naming structure. Some firmware goes into a generic location and other files
+> > > go into device-specific location. So having a generic helper doesn't really
+> > > help.
 
--- 
-With best wishes
-Dmitry
+> > That sounds like a job for symlinks surely?
+
+> Excuse me, but I don't understand the goal for such symlinks. In my
+> opinion (and more importantly, in the opinion of qcom maintainers),
+> firmware-name does the necessary job. It provides enough flexibility
+> and doesn't require any additional dances around.
+
+The goal is to avoid adding a Linux specific ABI if we don't need one,
+and to allow later adjustment of what's selected on the userspace side
+more easily (eg, if a more specific firwmare is found).
+
+--YMXJcNcxLhYXGPw7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSck9gACgkQJNaLcl1U
+h9BlIAf/U3zhxoGXi5DoWCg8Bs+vMFignIh07oSJjhgCaLNRBDO8u+xB0O2y3Ttc
+huuRgDvcmjdZu1j258LPOc2dOwsYlGpIGNZuO2MxbeRxWLvJ+jYolrQr693R0H7Z
+H7tR1GmW2+kU10RHflKOdoByXYSFg3s8Y37K1gUAKYDFCtDdk72sSeRdKWAyxlb1
+cieBspLTI7ezND4O8mBpNZTkPrw6TFGDtETlk6ek5ySbUD2beWWTbBWbb604LJrI
+IGStw1SfiHcu6eY0zm7BFyiWJgowKLxzq4Aesy/ok/Ng8ztRXk1dYttxFifSY+x0
+GSDE23I/jS9mukoIMyL1z3/nA0ty4Q==
+=jB6O
+-----END PGP SIGNATURE-----
+
+--YMXJcNcxLhYXGPw7--
