@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 819867419AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 22:37:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29A7A7419AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 22:37:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231509AbjF1Ufn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 16:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37116 "EHLO
+        id S232082AbjF1Ufp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 16:35:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231576AbjF1Ufi (ORCPT
+        with ESMTP id S232047AbjF1Ufi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 28 Jun 2023 16:35:38 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9C7210E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:35 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f86fbe5e4fso84230e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:35 -0700 (PDT)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A732110
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:37 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f8689fbf59so1857920e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687984534; x=1690576534;
+        d=linaro.org; s=google; t=1687984535; x=1690576535;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sX61xLzrSqpunz5ev7NdqhGboO2e1ygKVlT8rjAfgIw=;
-        b=CKlYnjbhvmTX5qxXcW486aoyEsOIGjb6TgKAKUMd4xm9mgYeCF3Isk8/IbA364cL9z
-         2eF54eO3/ge5Ua/6l3tHvGFnwZDP3BsVlihmENcF5HCI6SAbImPBQ2K/NxNNefSGydz0
-         eig1dL2XxLXGcWsHZLuLJbViXuiueTsnsbbNswb1Bcfj/yKtMJ9mxkq4TiOGlE6UTaZ0
-         5X3WOOm5U4U4RGE0+gYxzrlWDXpjx/tAkTHb3tgbG8jkOMHIrAZYMt6q0qGrTN+3RuMF
-         9HuIL9KVnzpD05afFiOTPM+cGPl6iCScOamGlqZtVe8GaGR04E7AUGF8H9GPWe06Gq4W
-         QyXQ==
+        bh=DkM6eACK+l7KK09aC4iRvpEN0T6pFUWvLy8n57wVeSY=;
+        b=Wk87rACLpnAT+qXyvw65l5SaJkF7pt8Q2vfYNiidfMn/ez+0hqT4ECXI4GXSY4YEzn
+         pbIus18/SVFGIoizV7WukfwTK+rZcf+IO9dGfzl/ajO2NyB9m8Vcced6Yyuk9/CRU2hz
+         9DYQEgsFIMKEFGvkvQfu9PMYu8+97CuRODHAYACzu/Xai9W1EAuw/yRuWTUrf92a7QfE
+         bsOxTFamvXGjBPKiamdrrv76NFLZvEfyZ7/67o+JBPu8KfvrpKZjy6nsD1oCV6nDc6cG
+         W7ZgZum4RcrCCK1NQuRUTq0LY+AM0Gx1GR/zEPDWffQwXI5T1jizrUjMGEV/HC3kHsPy
+         sYOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687984534; x=1690576534;
+        d=1e100.net; s=20221208; t=1687984535; x=1690576535;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sX61xLzrSqpunz5ev7NdqhGboO2e1ygKVlT8rjAfgIw=;
-        b=KdJ0FffW3MVEWtQh7fbAyZPBrxFy2QU7jYfFnkoTT3qZ5y0DvhZ4OqYcV1O+lKhcjQ
-         ZjVccJI029+PKsj2ci8gzl+8f5WsUSKQOB/HW7Z1lDk0AYX2BbPJw6aYRuX1TcFeCJCX
-         jJ2AgqWwNXnRmoz8w1DleOVPTj1RndClLRZgdyCagpwxJT2EtKHqlfThTD0w2KK17MlM
-         /LQgsMovE6pPRO2eRY27ZiBPS3DNKrONjZk++m4Ff7lf8mYH0JesdgDdXaQbcoFt4Oj6
-         6fSKBwQbQNdkm/lwjMiQtmZGX2ZpwojuYKHwvXsevQp1mbMxGqYFiGmvIuAh6Tt9YuoI
-         stmA==
-X-Gm-Message-State: AC+VfDwehKh0Tiz4VP73wmLVOR72IA4Qy2BRjEc6MdsbLWcAiIJ//Z0h
-        NQiYbaIEpmcVxdTbYa+Utl8l1A==
-X-Google-Smtp-Source: ACHHUZ4mbDR4q/0SPRJDfw23h+iHYX5F18pGLnfkI1JO4yYJUyJY/kwbBvEWvex+U59sYliIjS1DdQ==
-X-Received: by 2002:a05:6512:3f1d:b0:4fa:ce08:a9d0 with SMTP id y29-20020a0565123f1d00b004face08a9d0mr8697767lfa.57.1687984534316;
-        Wed, 28 Jun 2023 13:35:34 -0700 (PDT)
+        bh=DkM6eACK+l7KK09aC4iRvpEN0T6pFUWvLy8n57wVeSY=;
+        b=EFRmr7ovqOIs63FmvLILoDUk48uVEXSfau3A1l/nRGJFobNeBvzPWVKDXb+Ao4/jGo
+         PNIvy354QX9nR/3YVeqylAQJqEG8WJQ/0ZYTiA/A+65/brbMfO2PNzPsz1pOU0vG19DP
+         EjJUh+bRItTltyeuJ0q/qJKSOKlv7ev282p8RgjglX5HTx5jbZJAb7eajkvVDNaq2k8O
+         wxTJiizyy2IYH77t6ja5C1dhH2CcBgb803v8Oct5VJmDShiYNfPApePgRG0SMrCjx3m7
+         KTUuqHQpVPWafq1FA5/2BrtbNY/LFqhkQS/ZvmjYEroxWfxyzVngqSK1lYIJfr+Z5ILZ
+         aUMA==
+X-Gm-Message-State: AC+VfDxCnGdYFLZXNFk5riXkFRAABksRDMD+vUzlRzPYgubHSKxu/tJA
+        2+I1J7BSvt+lNy/Flj490k1Z8w==
+X-Google-Smtp-Source: ACHHUZ5yuPrDceywU3WbC6OFqainhsthjjiGoMq5J/QDVEMJF3IKLcjx+7vdLigOv6OeD1rpweVziQ==
+X-Received: by 2002:a05:6512:239a:b0:4f8:6ac4:1aa9 with SMTP id c26-20020a056512239a00b004f86ac41aa9mr1045562lfv.21.1687984535651;
+        Wed, 28 Jun 2023 13:35:35 -0700 (PDT)
 Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id m25-20020a056512015900b004fb86c89fa1sm753363lfo.135.2023.06.28.13.35.33
+        by smtp.gmail.com with ESMTPSA id m25-20020a056512015900b004fb86c89fa1sm753363lfo.135.2023.06.28.13.35.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jun 2023 13:35:34 -0700 (PDT)
+        Wed, 28 Jun 2023 13:35:35 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 28 Jun 2023 22:35:06 +0200
-Subject: [PATCH 06/14] drm/msm/a6xx: Move LLC accessors to the common
- header
+Date:   Wed, 28 Jun 2023 22:35:07 +0200
+Subject: [PATCH 07/14] drm/msm/a6xx: Bail out early if setting GPU OOB
+ fails
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230628-topic-a7xx_drmmsm-v1-6-a7f4496e0c12@linaro.org>
+Message-Id: <20230628-topic-a7xx_drmmsm-v1-7-a7f4496e0c12@linaro.org>
 References: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
 In-Reply-To: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -74,83 +74,47 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687984524; l=2053;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687984524; l=937;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=3i7Z22FP2QVKu6xop0YI/VspQ/V2L4DBdczgpDJONsc=;
- b=r4Q1pP42KzKhFjKsyVrb/P+HQX12W0EiaS/EiByIjNmqcHcX7aVTaUVQS+18tL0ZQKrQvVoWY
- uruPmivoCPwBWUKURF/S4An4Dnrod1wUsjYRXHU00JAzDBsnv3jqobc
+ bh=9J73aF30PI34nc92bobMmRBFeW3h6sk6+9cqWlv0aIs=;
+ b=zmnxv1qkjjq2p1yEjeUi56tWX0E0Ek0pCy6wtN2JzIoG/ilSwtPl8RZ6guWx36wWuEwoXknCU
+ FGScjwrujijAbVyqz0v4cw90pj4jSl6z7zz5YuNJkRicoA68Kcs0n7N
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move these wrappers in preparation for use in a6xx_gmu.c
+If the GMU can't guarantee the required resources are up, trying to
+bring up the GPU is a lost cause. Return early if setting GPU OOB
+fails.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 ---------------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h | 15 +++++++++++++++
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index a70e36178058..c1c76fe288b2 100644
+index c1c76fe288b2..7c8345ae1a30 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1735,21 +1735,6 @@ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
- 	return IRQ_HANDLED;
- }
+@@ -1201,7 +1201,9 @@ static int hw_init(struct msm_gpu *gpu)
  
--static void a6xx_llc_rmw(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 mask, u32 or)
--{
--	return msm_rmw(a6xx_gpu->llc_mmio + (reg << 2), mask, or);
--}
--
--static u32 a6xx_llc_read(struct a6xx_gpu *a6xx_gpu, u32 reg)
--{
--	return msm_readl(a6xx_gpu->llc_mmio + (reg << 2));
--}
--
--static void a6xx_llc_write(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 value)
--{
--	msm_writel(value, a6xx_gpu->llc_mmio + (reg << 2));
--}
--
- static void a6xx_llc_deactivate(struct a6xx_gpu *a6xx_gpu)
- {
- 	llcc_slice_deactivate(a6xx_gpu->llc_slice);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index c788b06e72da..39d1f1f5a6d1 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -62,6 +62,21 @@ static inline bool a6xx_has_gbif(struct adreno_gpu *gpu)
- 	return true;
- }
+ 	if (!adreno_has_gmu_wrapper(adreno_gpu)) {
+ 		/* Make sure the GMU keeps the GPU on while we set it up */
+-		a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
++		ret = a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
++		if (ret)
++			return ret;
+ 	}
  
-+static inline void a6xx_llc_rmw(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 mask, u32 or)
-+{
-+	return msm_rmw(a6xx_gpu->llc_mmio + (reg << 2), mask, or);
-+}
-+
-+static inline u32 a6xx_llc_read(struct a6xx_gpu *a6xx_gpu, u32 reg)
-+{
-+	return msm_readl(a6xx_gpu->llc_mmio + (reg << 2));
-+}
-+
-+static inline void a6xx_llc_write(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 value)
-+{
-+	msm_writel(value, a6xx_gpu->llc_mmio + (reg << 2));
-+}
-+
- #define shadowptr(_a6xx_gpu, _ring) ((_a6xx_gpu)->shadow_iova + \
- 		((_ring)->id * sizeof(uint32_t)))
- 
+ 	/* Clear GBIF halt in case GX domain was not collapsed */
 
 -- 
 2.41.0
