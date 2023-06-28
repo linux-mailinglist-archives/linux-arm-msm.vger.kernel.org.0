@@ -2,133 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35C2B740E86
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 12:20:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25291740EA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 12:26:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230304AbjF1KUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 06:20:35 -0400
-Received: from mail-il1-f170.google.com ([209.85.166.170]:44532 "EHLO
-        mail-il1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231540AbjF1KSd (ORCPT
+        id S231638AbjF1K0u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 06:26:50 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131]:21882 "EHLO
+        mx0a-0031df01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231452AbjF1KYr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 06:18:33 -0400
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-345c487807bso3814385ab.1;
-        Wed, 28 Jun 2023 03:18:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687947512; x=1690539512;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jkZY5XWnI6WOwfagmaCwCAQfGioFt+uVaBoTTNmJFWA=;
-        b=i0Yug6i/hnUkJLaytp8u2FDJgOYkaSXTPo1o5ZZTFCONNo204GWdO0NQHNz7gkBR4z
-         XK+/8bDLgSn6j65B7xKgeOWrkIhXB4Yp66oZ3ijT/gNs7q3WI/mJKtymbzqc0GGC8akN
-         Yrz5zfdTj16W9ncWQvZrWw2Ssd9eeYwiCbKD0aDi40SHsKZqWjQVy7Ii7hdGuX4Oh5B+
-         ZbacGohjatdfka6suJzBVoUrTG+zflFf5E0bA0saZLDLMZtrJz5ljRnOoskU3lP2ophH
-         WEbdc9DgKvKpiSx61hGGO2Z0IehThIP7Nl2x/4DB6945ojDOlhOtUWMwDXhfzUcJtGeN
-         3NQA==
-X-Gm-Message-State: AC+VfDzVTO/dzgD5n6NvBbC2S949aB5nhbqiAkhsfV0NtvYDB1xEY3S6
-        wdzOskjVZvy9+Qalh93xndKVXmwF1w==
-X-Google-Smtp-Source: ACHHUZ4F1SZzbggWtZ3M7Dd8uYudBHLwcuRpSuiAOEntbx7YA5l4kCgwSe8zR4CL2ou+ywBadXOIEQ==
-X-Received: by 2002:a92:cac8:0:b0:345:bfdb:3548 with SMTP id m8-20020a92cac8000000b00345bfdb3548mr4273966ilq.2.1687947512250;
-        Wed, 28 Jun 2023 03:18:32 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id q9-20020a92c009000000b0034267d3fcc5sm3324584ild.55.2023.06.28.03.18.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jun 2023 03:18:31 -0700 (PDT)
-Received: (nullmailer pid 47051 invoked by uid 1000);
-        Wed, 28 Jun 2023 10:18:26 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Imran Shaik <quic_imrashai@quicinc.com>
-Cc:     Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Wed, 28 Jun 2023 06:24:47 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35S6Vo8F030116;
+        Wed, 28 Jun 2023 10:24:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=manEkdmuQleWrH5nEtrGiAPiHViuQZPLn2Zbplf0WL0=;
+ b=UwET1pWHAvI0FGiMTI6UH4ClvuPwn4W80jxaEugB7gorh4Hngr2NNwGdvilR7it6PaUt
+ 2cdkqOi7trG6AeEGzDws15GLDW5af3oEZog2EyX416pWGlWSl5fV2mV4PwrKH7IwSkWi
+ KpKKNZgYg9NO8vc8waRpnnj34JDZ+2HD6RmuLfrmx8pThuNHbCJCPGTitaV+qJbikbL0
+ o2Ua64DJpwQJ2rrzDKh5gCl64u1iJSiYrV8+UDH9AUWMS9L91hvOtllSeEEQzUPM8dsO
+ tHC+qKJ5YJDatek0efe1RxQ/kfPqAfFWAcyPvYG4aP5JFH9mltC1pL5c7XyFffjNEqnR WA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgfp3rfwf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Jun 2023 10:24:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35SANwae027678
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Jun 2023 10:23:58 GMT
+Received: from hu-schowdhu-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.7; Wed, 28 Jun 2023 03:23:53 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-clk@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        linux-kernel@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org
-In-Reply-To: <20230628092837.3090801-2-quic_imrashai@quicinc.com>
-References: <20230628092837.3090801-1-quic_imrashai@quicinc.com>
- <20230628092837.3090801-2-quic_imrashai@quicinc.com>
-Message-Id: <168794750675.47016.17958709493582414189.robh@kernel.org>
-Subject: Re: [PATCH V2 1/5] dt-bindings: clock: Update GCC clocks for
- QDU1000 and QRU1000 SoCs
-Date:   Wed, 28 Jun 2023 04:18:26 -0600
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: [PATCH V25 0/3] misc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Wed, 28 Jun 2023 15:53:29 +0530
+Message-ID: <cover.1687945879.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5ZPY7U27_1T2anr0FKmTSqdNINU2tGcP
+X-Proofpoint-ORIG-GUID: 5ZPY7U27_1T2anr0FKmTSqdNINU2tGcP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-28_06,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ clxscore=1015 suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306280091
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
-On Wed, 28 Jun 2023 14:58:33 +0530, Imran Shaik wrote:
-> Update the qcom GCC clock bindings for QDU1000 and QRU1000 SoCs.
-> 
-> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-> ---
-> Chanes since v1:
->  - Removed the v2 variant compatible string changes
->  - Updated the maintainers list
-> 
->  Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml | 3 ++-
->  include/dt-bindings/clock/qcom,qdu1000-gcc.h                  | 4 +++-
->  2 files changed, 5 insertions(+), 2 deletions(-)
-> 
+In certain cases a register write needs to be executed for accessing the rest of the
+registers, also the user might want to record the changing values of a register with
+time for which he has the option to use the loop feature.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+The options mentioned above are exposed to the user by debugfs files once the driver
+is probed. The details and usage of this debugfs files are documented in
+Documentation/ABI/testing/debugfs-driver-dcc.
 
-yamllint warnings/errors:
+As an example let us consider a couple of debug scenarios where DCC has been proved to be
+effective for debugging purposes:-
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/arm/hisilicon/controller/cpuctrl.example.dtb: /example-0/cpuctrl@a22000/clock@0: failed to match any schema with compatible: ['hisilicon,hix5hd2-clock']
-Documentation/devicetree/bindings/arm/hisilicon/controller/sysctrl.example.dtb: /example-0/system-controller@802000/clock@0: failed to match any schema with compatible: ['hisilicon,hi3620-clock']
-Documentation/devicetree/bindings/arm/hisilicon/controller/hi3798cv200-perictrl.example.dtb: /example-0/peripheral-controller@8a20000/phy@850: failed to match any schema with compatible: ['hisilicon,hi3798cv200-combphy']
-Documentation/devicetree/bindings/net/qca,ar71xx.example.dtb: /example-0/ethernet@1a000000/mdio/switch@10: failed to match any schema with compatible: ['qca,ar9331-switch']
-Documentation/devicetree/bindings/net/marvell,mvusb.example.dtb: /example-0/usb/mdio@1/switch@0: failed to match any schema with compatible: ['marvell,mv88e6190']
-Documentation/devicetree/bindings/media/rockchip-isp1.example.dtb: /example-0/parent/i2c/camera@36: failed to match any schema with compatible: ['ovti,ov5695']
-Documentation/devicetree/bindings/thermal/imx-thermal.example.dtb: /example-0/anatop@20c8000: failed to match any schema with compatible: ['fsl,imx6q-anatop', 'syscon', 'simple-mfd']
-Documentation/devicetree/bindings/thermal/brcm,avs-ro-thermal.example.dtb: /example-0/avs-monitor@7d5d2000: failed to match any schema with compatible: ['brcm,bcm2711-avs-monitor', 'syscon', 'simple-mfd']
-Documentation/devicetree/bindings/memory-controllers/ingenic,nemc.example.dtb: /example-0/memory-controller@13410000/ethernet@6: failed to match any schema with compatible: ['davicom,dm9000']
-Documentation/devicetree/bindings/leds/common.example.dtb: /example-2/i2c/led-controller@30: failed to match any schema with compatible: ['panasonic,an30259a']
-Documentation/devicetree/bindings/clock/milbeaut-clock.example.dtb: /example-2/serial@1e700010: failed to match any schema with compatible: ['socionext,milbeaut-usio-uart']
-Documentation/devicetree/bindings/clock/sprd,sc9863a-clk.example.dtb: /example-1/syscon@20e00000: failed to match any schema with compatible: ['sprd,sc9863a-glbregs', 'syscon', 'simple-mfd']
-Documentation/devicetree/bindings/sound/audio-graph-card2.example.dtb: /example-0/cpu: failed to match any schema with compatible: ['cpu-driver']
-Documentation/devicetree/bindings/sound/audio-graph-card2.example.dtb: /example-0/codec: failed to match any schema with compatible: ['codec-driver']
-Documentation/devicetree/bindings/reset/hisilicon,hi3660-reset.example.dtb: /example-0/iomcu@ffd7e000: failed to match any schema with compatible: ['hisilicon,hi3660-iomcu', 'syscon']
-Documentation/devicetree/bindings/i2c/qcom,i2c-cci.example.dtb: /example-0/cci@ac4a000/i2c-bus@1/camera@60: failed to match any schema with compatible: ['ovti,ov7251']
-Documentation/devicetree/bindings/input/mediatek,pmic-keys.example.dtb: /example-0/pmic: failed to match any schema with compatible: ['mediatek,mt6397']
-Documentation/devicetree/bindings/input/sprd,sc27xx-vibrator.example.dtb: /example-0/pmic@0: failed to match any schema with compatible: ['sprd,sc2731']
-Documentation/devicetree/bindings/dma/dma-router.example.dtb: /example-0/dma-router@4a002b78: failed to match any schema with compatible: ['ti,dra7-dma-crossbar']
-Documentation/devicetree/bindings/dma/dma-controller.example.dtb: /example-0/dma-controller@48000000: failed to match any schema with compatible: ['ti,omap-sdma']
-Documentation/devicetree/bindings/iio/adc/ti,palmas-gpadc.example.dtb: /example-0/pmic: failed to match any schema with compatible: ['ti,twl6035-pmic', 'ti,palmas-pmic']
-Documentation/devicetree/bindings/iio/adc/ti,palmas-gpadc.example.dtb: /example-0/pmic: failed to match any schema with compatible: ['ti,twl6035-pmic', 'ti,palmas-pmic']
+i)TimeStamp Related Issue
 
-doc reference errors (make refcheckdocs):
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+instead of proper timestamp values.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230628092837.3090801-2-quic_imrashai@quicinc.com
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
 
-pip3 install dtschema --upgrade
+We get all the clk register details from IP documentation and configure it
+via DCC config_read debugfs node. Before that we set the current linked list.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+/* Program the linked list with the addresses */
+echo R 0x10c004 > /sys/kernel/debug/qcom-dcc/../3/config
+echo R 0x10c008 > /sys/kernel/debug/qcom-dcc/../3/config
+echo R 0x10c00c > /sys/kernel/debug/qcom-dcc/../3/config
+echo R 0x10c010 > /sys/kernel/debug/qcom-dcc/../3/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo R 0x10C004 4 > /sys/kernel/debug/qcom-dcc/../3/config_read
+
+/* Enable DCC */
+echo 1 > /sys/kernel/debug/qcom-dcc/../3/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+         <timestamp>03/14/21</timestamp>
+             <generator>Linux DCC Parser</generator>
+                 <chip name="None" version="None">
+                 <register address="0x0010c004" value="0x80000000" />
+                 <register address="0x0010c008" value="0x00000008" />
+                 <register address="0x0010c00c" value="0x80004220" />
+                 <register address="0x0010c010" value="0x80000000" />
+             </chip>
+     <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
+
+Changes in v25
+
+* Updated the documentation of the structure dcc_config_entry as per the comments in V23
+* Updated the documentation of the dcc Kconfig definition as per comment in V24
+* Used u64 where applicable
+* Removed the mutex locks where it is not needed
+* Removed the use of unlikely keyword
+* Renamed "nr_link_list" to "max_link_list"
+
+Souradeep Chowdhury (3):
+  dt-bindings: misc: qcom,dcc: Add the dtschema
+  misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+
+ Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
+ .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
+ MAINTAINERS                                   |    8 +
+ drivers/misc/Kconfig                          |    8 +
+ drivers/misc/Makefile                         |    1 +
+ drivers/misc/qcom-dcc.c                       | 1312 +++++++++++++++++
+ 6 files changed, 1378 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
+ create mode 100644 drivers/misc/qcom-dcc.c
+
+-- 
+2.17.1
 
