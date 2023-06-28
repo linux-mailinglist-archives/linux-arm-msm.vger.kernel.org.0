@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1DD6740EBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 12:28:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C975E740EC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 12:28:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231430AbjF1K2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 06:28:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57362 "EHLO
+        id S231410AbjF1K2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 06:28:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231417AbjF1K0n (ORCPT
+        with ESMTP id S231422AbjF1K0n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 28 Jun 2023 06:26:43 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1077630C0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 03:26:41 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-313f3cd6bb4so2941051f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 03:26:40 -0700 (PDT)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3452230C4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 03:26:42 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-311099fac92so6973250f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 03:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687947999; x=1690539999;
+        d=linaro.org; s=google; t=1687948000; x=1690540000;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QndBu+Ea73+5HZm45UHtALLqjv/Bpq0i3QEOMrOjFEA=;
-        b=xXvqIFxIGebSeM10VHUvp6JelIbH0a8Ghpt64wKknXwMSWL95vKtz40Urf/l2eRZyA
-         cjijU5zSPWNmwFnS43WQxxT2utoqGcRzSyayFdaRLw0YHKXIWNe5nbZlSY5r5IUciEtW
-         Sur/5jylNwWcOGVtBJ3bEGewf7JLwbJrpY2LUxwj92DLECfudE3uVlpVGlrPXyKYapA9
-         H1yc3NgwjRve8v2SGiIZGEu2TQDAlBD3bjDUzFPwr1kBUwjVLXE4764tZgl9hFDs1Yak
-         lZrusYucIwYjDAT76FMkcFZmsRM6Gyn/Z02PodY4GX3iq+EfHcdaJnfC15T9MvKCvs4P
-         ocEw==
+        bh=srR4qXI4SOaRzuTnNjTHD1luV6fZZPzoY3QYdalo8qI=;
+        b=Y6Q+PawFy+kJaRdCZCPHXwMw9ZqLRbomAw6YgjOi9KVEfS/4P/HbDrP9ZhJRU6ywOe
+         iPv0i8olWL0oVFvuiIRH981wrhd+0pzPMqEy0D0ZgBge/cjyeDZ73H6a0WW82n704GUS
+         4Y+Wk0SCIcMFW7ghIYsQg9J15d+lSu6A4sqaWr3IocqBnd+WBewi6ZB7hEw7JCckIql5
+         FB4i5VDkAG78WKb1JBJChHG/5jncfE8sX84cDYXoNG4syCvR7JTv6mmK4Japm2OWV8Qy
+         wiiX9wGTj6mkM9Z74fzUTnghT2FI9trCV2M1LmWw3YvtarKYty56k+D3F+H0+NoLgpO5
+         yY9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687947999; x=1690539999;
+        d=1e100.net; s=20221208; t=1687948000; x=1690540000;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QndBu+Ea73+5HZm45UHtALLqjv/Bpq0i3QEOMrOjFEA=;
-        b=UUBpDsHoxw0xP+g2LRiiw3va3QFvU66vddRl8s4rtN0nNu1vhWZDddUyFJdp4NbDKX
-         GzJGvOhFqjH6ypJeXaCj3e2VPcNE2xv9fB3rWoyJXGYFBS6zWRusIdcao2dW26yyLEiG
-         mBqQGsslcWgGSk9DusnsUl1WDeEWW4rDCaK/rn6IypV9MSmJ3hnjuNe0V2gV4m+ZtGDW
-         v0Mw7x2masBdNQ9zrEAqYQ+PfiBgtQFYQEJ07t3Vg6/JMyizuuiWruNl9YoWfXE/RlEa
-         8dQEujQYYTMChMfjBmh7vebN8b1neaPqyqk8QqZlhMLAQBlvERUBi9ZVJZp8RLpSZ522
-         r1Kw==
-X-Gm-Message-State: AC+VfDy/g38m9j68A/cuSPiEhMUbBK/G9tdIX57Zxbfz1SE0TG1tRePR
-        uPoJFlSKVc9ftRw2lpF+/QQ3r35bKAcUsVdRUg/u+A==
-X-Google-Smtp-Source: ACHHUZ5jM7AFbBVobXv7tCMo8URNzib2Q8aoTQ3nBXjD6sz9p2fAnpPFJReVgG2Pjw6ld9T5Q04RIw==
-X-Received: by 2002:adf:e741:0:b0:313:ee2e:dae1 with SMTP id c1-20020adfe741000000b00313ee2edae1mr7605993wrn.18.1687947999424;
-        Wed, 28 Jun 2023 03:26:39 -0700 (PDT)
+        bh=srR4qXI4SOaRzuTnNjTHD1luV6fZZPzoY3QYdalo8qI=;
+        b=U/ekw3aUWb6UYSNjRQzkFb6QABuiBnnsA3Pw4NYphDjRbiQn0RGY8SdspP7Aq6jm2o
+         cVnDRKg1kMqiEZEEjNguzBKGCSrmx+XwSKEv5Y6SPh3eGeDvkGRVrDC58f9NTsl8OC4W
+         UbRoXImw9F1/ctZpLU/iglR3TZreCtNMKjrZweNB1qKq+Ykngpy5XvV8Ffsqhh+Ab3No
+         kVjvphIhyU/wZ+PURIL94iIAFb/bVrYT3/9lIvoxN9q+UCNm2QEqMU1wyPXy3AiRZ6DM
+         839NE9P9kD2odiffcEWzm5M//tCriXedu3qZPRibe5WCwD/+h3Xy64GySXCPCoGCQx22
+         axcw==
+X-Gm-Message-State: AC+VfDzEx3YXhcvXw/c4sXhPaHxL815Ynhnc1pjyUIBvSbg2wEdikKS4
+        fIn2WX6axBQ1+mTUVLUSIYtWsw==
+X-Google-Smtp-Source: ACHHUZ5S4H9zXhddpOXM9tKWiI2dGOx62qaeBcYbU97WH85fLsREvkzVPMEm3gY/9OG0jwyaeyA//w==
+X-Received: by 2002:a5d:5307:0:b0:313:f60d:4958 with SMTP id e7-20020a5d5307000000b00313f60d4958mr5463674wrv.53.1687948000700;
+        Wed, 28 Jun 2023 03:26:40 -0700 (PDT)
 Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id a10-20020a5d53ca000000b003140555c0ddsm2467780wrw.56.2023.06.28.03.26.38
+        by smtp.gmail.com with ESMTPSA id a10-20020a5d53ca000000b003140555c0ddsm2467780wrw.56.2023.06.28.03.26.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jun 2023 03:26:39 -0700 (PDT)
+        Wed, 28 Jun 2023 03:26:40 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
         broonie@kernel.org
@@ -60,9 +60,9 @@ Cc:     robh+dt@kernel.org, devicetree@vger.kernel.org,
         kuninori.morimoto.gx@renesas.com, linux-kernel@vger.kernel.org,
         pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware name from DT
-Date:   Wed, 28 Jun 2023 11:26:20 +0100
-Message-Id: <20230628102621.15016-3-srinivas.kandagatla@linaro.org>
+Subject: [PATCH 3/3] arm64: dts: qcom: sc8280xp-x13s: Add audio topology firmware path
+Date:   Wed, 28 Jun 2023 11:26:21 +0100
+Message-Id: <20230628102621.15016-4-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
 References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
@@ -78,53 +78,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently firmware file name is autogenerated based on card name and model number,
-however this imposed a restriction of finding firmware in a single firmware path.
-Platform specific firmwares are normally located in sub folders of the SoC.
-
-Provide more flexibity by reading firmware-name from DT.
+Add audio topology firmware name and path in dt so that we can
+specify full path for it.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- sound/soc/qcom/qdsp6/topology.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
-index cccc59b570b9..ccb4efc15648 100644
---- a/sound/soc/qcom/qdsp6/topology.c
-+++ b/sound/soc/qcom/qdsp6/topology.c
-@@ -1258,16 +1258,16 @@ static struct snd_soc_tplg_ops audioreach_tplg_ops  = {
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 7cc3028440b6..0160b8e7d64f 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -924,6 +924,11 @@
+ 	};
+ };
  
- int audioreach_tplg_init(struct snd_soc_component *component)
- {
--	struct snd_soc_card *card = component->card;
- 	struct device *dev = component->dev;
- 	const struct firmware *fw;
--	char *tplg_fw_name;
-+	const char *tplg_fw_name;
- 	int ret;
- 
--	/* Inline with Qualcomm UCM configs and linux-firmware path */
--	tplg_fw_name = kasprintf(GFP_KERNEL, "qcom/%s/%s-tplg.bin", card->driver_name, card->name);
--	if (!tplg_fw_name)
--		return -ENOMEM;
-+	ret = of_property_read_string(dev->of_node, "firmware-name",  &tplg_fw_name);
-+	if (ret < 0) {
-+		dev_err(dev, "firmware-name property missing in Device tree\n");
-+		return ret;
-+	}
- 
- 	ret = request_firmware(&fw, tplg_fw_name, dev);
- 	if (ret < 0) {
-@@ -1283,8 +1283,6 @@ int audioreach_tplg_init(struct snd_soc_component *component)
- 
- 	release_firmware(fw);
- err:
--	kfree(tplg_fw_name);
--
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(audioreach_tplg_init);
++
++&q6apm {
++	firmware-name = "qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin";
++};
++
+ &qup0 {
+ 	status = "okay";
+ };
 -- 
 2.21.0
 
