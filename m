@@ -2,95 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49C7B740A71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 10:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB154740A9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 10:08:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232666AbjF1IGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 04:06:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34618 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232280AbjF1IBw (ORCPT
+        id S232935AbjF1IHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 04:07:55 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217]:48386 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232320AbjF1IEv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 04:01:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BA31BE8;
-        Wed, 28 Jun 2023 00:59:49 -0700 (PDT)
+        Wed, 28 Jun 2023 04:04:51 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BAEEE6130B;
-        Wed, 28 Jun 2023 06:41:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B217C433C8;
-        Wed, 28 Jun 2023 06:41:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1687934509;
-        bh=H+UwcZ/vjGf77sZdNXoCybxM/WI1ACzxmM96uHWBNHY=;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 382A1612B2;
+        Wed, 28 Jun 2023 06:47:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985EAC433C8;
+        Wed, 28 Jun 2023 06:47:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687934821;
+        bh=d+baqAWGEBGvcOft2QO3hccMGeQCJsFLMtVCuuWroW0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XteJZEHLN6bRybvpQ5dH0Lfv5gR3Lg9uD1uSf+ZsMr+VveSu91RqojbmvY39VLH8c
-         +fUhLebc7dEhDvEamyp7dmW7p9UmCBnfqe2gFB3dxgLkws/9L/puLPHWbk0KvT4HmC
-         9fKrmii1w/0lTsjHFVTZxiMQQvug6p1cZn3Lk5pc=
-Date:   Wed, 28 Jun 2023 08:41:46 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        b=CfXojygt+HeElbkAC6X55hXj4o+kaWr5OI73g21/V3AZ1MK3bHXL4mBcvOev/0w5c
+         lLsJEn/9SIAkBhFg6uibNwKMQesouU17kPMgVW8QoCW9Eu/7JBUa+tePTidRrp/zRo
+         5fzHv+EP39oquyYSja8zoUchED860xkdOAQ0FU3h+1lttHk+USF2TOKOnnFjPbK3qr
+         sQbEmfKAgEu3wo2KwJRigDT18J+32dLLfxd/un6020jb4Oom5OaoITtzZwO1FUs/xQ
+         PL7Vz6zsgJaS/hSVueevSqfYD8wP3o2U817m1cHkN5cWUDtUPvDnqm9j9TAQx0brbX
+         SsYCgsE80cAbg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1qEOxA-0001LV-U7; Wed, 28 Jun 2023 08:47:00 +0200
+Date:   Wed, 28 Jun 2023 08:47:00 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V24 0/3] misc: Add driver support for Data Capture and
- Compare unit(DCC)
-Message-ID: <2023062831-flail-deprecate-5eed@gregkh>
-References: <cover.1687855361.git.quic_schowdhu@quicinc.com>
- <2023062734-smuggling-bulldog-a46c@gregkh>
- <7b0b3f88-9ecd-090d-de65-3d4779b64a91@quicinc.com>
+        linux-kernel@vger.kernel.org, Patrick Wildt <patrick@blueri.se>
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: add explicit rtc
+ interrupt parent
+Message-ID: <ZJvXZDBGBSQfeBdh@hovoldconsulting.com>
+References: <20230627085306.6033-1-johan+linaro@kernel.org>
+ <20230627132406.GA5490@thinkpad>
+ <ZJr_5JIqWSGq-E-T@hovoldconsulting.com>
+ <20230628052557.GB20477@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7b0b3f88-9ecd-090d-de65-3d4779b64a91@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+In-Reply-To: <20230628052557.GB20477@thinkpad>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 28, 2023 at 11:15:46AM +0530, Souradeep Chowdhury wrote:
-> 
-> 
-> On 6/27/2023 3:52 PM, Greg Kroah-Hartman wrote:
-> > On Tue, Jun 27, 2023 at 03:19:23PM +0530, Souradeep Chowdhury wrote:
-> > > Changes in v24
+On Wed, Jun 28, 2023 at 10:55:57AM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Jun 27, 2023 at 05:27:32PM +0200, Johan Hovold wrote:
+> > On Tue, Jun 27, 2023 at 06:54:06PM +0530, Manivannan Sadhasivam wrote:
+> > > On Tue, Jun 27, 2023 at 10:53:06AM +0200, Johan Hovold wrote:
+> > > > Unless explicitly specified the interrupt-parent property is inherited
+> > > > from the parent node on Linux even though this may not be in full
+> > > > compliance with the devicetree specification.
+> > > > 
+> > > > Following commit 2d5cab9232ba ("arm64: dts: qcom: sc8280xp-pmics:
+> > > > Specify interrupt parent explicitly"), add an explicit interrupt parent
+> > > > also for the PMIC RTC node for the benefit of other operating systems
+> > > > which may be confused by this omission.
+> > > > 
+> > > > Note that any such OS must still implement a fallback to the root
+> > > > interrupt domain as most devicetrees are written under the assumption
+> > > > that the interrupt parent is inherited.
+> > > > 
+> > > > Reported-by: Patrick Wildt <patrick@blueri.se>
+> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > > > 
-> > > *Implemented the comments in v23
+> > > It is good to encode this in the binding and fix other such instances.
 > > 
-> > That explains absolutely nothing about what changed at all.
+> > Not sure about that. Perhaps the spec should be updated to match reality
+> > instead... We have many more instances like this, even for this very
+> > SoC, but apparently OpenBSD or whatever OS needs this falls back to the
+> > root domain then.
 > > 
-> > What would you do if you got a patch series that had this as a change
-> > list?  What do you expect us to do?
+> 
+> Just because linux is doing it in a different way doesn't warrant an amendment
+> to the spec IMO.
+
+My point is that it's apparently not just Linux as most devicetrees work
+this way at least for the root domain. And then it may be time to update
+the spec in some way.
+ 
+> > Changing this for the rtc node for consistency after you changed the
+> > others is a no-brainer, but not sure about trying to do this tree-wide.
+> > We already have too many of these one-line DT cleanups...
 > > 
-> > {sigh}
 > 
-> My apologies on missing out on the specifics.
-> 
-> The main changes in this version are as follows:-
-> 
-> * Updated the documentation of the structure dcc_config_entry
-> * Renamed "nr_link_list" to "max_link_list"
-> * Used u64 where applicable
-> * Removed the locks from ready_read method and also dropped
->   the use of unlikely keyword.
+> I agree that this is going to be a one-line cleanup but someone has to do it.
+> (not asking you to do since I also skipped it during 2d5cab9232ba). We can put
+> it in the back burner.
 
-Please fix this up and send a new version.
+So that may actually amount to a ten-thousand line diff or so... And
+then it's probably better to just update the spec.
 
-thanks,
-
-greg k-h
+Johan
