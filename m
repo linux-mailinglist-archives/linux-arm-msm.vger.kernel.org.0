@@ -2,142 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE9E6741717
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 19:18:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8033741762
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 19:42:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232050AbjF1RS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 13:18:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43448 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232027AbjF1RSv (ORCPT
+        id S229501AbjF1Rmx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 13:42:53 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217]:54786 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229652AbjF1Rmv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 13:18:51 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E0221BFE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 10:18:49 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fafe87c6fbso6282199e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 10:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687972727; x=1690564727;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ow7tRjEnsCjS1GIOssymNS7x0t0R+j0hS5b7Ebpa1p0=;
-        b=ehYR155YzFx895QNHg9wHaaw+3kIP/EM7R6ld82ulDdVzKb3XAIzpizTnaiGaNnc46
-         YFOFtA23bJFNXeAN+td6RvEsX46tCTiCZz7wnj0D4oaPbUP8YN/iyKGFYiK/pmXz7yXC
-         KWmQNT1q+/RRZxr1tMFiZpubGU5T5NtVqJiI6ScmrVaG2druj0A4j6eyTPX1xinwmFEL
-         ZMmCMAbXULkJrFPS0+e7ULq6xTFqSub1DKt2o1utNYZmwjtBza2h2tw+ilQvrz7YvLev
-         HfBbnoFeEJOuwyrlyMeia5dpchManwelJAUd+kdDkWJIC9gQnwFciCzHzTWAR4rd09Ox
-         7y5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687972727; x=1690564727;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ow7tRjEnsCjS1GIOssymNS7x0t0R+j0hS5b7Ebpa1p0=;
-        b=XNh9Q4yva/Iv2CffFp2yq+27x5fTHl7sjra/vDrQ3sFw+5afY4iZx6UGKm06DguE8v
-         pjm1jQ4UFekglHZhMi2UQIhsakKytlHzp8jAwgez3qamgXsB/qpgz57bV8CnPCdlz//B
-         F5Jr3Jx5THmM5SYH5bL+mLWoOdXFuGmSGUAGH8zeevkCrMDCBiB2lIRpb9lOPp468tiy
-         jHcW2zEpK3BTLQ4ibcjSY0EjTwD+ilGJwWq51XFTG7vZGOwntVSOUWVJ01912bWgUlUZ
-         X9hliZciY/IWFTj19uOudsUm1TWo12ZzTHNWx2tCF8GZTnyF9ulybdQUGIntZXRoxGnH
-         MGiw==
-X-Gm-Message-State: AC+VfDwP7am7MTB5NaL4R6EZLdtkrB86f+TiVaBFSkkp4Gf9umrKFAdp
-        ayE8b6tRh2VRWG7UIprWYbxZ2Q==
-X-Google-Smtp-Source: ACHHUZ77YJXHqmFGoChqgG3trHPveAapS5Nb3B+LNq40EJ1Bf0lssdrfxIgIeP0QaAx96K4CoERoaw==
-X-Received: by 2002:a19:6704:0:b0:4f9:547c:a3cc with SMTP id b4-20020a196704000000b004f9547ca3ccmr14580392lfc.14.1687972727147;
-        Wed, 28 Jun 2023 10:18:47 -0700 (PDT)
-Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id d27-20020ac244db000000b004f27471e0aesm2006371lfm.79.2023.06.28.10.18.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 10:18:46 -0700 (PDT)
-Message-ID: <42b1167d-da60-f6c3-67b6-3f6857327396@linaro.org>
-Date:   Wed, 28 Jun 2023 19:18:45 +0200
+        Wed, 28 Jun 2023 13:42:51 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 395116141D;
+        Wed, 28 Jun 2023 17:42:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D93C433C8;
+        Wed, 28 Jun 2023 17:42:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687974170;
+        bh=lqDFjemWmplk7HOK0FDXsjyFPEZ6trWi4OmRwLFV/5M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Cm/4DEX2nbNEK3Lyi4lprLSxrrS6BvJE6GZxSx4V7hZoBmtsObVCdDFxffScaEzoU
+         zpoKJDIHPrv6LznJN61cXRAx+tK+xTUHZGrP6fJaMg1HTTK0wrM4fjUCOD7I2707co
+         4uezjJdsVDzYBI1dEV88F0nduy1MZH3/lRdNG/NzkTTKCCZ7u939C0msw9J9gnnC2/
+         5J7ygqQM6/o0Fxrz+IGMxSUfY+9ttOYaWuvg/uqXTdmnAoaGiRi8mnnpX8qUArd6nd
+         1MZ8an89pGr3FubGz43ikVU0pklxkUT+Y2mtsO7c7dUKdD/Z3d4qCC1tlxvpPhcizy
+         ze6YsJIw1OBDg==
+Date:   Wed, 28 Jun 2023 18:42:44 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        johan+linaro@kernel.org, perex@perex.cz, tiwai@suse.com,
+        lgirdwood@gmail.com, ckeepax@opensource.cirrus.com,
+        kuninori.morimoto.gx@renesas.com, linux-kernel@vger.kernel.org,
+        pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org
+Subject: Re: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware
+ name from DT
+Message-ID: <bca929a1-03bd-4854-872a-07060e483d1b@sirena.org.uk>
+References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
+ <20230628102621.15016-3-srinivas.kandagatla@linaro.org>
+ <f71c8d2b-d5f4-42bb-932f-5b9ec6117ffc@sirena.org.uk>
+ <b2aef484-71c9-5655-c1f8-ddde57687491@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 2/2] clk: qcom: gdsc: Add support for set_hwmode_dev
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        avel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>
-Cc:     linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20230628105652.1670316-1-abel.vesa@linaro.org>
- <20230628105652.1670316-3-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230628105652.1670316-3-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Iw1MrnpkR98xnaXf"
+Content-Disposition: inline
+In-Reply-To: <b2aef484-71c9-5655-c1f8-ddde57687491@linaro.org>
+X-Cookie: HELLO, everybody, I'm a HUMAN!!
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.06.2023 12:56, Abel Vesa wrote:
-> Implement the GDSC specific genpd set_hwmode_dev callback in order to
-> switch the HW control on or off. For any GDSC that supports HW control
-> set this callback in order to allow its consumers to control it.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-This still does nothing to prevent the HW_CTRL state being changed in
-init, enable and disable functions.
 
-Konrad
->  drivers/clk/qcom/gdsc.c | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 5358e28122ab..9a04bf2e4379 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -314,6 +314,26 @@ static int gdsc_enable(struct generic_pm_domain *domain)
->  	return 0;
->  }
->  
-> +static int gdsc_set_hwmode_dev(struct generic_pm_domain *domain,
-> +			       struct device *dev, bool enable)
-> +{
-> +	int ret = gdsc_hwctrl(domain_to_gdsc(domain), enable);
-> +
-> +	if (ret)
-> +		goto out;
-> +
-> +	/*
-> +	 * Wait for the GDSC to go through a power down and
-> +	 * up cycle.  In case there is a status polling going on
-> +	 * before the power cycle is completed it might read an
-> +	 * wrong status value.
-> +	 */
-> +	udelay(1);
-> +
-> +out:
-> +	return ret;
-> +}
-> +
->  static int gdsc_disable(struct generic_pm_domain *domain)
->  {
->  	struct gdsc *sc = domain_to_gdsc(domain);
-> @@ -451,6 +471,8 @@ static int gdsc_init(struct gdsc *sc)
->  		sc->pd.power_off = gdsc_disable;
->  	if (!sc->pd.power_on)
->  		sc->pd.power_on = gdsc_enable;
-> +	if (sc->flags & HW_CTRL)
-> +		sc->pd.set_hwmode_dev = gdsc_set_hwmode_dev;
->  
->  	ret = pm_genpd_init(&sc->pd, NULL, !on);
->  	if (ret)
+--Iw1MrnpkR98xnaXf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Wed, Jun 28, 2023 at 05:30:15PM +0100, Srinivas Kandagatla wrote:
+> On 28/06/2023 12:53, Mark Brown wrote:
+
+> > Why not try a series of firmware names/locations generated using the
+> > identifying information for the card/system?  That way we don't have to
+
+> There is no consistent way with the current state of what is available in
+> linux-firmware and what drivers can generate from DMI, atleast with Qualcomm
+> SoCs.
+
+What's in linux-firmware now is not relevant, we can change that however
+we like.
+
+> Example for x13s has all the firmwares are under qcom/sc8280xp/LENOVO/21BX
+> for two models 21BX, 21BY.
+
+> However none of the DMI properties match exactly to 21BX or 21BY.
+
+> These have to be either derived from product name 21BYZ9SNUS or some other
+> dmi properties.
+
+> This logic is not going to be very reliable, can differ across platforms.
+
+But the goal here is to have platform specific firmwares so that's fine?
+So long as we come up with something stable and platform specific
+userspace will have the information to provide the firmware it likes,
+even if that does end up involving a lot of symlinks.
+
+> All of the qcom platforms use firmware-name from DT to get the full firmware
+> path with name.
+
+> I know this has scaling issues, but with the current state of things, its
+> the only option I see.
+
+When you say "all the qcom platforms" what do you mean, you're proposing
+a new property here?
+
+--Iw1MrnpkR98xnaXf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSccRMACgkQJNaLcl1U
+h9BRrwf8DRcauWHVO26sbyrZZ2DD0opRH8+s+6Omd6fL+MKJ8WXwMYpBKHxfHWFU
+2LchHvPwo+UVu/lj6qhkOM/B3RV8yt0VK1yMpjcKGEPqJWIQn6dH9lEIcnCnVmTU
+dIkoxX4fd0FjNthvyVBqjuzKHkHQsaanWH6S6zz2KtDRThROD6EuaJv4ODfOGYST
+55BSX3JIZ5rTOVhCsT9fMLCpK353CHOaqrO7xd4UdGDRoLYP8gNxIivjZPBBKnBy
+SEAtK3SVxhNBv0xRTYivVY0yvIBjf/XyVRuDrRlllCywc9vTZRDEYT6wXFfcyQ5z
+yS96KgbdGB1uTs/blOMFnzxh1peu+w==
+=/Cgk
+-----END PGP SIGNATURE-----
+
+--Iw1MrnpkR98xnaXf--
