@@ -2,205 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52E15740FD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:13:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 316D1740FDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 13:15:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbjF1LNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 07:13:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34076 "EHLO
+        id S231826AbjF1LPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 07:15:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjF1LNh (ORCPT
+        with ESMTP id S231824AbjF1LPL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 07:13:37 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CAD268F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:13:35 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b69ff54321so52359181fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:13:35 -0700 (PDT)
+        Wed, 28 Jun 2023 07:15:11 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31A9E5B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:15:09 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fb7acaa7a5so4420339e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 04:15:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687950813; x=1690542813;
+        d=linaro.org; s=google; t=1687950908; x=1690542908;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mxUjDgbY/jNz54AC4sl2RIErcdWqb2mUuJILzEKOlqM=;
-        b=oaZ8tyOpIUvX+cCLzgWdNoY8qftM92bZWnYXHa1SrK1QcQPPtAxjE4Sc7rnvK6yo5E
-         jFxzIDIPHv1HMLWARS/EKHXuxZ9f68yYnLRJDWTHzN5NpL4IVaLRwAMDZUFahEw9yNBB
-         EWOP7DSP9oo5THMy3XEr08CZ+YzzpleUdQtab5olUQClRuBtSh7ZoTxbcfLjuYG//vYO
-         73p49yKQ52BpY3azzO+z4MqRj4kmOVgaT/TV1auN55Gf01WwYad489xm+1Jgih7tx2ko
-         S+Oc+Qi2zgCMmNQOpQxYjjZdb5XIejDQ7sGOQ0/mEA7peRKHrJlaiexutyvC62/xMhc4
-         LiNQ==
+        bh=CRpDMlSOdjlWJCoFGMItwOJ9PaCH0eJrXnbwCOjqAQ8=;
+        b=B8aA7AwH5cdDsrTOl3ocBUZ75+yfTiKsMjDwcTuOXgFC/SClQlWhLdWIUHX5D91Y4j
+         uxYA2EwnDEIu1JepUhz9w+UprVffsoWk68PuHhXYYn71cj7l0D1tc3mFJVE30DN0i8IU
+         eSe+huJVNFOJ8FXoM11elPI4ZpIrjIOW7ANwcItSTjEsOJ/9R3liIak85ZbH/WQcuxJ7
+         /rOmyezc3KZAWmllAhzEn8Ai9vjvd74qhuMc7nrGKV+i8YfG7HJehub+ed9E8VkwQSeK
+         zNmOjkZxhiYssey1aDXKPL0wnhG17dAXajo06RaTnl79m4jF3y78KNam12PN7rhzPwMD
+         3gVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687950813; x=1690542813;
+        d=1e100.net; s=20221208; t=1687950908; x=1690542908;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mxUjDgbY/jNz54AC4sl2RIErcdWqb2mUuJILzEKOlqM=;
-        b=MnYOcrT5DCiz8NRUxekhH64AdoAmx9xtbCk464ncKdbMmdpy1C0fVp2SBuUYux/SPP
-         hsmo1B8qRwgbSaJUMOhZopWwRaFNUSi755bIt8mno4Qh7UkCSTcbb3+ArkpJbTcRw3k8
-         /I5t+QfKEuK2PuWXYDVswDMcLY/mm7sMfieAl3vGn6vT+RhSzmZ426cn1KKpq5/e9r13
-         SmRC5L0uTYfXy1ngL8naL+MHr5sbJ1n1zj9/8bAwBz63RRuMvZQWWCTfThCplVIDoaNO
-         gbWRTOsJQDBjl8816jdEfJlBwRRGuJ+f0ql3vpfc1z8LrP47HRej/r8PYF5PbSRjKx4i
-         ATtA==
-X-Gm-Message-State: AC+VfDw9FKI2GyTnBDYywyJV2mdTay/t00Re5RKnnNa1gDfDIPTTTMQu
-        9J+DOzBB7Q2qdKTjTs3yTA92Gw==
-X-Google-Smtp-Source: ACHHUZ7F1tJgooydEk02WTCZjUfRe7PKzXWFYzlX3R9hRMRIB9K95VGzrtXqoz4UshqPiLZ3IaK0qw==
-X-Received: by 2002:a2e:8e8a:0:b0:2b4:8239:b132 with SMTP id z10-20020a2e8e8a000000b002b48239b132mr18914904ljk.22.1687950813572;
-        Wed, 28 Jun 2023 04:13:33 -0700 (PDT)
+        bh=CRpDMlSOdjlWJCoFGMItwOJ9PaCH0eJrXnbwCOjqAQ8=;
+        b=OnKPMR5l+1BtOLdgw+nNnyfqCq+JFLULiclw2mY1MYWLXkIcVvxP4BA41vD+k+oZpy
+         3gl+iS8KPZoojk4jUmKTqJU47gxVVT9LmKsSzT818pnLRESpPoo1072Mxk9DcZn3yuYt
+         LlIzkWuf0vA+iHbqxK7WgfHGV2BpjCzLG1vp169HzUumKjMxHjhqi9nxZ5ryjSXngUlq
+         rZowrLFyi2OZG8bFrvU8eIP0+c006YoCRMTJK9OmFD9EJ32ISHqicNRCy5ZaaAUDpl5x
+         2iYE182WFThluee4besVGdmMWgbYbKJubhZSTdJmzd4TfvsUfu9qRcVhBkxIVIs0CwkT
+         ClNg==
+X-Gm-Message-State: AC+VfDzYZQ530A2Qpa7pMmovtU8Lwkbk04DdNcmYbugLHUm9kGRNKmff
+        kFgZ0yESLaItR6CD1xPwvbrpVQ==
+X-Google-Smtp-Source: ACHHUZ5BKDzsJlf5np3IFyFRLJfmAo1gnPmz2jehYTyTkbdTgjA5UsH8zb9DnsQxRJrN4GhaKrpImg==
+X-Received: by 2002:a05:6512:3d02:b0:4fb:7392:c72c with SMTP id d2-20020a0565123d0200b004fb7392c72cmr8117318lfv.57.1687950907897;
+        Wed, 28 Jun 2023 04:15:07 -0700 (PDT)
 Received: from [192.168.1.101] (abyj233.neoplus.adsl.tpnet.pl. [83.9.29.233])
-        by smtp.gmail.com with ESMTPSA id d19-20020a2e3313000000b002b1e6a78d3esm2165609ljc.82.2023.06.28.04.13.32
+        by smtp.gmail.com with ESMTPSA id b12-20020a056512024c00b004f87571a5c8sm1872343lfo.48.2023.06.28.04.15.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 04:13:33 -0700 (PDT)
-Message-ID: <2dfa5bb8-3189-29f2-a85f-3dd392b27141@linaro.org>
-Date:   Wed, 28 Jun 2023 13:13:31 +0200
+        Wed, 28 Jun 2023 04:15:07 -0700 (PDT)
+Message-ID: <b02789ca-b6a0-d972-7e9e-fdddd3d15538@linaro.org>
+Date:   Wed, 28 Jun 2023 13:15:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v4 5/6] soc: qcom: Add LLCC support for multi channel DDR
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: add explicit rtc
+ interrupt parent
 Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Patrick Wildt <patrick@blueri.se>, Johan Hovold <johan@kernel.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
- <20230623141806.13388-6-quic_kbajaj@quicinc.com>
- <b84b2bfc-6f8f-f50f-27b5-52a982ae30f2@linaro.org>
- <e80f0bd3-cf1e-dfed-bcc6-d22d4d934230@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Mark Kettenis <kettenis@openbsd.org>
+References: <20230627085306.6033-1-johan+linaro@kernel.org>
+ <20230627132406.GA5490@thinkpad> <ZJr_5JIqWSGq-E-T@hovoldconsulting.com>
+ <20230628052557.GB20477@thinkpad> <ZJvXZDBGBSQfeBdh@hovoldconsulting.com>
+ <ZJvv_bcum7nhrgrO@mone.fritz.box>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <e80f0bd3-cf1e-dfed-bcc6-d22d4d934230@quicinc.com>
+In-Reply-To: <ZJvv_bcum7nhrgrO@mone.fritz.box>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.06.2023 10:52, Komal Bajaj wrote:
-> 
-> 
-> On 6/23/2023 8:28 PM, Konrad Dybcio wrote:
->> On 23.06.2023 16:18, Komal Bajaj wrote:
->>> Add LLCC support for multi channel DDR configuration
->>> based on a feature register. Reading DDR channel
->>> confiuration uses nvmem framework, so select the
->>> dependency in Kconfig. Without this, there will be
->>> errors while building the driver with COMPILE_TEST only.
+On 28.06.2023 10:31, Patrick Wildt wrote:
+> On Wed, Jun 28, 2023 at 08:47:00AM +0200, Johan Hovold wrote:
+>> On Wed, Jun 28, 2023 at 10:55:57AM +0530, Manivannan Sadhasivam wrote:
+>>> On Tue, Jun 27, 2023 at 05:27:32PM +0200, Johan Hovold wrote:
+>>>> On Tue, Jun 27, 2023 at 06:54:06PM +0530, Manivannan Sadhasivam wrote:
+>>>>> On Tue, Jun 27, 2023 at 10:53:06AM +0200, Johan Hovold wrote:
+>>>>>> Unless explicitly specified the interrupt-parent property is inherited
+>>>>>> from the parent node on Linux even though this may not be in full
+>>>>>> compliance with the devicetree specification.
+>>>>>>
+>>>>>> Following commit 2d5cab9232ba ("arm64: dts: qcom: sc8280xp-pmics:
+>>>>>> Specify interrupt parent explicitly"), add an explicit interrupt parent
+>>>>>> also for the PMIC RTC node for the benefit of other operating systems
+>>>>>> which may be confused by this omission.
+>>>>>>
+>>>>>> Note that any such OS must still implement a fallback to the root
+>>>>>> interrupt domain as most devicetrees are written under the assumption
+>>>>>> that the interrupt parent is inherited.
+>>>>>>
+>>>>>> Reported-by: Patrick Wildt <patrick@blueri.se>
+>>>>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>>>>
+>>>>> It is good to encode this in the binding and fix other such instances.
+>>>>
+>>>> Not sure about that. Perhaps the spec should be updated to match reality
+>>>> instead... We have many more instances like this, even for this very
+>>>> SoC, but apparently OpenBSD or whatever OS needs this falls back to the
+>>>> root domain then.
+>>>>
 >>>
->>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->>> ---
->>>   drivers/soc/qcom/Kconfig     |  2 ++
->>>   drivers/soc/qcom/llcc-qcom.c | 33 ++++++++++++++++++++++++++++++---
->>>   2 files changed, 32 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->>> index a491718f8064..cc9ad41c63aa 100644
->>> --- a/drivers/soc/qcom/Kconfig
->>> +++ b/drivers/soc/qcom/Kconfig
->>> @@ -64,6 +64,8 @@ config QCOM_LLCC
->>>       tristate "Qualcomm Technologies, Inc. LLCC driver"
->>>       depends on ARCH_QCOM || COMPILE_TEST
->>>       select REGMAP_MMIO
->>> +    select NVMEM
->>> +    select QCOM_SCM
->>>       help
->>>         Qualcomm Technologies, Inc. platform specific
->>>         Last Level Cache Controller(LLCC) driver for platforms such as,
->>> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
->>> index 6cf373da5df9..3c29612da1c5 100644
->>> --- a/drivers/soc/qcom/llcc-qcom.c
->>> +++ b/drivers/soc/qcom/llcc-qcom.c
->>> @@ -12,6 +12,7 @@
->>>   #include <linux/kernel.h>
->>>   #include <linux/module.h>
->>>   #include <linux/mutex.h>
->>> +#include <linux/nvmem-consumer.h>
->>>   #include <linux/of.h>
->>>   #include <linux/of_device.h>
->>>   #include <linux/regmap.h>
->>> @@ -943,6 +944,19 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
->>>       return ret;
->>>   }
->>>   +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u8 *cfg_index)
->>> +{
->>> +    int ret;
->>> +
->>> +    ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
->>> +    if (ret == -ENOENT) {
->>> +        *cfg_index = 0;
->>> +        return 0;
->>> +    }
->>> +
->>> +    return ret;
->>> +}
->>> +
->>>   static int qcom_llcc_remove(struct platform_device *pdev)
->>>   {
->>>       /* Set the global pointer to a error code to avoid referencing it */
->>> @@ -975,11 +989,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->>>       struct device *dev = &pdev->dev;
->>>       int ret, i;
->>>       struct platform_device *llcc_edac;
->>> -    const struct qcom_llcc_config *cfg;
->>> +    const struct qcom_llcc_config *cfg, *entry;
->>>       const struct llcc_slice_config *llcc_cfg;
->>>       u32 sz;
->>> +    u8 cfg_index;
->>>       u32 version;
->>>       struct regmap *regmap;
->>> +    u32 num_entries = 0;
->>>         drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
->>>       if (!drv_data) {
->>> @@ -1040,8 +1056,19 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->>>         drv_data->version = version;
->>>   -    llcc_cfg = cfg[0]->sct_data;
->>> -    sz = cfg[0]->size;
->>> +    ret = qcom_llcc_get_cfg_index(pdev, &cfg_index);
->>> +    if (ret)
->>> +        goto err;
->>> +
+>>> Just because linux is doing it in a different way doesn't warrant an amendment
+>>> to the spec IMO.
 >>
->>> +    for (entry = cfg; entry->sct_data; entry++, num_entries++)
->>> +        ;
->>> +    if (cfg_index >= num_entries || cfg_index < 0) {
->> cfg_index is an unsigned variable, it can never be < 0
+>> My point is that it's apparently not just Linux as most devicetrees work
+>> this way at least for the root domain. And then it may be time to update
+>> the spec in some way.
 > 
-> Okay, will remove this condition.
+> I'm not sure about the point you're trying to make.  In OpenBSD's
+> implementation, which I think complies with the spec, for non-extended
+> interrupts we check the node's (or all its parents') interrupt-parent
+> property.
 > 
->>
->>> +        ret = -EINVAL;
->>> +        goto err;
->>> +    }
->>> +
->> if (cfg_index >= entry->size)? With that, you can also keep the config
->> entries non-0-terminated in the previous patch, saving a whole lot of RAM.
+> Technically the SPMI arbiter could define an interrupt-parent that
+> points to itself, because it's using interrupts-extended anyway to
+> point to the PDC.  But that would feel a bit stupid and not really
+> correct.  Alternatively each child node could have interrupt-parent.
 > 
-> entry->size represents the size of sct table whereas num_entries represents the number
-> of sct tables that we can have. And by this check we are validating the value read from the
-> fuse register. Am I understanding your comment correctly?
-Oh you're right.
-
-I still see room for improvement, though.
-
-For example, you duplicate assigning need_llcc_cfg, reg_offset
-and edac_reg_offset. You can add a new struct, like "sct_config" and add
-a pointer to sct_config[] & the length of this array to qcom_llcc_config.
+> That said, I understand the point that it might make sense to amend
+> the spec so that if a parent node is an interrupt-controller, that's
+> most probably interrupt parent, unless an interrupt-parent property
+> shows up before.
+> 
+> I would like to add that OpenBSD supports a number of SoCs for quite
+> some years and this is the first time I've hit an issue with interrupts
+> that were not designed in a way for the current spec to work.  That said
+> we obviously support quite fewer SoCs/boards in total compared to Linux.
+Linux does something out of spec here. We should either comply or amend
+the dt spec. Perhaps that's a question for Rob Herring.
 
 Konrad
-
 > 
->>
->> Konrad
->>> +    llcc_cfg = cfg[cfg_index].sct_data;
->>> +    sz = cfg[cfg_index].size;
->>>         for (i = 0; i < sz; i++)
->>>           if (llcc_cfg[i].slice_id > drv_data->max_slices)
-> 
+> Cheers,
+> Patrick
