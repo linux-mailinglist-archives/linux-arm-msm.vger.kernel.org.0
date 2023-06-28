@@ -2,104 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B51A740CA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 11:25:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1694D740B46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 10:25:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229450AbjF1JYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 05:24:51 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217]:34604 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234202AbjF1JEt (ORCPT
+        id S232847AbjF1IZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 04:25:22 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131]:26686 "EHLO
+        mx0b-0031df01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232236AbjF1ISq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 05:04:49 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F8C9612E7;
-        Wed, 28 Jun 2023 05:26:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C1BC433C8;
-        Wed, 28 Jun 2023 05:26:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687929970;
-        bh=IH62veiH3zIYuVJb9DYDwfF8k41UKiAEys/EwODuy9k=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nD3x2WtyHP7OAhdwhay6wu4zjy9AnccHAXQ0D+HQEePHiWumleGtjGZ70t7F2vYZE
-         sHCOMfeIw/pJatS+AHKUWHJ0caP9PBdYnRHnRNACIvGaYMOkQYWgYu9EjoExqda1y+
-         IAy/vcrebVwg/xhAhqTTHog76PI59TPllZ5NISPTqCABM7g+nuIblMbRYF/8z+NbfE
-         ESMbt1Dq4fWoy0VZma3zizVKAw/IdTVZt3zEbP/U+010MEUiP5h6RK/x1If6BQR4OC
-         3HEZSc+0jgbK75LNX/xYUIY25MrYXiQ4C3LuZ91uN6QjgOp+qi3RcsVQmntwegAEt6
-         qAoWxk6E2/LMA==
-Date:   Wed, 28 Jun 2023 10:55:57 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Patrick Wildt <patrick@blueri.se>
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: add explicit rtc
- interrupt parent
-Message-ID: <20230628052557.GB20477@thinkpad>
-References: <20230627085306.6033-1-johan+linaro@kernel.org>
- <20230627132406.GA5490@thinkpad>
- <ZJr_5JIqWSGq-E-T@hovoldconsulting.com>
+        Wed, 28 Jun 2023 04:18:46 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35S5XS79025324;
+        Wed, 28 Jun 2023 05:46:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4bHwza8Eduoh9dzsmAR+RGoikY/FB9VhaVuThdeOOXI=;
+ b=GFOT/5L8cIrsYubMz/luaD9gSPvEQ85Z1VnDml8g9RLQNmMR5TYfOKFXS6JzCKvW14Wz
+ c0kCEezRfHSvITbo0L6izYdNj3n7sOn5gCJUkK1Sg/58OLsr0cZbjHg7Yh6Mf1rbb3rp
+ 6VoVdipcuVPeqdw8m21SYgIL5ZLHOB1kVKpaliV6clRkpaw0viNBZNqFxKsHdcqKp7VR
+ U5vPkvvFSDDyHEucQQDJZFhA19a5D0pKrNCCYivhTS9nILuUcIpIe+cCLhSfImyhJt4l
+ hvYcNcEJVlQIdg5KAmSLSTnR5CQRgfzmbJlxeifme27i4nLB6U+hfPsG4Eo1ePo4QEuR Qg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgetpg0nd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Jun 2023 05:46:13 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35S5kBJU005524
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Jun 2023 05:46:12 GMT
+Received: from [10.50.9.120] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 27 Jun
+ 2023 22:46:07 -0700
+Message-ID: <7b0b3f88-9ecd-090d-de65-3d4779b64a91@quicinc.com>
+Date:   Wed, 28 Jun 2023 11:15:46 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZJr_5JIqWSGq-E-T@hovoldconsulting.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH V24 0/3] misc: Add driver support for Data Capture and
+ Compare unit(DCC)
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        "Rajendra Nayak" <quic_rjendra@quicinc.com>
+References: <cover.1687855361.git.quic_schowdhu@quicinc.com>
+ <2023062734-smuggling-bulldog-a46c@gregkh>
+Content-Language: en-US
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <2023062734-smuggling-bulldog-a46c@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pBZIzRLXA8B6fG9SkouqsZYZcdo7sfcZ
+X-Proofpoint-GUID: pBZIzRLXA8B6fG9SkouqsZYZcdo7sfcZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-28_02,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ mlxlogscore=846 spamscore=0 priorityscore=1501 suspectscore=0
+ clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306280050
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 27, 2023 at 05:27:32PM +0200, Johan Hovold wrote:
-> On Tue, Jun 27, 2023 at 06:54:06PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Jun 27, 2023 at 10:53:06AM +0200, Johan Hovold wrote:
-> > > Unless explicitly specified the interrupt-parent property is inherited
-> > > from the parent node on Linux even though this may not be in full
-> > > compliance with the devicetree specification.
-> > > 
-> > > Following commit 2d5cab9232ba ("arm64: dts: qcom: sc8280xp-pmics:
-> > > Specify interrupt parent explicitly"), add an explicit interrupt parent
-> > > also for the PMIC RTC node for the benefit of other operating systems
-> > > which may be confused by this omission.
-> > > 
-> > > Note that any such OS must still implement a fallback to the root
-> > > interrupt domain as most devicetrees are written under the assumption
-> > > that the interrupt parent is inherited.
-> > > 
-> > > Reported-by: Patrick Wildt <patrick@blueri.se>
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > 
-> > It is good to encode this in the binding and fix other such instances.
+
+
+On 6/27/2023 3:52 PM, Greg Kroah-Hartman wrote:
+> On Tue, Jun 27, 2023 at 03:19:23PM +0530, Souradeep Chowdhury wrote:
+>> Changes in v24
+>>
+>> *Implemented the comments in v23
 > 
-> Not sure about that. Perhaps the spec should be updated to match reality
-> instead... We have many more instances like this, even for this very
-> SoC, but apparently OpenBSD or whatever OS needs this falls back to the
-> root domain then.
+> That explains absolutely nothing about what changed at all.
 > 
-
-Just because linux is doing it in a different way doesn't warrant an amendment
-to the spec IMO.
-
-> Changing this for the rtc node for consistency after you changed the
-> others is a no-brainer, but not sure about trying to do this tree-wide.
-> We already have too many of these one-line DT cleanups...
+> What would you do if you got a patch series that had this as a change
+> list?  What do you expect us to do?
 > 
+> {sigh}
 
-I agree that this is going to be a one-line cleanup but someone has to do it.
-(not asking you to do since I also skipped it during 2d5cab9232ba). We can put
-it in the back burner.
+My apologies on missing out on the specifics.
 
-- Mani
+The main changes in this version are as follows:-
 
-> Johan
+* Updated the documentation of the structure dcc_config_entry
+* Renamed "nr_link_list" to "max_link_list"
+* Used u64 where applicable
+* Removed the locks from ready_read method and also dropped
+   the use of unlikely keyword.
 
--- 
-மணிவண்ணன் சதாசிவம்
+> 
