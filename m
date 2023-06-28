@@ -2,249 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A66E57406BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 01:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D76B740828
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 04:19:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230073AbjF0XCL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jun 2023 19:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36828 "EHLO
+        id S229953AbjF1CTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jun 2023 22:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbjF0XCK (ORCPT
+        with ESMTP id S229488AbjF1CTl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jun 2023 19:02:10 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB042DD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 16:02:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5E8256123D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jun 2023 23:02:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2699EC433C0;
-        Tue, 27 Jun 2023 23:02:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687906927;
-        bh=oCt8E9FdwcBRdKNVjRBeCmeZPnPu3bQxmmPSXo/NpQg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EfQV6D1VxvKG7age0lnwF27KmrbT3yV1xG5y7tmuwqangeTdGTF2R+ybkuzx356Va
-         w9FvCHRoFJNLxxCqoX19A07KYFicuOOWuz9IRGJbpIrEC/Eh4QeVlL5lZIgMLEkXzN
-         QuAYzUnD7CpCczUII2CSjhjqfUAyXSVt31BLFVIh5peoloY0zD0jBS7Q/6TqDUorar
-         8J8QKAxdQMoOy0GSBZmdlpNZFSrMj5YT5Jb/Fng2kUe7143nA1kiy9JPZWTsD6DLAk
-         R0tOwn1eXMjUwWhVpuHHzVvOnyzbS/XMbUz/IdzWfEMEFsQ6AuKNsF6d/Hc1bKJ8yZ
-         9QYIOj20hqurQ==
-Date:   Tue, 27 Jun 2023 16:06:00 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Adrien Thierry <athierry@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v3 2/3] phy: qcom-snps-femto-v2: add system sleep PM ops
-Message-ID: <ntxmsvjpxczku7qmb7xzo7fpo5r6daqrenu6qbunz3qzyctfa5@2itckk3ogvip>
-References: <20230622194021.80892-1-athierry@redhat.com>
- <20230622194021.80892-3-athierry@redhat.com>
- <52qapxj7sdearduro3iiqqpekrltc5zviwgq3gz4j4lne6cp5b@phikpenjras3>
- <ZJslqaHZqdizSGbc@fedora>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZJslqaHZqdizSGbc@fedora>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 27 Jun 2023 22:19:41 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E479C1BE9;
+        Tue, 27 Jun 2023 19:19:40 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35S1jEMw024612;
+        Wed, 28 Jun 2023 02:19:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=QgWMcPzFqNiXlDNtnl/5wBCYzDq0M3EAgNvmmatSSIo=;
+ b=ad8BspXShklU8O0dDFabdN8PRVCPguR9+Zc2+EUyxlvScOyQdmstb2Qr1qljAySXEOKz
+ n6IWNxSZvbD1YOaJhcXtrysEGHRxuLYKP7QL8qwsjVU4jz2GDpjYdfKYrYOfODFKqknQ
+ /zKL+6Hv+XrqWk/KgSp9x8bj8teB7Xj2cqTT7HhTXPoEgFg8DJ33eyQn1M87UxKiFYul
+ ezpDN9llWwAiBf05+qRFMVj/lrjup1Uj2RuHbH2M12C9tq1zaGm+X2AxWu3JDEGhWSky
+ 6S5lu9vlE9xUsyw6Ylnlpn0q3m57L+RASzB0jSMC4Rws2gkvXT8tqL6JpD+kKCDg+NDj og== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgbfsr1j9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Jun 2023 02:19:37 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 35S2JYxl023379;
+        Wed, 28 Jun 2023 02:19:34 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3rdsjkqpkk-1;
+        Wed, 28 Jun 2023 02:19:34 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35S2JYi2023365;
+        Wed, 28 Jun 2023 02:19:34 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 35S2JXv5023361;
+        Wed, 28 Jun 2023 02:19:34 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id 324CB4AA4; Wed, 28 Jun 2023 07:49:33 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v6 0/3] PCI: qcom: ep: Add basic interconnect support
+Date:   Wed, 28 Jun 2023 07:49:27 +0530
+Message-Id: <1687918770-28416-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: K-7N3sMDXgpjPdBcls83U6iog9SjsFSf
+X-Proofpoint-ORIG-GUID: K-7N3sMDXgpjPdBcls83U6iog9SjsFSf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-27_16,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=538
+ adultscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306280019
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 27, 2023 at 02:08:41PM -0400, Adrien Thierry wrote:
-> Hi Bjorn,
-> 
-> On Thu, Jun 22, 2023 at 02:43:07PM -0700, Bjorn Andersson wrote:
-> > On Thu, Jun 22, 2023 at 03:40:19PM -0400, Adrien Thierry wrote:
-> > > The downstream driver [1] implements set_suspend(), which deals with
-> > > both runtime and system sleep/resume. The upstream driver already has
-> > > runtime PM ops, so add the system sleep PM ops as well, reusing the same
-> > > code as the runtime PM ops.
-> > > 
-> > > [1] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c
-> > > 
-> > > Signed-off-by: Adrien Thierry <athierry@redhat.com>
-> > > ---
-> > >  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 18 ++++++++++--------
-> > >  1 file changed, 10 insertions(+), 8 deletions(-)
-> > > 
-> > > diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> > > index ce1d2f8b568a..378a5029f61e 100644
-> > > --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> > > +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> > > @@ -179,7 +179,7 @@ static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
-> > >  	readl_relaxed(base + offset);
-> > >  }
-> > >  
-> > > -static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
-> > > +static int qcom_snps_hsphy_do_suspend(struct qcom_snps_hsphy *hsphy)
-> > >  {
-> > >  	dev_dbg(&hsphy->phy->dev, "Suspend QCOM SNPS PHY\n");
-> > >  
-> > > @@ -199,7 +199,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
-> > >  	return 0;
-> > >  }
-> > >  
-> > > -static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
-> > > +static int qcom_snps_hsphy_do_resume(struct qcom_snps_hsphy *hsphy)
-> > >  {
-> > >  	int ret;
-> > >  
-> > > @@ -214,25 +214,25 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
-> > >  	return 0;
-> > >  }
-> > >  
-> > > -static int __maybe_unused qcom_snps_hsphy_runtime_suspend(struct device *dev)
-> > > +static int __maybe_unused qcom_snps_hsphy_suspend(struct device *dev)
-> > >  {
-> > >  	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
-> > >  
-> > >  	if (!hsphy->phy_initialized)
-> > >  		return 0;
-> > >  
-> > > -	qcom_snps_hsphy_suspend(hsphy);
-> > > +	qcom_snps_hsphy_do_suspend(hsphy);
-> > >  	return 0;
-> > >  }
-> > >  
-> > > -static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
-> > > +static int __maybe_unused qcom_snps_hsphy_resume(struct device *dev)
-> > >  {
-> > >  	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
-> > >  
-> > >  	if (!hsphy->phy_initialized)
-> > >  		return 0;
-> > >  
-> > > -	qcom_snps_hsphy_resume(hsphy);
-> > > +	qcom_snps_hsphy_do_resume(hsphy);
-> > >  	return 0;
-> > >  }
-> > >  
-> > > @@ -518,8 +518,10 @@ static const struct of_device_id qcom_snps_hsphy_of_match_table[] = {
-> > >  MODULE_DEVICE_TABLE(of, qcom_snps_hsphy_of_match_table);
-> > >  
-> > >  static const struct dev_pm_ops qcom_snps_hsphy_pm_ops = {
-> > > -	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_runtime_suspend,
-> > > -			   qcom_snps_hsphy_runtime_resume, NULL)
-> > > +	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_suspend,
-> > > +			   qcom_snps_hsphy_resume, NULL)
-> > > +	SET_SYSTEM_SLEEP_PM_OPS(qcom_snps_hsphy_suspend,
-> > > +				qcom_snps_hsphy_resume)
-> > 
-> > Won't this cause issues if you system suspend the device while it's
-> > already runtime suspended?
-> >
-> 
-> I'm not sure if it would cause issues, but after reflexion and discussion
-> with Andrew, I think it's unnecessary to add system PM ops in the femto
-> PHY driver. 
-> 
+Add basic support for managing "pcie-mem" interconnect path by setting
+a low constraint before enabling clocks and updating it after the link
+is up based on link speed and width the device got enumerated.
 
-Glad you looked further into this, I had a brief chat with Andrew and
-was building a similar understanding.
+changes from v5:
+	- addressed the comments by mani.
+changes from v4:
+        - rebased with linux-next.
+        - Added comments as suggested by mani.
+        - removed the arm: dts: qcom: sdx55: Add interconnect path
+          as that patch is already applied.
+changes from v3:
+        - ran make DT_CHECKER_FLAGS=-m dt_binding_check and fixed
+         errors.
+        - Added macros in the qcom ep driver patch as suggested by Dmitry
+changes from v2:
+        - changed the logic for getting speed and width as suggested
+         by bjorn.
+        - fixed compilation errors.
 
-> In the dwc3 core, both system and runtime suspend end up calling
-> dwc3_suspend_common(). From there, what happens depends on the USB mode
-> and whether the controller is entering system or runtime suspend.
-> 
-> HOST mode:
->   (1) system suspend on a non-wakeup controller
-> 
->   The [1] if branch is taken. dwc3_core_exit() is called, which ends up
->   calling phy_power_off() and phy_exit(). Those two functions decrease the
->   PM runtime count at some point, so they will trigger the PHY runtime sleep
->   (assuming the count is right).
-> 
->   (2) runtime suspend / system suspend on a wakeup controller  
-> 
->   The [1] branch is not taken. dwc3_suspend_common() calls
->   phy_pm_runtime_put_sync(dwc->usb2_generic_phy). Assuming the ref count is
->   right, the PHY runtime suspend op is called.
-> 
-> DEVICE mode:
-> 
->   dwc3_core_exit() is called on both runtime and system sleep
->   unless the controller is already runtime suspended.
-> 
-> OTG mode:
->   (1) system suspend : dwc3_core_exit() is called
-> 
->   (2) runtime suspend : do nothing
-> 
-> With that in mind:
-> 
-> 1) Does the PHY need to implement system sleep callbacks? 
-> 
-> dwc3 core system sleep callback will already runtime suspend the PHY, and
-> also call phy_power_off() and phy_exit() for non-wakeup controllers. So,
-> adding system PM ops to the femto PHY driver would be redundant.
-> 
 
-It seems these decisions must come from the controller, in order to
-handle the differences between a wakeup capable port and not. So I'm
-thinking that it's correct that it should not implement this.
+Krishna chaitanya chundru (3):
+  dt-bindings: PCI: qcom: ep: Add interconnects path
+  arm: dts: qcom: sdx65: Add PCIe interconnect path
+  PCI: qcom-ep: Add ICC bandwidth voting support
 
-> 2) Should the ref_clk be disabled for runtime sleep / wakeup controller
-> system sleep, or only for non-wakeup controller system sleep?
-> 
-> I'm a little hesitant here. In my submission I'm disabling it in both, but
-> looking at the downstream code you provided, it seems it's only disabled
-> for system sleep. ref_clk is disabled by phy->set_suspend() [2] which IIUC
-> is only called in the system sleep path through dwc3_core_exit() [3].
-> Moreover, in host mode the upstream code seems to make a distinction
-> between 1) runtime sleep / system sleep for wakeup controller, and 2)
-> system sleep for non-wakeup controller where phy_power_off() and
-> phy_exit() are only called in the latter. This suggests the PHY is not
-> supposed to be in a fully powered-off state for runtime sleep and system
-> sleep for wakeup controller. So, it's possible the ref_clk should be kept
-> enabled in this case. What is your take on this? I could only disable
-> ref_clk in the femto phy->exit() callback to keep ref_clk enabled during
-> runtime sleep and make sure it's only disabled on system sleep for
-> non-wakeup controller.
-> 
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 13 ++++
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |  3 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          | 72 +++++++++++++++++++++-
+ 3 files changed, 87 insertions(+), 1 deletion(-)
 
-I suggested the same to Andrew, in our chat. Keeping sufficient
-resources on, to allow the system to be woken up again by a USB device
-is needed if requested. As such the handling of ref must differ between
-the two cases.
+-- 
+2.7.4
 
-It still looks a bit strange to me, having the runtime PM callbacks
-prepare for wakeup from system suspend...
-
-> Hoping I'm not missing anything here.
-> 
-
-I think you managed to capture it all. Sorry for leading you down this
-incorrect path.
-
-Regards,
-Bjorn
-
-> Best,
-> 
-> Adrien
-> 
-> [1] https://elixir.bootlin.com/linux/latest/source/drivers/usb/dwc3/core.c#L1988
-> [2] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c#L524
-> [3] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/dwc3/core.c#L1915
-> 
-> > Regards,
-> > Bjorn
-> > 
-> > >  };
-> > >  
-> > >  static void qcom_snps_hsphy_override_param_update_val(
-> > > -- 
-> > > 2.40.1
-> > > 
-> 
