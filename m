@@ -2,107 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4A5C7417CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 20:11:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF8AA741897
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 21:06:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229622AbjF1SLA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 14:11:00 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217]:48202 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbjF1SK5 (ORCPT
+        id S231865AbjF1TFc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 15:05:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54936 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231460AbjF1TFN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 14:10:57 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 029A161374;
-        Wed, 28 Jun 2023 18:10:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A2AC433C8;
-        Wed, 28 Jun 2023 18:10:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687975856;
-        bh=S8iFMTRFi4myYQxAkEhyB53zlJci8Gm8CA/jvNuBY2s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cPTY3bX1lk4GxRiSxlodx+ugOaPB3xpc1AmBC6B9gILVTJY8pSBfrCaCQ9rQ/Fv8y
-         pmWZm8dao4+74szOO2hgfa6SsbzICms/cgnhZ8JNoK166T+Y3D0SRev4qLf7OwAd54
-         0gnOc9wTbeW3k7JIfSTn6veo35Qq4EIvjub+CoAWLkstUS3XubjZjPClmKATV5psyB
-         DhUapJ8FeaXOPdB7oMzpfa7FY/vqDW8k4s+lWdD3/k2ecx6FuQ2WbgN4LqfDK+yAF8
-         Kh1wKQkKPg9Xyf/ZrdcT2SXk06B2HOxfY0qoj/8fOMtezSZUJnCR7NvTp8DnH2I8PS
-         TO9hWPdCw5uvA==
-Date:   Wed, 28 Jun 2023 19:10:50 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, johan+linaro@kernel.org,
-        perex@perex.cz, tiwai@suse.com, lgirdwood@gmail.com,
-        ckeepax@opensource.cirrus.com, kuninori.morimoto.gx@renesas.com,
-        linux-kernel@vger.kernel.org, pierre-louis.bossart@linux.intel.com,
-        alsa-devel@alsa-project.org
-Subject: Re: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware
- name from DT
-Message-ID: <c377aefe-2678-4ba7-96b3-2186e8f3f1b4@sirena.org.uk>
-References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
- <20230628102621.15016-3-srinivas.kandagatla@linaro.org>
- <f71c8d2b-d5f4-42bb-932f-5b9ec6117ffc@sirena.org.uk>
- <73dce263-bee6-554f-9eb6-af4aa7badab1@linaro.org>
+        Wed, 28 Jun 2023 15:05:13 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 934391BD4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 12:05:12 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b69ed7d050so2530771fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 12:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687979111; x=1690571111;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=J5YZzdJQyh4eu5fAj6xameoZPW5lmqQSZHtsSrZxy+c=;
+        b=bApBKeIV6L+P7bQQSgdCs8KOomZuQ+P1vVzFbdcBYF5YrlqR1gQpUbDKW+svoxZM5u
+         ZMI1O2A432MkFzaG9yEcIzwtnDdz7yUanUYRGGth1TcETQ9nw9TCowrr7KBXzjA4LaTT
+         5a9wa4Mx67QZRyBtXHn535wSfV3hKRjiKJ8O6R7VMaIhU8OrO+kbE1JHkq26aLgK220A
+         SlOWKQVRIMGY/BBPpmz2qqLFTj6aG1IUWc/dmxZA5aT9ZSYr01DHDkK0pZbIM0b67bCb
+         G1p8PRTStaNe7WCI/CTPdXo6fR7CNQGEg7Na2JMDre/uMZseZJCfO5KoSO4gZyFtudW2
+         uK0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687979111; x=1690571111;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J5YZzdJQyh4eu5fAj6xameoZPW5lmqQSZHtsSrZxy+c=;
+        b=KHFSGeCM2zsdqpf6g7Ypw6lcbMXzg2IgrHjWlRLeGa/zUSf93iSBpUS2feHnIp1G5d
+         2rd50BHmunPgGGpEuXE/QKv8XKM0paPEQVH0w46Otnfv7rNyekwUQAwKQSNwNtjnkc6j
+         jJezwWI/t6Usjuwp9jYUTpXKgFTNxsoeAbaRZ9nYtL+x+CVtGvJkvm9CJDtaZqpEIC08
+         9JGOh/tr1KNugoCh6J7hbC+XNWJQ7lKN/VnpgqPhwbOgaWkvikf7CJIxowVITqmOg+y4
+         Jdo2TKd1Rlk8gFTpXNK58Zb+dRhY+CD63hydD1iv/yGbfqHpdjXgoMiJH5+T9gB2n0ro
+         hfsg==
+X-Gm-Message-State: AC+VfDzlfrEy8mUNPNC0iPhFtOrbL69jQEXi9Df8CsE6QjpMHRVaPHHn
+        MxR+ndYjI2QMlBe6L16l7r/5BXcGMTM8q7wfaEg=
+X-Google-Smtp-Source: ACHHUZ4bn9WdqZwlwgpaohN+JH/FskgQr6To+oDImxYoZ8FAbp2paEayyppRUM7Xb7j7v5znECW0yA==
+X-Received: by 2002:a2e:900a:0:b0:2b4:6195:bb26 with SMTP id h10-20020a2e900a000000b002b46195bb26mr22432303ljg.25.1687979110797;
+        Wed, 28 Jun 2023 12:05:10 -0700 (PDT)
+Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
+        by smtp.gmail.com with ESMTPSA id t6-20020a2e9c46000000b002b6a85a7292sm1102616ljj.19.2023.06.28.12.05.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jun 2023 12:05:09 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Wed, 28 Jun 2023 21:05:08 +0200
+Subject: [PATCH] drm/msm/adreno: Assign revn to A635
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="odJ0u5EEv+hukUFR"
-Content-Disposition: inline
-In-Reply-To: <73dce263-bee6-554f-9eb6-af4aa7badab1@linaro.org>
-X-Cookie: HELLO, everybody, I'm a HUMAN!!
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230628-topic-a635-v1-1-5056e09c08fb@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGOEnGQC/x2NQQqDMBAAvyJ77oJJrNp+RTwk221dkCiJihD8u
+ 0uPMzBMgcxJOMO7KpD4kCxLVDCPCmjy8ccoH2WwtXV1a3vcllUIfeueaIIjS6++a0wHGgSfGUP
+ ykSZN4j7PKtfEXzn/h2G8rhsjRnTzcQAAAA==
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687979108; l=1049;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=yOF2V2vC/eERQ5I69KrybMFDlBclITTn/+Bht2rKkYY=;
+ b=T9f2BftsBHUMn+H55F1KeMb0BOE9TuUoOA3jtNlB1lxYTYSv97uLuQMLHUS9T4OyQkR1hib9J
+ t+Eg5u6zA8ICDEQPx9CoIlDczwxnK718qaXUbFdux/m3XE4IGEwzpIS
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Recently, a WARN_ON() was introduced to ensure that revn is filled before
+adreno_is_aXYZ is called. This however doesn't work very well when revn is
+0 by design (such as for A635). Fill it in as a stopgap solution for
+-fixes.
 
---odJ0u5EEv+hukUFR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-On Wed, Jun 28, 2023 at 07:57:38PM +0300, Dmitry Baryshkov wrote:
-> On 28/06/2023 14:53, Mark Brown wrote:
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index cb94cfd137a8..8ea7eae9fc52 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -345,6 +345,7 @@ static const struct adreno_info gpulist[] = {
+ 		.address_space_size = SZ_16G,
+ 	}, {
+ 		.rev = ADRENO_REV(6, 3, 5, ANY_ID),
++		.revn = 635,
+ 		.fw = {
+ 			[ADRENO_FW_SQE] = "a660_sqe.fw",
+ 			[ADRENO_FW_GMU] = "a660_gmu.bin",
 
-> > Why not try a series of firmware names/locations generated using the
-> > identifying information for the card/system?  That way we don't have to
-> > put a filename in the ABI which has fun scaling issues.
+---
+base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
+change-id: 20230628-topic-a635-1b3c2c987417
 
-> This is what was done by Srini in the initial (currently committed) version.
-> Unfortunately this easily results in the audio topology being separated from
-> the rest of the platform-specific firmware. For example, for the mentioned
-> X13s we already have a subdir under /lib/firmware/qcom and several
-> firmware-name DT properties pointing to the files in that subdir:
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-> $ grep firmware-name
-> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> 		firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn";
-> 	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
-> 	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn";
-
-> This is not unique to the X13s, other Qualcomm boards also use full paths.
-
-If the goal here is to put all the firmwares for a given board in a
-single place surely it would be better to factor this all out of the
-individual drivers so that they ask some helper for a directory to use
-for firmware?  Adding these device specific firmware node properties
-doesn't seem to follow.
-
---odJ0u5EEv+hukUFR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmScd6kACgkQJNaLcl1U
-h9CVewf/VRExNVrsgkLPa3cwHd22uiab7/9Pce7RpfyTmoA1zyYUbQvPZOsJgNZ+
-0Q5a15Cw4YMXpdQIE37xVukcWttL5myFf8ycUSU45WAS5+YLuDa/RcuGFP5/IEZm
-Lcq3wfX7zG0mxhE9Kj2E+k/rKieUPDbHGBfSikKrw8GL9jB8EZNG3tk7PXRLXpeJ
-FAN+BRcSuZTjKInCR0ErUSgbMqNXHinbdxC8VCtwDZd7U6R0YT9xaKlVzMf+aK0K
-+8ZptUCFFDR9THaCOXj3ujwF54WycL5Wo+9jIoPsVF92RTQcMwtzGmM48K6WY8tz
-86G2gU01b89cvJ2vMPpdqZqR/UxLig==
-=8mP1
------END PGP SIGNATURE-----
-
---odJ0u5EEv+hukUFR--
