@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 373C7741354
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 16:04:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91056741352
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 16:04:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232438AbjF1ODL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 10:03:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51678 "EHLO
+        id S232473AbjF1ODR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 10:03:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232535AbjF1OBr (ORCPT
+        with ESMTP id S232369AbjF1OBu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 10:01:47 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B062D72
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 07:00:59 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f8775126d3so8344655e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 07:00:59 -0700 (PDT)
+        Wed, 28 Jun 2023 10:01:50 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CB830D3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 07:01:01 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb960b7c9dso515675e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 07:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687960858; x=1690552858;
+        d=linaro.org; s=google; t=1687960859; x=1690552859;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8b95YyrPSuupI481LxGuPH0W0Ev0Q0xP5dP+IZGpzvg=;
-        b=GXyD7n9AIosDIZkXLIVkkwaxQn6nxHqixAueYldTJN1tISQFqyIYcH57YvtWYC3kbK
-         JFNXWiIvXhU2dOZ2Ro87B79Lm4eXi5XMAwt4MQ+CUGzXRu9IwgF4H2KG1EY9E9ARDMvC
-         ifqfBiUOP8HIGfUq+iqpkIdGu/Nc7jFfGufDRPNRoWzmNi6C6lyLEh/6jmdbJQsIubSo
-         mvCKss89EsyLvDBAmgTDjmDWvdjjMHsGd3CuzmkCRly75D4iCbkLPnsnA6mMh5/EG/Es
-         RutCpk8IvwZsgoBdcihFhi3x/HjM2I9j8pa54xx/2iZNZm6Y92AkLN8F/ysKYEqKLeyj
-         15hQ==
+        bh=OqEu13zU8yL/k2MIrt/7DelQ5S48Y7ED1AMrbjwM43Y=;
+        b=nJAIiKuBS93A+kvHakGLMPDVP8j1gnHcuI+Xk1F1DhSvsHjTRgeF/oTMGQtZpHE38y
+         5s5e85igrMv71jxvnDWxIHfMrPXjAOoU8nFT6/aA8YajJFxZdNIHDySdSQ3GWqhJO8wi
+         2NlpmI85/gm2uU+9i1JJbQkCvTHmI1dvyo5qYdaol9FOKOD+EIuv5AT+fMU7KUkD6bow
+         ADd1fvEMhmEW09b2jEDFetJwxeNVB0iXWO6iHJvwvyE26qfkQieGF/bXkIX7uW+r2rtS
+         b9dLEvh8kCkcKob7aH8Uvvo1XPXIVe9EoBQfzLsip/4GBWwOHBGrvlo/JEdCQnweTtQH
+         5DEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687960858; x=1690552858;
+        d=1e100.net; s=20221208; t=1687960859; x=1690552859;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8b95YyrPSuupI481LxGuPH0W0Ev0Q0xP5dP+IZGpzvg=;
-        b=WQzqJq7VXvNhgluJ5NWv2++9DdqkXdpVE2ZT/BeFS2jfiXrI90Ea8E94jOa0vGBI9v
-         /sDj1nLzYLAIZ8ZNKVX/kXPj0ae4UvBhDEoCmgFNDJRgh4mmvs6m5s6DLcHu/M4X4fdI
-         tA4B7AHkSw+8/3evpqlBAHLJ5bqXFkTXT+X3BSRt0Zq/W4nRrGITR0qbgmopsE3uWKoj
-         Eb/Eirgjsg1DtyVXTSWSVbY1WjQ+A1jbVEi7KAhKW8lMaQo9bhSB0mtTL8SYVdcLz6/0
-         Vj+SimAi3NHasyyOYRnuek8qd4Mlg4a2B29oB0/cBJ1WRVXyOzSre74wax2/P4nrbGuY
-         x3HA==
-X-Gm-Message-State: AC+VfDyZfPYM0BxUKVIF1pM6RDRnatdw+bQqzOzzKdQq1YHZg6YgZkNF
-        UwwosZH+fdEcdB8s4LS8FErrZQ==
-X-Google-Smtp-Source: ACHHUZ4J3wZQQ2+X+QSFmCRsHtuDPTJv44gypfwW4A8nwbuo8MrNX/D1zWkfitegHfE4OMnkBulkDQ==
-X-Received: by 2002:a19:6445:0:b0:4f8:74b5:b4ec with SMTP id b5-20020a196445000000b004f874b5b4ecmr19101455lfj.41.1687960857816;
-        Wed, 28 Jun 2023 07:00:57 -0700 (PDT)
+        bh=OqEu13zU8yL/k2MIrt/7DelQ5S48Y7ED1AMrbjwM43Y=;
+        b=G+5w/29tIG7fnevgyVUtG0UotZMrLhPfgW5MRhJLe3Ws7M1mAOfCoFtg8zAy/x+EyM
+         rCJjGWMkb5AUL6PZllCqDdD+2/MRa0OrthN8r/iSKoGqL7YR26pmvCmTgt82I1SIBirs
+         3+hbGQDKzDIiVFxNBn9zLXRdLlvSXMEpdUxvDqO8Ok4EYhT1AMgvhbND+3ooLM7A+5lN
+         EfLJIMWxULl+bGM9qK0HW4oqUc0txucLe26theQx5OSj+FsjUOLJr27GrHquZehzY+Sw
+         sK8m15zL1S84ZEYdupjNmLC1XgJ99UPi5nBOuIS/+AY6hHIpDTDUOwMonI7YPfCpI40w
+         wCFw==
+X-Gm-Message-State: AC+VfDwN7A9P5HrJ45RRcIvPnvZU2EBq7U2xo7g7zok3BUDOkboI1am2
+        48A0t4cPCTSjrG5DXd71kFi51A==
+X-Google-Smtp-Source: ACHHUZ5BhriSAHojjwk3P2cJXs2qF0Efo/9jFLbw7JcXEo8bsSSdsqklP91mxTS5BFIaiDhIMh6Rzg==
+X-Received: by 2002:a05:6512:ace:b0:4fb:8bad:1cdf with SMTP id n14-20020a0565120ace00b004fb8bad1cdfmr2863659lfu.42.1687960859575;
+        Wed, 28 Jun 2023 07:00:59 -0700 (PDT)
 Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id w2-20020a05651204c200b004f8586ab633sm1941359lfq.279.2023.06.28.07.00.55
+        by smtp.gmail.com with ESMTPSA id w2-20020a05651204c200b004f8586ab633sm1941359lfq.279.2023.06.28.07.00.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jun 2023 07:00:56 -0700 (PDT)
+        Wed, 28 Jun 2023 07:00:59 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 28 Jun 2023 16:00:46 +0200
-Subject: [PATCH v12 07/10] soc: qcom: cpr: Use u64 for frequency
+Date:   Wed, 28 Jun 2023 16:00:47 +0200
+Subject: [PATCH v12 08/10] soc: qcom: cpr-common: Add threads support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230217-topic-cpr3h-v12-7-1a4d050e1e67@linaro.org>
+Message-Id: <20230217-topic-cpr3h-v12-8-1a4d050e1e67@linaro.org>
 References: <20230217-topic-cpr3h-v12-0-1a4d050e1e67@linaro.org>
 In-Reply-To: <20230217-topic-cpr3h-v12-0-1a4d050e1e67@linaro.org>
 To:     AngeloGioacchino Del Regno 
@@ -75,13 +75,15 @@ Cc:     Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-pm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687960842; l=4633;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687960842; l=6300;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=PWlHXLBc6eYCIQOuwoDLOgk0BhchBWn8dDGTg2w8H7k=;
- b=0JGVm89AazNICKETJE/s/6QEfJQZxPuyLNjwGmBRqeDUB7YMT54OCVG2DBkRbJSa/IKpkdXDG
- sJwes9YByc7D03jP1ZTCHnRsUzgbIxYUFfDDYlOWc3uHwtWjuR9j3qn
+ bh=AmdIHRQt1IfT1bayaE8b01VCVDroKAlvOlp4kw5cvQM=;
+ b=FYKp7AAyjoGqHhecfuZyCDgIFWf0NWf6sV5qWWbi6BzZzhB6dc8ZgA5hLLINtqNzF/AKW3QU+
+ eqwpvTK239gDzxinCj3AuG4uVyQhp61m8yU0PPq9UPmEByfDf/zZZqO
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,140 +96,179 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-32 bits is not enough for over-2.changeGHz frequencies. Move all variables
-that operate on Hz to u64 to avoid overflows.
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
+Add support for parsing per-CPR-thread data in preparation for introducing
+CPR3+ support.
+
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+[Konrad: separate this patch out of a bigger one]
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/soc/qcom/cpr-common.c | 13 +++++++------
- drivers/soc/qcom/cpr-common.h |  9 ++++-----
- drivers/soc/qcom/cpr.c        |  8 ++++----
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ drivers/soc/qcom/cpr-common.c | 42 +++++++++++++++++++++++++-----------------
+ drivers/soc/qcom/cpr-common.h |  8 ++++++--
+ drivers/soc/qcom/cpr.c        |  4 ++--
+ 3 files changed, 33 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/soc/qcom/cpr-common.c b/drivers/soc/qcom/cpr-common.c
-index 44c681bbbf13..3e3a4a61cfde 100644
+index 3e3a4a61cfde..9001dccd4d95 100644
 --- a/drivers/soc/qcom/cpr-common.c
 +++ b/drivers/soc/qcom/cpr-common.c
-@@ -218,7 +218,7 @@ unsigned int cpr_get_fuse_corner(struct dev_pm_opp *opp)
+@@ -73,35 +73,42 @@ static int cpr_read_fuse_uV(int init_v_width, int step_size_uV, int ref_uV,
+ 	return DIV_ROUND_UP(uV, step_volt) * step_volt;
  }
- EXPORT_SYMBOL_GPL(cpr_get_fuse_corner);
  
--unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
-+u64 cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
- 				     struct device *cpu_dev)
+-const struct cpr_fuse *cpr_get_fuses(struct device *dev,
++const struct cpr_fuse *cpr_get_fuses(struct device *dev, int tid,
+ 				     unsigned int num_fuse_corners)
  {
- 	u64 rate = 0;
-@@ -250,7 +250,7 @@ unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
- out_ref:
- 	of_node_put(desc_np);
+ 	struct cpr_fuse *fuses;
+-	int i;
++	char cpr_name[11]; /* length of "cpr" + length of UINT_MAX (7) + \0 */
++	unsigned int i;
  
--	return (unsigned long) rate;
-+	return rate;
+ 	fuses = devm_kcalloc(dev, num_fuse_corners, sizeof(*fuses), GFP_KERNEL);
+ 	if (!fuses)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	/* Support legacy bindings */
++	if (tid == UINT_MAX)
++		snprintf(cpr_name, sizeof(cpr_name), "cpr");
++	else
++		snprintf(cpr_name, sizeof(cpr_name), "cpr%d", tid);
++
+ 	for (i = 0; i < num_fuse_corners; i++) {
+-		char tbuf[32];
++		char tbuf[50];
+ 
+-		snprintf(tbuf, 32, "cpr_ring_osc%d", i + 1);
++		snprintf(tbuf, sizeof(tbuf), "%s_ring_osc%d", cpr_name, i + 1);
+ 		fuses[i].ring_osc = devm_kstrdup(dev, tbuf, GFP_KERNEL);
+ 		if (!fuses[i].ring_osc)
+ 			return ERR_PTR(-ENOMEM);
+ 
+-		snprintf(tbuf, 32, "cpr_init_voltage%d", i + 1);
++		snprintf(tbuf, sizeof(tbuf), "%s_init_voltage%d", cpr_name, i + 1);
+ 		fuses[i].init_voltage = devm_kstrdup(dev, tbuf, GFP_KERNEL);
+ 		if (!fuses[i].init_voltage)
+ 			return ERR_PTR(-ENOMEM);
+ 
+-		snprintf(tbuf, 32, "cpr_quotient%d", i + 1);
++		snprintf(tbuf, sizeof(tbuf), "%s_quotient%d", cpr_name, i + 1);
+ 		fuses[i].quotient = devm_kstrdup(dev, tbuf, GFP_KERNEL);
+ 		if (!fuses[i].quotient)
+ 			return ERR_PTR(-ENOMEM);
+ 
+-		snprintf(tbuf, 32, "cpr_quotient_offset%d", i + 1);
++		snprintf(tbuf, sizeof(tbuf), "%s_quotient_offset%d", cpr_name, i + 1);
+ 		fuses[i].quotient_offset = devm_kstrdup(dev, tbuf, GFP_KERNEL);
+ 		if (!fuses[i].quotient_offset)
+ 			return ERR_PTR(-ENOMEM);
+@@ -202,15 +209,15 @@ int cpr_find_initial_corner(struct device *dev, struct clk *cpu_clk,
  }
- EXPORT_SYMBOL_GPL(cpr_get_opp_hz_for_req);
+ EXPORT_SYMBOL_GPL(cpr_find_initial_corner);
  
-@@ -260,7 +260,7 @@ int cpr_calculate_scaling(struct device *dev,
- 			  const struct corner *corner)
+-unsigned int cpr_get_fuse_corner(struct dev_pm_opp *opp)
++unsigned int cpr_get_fuse_corner(struct dev_pm_opp *opp, u32 tid)
  {
- 	u32 quot_diff = 0;
--	unsigned long freq_diff;
-+	u64 freq_diff;
- 	int scaling;
- 	const struct fuse_corner *fuse, *prev_fuse;
- 	int ret;
-@@ -280,8 +280,9 @@ int cpr_calculate_scaling(struct device *dev,
- 	}
+ 	struct device_node *np;
+ 	unsigned int fuse_corner = 0;
  
- 	freq_diff = fuse->max_freq - prev_fuse->max_freq;
--	freq_diff /= 1000000; /* Convert to MHz */
--	scaling = 1000 * quot_diff / freq_diff;
-+	freq_diff = div_u64(freq_diff, 1000000); /* Convert to MHz */
-+	scaling = 1000 * quot_diff;
-+	do_div(scaling, freq_diff);
- 	return min(scaling, fdata->max_quot_scale);
- }
- EXPORT_SYMBOL_GPL(cpr_calculate_scaling);
-@@ -289,7 +290,7 @@ EXPORT_SYMBOL_GPL(cpr_calculate_scaling);
- int cpr_interpolate(const struct corner *corner, int step_volt,
- 		    const struct fuse_corner_data *fdata)
- {
--	unsigned long f_high, f_low, f_diff;
-+	u64 f_high, f_low, f_diff;
- 	int uV_high, uV_low, uV;
- 	u64 temp, temp_limit;
- 	const struct fuse_corner *fuse, *prev_fuse;
+ 	np = dev_pm_opp_get_of_node(opp);
+-	if (of_property_read_u32(np, "qcom,opp-fuse-level", &fuse_corner))
+-		pr_err("%s: missing 'qcom,opp-fuse-level' property\n",
+-		       __func__);
++	if (of_property_read_u32_index(np, "qcom,opp-fuse-level", tid, &fuse_corner))
++		pr_err("%s: missing 'qcom,opp-fuse-level[%u]' property\n",
++		       __func__, tid);
+ 
+ 	of_node_put(np);
+ 
+@@ -235,15 +242,16 @@ u64 cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
+ 	if (!ref_np)
+ 		goto out_ref;
+ 
+-	do {
+-		of_node_put(child_req_np);
+-		child_np = of_get_next_available_child(desc_np, child_np);
++	for_each_available_child_of_node(desc_np, child_np) {
+ 		child_req_np = of_parse_phandle(child_np, "required-opps", 0);
+-	} while (child_np && child_req_np != ref_np);
+ 
+-	if (child_np && child_req_np == ref_np)
+-		of_property_read_u64(child_np, "opp-hz", &rate);
++		if (child_np && child_req_np == ref_np) {
++			of_property_read_u64(child_np, "opp-hz", &rate);
++			goto out;
++		}
++	}
+ 
++out:
+ 	of_node_put(child_req_np);
+ 	of_node_put(child_np);
+ 	of_node_put(ref_np);
 diff --git a/drivers/soc/qcom/cpr-common.h b/drivers/soc/qcom/cpr-common.h
-index 0aa227617d2f..1b2fa344eb09 100644
+index 1b2fa344eb09..2c5bb81ab713 100644
 --- a/drivers/soc/qcom/cpr-common.h
 +++ b/drivers/soc/qcom/cpr-common.h
-@@ -42,7 +42,7 @@ struct fuse_corner {
- 	int step_quot;
- 	const struct reg_sequence *accs;
- 	int num_accs;
--	unsigned long max_freq;
-+	u64 max_freq;
- 	u8 ring_osc_idx;
- };
- 
-@@ -54,13 +54,13 @@ struct corner {
- 	int quot_adjust;
+@@ -22,6 +22,9 @@ struct fuse_corner_data {
+ 	int ref_uV;
+ 	int max_uV;
+ 	int min_uV;
++	int range_uV;
++	/* fuse volt: closed/open loop */
++	int volt_cloop_adjust;
+ 	int volt_oloop_adjust;
+ 	int max_volt_scale;
+ 	int max_quot_scale;
+@@ -55,6 +58,7 @@ struct corner {
  	u32 save_ctl;
  	u32 save_irq;
--	unsigned long freq;
-+	u64 freq;
+ 	u64 freq;
++	bool is_open_loop;
  	struct fuse_corner *fuse_corner;
  };
  
- struct corner_data {
- 	unsigned int fuse_corner;
--	unsigned long freq;
-+	u64 freq;
- };
- 
- struct acc_desc {
-@@ -92,8 +92,7 @@ int cpr_populate_fuse_common(struct device *dev,
+@@ -81,7 +85,7 @@ int cpr_populate_ring_osc_idx(struct device *dev,
+ 			      struct fuse_corner *fuse_corner,
+ 			      const struct cpr_fuse *cpr_fuse,
+ 			      int num_fuse_corners);
+-const struct cpr_fuse *cpr_get_fuses(struct device *dev,
++const struct cpr_fuse *cpr_get_fuses(struct device *dev, int tid,
+ 				     unsigned int num_fuse_corners);
+ int cpr_populate_fuse_common(struct device *dev,
+ 			     struct fuse_corner_data *fdata,
+@@ -91,7 +95,7 @@ int cpr_populate_fuse_common(struct device *dev,
+ 			     int init_v_step);
  int cpr_find_initial_corner(struct device *dev, struct clk *cpu_clk,
  			    struct corner *corners, int num_corners);
- u32 cpr_get_fuse_corner(struct dev_pm_opp *opp);
--unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
--				     struct device *cpu_dev);
-+u64 cpr_get_opp_hz_for_req(struct dev_pm_opp *ref, struct device *cpu_dev);
+-u32 cpr_get_fuse_corner(struct dev_pm_opp *opp);
++u32 cpr_get_fuse_corner(struct dev_pm_opp *opp, u32 tid);
+ u64 cpr_get_opp_hz_for_req(struct dev_pm_opp *ref, struct device *cpu_dev);
  int cpr_calculate_scaling(struct device *dev,
  			  const char *quot_offset,
- 			  const struct fuse_corner_data *fdata,
 diff --git a/drivers/soc/qcom/cpr.c b/drivers/soc/qcom/cpr.c
-index cc1e4c462d1f..49c33b13b82b 100644
+index 49c33b13b82b..bd94e19fc0fb 100644
 --- a/drivers/soc/qcom/cpr.c
 +++ b/drivers/soc/qcom/cpr.c
-@@ -827,8 +827,8 @@ static int cpr_corner_init(struct cpr_drv *drv)
- 	struct corner_data *cdata;
- 	const struct fuse_corner_data *fdata;
- 	bool apply_scaling;
--	unsigned long freq_diff, freq_diff_mhz;
--	unsigned long freq;
-+	unsigned long freq_diff_mhz;
-+	u64 freq, freq_diff;
- 	int step_volt = regulator_get_linear_step(drv->vdd_apc);
- 	struct dev_pm_opp *opp;
+@@ -852,7 +852,7 @@ static int cpr_corner_init(struct cpr_drv *drv)
+ 		opp = dev_pm_opp_find_level_exact(&drv->pd.dev, level);
+ 		if (IS_ERR(opp))
+ 			return -EINVAL;
+-		fc = cpr_get_fuse_corner(opp);
++		fc = cpr_get_fuse_corner(opp, 0);
+ 		if (!fc) {
+ 			dev_pm_opp_put(opp);
+ 			return -EINVAL;
+@@ -1326,7 +1326,7 @@ static int cpr_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
  
-@@ -867,7 +867,7 @@ static int cpr_corner_init(struct cpr_drv *drv)
- 		cdata[level - 1].freq = freq;
+-	drv->cpr_fuses = cpr_get_fuses(drv->dev, desc->num_fuse_corners);
++	drv->cpr_fuses = cpr_get_fuses(drv->dev, UINT_MAX, desc->num_fuse_corners);
+ 	if (IS_ERR(drv->cpr_fuses))
+ 		return PTR_ERR(drv->cpr_fuses);
  
- 		fuse = &drv->fuse_corners[fnum];
--		dev_dbg(drv->dev, "freq: %lu level: %u fuse level: %u\n",
-+		dev_dbg(drv->dev, "freq: %llu level: %u fuse level: %u\n",
- 			freq, dev_pm_opp_get_level(opp) - 1, fnum);
- 		if (freq > fuse->max_freq)
- 			fuse->max_freq = freq;
-@@ -941,7 +941,7 @@ static int cpr_corner_init(struct cpr_drv *drv)
- 
- 		if (apply_scaling) {
- 			freq_diff = fuse->max_freq - corner->freq;
--			freq_diff_mhz = freq_diff / 1000000;
-+			freq_diff_mhz = (u32)div_u64(freq_diff, 1000000);
- 			corner->quot_adjust = scaling * freq_diff_mhz / 1000;
- 
- 			corner->uV = cpr_interpolate(corner, step_volt, fdata);
 
 -- 
 2.41.0
