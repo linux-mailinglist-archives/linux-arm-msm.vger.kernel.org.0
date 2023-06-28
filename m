@@ -2,63 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 246857418EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 21:33:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59FB77418F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 21:40:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbjF1TdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 15:33:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57736 "EHLO
+        id S231430AbjF1TkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 15:40:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231926AbjF1TdU (ORCPT
+        with ESMTP id S231561AbjF1TkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 15:33:20 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86D3E4B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 12:33:18 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f122ff663eso8974550e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 12:33:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687980797; x=1690572797;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8luJOwdXXfNeGMdyQDRfNqFP6j7QRvwX8K5JggFfHh4=;
-        b=OFojlgb6qOIm4BRwHjuEJRu21xeqeV1LKW39dulUm0vJglosAJKjZTlgW3/cLlgfU8
-         sPI1lmD/lzuYgpDV9HQafdKnia9WgUg3ps4kGh906wC3CQM3CUftthUwZpdg7TBFzX3b
-         9IKQRCdmv2yazcc8DILLCL5930i2OlChyeDr4t8roHHZ/8D5Pg3L6dzeUbrwd+FnfPJP
-         DP6qRBRkRtoeC5tx0hOHsHdiNUcEQtnRemfIlpTpqqZ9vtZXAlhmrS8UpwMjvoRSIX/i
-         jxGG/T63PLW80jwq8IRznHCsNQ9kM6G9jYkhNVr3xenUyn7YyYoQknQ5JwtTAu3ecF4b
-         Yjjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687980797; x=1690572797;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8luJOwdXXfNeGMdyQDRfNqFP6j7QRvwX8K5JggFfHh4=;
-        b=UNWFWZrAjvRWFhKCnMdxHPKWAL79tvNI4CWgKVCBoMK/wuk3QYylQbH4MtFwPmBNub
-         0oY6QOBZnzfmZTssdYTJODz1fdO/xQ2BP7FnpNtVVeUvlLMqiiK7fiBpJnrxW62SSiCk
-         /4ci27tjsp8sUj+vOp/CPKOTT7F/mubmVbLZYurk+mK9e0hpyAW22enGyRvmwibBKmJT
-         ANRzY/qSq21z4fXrmtaD+2S1u8we93XYeKI1klH/+n6YXFwsMzKIhImdLARyw2Ztgrhf
-         1mXsrS5s4GVNgbTzCb0K5YAODedE1ZiXQN/ILAtPT5EfiiZvXXclolPIshCooT+mp4aZ
-         SUKQ==
-X-Gm-Message-State: AC+VfDyy6PaM+c0/UprtD7b8ildawtbL/0gkeblWNATNvGzFQtiUegio
-        QsJ1WmHJS4mLDA84oXi1XwpOpA==
-X-Google-Smtp-Source: ACHHUZ4tzZacjhlbNXcdymGFQQEzjZFRE+pRBdGohWQU6TmdwqnDkuI66k6/rbtFjpxqb2SbajrvVQ==
-X-Received: by 2002:a19:674d:0:b0:4f8:6ea5:104b with SMTP id e13-20020a19674d000000b004f86ea5104bmr16247327lfj.30.1687980797180;
-        Wed, 28 Jun 2023 12:33:17 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id r22-20020ac24d16000000b004fb757bd429sm1385852lfi.96.2023.06.28.12.33.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 12:33:16 -0700 (PDT)
-Message-ID: <fabef33c-a8c7-af61-80b4-91e55081c977@linaro.org>
-Date:   Wed, 28 Jun 2023 22:33:16 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware
- name from DT
-Content-Language: en-GB
-To:     Mark Brown <broonie@kernel.org>
+        Wed, 28 Jun 2023 15:40:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE5010FB;
+        Wed, 28 Jun 2023 12:40:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4550D61460;
+        Wed, 28 Jun 2023 19:40:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54110C433C0;
+        Wed, 28 Jun 2023 19:40:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1687981220;
+        bh=klgTWdJWuY+ukpWOnYTdmCpH06zL7nTICvdJceCsqqQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CylwdhInikX6hCGDUJn+nYbTRlGsBpp8Ur1zy7oz6vC3UiprJVxVbFkCZu74t2Jtu
+         ZiEy79TUuvXOOtW/Bfd3qpZLlyZFkU5s41sV/eC5HbLQ4zcrdDAc553OUbwklCuyRg
+         na5DZ7Re+mqsLV37CoA4VTFyrlL+fDLinK29qUx22ceiiKxmgtjSevvnmNaaTt033Z
+         IZ6IL22GqPzZqCgBJwJNQIkU5ToE4Sn5FwqVysax+mF/tePaX3LFWpfdteoqyMR4sL
+         CQh/pCdpvXIZy2UcIY+I6iVRPEcJ3LbQTaqJDECGNaFtJN9fzCErqCO1FIg8cNB48P
+         llGyLkXmA2NiA==
+Date:   Wed, 28 Jun 2023 20:40:12 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
         robh+dt@kernel.org, devicetree@vger.kernel.org,
@@ -67,59 +44,65 @@ Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         ckeepax@opensource.cirrus.com, kuninori.morimoto.gx@renesas.com,
         linux-kernel@vger.kernel.org, pierre-louis.bossart@linux.intel.com,
         alsa-devel@alsa-project.org
+Subject: Re: [PATCH 2/3] ASoC: qcom: q6apm: add support for reading firmware
+ name from DT
+Message-ID: <c5bbdaa9-43fb-4ec3-af7d-b1629d2d88f7@sirena.org.uk>
 References: <20230628102621.15016-1-srinivas.kandagatla@linaro.org>
  <20230628102621.15016-3-srinivas.kandagatla@linaro.org>
  <f71c8d2b-d5f4-42bb-932f-5b9ec6117ffc@sirena.org.uk>
  <73dce263-bee6-554f-9eb6-af4aa7badab1@linaro.org>
  <c377aefe-2678-4ba7-96b3-2186e8f3f1b4@sirena.org.uk>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <c377aefe-2678-4ba7-96b3-2186e8f3f1b4@sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+ <fabef33c-a8c7-af61-80b4-91e55081c977@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="mgpSf2rFHH6HbzH9"
+Content-Disposition: inline
+In-Reply-To: <fabef33c-a8c7-af61-80b4-91e55081c977@linaro.org>
+X-Cookie: HELLO, everybody, I'm a HUMAN!!
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2023 21:10, Mark Brown wrote:
-> On Wed, Jun 28, 2023 at 07:57:38PM +0300, Dmitry Baryshkov wrote:
->> On 28/06/2023 14:53, Mark Brown wrote:
-> 
->>> Why not try a series of firmware names/locations generated using the
->>> identifying information for the card/system?  That way we don't have to
->>> put a filename in the ABI which has fun scaling issues.
-> 
->> This is what was done by Srini in the initial (currently committed) version.
->> Unfortunately this easily results in the audio topology being separated from
->> the rest of the platform-specific firmware. For example, for the mentioned
->> X13s we already have a subdir under /lib/firmware/qcom and several
->> firmware-name DT properties pointing to the files in that subdir:
-> 
->> $ grep firmware-name
->> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
->> 		firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn";
->> 	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
->> 	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn";
-> 
->> This is not unique to the X13s, other Qualcomm boards also use full paths.
-> 
-> If the goal here is to put all the firmwares for a given board in a
-> single place surely it would be better to factor this all out of the
-> individual drivers so that they ask some helper for a directory to use
-> for firmware?  Adding these device specific firmware node properties
-> doesn't seem to follow.
 
-This quickly becomes overcomplicated. Some platforms use different 
-firmware naming structure. Some firmware goes into a generic location 
-and other files go into device-specific location. So having a generic 
-helper doesn't really help.
+--mgpSf2rFHH6HbzH9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
--- 
-With best wishes
-Dmitry
+On Wed, Jun 28, 2023 at 10:33:16PM +0300, Dmitry Baryshkov wrote:
+> On 28/06/2023 21:10, Mark Brown wrote:
 
+> > If the goal here is to put all the firmwares for a given board in a
+> > single place surely it would be better to factor this all out of the
+> > individual drivers so that they ask some helper for a directory to use
+> > for firmware?  Adding these device specific firmware node properties
+> > doesn't seem to follow.
+
+> This quickly becomes overcomplicated. Some platforms use different firmware
+> naming structure. Some firmware goes into a generic location and other files
+> go into device-specific location. So having a generic helper doesn't really
+> help.
+
+That sounds like a job for symlinks surely?
+
+--mgpSf2rFHH6HbzH9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmScjJwACgkQJNaLcl1U
+h9BCDgf+MwHq6JhItt1dx5AosYopofv5eM+cXQTZJxH7Ty1pBE0ZrubrQITHgUps
+ZMN5jdtiLpD1sam4qsyb1yNUB8o+4sk7p6Q6rKS/Bwv73R6lQwd04PS3+KW+12V/
+Pg39ZUdB4XjjKgmKQ+LKBXZi2qkB4Vhd9ApqIMIEtNYXhRk68JVnhlUseenPfn6Y
++bay/mh1nmisb1hVYEhwlabisc2pRStjRhD4+MKBxEEdHPKyUtUciYCUasW4OCj6
+mcptRKGax8OZWyWykw0htaHI19V+6QkTFvZDlNc7mwWBqQx+t7FxgsbpGR3Eo1L2
+dnMNFETQ1pxu67LvWHYP5e6gRpok4Q==
+=Nl3r
+-----END PGP SIGNATURE-----
+
+--mgpSf2rFHH6HbzH9--
