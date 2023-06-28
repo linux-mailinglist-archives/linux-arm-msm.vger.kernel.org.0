@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD6397419C3
+	by mail.lfdr.de (Postfix) with ESMTP id 2AD7B7419C1
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jun 2023 22:37:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231944AbjF1Ugr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 16:36:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37242 "EHLO
+        id S231837AbjF1Ugq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 16:36:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231933AbjF1Ufv (ORCPT
+        with ESMTP id S232111AbjF1Uf5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 16:35:51 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFE532718
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:46 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fa48b5dc2eso97263e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:46 -0700 (PDT)
+        Wed, 28 Jun 2023 16:35:57 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FB62942
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:48 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fa16c6a85cso82319e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jun 2023 13:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687984545; x=1690576545;
+        d=linaro.org; s=google; t=1687984547; x=1690576547;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=voWmkq5A/4H6lrc7bXc4yRtm7lr6RklCvSbF7Hr43HQ=;
-        b=bvwPX9iP1u0B4dVVrwoOKjAjYT9LWVkOzmGvgfrcnHnX8XfIw1kbxsUXjuS4u3dNdt
-         +nc29D4mb2pNHv519QJhDSkS79ZC15A9UVGqlWZ6lPIk/C5+kvdra+ikO9sZIFoLd7Xa
-         bWN1SolzqXnjhKPtjqkVFBsvlchU2UIeGNF1HEbhbaMXyAhqi3K0tJW1Z31w2zVKbf7S
-         g6B14ODlxsgbHZ4UPE4uQRKynZmFJMgtkOmYx4HDPWS1ZNRj2NIM0UJ2gH05d7DtYmGH
-         rektJN9Ujyob5dY0eWrXdWl5asVDrnteqpv7zplar0cE0hF9PKVbLk1B2tF4w3gZ0Rpz
-         f5jg==
+        bh=w4FrtTzzHgJt6VgBD5Al19EdXlLxrqJDKTmf8RSr2nw=;
+        b=BayOPWTj/YnDNGngG10tqbk/lga6jA6qkD1rt8kJU0L5moKrqx3DYkXvuIFmQ28aVu
+         I5oei8+BP4P4hOr3ATnzH+nUHxm0ESM5xE0401AJTPv5WKZNgyNgiBGBSwUw7fC/3Vnf
+         yOndcOvJ5q6+vLLA/KW9o4NeMDFiNGyU/6ZY1BUDPdd2SVK8KJz2ww91FLQQ6sSIwIZ4
+         Ba2aBJGAU0xPfD7HVbAwQ5XbIobd01rKXoBu1+WTYN33EoWofY1ymB7cjSfSA8DMB5oT
+         cjtbvjaOTJbj4y6XYEwEjknU1+sUWByuChuO+dkIaMBQFMokKX6NaLSAtP7YeBM7fH4u
+         uNbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687984545; x=1690576545;
+        d=1e100.net; s=20221208; t=1687984547; x=1690576547;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=voWmkq5A/4H6lrc7bXc4yRtm7lr6RklCvSbF7Hr43HQ=;
-        b=XvtiSVz1HK3EVWa5c45yKd8QI994lhEVwOsQBQZmbDwqgB9lPEIDb7V5ma+etx1Ar3
-         M9Sfk0wILcRzaQTWx7Hcqj6DMqWdCCg+YjloASTGRZ6qHVXb4IbnyWKVJmRaUb/EJ0ju
-         H/YCouav+Ix8uXtSlXlOeMPzNShLzK5DmcF7d/EDcrnpEbSoIYudYAh3ec+Q+nO/GOZa
-         iJag9nCoQ6Jm0o96qscfERX+lZgGyYltnkf+JTSbid073oQa6z6gWnBsrJhBp/CvRuwJ
-         5vlJK5wB0FWTxexTcS2fCv//AU895DBXs12vsm6KVDYsr725rWulbW7+6dr9SzWw/Q7K
-         1nyA==
-X-Gm-Message-State: AC+VfDxo9bEm77G2ybacsTArq/qvJ4F3LhgsmHOdamlu8oFrJE1KyXwj
-        ZOy+c+o5fQAvibx7Mj+/mo2H4A==
-X-Google-Smtp-Source: ACHHUZ7yYY5xB5BOCg57Wk9P4RZ0TASg4RnHuydH+NJKXLhpuzizJhVfp+DTy6qJqYFjwlPt095a1g==
-X-Received: by 2002:a19:5e48:0:b0:4f6:29cf:c0dd with SMTP id z8-20020a195e48000000b004f629cfc0ddmr19592853lfi.8.1687984544935;
-        Wed, 28 Jun 2023 13:35:44 -0700 (PDT)
+        bh=w4FrtTzzHgJt6VgBD5Al19EdXlLxrqJDKTmf8RSr2nw=;
+        b=ZQnnqpviIv1D6LaMhrwR+oNMOUjZiWQ4lm36iVJnGrWDSz9ZW5HjXbztrrTKeNdQtT
+         4zaB8Mr6qLpVvukHc/tLqRT2hETv875cgot4JZIYTQgD//8sr3bzE5rYH63fg3xFuQjC
+         cAaLzTjceIW0nFs38/CQTOEkInOhhriGnbzBXgmLFcM+42wLfFuhiL36O3wD8GX7TN7z
+         fn04S/Cf8PBME7wFyr3W3QChFmrFiqta2UrufDzgpcFVfYAe2BUhtxBYfnKAEOtlXIbZ
+         ClxcfM3jCFdz6DtiImjFSf3yHpJokMC5hJ27KHyxTRw3fOEUM439HdDrcvN139Jh/6jy
+         YBnQ==
+X-Gm-Message-State: AC+VfDxXcaR+RPU8SwsMtXrrvnrnrxs0Ed36DoBCfgrYbPpmubESNgkl
+        6lBH/9at6IbiUyQPnRqfFyYDnQ==
+X-Google-Smtp-Source: ACHHUZ7IRPMwemXJGk4bUgZ8NEjR9/5Bz4Lvpzn8XaqFqMIHZc9eoQ9qMsT19SSmiByMSzSsrdUDAw==
+X-Received: by 2002:a19:6755:0:b0:4f8:58f4:b96e with SMTP id e21-20020a196755000000b004f858f4b96emr21900556lfj.37.1687984547234;
+        Wed, 28 Jun 2023 13:35:47 -0700 (PDT)
 Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id m25-20020a056512015900b004fb86c89fa1sm753363lfo.135.2023.06.28.13.35.43
+        by smtp.gmail.com with ESMTPSA id m25-20020a056512015900b004fb86c89fa1sm753363lfo.135.2023.06.28.13.35.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jun 2023 13:35:44 -0700 (PDT)
+        Wed, 28 Jun 2023 13:35:46 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 28 Jun 2023 22:35:13 +0200
-Subject: [PATCH 13/14] drm/msm/a6xx: Vastly increase HFI timeout
+Date:   Wed, 28 Jun 2023 22:35:14 +0200
+Subject: [PATCH RFC 14/14] drm/msm/a6xx: Poll for GBIF unhalt status in
+ hw_init
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230628-topic-a7xx_drmmsm-v1-13-a7f4496e0c12@linaro.org>
+Message-Id: <20230628-topic-a7xx_drmmsm-v1-14-a7f4496e0c12@linaro.org>
 References: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
 In-Reply-To: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -73,44 +74,54 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1687984524; l=863;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1687984524; l=1255;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=dEgcZTxCoSPqEO7GO/0ZL2tns6GDxdULpb4qFZADjmk=;
- b=/Mfvry5SQ0m/wK5vDp3W2W1GiurV0+qd9uxCmsN576pkyGMTxvesfqdFzY18kxMFp33X4ZnGe
- KT9o55q1KbuDNDwjmDjPN2PnwmAd933Lox8wZjXypTcxnhdXg3wqymD
+ bh=5Q1kvDGqQf+MZGSOe2N8n59sdYSKweQE1iz0+XOB04c=;
+ b=eXvXP/e+RhlAwoWIAvEi5snC/1AjilAjPzcIT9/z050IFx7BiJqsJPVjijWMHbh0Eosacg1Mh
+ yHlbBK/Mq2rB0sbPFYndGRfJjM8/YkKiNuzpi1B5hPjhfx845Uzw/Wt
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A7xx GMUs can be slow as molasses at times.
-Increase the timeout to 1 second to match the vendor driver.
+Some GPUs - particularly A7xx ones - are really really stubborn and
+sometimes take a longer-than-expected time to finish unhalting GBIF.
+
+Note that this is not caused by the request a few lines above.
+
+Poll for the unhalt ack to make sure we're not trying to write bits to
+an essentially dead GPU that can't receive data on its end of the bus.
+Failing to do this will result in inexplicable GMU timeouts or worse.
+
+This is a rather ugly hack which introduces a whole lot of latency.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index cdb3f6e74d3e..e25ddb82a087 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -108,7 +108,7 @@ static int a6xx_hfi_wait_for_ack(struct a6xx_gmu *gmu, u32 id, u32 seqnum,
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index fac325217a7e..b0fa764ba299 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1629,6 +1629,10 @@ static int hw_init(struct msm_gpu *gpu)
+ 		mb();
+ 	}
  
- 	/* Wait for a response */
- 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
--		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 5000);
-+		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 1000000);
++	/* Some GPUs are stubborn and take their sweet time to unhalt GBIF! */
++	if (adreno_is_a7xx(adreno_gpu) && a6xx_has_gbif(adreno_gpu))
++		spin_until(!gpu_read(gpu, REG_A6XX_GBIF_HALT_ACK));
++
+ 	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_CNTL, 0);
  
- 	if (ret) {
- 		DRM_DEV_ERROR(gmu->dev,
+ 	if (adreno_is_a619_holi(adreno_gpu))
 
 -- 
 2.41.0
