@@ -2,164 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D16A7742294
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 10:48:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 106AB742312
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 11:17:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231361AbjF2Iso (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 04:48:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56430 "EHLO
+        id S232446AbjF2JRg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 05:17:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231838AbjF2IsQ (ORCPT
+        with ESMTP id S232464AbjF2JRS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 04:48:16 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271FB4680
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 01:45:28 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f766777605so649091e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 01:45:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688028326; x=1690620326;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F9c/Sgnntrd4PLPE97fe1hO07h+vpbHzWVDhlUf4NLE=;
-        b=o6Bt7kUqI6c73rmx2IZbT+oK/jw8EAUelXUlO2gDsHwXvf3MjL8oFp/n6JFHZwzoqK
-         BLsDSI2zlFrU8fPPM/51ElJTnXqnPcjjc9A4mLveHt2EMunBe6OLmZBYXQ9pA4x693a1
-         Lk1p5pIhKP0EzqiYbD3H05AuDt4thQpGRLJWU74lm3W1IJCHeawEUD99NrSgpYadEQnR
-         DlKilvUXNiZUkO4uP4em1uAl3sXDwQddNr9VkQy+/7o6rnHmYOBC4nTqbfeOCHqoYsLn
-         IXjKWDSSU8CI2lWcsqsusVusZm/BQVmM0yVf6Od/n49P0/KXFoZjnqrpNeTs7M9i6+gd
-         HtvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688028326; x=1690620326;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F9c/Sgnntrd4PLPE97fe1hO07h+vpbHzWVDhlUf4NLE=;
-        b=WRiz7WFFYNg3akwau/w2jeHRyQve66190kSz+7Zv4SEEeXXpLbCkkUjc8GQlKy7Hi3
-         Detv+eu42xD4VCTq85mJjLz8lmpqmTdTmf8hiR2r5sNGCo3be8UQnfeZTbNM7M41plZc
-         unuTp//UvfAPFwFhODWHwQyRwSmFLC4GXqT+dE2kGHzL7mF09/612HXrkUK9PHbtc0+Q
-         CM9djOYN+mXvPxF2mo/2IZHsbbZa38jEqHItNM+N5kEPpGDoccmtOb7tP8Tkb1eV4cFP
-         SSxQ9SEqC62TCClwkvppu2/+Q3YoIJUGRqsxWvt8ZUmMiUrGnaXtH17G0kXcE1aKaUVz
-         6gIg==
-X-Gm-Message-State: ABy/qLY+iACIE8gYor58EbVWD7MbEKLv2L9p87xnPtsru/tn8Trg06cA
-        PGfz8IcP5cioJgd1X9UVhgAj1A==
-X-Google-Smtp-Source: APBJJlH8LQwEMkOFJdbdn8IrGr/8WOtmsjrUEho66Yg7p5fPZKa4NzYigSxuH+FneC10rjP/rXqLgA==
-X-Received: by 2002:a05:6512:2310:b0:4fb:9a1e:1262 with SMTP id o16-20020a056512231000b004fb9a1e1262mr1202033lfu.65.1688028326533;
-        Thu, 29 Jun 2023 01:45:26 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id b7-20020a056512024700b004f85d80ca64sm2233550lfo.221.2023.06.29.01.45.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jun 2023 01:45:26 -0700 (PDT)
-Message-ID: <f274247c-f45b-8a48-92f2-cff4597aff15@linaro.org>
-Date:   Thu, 29 Jun 2023 11:45:25 +0300
+        Thu, 29 Jun 2023 05:17:18 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28B12134;
+        Thu, 29 Jun 2023 02:17:05 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35T8mXOb031688;
+        Thu, 29 Jun 2023 09:16:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ejgo9Ha3IFB/uURLTL7ikLrQKDml9uYD+lWUNGD1J8Y=;
+ b=Q5HZqz2n2kb+NTEAkAMXSIizloKVYik7ju104y8OZn96yjHMUHE2r8UejPxDjrhEh+ps
+ cWd+wSjFgdc14K+PKEi3qq1azBZ4u8pIdlYimOLDmiz94hYg8zELLvYJKoMvoj5qSUlm
+ xiUF5h+AVna9EN8O6xmE+kS2MqM4CdpARbaD3NQkgbC4GLfavjf/FtljharaTs7g7lti
+ W5er+AR707Ti/P+vUgWcLn+r0mbJLrLF6PCLPJLahm3sSTqxYU6TXLloEYqyRTq0dHdq
+ vQaCRNeFWUgrW34kv5/90nBcHlAXjnLhsXVO/11Eb0P2sw0E9ZHOoCkdGvjaL0iDILnZ Pg== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgnxr9w8g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Jun 2023 09:16:37 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35T9GZf5010847
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Jun 2023 09:16:35 GMT
+Received: from [10.216.42.4] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 29 Jun
+ 2023 02:16:28 -0700
+Message-ID: <e0fef1b0-3fa1-08c1-3c0e-aca30c9da266@quicinc.com>
+Date:   Thu, 29 Jun 2023 14:46:18 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
-Content-Language: en-GB
-To:     Anjelique Melendez <quic_amelende@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     pavel@ucw.cz, lee@kernel.org, thierry.reding@gmail.com,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        u.kleine-koenig@pengutronix.de, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
-References: <20230621185949.2068-1-quic_amelende@quicinc.com>
- <20230621185949.2068-2-quic_amelende@quicinc.com>
- <20230626135857.GA3118929-robh@kernel.org>
- <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 10/21] soc: qcom: Add qcom's pstore minidump driver
+ support
+Content-Language: en-US
+To:     Rob Herring <robh+dt@kernel.org>
+CC:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <keescook@chromium.org>,
+        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
+        <mathieu.poirier@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <linus.walleij@linaro.org>,
+        <andy.shevchenko@gmail.com>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+ <1687955688-20809-11-git-send-email-quic_mojha@quicinc.com>
+ <CAL_Jsq+O70mnreuS1m54RKM+uZu_z1L87RT8sKBYEw5uvowGJg@mail.gmail.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <CAL_Jsq+O70mnreuS1m54RKM+uZu_z1L87RT8sKBYEw5uvowGJg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Ao0JE0wQQz6nMX3r1Yj7CGXQWb2hQpyl
+X-Proofpoint-GUID: Ao0JE0wQQz6nMX3r1Yj7CGXQWb2hQpyl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-29_01,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1015 impostorscore=0 mlxscore=0 spamscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306290082
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/06/2023 04:19, Anjelique Melendez wrote:
-> 
-> 
-> On 6/26/2023 6:58 AM, Rob Herring wrote:
->> On Wed, Jun 21, 2023 at 11:59:45AM -0700, Anjelique Melendez wrote:
->>> Add binding for the Qualcomm Programmable Boot Sequencer device.
->>>
->>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->>> ---
->>>   .../bindings/soc/qcom/qcom-pbs.yaml           | 41 +++++++++++++++++++
->>>   1 file changed, 41 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
->>> new file mode 100644
->>> index 000000000000..0a89c334f95c
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
->>> @@ -0,0 +1,41 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/soc/qcom/qcom-pbs.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm Technologies, Inc. PBS
->>> +
->>> +maintainers:
->>> +  - Anjelique Melendez <quic_amelende@quicinc.com>
->>> +
->>> +description: |
->>> +  Qualcomm PBS (programmable boot sequencer) supports triggering sequences
->>> +  for clients upon request.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,pbs
->>> +
->>> +  reg:
->>> +    description: |
->>> +      Base address of the PBS peripheral.
->>> +    maxItems: 1
->>> +
->>> +required:
->>> + - compatible
->>> + - reg
->>> +
->>> +additionalProperties: false
->>> +
->>> +examples:
->>> +  - |
->>> +    pmic {
->>> +      #address-cells = <1>;
->>> +      #size-cells = <0>;
->>> +
->>> +      qcom,pbs@7400 {
->>> +        compatible = "qcom,pbs";
->>> +        reg = <0x7400>;
->>> +      };
+
+
+On 6/29/2023 4:27 AM, Rob Herring wrote:
+> On Wed, Jun 28, 2023 at 6:37 AM Mukesh Ojha <quic_mojha@quicinc.com> wrote:
 >>
->> Why do you need a child node for this? Is there more than 1 instance in
->> a PMIC? Every sub-function of a PMIC doesn't have to have a DT node.
+>> This driver was inspired from the fact pstore ram region should be
+>> fixed and boot firmware need to have awarness about this region,
+>> so that it will be persistent across boot. But, there are many
+>> QCOM SoC which does not support warm boot from hardware but they
+>> have minidump support from the software, and for them, there is
+>> no need of this pstore ram region to be fixed, but at the same
+>> time have interest in the pstore frontends data. So, this driver
+>> get the dynamic reserved region from the ram and register the
+>> ramoops platform device.
 >>
+>>   +---------+     +---------+   +--------+     +---------+
+>>   | console |     | pmsg    |   | ftrace |     | dmesg   |
+>>   +---------+     +---------+   +--------+     +---------+
+>>         |             |             |              |
+>>         |             |             |              |
+>>         +------------------------------------------+
+>>                            |
+>>                           \ /
+>>                    +----------------+
+>>              (1)   |pstore frontends|
+>>                    +----------------+
+>>                            |
+>>                           \ /
+>>                   +------------------- +
+>>              (2)  | pstore backend(ram)|
+>>                   +--------------------+
+>>                            |
+>>                           \ /
+>>                   +--------------------+
+>>              (3)  |qcom_pstore_minidump|
+>>                   +--------------------+
+>>                            |
+>>                           \ /
+>>                     +---------------+
+>>              (4)    | qcom_minidump |
+>>                     +---------------+
+>>
+>> This driver will route all the pstore front data to the stored
+>> in qcom pstore reserved region and the reason of showing an
+>> arrow from (3) to (4) as qcom_pstore_minidump driver will register
+>> all the available frontends region with qcom minidump driver
+>> in upcoming patch.
+>>
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> ---
+>>   drivers/soc/qcom/Kconfig                | 12 +++++
+>>   drivers/soc/qcom/Makefile               |  1 +
+>>   drivers/soc/qcom/qcom_pstore_minidump.c | 85 +++++++++++++++++++++++++++++++++
 > 
-> We currently have another downstream driver (which is planned to get upstreamed)
-> which also needs a handle to a pbs device in order to properly trigger events.
+> drivers/soc/ is the dumping ground for things with no other place. As
+> this is a pstore driver, it belongs with pstore.
 
-Does it have to be a separate driver? Or is it a part of the LPG driver, 
-just being artificially split away?
+The inspiration of this driver was taken from 
+drivers/platform/chrome/chromeos_pstore.c, do you think that is misplaced ?
 
 > 
->> Rob
+>>   3 files changed, 98 insertions(+)
+>>   create mode 100644 drivers/soc/qcom/qcom_pstore_minidump.c
+>>
+>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>> index 1834213fd652..fbf08e30feda 100644
+>> --- a/drivers/soc/qcom/Kconfig
+>> +++ b/drivers/soc/qcom/Kconfig
+>> @@ -306,4 +306,16 @@ config QCOM_MINIDUMP_SMEM
+>>
+>>            This config should be enabled if the low level minidump is implemented
+>>            as part of SMEM.
+>> +
+>> +config QCOM_PSTORE_MINIDUMP
+>> +       tristate "Pstore support for QCOM Minidump"
+>> +       depends on ARCH_QCOM
+>> +       depends on PSTORE_RAM
+>> +       depends on QCOM_MINIDUMP
+>> +       help
+>> +         Enablement of this driver ensures that ramoops region can be anywhere
+>> +         reserved in ram instead of being fixed address which needs boot firmware
+>> +         awareness. So, this driver creates plaform device and registers available
+>> +         frontend region with the Qualcomm's minidump driver.
+>> +
+>>   endmenu
+>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>> index 737d868757ac..1ab59c1b364d 100644
+>> --- a/drivers/soc/qcom/Makefile
+>> +++ b/drivers/soc/qcom/Makefile
+>> @@ -36,3 +36,4 @@ qcom_ice-objs                 += ice.o
+>>   obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)        += qcom_ice.o
+>>   obj-$(CONFIG_QCOM_MINIDUMP) += qcom_minidump.o
+>>   obj-$(CONFIG_QCOM_MINIDUMP_SMEM) += qcom_minidump_smem.o
+>> +obj-$(CONFIG_QCOM_PSTORE_MINIDUMP) += qcom_pstore_minidump.o
+>> diff --git a/drivers/soc/qcom/qcom_pstore_minidump.c b/drivers/soc/qcom/qcom_pstore_minidump.c
+>> new file mode 100644
+>> index 000000000000..b07cd10340df
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/qcom_pstore_minidump.c
+>> @@ -0,0 +1,85 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/module.h>
+>> +#include <linux/of_device.h>
 > 
-> 
-> 
+> You probably don't need this include. Use the actual includes you need
+> and don't rely on implicit includes (because I'm trying to remove
+> those).
 
--- 
-With best wishes
-Dmitry
+Ok, will try to check..
 
+- Mukesh
+
+> 
+>> +#include <linux/of_reserved_mem.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/pstore_ram.h>
+>> +
+>> +struct qcom_ramoops_dd {
+>> +       struct ramoops_platform_data qcom_ramoops_pdata;
+>> +       struct platform_device *ramoops_pdev;
+>> +};
+>> +
+>> +static int qcom_ramoops_probe(struct platform_device *pdev)
+>> +{
+>> +       struct device_node *of_node = pdev->dev.of_node;
+>> +       struct qcom_ramoops_dd *qcom_rdd;
+>> +       struct ramoops_platform_data *pdata;
+>> +       struct reserved_mem *rmem;
+>> +       struct device_node *node;
+>> +       long ret;
+>> +
+>> +       node = of_parse_phandle(of_node, "memory-region", 0);
+>> +       if (!node)
+>> +               return -ENODEV;
+>> +
+>> +       rmem = of_reserved_mem_lookup(node);
+>> +       of_node_put(node);
+>> +       if (!rmem) {
+>> +               dev_err(&pdev->dev, "failed to locate DT /reserved-memory resource\n");
+>> +               return -EINVAL;
+>> +       }
+>> +
+>> +       qcom_rdd = devm_kzalloc(&pdev->dev, sizeof(*qcom_rdd), GFP_KERNEL);
+>> +       if (!qcom_rdd)
+>> +               return -ENOMEM;
+>> +
+>> +       pdata = &qcom_rdd->qcom_ramoops_pdata;
+>> +       pdata->mem_size = rmem->size;
+>> +       pdata->mem_address = rmem->base;
+>> +       ramoops_parse_dt(pdev, pdata);
+>> +
+>> +       qcom_rdd->ramoops_pdev = platform_device_register_data(NULL, "ramoops", -1,
+>> +                                                              pdata, sizeof(*pdata));
+>> +       if (IS_ERR(qcom_rdd->ramoops_pdev)) {
+>> +               ret = PTR_ERR(qcom_rdd->ramoops_pdev);
+>> +               dev_err(&pdev->dev, "could not create platform device: %ld\n", ret);
+>> +               qcom_rdd->ramoops_pdev = NULL;
+>> +       }
+>> +       platform_set_drvdata(pdev, qcom_rdd);
+>> +
+>> +       return ret;
+>> +}
+>> +
+>> +static void qcom_ramoops_remove(struct platform_device *pdev)
+>> +{
+>> +       struct qcom_ramoops_dd *qcom_rdd = platform_get_drvdata(pdev);
+>> +
+>> +       platform_device_unregister(qcom_rdd->ramoops_pdev);
+>> +       qcom_rdd->ramoops_pdev = NULL;
+>> +}
+>> +
+>> +static const struct of_device_id qcom_ramoops_of_match[] = {
+>> +       { .compatible = "qcom,ramoops"},
+>> +       {}
+>> +};
+>> +MODULE_DEVICE_TABLE(of, qcom_ramoops_of_match);
+>> +
+>> +static struct platform_driver qcom_ramoops_drv = {
+>> +       .driver         = {
+>> +               .name   = "qcom,ramoops",
+>> +               .of_match_table = qcom_ramoops_of_match,
+>> +       },
+>> +       .probe = qcom_ramoops_probe,
+>> +       .remove_new = qcom_ramoops_remove,
+>> +};
+>> +
+>> +module_platform_driver(qcom_ramoops_drv);
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm ramoops minidump driver");
+>> +MODULE_LICENSE("GPL");
+>> --
+>> 2.7.4
+>>
