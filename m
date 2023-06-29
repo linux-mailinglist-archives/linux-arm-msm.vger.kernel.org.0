@@ -2,82 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 428DD742EB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 22:43:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6012B742EBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 22:44:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232174AbjF2UnK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 16:43:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44198 "EHLO
+        id S231792AbjF2Uok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 16:44:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231724AbjF2UnG (ORCPT
+        with ESMTP id S229710AbjF2Uoj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 16:43:06 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 139D83583
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:43:04 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f973035d60so1848414e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:43:03 -0700 (PDT)
+        Thu, 29 Jun 2023 16:44:39 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11AE32695
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:44:38 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f957a45b10so1742480e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:44:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688071382; x=1690663382;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IzxMth0rG0N/LdCu/KosSUDXTQQIZ0gHsj0ndjwQLDE=;
-        b=hDXhXg7VhfNyIOy4+CTKIPUtGkf6Md/FXtPH9QJ8iYHRO65eCeAhNsy67ioa4Ftpaa
-         dNqnazlWjDnBJCVwow5ObOPBHHI5RnjvvCjSW830waXR4daQXe82YmL2xk9ZgQ5LPpAm
-         c/p/45BVAgxjsI6ZnvPu4kRPnQmQwrtm8LPC9LJyMoHMsFBQCM+pi5tmyDIV/OxUBMYE
-         b2jenr0qISLEc9W0VwDG+hx4Ka5rkZn6Zff8YjCGHptJY+t8G24H619o4afWXuQB72Qw
-         Bpp8UdyC0XGiBtRoatJjt3HUndkYm+A+BZRi8sI1kSTQSIMzLBr0GSoJqAN6Pj7/ZzwU
-         Km+w==
+        d=linaro.org; s=google; t=1688071476; x=1690663476;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Yaz00FEgGCTPJB8nvCETL7NnrgelsFGdklYuZ97nPlY=;
+        b=ZiLvRjrx0hTzcGSqqZFobRZbdbjQYk5Ph8ozUtUffExhYwZt8uGNvPdc+o1z0Ynp4X
+         VZ+tu2UtkoXGOO5pr6F0I+l90UmhOQWGOCBPcFZg8E5oWWVipkpFIZ1zV9ZcgHMYJWkt
+         dTcDBSQW8yiI0G2PBISA6VNQ7Xr7z8j0w0H/y4nDHDXLdG5/yKTTmv5cV5OH+DOWrz9C
+         KdxfJp7VRpS5EI9IocXPkDD2OdnmEmDoozkoyLzlA5VRZEY+LOEmKxtkgVKVHK8JKGWY
+         vr6HKRydRWhVOVLw8HUZLVnqz/TK4EF1jtbIv+SPcfggbpwA3p+8+HfyRkqimRUEyNVU
+         A03w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688071382; x=1690663382;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1688071476; x=1690663476;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IzxMth0rG0N/LdCu/KosSUDXTQQIZ0gHsj0ndjwQLDE=;
-        b=eYTLA3tkH69DHJx2kL8iItJL9W6Xrej89b4JVBHxoUoXG9dE+jjt4lmhCjEznhEYxw
-         N0W3Hn05x3V7Kzv3h1p4FjX1P4XRpsMMSf5pdIzgutpd1qdGtiFuPTWoae3fSCzqCUV3
-         PoMO/P1nev4QntrTRu2tM5faxCYp2QtirbFAaDydeqlSxvqlnqViymwmK855tp3iL3vC
-         x7EVqMxuJOiOcFTUxv/cWzq+RjqIs/U7o3F1Yi89yIQySCgk6skrPEpJ+UQB4pMajy2+
-         /bcVRqZn95HqiDsut4I//+XCLd8pGIefZbTjkj8XmL/35ElEK1OKAbfYvYP8Eb6JAph0
-         sz8A==
-X-Gm-Message-State: ABy/qLavTkLDy/r1zXAfmqWXMXS+sUwFxMyEErGvNT5DmxU1PnwdZzjV
-        EPHQ6O3UuYWkRZ7Guh33xqelaA==
-X-Google-Smtp-Source: APBJJlGAlkVprPYhgU2wjTVmbVWzHZ5kw+ZQNkVn2/xcuGLkZFYmu1EZxOxWKNoyp/KxK12Sob4g1Q==
-X-Received: by 2002:a19:3846:0:b0:4fb:893a:d322 with SMTP id d6-20020a193846000000b004fb893ad322mr654227lfj.68.1688071382276;
-        Thu, 29 Jun 2023 13:43:02 -0700 (PDT)
+        bh=Yaz00FEgGCTPJB8nvCETL7NnrgelsFGdklYuZ97nPlY=;
+        b=jke7rrm9Kqp69X68eryQXRFZ2m2QuYnmmCy28uaapwRnmta3O8Aa6Uw3dEItmFH+Ul
+         idV01O+Eas/BD9FjeeoH7f1qUqW9OWsc8Aqli6eLQ0C2R+1WoMnhiXPLzP3GgeSDRskM
+         wYPz9HbL3PObZzXKYDb6Sktds7wPWvq3kJY7Tx20ExPaSa0zrj5BwoVuUyrPGjtvQxXU
+         5DFHupaQH3SA8GkNWP9R/ohnlwbw83A0u7Gy29ktjoSNI81EMPbVX/NXnRbMDw38nJFf
+         Y3UE+cqtq9Dig1QmvAskNaDpmTNLP0oUZUHIeq1E8ef36rTZ0fCPli40URWizoDC89dx
+         a6JQ==
+X-Gm-Message-State: ABy/qLbm4mTjuHb05dbEWyDsUVaMHksSYYL/Rj3JSgo1v1cyOb4uQDgP
+        CBm7VRyGHyNUcoMjupM4eB+3+w==
+X-Google-Smtp-Source: APBJJlHY6jW97U1D4G7rtrJ9N/FSbLkfUZXVa4JplOMQ3ixUjo5atHOSwdsjaRQRK6wNO8jyUxStRA==
+X-Received: by 2002:a19:4f10:0:b0:4f9:607a:6508 with SMTP id d16-20020a194f10000000b004f9607a6508mr787367lfb.50.1688071476300;
+        Thu, 29 Jun 2023 13:44:36 -0700 (PDT)
 Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id s3-20020a19ad43000000b004fb745fd232sm1900353lfd.30.2023.06.29.13.43.00
+        by smtp.gmail.com with ESMTPSA id m11-20020a056512014b00b004fb326d4ff0sm2045647lfo.77.2023.06.29.13.44.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jun 2023 13:43:01 -0700 (PDT)
-Message-ID: <7ea83d11-80b5-51ef-b9b1-053cf2f1810b@linaro.org>
-Date:   Thu, 29 Jun 2023 22:43:00 +0200
+        Thu, 29 Jun 2023 13:44:35 -0700 (PDT)
+Message-ID: <8ddbd947-6cb6-8c86-eb48-8b6ae9b4be2b@linaro.org>
+Date:   Thu, 29 Jun 2023 22:44:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
+Subject: Re: [PATCH v2 2/4] regulator: Introduce Qualcomm REFGEN regulator
+ driver
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
- <20230625202547.174647-14-dmitry.baryshkov@linaro.org>
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230628-topic-refgen-v2-0-6136487c78c5@linaro.org>
+ <20230628-topic-refgen-v2-2-6136487c78c5@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v2 13/26] soc: qcom: Add driver for Qualcomm Krait L2
- cache scaling
-In-Reply-To: <20230625202547.174647-14-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230628-topic-refgen-v2-2-6136487c78c5@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,249 +92,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.06.2023 22:25, Dmitry Baryshkov wrote:
-> Add a simple driver that handles scaling of L2 frequency and voltages.
+On 29.06.2023 22:35, Konrad Dybcio wrote:
+> Modern Qualcomm SoCs have a REFGEN (reference voltage generator)
+> regulator, providing reference voltage to on-chip IP, like PHYs.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add a driver to support toggling that regulator.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  drivers/soc/qcom/Kconfig          |   9 ++
->  drivers/soc/qcom/Makefile         |   1 +
->  drivers/soc/qcom/krait-l2-cache.c | 190 ++++++++++++++++++++++++++++++
->  3 files changed, 200 insertions(+)
->  create mode 100644 drivers/soc/qcom/krait-l2-cache.c
-> 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index e597799e8121..01090b7a3c06 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -70,6 +70,15 @@ config QCOM_LLCC
->  	  SDM845. This provides interfaces to clients that use the LLCC.
->  	  Say yes here to enable LLCC slice driver.
->  
-> +config QCOM_KRAIT_L2_CACHE
-> +	tristate "Qualcomm Krait L2 cache scaling"
-> +	depends on ARCH_QCOM && ARM || COMPILE_TEST
-> +	select INTERCONNECT
-> +	select INTERCONNECT_CLK
-> +	default ARM_QCOM_CPUFREQ_NVMEM
-> +	help
-> +	  The driver for scaling the L2 cache frequency on Qualcomm Krait platforms.
-> +
->  config QCOM_KRYO_L2_ACCESSORS
->  	bool
->  	depends on (ARCH_QCOM || COMPILE_TEST) && ARM64
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index 99114c71092b..cdd1cc96e9f9 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -31,6 +31,7 @@ obj-$(CONFIG_QCOM_APR) += apr.o
->  obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
->  obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
->  obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
-> +obj-$(CONFIG_QCOM_KRAIT_L2_CACHE) += krait-l2-cache.o
->  obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
->  obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
->  qcom_ice-objs			+= ice.o
-> diff --git a/drivers/soc/qcom/krait-l2-cache.c b/drivers/soc/qcom/krait-l2-cache.c
-> new file mode 100644
-> index 000000000000..af9e7b955daf
-> --- /dev/null
-> +++ b/drivers/soc/qcom/krait-l2-cache.c
-> @@ -0,0 +1,190 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2023, Linaro Ltd.
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/interconnect-clk.h>
-> +#include <linux/interconnect-provider.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pm_opp.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +#include <dt-bindings/soc/qcom,krait-l2-cache.h>
-> +
-> +/* Random ID that doesn't clash with main qnoc and OSM */
-> +#define L2_MASTER_NODE 2000
-> +
-> +/* vdd-mem and vdd-dig */
-> +#define NUM_SUPPLIES 2
-I *think* the code would be much, much simpler if you made the
-debug print, regulator set and error message a separate function
-and then called them explicitly, without a for-loop.
-
-> +static int krait_l2_config_regulators(struct device *dev,
-> +				      struct dev_pm_opp *old_opp,
-> +				      struct dev_pm_opp *new_opp,
-> +				      struct regulator **regulators,
-> +				      unsigned int count)
-> +{
-> +	struct dev_pm_opp_supply supplies[NUM_SUPPLIES];
-> +	unsigned long old_freq, freq;
-> +	unsigned int i;
-> +	int ret;
-> +
-> +	if (WARN_ON_ONCE(count != NUM_SUPPLIES))
-> +		return -EINVAL;
-> +
-> +	ret = dev_pm_opp_get_supplies(new_opp, supplies);
-> +	if (WARN_ON(ret))
-> +		return ret;
-> +
-> +	old_freq = dev_pm_opp_get_freq(old_opp);
-> +	freq = dev_pm_opp_get_freq(new_opp);
-> +
-> +	WARN_ON(!old_freq || !freq);
-> +	if (freq > old_freq) {
-> +		for (i = 0; i < count; i++) {
-> +			struct regulator *reg = regulators[i];
-> +			struct dev_pm_opp_supply *supply = &supplies[i];
-> +
-> +			dev_dbg(dev, "%s: voltages (mV): %lu %lu %lu\n", __func__,
-> +				supply->u_volt_min, supply->u_volt, supply->u_volt_max);
-> +
-> +			ret = regulator_set_voltage_triplet(reg,
-> +							    supply->u_volt_min,
-> +							    supply->u_volt,
-> +							    supply->u_volt_max);
-> +			if (ret) {
-> +				dev_err(dev, "%s: failed to set voltage (%lu %lu %lu mV): %d\n",
-> +					__func__, supply->u_volt_min, supply->u_volt,
-> +					supply->u_volt_max, ret);
-> +				goto restore_backwards;
-> +			}
-> +		}
-> +	} else {
-> +		for (i = count; i > 0; i--) {
-> +			struct regulator *reg = regulators[i - 1];
-> +			struct dev_pm_opp_supply *supply = &supplies[i - 1];
-> +
-> +			dev_dbg(dev, "%s: voltages (mV): %lu %lu %lu\n", __func__,
-> +				supply->u_volt_min, supply->u_volt, supply->u_volt_max);
-> +
-> +			ret = regulator_set_voltage_triplet(reg,
-> +							    supply->u_volt_min,
-> +							    supply->u_volt,
-> +							    supply->u_volt_max);
-> +			if (ret) {
-> +				dev_err(dev, "%s: failed to set voltage (%lu %lu %lu mV): %d\n",
-> +					__func__, supply->u_volt_min, supply->u_volt,
-> +					supply->u_volt_max, ret);
-> +				goto restore_forward;
-> +			}
-> +		}
-> +	}
-> +
-> +	return 0;
-> +
-> +restore_backwards:
-> +
-> +	dev_pm_opp_get_supplies(old_opp, supplies);
-> +
-> +	for (; i > 0; i--) {
-> +		struct regulator *reg = regulators[i - 1];
-> +		struct dev_pm_opp_supply *supply = &supplies[i - 1];
-> +
-> +		dev_dbg(dev, "%s: voltages (mV): %lu %lu %lu\n", __func__,
-> +			supply->u_volt_min, supply->u_volt, supply->u_volt_max);
-> +
-> +		regulator_set_voltage_triplet(reg,
-> +					      supply->u_volt_min,
-> +					      supply->u_volt,
-> +					      supply->u_volt_max);
-> +	}
-> +
-> +	return ret;
-> +
-> +restore_forward:
-> +
-> +	dev_pm_opp_get_supplies(old_opp, supplies);
-> +
-> +	for ( ; i < count; i++) {
-> +		struct regulator *reg = regulators[i];
-> +		struct dev_pm_opp_supply *supply = &supplies[i];
-> +
-> +		dev_dbg(dev, "%s: voltages (mV): %lu %lu %lu\n", __func__,
-> +			supply->u_volt_min, supply->u_volt, supply->u_volt_max);
-> +
-> +		regulator_set_voltage_triplet(reg,
-> +					      supply->u_volt_min,
-> +					      supply->u_volt,
-> +					      supply->u_volt_max);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int krait_l2_probe(struct platform_device *pdev)
-> +{
-> +	struct dev_pm_opp_config krait_l2_cfg = {
-> +		.clk_names = (const char * const[]) { NULL, NULL },
-> +		.config_regulators = krait_l2_config_regulators,
-> +		.regulator_names = (const char * const[]) { "vdd-mem", "vdd-dig", NULL },
-> +	};
-> +	struct icc_clk_data data[] = {
-> +		{ .name = "l2", .opp = true},
-true} -> true }
+Ugh. Missed the 'const' here and below. LMK if that warrants a resend
+(or.. perhaps you just have other comments)
 
 Konrad
-> +	};
-> +
-> +	struct device *dev = &pdev->dev;
-> +	struct icc_provider *provider;
-> +	struct clk *clk;
-> +	int ret;
-> +
-> +	clk = devm_clk_get(dev, NULL);
-> +	if (IS_ERR(clk))
-> +		return PTR_ERR(clk);
-> +
-> +	ret = devm_pm_opp_set_config(dev, &krait_l2_cfg);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = devm_pm_opp_of_add_table(dev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	data[0].clk = clk;
-> +	provider = icc_clk_register(dev, L2_MASTER_NODE, ARRAY_SIZE(data), data);
-> +	if (IS_ERR(provider))
-> +		return PTR_ERR(provider);
-> +
-> +	platform_set_drvdata(pdev, provider);
-> +
-> +	return 0;
-> +}
-> +
-> +static int krait_l2_remove(struct platform_device *pdev)
-> +{
-> +	struct icc_provider *provider = platform_get_drvdata(pdev);
-> +
-> +	icc_clk_unregister(provider);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id krait_l2_match_table[] = {
-> +	{ .compatible = "qcom,krait-l2-cache" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, krait_l2_match_table);
-> +
-> +static struct platform_driver krait_l2_driver = {
-> +	.probe = krait_l2_probe,
-> +	.remove = krait_l2_remove,
-> +	.driver = {
-> +		.name = "qcom-krait-l2",
-> +		.of_match_table = krait_l2_match_table,
-> +		.sync_state = icc_sync_state,
+> +	.ops = &(struct regulator_ops) {
+> +		.enable		= qcom_sdm845_refgen_enable,
+> +		.disable	= qcom_sdm845_refgen_disable,
+> +		.is_enabled	= qcom_sdm845_refgen_is_enabled,
 > +	},
 > +};
 > +
-> +module_platform_driver(krait_l2_driver);
+> +static struct regulator_desc sm8250_refgen_desc = {
+> +	.enable_reg = REFGEN_REG_PWRDWN_CTRL5,
+> +	.enable_mask = REFGEN_PWRDWN_CTRL5_MASK,
+> +	.enable_val = REFGEN_PWRDWN_CTRL5_ENABLE,
+> +	.disable_val = 0,
+> +	.enable_time = 5,
+> +	.name = "refgen",
+> +	.owner = THIS_MODULE,
+> +	.type = REGULATOR_VOLTAGE,
+> +	.ops = &(struct regulator_ops) {
+> +		.enable		= regulator_enable_regmap,
+> +		.disable	= regulator_disable_regmap,
+> +		.is_enabled	= regulator_is_enabled_regmap,
+> +	},
+> +};
 > +
-> +MODULE_DESCRIPTION("Qualcomm Krait L2 scaling driver");
-> +MODULE_LICENSE("GPL v2");
+> +static const struct regmap_config qcom_refgen_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
+> +	.fast_io = true,
+> +};
+> +
+> +static int qcom_refgen_probe(struct platform_device *pdev)
+> +{
+> +	struct regulator_init_data *init_data;
+> +	struct regulator_config config = {};
+> +	const struct regulator_desc *rdesc;
+> +	struct device *dev = &pdev->dev;
+> +	struct regulator_dev *rdev;
+> +	struct regmap *regmap;
+> +	void __iomem *base;
+> +
+> +	rdesc = of_device_get_match_data(dev);
+> +	if (!rdesc)
+> +		return -ENODATA;
+> +
+> +	base = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(base))
+> +		return PTR_ERR(base);
+> +
+> +	regmap = devm_regmap_init_mmio(dev, base, &qcom_refgen_regmap_config);
+> +	if (IS_ERR(regmap))
+> +		return PTR_ERR(regmap);
+> +
+> +	init_data = of_get_regulator_init_data(dev, dev->of_node, rdesc);
+> +	if (!init_data)
+> +		return -ENOMEM;
+> +
+> +	config.dev = dev;
+> +	config.init_data = init_data;
+> +	config.of_node = dev->of_node;
+> +	config.regmap = regmap;
+> +
+> +	rdev = devm_regulator_register(dev, rdesc, &config);
+> +	if (IS_ERR(rdev))
+> +		return PTR_ERR(rdev);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_refgen_match_table[] = {
+> +	{ .compatible = "qcom,sdm845-refgen-regulator", .data = &sdm845_refgen_desc },
+> +	{ .compatible = "qcom,sm8250-refgen-regulator", .data = &sm8250_refgen_desc },
+> +	{ }
+> +};
+> +
+> +static struct platform_driver qcom_refgen_driver = {
+> +	.probe = qcom_refgen_probe,
+> +	.driver = {
+> +		.name = "qcom-refgen-regulator",
+> +		.of_match_table = qcom_refgen_match_table,
+> +	},
+> +};
+> +module_platform_driver(qcom_refgen_driver);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Qualcomm REFGEN regulator driver");
+> 
