@@ -2,408 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E09C3741C5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 01:21:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1495D741CCD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 02:13:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231823AbjF1XVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jun 2023 19:21:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33668 "EHLO
+        id S231330AbjF2ANr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jun 2023 20:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbjF1XVh (ORCPT
+        with ESMTP id S230449AbjF2ANq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jun 2023 19:21:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DEE21FFB;
-        Wed, 28 Jun 2023 16:21:35 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1805061495;
-        Wed, 28 Jun 2023 23:21:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E599C43395;
-        Wed, 28 Jun 2023 23:21:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1687994494;
-        bh=ACoNJqLmMSSKski9UCPiO0yxsg2i09dtScgv0JdZFvk=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=uD2CtfXMM5ou1hcT50s50ZeFg3pVLaSzaO8YMHupEIWxxXA28Cu9pZBAT4OGQ7tUz
-         x+EG5VnLasN9TUHrwoB6pLdxrrK//+PjIi0qEk58ZBf75puprXixf0ObHLsjUMKkiX
-         iu1Z7dYadqQ3hdlDJS1OBLpyYk/TLJwx6dyL9YQ08Vdl0EKbHX9LJTzvhvOp+8a0Cx
-         YXI+q5ChigUkJhch8n62DxUDaw5VSOEOixR9Sj75K12Qzq/Aor3nhdykaCYEmtNtno
-         xo4wkO3PS51nf3Z85+BST+mVhi2OWQFcQbH+wkC1W9h3Cei60Wvn1lwIYiahMGy6nk
-         MkYM/cKTURpBQ==
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-4fa48b5dc2eso135753e87.1;
-        Wed, 28 Jun 2023 16:21:34 -0700 (PDT)
-X-Gm-Message-State: AC+VfDzvqM0VrYoUWx9qojSqgMW41V3NqJbfi3aQUgSW+So1u//y13Ll
-        9DYSq6KbmM4Q1JtpY78mzSz/DRQq4udYrPuu6A==
-X-Google-Smtp-Source: ACHHUZ6U3aFUeGZz0HgXWANEq4Y9/CIXuHi9Rs47yHyROTuI3TxVl70to/g+u37ZzNDZ8NJm8X1MQ/0CnnJyhJj0jiM=
-X-Received: by 2002:a19:ca5a:0:b0:4f8:62a6:8b2 with SMTP id
- h26-20020a19ca5a000000b004f862a608b2mr10514066lfj.46.1687994492270; Wed, 28
- Jun 2023 16:21:32 -0700 (PDT)
+        Wed, 28 Jun 2023 20:13:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C9AF172D;
+        Wed, 28 Jun 2023 17:13:44 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35SNdEZO028785;
+        Thu, 29 Jun 2023 00:13:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=07Q9n8UY5r3S6q0cTSPNKpRgaZmeE5KxbFtqeXElQ8E=;
+ b=M7oIgLJuQCJtoaO0lO3sGDkFGPtSG8jk1gGHBEATpNVHONvPzrL6fMDgCkGtZrMLXLAw
+ ZaD5qKamTxkJ9ZrBhFfNMleO6N8Q1YTuuT9vwL0FReStdhidZhPA06lst+lMF4jIje2h
+ JZZCPdtNm97YVr1qELodXJRpeO1yGxXMirRDCMq6d4UhfPvPhIxNVf+/p+lqGZ4uAaWw
+ sCFL2bcIMtULgt8fwGeeVG58f8wD7d+qHuwLool/LnDIO3wQw2v/k1YeHITyxm+xruQQ
+ QQb9UQnPROCC8Rjicn3AzOvlxIyWRNCA7xKnIhBMMu4F50bV8ixuOTO4IVYCm96Df9Vc hw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgemk25ta-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Jun 2023 00:13:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35T0DTwk029777
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Jun 2023 00:13:29 GMT
+Received: from [10.110.20.95] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Wed, 28 Jun
+ 2023 17:13:29 -0700
+Message-ID: <cb7630b4-4953-31df-faeb-a54f7757c1af@quicinc.com>
+Date:   Wed, 28 Jun 2023 17:12:20 -0700
 MIME-Version: 1.0
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com> <1687955688-20809-2-git-send-email-quic_mojha@quicinc.com>
-In-Reply-To: <1687955688-20809-2-git-send-email-quic_mojha@quicinc.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 28 Jun 2023 17:21:20 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+VXCoxadtLZjRJVqE4BGVrqVkndwkYJCbxW0rGGk=zsA@mail.gmail.com>
-Message-ID: <CAL_Jsq+VXCoxadtLZjRJVqE4BGVrqVkndwkYJCbxW0rGGk=zsA@mail.gmail.com>
-Subject: Re: [PATCH v4 01/21] docs: qcom: Add qualcomm minidump guide
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     corbet@lwn.net, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
-        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
-        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 2/7] dt-bindings: leds: leds-qcom-lpg: Add support for LUT
+ through NVMEM devices
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>
+CC:     <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>
+References: <20230621185949.2068-1-quic_amelende@quicinc.com>
+ <20230621185949.2068-3-quic_amelende@quicinc.com>
+ <4ee5f3fc-3376-7421-23cd-8fc905704493@linaro.org>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <4ee5f3fc-3376-7421-23cd-8fc905704493@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oP9YdC0wcfs5EbAMETPNWcLV358QB24U
+X-Proofpoint-ORIG-GUID: oP9YdC0wcfs5EbAMETPNWcLV358QB24U
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-28_14,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ phishscore=0 clxscore=1011 lowpriorityscore=0 suspectscore=0
+ mlxlogscore=999 impostorscore=0 priorityscore=1501 mlxscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306280213
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 28, 2023 at 6:36=E2=80=AFAM Mukesh Ojha <quic_mojha@quicinc.com=
-> wrote:
->
-> Add the qualcomm minidump guide for the users which
-> tries to cover the dependency and the way to test
-> and collect minidump on Qualcomm supported platforms.
->
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->  Documentation/admin-guide/index.rst         |   1 +
->  Documentation/admin-guide/qcom_minidump.rst | 293 ++++++++++++++++++++++=
-++++++
->  2 files changed, 294 insertions(+)
->  create mode 100644 Documentation/admin-guide/qcom_minidump.rst
->
-> diff --git a/Documentation/admin-guide/index.rst b/Documentation/admin-gu=
-ide/index.rst
-> index 43ea35613dfc..251d070486c2 100644
-> --- a/Documentation/admin-guide/index.rst
-> +++ b/Documentation/admin-guide/index.rst
-> @@ -120,6 +120,7 @@ configure specific aspects of kernel behavior to your=
- liking.
->     perf-security
->     pm/index
->     pnp
-> +   qcom_minidump
->     rapidio
->     ras
->     rtc
-> diff --git a/Documentation/admin-guide/qcom_minidump.rst b/Documentation/=
-admin-guide/qcom_minidump.rst
-> new file mode 100644
-> index 000000000000..a3a8cfee4555
-> --- /dev/null
-> +++ b/Documentation/admin-guide/qcom_minidump.rst
-> @@ -0,0 +1,293 @@
-> +Qualcomm Minidump Feature
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> +
-> +Introduction
-> +------------
-> +
-> +Minidump is a best effort mechanism to collect useful and predefined
-> +data for first level of debugging on end user devices running on
-> +Qualcomm SoCs. It is built on the premise that System on Chip (SoC)
-> +or subsystem part of SoC crashes, due to a range of hardware and
-> +software bugs. Hence, the ability to collect accurate data is only
-> +a best-effort. The data collected could be invalid or corrupted, data
-> +collection itself could fail, and so on.
-> +
-> +Qualcomm devices in engineering mode provides a mechanism for generating
-> +full system RAM dumps for post-mortem debugging. But in some cases it's
-> +however not feasible to capture the entire content of RAM. The minidump
-> +mechanism provides the means for selecting region should be included in
-> +the ramdump.
-> +
-> +::
-> +
-> +   +-----------------------------------------------+
-> +   |   DDR                       +-------------+   |
-> +   |                             |      SS0-ToC|   |
-> +   | +----------------+     +----------------+ |   |
-> +   | |Shared memory   |     |         SS1-ToC| |   |
-> +   | |(SMEM)          |     |                | |   |
-> +   | |                | +-->|--------+       | |   |
-> +   | |G-ToC           | |   | SS-ToC  \      | |   |
-> +   | |+-------------+ | |   | +-----------+  | |   |
-> +   | ||-------------| | |   | |-----------|  | |   |
-> +   | || SS0-ToC     | | | +-|<|SS1 region1|  | |   |
-> +   | ||-------------| | | | | |-----------|  | |   |
-> +   | || SS1-ToC     |-|>+ | | |SS1 region2|  | |   |
-> +   | ||-------------| |   | | |-----------|  | |   |
-> +   | || SS2-ToC     | |   | | |  ...      |  | |   |
-> +   | ||-------------| |   | | |-----------|  | |   |
-> +   | ||  ...        | |   |-|<|SS1 regionN|  | |   |
-> +   | ||-------------| |   | | |-----------|  | |   |
-> +   | || SSn-ToC     | |   | | +-----------+  | |   |
-> +   | |+-------------+ |   | |                | |   |
-> +   | |                |   | |----------------| |   |
-> +   | |                |   +>|  regionN       | |   |
-> +   | |                |   | |----------------| |   |
-> +   | +----------------+   | |                | |   |
-> +   |                      | |----------------| |   |
-> +   |                      +>|  region1       | |   |
-> +   |                        |----------------| |   |
-> +   |                        |                | |   |
-> +   |                        |----------------|-+   |
-> +   |                        |  region5       |     |
-> +   |                        |----------------|     |
-> +   |                        |                |     |
-> +   |  Region information    +----------------+     |
-> +   | +---------------+                             |
-> +   | |region name    |                             |
-> +   | |---------------|                             |
-> +   | |region address |                             |
-> +   | |---------------|                             |
-> +   | |region size    |                             |
-> +   | +---------------+                             |
-> +   +-----------------------------------------------+
-> +       G-ToC: Global table of contents
-> +       SS-ToC: Subsystem table of contents
-> +       SS0-SSn: Subsystem numbered from 0 to n
-> +
-> +It depends on targets how the underlying hardware taking care of the
-> +implementation part for minidump like above diagram is for shared
-> +memory and it is possible that this could be implemented via memory
-> +mapped regions but the general idea remain same.
-> +
-> +In this document, SMEM will be used as the backend implementation of
-> +minidump.
-> +
-> +SMEM as backend
-> +----------------
-> +
-> +The core of minidump feature is part of Qualcomm's boot firmware code.
-> +It initializes shared memory (SMEM), which is a part of DDR and
-> +allocates a small section of it to minidump table, i.e. also called
-> +global table of contents (G-ToC). Each subsystem (APSS, ADSP, ...) has
-> +its own table of segments to be included in the minidump, all
-> +references from a descriptor in SMEM (G-ToC). Each segment/region has
-> +some details like name, physical address and its size etc. and it
-> +could be anywhere scattered in the DDR.
-> +
-> +Minidump kernel driver concept
-> +------------------------------
-> +::
-> +
-> +  Minidump Client-1     Client-2      Client-5    Client-n
-> +         |               |              |             |
-> +         |               |    ...       |   ...       |
-> +         |               |              |             |
-> +         |               |              |             |
-> +         |               |              |             |
-> +         |               |              |             |
-> +         |               |              |             |
-> +         |               |              |             |
-> +         |           +---+--------------+----+        |
-> +         +-----------+  qcom_minidump(core)  +--------+
-> +                     |                       |
-> +                     +------+-----+------+---+
-> +                            |     |      |
-> +                            |     |      |
-> +            +---------------+     |      +--------------------+
-> +            |                     |                           |
-> +            |                     |                           |
-> +            |                     |                           |
-> +            v                     v                           v
-> + +-------------------+      +-------------------+     +-----------------=
--+
-> + |qcom_minidump_smem |      |qcom_minidump_mmio |     | qcom_minidump_rm=
- |
-> + |                   |      |                   |     |                 =
- |
-> + +-------------------+      +-------------------+     +-----------------=
--+
-> +   Shared memory              Memory mapped IO           Resource manage=
-r
-> +    (backend)                   (backend)                   (backend)
-> +
-> +
-> +Kernel implementation of minidump driver is divided into two parts one i=
-s,
-> +the core implementation called frontend driver ``qcom_minidump.c`` and t=
-his
-> +is the driver will be exposing the API for clients and the other part is=
-,
-> +backend driver and its depends whether it is based on SMEM, MMIO or some
-> +other way corressponding driver will be hooking itself up with the core
-> +driver to get itself working. As of now, at a time one and only one back=
-end
-> +can be attached to the front-end either it is HOST or a guest VM.
-> +
-> +Qualcomm minidump kernel driver adds the capability to add Linux region
-> +to be dumped as part of RAM dump collection. At the moment, shared memor=
-y
-> +driver creates platform device for minidump driver and give a means to
-> +APSS minidump to initialize itself on probe.
-> +
-> +This driver provides ``qcom_minidump_region_register`` and
-> +``qcom_minidump_region_unregister`` API's to register and unregister
-> +APSS minidump region. It also gives a mechanism to update physical/virtu=
-al
-> +address for the client whose addresses keeps on changing, e.g., current =
-stack
-> +address of task keeps on changing on context switch for each core. So th=
-ese
-> +clients can update their addresses with ``qcom_minidump_update_region``
-> +API.
-> +
-> +The driver also supports registration for the clients who came before
-> +minidump driver was initialized. It maintains pending list of clients
-> +who came before minidump and once minidump is initialized it registers
-> +them in one go.
-> +
-> +To simplify post-mortem debugging, driver creates and maintain an ELF
-> +header as first region that gets updated each time a new region gets
-> +registered.
-> +
-> +The solution supports extracting the RAM dump/minidump produced either
-> +over USB or stored to an attached storage device.
-> +
-> +Dependency of minidump kernel driver
-> +------------------------------------
-> +
-> +It is to note that whole of minidump depends on Qualcomm boot
-> +firmware whether it supports minidump or not. So, if the minidump
-> +SMEM ID is present in shared memory, it indicates that minidump
-> +is supported from boot firmware and it is possible to dump Linux
-> +(APSS) region as part of minidump collection.
-> +
-> +How a kernel client driver can register region with minidump
-> +------------------------------------------------------------
-> +
-> +Client driver can use ``qcom_minidump_region_register`` API's to
-> +register and ``qcom_minidump_region_unregister`` to unregister
-> +their region from minidump driver.
-> +
-> +Client needs to fill their region by filling ``qcom_minidump_region``
-> +structure object which consists of the region name, region's
-> +virtual and physical address and its size.
-> +
-> +Below is one sample client driver snippet which tries to allocate
-> +a region from kernel heap of certain size and it writes a certain
-> +known pattern (that can help in verification after collection
-> +that we got the exact pattern, what we wrote) and registers it with
-> +minidump.
-> +
-> + .. code-block:: c
-> +
-> +  #include <soc/qcom/qcom_minidump.h>
-> +  [...]
-> +
-> +
-> +  [... inside a function ...]
-> +  struct qcom_minidump_region region;
-> +
-> +  [...]
-> +
-> +  client_mem_region =3D kzalloc(region_size, GFP_KERNEL);
-> +  if (!client_mem_region)
-> +       return -ENOMEM;
-> +
-> +  [... Just write a pattern ...]
-> +  memset(client_mem_region, 0xAB, region_size);
-> +
-> +  [... Fill up the region object ...]
-> +  strlcpy(region.name, "REGION_A", sizeof(region.name));
-> +  region.virt_addr =3D client_mem_region;
-> +  region.phys_addr =3D virt_to_phys(client_mem_region);
-> +  region.size =3D region_size;
-> +
-> +  ret =3D qcom_minidump_region_register(&region);
-> +  if (ret < 0) {
-> +       pr_err("failed to add region in minidump: err: %d\n", ret);
-> +       return ret;
-> +  }
-> +
-> +  [...]
-> +
-> +
-> +Test
-> +----
-> +
-> +Existing Qualcomm devices already supports entire RAM dump (also called
-> +full dump) by writing appropriate value to Qualcomm's top control and
-> +status register (tcsr) in ``driver/firmware/qcom_scm.c`` .
-> +
-> +SCM device Tree bindings required to support download mode
-> +For example (sm8450) ::
-> +
-> +       / {
-> +
-> +       [...]
-> +
-> +               firmware {
-> +                       scm: scm {
-> +                               compatible =3D "qcom,scm-sm8450", "qcom,s=
-cm";
-> +                               [... tcsr register ... ]
-> +                               qcom,dload-mode =3D <&tcsr 0x13000>;
-> +
-> +                               [...]
-> +                       };
-> +               };
-> +
-> +       [...]
-> +
-> +               soc: soc@0 {
-> +
-> +                       [...]
-> +
-> +                       tcsr: syscon@1fc0000 {
-> +                               compatible =3D "qcom,sm8450-tcsr", "sysco=
-n";
-> +                               reg =3D <0x0 0x1fc0000 0x0 0x30000>;
-> +                       };
-> +
-> +                       [...]
-> +               };
-> +       [...]
-> +
-> +       };
-> +
-> +User of minidump can pass ``qcom_scm.download_mode=3D"mini"`` to kernel
-> +commandline to set the current download mode to minidump.
-> +Similarly, ``"full"`` is passed to set the download mode to full dump
-> +where entire RAM dump will be collected while setting it ``"full,mini"``
-> +will collect minidump along with fulldump.
-> +
-> +Writing to sysfs node can also be used to set the mode to minidump::
-> +
-> +       echo "mini" > /sys/module/qcom_scm/parameter/download_mode
-> +
-> +Once the download mode is set, any kind of crash will make the device co=
-llect
-> +respective dump as per set download mode.
-> +
-> +Dump collection
-> +---------------
-> +
-> +The solution supports extracting the minidump produced either over USB o=
-r
-> +stored to an attached storage device.
-> +
-> +By default, dumps are downloaded via USB to the attached x86_64 machine
-> +running PCAT (Qualcomm tool) software. Upon download, we will see
-> +a set of binary blobs starting with name ``md_*`` in PCAT configured dir=
-ectory
-> +in x86_64 machine, so for above example from the client it will be
 
-So I can't use my QCom laptop or M1 MacBook? This text won't age well,
-so perhaps reword it.
 
-Rob
+On 6/24/2023 2:42 AM, Krzysztof Kozlowski wrote:
+> On 21/06/2023 20:59, Anjelique Melendez wrote:
+>> Update leds-qcom-lpg bindings to support LUT patterns through NVMEM
+>> devices.
+>>
+>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>> ---
+>>  .../bindings/leds/leds-qcom-lpg.yaml          | 85 +++++++++++++++++++
+>>  1 file changed, 85 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+>> index e6f1999cb22f..c9d53820bf83 100644
+>> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+>> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+>> @@ -63,6 +63,31 @@ properties:
+>>          - description: dtest line to attach
+>>          - description: flags for the attachment
+>>  
+>> +  nvmem:
+>> +    description: >
+>> +      Phandle(s) of the nvmem device(s) to access the LUT stored in the SDAM module(s).
+> 
+> It's the first time in this binding the "LUT" appears. Drop redundant
+> parts like "Phandle(s) of ...." and describe what do you expect there
+> and why the hardware needs it. 
+
+LUT is a "lookup table"(https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml?h=v6.4#n14)
+and in this case holds pattern data i.e LUT patterns.
+
+Currently, qcom,pm660l-lpg, qcom,pm8150b-lpg, qcom,pm8150l-lpg, qcom,pm8941-lpg, qcom,pm8994-lpg,
+qcom,pmc8180c-lpg, qcom,pmi8994-lpg, and qcom,pmi8998-lpg all have an a specific LUT peripheral
+(https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/leds/rgb/leds-qcom-lpg.c?h=v6.4-rc7#n1382)
+and this is already being handled in leds-qcom-lpg.
+
+What is new with this patch set is that instead of having a LUT peripheral, some PMICs use nvmem to 
+hold LUT pattern and other lpg per channel data.
+The use of nvmems to store LUT pattern and lpg data is called PPG.
+You can either have a single nvmem PPG (a single nvmem device that holds LUT pattern 
+and lpg per channel data) or two-nvmem PPG(1 nvmem for LUT pattern and 1 nvmem for lpg per channel data)
+
+I can update the descritpion for the entire binding to mention PPG and LUT so this is more clear. 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml?h=v6.4#n12
+
+ 
+>> +      This property is required only when LUT mode is supported and the LUT pattern is
+>> +      stored in SDAM modules instead of a LUT module.
+>> +    minItems: 1
+>> +    maxItems: 2
+>> +
+>> +  nvmem-names:
+>> +    description: >
+>> +      The nvmem device name(s) for the SDAM module(s) where the LUT pattern data is stored.
+>> +      This property is required only when LUT mode is supported with SDAM module instead of
+>> +      LUT module.
+>> +    minItems: 1
+>> +    items:
+>> +      - const: lpg_chan_sdam
+>> +      - const: lut_sdam
+>> +
+>> +  qcom,pbs-client:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +    description: >
+>> +      Phandle of the PBS client used for sending the PBS trigger. This property is
+> 
+> 
+> You need to explain what is PBS and what this property is doing.
+> 
+> Phandle of PBS client? This is the PBS client! It does not make sense.
+Ack
+> 
+> 
+> 
+>> +      required when LUT mode is supported and the LUT pattern is stored in a single
+>> +      SDAM module instead of a LUT module.
+> 
+> Which devices support LUT? Why this is not constrained per variant?
+When you say constrained per variant, are you looking for something more like this?
+i.e. 
+allOf:
+  - if: 
+      properties:
+        compatible:
+          contains:
+            const: qcom,pmi632-lpg
+    then:
+      properties:
+        nvmem:
+          maxItems: 1
+        nvmem-names:
+          items:
+            - const: lpg_chan_sdam
+      required:
+        - nvmem
+        - qcom,pbs-client
+  - if: 
+      properties:
+        compatible:
+          contains:
+            const: qcom,pm8350c-pwm
+    then:
+      properties:
+        nvmem:
+          maxItems: 2
+        nvmem-names:
+          items:
+            - const: lpg_chan_sdam
+            - const: lut_sdam
+      required:
+       - nvmem
+
+> 
+>> +
+>>    multi-led:
+>>      type: object
+>>      $ref: leds-class-multicolor.yaml#
+>> @@ -191,4 +216,64 @@ examples:
+>>        compatible = "qcom,pm8916-pwm";
+>>        #pwm-cells = <2>;
+>>      };
+>> +  - |
+>> +    #include <dt-bindings/leds/common.h>
+>> +
+>> +    led-controller {
+>> +      compatible = "qcom,pm8350c-pwm";
+>> +      #address-cells = <1>;
+>> +      #size-cells = <0>;
+>> +      #pwm-cells = <2>;
+>> +      nvmem-names = "lpg_chan_sdam" , "lut_sdam";
+> 
+> Fix your whitespaces.
+Ack
+> 
+>> +      nvmem = <&pmk8550_sdam_21 &pmk8550_sdam_22>;
+> 
+> Two entries, not one> 
+> Anyway, adding one property does not justify new example. Integrate it
+> into existing one.
+
+So we actually cannot integrate these properties into existing examples.
+The current examples are for PMICs that use LUT peripherals (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/leds/rgb/leds-qcom-lpg.c?h=v6.4#n1417).
+This patch series is adding support for PMICs that do not have a LUT peripheral
+and instead store LUT patterns and LPG configurations in either 1 or 2 NVMEM(s). 
+> 
+>> +
+>> +      led@1 {
+>> +        reg = <1>;
+>> +        color = <LED_COLOR_ID_RED>;
+>> +        label = "red";
+>> +      };
+>> +
+>> +      led@2 {
+>> +        reg = <2>;
+>> +        color = <LED_COLOR_ID_GREEN>;
+>> +        label = "green";
+>> +      };
+>> +
+>> +      led@3 {
+>> +        reg = <3>;
+>> +        color = <LED_COLOR_ID_BLUE>;
+>> +        label = "blue";
+>> +      };
+>> +    };
+>> +  - |
+>> +    #include <dt-bindings/leds/common.h>
+>> +
+>> +    led-controller {
+>> +      compatible = "qcom,pmi632-lpg";
+>> +      #address-cells = <1>;
+>> +      #size-cells = <0>;
+>> +      #pwm-cells = <2>;
+>> +      nvmem-names = "lpg_chan_sdam";
+>> +      nvmem = <&pmi632_sdam7>;
+>> +      qcom,pbs-client = <&pmi632_pbs_client3>;
+> 
+> One more example? Why?
+> 
+> Why do you have here only one NVMEM cell? Aren't you missing constraints
+> in the binding?The use of the qcom,pbs-client is only used when we have a PMIC device that has a single PPG NVMEM, 
+which is why this was not included in the above 2 nvmem PPG example. I see how these two PPG examples
+are repetitive so I am ok with getting rid of one of them but I do think we should have at least one PPG example.
+
+> 
+> Best regards,
+> Krzysztof
+> 
+Thanks,
+Anjelique
