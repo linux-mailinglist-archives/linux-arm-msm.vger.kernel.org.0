@@ -2,97 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95556742B62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 19:38:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99C9A742C70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 20:53:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232357AbjF2RiE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 13:38:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60692 "EHLO
+        id S232477AbjF2Swy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 14:52:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232242AbjF2RiD (ORCPT
+        with ESMTP id S232465AbjF2Swx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 13:38:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC26ADE;
-        Thu, 29 Jun 2023 10:38:01 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35THSuoo028542;
-        Thu, 29 Jun 2023 17:37:54 GMT
+        Thu, 29 Jun 2023 14:52:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9FA5A2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 11:52:51 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35TGQLDu004360;
+        Thu, 29 Jun 2023 18:52:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OqhwsnEZHEeSfGhGUGECNHuBpu81qSXos9J1ZHELdFQ=;
- b=djf9D9kPj4KUmlDDcH9UUPpcMjua5QFJsVF33PIUfUQYUxB4aEE4Lc1t64SAqflI35SF
- d9QSeeai+aLHhSS495GLKPWfCY9Jq7YgFRjNfZUgQqFnp2weTqaappgPfonykak9ztFr
- LR6YOVrpr/9Sltr7YcCnyXXiieaTK0upxQfc+c/pbXppyuzb2ZpA23jtBNjqnMILkVKg
- LGbUIxYZNcJqsr00tWjd9NQNpyiyMqmIw/9GaFdRbp9lgpXXCom/Xso3Urx+9JkuaMrm
- 38MBldJypz358AMcaHDSmDdJqmEU5YhfE0rEnE3xdkPDNd2RGRH0FBZjBLDGXTQYOhmi ow== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgetpkxqg-1
+ bh=drE4UQHIiVRQZ4hLRKYCxMDm2+ayfGtKEs08w4G/xJQ=;
+ b=ArWME2HCx85GwdIDg+p4cbdOs/m3McEBD+2ypkLlo0T6yvWEB/OIZ5lHsBJI6LK71pKB
+ fwJH1d8ZwijJVFP82uJ6OOQd2rI/YYB+Tjlu5i46yhSHfJO0GILmhMtQO/Te+s+kH4Ng
+ 5ZGYgZgu9PbTY0CPwRIzNJ2eoXQTXZPHMg6h5KrERacWgvXuTL/07Anh4yz782z5KUTJ
+ H4YmslkIZevzi+2g7z5ETVhRSkTIekF6EKW36N6nUae+7VFMevLTurB3Cit9j1OCA+ty
+ 0avLqjBSuFovxDK483tGh27DGkWNo90/bRDjwypI7NHJkQ1hgvKsnUsp/v8Ig7yCBrec EQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgy1thy65-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Jun 2023 17:37:54 +0000
+        Thu, 29 Jun 2023 18:52:40 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35THbrCj029600
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35TIqdkU013795
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Jun 2023 17:37:53 GMT
+        Thu, 29 Jun 2023 18:52:39 GMT
 Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 29 Jun
- 2023 10:37:52 -0700
-Message-ID: <829ef35b-b074-81db-0aa2-7cb3dd276322@quicinc.com>
-Date:   Thu, 29 Jun 2023 10:37:52 -0700
+ 2023 11:52:38 -0700
+Message-ID: <3df58d80-5544-ca63-5d83-1e2d7291b5ae@quicinc.com>
+Date:   Thu, 29 Jun 2023 11:52:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [Freedreno] [PATCH 2/3] drm/msm/dpu: Set DATABUS_WIDEN on command
- mode encoders
+Subject: Re: [RFC PATCH 0/3] Support for Solid Fill Planes
 Content-Language: en-US
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        David Airlie <airlied@gmail.com>,
+        Pekka Paalanen <ppaalanen@gmail.com>
+CC:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        <daniel.vetter@ffwll.ch>, <dri-devel@lists.freedesktop.org>,
+        <swboyd@chromium.org>, <seanpaul@chromium.org>,
+        <laurent.pinchart@ideasonboard.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <wayland-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-2-c7069f2efca1@quicinc.com>
- <c74c9e0e-d059-f0e3-4350-03089c37131a@linaro.org>
- <cce68370-3fd9-4c9a-258e-af0d5d057fda@quicinc.com>
- <n2c5qlujxhbbj2aqlgj7fetzoteood5h4hmbwt4mapi77xlvmt@bpourzaideti>
- <81a5e241-ec82-7414-8752-4ce3cb084959@linaro.org>
- <f14f2c31-38c2-0600-3a29-17e83afececf@quicinc.com>
- <26tvhvqpxtxz5tqc6jbjixadpae34k7uc7fyec2u5o2ccj4tdq@tjvguzlolc3g>
- <8dcd643f-9644-a4e7-a0d5-eefa28084a88@linaro.org>
- <7d5256cd-c0bd-36e3-9b59-63ad8595f0ce@quicinc.com>
- <b119470d-f656-71d1-8b87-b4b8196f5220@linaro.org>
- <a4688db2-4230-7485-a688-bc6253d2d4b8@quicinc.com>
- <dab90e58-c25a-9b5a-bae0-dfc50de7d363@linaro.org>
- <0f988169-58cb-eccf-9590-f5097e085f22@quicinc.com>
- <53df7008-0a72-dfa7-27d9-96c07e410ac3@quicinc.com>
+References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
+ <Y2leZDfLj/5963wl@intel.com>
+ <d0b5abdc-85ad-fee2-9760-866c32bab111@quicinc.com>
+ <20230627105849.004050b3@eldfell>
+ <5e60fe99-76d5-c242-608e-b74bf6f0e7bd@quicinc.com>
+ <54f194fe-ab7b-247d-600b-6da8f5c57dbf@linaro.org>
+ <1613cdd4-8d90-6589-97e8-c4e1810bde04@quicinc.com>
 From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <53df7008-0a72-dfa7-27d9-96c07e410ac3@quicinc.com>
+In-Reply-To: <1613cdd4-8d90-6589-97e8-c4e1810bde04@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Swy70pEuaCEkFM2pB4TSoGFWACDmQDL_
-X-Proofpoint-GUID: Swy70pEuaCEkFM2pB4TSoGFWACDmQDL_
+X-Proofpoint-ORIG-GUID: QALEiAI5DjjxC8XCpssFN1YSS1awhSxJ
+X-Proofpoint-GUID: QALEiAI5DjjxC8XCpssFN1YSS1awhSxJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-29_05,2023-06-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- mlxlogscore=999 spamscore=0 priorityscore=1501 suspectscore=0
- clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306290159
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+ definitions=2023-06-29_06,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306290170
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -101,138 +94,230 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/29/2023 10:26 AM, Abhinav Kumar wrote:
+On 6/27/2023 3:10 PM, Abhinav Kumar wrote:
 > 
 > 
-> On 6/22/2023 4:37 PM, Abhinav Kumar wrote:
->>
->>
->> On 6/22/2023 4:14 PM, Dmitry Baryshkov wrote:
->>> On 23/06/2023 01:37, Abhinav Kumar wrote:
->>>>
->>>>
->>>> On 6/21/2023 4:46 PM, Dmitry Baryshkov wrote:
->>>>> On 22/06/2023 02:01, Abhinav Kumar wrote:
->>>>>>
->>>>>>
->>>>>> On 6/21/2023 9:36 AM, Dmitry Baryshkov wrote:
->>>>>>> On 21/06/2023 18:17, Marijn Suijten wrote:
->>>>>>>> On 2023-06-20 14:38:34, Jessica Zhang wrote:
->>>>>>>> <snip>
->>>>>>>>>>>>>> +    if (phys_enc->hw_intf->ops.enable_widebus)
->>>>>>>>>>>>>> + phys_enc->hw_intf->ops.enable_widebus(phys_enc->hw_intf);
->>>>>>>>>>>>>
->>>>>>>>>>>>> No. Please provide a single function which takes necessary
->>>>>>>>>>>>> configuration, including compression and wide_bus_enable.
->>>>>>>>>>>>>
->>>>>>>>>>>>
->>>>>>>>>>>> There are two ways to look at this. Your point is coming 
->>>>>>>>>>>> from the
->>>>>>>>>>>> perspective that its programming the same register but just 
->>>>>>>>>>>> a different
->>>>>>>>>>>> bit. But that will also make it a bit confusing.
->>>>>>>>>>
->>>>>>>>>> My point is to have a high-level function that configures the 
->>>>>>>>>> INTF for
->>>>>>>>>> the CMD mode. This way it can take a structure with necessary
->>>>>>>>>> configuration bits.
->>>>>>>>>
->>>>>>>>> Hi Dmitry,
->>>>>>>>>
->>>>>>>>> After discussing this approach with Abhinav, we still have a few
->>>>>>>>> questions about it:
->>>>>>>>>
->>>>>>>>> Currently, only 3 of the 32 bits for INTF_CONFIG2 are being 
->>>>>>>>> used (the
->>>>>>>>> rest are reserved with no plans of being programmed in the 
->>>>>>>>> future). Does
->>>>>>>>> this still justify the use of a struct to pass in the necessary
->>>>>>>>> configuration?
->>>>>>>>
->>>>>>>> No.  The point Dmitry is making is **not** about this concidentally
->>>>>>>> using the same register, but about adding a common codepath to 
->>>>>>>> enable
->>>>>>>> compression on this hw_intf (regardless of the registers it 
->>>>>>>> needs to
->>>>>>>> touch).
->>>>>>>
->>>>>>> Actually to setup INTF for CMD stream (which is equal to setting 
->>>>>>> up compression at this point).
->>>>>>>
->>>>>>
->>>>>> Yes it should be setup intf for cmd and not enable compression.
->>>>>>
->>>>>> Widebus and compression are different features and we should be 
->>>>>> able to control them independently.
->>>>>>
->>>>>> We just enable them together for DSI. So a separation is necessary.
->>>>>>
->>>>>> But I am still not totally convinced we even need to go down the 
->>>>>> path for having an op called setup_intf_cmd() which takes in a 
->>>>>> struct like
->>>>>>
->>>>>> struct dpu_cmd_intf_cfg {
->>>>>>      bool data_compress;
->>>>>>      bool widebus_en;
->>>>>> };
->>>>>>
->>>>>> As we have agreed that we will not touch the video mode timing 
->>>>>> engine path, it leaves us with only two bits.
->>>>>>
->>>>>> And like I said, its not that these two bits always go together. 
->>>>>> We want to be able to control them independently which means that 
->>>>>> its not necessary both bits program the same register one by one. 
->>>>>> We might just end up programming one of them if we just use widebus.
->>>>>>
->>>>>> Thats why I am still leaning on keeping this approach.
->>>>>
->>>>> I do not like the idea of having small functions being called 
->>>>> between modules. So, yes there will a config of two booleans, but 
->>>>> it is preferable (and more scalable) compared to separate callbacks.
->>>>>
->>>>
->>>> I definitely agree with the scalable part and I even cross checked 
->>>> that the number of usable bitfields of this register is going up 
->>>> from one chipset to the other although once again that depends on 
->>>> whether we will use those features.
->>>>
->>>> For that reason I am not opposed to the struct idea.
->>>>
->>>> But there is also another pattern i am seeing which worries me. 
->>>> Usable bitfields sometimes even reduce. For those cases, if we go 
->>>> with a pre-defined struct it ends up with redundant members as those 
->>>> bitfields go away.
->>>>
->>>> With the function op based approach, we just call the op if the 
->>>> feature bit / core revision.
->>>>
->>>> So I wanted to check once more about the fact that we should 
->>>> consider not just expansion but also reduction.
+> On 6/27/2023 2:59 PM, Dmitry Baryshkov wrote:
+>> On 28/06/2023 00:27, Jessica Zhang wrote:
 >>>
->>> As we have to support all generations, there is no actual reduction. 
->>> Newer SoCs do not have particular feature/bit, but older ones do. By 
->>> having multiple optional ops we just move this knowledge from 
->>> ops->complex_callback() to _setup_block_ops(). But more importantly 
->>> the caller gets more complicated. Instead of just calling 
->>> ops->set_me_up(), it has to check all the optional callbacks and call 
->>> the one by one.
 >>>
+>>> On 6/27/2023 12:58 AM, Pekka Paalanen wrote:
+>>>> On Mon, 26 Jun 2023 16:02:50 -0700
+>>>> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>>>>
+>>>>> On 11/7/2022 11:37 AM, Ville Syrjälä wrote:
+>>>>>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
+>>>>>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
+>>>>>>> properties. When the color fill value is set, and the framebuffer 
+>>>>>>> is set
+>>>>>>> to NULL, memory fetch will be disabled.
+>>>>>>
+>>>>>> Thinking a bit more universally I wonder if there should be
+>>>>>> some kind of enum property:
+>>>>>>
+>>>>>> enum plane_pixel_source {
+>>>>>>     FB,
+>>>>>>     COLOR,
+>>>>>>     LIVE_FOO,
+>>>>>>     LIVE_BAR,
+>>>>>>     ...
+>>>>>> }
+>>>>>
+>>>>> Reviving this thread as this was the initial comment suggesting to
+>>>>> implement pixel_source as an enum.
+>>>>>
+>>>>> I think the issue with having pixel_source as an enum is how to decide
+>>>>> what counts as a NULL commit.
+>>>>>
+>>>>> Currently, setting the FB to NULL will disable the plane. So I'm
+>>>>> guessing we will extend that logic to "if there's no pixel_source set
+>>>>> for the plane, then it will be a NULL commit and disable the plane".
+>>>>>
+>>>>> In that case, the question then becomes when to set the 
+>>>>> pixel_source to
+>>>>> NONE. Because if we do that when setting a NULL FB (or NULL solid_fill
+>>>>> blob), it then forces userspace to set one property before the other.
+>>>>
+>>>> Right, that won't work.
+>>>>
+>>>> There is no ordering between each property being set inside a single
+>>>> atomic commit. They can all be applied to kernel-internal state
+>>>> theoretically simultaneously, or any arbitrary random order, and the
+>>>> end result must always be the same. Hence, setting one property cannot
+>>>> change the state of another mutable property. I believe that doing
+>>>> otherwise would make userspace fragile and hard to get right.
+>>>>
+>>>> I guess there might be an exception to that rule when the same property
+>>>> is set multiple times in a single atomic commit; the last setting in
+>>>> the array prevails. That's universal and not a special-case between two
+>>>> specific properties.
+>>>>
+>>>>> Because of that, I'm thinking of having pixel_source be represented 
+>>>>> by a
+>>>>> bitmask instead. That way, we will simply unset the corresponding
+>>>>> pixel_source bit when passing in a NULL FB/solid_fill blob. Then, in
+>>>>> order to detect whether a commit is NULL or has a valid pixel 
+>>>>> source, we
+>>>>> can just check if pixel_source == 0.
+>>>>
+>>>> Sounds fine to me at first hand, but isn't there the enum property that
+>>>> says if the kernel must look at solid_fill blob *or* FB_ID?
+>>>>
+>>>> If enum prop says "use solid_fill prop", the why would changes to FB_ID
+>>>> do anything? Is it for backwards-compatibility with KMS clients that do
+>>>> not know about the enum prop?
+>>>>
+>>>> It seems like that kind of backwards-compatiblity will cause problems
+>>>> in trying to reason about the atomic state, as explained above, leading
+>>>> to very delicate and fragile conditions where things work intuitively.
+>>>> Hence, I'm not sure backwards-compatibility is wanted. This won't be
+>>>> the first or the last KMS property where an unexpected value left over
+>>>> will make old atomic KMS clients silently malfunction up to showing no
+>>>> recognisable picture at all. *If* that problem needs solving, there
+>>>> have been ideas floating around about resetting everything to nice
+>>>> values so that userspace can ignore what it does not understand. So far
+>>>> there has been no real interest in solving that problem in the kernel
+>>>> though.
+>>>>
+>>>> Legacy non-atomic UAPI wrappers can do whatever they want, and program
+>>>> any (new) properties they want in order to implement the legacy
+>>>> expectations, so that does not seem to be a problem.
+>>>
+>>> Hi Pekka and Dmitry,
+>>>
+>>> After reading through both of your comments, I think I have a better 
+>>> understanding of the pixel_source implementation now.
+>>>
+>>> So to summarize, we want to expose another property called 
+>>> "pixel_source" to userspace that will default to FB (as to not break 
+>>> legacy userspace).
+>>>
+>>> If userspace wants to use solid fill planes, it will set both the 
+>>> solid_fill *and* pixel_source properties to a valid blob and COLOR 
+>>> respectively. If it wants to use FB, it will set FB_ID and 
+>>> pixel_source to a valid FB and FB.
+>>>
+>>> Here's a table illustrating what I've described above:
+>>>
+>>> +-----------------+-------------------------+-------------------------+
+>>> | Use Case        | Legacy Userspace        | solid_fill-aware        |
+>>> |                 |                         | Userspace               |
+>>> +=================+=========================+=========================+
+>>> | Valid FB        | pixel_source = FB       | pixel_source = FB       |
+>>> |                 | FB_ID = valid FB        | FB_ID = valid FB        |
+>>> +-----------------+-------------------------+-------------------------+
+>>> | Valid           | pixel_source = COLOR    | N/A                     |
+>>> | solid_fill blob | solid_fill = valid blob |                         |
 >>
->> Alright, I am thinking that perhaps because this register is kind of 
->> unique that its actually controlling a specific setting in the 
->> datapath, downstream also has separate ops for this.
->>
->> But thats fine, we can go ahead with the struct based approach.
+>> Probably these two cells were swapped.
 >>
 > 
-> As data_compress has already landed, let me introduced the struct along 
-> with the core_revision based approach in the core_revision series and 
-> this series will expand that struct to include widebus too.
+> Ack, yes they were swapped.
+> 
+>>> +-----------------+-------------------------+-------------------------+
+>>> | NULL commit     | pixel_source = FB       | pixel_source = FB       |
+>>> |                 | FB_ID = NULL            | FB_ID = NULL            |
+>>> +-----------------+-------------------------+-------------------------+
+>>
+>>                                                | or:
+>>                                                | pixel_source = COLOR
+>>                                                | solid_fill = NULL
 
-Acked. Will rebase on top of the core_revision series and add widebus to 
-the config struct.
+Hi Dmitry and Abhinav,
 
-Thanks,
+Sorry, forgot to respond to this comment.
+Yep, if pixel_source is set to COLOR, then a NULL solid_fill blob will 
+count as a NULL commit.
+
+>>>
+>>> Is there anything I'm missing or needs to be clarified?
+>>>
+>>
+>> LGTM otherwise
+>>
+> 
+> LGTM too.
+
+Thanks for the feedback!
+
+BR,
 
 Jessica Zhang
 
+> 
+>>> Thanks,
+>>>
+>>> Jessica Zhang
+>>>
+>>>>
+>>>>
+>>>> Thanks,
+>>>> pq
+>>>>
+>>>>
+>>>>>
+>>>>> Would be interested in any feedback on this.
+>>>>>
+>>>>> Thanks,
+>>>>>
+>>>>> Jessica Zhang
+>>>>>
+>>>>>>> In addition, loosen the NULL FB checks within the atomic commit 
+>>>>>>> callstack
+>>>>>>> to allow a NULL FB when color_fill is nonzero and add FB checks in
+>>>>>>> methods where the FB was previously assumed to be non-NULL.
+>>>>>>>
+>>>>>>> Finally, have the DPU driver use drm_plane_state.color_fill and
+>>>>>>> drm_plane_state.color_fill_format instead of 
+>>>>>>> dpu_plane_state.color_fill,
+>>>>>>> and add extra checks in the DPU atomic commit callstack to 
+>>>>>>> account for a
+>>>>>>> NULL FB in cases where color_fill is set.
+>>>>>>>
+>>>>>>> Some drivers support hardware that have optimizations for solid fill
+>>>>>>> planes. This series aims to expose these capabilities to 
+>>>>>>> userspace as
+>>>>>>> some compositors have a solid fill flag (ex. SOLID_COLOR in the 
+>>>>>>> Android
+>>>>>>> hardware composer HAL) that can be set by apps like the Android 
+>>>>>>> Gears
+>>>>>>> app.
+>>>>>>>
+>>>>>>> Userspace can set the color_fill value by setting 
+>>>>>>> COLOR_FILL_FORMAT to a
+>>>>>>> DRM format, setting COLOR_FILL to a color fill value, and setting 
+>>>>>>> the
+>>>>>>> framebuffer to NULL.
+>>>>>>
+>>>>>> Is there some real reason for the format property? Ie. why not
+>>>>>> just do what was the plan for the crttc background color and
+>>>>>> specify the color in full 16bpc format and just pick as many
+>>>>>> msbs from that as the hw can use?
+>>>>>>>
+>>>>>>> Jessica Zhang (3):
+>>>>>>>     drm: Introduce color fill properties for drm plane
+>>>>>>>     drm: Adjust atomic checks for solid fill color
+>>>>>>>     drm/msm/dpu: Use color_fill property for DPU planes
+>>>>>>>
+>>>>>>>    drivers/gpu/drm/drm_atomic.c              | 68 
+>>>>>>> ++++++++++++-----------
+>>>>>>>    drivers/gpu/drm/drm_atomic_helper.c       | 34 +++++++-----
+>>>>>>>    drivers/gpu/drm/drm_atomic_uapi.c         |  8 +++
+>>>>>>>    drivers/gpu/drm/drm_blend.c               | 38 +++++++++++++
+>>>>>>>    drivers/gpu/drm/drm_plane.c               |  8 +--
+>>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  7 ++-
+>>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 66 
+>>>>>>> ++++++++++++++--------
+>>>>>>>    include/drm/drm_atomic_helper.h           |  5 +-
+>>>>>>>    include/drm/drm_blend.h                   |  2 +
+>>>>>>>    include/drm/drm_plane.h                   | 28 ++++++++++
+>>>>>>>    10 files changed, 188 insertions(+), 76 deletions(-)
+>>>>>>>
+>>>>>>> -- 
+>>>>>>> 2.38.0
+>>>>>>
+>>>>>> -- 
+>>>>>> Ville Syrjälä
+>>>>>> Intel
+>>>>
+>>
