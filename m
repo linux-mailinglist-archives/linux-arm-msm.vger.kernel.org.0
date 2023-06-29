@@ -2,88 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6012B742EBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 22:44:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D1F1742F32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 23:02:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231792AbjF2Uok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 16:44:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44928 "EHLO
+        id S230284AbjF2VBg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 17:01:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjF2Uoj (ORCPT
+        with ESMTP id S231161AbjF2VBG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 16:44:39 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11AE32695
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:44:38 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f957a45b10so1742480e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:44:37 -0700 (PDT)
+        Thu, 29 Jun 2023 17:01:06 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6203C1BF3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 14:01:03 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fbc0981743so9160415e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 14:01:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688071476; x=1690663476;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yaz00FEgGCTPJB8nvCETL7NnrgelsFGdklYuZ97nPlY=;
-        b=ZiLvRjrx0hTzcGSqqZFobRZbdbjQYk5Ph8ozUtUffExhYwZt8uGNvPdc+o1z0Ynp4X
-         VZ+tu2UtkoXGOO5pr6F0I+l90UmhOQWGOCBPcFZg8E5oWWVipkpFIZ1zV9ZcgHMYJWkt
-         dTcDBSQW8yiI0G2PBISA6VNQ7Xr7z8j0w0H/y4nDHDXLdG5/yKTTmv5cV5OH+DOWrz9C
-         KdxfJp7VRpS5EI9IocXPkDD2OdnmEmDoozkoyLzlA5VRZEY+LOEmKxtkgVKVHK8JKGWY
-         vr6HKRydRWhVOVLw8HUZLVnqz/TK4EF1jtbIv+SPcfggbpwA3p+8+HfyRkqimRUEyNVU
-         A03w==
+        d=linaro.org; s=google; t=1688072462; x=1690664462;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2a4XOvBfl8jkyMyXbTrIC6L2XcvUddWElbWmdZVx9Q4=;
+        b=lQmas8RAFfOnCLsgrdNt9JjCe5SQJ3icAxuFDfXXofHxf/R6z1xuAMUQkf3hZ2MUkG
+         MVj+PnP3eDBf1AL4qTVFZseMgrf1Fr4TO2rGk9To4o3fT9D/OWNbNu9c7FELAmh/1FMk
+         inXNpPhn9k4H6Eqpyely5aTNXgzWLNSagRPHed46y3++IFch5XHBGc5uJCpWDYB4IHeC
+         Oz7TsWYHV4z0uKGAd5UOzcfVaTuT12YwJmL4f0cWh8voyaJnjr2dGDYtq5e448W0bYEK
+         s1z1V4pLJjSpybxoQ6zTN8tSQtr0Bebsx0SVnzmnvQljsKVI75JS+4/RPtyCHnXauC17
+         GVPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688071476; x=1690663476;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yaz00FEgGCTPJB8nvCETL7NnrgelsFGdklYuZ97nPlY=;
-        b=jke7rrm9Kqp69X68eryQXRFZ2m2QuYnmmCy28uaapwRnmta3O8Aa6Uw3dEItmFH+Ul
-         idV01O+Eas/BD9FjeeoH7f1qUqW9OWsc8Aqli6eLQ0C2R+1WoMnhiXPLzP3GgeSDRskM
-         wYPz9HbL3PObZzXKYDb6Sktds7wPWvq3kJY7Tx20ExPaSa0zrj5BwoVuUyrPGjtvQxXU
-         5DFHupaQH3SA8GkNWP9R/ohnlwbw83A0u7Gy29ktjoSNI81EMPbVX/NXnRbMDw38nJFf
-         Y3UE+cqtq9Dig1QmvAskNaDpmTNLP0oUZUHIeq1E8ef36rTZ0fCPli40URWizoDC89dx
-         a6JQ==
-X-Gm-Message-State: ABy/qLbm4mTjuHb05dbEWyDsUVaMHksSYYL/Rj3JSgo1v1cyOb4uQDgP
-        CBm7VRyGHyNUcoMjupM4eB+3+w==
-X-Google-Smtp-Source: APBJJlHY6jW97U1D4G7rtrJ9N/FSbLkfUZXVa4JplOMQ3ixUjo5atHOSwdsjaRQRK6wNO8jyUxStRA==
-X-Received: by 2002:a19:4f10:0:b0:4f9:607a:6508 with SMTP id d16-20020a194f10000000b004f9607a6508mr787367lfb.50.1688071476300;
-        Thu, 29 Jun 2023 13:44:36 -0700 (PDT)
-Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id m11-20020a056512014b00b004fb326d4ff0sm2045647lfo.77.2023.06.29.13.44.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jun 2023 13:44:35 -0700 (PDT)
-Message-ID: <8ddbd947-6cb6-8c86-eb48-8b6ae9b4be2b@linaro.org>
-Date:   Thu, 29 Jun 2023 22:44:34 +0200
+        d=1e100.net; s=20221208; t=1688072462; x=1690664462;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2a4XOvBfl8jkyMyXbTrIC6L2XcvUddWElbWmdZVx9Q4=;
+        b=SGSloy0xATtQ+gcRpITk2h5R3H3jGJRKX5+i1NXCoTs40ozUJY3PE0tuHur3JivxYx
+         VoB2qlpL9eJ4yP74FSeKD1EC3mYCjDTElxaqTp1i3fvCf9tBVv5M/XMUcJLcDtQIDDq5
+         a71UnGGqVSzyrnKDlqvvCnondNsejEPgJ+PxilSCO6s4Yd+m60valP7i5r+U/skyl1LO
+         XPm607M/5S2ebucwbD0uQIHMi6L/2Bk+Nrjmv5yAeCgYfuK6UP2gmxJD75JhX3kd6VOt
+         WBnB1pGeCMBX4a2OfLf3rwbzXW5eKxYr74Vms56FcWNYRd8B1Eyhq3tyl9P/DUD93kvm
+         q1bw==
+X-Gm-Message-State: AC+VfDw1X0ANJcFJTCMInTVbPrFwY+vHpLCt0YwE7Vs/CZzTOCgo4Wbr
+        8PoUbRdNtH0miAGhNiX1sowekQ==
+X-Google-Smtp-Source: ACHHUZ7M5nUflafoNdqfIa1WrN58O1WA6yIYD+4c21sNwcF2PntOJeAfx1WYslvFt0QV0bXBTUuUTA==
+X-Received: by 2002:a05:600c:218e:b0:3fb:b1af:a44b with SMTP id e14-20020a05600c218e00b003fbb1afa44bmr378629wme.5.1688072461815;
+        Thu, 29 Jun 2023 14:01:01 -0700 (PDT)
+Received: from lion.localdomain (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id c15-20020adffb4f000000b00313e4d02be8sm15745722wrs.55.2023.06.29.14.01.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jun 2023 14:01:01 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Subject: [PATCH v2 0/3] arm64: dts: qcom: some sdm850/c630 bits
+Date:   Thu, 29 Jun 2023 22:00:52 +0100
+Message-Id: <20230627-c630-uart-and-1p2-reg-v2-0-496b581935c1@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 2/4] regulator: Introduce Qualcomm REFGEN regulator
- driver
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAATxnWQC/4WNQQ6CMBBFr0K6dkwpUISV9zAspmWAJtqSKRIN4
+ e4WLuDy/Z+Xt4lI7CiKNtsE0+qiCz6BumTCTuhHAtcnFkqqQmpVg9WFhDfyAuh7yGcFTCOgrKp
+ GN4MprRbJNRgJDKO302G/MC7ExzEzDe5zBh9d4snFJfD37K/5sf5LrTlIMOXNpFiti8bcn84jh
+ 2vgUXT7vv8AryjKutQAAAA=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230628-topic-refgen-v2-0-6136487c78c5@linaro.org>
- <20230628-topic-refgen-v2-2-6136487c78c5@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230628-topic-refgen-v2-2-6136487c78c5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Caleb Connolly <caleb.connolly@linaro.org>
+X-Mailer: b4 0.13-dev-46309
+X-Developer-Signature: v=1; a=openpgp-sha256; l=845;
+ i=caleb.connolly@linaro.org; h=from:subject:message-id;
+ bh=7YLSL57Hzq4sm+S8fpJcy+wBki6LlV+R/beBsDr+sLU=;
+ b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBknfEM2SWHdAD7ka7R6kfzPE/AeIZc5rjJG/UqQ
+ lHyVIht3UOJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZJ3xDAAKCRAFgzErGV9k
+ tii5EACZ+QjFyD7MSFqn4Hr2ymzC+b3gD1yFV9nf47OqxzpCu4wly//h9+CpPA42C6KD6MtTb0p
+ 2vKqnajjGOYw0rxX8rjjV4q3FCsZNZiOv9/GNtIJaMAnhM1JDvOSSXnwiCMfRi1mg+U3dP0F6is
+ 55C6iTHy5XWitKDda+Ujs4lDAxERg+0lCDlUm9DwqJI9c9rfZo4Z8VQkt6IsteuHS8P5dCyI4xp
+ Sg34APosoWDdTmpxsiykwKhKT3nEKwsV3+S9cHM1GcKYNRTm9nustdcubqb7srYVgJd2mVx2fBI
+ Rtj4dA0FKxv1OFnxxBs+egVBUItDoI8QzEpOg7KZWD+bv6I1i5FtWXwPCD01mraTOTPVY6lVSjT
+ S+ykHSIafaVV+nHKlnrsKbYjDl4+5sLEfKoJ57oQbm5RGEW36Gs51XU8U2VHCr2R6fkdGRkLiXn
+ dBmRaidxt3Jhtzdnjh3Xw8j3x2oA7ppCEk1aZHu61nLTPaaeYw1mtacq8Oq8Lb9VM4qv7VA2RZf
+ GqCl2JDBdyJVbAVf4BzW6jqDAuSPOcVYdgr8SKXMTBCIpHa4reWgriZVzHHlm4IJJnZvVkVdKLA
+ rnV+OYXvM8Crpt4C+QuPkIcC230cg3ZK1aS6+cpheB++eRA5wZfj26jyP5k5KMFAIPPFqeoaLt7
+ bIr7NVCJ++TIoXw==
+X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
+ fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,101 +97,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29.06.2023 22:35, Konrad Dybcio wrote:
-> Modern Qualcomm SoCs have a REFGEN (reference voltage generator)
-> regulator, providing reference voltage to on-chip IP, like PHYs.
-> 
-> Add a driver to support toggling that regulator.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-Ugh. Missed the 'const' here and below. LMK if that warrants a resend
-(or.. perhaps you just have other comments)
+A few DT fixes for the SDM850 laptops
 
-Konrad
-> +	.ops = &(struct regulator_ops) {
-> +		.enable		= qcom_sdm845_refgen_enable,
-> +		.disable	= qcom_sdm845_refgen_disable,
-> +		.is_enabled	= qcom_sdm845_refgen_is_enabled,
-> +	},
-> +};
-> +
-> +static struct regulator_desc sm8250_refgen_desc = {
-> +	.enable_reg = REFGEN_REG_PWRDWN_CTRL5,
-> +	.enable_mask = REFGEN_PWRDWN_CTRL5_MASK,
-> +	.enable_val = REFGEN_PWRDWN_CTRL5_ENABLE,
-> +	.disable_val = 0,
-> +	.enable_time = 5,
-> +	.name = "refgen",
-> +	.owner = THIS_MODULE,
-> +	.type = REGULATOR_VOLTAGE,
-> +	.ops = &(struct regulator_ops) {
-> +		.enable		= regulator_enable_regmap,
-> +		.disable	= regulator_disable_regmap,
-> +		.is_enabled	= regulator_is_enabled_regmap,
-> +	},
-> +};
-> +
-> +static const struct regmap_config qcom_refgen_regmap_config = {
-> +	.reg_bits = 32,
-> +	.reg_stride = 4,
-> +	.val_bits = 32,
-> +	.fast_io = true,
-> +};
-> +
-> +static int qcom_refgen_probe(struct platform_device *pdev)
-> +{
-> +	struct regulator_init_data *init_data;
-> +	struct regulator_config config = {};
-> +	const struct regulator_desc *rdesc;
-> +	struct device *dev = &pdev->dev;
-> +	struct regulator_dev *rdev;
-> +	struct regmap *regmap;
-> +	void __iomem *base;
-> +
-> +	rdesc = of_device_get_match_data(dev);
-> +	if (!rdesc)
-> +		return -ENODATA;
-> +
-> +	base = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(base))
-> +		return PTR_ERR(base);
-> +
-> +	regmap = devm_regmap_init_mmio(dev, base, &qcom_refgen_regmap_config);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	init_data = of_get_regulator_init_data(dev, dev->of_node, rdesc);
-> +	if (!init_data)
-> +		return -ENOMEM;
-> +
-> +	config.dev = dev;
-> +	config.init_data = init_data;
-> +	config.of_node = dev->of_node;
-> +	config.regmap = regmap;
-> +
-> +	rdev = devm_regulator_register(dev, rdesc, &config);
-> +	if (IS_ERR(rdev))
-> +		return PTR_ERR(rdev);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id qcom_refgen_match_table[] = {
-> +	{ .compatible = "qcom,sdm845-refgen-regulator", .data = &sdm845_refgen_desc },
-> +	{ .compatible = "qcom,sm8250-refgen-regulator", .data = &sm8250_refgen_desc },
-> +	{ }
-> +};
-> +
-> +static struct platform_driver qcom_refgen_driver = {
-> +	.probe = qcom_refgen_probe,
-> +	.driver = {
-> +		.name = "qcom-refgen-regulator",
-> +		.of_match_table = qcom_refgen_match_table,
-> +	},
-> +};
-> +module_platform_driver(qcom_refgen_driver);
-> +
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("Qualcomm REFGEN regulator driver");
-> 
+* Add the missing eDP bridge 1p2 regulator on the c630
+* Fix bluetooth UART aliases
+* Enable debug UART on the c630
+
+---
+Changes in v2:
+- Fix property ordering in patch 1
+- Directly reference hsuart renaming commit in patch 3
+- Link to v1: https://lore.kernel.org/r/20230627-c630-uart-and-1p2-reg-v1-0-b48bfb47639b@linaro.org
+
+---
+Caleb Connolly (3):
+      arm64: dts: qcom: c630: add panel bridge 1p2 regulator
+      arm64: dts: qcom: c630: add debug uart
+      arm64: dts: qcom: sdm850-*: fix uart6 aliases
+
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      | 35 +++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts   |  2 +-
+ 2 files changed, 35 insertions(+), 2 deletions(-)
+---
+base-commit: c3dae0fa8662b2848ccbcdc6187443ca64cd2808
+
+// Caleb (they/them)
+
