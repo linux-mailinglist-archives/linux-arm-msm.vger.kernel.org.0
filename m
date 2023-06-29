@@ -2,171 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10831742FC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 23:54:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54EB87430DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 01:08:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231508AbjF2Vys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 17:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60948 "EHLO
+        id S229768AbjF2XIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 19:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232144AbjF2VyO (ORCPT
+        with ESMTP id S229459AbjF2XIJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 17:54:14 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A4B30F1;
-        Thu, 29 Jun 2023 14:53:56 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35TLkQ42017475;
-        Thu, 29 Jun 2023 21:53:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/XdqmJgBgI4NzRL9qQX8jk2AqYtbjs3ud9Ias1hDbTU=;
- b=OzhtrvK2wIUJNu43NHUkL8DI6lSfkcUF5Q6ILcKgaPzLt2VfXIR9xB7iaZHnkgRBPhgD
- mq1Sgkw9gbvAYhKLuoC+66twsrfZsecWkN+dkMUGSEj+Rryd/f2bF0GkLQqUYZ+4vV08
- uWmcz4L17JUWDb1tEYqnnnAG+w9bc7ic7iiJKnGjx5fAnWgNSpQhFj+WELHBgdc52I2w
- 73D1RLbR6dTaMOJyCp23pjVoWrpdQC4+1YGuQqmJB0+Y0LuYjCuA/Pr4EfKrzFGhxFV8
- 7w5twNJMTxYR02wm/eSdgHAbVEdcDuZb+ef013XEwD4qIEyXbcVB593gvRfFZaEkK42j lA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhgpgr5w8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Jun 2023 21:53:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35TLriad029585
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Jun 2023 21:53:44 GMT
-Received: from [10.134.66.165] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Thu, 29 Jun
- 2023 14:53:43 -0700
-Message-ID: <fa12dd5d-af9d-235d-a6c7-3dcf690dcd67@quicinc.com>
-Date:   Thu, 29 Jun 2023 14:53:42 -0700
+        Thu, 29 Jun 2023 19:08:09 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA1D30C4;
+        Thu, 29 Jun 2023 16:08:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1688080088; x=1719616088;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=iznXYZ4xH3Nv8gWM89HiaGceomxOh3Ta2hE5jZaVkOM=;
+  b=hf7R9BmpUHb+H+KPeikLPY/F62jOVX+vZ2xUi4+cFoSMP3goXwN4sSm2
+   aphqsQE1NiP8vsP15kkpfIUNX/iXiT86U73biMPyopXHsqRoCcIoo16Dx
+   2qHRGo9G5QbxQxWAPKQQGz7EWJjuZrw8WvS6D02NfDmyRvkhk9ewuF8Cm
+   6SNKwaZ9qmzA8TXwn1nMoj5qLZO1Ro0P6NW5/1Gv29cy3oKug/eAPsHKd
+   UnEzk/N1WXQzu/b5gsDbPZh1vBMYeP+MM/eGwePrbcr/fULZznmVvz0Nz
+   QVvsP945RMWs3vqxPRzCWx5fwzSgi/vHIoizYl/s8mqbccP+MVDnk9Kqk
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10756"; a="352077264"
+X-IronPort-AV: E=Sophos;i="6.01,169,1684825200"; 
+   d="scan'208";a="352077264"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2023 16:08:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10756"; a="807531156"
+X-IronPort-AV: E=Sophos;i="6.01,169,1684825200"; 
+   d="scan'208";a="807531156"
+Received: from lkp-server01.sh.intel.com (HELO 783282924a45) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 29 Jun 2023 16:08:02 -0700
+Received: from kbuild by 783282924a45 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qF0k5-000ETx-1u;
+        Thu, 29 Jun 2023 23:08:01 +0000
+Date:   Fri, 30 Jun 2023 07:07:19 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     oe-kbuild-all@lists.linux.dev, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 2/4] regulator: Introduce Qualcomm REFGEN regulator
+ driver
+Message-ID: <202306300643.LHN1fbOT-lkp@intel.com>
+References: <20230628-topic-refgen-v2-2-6136487c78c5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh@kernel.org>
-CC:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
-        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pwm@vger.kernel.org>
-References: <20230621185949.2068-1-quic_amelende@quicinc.com>
- <20230621185949.2068-2-quic_amelende@quicinc.com>
- <20230626135857.GA3118929-robh@kernel.org>
- <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
- <f274247c-f45b-8a48-92f2-cff4597aff15@linaro.org>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <f274247c-f45b-8a48-92f2-cff4597aff15@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kZcRCS-GeKOiZb2XNIZgHnfikzARb_cZ
-X-Proofpoint-ORIG-GUID: kZcRCS-GeKOiZb2XNIZgHnfikzARb_cZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-29_08,2023-06-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- priorityscore=1501 bulkscore=0 mlxlogscore=999 adultscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1011 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306290198
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230628-topic-refgen-v2-2-6136487c78c5@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Konrad,
 
+kernel test robot noticed the following build errors:
 
-On 6/29/2023 1:45 AM, Dmitry Baryshkov wrote:
-> On 29/06/2023 04:19, Anjelique Melendez wrote:
->>
->>
->> On 6/26/2023 6:58 AM, Rob Herring wrote:
->>> On Wed, Jun 21, 2023 at 11:59:45AM -0700, Anjelique Melendez wrote:
->>>> Add binding for the Qualcomm Programmable Boot Sequencer device.
->>>>
->>>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->>>> ---
->>>>   .../bindings/soc/qcom/qcom-pbs.yaml           | 41 +++++++++++++++++++
->>>>   1 file changed, 41 insertions(+)
->>>>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
->>>> new file mode 100644
->>>> index 000000000000..0a89c334f95c
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
->>>> @@ -0,0 +1,41 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/soc/qcom/qcom-pbs.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm Technologies, Inc. PBS
->>>> +
->>>> +maintainers:
->>>> +  - Anjelique Melendez <quic_amelende@quicinc.com>
->>>> +
->>>> +description: |
->>>> +  Qualcomm PBS (programmable boot sequencer) supports triggering sequences
->>>> +  for clients upon request.
->>>> +
->>>> +properties:
->>>> +  compatible:
->>>> +    const: qcom,pbs
->>>> +
->>>> +  reg:
->>>> +    description: |
->>>> +      Base address of the PBS peripheral.
->>>> +    maxItems: 1
->>>> +
->>>> +required:
->>>> + - compatible
->>>> + - reg
->>>> +
->>>> +additionalProperties: false
->>>> +
->>>> +examples:
->>>> +  - |
->>>> +    pmic {
->>>> +      #address-cells = <1>;
->>>> +      #size-cells = <0>;
->>>> +
->>>> +      qcom,pbs@7400 {
->>>> +        compatible = "qcom,pbs";
->>>> +        reg = <0x7400>;
->>>> +      };
->>>
->>> Why do you need a child node for this? Is there more than 1 instance in
->>> a PMIC? Every sub-function of a PMIC doesn't have to have a DT node.
->>>
->>
->> We currently have another downstream driver (which is planned to get upstreamed)
->> which also needs a handle to a pbs device in order to properly trigger events.
-> 
-> Does it have to be a separate driver? Or is it a part of the LPG driver, just being artificially split away?
+[auto build test ERROR on 5c875096d59010cee4e00da1f9c7bdb07a025dc2]
 
-Sure, I just discussed with team and we are ok with removing this as a separate driver. Will have that 
-for next version. 
-> 
->>
->>> Rob
->>
->>
->>
-> 
+url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/dt-bindings-regulator-Describe-Qualcomm-REFGEN-regulator/20230630-043835
+base:   5c875096d59010cee4e00da1f9c7bdb07a025dc2
+patch link:    https://lore.kernel.org/r/20230628-topic-refgen-v2-2-6136487c78c5%40linaro.org
+patch subject: [PATCH v2 2/4] regulator: Introduce Qualcomm REFGEN regulator driver
+config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20230630/202306300643.LHN1fbOT-lkp@intel.com/config)
+compiler: s390-linux-gcc (GCC) 12.3.0
+reproduce: (https://download.01.org/0day-ci/archive/20230630/202306300643.LHN1fbOT-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202306300643.LHN1fbOT-lkp@intel.com/
+
+All errors (new ones prefixed by >>, old ones prefixed by <<):
+
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_sed.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_nq.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_twos.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_ftp.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_pe_sip.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/netfilter/nf_defrag_ipv4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/netfilter/nf_reject_ipv4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/netfilter/iptable_nat.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/netfilter/iptable_raw.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ip_tunnel.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ipip.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ip_gre.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/udp_tunnel.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ip_vti.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ah4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/esp4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/xfrm4_tunnel.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/tunnel4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/inet_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/tcp_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/udp_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/raw_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/xfrm/xfrm_algo.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/xfrm/xfrm_user.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/unix/unix_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/netfilter/ip6table_raw.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/netfilter/ip6table_nat.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/netfilter/nf_defrag_ipv6.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/netfilter/nf_reject_ipv6.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/ah6.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/esp6.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/xfrm6_tunnel.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/tunnel6.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/mip6.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/sit.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv6/ip6_udp_tunnel.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ar9331.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_brcm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_dsa.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_gswip.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_hellcreek.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ksz.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_lan9303.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_mtk.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_none.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ocelot.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ocelot_8021q.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_qca.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_rtl4_a.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_rtl8_4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_rzn1_a5psw.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_sja1105.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_trailer.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_xrs700x.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/8021q/8021q.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/xdp/xsk_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/mptcp/mptcp_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/mptcp/mptcp_crypto_test.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/mptcp/mptcp_token_test.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/packet/af_packet.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/packet/af_packet_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/key/af_key.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/bridge/netfilter/nf_conntrack_bridge.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/bridge/netfilter/ebtables.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/bridge/netfilter/ebtable_broute.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/bridge/netfilter/ebtable_filter.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/bridge/netfilter/ebtable_nat.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/bridge/bridge.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sunrpc/sunrpc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sunrpc/auth_gss/auth_rpcgss.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sunrpc/auth_gss/rpcsec_gss_krb5.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/kcm/kcm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/atm/atm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/atm/lec.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/atm/mpoa.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sctp/sctp_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/tipc/diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/caif/caif.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/caif/chnl_net.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/caif/caif_socket.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/caif/caif_usb.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/6lowpan/6lowpan.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ieee802154/6lowpan/ieee802154_6lowpan.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ieee802154/ieee802154_socket.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/nfc/nci/nci.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/nfc/nfc_digital.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/vmw_vsock/vsock_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/hsr/hsr.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/cio/ccwgroup.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/cio/vfio_ccw.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/block/dasd_diag_mod.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/block/dasd_eckd_mod.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/block/dasd_fba_mod.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/block/dcssblk.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/char/raw3270.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/char/con3270.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/char/fs3270.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/s390/net/lcs.o
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/fsl-edma.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/idma64.ko] undefined!
+>> ERROR: modpost: "devm_platform_ioremap_resource" [drivers/regulator/qcom-refgen-regulator.ko] undefined!
+ERROR: modpost: "iounmap" [drivers/tty/ipwireless/ipwireless.ko] undefined!
+ERROR: modpost: "ioremap" [drivers/tty/ipwireless/ipwireless.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/char/xillybus/xillybus_of.ko] undefined!
+ERROR: modpost: "devm_memremap" [drivers/misc/open-dice.ko] undefined!
+ERROR: modpost: "devm_memunmap" [drivers/misc/open-dice.ko] undefined!
+ERROR: modpost: "iounmap" [drivers/net/ethernet/8390/pcnet_cs.ko] undefined!
+ERROR: modpost: "ioremap" [drivers/net/ethernet/8390/pcnet_cs.ko] undefined!
+WARNING: modpost: suppressed 13 unresolved symbol warnings because there were too many)
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
