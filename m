@@ -2,139 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27E75742F38
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 23:02:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10831742FC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 23:54:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231208AbjF2VBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 17:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50202 "EHLO
+        id S231508AbjF2Vys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 17:54:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231446AbjF2VBL (ORCPT
+        with ESMTP id S232144AbjF2VyO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 17:01:11 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 378453583
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 14:01:06 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-31409e8c145so1302976f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 14:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688072464; x=1690664464;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uOBQQAO39ORd9139cxaa/8jYBiyUfsE1Tz3TWmmoA48=;
-        b=EHkaO3Xz/aFpzpDvUr+1th1OQNVk2w8qipWA/+EpTRAkILexEhuDc9lxWSslxxSWGg
-         27IAOJezPtavNF6vTpt62/YoctOqc3QjkNrsddQWumZoSNnKgxp8dN1W9RpKp1gztNQv
-         GtG0ZBiLuxsNbPAzQ38ObWaWbFWI9rBtCPqeeCPB0Ihwu8iQqqhi1PK/zogqDIS7CO6n
-         RUmQ3ifNpWAJYLgemxVtrPGFTNW7kG3M1zrJk+HFtxxRbyiuzfoNdqFW1sudkvgCAekV
-         d2gDTfNpb50pgMEBHKh6Y3ZvRBe2c7RGqbv7kIXZRcW4H+iwQXE27tneUWw6QnJhW+TA
-         I29w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688072464; x=1690664464;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uOBQQAO39ORd9139cxaa/8jYBiyUfsE1Tz3TWmmoA48=;
-        b=AcSEHZ0RYOEXtyu3aHBplUPOn4oRl1AHM5A6RxmXpO/lIVNCgzoNjnM9y1+RsDX2yD
-         z/Zm3ez8Jjg8UTzCpj4sTCDkOoRbQx4bdikPXjpPDep2xq7CtN1oSppgHgtuqsVro55d
-         M3syqjFbV97DvPvujc7Hef2Tls9Ew6QsEu5ZQkhGvaxNnjChSFEmHQCKX/5kqRXlrULv
-         K98vx9iGt3h57+4nG1wQYC1DwlYLy381ECtSRy9nui1602eYJRk/KUJN3X/K/SICoiWn
-         /t4kmkxWIIBO/cnQYEk78HNABl/+n0LbbpL8nuASdcN9SRNQR5k4VmaNrSVvx4e37v5H
-         UGfw==
-X-Gm-Message-State: ABy/qLYf+7dgxgd5TJWyCfYnyG9IfGGxR8nc/jqKXim99fIs/pABq/lt
-        T+77n2/JQnluJcczhYTbVyZ6EQ==
-X-Google-Smtp-Source: APBJJlGTTPfQrqLF+wgBEqRxUOJBv9wdQQQWG+9w4ApC0NgSyPibUxk3CWKWZ9PIMFZB0p2RBapehg==
-X-Received: by 2002:a5d:61d2:0:b0:313:e8bf:a6e with SMTP id q18-20020a5d61d2000000b00313e8bf0a6emr560436wrv.21.1688072464741;
-        Thu, 29 Jun 2023 14:01:04 -0700 (PDT)
-Received: from lion.localdomain (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id c15-20020adffb4f000000b00313e4d02be8sm15745722wrs.55.2023.06.29.14.01.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jun 2023 14:01:04 -0700 (PDT)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-Date:   Thu, 29 Jun 2023 22:00:55 +0100
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sdm850-*: fix uart6 aliases
+        Thu, 29 Jun 2023 17:54:14 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A4B30F1;
+        Thu, 29 Jun 2023 14:53:56 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35TLkQ42017475;
+        Thu, 29 Jun 2023 21:53:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/XdqmJgBgI4NzRL9qQX8jk2AqYtbjs3ud9Ias1hDbTU=;
+ b=OzhtrvK2wIUJNu43NHUkL8DI6lSfkcUF5Q6ILcKgaPzLt2VfXIR9xB7iaZHnkgRBPhgD
+ mq1Sgkw9gbvAYhKLuoC+66twsrfZsecWkN+dkMUGSEj+Rryd/f2bF0GkLQqUYZ+4vV08
+ uWmcz4L17JUWDb1tEYqnnnAG+w9bc7ic7iiJKnGjx5fAnWgNSpQhFj+WELHBgdc52I2w
+ 73D1RLbR6dTaMOJyCp23pjVoWrpdQC4+1YGuQqmJB0+Y0LuYjCuA/Pr4EfKrzFGhxFV8
+ 7w5twNJMTxYR02wm/eSdgHAbVEdcDuZb+ef013XEwD4qIEyXbcVB593gvRfFZaEkK42j lA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhgpgr5w8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Jun 2023 21:53:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35TLriad029585
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Jun 2023 21:53:44 GMT
+Received: from [10.134.66.165] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Thu, 29 Jun
+ 2023 14:53:43 -0700
+Message-ID: <fa12dd5d-af9d-235d-a6c7-3dcf690dcd67@quicinc.com>
+Date:   Thu, 29 Jun 2023 14:53:42 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230627-c630-uart-and-1p2-reg-v2-3-496b581935c1@linaro.org>
-References: <20230627-c630-uart-and-1p2-reg-v2-0-496b581935c1@linaro.org>
-In-Reply-To: <20230627-c630-uart-and-1p2-reg-v2-0-496b581935c1@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Caleb Connolly <caleb.connolly@linaro.org>
-X-Mailer: b4 0.13-dev-46309
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1330;
- i=caleb.connolly@linaro.org; h=from:subject:message-id;
- bh=mIKtpml91PM3gdeXmNYntQf53BgERbNuTOCLXCFBW1M=;
- b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBknfEMQdBXLRT8t49iYEWTFPolTPzPtQO+LLqYz
- ch5VknnbEeJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZJ3xDAAKCRAFgzErGV9k
- tln7D/4+IwOi1ioubjJTKTUpZHjSTzkFasotbnr136fREsjAU8nO5BUGOij7MBcE580X4DdeZpH
- YU48ItNUflILo5yEOO5L9gTPR9o4vOwLaAIE9WbRhgZzrBB6BYfx3AP4hHGj84ac0GNINyQHpPn
- WpY/t8Z3j4yVIKfqXWdS/QGjrKXk4LtWNmjWMmRpr+ThkpUpuS4CrtREdTFlvdcdrShfRU1pI/j
- NSg0p1lpfiKdswj4/pAiIVm0u1jwuwe7cYcix71R6UL7VgOiyZaPA+FRFC8sn0kbUoH486MCpRG
- Oo84zr+RJOi4/pGMp561QDaN8+D6eAFKJwM/xHzNVWO3p+Wym7bREmYm1QN2RB+P1echXkVchh6
- FOA1XP38/jalCuyl55wH9f3nW9rfbfDiXJgOaHYuJ1BPmZnANvcKnv5W52BwSQnb3LGVvp2Qa8B
- YQV5Jgv+9czWdrnGAzGLnaY+Y6BjVYPt2yCBujR4g3AA3c0d/s9UT3yBxYTAtAyFM65vgXPRDkE
- +elv5r7pO+P8E0NlSPuF4GfzcHofW6WYu+lVNxGpS5HKPHe/6gZuRqCbQcR77xJjFn1kvQwtBC1
- RdfAxAvHwmDgXxfSlp2FWDlO6wRdySB23qcgjOqL7pMsSZAr9QdcLrNEhrwdhoosTSaA0m2XREI
- sSebzK+qtkL/n4g==
-X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
- fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>
+CC:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>
+References: <20230621185949.2068-1-quic_amelende@quicinc.com>
+ <20230621185949.2068-2-quic_amelende@quicinc.com>
+ <20230626135857.GA3118929-robh@kernel.org>
+ <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
+ <f274247c-f45b-8a48-92f2-cff4597aff15@linaro.org>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <f274247c-f45b-8a48-92f2-cff4597aff15@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: kZcRCS-GeKOiZb2XNIZgHnfikzARb_cZ
+X-Proofpoint-ORIG-GUID: kZcRCS-GeKOiZb2XNIZgHnfikzARb_cZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-29_08,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=999 adultscore=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1011 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306290198
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is a follow up on a previous patch[1] fixing the aliases for
-sdm845 devices, fix them here too.
 
-[1]: 4772c03002c3 ("arm64: dts: qcom: sdm845-*: fix uart6 aliases")
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 2 +-
- arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+On 6/29/2023 1:45 AM, Dmitry Baryshkov wrote:
+> On 29/06/2023 04:19, Anjelique Melendez wrote:
+>>
+>>
+>> On 6/26/2023 6:58 AM, Rob Herring wrote:
+>>> On Wed, Jun 21, 2023 at 11:59:45AM -0700, Anjelique Melendez wrote:
+>>>> Add binding for the Qualcomm Programmable Boot Sequencer device.
+>>>>
+>>>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>>>> ---
+>>>>   .../bindings/soc/qcom/qcom-pbs.yaml           | 41 +++++++++++++++++++
+>>>>   1 file changed, 41 insertions(+)
+>>>>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
+>>>> new file mode 100644
+>>>> index 000000000000..0a89c334f95c
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-pbs.yaml
+>>>> @@ -0,0 +1,41 @@
+>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>> +%YAML 1.2
+>>>> +---
+>>>> +$id: http://devicetree.org/schemas/soc/qcom/qcom-pbs.yaml#
+>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>> +
+>>>> +title: Qualcomm Technologies, Inc. PBS
+>>>> +
+>>>> +maintainers:
+>>>> +  - Anjelique Melendez <quic_amelende@quicinc.com>
+>>>> +
+>>>> +description: |
+>>>> +  Qualcomm PBS (programmable boot sequencer) supports triggering sequences
+>>>> +  for clients upon request.
+>>>> +
+>>>> +properties:
+>>>> +  compatible:
+>>>> +    const: qcom,pbs
+>>>> +
+>>>> +  reg:
+>>>> +    description: |
+>>>> +      Base address of the PBS peripheral.
+>>>> +    maxItems: 1
+>>>> +
+>>>> +required:
+>>>> + - compatible
+>>>> + - reg
+>>>> +
+>>>> +additionalProperties: false
+>>>> +
+>>>> +examples:
+>>>> +  - |
+>>>> +    pmic {
+>>>> +      #address-cells = <1>;
+>>>> +      #size-cells = <0>;
+>>>> +
+>>>> +      qcom,pbs@7400 {
+>>>> +        compatible = "qcom,pbs";
+>>>> +        reg = <0x7400>;
+>>>> +      };
+>>>
+>>> Why do you need a child node for this? Is there more than 1 instance in
+>>> a PMIC? Every sub-function of a PMIC doesn't have to have a DT node.
+>>>
+>>
+>> We currently have another downstream driver (which is planned to get upstreamed)
+>> which also needs a handle to a pbs device in order to properly trigger events.
+> 
+> Does it have to be a separate driver? Or is it a part of the LPG driver, just being artificially split away?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 141457ddad6b..fbd55bc89fd1 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -34,7 +34,7 @@ / {
- 
- 	aliases {
- 		serial0 = &uart9;
--		hsuart0 = &uart6;
-+		serial1 = &uart6;
- 	};
- 
- 	gpio-keys {
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-index 41f59e32af64..543837316001 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-@@ -56,7 +56,7 @@ framebuffer0: framebuffer@80400000 {
- 	};
- 
- 	aliases {
--		hsuart0 = &uart6;
-+		serial1 = &uart6;
- 	};
- 
- 	/* Reserved memory changes */
-
--- 
-2.41.0
-
+Sure, I just discussed with team and we are ok with removing this as a separate driver. Will have that 
+for next version. 
+> 
+>>
+>>> Rob
+>>
+>>
+>>
+> 
