@@ -2,81 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 412C5742A62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 18:12:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 835EC742A87
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 18:22:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232408AbjF2QMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 12:12:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37912 "EHLO
+        id S232168AbjF2QWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 12:22:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232296AbjF2QMg (ORCPT
+        with ESMTP id S232446AbjF2QWL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 12:12:36 -0400
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C40DF10E5;
-        Thu, 29 Jun 2023 09:12:35 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-7836164a08aso36498839f.1;
-        Thu, 29 Jun 2023 09:12:35 -0700 (PDT)
+        Thu, 29 Jun 2023 12:22:11 -0400
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A6B2D71;
+        Thu, 29 Jun 2023 09:22:10 -0700 (PDT)
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-78625caa702so36251339f.1;
+        Thu, 29 Jun 2023 09:22:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688055155; x=1690647155;
+        d=1e100.net; s=20221208; t=1688055729; x=1690647729;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I3cbrEba2zKCc7+NLRK37Om5CmAjDmmF+NMGLR2TXNw=;
-        b=gbC2SH9FC+4L6slEkdxO7KzGlldgyQFsjHcc6umJg3lviQzSMIgR9ZBDwIHYQXqgcv
-         u5SgCTtPjnuLHH2Vbjp1Qu+a6M/1neFWcDwOGM65j+s8oglY5IsNGmGjNB7tdM+nTQ5k
-         xCcrB4L/AMHi3jVLyMHT0VvWMwX/DRw0boSH/Z3v+oQ1+Fnv1b+4sXp8XLhHCl32Aefi
-         yBnihCvYXumXHnHitKks9MdMGk7moh+p3xDUymt9RV1z3l+bQDVt9vXdiApoOyfe2O6u
-         2X8gpwQyCXI2n1WAinoYXHgoLnrG8MrgpmR42+B8rDBPmvpGmcTsse++8jKA0z0VuNQb
-         KR2A==
-X-Gm-Message-State: AC+VfDzKBUQXNthokP6A+rPoK1XGpmbh3SwwPRJu6F/DkJUeRXzF2EkX
-        1GIF4I5/PgXuX9al20uq89RmmH3Q/Q==
-X-Google-Smtp-Source: ACHHUZ705vS8Dn9vGnSlG3J2dxDiTeOe9Cq3FIEpSpo5xeOKdlFlvpHugksZ11fmTkDJxH+5o0uW8Q==
-X-Received: by 2002:a5e:a51a:0:b0:783:62af:fbdf with SMTP id 26-20020a5ea51a000000b0078362affbdfmr11390301iog.14.1688055155018;
-        Thu, 29 Jun 2023 09:12:35 -0700 (PDT)
+        bh=8XJIPc5D/nWMfHtdu7S7li9GBwwNXgclF2o+QzBIkc4=;
+        b=h1p8UOYDhvekLDtouXyxYzVLqYPXQES0d5trf7gGfzrqCG3sxpTEi2eUjt5fcnJytL
+         oBz3u6FvXO38u/hZMsKOWxw4EBBVwcXgsejzc7JCGHP0q6eV14DWxZ4Q13ElLkkVsLo8
+         k7cqMyVCdSRYtFyn//wM/aUWU6RIyKjVXdHuhF/sOZ3X8i9uTJSlWRxG2jjVpCWAo4Ma
+         8N4qdxtILC5pq+LSwgd04YuQwLgvag9hRFbXFBfwCNyluO32cFdn9a4BF03R90YEh5/3
+         P6MiPhj7ghF0hMIiN5Dy70lzeLbUIN+Sl7tcnthFEI+YGn9SfnWypFo+xwbWPmqyFENG
+         liMQ==
+X-Gm-Message-State: AC+VfDxCQNTaIqS0jrT1+H6hGeHcPaa6HlATJmIiG2Yi7z/KQF+ndult
+        FCIQMU8EN4ARR63y5ZtTwQ==
+X-Google-Smtp-Source: ACHHUZ6zGJ7m4puXX8RHcH3RvWagEBtmRonrdSYks1C5rYbMaDbnTtvDB2aOGrA7t0/2f2jzbMXmHw==
+X-Received: by 2002:a05:6602:200c:b0:786:2d04:7b14 with SMTP id y12-20020a056602200c00b007862d047b14mr19684iod.16.1688055729525;
+        Thu, 29 Jun 2023 09:22:09 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id a21-20020a5d89d5000000b00784315b7f86sm1856336iot.24.2023.06.29.09.12.32
+        by smtp.gmail.com with ESMTPSA id b2-20020a05663801a200b0042aeaba5413sm1498979jaq.117.2023.06.29.09.22.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jun 2023 09:12:34 -0700 (PDT)
-Received: (nullmailer pid 3128049 invoked by uid 1000);
-        Thu, 29 Jun 2023 16:12:31 -0000
-Date:   Thu, 29 Jun 2023 10:12:31 -0600
+        Thu, 29 Jun 2023 09:22:08 -0700 (PDT)
+Received: (nullmailer pid 3141062 invoked by uid 1000);
+        Thu, 29 Jun 2023 16:22:06 -0000
+Date:   Thu, 29 Jun 2023 10:22:06 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Lux Aliaga <they@mint.lgbt>,
-        Sean Paul <sean@poorly.run>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        linux-clk@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Subject: Re: [PATCH v2 06/15] dt-bindings: display/msm: sc7180-dpu: Describe
- SM6125
-Message-ID: <168805515067.3127989.380988000500770065.robh@kernel.org>
-References: <20230627-sm6125-dpu-v2-0-03e430a2078c@somainline.org>
- <20230627-sm6125-dpu-v2-6-03e430a2078c@somainline.org>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/4] dt-bindings: regulator: Describe Qualcomm REFGEN
+ regulator
+Message-ID: <20230629162206.GA3137232-robh@kernel.org>
+References: <20230628-topic-refgen-v1-0-126e59573eeb@linaro.org>
+ <20230628-topic-refgen-v1-1-126e59573eeb@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230627-sm6125-dpu-v2-6-03e430a2078c@somainline.org>
+In-Reply-To: <20230628-topic-refgen-v1-1-126e59573eeb@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -88,20 +80,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 27 Jun 2023 22:14:21 +0200, Marijn Suijten wrote:
-> SM6125 is identical to SM6375 except that while downstream also defines
-> a throttle clock, its presence results in timeouts whereas SM6375
-> requires it to not observe any timeouts.  This is represented by
-> reducing the clock array length to 6 so that it cannot be passed.  Note
-> that any SoC other than SM6375 (currently SC7180 and SM6350) are
-> unconstrained and could either pass or leave out this "throttle" clock.
+On Wed, Jun 28, 2023 at 06:29:45PM +0200, Konrad Dybcio wrote:
+> Modern Qualcomm SoCs have a REFGEN (reference voltage generator)
+> regulator, providing reference voltage to on-chip IP, like PHYs.
+> It's controlled through MMIO and we can toggle it or read its state back.
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Describe it.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  .../devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml   | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  .../regulator/qcom,sdm845-refgen-regulator.yaml    | 56 ++++++++++++++++++++++
+>  1 file changed, 56 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/regulator/qcom,sdm845-refgen-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,sdm845-refgen-regulator.yaml
+> new file mode 100644
+> index 000000000000..19d3eb9db98f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/regulator/qcom,sdm845-refgen-regulator.yaml
+> @@ -0,0 +1,56 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/regulator/qcom,sdm845-refgen-regulator.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. REFGEN Regulator
+> +
+> +maintainers:
+> +  - Konrad Dybcio <konradybcio@kernel.org>
+> +
+> +description: |
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Don't need '|'.
 
+> +    The REFGEN (reference voltage renegator) regulator provides reference
+
+renegator?
+
+> +    voltage for on-chip IPs (like PHYs) on some Qualcomm SoCs.
+> +
+> +allOf:
+> +  - $ref: regulator.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - items:
+> +          - enum:
+> +              - qcom,sc7180-refgen-regulator
+> +              - qcom,sc8180x-refgen-regulator
+> +              - qcom,sm8150-refgen-regulator
+> +          - const: qcom,sdm845-refgen-regulator
+> +
+> +      - items:
+> +          - enum:
+> +              - qcom,sc7280-refgen-regulator
+> +              - qcom,sc8280xp-refgen-regulator
+> +              - qcom,sm6350-refgen-regulator
+> +              - qcom,sm6375-refgen-regulator
+> +              - qcom,sm8350-refgen-regulator
+> +          - const: qcom,sm8250-refgen-regulator
+> +
+> +      - enum:
+> +          - qcom,sdm845-refgen-regulator
+> +          - qcom,sm8250-refgen-regulator
+> +
+> +  reg: true
+
+Need to define how many.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    regulator@162f000 {
+> +      compatible = "qcom,sm8250-refgen-regulator";
+> +      reg = <0 0x0162f000 0 0x84>;
+
+Default cell size is 1.
+
+> +    };
+> +...
+> 
+> -- 
+> 2.41.0
+> 
