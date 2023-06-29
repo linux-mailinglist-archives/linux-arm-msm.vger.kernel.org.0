@@ -2,108 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 851A0742E25
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 22:09:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95CB1742E77
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 22:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232113AbjF2UFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 16:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
+        id S230410AbjF2Ufx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 16:35:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232600AbjF2UFD (ORCPT
+        with ESMTP id S229670AbjF2Ufw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 16:05:03 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A0C2D52
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:05:01 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fba03becc6so741571e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:05:01 -0700 (PDT)
+        Thu, 29 Jun 2023 16:35:52 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6AAA30DD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:35:49 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b69f71a7easo18713891fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:35:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688069099; x=1690661099;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OF3SWHQBitllVPlaYnVLF/iiTBXMytWTZQU29N7FmDM=;
-        b=gxSfIjzJgF4o6hdReIGjdG8oDb8YMY+FvG9DOf48gJS/uXUgVgdRBxWOyIbIwZURQ6
-         qqlLtGy9beddY4617elmaPql81XYUQ8zxW7WylayUjuELQrLfAH6Ort+7wOGubNRvfjs
-         vPUnouklFBiwE0tQK5VjdKd6ndIr8to+h+Q9RDGQzK+DZDXTIUQ1jVsZKarH3Pku08RX
-         2QvOPHNXoyjvlv7ryV1D7SN/jNZctB6mPECftJZV3hBBGOiv7QrR0qAJLqP8YAr1Kln/
-         XVdozh/5IpjZyWV41qXtrBGwBcWg4aLtVJRCcZRZeIvobORm50LcEvt3gPIPCgI5UMbS
-         PLwg==
+        d=linaro.org; s=google; t=1688070948; x=1690662948;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=roO8YrYj9iIU3EjCKgeaxJFuC8MlkPexoI9WwcBfk4M=;
+        b=aL7DwfgqS2nZOiWfMRKgRg8GCSGzlLizCKplh1fLS7f0H0fS9RRyV871dMs8WEpx6O
+         w2yXTGUAqCaC4PQ4CyZ6Wc07E/VzuxRZMu5S3YL1y7OHJCBS0fu0DFmco7gDPNyz1XJL
+         ZyRB+h+o6KOPBJpUbV/o8vmFXFaH8fLdq1WCNby99S+hpY6hSaYbclB/VXz9P3t3ouKj
+         zmCzSJfOkn5Urm2mTYCi6chGG6rBubDwoGWAm3nUK6z6XxAiJuyLFFnK96TKahXHgQzb
+         UcYsOdaZonTln2aa+cWXjc+6wBy5uoit5M1ysqAUf8XPnygDkQ0rR5C8qvKO4AHxbnQM
+         VUBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688069099; x=1690661099;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OF3SWHQBitllVPlaYnVLF/iiTBXMytWTZQU29N7FmDM=;
-        b=UZRlJYysoFxewavKpfR4ood9FgP1fRFzNv4lHZ3JEqtLTNz1btIPAwqqBWS/QuWDlJ
-         00NCAnTJb8rISnxktRSjaZ3xKYRic0xgIqr55HJwMJTlx369TzEKYlqKqDtwM6wdjxjL
-         sZQLtIsCJJ/HZIq7+81N02WIZ6K59nEncO9SAuJ629b0QlScaSeM4P4topBAr0ld8saU
-         hi2cWcEt2t7i80jG3/aTT40Givii0HHCL0L3B/r2CNNWXzSx7OCQRj9KGL/QDlDN3c2M
-         8+J/O52c6y/RLspIOsXl2jG6WswesDowngHlqg4IFIj5vIEax6Bg8AK4o3AwUg+YygE6
-         /JuA==
-X-Gm-Message-State: ABy/qLagh/8DqV6u8LXmnRZkWs4juLM7XBCzqTXTLPkwYyqchvGv+gTN
-        9jba5SZM1YBBLV3KmCKFQmtlmQ==
-X-Google-Smtp-Source: APBJJlHCImMszh08qroN+ScqTvW+Lm4kzbNBHCoakjGE3swSx6rZ5XyHj9KuN68oeeMW8B9bxhKuoQ==
-X-Received: by 2002:a05:6512:693:b0:4f8:6d9d:abe0 with SMTP id t19-20020a056512069300b004f86d9dabe0mr365281lfe.33.1688069099306;
-        Thu, 29 Jun 2023 13:04:59 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688070948; x=1690662948;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=roO8YrYj9iIU3EjCKgeaxJFuC8MlkPexoI9WwcBfk4M=;
+        b=Todv0nhR4kvdQZBNovjBWYLEoF/53bToAFLoYCJ8CThc004HXldq6O3hr5/2kxXrRk
+         of4/dC+zJTZtFwAml38ELWBT/Gw8sT2Y8jeRbDyPt0pGmkFa8ay9mJzpfgLYi6wjLdFH
+         OPb2fOQGeeK/du8PZUhz0xG6qrKZV7XVvyS+IpqX6YcHbTaK/hL9Ym+iUP5xfDP9s2RG
+         9JAJEeZHQaUfyMNVot+npF52Nl6Pgl0IcnphSkCMAu71I7TNKhWYS9e8UPeyFOdBHRp+
+         VpblsKUZKuCesuJ3zz2SOSpS6DdbG4rDu1zgDQPi6r1X9yhjlJXLM7pV6zb5VXkUL893
+         VkWA==
+X-Gm-Message-State: ABy/qLYjM9ZjycrUXv5qMinzCCyluP4W9pnO+rSRuBR7I3KN5mA9uTj+
+        zulwo0JDxD9PiZ1iJKiw0AcnYw==
+X-Google-Smtp-Source: APBJJlHmYuIe4jmQmUOHf4LS1a4x4RFAsAsgFkB5nTh0ZJKctX3XwebQ8qIYR4nQuF0TAC/qNt9f0g==
+X-Received: by 2002:a2e:9059:0:b0:2b6:9f95:46d9 with SMTP id n25-20020a2e9059000000b002b69f9546d9mr545726ljg.46.1688070948029;
+        Thu, 29 Jun 2023 13:35:48 -0700 (PDT)
 Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id k28-20020ac2457c000000b004fb9fbdd8fcsm207623lfm.252.2023.06.29.13.04.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jun 2023 13:04:58 -0700 (PDT)
-Message-ID: <ef515514-43e8-e4c9-e013-09aa27bc2110@linaro.org>
-Date:   Thu, 29 Jun 2023 22:04:55 +0200
+        by smtp.gmail.com with ESMTPSA id k3-20020a2e2403000000b002b6b849c894sm1136008ljk.111.2023.06.29.13.35.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jun 2023 13:35:47 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/4] Qualcomm REFGEN regulator
+Date:   Thu, 29 Jun 2023 22:35:40 +0200
+Message-Id: <20230628-topic-refgen-v2-0-6136487c78c5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 08/11] dt-bindings: usb: ci-hdrc-usb2: Fix handling
- pinctrl properties
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABzrnWQC/3WNwQ6CMBBEf8Xs2TVtEVBP/ofh0OICm5CWbJFoC
+ P/uyt3jm8ybWSGTMGW4HVYQWjhzigrueIB28LEn5KcyOOMKU7kLzmniFoW6niLacxdMqCtnbQm
+ qBJ8Jg/jYDirF1zhqOGmZ3/vHo1EeOM9JPvvlYn/pn/XFokHrKiqvZV0QhfvI0Us6Jemh2bbtC
+ 3Xqv2i+AAAA
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Benjamin Li <benl@squareup.com>,
-        James Willcox <jwillcox@squareup.com>,
-        Joseph Gates <jgates@squareup.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Zac Crosby <zac@squareup.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Jun Nie <jun.nie@linaro.org>, Max Chen <mchen@squareup.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konradybcio@kernel.org>,
-        alsa-devel@alsa-project.org, iommu@lists.linux.dev,
-        linux-usb@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Andy Gross <andy.gross@linaro.org>
-References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
- <20230627-topic-more_bindings-v1-8-6b4b6cd081e5@linaro.org>
- <20230629152335.GA3055525-robh@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230629152335.GA3055525-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688070946; l=1730;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=o6C8T/LQ49ia1cOEpHXglcMRSGrmiGdpXmYAdGtJ7Z4=;
+ b=Ex0q08xmxL6AcV018TpSZ/b4gyImH8vj9XCXXL2F+XrwzPusRQOEc3gsYGh6Q8WErt/Xl22a6
+ YSziOTXpLASAMFu25y+vL3MkzJtUXbIUQz/3N+4VTUznwyJ2mRR5a7+
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -112,84 +98,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29.06.2023 17:23, Rob Herring wrote:
-> On Tue, Jun 27, 2023 at 06:24:24PM +0200, Konrad Dybcio wrote:
->> Untangle the bit messy oneOf trees and add the missing pinctrl-2 mention
->> to handle the different pinctrl combinations.
->>
->> Fixes: 4c8375d35f72 ("dt-bindings: usb: ci-hdrc-usb2: convert to DT schema format")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/usb/ci-hdrc-usb2.yaml      | 27 ++++++----------------
->>  1 file changed, 7 insertions(+), 20 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
->> index 782402800d4a..24431a7adf3e 100644
->> --- a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
->> +++ b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
->> @@ -199,17 +199,6 @@ properties:
->>        In case of HSIC-mode, "idle" and "active" pin modes are mandatory.
->>        In this case, the "idle" state needs to pull down the data and
->>        strobe pin and the "active" state needs to pull up the strobe pin.
->> -    oneOf:
->> -      - items:
->> -          - const: idle
->> -          - const: active
-> 
-> These are no longer valid values? The description still mentions them.
-I believe allOf: now covers them all?
+Recent Qualcomm SoCs have a REFGEN (reference voltage generator) regulator
+responsible for providing a reference voltage to some on-SoC IPs (like DSI
+or PHYs). It can be turned off when unused to save power.
 
-> 
->> -      - items:
->> -          - const: default
->> -          - enum:
->> -              - host
->> -              - device
->> -      - items:
->> -          - const: default
->>  
->>    pinctrl-0:
->>      maxItems: 1
->> @@ -357,17 +346,15 @@ allOf:
->>              - const: active
->>      else:
->>        properties:
->> +        pinctrl-2:
-> 
-> This should be implicitly allowed. Is it not?
-No, it errored out for me.
+This series introduces the driver for it and lets the DSI driver
+consume it.
 
-> 
-> I'm reallly at a loss as to what problem this patch solves.
-Specifying all 3 pin states is impossible with the current state of
-this binding, even though it's a supported configuration (check
-qcom/apq8039-t2.dtb). I should have been more clear in the commit
-message.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Remove "|" from bindings description
+- fix 'renegator' typo
+- define number of 'reg'
+- adjust reg= to size/address-cells = 1
+- fix regmap usage
+- use C++ comments for the header
+- remove now-unused struct qcom_refgen
+- use common helpers for sm8250 refgen (simple bit ops)
+- add missing FIELD_PREPs (small brain forgot regmap_update_bits
+  doesn't do shifting)
+- pick up tags
+- Link to v1: https://lore.kernel.org/r/20230628-topic-refgen-v1-0-126e59573eeb@linaro.org
 
-Konrad
+---
+Konrad Dybcio (4):
+      dt-bindings: regulator: Describe Qualcomm REFGEN regulator
+      regulator: Introduce Qualcomm REFGEN regulator driver
+      dt-bindings: display/msm: dsi-controller-main: Allow refgen-supply
+      drm/msm/dsi: Hook up refgen regulator
 
-> 
->> +          maxItems: 1
->> +
->>          pinctrl-names:
->>            minItems: 1
->> -          maxItems: 2
->> -          oneOf:
->> -            - items:
->> -                - const: default
->> -                - enum:
->> -                    - host
->> -                    - device
->> -            - items:
->> -                - const: default
->> +          items:
->> +            - const: default
->> +            - const: host
->> +            - const: device
->>    - if:
->>        properties:
->>          compatible:
->>
->> -- 
->> 2.41.0
->>
+ .../bindings/display/msm/dsi-controller-main.yaml  |   4 +
+ .../regulator/qcom,sdm845-refgen-regulator.yaml    |  57 ++++++++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |   2 +
+ drivers/regulator/Kconfig                          |  10 ++
+ drivers/regulator/Makefile                         |   1 +
+ drivers/regulator/qcom-refgen-regulator.c          | 154 +++++++++++++++++++++
+ 6 files changed, 228 insertions(+)
+---
+base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
+change-id: 20230628-topic-refgen-14fb0b762115
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
