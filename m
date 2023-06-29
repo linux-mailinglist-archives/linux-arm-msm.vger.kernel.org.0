@@ -2,71 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 018457428C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 16:47:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 924297428CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 16:47:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230466AbjF2OrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 10:47:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40628 "EHLO
+        id S231393AbjF2OrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 10:47:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjF2OrJ (ORCPT
+        with ESMTP id S231784AbjF2OrQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 10:47:09 -0400
+        Thu, 29 Jun 2023 10:47:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3C0A1FC1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 07:46:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAA0B2D4A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 07:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1688049984;
+        s=mimecast20190719; t=1688049985;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=zDXFOarJFkvxNU7P1GHKG3noUeFa/ZYuvulMUbxlN1A=;
-        b=UiBlvWvoeXa/QYHbksOx3L97BWXeTwJjNFqIXhx7G8W7g9CP2/bbOYavLeRhOMX8EZcE4Z
-        PB5oQ53Myid8d6jbB9lmN72OtqN7qd8QlK0zijpzhU6NGq5hndvbQBPg0sIrFJHn8JRlqi
-        WmL7QOm41fJAuMB/RM1hWDMk0RLOsVo=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=mJHAjr6KTZnVlwFWvOamTtWU7Nmn1qurp7u5WOjdc6M=;
+        b=PVidxbV2P0oJrL6QGEnJEMndjeUsZ8w5R4HSqkOHFhWzTAtddorM/YnkLGyPq5LMDxUDsK
+        ndKzOPA+0xIRx+rHvVoLaQ1KoAHo0lJdwHR6fQu16ootGOCosy360VRwO37SzIPgfc+QdS
+        qUH0APdG3AD9nHFp+pjkOZJ3F+dIqIs=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-92-zdRNmAAUNaGtGp7kyGy1ZA-1; Thu, 29 Jun 2023 10:46:22 -0400
-X-MC-Unique: zdRNmAAUNaGtGp7kyGy1ZA-1
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-63511adcf45so8712586d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 07:46:21 -0700 (PDT)
+ us-mta-90-YxfGiou_OEewDfdVzJpZSQ-1; Thu, 29 Jun 2023 10:46:24 -0400
+X-MC-Unique: YxfGiou_OEewDfdVzJpZSQ-1
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7659db633acso101005485a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 07:46:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688049981; x=1690641981;
+        d=1e100.net; s=20221208; t=1688049983; x=1690641983;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zDXFOarJFkvxNU7P1GHKG3noUeFa/ZYuvulMUbxlN1A=;
-        b=XpeM0yCQoY8FI3GoBJ0UhuGmFZAqJP/UVkNDl46gdCqynLhhXxogKZUXnGUXg3lw4L
-         rJqXYylWOhOtqObE2n3ip9cnbV7Bz/5GS+o/UK2+V2wyTrVMmQbGI/fB04INSl9ReRnT
-         tj/gwMTqs2/j666k3UotlFyqRBSscEq2BNeW0T/fKcf4Q6ecPbV/Uk4Pf4tWdf89z9Y8
-         Eq1EQ3r1XI05hUDQEd3amtLoKd+2qA37kMGH9LgNT9tkFbvZyPa80SpFpPpu6Sn4Kdi3
-         Y/Jm04NNg/HYSF2NMy87P70JBTjQP6l3Znq2XYJcV9QDdr3TILzMpG1cCfuWL7ZTB7PS
-         7dpA==
-X-Gm-Message-State: AC+VfDzkfv9jwRhSdm3ex44+4I9fhVF0ZcnncNgbCgoZeC80z75dZ++D
-        eiZ2YW28xnztgHwyKOhjwt2vtxLrTk2w59GJYEk0BaUSqFL9FjeNoPOGA4zqJuvI9wpGewJBpNb
-        WD5p4H9z4YAGOgXCIH5O/BcQ9KQ==
-X-Received: by 2002:a05:6214:2483:b0:635:dbb4:853e with SMTP id gi3-20020a056214248300b00635dbb4853emr15923413qvb.54.1688049981101;
-        Thu, 29 Jun 2023 07:46:21 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ7CgQm3B3HQ8J0z+gAS6H/08cIkKpo/GCX/poZibomgLtQPS418bo46ORUPF/WAp8JuwB//QA==
-X-Received: by 2002:a05:6214:2483:b0:635:dbb4:853e with SMTP id gi3-20020a056214248300b00635dbb4853emr15923392qvb.54.1688049980886;
-        Thu, 29 Jun 2023 07:46:20 -0700 (PDT)
+        bh=mJHAjr6KTZnVlwFWvOamTtWU7Nmn1qurp7u5WOjdc6M=;
+        b=IFr/HM/WXXQ460DG2Fd5wWcrMF9E9EWmvWgdW0mByNCvCoxQFNUwgEERPLHFbD9nlq
+         9rl4Bls946gps9wlZdG1azpzauq60FMzPHDuI3rjPjWjh7ZWd/MbMnlnpI+nlywO1FKf
+         TAfd9U1JfbhyBLiw8hdwwu6QcRMaZZsFOdDD1XK1I1xGhDyKcvHdATdTR3q7ieOJJxDC
+         hBHIVypYE9Z8s0CN3OqjsccjsGQGvckXVLaPVWg8OOOHW3aO+GAdJYjLJHIAtPz3/Z6t
+         DW7E37NDIYqR+dKt6u1azIDzdH/+wXfU+8L5LG2BLYvoi5zxlr93WvfvtIJtAsdHCTrW
+         TIWw==
+X-Gm-Message-State: AC+VfDxvIn3gzxdrS78SD3WbI7N5pGHeIyYmQIaL2RfS4/RrTSJSAWw7
+        0ruq6MGXuyPNEnrG/Cx/xCBDvAt/MvxG6kVx/EC50H6VNEOB3Q71RrhFpzg46DmeqkhZLetILk6
+        eejuScV5wU2/FLfFvwAKPCUus8Q==
+X-Received: by 2002:a05:6214:493:b0:62f:ffcc:337a with SMTP id pt19-20020a056214049300b0062fffcc337amr53542788qvb.25.1688049983502;
+        Thu, 29 Jun 2023 07:46:23 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ7ha+Mfs7Doj4shg6GNpLPTKkZCYV++sdbCYEyb8MOGt3lEwlYQ8NSoBGVyWNAjXMtZrjqRwQ==
+X-Received: by 2002:a05:6214:493:b0:62f:ffcc:337a with SMTP id pt19-20020a056214049300b0062fffcc337amr53542772qvb.25.1688049983271;
+        Thu, 29 Jun 2023 07:46:23 -0700 (PDT)
 Received: from fedora.redhat.com ([107.171.218.122])
-        by smtp.gmail.com with ESMTPSA id a17-20020a0ccdd1000000b005dd8b9345b4sm7055590qvn.76.2023.06.29.07.46.19
+        by smtp.gmail.com with ESMTPSA id a17-20020a0ccdd1000000b005dd8b9345b4sm7055590qvn.76.2023.06.29.07.46.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jun 2023 07:46:20 -0700 (PDT)
+        Thu, 29 Jun 2023 07:46:22 -0700 (PDT)
 From:   Adrien Thierry <athierry@redhat.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <pza@pengutronix.de>
 Cc:     Adrien Thierry <athierry@redhat.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v4 1/3] phy: qcom-snps-femto-v2: keep cfg_ahb_clk enabled during runtime suspend
-Date:   Thu, 29 Jun 2023 10:45:38 -0400
-Message-Id: <20230629144542.14906-2-athierry@redhat.com>
+Subject: [PATCH v4 2/3] phy: qcom-snps-femto-v2: properly enable ref clock
+Date:   Thu, 29 Jun 2023 10:45:39 -0400
+Message-Id: <20230629144542.14906-3-athierry@redhat.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230629144542.14906-1-athierry@redhat.com>
 References: <20230629144542.14906-1-athierry@redhat.com>
@@ -82,85 +86,164 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the dwc3 core, both system and runtime suspend end up calling
-dwc3_suspend_common(). From there, what happens for the PHYs depends on
-the USB mode and whether the controller is entering system or runtime
-suspend.
+The driver is not enabling the ref clock, which thus gets disabled by
+the clk_disable_unused() initcall. This leads to the dwc3 controller
+failing to initialize if probed after clk_disable_unused() is called,
+for instance when the driver is built as a module.
 
-HOST mode:
-  (1) system suspend on a non-wakeup-capable controller
+To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
+clocks at the proper places.
 
-  The [1] if branch is taken. dwc3_core_exit() is called, which ends up
-  calling phy_power_off() and phy_exit(). Those two functions decrease the
-  PM runtime count at some point, so they will trigger the PHY runtime
-  sleep (assuming the count is right).
+Note that the cfg_ahb clock is currently not used by any device tree
+instantiation of the PHY. Work needs to be done separately to fix this.
 
-  (2) runtime suspend / system suspend on a wakeup-capable controller
-
-  The [1] branch is not taken. dwc3_suspend_common() calls
-  phy_pm_runtime_put_sync(). Assuming the ref count is right, the PHY
-  runtime suspend op is called.
-
-DEVICE mode:
-  dwc3_core_exit() is called on both runtime and system sleep
-  unless the controller is already runtime suspended.
-
-OTG mode:
-  (1) system suspend : dwc3_core_exit() is called
-
-  (2) runtime suspend : do nothing
-
-In host mode, the code seems to make a distinction between 1) runtime
-sleep / system sleep for wakeup-capable controller, and 2) system sleep
-for non-wakeup-capable controller, where phy_power_off() and phy_exit()
-are only called for the latter. This suggests the PHY is not supposed to
-be in a fully powered-off state for runtime sleep and system sleep for
-wakeup-capable controller.
-
-Moreover, downstream, cfg_ahb_clk only gets disabled for system suspend.
-The clocks are disabled by phy->set_suspend() [2] which is only called
-in the system sleep path through dwc3_core_exit() [3].
-
-With that in mind, don't disable the clocks during the femto PHY runtime
-suspend callback. The clocks will only be disabled during system suspend
-for non-wakeup-capable controllers, through dwc3_core_exit().
-
-[1] https://elixir.bootlin.com/linux/v6.4/source/drivers/usb/dwc3/core.c#L1988
-[2] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c#L524
-[3] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/dwc3/core.c#L1915
-
+Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
+Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
 Signed-off-by: Adrien Thierry <athierry@redhat.com>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 63 ++++++++++++++-----
+ 1 file changed, 48 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index 6c237f3cc66d..3335480fc395 100644
+index 3335480fc395..6170f8fd118e 100644
 --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
 +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -165,22 +165,13 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
- 					   0, USB2_AUTO_RESUME);
- 	}
+@@ -110,11 +110,13 @@ struct phy_override_seq {
+ /**
+  * struct qcom_snps_hsphy - snps hs phy attributes
+  *
++ * @dev: device structure
++ *
+  * @phy: generic phy
+  * @base: iomapped memory space for snps hs phy
+  *
+- * @cfg_ahb_clk: AHB2PHY interface clock
+- * @ref_clk: phy reference clock
++ * @num_clks: number of clocks
++ * @clks: array of clocks
+  * @phy_reset: phy reset control
+  * @vregs: regulator supplies bulk data
+  * @phy_initialized: if PHY has been initialized correctly
+@@ -122,11 +124,13 @@ struct phy_override_seq {
+  * @update_seq_cfg: tuning parameters for phy init
+  */
+ struct qcom_snps_hsphy {
++	struct device *dev;
++
+ 	struct phy *phy;
+ 	void __iomem *base;
  
--	clk_disable_unprepare(hsphy->cfg_ahb_clk);
- 	return 0;
- }
+-	struct clk *cfg_ahb_clk;
+-	struct clk *ref_clk;
++	int num_clks;
++	struct clk_bulk_data *clks;
+ 	struct reset_control *phy_reset;
+ 	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
  
- static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+@@ -135,6 +139,34 @@ struct qcom_snps_hsphy {
+ 	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+ };
+ 
++static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
++{
++	struct device *dev = hsphy->dev;
++
++	hsphy->num_clks = 2;
++	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
++	if (!hsphy->clks)
++		return -ENOMEM;
++
++	/*
++	 * TODO: Currently no device tree instantiation of the PHY is using the clock.
++	 * This needs to be fixed in order for this code to be able to use devm_clk_bulk_get().
++	 */
++	hsphy->clks[0].id = "cfg_ahb";
++	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
++	if (IS_ERR(hsphy->clks[0].clk))
++		return dev_err_probe(dev, PTR_ERR(hsphy->clks[0].clk),
++				     "failed to get cfg_ahb clk\n");
++
++	hsphy->clks[1].id = "ref";
++	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
++	if (IS_ERR(hsphy->clks[1].clk))
++		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
++				     "failed to get ref clk\n");
++
++	return 0;
++}
++
+ static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+ 						u32 mask, u32 val)
  {
--	int ret;
--
- 	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
+@@ -365,16 +397,16 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 	if (ret)
+ 		return ret;
  
 -	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
--	if (ret) {
--		dev_err(&hsphy->phy->dev, "failed to enable cfg ahb clock\n");
--		return ret;
--	}
--
- 	return 0;
- }
++	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
+ 	if (ret) {
+-		dev_err(&phy->dev, "failed to enable cfg ahb clock, %d\n", ret);
++		dev_err(&phy->dev, "failed to enable clocks, %d\n", ret);
+ 		goto poweroff_phy;
+ 	}
  
+ 	ret = reset_control_assert(hsphy->phy_reset);
+ 	if (ret) {
+ 		dev_err(&phy->dev, "failed to assert phy_reset, %d\n", ret);
+-		goto disable_ahb_clk;
++		goto disable_clks;
+ 	}
+ 
+ 	usleep_range(100, 150);
+@@ -382,7 +414,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 	ret = reset_control_deassert(hsphy->phy_reset);
+ 	if (ret) {
+ 		dev_err(&phy->dev, "failed to de-assert phy_reset, %d\n", ret);
+-		goto disable_ahb_clk;
++		goto disable_clks;
+ 	}
+ 
+ 	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_CFG0,
+@@ -439,8 +471,8 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 
+ 	return 0;
+ 
+-disable_ahb_clk:
+-	clk_disable_unprepare(hsphy->cfg_ahb_clk);
++disable_clks:
++	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+ poweroff_phy:
+ 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+ 
+@@ -452,7 +484,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
+ 	struct qcom_snps_hsphy *hsphy = phy_get_drvdata(phy);
+ 
+ 	reset_control_assert(hsphy->phy_reset);
+-	clk_disable_unprepare(hsphy->cfg_ahb_clk);
++	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+ 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+ 	hsphy->phy_initialized = false;
+ 
+@@ -545,14 +577,15 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+ 	if (!hsphy)
+ 		return -ENOMEM;
+ 
++	hsphy->dev = dev;
++
+ 	hsphy->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(hsphy->base))
+ 		return PTR_ERR(hsphy->base);
+ 
+-	hsphy->ref_clk = devm_clk_get(dev, "ref");
+-	if (IS_ERR(hsphy->ref_clk))
+-		return dev_err_probe(dev, PTR_ERR(hsphy->ref_clk),
+-				     "failed to get ref clk\n");
++	ret = qcom_snps_hsphy_clk_init(hsphy);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to initialize clocks\n");
+ 
+ 	hsphy->phy_reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+ 	if (IS_ERR(hsphy->phy_reset)) {
 -- 
 2.40.1
 
