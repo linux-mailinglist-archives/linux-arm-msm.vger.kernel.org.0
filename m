@@ -2,72 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C0A27428ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 16:53:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3384742950
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 17:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232348AbjF2Oxi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 10:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41984 "EHLO
+        id S232489AbjF2PS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 11:18:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231848AbjF2Oxh (ORCPT
+        with ESMTP id S232224AbjF2PSx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 10:53:37 -0400
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A191FC1;
-        Thu, 29 Jun 2023 07:53:36 -0700 (PDT)
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-77acb04309dso31953839f.2;
-        Thu, 29 Jun 2023 07:53:36 -0700 (PDT)
+        Thu, 29 Jun 2023 11:18:53 -0400
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5EF6199E;
+        Thu, 29 Jun 2023 08:18:52 -0700 (PDT)
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-77ac14ff51bso32497839f.3;
+        Thu, 29 Jun 2023 08:18:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688050416; x=1690642416;
+        d=1e100.net; s=20221208; t=1688051932; x=1690643932;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GOYUzFM6nNg6hOjwQDWmHYcu/9hQEbryLCl82/r+usM=;
-        b=AlTaaPGJ0kBf+fBsOIioJGJnAP/HW2SBWftlPXHt0xBMGmH1jwEo22vM3Gye2KeTaS
-         W6KgKvUHk1G6y4upON0MklJnuqj9q1LoMRk4YB+WjgumD3u6Y/7LaFhl5a7FGdrW1Q3o
-         RnUZR3abv83YTfvf3Ou5lBCvLR9maLrRFjkwxtPggSgUP2ZrGPznlka5zda+4Sj9g2nQ
-         j8d1f/ocwLowOQMyPLvPl7yMgYCtkQq9mkiaAj7eoL2oQNYbqtI8ahdVsbwmOVfQQC5f
-         sx1x5HVl7Ez/noWTMN1Xi6clS1NSg5pwuxaAPkBtWsE6LIqKzNgr1gROZ/z66MaC2SiK
-         uQgQ==
-X-Gm-Message-State: AC+VfDwOoMeVBmAZNMhL4XMDZyKvb0eWqT3AholwK51GXED5kKmNFLdB
-        5mgpVoPxDEGQofSkeZjNvw==
-X-Google-Smtp-Source: ACHHUZ6RbEYn/dqa3uP+/XLwve1o9v7zVTMLczYa5gDwSwHtGlYMl02sOx42hOyX+it8cX64Lr3kig==
-X-Received: by 2002:a6b:7a4b:0:b0:783:6eef:1496 with SMTP id k11-20020a6b7a4b000000b007836eef1496mr10830023iop.19.1688050415845;
-        Thu, 29 Jun 2023 07:53:35 -0700 (PDT)
+        bh=D2F5panrQ9N51YbtKXEYqm4xFh86mMaEOlU/moUG6+Y=;
+        b=VTY8IOfMvrRO0r88NUy1IFD4csxpPpFTCD5zBW7krMZ5rfSsNyev6ilR28k5kXE9X8
+         9EF1t7525umN8+iMtDUH4y2D3003ktNlTl30QHLxGFvOqR6nkSbI/nCQlVMGKkp2BuBy
+         vDD7aV26JyrFc2YAYmnWiuWY8Hq0Q676tgkOxqzBHILSZ7QKXV+4JhQCa/FG7p26l0+z
+         ce+2SLUkBBP/b7+enNvQ5bSIZLmhU+BrPTQ3Y9zVbp/yISSqjMvWJouWAG99UOsvAs5a
+         Gew1SnrPFK5IJLV/cQumcpWjP1lsM4tG+LriM8bYyIyYrvwPLLTl1E3yXrBVi42QGhRQ
+         w0LA==
+X-Gm-Message-State: AC+VfDw36VuaT5luNss0LOXIGy8GoBktDDA9mJQ6sfdKGKhFmlJ8uk3z
+        hTJ10jX5w35NZ996RJb8Tw==
+X-Google-Smtp-Source: ACHHUZ6s9Jdl5RFEqCdgdp0bwGY7cGwuE+P2Z34gk2rOEic26k/FpRgytM547mDniAnRHCO5gYxGXA==
+X-Received: by 2002:a6b:d912:0:b0:786:2c7d:dd19 with SMTP id r18-20020a6bd912000000b007862c7ddd19mr3191265ioc.17.1688051932111;
+        Thu, 29 Jun 2023 08:18:52 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id t1-20020a02cca1000000b004165ac64e0asm3292747jap.40.2023.06.29.07.53.33
+        by smtp.gmail.com with ESMTPSA id a22-20020a5d9ed6000000b0077e3566a801sm4430658ioe.29.2023.06.29.08.18.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jun 2023 07:53:35 -0700 (PDT)
-Received: (nullmailer pid 2954772 invoked by uid 1000);
-        Thu, 29 Jun 2023 14:53:33 -0000
-Date:   Thu, 29 Jun 2023 08:53:33 -0600
+        Thu, 29 Jun 2023 08:18:51 -0700 (PDT)
+Received: (nullmailer pid 3053897 invoked by uid 1000);
+        Thu, 29 Jun 2023 15:18:48 -0000
+Date:   Thu, 29 Jun 2023 09:18:48 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        linux-pm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>, iommu@lists.linux.dev,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Peng Fan <peng.fan@nxp.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Zac Crosby <zac@squareup.com>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        Jun Nie <jun.nie@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, Leo Yan <leo.yan@linaro.org>,
+        Lee Jones <lee@kernel.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-kernel@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-clk@vger.kernel.org, Nishanth Menon <nm@ti.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        devicetree@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
+        alsa-devel@alsa-project.org, Stephan Gerhold <stephan@gerhold.net>,
+        linux-usb@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Max Chen <mchen@squareup.com>, Benjamin Li <benl@squareup.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Xu Yang <xu.yang_2@nxp.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Mark Brown <broonie@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Ilia Lin <ilia.lin@kernel.org>
-Subject: Re: [PATCH v2 04/26] dt-bindings: clock: qcom,krait-cc: Krait core
- clock controller
-Message-ID: <168805041257.2954718.13141524461815116895.robh@kernel.org>
-References: <20230625202547.174647-1-dmitry.baryshkov@linaro.org>
- <20230625202547.174647-5-dmitry.baryshkov@linaro.org>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH 05/11] dt-bindings: sound: Convert
+ pm8916-wcd-analog-codec to YAML
+Message-ID: <168805192771.3053849.17023496929175540009.robh@kernel.org>
+References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
+ <20230627-topic-more_bindings-v1-5-6b4b6cd081e5@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230625202547.174647-5-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230627-topic-more_bindings-v1-5-6b4b6cd081e5@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -80,19 +100,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sun, 25 Jun 2023 23:25:25 +0300, Dmitry Baryshkov wrote:
-> Define bindings for the Qualcomm Krait CPU and L2 clock controller. This
-> device is used on old Qualcomm SoCs (APQ8064, MSM8960) and supports up
-> to 4 core clocks and a separate L2 clock. Furthermore, L2 clock is
-> represented as the interconnect to facilitate L2 frequency scaling
-> together with scaling the CPU frequencies.
+On Tue, 27 Jun 2023 18:24:21 +0200, Konrad Dybcio wrote:
+> Convert the PM8916 analog WCD codec bindings to YAML.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  include/dt-bindings/clock/qcom,krait-cc.h | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->  create mode 100644 include/dt-bindings/clock/qcom,krait-cc.h
+>  .../bindings/sound/qcom,msm8916-wcd-analog.txt     | 101 -------------
+>  .../sound/qcom,pm8916-wcd-analog-codec.yaml        | 160 +++++++++++++++++++++
+>  2 files changed, 160 insertions(+), 101 deletions(-)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 
