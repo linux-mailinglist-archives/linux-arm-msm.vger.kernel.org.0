@@ -2,99 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A27FD742DCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 21:53:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 851A0742E25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 22:09:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232095AbjF2Txb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 15:53:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59490 "EHLO
+        id S232113AbjF2UFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 16:05:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231430AbjF2Txa (ORCPT
+        with ESMTP id S232600AbjF2UFD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 15:53:30 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A051BE9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 12:53:28 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fb7373dd35so1338632e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 12:53:28 -0700 (PDT)
+        Thu, 29 Jun 2023 16:05:03 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A0C2D52
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:05:01 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fba03becc6so741571e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 13:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688068407; x=1690660407;
+        d=linaro.org; s=google; t=1688069099; x=1690661099;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6pBbaluuyzwVXP1sHmiMWy/GcrSJJh0VQlK5YIkf6P0=;
-        b=edlVolaaYSWq+gCodM88LdgZ4bBSQjITOlBT06sdJFFBKOONKbSncjMaF8s29wapuZ
-         xoDUSGdULdCvp20rQCZwzxTBDsG6wVNxGsiAS2PkdRP6dZDjyNVk+0Q/9vCM1yly3VPK
-         ESCVLcOqp2KI7Gnl1tmpwKrxG3gUWO/KLmggO+nhdVnbXNh+X9nOVfDwc/C9a5pMJcEz
-         e3YTyQxg570Ov6g4ZPwM9FW4o33BAWcV99xTboRQl7WJmZl9cKckH24H+RDj6b6F5nrv
-         kBXah+OGDyawAGKb9ol5gZDn+5Ph3G0ai61YWnM1AP+hqa7tRQcp1gYUWWD0C2jrCDIH
-         16Yw==
+        bh=OF3SWHQBitllVPlaYnVLF/iiTBXMytWTZQU29N7FmDM=;
+        b=gxSfIjzJgF4o6hdReIGjdG8oDb8YMY+FvG9DOf48gJS/uXUgVgdRBxWOyIbIwZURQ6
+         qqlLtGy9beddY4617elmaPql81XYUQ8zxW7WylayUjuELQrLfAH6Ort+7wOGubNRvfjs
+         vPUnouklFBiwE0tQK5VjdKd6ndIr8to+h+Q9RDGQzK+DZDXTIUQ1jVsZKarH3Pku08RX
+         2QvOPHNXoyjvlv7ryV1D7SN/jNZctB6mPECftJZV3hBBGOiv7QrR0qAJLqP8YAr1Kln/
+         XVdozh/5IpjZyWV41qXtrBGwBcWg4aLtVJRCcZRZeIvobORm50LcEvt3gPIPCgI5UMbS
+         PLwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688068407; x=1690660407;
+        d=1e100.net; s=20221208; t=1688069099; x=1690661099;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6pBbaluuyzwVXP1sHmiMWy/GcrSJJh0VQlK5YIkf6P0=;
-        b=RGwbS1f9hWV9cW+QB7vC1M/sJ2k7mpwa96ktVPf2sPjuHERnmOr5ZXO+cKcomVmNrX
-         MU3oQfaMpLmFNpOhu2Gn2GOrhHsRywxmwkecOYJ1hrJhbK8IGb0nKkOaVg6OY//eIgZP
-         YtCzroemGmPvyw4EN1wSzEsxuO41XmNN+uurj6WboksbYODpFLzcKECym74o1Z1zvIeg
-         TjNJOOUgeCv01BLP+cbeLiWTVWWsWIqNxFF1bpplfNUX6vbJptEchWO2Bcxmk9dXTld/
-         vHpSc7so/qJM3daislE97XeN4VbbuqkqWpP+hfL5U5OH2+bvKHT3uWIISZN1VThuoS44
-         DifA==
-X-Gm-Message-State: ABy/qLajXp70dM2tJrkU6Ehrl8Cob+uXRgMXd3xJUndKnrvXENx+sqow
-        kFRJkrWRWUxypq1gUiWjlm0hmQ==
-X-Google-Smtp-Source: APBJJlFEtRmdUeebJYgWsqZgvE8IML5SO44xmsVeT9iQKxrK3gpe0zDMG+bTdRHWyp3TXD/N+iKJaw==
-X-Received: by 2002:a05:6512:3994:b0:4f8:5dd2:21fb with SMTP id j20-20020a056512399400b004f85dd221fbmr312467lfu.8.1688068406682;
-        Thu, 29 Jun 2023 12:53:26 -0700 (PDT)
+        bh=OF3SWHQBitllVPlaYnVLF/iiTBXMytWTZQU29N7FmDM=;
+        b=UZRlJYysoFxewavKpfR4ood9FgP1fRFzNv4lHZ3JEqtLTNz1btIPAwqqBWS/QuWDlJ
+         00NCAnTJb8rISnxktRSjaZ3xKYRic0xgIqr55HJwMJTlx369TzEKYlqKqDtwM6wdjxjL
+         sZQLtIsCJJ/HZIq7+81N02WIZ6K59nEncO9SAuJ629b0QlScaSeM4P4topBAr0ld8saU
+         hi2cWcEt2t7i80jG3/aTT40Givii0HHCL0L3B/r2CNNWXzSx7OCQRj9KGL/QDlDN3c2M
+         8+J/O52c6y/RLspIOsXl2jG6WswesDowngHlqg4IFIj5vIEax6Bg8AK4o3AwUg+YygE6
+         /JuA==
+X-Gm-Message-State: ABy/qLagh/8DqV6u8LXmnRZkWs4juLM7XBCzqTXTLPkwYyqchvGv+gTN
+        9jba5SZM1YBBLV3KmCKFQmtlmQ==
+X-Google-Smtp-Source: APBJJlHCImMszh08qroN+ScqTvW+Lm4kzbNBHCoakjGE3swSx6rZ5XyHj9KuN68oeeMW8B9bxhKuoQ==
+X-Received: by 2002:a05:6512:693:b0:4f8:6d9d:abe0 with SMTP id t19-20020a056512069300b004f86d9dabe0mr365281lfe.33.1688069099306;
+        Thu, 29 Jun 2023 13:04:59 -0700 (PDT)
 Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
-        by smtp.gmail.com with ESMTPSA id n30-20020ac2491e000000b004fb82d7532dsm1219419lfi.177.2023.06.29.12.53.24
+        by smtp.gmail.com with ESMTPSA id k28-20020ac2457c000000b004fb9fbdd8fcsm207623lfm.252.2023.06.29.13.04.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jun 2023 12:53:26 -0700 (PDT)
-Message-ID: <13f29231-692e-b624-bdbd-fa1b2b3e793b@linaro.org>
-Date:   Thu, 29 Jun 2023 21:53:23 +0200
+        Thu, 29 Jun 2023 13:04:58 -0700 (PDT)
+Message-ID: <ef515514-43e8-e4c9-e013-09aa27bc2110@linaro.org>
+Date:   Thu, 29 Jun 2023 22:04:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v2 13/15] arm64: dts: qcom: sm6125: Add dispcc node
+Subject: Re: [PATCH 08/11] dt-bindings: usb: ci-hdrc-usb2: Fix handling
+ pinctrl properties
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Rob Herring <robh@kernel.org>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Benjamin Li <benl@squareup.com>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Zac Crosby <zac@squareup.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Jun Nie <jun.nie@linaro.org>, Max Chen <mchen@squareup.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-References: <20230627-sm6125-dpu-v2-0-03e430a2078c@somainline.org>
- <20230627-sm6125-dpu-v2-13-03e430a2078c@somainline.org>
- <4a267feb-5855-1427-c378-b2615eae4f84@linaro.org>
- <kisifidg4bdb4v6fb6nvgt5omsprssd4bxrn6wqehjo66l2y4a@7nfaydtafzpn>
- <CAA8EJpr+PyjehSd4SEUVfh13+i=+-7v1esQasc+7gNaL2iqWJA@mail.gmail.com>
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        alsa-devel@alsa-project.org, iommu@lists.linux.dev,
+        linux-usb@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>
+References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
+ <20230627-topic-more_bindings-v1-8-6b4b6cd081e5@linaro.org>
+ <20230629152335.GA3055525-robh@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpr+PyjehSd4SEUVfh13+i=+-7v1esQasc+7gNaL2iqWJA@mail.gmail.com>
+In-Reply-To: <20230629152335.GA3055525-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -102,92 +112,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29.06.2023 14:24, Dmitry Baryshkov wrote:
-> On Thu, 29 Jun 2023 at 15:14, Marijn Suijten
-> <marijn.suijten@somainline.org> wrote:
+On 29.06.2023 17:23, Rob Herring wrote:
+> On Tue, Jun 27, 2023 at 06:24:24PM +0200, Konrad Dybcio wrote:
+>> Untangle the bit messy oneOf trees and add the missing pinctrl-2 mention
+>> to handle the different pinctrl combinations.
 >>
->> On 2023-06-29 13:56:25, Dmitry Baryshkov wrote:
->>> On 27/06/2023 23:14, Marijn Suijten wrote:
->>>> Enable and configure the dispcc node on SM6125 for consumption by MDSS
->>>> later on.
->>>>
->>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/sm6125.dtsi | 25 +++++++++++++++++++++++++
->>>>   1 file changed, 25 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>>> index edb03508dba3..a5cc0d43d2d9 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>>> @@ -3,6 +3,7 @@
->>>>    * Copyright (c) 2021, Martin Botka <martin.botka@somainline.org>
->>>>    */
->>>>
->>>> +#include <dt-bindings/clock/qcom,dispcc-sm6125.h>
->>>>   #include <dt-bindings/clock/qcom,gcc-sm6125.h>
->>>>   #include <dt-bindings/clock/qcom,rpmcc.h>
->>>>   #include <dt-bindings/dma/qcom-gpi.h>
->>>> @@ -1203,6 +1204,30 @@ sram@4690000 {
->>>>                     reg = <0x04690000 0x10000>;
->>>>             };
->>>>
->>>> +           dispcc: clock-controller@5f00000 {
->>>> +                   compatible = "qcom,sm6125-dispcc";
->>>> +                   reg = <0x05f00000 0x20000>;
->>>> +                   clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>>> +                            <0>,
->>>> +                            <0>,
->>>> +                            <0>,
->>>> +                            <0>,
->>>> +                            <0>,
->>>> +                            <&gcc GCC_DISP_AHB_CLK>,
->>>> +                            <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>;
->>>> +                   clock-names = "bi_tcxo",
->>>> +                                 "dsi0_phy_pll_out_byteclk",
->>>> +                                 "dsi0_phy_pll_out_dsiclk",
->>>> +                                 "dsi1_phy_pll_out_dsiclk",
->>>> +                                 "dp_phy_pll_link_clk",
->>>> +                                 "dp_phy_pll_vco_div_clk",
->>>> +                                 "cfg_ahb_clk",
->>>> +                                 "gcc_disp_gpll0_div_clk_src";
->>>> +                   power-domains = <&rpmpd SM6125_VDDCX>;
->>>
->>> Would it be logical to specify the required-opps too?
+>> Fixes: 4c8375d35f72 ("dt-bindings: usb: ci-hdrc-usb2: convert to DT schema format")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  .../devicetree/bindings/usb/ci-hdrc-usb2.yaml      | 27 ++++++----------------
+>>  1 file changed, 7 insertions(+), 20 deletions(-)
 >>
->> Perhaps, but barely any other SoC aside from sm8x50 sets it on dispcc.
->> What should it be, rpmhpd_opp_low_svs?  IIRC we used "svs" for the DSI
->> PHY despite not having a reference value downstream (it sets a range of
->> NOM-TURBO_NO_CPR, and RETENTION when it's off).
+>> diff --git a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+>> index 782402800d4a..24431a7adf3e 100644
+>> --- a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+>> +++ b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+>> @@ -199,17 +199,6 @@ properties:
+>>        In case of HSIC-mode, "idle" and "active" pin modes are mandatory.
+>>        In this case, the "idle" state needs to pull down the data and
+>>        strobe pin and the "active" state needs to pull up the strobe pin.
+>> -    oneOf:
+>> -      - items:
+>> -          - const: idle
+>> -          - const: active
 > 
-> Then for DSI PHY the required-opps should be rpmpd_opp_nom.
-Yes
+> These are no longer valid values? The description still mentions them.
+I believe allOf: now covers them all?
 
 > 
-> For the dispcc I think the rpmpd_opp_ret, the lowest possible vote,
-> should be enough.
-I'm not 100% sure but not specifying an opp and turning on the domain
-*******probably******* just sticks with the lowest vote
+>> -      - items:
+>> -          - const: default
+>> -          - enum:
+>> -              - host
+>> -              - device
+>> -      - items:
+>> -          - const: default
+>>  
+>>    pinctrl-0:
+>>      maxItems: 1
+>> @@ -357,17 +346,15 @@ allOf:
+>>              - const: active
+>>      else:
+>>        properties:
+>> +        pinctrl-2:
+> 
+> This should be implicitly allowed. Is it not?
+No, it errored out for me.
+
+> 
+> I'm reallly at a loss as to what problem this patch solves.
+Specifying all 3 pin states is impossible with the current state of
+this binding, even though it's a supported configuration (check
+qcom/apq8039-t2.dtb). I should have been more clear in the commit
+message.
 
 Konrad
+
 > 
+>> +          maxItems: 1
+>> +
+>>          pinctrl-names:
+>>            minItems: 1
+>> -          maxItems: 2
+>> -          oneOf:
+>> -            - items:
+>> -                - const: default
+>> -                - enum:
+>> -                    - host
+>> -                    - device
+>> -            - items:
+>> -                - const: default
+>> +          items:
+>> +            - const: default
+>> +            - const: host
+>> +            - const: device
+>>    - if:
+>>        properties:
+>>          compatible:
 >>
->> - Marijn
+>> -- 
+>> 2.41.0
 >>
->>>
->>>> +                   #clock-cells = <1>;
->>>> +                   #power-domain-cells = <1>;
->>>> +           };
->>>> +
->>>>             apps_smmu: iommu@c600000 {
->>>>                     compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
->>>>                     reg = <0x0c600000 0x80000>;
->>>>
->>>
->>> --
->>> With best wishes
->>> Dmitry
->>>
-> 
-> 
-> 
