@@ -2,58 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DE11742994
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 17:26:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D547A7429A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 17:28:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232789AbjF2P0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 11:26:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51804 "EHLO
+        id S231245AbjF2P17 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 11:27:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232848AbjF2PZ5 (ORCPT
+        with ESMTP id S230487AbjF2P1u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 11:25:57 -0400
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E0D04209;
-        Thu, 29 Jun 2023 08:25:25 -0700 (PDT)
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7837329a00aso33640239f.2;
-        Thu, 29 Jun 2023 08:25:25 -0700 (PDT)
+        Thu, 29 Jun 2023 11:27:50 -0400
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD6DAE57;
+        Thu, 29 Jun 2023 08:27:48 -0700 (PDT)
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-783544a1c90so33585039f.1;
+        Thu, 29 Jun 2023 08:27:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688052325; x=1690644325;
+        d=1e100.net; s=20221208; t=1688052468; x=1690644468;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TnHuzw7CkVANTcF7RhSjmBYBRcPIhT7jREWwRFoM0uo=;
-        b=Q2Ax8WJAQebUa48iyEP+HUitMSPUQHK716f03TCFiK8Teoy4v3Nr3azxfqjtvZfRJO
-         RHQR664Xr3WpiQZlUeD6Pb0XDejzl3WOfhqhQhPBDJvgyIBmsZu3I6tCXhV3r59Jf/sp
-         /+nUbCOCeJN1ZUjE070Gl71Is2y5VQhYIEQauhUQJeycTpkuJ4VwT92kfxyNzlQfXEse
-         xUMV5iftClOHFV8RFSPd/QK9MmtpmPfeEci2XmofLqHVRg6JgvTIa/s3OvIEgalfvUtO
-         tCtKfPWdeHCbgwyLq3gO7rNJU1khlW7kU2gLvmWchzp0ug+AxVamsT7aVXzkjgpEVc0O
-         KGtA==
-X-Gm-Message-State: AC+VfDyDrvc/8daMCo9XmnGhYQ6A5Zx+JroL1EJ7LVIJ1bRhm67tQ5FJ
-        vnpKhddzm+iI8p3r0HUJeQ==
-X-Google-Smtp-Source: ACHHUZ4lZ0RzUIUB6cZqLxkPbdh8s9wacVYy2WiA/MADygWgpIkifl94VHt3S/snbZZ2XsWJonb1qw==
-X-Received: by 2002:a5e:8712:0:b0:785:d5d4:9f1c with SMTP id y18-20020a5e8712000000b00785d5d49f1cmr5593084ioj.18.1688052324947;
-        Thu, 29 Jun 2023 08:25:24 -0700 (PDT)
+        bh=VZR9sZh+9bjHT/NeBWN3KSD8INZ5F1XGNWsIgo61+bw=;
+        b=WGuX7TOe7g3Vn5OECSraMNCk52ob8wEu4AguwZ4TTgo9V8y64dSGkQ+ksPwRUe5PuZ
+         N1tlvjDIWMriF54ytl+ZCJ8RYhsVle8f3h78apO36+GAQe2kTAVqQWsuoJHETngPl1ck
+         fxTIYXGYJfgA1K90pgPWkR9FC3qk+q3Y5sEe7b/hdcXtKvGeYewV2ZR6rw5HbPWjsvZt
+         mKBFn5tDfgOvFLn4kkwMlDhMPl8yCFnlRCqAuALGlEC9numaaO4EtNHLSavQGAaaYAAy
+         EcLthhkJd+Rb5PeO8ITLnSBzJxywgA9+6HRpbf9Ax3FhcgxNVfAUr+ND9v/WCRYlbC35
+         klUw==
+X-Gm-Message-State: AC+VfDwOwTktjkpBf5BgnlDXunbkhl1Inp5ZdX+cuYfO2nYbPLO2lcZe
+        jgnH1/iKcGlDrUcyl5HMUDUqh8S/lA==
+X-Google-Smtp-Source: ACHHUZ4KLxkCInEQQQCS9qmNAEIF532E5Hd6Y2pqUoJrYe3Vdsqc/jeuYEguX546tpcpPckCkDYkiA==
+X-Received: by 2002:a05:6602:424e:b0:775:5f74:f4c7 with SMTP id cc14-20020a056602424e00b007755f74f4c7mr42469927iob.17.1688052468076;
+        Thu, 29 Jun 2023 08:27:48 -0700 (PDT)
 Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id h3-20020a02cd23000000b0042acbd3a791sm2764234jaq.9.2023.06.29.08.25.23
+        by smtp.gmail.com with ESMTPSA id t10-20020a02878a000000b00428722c1c51sm3875373jai.32.2023.06.29.08.27.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jun 2023 08:25:24 -0700 (PDT)
-Received: (nullmailer pid 3063357 invoked by uid 1000);
-        Thu, 29 Jun 2023 15:25:22 -0000
-Date:   Thu, 29 Jun 2023 09:25:22 -0600
+        Thu, 29 Jun 2023 08:27:47 -0700 (PDT)
+Received: (nullmailer pid 3066583 invoked by uid 1000);
+        Thu, 29 Jun 2023 15:27:44 -0000
+Date:   Thu, 29 Jun 2023 09:27:44 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        sboyd@kernel.org, mturquette@baylibre.com,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org, agross@kernel.org
-Subject: Re: [PATCH] dt-bindings: clock: qcom: Update my email address
-Message-ID: <168805232244.3063305.12279148321293876626.robh@kernel.org>
-References: <20230627173123.9221-1-quic_tdas@quicinc.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Martin Botka <martin.botka@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Lux Aliaga <they@mint.lgbt>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 03/15] dt-bindings: clock: qcom,dispcc-sm6125: Require
+ GCC PLL0 DIV clock
+Message-ID: <168805246390.3066499.7212254924681716912.robh@kernel.org>
+References: <20230627-sm6125-dpu-v2-0-03e430a2078c@somainline.org>
+ <20230627-sm6125-dpu-v2-3-03e430a2078c@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230627173123.9221-1-quic_tdas@quicinc.com>
+In-Reply-To: <20230627-sm6125-dpu-v2-3-03e430a2078c@somainline.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -66,42 +90,16 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 27 Jun 2023 23:01:23 +0530, Taniya Das wrote:
-> Update my email address from the defunct codeaurora.org domain to the
-> current quicinc.com domain.
+On Tue, 27 Jun 2023 22:14:18 +0200, Marijn Suijten wrote:
+> The "gcc_disp_gpll0_div_clk_src" clock is consumed by the driver, will
+> be passed from DT, and should be required by the bindings.
 > 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Fixes: 8397c9c0c26b ("dt-bindings: clock: add QCOM SM6125 display clock bindings")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml   | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml   | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml   | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml   | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml   | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml   | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml     | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml    | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml    | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml    | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml    | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml    | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml    | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gcc.yaml           | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,gpucc.yaml         | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,mmcc.yaml          | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,msm8998-gpucc.yaml | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml        | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,sc7180-camcc.yaml  | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,sc7180-dispcc.yaml | 2 +-
->  .../devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml      | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml    | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,sc7280-camcc.yaml  | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,sc7280-dispcc.yaml | 2 +-
->  .../devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml          | 2 +-
->  .../devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml      | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,sdm845-dispcc.yaml | 2 +-
->  Documentation/devicetree/bindings/clock/qcom,videocc.yaml       | 2 +-
->  28 files changed, 28 insertions(+), 28 deletions(-)
+>  Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 
