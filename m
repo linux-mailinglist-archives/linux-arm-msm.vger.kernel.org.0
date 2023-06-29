@@ -2,92 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2280742C71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 20:53:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB6F3742D4F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jun 2023 21:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232047AbjF2SxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 14:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34230 "EHLO
+        id S231963AbjF2TTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jun 2023 15:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232672AbjF2SxO (ORCPT
+        with ESMTP id S232206AbjF2TTZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 14:53:14 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 362F2A2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 11:53:12 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35THvhuw029422;
-        Thu, 29 Jun 2023 18:53:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UwVV4d+Ja9UeYUNNGZ7vaxDt9exIm/zyrCZ4wj525U4=;
- b=RWFFZjxl2BnSUvy9cVjFJqve+xqkIrPiqK/gl/WPTGXTjQ7tu4s/hjT+z9KsbnXDgIAX
- q2/nOQwq0YSs0DJ7XgIVfZO0trIRdQtcMfw3LBLYcE7AQTB1CwNahQNdQZtpSrzmshJa
- 9brjemp6jB5d0lPCZ6AtviL0gpdvJRyfKs5+ljAoMpRos5Cw+AUwtpV/18jzHh7jkt9R
- +B5DGGIxeSh1K5R7H2WwrwoSqC4h/xf3Mk88KZogU6oblKCE28WX2I/AyCpW2xNaiUya
- npHPmYlmjYYFI3eckW8D5iozMU3HuA6wgYLANrewTy/DK6vPz4CpWDdRlgoe2A32ouC2 Ew== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rh7s2s4j7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Jun 2023 18:53:02 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35TIr1AD009595
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Jun 2023 18:53:01 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 29 Jun
- 2023 11:53:01 -0700
-Message-ID: <b7627939-6cef-3fc7-066c-bf2265163bed@quicinc.com>
-Date:   Thu, 29 Jun 2023 11:53:00 -0700
+        Thu, 29 Jun 2023 15:19:25 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B7D49FC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 12:14:53 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fb960b7c9dso1706050e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 12:14:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688066091; x=1690658091;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0Vq+T8lQo74iqCO2gARUksyTq7tukw2uYRbItDc46iw=;
+        b=NGs2k0y7ct9TAeWIg2sXMCaKO1ie2YUvLXJyeU3KSEZgGdU+ZSFrYJPd+GZ8Y0QrXQ
+         snIQmz9Z5dR5Tqgs3/9E/CFKoSJAZyX7A2s2a00Crzbe/yhCuVyJCHtN1ZOV1BQ2sP0z
+         j8Fuhub3WhCWuH9gBRkx8v9HuepD+M2Z5v7oUb1memQGcYPbgQGQDU7vILngB4cx+rPs
+         XzdC0Uj+KVV8vJjNrB/vZn71mmy335Hr1xVYYCSnzOhfivzCeSGT337/xcAz6Cq4ENFw
+         HJgc9Iupi7bCgQwg0MlcgyvpIqq0Uz69eDJJvMLqXx2bd2QC5S2TMSs63YC8EPT1+ay+
+         Fsyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688066091; x=1690658091;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Vq+T8lQo74iqCO2gARUksyTq7tukw2uYRbItDc46iw=;
+        b=TH4YaNCuiNHeSST96993+PpUJUkOI9HGkZEZIdSV2ubNB/od93qO+9p7aOFSJNyQFt
+         VRJ5Vr/a9kXC1RxHKFgVy2MBHibLfBSytJSeZIihT9ci/X7AnR9480ObhU26g8OSH483
+         iFw3bnmS1P2Ttpql8XaWgOjrYds7ONbyV7Zar4VgxPaQAggMbqUDGz+GCAnbSZDaEKbD
+         mrTLKGaRLDaQhqRdobwxjZnsZL/NSXwcHcQlhGaRutYghc0SbakjbLU2fpGFZMjM7KgA
+         KKUM2ynJGToAZY1QbcmAeJJ1HGUqlqiPKEUfAWeWdHd3oUlb9eBpVJDbqJ7FuXJzv8jF
+         i5bA==
+X-Gm-Message-State: ABy/qLYRcBUK8s7OT0C99242cB8aLVozrQOuYs8AZO1GHuoFcyPeaS1R
+        q7kxPiFbkgBAF49yfHY7HoG55A==
+X-Google-Smtp-Source: APBJJlGBtQm30wveE7QHuHEUoBRPBJ59HzZZOwf8zDUMmBFEmC1w9RT6nElA3dhsxQ7/3LNWzbB9VQ==
+X-Received: by 2002:a05:6512:3b9c:b0:4ec:9ef9:e3d with SMTP id g28-20020a0565123b9c00b004ec9ef90e3dmr778592lfv.26.1688066091464;
+        Thu, 29 Jun 2023 12:14:51 -0700 (PDT)
+Received: from [192.168.1.101] (abyk82.neoplus.adsl.tpnet.pl. [83.9.30.82])
+        by smtp.gmail.com with ESMTPSA id p17-20020a05651238d100b004fb99acbbe7sm401514lft.231.2023.06.29.12.14.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Jun 2023 12:14:50 -0700 (PDT)
+Message-ID: <ba1a6af3-b522-09da-ae81-88f75eae7a47@linaro.org>
+Date:   Thu, 29 Jun 2023 21:14:47 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [Freedreno] [RFC PATCH 0/3] Support for Solid Fill Planes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 12/15] arm64: dts: qcom: sm6125: Switch fixed xo_board
+ clock to RPM XO clock
 Content-Language: en-US
-To:     Pekka Paalanen <ppaalanen@gmail.com>
-CC:     <daniel.vetter@ffwll.ch>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
-        <seanpaul@chromium.org>, <laurent.pinchart@ideasonboard.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <wayland-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <Y2leZDfLj/5963wl@intel.com>
- <d0b5abdc-85ad-fee2-9760-866c32bab111@quicinc.com>
- <20230627105849.004050b3@eldfell>
- <5e60fe99-76d5-c242-608e-b74bf6f0e7bd@quicinc.com>
- <54f194fe-ab7b-247d-600b-6da8f5c57dbf@linaro.org>
- <1613cdd4-8d90-6589-97e8-c4e1810bde04@quicinc.com>
- <20230628103451.118c0d76@eldfell>
- <af4058fb-9744-87c8-bf9c-85cf78a97095@quicinc.com>
- <20230629102925.71b5b6ad@eldfell>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20230629102925.71b5b6ad@eldfell>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nV8qrfhd01WbDX5aBgDYBoRNUFwwSlgj
-X-Proofpoint-ORIG-GUID: nV8qrfhd01WbDX5aBgDYBoRNUFwwSlgj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-29_06,2023-06-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- spamscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0
- mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306290170
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+References: <20230627-sm6125-dpu-v2-0-03e430a2078c@somainline.org>
+ <20230627-sm6125-dpu-v2-12-03e430a2078c@somainline.org>
+ <84eb1d40-436b-a5b4-a4e3-75a511ad5a90@linaro.org>
+ <st3nrb54zxa5xp7qqkdyygf7t6ucgzl3xc5w6d426xy6udj4fx@puakunoaoj2l>
+ <CAA8EJpqHh4ZWZxuRMLN2z8BZYFqzoWxZV=oW1ANzEJy4i-PWNw@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAA8EJpqHh4ZWZxuRMLN2z8BZYFqzoWxZV=oW1ANzEJy4i-PWNw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,197 +103,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/29/2023 12:29 AM, Pekka Paalanen wrote:
-> On Wed, 28 Jun 2023 09:40:21 -0700
-> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> 
->> On 6/28/2023 12:34 AM, Pekka Paalanen wrote:
->>> On Tue, 27 Jun 2023 15:10:19 -0700
->>> Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>>    
->>>> On 6/27/2023 2:59 PM, Dmitry Baryshkov wrote:
->>>>> On 28/06/2023 00:27, Jessica Zhang wrote:
->>>>>>
->>>>>>
->>>>>> On 6/27/2023 12:58 AM, Pekka Paalanen wrote:
->>>>>>> On Mon, 26 Jun 2023 16:02:50 -0700
->>>>>>> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>>>>>>      
->>>>>>>> On 11/7/2022 11:37 AM, Ville Syrjälä wrote:
->>>>>>>>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
->>>>>>>>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
->>>>>>>>>> properties. When the color fill value is set, and the framebuffer
->>>>>>>>>> is set
->>>>>>>>>> to NULL, memory fetch will be disabled.
->>>>>>>>>
->>>>>>>>> Thinking a bit more universally I wonder if there should be
->>>>>>>>> some kind of enum property:
->>>>>>>>>
->>>>>>>>> enum plane_pixel_source {
->>>>>>>>>       FB,
->>>>>>>>>       COLOR,
->>>>>>>>>       LIVE_FOO,
->>>>>>>>>       LIVE_BAR,
->>>>>>>>>       ...
->>>>>>>>> }
->>>>>>>>
->>>>>>>> Reviving this thread as this was the initial comment suggesting to
->>>>>>>> implement pixel_source as an enum.
->>>>>>>>
->>>>>>>> I think the issue with having pixel_source as an enum is how to decide
->>>>>>>> what counts as a NULL commit.
->>>>>>>>
->>>>>>>> Currently, setting the FB to NULL will disable the plane. So I'm
->>>>>>>> guessing we will extend that logic to "if there's no pixel_source set
->>>>>>>> for the plane, then it will be a NULL commit and disable the plane".
->>>>>>>>
->>>>>>>> In that case, the question then becomes when to set the pixel_source to
->>>>>>>> NONE. Because if we do that when setting a NULL FB (or NULL solid_fill
->>>>>>>> blob), it then forces userspace to set one property before the other.
->>>>>>>
->>>>>>> Right, that won't work.
->>>>>>>
->>>>>>> There is no ordering between each property being set inside a single
->>>>>>> atomic commit. They can all be applied to kernel-internal state
->>>>>>> theoretically simultaneously, or any arbitrary random order, and the
->>>>>>> end result must always be the same. Hence, setting one property cannot
->>>>>>> change the state of another mutable property. I believe that doing
->>>>>>> otherwise would make userspace fragile and hard to get right.
->>>>>>>
->>>>>>> I guess there might be an exception to that rule when the same property
->>>>>>> is set multiple times in a single atomic commit; the last setting in
->>>>>>> the array prevails. That's universal and not a special-case between two
->>>>>>> specific properties.
->>>>>>>      
->>>>>>>> Because of that, I'm thinking of having pixel_source be represented
->>>>>>>> by a
->>>>>>>> bitmask instead. That way, we will simply unset the corresponding
->>>>>>>> pixel_source bit when passing in a NULL FB/solid_fill blob. Then, in
->>>>>>>> order to detect whether a commit is NULL or has a valid pixel
->>>>>>>> source, we
->>>>>>>> can just check if pixel_source == 0.
->>>>>>>
->>>>>>> Sounds fine to me at first hand, but isn't there the enum property that
->>>>>>> says if the kernel must look at solid_fill blob *or* FB_ID?
->>>>>>>
->>>>>>> If enum prop says "use solid_fill prop", the why would changes to FB_ID
->>>>>>> do anything? Is it for backwards-compatibility with KMS clients that do
->>>>>>> not know about the enum prop?
->>>>>>>
->>>>>>> It seems like that kind of backwards-compatiblity will cause problems
->>>>>>> in trying to reason about the atomic state, as explained above, leading
->>>>>>> to very delicate and fragile conditions where things work intuitively.
->>>>>>> Hence, I'm not sure backwards-compatibility is wanted. This won't be
->>>>>>> the first or the last KMS property where an unexpected value left over
->>>>>>> will make old atomic KMS clients silently malfunction up to showing no
->>>>>>> recognisable picture at all. *If* that problem needs solving, there
->>>>>>> have been ideas floating around about resetting everything to nice
->>>>>>> values so that userspace can ignore what it does not understand. So far
->>>>>>> there has been no real interest in solving that problem in the kernel
->>>>>>> though.
->>>>>>>
->>>>>>> Legacy non-atomic UAPI wrappers can do whatever they want, and program
->>>>>>> any (new) properties they want in order to implement the legacy
->>>>>>> expectations, so that does not seem to be a problem.
->>>>>>
->>>>>> Hi Pekka and Dmitry,
->>>>>>
->>>>>> After reading through both of your comments, I think I have a better
->>>>>> understanding of the pixel_source implementation now.
->>>>>>
->>>>>> So to summarize, we want to expose another property called
->>>>>> "pixel_source" to userspace that will default to FB (as to not break
->>>>>> legacy userspace).
->>>>>>
->>>>>> If userspace wants to use solid fill planes, it will set both the
->>>>>> solid_fill *and* pixel_source properties to a valid blob and COLOR
->>>>>> respectively. If it wants to use FB, it will set FB_ID and
->>>>>> pixel_source to a valid FB and FB.
->>>>>>
->>>>>> Here's a table illustrating what I've described above:
->>>>>>
->>>>>> +-----------------+-------------------------+-------------------------+
->>>>>> | Use Case        | Legacy Userspace        | solid_fill-aware        |
->>>>>> |                 |                         | Userspace               |
->>>>>> +=================+=========================+=========================+
->>>>>> | Valid FB        | pixel_source = FB       | pixel_source = FB       |
->>>>>> |                 | FB_ID = valid FB        | FB_ID = valid FB        |
->>>>>> +-----------------+-------------------------+-------------------------+
->>>>>> | Valid           | pixel_source = COLOR    | N/A                     |
->>>>>> | solid_fill blob | solid_fill = valid blob |                         |
->>>>>
->>>>> Probably these two cells were swapped.
->>>>>       
->>>>
->>>> Ack, yes they were swapped.
->>>>   
->>>>>> +-----------------+-------------------------+-------------------------+
->>>>>> | NULL commit     | pixel_source = FB       | pixel_source = FB       |
->>>>>> |                 | FB_ID = NULL            | FB_ID = NULL            |
->>>>>> +-----------------+-------------------------+-------------------------+
->>>>>
->>>>>                                                  | or:
->>>>>                                                  | pixel_source = COLOR
->>>>>                                                  | solid_fill = NULL
->>>>>>
->>>>>> Is there anything I'm missing or needs to be clarified?
->>>>>>      
->>>>>
->>>>> LGTM otherwise
->>>>>       
->>>>
->>>> LGTM too.
->>>
->>> Hi,
->>>
->>> yeah, that sounds fine to me, if everyone thinks that adding a new
->>> property for pixel_source is a good idea. I just assumed it was already
->>> agreed, and based my comments on that.
->>>
->>> I don't really remember much of the discussion about a special FB that
->>> is actually a solid fill vs. this two new properties design, so I
->>> cannot currently give an opinion on that, or any other design.
+On 29.06.2023 14:26, Dmitry Baryshkov wrote:
+> On Thu, 29 Jun 2023 at 15:09, Marijn Suijten
+> <marijn.suijten@somainline.org> wrote:
 >>
->> Hi Pekka,
+>> On 2023-06-29 13:55:28, Dmitry Baryshkov wrote:
+>>> On 27/06/2023 23:14, Marijn Suijten wrote:
+>>>> We have a working RPM XO clock; no other driver except rpmcc should be
+>>>> parenting directly to the fixed-factor xo_board clock nor should it be
+>>>> reachable by that global name.  Remove the name to that effect, so that
+>>>> every clock relation is explicitly defined in DTS.
+>>>>
+>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>> ---
+>>>>   arch/arm64/boot/dts/qcom/sm6125.dtsi | 7 ++++---
+>>>>   1 file changed, 4 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>>>> index 722dde560bec..edb03508dba3 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>>>> @@ -22,7 +22,6 @@ xo_board: xo-board {
+>>>>                     compatible = "fixed-clock";
+>>>>                     #clock-cells = <0>;
+>>>>                     clock-frequency = <19200000>;
+>>>> -                   clock-output-names = "xo_board";
+>>>
+>>> Why? I'd say, leave it.
 >>
->> It was discussed in the v3 of this series, but we came to the conclusion
->> that allocating an FB for solid_fill was unnecessary since solid fill
->> does not require memory fetch.
+>> The exact reason is explained in the commit message.
 > 
-> Hi,
-> 
-> it just occurred to me that the pixel_source property could be replaced
-> with the rule that if a solid_fill blob id is 0, then use FD_IB. Or
-> vice versa. But if someone then adds a third way of setting content on
-> a plane, it would result in a chain of "if this is 0, then use the next
-> one" and only if all are 0, there is no content.
+> Usually we do no not kill the xo_board name for the sake of anybody
+> still looking for the old name. Weak argument, I know.
+The only users are (rg -l '"xo_board"' drivers):
 
-Hi Pekka,
+drivers/clk/qcom/mmcc-msm8974.c
+drivers/clk/qcom/a53-pll.c
+drivers/clk/qcom/gcc-msm8974.c
+drivers/clk/qcom/clk-smd-rpm.c
+drivers/clk/qcom/mmcc-msm8996.c
+drivers/clk/qcom/gcc-msm8916.c
+drivers/clk/qcom/gcc-apq8084.c
+drivers/clk/qcom/gcc-msm8996.c
+drivers/clk/qcom/mmcc-apq8084.c
+drivers/clk/qcom/clk-rpmh.c
+drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
 
-Agreed. I would prefer having a pixel_source property as it will be more 
-extendable than having arbitrary checks.
+This platform only binds clk-smd-rpm, but patch 11 provides a
+direct reference in the DT.
 
-> 
-> I'm not sure if that's better or worse. Both designs seem to have the
-> same backwards compatibility issues, and the exact same impact to
-> legacy SetCrtc ioctl. Maybe pixel_source property is easier to document
-> and understand though when there is no "if this does not exist or is 0
-> then ..." chain.
-FWIW, the solid_fill feature will require both the solid_fill and 
-pixel_source properties. I'll make a note of this in the cover letter.
+Konrad
 
 > 
-> So, pixel_source is fine by me.
-
-Awesome, thanks for the feedback! Will push a v4 with these changes.
-
-Thanks,
-
-Jessica Zhang
-
+>>
+>>>
+>>> With that fixed:
+>>
+>> Hence I don't think it makes sense to "fix" this.
+>>
+>> - Marijn
+>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
 > 
-> Thanks,
-> pq
+> 
