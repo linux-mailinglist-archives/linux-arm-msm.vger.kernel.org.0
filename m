@@ -2,123 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05EF87434E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 08:24:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A88743584
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 09:11:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbjF3GYF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 02:24:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58858 "EHLO
+        id S231691AbjF3HLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 03:11:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229883AbjF3GYE (ORCPT
+        with ESMTP id S230426AbjF3HLm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 02:24:04 -0400
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.216])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 694501BCE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jun 2023 23:24:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
-        Content-Type; bh=ISJVHwzHvmijJJrvj2ySMSMkBnauKRMlWEOPSz+Jbws=;
-        b=i+K3F/+kq4bILLFDqdNubCShzdw13HIPvfg9E1Ob67Gk4oCRogpDBkcrpL6OBT
-        vntWLspcmRGx4v/ykzF/TZOInprZ+z/dNptR0R6W1sSraIWHKzGIHPtpiitHFeuL
-        Jh+CnctLsn4bxNklAFGKRq53hTV3t8vTRK8vfND2cNQxA=
-Received: from ubuntu.localdomain (unknown [220.180.239.201])
-        by zwqz-smtp-mta-g3-1 (Coremail) with SMTP id _____wCH3B3cdJ5kf2foBA--.62394S2;
-        Fri, 30 Jun 2023 14:23:27 +0800 (CST)
-From:   =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-To:     mani@kernel.org, loic.poulain@linaro.org, slark_xiao@163.com
-Cc:     fabio.porcedda@gmail.com, koen.vandeputte@citymesh.com,
-        song.fc@gmail.com, bhelgaas@google.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, jerry.meng@quectel.com,
-        duke.xin@quectel.com,
-        =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-Subject: [PATCH v6] bus: mhi: host: pci_generic: Add support for Quectel RM520N-GL modem
-Date:   Thu, 29 Jun 2023 23:23:18 -0700
-Message-Id: <20230630062318.12114-1-duke_xinanwen@163.com>
-X-Mailer: git-send-email 2.25.1
+        Fri, 30 Jun 2023 03:11:42 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6E7199;
+        Fri, 30 Jun 2023 00:11:37 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U5QCT6014244;
+        Fri, 30 Jun 2023 07:11:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BFrv4h8arCmopr0GT3R+CcIJImDld/jIwh7rwC4ymxw=;
+ b=lvLF6wj0ZXHO/InrTg76+zgs+3yQySN5tSVbhzoO5RpLq5O3MizpeGmjgnpzOpG0tSWy
+ VjaYNG3P7Jo19G26VQXuh8VC4Vhd4PeFjZJhUKIhHes8WvCSrLwz6ZfaAWrvdU5aRD+z
+ LnNRptFnIgpMK9OFuIxDRoK2fb+EoSNzIufs7xEC+EMRAhhg+wezCvaJh/gjC/qHeBfx
+ I5AvaOSZ3RLokNWyxmQCPDIAFnQ7HCSH7xgPQVQ5qZ5y25QqKB6qhXOxBduZeOEQQewh
+ ouCFR26fiwOSmBWWw8Vs7bS7itQ0pcgi1dQhyB2U8tSPi80Tn3ZixaPvFuJL/oVrELhZ vA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhgpgs17p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Jun 2023 07:11:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35U7BUMI000776
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Jun 2023 07:11:30 GMT
+Received: from [10.216.51.197] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Fri, 30 Jun
+ 2023 00:11:22 -0700
+Message-ID: <98706ea2-b722-e956-b204-08791977307b@quicinc.com>
+Date:   Fri, 30 Jun 2023 12:41:18 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH V2 13/13] arm64: dtsi: qcom: ipq9574: Add nodes to bring
+ up multipd
+Content-Language: en-US
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_eberman@quicinc.com>, <quic_mojha@quicinc.com>,
+        <kvalo@kernel.org>, <loic.poulain@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>, <quic_varada@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
+ <20230521222852.5740-14-quic_mmanikan@quicinc.com>
+ <8d21467a-83a4-8478-dbf5-edd77461e6dc@linaro.org>
+ <15bdbd23-9066-ee20-1e29-1d086340c133@quicinc.com>
+In-Reply-To: <15bdbd23-9066-ee20-1e29-1d086340c133@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wCH3B3cdJ5kf2foBA--.62394S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KryrGw48tr1Utw45KFyDKFg_yoW8tr43pF
-        4F9rWIvF4vqFWSy3s7G34kCFn5Wa13uryUKF13Gw10qr4qyw4Fqryv9r1YvF4jvFZ5W3WS
-        vF15Jr90g3WqyFUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRleH3UUUUU=
-X-Originating-IP: [220.180.239.201]
-X-CM-SenderInfo: 5gxnvsp0lqt0xzhqqiywtou0bp/xtbBFQGee2B9nOydugAAs7
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L3,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pi6zt2qimRPkeghAyfoGOw672OQCrVir
+X-Proofpoint-ORIG-GUID: pi6zt2qimRPkeghAyfoGOw672OQCrVir
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-30_03,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=817 adultscore=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306300060
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add MHI interface definition for RM520 product based on Qualcomm SDX6X chip
 
-Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
----
-Changelog
 
-v5 -> v6
+On 6/27/2023 1:14 PM, Manikanta Mylavarapu wrote:
+> 
+> 
+> On 6/24/2023 12:31 PM, Krzysztof Kozlowski wrote:
+>> On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
+>>> Enable nodes required for multipd remoteproc bring up.
+>>>
+>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>> ---
+>>> Changes in V2:
+>>>     - Corrected syntax like alignmnet and kept nodes in sorted order.
+>>>     - Added 'firmware-name' property.
+>>>
+>>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 118 ++++++++++++++++++++++++++
+>>>   1 file changed, 118 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> index 0e04549c69a5..ff0da53ba05f 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>> @@ -160,6 +160,11 @@
+>>>               no-map;
+>>>           };
+>>>
+>>> +        q6_region: wcnss@4ab00000 {
+>>> +            reg = <0x0 0x4ab00000 0x0 0x2b00000>;
+>>> +            no-map;
+>>> +        };
+>>> +
+>>>           smem@4aa00000 {
+>>>               compatible = "qcom,smem";
+>>>               reg = <0x0 0x4aa00000 0x0 0x00100000>;
+>>> @@ -697,6 +702,95 @@
+>>>               };
+>>>           };
+>>>
+>>> +        q6v5_wcss: remoteproc@cd00000 {
+>>> +            compatible = "qcom,ipq9574-q6-mpd";
+>>> +            reg = <0x0cd00000 0x4040>;
+>>> +            firmware-name = "IPQ9574/q6_fw.mdt",
+>>> +                    "IPQ9574/m3_fw.mdt";
+>>
+>> Here and...
+>>
+>>> +            interrupts-extended = <&intc GIC_SPI 325 
+>>> IRQ_TYPE_EDGE_RISING>,
+>>> +                          <&wcss_smp2p_in 0 0>,
+>>> +                          <&wcss_smp2p_in 1 0>,
+>>> +                          <&wcss_smp2p_in 2 0>,
+>>> +                          <&wcss_smp2p_in 3 0>;
+>>> +            interrupt-names = "wdog",
+>>> +                      "fatal",
+>>> +                      "ready",
+>>> +                      "handover",
+>>> +                      "stop-ack";
+>>> +
+>>> +            qcom,smem-states = <&wcss_smp2p_out 0>,
+>>> +                       <&wcss_smp2p_out 1>;
+>>> +            qcom,smem-state-names = "shutdown",
+>>> +                        "stop";
+>>> +            memory-region = <&q6_region>;
+>>> +
+>>> +            glink-edge {
+>>> +                interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
+>>> +                label = "rtr";
+>>> +                qcom,remote-pid = <1>;
+>>> +                mboxes = <&apcs_glb 8>;
+>>> +            };
+>>> +
+>>> +            pd-1 {
+>>> +                compatible = "qcom,ipq9574-wcss-ahb-mpd";
+>>> +                firmware-name = "IPQ9574/q6_fw.mdt";
+>>
+>> ... here - why do you have firmware in both places?
+>>
 
-* Update commit message to include the changelog and reviewd tag.
+	In multipd model, Q6 & WCSS uses different firmware.
+	I will correct the firmware-name. Thanks for catching.
 
-v4 -> v5
+>>> +                interrupts-extended = <&wcss_smp2p_in 8 0>,
+>>> +                              <&wcss_smp2p_in 9 0>,
+>>> +                              <&wcss_smp2p_in 12 0>,
+>>> +                              <&wcss_smp2p_in 11 0>;
+>>> +                interrupt-names = "fatal",
+>>> +                          "ready",
+>>> +                          "spawn-ack",
+>>> +                          "stop-ack";
+>>> +                qcom,smem-states = <&wcss_smp2p_out 8>,
+>>> +                           <&wcss_smp2p_out 9>,
+>>> +                           <&wcss_smp2p_out 10>;
+>>> +                qcom,smem-state-names = "shutdown",
+>>> +                            "stop",
+>>> +                            "spawn";
+>>> +            };
+>>> +
+>>> +            pd-2 {
+>>> +                compatible = "qcom,ipq5018-wcss-pcie-mpd";
+>>
+>> This compatible is confusing for this device.
+>>
+	I will clean up all SOC specific compatibles and have
+	only device specific compatibles for Q6 & WCSS radio's
+	as i mentioned on other thread.
 
-* Add patch CC to mhi@lists.linux.dev.
-
-v3 -> v4
-
-* Limit character length to 75 characters and adjusted "project" description to "product".
-
-v2 -> v3
-
-* Sorted add rm520 id in mhi_pci_id_table and modify commit message.
-
-v1 -> v2
-
-* Use [modem_quectel_em1xx_config] compatible instead of duplicating the configuration.
----
- drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 70e37c490150..1e7caa62f114 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -352,6 +352,16 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
- 	.sideband_wake = true,
- };
- 
-+static const struct mhi_pci_dev_info mhi_quectel_rm5xx_info = {
-+	.name = "quectel-rm5xx",
-+	.edl = "qcom/prog_firehose_sdx6x.elf",
-+	.config = &modem_quectel_em1xx_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = true,
-+};
-+
- static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
- 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-@@ -591,6 +601,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-+	/* RM520N-GL (sdx6x), eSIM */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004),
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
--- 
-2.25.1
-
+Thanks & Regards,
+Manikanta.
