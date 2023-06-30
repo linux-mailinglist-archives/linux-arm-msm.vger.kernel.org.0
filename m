@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9360874438C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 22:55:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 335CB744389
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 22:55:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232682AbjF3Uzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 16:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56478 "EHLO
+        id S231634AbjF3Uzf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 16:55:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232431AbjF3Uzg (ORCPT
+        with ESMTP id S232431AbjF3Uze (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 16:55:36 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A4193C1D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 13:55:32 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b6afc1ceffso38344321fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 13:55:32 -0700 (PDT)
+        Fri, 30 Jun 2023 16:55:34 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C6983C29
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 13:55:33 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fb96e2b573so3891119e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 13:55:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688158530; x=1690750530;
+        d=linaro.org; s=google; t=1688158531; x=1690750531;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fNVmU8HfJzAhSkmsEVuTAg9GbpLxTciOPnh3vvstVXw=;
-        b=f//wGEaqZBaUvbk42MTt5ilcOlle2/2QUHaUEk1m/L98MhZWXbU6u/88C7T1pVLtSj
-         6v852L+asxRXX7zt4JWLao6PzRzhe/FNqWduuUWnj2glpHZYJ9qGZL8BQbXwx3tw5ZqS
-         XeMfJlkG431lDFMW+VvZQhIa+kIJVFZgpzwuxj8fwpk8mMc9OxoBqGXF73eYHkfjpiwZ
-         0gVHS1VQnT2cGBvQ/2EnNaeMSxKp8cFGW5DjJs5tP949UGKYrAi2zfGhjBXimjzdUw2R
-         gZhN7CjudmzgvzmQaCYqDTsJVXNrnJevhW1DHC7t6ah3uEACxtG6ExYpWw+RVVEX48NJ
-         YZqA==
+        bh=r18mIVnmzqRHDPtVLwyQfg7CU86v3tvlxJpotfkE8/Y=;
+        b=LUyeVfhqY4vehUN7iaSFHM+uoOBODXHG8w7l6Lw7PspLCfPKldR4KAwZ1W9FkwPAuz
+         kI/Q+1MxAeU1vP5nHpmXjAfiU9JM2e+/iBsUqH0s5rZGQ5euKH3Yt1cji348QgFhMHIq
+         qVrBcQRqzKPK4Aox2BpKJuQiYPSASSiuISu/JXDfBywg65cxJov1vuKP53Moc0HZHebx
+         aR4n0XANAHbQWlhFuZM9jYtEGHCdwcxW1Q5gIVMVXI5MdqMXJiucCr0kBkpepibS8Ziy
+         JORNtbZtmqE2GoUPVrNwAsrmOQWtVoq4RQYaDs34Y9QzFTZEHdg7FMZzquDPDa+YAvLu
+         lluQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688158530; x=1690750530;
+        d=1e100.net; s=20221208; t=1688158531; x=1690750531;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fNVmU8HfJzAhSkmsEVuTAg9GbpLxTciOPnh3vvstVXw=;
-        b=kvKb/y+Oxlbyia5S1FkaLQltIb0EUFGwUD+G/Y3WMYHqeojS6yq6c1Ivg/bvoKP7N0
-         krXEpkIgKu2rNxc+hMkj01MhKp7IwTiD7zyigYxHE7brK5OGwN2K1pC7b51MHeSCI1JK
-         PPTmNRImgaIXeHP05zDHiTch6+HdvzA54r/2eL8u4c6DkFsFE0o7jN7J8LxzaBSdGeaI
-         CDVTP4tWopYkbPnaABT1xFdtfZWxQeiSfKvfXG/+BkKr9YveiDF8ndLdiHuKlfNwA2gi
-         LaKAaAssCi3/ddW3mFpyAsKVqw/7Ebw6+6fHB8PUEc9PuLOno0xiT0/RclrEcTWKtoRX
-         nZQw==
-X-Gm-Message-State: ABy/qLY2U28xT1tNofyRZTPreKpYiWSPC/b4hNo7Gf1SjRYv0IHsIjp9
-        CpgP8v05k+j/MLyc2XzsoOsgdg==
-X-Google-Smtp-Source: APBJJlExHsyRDH6kMi2+38aJrM34jptdomKRUlQ6QzHz46r0gnHStPNiGOd6yd259I1hO4NsQCtOvQ==
-X-Received: by 2002:a05:6512:31d6:b0:4f8:46e9:9f19 with SMTP id j22-20020a05651231d600b004f846e99f19mr3757977lfe.1.1688158530458;
-        Fri, 30 Jun 2023 13:55:30 -0700 (PDT)
+        bh=r18mIVnmzqRHDPtVLwyQfg7CU86v3tvlxJpotfkE8/Y=;
+        b=WZGhjCfoq2IwmbHo+jjuj5tGr1vVyEavspMLKOPX9hrhvOqiydHkXqfSKeohq38IOY
+         T+VAw/h05kfcx4FIiS2ntZuCrBbctMORJSO9DMRclVwCAGW2RdusuTI3LHv1XmhOxegz
+         5mxI7hf/vsynVaTlf/ORREnoxKNFIQKwHejH7/qKSTtHrCjGKeWH3jADd1c4ZBc52yPy
+         mv2By5nZXoKvhd0BQUSOeiF1MsMsUBaJ3lDkgmKv2IuZ8+2UlqVF9znpFMK+hq2w+rFy
+         HkDlpn94MtUxzQjnKv6zyqn5+fw7OA2vpoDega3ZTfGpJwlH+0YsY5FFllwwqaUEqTcy
+         XxFg==
+X-Gm-Message-State: ABy/qLYYaeEW6Fqcv3ai4XXLO30Yx7ekMgmJAaO1xUnzCI9b0hHsY0MJ
+        d1ctPimI40oMxGeKChT0U0ldWA==
+X-Google-Smtp-Source: APBJJlE7JZKxqCJN4wJq27EJv5YNxShDUyy9x1y4SLSryjFibDNtFji/MeeW5RVzba70K+QXzWeFZw==
+X-Received: by 2002:a05:6512:3c81:b0:4f5:1418:e230 with SMTP id h1-20020a0565123c8100b004f51418e230mr1018104lfv.52.1688158531172;
+        Fri, 30 Jun 2023 13:55:31 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z11-20020ac25deb000000b004fb75943aa0sm2252168lfq.196.2023.06.30.13.55.29
+        by smtp.gmail.com with ESMTPSA id z11-20020ac25deb000000b004fb75943aa0sm2252168lfq.196.2023.06.30.13.55.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jun 2023 13:55:29 -0700 (PDT)
+        Fri, 30 Jun 2023 13:55:30 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 08/15] drm/msm/hdmi: switch to pm_runtime_resume_and_get()
-Date:   Fri, 30 Jun 2023 23:55:16 +0300
-Message-Id: <20230630205523.76823-9-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 09/15] drm/msm/hdmi: add runtime PM calls to DDC transfer function
+Date:   Fri, 30 Jun 2023 23:55:17 +0300
+Message-Id: <20230630205523.76823-10-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230630205523.76823-1-dmitry.baryshkov@linaro.org>
 References: <20230630205523.76823-1-dmitry.baryshkov@linaro.org>
@@ -78,77 +78,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The pm_runtime_get_sync() function is a bad choise for runtime power
-management. Switch HDMI driver to pm_runtime_resume_and_get() and add
-proper error handling, while we are at it.
+We must be sure that the HDMI controller is powered on, while performing
+the DDC transfer. Add corresponding runtime PM calls to
+msm_hdmi_i2c_xfer().
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c |  2 +-
- drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    | 12 ++++++++++--
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c    |  6 +++++-
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index bb10b35194ff..4aa11eabbf2a 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -27,7 +27,7 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
- 	const struct hdmi_platform_config *config = hdmi->config;
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+index de182c004843..9c78c6c528be 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+@@ -107,11 +107,15 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 	if (num == 0)
+ 		return num;
  
--	pm_runtime_get_sync(&hdmi->pdev->dev);
-+	pm_runtime_resume_and_get(&hdmi->pdev->dev);
- 
- 	ret = regulator_bulk_enable(config->pwr_reg_cnt, hdmi->pwr_regs);
- 	if (ret)
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-index 3d3d72ff6a83..7de538046a52 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-@@ -85,7 +85,12 @@ int msm_hdmi_hpd_enable(struct drm_bridge *bridge)
- 	if (hdmi->hpd_gpiod)
- 		gpiod_set_value_cansleep(hdmi->hpd_gpiod, 1);
- 
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "runtime resume failed: %d\n", ret);
-+		goto fail;
-+	}
-+
- 	ret = clk_bulk_prepare_enable(config->hpd_clk_cnt, hdmi->hpd_clks);
- 	if (ret)
- 		goto fail;
-@@ -179,7 +184,10 @@ static enum drm_connector_status detect_reg(struct hdmi *hdmi)
- 	uint32_t hpd_int_status = 0;
- 	int ret;
- 
--	pm_runtime_get_sync(&hdmi->pdev->dev);
 +	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
 +	if (ret)
-+		goto out;
-+
- 	ret = clk_bulk_prepare_enable(config->hpd_clk_cnt, hdmi->hpd_clks);
- 	if (ret)
- 		goto out;
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-index 9780107e1cc9..d1f6b53c3109 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -57,7 +57,11 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
- 	struct device *dev = &phy->pdev->dev;
- 	int i, ret = 0;
- 
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "runtime resume failed: %d\n", ret);
 +		return ret;
-+	}
++
+ 	init_ddc(hdmi_i2c);
  
- 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
- 	if (ret) {
+ 	ret = ddc_clear_irq(hdmi_i2c);
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	for (i = 0; i < num; i++) {
+ 		struct i2c_msg *p = &msgs[i];
+@@ -169,7 +173,7 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 				hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_HW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_INT_CTRL));
+-		return ret;
++		goto fail;
+ 	}
+ 
+ 	ddc_status = hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS);
+@@ -202,7 +206,13 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 		}
+ 	}
+ 
++	pm_runtime_put(&hdmi->pdev->dev);
++
+ 	return i;
++
++fail:
++	pm_runtime_put(&hdmi->pdev->dev);
++	return ret;
+ }
+ 
+ static u32 msm_hdmi_i2c_func(struct i2c_adapter *adapter)
 -- 
 2.39.2
 
