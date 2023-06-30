@@ -2,143 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F728744370
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 22:45:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91716744380
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 22:55:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232498AbjF3UpY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 16:45:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53712 "EHLO
+        id S229519AbjF3Uz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 16:55:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbjF3UpY (ORCPT
+        with ESMTP id S229496AbjF3Uz2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 16:45:24 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FBDDA2;
-        Fri, 30 Jun 2023 13:45:22 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35UBRRdS003723;
-        Fri, 30 Jun 2023 20:45:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=FTdBeaEKG+g/KZpBbXvDp7XxMcSZMCNnU0rIonn47R4=;
- b=So91Zj0cwX1FahlfGEeJkJe6l7qSIiudHOrygrpv5KhhtfsvWSOJICrIVoln00V0wdXu
- KO9OqVT2O20nbwVHArXaksrNOnTpPkD7majF+fwarD8wUe63WFrWXuDkO9d5MgJOtDMa
- EpJa4gVUlChB3Is/CwAdc0MHJhL85WK9DYQqbUzeNmZMvQGROphbAc9nKmmC2hp+H2yM
- 0lv+cwHYSUkZtnyFIkr66BDQ1JXkPglvClB70cd19P6QvecHgxyuwIPt6J/twQruyFEV
- ffG9YZCORjVFes2/5wTXInPWizrfm5OC9rAaAKyLXEv/oImfqRMu6icaokQP0n0OMUr8 Ww== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhw70s9gu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 20:45:17 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35UKjGs6030156
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 20:45:16 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.7; Fri, 30 Jun 2023 13:45:15 -0700
-Date:   Fri, 30 Jun 2023 13:45:14 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-CC:     Andy Gross <agross@kernel.org>,
+        Fri, 30 Jun 2023 16:55:28 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A043C1B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 13:55:26 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f8735ac3e3so3742211e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 13:55:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688158525; x=1690750525;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QYtFgFK+NL5eYqb4xNnzL2p3K6aTu66Q2w04c7k1+g0=;
+        b=hBGmOE4VZlSKM8yX0Hgd2jtXMt/Ai4Yqe4ZnOi4wL6mfEKcO9u+LIdwcgLcBf1/IBN
+         NPC5G6CoKXJOPXyt0Exy43x2LsvGasIzMOy5yH2OngeAYrfnEGM7h5OY4njC6J2ebdtr
+         JkUe7IXoo18legdHyhPcpURRqNcvC5dUOVzjJHA/TKH0xIAy5Jrh/h/RHJtadqjarpCQ
+         0L4FWWZd7JHQzzsQ/dd0Okdm13RExLY08vC6EkjdkYg9PH+akWXmnBbNQM+xtZ9RUmOT
+         Z8khraeHR0xinbSlvr1IQY5IVmxd78G8V5SmKaMi++MLJPy3Jzg5dzejrPfI1stp3AYt
+         VNTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688158525; x=1690750525;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QYtFgFK+NL5eYqb4xNnzL2p3K6aTu66Q2w04c7k1+g0=;
+        b=eshV6hXiKXM2sK+Z4kymk6jT4gumPxXdBHuMA5wYKSu0lbmdjpzkrT7qmN4ZrWJgJw
+         bVkyweqajEDsAJaoeMbr7e+hI+wThuPCnG2e/OciIplbspDK6gPSbzRnATpMT6QbPMPK
+         kLVJVooHqLgPYvgW7+xXwSpHb1ykDZPZNaNelvf862uWuFlvCXpmRs/kDD7rVqNK74GI
+         DZJ66FS7+4zoDziDr4XiDsOsQq9OZJ+43sum0mM4v4dyxd42AghSNddIT1A2b8nvZPIe
+         WAJz+vHO9e5+5mX5S0mhKd4g+rRYzOKOLiqeak7W1QevdqM6oqoqtYVw75yF27x1D7nr
+         rQog==
+X-Gm-Message-State: ABy/qLahMVXRHZqF2LnTriMteCjYG0/1DfQuUAaIbI/C3XOytXME04iU
+        BMMWXbXnDzAEpKv12LWRe5C2DQ==
+X-Google-Smtp-Source: APBJJlEjJEJbzJFN8+cyZiTlliH1NT5AXfoP1N+rUDn6ZmsCYiVJ08mX8buEls2jbxnQX9a5hjGvCQ==
+X-Received: by 2002:a05:6512:39c3:b0:4f9:570c:7b28 with SMTP id k3-20020a05651239c300b004f9570c7b28mr3756503lfu.32.1688158524685;
+        Fri, 30 Jun 2023 13:55:24 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id z11-20020ac25deb000000b004fb75943aa0sm2252168lfq.196.2023.06.30.13.55.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jun 2023 13:55:24 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v4 0/6] soc: qcom: llcc: Add support for QDU1000/QRU1000
-Message-ID: <20230630204514.GD1059662@hu-bjorande-lv.qualcomm.com>
-References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 00/15] drm/msm/hdmi: rework and fix the HPD even generation
+Date:   Fri, 30 Jun 2023 23:55:08 +0300
+Message-Id: <20230630205523.76823-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: miKdGWwja1m9W9-vd5yCCxUG6Uj85btZ
-X-Proofpoint-GUID: miKdGWwja1m9W9-vd5yCCxUG6Uj85btZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-30_12,2023-06-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- mlxlogscore=999 spamscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 bulkscore=0
- suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306300181
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 23, 2023 at 07:48:00PM +0530, Komal Bajaj wrote:
-> From: Komal-Bajaj <quic_kbajaj@quicinc.com>
-> 
+The MSM HDMI driver is plagued with the long-standing bug. If HDMI cable
+is disconnected, in most of the cases cable reconnection will not be
+detected properly. We have been carrying the patch from [1] in our
+integration tree for ages. The time has come to fix the long-standing
+bug and implement proper HPD handling.
 
-The patches in this series are going to be merged by two different
-maintainers, the interface between them is an existing, clean API, so it
-will be possible to merge the two halfs independently.
+This series was tested on msm8996 and apq8064 boards. On APQ8064 in some
+rare cases I get the backtrace logged at [2]. It is unclear if it is a
+result of this series or not. I'll investigate it further later on.
 
-So please split this into one series for the addition of the nvmem
-driver and one for the llcc pieces (with the nvmem interface/stub update
-in the llcc one).
+[1] https://lore.kernel.org/linux-arm-msm/20171027105732.19235-2-architt@codeaurora.org/
+[2] https://gitlab.freedesktop.org/drm/msm/-/issues/27
 
-Thanks,
-Bjorn
+Dmitry Baryshkov (15):
+  drm/msm/hdmi: move the alt_iface clock to the hpd list
+  drm/msm/hdmi: simplify extp clock handling
+  drm/msm/hdmi: correct indentation of HDMI bridge functions
+  drm/msm/hdmi: switch to atomic_pre_enable/post_disable
+  drm/msm/hdmi: set infoframes on all pre_enable calls
+  drm/msm/hdmi: drop clock frequency assignment
+  drm/msm/hdmi: switch to clk_bulk API
+  drm/msm/hdmi: switch to pm_runtime_resume_and_get()
+  drm/msm/hdmi: add runtime PM calls to DDC transfer function
+  drm/msm/hdmi: implement proper runtime PM handling
+  drm/msm/hdmi: rename hpd_clks to pwr_clks
+  drm/msm/hdmi: expand the HDMI_CFG macro
+  drm/msm/hdmi: drop hpd-gpios support
+  drm/msm/hdmi: ensure that HDMI is one if HPD is requested
+  drm/msm/hdmi: wire in hpd_enable/hpd_disable bridge ops
 
-> This patch series does the following -
->  * Add secure qfprom driver for reading secure fuse region in qfprom driver
->  * Add dt-bindings for secure qfprom
->  * Refactor LLCC driver to support multiple configuration
->  * Add support for multi channel DDR configuration in LLCC
->  * Add LLCC support for the Qualcomm QDU1000 and QRU1000 SoCs
-> 
-> Changes in v4 -
->  - Created a separate driver for reading from secure fuse region as suggested.
->  - Added patch for dt-bindings of secure qfprom driver accordingly.
->  - Added new properties in the dt-bindings for LLCC. 
->  - Implemented new logic to read the nvmem cell as suggested by Bjorn.
->  - Separating the DT patches from this series as per suggestion.
-> 
-> Changes in v3-
->  - Addressed comments from Krzysztof and Mani.
->  - Using qfprom to read DDR configuration from feature register.
-> 
-> Changes in v2:
->   - Addressing comments from Konrad.
-> 
-> Komal Bajaj (6):
->   dt-bindings: nvmem: sec-qfprom: Add bindings for secure qfprom
->   dt-bindings: cache: qcom,llcc: Add LLCC compatible for QDU1000/QRU1000
->   nvmem: sec-qfprom: Add Qualcomm secure QFPROM support.
->   soc: qcom: llcc: Refactor llcc driver to support multiple
->     configuration
->   soc: qcom: Add LLCC support for multi channel DDR
->   soc: qcom: llcc: Add QDU1000 and QRU1000 LLCC support
-> 
->  .../devicetree/bindings/cache/qcom,llcc.yaml  |  10 +
->  .../bindings/nvmem/qcom,sec-qfprom.yaml       |  58 ++++
->  drivers/nvmem/Kconfig                         |  12 +
->  drivers/nvmem/Makefile                        |   2 +
->  drivers/nvmem/sec-qfprom.c                    | 116 +++++++
->  drivers/soc/qcom/Kconfig                      |   2 +
->  drivers/soc/qcom/llcc-qcom.c                  | 304 +++++++++++++-----
->  include/linux/soc/qcom/llcc-qcom.h            |   2 +-
->  8 files changed, 416 insertions(+), 90 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
->  create mode 100644 drivers/nvmem/sec-qfprom.c
-> 
-> -- 
-> 2.40.1
-> 
+ drivers/gpu/drm/msm/hdmi/hdmi.c        | 142 ++++++++++++-------------
+ drivers/gpu/drm/msm/hdmi/hdmi.h        |  26 ++---
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c |  91 ++++++++--------
+ drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    | 141 +++++-------------------
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c    |  14 ++-
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c    |   6 +-
+ 6 files changed, 160 insertions(+), 260 deletions(-)
+
+-- 
+2.39.2
+
