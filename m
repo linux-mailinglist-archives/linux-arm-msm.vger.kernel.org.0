@@ -2,90 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A029C743591
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 09:14:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91E0C74359F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 09:17:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232111AbjF3HOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 03:14:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45538 "EHLO
+        id S231393AbjF3HRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 03:17:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232242AbjF3HOX (ORCPT
+        with ESMTP id S232314AbjF3HQb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 03:14:23 -0400
+        Fri, 30 Jun 2023 03:16:31 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAD2A1FD8;
-        Fri, 30 Jun 2023 00:14:21 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U6b4E2023666;
-        Fri, 30 Jun 2023 07:14:18 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F5A1FFA;
+        Fri, 30 Jun 2023 00:16:06 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U4nNd7019546;
+        Fri, 30 Jun 2023 07:15:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=YjMhPFXIaV6Bmr61Jk69OuoqapBueCTrFXuELpT6PfE=;
- b=PegSFDq7yLDiz7YaqczoY+ZrUuEQUa2MWwZBBHlssjvfwHDUcxKbfrna03uJPazMlsvS
- emr2HAvIfS8bLgCSR6T5pCxiCBtAZ6geIX4PaYpjwNTsT/2Qygo3tGMIS39/haMPD/GQ
- BzYDO8gzesVxcP8pFkBUD/IqF9dSpAzUnX1M3bnkh0MMreaejRU/jf9sVwxEIq4rEGt0
- h0r1RMb0ZHXfBGyIs7XpsnnNpXOBCYyADARvBBdBrzY1JEt/Mh191zZZVg73i7eslhYc
- GvYZjwgOf0KOxsGNVeueyQ7BC3ofVUit1B//xf5fmHD0a7jJzW2Mw1sYvrufQbIqik2N Uw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgy1tk4ct-1
+ bh=jlsDVQG07LBzpudueespK8/VedKCgmtXBJ4ZsDafVl4=;
+ b=XDm6L/hNTlWkxmcvI+rJwUMMSGQ5SGv9NwT3FuTevtowhJEx2X8us5EdCYm0nwcZT6SP
+ RoVBdm4HO6nwJN5dM8O81yq9Ag42SnKLAr7SynHf+XOj/AeaOiWnH2YtmNYqmqchOtyR
+ pvSqpMJG1Ghl/TmJLAnPOjdO/xmXMQxqACokePyjto0kXTNOEXUnhznH5NrwLBvUGgGq
+ sbnC5cHzuor7Ce69lApf2voCzM57KAmGUqUPnpPax2vJaAz0L/z4/yJ1FMzJrXkoCMj+
+ dusS8Mq3T8Ed9WaatrM+UhAN+VeDh1dt7LoDusbCkSlmiFTkXgm4T0xzwLVNx6Fjnr6E Fg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rha8e1yt7-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 07:14:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35U7EHwc014283
+        Fri, 30 Jun 2023 07:15:23 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35U7FMXx032517
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 07:14:17 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Fri, 30 Jun
- 2023 00:14:10 -0700
-Message-ID: <a04dd502-bd0f-e5c2-c935-16d221fb86cc@quicinc.com>
-Date:   Fri, 30 Jun 2023 12:44:06 +0530
+        Fri, 30 Jun 2023 07:15:22 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 30 Jun
+ 2023 00:15:16 -0700
+Message-ID: <774b0432-a78f-1aec-a31a-51067e33154f@quicinc.com>
+Date:   Fri, 30 Jun 2023 12:45:13 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V5 4/5] clk: qcom: camcc-sm8550: Add support for qdss,
- sleep and xo clocks
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 04/21] soc: qcom: Add Qualcomm APSS minidump (frontend)
+ feature support
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Satya Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230623164619.11464-1-quic_jkona@quicinc.com>
- <20230623164619.11464-5-quic_jkona@quicinc.com>
- <11b3058c-2261-95a4-2347-b0a33fdeb1e3@linaro.org>
- <99aebcb3-89d4-993b-5bc1-abc475b94843@quicinc.com>
- <a10cdae8-3f18-7ffc-8db7-ab21b47b91ca@linaro.org>
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <a10cdae8-3f18-7ffc-8db7-ab21b47b91ca@linaro.org>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+CC:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
+        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+ <1687955688-20809-5-git-send-email-quic_mojha@quicinc.com>
+ <8f00beed-f07b-43b6-820e-87af719598c6@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <8f00beed-f07b-43b6-820e-87af719598c6@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: k9k528B8Gzv8Y_jwaS2p6ODbtsC_HfUC
-X-Proofpoint-GUID: k9k528B8Gzv8Y_jwaS2p6ODbtsC_HfUC
+X-Proofpoint-GUID: Q165Un0IeiWc07YRWZv3lPd-sjb-uAGo
+X-Proofpoint-ORIG-GUID: Q165Un0IeiWc07YRWZv3lPd-sjb-uAGo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-30_04,2023-06-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- impostorscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ definitions=2023-06-30_03,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ mlxlogscore=999 clxscore=1015 impostorscore=0 priorityscore=1501
+ spamscore=0 mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2305260000 definitions=main-2306300061
 X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
@@ -99,164 +95,390 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/26/2023 7:10 PM, Dmitry Baryshkov wrote:
-> On 26/06/2023 14:59, Jagadeesh Kona wrote:
+On 6/29/2023 8:03 AM, Pavan Kondeti wrote:
+> On Wed, Jun 28, 2023 at 06:04:31PM +0530, Mukesh Ojha wrote:
+>> Minidump is a best effort mechanism to collect useful and predefined
+>> data for first level of debugging on end user devices running on
+>> Qualcomm SoCs. It is built on the premise that System on Chip (SoC)
+>> or subsystem part of SoC crashes, due to a range of hardware and
+>> software bugs. Hence, the ability to collect accurate data is only
+>> a best-effort. The data collected could be invalid or corrupted,
+>> data collection itself could fail, and so on.
 >>
+>> Qualcomm devices in engineering mode provides a mechanism for
+>> generating full system ramdumps for post mortem debugging. But in some
+>> cases it's however not feasible to capture the entire content of RAM.
+>> The minidump mechanism provides the means for selecting region should
+>> be included in the ramdump. The solution supports extracting the
+>> ramdump/minidump produced either over USB or stored to an attached
+>> storage device.
 >>
->> On 6/24/2023 5:49 PM, Konrad Dybcio wrote:
->>> On 23.06.2023 18:46, Jagadeesh Kona wrote:
->>>> Add support for camera qdss, sleep and xo clocks.
->>>>
->>>> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
->>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>> ---
->>>> Changes since v4:
->>>>   - No changes.
->>>> Changes since v3:
->>>>   - No changes.
->>>> Changes since v2:
->>>>   - No changes.
->>>> Changes since v1:
->>>>   - Newly added.
->>>>
->>>>   drivers/clk/qcom/camcc-sm8550.c | 180 
->>>> ++++++++++++++++++++++++++++++++
->>>>   1 file changed, 180 insertions(+)
->>>>
->>>> diff --git a/drivers/clk/qcom/camcc-sm8550.c 
->>>> b/drivers/clk/qcom/camcc-sm8550.c
->>>> index 075bea32087c..7b4882444d58 100644
->>>> --- a/drivers/clk/qcom/camcc-sm8550.c
->>>> +++ b/drivers/clk/qcom/camcc-sm8550.c
->>>> @@ -22,6 +22,8 @@
->>>>   enum {
->>>>       DT_IFACE,
->>>>       DT_BI_TCXO,
->>>> +    DT_BI_TCXO_AO,
->>>> +    DT_SLEEP_CLK,
->>>>   };
->>>>   enum {
->>>> @@ -43,6 +45,7 @@ enum {
->>>>       P_CAM_CC_PLL10_OUT_EVEN,
->>>>       P_CAM_CC_PLL11_OUT_EVEN,
->>>>       P_CAM_CC_PLL12_OUT_EVEN,
->>>> +    P_SLEEP_CLK,
->>>>   };
->>>>   static const struct pll_vco lucid_ole_vco[] = {
->>>> @@ -881,6 +884,22 @@ static const struct clk_parent_data 
->>>> cam_cc_parent_data_11[] = {
->>>>       { .hw = &cam_cc_pll7_out_even.clkr.hw },
->>>>   };
->>>> +static const struct parent_map cam_cc_parent_map_12[] = {
->>>> +    { P_SLEEP_CLK, 0 },
->>>> +};
->>>> +
->>>> +static const struct clk_parent_data cam_cc_parent_data_12[] = {
->>>> +    { .index = DT_SLEEP_CLK },
->>>> +};
->>>> +
->>>> +static const struct parent_map cam_cc_parent_map_13[] = {
->>>> +    { P_BI_TCXO, 0 },
->>>> +};
->>>> +
->>>> +static const struct clk_parent_data cam_cc_parent_data_13_ao[] = {
->>>> +    { .index = DT_BI_TCXO_AO },
->>>> +};
->>>> +
->>>>   static const struct freq_tbl ftbl_cam_cc_bps_clk_src[] = {
->>>>       F(19200000, P_BI_TCXO, 1, 0, 0),
->>>>       F(200000000, P_CAM_CC_PLL8_OUT_EVEN, 1, 0, 0),
->>>> @@ -1565,6 +1584,29 @@ static struct clk_rcg2 cam_cc_mclk7_clk_src = {
->>>>       },
->>>>   };
->>>> +static const struct freq_tbl ftbl_cam_cc_qdss_debug_clk_src[] = {
->>>> +    F(19200000, P_BI_TCXO, 1, 0, 0),
->>>> +    F(75000000, P_CAM_CC_PLL0_OUT_EVEN, 8, 0, 0),
->>>> +    F(150000000, P_CAM_CC_PLL0_OUT_EVEN, 4, 0, 0),
->>>> +    F(300000000, P_CAM_CC_PLL0_OUT_MAIN, 4, 0, 0),
->>>> +    { }
->>>> +};
->>>> +
->>>> +static struct clk_rcg2 cam_cc_qdss_debug_clk_src = {
->>>> +    .cmd_rcgr = 0x13f24,
->>>> +    .mnd_width = 0,
->>>> +    .hid_width = 5,
->>>> +    .parent_map = cam_cc_parent_map_0,
->>>> +    .freq_tbl = ftbl_cam_cc_qdss_debug_clk_src,
->>>> +    .clkr.hw.init = &(const struct clk_init_data) {
->>>> +        .name = "cam_cc_qdss_debug_clk_src",
->>>> +        .parent_data = cam_cc_parent_data_0,
->>>> +        .num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
->>>> +        .flags = CLK_SET_RATE_PARENT,
->>>> +        .ops = &clk_rcg2_shared_ops,
->>>> +    },
->>>> +};
->>>> +
->>>>   static const struct freq_tbl ftbl_cam_cc_sfe_0_clk_src[] = {
->>>>       F(466000000, P_CAM_CC_PLL6_OUT_EVEN, 1, 0, 0),
->>>>       F(594000000, P_CAM_CC_PLL6_OUT_EVEN, 1, 0, 0),
->>>> @@ -1611,6 +1653,26 @@ static struct clk_rcg2 cam_cc_sfe_1_clk_src = {
->>>>       },
->>>>   };
->>>> +static const struct freq_tbl ftbl_cam_cc_sleep_clk_src[] = {
->>>> +    F(32000, P_SLEEP_CLK, 1, 0, 0),
->>>> +    { }
->>>> +};
->>>> +
->>>> +static struct clk_rcg2 cam_cc_sleep_clk_src = {
->>>> +    .cmd_rcgr = 0x141a0,
->>>> +    .mnd_width = 0,
->>>> +    .hid_width = 5,
->>>> +    .parent_map = cam_cc_parent_map_12,
->>>> +    .freq_tbl = ftbl_cam_cc_sleep_clk_src,
->>>> +    .clkr.hw.init = &(const struct clk_init_data) {
->>>> +        .name = "cam_cc_sleep_clk_src",
->>>> +        .parent_data = cam_cc_parent_data_12,
->>>> +        .num_parents = ARRAY_SIZE(cam_cc_parent_data_12),
->>>> +        .flags = CLK_SET_RATE_PARENT,
->>>> +        .ops = &clk_rcg2_shared_ops,
->>>> +    },
->>>> +};
->>>> +
->>>>   static const struct freq_tbl ftbl_cam_cc_slow_ahb_clk_src[] = {
->>>>       F(19200000, P_BI_TCXO, 1, 0, 0),
->>>>       F(80000000, P_CAM_CC_PLL0_OUT_EVEN, 7.5, 0, 0),
->>>> @@ -1632,6 +1694,26 @@ static struct clk_rcg2 
->>>> cam_cc_slow_ahb_clk_src = {
->>>>       },
->>>>   };
->>>> +static const struct freq_tbl ftbl_cam_cc_xo_clk_src[] = {
->>>> +    F(19200000, P_BI_TCXO, 1, 0, 0),
->>> You're overloading P_BI_TCXO with a different parent clock (XO_A).
->>>
+>> Minidump kernel driver implementation is divided into two parts for
+>> simplicity, one is minidump core which can also be called minidump
+>> frontend(As API gets exported from this driver for registration with
+>> backend) and the other part is minidump backend i.e, where the underlying
+>> implementation of minidump will be there. There could be different way
+>> how the backend is implemented like Shared memory, Memory mapped IO
+>> or Resource manager based where the guest region information is passed
+>> to hypervisor via hypercalls.
 >>
->> This RCG just requires active only voting, hence using XO_A as its 
->> parent.
+>> Minidump Client-1     Client-2      Client-5    Client-n
+>>           |               |              |             |
+>>           |               |    ...       |   ...       |
+>>           |               |              |             |
+>>           |               |              |             |
+>>           |               |              |             |
+>>           |               |              |             |
+>>           |               |              |             |
+>>           |               |              |             |
+>>           |           +---+--------------+----+        |
+>>           +-----------+  qcom_minidump(core)  +--------+
+>>                       |                       |
+>>                       +------+-----+------+---+
+>>                              |     |      |
+>>                              |     |      |
+>>              +---------------+     |      +--------------------+
+>>              |                     |                           |
+>>              |                     |                           |
+>>              |                     |                           |
+>>              v                     v                           v
+>>   +-------------------+      +-------------------+     +------------------+
+>>   |qcom_minidump_smem |      |qcom_minidump_mmio |     | qcom_minidump_rm |
+>>   |                   |      |                   |     |                  |
+>>   +-------------------+      +-------------------+     +------------------+
+>>     Shared memory              Memory mapped IO           Resource manager
+>>      (backend)                   (backend)                   (backend)
 >>
->> Both XO and XO_A are same clock in HW (BI_TCXO), hence we can reuse 
->> P_BI_TCXO in frequency table for XO_A parent as well.
+>> Here, we will be giving all analogy of backend with SMEM as it is the
+>> only implemented backend at present but general idea remains the same.
+>>
+>> The core of minidump feature is part of Qualcomm's boot firmware code.
+>> It initializes shared memory (SMEM), which is a part of DDR and
+>> allocates a small section of it to minidump table i.e also called
+>> global table of content (G-ToC). Each subsystem (APSS, ADSP, ...) has
+>> their own table of segments to be included in the minidump, all
+>> references from a descriptor in SMEM (G-ToC). Each segment/region has
+>> some details like name, physical address and it's size etc. and it
+>> could be anywhere scattered in the DDR.
+>>
+>> qcom_minidump(core or frontend) driver adds the capability to add APSS
+>> region to be dumped as part of ram dump collection. It provides
+>> appropriate symbol register/unregister client regions.
+>>
+>> To simplify post mortem debugging, it creates and maintain an ELF
+>> header as first region that gets updated upon registration
+>> of a new region.
+>>
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> ---
+>>   drivers/soc/qcom/Kconfig                  |  15 +
+>>   drivers/soc/qcom/Makefile                 |   2 +
+>>   drivers/soc/qcom/qcom_minidump.c          | 456 ++++++++++++++++++++++++++++++
+>>   drivers/soc/qcom/qcom_minidump_internal.h |  75 +++++
+>>   include/soc/qcom/qcom_minidump.h          |  35 +++
+>>   5 files changed, 583 insertions(+)
+>>   create mode 100644 drivers/soc/qcom/qcom_minidump.c
+>>   create mode 100644 drivers/soc/qcom/qcom_minidump_internal.h
+>>
+>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>> index 982310b5a1cb..874ee8c3efe0 100644
+>> --- a/drivers/soc/qcom/Kconfig
+>> +++ b/drivers/soc/qcom/Kconfig
+>> @@ -279,6 +279,21 @@ config QCOM_INLINE_CRYPTO_ENGINE
+>>   	tristate
+>>   	select QCOM_SCM
+>>   
+>> +config QCOM_MINIDUMP
+>> +	tristate "QCOM Minidump APSS Core Infrastructure"
+>> +	depends on ARCH_QCOM
+>> +	help
+>> +	  This config allow linux core infrastructure for APSS minidump for
+>> +	  underlying backend(smem etc.) which can hook themselves to this and
+>> +	  work as one unit. So, this config should be selected in combination
+>> +	  with its backend.
+>> +
+>> +	  After this Linux clients driver can register their internal data
+>> +	  structures and debug messages as part of the apss minidump region
+>> +	  and when the SoC is crashed, and these selective regions will be
+>> +	  dumped instead of the entire DDR. This saves significant amount
+>> +	  of time and/or storage space.
+>> +
+>>   config QCOM_MINIDUMP_SMEM
+>>   	tristate "QCOM Minidump SMEM (as backend) Support"
+>>   	depends on ARCH_QCOM
+>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>> index 89b775512bef..737d868757ac 100644
+>> --- a/drivers/soc/qcom/Makefile
+>> +++ b/drivers/soc/qcom/Makefile
+>> @@ -34,3 +34,5 @@ obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+>>   obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+>>   qcom_ice-objs			+= ice.o
+>>   obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
+>> +obj-$(CONFIG_QCOM_MINIDUMP) += qcom_minidump.o
+>> +obj-$(CONFIG_QCOM_MINIDUMP_SMEM) += qcom_minidump_smem.o
+>> diff --git a/drivers/soc/qcom/qcom_minidump.c b/drivers/soc/qcom/qcom_minidump.c
+>> new file mode 100644
+>> index 000000000000..7744e57843ab
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/qcom_minidump.c
+>> @@ -0,0 +1,456 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+>> +
+>> +#include <linux/device.h>
+>> +#include <linux/export.h>
+>> +#include <linux/kallsyms.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/module.h>
+>> +#include <linux/printk.h>
+>> +#include <linux/string.h>
+>> +
+>> +#include "qcom_minidump_internal.h"
+>> +
+>> +/*
+>> + * In some of the Old Qualcomm devices, boot firmware statically allocates 300
+>> + * as total number of supported region (including all co-processors) in
+>> + * minidump table out of which linux was using 201. In future, this limitation
+>> + * from boot firmware might get removed by allocating the region dynamically.
+>> + * So, keep it compatible with older devices, we can keep the current limit for
+>> + * Linux to 201.
+>> + */
+>> +#define MAX_NUM_ENTRIES	  201
+>> +#define MAX_STRTBL_SIZE	  (MAX_NUM_ENTRIES * MAX_REGION_NAME_LENGTH)
+>> +
 > 
-> Please don't do such things, it complicates understanding the driver. 
-> The reviewer could have thought that here the driver was really 
-> referencing to the BI_TCXO rather than BI_TCXO_AO.
+> Should not we receive these constraints from backend?
 > 
+>> +/*
+>> + * md_lock protects "md" during calls to qcom_minidump_backend_register(),
+>> + * qcom_minidump_backend_unregister().
+>> + */
+>> +static DEFINE_MUTEX(md_lock);
+>> +
+>> +/* Only one front end will be attached to one back-end */
+>> +static struct minidump *md;
+>> +static char *md_backend;
+>> +
+> 
+> Can you explain this a bit more? There is just one fronend, correct?
+> Multiple possibilites of backend.
 
-The enum in parent list indicates the actual HW clock, and since XO and 
-XO_A are the same HW clock, parent enum needs to be a single one. Only 
-parent_data needs to be updated with AO as we have been doing for all 
-targets.
+Sorry, for misleading with the comment.
 
-Thanks,
-Jagadeesh
+Was trying to be explicit here that only one backend can be attached to
+the front end ..
 
->>
->> Thanks,
->> Jagadeesh
->>
->>> The rest lgtm
->>>
->>> Konrad
+Will fix the confusion.
+
 > 
-> [skipped the rest]
+> Is it a limitation at the moment that we support only one backend or
+> plan to support more backends later for the same frontend. Pls clarify.
 > 
+>> +static struct elf_shdr *elf_shdr_entry_addr(struct elfhdr *ehdr, int idx)
+>> +{
+>> +	struct elf_shdr *eshdr = (struct elf_shdr *)((size_t)ehdr + ehdr->e_shoff);
+>> +
+>> +	return &eshdr[idx];
+>> +}
+>> +
+> 
+> [...]
+> 
+>> +/**
+>> + * qcom_minidump_region_register() - Register region in APSS Minidump table.
+>> + * @region: minidump region.
+>> + *
+>> + * Return: On success, it returns 0 and negative error value on failure.
+>> + */
+> 
+> Are we not going to return any cookie upon success which can be passed
+> to us during unregistration?
+
+e.g, Let's just say if we return the region number as an cookies, the
+problem i see that, we multiple unregistration is happening we will
+be shifting the array upwards and that results in the index/cookies does
+not retain the same for the shifted regions.
+
+So, at the moment, client need to pass the same region for 
+un-registration as they have passed for registration..
+
+> 
+>> +int qcom_minidump_region_register(const struct qcom_minidump_region *region)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!qcom_minidump_valid_region(region))
+>> +		return -EINVAL;
+>> +
+>> +	mutex_lock(&md_lock);
+>> +	if (!md) {
+>> +		mutex_unlock(&md_lock);
+>> +		pr_err("No backend registered yet, try again..");
+>> +		return -EPROBE_DEFER;
+>> +	}
+>> +
+>> +	ret = md->ops->md_region_register(md, region);
+>> +	if (ret)
+>> +		goto unlock;
+>> +
+> 
+> The md_lock description in the beginning does not seems to be correct.
+> It is not limited to backend registration. It has much wider usage.
+> 
+> You are holding the lock while calling into backend. Basically the
+> synchronization is done in the front end.
+
+Initially, the thought was to have the backend their own lock but that
+is irrelevant as all the contention is there in the front end.
+
+So, used the same lock for synchronization as i moved in developement
+and the later that comment became obsolete.
+
+Thanks for catching this.
+will fix the comment.
+
+> 
+>> +	qcom_md_update_elf_header(region);
+>> +unlock:
+>> +	mutex_unlock(&md_lock);
+>> +	return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(qcom_minidump_region_register);
+>> +
+>> +/**
+>> + * qcom_minidump_region_unregister() - Unregister region from APSS Minidump table.
+>> + * @region: minidump region.
+>> + *
+>> + * Return: On success, it returns 0 and negative error value on failure.
+>> + */
+>> +int qcom_minidump_region_unregister(const struct qcom_minidump_region *region)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!qcom_minidump_valid_region(region))
+>> +		return -EINVAL;
+>> +
+>> +	mutex_lock(&md_lock);
+>> +	if (!md) {
+>> +		mutex_unlock(&md_lock);
+>> +		pr_err("No backend registered yet, try again..");
+>> +		return -EPROBE_DEFER;
+>> +	}
+>> +
+>> +	ret = md->ops->md_region_unregister(md, region);
+>> +	if (ret)
+>> +		goto unlock;
+>> +
+> 
+> The frontend is not validing that it is actually a registered client, it
+> is left to backend. Seems that is more duplication in the backend(s).
+
+For that front-end need to cache each registered entry and that is exact 
+copy at the backend, will need extra memory for copied data, so, that's
+the reason of this behavior.
+
+> 
+>> +	ret = qcom_minidump_clear_header(region);
+>> +unlock:
+>> +	mutex_unlock(&md_lock);
+>> +	return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(qcom_minidump_region_unregister);
+> 
+> can we create a namespace for exporting these symbols?
+
+Any specific reason, you are suggesting this ?
+
+> 
+>> +
+>> +static int qcom_minidump_add_elf_header(struct minidump *md_data)
+>> +{
+> 
+> [...]
+> 
+>> +
+>> +/**
+>> + * qcom_minidump_backend_register() - Register backend minidump device.
+>> + * @md_data: minidump backend driver data
+>> + *
+>> + * Return: On success, it returns 0 and negative error value on failure.
+>> + */
+>> +int qcom_minidump_backend_register(struct minidump *md_data)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (!md_data->name || !md_data->dev ||
+>> +	    !md_data->ops ||
+>> +	    !md_data->ops->md_table_init ||
+>> +	    !md_data->ops->md_region_register ||
+>> +	    !md_data->ops->md_region_unregister ||
+>> +	    !md_data->ops->md_table_exit) {
+>> +		pr_warn("backend '%s' must fill/implement necessary fields\n", md->name);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (md_backend && strcmp(md_backend, md_data->name)) {
+>> +		pr_warn("backend '%s' already in use: ignoring '%s'\n",
+>> +			 md_backend, md_data->name);
+>> +		return -EBUSY;
+>> +	}
+>> +
+>> +	mutex_lock(&md_lock);
+>> +	if (md) {
+>> +		dev_warn(md->dev, "backend '%s' already loaded: ignoring '%s'\n",
+>> +			 md->name, md_data->name);
+>> +		ret = -EBUSY;
+>> +		goto unlock;
+>> +	}
+>> +
+>> +	if (!md_data->max_region_limit || md_data->max_region_limit > MAX_NUM_ENTRIES)
+>> +		md_data->max_region_limit = MAX_NUM_ENTRIES;
+>> +
+>> +	ret = md_data->ops->md_table_init(md_data);
+>> +	if (ret) {
+>> +		dev_err(md_data->dev, "minidump backend initialization failed: %d\n", ret);
+>> +		goto unlock;
+>> +	}
+>> +
+>> +	/* First entry would be ELF header */
+>> +	ret = qcom_minidump_add_elf_header(md_data);
+>> +	if (ret) {
+>> +		dev_err(md_data->dev, "Failed to add elf header: %d\n", ret);
+>> +		md_data->ops->md_table_exit(md_data);
+>> +		goto unlock;
+>> +	}
+>> +
+>> +	md = md_data;
+>> +	md_backend = kstrdup(md->name, GFP_KERNEL);
+>> +	dev_info(md->dev, "Registered minidump backend : %s\n", md->name);
+>> +
+> 
+> What is the need for keeping md_backend separately? md::name is already
+> present.
+
+It looks redundant, this is one of cleanup, missed, thanks..
+
+> 
+> Also, how do we prevent backend module unloading while it is inuse? or
+> we don't need that constraint?
+
+md_lock is there for that..
+
+In next patch series, i am going to make all of this as static driver,
+so that constraints will not be there ?
+
+-Mukesh
+
+> 
+>> +unlock:
+>> +	mutex_unlock(&md_lock);
+>> +	return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(qcom_minidump_backend_register);
+> 
+> Thanks,
+> Pavan
