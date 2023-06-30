@@ -2,70 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84CEE74417E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 19:42:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77B8B7441A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 19:55:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231508AbjF3Rmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 13:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53322 "EHLO
+        id S229738AbjF3RzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 13:55:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232527AbjF3Rmh (ORCPT
+        with ESMTP id S229496AbjF3RzY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 13:42:37 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF6052122
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 10:42:35 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-bff27026cb0so2065850276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 10:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688146955; x=1690738955;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5GBVbHOFTdsyQJU8GGb14QvACpNRgooKdXsV/1n/jmE=;
-        b=XIVwvb9ZkoK9yR1KK3wGqQiI5P1EA8aljusSHRUNJL6khr7ZfLkl948A85RZCIR882
-         8XIkJG1rilOdOE6NFGi2sP4imn+Mg/ruQMamjrzH0qxDjK4mSERGFBDLHE78v2KI9c9B
-         5WTugaH2dk3pCxdZRCvz9txTIuzlhS7UFVsWFPnexuzA1NhQKPOD0Bmh8wbbG19K/tbu
-         Ara2OJOMLWzxwyYTH7lKDNeykcxgTSx3Fs3hppttITd0d2tpXGC7x3a1DHQhhRop40p2
-         qZ6NJAfsCQ+JdbH3/1WxW6GmYSYtsDBWkWrxisbmtHmAlFKNcbALUVKSO4RXNSPNdfhv
-         BJGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688146955; x=1690738955;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5GBVbHOFTdsyQJU8GGb14QvACpNRgooKdXsV/1n/jmE=;
-        b=MTJB6/2GsQ+azFJ9gmrhAhDL7fKvxsMiKSDJJxsEQVD0U67ivT+wvhiDbZJSo5IEDI
-         U8QY4cvBkKZ4iOeEFwjtderEZ6atEhwyi+qq2YnG/OSjbPJWQumndA2wFS7573IGevRX
-         s6qT81lfoHXTsvBcNEims4j9Mb2A9GCi/zQzeEd2sVby9VnrYnCp69kWj5+F0DhSxzx4
-         yHsfBYxD/bRibO4YqinKfC1vQzAzuh+d7dbTl/FBXYH/1f2A8R+tWciwWXXMMhLGz7Iy
-         bbGQs5TCXoXFb7MQKN07GiQAe1yrFLwiH9E3izn2dBT+9DJZV0+hEOLijBYVWhoG6vjD
-         RpKw==
-X-Gm-Message-State: ABy/qLZlildBWo20J5ZwvvEmDcs93qkTrwWvbwdPz/C7DLbl+u86hT8i
-        zNLttygBaSMoXiIiVXKyvSdiYvyQ3+f0Z1aqmZRweg==
-X-Google-Smtp-Source: APBJJlHEHXl3UILh2Mi9iFeCzRu6oPkIpCEYs+FuX67r8o+chF6UivHFOFWZstM8v89A8IaytZ+uanrvsla7hDq/bxI=
-X-Received: by 2002:a25:db87:0:b0:c01:4d4a:cbaa with SMTP id
- g129-20020a25db87000000b00c014d4acbaamr3214487ybf.37.1688146955047; Fri, 30
- Jun 2023 10:42:35 -0700 (PDT)
+        Fri, 30 Jun 2023 13:55:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3518C30C5;
+        Fri, 30 Jun 2023 10:55:23 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35UCsMPZ027478;
+        Fri, 30 Jun 2023 17:54:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=bGI605Yt1acHOhpiHV9hMd/eNOoz9Ob1L6r5EwqcJd0=;
+ b=ktMOgEzJKI41XwcxXnfnPymO4Bj+cr/9e24D20egnAru9iPgTzKjF7M56zjE6qv4IiRt
+ Bil078oBvU1bWAN3agzYVdNKR/oYA2QH8G35Ayy1W47FhM3yVLeAkeCEnrK4tltY39xW
+ QO/X/otHrgbNHbc85mbdx96WUo/SFMhNMuw3zaAewmlT1KqHXz3ZClnt7jDhBUJF3qlu
+ O4hRfwg/VR+zG67EwFT6d5O4I/LECY3u09f3PpjgSBYnW9Zy3StpX3wUUKGw2bvJKNKg
+ G5+u29jXAc75zSY4O6FWxc8yMnyUyoqUZ2Rf/5q7pIPudx7ZC3NJUBZpTdZ/zhRSDzMn mA== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhwutrwhd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Jun 2023 17:54:53 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35UHsr4E014727
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Jun 2023 17:54:53 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 30 Jun
+ 2023 10:54:52 -0700
+Message-ID: <d9fa6c9c-d592-658d-404f-47067c70c1e5@quicinc.com>
+Date:   Fri, 30 Jun 2023 10:54:52 -0700
 MIME-Version: 1.0
-References: <20230630061315.4027453-1-dmitry.baryshkov@linaro.org>
- <20230630061315.4027453-8-dmitry.baryshkov@linaro.org> <c59d002b-9d06-d744-d90b-22da4186522a@linaro.org>
- <CAA8EJpp+b1KVaMK82j7T=iGovXVAu3jq51rTHu6yqPcnkwXoeg@mail.gmail.com>
- <65d9025b-134d-eb8c-98d8-ab7103a5dc44@linaro.org> <CAA8EJpopHRNTyuzi2V=1t7o5xbXaCjxjP=yQUigCYDJMULxb=Q@mail.gmail.com>
- <e2c6abdc-f586-be9c-b400-7bf57021d5fa@linaro.org>
-In-Reply-To: <e2c6abdc-f586-be9c-b400-7bf57021d5fa@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 30 Jun 2023 20:42:23 +0300
-Message-ID: <CAA8EJpoN0nVJdBwYfRkS305fWjbHL6BUxcgo1CmS8jmn6gp2jg@mail.gmail.com>
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8450-hdk: add ADC-TM thermal zones
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH RFC v4 1/7] drm: Introduce solid fill DRM plane property
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <quic_abhinavk@quicinc.com>, <ppaalanen@gmail.com>,
+        <contact@emersion.fr>, <laurent.pinchart@ideasonboard.com>,
+        <sebastian.wick@redhat.com>, <ville.syrjala@linux.intel.com>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <wayland-devel@lists.freedesktop.org>
+References: <20230404-solid-fill-v4-0-f4ec0caa742d@quicinc.com>
+ <20230404-solid-fill-v4-1-f4ec0caa742d@quicinc.com>
+ <972b7cc7-77de-e332-ba41-b96c01dc7939@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <972b7cc7-77de-e332-ba41-b96c01dc7939@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: NXrrFklbUG3ASfSlULzowNIhZFqjz-QV
+X-Proofpoint-GUID: NXrrFklbUG3ASfSlULzowNIhZFqjz-QV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-30_10,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 malwarescore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 mlxlogscore=901 lowpriorityscore=0
+ impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306300155
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,147 +92,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 30 Jun 2023 at 19:15, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 30.06.2023 14:57, Dmitry Baryshkov wrote:
-> > On Fri, 30 Jun 2023 at 14:27, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >> On 30.06.2023 12:07, Dmitry Baryshkov wrote:
-> >>> On Fri, 30 Jun 2023 at 11:19, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>
-> >>>> On 30.06.2023 08:13, Dmitry Baryshkov wrote:
-> >>>>> Add thermal zones controlled through the ADC-TM (ADC thermal monitoring)
-> >>>>> PMIC interface. This includes several onboard sensors and the XO thermal
-> >>>>> sensor.
-> >>>>>
-> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>>> ---
-> >>>> [...]
-> >>>>>
-> >>>>> +     channel@144 {
-> >>>>> +             reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
-> >>>> This define should be cleaned up.. Since it takes a sid argument,
-> >>>> it really is ADC7_AMUX_THM1_100K_PU(sid)
-> >>>
-> >>> I don't think I understood your comment. The define itself is specific
-> >>> to PM8350, other PMICs might have different channel assignments.
-> >>
-> >> include/dt-bindings/iio/qcom,spmi-vadc.h
-> >> 263:#define ADC7_AMUX_THM1_100K_PU                      0x44
-> >
-> > Do you want to define PM8350_ADC7_AMUX_THM1_100K_PU(sid) using
-> > ADC7_AMUX_THM1_100K_PU ?
-> > Or to make all users use ADC7_AMUX_THM1_100K_PU?
->
->
-> >Or add the SID
-> > argument to ADC7_AMUX_THM1_100K_PU and switch to it?
-> This.
->
-> Since we have a generic binding for it (not sure what sort of ABI-ish rules
-> apply here, probably not very many since it's just a dumb preprocessor define),
-> we should not redefine it for each PMIC, especially since the SIDs are variable
-> nowadays :/
-
-I think it would be worth to have per-PMIC headers (which define which
-channels are available on this PMIC), but to use values from the
-qcom,spmi-vadc.h  header to define those per-PMIC values.
-
-WDYT?
-
->
-> Sorry for being too vague.
->
-> Konrad
-> >
-> >>
-> >> Konrad
-> >>>
-> >>>>
-> >>>> Konrad
-> >>>>
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "skin_msm_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>> +     channel@145 {
-> >>>>> +             reg = <PM8350_ADC7_AMUX_THM2_100K_PU(1)>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "camera_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>> +     channel@146 {
-> >>>>> +             reg = <PM8350_ADC7_AMUX_THM3_100K_PU(1)>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "therm1_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>> +     channel@147 {
-> >>>>> +             reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "wide_rfc_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>> +     channel@148 {
-> >>>>> +             reg = <PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "rear_tof_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>> +     channel@14c {
-> >>>>> +             reg = <PM8350_ADC7_GPIO3_100K_PU(1)>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "therm2_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>>       channel@303 {
-> >>>>>               reg = <PM8350B_ADC7_DIE_TEMP>;
-> >>>>>               label = "pm8350b_die_temp";
-> >>>>>       };
-> >>>>>
-> >>>>> +     channel@348 {
-> >>>>> +             reg = <PM8350B_ADC7_AMUX_THM5_100K_PU>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "usb_conn_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>>       channel@403 {
-> >>>>>               reg = <PMR735A_ADC7_DIE_TEMP>;
-> >>>>>               label = "pmr735a_die_temp";
-> >>>>>       };
-> >>>>> +
-> >>>>> +     channel@44a {
-> >>>>> +             reg = <PMR735A_ADC7_GPIO1_100K_PU>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "qtm_w_temp";
-> >>>>> +     };
-> >>>>> +
-> >>>>> +     channel@44b {
-> >>>>> +             reg = <PMR735A_ADC7_GPIO2_100K_PU>;
-> >>>>> +             qcom,hw-settle-time = <200>;
-> >>>>> +             qcom,ratiometric;
-> >>>>> +             label = "qtm_n_temp";
-> >>>>> +     };
-> >>>>>  };
-> >>>>>
-> >>>>>  &remoteproc_adsp {
-> >>>
-> >>>
-> >>>
-> >
-> >
-> >
 
 
+On 6/30/2023 3:33 AM, Dmitry Baryshkov wrote:
+> On 30/06/2023 03:25, Jessica Zhang wrote:
+>> Document and add support for solid_fill property to drm_plane. In
+>> addition, add support for setting and getting the values for solid_fill.
+>>
+>> To enable solid fill planes, userspace must assign a property blob to
+>> the "solid_fill" plane property containing the following information:
+>>
+>> struct drm_solid_fill_info {
+>>     u8 version;
+>>     u32 r, g, b;
+>> };
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/drm_atomic_state_helper.c |  9 +++++
+>>   drivers/gpu/drm/drm_atomic_uapi.c         | 55 
+>> +++++++++++++++++++++++++++++++
+>>   drivers/gpu/drm/drm_blend.c               | 33 +++++++++++++++++++
+>>   include/drm/drm_blend.h                   |  1 +
+>>   include/drm/drm_plane.h                   | 43 ++++++++++++++++++++++++
+>>   5 files changed, 141 insertions(+)
+> 
+> Also, I think the point which we missed up to now. Could you please add 
+> both new properties to dri/N/state debugfs?
 
--- 
-With best wishes
-Dmitry
+Hi Dmitry,
+
+Good catch -- acked.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
