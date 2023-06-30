@@ -2,210 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 829BB744354
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 22:40:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F81474435A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 22:42:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232428AbjF3UkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 16:40:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50950 "EHLO
+        id S232242AbjF3UmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 16:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232415AbjF3UkK (ORCPT
+        with ESMTP id S232532AbjF3Ul6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 16:40:10 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6856A3C00;
-        Fri, 30 Jun 2023 13:40:08 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35UIHP1K001799;
-        Fri, 30 Jun 2023 20:40:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=7MxM46J9CM0+AqYa4V5JbjXZQE9iUNyouKdVrgAp87o=;
- b=MPnmn4PFLRI0tGALA5VMF9qJClkufvAw8GpZNm/RDEd2CXE6qfubYuAYHjfCxT3GiOsY
- PmBbbRq7LKiJ3AKPLj0qo8lKyRlB8S79vsJ5DvEKyeaKAUklSixYtJ9WlMZTcAM5UZQZ
- pPVXeXJRWNlrTXS3X+nTygnUk0EtEsycjUyBgt87r2by/TnFAkF9TqdVQJGUQnesPESl
- N/Vs8vfzv6SRdC0fcc30ZUdJkj2IszGV8r6ugdEZPumzl2j2sK2DvIQfA5T9/xPGHjao
- rErDfgSTLjWz8bkkVxdBWtQi04+7Ivv0XL+pcVKFeijeUO9zh0Dm9CgoSJosIJUqIeKA Nw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhfewawvt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 20:40:04 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35UKe3Sd008669
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 20:40:03 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.7; Fri, 30 Jun 2023 13:40:02 -0700
-Date:   Fri, 30 Jun 2023 13:40:01 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v4 5/6] soc: qcom: Add LLCC support for multi channel DDR
-Message-ID: <20230630204001.GC1059662@hu-bjorande-lv.qualcomm.com>
-References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
- <20230623141806.13388-6-quic_kbajaj@quicinc.com>
+        Fri, 30 Jun 2023 16:41:58 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC05A2;
+        Fri, 30 Jun 2023 13:41:57 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-1b0138963ffso2157488fac.0;
+        Fri, 30 Jun 2023 13:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688157717; x=1690749717;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hei6z5b4CckyhDST/cotdRvq7xJLORaeNw4Fjc7LJac=;
+        b=qqpEc0UHC1Pn4HYeR/nCpyWwl1XTPXm6yo7Prv9WxE4SFrVABUui5vEnzQfaBQqq18
+         CopnejN3jW7Xq7rQgVzskJQgOtevz3olqA9fmOJpxNDX4NFLxcqjWSfrdn87OPWCE/yK
+         OKiUA6LVeBbDRsORPWuH8rt7lsFNS3WpmdIlMtY3U9TaY8KjAnP30tNfWTwFSakFYkfG
+         Uw/B8olBlSDdXwDVq+4+rFSu6QIfhBjU7W5VTpGd5wpojXSjjHJ9KfZNSkemoQ92LlCi
+         c4lMYH7dbIt0R24D+z6BPUjqIgPYkuxhC5gMQLOHc0q/Em/hSl69QTu2/38SD+fzmfP3
+         CJSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688157717; x=1690749717;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hei6z5b4CckyhDST/cotdRvq7xJLORaeNw4Fjc7LJac=;
+        b=Fb/Bi6CBdEuNjActWPSba2uljNqsL2OMGgO803KPP27WUhIHibBF8rcWUCZ8V9RKSr
+         U+U1iDPVOFBfrW4AaWI81K/yhCHnTc2+fxwXjrz0BWO6QHWzsOn9XXdwXIGBnsJK81lx
+         wf9esAadwoIEh9KRGS59kcKwKsmhdFRqtBEabXjDUPlO0DU6uygbnnOKQI4btI3F1q3Q
+         fAtcnbPmom7PgxVfAN2YSBMMNWH0WsoU6Xp5DZyKQG7GYhmFnPTw0GYPAnQi1YEKMJCJ
+         EZC0SjMqHXamRPhfp9Wj8G5M4CKHLdnIUp8VzfTjQXen2NDt/JNIwckQpD62Dth2801A
+         13bg==
+X-Gm-Message-State: ABy/qLZz3jhwf1QD+Y2hbBUqirf5OaJNm5SleNR31fW0ng8bCVBq5us2
+        d4mZUXiDd289QljM5abAvjdFLmgPWP0qVaJ3598GujzQ
+X-Google-Smtp-Source: ACHHUZ4aVwFnH3AO8hYQb728JRge1w32PAsmLUhEcQEnMEUqiTkxHgWJnzSzNRrmiAzZuYJh2YYBAlM5pxy3rrE+wYY=
+X-Received: by 2002:a05:6870:b6a5:b0:1ad:565f:df6c with SMTP id
+ cy37-20020a056870b6a500b001ad565fdf6cmr4974801oab.46.1688157716743; Fri, 30
+ Jun 2023 13:41:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230623141806.13388-6-quic_kbajaj@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: StUFaU-3uJpu3CBFtTw6ETc0UYW2wh8j
-X-Proofpoint-GUID: StUFaU-3uJpu3CBFtTw6ETc0UYW2wh8j
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-30_12,2023-06-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- clxscore=1015 spamscore=0 mlxlogscore=924 adultscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306300181
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230628-topic-a635-v1-1-5056e09c08fb@linaro.org> <ef074384-1eee-ec88-b02f-c4ada72037a4@linaro.org>
+In-Reply-To: <ef074384-1eee-ec88-b02f-c4ada72037a4@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 30 Jun 2023 13:41:45 -0700
+Message-ID: <CAF6AEGug0rrX4BV8=XEV2hZw_C3+W+4WV=2bSADzF5rnsoTS0g@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/adreno: Assign revn to A635
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 23, 2023 at 07:48:05PM +0530, Komal Bajaj wrote:
-> Add LLCC support for multi channel DDR configuration
-> based on a feature register. Reading DDR channel
-> confiuration uses nvmem framework, so select the
-> dependency in Kconfig. Without this, there will be
-> errors while building the driver with COMPILE_TEST only.
+On Wed, Jun 28, 2023 at 12:54=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 28/06/2023 22:05, Konrad Dybcio wrote:
+> > Recently, a WARN_ON() was introduced to ensure that revn is filled befo=
+re
+> > adreno_is_aXYZ is called. This however doesn't work very well when revn=
+ is
+> > 0 by design (such as for A635). Fill it in as a stopgap solution for
+> > -fixes.
+> >
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> I'd have probably added:
+>
+> Fixes: cc943f43ece7 ("drm/msm/adreno: warn if chip revn is verified
+> before being set")
+>
+> or
+>
+> Fixes: 192f4ee3e408 ("drm/msm/a6xx: Add support for Adreno 7c Gen 3 gpu")
 
-You may drop the last sentence, I don't think it's entirely correct.
+I'd lean towards the former, given that this is a temporary workaround
+until we do a more comprehensive overhaul and remove revn entirely
 
-> 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
->  drivers/soc/qcom/Kconfig     |  2 ++
->  drivers/soc/qcom/llcc-qcom.c | 33 ++++++++++++++++++++++++++++++---
->  2 files changed, 32 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index a491718f8064..cc9ad41c63aa 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -64,6 +64,8 @@ config QCOM_LLCC
->  	tristate "Qualcomm Technologies, Inc. LLCC driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	select REGMAP_MMIO
-> +	select NVMEM
-> +	select QCOM_SCM
+BR,
+-R
 
-I don't see anything your patch that warrants adding QCOM_SCM here,
-is it needed, should it be a separate commit?
-
->  	help
->  	  Qualcomm Technologies, Inc. platform specific
->  	  Last Level Cache Controller(LLCC) driver for platforms such as,
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 6cf373da5df9..3c29612da1c5 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -12,6 +12,7 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/mutex.h>
-> +#include <linux/nvmem-consumer.h>
->  #include <linux/of.h>
->  #include <linux/of_device.h>
->  #include <linux/regmap.h>
-> @@ -943,6 +944,19 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
->  	return ret;
->  }
->  
-> +static int qcom_llcc_get_cfg_index(struct platform_device *pdev, u8 *cfg_index)
-> +{
-> +	int ret;
-> +
-> +	ret = nvmem_cell_read_u8(&pdev->dev, "multi-chan-ddr", cfg_index);
-> +	if (ret == -ENOENT) {
-> +		*cfg_index = 0;
-> +		return 0;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->  static int qcom_llcc_remove(struct platform_device *pdev)
->  {
->  	/* Set the global pointer to a error code to avoid referencing it */
-> @@ -975,11 +989,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  	struct device *dev = &pdev->dev;
->  	int ret, i;
->  	struct platform_device *llcc_edac;
-> -	const struct qcom_llcc_config *cfg;
-> +	const struct qcom_llcc_config *cfg, *entry;
->  	const struct llcc_slice_config *llcc_cfg;
->  	u32 sz;
-> +	u8 cfg_index;
->  	u32 version;
->  	struct regmap *regmap;
-> +	u32 num_entries = 0;
->  
->  	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
->  	if (!drv_data) {
-> @@ -1040,8 +1056,19 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  
->  	drv_data->version = version;
->  
-> -	llcc_cfg = cfg[0]->sct_data;
-> -	sz = cfg[0]->size;
-> +	ret = qcom_llcc_get_cfg_index(pdev, &cfg_index);
-> +	if (ret)
-> +		goto err;
-> +
-> +	for (entry = cfg; entry->sct_data; entry++, num_entries++)
-> +		;
-
-This is still unnecessarily "clever":
-"For each valid entry, do nothing, while incrementing num_entries".
-
-How about just writing:
-"For each valid entry, increment num_entries"
-
-	for (entry = cfg; entry->sct_data; entry++)
-		num_entries++;
-
-
-> +	if (cfg_index >= num_entries || cfg_index < 0) {
-
-cfg_index is an unsiged number, so it's unlikely to be negative.
-
-Also, "cfg_index" and "num_entries" are values in the same domain, so
-keeping their names related is beneficial - i.e. rename num_entries to
-num_cfgs.
-
-Regards,
-Bjorn
-
-> +		ret = -EINVAL;
-> +		goto err;
-> +	}
-> +
-> +	llcc_cfg = cfg[cfg_index].sct_data;
-> +	sz = cfg[cfg_index].size;
->  
->  	for (i = 0; i < sz; i++)
->  		if (llcc_cfg[i].slice_id > drv_data->max_slices)
-> -- 
-> 2.40.1
-> 
+>
+>
+> > ---
+> >   drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+> >   1 file changed, 1 insertion(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
+rm/msm/adreno/adreno_device.c
+> > index cb94cfd137a8..8ea7eae9fc52 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > @@ -345,6 +345,7 @@ static const struct adreno_info gpulist[] =3D {
+> >               .address_space_size =3D SZ_16G,
+> >       }, {
+> >               .rev =3D ADRENO_REV(6, 3, 5, ANY_ID),
+> > +             .revn =3D 635,
+> >               .fw =3D {
+> >                       [ADRENO_FW_SQE] =3D "a660_sqe.fw",
+> >                       [ADRENO_FW_GMU] =3D "a660_gmu.bin",
+> >
+> > ---
+> > base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
+> > change-id: 20230628-topic-a635-1b3c2c987417
+> >
+> > Best regards,
+>
+> --
+> With best wishes
+> Dmitry
+>
