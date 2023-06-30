@@ -2,57 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA5997438FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 12:08:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37BAB743912
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 12:11:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233076AbjF3KI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 06:08:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54342 "EHLO
+        id S232579AbjF3KLW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 06:11:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233056AbjF3KIW (ORCPT
+        with ESMTP id S233055AbjF3KLR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 06:08:22 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 884193AB4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:07:51 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bd77424c886so1652573276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:07:51 -0700 (PDT)
+        Fri, 30 Jun 2023 06:11:17 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB552974
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:11:14 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-bdd069e96b5so1551125276.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:11:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688119671; x=1690711671;
+        d=linaro.org; s=google; t=1688119874; x=1690711874;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=k2fW+M48gYbDUccjgLpcMFUwDgh2+7WfsmzWyIA2Z90=;
-        b=miLeKSJ0PdWfroZ0EaqD/r3IF1SIbRDlXhHLZU3PKqiGvwgomdhEOdFUmtTM3qDlOF
-         whmtaBWX581BK6QcCjOim/uiG3r+xIf6AOzXbNsHoj4D/kAvTIEmQBDraqjcJ585dMS3
-         hmvyTIRuGSk2is0aFPgiY1e9Oxs9qY6wXT8mw2lme7BVfl1AiilGm45eZS9lvm1SgzAt
-         OpcbMYD53A1/tTLHjQu5JrgAvR/wg/wSIFloauJ/6eAYzeK5MtGI6NtjflDf+tD5e7mJ
-         o4FhUmnVlhQ60qzNZvHcrp1zbQqwVtCnHcQb8FsZ2J3E1wYN5GAk7tCHNpnyM7+iGZKM
-         ptKg==
+        bh=CLtUYyJmFpXUCnBKaPjwc0ogntOCCD1dJe6EQNzDukc=;
+        b=K/PHv47I1EdBLnMKJScBAO17etXkyuYbmR3ZAxaY8m0EoWiZRPoRWD9CUpmeW0F1QM
+         zr5IxjAGQJujaj9K2GYQ/ieXDYTsX3Trjo+NRScTv6icavfbKMoheDZSoktyYgQbJ7bo
+         ofV+lnJLss/vo3X8VPukrkmK4hTpJGTsbdrEwckwg2rWkS702ppluoSOnN81FAzj5rTc
+         WX0QBzK16uSnEqEVk2b0HI5xUUTgBjHZZ3PCZ8F/UnRQbK4fxEr7R1s7YuTtJ/BeLffl
+         YKM3wntm/j4zl8wBCb6+DakBFzqiOnEH7OPpWDJoxUPn0a/GnUteTE7N586BAFn6nvZm
+         024w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688119671; x=1690711671;
+        d=1e100.net; s=20221208; t=1688119874; x=1690711874;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=k2fW+M48gYbDUccjgLpcMFUwDgh2+7WfsmzWyIA2Z90=;
-        b=VkEWOn7Lx4BssVib5b3rRJQbNuqV8PrNMb/jMazuiSYC877U56AMPaeBgEQAnMXbQG
-         7IPLw/8z7pq3yZK2qgkd6wzgwZm+koj3Zr+pGNM3k8BPwYqlADMKIL14QrnAkaQZPaYS
-         uQkI8AgA6VqitlIY6pzkO2bvDfqu5S5k29pg9Pyty3WoU6/Q59/vjolhWf2Q/Eg4k9hg
-         tlGo4HWyHsXl3nXXhJmhWZgp9Im077MNEnd0urtExPUi5b7dN066653Dcoe7xf91gIbg
-         9TjQyv9MVizTTtvaQ3JCkBXMq0B74UkniJqhiPUyvMK3l8Imva9UxIsgswFtFptBbv1q
-         xbzQ==
-X-Gm-Message-State: ABy/qLbhpA/SDe4M48Jz1HkaIoQev3s7NRwaL1r5Po2S9rE5QIyIl11l
-        TOX6k98etq1kpnUOnF+sCq04Fen0RMr9LoRWfkRrD2aFChF0bCM2
-X-Google-Smtp-Source: APBJJlG8Y3i2ZlPGcSLKQN4jEo/O6g/C6MwsMfQDczxZ4l05R3m+c0mTHmCtRszEFdo+09/bI/trLihXjuXNd2M/fXw=
-X-Received: by 2002:a25:901:0:b0:c11:a10:aad0 with SMTP id 1-20020a250901000000b00c110a10aad0mr2379524ybj.37.1688119670754;
- Fri, 30 Jun 2023 03:07:50 -0700 (PDT)
+        bh=CLtUYyJmFpXUCnBKaPjwc0ogntOCCD1dJe6EQNzDukc=;
+        b=HZ/VYQcQOUSTmqpVOyt5apOdxG6NEWFEuLYT0Q8ggk3U8Mdm51d0en9v9Vjd8uU/mQ
+         dea/HG8IcgV9RRzPVutXhFF35N1idbYkJa+ACQdVrHB8jHye0Ldhh3cU2+yuLn8/mcuw
+         wjx2wGEAo4D162nVB1KeUL02h7xeg9ZanW0PrwiUTuAMAproMCChcxZNVaqy6oPMXg2m
+         /jtX1GynKljx4YYnGz2Uqk1aDCEbwm3fhFHMJQplwT9Ghk50YK8avUHrPuoLgboBNXFU
+         ysEGYESU6S7uxyikUIHK2ZhmsFz69QGgWJI6H2AHuzAmF6oJGgwYcsqFLogkel4ozclI
+         I0GQ==
+X-Gm-Message-State: ABy/qLZB/SXHg48VmVimUgdBATh5pCdKEJSKWkOPkfOjK8FHENwm22+c
+        2E7RDqHD1j+eujJMxZ4hN6wyRT66rwu492Q36LpyKg==
+X-Google-Smtp-Source: APBJJlHz/+lBf2xIzCqumkGSGKATewiFsUktYKSV0T6KuihVET8RlH7UaaDTtj3Rhrb0Ho7nqoMUB9giITwWIvhJwoU=
+X-Received: by 2002:a25:ad06:0:b0:bc6:91e5:7b4e with SMTP id
+ y6-20020a25ad06000000b00bc691e57b4emr2394673ybi.13.1688119873996; Fri, 30 Jun
+ 2023 03:11:13 -0700 (PDT)
 MIME-Version: 1.0
 References: <20230630061315.4027453-1-dmitry.baryshkov@linaro.org>
- <20230630061315.4027453-8-dmitry.baryshkov@linaro.org> <c59d002b-9d06-d744-d90b-22da4186522a@linaro.org>
-In-Reply-To: <c59d002b-9d06-d744-d90b-22da4186522a@linaro.org>
+ <20230630061315.4027453-5-dmitry.baryshkov@linaro.org> <4c7377c8-eca9-5614-9c71-d90c091f134d@linaro.org>
+In-Reply-To: <4c7377c8-eca9-5614-9c71-d90c091f134d@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 30 Jun 2023 13:07:39 +0300
-Message-ID: <CAA8EJpp+b1KVaMK82j7T=iGovXVAu3jq51rTHu6yqPcnkwXoeg@mail.gmail.com>
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8450-hdk: add ADC-TM thermal zones
+Date:   Fri, 30 Jun 2023 13:11:02 +0300
+Message-ID: <CAA8EJpoeNawPtpnz+mC0W94bcfZPn87+saQ8wxNX+5Wxx+ZLTg@mail.gmail.com>
+Subject: Re: [PATCH 4/7] arm64: dts: qcom: pmk8350: fix ADC-TM compatible string
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,108 +64,57 @@ Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 30 Jun 2023 at 11:19, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On Fri, 30 Jun 2023 at 11:13, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
 > On 30.06.2023 08:13, Dmitry Baryshkov wrote:
-> > Add thermal zones controlled through the ADC-TM (ADC thermal monitoring)
-> > PMIC interface. This includes several onboard sensors and the XO thermal
-> > sensor.
+> > The commit b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for
+> > pmk8350") for the ADC TM (thermal monitoring device) have used the
+> > compatible string from the vendor kernel ("qcom,adc-tm7"). Use the
+> > proper compatible string that is defined in the upstream kernel
+> > ("qcom,spmi-adc-tm5-gen2").
 > >
+> > Fixes: b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for pmk8350")
 > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > > ---
-> [...]
-> >
-> > +     channel@144 {
-> > +             reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
-> This define should be cleaned up.. Since it takes a sid argument,
-> it really is ADC7_AMUX_THM1_100K_PU(sid)
+> Well actually, adc-tm7 would be the correct compatible (PM8350X is PMIC7)
+> but it never landed on the driver side..
 
-I don't think I understood your comment. The define itself is specific
-to PM8350, other PMICs might have different channel assignments.
+I also thought so (and started implementing adc-tm7), but then I
+stumbled upon the commit 96f6f333bcf0 ("thermal/drivers/qcom: Add
+support for PMIC5 Gen2 ADCTM"), which clearly tells:
+
+    Add support for PMIC5 Gen2 ADC_TM, used on PMIC7 chips. It is a
+    close counterpart of PMIC7 ADC and has the same functionality as
+    PMIC5 ADC_TM, for threshold monitoring and interrupt generation.
+    It is present on PMK8350 alone, ....
+
+So, this is the right compatible for PMK8350.
 
 >
 > Konrad
->
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "skin_msm_temp";
-> > +     };
-> > +
-> > +     channel@145 {
-> > +             reg = <PM8350_ADC7_AMUX_THM2_100K_PU(1)>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "camera_temp";
-> > +     };
-> > +
-> > +     channel@146 {
-> > +             reg = <PM8350_ADC7_AMUX_THM3_100K_PU(1)>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "therm1_temp";
-> > +     };
-> > +
-> > +     channel@147 {
-> > +             reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "wide_rfc_temp";
-> > +     };
-> > +
-> > +     channel@148 {
-> > +             reg = <PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "rear_tof_temp";
-> > +     };
-> > +
-> > +     channel@14c {
-> > +             reg = <PM8350_ADC7_GPIO3_100K_PU(1)>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "therm2_temp";
-> > +     };
-> > +
-> >       channel@303 {
-> >               reg = <PM8350B_ADC7_DIE_TEMP>;
-> >               label = "pm8350b_die_temp";
-> >       };
+> >  arch/arm64/boot/dts/qcom/pmk8350.dtsi | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > >
-> > +     channel@348 {
-> > +             reg = <PM8350B_ADC7_AMUX_THM5_100K_PU>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "usb_conn_temp";
-> > +     };
-> > +
-> >       channel@403 {
-> >               reg = <PMR735A_ADC7_DIE_TEMP>;
-> >               label = "pmr735a_die_temp";
-> >       };
-> > +
-> > +     channel@44a {
-> > +             reg = <PMR735A_ADC7_GPIO1_100K_PU>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "qtm_w_temp";
-> > +     };
-> > +
-> > +     channel@44b {
-> > +             reg = <PMR735A_ADC7_GPIO2_100K_PU>;
-> > +             qcom,hw-settle-time = <200>;
-> > +             qcom,ratiometric;
-> > +             label = "qtm_n_temp";
-> > +     };
-> >  };
+> > diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+> > index bc6297e7253e..1eb74017062d 100644
+> > --- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+> > @@ -59,7 +59,7 @@ pmk8350_vadc: adc@3100 {
+> >               };
 > >
-> >  &remoteproc_adsp {
+> >               pmk8350_adc_tm: adc-tm@3400 {
+> > -                     compatible = "qcom,adc-tm7";
+> > +                     compatible = "qcom,spmi-adc-tm5-gen2";
+> >                       reg = <0x3400>;
+> >                       interrupts = <PMK8350_SID 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
+> >                       #address-cells = <1>;
 
 
 
