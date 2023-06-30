@@ -2,116 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3F5E743961
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 12:33:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75B0F7439E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 12:52:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbjF3KdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 06:33:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34926 "EHLO
+        id S232134AbjF3KwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 06:52:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230125AbjF3KdW (ORCPT
+        with ESMTP id S231455AbjF3KwX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 06:33:22 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6536F30DD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:33:21 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b69ff54321so27178501fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:33:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688121199; x=1690713199;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BV6pMCNFBELZthFQNdbEPY0LFf8oujVmtU/HlHM5O6w=;
-        b=La97SAtUMDaQJPXoGRraZ0zdFoKriXSnJyG5uqhKNWQLBvzsNLIa3sVbPGjI/Hyn6r
-         CwAUr8zFLmuU1Hw6/1WHilfZMHUbRmEi3qC+ryRszPZL6yTQZGTK/Fzq93hyTrPBE3ld
-         lvLHmDjSPBltv0e0WuW3AvCI1sVhEa6O7rxJXMNLcxJnQHKJ9hdlugyO7Ta3UAvdfsjR
-         vXB49PmJZrbWS40WXb320dBMOKwsnfMToxiq20oHb9+hWxDzy1gJT0GxGHFPpm6iJkbV
-         RdnaTWKi8hXixIY83GUyhOPj4PwhlGU5Rk3YCCUOP8WZj09ShQyDQ6kSgG8jPXJ5z+t+
-         JreA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688121199; x=1690713199;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BV6pMCNFBELZthFQNdbEPY0LFf8oujVmtU/HlHM5O6w=;
-        b=eh/NEUTTFguAlAXpcItUzEMaDm66KG8QjTdj6W0IYPM4CgZdRa+yQi2OKK1mtBTCeu
-         bt6LqRx+5sbxqNlUHFhmz7jopkha2SU4tU2ljauqyb6Euf5CVk7pO57VnJ4w6BFkstpQ
-         PVzqwPz/wkOyoN9+NN7ckDffA297V7BmUPSskQ1ge76G+bM1A2jO3cFbpOqYuDq1rrfH
-         HGRcQavlZ7wTTU0ofbHQH0V4rsa19gHCeQRKvAC6krJ8K5fGIW+idJdzc4+QSJVK+TR6
-         AUopBmq+S3/hpi2MDc7W7RqIckPY4gvGob88A2+/1R7X7xY19HSTwRCHL+bCo7WZqsfY
-         kQVQ==
-X-Gm-Message-State: ABy/qLa+5dHCgYxv5DgbCLTi7GA0A1VD/MufWXS3gOIuUHc7RkblZ8db
-        c1VUglzurT9Eff+BLLpSFvQdAA==
-X-Google-Smtp-Source: APBJJlEQ56WLGrt67F0epM2MytRHTKau3I6Ew1h+D6xetubMMeQ1wj68PFO/tnppTDhXOMB2EaKmOA==
-X-Received: by 2002:a05:6512:280d:b0:4fb:18f4:4cd4 with SMTP id cf13-20020a056512280d00b004fb18f44cd4mr2161674lfb.55.1688121199585;
-        Fri, 30 Jun 2023 03:33:19 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a20-20020a05600c225400b003fbb06af219sm6875419wmm.32.2023.06.30.03.33.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Jun 2023 03:33:18 -0700 (PDT)
-Message-ID: <972b7cc7-77de-e332-ba41-b96c01dc7939@linaro.org>
-Date:   Fri, 30 Jun 2023 13:33:16 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH RFC v4 1/7] drm: Introduce solid fill DRM plane property
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
-        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
-        sebastian.wick@redhat.com, ville.syrjala@linux.intel.com,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        wayland-devel@lists.freedesktop.org
-References: <20230404-solid-fill-v4-0-f4ec0caa742d@quicinc.com>
- <20230404-solid-fill-v4-1-f4ec0caa742d@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230404-solid-fill-v4-1-f4ec0caa742d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 30 Jun 2023 06:52:23 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1A635AF;
+        Fri, 30 Jun 2023 03:52:22 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U9IqOe011436;
+        Fri, 30 Jun 2023 10:52:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=lDAMfguN/Oi65s75t9Fww/pWagtN3YyKDqCIn+q6vwM=;
+ b=d4Z9vANmdQXbzJii6b6A3+24cMa0OhWTIJHqVD8I3WLiL5pFzl1nyEUasXrGvWBZe/2z
+ /aGJq6Xgn+yDxHjt/5NSDazKpkqGyiZQmmRRwVXcWMsHLyG/ZCemZKpfAbyYqziqCFxj
+ aQ0lV+LI4Lsr/p67ZkKyXla+hqoNKreK0waLbu28zj1gx9wz+6fwqa5qiPKYh4dFDsXR
+ ZHpr2932XFOjw+4twe2lbY179+s7SfCLRECRp8afKji+4jC/Wlo0XlJMAgirrkCMnTXb
+ +Ie1wPBZnPuF4Lly13fvDQx0cxc9ZscwPgc/cBapA67/+Z6GHzmEDHV2Qyz33xLcxPIY Gw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhfew9nvw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Jun 2023 10:52:17 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 35UAqDJx004625;
+        Fri, 30 Jun 2023 10:52:13 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3rdsjkpf1t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 30 Jun 2023 10:52:13 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35UAqCcJ004610;
+        Fri, 30 Jun 2023 10:52:13 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 35UAqC8o004605;
+        Fri, 30 Jun 2023 10:52:12 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id 082174ABD; Fri, 30 Jun 2023 16:22:12 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v2 0/8] PCCI: EPC: Add support to wake up host from D3 states
+Date:   Fri, 30 Jun 2023 16:22:03 +0530
+Message-Id: <1688122331-25478-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: VDcv7iTz9CrIxszYA5AUHww6jagh1-wg
+X-Proofpoint-GUID: VDcv7iTz9CrIxszYA5AUHww6jagh1-wg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-30_05,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
+ clxscore=1015 spamscore=0 mlxlogscore=352 adultscore=0 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306300092
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/06/2023 03:25, Jessica Zhang wrote:
-> Document and add support for solid_fill property to drm_plane. In
-> addition, add support for setting and getting the values for solid_fill.
-> 
-> To enable solid fill planes, userspace must assign a property blob to
-> the "solid_fill" plane property containing the following information:
-> 
-> struct drm_solid_fill_info {
-> 	u8 version;
-> 	u32 r, g, b;
-> };
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/drm_atomic_state_helper.c |  9 +++++
->   drivers/gpu/drm/drm_atomic_uapi.c         | 55 +++++++++++++++++++++++++++++++
->   drivers/gpu/drm/drm_blend.c               | 33 +++++++++++++++++++
->   include/drm/drm_blend.h                   |  1 +
->   include/drm/drm_plane.h                   | 43 ++++++++++++++++++++++++
->   5 files changed, 141 insertions(+)
+Here we propose this patch series to add support in PCI endpoint
+driver to wake up host from D3 states.
 
-Also, I think the point which we missed up to now. Could you please add 
-both new properties to dri/N/state debugfs?
+As endpoint cannot send any data/MSI when the D-state is in
+D3cold or D3hot. Endpoint needs to bring the device back to D0
+to send any kind of data.
+
+For this endpoint needs to send inband PME the device is in D3 state or
+toggle wake when the device is D3 cold and vaux is not supplied.
+
+As EPF doestn't know the D-state of the PCI, added a notify op whenever
+device state changes.
+
+Based on the D-state the EPF driver decides to wake host either by
+toggling wake or by sending PME.
+
+When the MHI state is in M3 MHI driver will wakeup the host using the
+wakeup op.
+
+Changes from v1:
+	- Moved from RFC patch to regular patch
+	- Inclueded EPF patch and added a new op patch to notify dstate change
+Krishna chaitanya chundru (8):
+  PCI: endpoint: Add dstate change notifier support
+  PCI: qcom-ep: Add support for D-state change notification
+  PCI: epf-mhi: Add dtate change op
+  PCI: endpoint: Add wakeup host API to EPC core
+  pci: dwc: Add wakeup host op to pci_epc_ops
+  PCI: qcom: ep: Add wake up host op to dw_pcie_ep_ops
+  PCI: epf-mhi: Add wakeup host op
+  bus: mhi: ep: wake up host is the MHI state is in M3
+
+ Documentation/PCI/endpoint/pci-endpoint.rst     | 11 +++++
+ drivers/bus/mhi/ep/main.c                       | 16 ++++++-
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 12 +++++
+ drivers/pci/controller/dwc/pcie-designware.h    |  3 ++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c       | 37 ++++++++++++++++
+ drivers/pci/endpoint/functions/pci-epf-mhi.c    | 32 ++++++++++++++
+ drivers/pci/endpoint/pci-epc-core.c             | 58 +++++++++++++++++++++++++
+ include/linux/mhi_ep.h                          |  4 ++
+ include/linux/pci-epc.h                         | 12 +++++
+ include/linux/pci-epf.h                         |  1 +
+ 10 files changed, 185 insertions(+), 1 deletion(-)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
 
