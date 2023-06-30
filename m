@@ -2,234 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38113743348
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 05:42:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC521743382
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 06:25:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232002AbjF3DmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jun 2023 23:42:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44206 "EHLO
+        id S230229AbjF3EZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 00:25:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbjF3DmO (ORCPT
+        with ESMTP id S230385AbjF3EZe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jun 2023 23:42:14 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F582681;
-        Thu, 29 Jun 2023 20:42:12 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U3dYZa018520;
-        Fri, 30 Jun 2023 03:41:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=seQ2j0gbJ727u3DPmbrPvnp+QMoIsDD6zoTAV/LLxGs=;
- b=k7/67pWnKxiivIUzpZLXHAvhD9aOhk1TEi12M1YYgewLaU2xMvnyILcWV2fIVpLNyNip
- zVWgOPbthu/NaQ/D0mWU7TTrtPgU2KF7t0aFi4g9k40CGPbTaHbtIPyg9xaDG2s37cJq
- FJQe/ESik6zPQqGhuHBCGxPuJb8RsQw8zVUqBu+X/7iHWm78tLWYlJAExZzzRP/DOFUM
- /YPL+vUXfpE1otUzLL+EnpqXEMwpv0u2itErpRTMNPRHPoo/7ehiV4A52wiFZwT8x7hM
- BpdH8FpsYeNRh5sNXmFgKR/eTNVjdooUFLW6oOdOquMAhdsZ1nGQWP1F5Jh//U2iMEFQ Dg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rh0aajpd6-1
+        Fri, 30 Jun 2023 00:25:34 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E54630D1;
+        Thu, 29 Jun 2023 21:25:33 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U4JQT8010952;
+        Fri, 30 Jun 2023 04:25:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=Voo9QKIV2Frsi5kA9jpD3XnC9AdZmVSTZ4udynG7uPc=;
+ b=JV/AkqhpGbo5xO39N47jFAIoJiXNn59+EaPPAdlFHAdOxgDD1irbzQaC3+2BDf4LGp5R
+ flfMGMhnLH6bYVenM9WlzrZQK9hmmpnWFXtOUhE8zAh+W2+Ivogm18CNWluf1S5ljJdb
+ f6nm955iLHDUnQ1IdNg9TAmUancJwlDct/fQfTjqK0zFRbEBHBse1JACjq2VI8jEt2RP
+ fGYaRLUXVmkc0CJDtnw1qMa2jSkBOlO5kIsYuh3V2fk0ncCkftI2nsbxiRLVyNLLJPMm
+ eeZTf8nen+AJHaK+fx6JfklxCI0ju0yL/5tux1CBIgF4WAyeAcXjfuQW9XYYK4pKB2hA +g== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rh7s2t1jq-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 03:41:47 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35U3fjTk004090
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 03:41:45 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.7; Thu, 29 Jun 2023 20:41:38 -0700
-Date:   Fri, 30 Jun 2023 09:11:34 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>, <corbet@lwn.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH v4 13/21] remoterproc: qcom: refactor to leverage
- exported minidump symbol
-Message-ID: <5976b2a5-6ff4-4d1d-8d8a-dca783f49799@quicinc.com>
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <1687955688-20809-14-git-send-email-quic_mojha@quicinc.com>
- <f1581356-97ba-4faa-8e1c-0d5c7ba994e3@quicinc.com>
- <cd4b7be5-4cfd-e330-458d-3e22019839b9@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <cd4b7be5-4cfd-e330-458d-3e22019839b9@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        Fri, 30 Jun 2023 04:25:30 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 35U4PQFG013204;
+        Fri, 30 Jun 2023 04:25:26 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3rdsjknf4g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 30 Jun 2023 04:25:26 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35U4PQVg013188;
+        Fri, 30 Jun 2023 04:25:26 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 35U4PQ9i013186;
+        Fri, 30 Jun 2023 04:25:26 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id A685C4AB6; Fri, 30 Jun 2023 09:55:25 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v7 0/3] PCI: qcom: ep: Add basic interconnect support
+Date:   Fri, 30 Jun 2023 09:55:20 +0530
+Message-Id: <1688099123-28036-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fcztJk2Fzuuq4shNAq7buAclqPcMp1p1
-X-Proofpoint-ORIG-GUID: fcztJk2Fzuuq4shNAq7buAclqPcMp1p1
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0q7wfKuBdFE3QLqpwvjnDgEghTbHjwck
+X-Proofpoint-ORIG-GUID: 0q7wfKuBdFE3QLqpwvjnDgEghTbHjwck
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-30_01,2023-06-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
- suspectscore=0 mlxscore=0 clxscore=1015 impostorscore=0 mlxlogscore=842
- malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306300030
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+ definitions=2023-06-30_02,2023-06-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=535 impostorscore=0
+ mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306300037
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 29, 2023 at 02:50:34PM +0530, Mukesh Ojha wrote:
-> 
-> 
-> On 6/28/2023 9:21 PM, Pavan Kondeti wrote:
-> > On Wed, Jun 28, 2023 at 06:04:40PM +0530, Mukesh Ojha wrote:
-> > > -static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsystem *subsystem,
-> > > -			void (*rproc_dumpfn_t)(struct rproc *rproc, struct rproc_dump_segment *segment,
-> > > -				void *dest, size_t offset, size_t size))
-> > > +void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
-> > > +		void (*rproc_dumpfn_t)(struct rproc *rproc,
-> > > +		struct rproc_dump_segment *segment, void *dest, size_t offset,
-> > > +		size_t size))
-> > >   {
-> > > -	struct minidump_region __iomem *ptr;
-> > > -	struct minidump_region region;
-> > > -	int seg_cnt, i;
-> > >   	dma_addr_t da;
-> > >   	size_t size;
-> > > +	int seg_cnt;
-> > >   	char *name;
-> > > +	void *ptr;
-> > > +	int ret;
-> > > +	int i;
-> > >   	if (WARN_ON(!list_empty(&rproc->dump_segments))) {
-> > >   		dev_err(&rproc->dev, "dump segment list already populated\n");
-> > > -		return -EUCLEAN;
-> > > +		return;
-> > >   	}
-> > > -	seg_cnt = le32_to_cpu(subsystem->region_count);
-> > > -	ptr = ioremap((unsigned long)le64_to_cpu(subsystem->regions_baseptr),
-> > > -		      seg_cnt * sizeof(struct minidump_region));
-> > > +	ptr = qcom_ss_md_mapped_base(minidump_id, &seg_cnt);
-> > >   	if (!ptr)
-> > > -		return -EFAULT;
-> > > +		return;
-> > >   	for (i = 0; i < seg_cnt; i++) {
-> > > -		memcpy_fromio(&region, ptr + i, sizeof(region));
-> > > -		if (le32_to_cpu(region.valid) == MINIDUMP_REGION_VALID) {
-> > > -			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
-> > > -			if (!name) {
-> > > -				iounmap(ptr);
-> > > -				return -ENOMEM;
-> > > -			}
-> > > -			da = le64_to_cpu(region.address);
-> > > -			size = le64_to_cpu(region.size);
-> > > -			rproc_coredump_add_custom_segment(rproc, da, size, rproc_dumpfn_t, name);
-> > > +		ret = qcom_ss_valid_segment_info(ptr, i, &name, &da, &size);
-> > > +		if (ret < 0) {
-> > > +			iounmap(ptr);
-> > > +			dev_err(&rproc->dev,
-> > > +				"Failed with error: %d while adding minidump entries\n",
-> > > +				ret);
-> > > +			goto clean_minidump;
-> > >   		}
-> > > -	}
-> > > -
-> > > -	iounmap(ptr);
-> > > -	return 0;
-> > > -}
-> > > -
-> > > -void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
-> > > -		void (*rproc_dumpfn_t)(struct rproc *rproc,
-> > > -		struct rproc_dump_segment *segment, void *dest, size_t offset,
-> > > -		size_t size))
-> > > -{
-> > > -	int ret;
-> > > -	struct minidump_subsystem *subsystem;
-> > > -	struct minidump_global_toc *toc;
-> > > -
-> > > -	/* Get Global minidump ToC*/
-> > > -	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, NULL);
-> > > -
-> > > -	/* check if global table pointer exists and init is set */
-> > > -	if (IS_ERR(toc) || !toc->status) {
-> > > -		dev_err(&rproc->dev, "Minidump TOC not found in SMEM\n");
-> > > -		return;
-> > > -	}
-> > > -	/* Get subsystem table of contents using the minidump id */
-> > > -	subsystem = &toc->subsystems[minidump_id];
-> > > -
-> > > -	/**
-> > > -	 * Collect minidump if SS ToC is valid and segment table
-> > > -	 * is initialized in memory and encryption status is set.
-> > > -	 */
-> > > -	if (subsystem->regions_baseptr == 0 ||
-> > > -	    le32_to_cpu(subsystem->status) != 1 ||
-> > > -	    le32_to_cpu(subsystem->enabled) != MINIDUMP_SS_ENABLED ||
-> > > -	    le32_to_cpu(subsystem->encryption_status) != MINIDUMP_SS_ENCR_DONE) {
-> > > -		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
-> > > -		return;
-> > > +		/* if it is a valid segment */
-> > > +		if (!ret)
-> > > +			rproc_coredump_add_custom_segment(rproc, da, size,
-> > > +							  rproc_dumpfn_t, name);
-> > >   	}
-> > > -	ret = qcom_add_minidump_segments(rproc, subsystem, rproc_dumpfn_t);
-> > > -	if (ret) {
-> > > -		dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
-> > > -		goto clean_minidump;
-> > > -	}
-> > > +	iounmap(ptr);
-> > >   	rproc_coredump_using_sections(rproc);
-> > > +
-> > >   clean_minidump:
-> > >   	qcom_minidump_cleanup(rproc);
-> > >   }
-> > 
-> > I like the idea of moving minidump pieces to drivers/soc/qcom/*minidump*.
-> > 
-> > Is it possible to accept one function callback from remoteproc and do
-> > all of this in one function exported by minidump?
-> > 
-> > qcom_ss_valid_segment_info() seems a low level function to be exported..
-> 
-> It was ending up with circular dependency due to
-> rproc_coredump_add_custom_segment()
-> 
-> 
-> rproc_coredump => qcom_common => qcom_minidump_smem => rproc_coredump
-> 
+Add basic support for managing "pcie-mem" interconnect path by setting
+a low constraint before enabling clocks and updating it after the link
+is up based on link speed and width the device got enumerated.
 
-Where is the circular dependency here? Any API accepting callback would
-end up like below
+chnages from v6:
+	- addressed the comments as suggested by mani.
+changes from v5:
+        - addressed the comments by mani.
+changes from v4:
+        - rebased with linux-next.
+        - Added comments as suggested by mani.
+        - removed the arm: dts: qcom: sdx55: Add interconnect path
+          as that patch is already applied.
+changes from v3:
+        - ran make DT_CHECKER_FLAGS=-m dt_binding_check and fixed
+         errors.
+        - Added macros in the qcom ep driver patch as suggested by Dmitry
+changes from v2:
+        - changed the logic for getting speed and width as suggested
+         by bjorn.
+        - fixed compilation errors.
 
-caller -> API(callback) -> (*callback) -> [in caller code ...]
 
-May be I am missing something here.
+Krishna chaitanya chundru (3):
+  dt-bindings: PCI: qcom: ep: Add interconnects path
+  arm: dts: qcom: sdx65: Add PCIe interconnect path
+  PCI: qcom-ep: Add ICC bandwidth voting support
 
-AFAICS, the minidump could do everything except it does not know how to
-create a segment and add it to rproc::dump_segments list. Is it not
-possible to write a minidump API that accepts a callback and a list
-head? we may not probably re-use rproc_coredump_add_custom_segment() as
-is, but some refactoring allows/covers both cases..Pls give it a
-thought.
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 13 ++++
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |  3 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          | 71 ++++++++++++++++++++++
+ 3 files changed, 87 insertions(+)
 
-This way we don't need to create an internal API like below
+-- 
+2.7.4
 
-int qcom_ss_valid_segment_info(void *ptr, int i, char **name, dma_addr_t
-*da, size_t *size)
-
-Thanks,
-Pavan
