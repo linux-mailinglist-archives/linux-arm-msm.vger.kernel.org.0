@@ -2,88 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 053617442AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 21:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5E4274430C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 22:03:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbjF3TUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 15:20:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58124 "EHLO
+        id S231361AbjF3UDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 16:03:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjF3TUL (ORCPT
+        with ESMTP id S229774AbjF3UDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 15:20:11 -0400
-Received: from fallback1.i.mail.ru (fallback1.i.mail.ru [79.137.243.67])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AC1D3C3A;
-        Fri, 30 Jun 2023 12:20:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-        h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=6+Sdx4y5P/7mR6Rt0XOAft4knLAqXtaeIaSTpGTdCC0=;
-        t=1688152809;x=1688242809; 
-        b=mJlO5pcIVyO7Lx+r1zzfs7tM3+XiIK3/V5ph/Yv0JOEdhDXwExjbeckZnCr0WCRwi2PIOffAX9h0OjUlTTuwoSfFNQ4vcYYDQF+TNCb4RyEHPbTXTV7Urn2EKdIFQZXAJ/YOVff1WlEqxUlvT90QLA4hr5BS1kEbjb51RrVnknU=;
-Received: from [10.12.4.8] (port=49240 helo=smtp35.i.mail.ru)
-        by fallback1.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-        id 1qFJf4-00GpPt-0g; Fri, 30 Jun 2023 22:20:06 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-        h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=6+Sdx4y5P/7mR6Rt0XOAft4knLAqXtaeIaSTpGTdCC0=;
-        t=1688152806;x=1688242806; 
-        b=pifMZQ0xaB7FbPClZ3QDUfhBFdYgSCSLbVDz3SEaBL9eHqtO3AkDYAVVXbbHBls+JI2oY5TkHg/Ed69baaBq/pW9E1cD6O4HhQ2UsO9/9Pi8OaHtAEvCXDyhojS9l8owc2Js5P2zza6uQmm80Mu9ehrLinOm4S8hjHmlldgmSUM=;
-Received: by smtp35.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-        id 1qFJem-002CGE-0e; Fri, 30 Jun 2023 22:19:48 +0300
-From:   Danila Tikhonov <danila@jiaxyga.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, davidwronek@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH] clk: qcom: gcc-sm7150: Add CLK_OPS_PARENT_ENABLE to sdcc2 rcg
-Date:   Fri, 30 Jun 2023 22:19:44 +0300
-Message-ID: <20230630191944.20282-1-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.41.0
+        Fri, 30 Jun 2023 16:03:38 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F81C13E;
+        Fri, 30 Jun 2023 13:03:37 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35UJe3jd022974;
+        Fri, 30 Jun 2023 20:03:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=7Kj8HQoxK0oXlxEssFyywogLQQqErFgwwotTvJTZo2M=;
+ b=ADRzBsVnBPNiEaqBxnhw22kglW9SzgMuY2utGSnQEOh7j3DhQDmBqQt0z9Q9abHHzW5K
+ 6WGK9Y5doe6Fdg6O03VKC5FH0pnFfYYaEdhxCPpGdIzwEejZ8L29AsDr8DyDj4lmPlOt
+ 1rzW7+6eq3VsPwsWwIDkLuaPRuhNa/Rj2VZxqFyZLGlkgeJDOiSrPXubKfMI12bocBdW
+ rJmOzuOI5nY6nxk/ast5b1K2w4s33Dah3b4/2XafkVbTqEFQRS8vvFwnrq2gwJvXrUXT
+ BLWa753IjXMvQ6ZWTwkjiOdOLNcNTL5NqUo4zQq276L1o1JCiwPMRzY3VMp+k6Fkytx4 IA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rgy1tmsvc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Jun 2023 20:03:27 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35UK3QqN016147
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Jun 2023 20:03:26 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.7; Fri, 30 Jun 2023 13:03:26 -0700
+Date:   Fri, 30 Jun 2023 13:03:25 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v4 3/6] nvmem: sec-qfprom: Add Qualcomm secure QFPROM
+ support.
+Message-ID: <20230630200325.GA1059662@hu-bjorande-lv.qualcomm.com>
+References: <20230623141806.13388-1-quic_kbajaj@quicinc.com>
+ <20230623141806.13388-4-quic_kbajaj@quicinc.com>
+ <ea4c49cd-17d1-6921-a447-5debaebb0cfd@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: EEAE043A70213CC8
-X-77F55803: 4F1203BC0FB41BD9D327C87852EB66D3080F4C810759D0F811E72B7AA1AF68FA182A05F5380850404C228DA9ACA6FE278C9E5096E1C850F88C1AB0D8FB980675429B51107E0C5B6EB56CF6928DE05F7D
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7492D3E4238663367EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006377E85B0EC44E8FD73EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38BE5CCB53A13BC8DBA91F16B73EAF39CC839DDC95B95B59EE1CC7F00164DA146DAFE8445B8C89999728AA50765F790063706C07FE7DDBB4AB7389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8A0BCD6C998BE2772F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C8ADF99E4698B9BE86136E347CC761E074AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3CF39425AD3EEC986BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF4964A708C60C975A1DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C3E28E55B77232B29E35872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-C1DE0DAB: 0D63561A33F958A5ADA757FF14E31B650581116A7A214DD5AB7CA050525296F8F87CCE6106E1FC07E67D4AC08A07B9B0CE135D2742255B359C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A0997E3FB2386030E77
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFEF3E36C53A517CBCE925D51283E26D5FEB41A7ADA2AB3C51994E43073129A1BC8B42E79199D3D3ED5622055276C82EC6B13580FAD7F047B3474E29EDDDC108306E346BF9FA413E554C41F94D744909CE4BCAC77546666B612CC0CD5AA9A1B9887EE09F5AAA95A50543082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXjORchWSMBWv9DZri5am/Ys
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981C708A6485BDCACB4392B9430AFD86279976AF1CB91E68C81643683D8C0F3ED1CA3C71A376745D86BBE86167304C7680C3980CE5AAA35C7CD60F22E8815EDE5EAEAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4F9CE69B8C4B8347460019CF3CEAE9FBB0C8A93AF53B88541049FFFDB7839CE9ED1D19D87AC90FBA299F8AE903C22B555DB942BF447F72B12F7ABE122C3467BEF
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5xhPKz0ZEsZ5k6NOOPWz5QAiZSCXKGQRq3/7KxbCLSB2ESzQkaOXqCBFZPLWFrEGlV1shfWe2EVcxl5toh0c/aCGOghz/frdRhzMe95NxDFdr2FD4uy5x8JmBMN6wj4lgw==
-X-Mailru-MI: C000000000000800
-X-Mras: Ok
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ea4c49cd-17d1-6921-a447-5debaebb0cfd@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vYd3QWMYftPcC3hZ48bRaNHZ4nArgx_K
+X-Proofpoint-GUID: vYd3QWMYftPcC3hZ48bRaNHZ4nArgx_K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-30_12,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1011 adultscore=0 priorityscore=1501
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306300174
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
-didn't update its configuration" error.
+On Fri, Jun 23, 2023 at 04:53:44PM +0200, Konrad Dybcio wrote:
+> On 23.06.2023 16:18, Komal Bajaj wrote:
+> > diff --git a/drivers/nvmem/sec-qfprom.c b/drivers/nvmem/sec-qfprom.c
+[..]
+> > +static int sec_qfprom_reg_read(void *context, unsigned int reg, void *_val, size_t bytes)
+> > +{
+> > +	struct sec_qfprom_priv *priv = context;
+> > +	u8 *val = _val;
+> > +	u8 *tmp;
+> > +	u32 read_val;
+> > +	unsigned int i;
+> Please sort this to look like a reverse-Christmas-tree
+> 
+> 
+> > +
+> > +	for (i = 0; i < bytes; i++, reg++) {
+> > +		if (i == 0 || reg % 4 == 0) {
+> > +			if (qcom_scm_io_readl(priv->qfpseccorrected + (reg & ~3), &read_val)) {
+> > +				dev_err(priv->dev, "Couldn't access fuse register\n");
+> > +				return -EINVAL;
+> > +			}
+> > +			tmp = (u8 *)&read_val;
+> > +		}
+> I don't understand this read-4-times dance.. qcom_scm_io_readl() reads
+> u32, so this should be as simple as:
+> 
+> val[i + 0] = FIELD_GET(GENMASK(7, 0), reg);
+> val[i + 1] = ..
+> val[i + 2] = ..
+> val[i + 3] = ..
+> 
 
-Fixes: a808d58ddf29 ("clk: qcom: Add Global Clock Controller (GCC) driver for SM7150")
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- drivers/clk/qcom/gcc-sm7150.c | 1 +
- 1 file changed, 1 insertion(+)
+No need for FIELD_GET() to do that, you can just do *(u32*)val =
+read_val; although this comes with alignment issues.
 
-diff --git a/drivers/clk/qcom/gcc-sm7150.c b/drivers/clk/qcom/gcc-sm7150.c
-index 6b628178f62c..6da87f0436d0 100644
---- a/drivers/clk/qcom/gcc-sm7150.c
-+++ b/drivers/clk/qcom/gcc-sm7150.c
-@@ -739,6 +739,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.parent_data = gcc_parent_data_6,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_6),
- 		.ops = &clk_rcg2_floor_ops,
-+		.flags = CLK_OPS_PARENT_ENABLE,
- 	},
- };
- 
--- 
-2.41.0
 
+But, that this the length of val is always divisible by 4, and I
+wasn't able to convince myself that it was the case...
+
+So this is, pretty much, what I proposed in v3:
+https://lore.kernel.org/linux-arm-msm/20230527205031.iwsujvlbxazukwfy@ripper/
+
+Regards,
+Bjorn
+
+> 
+> > +
+> > +		val[i] = tmp[reg & 3];
+> > +	}
+> > +
+> > +	return 0;
