@@ -2,112 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1DB6744000
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 18:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84CEE74417E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 19:42:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230001AbjF3Qms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 12:42:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47880 "EHLO
+        id S231508AbjF3Rmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 13:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232002AbjF3Qms (ORCPT
+        with ESMTP id S232527AbjF3Rmh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 12:42:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5085F3C01;
-        Fri, 30 Jun 2023 09:42:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E31E1617A2;
-        Fri, 30 Jun 2023 16:42:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323A6C433C0;
-        Fri, 30 Jun 2023 16:42:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688143365;
-        bh=AsDLQehiD2Ddz03Ikj9Gqrg+mzel9zl96sFughFSDQ0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T2adtZrDtTG0SQamq18KanY3XaVB6ccsBpmcw0/1XhiyAZkC/QKnn8GJXUoXe1j78
-         DnhgYMH14iYbhdJI5PIY38dc3rbXLTv5wKTguP93rqa+oQSfyv+qN+Zgdg3PXngRlG
-         7yLTV3321PSbtLnmRWSazgMNwmMpi2sxIALgkABK4Z+9pKpsRdBrDQrU563JbEBusk
-         59xpwG4OReK9EwJDjaUCLUFi6NrwRsk9hDh7pIJioytFn7T9W+EDIR4pjNtY1ug6dK
-         UJOnzoPKIR5lbi8vcbr2rdAw67elfRtLh8tYVsa1zvvj/rrICy+zC5+9hLYBfu0UdU
-         wU3KU8xA0XfFQ==
-Date:   Fri, 30 Jun 2023 17:42:37 +0100
-From:   Mark Brown <broonie@kernel.org>
+        Fri, 30 Jun 2023 13:42:37 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF6052122
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 10:42:35 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-bff27026cb0so2065850276.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 10:42:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688146955; x=1690738955;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5GBVbHOFTdsyQJU8GGb14QvACpNRgooKdXsV/1n/jmE=;
+        b=XIVwvb9ZkoK9yR1KK3wGqQiI5P1EA8aljusSHRUNJL6khr7ZfLkl948A85RZCIR882
+         8XIkJG1rilOdOE6NFGi2sP4imn+Mg/ruQMamjrzH0qxDjK4mSERGFBDLHE78v2KI9c9B
+         5WTugaH2dk3pCxdZRCvz9txTIuzlhS7UFVsWFPnexuzA1NhQKPOD0Bmh8wbbG19K/tbu
+         Ara2OJOMLWzxwyYTH7lKDNeykcxgTSx3Fs3hppttITd0d2tpXGC7x3a1DHQhhRop40p2
+         qZ6NJAfsCQ+JdbH3/1WxW6GmYSYtsDBWkWrxisbmtHmAlFKNcbALUVKSO4RXNSPNdfhv
+         BJGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688146955; x=1690738955;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5GBVbHOFTdsyQJU8GGb14QvACpNRgooKdXsV/1n/jmE=;
+        b=MTJB6/2GsQ+azFJ9gmrhAhDL7fKvxsMiKSDJJxsEQVD0U67ivT+wvhiDbZJSo5IEDI
+         U8QY4cvBkKZ4iOeEFwjtderEZ6atEhwyi+qq2YnG/OSjbPJWQumndA2wFS7573IGevRX
+         s6qT81lfoHXTsvBcNEims4j9Mb2A9GCi/zQzeEd2sVby9VnrYnCp69kWj5+F0DhSxzx4
+         yHsfBYxD/bRibO4YqinKfC1vQzAzuh+d7dbTl/FBXYH/1f2A8R+tWciwWXXMMhLGz7Iy
+         bbGQs5TCXoXFb7MQKN07GiQAe1yrFLwiH9E3izn2dBT+9DJZV0+hEOLijBYVWhoG6vjD
+         RpKw==
+X-Gm-Message-State: ABy/qLZlildBWo20J5ZwvvEmDcs93qkTrwWvbwdPz/C7DLbl+u86hT8i
+        zNLttygBaSMoXiIiVXKyvSdiYvyQ3+f0Z1aqmZRweg==
+X-Google-Smtp-Source: APBJJlHEHXl3UILh2Mi9iFeCzRu6oPkIpCEYs+FuX67r8o+chF6UivHFOFWZstM8v89A8IaytZ+uanrvsla7hDq/bxI=
+X-Received: by 2002:a25:db87:0:b0:c01:4d4a:cbaa with SMTP id
+ g129-20020a25db87000000b00c014d4acbaamr3214487ybf.37.1688146955047; Fri, 30
+ Jun 2023 10:42:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230630061315.4027453-1-dmitry.baryshkov@linaro.org>
+ <20230630061315.4027453-8-dmitry.baryshkov@linaro.org> <c59d002b-9d06-d744-d90b-22da4186522a@linaro.org>
+ <CAA8EJpp+b1KVaMK82j7T=iGovXVAu3jq51rTHu6yqPcnkwXoeg@mail.gmail.com>
+ <65d9025b-134d-eb8c-98d8-ab7103a5dc44@linaro.org> <CAA8EJpopHRNTyuzi2V=1t7o5xbXaCjxjP=yQUigCYDJMULxb=Q@mail.gmail.com>
+ <e2c6abdc-f586-be9c-b400-7bf57021d5fa@linaro.org>
+In-Reply-To: <e2c6abdc-f586-be9c-b400-7bf57021d5fa@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 30 Jun 2023 20:42:23 +0300
+Message-ID: <CAA8EJpoN0nVJdBwYfRkS305fWjbHL6BUxcgo1CmS8jmn6gp2jg@mail.gmail.com>
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8450-hdk: add ADC-TM thermal zones
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 2/4] regulator: Introduce Qualcomm REFGEN regulator
- driver
-Message-ID: <edce1d82-21fa-4a24-bf21-f8d36321a409@sirena.org.uk>
-References: <20230628-topic-refgen-v2-0-6136487c78c5@linaro.org>
- <20230628-topic-refgen-v2-2-6136487c78c5@linaro.org>
- <8ddbd947-6cb6-8c86-eb48-8b6ae9b4be2b@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8lqkCU9h8Shc3YwO"
-Content-Disposition: inline
-In-Reply-To: <8ddbd947-6cb6-8c86-eb48-8b6ae9b4be2b@linaro.org>
-X-Cookie: Old mail has arrived.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 30 Jun 2023 at 19:15, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 30.06.2023 14:57, Dmitry Baryshkov wrote:
+> > On Fri, 30 Jun 2023 at 14:27, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> On 30.06.2023 12:07, Dmitry Baryshkov wrote:
+> >>> On Fri, 30 Jun 2023 at 11:19, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>>>
+> >>>> On 30.06.2023 08:13, Dmitry Baryshkov wrote:
+> >>>>> Add thermal zones controlled through the ADC-TM (ADC thermal monitoring)
+> >>>>> PMIC interface. This includes several onboard sensors and the XO thermal
+> >>>>> sensor.
+> >>>>>
+> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>>> ---
+> >>>> [...]
+> >>>>>
+> >>>>> +     channel@144 {
+> >>>>> +             reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
+> >>>> This define should be cleaned up.. Since it takes a sid argument,
+> >>>> it really is ADC7_AMUX_THM1_100K_PU(sid)
+> >>>
+> >>> I don't think I understood your comment. The define itself is specific
+> >>> to PM8350, other PMICs might have different channel assignments.
+> >>
+> >> include/dt-bindings/iio/qcom,spmi-vadc.h
+> >> 263:#define ADC7_AMUX_THM1_100K_PU                      0x44
+> >
+> > Do you want to define PM8350_ADC7_AMUX_THM1_100K_PU(sid) using
+> > ADC7_AMUX_THM1_100K_PU ?
+> > Or to make all users use ADC7_AMUX_THM1_100K_PU?
+>
+>
+> >Or add the SID
+> > argument to ADC7_AMUX_THM1_100K_PU and switch to it?
+> This.
+>
+> Since we have a generic binding for it (not sure what sort of ABI-ish rules
+> apply here, probably not very many since it's just a dumb preprocessor define),
+> we should not redefine it for each PMIC, especially since the SIDs are variable
+> nowadays :/
 
---8lqkCU9h8Shc3YwO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think it would be worth to have per-PMIC headers (which define which
+channels are available on this PMIC), but to use values from the
+qcom,spmi-vadc.h  header to define those per-PMIC values.
 
-On Thu, Jun 29, 2023 at 10:44:34PM +0200, Konrad Dybcio wrote:
-> On 29.06.2023 22:35, Konrad Dybcio wrote:
-> > Modern Qualcomm SoCs have a REFGEN (reference voltage generator)
-> > regulator, providing reference voltage to on-chip IP, like PHYs.
-> >=20
-> > Add a driver to support toggling that regulator.
-> >=20
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> Ugh. Missed the 'const' here and below. LMK if that warrants a resend
-> (or.. perhaps you just have other comments)
+WDYT?
 
-Please, there was a build error anyway.
+>
+> Sorry for being too vague.
+>
+> Konrad
+> >
+> >>
+> >> Konrad
+> >>>
+> >>>>
+> >>>> Konrad
+> >>>>
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "skin_msm_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>> +     channel@145 {
+> >>>>> +             reg = <PM8350_ADC7_AMUX_THM2_100K_PU(1)>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "camera_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>> +     channel@146 {
+> >>>>> +             reg = <PM8350_ADC7_AMUX_THM3_100K_PU(1)>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "therm1_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>> +     channel@147 {
+> >>>>> +             reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "wide_rfc_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>> +     channel@148 {
+> >>>>> +             reg = <PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "rear_tof_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>> +     channel@14c {
+> >>>>> +             reg = <PM8350_ADC7_GPIO3_100K_PU(1)>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "therm2_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>>       channel@303 {
+> >>>>>               reg = <PM8350B_ADC7_DIE_TEMP>;
+> >>>>>               label = "pm8350b_die_temp";
+> >>>>>       };
+> >>>>>
+> >>>>> +     channel@348 {
+> >>>>> +             reg = <PM8350B_ADC7_AMUX_THM5_100K_PU>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "usb_conn_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>>       channel@403 {
+> >>>>>               reg = <PMR735A_ADC7_DIE_TEMP>;
+> >>>>>               label = "pmr735a_die_temp";
+> >>>>>       };
+> >>>>> +
+> >>>>> +     channel@44a {
+> >>>>> +             reg = <PMR735A_ADC7_GPIO1_100K_PU>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "qtm_w_temp";
+> >>>>> +     };
+> >>>>> +
+> >>>>> +     channel@44b {
+> >>>>> +             reg = <PMR735A_ADC7_GPIO2_100K_PU>;
+> >>>>> +             qcom,hw-settle-time = <200>;
+> >>>>> +             qcom,ratiometric;
+> >>>>> +             label = "qtm_n_temp";
+> >>>>> +     };
+> >>>>>  };
+> >>>>>
+> >>>>>  &remoteproc_adsp {
+> >>>
+> >>>
+> >>>
+> >
+> >
+> >
 
---8lqkCU9h8Shc3YwO
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSfBf0ACgkQJNaLcl1U
-h9DtzQf/YZpKHlgLTdOMFkC3HZ2f3TPMgOKk1lmiFlPQ5fUWfvRGxR+3UFPRhxH3
-obR+n3Ji9r4vNwlUe04KpzhA65zz7YbpLkSLmU2IBagoSyrRktUWz980Km1D0jYP
-aq50iK3sDzpbsp3/EvXTMx36o7PvCw6LksKTeBrQ4Gdt/N8WNnCry+UMEIBaoXLf
-cf5RMuXmMVkJhptiSt4KYtBNq6DsxEJ2FCipz5RnLCg/eqs/9YN+CnKWKGV66QXE
-Q2tsb4NTsIdgkguQSCogUysRtNz6OJIwp1PyYXUud924LDjAIqQ18PdV1vW+ydtV
-3+8KotwTm//MVThoCXKxIHrOc2EH7g==
-=cpsx
------END PGP SIGNATURE-----
-
---8lqkCU9h8Shc3YwO--
+-- 
+With best wishes
+Dmitry
