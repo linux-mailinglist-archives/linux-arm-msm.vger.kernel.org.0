@@ -2,143 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E49B97439EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 12:52:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33752743A85
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 13:12:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232449AbjF3Kwh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 06:52:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43664 "EHLO
+        id S232853AbjF3LMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 07:12:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232410AbjF3Kwf (ORCPT
+        with ESMTP id S232848AbjF3LL7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 06:52:35 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4282358A;
-        Fri, 30 Jun 2023 03:52:34 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U9XU80014782;
-        Fri, 30 Jun 2023 10:52:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=xzLUzIL/qxaf0TvQEPU7BTfA4oHCOh5h/B0H/DxoR8w=;
- b=gOh0d/bPBhSuc0oPXlgp7ncZHB5bbWz3O+2jdYXCnSb3zTd4jR0Ns1SRo0TXpsUvVdL5
- uADwYzapWUgGutMvTFse0S9VR97Zox1f7EODwFz1Xy0m3OC3ndRx0YN6WDguzPTknQ4x
- o8hO7efmhtXh6GlYwvgj+hGZPBE4pjRT2pps64xGRqk0j6+jnwb55GZdzOkyTWfLPiW5
- TWQ0kTgk3OWIMAyQhPHicMB+ad0Gcw7Ii0CutWVuMeoHcHz3oiKz6+Q/5lOvncCpu0jw
- acrFyS3RK2GSDF8BV3bazho2t/wgSih28KVZPMu4rJH2RnoKt7LImz0BjTmPJG+6UDkZ Ug== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rha8e2f2e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 10:52:25 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 35UAqH2O004744;
-        Fri, 30 Jun 2023 10:52:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3rdsjkpf31-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 30 Jun 2023 10:52:22 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 35UAqMUK004786;
-        Fri, 30 Jun 2023 10:52:22 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 35UAqLYv004781;
-        Fri, 30 Jun 2023 10:52:22 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 39CD14ABD; Fri, 30 Jun 2023 16:22:21 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Dan Carpenter <error27@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bo Liu <liubo03@inspur.com>,
-        mhi@lists.linux.dev (open list:MHI BUS)
-Subject: [PATCH v2 8/8] bus: mhi: ep: wake up host is the MHI state is in M3
-Date:   Fri, 30 Jun 2023 16:22:11 +0530
-Message-Id: <1688122331-25478-9-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1688122331-25478-1-git-send-email-quic_krichai@quicinc.com>
-References: <1688122331-25478-1-git-send-email-quic_krichai@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Skcwe1DPfFGYgtTmPP72vdU1oy6Admjq
-X-Proofpoint-ORIG-GUID: Skcwe1DPfFGYgtTmPP72vdU1oy6Admjq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-30_05,2023-06-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- mlxlogscore=868 clxscore=1011 impostorscore=0 priorityscore=1501
- spamscore=0 mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306300092
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 30 Jun 2023 07:11:59 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF4735B6;
+        Fri, 30 Jun 2023 04:11:48 -0700 (PDT)
+From:   Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1688123506;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LBi2xn+NWrUQzLbxhPhUtfNKTaMAus8XdZkjy6jHSNM=;
+        b=418LKbfzErO8aWbRiCy6RicHEfWmrfLoIcdhuAdqKEQ/ZbLyV5fOr9TL2jgmxbiB1UJ3bl
+        L7RSNcul7PGGKtMoVG58xOTYMswwl0fvl2x6Gy3oeK78nmBEYbydnR6FVElSSy3QDkkQS4
+        aNdClghzIVSlb1kIYZa+lxNsG6dKqXTENfkuKKK8H3fwdANqYJnMII3qHGkdR7RslbGNzH
+        rMZSPPYA/DaN+m+jbNSRocp1b1dwjRh2NBrN92RDYtVGXNSXIAHcc+RtRHjhZQcR/LI027
+        /C9gb1mFySWZHISgYn13LNhN7Izd0dCqTTysj0/z5qIQHqLoTPKk/6VDB9l9vg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1688123506;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LBi2xn+NWrUQzLbxhPhUtfNKTaMAus8XdZkjy6jHSNM=;
+        b=jVPJlwFMcCzb0wYuBYE9xW6cZEwUMtJR24us2ZwmMLiYkh/Ya8FPIpIwdTH1G8h/qMJoP9
+        yy6W7RPJnQ28ZkBA==
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Yangtao Li <frank.li@vivo.com>
+Cc:     miquel.raynal@bootlin.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, amitk@kernel.org, rui.zhang@intel.com,
+        mmayer@broadcom.com, bcm-kernel-feedback-list@broadcom.com,
+        florian.fainelli@broadcom.com, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        linux-imx@nxp.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, thara.gopinath@gmail.com,
+        heiko@sntech.de, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@foss.st.com, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, matthias.bgg@gmail.com,
+        angelogioacchino.delregno@collabora.com,
+        srinivas.pandruvada@linux.intel.com,
+        DLG-Adam.Ward.opensource@dm.renesas.com, shangxiaojing@huawei.com,
+        bchihi@baylibre.com, wenst@chromium.org,
+        hayashi.kunihiko@socionext.com,
+        niklas.soderlund+renesas@ragnatech.se, chi.minghao@zte.com.cn,
+        johan+linaro@kernel.org, jernej.skrabec@gmail.com,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 01/15] genirq/devres: Add error information printing
+ for devm_request_threaded_irq()
+In-Reply-To: <20230627110025.vgtplc6nluiiuvoh@pengutronix.de>
+References: <20230627101215.58798-1-frank.li@vivo.com>
+ <20230627110025.vgtplc6nluiiuvoh@pengutronix.de>
+Date:   Fri, 30 Jun 2023 13:11:46 +0200
+Message-ID: <87h6qpyzkd.ffs@tglx>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the MHI state is in M3 then the most probably the host kept the
-device in D3 hot or D3 cold, due to that endpoint transctions will not
-be read by the host, so endpoint needs to bring the host to D0 which
-eventually bring back the MHI state to M0.
+On Tue, Jun 27 2023 at 13:00, Uwe Kleine-K=C3=B6nig wrote:
+> On Tue, Jun 27, 2023 at 06:12:01PM +0800, Yangtao Li wrote:
+>
+> While I assume changing to dev_err_probe is a result of my concern that
+> no error should be printed when rc=3D-EPROBEDEFER, my other concern that
+> adding an error message to a generic allocation function is a bad idea
+> still stands.
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- drivers/bus/mhi/ep/main.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+I agree in general, but if you actually look at the call sites of
+devm_request_threaded_irq() then the vast majority of them print more or
+less lousy error messages. A quick grep/sed/awk/sort/uniq revealed
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 6008818..42d3791 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -451,12 +451,14 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
- 	struct mhi_ep_cntrl *mhi_cntrl = mhi_dev->mhi_cntrl;
- 	struct mhi_ep_chan *mhi_chan = mhi_dev->dl_chan;
- 	struct device *dev = &mhi_chan->mhi_dev->dev;
-+	u32 buf_left, read_offset, count = 0;
- 	struct mhi_ring_element *el;
--	u32 buf_left, read_offset;
- 	struct mhi_ep_ring *ring;
- 	enum mhi_ev_ccs code;
-+	enum mhi_state state;
- 	void *read_addr;
- 	u64 write_addr;
-+	bool mhi_reset;
- 	size_t tr_len;
- 	u32 tre_len;
- 	int ret;
-@@ -464,6 +466,18 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
- 	buf_left = skb->len;
- 	ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
- 
-+	if (mhi_cntrl->mhi_state == MHI_STATE_M3) {
-+		dev_dbg(dev, "wake up by ch id %x\n", mhi_chan->chan);
-+		mhi_cntrl->wakeup_host(mhi_cntrl);
-+	}
-+
-+	/* Wait for Host to set the M0 state */
-+	do {
-+		msleep(M0_WAIT_DELAY_MS);
-+		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
-+		count++;
-+	} while (state != MHI_STATE_M0 && count < M0_WAIT_COUNT);
-+
- 	mutex_lock(&mhi_chan->lock);
- 
- 	do {
--- 
-2.7.4
+     519 messages total (there are probably more)
 
+     352 unique messages
+
+     323 unique messages after lower casing
+
+         Those 323 are mostly just variants of the same patterns with slight
+         modifications in formatting and information provided.
+
+     186 of these messages do not deliver any useful information,
+         e.g. "no irq", "
+
+     The most useful one of all is: "could request wakeup irq: %d"
+
+So there is certainly an argument to be made that this particular
+function should print a well formatted and informative error message.
+
+It's not a general allocator like kmalloc(). It's specialized and in the
+vast majority of cases failing to request the interrupt causes the
+device probe to fail. So having proper and consistent information why
+the device cannot be used _is_ useful.
+
+Yangtao: The way how this is attempted is not useful at all.
+
+    1) The changelog is word salad and provides 0 rationale
+
+       Also such series require a cover letter...
+
+    2) The dev_err() which is added is not informative at all and cannot
+       replace actually useful error messages. It's not that hard to
+       make it useful.
+
+    2) Adding the printks unconditionally first will emit two messages
+       with different content.
+
+       This is not how such changes are done.
+
+       The proper approach is to create a wrapper function which emits
+       the error message:
+
+       wrapper(....., const char *info)
+       {
+            ret =3D devm_request_threaded_irq(....);
+            if (ret < 0) {
+               dev_err(dev, "Failed to request %sinterrupt %u %s %s: %d\n,
+                       thread_fn ? "threaded " : "",
+                       irq, devname, info ? : "", ret);
+            }
+            return ret;
+       }
+
+       Then convert the callsites over one by one with proper
+       changelogs and justification.
+
+       See?
+
+Thanks,
+
+        tglx
