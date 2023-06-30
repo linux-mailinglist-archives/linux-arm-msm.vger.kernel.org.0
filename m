@@ -2,227 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B2117438C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 11:56:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA5997438FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jun 2023 12:08:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230178AbjF3J4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 05:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48120 "EHLO
+        id S233076AbjF3KI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 06:08:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232017AbjF3J4U (ORCPT
+        with ESMTP id S233056AbjF3KIW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 05:56:20 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BCEC173C;
-        Fri, 30 Jun 2023 02:56:19 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35U7U0YZ004035;
-        Fri, 30 Jun 2023 09:56:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=eQ3vHT80MxEnZAb6UvuoEXPBJGI7Dh5eKZ0+Yk0ssB4=;
- b=Ja1LGnOHvcOmDEimWNBNq67sBhrvBeTaPi5IljaQBSi4xTkvj+Yiw9Vrk2l8kpTdsKvT
- 4qaVCNqG+2leL8CGbV8xDrQmK2WPY/f/xb0hYv7hA6YIvNHkDbZPVXa6rCtQi6Db6o1p
- fi9E/hpAWpWaYKfRGFRNx9nNJ7KgjXUdt5s5dzsOD4X4hdxfqWsdoohl9K8j6yB1lvg9
- PKR0fVpHy4OXiCBDNfjFQbOcpIv2T2jF37xjhYV3WlCumgDP9Jq9erA7GQpvxBvZofT8
- 8bouN/tFogcS+D0p2JPIfvF08aOlocPTcYwXqsLMByR3ecy787WtTr89nsmbCRs4VWMW Gw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rhsycrcf8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 09:56:06 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35U9u5TP008806
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Jun 2023 09:56:05 GMT
-Received: from [10.217.218.238] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Fri, 30 Jun
- 2023 02:56:01 -0700
-Message-ID: <32832352-e832-3ce1-caed-51e909b9ba62@quicinc.com>
-Date:   Fri, 30 Jun 2023 15:25:57 +0530
+        Fri, 30 Jun 2023 06:08:22 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 884193AB4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:07:51 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bd77424c886so1652573276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 03:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688119671; x=1690711671;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=k2fW+M48gYbDUccjgLpcMFUwDgh2+7WfsmzWyIA2Z90=;
+        b=miLeKSJ0PdWfroZ0EaqD/r3IF1SIbRDlXhHLZU3PKqiGvwgomdhEOdFUmtTM3qDlOF
+         whmtaBWX581BK6QcCjOim/uiG3r+xIf6AOzXbNsHoj4D/kAvTIEmQBDraqjcJ585dMS3
+         hmvyTIRuGSk2is0aFPgiY1e9Oxs9qY6wXT8mw2lme7BVfl1AiilGm45eZS9lvm1SgzAt
+         OpcbMYD53A1/tTLHjQu5JrgAvR/wg/wSIFloauJ/6eAYzeK5MtGI6NtjflDf+tD5e7mJ
+         o4FhUmnVlhQ60qzNZvHcrp1zbQqwVtCnHcQb8FsZ2J3E1wYN5GAk7tCHNpnyM7+iGZKM
+         ptKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688119671; x=1690711671;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k2fW+M48gYbDUccjgLpcMFUwDgh2+7WfsmzWyIA2Z90=;
+        b=VkEWOn7Lx4BssVib5b3rRJQbNuqV8PrNMb/jMazuiSYC877U56AMPaeBgEQAnMXbQG
+         7IPLw/8z7pq3yZK2qgkd6wzgwZm+koj3Zr+pGNM3k8BPwYqlADMKIL14QrnAkaQZPaYS
+         uQkI8AgA6VqitlIY6pzkO2bvDfqu5S5k29pg9Pyty3WoU6/Q59/vjolhWf2Q/Eg4k9hg
+         tlGo4HWyHsXl3nXXhJmhWZgp9Im077MNEnd0urtExPUi5b7dN066653Dcoe7xf91gIbg
+         9TjQyv9MVizTTtvaQ3JCkBXMq0B74UkniJqhiPUyvMK3l8Imva9UxIsgswFtFptBbv1q
+         xbzQ==
+X-Gm-Message-State: ABy/qLbhpA/SDe4M48Jz1HkaIoQev3s7NRwaL1r5Po2S9rE5QIyIl11l
+        TOX6k98etq1kpnUOnF+sCq04Fen0RMr9LoRWfkRrD2aFChF0bCM2
+X-Google-Smtp-Source: APBJJlG8Y3i2ZlPGcSLKQN4jEo/O6g/C6MwsMfQDczxZ4l05R3m+c0mTHmCtRszEFdo+09/bI/trLihXjuXNd2M/fXw=
+X-Received: by 2002:a25:901:0:b0:c11:a10:aad0 with SMTP id 1-20020a250901000000b00c110a10aad0mr2379524ybj.37.1688119670754;
+ Fri, 30 Jun 2023 03:07:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH V1] net: mhi : Add support to enable ethernet interface
-To:     <mhi@lists.linux.dev>
-CC:     <mrana@quicinc.com>, <quic_qianyu@quicinc.com>,
-        <manivannan.sadhasivam@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "Paolo Abeni" <pabeni@redhat.com>,
-        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        <quic_krichai@quicinc.com>, <quic_vbadigan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <1688118281-13032-1-git-send-email-quic_vpernami@quicinc.com>
-Content-Language: en-US
-From:   Vivek Pernamitta <quic_vpernami@quicinc.com>
-In-Reply-To: <1688118281-13032-1-git-send-email-quic_vpernami@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: h_dA-siWs5EDVgqIwL2q6QZmGpEKJ2_g
-X-Proofpoint-GUID: h_dA-siWs5EDVgqIwL2q6QZmGpEKJ2_g
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-30_05,2023-06-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- mlxscore=0 phishscore=0 bulkscore=0 adultscore=0 mlxlogscore=914
- impostorscore=0 priorityscore=1501 spamscore=0 clxscore=1011
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306300083
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230630061315.4027453-1-dmitry.baryshkov@linaro.org>
+ <20230630061315.4027453-8-dmitry.baryshkov@linaro.org> <c59d002b-9d06-d744-d90b-22da4186522a@linaro.org>
+In-Reply-To: <c59d002b-9d06-d744-d90b-22da4186522a@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 30 Jun 2023 13:07:39 +0300
+Message-ID: <CAA8EJpp+b1KVaMK82j7T=iGovXVAu3jq51rTHu6yqPcnkwXoeg@mail.gmail.com>
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8450-hdk: add ADC-TM thermal zones
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 30 Jun 2023 at 11:19, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 30.06.2023 08:13, Dmitry Baryshkov wrote:
+> > Add thermal zones controlled through the ADC-TM (ADC thermal monitoring)
+> > PMIC interface. This includes several onboard sensors and the XO thermal
+> > sensor.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> [...]
+> >
+> > +     channel@144 {
+> > +             reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
+> This define should be cleaned up.. Since it takes a sid argument,
+> it really is ADC7_AMUX_THM1_100K_PU(sid)
 
-On 6/30/2023 3:14 PM, Vivek Pernamitta wrote:
-> Add support to enable ethernet interface for MHI SWIP channels.
+I don't think I understood your comment. The define itself is specific
+to PM8350, other PMICs might have different channel assignments.
+
 >
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> ---
->   drivers/net/mhi_net.c | 53 ++++++++++++++++++++++++++++++++++++++-------------
->   1 file changed, 40 insertions(+), 13 deletions(-)
+> Konrad
 >
-> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-> index 3d322ac..0a47e15 100644
-> --- a/drivers/net/mhi_net.c
-> +++ b/drivers/net/mhi_net.c
-> @@ -11,6 +11,7 @@
->   #include <linux/netdevice.h>
->   #include <linux/skbuff.h>
->   #include <linux/u64_stats_sync.h>
-> +#include <linux/etherdevice.h>
->   
->   #define MHI_NET_MIN_MTU		ETH_MIN_MTU
->   #define MHI_NET_MAX_MTU		0xffff
-> @@ -38,10 +39,12 @@ struct mhi_net_dev {
->   	u32 rx_queue_sz;
->   	int msg_enable;
->   	unsigned int mru;
-> +	bool ethernet_if;
->   };
->   
->   struct mhi_device_info {
->   	const char *netname;
-> +	bool ethernet_if;
->   };
->   
->   static int mhi_ndo_open(struct net_device *ndev)
-> @@ -140,6 +143,14 @@ static void mhi_net_setup(struct net_device *ndev)
->   	ndev->tx_queue_len = 1000;
->   }
->   
-> +static void mhi_ethernet_setup(struct net_device *ndev)
-> +{
-> +	ndev->netdev_ops = &mhi_netdev_ops;
-> +	ether_setup(ndev);
-> +	ndev->min_mtu = ETH_MIN_MTU;
-> +	ndev->max_mtu = ETH_MAX_MTU;
-> +}
-> +
->   static struct sk_buff *mhi_net_skb_agg(struct mhi_net_dev *mhi_netdev,
->   				       struct sk_buff *skb)
->   {
-> @@ -209,16 +220,22 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
->   			mhi_netdev->skbagg_head = NULL;
->   		}
->   
-> -		switch (skb->data[0] & 0xf0) {
-> -		case 0x40:
-> -			skb->protocol = htons(ETH_P_IP);
-> -			break;
-> -		case 0x60:
-> -			skb->protocol = htons(ETH_P_IPV6);
-> -			break;
-> -		default:
-> -			skb->protocol = htons(ETH_P_MAP);
-> -			break;
-> +		if (mhi_netdev->ethernet_if) {
-> +			skb_copy_to_linear_data(skb, skb->data,
-> +						mhi_res->bytes_xferd);
-> +			skb->protocol = eth_type_trans(skb, mhi_netdev->ndev);
-> +		} else {
-> +			switch (skb->data[0] & 0xf0) {
-> +			case 0x40:
-> +				skb->protocol = htons(ETH_P_IP);
-> +				break;
-> +			case 0x60:
-> +				skb->protocol = htons(ETH_P_IPV6);
-> +				break;
-> +			default:
-> +				skb->protocol = htons(ETH_P_MAP);
-> +				break;
-> +			}
->   		}
->   
->   		u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
-> @@ -301,11 +318,17 @@ static void mhi_net_rx_refill_work(struct work_struct *work)
->   		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
->   }
->   
-> -static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev)
-> +static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev, bool eth_dev)
->   {
->   	struct mhi_net_dev *mhi_netdev;
->   	int err;
->   
-> +	if (eth_dev) {
-> +		eth_random_addr(ndev->dev_addr);
-> +		if (!is_valid_ether_addr(ndev->dev_addr))
-> +			return -EADDRNOTAVAIL;
-> +	}
-> +
->   	mhi_netdev = netdev_priv(ndev);
->   
->   	dev_set_drvdata(&mhi_dev->dev, mhi_netdev);
-> @@ -313,6 +336,7 @@ static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev)
->   	mhi_netdev->mdev = mhi_dev;
->   	mhi_netdev->skbagg_head = NULL;
->   	mhi_netdev->mru = mhi_dev->mhi_cntrl->mru;
-> +	mhi_netdev->ethernet_if = eth_dev;
->   
->   	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
->   	u64_stats_init(&mhi_netdev->stats.rx_syncp);
-> @@ -356,13 +380,14 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
->   	int err;
->   
->   	ndev = alloc_netdev(sizeof(struct mhi_net_dev), info->netname,
-> -			    NET_NAME_PREDICTABLE, mhi_net_setup);
-> +			    NET_NAME_PREDICTABLE, info->ethernet_if ?
-> +			    mhi_ethernet_setup : mhi_net_setup);
->   	if (!ndev)
->   		return -ENOMEM;
->   
->   	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
->   
-> -	err = mhi_net_newlink(mhi_dev, ndev);
-> +	err = mhi_net_newlink(mhi_dev, ndev, info->ethernet_if);
->   	if (err) {
->   		free_netdev(ndev);
->   		return err;
-> @@ -380,10 +405,12 @@ static void mhi_net_remove(struct mhi_device *mhi_dev)
->   
->   static const struct mhi_device_info mhi_hwip0 = {
->   	.netname = "mhi_hwip%d",
-> +	.ethernet_if = false,
->   };
->   
->   static const struct mhi_device_info mhi_swip0 = {
->   	.netname = "mhi_swip%d",
-> +	.ethernet_if = false,
->   };
->   
->   static const struct mhi_device_id mhi_net_id_table[] = {
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "skin_msm_temp";
+> > +     };
+> > +
+> > +     channel@145 {
+> > +             reg = <PM8350_ADC7_AMUX_THM2_100K_PU(1)>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "camera_temp";
+> > +     };
+> > +
+> > +     channel@146 {
+> > +             reg = <PM8350_ADC7_AMUX_THM3_100K_PU(1)>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "therm1_temp";
+> > +     };
+> > +
+> > +     channel@147 {
+> > +             reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "wide_rfc_temp";
+> > +     };
+> > +
+> > +     channel@148 {
+> > +             reg = <PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "rear_tof_temp";
+> > +     };
+> > +
+> > +     channel@14c {
+> > +             reg = <PM8350_ADC7_GPIO3_100K_PU(1)>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "therm2_temp";
+> > +     };
+> > +
+> >       channel@303 {
+> >               reg = <PM8350B_ADC7_DIE_TEMP>;
+> >               label = "pm8350b_die_temp";
+> >       };
+> >
+> > +     channel@348 {
+> > +             reg = <PM8350B_ADC7_AMUX_THM5_100K_PU>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "usb_conn_temp";
+> > +     };
+> > +
+> >       channel@403 {
+> >               reg = <PMR735A_ADC7_DIE_TEMP>;
+> >               label = "pmr735a_die_temp";
+> >       };
+> > +
+> > +     channel@44a {
+> > +             reg = <PMR735A_ADC7_GPIO1_100K_PU>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "qtm_w_temp";
+> > +     };
+> > +
+> > +     channel@44b {
+> > +             reg = <PMR735A_ADC7_GPIO2_100K_PU>;
+> > +             qcom,hw-settle-time = <200>;
+> > +             qcom,ratiometric;
+> > +             label = "qtm_n_temp";
+> > +     };
+> >  };
+> >
+> >  &remoteproc_adsp {
+
+
+
+-- 
+With best wishes
+Dmitry
