@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 049147449FC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jul 2023 16:42:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA45D744A59
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jul 2023 17:50:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbjGAOmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Jul 2023 10:42:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38546 "EHLO
+        id S229564AbjGAPuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Jul 2023 11:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbjGAOmE (ORCPT
+        with ESMTP id S229530AbjGAPuF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Jul 2023 10:42:04 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5EA35AB
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Jul 2023 07:42:03 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b69ea3b29fso47135761fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Jul 2023 07:42:03 -0700 (PDT)
+        Sat, 1 Jul 2023 11:50:05 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED0612686;
+        Sat,  1 Jul 2023 08:50:04 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id 006d021491bc7-565a8d74daeso1892614eaf.1;
+        Sat, 01 Jul 2023 08:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688222522; x=1690814522;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BXnw/FEpPPpZ+WG4ZVob38IzcodUEaUVz8j/V8IP3fU=;
-        b=EFLeI3PJZGpGQqlzawDupl04jL4AqEfMYNSBPa9G6ZoTmxnVbQFf5bhfUYdwdYSB45
-         OZIjbKBhe9focaUCsALj7DjgvvLrBPbsV2IJV6nOaqO6riOEd2TVktjYb/P0arrBmgUb
-         KpnsGzupfQaUcgD9TGykQUrwZ/XvcXun/7GMn2IBCbZOHAHgJyvLdCqm4q//eFtlgJMe
-         PqRvP//yXPHazOav8hFEUSUdGFMd4IHLjHpAYMX7bHh4YRT6KymSCnoXXHYOqAoc4NQP
-         1BgawP0FLeWVjogQje8c/+ueSQF10FXyWSHMkW3ssrcvT3M/s1t+/JuZOX/21KI7dZZb
-         gYzA==
+        d=gmail.com; s=20221208; t=1688226604; x=1690818604;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AWux/IF/aECwza6GtENWenn3smgX2WPjU/KjFJmhyNc=;
+        b=l9wb+bOH/n1H8L5N4d9tmf6kooHd3qjzenIY3zLrw0SuFKjc3azDJMYM/nFuXtPALu
+         fwfbHUh51ekSOCL0alqQpF3e466+djZhphZEUWSITdvB9evWLVWX3S1vayFR1fHc0Mtj
+         n7ZX2GfQe/QBd/TwwXrWkReGea1vgdFTgof4jKIefEcFhEjqTqd+zrrL/o1LQbT+9Dm5
+         1xHsTtQpLYq5NU02jWZYFM3rSVBROZyKfM4GbiF2MmL52G7plaPLkKKb94bkg5vip0pw
+         uhuOLwcqa0/voIsYdbUoYe4XmH0WUWkrykf4nrE5GHvaPQ8XSl25Mw/i8qE8oaDRYIuB
+         7Etg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688222522; x=1690814522;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BXnw/FEpPPpZ+WG4ZVob38IzcodUEaUVz8j/V8IP3fU=;
-        b=k+PjLARAzc7BX02oB9hgiToZv+/zkzwitxh3hfG/m499PO6ZfJUrFcsYEu5zzC8IXc
-         exsJmFhLOyUPpyGjCCMuGCHRb1WKgpA4NFYznL9E90hZJQHLPGJyBNNVjH/0oj/yo8Ni
-         kholNtp+d4SQiqS+SRE66gorW5HOMW0CyaQPKEnI60gNX7WM65wS/1NSLjjtLuZcaYtJ
-         HbvS6K6Gsmpljy/fOirEJ1mb5f5ZenEzWIApgkWX8kMiCxM7wq1G36vLgC4XoaOHOq44
-         6+QnUBjQUbVCN++3u32ESwkAgee7g4joiu0B39Zv30gRzkq9P8J8ss3/n4OqDOYk/BVv
-         e9HA==
-X-Gm-Message-State: ABy/qLanXQroSG4SG9REb76XhKCDyN4ZnOKmK7swYE8h/uBTIw//LS0V
-        NQgFWCgV8drKeXaOvadZ7B4Brw==
-X-Google-Smtp-Source: APBJJlFgxcpnuG9pkZhBLIAnPiRu5vZzw3WH4/SWTKfNj2SJgXp0DmGQyw1cH/Pa56vLVz7wyMBM2Q==
-X-Received: by 2002:a05:6512:15a8:b0:4fb:7933:dd4f with SMTP id bp40-20020a05651215a800b004fb7933dd4fmr5371505lfb.56.1688222521704;
-        Sat, 01 Jul 2023 07:42:01 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id 20-20020ac24834000000b004f60f2979e6sm3413409lft.83.2023.07.01.07.42.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Jul 2023 07:42:01 -0700 (PDT)
-Message-ID: <cd7b98b9-7a32-72f5-3997-6c332c295067@linaro.org>
-Date:   Sat, 1 Jul 2023 16:41:59 +0200
+        d=1e100.net; s=20221208; t=1688226604; x=1690818604;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AWux/IF/aECwza6GtENWenn3smgX2WPjU/KjFJmhyNc=;
+        b=G8H8XRzJQ+C9Jklfp2Fva9+GCHy3bvSZMGymmVfzAIzkVXVsk3RQ1SYWfcONdMS9Zn
+         I++zxSI5QS9XH3ZZeuu7pYGGeuLzSyu+bvhHcIISF0gmX2rg68tW2sn2jsVZmIkUdCmI
+         fErMstMqIWOLhOqQTYgYxEk0hFL34MKz+yKK1OF9CqAQ0ElPPfNznR22CbptdUlynUzK
+         jfuOh9cUxeCXvepeT7uM3n4a4EqJR9x6ryu/mJv+4KbVkyqiu8MhIjaxMPwssI+b0LTI
+         ZxaNMuvyHVJDFYCPmEcTZPb+t9K+89SxhT5JbOCt7z+lQKGfWRkRwvsQQhMwVU3FomHD
+         qD0A==
+X-Gm-Message-State: AC+VfDw/3DM8IjhO4rzhtJkBPIVqmpQyR9IdoxBDkUeCfqG5Plf6kwZR
+        YvR4V2Yo/BPWUCzx+aQYA8hh9udrXP69b1NQPyI=
+X-Google-Smtp-Source: ACHHUZ5p3Qamj32aSw4TXw6zcYs7G/XAByy351uI6wBsUAb95PSUxyzPUUUpESCbgaw4X1aoUbKIgnqr0SYz7yzOjiQ=
+X-Received: by 2002:a05:6820:447:b0:560:c558:b6f9 with SMTP id
+ p7-20020a056820044700b00560c558b6f9mr6089123oou.2.1688226604145; Sat, 01 Jul
+ 2023 08:50:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] clk: qcom: gcc-sm7150: Add CLK_OPS_PARENT_ENABLE to sdcc2
- rcg
-Content-Language: en-US
-To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
-        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        davidwronek@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230630191944.20282-1-danila@jiaxyga.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230630191944.20282-1-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+References: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org>
+In-Reply-To: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 1 Jul 2023 08:49:52 -0700
+Message-ID: <CAF6AEGsH0BZd_yyn7UtJ3cLbbw2A5qdg8gQ6SORzQKjsMsnvHA@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/adreno: Assign revn to A635
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,28 +76,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.06.2023 21:19, Danila Tikhonov wrote:
-> Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
-> didn't update its configuration" error.
-> 
-> Fixes: a808d58ddf29 ("clk: qcom: Add Global Clock Controller (GCC) driver for SM7150")
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+On Fri, Jun 30, 2023 at 4:12=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> Recently, a WARN_ON() was introduced to ensure that revn is filled before
+> adreno_is_aXYZ is called. This however doesn't work very well when revn i=
+s
+> 0 by design (such as for A635). Fill it in as a stopgap solution for
+> -fixes.
+>
+> Fixes: cc943f43ece7 ("drm/msm/adreno: warn if chip revn is verified befor=
+e being set")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  drivers/clk/qcom/gcc-sm7150.c | 1 +
+> Changes in v2:
+> - add fixes
+> - Link to v1: https://lore.kernel.org/r/20230628-topic-a635-v1-1-5056e09c=
+08fb@linaro.org
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
 >  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sm7150.c b/drivers/clk/qcom/gcc-sm7150.c
-> index 6b628178f62c..6da87f0436d0 100644
-> --- a/drivers/clk/qcom/gcc-sm7150.c
-> +++ b/drivers/clk/qcom/gcc-sm7150.c
-> @@ -739,6 +739,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
->  		.parent_data = gcc_parent_data_6,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_6),
->  		.ops = &clk_rcg2_floor_ops,
-> +		.flags = CLK_OPS_PARENT_ENABLE,
->  	},
->  };
->  
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm=
+/msm/adreno/adreno_device.c
+> index cb94cfd137a8..8ea7eae9fc52 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -345,6 +345,7 @@ static const struct adreno_info gpulist[] =3D {
+>                 .address_space_size =3D SZ_16G,
+>         }, {
+>                 .rev =3D ADRENO_REV(6, 3, 5, ANY_ID),
+> +               .revn =3D 635,
+>                 .fw =3D {
+>                         [ADRENO_FW_SQE] =3D "a660_sqe.fw",
+>                         [ADRENO_FW_GMU] =3D "a660_gmu.bin",
+>
+
+hmm, I realized a problem with this, it would change what
+MSM_PARAM_GPU_ID and more importantly MSM_PARAM_CHIP_ID return..  The
+former should be "harmless", although it isn't a good idea for uabi
+changes to be a side effect of a fix.  The latter is more problematic.
+
+I think I'm leaning more towards reverting commit cc943f43ece7
+("drm/msm/adreno: warn if chip revn is verified before being set") for
+-fixes.  I'm still thinking about options for a longer term fix.
+
+BR,
+-R
+
+
+> ---
+> base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
+> change-id: 20230628-topic-a635-1b3c2c987417
+>
+> Best regards,
+> --
+> Konrad Dybcio <konrad.dybcio@linaro.org>
+>
