@@ -2,70 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C923D7445AB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jul 2023 02:44:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7BC77445CC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jul 2023 03:15:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229665AbjGAAo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jun 2023 20:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56194 "EHLO
+        id S229643AbjGABPX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jun 2023 21:15:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbjGAAoz (ORCPT
+        with ESMTP id S229447AbjGABPV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jun 2023 20:44:55 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09373C3F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 17:44:53 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-bff27026cb0so2421350276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jun 2023 17:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688172293; x=1690764293;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rb4XLbAa6FHa6f/bZHMtFsSM9z+lq4odMd6vK4N6U0A=;
-        b=HDDOAVVxZmS9WBogOomJ5KhF8WCVKZYzgS9XGBT2dQOaIuUgD99wuLx12AAMrGrtX5
-         CidFk3nKSiYbOOsDoQx3IqW2Ozwk9XWwrjDieUdobowWMzeA7xNVlbvV9/OFVbKJgerR
-         aBUAskHi397/8ji2BnJ2A6Og6EF7DNNA2Ci7HbDj/GAXC3GloWQC4XXzqqg+RCSR+QNj
-         v2kqQJIkTbESJnODAF5p9AnbtStKLO2V22a/AYwl/RmPpBJ5zNrQpFu2A5h/ZXk3Gxdx
-         PfMB/YRwJk6RK+CLb4CQ6Ne34XRqVMOUi/viER6K9lKi+xzvO25xdsbtkI5Ef4VsGBQN
-         QnQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688172293; x=1690764293;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Rb4XLbAa6FHa6f/bZHMtFsSM9z+lq4odMd6vK4N6U0A=;
-        b=Iwe3WZhWJQJH/msc1cCVdPRPL6euAU6BKLCtYlq38R+4s8iJNO00dalkG3biW9rn35
-         x4QJ20HXyigSC1nQgzSE/VsSPwE+sEd47+UtFU/NoAzrH0LOVZdgiKDwV/AKFPfiulZi
-         LfywbcwHyMo+TNLnDSyvlq22oMv04Rv5qxWTuRmJufGsKVc6eo2SrLT2J2cvd6w3F4R6
-         McbvDhDJwto2jaiNWgPoKV4EXrtsqs6sCIxlR9BHZ0r+l8Qr4MuH7KFhtWsFnEO9Z+Ws
-         jwx1WmdzxiIvZ3tHjnUfI0UaYmy3L7XBeUB49aLOqjoQDZg2Tkg04irA7lmYDkPQ+UDf
-         emOQ==
-X-Gm-Message-State: ABy/qLaSR6lHnMMxDiEWfDy+nTJaSWoaTiwnE1WNwbaqCcoBaK5NlmO8
-        +2W5OpikwXBQd0iB6ySlqu9l5xPwGK2ALm7DQBu0xA==
-X-Google-Smtp-Source: APBJJlEL+WwVjxtvdk5GmlBVWtrIkQtRgNljiIk574SW1j79w6jqxyJYHfbUxzZsbWxrQV7bdXvEgAqaCpDsU8DP4VI=
-X-Received: by 2002:a25:2449:0:b0:c28:bcc1:4834 with SMTP id
- k70-20020a252449000000b00c28bcc14834mr3301600ybk.30.1688172293164; Fri, 30
- Jun 2023 17:44:53 -0700 (PDT)
+        Fri, 30 Jun 2023 21:15:21 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 062A93C18;
+        Fri, 30 Jun 2023 18:15:19 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3610kkSq029938;
+        Sat, 1 Jul 2023 01:14:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=SrBTJweWkdi0gemAtFUVQdHBHpnvXFNNG3Qz2bB+FlU=;
+ b=GZ+82djH8AFt/Cm7sVrC/iHBD8CB3urTs6JVL/Db6sJq4owToc/cUb36CrSz9zunSN39
+ /drjxmHZOqtyhPR8KM++Ff2X50osGdkKK4bgbjwL/7NMy0X+AcSU6rctEQkeQUmRv5ID
+ 429zCfaXr3Dgyc/6/Kk49KhK6Z/nzfvfv8kvsD0QGms2rAj2VTJZ1eWFkINpwGvMDSVi
+ w+Ya3vkRsUexmAAq2VgKiVTUCS4nml295U9f70sPnWCnydjNfNTUmhQnrFRVjQG/hTyc
+ AFY/LVnD5eb0cI6A7pNpHTAh1Qfj4/haD2sq1z2xbG7eAyZeRnvOT7VGymgahpcmiUci MA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rj6y30crx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 01 Jul 2023 01:14:45 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3611EjAG030031
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 1 Jul 2023 01:14:45 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 30 Jun
+ 2023 18:14:44 -0700
+Message-ID: <4531c809-8d0a-143b-961b-7218854d18f0@quicinc.com>
+Date:   Fri, 30 Jun 2023 18:14:44 -0700
 MIME-Version: 1.0
-References: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org>
-In-Reply-To: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 1 Jul 2023 03:44:41 +0300
-Message-ID: <CAA8EJprYvLXaGmpYaSBt9eW5H1Ec_BKeCLW1qp1FvvR1LpDf6g@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/adreno: Assign revn to A635
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH RFC v4 6/7] drm/msm/dpu: Allow NULL FBs in atomic commit
+Content-Language: en-US
+To:     Pekka Paalanen <ppaalanen@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
+        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
+        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>,
+        <wayland-devel@lists.freedesktop.org>
+References: <20230404-solid-fill-v4-0-f4ec0caa742d@quicinc.com>
+ <20230404-solid-fill-v4-6-f4ec0caa742d@quicinc.com>
+ <cca48c01-b84a-dff6-57ae-356971edacf3@linaro.org>
+ <20230630112153.5da36b6a@eldfell>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20230630112153.5da36b6a@eldfell>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BGx2i0UQTu6SpT2E4JW7wfERDEBvvn7B
+X-Proofpoint-GUID: BGx2i0UQTu6SpT2E4JW7wfERDEBvvn7B
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-30_14,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 spamscore=0 suspectscore=0
+ bulkscore=0 impostorscore=0 priorityscore=1501 phishscore=0 mlxscore=0
+ mlxlogscore=983 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307010010
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,51 +94,167 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Jul 2023 at 02:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> Recently, a WARN_ON() was introduced to ensure that revn is filled before
-> adreno_is_aXYZ is called. This however doesn't work very well when revn is
-> 0 by design (such as for A635). Fill it in as a stopgap solution for
-> -fixes.
->
-> Fixes: cc943f43ece7 ("drm/msm/adreno: warn if chip revn is verified before being set")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-As the v1:
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
-> Changes in v2:
-> - add fixes
-> - Link to v1: https://lore.kernel.org/r/20230628-topic-a635-v1-1-5056e09c08fb@linaro.org
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index cb94cfd137a8..8ea7eae9fc52 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -345,6 +345,7 @@ static const struct adreno_info gpulist[] = {
->                 .address_space_size = SZ_16G,
->         }, {
->                 .rev = ADRENO_REV(6, 3, 5, ANY_ID),
-> +               .revn = 635,
->                 .fw = {
->                         [ADRENO_FW_SQE] = "a660_sqe.fw",
->                         [ADRENO_FW_GMU] = "a660_gmu.bin",
->
-> ---
-> base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
-> change-id: 20230628-topic-a635-1b3c2c987417
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@linaro.org>
->
 
 
--- 
-With best wishes
-Dmitry
+On 6/30/2023 1:21 AM, Pekka Paalanen wrote:
+> On Fri, 30 Jun 2023 03:52:37 +0300
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> 
+>> On 30/06/2023 03:25, Jessica Zhang wrote:
+>>> Since solid fill planes allow for a NULL framebuffer in a valid commit,
+>>> add NULL framebuffer checks to atomic commit calls within DPU.
+>>>
+>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  9 ++++++-
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 45 +++++++++++++++++++------------
+>>>    2 files changed, 36 insertions(+), 18 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> index 1edf2b6b0a26..d1b37d2cc202 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>> @@ -451,6 +451,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>>>    	struct drm_plane_state *state;
+>>>    	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
+>>>    	struct dpu_plane_state *pstate = NULL;
+>>> +	const struct msm_format *fmt;
+>>>    	struct dpu_format *format;
+>>>    	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
+>>>    
+>>> @@ -470,7 +471,13 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>>>    		pstate = to_dpu_plane_state(state);
+>>>    		fb = state->fb;
+>>>    
+>>> -		format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
+>>> +		if (state->pixel_source == DRM_PLANE_PIXEL_SOURCE_FB && fb)
+>>> +			fmt = msm_framebuffer_format(pstate->base.fb);
+>>> +		else
+>>> +			fmt = dpu_get_msm_format(&_dpu_crtc_get_kms(crtc)->base,
+>>> +					DRM_FORMAT_RGBA8888, 0);
+>>
+>> The DRM_FORMAT_RGBA8888 should be defined somewhere in patch 1 as format
+>> for the solid_fill, then that define can be used in this patch.
+> 
+> Isn't this just a driver-specific decision to convert a RGB323232
+> solid_fill to be presented as a RGBA8888?
+
+Hi Dmitry and Pekka,
+
+Yes, the ABGR8888 format is specific to msm/dpu. In earlier revisions of 
+the series, we had come to an agreement that the solid fill property 
+should take RGB323232 to match the similar Wayland single pixel buffer 
+protocol [1].
+
+[1] 
+https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests/104
+
+> 
+> Though, below there is ABGR8888 used for something... inconsistent?
+
+Typo on my part. The format should be consistently ABGR8888.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+> 
+> Thanks,
+> pq
+> 
+>>
+>>> +
+>>> +		format = to_dpu_format(fmt);
+>>>    
+>>>    		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>>>    			bg_alpha_enable = true;
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> index 5f0984ce62b1..4476722f03bb 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> @@ -837,8 +837,10 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>    
+>>>    	pipe_cfg->dst_rect = new_plane_state->dst;
+>>>    
+>>> -	fb_rect.x2 = new_plane_state->fb->width;
+>>> -	fb_rect.y2 = new_plane_state->fb->height;
+>>> +	if (new_plane_state->pixel_source == DRM_PLANE_PIXEL_SOURCE_FB && new_plane_state->fb) {
+>>> +		fb_rect.x2 = new_plane_state->fb->width;
+>>> +		fb_rect.y2 = new_plane_state->fb->height;
+>>> +	}
+>>>    
+>>>    	/* Ensure fb size is supported */
+>>>    	if (drm_rect_width(&fb_rect) > MAX_IMG_WIDTH ||
+>>> @@ -848,10 +850,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>    		return -E2BIG;
+>>>    	}
+>>>    
+>>> -	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+>>> -
+>>>    	max_linewidth = pdpu->catalog->caps->max_linewidth;
+>>>    
+>>> +	if (drm_plane_solid_fill_enabled(new_plane_state))
+>>> +		fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
+>>> +	else
+>>> +		fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+>>> +
+>>>    	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+>>>    		/*
+>>>    		 * In parallel multirect case only the half of the usual width
+>>> @@ -1082,21 +1087,32 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>>>    	struct drm_crtc *crtc = state->crtc;
+>>>    	struct drm_framebuffer *fb = state->fb;
+>>>    	bool is_rt_pipe;
+>>> -	const struct dpu_format *fmt =
+>>> -		to_dpu_format(msm_framebuffer_format(fb));
+>>> +	const struct dpu_format *fmt;
+>>>    	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>>>    	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+>>>    	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>>>    	struct msm_gem_address_space *aspace = kms->base.aspace;
+>>>    	struct dpu_hw_fmt_layout layout;
+>>>    	bool layout_valid = false;
+>>> -	int ret;
+>>>    
+>>> -	ret = dpu_format_populate_layout(aspace, fb, &layout);
+>>> -	if (ret)
+>>> -		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+>>> -	else
+>>> -		layout_valid = true;
+>>> +	if (state->pixel_source == DRM_PLANE_PIXEL_SOURCE_FB && fb) {
+>>> +		int ret;
+>>> +
+>>> +		fmt = to_dpu_format(msm_framebuffer_format(fb));
+>>> +
+>>> +		ret = dpu_format_populate_layout(aspace, fb, &layout);
+>>> +		if (ret)
+>>> +			DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+>>> +		else
+>>> +			layout_valid = true;
+>>> +
+>>> +		DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
+>>> +				", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
+>>> +				crtc->base.id, DRM_RECT_ARG(&state->dst),
+>>> +				(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
+>>> +	} else {
+>>> +		fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
+>>> +	}
+>>>    
+>>>    	pstate->pending = true;
+>>>    
+>>> @@ -1104,11 +1120,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>>>    	pstate->needs_qos_remap |= (is_rt_pipe != pdpu->is_rt_pipe);
+>>>    	pdpu->is_rt_pipe = is_rt_pipe;
+>>>    
+>>> -	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
+>>> -			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
+>>> -			crtc->base.id, DRM_RECT_ARG(&state->dst),
+>>> -			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
+>>> -
+>>>    	dpu_plane_sspp_update_pipe(plane, pipe, pipe_cfg, fmt,
+>>>    				   drm_mode_vrefresh(&crtc->mode),
+>>>    				   layout_valid ? &layout : NULL);
+>>>    
+>>
+> 
