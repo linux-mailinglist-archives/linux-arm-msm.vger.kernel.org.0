@@ -2,70 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA45D744A59
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jul 2023 17:50:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97B4C744A80
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jul 2023 18:20:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229564AbjGAPuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Jul 2023 11:50:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47132 "EHLO
+        id S229533AbjGAQU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Jul 2023 12:20:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbjGAPuF (ORCPT
+        with ESMTP id S229477AbjGAQU5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Jul 2023 11:50:05 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED0612686;
-        Sat,  1 Jul 2023 08:50:04 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id 006d021491bc7-565a8d74daeso1892614eaf.1;
-        Sat, 01 Jul 2023 08:50:04 -0700 (PDT)
+        Sat, 1 Jul 2023 12:20:57 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2FBC10DC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Jul 2023 09:20:56 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1b852785a65so18741865ad.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Jul 2023 09:20:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688226604; x=1690818604;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AWux/IF/aECwza6GtENWenn3smgX2WPjU/KjFJmhyNc=;
-        b=l9wb+bOH/n1H8L5N4d9tmf6kooHd3qjzenIY3zLrw0SuFKjc3azDJMYM/nFuXtPALu
-         fwfbHUh51ekSOCL0alqQpF3e466+djZhphZEUWSITdvB9evWLVWX3S1vayFR1fHc0Mtj
-         n7ZX2GfQe/QBd/TwwXrWkReGea1vgdFTgof4jKIefEcFhEjqTqd+zrrL/o1LQbT+9Dm5
-         1xHsTtQpLYq5NU02jWZYFM3rSVBROZyKfM4GbiF2MmL52G7plaPLkKKb94bkg5vip0pw
-         uhuOLwcqa0/voIsYdbUoYe4XmH0WUWkrykf4nrE5GHvaPQ8XSl25Mw/i8qE8oaDRYIuB
-         7Etg==
+        d=gmail.com; s=20221208; t=1688228456; x=1690820456;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5O8JTAv4YKw7uBry2NnIZyVDnMiMWTmml9N1ztNufp0=;
+        b=nSgSStXrnBPo1GTiqMuJEqk85ex8UyRMBoWaZWBjI+ocKbZH5y8hhBzkJ/SRKD2/bf
+         l6OGMMp7W3tj7d2e+XibgAYckXE9Kl+BFxTOJp4/1F1lnnlAlT5tZL0dmBS9Gf0jPZHI
+         8EKYmS9bIzIIAGXx8AjCnMiYpjkYXnOrJq7oXx5KBL9gksqGdzS6b7TY62KcD0Tababi
+         Qrf1iv2BpJCwNrVbVF6aAwcgpz5+k0faun9aTIGtHIRdxWdrXlD+AYzlWz8xmENplzxz
+         r3LvTB4/otqQiZKfIs87CH4lznWP8jivrX+zhf3T8kOXCPzUlrVt0j0+KEqL25MB1022
+         ZCrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688226604; x=1690818604;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AWux/IF/aECwza6GtENWenn3smgX2WPjU/KjFJmhyNc=;
-        b=G8H8XRzJQ+C9Jklfp2Fva9+GCHy3bvSZMGymmVfzAIzkVXVsk3RQ1SYWfcONdMS9Zn
-         I++zxSI5QS9XH3ZZeuu7pYGGeuLzSyu+bvhHcIISF0gmX2rg68tW2sn2jsVZmIkUdCmI
-         fErMstMqIWOLhOqQTYgYxEk0hFL34MKz+yKK1OF9CqAQ0ElPPfNznR22CbptdUlynUzK
-         jfuOh9cUxeCXvepeT7uM3n4a4EqJR9x6ryu/mJv+4KbVkyqiu8MhIjaxMPwssI+b0LTI
-         ZxaNMuvyHVJDFYCPmEcTZPb+t9K+89SxhT5JbOCt7z+lQKGfWRkRwvsQQhMwVU3FomHD
-         qD0A==
-X-Gm-Message-State: AC+VfDw/3DM8IjhO4rzhtJkBPIVqmpQyR9IdoxBDkUeCfqG5Plf6kwZR
-        YvR4V2Yo/BPWUCzx+aQYA8hh9udrXP69b1NQPyI=
-X-Google-Smtp-Source: ACHHUZ5p3Qamj32aSw4TXw6zcYs7G/XAByy351uI6wBsUAb95PSUxyzPUUUpESCbgaw4X1aoUbKIgnqr0SYz7yzOjiQ=
-X-Received: by 2002:a05:6820:447:b0:560:c558:b6f9 with SMTP id
- p7-20020a056820044700b00560c558b6f9mr6089123oou.2.1688226604145; Sat, 01 Jul
- 2023 08:50:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org>
-In-Reply-To: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org>
+        d=1e100.net; s=20221208; t=1688228456; x=1690820456;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5O8JTAv4YKw7uBry2NnIZyVDnMiMWTmml9N1ztNufp0=;
+        b=hBQRfuYPW02Tfo/gOuWAA69jktO6R0MuWFgpwhM3qecQnm9w9IR88ue2H32nw/KXBG
+         3QcKPUPn3ydl8lrZuXHWvXC58a8O3weu135AMLD6ktwPCTJXeUuWLMVxX2bfAGimtQaO
+         Ez6BH4+XICvr0LKINQegC+GpoeNm3O1bvIYCDrbUhXlWGEfLTQZC2RNztD66aHOZJhws
+         LYls9WBuzYk2di7lY+5Ni+VtI7lkZwQaYJKex46hDyh+CgRmF3I86BFhXPBf7eQx91Y/
+         +y+4FMX1Bi/wbJzJTWpBgHj2x/y17BPEeQYw92gMIkJFgYC/E8DfdBPVBslWEv3bBaOJ
+         TVTw==
+X-Gm-Message-State: ABy/qLYpvmVyA43bPWyQ1Ffo/HtW/7Sj/gMXjXTf50DQY4wFGvayc8Ek
+        uMRHzxbC4IaFGSfXdekRIDw/qFGc3fw=
+X-Google-Smtp-Source: APBJJlEkYzb4+ziqA6o0isUYA/IlAPGUGt5QLGTOuwq8cIvD/a7RCSRTrtqk5LiDl6HTuLay0SytTg==
+X-Received: by 2002:a17:902:c406:b0:1b6:783d:9ba7 with SMTP id k6-20020a170902c40600b001b6783d9ba7mr8803589plk.27.1688228456021;
+        Sat, 01 Jul 2023 09:20:56 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:ae1c:de46:682a:206])
+        by smtp.gmail.com with ESMTPSA id d4-20020a170902aa8400b001b7feed285csm10599352plr.36.2023.07.01.09.20.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Jul 2023 09:20:55 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Sat, 1 Jul 2023 08:49:52 -0700
-Message-ID: <CAF6AEGsH0BZd_yyn7UtJ3cLbbw2A5qdg8gQ6SORzQKjsMsnvHA@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/adreno: Assign revn to A635
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [PATCH] drm/msm/a690: Remove revn and name
+Date:   Sat,  1 Jul 2023 09:20:48 -0700
+Message-ID: <20230701162048.6271-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -76,60 +69,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 30, 2023 at 4:12=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> Recently, a WARN_ON() was introduced to ensure that revn is filled before
-> adreno_is_aXYZ is called. This however doesn't work very well when revn i=
-s
-> 0 by design (such as for A635). Fill it in as a stopgap solution for
-> -fixes.
->
-> Fixes: cc943f43ece7 ("drm/msm/adreno: warn if chip revn is verified befor=
-e being set")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes in v2:
-> - add fixes
-> - Link to v1: https://lore.kernel.org/r/20230628-topic-a635-v1-1-5056e09c=
-08fb@linaro.org
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm=
-/msm/adreno/adreno_device.c
-> index cb94cfd137a8..8ea7eae9fc52 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -345,6 +345,7 @@ static const struct adreno_info gpulist[] =3D {
->                 .address_space_size =3D SZ_16G,
->         }, {
->                 .rev =3D ADRENO_REV(6, 3, 5, ANY_ID),
-> +               .revn =3D 635,
->                 .fw =3D {
->                         [ADRENO_FW_SQE] =3D "a660_sqe.fw",
->                         [ADRENO_FW_GMU] =3D "a660_gmu.bin",
->
+From: Rob Clark <robdclark@chromium.org>
 
-hmm, I realized a problem with this, it would change what
-MSM_PARAM_GPU_ID and more importantly MSM_PARAM_CHIP_ID return..  The
-former should be "harmless", although it isn't a good idea for uabi
-changes to be a side effect of a fix.  The latter is more problematic.
+These fields are deprecated.  But any userspace new enough to support
+a690 also knows how to identify the GPU based on chip-id.
 
-I think I'm leaning more towards reverting commit cc943f43ece7
-("drm/msm/adreno: warn if chip revn is verified before being set") for
--fixes.  I'm still thinking about options for a longer term fix.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 2 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 2 --
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 3 ++-
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
-BR,
--R
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index ab5c446e4409..a537a3872f01 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2102,7 +2102,7 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	info = adreno_info(config->rev);
+ 
+ 	if (info && (info->revn == 650 || info->revn == 660 ||
+-		     info->revn == 690 ||
++		     adreno_cmp_rev(ADRENO_REV(6, 9, 0, ANY_ID), info->rev) ||
+ 		     adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), info->rev)))
+ 		adreno_gpu->base.hw_apriv = true;
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index e5a865024e94..ff9f5321f2e6 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -357,8 +357,6 @@ static const struct adreno_info gpulist[] = {
+ 		.hwcg = a640_hwcg,
+ 	}, {
+ 		.rev = ADRENO_REV(6, 9, 0, ANY_ID),
+-		.revn = 690,
+-		.name = "A690",
+ 		.fw = {
+ 			[ADRENO_FW_SQE] = "a660_sqe.fw",
+ 			[ADRENO_FW_GMU] = "a690_gmu.bin",
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index ac9c429ca07b..506001080374 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -274,7 +274,8 @@ static inline int adreno_is_a660(struct adreno_gpu *gpu)
+ 
+ static inline int adreno_is_a690(struct adreno_gpu *gpu)
+ {
+-	return gpu->revn == 690;
++	/* The order of args is important here to handle ANY_ID correctly */
++	return adreno_cmp_rev(ADRENO_REV(6, 9, 0, ANY_ID), gpu->rev);
+ };
+ 
+ /* check for a615, a616, a618, a619 or any derivatives */
+-- 
+2.41.0
 
-
-> ---
-> base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
-> change-id: 20230628-topic-a635-1b3c2c987417
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@linaro.org>
->
