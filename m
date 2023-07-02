@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72A58744DE8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 15:43:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72881744DEB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 15:43:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230025AbjGBNnm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jul 2023 09:43:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41892 "EHLO
+        id S229966AbjGBNnn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jul 2023 09:43:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229954AbjGBNnl (ORCPT
+        with ESMTP id S229753AbjGBNnm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jul 2023 09:43:41 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFDEFE72
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 06:43:36 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-31434226a2eso789533f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 06:43:36 -0700 (PDT)
+        Sun, 2 Jul 2023 09:43:42 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49A410C0
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 06:43:37 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b699a2fe86so58134671fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 06:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688305415; x=1690897415;
+        d=linaro.org; s=google; t=1688305416; x=1690897416;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UH4lxIyJZ/66UDj2KyoTn9M7j7BtBKPALuXyhhsx3zY=;
-        b=rTTs+dvFPBvLv56c2PzoZXwMLUNAwux8KQpWZOH202fmf8iQHlr6vk6Gm+F97yCDhw
-         x82RBU6MrO0479H9ZkorZzCT5A1a+Dcp7SptrlBqdkbSw4GRoeqW0vMVRId52jrRXMHM
-         MNXkLeBg0ePy3V2gkIbNViv9Lba0cdvcLP14sNIHyFer47Mae9CcRZFdD7OQbi6cEniZ
-         vZywLp/vMHllsNU8yhZbev3iAUSO4o7fs5ATUlocGA+nBKpEQS/755kySin1gaU/+wCz
-         e1al+o0BQ63NTx0X9BEBuyWJwoQLEdhccBkGlpt4B3yQQxrbUOUpfrVAwaKb5UcsemDr
-         ETYA==
+        bh=623T1YaDMVcPpLyGUimPTZEZnF+8YGwn8ANHFMuY4mY=;
+        b=g3ClD081YSRI5g1DTaouymuXIui1d48PJv/wS/1P5UGpGmtdzyEyl/v8Ztuuk3PVzD
+         fHNGAQLgY5u/k8r3dGA6XENsVx6whWZdkAOUcijva+PVSmS4CyIiGuUcPqB1g70u7+Je
+         wuQQTzNhz4eyaNPpD7MoenhWU1RDmOgw4QBa6BrOShceQ2yENiuzXBQDuNwf0LzhyErR
+         vwM6GRvZq1Y3hBKMKSMu1koyB426GVH8J9Z0ZljrlKfxSFAfn2fuWKZKcAPAHS63Bbts
+         JHYK4gBrxVWHCYAP/m8ibLcmca4uZzmTs0ibvINDSwLB0dld/qSb/b2unTROb+HYYak7
+         f6GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688305415; x=1690897415;
+        d=1e100.net; s=20221208; t=1688305416; x=1690897416;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UH4lxIyJZ/66UDj2KyoTn9M7j7BtBKPALuXyhhsx3zY=;
-        b=hAAgfrwI1kaxHTJ9r0muSWybmW7MLACJ/gz2B+ZaoF8dPbbgUx8CKdOUATvvmXTU4n
-         Ag54EtEhOzKkGNiDgIBliG43c2ONf19r9u43IRCagMPxhxadkx9mvAyJzEhxKB4U5I/n
-         WfemyKw/ULcK3IdH/MRtnPa7DH8mzb7hwR+bF40fOmhvkO8XANJgR7/4mJpGRBeRjpFT
-         igcG1DnjlsS43F0SPwBE+LH+qthgFVoRWiDcPZQ26w/uetq6JwxZXdoYmoTrY5pfPDwL
-         GqIRMkC9GWIFOcozE1nvenM8g90kvWB1kwRkhjyDsZ5aQhtjNAKUu/Acbd7z+2DLgnN5
-         DzKw==
-X-Gm-Message-State: ABy/qLYYlOzfdGtXrKCd5TlxTAU7ixOWz8XuMVc7+etXsqYLbLeyvthK
-        PdfQDkgDLFNpho41hEsQ4VspL80C14E+UrQCDy4=
-X-Google-Smtp-Source: APBJJlEprJQwnNOP499rvOpiD0JT0fgh3HWSvF0MPaaTU+L8HceuepV/nX+bUwmlbrAFwP7KkAn8kg==
-X-Received: by 2002:adf:ee51:0:b0:313:e520:936f with SMTP id w17-20020adfee51000000b00313e520936fmr10220681wro.17.1688305415272;
-        Sun, 02 Jul 2023 06:43:35 -0700 (PDT)
+        bh=623T1YaDMVcPpLyGUimPTZEZnF+8YGwn8ANHFMuY4mY=;
+        b=DR/EHmqO9rDscXjljMaEE7k9vjYKzGs1O5KL2/vkSTkXsKTaPzksm3jAzOMRLGgOQl
+         6M4/NGJCN0igS0WpdbLIHl1ZSjDuAUZljACWB9jWnWbjl0o5XE3XiSd41/U8KdjbfPql
+         Q793oZ4z3yOBuiv2woi1tFpAAl7ZXo9Tg6tqKPFNik/bFa1W2o8p1lR3o+U9Oi6s4rND
+         wwlujTLoHkUEcIN5ADo+sLjHgUu2dd3b0arGZV0s+urgY3Rb1hhN+trrGEAChGzB9EXC
+         GpEbSijFytiEHTd7HFbJSXpPt5h/tiRTzVPB4UnXzQsi32BXWWgkeW7aN8OzMLa5OaEb
+         hVzw==
+X-Gm-Message-State: ABy/qLYz3896PpNjG0Vmvstc0oKnlg+0+azMrIxPgjiW5gZHT9sBOHYe
+        5LlihEjpNCvfuFFL6qLfK89lqw==
+X-Google-Smtp-Source: APBJJlETQHkLvUAgh+XTwbMHkg3SwDyT0JauQ160nafzCe1fOYJOzZdyF13EU+eFV+ZuQgYMeS/sKA==
+X-Received: by 2002:a2e:8556:0:b0:2b5:80e0:f190 with SMTP id u22-20020a2e8556000000b002b580e0f190mr5079573ljj.37.1688305416004;
+        Sun, 02 Jul 2023 06:43:36 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d9-20020a2e96c9000000b002b6988ca476sm4310650ljj.101.2023.07.02.06.43.34
+        by smtp.gmail.com with ESMTPSA id d9-20020a2e96c9000000b002b6988ca476sm4310650ljj.101.2023.07.02.06.43.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jul 2023 06:43:34 -0700 (PDT)
+        Sun, 02 Jul 2023 06:43:35 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -57,9 +57,9 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 18/27] ARM: dts: qcom: pm8921: move reg property
-Date:   Sun,  2 Jul 2023 16:43:11 +0300
-Message-Id: <20230702134320.98831-19-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 19/27] ARM: dts: qcom: pm8058: use defined IRQ flags
+Date:   Sun,  2 Jul 2023 16:43:12 +0300
+Message-Id: <20230702134320.98831-20-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230702134320.98831-1-dmitry.baryshkov@linaro.org>
 References: <20230702134320.98831-1-dmitry.baryshkov@linaro.org>
@@ -67,7 +67,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,28 +75,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move reg property to come after compatible.
+Use symbolic names for IRQ flags instead of using the numeric values.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom/pm8921.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom/pm8058.dtsi | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/pm8921.dtsi b/arch/arm/boot/dts/qcom/pm8921.dtsi
-index 4697ca33666f..fa00b57e28b9 100644
---- a/arch/arm/boot/dts/qcom/pm8921.dtsi
-+++ b/arch/arm/boot/dts/qcom/pm8921.dtsi
-@@ -31,9 +31,9 @@ pm8921_mpps: mpps@50 {
- 
- 		rtc@11d {
- 			compatible = "qcom,pm8921-rtc";
-+			reg = <0x11d>;
- 			interrupt-parent = <&pm8921>;
- 			interrupts = <39 IRQ_TYPE_EDGE_RISING>;
--			reg = <0x11d>;
+diff --git a/arch/arm/boot/dts/qcom/pm8058.dtsi b/arch/arm/boot/dts/qcom/pm8058.dtsi
+index 913a511719fa..3683d7b60918 100644
+--- a/arch/arm/boot/dts/qcom/pm8058.dtsi
++++ b/arch/arm/boot/dts/qcom/pm8058.dtsi
+@@ -12,7 +12,8 @@ pwrkey@1c {
+ 			compatible = "qcom,pm8058-pwrkey";
+ 			reg = <0x1c>;
+ 			interrupt-parent = <&pm8058>;
+-			interrupts = <50 1>, <51 1>;
++			interrupts = <50 IRQ_TYPE_EDGE_RISING>,
++				     <51 IRQ_TYPE_EDGE_RISING>;
+ 			debounce = <15625>;
+ 			pull-up;
+ 		};
+@@ -61,7 +62,8 @@ pm8058_keypad: keypad@148 {
+ 			compatible = "qcom,pm8058-keypad";
+ 			reg = <0x148>;
+ 			interrupt-parent = <&pm8058>;
+-			interrupts = <74 1>, <75 1>;
++			interrupts = <74 IRQ_TYPE_EDGE_RISING>,
++				     <75 IRQ_TYPE_EDGE_RISING>;
+ 			debounce = <15>;
+ 			scan-delay = <32>;
+ 			row-hold = <91500>;
+@@ -135,7 +137,7 @@ rtc@1e8 {
+ 			compatible = "qcom,pm8058-rtc";
+ 			reg = <0x1e8>;
+ 			interrupt-parent = <&pm8058>;
+-			interrupts = <39 1>;
++			interrupts = <39 IRQ_TYPE_EDGE_RISING>;
  			allow-set-time;
  		};
- 
+ 	};
 -- 
 2.39.2
 
