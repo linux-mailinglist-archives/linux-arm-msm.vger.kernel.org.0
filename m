@@ -2,71 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52D1174502F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 21:06:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51805745039
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 21:10:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230033AbjGBTGL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jul 2023 15:06:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42926 "EHLO
+        id S229876AbjGBTKn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jul 2023 15:10:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbjGBTGK (ORCPT
+        with ESMTP id S229513AbjGBTKm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jul 2023 15:06:10 -0400
+        Sun, 2 Jul 2023 15:10:42 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F6C5C3;
-        Sun,  2 Jul 2023 12:06:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 740C1C2;
+        Sun,  2 Jul 2023 12:10:41 -0700 (PDT)
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 362IwqKo015994;
-        Sun, 2 Jul 2023 19:05:58 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 362ImAF5021294;
+        Sun, 2 Jul 2023 19:10:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0oDgH5WYwZFsjzVdjS/xQcqQZu98vFXtz1e2rIXEPpU=;
- b=Zc5xFQn1VKw6ssNahBR3bjeU6zcIXO9yA0Z2uiYNlUlbqMeknAvR5hjO9EBCd/HbkdEl
- Hv34jbmeAJKXghifW6yZKkYgXpVcTevrq+JbpSOyOUa/1j+gW1/0grulZGc1mGXzHGg0
- yjXJLML+1PrcR/Un4veUMO9sXUvalg/Tht79YMXpa8N9OpJs5f/AjhfSKZW3dkCykJqR
- nyoh7g5Vxpw09GRvbZdq6RBiPn72b5Pz5wYRkJYn/9gdXLi6/kIKfjXMyb6KVpkwEFfo
- YCLo7aBvgbaprwYTxfYx/VKDEs0scNiqeVOCE9yu9K2AuFXAyJ7XoVgaUV2byKEGi6gZ Mg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rjdedtb7r-1
+ bh=U2mjDAvqkkSpk+J8eReI+feCEnW7cKR95W2c86RrKNc=;
+ b=PEnW+PWeJC3ydBSJmJutF9NKDORiGx0egKdGFIDHaJsLOoMuRyIqZbrbScVBRAl32dfm
+ jj6aTB0iP8+8HIKHeHod84ORh4XERtPTjqe73FPRjrcJ/guvUwyw6ibyDqAnx3VPKA5V
+ OgFiGokoyIzVgPxiRIF17k1ZW54MFy07ZtIGuqvxqQwoQUJCg1AdkAVMd6wiSUUVoZIG
+ kMTFPNdk8JOi93v+gnOIifUqkUhAZRueiN55oP+4FlEI6l/BArnU9ES/c6R7AuyIG2X1
+ wDDxetj1cCt/L/B7ECtEC2SaWtgWQn8q0DC3E+dbhHmc7tjI4nhYhqoeChl5K2J3DpJZ QQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rjdedtbby-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 02 Jul 2023 19:05:58 +0000
+        Sun, 02 Jul 2023 19:10:29 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 362J5vwh026076
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 362JASls029828
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 2 Jul 2023 19:05:57 GMT
+        Sun, 2 Jul 2023 19:10:28 GMT
 Received: from [10.216.46.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Sun, 2 Jul 2023
- 12:05:51 -0700
-Message-ID: <26ae15d1-4e13-3ab7-6844-3a7d3ed03af4@quicinc.com>
-Date:   Mon, 3 Jul 2023 00:35:48 +0530
+ 12:10:22 -0700
+Message-ID: <622288dd-cb3c-b673-5544-46ff10106dbc@quicinc.com>
+Date:   Mon, 3 Jul 2023 00:40:19 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.1
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
+Subject: Re: [PATCH v9 08/10] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+To:     Johan Hovold <johan@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
- <ZJsDpqttBYtbQ0yg@hovoldconsulting.com>
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_harshq@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-9-quic_kriskura@quicinc.com>
+ <2eab503f-fa0d-990e-bed2-2445c5496798@linaro.org>
+ <b183a130-6237-7d15-5d5a-b56582b92b35@quicinc.com>
+ <ZJr9Xiv6_0nG0Pui@hovoldconsulting.com>
 From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZJsDpqttBYtbQ0yg@hovoldconsulting.com>
+In-Reply-To: <ZJr9Xiv6_0nG0Pui@hovoldconsulting.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -74,14 +77,14 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bmQMhqCz952k0LEaCQKtBBoNL7hBFCd5
-X-Proofpoint-ORIG-GUID: bmQMhqCz952k0LEaCQKtBBoNL7hBFCd5
+X-Proofpoint-GUID: Toaz9_Daqu55fAPPAuWZ0VbLZd6PQ4xh
+X-Proofpoint-ORIG-GUID: Toaz9_Daqu55fAPPAuWZ0VbLZd6PQ4xh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-02_15,2023-06-30_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
  lowpriorityscore=0 adultscore=0 priorityscore=1501 clxscore=1015
- mlxscore=0 mlxlogscore=802 impostorscore=0 bulkscore=0 phishscore=0
+ mlxscore=0 mlxlogscore=766 impostorscore=0 bulkscore=0 phishscore=0
  spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2305260000 definitions=main-2307020182
 X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -96,58 +99,43 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/27/2023 9:13 PM, Johan Hovold wrote:
-> Hi Krishna,
+On 6/27/2023 8:46 PM, Johan Hovold wrote:
+> On Sat, Jun 24, 2023 at 12:43:23PM +0530, Krishna Kurapati PSSNV wrote:
+>>> On 21.06.2023 06:36, Krishna Kurapati wrote:
+>>>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+>>>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+>>>> platforms.
+>>>>
+>>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > 
-> On Wed, Jun 07, 2023 at 02:16:37PM +0200, Johan Hovold wrote:
->> On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
+>>> Not a comment to the patch, but very nice that Qcom ensured every
+>>> endpoint is wakeup-capable, this used not to be the case before :D
 > 
->>>   static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
->>>   {
->>>   	u32 reg;
->>> @@ -413,13 +423,16 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->>>   {
->>>   	u32 val;
->>>   	int i, ret;
->>> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
->>>   
->>>   	if (qcom->is_suspended)
->>>   		return 0;
->>>   
->>> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
->>> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
->>> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
->>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
->>> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
->>> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
->>> +			dev_err(qcom->dev, "HS-PHY%d not in L2\n", i);
->>> +	}
+>> Yes wakeup is supported by all ports now, but I didn't make those
+>> changes now as I wanted to keep driver code diff minimal and don't need
+>> wakeup support for the product currently. But for sure, will update
+>> driver code to handle wakeup on all ports in near future.
 > 
->> When testing this on the X13s I get:
->>
->> 	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
->>
->> for the third port, whose status registers always seems to return zero
->> (e.g. as if we're checking the wrong register?):
->>
->> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 0, pwr_event_stat = 38103c
->> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 1, pwr_event_stat = 38103c
->> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 2, pwr_event_stat = 00
->> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 3, pwr_event_stat = 140030
->>
->> I verified that everything appears to work as expected on sa8295p-adp.
->>
->> Do you have any idea of what may be causing this?
+> Why didn't you include it in v9? I thought you had a working
+> implementation for this?
 > 
-> You never replied to this; do you have any idea why the status register
-> for the second port seemingly always read back as 0 on the X13s?
+> Since wakeup will be another case where glue and core need to interact,
+> it's good to have the wakeup implementation from the start to be able to
+> evaluate your multiport implementation properly.
+> 
+> Right now it looks like you only added wakeup interrupt lookup and
+> request, but then you never actually enable them which is not very nice.
 > 
 > Johan
 
 Hi Johan,
 
-  Missed this mail. This never popped up on my system. So no idea what 
-is different in Lenovo X13s. Might need to check with team internally.
+  As mentioned in one of my comments on earlier patches, wakeup is not a 
+requirement I currently need to work on for the product. I added 
+multiport IRQ support only because my pathces need to modify IRQ names. 
+If there is a customer requirement I get in the future, I will 
+definitely implement the wakeup part. But for now, I would like to stick 
+to what is necessary for getting Multiport to work.
 
 Regards,
 Krishna,
