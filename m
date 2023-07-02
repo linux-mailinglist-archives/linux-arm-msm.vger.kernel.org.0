@@ -2,87 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CFAD744CB7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 10:29:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07B7F744DC4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 15:43:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229821AbjGBI3Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jul 2023 04:29:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36478 "EHLO
+        id S229949AbjGBNnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jul 2023 09:43:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229779AbjGBI3Y (ORCPT
+        with ESMTP id S229460AbjGBNnY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jul 2023 04:29:24 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14E5E7A
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 01:29:22 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-992b66e5affso380156666b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 01:29:22 -0700 (PDT)
+        Sun, 2 Jul 2023 09:43:24 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54436E69
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 06:43:23 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b69923a715so54459221fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 06:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688286561; x=1690878561;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=w1biNblKgtJgfVRZwDEOvjX/I6fTJ7KpT17Ok3nZx5M=;
-        b=uMqJUTA42zzTNobzfwK8XPREa/a9vj3Xfc/7KWipp1cnp/Jg0XeVY+x4k214j2yY2p
-         QoGg5zzyWZV0KJSDggJXTP6f6mbFRRUdjqNSf2NxLj7/wA9SRfIAm46ygvQ63r2uEXpX
-         fNoQjpgZVebllbu86RL5eRXcyUHR8Qhpzzihk9iDeJafk2zy7kZGgIGhfVity3Cmmwg0
-         pLKzBMIuwWp2HAWLosqYLZF9VyQAZld2sBX35Cf/wCq5foc92YcnAyZQjJYvz2dvD+H2
-         e3pIDjwRFmrF+Bh5CEoYUtwBR6uYTLkmSgeZBlRZgUB4OyFMScKs8aVTjco9NECFFkB6
-         sGog==
+        d=linaro.org; s=google; t=1688305401; x=1690897401;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vLuexr7NAUfWT2/HDhg3mtXe+TEPWAZI5+vgB3CHmyY=;
+        b=crWkKGLrsCFZYD44IWSkgz7sUBAj//nDbADt7I4QT52qGVUJtyHc15/EcBII+EyaTf
+         GS29diRMetsHEVIGZQBpb9go5+5s6/OiVr+AvZPuTIJ1JY0uzlo298BNtIuOiKRUl0ZR
+         Rl3t55+OwBjAxWpyPnalpI/uKq4UHLlxx9z4slJzg99a3Hf/44HH1qDLDPc9k63CpTAd
+         XYfQ/c+3U5Jal1aajm9VoA4/gPUP7NO2nXwpHdvvxHlPYG7Wq3qB0WCyFhKdsrsAChmC
+         zJPU2laVW/PdvxJ2mpsgSEFtfPwDd4hx4hrqKJGpCGo0/AVrKy6gKVmUKyhi1qEMjIRy
+         jlWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688286561; x=1690878561;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w1biNblKgtJgfVRZwDEOvjX/I6fTJ7KpT17Ok3nZx5M=;
-        b=Wjs+4XaK+ppPpKSJx7kRv98P7sXouPMRSMG2ZzTbtg+hMKBM1kmFnJDydvCunyBIPN
-         EzhwWDcXv8BJUS4jbO7a38yLVFP35dTV9G8CLzz1xLs4wa0htq78zfEEPQlEgZDHLAG6
-         3Yblr+oS3m92MW7apSqXDTp9zo0fDkNgC5uaiYdPuT1nEofnnjPmy2C0YKl6QvbY1dax
-         /AKlebjov7YeJvrNbmkO7QkyPDzcvkiC0oNlDL3cft+YhxW+jXGcrYruU6MTLN4cq1yQ
-         dIR995O06S50LHyySE7f28q/XhypEWnmq/F39w217wkg9FyXyOoJmf7TjkX5gRl3R2aJ
-         weWw==
-X-Gm-Message-State: ABy/qLaHn621yZwl19G+em3dGppfzTIQqxJgdJlUEnGkdQ7OHGekXLCA
-        B9uAuLbYuEWvGtJo8UlxyLPrPg==
-X-Google-Smtp-Source: APBJJlEq7536nmIYj1sWz/vSWp1KlO2nfy5GE5f1MJ94C2mivpQ6trVaYeegVFmTsikSDWcGy6GDVg==
-X-Received: by 2002:a17:906:e48:b0:988:882b:9a3 with SMTP id q8-20020a1709060e4800b00988882b09a3mr5395799eji.36.1688286561035;
-        Sun, 02 Jul 2023 01:29:21 -0700 (PDT)
-Received: from [192.168.10.214] ([217.169.179.6])
-        by smtp.gmail.com with ESMTPSA id s22-20020aa7cb16000000b0051bed498851sm9043073edt.54.2023.07.02.01.29.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Jul 2023 01:29:20 -0700 (PDT)
-Message-ID: <29af84dc-7db8-0c43-07b6-eb743cf25e57@linaro.org>
-Date:   Sun, 2 Jul 2023 10:29:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
- support
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
+        d=1e100.net; s=20221208; t=1688305401; x=1690897401;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vLuexr7NAUfWT2/HDhg3mtXe+TEPWAZI5+vgB3CHmyY=;
+        b=U7a9GLqubLWBjcW6Cf7uQkxRwx5Pn6G7leNWO9mmqvRL/1FftiYoTAEdk9pWfSmSXV
+         oV1tJnxpYYOynJk3m54aBaemqzlA7/5lrzpkW6x0A/zpg7PlGvKT5sp3xhEyrhw/FCbb
+         D2sxab8YeZWG+7KVeNPKdLfN5l9l2H3cmQN7PO4kMc7HHWfq6uvBfPFE4sP0I4FZHug/
+         5ytteEb7nsaqOkAaIM5Dzf/wR74P4m6WBSiWDWmHYRSnfu8Vu2hknBI4fvPfciCnIce4
+         XPn+z4oUehCAnmmnJNktBRSMobjSwmNad9xRA48v1QHiDqQhFzPVLzeOc3cCOGBTvlNV
+         8pxg==
+X-Gm-Message-State: ABy/qLbKRmPc2uieFGc588LwNVAMpWNYSdYzYlX9BtDaGRlnMYK96lHZ
+        PtAekL9SM6IEDIzRPVXPJjzy3A==
+X-Google-Smtp-Source: APBJJlH0RKAiT0zU+eSKW8eNftrtsYD75IJ1pBObeYmC4hVNqP1AYS0xA+to1IqRF3He77q+WopvmQ==
+X-Received: by 2002:a2e:9d98:0:b0:2b6:cc3b:5645 with SMTP id c24-20020a2e9d98000000b002b6cc3b5645mr5559622ljj.49.1688305401420;
+        Sun, 02 Jul 2023 06:43:21 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id d9-20020a2e96c9000000b002b6988ca476sm4310650ljj.101.2023.07.02.06.43.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Jul 2023 06:43:20 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Greg KH <gregkh@linuxfoundation.org>
-Cc:     corbet@lwn.net, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
-        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
-        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        Alex Elder <elder@linaro.org>
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <2023062814-chance-flounder-f002@gregkh>
- <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
- <cc30660f-dd72-aade-6346-a93c6ad4b695@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <cc30660f-dd72-aade-6346-a93c6ad4b695@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v2 00/27] ARM: dts: qcom: cleanup PMIC usage
+Date:   Sun,  2 Jul 2023 16:42:53 +0300
+Message-Id: <20230702134320.98831-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,26 +72,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/06/2023 18:04, Mukesh Ojha wrote:
->>
->>> We don't add layers when they are not needed, and never when there is no
->>> actual user.  If you need the extra "complexity" later, then add it
->>> later when it is needed as who knows when that will ever be.
->>>
->>> Please redo this series based on that, thanks.
->>
->> My bigger issue with this whole series is what would this all look
->> like if every SoC vendor upstreamed their own custom dumping
->> mechanism. That would be a mess. (I have similar opinions on the
->> $soc-vendor hypervisors.)
+While reviewing APQ8064 CPUFreq patchset, Konrad pointed out that PMICs
+are not a part of SoC and as such do not belong to the per-SoC files.
 
-Mukesh,
+Cleanup the way 32-bit Qualcomm platforms treat PMICs:
 
-LPC CFP is still open. There will be also Android and Kernel Debugging
-LPC microconference tracks. Coming with a unified solution could be a
-great topic for LPC. Solutions targeting only one user are quite often
-frowned upon.
+- Move SSBI PMICs to separate files (as a bonus merging two different
+  instances of PM8921, benefitting both platforms).
 
-Best regards,
-Krzysztof
+- Include such PMIC files only from the board files, keeping SoC file
+  generic.
+
+- Move RPM regulator definitions to board files too. They do not belong
+  to the SoC dtsi files for the same reason.
+
+- Move PMIC-specific GPIOs and supply properties to individual board
+  files.
+
+Changes since v1:
+- To ease reviewing break cleanups from the  "split PMIC" patches
+  (Konrad).
+
+Dmitry Baryshkov (27):
+  ARM: dts: qcom: apq8064: correct XOADC register address
+  ARM: dts: qcom: msm8960: introduce label for PMIC keypad
+  ARM: dts: qcom: msm8660-surf: use keypad label directly
+  ARM: dts: qcom: apq8064-nexus7: move sdcc1 node to proper place
+  ARM: dts: qcom: mdm9615-wp8548-mangoh-green: group include clauses
+  ARM: dts: qcom: strip prefix from PMIC files
+  ARM: dts: qcom: apq8064: fix PMIC node labels
+  ARM: dts: qcom: mdm9615: fix PMIC node labels
+  ARM: dts: qcom: msm8660: fix PMIC node labels
+  ARM: dts: qcom: msm8960: fix PMIC node labels
+  ARM: dts: qcom: msm8960: split PMIC to separate dtsi files
+  ARM: dts: qcom: apq8064: split PMICs to separate dtsi files
+  ARM: dts: qcom: mdm9615: split PMIC to separate dtsi files
+  ARM: dts: qcom: msm8660: split PMIC to separate dtsi files
+  ARM: dts: qcom: pm8058: reorder nodes
+  ARM: dts: qcom: pm8921: reorder nodes
+  ARM: dts: qcom: pm8018: move reg property
+  ARM: dts: qcom: pm8921: move reg property
+  ARM: dts: qcom: pm8058: use defined IRQ flags
+  ARM: dts: qcom: pm8921: switch to interrupts-extended
+  ARM: dts: qcom: pm8018: switch to interrupts-extended
+  ARM: dts: qcom: pm8058: switch to interrupts-extended
+  ARM: dts: qcom: apq8064: move RPM regulators to board files
+  ARM: dts: qcom: mdm9615: move RPM regulators to board files
+  ARM: dts: qcom: msm8660: move RPM regulators to board files
+  ARM: dts: qcom: msm8960: drop useless rpm regulators node
+  ARM: dts: qcom: msm8974: move regulators to board files
+
+ arch/arm/boot/dts/qcom/pm8018.dtsi            |  55 +++++
+ arch/arm/boot/dts/qcom/pm8058.dtsi            | 159 +++++++++++++
+ .../qcom/{qcom-pm8226.dtsi => pm8226.dtsi}    |   0
+ arch/arm/boot/dts/qcom/pm8821.dtsi            |  22 ++
+ .../qcom/{qcom-pm8841.dtsi => pm8841.dtsi}    |   0
+ arch/arm/boot/dts/qcom/pm8921.dtsi            | 136 +++++++++++
+ .../qcom/{qcom-pm8941.dtsi => pm8941.dtsi}    |   0
+ .../qcom/{qcom-pma8084.dtsi => pma8084.dtsi}  |   0
+ .../dts/qcom/{qcom-pmx55.dtsi => pmx55.dtsi}  |   0
+ .../dts/qcom/{qcom-pmx65.dtsi => pmx65.dtsi}  |   0
+ .../dts/qcom/qcom-apq8026-asus-sparrow.dts    |   2 +-
+ .../dts/qcom/qcom-apq8026-huawei-sturgeon.dts |   2 +-
+ .../boot/dts/qcom/qcom-apq8026-lg-lenok.dts   |   2 +-
+ .../qcom-apq8026-samsung-matisse-wifi.dts     |   2 +-
+ .../dts/qcom/qcom-apq8060-dragonboard.dts     | 146 +++++++-----
+ .../dts/qcom/qcom-apq8064-asus-nexus7-flo.dts |  69 +++---
+ .../boot/dts/qcom/qcom-apq8064-cm-qs600.dts   |  31 +--
+ .../boot/dts/qcom/qcom-apq8064-ifc6410.dts    |  38 ++--
+ .../qcom-apq8064-sony-xperia-lagan-yuga.dts   | 110 +++++----
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi      | 195 +---------------
+ .../dts/qcom/qcom-apq8074-dragonboard.dts     |  31 ++-
+ .../boot/dts/qcom/qcom-apq8084-ifc6540.dts    |   2 +-
+ arch/arm/boot/dts/qcom/qcom-apq8084-mtp.dts   |   2 +-
+ .../qcom/qcom-mdm9615-wp8548-mangoh-green.dts |   4 +-
+ .../boot/dts/qcom/qcom-mdm9615-wp8548.dtsi    | 139 +++++++++++-
+ arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi      | 181 +--------------
+ arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts  |  59 +++--
+ arch/arm/boot/dts/qcom/qcom-msm8660.dtsi      | 214 +-----------------
+ arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts   |  21 +-
+ .../qcom/qcom-msm8960-samsung-expressatt.dts  |   3 +-
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi      |  42 +---
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    |  31 ++-
+ .../qcom/qcom-msm8974-sony-xperia-rhine.dtsi  |  31 ++-
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi      |  27 ---
+ .../qcom/qcom-msm8974pro-fairphone-fp2.dts    |  31 ++-
+ .../qcom/qcom-msm8974pro-oneplus-bacon.dts    |  31 ++-
+ .../dts/qcom/qcom-msm8974pro-samsung-klte.dts |  12 +-
+ ...-msm8974pro-sony-xperia-shinano-castor.dts |  31 ++-
+ arch/arm/boot/dts/qcom/qcom-sdx55-mtp.dts     |   2 +-
+ arch/arm/boot/dts/qcom/qcom-sdx55-t55.dts     |   2 +-
+ .../dts/qcom/qcom-sdx55-telit-fn980-tlb.dts   |   2 +-
+ arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts     |   2 +-
+ 42 files changed, 996 insertions(+), 873 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8018.dtsi
+ create mode 100644 arch/arm/boot/dts/qcom/pm8058.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8226.dtsi => pm8226.dtsi} (100%)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8821.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8841.dtsi => pm8841.dtsi} (100%)
+ create mode 100644 arch/arm/boot/dts/qcom/pm8921.dtsi
+ rename arch/arm/boot/dts/qcom/{qcom-pm8941.dtsi => pm8941.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pma8084.dtsi => pma8084.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pmx55.dtsi => pmx55.dtsi} (100%)
+ rename arch/arm/boot/dts/qcom/{qcom-pmx65.dtsi => pmx65.dtsi} (100%)
+
+-- 
+2.39.2
 
