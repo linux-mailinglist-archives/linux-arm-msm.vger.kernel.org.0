@@ -2,379 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9D59744DFA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 15:43:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77AF9744E16
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 16:31:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbjGBNn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jul 2023 09:43:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42224 "EHLO
+        id S229702AbjGBObl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jul 2023 10:31:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbjGBNnx (ORCPT
+        with ESMTP id S229516AbjGBObk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jul 2023 09:43:53 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE45C10E3
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 06:43:43 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b5c2433134so44700441fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 06:43:43 -0700 (PDT)
+        Sun, 2 Jul 2023 10:31:40 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A53E5E;
+        Sun,  2 Jul 2023 07:31:39 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id 46e09a7af769-6b74b37fbe0so3060982a34.1;
+        Sun, 02 Jul 2023 07:31:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688305422; x=1690897422;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1688308299; x=1690900299;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lYK7jyDPhdkvFKyhVvnwQ7HbIDbOuUQGXBtxnQGSLEk=;
-        b=Y0SWxhrHLFr3dJ2orUPnxSxejwivvE6IwyioIWbB+dpSUrvO9edNFaKJGBnHcUKoQv
-         +4FybETbZinpM+n4eNSoDTN0sNbk73r3evRXenuZzLxIrMdvO3oQiJAENcIyhY0+TBYu
-         954cFvrRt9ptFj8zIOdAbHAzFrvzww+oCDrRoAWgO2WqkO3BNacKT3wz4GnDW82UXh2T
-         /PjpKdQ+k0lCIE7vo2vnjcy7o7O3lg2D0wqzLjUnMlQFZ7R7D6+Du8279YvlrsSb1aeK
-         g/sn1BByR5qZupTpJ0lMgQxidrWk/urDEGLjEB8Q/Yqe/OKqihEkyeadegjcVokyN8OQ
-         L1kA==
+        bh=88WutuRFo5WgJcYE0wkhr8U2pMfpdX9vpFvhW0Euzqw=;
+        b=Q6NyYbxP2qEn2Xutl+FCmmv4u6vk4SUdd0kUp1aKMGv2lL0rWAaH/9qukZ808LJrSu
+         W0I8koTlOwYKzChZyBTYE1sdeZBOXUOhJiNiiuv8Vn/9eLvcgeCr8NyJvaxhKn5bXn3H
+         TZi83tOqNzbqK/7arYfUL9NIfvb7mHFbB+zDIvWr0pMDygLmnSzhjNTf+OMhAXDkuHh3
+         YptOeF0ontuAsHf7dGPHLkKoWNVaUSynyViGQm/B/FvldaikeWo451PxAeeLlUKnSq4y
+         RONdiCRiIrpf7LsliZP2NvVPE8ROVV18aO/EWv/FVs9mc2r5ARNsjoCQLYcdFppGpDDC
+         lbRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688305422; x=1690897422;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1688308299; x=1690900299;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lYK7jyDPhdkvFKyhVvnwQ7HbIDbOuUQGXBtxnQGSLEk=;
-        b=c9Vq0/Xh6fo/C99o7jMih+0gMECxM7gukTUat+WrfTuKhB//K9wIxB/7gD8HHx05as
-         pE6+im8/2vC68uOpFvjgOj0xpVCPRhGmxl+m7uVgf8IZ/B59uyZZgts/4R/VWVMDhlUy
-         0ozLQQuUdB1SLuj4z2XanEtI6tttA/gDRVE5C0LiCc3RCzVjv5wtWhQ1G9w6ft4bmO3a
-         l4BFjvZLAQnyTn2W8KDwblwas+nwFImg679C/SLCEEV56Cyyo7buBLPvgPBzC1FkUwZi
-         7o7R/NeRedvMCTihC4HBUnpNPSAt7jpOocAUii5/OuRjTUQ63qKb6JwuD5/ZO6isFAPJ
-         KT7g==
-X-Gm-Message-State: ABy/qLaeKhJDNe2nWDHeny9EM1OWCJPnsAB9cjjAly2iY+1JCAKcDk7x
-        kzoxmHtuLnzg5MMqE3SRiCDqyg==
-X-Google-Smtp-Source: APBJJlE3rDN2VekRnBE2h3G/JDjsV29YSwHVyMLZsMT4TkhLSfd01Use9FaA+uqEghQsRThRMT9nhg==
-X-Received: by 2002:a2e:9893:0:b0:2b6:da61:d5b9 with SMTP id b19-20020a2e9893000000b002b6da61d5b9mr1353902ljj.14.1688305421944;
-        Sun, 02 Jul 2023 06:43:41 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d9-20020a2e96c9000000b002b6988ca476sm4310650ljj.101.2023.07.02.06.43.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jul 2023 06:43:41 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 27/27] ARM: dts: qcom: msm8974: move regulators to board files
-Date:   Sun,  2 Jul 2023 16:43:20 +0300
-Message-Id: <20230702134320.98831-28-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230702134320.98831-1-dmitry.baryshkov@linaro.org>
-References: <20230702134320.98831-1-dmitry.baryshkov@linaro.org>
+        bh=88WutuRFo5WgJcYE0wkhr8U2pMfpdX9vpFvhW0Euzqw=;
+        b=RkSVCvJPvsD2h1mMg8NdaypoQlpTddpaGMQXQDNYNmGaULLqGlWsvm7Y9Brj4rW6RS
+         mONcSECdOLsvhmFc0mz+N1TSYXd+3UdUx1icCFrrOdWei6DEJHZnJSURfKG7jaA0z/of
+         jdEhO1szeZEJekdiuW3w9fn7tqz97fwotg3M5oCZRBPTz2cgcAyV/eK+ZDST8hv6DKtY
+         Kbf1zJhA+zf5iL5Kn6YImzW13+Kr5xPRkJFVpR2zOHY2lp3Cj8t13mfIfM7MqA4HJeJc
+         UveKQERVHDDuGo6guvUX/+0QsSYrJbMytgb+ZVONK8I6gnMRbt129Zi9WMf3Kl/bAAtP
+         SoGQ==
+X-Gm-Message-State: AC+VfDx81YUwaHW2tvB2h7XSnZGvaOxnfjT6ormUBb+97+8NfYF7QwnN
+        x9TEnWwOGxhfklZDXTyLIyqr3SPg6mkUjApXFcA=
+X-Google-Smtp-Source: ACHHUZ70JPiogGnsvR1zJCU7ntAzo1ZSFvSXj5OfCRUvRh+KkQrmPShZS1FAwuEHFRDFaFf/8Ei7rvSLinqdYERzTrc=
+X-Received: by 2002:a9d:7b4e:0:b0:6b8:7fe2:cde5 with SMTP id
+ f14-20020a9d7b4e000000b006b87fe2cde5mr9968767oto.24.1688308299043; Sun, 02
+ Jul 2023 07:31:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org>
+ <CAF6AEGsH0BZd_yyn7UtJ3cLbbw2A5qdg8gQ6SORzQKjsMsnvHA@mail.gmail.com> <CAA8EJpripp+Hf=GvCit75naGQqK8owHzPb+VuYHin393HcFPwA@mail.gmail.com>
+In-Reply-To: <CAA8EJpripp+Hf=GvCit75naGQqK8owHzPb+VuYHin393HcFPwA@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 2 Jul 2023 07:31:27 -0700
+Message-ID: <CAF6AEGsdPhWO+hw3FHiqtMfiF34_RtrvvS4apykHNBbtmdj7fQ@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/adreno: Assign revn to A635
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The vph-pwr and boost regulators (even if they are unified by design)
-are not a property of SoC, so move them to board files.
+On Sat, Jul 1, 2023 at 5:24=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Sat, 1 Jul 2023 at 18:50, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Fri, Jun 30, 2023 at 4:12=E2=80=AFPM Konrad Dybcio <konrad.dybcio@li=
+naro.org> wrote:
+> > >
+> > > Recently, a WARN_ON() was introduced to ensure that revn is filled be=
+fore
+> > > adreno_is_aXYZ is called. This however doesn't work very well when re=
+vn is
+> > > 0 by design (such as for A635). Fill it in as a stopgap solution for
+> > > -fixes.
+> > >
+> > > Fixes: cc943f43ece7 ("drm/msm/adreno: warn if chip revn is verified b=
+efore being set")
+> > > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > ---
+> > > Changes in v2:
+> > > - add fixes
+> > > - Link to v1: https://lore.kernel.org/r/20230628-topic-a635-v1-1-5056=
+e09c08fb@linaro.org
+> > > ---
+> > >  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu=
+/drm/msm/adreno/adreno_device.c
+> > > index cb94cfd137a8..8ea7eae9fc52 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > @@ -345,6 +345,7 @@ static const struct adreno_info gpulist[] =3D {
+> > >                 .address_space_size =3D SZ_16G,
+> > >         }, {
+> > >                 .rev =3D ADRENO_REV(6, 3, 5, ANY_ID),
+> > > +               .revn =3D 635,
+> > >                 .fw =3D {
+> > >                         [ADRENO_FW_SQE] =3D "a660_sqe.fw",
+> > >                         [ADRENO_FW_GMU] =3D "a660_gmu.bin",
+> > >
+> >
+> > hmm, I realized a problem with this, it would change what
+> > MSM_PARAM_GPU_ID and more importantly MSM_PARAM_CHIP_ID return..  The
+> > former should be "harmless", although it isn't a good idea for uabi
+> > changes to be a side effect of a fix.  The latter is more problematic.
+>
+> I'd say MSM_PARAM_GPU_ID is broken for 635 anyway (won't it return 0
+> in this case)?
+> So the new value should be correct.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../dts/qcom/qcom-apq8074-dragonboard.dts     | 27 +++++++++++++++++++
- .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 27 +++++++++++++++++++
- .../qcom/qcom-msm8974-sony-xperia-rhine.dtsi  | 27 +++++++++++++++++++
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi      | 27 -------------------
- .../qcom/qcom-msm8974pro-fairphone-fp2.dts    | 27 +++++++++++++++++++
- .../qcom/qcom-msm8974pro-oneplus-bacon.dts    | 27 +++++++++++++++++++
- .../dts/qcom/qcom-msm8974pro-samsung-klte.dts | 10 ++++++-
- ...-msm8974pro-sony-xperia-shinano-castor.dts | 27 +++++++++++++++++++
- 8 files changed, 171 insertions(+), 28 deletions(-)
+no, it is very much intentional that GPU_ID returns 0 for newer GPUs,
+userspace should be matching on CHIP_ID.  (Also, we should be moving
+away from trying to infer generation/etc from CHIP_ID.. userspace is
+farther ahead of the kernel on this.)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom/qcom-apq8074-dragonboard.dts
-index 5a8af16bf02d..3e5311e7196e 100644
---- a/arch/arm/boot/dts/qcom/qcom-apq8074-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-apq8074-dragonboard.dts
-@@ -49,6 +49,33 @@ mpss_region: mpss@ac00000 {
- 			no-map;
- 		};
- 	};
-+
-+	vreg_boost: vreg-boost {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg-boost";
-+		regulator-min-microvolt = <3150000>;
-+		regulator-max-microvolt = <3150000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		gpio = <&pm8941_gpios 21 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&boost_bypass_n_pin>;
-+	};
-+
-+	vreg_vph_pwr: vreg-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph-pwr";
-+
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		regulator-always-on;
-+	};
- };
- 
- &blsp1_uart2 {
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
-index da99f770d4f5..ca402b4a68bd 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -60,6 +60,33 @@ vibrator {
- 		enable-gpios = <&tlmm 60 GPIO_ACTIVE_HIGH>;
- 	};
- 
-+	vreg_boost: vreg-boost {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg-boost";
-+		regulator-min-microvolt = <3150000>;
-+		regulator-max-microvolt = <3150000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		gpio = <&pm8941_gpios 21 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&boost_bypass_n_pin>;
-+	};
-+
-+	vreg_vph_pwr: vreg-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph-pwr";
-+
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		regulator-always-on;
-+	};
-+
- 	vreg_wlan: wlan-regulator {
- 		compatible = "regulator-fixed";
- 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi
-index 23ae474698aa..a43341ae4495 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi
-@@ -65,6 +65,33 @@ ramoops@3e8e0000 {
- 			pmsg-size = <0x80000>;
- 		};
- 	};
-+
-+	vreg_boost: vreg-boost {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg-boost";
-+		regulator-min-microvolt = <3150000>;
-+		regulator-max-microvolt = <3150000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		gpio = <&pm8941_gpios 21 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&boost_bypass_n_pin>;
-+	};
-+
-+	vreg_vph_pwr: vreg-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph-pwr";
-+
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		regulator-always-on;
-+	};
- };
- 
- &blsp1_i2c2 {
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-index aeca504918a0..a4ff1fe63903 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-@@ -2376,31 +2376,4 @@ timer {
- 			     <GIC_PPI 1 0xf08>;
- 		clock-frequency = <19200000>;
- 	};
--
--	vreg_boost: vreg-boost {
--		compatible = "regulator-fixed";
--
--		regulator-name = "vreg-boost";
--		regulator-min-microvolt = <3150000>;
--		regulator-max-microvolt = <3150000>;
--
--		regulator-always-on;
--		regulator-boot-on;
--
--		gpio = <&pm8941_gpios 21 GPIO_ACTIVE_HIGH>;
--		enable-active-high;
--
--		pinctrl-names = "default";
--		pinctrl-0 = <&boost_bypass_n_pin>;
--	};
--
--	vreg_vph_pwr: vreg-vph-pwr {
--		compatible = "regulator-fixed";
--		regulator-name = "vph-pwr";
--
--		regulator-min-microvolt = <3600000>;
--		regulator-max-microvolt = <3600000>;
--
--		regulator-always-on;
--	};
- };
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts
-index 24f9521a0be6..9cbdfe62051e 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts
-@@ -57,6 +57,33 @@ vibrator {
- 		enable-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
- 		vcc-supply = <&pm8941_l18>;
- 	};
-+
-+	vreg_boost: vreg-boost {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg-boost";
-+		regulator-min-microvolt = <3150000>;
-+		regulator-max-microvolt = <3150000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		gpio = <&pm8941_gpios 21 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&boost_bypass_n_pin>;
-+	};
-+
-+	vreg_vph_pwr: vreg-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph-pwr";
-+
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		regulator-always-on;
-+	};
- };
- 
- &blsp1_i2c2 {
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-oneplus-bacon.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-oneplus-bacon.dts
-index c0ca264d8140..6d1412aec45a 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-oneplus-bacon.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-oneplus-bacon.dts
-@@ -51,6 +51,33 @@ event-hall-sensor {
- 			debounce-interval = <150>;
- 		};
- 	};
-+
-+	vreg_boost: vreg-boost {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg-boost";
-+		regulator-min-microvolt = <3150000>;
-+		regulator-max-microvolt = <3150000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		gpio = <&pm8941_gpios 21 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&boost_bypass_n_pin>;
-+	};
-+
-+	vreg_vph_pwr: vreg-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph-pwr";
-+
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		regulator-always-on;
-+	};
- };
- 
- &blsp1_i2c1 {
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte.dts
-index 325feb89b343..ca3aa16b4b10 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte.dts
-@@ -155,7 +155,15 @@ vreg_panel: panel-regulator {
- 		enable-active-high;
- 	};
- 
--	/delete-node/ vreg-boost;
-+	vreg_vph_pwr: vreg-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph-pwr";
-+
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		regulator-always-on;
-+	};
- };
- 
- &blsp1_i2c2 {
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index efe21289c9fe..b76d51b1b667 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -84,6 +84,33 @@ vreg_vsp: lcd-dcdc-regulator {
- 		pinctrl-0 = <&lcd_dcdc_en_pin_a>;
- 	};
- 
-+	vreg_boost: vreg-boost {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg-boost";
-+		regulator-min-microvolt = <3150000>;
-+		regulator-max-microvolt = <3150000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		gpio = <&pm8941_gpios 21 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&boost_bypass_n_pin>;
-+	};
-+
-+	vreg_vph_pwr: vreg-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph-pwr";
-+
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		regulator-always-on;
-+	};
-+
- 	vreg_wlan: wlan-regulator {
- 		compatible = "regulator-fixed";
- 
--- 
-2.39.2
+> But more importantly, why are we exporting speedbin in
+> MSM_PARAM_CHIP_ID only if there is no revn? And why are we exporting
+> the speedbin at all as a part of CHIP_ID?
 
+Basically just being paranoid about not changing uabi.  It probably
+would be ok to export the speedbin for all, but I'd have to double
+check mesa version history.
+
+BR,
+-R
+
+> >
+> > I think I'm leaning more towards reverting commit cc943f43ece7
+> > ("drm/msm/adreno: warn if chip revn is verified before being set") for
+> > -fixes.  I'm still thinking about options for a longer term fix.
+> >
+> > BR,
+> > -R
+> >
+> >
+> > > ---
+> > > base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
+> > > change-id: 20230628-topic-a635-1b3c2c987417
+> > >
+> > > Best regards,
+> > > --
+> > > Konrad Dybcio <konrad.dybcio@linaro.org>
+> > >
+>
+>
+>
+> --
+> With best wishes
+> Dmitry
