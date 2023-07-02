@@ -2,71 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5AA6744BEC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 02:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F357744C9D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 10:08:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbjGBAYi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Jul 2023 20:24:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40622 "EHLO
+        id S229689AbjGBIIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jul 2023 04:08:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjGBAYh (ORCPT
+        with ESMTP id S229523AbjGBIId (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Jul 2023 20:24:37 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2F0C10D0
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Jul 2023 17:24:36 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-c4d04d50c4cso365871276.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Jul 2023 17:24:36 -0700 (PDT)
+        Sun, 2 Jul 2023 04:08:33 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 515FA10EB
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 01:08:31 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-51d885b0256so4280957a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 01:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688257476; x=1690849476;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=urzXsrUWGcl4UyBILDjOiaiWQROp3RKTi/U4MGrtkrM=;
-        b=iZOAttD7VYAawco0QIHpxIFtGOHtWeU2LK7KpRl3l8lETQjIYGQrHH/nupFtERCd8S
-         zkd5lbE+ICbk5XImA8eLJh7042KfwpiuS0jJY5lYUyyzenvvwpeMO/eyaySb1SYiDAuX
-         fS0Wjm8+2BNzXIA7y82Gq6/1uNnAVlLECP6Wzr1JJnEB2IpKwb+ySKCiEYoMuNdz6tDU
-         Zee4eH/NRcxjCnQRLQcjz8qzaGjtT76GGz4vuSDOiXcwX9I9yMXD51vx52yephJw64Wn
-         hiPxanafedXHM9UMODNhgfwMwD9pF0CZ1oVe063Jq8PvRQmsh+wrAgwNhVKTeGTpiLU/
-         aVtA==
+        d=linaro.org; s=google; t=1688285310; x=1690877310;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yiK+2U/avbBAV4omOI54stBTDSJ/EAt/1elJuMeHDBs=;
+        b=WIDy5mfFUskmICtRg/FM3Zrd6HN+Tub/DpXTeoIr+AsESgznR+Asn/JukLAm6dDv66
+         Rj33BnMIvvGl6YbB6qZlgE/zdekUD2YdGh35EKPcp/VnM6w+ZlHuG8XC1a+TU8kgkhku
+         19iH5iLh8QRRnzgXMjmfieQ4P1RQlUIz+bMHJuTy7+aZpw4kQgV1vPNfLlJxi0vnQjDO
+         H65axygqXaaS16E+gx065AQMk4Qs9blpg5IZ0QrfJGy50FEAXMO0itzHgG3rlA93bvHW
+         sFannxyMuPLJBjMu/YUtnlYW2ZR/eAhSC6C84M0sAtB2Noegyj/pczDlINTG6z7HJk47
+         oDCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688257476; x=1690849476;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=urzXsrUWGcl4UyBILDjOiaiWQROp3RKTi/U4MGrtkrM=;
-        b=jur0wVOZcSMMoYDwAYQXg1wKX9nfaVdu2a0e+9dr92FhOdr21XZKinWZAXSLm3IecV
-         VhNyd1ai7qi+/k7K8WMvPOQCKD0TZWj7TnGyY2qpQ4/+d0r2HiGPMhxqZuxxahiE2s/E
-         jPzY8ZTHjSj5pdQifeARO2YrS4mq52NLu9308WT+Qnn6dyVqMKKzEYFehPx5wLvN9GZw
-         zQbKKR/T38VSxpn8Q1rV4LULdy6frt0MU0MBm4W24z1u5pVpSi2wlFf6t3tR91VUq2ye
-         0yv1GmacEpkJgFSeIHJMivjMnppNG8IPEGMQuyLEbZ0C389e7i0nxCgErRILkELe5tfY
-         9+OQ==
-X-Gm-Message-State: ABy/qLZjI28PH6Yuv84pXkBeY0yqVvXa12++8xzt3302jox0visVqtMr
-        zEkWbnRb7ZDjTHL+gAqlktfFRRXS2iGhs/XuajbVzq9EEbELNYOa
-X-Google-Smtp-Source: APBJJlGs2pz64z1/S2iPbXPMC9ztG90XJQHlFFYOdiHoEDy/FwFGZpceDr9gy6ZybwdrV2YU3rBeED0TUj4duHCPyd8=
-X-Received: by 2002:a25:842:0:b0:c1d:4fce:464 with SMTP id 63-20020a250842000000b00c1d4fce0464mr5385642ybi.9.1688257475814;
- Sat, 01 Jul 2023 17:24:35 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688285310; x=1690877310;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yiK+2U/avbBAV4omOI54stBTDSJ/EAt/1elJuMeHDBs=;
+        b=ZaIs8Gb8amdx9/hOwZOlKv4xdyVMXZMuB/CDkZ1Q1drjpsyaYf/B1OBccL6hEuXcpB
+         iWyybRGFeztk5sLbEZrAVR/gf72xIIteG8tdpRMoKI63iiu8JKtKWwApCh8oGrB/0aZC
+         XUQdVbymZ5uqhsHcwL/DPtemqndYJzKxMI46RdY19/Aqe8AXGwdPMLsK3SNcH+1Zg1dq
+         Dvh3r/FcH5BCzGtRLzZZlqSZe0O06SiOYbgt3do+RM7v6C7XtWKIR1EUeyuqGIYQdcdX
+         9W1KjS6+QLavYDajOdaeUZbPOSWpR8G9+4eUeOd37fPtcZREk8MKqnc7ZFRuVabNh/L/
+         eKvw==
+X-Gm-Message-State: ABy/qLaRfF+3kfQomXGpkfupcE8SYEKJw0hgbx3E4lAGTGLU8NkhuAko
+        IlRuu75Z8WebdF/aVqqRh0T1gw==
+X-Google-Smtp-Source: APBJJlGWpB4p3HPFjgY/jo67bYOd3wrJxfJT99DmTEqvpdH/XPSeieNy/NxOiaIgYpFFRTESnRHoaA==
+X-Received: by 2002:aa7:d911:0:b0:51e:677:603f with SMTP id a17-20020aa7d911000000b0051e0677603fmr1212016edr.38.1688285309609;
+        Sun, 02 Jul 2023 01:08:29 -0700 (PDT)
+Received: from [192.168.10.214] ([217.169.179.6])
+        by smtp.gmail.com with ESMTPSA id z2-20020a50eb42000000b0051bf17d7710sm8772590edp.57.2023.07.02.01.08.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Jul 2023 01:08:28 -0700 (PDT)
+Message-ID: <6c5879dc-bc5c-0b02-0f1a-39b5b5cd5c20@linaro.org>
+Date:   Sun, 2 Jul 2023 10:08:27 +0200
 MIME-Version: 1.0
-References: <20230628-topic-a635-v2-1-5494c881b8be@linaro.org> <CAF6AEGsH0BZd_yyn7UtJ3cLbbw2A5qdg8gQ6SORzQKjsMsnvHA@mail.gmail.com>
-In-Reply-To: <CAF6AEGsH0BZd_yyn7UtJ3cLbbw2A5qdg8gQ6SORzQKjsMsnvHA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 2 Jul 2023 03:24:24 +0300
-Message-ID: <CAA8EJpripp+Hf=GvCit75naGQqK8owHzPb+VuYHin393HcFPwA@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/adreno: Assign revn to A635
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
+ support
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, corbet@lwn.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
+        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
+        andy.shevchenko@gmail.com
+Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,78 +84,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Jul 2023 at 18:50, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Fri, Jun 30, 2023 at 4:12=E2=80=AFPM Konrad Dybcio <konrad.dybcio@lina=
-ro.org> wrote:
-> >
-> > Recently, a WARN_ON() was introduced to ensure that revn is filled befo=
-re
-> > adreno_is_aXYZ is called. This however doesn't work very well when revn=
- is
-> > 0 by design (such as for A635). Fill it in as a stopgap solution for
-> > -fixes.
-> >
-> > Fixes: cc943f43ece7 ("drm/msm/adreno: warn if chip revn is verified bef=
-ore being set")
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> > Changes in v2:
-> > - add fixes
-> > - Link to v1: https://lore.kernel.org/r/20230628-topic-a635-v1-1-5056e0=
-9c08fb@linaro.org
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
-rm/msm/adreno/adreno_device.c
-> > index cb94cfd137a8..8ea7eae9fc52 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -345,6 +345,7 @@ static const struct adreno_info gpulist[] =3D {
-> >                 .address_space_size =3D SZ_16G,
-> >         }, {
-> >                 .rev =3D ADRENO_REV(6, 3, 5, ANY_ID),
-> > +               .revn =3D 635,
-> >                 .fw =3D {
-> >                         [ADRENO_FW_SQE] =3D "a660_sqe.fw",
-> >                         [ADRENO_FW_GMU] =3D "a660_gmu.bin",
-> >
->
-> hmm, I realized a problem with this, it would change what
-> MSM_PARAM_GPU_ID and more importantly MSM_PARAM_CHIP_ID return..  The
-> former should be "harmless", although it isn't a good idea for uabi
-> changes to be a side effect of a fix.  The latter is more problematic.
+On 28/06/2023 14:34, Mukesh Ojha wrote:
+> Minidump is a best effort mechanism to collect useful and predefined data
+> for first level of debugging on end user devices running on Qualcomm SoCs.
+> It is built on the premise that System on Chip (SoC) or subsystem part of
+> SoC crashes, due to a range of hardware and software bugs. Hence, the
+> ability to collect accurate data is only a best-effort. The data collected
+> could be invalid or corrupted, data collection itself could fail, and so on.
+> 
 
-I'd say MSM_PARAM_GPU_ID is broken for 635 anyway (won't it return 0
-in this case)?
-So the new value should be correct.
+...hundred of unrelated lines...
 
-But more importantly, why are we exporting speedbin in
-MSM_PARAM_CHIP_ID only if there is no revn? And why are we exporting
-the speedbin at all as a part of CHIP_ID?
+>  #define PANIC_PRINT_TASK_INFO          0x00000001
+>  #define PANIC_PRINT_MEM_INFO           0x00000002
+> @@ -261,6 +263,7 @@ void panic(const char *fmt, ...)
+>         int old_cpu, this_cpu;
+>         bool _crash_kexec_post_notifiers = crash_kexec_post_notifiers;
+> 
+> +       in_panic = true;
+>         if (panic_on_warn) {
+>                 /*
+>                  * This thread may hit another WARN() in the panic path.
+> --------------------------------------------------------------------------
+> 
+> Changes in v4:
 
->
-> I think I'm leaning more towards reverting commit cc943f43ece7
-> ("drm/msm/adreno: warn if chip revn is verified before being set") for
-> -fixes.  I'm still thinking about options for a longer term fix.
->
-> BR,
-> -R
->
->
-> > ---
-> > base-commit: 5c875096d59010cee4e00da1f9c7bdb07a025dc2
-> > change-id: 20230628-topic-a635-1b3c2c987417
-> >
-> > Best regards,
-> > --
-> > Konrad Dybcio <konrad.dybcio@linaro.org>
-> >
+Putting changelog at the end of very long cover letter does no help us
+to find it.
 
+>  - Redesigned the driver and divided the driver into front end and backend (smem) so
+>    that any new backend can be attached easily to avoid code duplication.
+>  - Patch reordering as per the driver and subsystem to easier review of the code.
+>  - Removed minidump specific code from remoteproc to minidump smem based driver.
+>  - Enabled the all the driver as modules.
+>  - Address comments made on documentation and yaml and Device tree file [Krzysztof/Konrad]
 
+That's not enough. Your binding changed a lot and I doubt we proposed
+such changes. You need to be specific.
 
---=20
-With best wishes
-Dmitry
+>  - Address comments made qcom_pstore_minidump driver and given its Device tree
+>    same set of properties as ramoops. [Luca/Kees]
+>  - Added patch for MAINTAINER file.
+>  - Include defconfig change as one patch as per [Krzysztof] suggestion.
+>  - Tried to remove the redundant file scope variables from the module as per [Krzysztof] suggestion.
+>  - Addressed comments made on dload mode patch v6 version 
+>    https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+> 
+> 
+
+Best regards,
+Krzysztof
+
