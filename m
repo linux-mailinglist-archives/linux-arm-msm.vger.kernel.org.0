@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46285744F1B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 19:44:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89C73744F28
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jul 2023 19:44:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230122AbjGBRnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jul 2023 13:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41100 "EHLO
+        id S230151AbjGBRni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jul 2023 13:43:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbjGBRnI (ORCPT
+        with ESMTP id S230133AbjGBRnJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jul 2023 13:43:08 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEE5E60
+        Sun, 2 Jul 2023 13:43:09 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 005B0E67
         for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 10:43:07 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b69ea3b29fso57503861fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 10:43:06 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b6a0e36d42so44609581fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 10:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688319785; x=1690911785;
+        d=linaro.org; s=google; t=1688319786; x=1690911786;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Spy/Rz/cAzxXKn/s1kOsEtZbTl790jBubt05JLTnLbc=;
-        b=xKVARl3+UEavVSKgEWAuZsemmhzlBXiFkYs+0+a2XvrnOYn+6kKi3bSiCv5xIQw1tH
-         4Rde/UGHJm+jLcm3GeOjdUs+4MGDzdDhAT7ftX17teNQ9upYzmBFMgaUq42DAPMgFd6H
-         uyms78+EI6eoPcCzjmRyIII9hr/uvxaqwNPJDpIZ2FrRxJzL6kOIEQ/30Gs1J/dPVse8
-         Woa/SGMa2A+7MFpeEaulOkFYgkdrm5TrJiKmLsEWZwXipJqZC192llmi6jTsje8z/kwm
-         gaIeEPTEBbn2BLwWoviRnJA7Dj5PD0gbg0adsKj9mwqeJBQMjnCPWx+6cwiTAECEOpN1
-         UjPA==
+        bh=PiQD8NPXoK/nu21wRjz7swL+/90HK35SEq9eEZ5XXuE=;
+        b=szb37ojCIrWyIbH7RQecSCJP/XyeHyNqmmaBh9onDYcDKLD+FIPvzBnDlqIGY+WFcw
+         QSD33xfVIt+XDzwzzbL+FjtjY4tFTUbGMGhLhC2jGAk9pRDEDs5N2y8VIYFEMCvarAJm
+         os4V8LiXrKwQddITdbdGB9vAqS5ygbeMTnnjgrWVmuTTjYdLn+FqO0dgWAC+10UiH3G8
+         cos0esosbF4r75PFBny36CIY2jBj8EGcfi/C9kEcQCD6RPt9v+915NdZ2Ets+OhY6lCb
+         773d9W5fipsjUR+o4HJ4WfKgXcr5rqPuWDKDjIY3vU57uNwXjiS0W1qBs58+XuljIjTy
+         ldeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688319785; x=1690911785;
+        d=1e100.net; s=20221208; t=1688319786; x=1690911786;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Spy/Rz/cAzxXKn/s1kOsEtZbTl790jBubt05JLTnLbc=;
-        b=XB1JswOIj/vOmeMUhucQZAOJmR+Sk9PhsYia40/hZ7Jm+/3qZW1OCrftc9NyDxrl7B
-         OXIwjirgvxoqQBF3SI+wRSyjrJFwYKzWt6m82wGjEyTX1wAGaZXMIpkVblCayb/YwQT9
-         dMLw4KkPYV3HiI0UMs8yRN/BvKQKako5XY+tjp8lLs++teifIp9CPrC2GaGImu6XEK7N
-         jkIBX9CKe6shX33MtbVQ8hYy4KwAu8R0Czt6nimuOTVTZ5DdbBGm3eGWOhhSrkEJVF66
-         uTXJKnFHo5sfCfrW2IT9AZFUC0Ff5RTgd3P6lUbtfDS6mMRztIDuLWxsBJha1zfYzGY6
-         5MdA==
-X-Gm-Message-State: ABy/qLZYflZqf2iQQpYosckoWNYh4vxxe8WdbfGy8pvbe6wtcu1W4kzI
-        kDXaRSl2oku1b/hDfXNTWSi6Ag==
-X-Google-Smtp-Source: APBJJlG6YkIBJol9D4H5EYF2JEsDZOPDID8nIXGAv1Q5LpjlHVZZ9535mZzz5sKuyxPv/7oF6o4Yig==
-X-Received: by 2002:a2e:8757:0:b0:2b6:cd71:6235 with SMTP id q23-20020a2e8757000000b002b6cd716235mr5413316ljj.42.1688319785438;
-        Sun, 02 Jul 2023 10:43:05 -0700 (PDT)
+        bh=PiQD8NPXoK/nu21wRjz7swL+/90HK35SEq9eEZ5XXuE=;
+        b=BuU0R1mOq/VrQ9tF92niOT5ZVJznpgitsnmrQtIFUSsB9bPmWS1eCf68kokvBcP3Q9
+         PgV7a+jOLEoH/q8kW8ZtnMUtLkYxKULrHA4XlCdG4WYx6ozIBwDAOFg4tC5mOxp9IBcS
+         OIBGPatUdsJvoOU/PsD55LC9ss7QtAwotPxcWTgjNfvkh6djdnHfzxmCq56h7I6elNQJ
+         kKIPi7qxAUzJoceB6lbenRCJtCSP/KLsBsxapH7ichmyUz//Vecaon+aWf3zeLnluCZz
+         UHYJjamji5863gPKhrNoyUu38oe818utXorKgIsLgH+ye0Fk8duFHscn2TYEjJmfE0tH
+         uUOQ==
+X-Gm-Message-State: ABy/qLYT5NNnaYEko8eZh1gSLobo4N0X3UCQmMVBUYO0XwQAkXvQIvyf
+        0tbNzX7B22C6rxW01L+MSpiPfQ==
+X-Google-Smtp-Source: APBJJlEHhMCDwDgf/6aVjCgaLcezDzbyqLrvjHOiuS5k6VoPxU2fW7+YSfalxB9Qt1FFfIok6q1SPw==
+X-Received: by 2002:a2e:8697:0:b0:2b6:bd20:c4be with SMTP id l23-20020a2e8697000000b002b6bd20c4bemr2409804lji.20.1688319786343;
+        Sun, 02 Jul 2023 10:43:06 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id v23-20020a2e9917000000b002b6daa3fa2csm1372550lji.69.2023.07.02.10.43.04
+        by smtp.gmail.com with ESMTPSA id v23-20020a2e9917000000b002b6daa3fa2csm1372550lji.69.2023.07.02.10.43.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jul 2023 10:43:04 -0700 (PDT)
+        Sun, 02 Jul 2023 10:43:05 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -67,9 +67,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
         Christian Marangi <ansuelsmth@gmail.com>,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH v3 19/28] ARM: dts: qcom: apq8064: declare SAW2 regulators
-Date:   Sun,  2 Jul 2023 20:42:37 +0300
-Message-Id: <20230702174246.121656-20-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 20/28] ARM: dts: qcom: apq8064: add Krait clock controller
+Date:   Sun,  2 Jul 2023 20:42:38 +0300
+Message-Id: <20230702174246.121656-21-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230702174246.121656-1-dmitry.baryshkov@linaro.org>
 References: <20230702174246.121656-1-dmitry.baryshkov@linaro.org>
@@ -85,66 +85,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SAW2 (SPM and AVS Wrapper) among other things is yet another way to
-handle CPU-related PMIC regulators. Provide a way to control voltage of
-these regulators.
+Add device node for the clock controller for the CPU cores and L2
+clocks. It will be further used by the L2 and by the CPUfreq nodes.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 26 ++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-index 5a85359d61e5..ab4b8f8270bb 100644
+index ab4b8f8270bb..c212215800d0 100644
 --- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
 +++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-@@ -408,25 +408,41 @@ acc3: clock-controller@20b8000 {
- 		saw0: power-manager@2089000 {
- 			compatible = "qcom,apq8064-saw2-v1.1-cpu", "qcom,saw2";
- 			reg = <0x02089000 0x1000>, <0x02009000 0x1000>;
--			regulator;
-+
-+			saw0_vreg: regulator {
-+				regulator-min-microvolt = <850000>;
-+				regulator-max-microvolt = <1300000>;
-+			};
+@@ -213,6 +213,32 @@ sleep_clk: sleep_clk {
  		};
+ 	};
  
- 		saw1: power-manager@2099000 {
- 			compatible = "qcom,apq8064-saw2-v1.1-cpu", "qcom,saw2";
- 			reg = <0x02099000 0x1000>, <0x02009000 0x1000>;
--			regulator;
++	kraitcc: clock-controller {
++		compatible = "qcom,krait-cc-v1";
++		clocks = <&gcc PLL9>, /* hfpll0 */
++			 <&gcc PLL10>, /* hfpll1 */
++			 <&gcc PLL16>, /* hfpll2 */
++			 <&gcc PLL17>, /* hfpll3 */
++			 <&gcc PLL12>, /* hfpll_l2 */
++			 <&acc0>,
++			 <&acc1>,
++			 <&acc2>,
++			 <&acc3>,
++			 <&l2cc>;
++		clock-names = "hfpll0",
++			      "hfpll1",
++			      "hfpll2",
++			      "hfpll3",
++			      "hfpll_l2",
++			      "acpu0_aux",
++			      "acpu1_aux",
++			      "acpu2_aux",
++			      "acpu3_aux",
++			      "acpu_l2_aux";
++		#clock-cells = <1>;
++		#interconnect-cells = <1>;
++	};
 +
-+			saw1_vreg: regulator {
-+				regulator-min-microvolt = <850000>;
-+				regulator-max-microvolt = <1300000>;
-+			};
- 		};
- 
- 		saw2: power-manager@20a9000 {
- 			compatible = "qcom,apq8064-saw2-v1.1-cpu", "qcom,saw2";
- 			reg = <0x020a9000 0x1000>, <0x02009000 0x1000>;
--			regulator;
-+
-+			saw2_vreg: regulator {
-+				regulator-min-microvolt = <850000>;
-+				regulator-max-microvolt = <1300000>;
-+			};
- 		};
- 
- 		saw3: power-manager@20b9000 {
- 			compatible = "qcom,apq8064-saw2-v1.1-cpu", "qcom,saw2";
- 			reg = <0x020b9000 0x1000>, <0x02009000 0x1000>;
--			regulator;
-+
-+			saw3_vreg: regulator {
-+				regulator-min-microvolt = <850000>;
-+				regulator-max-microvolt = <1300000>;
-+			};
- 		};
- 
- 		sps_sic_non_secure: sps-sic-non-secure@12100000 {
+ 	sfpb_mutex: hwmutex {
+ 		compatible = "qcom,sfpb-mutex";
+ 		syscon = <&sfpb_wrapper_mutex 0x604 0x4>;
 -- 
 2.39.2
 
