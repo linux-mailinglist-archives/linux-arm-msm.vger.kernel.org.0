@@ -2,62 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B03F4745980
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 12:00:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10DFE74599F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 12:06:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230090AbjGCKAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 06:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56184 "EHLO
+        id S229897AbjGCKGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 06:06:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231784AbjGCKAP (ORCPT
+        with ESMTP id S229849AbjGCKGb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 06:00:15 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2845E1FDF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 02:56:43 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b6a0d91e80so67087411fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 02:56:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688378202; x=1690970202;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yFcxpzOhBBd54XFri+2kajvhzFonIIEcAtw+w2KHC+0=;
-        b=ET94rEvWPCEzRWltZoBAcSq+oQ9T70y45rUYR0l/HS1wT3srLw67FMqpCQGbnb4gnE
-         Mu1pWz/TTFsQV2wohpWYqUjj641KolURlSDad+HNDXKIjgznxSqc/2bfzxvwwLrApVex
-         LW0nGe0BGPBkRdcVVL/symNezzzi1hm02UmXy2dTazmcZc3LLKe3iydt4rbihjh4KNUO
-         S/4D9wnpRbY0lAcwyoZGqtqrqj2ElVzXqOxIzxGQQ/L/9YtHO/KZUI/5UE6C38AUK0/S
-         Xt12x2v6o0Zldgr9DqfMKCNdLSlmfS202tg7Hq8vdp38/Sf2v1wBeE/P8XypVMx+Fmyv
-         Z9Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688378202; x=1690970202;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yFcxpzOhBBd54XFri+2kajvhzFonIIEcAtw+w2KHC+0=;
-        b=hNBLTTlACRFTfkCnNGALi8UljE6Ff/bbLvaNoMFrQdpGrfIFoMb+adMJw9D4cxkhG9
-         1DxldOLWkAZxBXWuCM7/LmFrPLlcfuFFgw6FCTqwem9W5iTBsEefrgaEdKNc5xxV6/qe
-         mYeb6adNEhZwCqFzJ2X3Cp/5pHE5AY5ju2Fzk+jlTtuZ3DVsFZG01ay2raFXNhCMcyJ/
-         VYeEjnr7bKamtNjwjM5HQ5mhjET577ytFXZDCvJgwUA3QzrMe4O3NaDYhEw8Y4c7+dCa
-         ryIr38QEzzybHhB3a+UdqD+0Eq0cGLp4vipjVThCrUbWv/bat2x/b9UaVtaieCWjEJ1U
-         dw4A==
-X-Gm-Message-State: ABy/qLY6OMCbo4N2VGjK2Ia/5ouzsT5Lt1ivuEzwbN/6qWWezlKoZH6r
-        YZsQLdBdU83UM1ZnCHA7/UkR2g==
-X-Google-Smtp-Source: APBJJlFiPp5D+M8CDsBXsrjtixc558rhCoZDaYFSfKBuUGv/1G4z1yLHFUp1S2TWgfy3NbzIeXdBmA==
-X-Received: by 2002:a2e:3318:0:b0:2b6:e794:5cea with SMTP id d24-20020a2e3318000000b002b6e7945ceamr1783785ljc.27.1688378202049;
-        Mon, 03 Jul 2023 02:56:42 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id y3-20020a2e7d03000000b002b6eeb204a1sm87134ljc.83.2023.07.03.02.56.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 02:56:41 -0700 (PDT)
-Message-ID: <0f4f5a4d-379b-c00c-6bf2-58c08fcc4551@linaro.org>
-Date:   Mon, 3 Jul 2023 11:56:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: minor whitespace cleanup around '='
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
+        Mon, 3 Jul 2023 06:06:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F2AE55;
+        Mon,  3 Jul 2023 03:06:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8A2A860EA5;
+        Mon,  3 Jul 2023 10:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C48C433C9;
+        Mon,  3 Jul 2023 10:06:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688378776;
+        bh=fg9u5qol+i4IE9oNqt3vMUT6VtW9bdPHOEaHOZk3P+w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nE02Uj7IjSAF3+TaZZKxSwCWOaQ/Ma2L2Eqp9+HVv2ub49lfF9UB8mhn1ftgsIGt2
+         YmYmFl/Mc6tMTW/v3wpNxrzE0A7dlYmh1DtWST88uQ/lMrs+RbAUrbJkSNMSHvzc3E
+         PeoHqM3CRVufm60o5/2l2LWrLohWcQk4sx49OR3JfAh7WogRlAU9QCcVPsb0k+pE8m
+         JTsUWwz2w6vC0tgTsoQ+OirGd8Q26q53nahjZfFWiBzjR4E3TfdsC8e50mL6ystkiK
+         D8+ibq/Iluf+I2LsoKQ3eRxXEIJkV3Yz9Mx5PpVdJpchWU5s5H/mITM0EowkbT55+o
+         qfXsJCLQDOZ9Q==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qGGRz-0000kv-1C;
+        Mon, 03 Jul 2023 12:06:31 +0200
+Date:   Mon, 3 Jul 2023 12:06:31 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -66,16 +48,19 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: minor whitespace cleanup around '='
+Message-ID: <ZKKdp8r5Z_47iU-j@hovoldconsulting.com>
 References: <20230702185051.43867-1-krzysztof.kozlowski@linaro.org>
  <e09af830-d114-7ee6-0cab-e6812bc10fd4@linaro.org>
  <ZKKXGE95Sv-eLQa8@hovoldconsulting.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZKKXGE95Sv-eLQa8@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+ <0f4f5a4d-379b-c00c-6bf2-58c08fcc4551@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0f4f5a4d-379b-c00c-6bf2-58c08fcc4551@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,42 +68,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3.07.2023 11:38, Johan Hovold wrote:
-> On Mon, Jul 03, 2023 at 11:30:24AM +0200, Konrad Dybcio wrote:
->> On 2.07.2023 20:50, Krzysztof Kozlowski wrote:
->>> The DTS code coding style expects exactly one space before and after '='
->>> sign.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
-> 
-> [...]
->  
->>> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
->>> index 895cafc11480..c4209e2d4b4e 100644
->>> --- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
->>> @@ -155,7 +155,7 @@ CPU7: cpu@3 {
->>>  
->>>  		idle-states {
->>>  			CPU_SLEEP_0: cpu-sleep-0 {
->>> -				compatible ="qcom,idle-state-spc", "arm,idle-state";
->>> +				compatible = "qcom,idle-state-spc", "arm,idle-state";
->> Will conflict with:
->>
->> https://lore.kernel.org/linux-arm-msm/20230627-topic-more_bindings-v1-2-6b4b6cd081e5@linaro.org/
->>
->> there are also a couple of entries with property =\n\t{n}[a-z]
->>
->> Otherwise lgtm
->  
-> Konrad, please remember to trim irrelevant context from your replies
-> (e.g. so that we don't have to skim through thousands of lines to find
-> a single comment).
-My actual reply begins at line 77, which is considerably less than
-thousands and is concluded by my signoff, which signifies the end
-of the message.
+On Mon, Jul 03, 2023 at 11:56:40AM +0200, Konrad Dybcio wrote:
+> On 3.07.2023 11:38, Johan Hovold wrote:
+ 
+> > Konrad, please remember to trim irrelevant context from your replies
+> > (e.g. so that we don't have to skim through thousands of lines to find
+> > a single comment).
+> My actual reply begins at line 77, which is considerably less than
+> thousands and is concluded by my signoff, which signifies the end
+> of the message.
 
-Konrad
-> 
-> Johan
+That was not the point. The point is that you should trim your replies,
+including context after your reply (sure, some people keep context when
+providing reviewed-by tags, but generally replies should be trimmed).
+
+Including an empty line before your inline comments would also make your
+replies easier to read.
+
+Johan
