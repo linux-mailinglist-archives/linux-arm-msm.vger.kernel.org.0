@@ -2,85 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B76727465BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 00:27:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 238D57465C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 00:36:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230472AbjGCW1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 18:27:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38242 "EHLO
+        id S229505AbjGCWg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 18:36:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjGCW1E (ORCPT
+        with ESMTP id S229504AbjGCWg2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 18:27:04 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F51E5F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 15:27:03 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 363MQTM8027924;
-        Mon, 3 Jul 2023 22:26:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+FXU5nvXJfcUI9NyyVurUCwn0U7MwxPIrV6LaHY/64M=;
- b=fmGCoTLCyabbXLhz+cOVpxab6xm0InW3DyysNiyJiIuyOGr8gYHceKkXlsIVvh9ZJRyC
- KU1Bz0i5md3To10CKJlk17h7EfGSbzW1Ni+dyY8FddeasdxtJGXq1EdJbCU+BjEkBdNL
- UlRoGUHN1xVkRqPbI3IxXFBNV0KPUgMf2EALPDKGuOkuwZGXgiHgTO2UIaWCr0OlX1d2
- lQ5ENVO4WmhZt2eu8ECWVASwGeL8bPlsodA+obYZaieKbhNPuk6aY0qCKCMAhCftX9Pb
- OuipqD3GdBfQ7PkHGE6llFmnYplR9+cfz2sSS6p0A7M5WjjS9pEcGyd/q//Ti+hpahjp Ow== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rm0he0r64-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 03 Jul 2023 22:26:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 363MQo6s007012
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 3 Jul 2023 22:26:50 GMT
-Received: from [10.110.19.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Mon, 3 Jul 2023
- 15:26:49 -0700
-Message-ID: <83a50eb3-3e0d-6b65-2e15-a675c717912d@quicinc.com>
-Date:   Mon, 3 Jul 2023 15:26:48 -0700
+        Mon, 3 Jul 2023 18:36:28 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9E990
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 15:36:26 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-57688a146ecso58486587b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 15:36:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688423786; x=1691015786;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=v5YY7eZa6tSEZAqEH7ddXutblBR9DptLHLqPJJAXbjE=;
+        b=oc6w2y8/EiiV/kOGEc3tk+2IlksT6VXTryqCwTSPFNt7M10KKNPDkb155MfdIkQSlp
+         z/Na5ztWb9Q380/WtUWBjvh9cM3pwAAh9xYoPSXaecaL7ep1KNMYfMFP7GRDzE9s99wl
+         QCQ6l34Po6IMCdTUsczn8MVVXv61+c9u6OKEdUZjwqcSbOAmqWlC/VxLTcbZKQyOPCeP
+         guGq4816f47tnvaks38UEYwIerbsdhwTn9Qt33OJx2ih+KbAxqXHvbEXB+muzBxtE2BS
+         sQjL133Vly6g/R7tQleWSo/SfOi1tuDBQz6TQpxPuVGLJ+sk6yM+ec3nHj+3eBm1RTl2
+         NV2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688423786; x=1691015786;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=v5YY7eZa6tSEZAqEH7ddXutblBR9DptLHLqPJJAXbjE=;
+        b=FF9j3RcN504SpCtK+YMqTpT2XAnYePB7VHLGX7LsVjpBs+rdcI1HRdf5ENb0NPDbTf
+         aO0JPBpLDKEtv1jBRUQlrzQvue4hulvKQohoiSMiGdth3kAmOkwGrEgIRleFV7MDruiT
+         Vw2fwTJqPc7GHPSHDmb9mW5/lQfsTP1yMAiAH2lG60GAqtK3tZWB0vAqrHz/45/oi368
+         lWGKMJUh3KWINh57BrJvm/uYOTgK2nmblwdrmBnN3eJ9W7RmpCyqoX7WeFx2dmiIZ6/1
+         P7kKcBP0T4bUs6YTlwGxMa3TVp6dM3xVUIZY1pxQNSYQ9MSzu7AzAS3Qht2ieXmZmzJu
+         hwYA==
+X-Gm-Message-State: ABy/qLYTgQi6BKGPFmsonOsqp5msUffjI/P0/GAO6+GVdTmitHX71+ej
+        rcDoEYx8wPsG87QQHvASuHrVM84yqoYEcye5Sq4zxqYAZG/FMcOx
+X-Google-Smtp-Source: APBJJlGFi/oMweVuBuQGrbV02UEeAGc1r8Xi7vBeXGaplB8KvhFeJQrjDmAmDxehJCeGQ0b/qwddlTTzejOAdQ7sYYg=
+X-Received: by 2002:a81:8390:0:b0:579:e2f5:1253 with SMTP id
+ t138-20020a818390000000b00579e2f51253mr7350619ywf.39.1688423786046; Mon, 03
+ Jul 2023 15:36:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
+References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
+ <20230620000846.946925-3-dmitry.baryshkov@linaro.org> <c278bf93-124c-5512-51af-042a0dcbd67b@quicinc.com>
+ <CAA8EJpo86WaDBPGMJiytqyuNYqUTqBfEmeKSLFYUvK6r82FKqA@mail.gmail.com> <83a50eb3-3e0d-6b65-2e15-a675c717912d@quicinc.com>
+In-Reply-To: <83a50eb3-3e0d-6b65-2e15-a675c717912d@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 4 Jul 2023 01:36:15 +0300
+Message-ID: <CAA8EJppekbuLraWGH7M7t0Qqz-hp+6teeB6NkK2DGoTMvJbNqw@mail.gmail.com>
 Subject: Re: [PATCH 2/8] drm/msm/dpu: drop performance tuning modes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
- <20230620000846.946925-3-dmitry.baryshkov@linaro.org>
- <c278bf93-124c-5512-51af-042a0dcbd67b@quicinc.com>
- <CAA8EJpo86WaDBPGMJiytqyuNYqUTqBfEmeKSLFYUvK6r82FKqA@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpo86WaDBPGMJiytqyuNYqUTqBfEmeKSLFYUvK6r82FKqA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7MS8GCENWfjPpqHQdzwhDVjaCU5NsnE1
-X-Proofpoint-ORIG-GUID: 7MS8GCENWfjPpqHQdzwhDVjaCU5NsnE1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-03_15,2023-06-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- suspectscore=0 adultscore=0 clxscore=1015 impostorscore=0 phishscore=0
- priorityscore=1501 mlxlogscore=999 spamscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307030205
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,91 +76,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 4 Jul 2023 at 01:26, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 7/3/2023 3:20 PM, Dmitry Baryshkov wrote:
+> > On Tue, 4 Jul 2023 at 00:40, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 6/19/2023 5:08 PM, Dmitry Baryshkov wrote:
+> >>> DPU performance module contains code to change performance state
+> >>> calculations. In addition to normal (sum plane and CRTC requirements),
+> >>> it can work in 'minimal' or 'fixed' modes. Both modes are impractical,
+> >>> since they can easily end up with the display underruns. Userspace also
+> >>> should not depend on these modes availability, since they are tuned
+> >>> through debugfs, which might not be available.
+> >>>
+> >>> Drop relevant code to simplify performance state calculations.
+> >>>
+> >>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>> ---
+> >>
+> >> Sorry but NAK on this change for two reasons:
+> >>
+> >> This mode is not for usermode to depend on but for debugging. I have
+> >> personally used both the perf max and perf min modes for debug.
+> >>
+> >> 1) The purpose is that, if you do see an underrun, you can force the
+> >> perf mode as it will select max clk and bw rate
+> >>
+> >> So something like below:
+> >>
+> >> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 2 > perf_mode
+> >> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 300000000 >
+> >> fix_core_clk_rate
+> >>
+> >> This will allow us to force the clk to a particular value to see at what
+> >> point it starts underruning
+> >>
+> >> Also you can even do
+> >>
+> >> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 1 > perf_mode
+> >>
+> >> This will automatically max out the clk and BW
+> >>
+> >> With this, you can figure out if underrun is a performance related
+> >> underrun or a misconfiguration. We used it even recently to debug the
+> >> performance issue with pclk reduction
+> >
+> > Hmm, 1 is minimum, not maxumum.
+> >
+>
+> The name is kind of confusing.
+>
+> Yes 1 is min perf mode but it maxes out the clocks and BW.
+>
+> I guess its named that way because a min perf mode gives you the minimum
+> savings in terms of power.
+>
+> >>
+> >> 2) Sometimes, you even want to force an underrun to debug devcoredump OR
+> >> the recovery code. Forcing the min clk mode by doing
+> >>
+> >> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 19200000 >
+> >> fix_core_clk_rate
+> >> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 2 > perf_mode
+> >>
+> >> Is the easiest way to trigger the recovery handler.
+> >>
+> >> Hence I am not at all convinced of dropping this.
+> >
+> > I see, thanks for sharing the usecases. However I still think that it
+> > is overcomplicated for the debugging feature. What about dropping all
+> > perf modes and providing just 'override_core_clk_rate' and
+> > 'override_avg_bw', 'override_peak_bw'?
+> >
+>
+> No, we need both. Let me explain why:
+>
+> 1) Having just the min perf mode, directly uses the max clk and bw. This
+> is useful when you just want to run at the max and see the behavior
+>
+> 2) If you want to figure out what is the sweet spot where the issue does
+> not happen you need the "fixed" mode to find the range where the issue
+> doesnt happen
+>
+> This is one of the oldest and most effective debugging mechanisms.
+>
+> I dont want to touch this and I personally use this quite often.
+
+Ack, I'll see if I can keep the interface / idea. I still think that
+override + in-kernel limits should do the same trick as the current
+'maximum' does.
 
 
-On 7/3/2023 3:20 PM, Dmitry Baryshkov wrote:
-> On Tue, 4 Jul 2023 at 00:40, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 6/19/2023 5:08 PM, Dmitry Baryshkov wrote:
->>> DPU performance module contains code to change performance state
->>> calculations. In addition to normal (sum plane and CRTC requirements),
->>> it can work in 'minimal' or 'fixed' modes. Both modes are impractical,
->>> since they can easily end up with the display underruns. Userspace also
->>> should not depend on these modes availability, since they are tuned
->>> through debugfs, which might not be available.
->>>
->>> Drop relevant code to simplify performance state calculations.
->>>
->>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>
->> Sorry but NAK on this change for two reasons:
->>
->> This mode is not for usermode to depend on but for debugging. I have
->> personally used both the perf max and perf min modes for debug.
->>
->> 1) The purpose is that, if you do see an underrun, you can force the
->> perf mode as it will select max clk and bw rate
->>
->> So something like below:
->>
->> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 2 > perf_mode
->> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 300000000 >
->> fix_core_clk_rate
->>
->> This will allow us to force the clk to a particular value to see at what
->> point it starts underruning
->>
->> Also you can even do
->>
->> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 1 > perf_mode
->>
->> This will automatically max out the clk and BW
->>
->> With this, you can figure out if underrun is a performance related
->> underrun or a misconfiguration. We used it even recently to debug the
->> performance issue with pclk reduction
-> 
-> Hmm, 1 is minimum, not maxumum.
-> 
 
-The name is kind of confusing.
-
-Yes 1 is min perf mode but it maxes out the clocks and BW.
-
-I guess its named that way because a min perf mode gives you the minimum 
-savings in terms of power.
-
->>
->> 2) Sometimes, you even want to force an underrun to debug devcoredump OR
->> the recovery code. Forcing the min clk mode by doing
->>
->> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 19200000 >
->> fix_core_clk_rate
->> localhost /sys/kernel/debug/dri/1/debug/core_perf # echo 2 > perf_mode
->>
->> Is the easiest way to trigger the recovery handler.
->>
->> Hence I am not at all convinced of dropping this.
-> 
-> I see, thanks for sharing the usecases. However I still think that it
-> is overcomplicated for the debugging feature. What about dropping all
-> perf modes and providing just 'override_core_clk_rate' and
-> 'override_avg_bw', 'override_peak_bw'?
-> 
-
-No, we need both. Let me explain why:
-
-1) Having just the min perf mode, directly uses the max clk and bw. This 
-is useful when you just want to run at the max and see the behavior
-
-2) If you want to figure out what is the sweet spot where the issue does 
-not happen you need the "fixed" mode to find the range where the issue 
-doesnt happen
-
-This is one of the oldest and most effective debugging mechanisms.
-
-I dont want to touch this and I personally use this quite often.
+-- 
+With best wishes
+Dmitry
