@@ -2,88 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AB37746236
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 20:20:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E45057462AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 20:46:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231395AbjGCSUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 14:20:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
+        id S229504AbjGCSqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 14:46:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231290AbjGCSUf (ORCPT
+        with ESMTP id S230414AbjGCSqn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 14:20:35 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D092810D8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 11:20:22 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b5c231f842so70378361fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 11:20:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688408421; x=1691000421;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bMGOdp2WrmK72JlLnA4GZHmaTpxK++joMT5QYp1sllQ=;
-        b=lhTdDtnHM8h9ePa+Murs4OHPWVomZDeXPgOpnX3OehH26YGjrpqtm70lui0AjPvQtG
-         jaYtgTl041ICwg0AI4Wu/6jmusMI2Acl+N7AmDGsFWGtT6866CWdY9kiiszXiQ16XoFs
-         A9Zwi3qrscx/QnLuDmfkzMKizuAqL6rk2AEMpLN5mHtsCFBTZgXwn4nB87wANtHhph1C
-         l7rty66I47+ALpGD0xCaWOQTSslViZZL5N2vJizbzhkoKG/lHLx6vaQJ0VTebvOFmOcS
-         LgOawt1ww1e0qSzzYnBdCVMLj+ZkF2SfC34Lw2HJJ4ZnNaZjhR/zsnn7qh5S1pPQbFPi
-         da4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688408421; x=1691000421;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bMGOdp2WrmK72JlLnA4GZHmaTpxK++joMT5QYp1sllQ=;
-        b=E/vCJQ5GGPBEMfVPMHcgQ75sGueRtVL4AmlK426fb8tvhx7MAXT6pSpKuMmZNyxwIW
-         2TkjwJFfl0ApW8rAsDSw3XPYtypb7CNpW+ftGkZZdehDfxHekZ8fxZeQDWgg2t+6qdFy
-         hguLx6UYptM51hg/oCfW9q/+3QIZxNYdAOSSZc+OW6oqGrl3zG2sMEh+13Ysx6+Spbuj
-         fT9f4SaUrCGWf+ztIhaW6UmP65oFrt85/GgtA+UuQZT1ipfgHO3rPbmmOBfpXnnl2hZ2
-         w77uPvZfH2fQ7HlUmblEPyMOUB6Bb3JwIVOPSx3Lsvcon3UXMJYCvFq3gAPUsBG4OtGN
-         V1ww==
-X-Gm-Message-State: ABy/qLbeknWPTXAClkYO07WlkNdodqlMOL7LHbEMi640IiUJwLgZeMf9
-        5juLvbFei27ShD9sL7GruaTMgQ==
-X-Google-Smtp-Source: APBJJlE8ny5kSPTUjmQmeDKziqPR0/TUc/91ONsaWaWWKJ4df8Y71rdn6WYsPZtmTayEdfW6z7X7Fw==
-X-Received: by 2002:a2e:850b:0:b0:2b6:ba00:f733 with SMTP id j11-20020a2e850b000000b002b6ba00f733mr8333259lji.18.1688408420733;
-        Mon, 03 Jul 2023 11:20:20 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id s9-20020a2e9c09000000b002b6995f38a2sm4946224lji.100.2023.07.03.11.20.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 11:20:20 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 03 Jul 2023 20:20:12 +0200
-Subject: [PATCH v2 8/8] arm64: dts: qcom: msm8998: Use the correct
- GPLL0_DIV leg for MMCC
+        Mon, 3 Jul 2023 14:46:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E130710D8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 11:46:37 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 363Ihdb1028911;
+        Mon, 3 Jul 2023 18:46:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=GO8CxHexeCVWLLHPxaT69D9qf8UdsizXa9GOOiV1+j0=;
+ b=RXwrBoZig5+L7VKHz2g7nmkNuiOnx/hyTR6t5wlPngKt6488mVTrFBnH4oPxKm0wIbub
+ XLsAAHWHLx4Y/dC/CiloxwO6nyP5omLs+F5T0XbEi+mOL5KRcr1pgbXQhCoeFfV/n3ch
+ aW5gt1oTp1VqTA7XSjal9Yq/mzpey/JWNN9B4eDiHxgjRXIbSs1PykZP0UujoYspaViP
+ jnxi2ll35oUCluoDopOEmaAtl4EGrTt6ZbSo0T2VvLXgWEx7BprAFumC6f0jMM9r22b8
+ Gt9xnEVh65tTqUIGsaSa7zWq/KEA2UtaZpIgrnefznYiheKB65iiyN3stl09IwODxTic 1g== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rkyrr8n14-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Jul 2023 18:46:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 363IkH6g030843
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Jul 2023 18:46:17 GMT
+Received: from [10.110.19.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Mon, 3 Jul 2023
+ 11:46:17 -0700
+Message-ID: <a0917df0-113d-c26f-614c-08ac18fc6613@quicinc.com>
+Date:   Mon, 3 Jul 2023 11:46:16 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230622-topic-8998clk-v2-8-6222fbc2916b@linaro.org>
-References: <20230622-topic-8998clk-v2-0-6222fbc2916b@linaro.org>
-In-Reply-To: <20230622-topic-8998clk-v2-0-6222fbc2916b@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 12/19] drm/msm/dpu: inline LM_BLK macros
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688408407; l=1108;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=rcLA8twyqUlcJD4D43vneN0vw2noKKbjZxFdyfHDJZM=;
- b=J9qF1k7V2CcK1QdJjF8lyl9xKqY04T25afPjuYYxmly9bH9mpvemJtiRXtaKrrEaWRVNontZE
- 8X79xc6aeF3D7pgVQuJGJEZIkWOOAAtyaan6pgi66L4r5buBBT1lL5i
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
+ <20230619212519.875673-13-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230619212519.875673-13-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 13N-12liZl2K2FC4c6tyDrTDfsstqC6u
+X-Proofpoint-ORIG-GUID: 13N-12liZl2K2FC4c6tyDrTDfsstqC6u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-03_13,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 impostorscore=0
+ mlxlogscore=744 spamscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307030170
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,41 +86,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MMCC has its own GPLL0 legs - one for 1-1 and one for div-2 output.
-We've already been using the correct one in the non-div case, start
-doing so for the other one as well.
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 74bd05579796..c4faba092368 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2718,7 +2718,8 @@ mmcc: clock-controller@c8c0000 {
- 				      "dsi1byte",
- 				      "hdmipll",
- 				      "dplink",
--				      "dpvco";
-+				      "dpvco",
-+				      "gpll0_div";
- 			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&gcc GCC_MMSS_GPLL0_CLK>,
- 				 <0>,
-@@ -2727,7 +2728,8 @@ mmcc: clock-controller@c8c0000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <0>;
-+				 <0>,
-+				 <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
- 		};
- 
- 		mmss_smmu: iommu@cd00000 {
+On 6/19/2023 2:25 PM, Dmitry Baryshkov wrote:
+> To simplify making changes to the hardware block definitions, expand
+> corresponding macros. This way making all the changes are more obvious
+> and visible in the source files.
+> 
+> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
--- 
-2.41.0
+Same comment as the other change, I have cross-checked most of the 
+entries to make sure they match the pre-inlining values.
 
+For the rest, I am going to rely on Marijn's checksum method.
+
+Hence,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
