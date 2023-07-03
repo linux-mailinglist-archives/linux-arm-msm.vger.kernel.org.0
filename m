@@ -2,95 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EA85745B4F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 13:38:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EB6F745B54
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 13:39:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231180AbjGCLiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 07:38:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52088 "EHLO
+        id S229944AbjGCLi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 07:38:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbjGCLiO (ORCPT
+        with ESMTP id S231202AbjGCLi6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 07:38:14 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09179115
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 04:38:09 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-51bece5d935so5653219a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 04:38:08 -0700 (PDT)
+        Mon, 3 Jul 2023 07:38:58 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7433510C1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 04:38:40 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fa16c6a85cso6695071e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 04:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688384287; x=1690976287;
+        d=linaro.org; s=google; t=1688384319; x=1690976319;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=X5HPd4zFbQ0E8syfNvWoZd2Jd08kmy2oDhqKMHkzCzU=;
-        b=WTSAIu0maOXQvTMLW5soPiv4CB8m8rJXos+Ot/4WhoAT3QcoySeaG03E3s4qyOsLAE
-         Fti+Zr+2ygJOfVCoGWf6TlPthhRoXpzr9z1/jgRcGtrGllnYf7UxA8w8Bs17b0pQZEW5
-         tvmISmZINVUix2PAApU6Osun8dVCilkx/R5h/GnAeZs1US2IfXem9jb1iEC+UzK7RTkg
-         Fa4TqSjhPZVbAQlznOuPTyNAlqvYzttRsp/lsMgeItRybVTA4RvQ34EpHtHgAxPlSVJh
-         nFb/hPJCev99wQuTGYl4XRx/TOKxJ9WppJPRuUH+ChxHLvd0uAGickcRDP7CWstI7fPj
-         4NWA==
+        bh=BO8GW8PeYymSXJGNiPjR8cSXwNY+2rR/6KhP5/MPo+o=;
+        b=fxFXcpeC8LRGxAPMz6QoEUha2hXlbQjVDMIh+e8+vE+r3UlWD49J8OjJdOuHrQ68Wi
+         PWQTHlnTHsV7BEkII7vt7tPcjaVjO0hQl4vtaAOgtpsit3mEh+90wrHaPOkoglep6JM+
+         7+AnCstLdZ1qNsE5KH/g+Q1VSekZKPW6y44v3GqIe7XUdx2hkn02AdyU2fC7jQ8j8A3B
+         0iq2WYZjdAf7xPgU/MDAvIifIZNU8pTXWX7/UcRmXoJ0u1mrlgZj6qxl4rlhMmilV78O
+         TdxdWunJh27w0XAswIDudIyXd8wSNRB++qzdlswTBgO4obsJSCxdU3h7tij1NjPu2t1/
+         APFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688384287; x=1690976287;
+        d=1e100.net; s=20221208; t=1688384319; x=1690976319;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X5HPd4zFbQ0E8syfNvWoZd2Jd08kmy2oDhqKMHkzCzU=;
-        b=kzd2NVjPvy6i8oMpZ19d3l9ha4TAZ+A0ja5teviFB63SYpQCDH2T+BgpQC02fGj1zK
-         KzwbdqO3lk5qAmoQXxvSWIBZeZ2InpRgG09BtnQCEYUQhoBTYKo8iS0Wdyiq6xnCuiAt
-         iWwKyLy3HvFid9JBIDkGcFxb/lhuL1OgNu7eTeG/h7Nn8+iqzndFuZj/LTR38ytPXHGe
-         bJGKkHGYyJRIPvPAoLwr84QaQcK5ceSIoGBmCetkj0AYJx8d+yrfsUatujKAno+qFe6+
-         m5wzphgOgggtbxVmuSJRdacbORG8OykbBezo667MtIlH1EPte71w2EyfQcZ8f6P0VQ2O
-         JRyQ==
-X-Gm-Message-State: ABy/qLZ39Hk5kFgrzm1Kf77qBBNm1iAlAzRu8daIKRrDjJ2nCTsgND0e
-        xtZlmFhvCRERuLFNf7TkwaU0vA==
-X-Google-Smtp-Source: APBJJlFffSttED6PPzA0GMbvALnbcSFZlcl8peWg26b+PFdzfiWaPZ5DZ6BTAp/RMGL8Hcmd6Pnyng==
-X-Received: by 2002:a50:ff0d:0:b0:51b:df1d:ebc3 with SMTP id a13-20020a50ff0d000000b0051bdf1debc3mr6968185edu.25.1688384287387;
-        Mon, 03 Jul 2023 04:38:07 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id n22-20020a056402515600b0051e0f100c48sm1412583edd.22.2023.07.03.04.38.03
+        bh=BO8GW8PeYymSXJGNiPjR8cSXwNY+2rR/6KhP5/MPo+o=;
+        b=CEcnf1mao2978r7fJ4XZ6ML9vzTyIYJ1NYNJHvZV7kTOf4Oad5kPAN466FH8iH3w6Y
+         OTrYqKE4C+LyD082SBteoyf37A67fZv3XNvOJv0UCiLbvTk7IcrojZ6WiDw75hvmpQsv
+         7T/ruY8LhqdO687Xa1swppi3ZBSyzzzWolU+AUXWwpiH9N/aKy9zTptSMn0kkjpfiSO+
+         WmsKY7zitNIf/+boB7vTRup7t14rsucnRG1VwfPwW3vw+27Upo+aJ5mzpErvxYlla9n9
+         KEx5xqcISxiGppDRY59Ynk0J2VpZEIe96iujw9n0eTAihOaD8sxrP2XQiqSqSLVxg8Ll
+         7S2w==
+X-Gm-Message-State: ABy/qLY37ZwJJ5M78jMm66owoq/ycrCMPKroOKG0ewc3owq4ArR+f6/B
+        fuL/py/cv+d26N9T2fLP1Lm2PA==
+X-Google-Smtp-Source: APBJJlHrYCVB+3i7lJ9HYb6fhELg1/YT98vWg8MshIY9zPGzBkRDNO9tqdVAydtuDp2A9Z4K+g7Dzg==
+X-Received: by 2002:a05:6512:3691:b0:4f6:1b45:e8aa with SMTP id d17-20020a056512369100b004f61b45e8aamr6330115lfs.50.1688384318648;
+        Mon, 03 Jul 2023 04:38:38 -0700 (PDT)
+Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
+        by smtp.gmail.com with ESMTPSA id f9-20020a19ae09000000b004fbb3e91a3fsm498698lfc.114.2023.07.03.04.38.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 04:38:06 -0700 (PDT)
-Message-ID: <20873d35-86f6-70e7-ed19-efaffb9eb25b@linaro.org>
-Date:   Mon, 3 Jul 2023 13:38:02 +0200
+        Mon, 03 Jul 2023 04:38:38 -0700 (PDT)
+Message-ID: <1c3b0363-f222-7b90-4583-a12261c19a52@linaro.org>
+Date:   Mon, 3 Jul 2023 13:38:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 01/15] genirq/devres: Add error information printing for
- devm_request_threaded_irq()
+Subject: Re: [RFC PATCH 3/8] cpufreq: qcom-nvmem: provide vmin constraint for
+ early Kraits
 Content-Language: en-US
-To:     Yangtao Li <frank.li@vivo.com>, miquel.raynal@bootlin.com,
-        rafael@kernel.org, daniel.lezcano@linaro.org, amitk@kernel.org,
-        rui.zhang@intel.com, mmayer@broadcom.com,
-        bcm-kernel-feedback-list@broadcom.com,
-        florian.fainelli@broadcom.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, thara.gopinath@gmail.com,
-        heiko@sntech.de, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@foss.st.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, tglx@linutronix.de, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com,
-        srinivas.pandruvada@linux.intel.com,
-        DLG-Adam.Ward.opensource@dm.renesas.com, shangxiaojing@huawei.com,
-        bchihi@baylibre.com, wenst@chromium.org,
-        u.kleine-koenig@pengutronix.de, hayashi.kunihiko@socionext.com,
-        niklas.soderlund+renesas@ragnatech.se, chi.minghao@zte.com.cn,
-        johan+linaro@kernel.org, jernej.skrabec@gmail.com
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org
-References: <20230627071707.77659-1-frank.li@vivo.com>
- <82dc5efc-35fe-15ff-d0ea-e1a19da71c5c@linaro.org>
- <db14ea3c-c224-e263-e134-70e9acc5008a@vivo.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <db14ea3c-c224-e263-e134-70e9acc5008a@vivo.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230702175045.122041-1-dmitry.baryshkov@linaro.org>
+ <20230702175045.122041-4-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230702175045.122041-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -98,46 +90,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/07/2023 11:10, Yangtao Li wrote:
-> On 2023/6/27 15:43, Krzysztof Kozlowski wrote:
+On 2.07.2023 19:50, Dmitry Baryshkov wrote:
+> Early Krait CPUs required that core voltage was not below 1.15 V.
+> Implement this requirement by adding separate config_regulators
+> callback.
 > 
->> On 27/06/2023 09:16, Yangtao Li wrote:
->>> Ensure that all error handling branches print error information. In this
->>> way, when this function fails, the upper-layer functions can directly
->>> return an error code without missing debugging information. Otherwise,
->>> the error message will be printed redundantly or missing.
->>>
->>> There are more than 700 calls to the devm_request_threaded_irq method.
->>> If error messages are printed everywhere, more than 1000 lines of code
->>> can be saved by removing the msg in the driver.
->>>
->>> Signed-off-by: Yangtao Li <frank.li@vivo.com>
->>> ---
->>>   kernel/irq/devres.c | 5 ++++-
->>>   1 file changed, 4 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/kernel/irq/devres.c b/kernel/irq/devres.c
->>> index f6e5515ee077..94039a915218 100644
->>> --- a/kernel/irq/devres.c
->>> +++ b/kernel/irq/devres.c
->>> @@ -58,8 +58,10 @@ int devm_request_threaded_irq(struct device *dev, unsigned int irq,
->>>   
->>>   	dr = devres_alloc(devm_irq_release, sizeof(struct irq_devres),
->>>   			  GFP_KERNEL);
->>> -	if (!dr)
->>> +	if (!dr) {
->>> +		dev_err(dev, "Failed to allocate device resource data\n");
->> Just like any memory allocation, I don't think we print anything for
->> devres failures. Why do you think we should start doing it?
-> 
-> 
-> And tglx point out that:
-> 
-> Having proper and consistent information why the device cannot be used 
-> _is_ useful.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+"early krait" as in msm8960, or "early krait" as in "pre-production"?
 
-Where did tglx suggest printing devres allocation ENOMEM errors?
-
-Best regards,
-Krzysztof
-
+Konrad
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 67 +++++++++++++++++++++++++++-
+>  1 file changed, 66 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index 113f35668048..9312c8ab62a8 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -30,6 +30,8 @@
+>  #include <linux/slab.h>
+>  #include <linux/soc/qcom/smem.h>
+>  
+> +#include <asm/cputype.h>
+> +
+>  #include <dt-bindings/arm/qcom,ids.h>
+>  
+>  struct qcom_cpufreq_drv;
+> @@ -257,6 +259,66 @@ static const struct qcom_cpufreq_match_data match_data_apq8064 = {
+>  	.regulator_names = apq8064_regulator_names,
+>  };
+>  
+> +static const int krait_needs_vmin(void)
+> +{
+> +	switch (read_cpuid_id()) {
+> +	case 0x511F04D0: /* KR28M2A20 */
+> +	case 0x511F04D1: /* KR28M2A21 */
+> +	case 0x510F06F0: /* KR28M4A10 */
+> +		return 1;
+> +	default:
+> +		return 0;
+> +	};
+> +}
+> +
+> +#define KRAIT_VMIN	1150000
+> +#define KRAIT_VMIN_MAX	(KRAIT_VMIN + 25000)
+> +static int krait_config_regulator_vmin(struct device *dev,
+> +				       struct dev_pm_opp *old_opp, struct dev_pm_opp *new_opp,
+> +				       struct regulator **regulators, unsigned int count)
+> +{
+> +	struct regulator *reg = regulators[0];
+> +	struct dev_pm_opp_supply supply;
+> +	int ret;
+> +
+> +	/* This function only supports single regulator per device */
+> +	if (WARN_ON(count > 1)) {
+> +		dev_err(dev, "multiple regulators are not supported\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (IS_ERR(reg)) {
+> +		dev_dbg(dev, "%s: regulator not available: %ld\n", __func__,
+> +			PTR_ERR(reg));
+> +		return 0;
+> +	}
+> +
+> +	ret = dev_pm_opp_get_supplies(new_opp, &supply);
+> +	if (WARN_ON(ret))
+> +		return ret;
+> +
+> +	if (supply.u_volt_min < KRAIT_VMIN) {
+> +		supply.u_volt_min = KRAIT_VMIN;
+> +		supply.u_volt = KRAIT_VMIN;
+> +		supply.u_volt_max = KRAIT_VMIN_MAX;
+> +	}
+> +
+> +	dev_dbg(dev, "%s: voltages (mV): %lu %lu %lu\n", __func__,
+> +		supply.u_volt_min, supply.u_volt, supply.u_volt_max);
+> +
+> +	ret = regulator_set_voltage_triplet(reg,
+> +					    supply.u_volt_min,
+> +					    supply.u_volt,
+> +					    supply.u_volt_max);
+> +	if (ret)
+> +		dev_err(dev, "%s: failed to set voltage (%lu %lu %lu mV): %d\n",
+> +			__func__, supply.u_volt_min, supply.u_volt,
+> +			supply.u_volt_max, ret);
+> +
+> +	return ret;
+> +}
+> +
+> +
+>  static int qcom_cpufreq_probe(struct platform_device *pdev)
+>  {
+>  	struct qcom_cpufreq_drv *drv;
+> @@ -344,8 +406,11 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+>  			config.virt_devs = NULL;
+>  		}
+>  
+> -		if (drv->data->regulator_names)
+> +		if (drv->data->regulator_names) {
+>  			config.regulator_names = drv->data->regulator_names;
+> +			if (krait_needs_vmin())
+> +				config.config_regulators = krait_config_regulator_vmin;
+> +		}
+>  
+>  		if (config.supported_hw ||
+>  		    config.genpd_names ||
