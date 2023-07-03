@@ -2,216 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF4EA7460D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 18:39:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BECD7461AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 19:58:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbjGCQj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 12:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56104 "EHLO
+        id S230197AbjGCR61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 13:58:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbjGCQjZ (ORCPT
+        with ESMTP id S229505AbjGCR60 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 12:39:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89B95E41;
-        Mon,  3 Jul 2023 09:39:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 27A3E60FCD;
-        Mon,  3 Jul 2023 16:39:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88545C433C8;
-        Mon,  3 Jul 2023 16:39:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688402363;
-        bh=mU//x9jBPILiKpU55W6pKfM7tWEnFXK8s6uKf0IHSCQ=;
-        h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-        b=M7QzdEtEbwotwMWafP/+IUqD+OL0lZqDIEYIxukmJRy4zFLksHmS0OvpXttqHtoql
-         zmAPP+1ejIDFbQbr8IlUUScA4lqau9u+Buss6+c8qzKd9/wI364iDkNElNOBdEF98q
-         Kh8eWQuwrF+h+/XzRxBXe/kwXG538TSND8V3ImrZFwLpsD4bMMtjgjw77IIimtdyiI
-         vm3F44IJaZ2yU9uFJNPVYGV9kH3TkMVG5bUFa2ByYcCloMku7wRiF6DxKGei5SKe9K
-         hwn9AMOYpgf4vnwkGj6bYY4CIZ3iKF2SBAvkgudHibT6SNUv99F0DvP2atQXG8oO+Q
-         8onz/cm4rlnJg==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-        id 22663CE0DD0; Mon,  3 Jul 2023 09:39:23 -0700 (PDT)
-Date:   Mon, 3 Jul 2023 09:39:23 -0700
-From:   "Paul E. McKenney" <paulmck@kernel.org>
-To:     Dave Chinner <david@fromorbit.com>
-Cc:     Vlastimil Babka <vbabka@suse.cz>,
-        Qi Zheng <zhengqi.arch@bytedance.com>,
-        akpm@linux-foundation.org, tkhai@ya.ru, roman.gushchin@linux.dev,
-        djwong@kernel.org, brauner@kernel.org, tytso@mit.edu,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
-        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org
-Subject: Re: [PATCH 24/29] mm: vmscan: make global slab shrink lockless
-Message-ID: <cc894c77-717a-4e9f-b649-48bab40e7c60@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-25-zhengqi.arch@bytedance.com>
- <cf0d9b12-6491-bf23-b464-9d01e5781203@suse.cz>
- <ZJU708VIyJ/3StAX@dread.disaster.area>
+        Mon, 3 Jul 2023 13:58:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 669F6E60;
+        Mon,  3 Jul 2023 10:58:25 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 363HtlHO003033;
+        Mon, 3 Jul 2023 17:58:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=BTYAeqSWG1uNHEf8QfyNjFJJct+DZt4Z7tIc8EZR4aE=;
+ b=bjUPgpqQ14lsWVpHDhHl1zkv/lwoLwtrVtuyz9FO/i0TAwpsoB+2yDe48mmEKCL8UF/5
+ cM2QaPmm43c7p2eCVYJsXnybogrkk4GFvvY1K7hHfI+YgtH3ru9ydzv76wGoeGcr2EdC
+ to5Zh0CHziae1jQhr9cGNZ65M/pmxzluR00bDYt65B+VSD5+ExWmN7mIsAVc7mvx1sEh
+ ejl8qS+bLAZOxmLw5k3tUUdKyBCgrjTErnHcEmc0t1YoHaiH1Rno7xTjagEjwHPc1OaN
+ ORmnbEIZm+KOefkwY+gd6t1nYS07w1aKYiU4Dv+po9PdQGTuBboD9Qg7pfxp6AURwZ2f bg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rky5mgmyp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Jul 2023 17:58:18 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 363HwHiq004115
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Jul 2023 17:58:17 GMT
+Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.7; Mon, 3 Jul 2023 10:58:12 -0700
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <sboyd@kernel.org>, <mturquette@baylibre.com>, <mani@kernel.org>,
+        <lpieralisi@kernel.org>, <bhelgaas@google.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <quic_srichara@quicinc.com>
+CC:     <stable@vger.kernel.org>
+Subject: [PATCH V2] PCI: qcom: Use PARF_SLV_ADDR_SPACE_SIZE for ops_2_3_3
+Date:   Mon, 3 Jul 2023 23:27:57 +0530
+Message-ID: <20230703175757.2425540-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZJU708VIyJ/3StAX@dread.disaster.area>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gMO3IHTtVjSYG44uW62IUS2hk5k67znm
+X-Proofpoint-GUID: gMO3IHTtVjSYG44uW62IUS2hk5k67znm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-03_13,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ spamscore=0 clxscore=1011 mlxscore=0 priorityscore=1501 phishscore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307030162
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 23, 2023 at 04:29:39PM +1000, Dave Chinner wrote:
-> On Thu, Jun 22, 2023 at 05:12:02PM +0200, Vlastimil Babka wrote:
-> > On 6/22/23 10:53, Qi Zheng wrote:
-> > > @@ -1067,33 +1068,27 @@ static unsigned long shrink_slab(gfp_t gfp_mask, int nid,
-> > >  	if (!mem_cgroup_disabled() && !mem_cgroup_is_root(memcg))
-> > >  		return shrink_slab_memcg(gfp_mask, nid, memcg, priority);
-> > >  
-> > > -	if (!down_read_trylock(&shrinker_rwsem))
-> > > -		goto out;
-> > > -
-> > > -	list_for_each_entry(shrinker, &shrinker_list, list) {
-> > > +	rcu_read_lock();
-> > > +	list_for_each_entry_rcu(shrinker, &shrinker_list, list) {
-> > >  		struct shrink_control sc = {
-> > >  			.gfp_mask = gfp_mask,
-> > >  			.nid = nid,
-> > >  			.memcg = memcg,
-> > >  		};
-> > >  
-> > > +		if (!shrinker_try_get(shrinker))
-> > > +			continue;
-> > > +		rcu_read_unlock();
-> > 
-> > I don't think you can do this unlock?
+PARF_SLV_ADDR_SPACE_SIZE_2_3_3 macro is used for IPQ8074
+2_3_3 post_init ops. pcie slave addr size was initially set
+to 0x358, but was wrongly changed to 0x168 as a part of
+"PCI: qcom: Remove PCIE20_ prefix from register definitions"
+Fixing it, by using the right macro PARF_SLV_ADDR_SPACE_SIZE
+and removing the unused PARF_SLV_ADDR_SPACE_SIZE_2_3_3.
 
-Sorry to be slow to respond here, this one fell through the cracks.
-And thank you to Qi for reminding me!
+Without this pcie bring up on IPQ8074 is broken now.
 
-If you do this unlock, you had jolly well better nail down the current
-element (the one referenced by shrinker), for example, by acquiring an
-explicit reference count on the object.  And presumably this is exactly
-what shrinker_try_get() is doing.  And a look at your 24/29 confirms this,
-at least assuming that shrinker->refcount is set to zero before the call
-to synchronize_rcu() in free_module() *and* that synchronize_rcu() doesn't
-start until *after* shrinker_put() calls complete().  Plus, as always,
-the object must be removed from the list before the synchronize_rcu()
-starts.  (On these parts of the puzzle, I defer to those more familiar
-with this code path.  And I strongly suggest carefully commenting this
-type of action-at-a-distance design pattern.)
+Fixes: 39171b33f652 ("PCI: qcom: Remove PCIE20_ prefix from register definitions")
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+---
+ [V2] Fixed the 'fixes tag' correctly, subject, right macro usage
 
-Why is this important?  Because otherwise that object might be freed
-before you get to the call to rcu_read_lock() at the end of this loop.
-And if that happens, list_for_each_entry_rcu() will be walking the
-freelist, which is quite bad for the health and well-being of your kernel.
+ drivers/pci/controller/dwc/pcie-qcom.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-There are a few other ways to make this sort of thing work:
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 4ab30892f6ef..1689d072fe86 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -43,7 +43,6 @@
+ #define PARF_PHY_REFCLK				0x4c
+ #define PARF_CONFIG_BITS			0x50
+ #define PARF_DBI_BASE_ADDR			0x168
+-#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x16c /* Register offset specific to IP ver 2.3.3 */
+ #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+ #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+ #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+@@ -811,7 +810,7 @@ static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
+ 	u32 val;
+ 
+ 	writel(SLV_ADDR_SPACE_SZ,
+-		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_2_3_3);
++		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+ 
+ 	val = readl(pcie->parf + PARF_PHY_CTRL);
+ 	val &= ~PHY_TEST_PWR_DOWN;
+-- 
+2.34.1
 
-1.	Defer the shrinker_put() to the beginning of the loop.
-	You would need a flag initially set to zero, and then set to
-	one just before (or just after) the rcu_read_lock() above.
-	You would also need another shrinker_old pointer to track the
-	old pointer.  Then at the top of the loop, if the flag is set,
-	invoke shrinker_put() on shrinker_old.	This ensures that the
-	previous shrinker structure stays around long enough to allow
-	the loop to find the next shrinker structure in the list.
-
-	This approach is attractive when the removal code path
-	can invoke shrinker_put() after the grace period ends.
-
-2.	Make shrinker_put() invoke call_rcu() when ->refcount reaches
-	zero, and have the callback function free the object.  This of
-	course requires adding an rcu_head structure to the shrinker
-	structure, which might or might not be a reasonable course of
-	action.  If adding that rcu_head is reasonable, this simplifies
-	the logic quite a bit.
-
-3.	For the shrinker-structure-removal code path, remove the shrinker
-	structure, then remove the initial count from ->refcount,
-	and then keep doing grace periods until ->refcount is zero,
-	then do one more.  Of course, if the result of removing the
-	initial count was zero, then only a single additional grace
-	period is required.
-
-	This would need to be carefully commented, as it is a bit
-	unconventional.
-
-There are probably many other ways, but just to give an idea of a few
-other ways to do this.
-
-> > > +
-> > >  		ret = do_shrink_slab(&sc, shrinker, priority);
-> > >  		if (ret == SHRINK_EMPTY)
-> > >  			ret = 0;
-> > >  		freed += ret;
-> > > -		/*
-> > > -		 * Bail out if someone want to register a new shrinker to
-> > > -		 * prevent the registration from being stalled for long periods
-> > > -		 * by parallel ongoing shrinking.
-> > > -		 */
-> > > -		if (rwsem_is_contended(&shrinker_rwsem)) {
-> > > -			freed = freed ? : 1;
-> > > -			break;
-> > > -		}
-> > > -	}
-> > >  
-> > > -	up_read(&shrinker_rwsem);
-> > > -out:
-> > > +		rcu_read_lock();
-> > 
-> > That new rcu_read_lock() won't help AFAIK, the whole
-> > list_for_each_entry_rcu() needs to be under the single rcu_read_lock() to be
-> > safe.
-> 
-> Yeah, that's the pattern we've been taught and the one we can look
-> at and immediately say "this is safe".
-> 
-> This is a different pattern, as has been explained bi Qi, and I
-> think it *might* be safe.
-> 
-> *However.*
-> 
-> Right now I don't have time to go through a novel RCU list iteration
-> pattern it one step at to determine the correctness of the
-> algorithm. I'm mostly worried about list manipulations that can
-> occur outside rcu_read_lock() section bleeding into the RCU
-> critical section because rcu_read_lock() by itself is not a memory
-> barrier.
-> 
-> Maybe Paul has seen this pattern often enough he could simply tell
-> us what conditions it is safe in. But for me to work that out from
-> first principles? I just don't have the time to do that right now.
-
-If the code does just the right sequence of things on the removal path
-(remove, decrement reference, wait for reference to go to zero, wait for
-grace period, free), then it would work.  If this is what is happening,
-I would argue for more comments.  ;-)
-
-							Thanx, Paul
-
-> > IIUC this is why Dave in [4] suggests unifying shrink_slab() with
-> > shrink_slab_memcg(), as the latter doesn't iterate the list but uses IDR.
-> 
-> Yes, I suggested the IDR route because radix tree lookups under RCU
-> with reference counted objects are a known safe pattern that we can
-> easily confirm is correct or not.  Hence I suggested the unification
-> + IDR route because it makes the life of reviewers so, so much
-> easier...
-> 
-> Cheers,
-> 
-> Dave.
-> -- 
-> Dave Chinner
-> david@fromorbit.com
