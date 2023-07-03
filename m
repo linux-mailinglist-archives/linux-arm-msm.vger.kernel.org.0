@@ -2,83 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ADF4746071
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 18:09:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ACC6746076
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 18:10:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbjGCQJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 12:09:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44858 "EHLO
+        id S231153AbjGCQKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 12:10:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbjGCQJ1 (ORCPT
+        with ESMTP id S230403AbjGCQKE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 12:09:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DD3185
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 09:09:26 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 363DNKRC001807;
-        Mon, 3 Jul 2023 16:09:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=VWoyUazCr13RB9aFOLGDheieW5hl0XAn1nenx18NdfI=;
- b=m1RmEDdsDIPkz5RTD7As0sndOy0wEiWlzc4xvHFnkHPEWez8pCLOGmXbTOQCUxSsFeRI
- 8HwtKeX2HD+gAuMy2m6oJoMAGyPaAouk6Ydzbt66QlDtm+P6l02unMoZ1R0zHztLX428
- T9kSQ41W6K5mLaqlFN07FNfBURjes537g4iOj73EG4ALoKfPecme8O1l9CvxtG8w3g2s
- 6OVbffOWCS1utsvd7F4yv/Sa8wQhupogYHh1VapvgdqAuzx8WIqPmyj94T4CTQlin3UZ
- eQDGtw9IMuE3EhhKGoUDHWjr1vb2/bSK9PQMUchcKQQcLxjUkGttwTYmIJaC8U3VGZZZ Rw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rky5mgbrb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 03 Jul 2023 16:09:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 363G9D6R003154
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 3 Jul 2023 16:09:13 GMT
-Received: from [10.110.64.205] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Mon, 3 Jul 2023
- 09:09:13 -0700
-Message-ID: <87f99d27-c746-baab-6ead-772e2bf81f39@quicinc.com>
-Date:   Mon, 3 Jul 2023 09:09:12 -0700
+        Mon, 3 Jul 2023 12:10:04 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 090C4E42
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 09:10:02 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-51d9890f368so5162637a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 09:10:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688400600; x=1690992600;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LjungVd0/xOT2xWI77bKySokcNnytRYgG5Uu2ldusX4=;
+        b=DaRfPwmGCcCDWkMyZd/KzmzPJ3OwupWE4lG+U1qybpBT44GBgLEtjRv2xg8vK/u5uE
+         FbXx2x4uQReVARA8YKrHMgHoCPthpHNfO+VSvBMjJbb2B9V8nZK8jsUFX75/g4eW1KJ2
+         lra5ltykUJmKSyVy64Mg3x82exWymYwR2Xjpc7aozpmDgqq+DgG2jYKapWn64dO9ph2s
+         9y+nT6vnsKL9P+G0qTq5x8TsNnH1fb8EMXINgasUvgmepm6J+m1syK+m1dUs9O0iNhu5
+         l8RJJSZQCtGosV+TpPKn7Vp5PoSK89gbXfVfxOr6tYPlpiMwLfoa8JEemFVzE1QkROBq
+         tz8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688400600; x=1690992600;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LjungVd0/xOT2xWI77bKySokcNnytRYgG5Uu2ldusX4=;
+        b=VZTlPBbPkS5Rn9Ubwgydmzyo0eSevE5+3i/QRCzgmxx72J8TT9SzYv+HgEPIsnR3mZ
+         G5j3Vqtmy9SouHp4pUktYPyHgWRS7io5hQ8tf2yA8iz43mIyP/3AXId3rV3NADKUm5j6
+         ZncpQaabVsJakuxNm+OxFCl1KIh88g5wiUV4qt2DUF/qMfZ9H/JX0uQKtMqItu4WETBl
+         L/2cSBHP0tN5Jl048vJ1/IBGNwDPUTuEPM+Dj4enu5Z/A5IgdQa9WAOwTD/YXvrCNWd6
+         E5d74+nImVRIlteZ3Pvmnf2S/FhUw9aZjO/nUHwgLjtNb3sCt6MSQRDaDcCt5ImJVHiI
+         8JKg==
+X-Gm-Message-State: ABy/qLb/AKLjyOqoFTYgOb8wFkLXl1fGd+Kb1ZrCtHaVJ8SZ5ip04+jT
+        z+qFdd2oHvYK0MdWl7909YQsHw==
+X-Google-Smtp-Source: APBJJlEdQduU4Odvi7yNT3UQy9kDY+lEssXYe8tOu5yZp/tDGzHDh9gnWuSC4AfJT9ngt+m4qfWfnw==
+X-Received: by 2002:a05:6402:8d8:b0:51e:e67:df4d with SMTP id d24-20020a05640208d800b0051e0e67df4dmr2925284edz.38.1688400600509;
+        Mon, 03 Jul 2023 09:10:00 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id p14-20020a05640243ce00b0051dd16f7e50sm6212725edc.44.2023.07.03.09.09.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Jul 2023 09:09:59 -0700 (PDT)
+Message-ID: <8f859959-d0d7-8417-68c9-19105be1844d@linaro.org>
+Date:   Mon, 3 Jul 2023 18:09:57 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 10/19] drm/msm/dpu: inline SSPP_BLK macros
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: minor whitespace cleanup around '='
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
- <20230619212519.875673-11-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230619212519.875673-11-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230702185051.43867-1-krzysztof.kozlowski@linaro.org>
+ <e09af830-d114-7ee6-0cab-e6812bc10fd4@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <e09af830-d114-7ee6-0cab-e6812bc10fd4@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8WAQo9S76egAKVCsLZHGJzo_ncb4BXQ7
-X-Proofpoint-GUID: 8WAQo9S76egAKVCsLZHGJzo_ncb4BXQ7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-03_11,2023-06-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=578 adultscore=0
- spamscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307030147
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,21 +81,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/19/2023 2:25 PM, Dmitry Baryshkov wrote:
-> To simplify making changes to the hardware block definitions, expand
-> corresponding macros. This way making all the changes are more obvious
-> and visible in the source files.
+On 03/07/2023 11:30, Konrad Dybcio wrote:
+> On 2.07.2023 20:50, Krzysztof Kozlowski wrote:
+>> The DTS code coding style expects exactly one space before and after '='
+>> sign.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/ipq8074.dtsi         |   8 +-
+>>  .../dts/qcom/msm8916-samsung-serranove.dts    |   6 +-
+>>  arch/arm64/boot/dts/qcom/msm8939.dtsi         |  14 +-
+>>  .../boot/dts/qcom/msm8953-xiaomi-daisy.dts    |   2 +-
+>>  .../boot/dts/qcom/msm8953-xiaomi-vince.dts    |   2 +-
+>>  arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
+>>  .../dts/qcom/msm8996pro-xiaomi-natrium.dts    |   2 +-
+>>  arch/arm64/boot/dts/qcom/msm8998.dtsi         |  18 +-
+>>  arch/arm64/boot/dts/qcom/qcm2290.dtsi         |   2 +-
+>>  arch/arm64/boot/dts/qcom/qcs404.dtsi          |   8 +-
+>>  arch/arm64/boot/dts/qcom/sa8540p.dtsi         |   2 +-
+>>  .../sc7280-herobrine-audio-rt5682-3mic.dtsi   |   2 +-
+>>  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   2 +-
+>>  arch/arm64/boot/dts/qcom/sc8180x.dtsi         |   2 +-
+>>  arch/arm64/boot/dts/qcom/sdm630.dtsi          |  10 +-
+>>  .../dts/qcom/sdm845-oneplus-enchilada.dts     |   2 +-
+>>  arch/arm64/boot/dts/qcom/sdx75.dtsi           |   4 +-
+>>  arch/arm64/boot/dts/qcom/sm6115.dtsi          |   2 +-
+>>  arch/arm64/boot/dts/qcom/sm8250.dtsi          | 198 +++++++++---------
+>>  arch/arm64/boot/dts/qcom/sm8350.dtsi          | 196 ++++++++---------
+>>  arch/arm64/boot/dts/qcom/sm8450.dtsi          | 194 ++++++++---------
+>>  arch/arm64/boot/dts/qcom/sm8550.dtsi          | 196 ++++++++---------
+>>  22 files changed, 439 insertions(+), 439 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>> index 68839acbd613..00ed71936b47 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>> @@ -794,10 +794,10 @@ frame@b128000 {
+>>  
+>>  		pcie1: pci@10000000 {
+>>  			compatible = "qcom,pcie-ipq8074";
+>> -			reg =  <0x10000000 0xf1d>,
+>> -			       <0x10000f20 0xa8>,
+>> -			       <0x00088000 0x2000>,
+>> -			       <0x10100000 0x1000>;
+>> +			reg = <0x10000000 0xf1d>,
+>> +			      <0x10000f20 0xa8>,
+>> +			      <0x00088000 0x2000>,
+>> +			      <0x10100000 0x1000>;
+>>  			reg-names = "dbi", "elbi", "parf", "config";
+>>  			device_type = "pci";
+>>  			linux,pci-domain = <1>;
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+>> index 15dc246e84e2..126e8b5cf49f 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+>> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+>> @@ -219,9 +219,9 @@ magnetometer@2e {
+>>  		compatible = "yamaha,yas537";
+>>  		reg = <0x2e>;
+>>  
+>> -		mount-matrix =  "0",  "1",  "0",
+>> -				"1",  "0",  "0",
+>> -				"0",  "0", "-1";
+>> +		mount-matrix = "0",  "1",  "0",
+>> +			       "1",  "0",  "0",
+>> +			       "0",  "0", "-1";
+>>  	};
+>>  };
+>>  
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>> index 895cafc11480..c4209e2d4b4e 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>> @@ -155,7 +155,7 @@ CPU7: cpu@3 {
+>>  
+>>  		idle-states {
+>>  			CPU_SLEEP_0: cpu-sleep-0 {
+>> -				compatible ="qcom,idle-state-spc", "arm,idle-state";
+>> +				compatible = "qcom,idle-state-spc", "arm,idle-state";
+> Will conflict with:
 > 
-> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> https://lore.kernel.org/linux-arm-msm/20230627-topic-more_bindings-v1-2-6b4b6cd081e5@linaro.org/
+> 
+> there are also a couple of entries with property =\n\t{n}[a-z]
+> 
+> Otherwise lgtm
+> 
+... and if I want to reply to this, I have to find and remove entire big
+piece of unrelated quote. So you put this burden on me and you keep
+insisting that everything is easy. No, it is not.
 
-I checked a few of the entries to make sure there are no copy-paste 
-errors but not all of them.
+Anyway, the remaining =\t properties were done like this on purpose for
+easier reading. What I am cleaning here are the cases where there are no
+benefits of such style.
 
-I am going to rely on Marijn's checksum method results that there were 
-no differences in the checksum and go ahead with my,
+Best regards,
+Krzysztof
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
