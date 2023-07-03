@@ -2,137 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E64307455DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 09:20:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E3FC74563E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 09:43:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230247AbjGCHUu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 03:20:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57112 "EHLO
+        id S229483AbjGCHnG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 03:43:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbjGCHUt (ORCPT
+        with ESMTP id S229830AbjGCHm7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 03:20:49 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03CAE43
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 00:20:47 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-1b055511b85so3540038fac.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 00:20:47 -0700 (PDT)
+        Mon, 3 Jul 2023 03:42:59 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AB28C1;
+        Mon,  3 Jul 2023 00:42:58 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b698937f85so67109061fa.2;
+        Mon, 03 Jul 2023 00:42:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688368847; x=1690960847;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5wOEeEqZxs/53QPFBAeYmLrF3X4waeqXDqE1Qr5s1oo=;
-        b=K4Fk0wgl41urJ973GedutT6AJySQVRpM7IEAeH1DL3A0K5cftuzCamKRTB9DPS99mD
-         nA2nj+JvCX7ToqPkiXrqneN0AFk6tdTwfutFdtsVKkSIPottw7M/tR3AATLz4IgyfIl5
-         3uIT+BmwDiCixsnU59nodSwDjHwYO1qhwePVV9/5uIAGIE8HgjGzSORacDRfTQN9o+A4
-         RK189ThZg7KIFV/i1sqW4r2TYZBTb/6fmGM/KM32273ABzhuloTOaX+mqNyy/elVoy8H
-         x0NV4f9dVSDnPrOCSmBeOuSYdtx92ccMK5jyz2fExYMyn5NXHnQPrd9uQwVYLUOJFjPO
-         p98w==
+        d=gmail.com; s=20221208; t=1688370176; x=1690962176;
+        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q1fo/4xJmI/v8Apxv9iZE5rA9bnr+7LUJRY6uhOPxrs=;
+        b=XTuXbF9NC0ZLUFLxZHbCrh3BmMosYZaCcPoeLni+PwhvONO2MBefRwIVdNhR75bJKG
+         XwZKEo9RjfCO7OaaiKzfTjv7G9R17HRp6865LFsLPbmgEc4c1ju6/W9CIOzeuvxOp3im
+         IRhzqK25pn8mJWiUqycZyFM/wAT24ZmeUrQaE5kt+P71VKOl4Yl7aqkS4Mw6Vr8WElKy
+         lUoWAojpHSEyjyXzzCrdbUWhothijb5FFlUGYgKjbmF4NL3VOmX3/gM4WrEuIximSsrn
+         egoeVN2r20c+4kVR/tD+nan5IcPTGaHA46PrObKU8JfE634aoogYUPucgBf066n8gZOh
+         XJ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688368847; x=1690960847;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5wOEeEqZxs/53QPFBAeYmLrF3X4waeqXDqE1Qr5s1oo=;
-        b=lgt8cnzHq5zM5qw1uAnan3ymnK1MqjywMWYZzoNtzNuV0gKItLjgopIyeU64Hl9hsE
-         T4jKomKehLmTAFK3QyFUHBYGiGLNooaYoUMMY44TSJNxmwZTHTSuRUgcCug3RSI8MXCj
-         vEnJTBnbCFaq/gKyP4NUfPgbHQ+pjIkXazcjK0DeOOEwIwz1DXn+JWmoDv8uIQveR+/F
-         b5q/9MYIv9GWZktviPAgS6Wpm5KgPmpbX+B1RMCiF0zMK9KQxLaowBEqZrivCdX1GJLq
-         Xi1K53P1dSblq8xKIi8AULxuE9Io07IRYYL5gqbbMakXsrybWgcO/3mQ6P4gao2MW2oA
-         nJBQ==
-X-Gm-Message-State: ABy/qLZB0S87lpvhdlTJJFiDVphCy16P41+Q1l6h+eBwm8kdwgvSWuB+
-        iIoXTCLydmmGOtlG+Rx+I9VTKIRNI6mZrkIOaYjewA==
-X-Google-Smtp-Source: APBJJlEb+AJ0CavHV/EY5o02uXm03FgkhsSGBahp5rgVjQwn4oDUf2oZLdvfrUiaO5BwJCpHYi9SurP9PwIS6yl4hW0=
-X-Received: by 2002:a05:6870:f150:b0:1b0:3771:736c with SMTP id
- l16-20020a056870f15000b001b03771736cmr12943732oac.41.1688368847232; Mon, 03
- Jul 2023 00:20:47 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688370176; x=1690962176;
+        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q1fo/4xJmI/v8Apxv9iZE5rA9bnr+7LUJRY6uhOPxrs=;
+        b=ls/Eh1nGOiCrMRxq513E45c38xzm8DTaYkaV+gFzxtctx/UuxyfVIJjmfhGnMxTRzd
+         +N0l2shONa5FTmKHtayfIjkMczI276gwRSJKMoGxAxJ8E6Omc2pd/ylPzA0XcAdqZGiV
+         BTQCTW+19g7GsY9hTZCVLpW2s8czEv718Unw6KB6TTVfUJHoZc9looClnc/XboCINS58
+         sL4DByPziFLkg10twWh9aYakpzNuJ+0kvk5FkBemt8KFVftJr1cW0Y7d5caqIjUse4OR
+         FzNuJ5kWPTHvU+Y9vvUEQzndJaWXoMbmqxHxtWrZXDx2VbIsK2ZQTpH/NQnjoy1PGq1e
+         /m/A==
+X-Gm-Message-State: ABy/qLbiYMkhRqQqaX4rmdm7xt0GUZrXoD6l/JfHhYBzUlHEz6w2wTKI
+        /6R7covTAqz76E+AU3NIK8k=
+X-Google-Smtp-Source: APBJJlEihHpYEQV3HBBUGCrGICtVF/Y3mrZuaF6KRazeMHpNXruNvJsym66J/DOXgm+zAeWs8K9cRw==
+X-Received: by 2002:a2e:900e:0:b0:2b6:e121:cf68 with SMTP id h14-20020a2e900e000000b002b6e121cf68mr2760105ljg.5.1688370176174;
+        Mon, 03 Jul 2023 00:42:56 -0700 (PDT)
+Received: from eldfell ([194.136.85.206])
+        by smtp.gmail.com with ESMTPSA id o6-20020a2e7306000000b002b6e77e87fcsm704378ljc.68.2023.07.03.00.42.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jul 2023 00:42:55 -0700 (PDT)
+Date:   Mon, 3 Jul 2023 10:42:46 +0300
+From:   Pekka Paalanen <ppaalanen@gmail.com>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Sean Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
+        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
+        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>,
+        <wayland-devel@lists.freedesktop.org>
+Subject: Re: [PATCH RFC v4 7/7] drm/msm/dpu: Use DRM solid_fill property
+Message-ID: <20230703104246.7226953a@eldfell>
+In-Reply-To: <20230630112649.263331b4@eldfell>
+References: <20230404-solid-fill-v4-0-f4ec0caa742d@quicinc.com>
+        <20230404-solid-fill-v4-7-f4ec0caa742d@quicinc.com>
+        <20230630112649.263331b4@eldfell>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <1687955688-20809-9-git-send-email-quic_mojha@quicinc.com>
- <CAL_JsqJ_TTnGjjB2d8_FKHpWBRG5GHLoWnabCKjsdeZ4QFdNEg@mail.gmail.com>
- <cacbbb02-732e-076e-50bf-292d20a4d722@quicinc.com> <58a26b9e-a48d-d567-c310-193a2c52521e@linaro.org>
- <5447f9f8-55b4-8bed-66a6-1c9d62b02c79@quicinc.com>
-In-Reply-To: <5447f9f8-55b4-8bed-66a6-1c9d62b02c79@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date:   Mon, 3 Jul 2023 09:20:35 +0200
-Message-ID: <CAGE=qrq0CuO4J-6yC=YZ4xjL67o9QTqpei0ovX-X_8MLVeEH6g@mail.gmail.com>
-Subject: Re: [PATCH v4 08/21] dt-bindings: reserved-memory: Add qcom,ramoops binding
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, corbet@lwn.net,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
-        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
-        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="Sig_/=0TNTkoqRYefLA_rwhlpF9P";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 3 Jul 2023 at 08:22, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
-> On 7/2/2023 1:42 PM, Krzysztof Kozlowski wrote:
-> >>> The big difference is if firmware is not deciding where this log
-> >>> lives, then it doesn't need to be in DT. How does anything except the
-> >>> kernel that allocates the log find the logs?
-> >>
-> >> Yes, you are correct, firmware is not deciding where the logs lives
-> >> instead here, Kernel has reserved the region where the ramoops region
-> >> lives and later with the minidump registration where, physical
-> >> address/size/virtual address(for parsing) are passed and that is how
-> >> firmware is able to know and dump those region before triggering system
-> >> reset.
-> >
-> > Your explanation does not justify storing all this in DT. Kernel can
-> > allocate any memory it wishes, store there logs and pass the address to
-> > the firmware. That's it, no need for DT.
->
-> If you go through the driver, you will know that what it does, is
+--Sig_/=0TNTkoqRYefLA_rwhlpF9P
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-We talk about bindings and I should not be forced to look at the
-driver to be able to understand them. Bindings should stand on their
-own.
+On Fri, 30 Jun 2023 11:26:49 +0300
+Pekka Paalanen <ppaalanen@gmail.com> wrote:
 
-> just create platform device for actual ramoops driver to probe and to
+> On Thu, 29 Jun 2023 17:25:06 -0700
+> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>=20
+> > Drop DPU_PLANE_COLOR_FILL_FLAG and check the DRM solid_fill property to
+> > determine if the plane is solid fill. In addition drop the DPU plane
+> > color_fill field as we can now use drm_plane_state.solid_fill instead,
+> > and pass in drm_plane_state.alpha to _dpu_plane_color_fill_pipe() to
+> > allow userspace to configure the alpha value for the solid fill color.
+> >=20
+> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 21 +++++++++++++++------
+> >  1 file changed, 15 insertions(+), 6 deletions(-)
+> >=20
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
+m/msm/disp/dpu1/dpu_plane.c
+> > index 4476722f03bb..11d4fb771a1f 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -42,7 +42,6 @@
+> >  #define SHARP_SMOOTH_THR_DEFAULT	8
+> >  #define SHARP_NOISE_THR_DEFAULT	2
+> > =20
+> > -#define DPU_PLANE_COLOR_FILL_FLAG	BIT(31)
+> >  #define DPU_ZPOS_MAX 255
+> > =20
+> >  /*
+> > @@ -82,7 +81,6 @@ struct dpu_plane {
+> > =20
+> >  	enum dpu_sspp pipe;
+> > =20
+> > -	uint32_t color_fill;
+> >  	bool is_error;
+> >  	bool is_rt_pipe;
+> >  	const struct dpu_mdss_cfg *catalog;
+> > @@ -606,6 +604,17 @@ static void _dpu_plane_color_fill_pipe(struct dpu_=
+plane_state *pstate,
+> >  	_dpu_plane_setup_scaler(pipe, fmt, true, &pipe_cfg, pstate->rotation);
+> >  }
+> > =20
+> > +static uint32_t _dpu_plane_get_fill_color(struct drm_solid_fill solid_=
+fill)
+> > +{
+> > +	uint32_t ret =3D 0;
+> > +
+> > +	ret |=3D ((uint8_t) solid_fill.b) << 16;
+> > +	ret |=3D ((uint8_t) solid_fill.g) << 8;
+> > +	ret |=3D ((uint8_t) solid_fill.r); =20
+>=20
+> solid_fill.r, g and b are uint32_t, yes?
+>=20
+> What's the value encoding in the UAPI? That doc was missing.
+>=20
+> I wouldn't expect the UAPI to use 32-bit variables if it was
+> essentially 8-bit, so this conversion looks wrong.
+>=20
+> Nominal color value 1.0 in u8 is 0xff. The same in u32 is probably
+> 0xffffffff? So a simple cast to u8 won't work. You'd want to take the
+> upper 8 bits instead.
+>=20
+>=20
+> Thanks,
+> pq
+>=20
+> > +
+> > +	return ret;
 
-Not really justification for Devicetree anyway. Whatever your driver
-is doing, is driver's business, not bindings.
+Btw. if your driver format is ABGR, then this function leaves alpha as
+zero. That's confusing.
 
-> provide this it needs exact set of parameters of input what original
-> ramoops DT provides, we need to keep it in DT as maintaining this in
-> driver will not scale well with different size/parameter size
-> requirement for different targets.
+It would be nice to mention the exact pixel format in the function name
+so the consistency is easier to check in both here and in callers.
 
-Really? Why? I don't see a problem in scaling. At all.
 
->
-> >
-> >>
-> >> A part of this registration code you can find in 11/21
-> >>
-> >>> I'm pretty sure I already said all this before.
-> >>
-> >> Yes, you said this before but that's the reason i came up with vendor
-> >> ramoops instead of changing traditional ramoops binding.
-> >
-> > That's unexpected conclusion. Adding more bindings is not the answer to
-> > comment that it should not be in the DTS in the first place.
->
-> Please suggest, what is the other way being above text as requirement..
+Thanks,
+pq
 
-I do not see any requirement for us there. Forcing me to figure out
-how to add non-hardware property to DT is not the way to convince
-reviewers. But if you insist - we have ABI for this, called sysfs. If
-it is debugging feature, then debugfs.
+> > +}
+> > +
+> >  /**
+> >   * _dpu_plane_color_fill - enables color fill on plane
+> >   * @pdpu:   Pointer to DPU plane object
+> > @@ -977,9 +986,9 @@ void dpu_plane_flush(struct drm_plane *plane)
+> >  	if (pdpu->is_error)
+> >  		/* force white frame with 100% alpha pipe output on error */
+> >  		_dpu_plane_color_fill(pdpu, 0xFFFFFF, 0xFF);
+> > -	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
+> > -		/* force 100% alpha */
+> > -		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
+> > +	else if (drm_plane_solid_fill_enabled(plane->state))
+> > +		_dpu_plane_color_fill(pdpu, _dpu_plane_get_fill_color(plane->state->=
+solid_fill),
+> > +				plane->state->alpha);
+> >  	else {
+> >  		dpu_plane_flush_csc(pdpu, &pstate->pipe);
+> >  		dpu_plane_flush_csc(pdpu, &pstate->r_pipe);
+> > @@ -1024,7 +1033,7 @@ static void dpu_plane_sspp_update_pipe(struct drm=
+_plane *plane,
+> >  	}
+> > =20
+> >  	/* override for color fill */
+> > -	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
+> > +	if (drm_plane_solid_fill_enabled(plane->state)) {
+> >  		_dpu_plane_set_qos_ctrl(plane, pipe, false);
+> > =20
+> >  		/* skip remaining processing on color fill */
+> >  =20
+>=20
 
-Best regards,
-Krzysztof
+
+--Sig_/=0TNTkoqRYefLA_rwhlpF9P
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmSie/YACgkQI1/ltBGq
+qqdvWg/+IUlRh8UhRQkQoJS25uUvPZS8VcXCmrgzoWzMxdliGqBuuBZYtX4eY1gZ
+3E1nEhYylI4RoAF6JuNzoHaegBpK8TmFcx60sj1Y8WQnH6DlWni3FsF/+4T9jwbn
+IZDcOl3oihEsOPZgtbHvnpJgpqyVrGG+C7hVIvlLK4j8ngn1FC9aj63mTlluInlS
+ER82vqXHRw+QXOYiyj2XmrylS36mXTambq0iJKYQLLIEz0hJvN6ZEBjd06GZWJTW
+8R24cX6zSTNC9jY4F7aL21i8eUqLLa79/lYQ+kkv28ClsH2xZGr2R2+KiaDVOYaR
+7n74EWWIMyt/f2XYdkzM2K+TMF6P61/CZy9nfW74YeoPadI4oJV5x2Sta3RqtqPH
+TpUmikI9n+LwSEqDjXGmxbI+/xAqt5sfpS0wgBH11tD7R0f41LB98aw6zPcxlR4e
+n4Rvdpow8UpOZv7WSXkLjkU0qto8DOEHANhCUBPFwuqybjlPjvi7w0dNSs7K32xj
+BQiDoBOz2c+8tfpo3KqjJmkxk0r/E0wDwqIh/N/j8Uit6mmbPH62lkwZYLLBkOkg
+mPMDAB8wj1lHazzbGJnvTCCXnsWlNv1eNWGelRHlGFaL7DuQPRZReU1SDfjhU2sH
++DXeGFF7jsTt1Muzt/ol9LhgrHTWsP5N1DtGWayklopgc9nZhJU=
+=OtQx
+-----END PGP SIGNATURE-----
+
+--Sig_/=0TNTkoqRYefLA_rwhlpF9P--
