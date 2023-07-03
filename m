@@ -2,62 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C79B9745867
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 11:31:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6A2574588E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 11:38:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbjGCJbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 05:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38894 "EHLO
+        id S230262AbjGCJiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 05:38:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjGCJbq (ORCPT
+        with ESMTP id S229981AbjGCJiT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 05:31:46 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71BFFE4E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 02:31:40 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so6707992e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 02:31:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688376699; x=1690968699;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AR104y3QqVYoIsuWZKIFJDaoFQxgMiulPpMGyuuJOjk=;
-        b=bme98N5Vmp31XIElKS8TaxwTe/CKr4qVCQRxAdRX458xkkcKxJ7qXtMrLePMO7poLz
-         AfKpiKq7P6F6ZbJOgtjcZrHES0I7CyiYljPbYPadbVJcSSZoZeMm87WvBjBffTW5I9a9
-         vsFItCg9sL2YYHvfUbNhCofgXsghkGh/KhmtcjadnM94sz6+BLZ9dlpbKaGzAAG1sgXu
-         dsrIq585+bN8C/slDlC81sC7L7Ca0NjDxeZI4c7w5LkobaNGHogEMc+nC/81GKBqThio
-         qEQD/L4eK9pM6oP6H9EO+24RACTULw4xT8q2wNsXrPHNN4HLI9a+8LSP6zhkKqYAd7JQ
-         ZJ+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688376699; x=1690968699;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AR104y3QqVYoIsuWZKIFJDaoFQxgMiulPpMGyuuJOjk=;
-        b=ICPMqifJfS8DVD5IPrZSJOTphrwWHHzth6pd+fw4EATXgknGI3E3rCQxfBFbBqvLPE
-         MHZ1Mee6ZRwO/PmI4uDeYd5fNXiyrLgA8gyX8SDz2Vtv2vEFs17lXV/z7YMJUdjWowo2
-         5WzRlD0wNZrVQQtBVls+xs+PrcEFDinwSTXGLu/1Qe7a02vInTOI9REqIcKuuVLHUR89
-         dctae0mDY1VCfuILpZ5GrvCT9QR77blCvo/AruWwTExReD9omqrscQOIQTGkipeKJsjd
-         n+4f3W2TUUUlIWCQoBQOQrOy1MYb0QLJ2FlRurlYH70NbsZeosCTCkDybISdx2WaeM/q
-         wNBw==
-X-Gm-Message-State: ABy/qLY2P5iDvMhG9y8/NbhTYrKuZSyWwbEiyjZn3/P3VSx43lkY/Y9u
-        RzKYtQKupAwk5Nm1g5EFV31Anw==
-X-Google-Smtp-Source: APBJJlH25sIIkUUGwnfY/ZU/BW85gfrB7xSkhcNCsyt3Zida7bUL2+SIVAiNtUZSqri7Zl2MGYiS6w==
-X-Received: by 2002:a05:6512:485b:b0:4fb:8fde:f60d with SMTP id ep27-20020a056512485b00b004fb8fdef60dmr5995656lfb.22.1688376698605;
-        Mon, 03 Jul 2023 02:31:38 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id c23-20020ac244b7000000b004fb761ed781sm3698625lfm.109.2023.07.03.02.31.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 02:31:38 -0700 (PDT)
-Message-ID: <2587c8d6-52d5-bc3b-a053-9502dd4239e7@linaro.org>
-Date:   Mon, 3 Jul 2023 11:31:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: minor whitespace cleanup around '='
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mon, 3 Jul 2023 05:38:19 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0293E12E;
+        Mon,  3 Jul 2023 02:38:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 82B0A60E9A;
+        Mon,  3 Jul 2023 09:38:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5ECC433C7;
+        Mon,  3 Jul 2023 09:38:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688377097;
+        bh=vvCvcdLVaW5HY77zDNvNSDkUf9oON5WYhBfmOhVV2LE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FKhjPU9wi0gYdL0JGtCjyCrRK2viaJ1J6DZDySjWrJDHKj/cUz/VJmer7uBKGE5nV
+         nXaDct9eOrdbkzJhqR28P85tkmHgFixtnsBVdN65ywUBPbrCMCpNRYNase4XPham42
+         ORxneKGlelLynOuyzsWnmATUtwWMknBzm9dTtAUE1nGjIQ5We53lhQQ4/97s1pdtJe
+         ccv4Zp1xU/2DuhOETOgReykTUThNiTGEGAlUoq2ZAIbKowFqPO5mep27tvwlAqFAp/
+         FcOgGeY2OgrVXp2JmaYVpoPR0SfGiXon5R9IcgfkBnwbieOY29QJXiFTmxq2S8V9fV
+         xykboCtXpZcRA==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qGG0u-0006cO-1C;
+        Mon, 03 Jul 2023 11:38:32 +0200
+Date:   Mon, 3 Jul 2023 11:38:32 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -65,14 +48,16 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: minor whitespace cleanup around '='
+Message-ID: <ZKKXGE95Sv-eLQa8@hovoldconsulting.com>
 References: <20230702185051.43867-1-krzysztof.kozlowski@linaro.org>
- <20230702185051.43867-2-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230702185051.43867-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+ <e09af830-d114-7ee6-0cab-e6812bc10fd4@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e09af830-d114-7ee6-0cab-e6812bc10fd4@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,74 +66,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2.07.2023 20:50, Krzysztof Kozlowski wrote:
-> The DTS code coding style expects exactly one space before and after '='
-> sign.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Mon, Jul 03, 2023 at 11:30:24AM +0200, Konrad Dybcio wrote:
+> On 2.07.2023 20:50, Krzysztof Kozlowski wrote:
+> > The DTS code coding style expects exactly one space before and after '='
+> > sign.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
 
-Konrad
->  arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi      | 20 +++++++++----------
->  .../qcom/qcom-msm8974pro-fairphone-fp2.dts    |  2 +-
->  2 files changed, 11 insertions(+), 11 deletions(-)
+[...]
+ 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> > index 895cafc11480..c4209e2d4b4e 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> > @@ -155,7 +155,7 @@ CPU7: cpu@3 {
+> >  
+> >  		idle-states {
+> >  			CPU_SLEEP_0: cpu-sleep-0 {
+> > -				compatible ="qcom,idle-state-spc", "arm,idle-state";
+> > +				compatible = "qcom,idle-state-spc", "arm,idle-state";
+> Will conflict with:
 > 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-> index f0ef86fadc9d..5f0ff61017d1 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-> @@ -416,10 +416,10 @@ restart@4ab000 {
->  
->  		pcie0: pci@40000000 {
->  			compatible = "qcom,pcie-ipq4019";
-> -			reg =  <0x40000000 0xf1d
-> -				0x40000f20 0xa8
-> -				0x80000 0x2000
-> -				0x40100000 0x1000>;
-> +			reg = <0x40000000 0xf1d>,
-> +			      <0x40000f20 0xa8>,
-> +			      <0x80000 0x2000>,
-> +			      <0x40100000 0x1000>;
->  			reg-names = "dbi", "elbi", "parf", "config";
->  			device_type = "pci";
->  			linux,pci-domain = <0>;
-> @@ -543,9 +543,9 @@ wifi0: wifi@a000000 {
->  				     <GIC_SPI 46 IRQ_TYPE_EDGE_RISING>,
->  				     <GIC_SPI 47 IRQ_TYPE_EDGE_RISING>,
->  				     <GIC_SPI 168 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names =  "msi0",  "msi1",  "msi2",  "msi3",
-> -					   "msi4",  "msi5",  "msi6",  "msi7",
-> -					   "msi8",  "msi9", "msi10", "msi11",
-> +			interrupt-names = "msi0",  "msi1",  "msi2",  "msi3",
-> +					  "msi4",  "msi5",  "msi6",  "msi7",
-> +					  "msi8",  "msi9", "msi10", "msi11",
->  					  "msi12", "msi13", "msi14", "msi15",
->  					  "legacy";
->  			status = "disabled";
-> @@ -585,9 +585,9 @@ wifi1: wifi@a800000 {
->  				     <GIC_SPI 62 IRQ_TYPE_EDGE_RISING>,
->  				     <GIC_SPI 63 IRQ_TYPE_EDGE_RISING>,
->  				     <GIC_SPI 169 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names =  "msi0",  "msi1",  "msi2",  "msi3",
-> -					   "msi4",  "msi5",  "msi6",  "msi7",
-> -					   "msi8",  "msi9", "msi10", "msi11",
-> +			interrupt-names = "msi0",  "msi1",  "msi2",  "msi3",
-> +					  "msi4",  "msi5",  "msi6",  "msi7",
-> +					  "msi8",  "msi9", "msi10", "msi11",
->  					  "msi12", "msi13", "msi14", "msi15",
->  					  "legacy";
->  			status = "disabled";
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts
-> index f531d2679f6c..42d253b75dad 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-fairphone-fp2.dts
-> @@ -414,7 +414,7 @@ cmd-data-pins {
->  
->  	wcnss_pin_a: wcnss-pin-active-state {
->  		wlan-pins {
-> -			pins =  "gpio36", "gpio37", "gpio38", "gpio39", "gpio40";
-> +			pins = "gpio36", "gpio37", "gpio38", "gpio39", "gpio40";
->  			function = "wlan";
->  
->  			drive-strength = <6>;
+> https://lore.kernel.org/linux-arm-msm/20230627-topic-more_bindings-v1-2-6b4b6cd081e5@linaro.org/
+> 
+> there are also a couple of entries with property =\n\t{n}[a-z]
+> 
+> Otherwise lgtm
+ 
+Konrad, please remember to trim irrelevant context from your replies
+(e.g. so that we don't have to skim through thousands of lines to find
+a single comment).
+
+Johan
