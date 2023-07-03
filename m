@@ -2,89 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C95B746200
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 20:17:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF626746214
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 20:20:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230351AbjGCSRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 14:17:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41070 "EHLO
+        id S229585AbjGCSUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 14:20:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230133AbjGCSR3 (ORCPT
+        with ESMTP id S229915AbjGCSUM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 14:17:29 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04CE0E73
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 11:17:16 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b6ef64342aso8799641fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 11:17:15 -0700 (PDT)
+        Mon, 3 Jul 2023 14:20:12 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ED05E60
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 11:20:11 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b5c2433134so59915521fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 11:20:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688408234; x=1691000234;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dSlFXmAt5oolMbr6tP679qhhXZff6RY3Gb+h/82siT8=;
-        b=O8V6FIJb6QCwNE55YsoL15LZOs6JdRyMypATmvkcOrDD/Uo37iALfo1ZRFKc+BO+aR
-         6UJD3MuH0mNYJ96fF8hrGxVag6vLz0f4ixxHLSkz5JgROUKhIZYSzNeoO/cMxq1ABOy4
-         PHPT0uLnS7cT+TWGf05GJa0HDB3bLOON/484PM7gzWePK/zRKNji7Q++nIiLh6lEe7kL
-         Iaci0NY//qtWcM7VcXGqC/G1EqEeaSgGXPqCtV+zPuO4Z4XiAAq0rw2vW+rlyr5VUsX0
-         UYRlMmC7cA++U7hbFV2xjKJnvWYCGaw9cHq9OanJNRvVaDd8zK4Ez2vTXELhhQufw4hF
-         aApw==
+        d=linaro.org; s=google; t=1688408409; x=1691000409;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3709e8fFO7E8llHUHqUI0y08/wPoh5pT/hkxw+53yrA=;
+        b=xlbJbUEX5Yd1k6PCD+ZYtC53K72Yd0PHdVCAy7vEuq16XkVIL+lMFsFw1n3acu0oFf
+         QphUw8hLNrjcSvp2kR/WRKI+Sef2rfV8uiwOhQU3wzzxED5dwcKZN2IPmJTKHzYV0W8g
+         XHaOPq4MvvRet0J9Bf+zA/UFQeKCqPCR2yW9BXduaILBZzKM1KalFbfxmnKzeGFk+2wl
+         1QpUAfJKXc6SOUKEaceuiswtw6j6fxph55L30BEj9VWgWEdYqtMOCY3ZeSTvVz4hrfyx
+         qbK2+7tNF68yqWQsme5hygBypd0PFZX+tcIMKdpQM9w/ktCgn8qJYnnktuz+VeBuv9i+
+         c94w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688408234; x=1691000234;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dSlFXmAt5oolMbr6tP679qhhXZff6RY3Gb+h/82siT8=;
-        b=L8JyrE5Z7cinJdj8FPVY1m+LTS9ocspM4PcbY1Y3NcV7+0keBbfqrAwL2glw5CUaQm
-         cm3q3C01e8jS5rq+ixGziFYQv2ogO2uxq/SJfmQ1bNRl1/BHfKflsz8r37Zu9DQkZ59V
-         RIDVATj+iba/7T2Jihm7tz2fl5qiMySmJy+SIXih1WfXe+SQ+l/7i5jsz3uHLUYrBy1s
-         BEXm/rE4ExloT6lqCCNbNad4lxykRLfidNN0/SSW4w3kvNiNsyQDNthmJuR/XOB3UWwE
-         7d2mMzpKXW0TYG9GqrqWv37RMW0tHPD1GDzVDhbOQGSGoE7Of+qBpItIKhRNkQvPKhAf
-         alDA==
-X-Gm-Message-State: ABy/qLbH29qyRhKuDe9T0yHD8goo0jgVdo/qD8+lv8wRoWVSnzxVjOS0
-        eU5prrqFoLlnMpyTcF3MdBr05g==
-X-Google-Smtp-Source: APBJJlFYqk8AsjWf9PKxWzhoTDvI2m8S6a20htiKRvrfbyX/L++Ie8ZIJC0YvUXf8qcTvAeLsojqVA==
-X-Received: by 2002:a05:6512:3086:b0:4f9:547c:a3cc with SMTP id z6-20020a056512308600b004f9547ca3ccmr8293048lfd.14.1688408234251;
-        Mon, 03 Jul 2023 11:17:14 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688408409; x=1691000409;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3709e8fFO7E8llHUHqUI0y08/wPoh5pT/hkxw+53yrA=;
+        b=EnFwl+CsLCYo75kwpII55Cz++e3LxqSS70qDW4cHQG7+c2JPPdIxcSkVmjpoqWKeQo
+         obI08UGZZcgV0HJYjJ5PAgG6wBn0tNFWLM8fX1KCjg41yj94ew8DPXw4HgwfgTSXokWC
+         1B3PfO+LWWPxre6Ay/ByLXTgD7/40J+LufxU5Uc3jCGDAeZmFJcd1YszX4S9M0GwZin3
+         ih1GBcDfmjR1ovS+ZpNNGPlTb+ltg4u+0aJt0QPZhBSyxgcxrhSheZXDqvwll2UztmMA
+         CWwcxyfEL2ynTCP/NJAPmbJXVUUsOWKESV+HYalMQXfZ5MsHj1y+liOVZqoPw3iTqc2h
+         29hg==
+X-Gm-Message-State: ABy/qLYmSC8rApDXoL9yP1XZbM0LoLIEBetkB0Ou6Ur7myl8nF6lu8Gw
+        jiSlAB4vvoQO1aB1p53M6C5n8w==
+X-Google-Smtp-Source: APBJJlGlQkOPQixu2L4tRQl8VLKaygBQZqyviz+FiZtst2YTgudx5n1zzFiZEjQMQEy/J956gCnpNA==
+X-Received: by 2002:a2e:800b:0:b0:2b6:cbdb:790c with SMTP id j11-20020a2e800b000000b002b6cbdb790cmr3658759ljg.1.1688408409514;
+        Mon, 03 Jul 2023 11:20:09 -0700 (PDT)
 Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id q8-20020ac25108000000b004f85628ec34sm2617439lfb.33.2023.07.03.11.17.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 11:17:13 -0700 (PDT)
-Message-ID: <847366eb-1a0d-ad58-324c-aa816cc348aa@linaro.org>
-Date:   Mon, 3 Jul 2023 20:17:11 +0200
+        by smtp.gmail.com with ESMTPSA id s9-20020a2e9c09000000b002b6995f38a2sm4946224lji.100.2023.07.03.11.20.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jul 2023 11:20:09 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/8] MSM8998 clk cleanups and fixups
+Date:   Mon, 03 Jul 2023 20:20:04 +0200
+Message-Id: <20230622-topic-8998clk-v2-0-6222fbc2916b@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 1/4] dt-bindings: regulator: Describe Qualcomm REFGEN
- regulator
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFQRo2QC/3WNwQ6DIBAFf8Vw7jaArUJP/Y/GA+CqmxIwYE0b4
+ 7+Xeu9xJnlvNpYxEWZ2qzaWcKVMMRSQp4q5yYQRgfrCTHJZ80ZKWOJMDpTWyvknXGrRatUMNee
+ KlY01GcEmE9xUVuHlfZFzwoHeR+TRFZ4oLzF9juYqfvbf/SqAw9W2hvcNamXF3VMwKZ5jGlm37
+ /sXqei9+8AAAAA=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Taniya Das <tdas@codeaurora.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230628-topic-refgen-v3-0-9fbf0e605d23@linaro.org>
- <20230628-topic-refgen-v3-1-9fbf0e605d23@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230628-topic-refgen-v3-1-9fbf0e605d23@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688408407; l=1720;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=phlPM9Cc876D80OS9Sc/anPCogRjxlTnuuGA5rJzqPI=;
+ b=7dmYnDCVVvlGri8VIWKTTOkbE9P5gWVFlLT8wuUmBrmzdbLf5oD70Fg+iauFZMgQz+tdBHbiu
+ RIbMXQauebHDezcAG0E87N7GJs3nlC2z11esmEwvb5TPh9dEDmMlAAx
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,93 +93,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3.07.2023 20:15, Konrad Dybcio wrote:
-> Modern Qualcomm SoCs have a REFGEN (reference voltage generator)
-> regulator, providing reference voltage to on-chip IP, like PHYs.
-> It's controlled through MMIO and we can toggle it or read its state back.
-> 
-> Describe it.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-I have a chronic issue where I realize I didn't run b4 trailers -u the
-milisecond I hit enter on b4 send.
+The MSM8998 clock controller drivers have some rough edges around whether
+and how Linux should touch them, which this series tries to sand down
+a bit.
 
-This was:
+MSM8998 maple seems not to explode, please give it a spin on your boards.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Pick up tags (thanks a lot Jeffrey for testing)
+- Drop patch "Don't poke at some BIMC GPU clocks"
+- Link to v1: https://lore.kernel.org/r/20230622-topic-8998clk-v1-0-5b7a0d6e98b1@linaro.org
 
-at
+---
+Konrad Dybcio (8):
+      dt-bindings: clk: qcom,gcc-msm8998: Add missing GPU/MMSS GPLL0 legs
+      dt-bindings: clock: qcom,mmcc: Add GPLL0_DIV for MSM8998
+      clk: qcom: gcc-msm8998: Control MMSS and GPUSS GPLL0 outputs properly
+      clk: qcom: mmcc-msm8998: Properly consume GPLL0 inputs
+      clk: qcom: gpucc-msm8998: Use the correct GPLL0 leg with old DTs
+      clk: qcom: gcc-msm8998: Don't check halt bit on some branch clks
+      arm64: dts: qcom: msm8998: Use the correct GPLL0 leg for GPUCC
+      arm64: dts: qcom: msm8998: Use the correct GPLL0_DIV leg for MMCC
 
-https://lore.kernel.org/linux-arm-msm/168814320140.1876966.17866889850041692910.robh@kernel.org/
+ .../devicetree/bindings/clock/qcom,mmcc.yaml       |  2 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              |  8 ++-
+ drivers/clk/qcom/gcc-msm8998.c                     | 64 +++++++++++++++++++++-
+ drivers/clk/qcom/gpucc-msm8998.c                   |  2 +-
+ drivers/clk/qcom/mmcc-msm8998.c                    | 35 +++---------
+ include/dt-bindings/clock/qcom,gcc-msm8998.h       |  3 +
+ 6 files changed, 80 insertions(+), 34 deletions(-)
+---
+base-commit: 296d53d8f84ce50ffaee7d575487058c8d437335
+change-id: 20230622-topic-8998clk-4317986f3008
 
-Sorry for the inconvenience.
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
->  .../regulator/qcom,sdm845-refgen-regulator.yaml    | 57 ++++++++++++++++++++++
->  1 file changed, 57 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom,sdm845-refgen-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,sdm845-refgen-regulator.yaml
-> new file mode 100644
-> index 000000000000..f02f97d4fdd2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/regulator/qcom,sdm845-refgen-regulator.yaml
-> @@ -0,0 +1,57 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/regulator/qcom,sdm845-refgen-regulator.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. REFGEN Regulator
-> +
-> +maintainers:
-> +  - Konrad Dybcio <konradybcio@kernel.org>
-> +
-> +description:
-> +  The REFGEN (reference voltage generator) regulator provides reference
-> +  voltage for on-chip IPs (like PHYs) on some Qualcomm SoCs.
-> +
-> +allOf:
-> +  - $ref: regulator.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - items:
-> +          - enum:
-> +              - qcom,sc7180-refgen-regulator
-> +              - qcom,sc8180x-refgen-regulator
-> +              - qcom,sm8150-refgen-regulator
-> +          - const: qcom,sdm845-refgen-regulator
-> +
-> +      - items:
-> +          - enum:
-> +              - qcom,sc7280-refgen-regulator
-> +              - qcom,sc8280xp-refgen-regulator
-> +              - qcom,sm6350-refgen-regulator
-> +              - qcom,sm6375-refgen-regulator
-> +              - qcom,sm8350-refgen-regulator
-> +          - const: qcom,sm8250-refgen-regulator
-> +
-> +      - enum:
-> +          - qcom,sdm845-refgen-regulator
-> +          - qcom,sm8250-refgen-regulator
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    regulator@162f000 {
-> +      compatible = "qcom,sm8250-refgen-regulator";
-> +      reg = <0x0162f000 0x84>;
-> +    };
-> +...
-> 
