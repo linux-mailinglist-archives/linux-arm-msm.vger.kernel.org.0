@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7E0374533D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 02:37:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EBD674533F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 02:38:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbjGCAh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jul 2023 20:37:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35860 "EHLO
+        id S229715AbjGCAh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jul 2023 20:37:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229816AbjGCAh5 (ORCPT
+        with ESMTP id S229875AbjGCAh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jul 2023 20:37:57 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99591BF
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 17:37:56 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b6a5fd1f46so58598831fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 17:37:56 -0700 (PDT)
+        Sun, 2 Jul 2023 20:37:58 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937D2E46
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jul 2023 17:37:57 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b6a0e36d42so46969411fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jul 2023 17:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688344675; x=1690936675;
+        d=linaro.org; s=google; t=1688344676; x=1690936676;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JPFwCvRngaFzJ94U7CZjB/OGCFNsTWeZNPgu469jNjI=;
-        b=zqc8yxn+85gSqrBDI0ZGz0xLVJhr/wm+fFHjv88VmquMMzqCImDdrX/yVEWaJfLtzt
-         bztABFbB7IIrko9nWgeExVDNlF/vTz/DO161LfevnzAXu/oOonoHgsXdb7ALC2diIRvj
-         XBiMjSITEDbUe0KEqpb0SvZCsHvzjcesL8v2TBuBBZcUsM+8aFSMjvQq9T7hooPriW/J
-         pl+c71IxTFjUN8FE3xDbqMWksY+4nn4k2vGzj7WLcEPpIQK7woZlJ2oyrWsFXRCpCOOx
-         9hpLz5de9zSnKhtQiWFjiek/mg08NFMGVp6PCWYDiF65EqWzyw6QVZn337z0jRRsDtwX
-         otlg==
+        bh=S7GwLdWUZVT1Ti3y8jUA1Y6eL5SvuXMoiLEPs7RJxLY=;
+        b=QNNnPQQ7dz3xZB2ev0BD7VEVrGaMkcM2tKSTv88yUcMezVqyKYeVdzKNsvehicWi2n
+         PKFrwHTrZuNCIzFRLqaG7p1PwS8xQNbvKqZWNMALbZk2ylClaH4h0IqhjmYzhjnPm8h4
+         LZcQbcItjVHRC7t5riXOR37329lDjDrCuJocVBrKSiMgK29gedWxLyvxwj3Irccxc4oG
+         EvhlcAMAMfXPF17X+Fd3v5hy1tOq3tix0l4VRzQtjcTzrAGUD/oyD1GOBR14xnxYn+bz
+         BHclThixPj6tclubtQkRJisBAPEaBiImHyeUz/Yx1RQYEG8dTvmyXJQODFQl0ezXqbZM
+         +4WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688344675; x=1690936675;
+        d=1e100.net; s=20221208; t=1688344676; x=1690936676;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JPFwCvRngaFzJ94U7CZjB/OGCFNsTWeZNPgu469jNjI=;
-        b=cTYKnflE3Avw5Pizo+QZwhzQIGnMjKlGpjqhBtoHAdTCQf6euRsH8WXVOfqmQ+kxfP
-         QTvox4of8xUAhRbRU4NIqSFkY8Q+mePw/Vpir66aNSvh1kgoasW/nHQMDkIRk+aKcQLd
-         jprqtu3Tfetq0dg2taNHPEpiuuVzHVZA1jpVpERWngiPpwse11y/n6zSyPhABLKo6CkA
-         tlBXO7BLy7CdVTnXKcXNdpILXZNStjrXALPOWSGSNxiY7/O6RYv4k2vWCV4Iy3KgqDHg
-         zeEW/uEvbCFs21SteBh9EDWBpRBykgg6rFXyGT2G0Bxy7NY+jh9FWwniEU4d3n4pL+wA
-         BUsg==
-X-Gm-Message-State: ABy/qLYNdeGMYmgTqDOPtWrrS8UhybCi1XGeXuDxTNur/w/Zwn90kE3f
-        jEo63sjeu9pVWeEXHBBOYazdig==
-X-Google-Smtp-Source: APBJJlGRBoBupoFRwJOOIXxbqzcof+LE14S8pxvp2t7NizJblaQDQ3CdluQZWpm+UEkjaCU7nqT9Fg==
-X-Received: by 2002:a2e:2e04:0:b0:2b4:737c:e316 with SMTP id u4-20020a2e2e04000000b002b4737ce316mr6595190lju.14.1688344675238;
+        bh=S7GwLdWUZVT1Ti3y8jUA1Y6eL5SvuXMoiLEPs7RJxLY=;
+        b=Xn2fltCp2w1xY22Tve8q3vgigXDBlU4Ni5eO5IdqUIs0qz9aUAmiiOFgwQdwW1eJI2
+         UyhpqRVj8zj+fWSRx3+cek29GudrgyuFeujAea14WrkexuvSVPTdTm5BBAzEkjFwMViZ
+         jhfyX5JfeOxwSahwJwDzABU0b4/9CbPxDbMiZHgyNcb/35VS776KuRIAqorIxqJqmq+0
+         ImrQActipZWVUAQcKdit3szremaPtnor8e58XJjiduZSx2OiupsUidIbeD+e7dOGt1J/
+         T1wRvWAYzANmqLEyXV5YVRItfJYFoYYIn3nD7vtIp/G22bqov3hg1sRs0BUcxpUrH68n
+         p1iA==
+X-Gm-Message-State: ABy/qLYg57H8uvp9RSyPrliMkSuvHaarnFvA7OZI6TIm5ZSLSxfoCjyj
+        EPUPV0P13Swmihv7NG5LVl+5zg==
+X-Google-Smtp-Source: APBJJlFKRoblJGMV6xQ3svB6jx8CgG7VOpUhAHBXfpfUHeZCmBR7GQEL8V/eIHQSK5ZNriWsQ9dXzA==
+X-Received: by 2002:a05:651c:2ce:b0:2b6:d956:79d4 with SMTP id f14-20020a05651c02ce00b002b6d95679d4mr1708631ljo.14.1688344675998;
         Sun, 02 Jul 2023 17:37:55 -0700 (PDT)
 Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id s24-20020a2e98d8000000b002b6ebc61e85sm136704ljj.54.2023.07.02.17.37.54
+        by smtp.gmail.com with ESMTPSA id s24-20020a2e98d8000000b002b6ebc61e85sm136704ljj.54.2023.07.02.17.37.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jul 2023 17:37:54 -0700 (PDT)
+        Sun, 02 Jul 2023 17:37:55 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 10/13] drm/msm: switch to drmm_mode_config_init()
-Date:   Mon,  3 Jul 2023 03:37:42 +0300
-Message-Id: <20230703003745.34239-11-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 11/13] drm/msm: only register 'kms' debug file if KMS is used
+Date:   Mon,  3 Jul 2023 03:37:43 +0300
+Message-Id: <20230703003745.34239-12-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230703003745.34239-1-dmitry.baryshkov@linaro.org>
 References: <20230703003745.34239-1-dmitry.baryshkov@linaro.org>
@@ -78,53 +78,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch to drmm_mode_config_init() instead of drm_mode_config_init().
-Drop drm_mode_config_cleanup() calls.
+There is little point in having the empty debugfs file which always
+returns -ENODEV. Change this file to be created only if KMS is actually
+used.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/msm_debugfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index e929da9360e4..6b734be17f3f 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -238,8 +238,6 @@ static int msm_drm_uninit(struct device *dev)
- 	if (kms)
- 		msm_disp_snapshot_destroy(ddev);
+diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
+index a0a936f80ae3..06fc632fd6f9 100644
+--- a/drivers/gpu/drm/msm/msm_debugfs.c
++++ b/drivers/gpu/drm/msm/msm_debugfs.c
+@@ -314,8 +314,9 @@ void msm_debugfs_init(struct drm_minor *minor)
+ 	debugfs_create_file("gpu", S_IRUSR, minor->debugfs_root,
+ 		dev, &msm_gpu_fops);
  
--	drm_mode_config_cleanup(ddev);
--
- 	if (kms) {
- 		pm_runtime_get_sync(dev);
- 		msm_irq_uninstall(ddev);
-@@ -439,11 +437,13 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 	might_lock(&priv->lru.lock);
- 	fs_reclaim_release(GFP_KERNEL);
+-	debugfs_create_file("kms", S_IRUSR, minor->debugfs_root,
+-		dev, &msm_kms_fops);
++	if (priv->kms)
++		debugfs_create_file("kms", S_IRUSR, minor->debugfs_root,
++				    dev, &msm_kms_fops);
  
--	drm_mode_config_init(ddev);
-+	ret = drmm_mode_config_init(ddev);
-+	if (ret)
-+		goto err_destroy_wq;
- 
- 	ret = msm_init_vram(ddev);
- 	if (ret)
--		goto err_cleanup_mode_config;
-+		goto err_destroy_wq;
- 
- 	dma_set_max_seg_size(dev, UINT_MAX);
- 
-@@ -551,8 +551,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 
- err_deinit_vram:
- 	msm_deinit_vram(ddev);
--err_cleanup_mode_config:
--	drm_mode_config_cleanup(ddev);
-+err_destroy_wq:
- 	destroy_workqueue(priv->wq);
- err_put_dev:
- 	drm_dev_put(ddev);
+ 	debugfs_create_u32("hangcheck_period_ms", 0600, minor->debugfs_root,
+ 		&priv->hangcheck_period);
 -- 
 2.39.2
 
