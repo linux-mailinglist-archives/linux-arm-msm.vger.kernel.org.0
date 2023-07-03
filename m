@@ -2,81 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2E057461D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 20:09:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 813E27461E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 20:16:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230281AbjGCSJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 14:09:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35852 "EHLO
+        id S230356AbjGCSQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 14:16:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230426AbjGCSJO (ORCPT
+        with ESMTP id S230073AbjGCSQD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 14:09:14 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 710CAE7A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 11:09:09 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b6a152a933so73365811fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 11:09:09 -0700 (PDT)
+        Mon, 3 Jul 2023 14:16:03 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E5B4E5F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 11:16:01 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f96d680399so7203769e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 11:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688407748; x=1690999748;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zqW9M2dFn1ZjAqPjCzlM+kpDwzNfPSt+HCWXrNSekXU=;
-        b=f8+qdZv0RtZ+fDx65C1Deda3yavnCaD9cBWp/8GLIU1CiuD5969J2pG0Nd3lU+OrBp
-         NPpZ19Eahtb+Uek8MmRJ5F0VsMeWn/k06DsfHhrCO/C2nltweMGIaEbCgBaefipSDrB4
-         FhJ7l69oKwnoSANlw48PPXzde+Hpvw2XAlhepZr7nyFS/vMNrsjIRk9kpxGC7oHp6WEy
-         t3PHzXkECnMzECGk0tTUgNo2y1v4OEzEK413cLj+8Ze4aApb4mVo1N5Nw9mstsAg39bF
-         L0jPHujFXzp215wclWaHt6v7wIwh1PgqK8eeAC/66+ov/Wgekj/BWJanBQb9HqUkQb2A
-         8cuA==
+        d=linaro.org; s=google; t=1688408159; x=1691000159;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QTb+nXJp46q8JDCpV9EvFgYbL4krB6DdNBmj86VEcFo=;
+        b=XuZ6q3VRsc5ysNSSfsmGf3gsLeCvE1lGP2VNQwr+GWLbH8tuBgj7maui1ViU+F5QnS
+         a4nwNpK4WsD5x/XEw/yyC+NHBu5be9jZpSd7SBcJYsEeA4xiBua1PIfBd2sw8N0p0s/9
+         WKUczo7kHoFvD6ea02hfGzGC0caphZjYO8Xmmde4RvG7RNV/XFlcqtJ9FcRotHD6z+NM
+         xLYFJWCq8bCkogJ86G6z5RwbVjuL02LBOLHRMswnUfFTzXvZT0lJrkjpZ8nAo6WCDwIc
+         kzwDeuWb3kXyK53ee3e3SgMoJZFikYmbsZKsOopOkx2AnjQyWLRDOv5nZMRYnqgoq3zQ
+         xzMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688407748; x=1690999748;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zqW9M2dFn1ZjAqPjCzlM+kpDwzNfPSt+HCWXrNSekXU=;
-        b=VWm3j7ESenG2XKrHqY5+tWEo7smiCdHi100eG6idqStxcei9u3Syepqp2GAXFzm9FZ
-         V5FYxwRMPMX2u9coBQAhgkpCcM4nNaqgGPVXbeUyUqQOq1DfmkOXcLIsHDw3WTbBgPqk
-         IQm6cmuyO/pYC8Qh3M1Zx+BtvpvFkF1/SLGjsbiPFaPmQpYeoClXyiTAXZDU8hIHhtTu
-         6lj9WsROqS8F4biun9xYF4nxFM5C2JdFh96xBhqt9ohvTF1yQ3DVzT0G2drD7NWcZPB7
-         CEMsgdkqRvZlhn7AkfluUjzzoxnz5Ab403ikVI42+QT/2pZw1IKJuBHi7CRKJJOY8c44
-         mM4g==
-X-Gm-Message-State: ABy/qLb8mnQ9RjKGi/VrWEFN2PRbGVN1ZaP/N874gCTJ6wACCzVSoetx
-        H018cicn/3F0cMzLwbM/1nSxkg==
-X-Google-Smtp-Source: APBJJlGu7JnhD5pgBRBgwJ8KhvEWkjVOGYWIScNa1OUFPNnLltk5NIocRFmliWckiDTbSZSYq386mQ==
-X-Received: by 2002:a2e:9610:0:b0:2b6:d8ea:6650 with SMTP id v16-20020a2e9610000000b002b6d8ea6650mr5018708ljh.27.1688407747826;
-        Mon, 03 Jul 2023 11:09:07 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688408159; x=1691000159;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QTb+nXJp46q8JDCpV9EvFgYbL4krB6DdNBmj86VEcFo=;
+        b=Zi6L+074Y6qn1jkRTCWgq40r/rnTgIF3jLh9hA1Xtkj3IB8ye/CJf37BzB+++9Ex0v
+         6N2V60p/dGxoBZmM6Mt94L6mf1mQ8KedDkYyCYfkQQEDuYfiKtkKhCePPspMnFyRxyK8
+         QsRbbAHaZb9UfKUlN3mDTDLEvQSBl7YflY/zRusa4EiWyHq1YQdqk219o79b0NU1fFeE
+         qexB6F2xZXo4qq44Bs1RRurHZ235/YKnCsiIsoUR8FGJWAOfFslAA9EWOiS708wdtJFN
+         FfD6tw2kFmPdoJIIOgDv4h0L9BBenXZYTz2UjZvuJYyCHCfVgdbSKqk2wZv77HcnyjL/
+         nsOw==
+X-Gm-Message-State: ABy/qLZgEjolCnw+QzH7QoHAX+zdOavaie8fMloc35xfZpRvQ5k5VbYr
+        Wan+9NjWmcyY+n/XhMf34AUFLGoXhV33NNO459IHRw==
+X-Google-Smtp-Source: APBJJlG0xwPkH81x0r1EHWM3a5V/GX1Xj4goSnJifgUtJ4oyaEqa+JWCs3kuS1MhflC4Xn2C133tSw==
+X-Received: by 2002:a19:2d05:0:b0:4fb:8e1b:ba05 with SMTP id k5-20020a192d05000000b004fb8e1bba05mr7952874lfj.11.1688408159219;
+        Mon, 03 Jul 2023 11:15:59 -0700 (PDT)
 Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id l17-20020a2ea311000000b002b690038aecsm5241157lje.112.2023.07.03.11.09.06
+        by smtp.gmail.com with ESMTPSA id a6-20020a056512390600b004f1383d57ecsm4633034lfu.202.2023.07.03.11.15.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 11:09:07 -0700 (PDT)
+        Mon, 03 Jul 2023 11:15:58 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 03 Jul 2023 20:09:02 +0200
-Subject: [PATCH 2/2] clk: qcom: videocc-sm8350: Add SC8280XP support
+Subject: [PATCH v3 0/4] Qualcomm REFGEN regulator
+Date:   Mon, 03 Jul 2023 20:15:53 +0200
+Message-Id: <20230628-topic-refgen-v3-0-9fbf0e605d23@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230703-topic-8280_videocc-v1-2-8959d4d0a93e@linaro.org>
-References: <20230703-topic-8280_videocc-v1-0-8959d4d0a93e@linaro.org>
-In-Reply-To: <20230703-topic-8280_videocc-v1-0-8959d4d0a93e@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+X-B4-Tracking: v=1; b=H4sIAFkQo2QC/32Nyw7CIBREf8WwFsOjQHXlfxgXgLctSQMNVKJp+
+ u/edudCl2cyZ2YhBXKAQi6HhWSooYQUEeTxQPxgYw80PJCJYEIyLVo6pyl4mqHrIVLedI45owX
+ niqDibAHqso1+QCk+xxHDCcvhtX/c7shDKHPK7/2y8i39sV45ZZQLDeqsjARw1zFEm9Mp5Z5sS
+ 1X8swXamkvdtMab1qsve13XD8P2byn8AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688407743; l=3909;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688408157; l=1915;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=TLaUxadYZTWfsq27UTIEE557pAqOizJ94PYvKkKz/Tk=;
- b=WpQTvAiTPbU+d9NEGQZPzx8s4qYWxW1WwgqfxJ9tIftvA1VT6QJgEH0gYt2MB4hn72/Nvc1bj
- bURoR3tW8r9CUuamy7C14ia9csa/uKVnHEXN2LNkOUG7dKYqK7YHADM
+ bh=3ESCbgZ3PrD9wdJUC4E4i1ivhrr8hMCGWLtTU5VEbiE=;
+ b=lVsR+3/ZTGKIrLGUE+kXfNb+uXPVJuPxZnKBT6Vi1scMbUIju2H2BmbC+EPLt8/QOISbRw6xR
+ 0GP4K7edxsvAYyTe+5BUX/I6zfBEYtpiezeRluPx78MvRquvBpGgf0t
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,114 +98,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SC8280XP, being a partial derivative of SM8350, shares almost the exact
-same videocc block. Extend the 8350 driver to support the bigger brother.
+Recent Qualcomm SoCs have a REFGEN (reference voltage generator) regulator
+responsible for providing a reference voltage to some on-SoC IPs (like DSI
+or PHYs). It can be turned off when unused to save power.
 
-The only notable changes are higher possible frequencies on some clocks
-and some switcheroo within the XO/sleep registers (probably due to some
-different board crystal configuration).
+This series introduces the driver for it and lets the DSI driver
+consume it.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/videocc-sm8350.c | 42 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
+Changes in v3:
+- depend on HAS_IOMEM (s390 build failure, meh)
+- constify regulator_ops
+- Link to v2: https://lore.kernel.org/r/20230628-topic-refgen-v2-0-6136487c78c5@linaro.org
 
-diff --git a/drivers/clk/qcom/videocc-sm8350.c b/drivers/clk/qcom/videocc-sm8350.c
-index b148877fc73d..581ad4440615 100644
---- a/drivers/clk/qcom/videocc-sm8350.c
-+++ b/drivers/clk/qcom/videocc-sm8350.c
-@@ -41,6 +41,10 @@ static const struct pll_vco lucid_5lpe_vco[] = {
- 	{ 249600000, 1750000000, 0 },
- };
- 
-+static const struct pll_vco lucid_5lpe_vco_8280[] = {
-+	{ 249600000, 1800000000, 0 },
-+};
-+
- static const struct alpha_pll_config video_pll0_config = {
- 	.l = 0x25,
- 	.alpha = 0x8000,
-@@ -159,6 +163,16 @@ static const struct freq_tbl ftbl_video_cc_mvs0_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_video_cc_mvs0_clk_src_8280[] = {
-+	F(720000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1014000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1098000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1332000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1599000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1680000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 video_cc_mvs0_clk_src = {
- 	.cmd_rcgr = 0xb94,
- 	.mnd_width = 0,
-@@ -181,6 +195,15 @@ static const struct freq_tbl ftbl_video_cc_mvs1_clk_src[] = {
- 	{ }
- };
- 
-+static const struct freq_tbl ftbl_video_cc_mvs1_clk_src_8280[] = {
-+	F(840000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	F(1098000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	F(1332000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	F(1600000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	F(1800000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	{ }
-+};
-+
- static struct clk_rcg2 video_cc_mvs1_clk_src = {
- 	.cmd_rcgr = 0xbb4,
- 	.mnd_width = 0,
-@@ -499,6 +522,7 @@ static struct qcom_cc_desc video_cc_sm8350_desc = {
- 
- static int video_cc_sm8350_probe(struct platform_device *pdev)
- {
-+	u32 video_cc_xo_clk_cbcr = 0xeec;
- 	struct regmap *regmap;
- 	int ret;
- 
-@@ -510,6 +534,21 @@ static int video_cc_sm8350_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8280xp-videocc")) {
-+		video_cc_sleep_clk_src.cmd_rcgr = 0xf38;
-+		video_cc_sleep_clk.halt_reg = 0xf58;
-+		video_cc_sleep_clk.clkr.enable_reg = 0xf58;
-+		video_cc_xo_clk_src.cmd_rcgr = 0xf14;
-+		video_cc_xo_clk_cbcr = 0xf34;
-+
-+		video_pll0.vco_table = video_pll1.vco_table = lucid_5lpe_vco_8280;
-+		/* No change, but assign it for completeness */
-+		video_pll0.num_vco = video_pll1.num_vco = ARRAY_SIZE(lucid_5lpe_vco_8280);
-+
-+		video_cc_mvs0_clk_src.freq_tbl = ftbl_video_cc_mvs0_clk_src_8280;
-+		video_cc_mvs1_clk_src.freq_tbl = ftbl_video_cc_mvs1_clk_src_8280;
-+	}
-+
- 	regmap = qcom_cc_map(pdev, &video_cc_sm8350_desc);
- 	if (IS_ERR(regmap)) {
- 		pm_runtime_put(&pdev->dev);
-@@ -525,7 +564,7 @@ static int video_cc_sm8350_probe(struct platform_device *pdev)
- 	 *      video_cc_xo_clk
- 	 */
- 	regmap_update_bits(regmap, 0xe58, BIT(0), BIT(0));
--	regmap_update_bits(regmap, 0xeec, BIT(0), BIT(0));
-+	regmap_update_bits(regmap, video_cc_xo_clk_cbcr, BIT(0), BIT(0));
- 
- 	ret = qcom_cc_really_probe(pdev, &video_cc_sm8350_desc, regmap);
- 	pm_runtime_put(&pdev->dev);
-@@ -534,6 +573,7 @@ static int video_cc_sm8350_probe(struct platform_device *pdev)
- }
- 
- static const struct of_device_id video_cc_sm8350_match_table[] = {
-+	{ .compatible = "qcom,sc8280xp-videocc" },
- 	{ .compatible = "qcom,sm8350-videocc" },
- 	{ }
- };
+Changes in v2:
+- Remove "|" from bindings description
+- fix 'renegator' typo
+- define number of 'reg'
+- adjust reg= to size/address-cells = 1
+- fix regmap usage
+- use C++ comments for the header
+- remove now-unused struct qcom_refgen
+- use common helpers for sm8250 refgen (simple bit ops)
+- add missing FIELD_PREPs (small brain forgot regmap_update_bits
+  doesn't do shifting)
+- pick up tags
+- Link to v1: https://lore.kernel.org/r/20230628-topic-refgen-v1-0-126e59573eeb@linaro.org
 
+---
+Konrad Dybcio (4):
+      dt-bindings: regulator: Describe Qualcomm REFGEN regulator
+      regulator: Introduce Qualcomm REFGEN regulator driver
+      dt-bindings: display/msm: dsi-controller-main: Allow refgen-supply
+      drm/msm/dsi: Hook up refgen regulator
+
+ .../bindings/display/msm/dsi-controller-main.yaml  |   4 +
+ .../regulator/qcom,sdm845-refgen-regulator.yaml    |  57 ++++++++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |   2 +
+ drivers/regulator/Kconfig                          |  11 ++
+ drivers/regulator/Makefile                         |   1 +
+ drivers/regulator/qcom-refgen-regulator.c          | 154 +++++++++++++++++++++
+ 6 files changed, 229 insertions(+)
+---
+base-commit: 296d53d8f84ce50ffaee7d575487058c8d437335
+change-id: 20230628-topic-refgen-14fb0b762115
+
+Best regards,
 -- 
-2.41.0
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
