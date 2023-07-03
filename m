@@ -2,88 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB1BE7465FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 01:02:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5316F74661C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 01:16:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230359AbjGCXCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 19:02:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43898 "EHLO
+        id S230464AbjGCXQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 19:16:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230331AbjGCXCD (ORCPT
+        with ESMTP id S230118AbjGCXQn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 19:02:03 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABED8E6D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 16:02:01 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f766777605so7683689e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 16:02:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688425320; x=1691017320;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JYnjAjsNdc+08o7EfBrn0+tklBHBzj+VlOunjsVeIes=;
-        b=sibiPYk/YJKgJiBGHF8C2gv7Orv9I7XefFQOV/sb/PxrndhfP9Zbp9YizegWG9y4Fr
-         5XWLYeOXVwjavRSiX1PseOeffxEd4vP7KbSEdqTO0TYz10xHnpdPONC1dJBjEuvdcnvD
-         aGse+zNiRl4W4qL0c4RZZ0MULPO2B4Aa9ktN421OFr/vS161jggrL+X2OaS8NGSR9APW
-         s8iqA1JV5S9R1yow+ZyVKtb6xCze7TVxK+MZNYQ09jtl37vxSTZyY3PNMavIoNQkgFxU
-         NebITzm5Mo/8NyIRLS5L+sM5DEYP61sHk93U/WZEW8/GUF3uB6U6/8FbwICfI0QUeSXY
-         IQLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688425320; x=1691017320;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JYnjAjsNdc+08o7EfBrn0+tklBHBzj+VlOunjsVeIes=;
-        b=LEyxIJGDLWaE+C80bDgwQkv2rTUArivyCAZ8Iws4W0MHYqKsL7oO3bepejTbQKiYnN
-         vpl8HKsUaBGzBrtlwfkHz7Cx+p9+u0L/4zyzWkDuLmw+s050jC1CuulIbaOYA4RFnVoI
-         iH1hEED/dTRK2DfWZkrS2ftxkNXYsqS+zpz6xzAwGZYjtIAEii4pd3pUwJMxZq9qkG83
-         j7fay+l3dpN39Qm371FwbVzsMDhra7cxamIypW3NLuTGKil3WZZcm+frUSxVuH1vQvxX
-         kArH8ej2M3T7zDrR+trY+a67P+a9+zC/vGi++tqjrP5wDCKltcoJtftefG5rfOhTJylF
-         suig==
-X-Gm-Message-State: ABy/qLZ5nCIXIoycDCyyIc4lwpEJTqyg2M9Aqs2aVVMqieb8Mahjllk9
-        V1vK4sI9LFiBcUWP0uFJzCGRvw==
-X-Google-Smtp-Source: APBJJlFugmQY5xvSs/ktG8Zm+2+0PfQ9R6eeHqJiC2Wo1/jOi9JmJ35CadEz5D48JhJml5DGCDH4cw==
-X-Received: by 2002:a05:6512:3f02:b0:4f9:b6f8:844f with SMTP id y2-20020a0565123f0200b004f9b6f8844fmr8008342lfa.39.1688425319700;
-        Mon, 03 Jul 2023 16:01:59 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id y26-20020ac255ba000000b004fba6f38f87sm2134802lfg.24.2023.07.03.16.01.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 16:01:59 -0700 (PDT)
-Message-ID: <654b0bbb-9dc3-b71d-b16f-cf6b1a327bbb@linaro.org>
-Date:   Tue, 4 Jul 2023 01:01:57 +0200
+        Mon, 3 Jul 2023 19:16:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E9F9F4
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 16:16:42 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 363NDHpC017271;
+        Mon, 3 Jul 2023 23:16:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Sg1PqDLgoo3C4TSwuuvd0OZlOkS8/qWtVIzIVpv3hyo=;
+ b=HivUTvO5HTrmjRe3XznJGmNMAWLnLWFXbhYII68ATN7Xxud2FFB+H79F+qtSYNVyrRb1
+ +vwFicx0VrMRi71FOf8jCCHu4j6Sul+b/x2TUbFSjKOWXr9q+yhhv9pvVgKkS2DFKoUp
+ 4B0AdP0BfYx2Stzyp7MCxcr0IfrFhFipbxE3jf1auUfQstnNLJOMcj0mwam6Cet0gN/h
+ VNgTtUNp6OmLq+0bcLNGdFfcrKP9fRxRuxRx5gwAMm5oun5DwOVGy+G39veSr8R88aaF
+ zZmykengLYF8afzST7MRtOx/SUNKW/m1vMmhm7FIBM+9S/gCZFeuwJe9sw9N+PQABZbw /g== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rky5mh1aa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Jul 2023 23:16:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 363NGVTx027066
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Jul 2023 23:16:31 GMT
+Received: from [10.110.19.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Mon, 3 Jul 2023
+ 16:16:31 -0700
+Message-ID: <e4e49b8a-80de-0e3a-d563-6bdd0e8f7c0e@quicinc.com>
+Date:   Mon, 3 Jul 2023 16:16:30 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 0/4] Qualcomm REFGEN regulator
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Rob Herring <robh@kernel.org>
-References: <20230628-topic-refgen-v3-0-9fbf0e605d23@linaro.org>
- <b93cb054-fd42-46e5-aef3-dc41b36a85f9@sirena.org.uk>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 5/8] drm/msm/dpu: drop the dpu_core_perf_crtc_update()'s
+ stop_req param
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <b93cb054-fd42-46e5-aef3-dc41b36a85f9@sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>
+References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
+ <20230620000846.946925-6-dmitry.baryshkov@linaro.org>
+ <61760ea5-92a4-2150-033f-7d8a9b167eb7@quicinc.com>
+ <CAA8EJprDwLhVQv1peOt71t-RTDBx2k72WqS0kpOsQudav=dhtw@mail.gmail.com>
+ <ecad5268-e867-c472-40d1-e22ad102ba99@quicinc.com>
+ <CAA8EJpo5jy=XM8v3xVFWxHcy3s4q_a4g6GuKxaKqzgXJLH144w@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpo5jy=XM8v3xVFWxHcy3s4q_a4g6GuKxaKqzgXJLH144w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4qZMjharz-ysXaZg_qsSn6pIxm1FLuRd
+X-Proofpoint-GUID: 4qZMjharz-ysXaZg_qsSn6pIxm1FLuRd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-03_15,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ spamscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 phishscore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307030211
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,18 +91,161 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.07.2023 00:59, Mark Brown wrote:
-> On Mon, Jul 03, 2023 at 08:15:53PM +0200, Konrad Dybcio wrote:
-> 
->> Recent Qualcomm SoCs have a REFGEN (reference voltage generator) regulator
->> responsible for providing a reference voltage to some on-SoC IPs (like DSI
->> or PHYs). It can be turned off when unused to save power.
->>
->> This series introduces the driver for it and lets the DSI driver
->> consume it.
-> 
-> What's the expected plan for merging this - should I be applying the DRM
-> patch?
-Uh sorry for not clarifying.. please just take the first two.
 
-Konrad
+
+On 7/3/2023 4:01 PM, Dmitry Baryshkov wrote:
+> On Tue, 4 Jul 2023 at 01:55, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 7/3/2023 3:53 PM, Dmitry Baryshkov wrote:
+>>> On Tue, 4 Jul 2023 at 01:37, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 6/19/2023 5:08 PM, Dmitry Baryshkov wrote:
+>>>>> The stop_req is true only in the dpu_crtc_disable() case, when
+>>>>> crtc->enable has already been set to false. This renders the stop_req
+>>>>> argument useless. Remove it completely.
+>>>>>
+>>>>
+>>>> What about the enable case?
+>>>>
+>>>> That time dpu_crtc->enabled  will be false but you need valid clock and
+>>>> BW that time when you want to enable.
+>>>
+>>> Maybe I'm missing something here. The driver sets dpu_crtc->enabled in
+>>> atomic_enable, while dpu_core_perf_crtc_update() is called further,
+>>> during atomic_flush, or from the CRTC event handler. And both these
+>>> cases have stop_req as false.
+>>>
+>>
+>> But the first enable will happen with a commit too right?
+> 
+> Which one? Could you please point to it?
+> 
+
+My question was that
+
+drm_atomic_helper_commit_planes which calls 
+drm_crtc_helper_funcs::atomic_flush (which calls 
+dpu_core_perf_crtc_update) is called before 
+drm_crtc_helper_funcs::atomic_enable which gets called only during 
+drm_atomic_helper_commit_modeset_enables in msm_atomic_commit_tail
+
+Wouldnt that get broken now?
+
+
+>>
+>> Thats the one I am referring to.
+>>
+>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 12 ++++++------
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  3 +--
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |  6 +++---
+>>>>>     3 files changed, 10 insertions(+), 11 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>> index f8d5c87d0915..773e641eab28 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+>>>>> @@ -277,7 +277,7 @@ static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+>>>>>     }
+>>>>>
+>>>>>     int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+>>>>> -             int params_changed, bool stop_req)
+>>>>> +                           int params_changed)
+>>>>>     {
+>>>>>         struct dpu_core_perf_params *new, *old;
+>>>>>         bool update_bus = false, update_clk = false;
+>>>>> @@ -301,13 +301,13 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+>>>>>         dpu_crtc = to_dpu_crtc(crtc);
+>>>>>         dpu_cstate = to_dpu_crtc_state(crtc->state);
+>>>>>
+>>>>> -     DRM_DEBUG_ATOMIC("crtc:%d stop_req:%d core_clk:%llu\n",
+>>>>> -                     crtc->base.id, stop_req, kms->perf.core_clk_rate);
+>>>>> +     DRM_DEBUG_ATOMIC("crtc:%d enabled:%d core_clk:%llu\n",
+>>>>> +                     crtc->base.id, crtc->enabled, kms->perf.core_clk_rate);
+>>>>>
+>>>>>         old = &dpu_crtc->cur_perf;
+>>>>>         new = &dpu_cstate->new_perf;
+>>>>>
+>>>>> -     if (crtc->enabled && !stop_req) {
+>>>>> +     if (crtc->enabled) {
+>>>>>                 /*
+>>>>>                  * cases for bus bandwidth update.
+>>>>>                  * 1. new bandwidth vote - "ab or ib vote" is higher
+>>>>> @@ -337,7 +337,7 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+>>>>>         }
+>>>>>
+>>>>>         trace_dpu_perf_crtc_update(crtc->base.id, new->bw_ctl,
+>>>>> -             new->core_clk_rate, stop_req, update_bus, update_clk);
+>>>>> +             new->core_clk_rate, !crtc->enabled, update_bus, update_clk);
+>>>>>
+>>>>>         if (update_bus) {
+>>>>>                 ret = _dpu_core_perf_crtc_update_bus(kms, crtc);
+>>>>> @@ -355,7 +355,7 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+>>>>>         if (update_clk) {
+>>>>>                 clk_rate = _dpu_core_perf_get_core_clk_rate(kms);
+>>>>>
+>>>>> -             trace_dpu_core_perf_update_clk(kms->dev, stop_req, clk_rate);
+>>>>> +             trace_dpu_core_perf_update_clk(kms->dev, !crtc->enabled, clk_rate);
+>>>>>
+>>>>>                 clk_rate = min(clk_rate, kms->perf.max_core_clk_rate);
+>>>>>                 ret = dev_pm_opp_set_rate(&kms->pdev->dev, clk_rate);
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+>>>>> index 2bf7836f79bb..c29ec72984b8 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+>>>>> @@ -58,11 +58,10 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
+>>>>>      * dpu_core_perf_crtc_update - update performance of the given crtc
+>>>>>      * @crtc: Pointer to crtc
+>>>>>      * @params_changed: true if crtc parameters are modified
+>>>>> - * @stop_req: true if this is a stop request
+>>>>>      * return: zero if success, or error code otherwise
+>>>>>      */
+>>>>>     int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+>>>>> -             int params_changed, bool stop_req);
+>>>>> +                           int params_changed);
+>>>>>
+>>>>>     /**
+>>>>>      * dpu_core_perf_crtc_release_bw - release bandwidth of the given crtc
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>> index ff5d306b95ed..214229d11e3e 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>> @@ -718,7 +718,7 @@ static void dpu_crtc_frame_event_cb(void *data, u32 event)
+>>>>>     void dpu_crtc_complete_commit(struct drm_crtc *crtc)
+>>>>>     {
+>>>>>         trace_dpu_crtc_complete_commit(DRMID(crtc));
+>>>>> -     dpu_core_perf_crtc_update(crtc, 0, false);
+>>>>> +     dpu_core_perf_crtc_update(crtc, 0);
+>>>>>         _dpu_crtc_complete_flip(crtc);
+>>>>>     }
+>>>>>
+>>>>> @@ -884,7 +884,7 @@ static void dpu_crtc_atomic_flush(struct drm_crtc *crtc,
+>>>>>                 return;
+>>>>>
+>>>>>         /* update performance setting before crtc kickoff */
+>>>>> -     dpu_core_perf_crtc_update(crtc, 1, false);
+>>>>> +     dpu_core_perf_crtc_update(crtc, 1);
+>>>>>
+>>>>>         /*
+>>>>>          * Final plane updates: Give each plane a chance to complete all
+>>>>> @@ -1100,7 +1100,7 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
+>>>>>                 atomic_set(&dpu_crtc->frame_pending, 0);
+>>>>>         }
+>>>>>
+>>>>> -     dpu_core_perf_crtc_update(crtc, 0, true);
+>>>>> +     dpu_core_perf_crtc_update(crtc, 0);
+>>>>>
+>>>>>         drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+>>>>>                 dpu_encoder_register_frame_event_callback(encoder, NULL, NULL);
+>>>
+>>>
+>>>
+> 
+> 
+> 
