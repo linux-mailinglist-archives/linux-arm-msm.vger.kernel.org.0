@@ -2,84 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08024745D1B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 15:25:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 540B7745D59
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 15:31:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231546AbjGCNZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 09:25:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49158 "EHLO
+        id S231550AbjGCNbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 09:31:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231477AbjGCNZi (ORCPT
+        with ESMTP id S231557AbjGCNbR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 09:25:38 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1860E6B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 06:25:34 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fbc77e76abso40018995e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 06:25:34 -0700 (PDT)
+        Mon, 3 Jul 2023 09:31:17 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ADF9E5A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 06:31:15 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b6a5fd1f46so68093711fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 06:31:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688390733; x=1690982733;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :to:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IOndpcYQZRei86HjTSa6sLCOIMedJ10F8ZmbDKThl2M=;
-        b=vd7G70PqJmphoqcC5/iGI9byEgifXwK6Rj3mJrKjAIB8uLw1hpzkudZj36bLUzAfkk
-         CjzNWks5k2enqZ83uiheJk1bPKP4uBNGIYPZq9fUuff3p2KtuZ3rqJncJyFJqF58Wk11
-         z3wyE/Lpomy7vrHjrlZWBHS1lrFctL5sXDGQirjHnrOynrP0Lsyxy/RUFfpaiizpZ15D
-         m2niLhmeobmjKoqyeci4H11VdTtxm8S2YpJ4x7pVGDNNw+N9JpOT8TaCH2LRBE6AMkMV
-         2n86A3zQAeyy55sfLbSPXNIM5/Y7R6C5jvxqBMMqtnupqZrKysuVl4uSym0zdS0BCsLV
-         ydtQ==
+        d=linaro.org; s=google; t=1688391073; x=1690983073;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mmnKR6NrcH13RIboC24wgvo0cXm9uFpdKMc5Nw0n2zA=;
+        b=ScMdpPo+quZsGKt6VxpWHDSxyvsyHQTKTkDln/Nk5LM97r3ByHE8tRaLbaMvIxbS85
+         lQMOOI6mNxiq/LTabMNpFsGcPccJoVDJvShOaSrpsRAAw2GVxGZ0/hQb3kL+DOn9bPO3
+         LzzMb+6WZ9gj9hrm80XN+GiplqVeWvzt2DHlJzYUm4O3fYez/hIEfojd6aCDtOQLMyDw
+         /JST52UuE9cGQN/N23OmzKAbDBCwMaT+9FXOCFXxFcoYHA40lGBrO7AfStANI6Fie7bc
+         AybJ0M1nIfz4EcE8lNqRCIoqPrMLcwxi6MjmTcgE/1FmWXxq/MKuYPxjFySG61Pss78+
+         QEIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688390733; x=1690982733;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :to:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1688391073; x=1690983073;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IOndpcYQZRei86HjTSa6sLCOIMedJ10F8ZmbDKThl2M=;
-        b=evYWWA3RZHzD04l8ERBQIoKD27GCsWVh30jI6TP1TIXhNLE0xs99ftMUVi9oc7bQJw
-         zlHHp1GTIkLTaaWGkYv31SC9qHYaAHWqu3FGZOwEGRVeBeoh+/fwuFK8cooSoH5jNY4S
-         f33fCWAcSSk5NR8EFa7umaZP6W7tyLy7f0FXqsg0PiTEgiI4Fy0di3YAMXme2cRjA5jF
-         8kWeq50PwXsLSbaoDWwc2iPH0i+bKgF9ePMdg2ivopuPBDil6jrp58s2Amjdm+ptjnxR
-         voZngd93VtEifjiJ14DyTglJMVS6kTghqfenGGjsgZgWavVn5cIB4vckN7JQckd0aFeT
-         kOKQ==
-X-Gm-Message-State: ABy/qLYgDQ+uEXc/tylDOOXbx1YT0Gxv28OPWR+PHBWtwrmglExpdB0G
-        Vxl/FRYFHS4TeelWKHoUqJwmTQ==
-X-Google-Smtp-Source: APBJJlFRFQcvat3EQxFgB5SI6iSmXIGa31iU1VkZvt3I+z99Hnaof/6yj4+br2u7++97LUjZHWQZuw==
-X-Received: by 2002:a1c:790e:0:b0:3fb:db66:8332 with SMTP id l14-20020a1c790e000000b003fbdb668332mr1599049wme.40.1688390733118;
-        Mon, 03 Jul 2023 06:25:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:cf0b:9dd4:190:b74f? ([2a01:e0a:982:cbb0:cf0b:9dd4:190:b74f])
-        by smtp.gmail.com with ESMTPSA id p19-20020a05600c205300b003fbc2c0addbsm10279849wmg.42.2023.07.03.06.25.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 06:25:32 -0700 (PDT)
-Message-ID: <1ed2eca7-b5bf-8d25-d38e-15022a8c8a39@linaro.org>
-Date:   Mon, 3 Jul 2023 15:25:31 +0200
+        bh=mmnKR6NrcH13RIboC24wgvo0cXm9uFpdKMc5Nw0n2zA=;
+        b=DTYFgZZ/PQ+AkDjCVSbP+aIcqxeV8b5axt6MLlg7/wkSxiBjdDHmEF+7rN8jcAKD+P
+         nn+k3trZCb2yiFpN7RtC0gjBs0968OZd2qQ5ymZRAsfClwq+Vl7QfRuH8I5jvQUxbyOw
+         UXxKbo5In0Qs3Shtqm+ZjDsbbNxFSPSQrRMqAHvPwM/9huGBO0wwLyRu8nALN0ZKi5/5
+         WvxVpZKT1VWJjH51Ab+o5GRCzTPETAMJvc4lBFdAVu5tjkOxD9OcOK24xpzlXwnbUn0O
+         kSC+TVwG0tGy84s51VzFYmQFIiwDYNPlLlj8qYSyN/+ImlFhqfAGWsbZXXDanjVaVPsN
+         JAUA==
+X-Gm-Message-State: ABy/qLYOc6JdUii5Kb3BFXKuDTQsViohWoiUA5/4QsvKOBKmU0Z4ldqL
+        4jpSxliyPxGcjOmm4AsppZ+0nw==
+X-Google-Smtp-Source: APBJJlGFdqjy8wwAOkx2KKsD9YVjv9xJFBDRdOY+uU/tTgJX7vCdJgPQj5vpQBGok4bNXDBHh5GbeQ==
+X-Received: by 2002:a05:6512:3984:b0:4fb:85b2:cf78 with SMTP id j4-20020a056512398400b004fb85b2cf78mr8856638lfu.37.1688391073559;
+        Mon, 03 Jul 2023 06:31:13 -0700 (PDT)
+Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
+        by smtp.gmail.com with ESMTPSA id ep7-20020a056512484700b004fbb1f70ceesm833417lfb.227.2023.07.03.06.31.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jul 2023 06:31:13 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/5] Add interconnects to QUPs on SM8250
+Date:   Mon, 03 Jul 2023 15:31:09 +0200
+Message-Id: <20230703-topic-8250_qup_icc-v1-0-fea39aa07525@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] dt-bindings: cleanup DTS example whitespaces
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, linux-iio@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-phy@lists.infradead.org,
-        linux-remoteproc@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20230702182308.7583-1-krzysztof.kozlowski@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230702182308.7583-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-B4-Tracking: v=1; b=H4sIAJ3NomQC/x2N0QqDMAwAf0XyvEBtp5X9yhCpMZsBqV2rMhD/f
+ WGPd3DcCYWzcIFHdULmQ4qsUaG+VUBziG9GmZTBGuuMNw63NQlhZxszfPY0CBG2tW+74O7kmUD
+ DMRTGMYdIs6ZxXxaVKfNLvv/Ts7+uH6A3bfx5AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andi Shyti <andi.shyti@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-i2c@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688391072; l=1274;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=P/b9sUtVGW1aCLv/5W9/Do7IS4MZ5AYwLEHs4cWI4Yo=;
+ b=FeyN/5yDiFSyKCkhToHlIcdNwZzpYCsAzae8/E3MTmMzSSgehX8sZSykvbqgM4E5OR2o/LBXV
+ pAWX9VvkUzICzoebYDjNNIbkASbiD70Z2u/I6lHttwRFt3eIaxT4Pcp
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,41 +91,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/07/2023 20:23, Krzysztof Kozlowski wrote:
-> The DTS code coding style expects spaces around '=' sign.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Rob,
-> 
-> Maybe this could go via your tree? Rebased on your for-next:
-> v6.4-rc2-45-gf0ac35049606
-> ---
->   .../bindings/arm/arm,coresight-cti.yaml        | 18 +++++++++---------
->   .../bindings/arm/keystone/ti,sci.yaml          |  8 ++++----
->   .../devicetree/bindings/display/msm/gmu.yaml   |  2 +-
->   .../display/panel/samsung,s6e8aa0.yaml         |  2 +-
->   .../display/rockchip/rockchip-vop.yaml         |  4 ++--
->   .../bindings/iio/adc/ti,adc108s102.yaml        |  2 +-
->   .../bindings/media/renesas,rzg2l-cru.yaml      |  4 ++--
->   .../devicetree/bindings/media/renesas,vin.yaml |  4 ++--
->   .../devicetree/bindings/mtd/mtd-physmap.yaml   |  2 +-
->   .../bindings/net/mediatek-dwmac.yaml           |  2 +-
->   .../bindings/perf/amlogic,g12-ddr-pmu.yaml     |  4 ++--
->   .../bindings/phy/mediatek,dsi-phy.yaml         |  2 +-
->   .../remoteproc/amlogic,meson-mx-ao-arc.yaml    |  2 +-
+SM8250 (like SM8150 but unlike all other QUP-equipped SoCs) doesn't
+provide a qup-core path. Adjust the bindings and drivers as necessary,
+and then describe the icc paths in the device tree. This makes it possible
+for interconnect sync_state succeed so long as you don't use UFS.
 
-For amlogic ones:
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (5):
+      dt-bindings: spi: spi-geni-qcom: Allow no qup-core icc path
+      dt-bindings: serial: geni-qcom: Allow no qup-core icc path
+      dt-bindings: i2c: qcom,i2c-geni: Allow no qup-core icc path
+      soc: qcom: geni-se: Allow any combination of icc paths
+      arm64: dts: qcom: sm8250: Add interconnects and power-domains to QUPs
 
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+ .../bindings/i2c/qcom,i2c-geni-qcom.yaml           |  27 ++--
+ .../bindings/serial/qcom,serial-geni-qcom.yaml     |  26 ++--
+ .../bindings/spi/qcom,spi-geni-qcom.yaml           |  15 ++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               | 150 +++++++++++++++++++++
+ drivers/soc/qcom/qcom-geni-se.c                    |   9 +-
+ 5 files changed, 204 insertions(+), 23 deletions(-)
+---
+base-commit: 296d53d8f84ce50ffaee7d575487058c8d437335
+change-id: 20230703-topic-8250_qup_icc-61768a34c7ec
 
-
->   .../devicetree/bindings/usb/mediatek,mtu3.yaml |  2 +-
->   .../devicetree/bindings/usb/ti,am62-usb.yaml   |  2 +-
->   15 files changed, 30 insertions(+), 30 deletions(-)
-> 
-
-<snip>
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
