@@ -2,73 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0B9674597A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 11:59:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B03F4745980
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 12:00:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231143AbjGCJ7h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 05:59:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57496 "EHLO
+        id S230090AbjGCKAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 06:00:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233115AbjGCJ7M (ORCPT
+        with ESMTP id S231784AbjGCKAP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 05:59:12 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2375B95
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 02:55:34 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qGGFi-0000sj-6H; Mon, 03 Jul 2023 11:53:50 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qGGFW-00Blsj-7i; Mon, 03 Jul 2023 11:53:38 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qGGFV-001phL-C8; Mon, 03 Jul 2023 11:53:37 +0200
-Date:   Mon, 3 Jul 2023 11:53:37 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Yangtao Li <frank.li@vivo.com>
-Cc:     Thomas Gleixner <tglx@linutronix.de>, heiko@sntech.de,
-        hayashi.kunihiko@socionext.com, rafael@kernel.org,
-        amitk@kernel.org, alexandre.torgue@foss.st.com,
-        linux-tegra@vger.kernel.org, thierry.reding@gmail.com,
-        jernej.skrabec@gmail.com, miquel.raynal@bootlin.com,
-        srinivas.pandruvada@linux.intel.com, festevam@gmail.com,
-        linux-stm32@st-md-mailman.stormreply.com, bchihi@baylibre.com,
-        florian.fainelli@broadcom.com, daniel.lezcano@linaro.org,
-        chi.minghao@zte.com.cn, jonathanh@nvidia.com,
-        linux-rockchip@lists.infradead.org, agross@kernel.org,
-        bcm-kernel-feedback-list@broadcom.com, linux-imx@nxp.com,
-        wenst@chromium.org, rui.zhang@intel.com, thara.gopinath@gmail.com,
-        kernel@pengutronix.de, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, s.hauer@pengutronix.de,
-        linux-mediatek@lists.infradead.org, mmayer@broadcom.com,
-        matthias.bgg@gmail.com, DLG-Adam.Ward.opensource@dm.renesas.com,
-        johan+linaro@kernel.org, angelogioacchino.delregno@collabora.com,
-        linux-arm-kernel@lists.infradead.org,
-        niklas.soderlund+renesas@ragnatech.se, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, shangxiaojing@huawei.com,
-        konrad.dybcio@linaro.org, mcoquelin.stm32@gmail.com,
-        shawnguo@kernel.org
-Subject: Re: [PATCH v2 01/15] genirq/devres: Add error information printing
- for devm_request_threaded_irq()
-Message-ID: <20230703095337.27bhco7nkqtxr4me@pengutronix.de>
-References: <20230627101215.58798-1-frank.li@vivo.com>
- <20230627110025.vgtplc6nluiiuvoh@pengutronix.de>
- <87h6qpyzkd.ffs@tglx>
- <690b12b7-5586-6ade-de83-99f463bc8397@vivo.com>
+        Mon, 3 Jul 2023 06:00:15 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2845E1FDF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 02:56:43 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b6a0d91e80so67087411fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 02:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688378202; x=1690970202;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yFcxpzOhBBd54XFri+2kajvhzFonIIEcAtw+w2KHC+0=;
+        b=ET94rEvWPCEzRWltZoBAcSq+oQ9T70y45rUYR0l/HS1wT3srLw67FMqpCQGbnb4gnE
+         Mu1pWz/TTFsQV2wohpWYqUjj641KolURlSDad+HNDXKIjgznxSqc/2bfzxvwwLrApVex
+         LW0nGe0BGPBkRdcVVL/symNezzzi1hm02UmXy2dTazmcZc3LLKe3iydt4rbihjh4KNUO
+         S/4D9wnpRbY0lAcwyoZGqtqrqj2ElVzXqOxIzxGQQ/L/9YtHO/KZUI/5UE6C38AUK0/S
+         Xt12x2v6o0Zldgr9DqfMKCNdLSlmfS202tg7Hq8vdp38/Sf2v1wBeE/P8XypVMx+Fmyv
+         Z9Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688378202; x=1690970202;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yFcxpzOhBBd54XFri+2kajvhzFonIIEcAtw+w2KHC+0=;
+        b=hNBLTTlACRFTfkCnNGALi8UljE6Ff/bbLvaNoMFrQdpGrfIFoMb+adMJw9D4cxkhG9
+         1DxldOLWkAZxBXWuCM7/LmFrPLlcfuFFgw6FCTqwem9W5iTBsEefrgaEdKNc5xxV6/qe
+         mYeb6adNEhZwCqFzJ2X3Cp/5pHE5AY5ju2Fzk+jlTtuZ3DVsFZG01ay2raFXNhCMcyJ/
+         VYeEjnr7bKamtNjwjM5HQ5mhjET577ytFXZDCvJgwUA3QzrMe4O3NaDYhEw8Y4c7+dCa
+         ryIr38QEzzybHhB3a+UdqD+0Eq0cGLp4vipjVThCrUbWv/bat2x/b9UaVtaieCWjEJ1U
+         dw4A==
+X-Gm-Message-State: ABy/qLY6OMCbo4N2VGjK2Ia/5ouzsT5Lt1ivuEzwbN/6qWWezlKoZH6r
+        YZsQLdBdU83UM1ZnCHA7/UkR2g==
+X-Google-Smtp-Source: APBJJlFiPp5D+M8CDsBXsrjtixc558rhCoZDaYFSfKBuUGv/1G4z1yLHFUp1S2TWgfy3NbzIeXdBmA==
+X-Received: by 2002:a2e:3318:0:b0:2b6:e794:5cea with SMTP id d24-20020a2e3318000000b002b6e7945ceamr1783785ljc.27.1688378202049;
+        Mon, 03 Jul 2023 02:56:42 -0700 (PDT)
+Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
+        by smtp.gmail.com with ESMTPSA id y3-20020a2e7d03000000b002b6eeb204a1sm87134ljc.83.2023.07.03.02.56.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Jul 2023 02:56:41 -0700 (PDT)
+Message-ID: <0f4f5a4d-379b-c00c-6bf2-58c08fcc4551@linaro.org>
+Date:   Mon, 3 Jul 2023 11:56:40 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4ifm6dkdtwbp3ztq"
-Content-Disposition: inline
-In-Reply-To: <690b12b7-5586-6ade-de83-99f463bc8397@vivo.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: minor whitespace cleanup around '='
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230702185051.43867-1-krzysztof.kozlowski@linaro.org>
+ <e09af830-d114-7ee6-0cab-e6812bc10fd4@linaro.org>
+ <ZKKXGE95Sv-eLQa8@hovoldconsulting.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ZKKXGE95Sv-eLQa8@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,43 +83,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 3.07.2023 11:38, Johan Hovold wrote:
+> On Mon, Jul 03, 2023 at 11:30:24AM +0200, Konrad Dybcio wrote:
+>> On 2.07.2023 20:50, Krzysztof Kozlowski wrote:
+>>> The DTS code coding style expects exactly one space before and after '='
+>>> sign.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+> 
+> [...]
+>  
+>>> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>>> index 895cafc11480..c4209e2d4b4e 100644
+>>> --- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>>> @@ -155,7 +155,7 @@ CPU7: cpu@3 {
+>>>  
+>>>  		idle-states {
+>>>  			CPU_SLEEP_0: cpu-sleep-0 {
+>>> -				compatible ="qcom,idle-state-spc", "arm,idle-state";
+>>> +				compatible = "qcom,idle-state-spc", "arm,idle-state";
+>> Will conflict with:
+>>
+>> https://lore.kernel.org/linux-arm-msm/20230627-topic-more_bindings-v1-2-6b4b6cd081e5@linaro.org/
+>>
+>> there are also a couple of entries with property =\n\t{n}[a-z]
+>>
+>> Otherwise lgtm
+>  
+> Konrad, please remember to trim irrelevant context from your replies
+> (e.g. so that we don't have to skim through thousands of lines to find
+> a single comment).
+My actual reply begins at line 77, which is considerably less than
+thousands and is concluded by my signoff, which signifies the end
+of the message.
 
---4ifm6dkdtwbp3ztq
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hello,
-
-On Mon, Jul 03, 2023 at 05:13:29PM +0800, Yangtao Li wrote:
-> [...] v3 has been sent.
-
-Please make sure that you send a v3 patch series (at least) to the
-people who gave you feedback for v2. If you skip people who had general
-concerns about the whole series, this might help you in the short run
-because they might miss to also criticise v3, but in the long run it
-might result in a loss of trust in you.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---4ifm6dkdtwbp3ztq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmSimqAACgkQj4D7WH0S
-/k6WAQgApvFvslry9NwR8H0z4aDKfgwg20hFIuR9LFKWPzquLmB7y1nBdA9z1Mpp
-Ybkb+E4cxXIe/uFWnm7mr+SlHuHQdwR6b983iZQjHGYCLiqxcAcWzp0W+b/ZH8JZ
-AYUipaQ9T6hm8Kqh+HgQN5VhXv7PM0fQH/yoBNeEF+CDsMwGMAoViefMhwHeZLx2
-+yHExhGOQNgoN2ge6GgpvdryJJ1NSl5PXpcyCG+1ED6a1pGmueDK5ipp+dMaxOQg
-l3/9ECPLYTDvPK4951UMlOuWdVG5qKqYw8q9Z8I5QGTav+lKoshXgpbAbQnHNpv+
-44KmixTXlQmRdC4XP2f1Em3/fP/8Dw==
-=4vu6
------END PGP SIGNATURE-----
-
---4ifm6dkdtwbp3ztq--
+Konrad
+> 
+> Johan
