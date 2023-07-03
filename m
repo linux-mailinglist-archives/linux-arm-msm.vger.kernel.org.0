@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 540B7745D59
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 15:31:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0171745D5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 15:31:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231550AbjGCNbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 09:31:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53410 "EHLO
+        id S231540AbjGCNbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 09:31:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231557AbjGCNbR (ORCPT
+        with ESMTP id S231572AbjGCNbS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 09:31:17 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ADF9E5A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 06:31:15 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b6a5fd1f46so68093711fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 06:31:15 -0700 (PDT)
+        Mon, 3 Jul 2023 09:31:18 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11E0E66
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 06:31:16 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f954d7309fso5561384e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 06:31:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688391073; x=1690983073;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mmnKR6NrcH13RIboC24wgvo0cXm9uFpdKMc5Nw0n2zA=;
-        b=ScMdpPo+quZsGKt6VxpWHDSxyvsyHQTKTkDln/Nk5LM97r3ByHE8tRaLbaMvIxbS85
-         lQMOOI6mNxiq/LTabMNpFsGcPccJoVDJvShOaSrpsRAAw2GVxGZ0/hQb3kL+DOn9bPO3
-         LzzMb+6WZ9gj9hrm80XN+GiplqVeWvzt2DHlJzYUm4O3fYez/hIEfojd6aCDtOQLMyDw
-         /JST52UuE9cGQN/N23OmzKAbDBCwMaT+9FXOCFXxFcoYHA40lGBrO7AfStANI6Fie7bc
-         AybJ0M1nIfz4EcE8lNqRCIoqPrMLcwxi6MjmTcgE/1FmWXxq/MKuYPxjFySG61Pss78+
-         QEIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688391073; x=1690983073;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1688391075; x=1690983075;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mmnKR6NrcH13RIboC24wgvo0cXm9uFpdKMc5Nw0n2zA=;
-        b=DTYFgZZ/PQ+AkDjCVSbP+aIcqxeV8b5axt6MLlg7/wkSxiBjdDHmEF+7rN8jcAKD+P
-         nn+k3trZCb2yiFpN7RtC0gjBs0968OZd2qQ5ymZRAsfClwq+Vl7QfRuH8I5jvQUxbyOw
-         UXxKbo5In0Qs3Shtqm+ZjDsbbNxFSPSQrRMqAHvPwM/9huGBO0wwLyRu8nALN0ZKi5/5
-         WvxVpZKT1VWJjH51Ab+o5GRCzTPETAMJvc4lBFdAVu5tjkOxD9OcOK24xpzlXwnbUn0O
-         kSC+TVwG0tGy84s51VzFYmQFIiwDYNPlLlj8qYSyN/+ImlFhqfAGWsbZXXDanjVaVPsN
-         JAUA==
-X-Gm-Message-State: ABy/qLYOc6JdUii5Kb3BFXKuDTQsViohWoiUA5/4QsvKOBKmU0Z4ldqL
-        4jpSxliyPxGcjOmm4AsppZ+0nw==
-X-Google-Smtp-Source: APBJJlGFdqjy8wwAOkx2KKsD9YVjv9xJFBDRdOY+uU/tTgJX7vCdJgPQj5vpQBGok4bNXDBHh5GbeQ==
-X-Received: by 2002:a05:6512:3984:b0:4fb:85b2:cf78 with SMTP id j4-20020a056512398400b004fb85b2cf78mr8856638lfu.37.1688391073559;
-        Mon, 03 Jul 2023 06:31:13 -0700 (PDT)
+        bh=n/gQKrgv9jl26df4nD8+qhw8ZnBWlEQchlmkvSgMYjQ=;
+        b=l73yEXFOeig5qdtuMpI+ALwg4IVM0aw9hMZjHVFwaUTnXiGtujvGJewYdsk1tleRB2
+         z5tITNcyfBvWbsRHjpFGGK9a0W/F52UoOdp0EWnav7IOMCgJf0zfkzpmgKx+aFVokbco
+         l3jNynIeC4wwqc+g44wcjQN5AQwMi6M5kzm90uknSp01Mkpti5/bMT90w27Ts3yD+fE7
+         MvtWhkjLwinbSN/UdfRchpILrNNaHLGs0aIZKmqq2h4ECaoHOUzA/QBvxsgLMOZ3jvvV
+         vnIyUzgheqLU2ZkOn+8epAM/lRzIhipLWJuEU6Q3oNUjF2vCHFMYhU1FA5ilKCKscZRZ
+         DmOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688391075; x=1690983075;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n/gQKrgv9jl26df4nD8+qhw8ZnBWlEQchlmkvSgMYjQ=;
+        b=FPDZkTD+y0aMFzoXGSMojtBNsqX9XcbZPRFSHLRjapdGgF7KegPC4l0ZP/nlgLft7b
+         oEg0fUtAA5C2Oa9vWydGPFs8esr+R7wzvfQ4jfTh52L4h8JyiwoHYcDE0xMRq+YyecV5
+         Y3TjwSmD6Z/hFjqdxz5GAwksTmR9++52oxF0hFNVMLF0lF3eXtwAfsrEuswifDO5IN8j
+         MqsIG+1LMvxWJNqB3waajbhDWWXVvzCDU7D+jWhqV7IhU7UgDEmN9TprN0pkFEajIww3
+         e6zcdv7tMaGu+3Yvfv3YI2IWXOS1I6AhDmWS47Me7U7ohNzZ6Ni6YFWYO1b/DMNTVI7p
+         pV1g==
+X-Gm-Message-State: ABy/qLbvxcQVrzUtBUL+4s2kgM1Q3m3PFPdEGBjK+EIA7LeSdJGzmUBg
+        k/Oeb9OWLH8UdSpHnuxFwFOAsw==
+X-Google-Smtp-Source: APBJJlHpPmW37wHbYhD2VatnWDTXUi9XhtZ9muHG5jeTKYozptLFtx9Ha1cNS8EAgJxO9jLR4qBMmA==
+X-Received: by 2002:a05:6512:3c87:b0:4f4:a656:2466 with SMTP id h7-20020a0565123c8700b004f4a6562466mr3914367lfv.15.1688391074973;
+        Mon, 03 Jul 2023 06:31:14 -0700 (PDT)
 Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id ep7-20020a056512484700b004fbb1f70ceesm833417lfb.227.2023.07.03.06.31.12
+        by smtp.gmail.com with ESMTPSA id ep7-20020a056512484700b004fbb1f70ceesm833417lfb.227.2023.07.03.06.31.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 06:31:13 -0700 (PDT)
+        Mon, 03 Jul 2023 06:31:14 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 0/5] Add interconnects to QUPs on SM8250
-Date:   Mon, 03 Jul 2023 15:31:09 +0200
-Message-Id: <20230703-topic-8250_qup_icc-v1-0-fea39aa07525@linaro.org>
+Date:   Mon, 03 Jul 2023 15:31:10 +0200
+Subject: [PATCH 1/5] dt-bindings: spi: spi-geni-qcom: Allow no qup-core icc
+ path
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJ3NomQC/x2N0QqDMAwAf0XyvEBtp5X9yhCpMZsBqV2rMhD/f
- WGPd3DcCYWzcIFHdULmQ4qsUaG+VUBziG9GmZTBGuuMNw63NQlhZxszfPY0CBG2tW+74O7kmUD
- DMRTGMYdIs6ZxXxaVKfNLvv/Ts7+uH6A3bfx5AAAA
+Message-Id: <20230703-topic-8250_qup_icc-v1-1-fea39aa07525@linaro.org>
+References: <20230703-topic-8250_qup_icc-v1-0-fea39aa07525@linaro.org>
+In-Reply-To: <20230703-topic-8250_qup_icc-v1-0-fea39aa07525@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Mark Brown <broonie@kernel.org>,
@@ -74,11 +75,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-serial@vger.kernel.org, linux-i2c@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688391072; l=1274;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688391072; l=1083;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=P/b9sUtVGW1aCLv/5W9/Do7IS4MZ5AYwLEHs4cWI4Yo=;
- b=FeyN/5yDiFSyKCkhToHlIcdNwZzpYCsAzae8/E3MTmMzSSgehX8sZSykvbqgM4E5OR2o/LBXV
- pAWX9VvkUzICzoebYDjNNIbkASbiD70Z2u/I6lHttwRFt3eIaxT4Pcp
+ bh=TQNTCWE+iBjVfoMqrm2paazex7hqvKkpoTz9pkEkyKc=;
+ b=cStngA5XatURTQAcTPIg9usdXNHDCeFjDqHlJO5FM/ZH4iA7azJ01kuuVe06R9jsSSgwZ4aUm
+ VBUl9Y1tbCiDUoxFvB6NfWRfJ1/5XpZHtnKTkXLnTdFJOWHEcbjMsUq
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -91,31 +92,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8250 (like SM8150 but unlike all other QUP-equipped SoCs) doesn't
-provide a qup-core path. Adjust the bindings and drivers as necessary,
-and then describe the icc paths in the device tree. This makes it possible
-for interconnect sync_state succeed so long as you don't use UFS.
+Some SoCs (like SM8150 and SM8250) don't seem to provide a qup-core path.
+Allow such case.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (5):
-      dt-bindings: spi: spi-geni-qcom: Allow no qup-core icc path
-      dt-bindings: serial: geni-qcom: Allow no qup-core icc path
-      dt-bindings: i2c: qcom,i2c-geni: Allow no qup-core icc path
-      soc: qcom: geni-se: Allow any combination of icc paths
-      arm64: dts: qcom: sm8250: Add interconnects and power-domains to QUPs
+ .../devicetree/bindings/spi/qcom,spi-geni-qcom.yaml       | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
- .../bindings/i2c/qcom,i2c-geni-qcom.yaml           |  27 ++--
- .../bindings/serial/qcom,serial-geni-qcom.yaml     |  26 ++--
- .../bindings/spi/qcom,spi-geni-qcom.yaml           |  15 ++-
- arch/arm64/boot/dts/qcom/sm8250.dtsi               | 150 +++++++++++++++++++++
- drivers/soc/qcom/qcom-geni-se.c                    |   9 +-
- 5 files changed, 204 insertions(+), 23 deletions(-)
----
-base-commit: 296d53d8f84ce50ffaee7d575487058c8d437335
-change-id: 20230703-topic-8250_qup_icc-61768a34c7ec
+diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+index 2e20ca313ec1..2890c4968c2a 100644
+--- a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
++++ b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+@@ -49,11 +49,16 @@ properties:
+     maxItems: 3
+ 
+   interconnect-names:
+-    minItems: 2
+-    items:
+-      - const: qup-core
+-      - const: qup-config
+-      - const: qup-memory
++    oneOf:
++      - items:
++          - const: qup-config
++          - const: qup-memory
++
++      - minItems: 2
++        items:
++          - const: qup-core
++          - const: qup-config
++          - const: qup-memory
+ 
+   interrupts:
+     maxItems: 1
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.41.0
 
