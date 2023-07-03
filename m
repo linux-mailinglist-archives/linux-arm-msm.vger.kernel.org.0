@@ -2,597 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CCDB745AD9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 13:17:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37A0A745ADD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 13:18:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229701AbjGCLRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 07:17:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42562 "EHLO
+        id S230250AbjGCLR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 07:17:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229816AbjGCLRS (ORCPT
+        with ESMTP id S229816AbjGCLR5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 07:17:18 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40899109;
-        Mon,  3 Jul 2023 04:17:14 -0700 (PDT)
-Received: from [IPV6:2a01:e0a:120:3210:4563:92b0:7df7:68d2] (unknown [IPv6:2a01:e0a:120:3210:4563:92b0:7df7:68d2])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 7037A6602239;
-        Mon,  3 Jul 2023 12:17:12 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1688383032;
-        bh=aQdDlfIg3Ekdf2DPNLrR3KrOKGJTINsqQtF+7USiHgI=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=U+QXnyUX0uvqZgtFOFOwY1waprmVqLbhVdfneTLxiZ6IVdaZuqiaHoHS7Nnkp69T+
-         AbKIxSrX3nN4oA1RmGdFfQ2oOtepITnsrLBhxVCy5VTxsNyKLmpbULoIJcxJk1LRBu
-         Y/BNTjbWucc3614ptvW2AKXUH4YWPsso0yIOdBGpVfFudvipqixP2AFllGAMWvNKEe
-         8LMZc3O+DHIn6VQp2QNxE4VF8rKDOnqv4PtljmghMmhYFaWqR22GOSyD9p9miVmGF7
-         trC78KDXWDoQW4bmOLkbCF6rbIrPPyah9X+ZmipBZcvbRGHYzmG9wqI9+EzKvGwOBU
-         Gy6UXytnbwejQ==
-Message-ID: <e3250369-1a68-d061-3618-fd285f760315@collabora.com>
-Date:   Mon, 3 Jul 2023 13:17:10 +0200
+        Mon, 3 Jul 2023 07:17:57 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D28DEA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 04:17:54 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4faaaa476a9so6792188e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 04:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688383072; x=1690975072;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AiG2E9lyX7R6JeCw0Hq9bLTBu3xdtmAiHdXrjzQB/Go=;
+        b=ftU7FTMwBj4VMEGow7wF9oaZUig6nbUCWaqi2MmOP1RFY6wePfmeFm+k3/HvFham5J
+         dUQyOMnevCAwwZ1SgqqXTOafa5G373uxwEqxjwgyq3JkBYrifprqWkX8rn+wbpxVAjAI
+         Hx04aLNBu+b4wSgaHdHHmgzakMLv60KoG3rOq68NxWmQ/9FAwfbxP2G8Bveoq4tjNNhK
+         rJsNuDmMNS1RwbQSjyvDJEiR0HCVeeH1+Tb+071ILZXVQWHaDzw57fr6mSB7lxfdPpll
+         Npc7FJImUGZLYlIWNjc5zoR4ICy12+zIVpzud4ub10TXFl92FzKcXZyJtO1HHIy8KQiP
+         UBaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688383072; x=1690975072;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AiG2E9lyX7R6JeCw0Hq9bLTBu3xdtmAiHdXrjzQB/Go=;
+        b=gJ2Wpru3dvO2ZcCAbizLG/98ICAkDH2NuCUt5AMuX0+qWtU1e0Dt3XkZOvrJzswGAJ
+         ea7QzMc9y79QPjrYeJYyT7ftdgNSwOu01zyisj74BNF8vzDy5zColpx4xb9TgYZMxGY1
+         z1AXNf4vfURNRvJAICVN6cOfTOhw3aKS//8qpu/ZfyphjUT3GesUsPjH5ff99iNyXkdm
+         cdZWdM7t22dss0ETn0sro4tewg+6+PYztkPtenrY8PpyXHn4vdp1W8Po+BjVnvdh+9Nc
+         vS47fQJp4UVV4tXt80HbuP2vOdKghCh3Wja9rdUQOofG5KLc2D9Qd49Jenlf1KDpDb45
+         6qyg==
+X-Gm-Message-State: ABy/qLa8QUDJ62AMg+m77AkfyNDltNpGEZacLSTZGWVRmrhJdyKkRNnr
+        bb7kH/I/qtjm8A93sDmQ3z4hRw==
+X-Google-Smtp-Source: APBJJlF+ROws4cooNvbfGzB14o/lSdC80W+tRssizG9GZwZtIZG3LnIlnNPhCazurc5TA2oDfmdZKQ==
+X-Received: by 2002:a05:6512:3a8e:b0:4f5:a181:97b8 with SMTP id q14-20020a0565123a8e00b004f5a18197b8mr7390760lfu.25.1688383072379;
+        Mon, 03 Jul 2023 04:17:52 -0700 (PDT)
+Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
+        by smtp.gmail.com with ESMTPSA id d1-20020ac24c81000000b004fb759964a9sm3758528lfl.168.2023.07.03.04.17.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Jul 2023 04:17:52 -0700 (PDT)
+Message-ID: <915fa7cd-5d5d-94dd-621c-654938cb07b3@linaro.org>
+Date:   Mon, 3 Jul 2023 13:17:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 10/11] media: v4l2: Add DELETE_BUF ioctl
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 06/28] interconnect: icc-clk: add support for scaling
+ using OPP
 Content-Language: en-US
-To:     Hsia-Jun Li <Randy.Li@synaptics.com>
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        p.zabel@pengutronix.de, ming.qian@nxp.com,
-        hverkuil-cisco@xs4all.nl, gregkh@linuxfoundation.org,
-        ezequiel@vanguardiasur.com.ar,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, nicolas.dufresne@collabora.com,
-        linux-staging@lists.linux.dev, kernel@collabora.com,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ayaka <ayaka@soulik.info>
-References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
- <20230622131349.144160-11-benjamin.gaignard@collabora.com>
- <80a03c29-6f3d-43f1-755c-10f3ae2c2756@synaptics.com>
- <42a45bad-09c7-ffb6-49cb-29ec0826599d@collabora.com>
- <3b22fda9-4a0e-2c03-2f12-19e5e3239235@synaptics.com>
- <54833256-7d88-9316-4f0f-b8c57552cd7b@synaptics.com>
- <0f4fd31f-ef61-8dee-7a88-55263f266975@collabora.com>
- <483472c8-74fd-4208-343e-4a8bf79dc6e7@synaptics.com>
- <2b64b605-61cc-248e-a67a-85266434c7a6@collabora.com>
- <16feefaa-e4d9-ad5a-71c5-cee8ce8be5e4@synaptics.com>
- <e08d5d16-3387-ace1-767d-435ab52a98df@collabora.com>
- <8ca2f66e-8ff9-e885-274f-51417b581b78@synaptics.com>
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-In-Reply-To: <8ca2f66e-8ff9-e885-274f-51417b581b78@synaptics.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230702174246.121656-1-dmitry.baryshkov@linaro.org>
+ <20230702174246.121656-7-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230702174246.121656-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2.07.2023 19:42, Dmitry Baryshkov wrote:
+> Sometimes it might be required to scale the clock using the OPP
+> framework (e.g. to scale regulators following the required clock rate).
+> Extend the interconnec-clk framework to handle OPP case in addition to
+> scaling the clock.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Le 03/07/2023 à 13:02, Hsia-Jun Li a écrit :
->
->
-> On 7/3/23 18:35, Benjamin Gaignard wrote:
->> CAUTION: Email originated externally, do not click links or open 
->> attachments unless you recognize the sender and know the content is 
->> safe.
->>
->>
->> Le 03/07/2023 à 11:20, Hsia-Jun Li a écrit :
->>>
->>> On 7/3/23 16:52, Benjamin Gaignard wrote:
->>>> CAUTION: Email originated externally, do not click links or open
->>>> attachments unless you recognize the sender and know the content is
->>>> safe.
->>>>
->>>>
->>>> Le 03/07/2023 à 10:19, Hsia-Jun Li a écrit :
->>>>>
->>>>> On 7/3/23 16:12, Benjamin Gaignard wrote:
->>>>>> CAUTION: Email originated externally, do not click links or open
->>>>>> attachments unless you recognize the sender and know the content is
->>>>>> safe.
->>>>>>
->>>>>>
->>>>>> Le 30/06/2023 à 11:43, Hsia-Jun Li a écrit :
->>>>>>>
->>>>>>> On 6/27/23 16:47, Hsia-Jun Li wrote:
->>>>>>>> CAUTION: Email originated externally, do not click links or open
->>>>>>>> attachments unless you recognize the sender and know the 
->>>>>>>> content is
->>>>>>>> safe.
->>>>>>>>
->>>>>>>>
->>>>>>>> On 6/27/23 16:43, Benjamin Gaignard wrote:
->>>>>>>>> CAUTION: Email originated externally, do not click links or open
->>>>>>>>> attachments unless you recognize the sender and know the 
->>>>>>>>> content is
->>>>>>>>> safe.
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> Le 27/06/2023 à 09:30, Hsia-Jun Li a écrit :
->>>>>>>>>>
->>>>>>>>>> On 6/22/23 21:13, Benjamin Gaignard wrote:
->>>>>>>>>>> CAUTION: Email originated externally, do not click links or 
->>>>>>>>>>> open
->>>>>>>>>>> attachments unless you recognize the sender and know the
->>>>>>>>>>> content is
->>>>>>>>>>> safe.
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> VIDIOC_DELETE_BUF ioctl allows to delete a buffer from a queue.
->>>>>>>>>>>
->>>>>>>>>>> Signed-off-by: Benjamin Gaignard
->>>>>>>>>>> <benjamin.gaignard@collabora.com>
->>>>>>>>>>> ---
->>>>>>>>>>> .../userspace-api/media/v4l/user-func.rst | 1 +
->>>>>>>>>>> .../media/v4l/vidioc-delete-buf.rst | 51
->>>>>>>>>>> +++++++++++++++++++
->>>>>>>>>>> .../media/common/videobuf2/videobuf2-core.c | 33 ++++++++++++
->>>>>>>>>>> .../media/common/videobuf2/videobuf2-v4l2.c | 6 +++
->>>>>>>>>>> drivers/media/v4l2-core/v4l2-dev.c | 1 +
->>>>>>>>>>> drivers/media/v4l2-core/v4l2-ioctl.c | 10 ++++
->>>>>>>>>>> include/media/v4l2-ioctl.h | 4 ++
->>>>>>>>>>> include/media/videobuf2-core.h | 9 ++++
->>>>>>>>>>> include/media/videobuf2-v4l2.h | 11 ++++
->>>>>>>>>>> include/uapi/linux/videodev2.h | 2 +
->>>>>>>>>>>   10 files changed, 128 insertions(+)
->>>>>>>>>>>   create mode 100644
->>>>>>>>>>> Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
->>>>>>>>>>>
->>>>>>>>>>> diff --git 
->>>>>>>>>>> a/Documentation/userspace-api/media/v4l/user-func.rst
->>>>>>>>>>> b/Documentation/userspace-api/media/v4l/user-func.rst
->>>>>>>>>>> index 15ff0bf7bbe6..8c74016e12fd 100644
->>>>>>>>>>> --- a/Documentation/userspace-api/media/v4l/user-func.rst
->>>>>>>>>>> +++ b/Documentation/userspace-api/media/v4l/user-func.rst
->>>>>>>>>>> @@ -17,6 +17,7 @@ Function Reference
->>>>>>>>>>>       vidioc-dbg-g-chip-info
->>>>>>>>>>>       vidioc-dbg-g-register
->>>>>>>>>>>       vidioc-decoder-cmd
->>>>>>>>>>> +    vidioc-delete-buf
->>>>>>>>>>>       vidioc-dqevent
->>>>>>>>>>>       vidioc-dv-timings-cap
->>>>>>>>>>>       vidioc-encoder-cmd
->>>>>>>>>>> diff --git
->>>>>>>>>>> a/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
->>>>>>>>>>> b/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
->>>>>>>>>>> new file mode 100644
->>>>>>>>>>> index 000000000000..0e7ce58f91bc
->>>>>>>>>>> --- /dev/null
->>>>>>>>>>> +++ 
->>>>>>>>>>> b/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
->>>>>>>>>>> @@ -0,0 +1,51 @@
->>>>>>>>>>> +.. SPDX-License-Identifier: GFDL-1.1-no-invariants-or-later
->>>>>>>>>>> +.. c:namespace:: V4L
->>>>>>>>>>> +
->>>>>>>>>>> +.. _VIDIOC_DELETE_BUF:
->>>>>>>>>>> +
->>>>>>>>>>> +************************
->>>>>>>>>>> +ioctl VIDIOC_DELETE_BUF
->>>>>>>>>>> +************************
->>>>>>>>>>> +
->>>>>>>>>>> +Name
->>>>>>>>>>> +====
->>>>>>>>>>> +
->>>>>>>>>>> +VIDIOC_DELETE_BUF - Delete a buffer from a queue
->>>>>>>>>>> +
->>>>>>>>>>> +Synopsis
->>>>>>>>>>> +========
->>>>>>>>>>> +
->>>>>>>>>>> +.. c:macro:: VIDIOC_DELETE_BUF
->>>>>>>>>>> +
->>>>>>>>>>> +``int ioctl(int fd, VIDIOC_DELETE_BUF, struct v4l2_buffer
->>>>>>>>>>> *argp)``
->>>>>>>>>>> +
->>>>>>>>>>> +Arguments
->>>>>>>>>>> +=========
->>>>>>>>>>> +
->>>>>>>>>>> +``fd``
->>>>>>>>>>> +    File descriptor returned by :c:func:`open()`.
->>>>>>>>>>> +
->>>>>>>>>>> +``argp``
->>>>>>>>>>> +    Pointer to struct :c:type:`v4l2_buffer`.
->>>>>>>>>>> +
->>>>>>>>>>> +Description
->>>>>>>>>>> +===========
->>>>>>>>>>> +
->>>>>>>>>>> +Applications can optionally call the :ref:`VIDIOC_DELETE_BUF`
->>>>>>>>>>> ioctl to
->>>>>>>>>>> +delete a buffer from a queue.
->>>>>>>>>>> +
->>>>>>>>>>> +The struct :c:type:`v4l2_buffer` structure is specified in
->>>>>>>>>>> +:ref:`buffer`.
->>>>>>>>>>> +
->>>>>>>>>>> +Return Value
->>>>>>>>>>> +============
->>>>>>>>>>> +
->>>>>>>>>>> +On success 0 is returned, on error -1 and the ``errno``
->>>>>>>>>>> variable is
->>>>>>>>>>> set
->>>>>>>>>>> +appropriately. The generic error codes are described at the
->>>>>>>>>>> +:ref:`Generic Error Codes <gen-errors>` chapter.
->>>>>>>>>>> +
->>>>>>>>>>> +EBUSY
->>>>>>>>>>> +    File I/O is in progress.
->>>>>>>>>>> +
->>>>>>>>>>> +EINVAL
->>>>>>>>>>> +    The buffer ``index`` doesn't exist in the queue.
->>>>>>>>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>>>> b/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>>>> index 899783f67580..aa546c972c3d 100644
->>>>>>>>>>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>>>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
->>>>>>>>>>> @@ -1637,6 +1637,39 @@ int vb2_core_prepare_buf(struct 
->>>>>>>>>>> vb2_queue
->>>>>>>>>>> *q,
->>>>>>>>>>> unsigned int index, void *pb)
->>>>>>>>>>>   }
->>>>>>>>>>>   EXPORT_SYMBOL_GPL(vb2_core_prepare_buf);
->>>>>>>>>>>
->>>>>>>>>>> +int vb2_core_delete_buf(struct vb2_queue *q, unsigned int 
->>>>>>>>>>> index)
->>>>>>>>>>> +{
->>>>>>>>>>> +       struct vb2_buffer *vb;
->>>>>>>>>>> +
->>>>>>>>>>> +       vb = vb2_get_buffer(q, index);
->>>>>>>>>>> +       if (!vb) {
->>>>>>>>>>> +               dprintk(q, 1, "invalid buffer index %d\n",
->>>>>>>>>>> index);
->>>>>>>>>>> +               return -EINVAL;
->>>>>>>>>>> +       }
->>>>>>>>>>> +
->>>>>>>>>>> +       if (vb->state != VB2_BUF_STATE_DEQUEUED) {
->>>>>>>>>>> +               dprintk(q, 1, "can't delete non dequeued buffer
->>>>>>>>>>> index
->>>>>>>>>>> %d\n", index);
->>>>>>>>>>> +               return -EINVAL;
->>>>>>>>>>> +       }
->>>>>>>>>>> +
->>>>>>>>>> I know the driver could implement its own
->>>>>>>>>> v4l2_ioctl_ops->vidioc_delete_buf() that check whether a 
->>>>>>>>>> buffer is
->>>>>>>>>> used by the hardware as a future reference frame.
->>>>>>>>>> But I think we need a flag to let the user know which buffer is
->>>>>>>>>> still
->>>>>>>>>> used by the hardware.
->>>>>>>>>> Alternative ref case is safe, we only know it's existing when
->>>>>>>>>> it is
->>>>>>>>>> dequeued in current V4L2 buffer mechanism.
->>>>>>>>>> While the Golden reference frame, such long term reference frame
->>>>>>>>>> could
->>>>>>>>>> last much longer.
->>>>>>>>>
->>>>>>>>> It is up to userland stack to know frames life time, it got the
->>>>>>>>> information for that.
->>>>>>>>
->>>>>>>> That is true for the stateless codec driver.
->>>>>>>>
->>>>>>>> While application for stateful decoder could never do that. It 
->>>>>>>> also
->>>>>>>> breaks what the document said:
->>>>>>>>
->>>>>>>> "The backing memory of |CAPTURE| buffers that are used as 
->>>>>>>> reference
->>>>>>>> frames by the stream may be read by the hardware even after 
->>>>>>>> they are
->>>>>>>> dequeued. Consequently, the client should avoid writing into this
->>>>>>>> memory
->>>>>>>> while the |CAPTURE| queue is streaming. Failure to observe this 
->>>>>>>> may
->>>>>>>> result in corruption of decoded frames."
->>>>>>>>
->>>>>>>>>
->>>>>>>>>>> +       if (vb->planes[0].mem_priv)
->>>>>>>>>>> +               call_void_vb_qop(vb, buf_cleanup, vb);
->>>>>>>>>>> +
->>>>>>>>>>> +       /* Free MMAP buffers or release USERPTR buffers */
->>>>>>>>>>> +       if (q->memory == VB2_MEMORY_MMAP)
->>>>>>>>>>> +               __vb2_buf_mem_free(vb);
->>>>>>>
->>>>>>> Here is another problem for the existing application, the mmap() 
->>>>>>> from
->>>>>>> the mmap offset or exportbuffer fd would not create a reference to
->>>>>>> buffer in this step(while the exportbuffer would create one 
->>>>>>> itself).
->>>>>>>
->>>>>>> When you delete a buffer, you may not release it from its virtual
->>>>>>> memory space, leaving a corrupted virtual memory space. Also this
->>>>>>> behavior is right, because mmap(2) says:
->>>>>>>
->>>>>>> "After  the  mmap()  call has returned, the file descriptor, fd, 
->>>>>>> can
->>>>>>> be closed immediately without invalidating the map‐ping."
->>>>>>
->>>>>> Existing applications do not call DELETE_BUF ioctl and when call it
->>>>>> they will be aware that the buffer is removed.
->>>>>> I have done it in GStreamer:
->>>>>> https://urldefense.proofpoint.com/v2/url?u=https-3A__gitlab.freedesktop.org_benjamin.gaignard1_gstreamer_-2D_commit_fca0fbc934f4440693ce0ff6c8dc8a2e5f5f17d9&d=DwIDaQ&c=7dfBJ8cXbWjhc0BhImu8wVIoUFmBzj1s88r8EGyM0UY&r=P4xb2_7biqBxD4LGGPrSV6j-jf3C3xlR7PXU-mLTeZE&m=TGH9toTzGRfO5aBsfaMvGbcOw-28q6cPmpX6vScbHjpCtaLtb-RuvBvsJ0z9RvAB&s=Ufl1ccfRZf2EhnfCBvnQzRJV9CDhGxl5spe9WNECspU&e= 
->>>>>>
->>>>>>
->>>>>>
->>>>>
->>>>> I have read that.
->>>>>
->>>>> There is not a VP8 parser in Gstreamer, while a parser would not work
->>>>> when deal with the secure video(userspace can't access the data
->>>>> context at all).
->>>>>
->>>>> Besides, this adds extra work for the application for a stateful 
->>>>> codec
->>>>> driver. The application need to parser the bitstream and track the 
->>>>> dpb.
->>>>>
->>>>> I don't mind if you could fix the nonfiction mechanism for those
->>>>> non-display frame and internal reference state.
->>>>>
->>>>> That could be requirement for codec firmware that its driver could
->>>>> support this DELETE_BUF ioctl() feature.
->>>>
->>>> Sorry I don't see the link with my patches here...
->>>> I have work on non-secure VP9 on stateless codec.
->>>> DELETE_BUF ioctl is optional and the main goal is to offer a way to
->>>> applications
->>>> to save memory if they know when they could delete buffers without 
->>>> risk.
->>>
->>> I try to explain why I think this design in not "complete". One
->>> problem resolved, more problems would occur.
->>>
->>>
->>> For non-secure video, those applications have worked:
->>>
->>> - It would break what stateful means here, application need to
->>> acquire(parse) the information that driver should offer.
->>>
->>>   Or it would break the decoding model.
->>>
->>> - Your Gstreamer sample code or this design won't work for AV1.
->> why ?
->
-> A frame in AV1 could be put to display order with a future frame. That 
-> is quite different to those ITU codecs.
->
-> Supposing a frame (we call it frame 0) without show_display frame, you 
-> could delete it (just want to do that) once it is decoded.
->
-> Actually, unless 7 future frames have came and parser has acknowledged 
-> them, it is not safe to delete that frame.
->
-> Or a show_exist that make frame 0 present.
->
-> In my personal opinion, this feature could break many uAPI's, I have 
-> said my worrying in the other emails.
->
-Of course if the application delete a useful buffer it is a problem but an application issue.
-I have test this code using GStreamer with VP9, VP8 and HEVC on Verisilicon driver without issues.
-I will be happy if someone could test it on another driver and/or other userlands (like ffmpeg).
-
->>>
->>> For all the future possible secure video:
->>>
->>> - This feature could never be used from the current design.
->>>
->>>
->>>>
->>>>>
->>>>>>
->>>>>> Regards,
->>>>>> Benjamin
->>>>>>
->>>>>>>
->>>>>>>>>>> +       else if (q->memory == VB2_MEMORY_DMABUF)
->>>>>>>>>>> +               __vb2_buf_dmabuf_put(vb);
->>>>>>>>>>> +       else
->>>>>>>>>>> +               __vb2_buf_userptr_put(vb);
->>>>>>>>>>> +
->>>>>>>>>>> +       vb2_queue_remove_buffer(q, vb);
->>>>>>>>>>> +       kfree(vb);
->>>>>>>>>>> +
->>>>>>>>>>> +       dprintk(q, 2, "buffer %d deleted\n", index);
->>>>>>>>>>> +       return 0;
->>>>>>>>>>> +}
->>>>>>>>>>> +
->>>>>>>>>>>   /*
->>>>>>>>>>>    * vb2_start_streaming() - Attempt to start streaming.
->>>>>>>>>>>    * @q:         videobuf2 queue
->>>>>>>>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c
->>>>>>>>>>> b/drivers/media/common/videobuf2/videobuf2-v4l2.c
->>>>>>>>>>> index 724135d41f7f..cea666c17b41 100644
->>>>>>>>>>> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
->>>>>>>>>>> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
->>>>>>>>>>> @@ -751,6 +751,12 @@ int vb2_prepare_buf(struct vb2_queue *q,
->>>>>>>>>>> struct
->>>>>>>>>>> media_device *mdev,
->>>>>>>>>>>   }
->>>>>>>>>>>   EXPORT_SYMBOL_GPL(vb2_prepare_buf);
->>>>>>>>>>>
->>>>>>>>>>> +int vb2_delete_buf(struct vb2_queue *q, struct v4l2_buffer *b)
->>>>>>>>>>> +{
->>>>>>>>>>> +       return vb2_core_delete_buf(q, b->index);
->>>>>>>>>>> +}
->>>>>>>>>>> +EXPORT_SYMBOL_GPL(vb2_delete_buf);
->>>>>>>>>>> +
->>>>>>>>>>>   int vb2_create_bufs(struct vb2_queue *q, struct
->>>>>>>>>>> v4l2_create_buffers
->>>>>>>>>>> *create)
->>>>>>>>>>>   {
->>>>>>>>>>>          unsigned requested_planes = 1;
->>>>>>>>>>> diff --git a/drivers/media/v4l2-core/v4l2-dev.c
->>>>>>>>>>> b/drivers/media/v4l2-core/v4l2-dev.c
->>>>>>>>>>> index f81279492682..80ace2e1e932 100644
->>>>>>>>>>> --- a/drivers/media/v4l2-core/v4l2-dev.c
->>>>>>>>>>> +++ b/drivers/media/v4l2-core/v4l2-dev.c
->>>>>>>>>>> @@ -720,6 +720,7 @@ static void determine_valid_ioctls(struct
->>>>>>>>>>> video_device *vdev)
->>>>>>>>>>>                  SET_VALID_IOCTL(ops, VIDIOC_PREPARE_BUF,
->>>>>>>>>>> vidioc_prepare_buf);
->>>>>>>>>>>                  SET_VALID_IOCTL(ops, VIDIOC_STREAMON,
->>>>>>>>>>> vidioc_streamon);
->>>>>>>>>>>                  SET_VALID_IOCTL(ops, VIDIOC_STREAMOFF,
->>>>>>>>>>> vidioc_streamoff);
->>>>>>>>>>> +               SET_VALID_IOCTL(ops, VIDIOC_DELETE_BUF,
->>>>>>>>>>> vidioc_delete_buf);
->>>>>>>>>>>          }
->>>>>>>>>>>
->>>>>>>>>>>          if (is_vid || is_vbi || is_meta) {
->>>>>>>>>>> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c
->>>>>>>>>>> b/drivers/media/v4l2-core/v4l2-ioctl.c
->>>>>>>>>>> index a858acea6547..1c737279d3ef 100644
->>>>>>>>>>> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
->>>>>>>>>>> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
->>>>>>>>>>> @@ -2156,6 +2156,15 @@ static int v4l_prepare_buf(const struct
->>>>>>>>>>> v4l2_ioctl_ops *ops,
->>>>>>>>>>>          return ret ? ret : ops->vidioc_prepare_buf(file, 
->>>>>>>>>>> fh, b);
->>>>>>>>>>>   }
->>>>>>>>>>>
->>>>>>>>>>> +static int v4l_delete_buf(const struct v4l2_ioctl_ops *ops,
->>>>>>>>>>> +                         struct file *file, void *fh, void 
->>>>>>>>>>> *arg)
->>>>>>>>>>> +{
->>>>>>>>>>> +       struct v4l2_buffer *b = arg;
->>>>>>>>>>> +       int ret = check_fmt(file, b->type);
->>>>>>>>>>> +
->>>>>>>>>>> +       return ret ? ret : ops->vidioc_delete_buf(file, fh, b);
->>>>>>>>>>> +}
->>>>>>>>>>> +
->>>>>>>>>>>   static int v4l_g_parm(const struct v4l2_ioctl_ops *ops,
->>>>>>>>>>>                                  struct file *file, void *fh,
->>>>>>>>>>> void
->>>>>>>>>>> *arg)
->>>>>>>>>>>   {
->>>>>>>>>>> @@ -2905,6 +2914,7 @@ static const struct v4l2_ioctl_info
->>>>>>>>>>> v4l2_ioctls[] = {
->>>>>>>>>>>          IOCTL_INFO(VIDIOC_ENUM_FREQ_BANDS, 
->>>>>>>>>>> v4l_enum_freq_bands,
->>>>>>>>>>> v4l_print_freq_band, 0),
->>>>>>>>>>>          IOCTL_INFO(VIDIOC_DBG_G_CHIP_INFO, 
->>>>>>>>>>> v4l_dbg_g_chip_info,
->>>>>>>>>>> v4l_print_dbg_chip_info, INFO_FL_CLEAR(v4l2_dbg_chip_info,
->>>>>>>>>>> match)),
->>>>>>>>>>>          IOCTL_INFO(VIDIOC_QUERY_EXT_CTRL, v4l_query_ext_ctrl,
->>>>>>>>>>> v4l_print_query_ext_ctrl, INFO_FL_CTRL |
->>>>>>>>>>> INFO_FL_CLEAR(v4l2_query_ext_ctrl, id)),
->>>>>>>>>>> +       IOCTL_INFO(VIDIOC_DELETE_BUF, v4l_delete_buf,
->>>>>>>>>>> v4l_print_buffer, INFO_FL_QUEUE),
->>>>>>>>>>>   };
->>>>>>>>>>>   #define V4L2_IOCTLS ARRAY_SIZE(v4l2_ioctls)
->>>>>>>>>>>
->>>>>>>>>>> diff --git a/include/media/v4l2-ioctl.h
->>>>>>>>>>> b/include/media/v4l2-ioctl.h
->>>>>>>>>>> index edb733f21604..2f232ed884c7 100644
->>>>>>>>>>> --- a/include/media/v4l2-ioctl.h
->>>>>>>>>>> +++ b/include/media/v4l2-ioctl.h
->>>>>>>>>>> @@ -163,6 +163,8 @@ struct v4l2_fh;
->>>>>>>>>>>    *     :ref:`VIDIOC_CREATE_BUFS <vidioc_create_bufs>` ioctl
->>>>>>>>>>>    * @vidioc_prepare_buf: pointer to the function that 
->>>>>>>>>>> implements
->>>>>>>>>>>    *     :ref:`VIDIOC_PREPARE_BUF <vidioc_prepare_buf>` ioctl
->>>>>>>>>>> + * @vidioc_delete_buf: pointer to the function that implements
->>>>>>>>>>> + *     :ref:`VIDIOC_DELETE_BUF <vidioc_delete_buf>` ioctl
->>>>>>>>>>>    * @vidioc_overlay: pointer to the function that implements
->>>>>>>>>>>    *     :ref:`VIDIOC_OVERLAY <vidioc_overlay>` ioctl
->>>>>>>>>>>    * @vidioc_g_fbuf: pointer to the function that implements
->>>>>>>>>>> @@ -422,6 +424,8 @@ struct v4l2_ioctl_ops {
->>>>>>>>>>>                                    struct v4l2_create_buffers
->>>>>>>>>>> *b);
->>>>>>>>>>>          int (*vidioc_prepare_buf)(struct file *file, void *fh,
->>>>>>>>>>>                                    struct v4l2_buffer *b);
->>>>>>>>>>> +       int (*vidioc_delete_buf)(struct file *file, void *fh,
->>>>>>>>>>> +                                struct v4l2_buffer *b);
->>>>>>>>>>>
->>>>>>>>>>>          int (*vidioc_overlay)(struct file *file, void *fh,
->>>>>>>>>>> unsigned
->>>>>>>>>>> int i);
->>>>>>>>>>>          int (*vidioc_g_fbuf)(struct file *file, void *fh,
->>>>>>>>>>> diff --git a/include/media/videobuf2-core.h
->>>>>>>>>>> b/include/media/videobuf2-core.h
->>>>>>>>>>> index 080b783d608d..0f9e68f76b77 100644
->>>>>>>>>>> --- a/include/media/videobuf2-core.h
->>>>>>>>>>> +++ b/include/media/videobuf2-core.h
->>>>>>>>>>> @@ -840,6 +840,15 @@ int vb2_core_create_bufs(struct vb2_queue
->>>>>>>>>>> *q,
->>>>>>>>>>> enum vb2_memory memory,
->>>>>>>>>>>    */
->>>>>>>>>>>   int vb2_core_prepare_buf(struct vb2_queue *q, unsigned int
->>>>>>>>>>> index,
->>>>>>>>>>> void *pb);
->>>>>>>>>>>
->>>>>>>>>>> +/**
->>>>>>>>>>> + * vb2_core_delete_buf() -
->>>>>>>>>>> + * @q: pointer to &struct vb2_queue with videobuf2 queue.
->>>>>>>>>>> + * @index:     id number of the buffer.
->>>>>>>>>>> + *
->>>>>>>>>>> + *  Return: returns zero on success; an error code otherwise.
->>>>>>>>>>> + */
->>>>>>>>>>> +int vb2_core_delete_buf(struct vb2_queue *q, unsigned int
->>>>>>>>>>> index);
->>>>>>>>>>> +
->>>>>>>>>>>   /**
->>>>>>>>>>>    * vb2_core_qbuf() - Queue a buffer from userspace
->>>>>>>>>>>    *
->>>>>>>>>>> diff --git a/include/media/videobuf2-v4l2.h
->>>>>>>>>>> b/include/media/videobuf2-v4l2.h
->>>>>>>>>>> index 88a7a565170e..3beeb4c735f0 100644
->>>>>>>>>>> --- a/include/media/videobuf2-v4l2.h
->>>>>>>>>>> +++ b/include/media/videobuf2-v4l2.h
->>>>>>>>>>> @@ -114,6 +114,17 @@ int vb2_create_bufs(struct vb2_queue *q,
->>>>>>>>>>> struct
->>>>>>>>>>> v4l2_create_buffers *create);
->>>>>>>>>>>    */
->>>>>>>>>>>   int vb2_prepare_buf(struct vb2_queue *q, struct media_device
->>>>>>>>>>> *mdev,
->>>>>>>>>>>                      struct v4l2_buffer *b);
->>>>>>>>>>> +/**
->>>>>>>>>>> + * vb2_delete_buf() - Delete the buffer from the queue
->>>>>>>>>>> + *
->>>>>>>>>>> + * @q:         pointer to &struct vb2_queue with videobuf2
->>>>>>>>>>> queue.
->>>>>>>>>>> + * @b:         buffer structure passed from userspace to
->>>>>>>>>>> + * &v4l2_ioctl_ops->vidioc_delete_buf handler in driver
->>>>>>>>>>> + *
->>>>>>>>>>> + * The return values from this function are intended to be
->>>>>>>>>>> directly
->>>>>>>>>>> returned
->>>>>>>>>>> + * from &v4l2_ioctl_ops->vidioc_delete_buf handler in driver.
->>>>>>>>>>> + */
->>>>>>>>>>> +int vb2_delete_buf(struct vb2_queue *q, struct v4l2_buffer 
->>>>>>>>>>> *b);
->>>>>>>>>>>
->>>>>>>>>>>   /**
->>>>>>>>>>>    * vb2_qbuf() - Queue a buffer from userspace
->>>>>>>>>>> diff --git a/include/uapi/linux/videodev2.h
->>>>>>>>>>> b/include/uapi/linux/videodev2.h
->>>>>>>>>>> index aee75eb9e686..31bba1915642 100644
->>>>>>>>>>> --- a/include/uapi/linux/videodev2.h
->>>>>>>>>>> +++ b/include/uapi/linux/videodev2.h
->>>>>>>>>>> @@ -2702,6 +2702,8 @@ struct v4l2_create_buffers {
->>>>>>>>>>>   #define VIDIOC_DBG_G_CHIP_INFO  _IOWR('V', 102, struct
->>>>>>>>>>> v4l2_dbg_chip_info)
->>>>>>>>>>>
->>>>>>>>>>>   #define VIDIOC_QUERY_EXT_CTRL  _IOWR('V', 103, struct
->>>>>>>>>>> v4l2_query_ext_ctrl)
->>>>>>>>>>> +#define VIDIOC_DELETE_BUF      _IOWR('V', 104, struct
->>>>>>>>>>> v4l2_buffer)
->>>>>>>>>>> +
->>>>>>>>>>>
->>>>>>>>>>>   /* Reminder: when adding new ioctls please add support for
->>>>>>>>>>> them to
->>>>>>>>>>> drivers/media/v4l2-core/v4l2-compat-ioctl32.c as well! */
->>>>>>>>>>> -- 
->>>>>>>>>>> 2.39.2
->>>>>>>>>>>
->>>>>>>> -- 
->>>>>>>> Hsia-Jun(Randy) Li
->>>>>>>>
-> -- 
-> Hsia-Jun(Randy) Li
+Konrad
+>  drivers/interconnect/icc-clk.c   | 13 +++++++++++--
+>  include/linux/interconnect-clk.h |  1 +
+>  2 files changed, 12 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+> index 4d43ebff4257..c7962acdcee7 100644
+> --- a/drivers/interconnect/icc-clk.c
+> +++ b/drivers/interconnect/icc-clk.c
+> @@ -7,10 +7,13 @@
+>  #include <linux/device.h>
+>  #include <linux/interconnect-clk.h>
+>  #include <linux/interconnect-provider.h>
+> +#include <linux/pm_opp.h>
+>  
+>  struct icc_clk_node {
+> +	struct device *dev;
+>  	struct clk *clk;
+>  	bool enabled;
+> +	bool opp;
+>  };
+>  
+>  struct icc_clk_provider {
+> @@ -25,12 +28,16 @@ struct icc_clk_provider {
+>  static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
+>  {
+>  	struct icc_clk_node *qn = src->data;
+> +	unsigned long rate = icc_units_to_bps(src->peak_bw);
+>  	int ret;
+>  
+>  	if (!qn || !qn->clk)
+>  		return 0;
+>  
+> -	if (!src->peak_bw) {
+> +	if (qn->opp)
+> +		return dev_pm_opp_set_rate(qn->dev, rate);
+> +
+> +	if (!rate) {
+>  		if (qn->enabled)
+>  			clk_disable_unprepare(qn->clk);
+>  		qn->enabled = false;
+> @@ -45,7 +52,7 @@ static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
+>  		qn->enabled = true;
+>  	}
+>  
+> -	return clk_set_rate(qn->clk, icc_units_to_bps(src->peak_bw));
+> +	return clk_set_rate(qn->clk, rate);
+>  }
+>  
+>  static int icc_clk_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
+> @@ -106,7 +113,9 @@ struct icc_provider *icc_clk_register(struct device *dev,
+>  	icc_provider_init(provider);
+>  
+>  	for (i = 0, j = 0; i < num_clocks; i++) {
+> +		qp->clocks[i].dev = dev;
+>  		qp->clocks[i].clk = data[i].clk;
+> +		qp->clocks[i].opp = data[i].opp;
+>  
+>  		node = icc_node_create(first_id + j);
+>  		if (IS_ERR(node)) {
+> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
+> index 0cd80112bea5..c695e5099901 100644
+> --- a/include/linux/interconnect-clk.h
+> +++ b/include/linux/interconnect-clk.h
+> @@ -11,6 +11,7 @@ struct device;
+>  struct icc_clk_data {
+>  	struct clk *clk;
+>  	const char *name;
+> +	bool opp;
+>  };
+>  
+>  struct icc_provider *icc_clk_register(struct device *dev,
