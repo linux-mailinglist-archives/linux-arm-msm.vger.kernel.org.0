@@ -2,226 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E3FC74563E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 09:43:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E11647456F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 10:09:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbjGCHnG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 03:43:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38358 "EHLO
+        id S230338AbjGCIJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 04:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjGCHm7 (ORCPT
+        with ESMTP id S230160AbjGCIJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 03:42:59 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AB28C1;
-        Mon,  3 Jul 2023 00:42:58 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b698937f85so67109061fa.2;
-        Mon, 03 Jul 2023 00:42:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688370176; x=1690962176;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q1fo/4xJmI/v8Apxv9iZE5rA9bnr+7LUJRY6uhOPxrs=;
-        b=XTuXbF9NC0ZLUFLxZHbCrh3BmMosYZaCcPoeLni+PwhvONO2MBefRwIVdNhR75bJKG
-         XwZKEo9RjfCO7OaaiKzfTjv7G9R17HRp6865LFsLPbmgEc4c1ju6/W9CIOzeuvxOp3im
-         IRhzqK25pn8mJWiUqycZyFM/wAT24ZmeUrQaE5kt+P71VKOl4Yl7aqkS4Mw6Vr8WElKy
-         lUoWAojpHSEyjyXzzCrdbUWhothijb5FFlUGYgKjbmF4NL3VOmX3/gM4WrEuIximSsrn
-         egoeVN2r20c+4kVR/tD+nan5IcPTGaHA46PrObKU8JfE634aoogYUPucgBf066n8gZOh
-         XJ+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688370176; x=1690962176;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q1fo/4xJmI/v8Apxv9iZE5rA9bnr+7LUJRY6uhOPxrs=;
-        b=ls/Eh1nGOiCrMRxq513E45c38xzm8DTaYkaV+gFzxtctx/UuxyfVIJjmfhGnMxTRzd
-         +N0l2shONa5FTmKHtayfIjkMczI276gwRSJKMoGxAxJ8E6Omc2pd/ylPzA0XcAdqZGiV
-         BTQCTW+19g7GsY9hTZCVLpW2s8czEv718Unw6KB6TTVfUJHoZc9looClnc/XboCINS58
-         sL4DByPziFLkg10twWh9aYakpzNuJ+0kvk5FkBemt8KFVftJr1cW0Y7d5caqIjUse4OR
-         FzNuJ5kWPTHvU+Y9vvUEQzndJaWXoMbmqxHxtWrZXDx2VbIsK2ZQTpH/NQnjoy1PGq1e
-         /m/A==
-X-Gm-Message-State: ABy/qLbiYMkhRqQqaX4rmdm7xt0GUZrXoD6l/JfHhYBzUlHEz6w2wTKI
-        /6R7covTAqz76E+AU3NIK8k=
-X-Google-Smtp-Source: APBJJlEihHpYEQV3HBBUGCrGICtVF/Y3mrZuaF6KRazeMHpNXruNvJsym66J/DOXgm+zAeWs8K9cRw==
-X-Received: by 2002:a2e:900e:0:b0:2b6:e121:cf68 with SMTP id h14-20020a2e900e000000b002b6e121cf68mr2760105ljg.5.1688370176174;
-        Mon, 03 Jul 2023 00:42:56 -0700 (PDT)
-Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id o6-20020a2e7306000000b002b6e77e87fcsm704378ljc.68.2023.07.03.00.42.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 00:42:55 -0700 (PDT)
-Date:   Mon, 3 Jul 2023 10:42:46 +0300
-From:   Pekka Paalanen <ppaalanen@gmail.com>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
-        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
-        <ville.syrjala@linux.intel.com>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        <wayland-devel@lists.freedesktop.org>
-Subject: Re: [PATCH RFC v4 7/7] drm/msm/dpu: Use DRM solid_fill property
-Message-ID: <20230703104246.7226953a@eldfell>
-In-Reply-To: <20230630112649.263331b4@eldfell>
-References: <20230404-solid-fill-v4-0-f4ec0caa742d@quicinc.com>
-        <20230404-solid-fill-v4-7-f4ec0caa742d@quicinc.com>
-        <20230630112649.263331b4@eldfell>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+        Mon, 3 Jul 2023 04:09:20 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAD1BC5;
+        Mon,  3 Jul 2023 01:09:17 -0700 (PDT)
+Received: from [IPV6:2a01:e0a:120:3210:4563:92b0:7df7:68d2] (unknown [IPv6:2a01:e0a:120:3210:4563:92b0:7df7:68d2])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 762B8660297B;
+        Mon,  3 Jul 2023 09:09:15 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1688371755;
+        bh=FoxyCwSED1NQb2JVKQe28H/cQr0EbCDBOFoxMI+oRmk=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=DX+0JyOi+UOAHjq+U7oPBEXI/iGkisjG3bkMz93iti3JlqWvZyY7i4tLWXdLS+081
+         jlqKGzRkb0RVaO4m511EhrPeVwYCMy80lMdoJPyf6+fkZPiBiKshVlu+UnXSCcsFUB
+         hezXrnKZtVJhr81Q+3PLGm63u7EYCTh0S3xPOFridHH20BYJ2maAlCpzpNz2ZHyub3
+         rudswu81kQdJXnL6gZC7bC4nmLxWYyonXo8VuAeatB1jmubCthLD4/yWeVPp0V9slO
+         4kJMv6ByOoqe7P7mp6+SXZOURXU3ybNccRmu5mydjS7FpaqNWZnPwTHTLoYesY23AL
+         VLnoLUdpeX/LA==
+Message-ID: <5cb3f216-5041-a155-5d2c-059dc1f15024@collabora.com>
+Date:   Mon, 3 Jul 2023 10:09:13 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/=0TNTkoqRYefLA_rwhlpF9P";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 04/11] media: videobuf2: Stop define VB2_MAX_FRAME as
+ global
+To:     Hsia-Jun Li <Randy.Li@synaptics.com>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, m.szyprowski@samsung.com,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        hverkuil-cisco@xs4all.nl, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, linux-rockchip@lists.infradead.org,
+        mchehab@kernel.org, linux-staging@lists.linux.dev,
+        ming.qian@nxp.com, kernel@collabora.com,
+        gregkh@linuxfoundation.org, tfiga@chromium.org,
+        nicolas.dufresne@collabora.com
+References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
+ <20230622131349.144160-5-benjamin.gaignard@collabora.com>
+ <e7444263-0ce5-1575-8cca-1e51b1cfbe9a@synaptics.com>
+Content-Language: en-US
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+In-Reply-To: <e7444263-0ce5-1575-8cca-1e51b1cfbe9a@synaptics.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/=0TNTkoqRYefLA_rwhlpF9P
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, 30 Jun 2023 11:26:49 +0300
-Pekka Paalanen <ppaalanen@gmail.com> wrote:
+Le 30/06/2023 à 11:51, Hsia-Jun Li a écrit :
+>
+> On 6/22/23 21:13, Benjamin Gaignard wrote:
+>> CAUTION: Email originated externally, do not click links or open 
+>> attachments unless you recognize the sender and know the content is 
+>> safe.
+>>
+>>
+>> After changing bufs arrays to a dynamic allocated array
+>> VB2_MAX_FRAME doesn't mean anything for videobuf2 core.
+>
+> I think make it 64 which is the VB2_MAX_FRAME in Android GKI kernel is 
+> more reasonable.
+>
+> It would be hard to iterate the whole array, it would go worse with a 
+> filter. Such iterate may need to go twice because you mix 
+> post-processing buffer and decoding buffer(with MV) in the same array.
 
-> On Thu, 29 Jun 2023 17:25:06 -0700
-> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->=20
-> > Drop DPU_PLANE_COLOR_FILL_FLAG and check the DRM solid_fill property to
-> > determine if the plane is solid fill. In addition drop the DPU plane
-> > color_fill field as we can now use drm_plane_state.solid_fill instead,
-> > and pass in drm_plane_state.alpha to _dpu_plane_color_fill_pipe() to
-> > allow userspace to configure the alpha value for the solid fill color.
-> >=20
-> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 21 +++++++++++++++------
-> >  1 file changed, 15 insertions(+), 6 deletions(-)
-> >=20
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
-m/msm/disp/dpu1/dpu_plane.c
-> > index 4476722f03bb..11d4fb771a1f 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > @@ -42,7 +42,6 @@
-> >  #define SHARP_SMOOTH_THR_DEFAULT	8
-> >  #define SHARP_NOISE_THR_DEFAULT	2
-> > =20
-> > -#define DPU_PLANE_COLOR_FILL_FLAG	BIT(31)
-> >  #define DPU_ZPOS_MAX 255
-> > =20
-> >  /*
-> > @@ -82,7 +81,6 @@ struct dpu_plane {
-> > =20
-> >  	enum dpu_sspp pipe;
-> > =20
-> > -	uint32_t color_fill;
-> >  	bool is_error;
-> >  	bool is_rt_pipe;
-> >  	const struct dpu_mdss_cfg *catalog;
-> > @@ -606,6 +604,17 @@ static void _dpu_plane_color_fill_pipe(struct dpu_=
-plane_state *pstate,
-> >  	_dpu_plane_setup_scaler(pipe, fmt, true, &pipe_cfg, pstate->rotation);
-> >  }
-> > =20
-> > +static uint32_t _dpu_plane_get_fill_color(struct drm_solid_fill solid_=
-fill)
-> > +{
-> > +	uint32_t ret =3D 0;
-> > +
-> > +	ret |=3D ((uint8_t) solid_fill.b) << 16;
-> > +	ret |=3D ((uint8_t) solid_fill.g) << 8;
-> > +	ret |=3D ((uint8_t) solid_fill.r); =20
->=20
-> solid_fill.r, g and b are uint32_t, yes?
->=20
-> What's the value encoding in the UAPI? That doc was missing.
->=20
-> I wouldn't expect the UAPI to use 32-bit variables if it was
-> essentially 8-bit, so this conversion looks wrong.
->=20
-> Nominal color value 1.0 in u8 is 0xff. The same in u32 is probably
-> 0xffffffff? So a simple cast to u8 won't work. You'd want to take the
-> upper 8 bits instead.
->=20
->=20
-> Thanks,
-> pq
->=20
-> > +
-> > +	return ret;
-
-Btw. if your driver format is ABGR, then this function leaves alpha as
-zero. That's confusing.
-
-It would be nice to mention the exact pixel format in the function name
-so the consistency is easier to check in both here and in callers.
+Here I don't want to change drivers behavior so I keep the same value.
+If it happens that they need more buffers, like for dynamic resolution change
+feature for Verisilicon VP9 decoder, case by case patches will be needed.
 
 
-Thanks,
-pq
-
-> > +}
-> > +
-> >  /**
-> >   * _dpu_plane_color_fill - enables color fill on plane
-> >   * @pdpu:   Pointer to DPU plane object
-> > @@ -977,9 +986,9 @@ void dpu_plane_flush(struct drm_plane *plane)
-> >  	if (pdpu->is_error)
-> >  		/* force white frame with 100% alpha pipe output on error */
-> >  		_dpu_plane_color_fill(pdpu, 0xFFFFFF, 0xFF);
-> > -	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
-> > -		/* force 100% alpha */
-> > -		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
-> > +	else if (drm_plane_solid_fill_enabled(plane->state))
-> > +		_dpu_plane_color_fill(pdpu, _dpu_plane_get_fill_color(plane->state->=
-solid_fill),
-> > +				plane->state->alpha);
-> >  	else {
-> >  		dpu_plane_flush_csc(pdpu, &pstate->pipe);
-> >  		dpu_plane_flush_csc(pdpu, &pstate->r_pipe);
-> > @@ -1024,7 +1033,7 @@ static void dpu_plane_sspp_update_pipe(struct drm=
-_plane *plane,
-> >  	}
-> > =20
-> >  	/* override for color fill */
-> > -	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
-> > +	if (drm_plane_solid_fill_enabled(plane->state)) {
-> >  		_dpu_plane_set_qos_ctrl(plane, pipe, false);
-> > =20
-> >  		/* skip remaining processing on color fill */
-> >  =20
->=20
-
-
---Sig_/=0TNTkoqRYefLA_rwhlpF9P
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmSie/YACgkQI1/ltBGq
-qqdvWg/+IUlRh8UhRQkQoJS25uUvPZS8VcXCmrgzoWzMxdliGqBuuBZYtX4eY1gZ
-3E1nEhYylI4RoAF6JuNzoHaegBpK8TmFcx60sj1Y8WQnH6DlWni3FsF/+4T9jwbn
-IZDcOl3oihEsOPZgtbHvnpJgpqyVrGG+C7hVIvlLK4j8ngn1FC9aj63mTlluInlS
-ER82vqXHRw+QXOYiyj2XmrylS36mXTambq0iJKYQLLIEz0hJvN6ZEBjd06GZWJTW
-8R24cX6zSTNC9jY4F7aL21i8eUqLLa79/lYQ+kkv28ClsH2xZGr2R2+KiaDVOYaR
-7n74EWWIMyt/f2XYdkzM2K+TMF6P61/CZy9nfW74YeoPadI4oJV5x2Sta3RqtqPH
-TpUmikI9n+LwSEqDjXGmxbI+/xAqt5sfpS0wgBH11tD7R0f41LB98aw6zPcxlR4e
-n4Rvdpow8UpOZv7WSXkLjkU0qto8DOEHANhCUBPFwuqybjlPjvi7w0dNSs7K32xj
-BQiDoBOz2c+8tfpo3KqjJmkxk0r/E0wDwqIh/N/j8Uit6mmbPH62lkwZYLLBkOkg
-mPMDAB8wj1lHazzbGJnvTCCXnsWlNv1eNWGelRHlGFaL7DuQPRZReU1SDfjhU2sH
-+DXeGFF7jsTt1Muzt/ol9LhgrHTWsP5N1DtGWayklopgc9nZhJU=
-=OtQx
------END PGP SIGNATURE-----
-
---Sig_/=0TNTkoqRYefLA_rwhlpF9P--
+>
+>> Remove it from the core definitions but keep it for drivers internal
+>> needs.
+>>
+>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>> ---
+>>   drivers/media/common/videobuf2/videobuf2-core.c | 2 ++
+>>   drivers/media/platform/amphion/vdec.c | 1 +
+>>   .../media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c | 2 ++
+>>   drivers/media/platform/qcom/venus/hfi.h | 2 ++
+>>   drivers/media/platform/verisilicon/hantro_hw.h | 2 ++
+>>   drivers/staging/media/ipu3/ipu3-v4l2.c | 2 ++
+>>   include/media/videobuf2-core.h | 1 -
+>>   include/media/videobuf2-v4l2.h | 4 ----
+>>   8 files changed, 11 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c 
+>> b/drivers/media/common/videobuf2/videobuf2-core.c
+>> index 86e1e926fa45..899783f67580 100644
+>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+>> @@ -31,6 +31,8 @@
+>>
+>>   #include <trace/events/vb2.h>
+>>
+>> +#define VB2_MAX_FRAME  32
+>> +
+>>   static int debug;
+>>   module_param(debug, int, 0644);
+>>
+>> diff --git a/drivers/media/platform/amphion/vdec.c 
+>> b/drivers/media/platform/amphion/vdec.c
+>> index 3fa1a74a2e20..b3219f6d17fa 100644
+>> --- a/drivers/media/platform/amphion/vdec.c
+>> +++ b/drivers/media/platform/amphion/vdec.c
+>> @@ -28,6 +28,7 @@
+>>
+>>   #define VDEC_MIN_BUFFER_CAP            8
+>>   #define VDEC_MIN_BUFFER_OUT            8
+>> +#define VB2_MAX_FRAME                  32
+>>
+>>   struct vdec_fs_info {
+>>          char name[8];
+>> diff --git 
+>> a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c 
+>> b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+>> index 6532a69f1fa8..a1e0f24bb91c 100644
+>> --- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+>> +++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+>> @@ -16,6 +16,8 @@
+>>   #include "../vdec_drv_if.h"
+>>   #include "../vdec_vpu_if.h"
+>>
+>> +#define VB2_MAX_FRAME  32
+>> +
+>>   /* reset_frame_context defined in VP9 spec */
+>>   #define VP9_RESET_FRAME_CONTEXT_NONE0 0
+>>   #define VP9_RESET_FRAME_CONTEXT_NONE1 1
+>> diff --git a/drivers/media/platform/qcom/venus/hfi.h 
+>> b/drivers/media/platform/qcom/venus/hfi.h
+>> index f25d412d6553..bd5ca5a8b945 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi.h
+>> +++ b/drivers/media/platform/qcom/venus/hfi.h
+>> @@ -10,6 +10,8 @@
+>>
+>>   #include "hfi_helper.h"
+>>
+>> +#define VB2_MAX_FRAME                          32
+>> +
+>>   #define VIDC_SESSION_TYPE_VPE                  0
+>>   #define VIDC_SESSION_TYPE_ENC                  1
+>>   #define VIDC_SESSION_TYPE_DEC                  2
+>> diff --git a/drivers/media/platform/verisilicon/hantro_hw.h 
+>> b/drivers/media/platform/verisilicon/hantro_hw.h
+>> index e83f0c523a30..9e8faf7ba6fb 100644
+>> --- a/drivers/media/platform/verisilicon/hantro_hw.h
+>> +++ b/drivers/media/platform/verisilicon/hantro_hw.h
+>> @@ -15,6 +15,8 @@
+>>   #include <media/v4l2-vp9.h>
+>>   #include <media/videobuf2-core.h>
+>>
+>> +#define VB2_MAX_FRAME  32
+>> +
+>>   #define DEC_8190_ALIGN_MASK    0x07U
+>>
+>>   #define MB_DIM                 16
+>> diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c 
+>> b/drivers/staging/media/ipu3/ipu3-v4l2.c
+>> index e530767e80a5..6627b5c2d4d6 100644
+>> --- a/drivers/staging/media/ipu3/ipu3-v4l2.c
+>> +++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
+>> @@ -10,6 +10,8 @@
+>>   #include "ipu3.h"
+>>   #include "ipu3-dmamap.h"
+>>
+>> +#define VB2_MAX_FRAME  32
+>> +
+>>   /******************** v4l2_subdev_ops ********************/
+>>
+>>   #define IPU3_RUNNING_MODE_VIDEO                0
+>> diff --git a/include/media/videobuf2-core.h 
+>> b/include/media/videobuf2-core.h
+>> index 77921cf894ef..080b783d608d 100644
+>> --- a/include/media/videobuf2-core.h
+>> +++ b/include/media/videobuf2-core.h
+>> @@ -20,7 +20,6 @@
+>>   #include <media/media-request.h>
+>>   #include <media/frame_vector.h>
+>>
+>> -#define VB2_MAX_FRAME  (32)
+>>   #define VB2_MAX_PLANES (8)
+>>
+>>   /**
+>> diff --git a/include/media/videobuf2-v4l2.h 
+>> b/include/media/videobuf2-v4l2.h
+>> index 5a845887850b..88a7a565170e 100644
+>> --- a/include/media/videobuf2-v4l2.h
+>> +++ b/include/media/videobuf2-v4l2.h
+>> @@ -15,10 +15,6 @@
+>>   #include <linux/videodev2.h>
+>>   #include <media/videobuf2-core.h>
+>>
+>> -#if VB2_MAX_FRAME != VIDEO_MAX_FRAME
+>> -#error VB2_MAX_FRAME != VIDEO_MAX_FRAME
+>> -#endif
+>> -
+>>   #if VB2_MAX_PLANES != VIDEO_MAX_PLANES
+>>   #error VB2_MAX_PLANES != VIDEO_MAX_PLANES
+>>   #endif
+>> -- 
+>> 2.39.2
+>>
