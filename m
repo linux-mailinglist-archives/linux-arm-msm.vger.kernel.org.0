@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1184A7463E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 22:16:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC1767463D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jul 2023 22:16:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231513AbjGCUPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 16:15:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
+        id S231540AbjGCUPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 16:15:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231479AbjGCUPg (ORCPT
+        with ESMTP id S231297AbjGCUPl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 16:15:36 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B243E7C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 13:15:35 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fba86f069bso4310183e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 13:15:35 -0700 (PDT)
+        Mon, 3 Jul 2023 16:15:41 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81CDBE70
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 13:15:37 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fb9fd28025so6671917e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 13:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688415333; x=1691007333;
+        d=linaro.org; s=google; t=1688415336; x=1691007336;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Zw6wxQsp3ppsN0NYmVnswHP22+wvONtC2zjsX1wOzhI=;
-        b=kg05hnSw+C0fw5X3QKM5EJqFl/E67tosGc7qEsUBd1uESSjUJoinl/1Cq8Ia9Y3ltL
-         qqGg5SKRLiq15m77niL/simEGBrQP2ADQ1bwoAm1SFyU+LAcuDpAoV9w/WREOlI9oApT
-         wCTeixf950CbSKvo5ZdSYRbjEUd0kxQ6K37rfyVRBq2AmNo3XaS2fS3m5Sm6YHjr8Tif
-         BnozIrjt2LqkmgXqinHKagpO8YV8sY7b29nvGzl8Pf1KiAMkkXPM+2iMBf8NnWd+pQjC
-         HOUBkhTdDvCdrna87Xyngu66JjyOIqILTpVTRgNmwelWTs2dA1t52ooq52E/qFpG2sA6
-         22qA==
+        bh=Q+0Um8zkakhdQHFaLy4JG6zS9o5SW/WZINmwineS6iY=;
+        b=oIno9YTSJcr2s/iZYSWkADwp8wpZZgE2zikU0u4uKaZK7P62MuSX1H4Okij4uEX8Gj
+         giXa9VPCekrlpz5n+CZD5IaHPsMJg0PWa7zFklrghaKmvdEj4LCu8yFvAu57ypdXZkMU
+         4usoBTqyKAbZxmGk5P2Mnfw+kkkAXtVV3wN/NIcRv0sUtZ8uszPu3vpG2muPEBf89zhC
+         9nfHOgNKaaZB1mKDzg8UDz4NmXK9SOVAg0hDX/rEpgXW6XED+tjMggSCULh4vAKjf/8N
+         Znw+o+AzHMTmBygXFgye73CcCI0dNfxR568nj9zB+azvGFEWgsSjq3DQz2GLodD/KOR7
+         axLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688415333; x=1691007333;
+        d=1e100.net; s=20221208; t=1688415336; x=1691007336;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Zw6wxQsp3ppsN0NYmVnswHP22+wvONtC2zjsX1wOzhI=;
-        b=Z5HQ2zZc/TfY7XeOngijrmkpfpWn0mL7MxKEI2R1vnANXOZ3Cq7HlPpVYfz/KZar7h
-         CGpp7uZQKOzM4+TtTuaRLqU+oZcdS5FLXUVgwZP7v6enZw7chjJpeVNCVc/whzzEp51x
-         WMq/hz51g8ppXOm3Spa8YAEQCdryRD1E9kobdpdg/S19ggEBBOK9jRr+DOrHY3ghVamC
-         Q1ytpuFRUKKex+gxr9iHF7jI4f3S50wUXmhYRouIWEdk45/E5P1dyeNXZ6F3Wb4P5w1i
-         4TpsN2sK2kwDDiF7ysUKU3xH7JgDW8YxYoQj/xgWEyXlV/LVpuW6hJ9pBskz2FCwGB/a
-         MyzQ==
-X-Gm-Message-State: ABy/qLaefnRqm85mS7cNlIpbDpFx3e98MQ/UdXIA3ih5bF+srTvITMNR
-        +4ubTWZCwsrJtYNmoQci+V3dSw==
-X-Google-Smtp-Source: APBJJlEB2cpeUZXP7bFDXqxJwdwsLbkdpi4ohSagacd8cGXfV47jbplH/u+UU+20PuEMyM7b0yv1WA==
-X-Received: by 2002:a05:6512:2386:b0:4fb:8987:734e with SMTP id c6-20020a056512238600b004fb8987734emr8489743lfv.68.1688415333183;
-        Mon, 03 Jul 2023 13:15:33 -0700 (PDT)
+        bh=Q+0Um8zkakhdQHFaLy4JG6zS9o5SW/WZINmwineS6iY=;
+        b=IghwgZnX7PKM3KA64pKox7dtaD5NAiGMMSutYtiNTKsegRPTIUjP8ovS2Fenk22PTb
+         WPFZPN+rTb0We/9WEQgG8Y+NiYsHc7pGiVjpNJa+sKSGVKn5apRmRwxpIh6wizhs9cwj
+         lJlv74ReYlJ5sltC82ncXdwaVQRKUvi33aXWiUTNLr5XfFWVpubKtk9e4w7LksTG348g
+         fD4r8ojiY7qeCNZeLtO7jj7QKm6n8NlOdq7Gqkv4f/khZ+VGaB5YchkY8WNQnZVXGfMr
+         koy0dRVgy8ptmAPLpZKmGF55/VYPenrVdi3Hf+5uRIYGLe5rYSEWf3t7dqvmltR/Qmfd
+         /BXg==
+X-Gm-Message-State: ABy/qLbnSQGSRTlzyia7QWu5j51WrlP4pdXKmZ70If6jPkWf1mWQf5MD
+        dqEHVAqwPq32WByaNXzyVQAjIQ==
+X-Google-Smtp-Source: APBJJlG5QQvvhnO7g/GSNHkZIMR2UvS/wvgZpurNTkaQTkdgLJI0pMd9FM8cmNOy4/pwpr85zP0ajA==
+X-Received: by 2002:a05:6512:3b85:b0:4fb:7447:e71a with SMTP id g5-20020a0565123b8500b004fb7447e71amr9811909lfv.63.1688415335807;
+        Mon, 03 Jul 2023 13:15:35 -0700 (PDT)
 Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id w27-20020a05651204db00b004fba7edc6cesm1991365lfq.7.2023.07.03.13.15.31
+        by smtp.gmail.com with ESMTPSA id w27-20020a05651204db00b004fba7edc6cesm1991365lfq.7.2023.07.03.13.15.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 13:15:32 -0700 (PDT)
+        Mon, 03 Jul 2023 13:15:35 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 03 Jul 2023 22:15:25 +0200
-Subject: [PATCH v2 1/4] dt-bindings: interconnect: qcom,rpmh: Add SM8250
- QUP virt
+Date:   Mon, 03 Jul 2023 22:15:26 +0200
+Subject: [PATCH v2 2/4] dt-bindings: interconnect: qcom,sm8250: Add QUP
+ virt
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230703-topic-8250_qup_icc-v2-1-9ba0a9460be2@linaro.org>
+Message-Id: <20230703-topic-8250_qup_icc-v2-2-9ba0a9460be2@linaro.org>
 References: <20230703-topic-8250_qup_icc-v2-0-9ba0a9460be2@linaro.org>
 In-Reply-To: <20230703-topic-8250_qup_icc-v2-0-9ba0a9460be2@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -79,11 +79,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-serial@vger.kernel.org, linux-i2c@vger.kernel.org,
         linux-pm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688415328; l=1408;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688415328; l=756;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=EJ6eYxYacI/Fn0L+Te5iXNWv+IZ55D6VGRpRhOsYXw4=;
- b=Z1+5MuvegjQGm8/+jMIqIUlKRUaWugEZZIZpTzfJN7oMOHqyb0mfrwiPosIyVdrQOf4gU1brJ
- AkmxNnnbsD6Ax/vYIsfVqx25uu6KxmAvCdjU6uHAaODWJ9pwC24PI53
+ bh=yyzfqYZ10PKIe62KfbudaQ05rBY4VRIJaeEdNY1khEY=;
+ b=HWANWfdD0EIElBwKwBgOmfuYoYX+pCwe1CQHmKFdH3hV07lEIE+vuiJ0rAXd1rLXanbPDsIZl
+ V3f120n1ZiPDYDXbeG68vy/f/SfgwLhh2SnCvBy1lUkUOuMTln0Hxc+
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -96,56 +96,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the QUP virtual bus on SM8250.
+Add the required defines for QUP_virt nodes.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../devicetree/bindings/interconnect/qcom,rpmh.yaml    | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ include/dt-bindings/interconnect/qcom,sm8250.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-index 4d93ad415e0b..a46497af1fd8 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
-@@ -18,9 +18,6 @@ description: |
-    least one RPMh device child node pertaining to their RSC and each provider
-    can map to multiple RPMh resources.
+diff --git a/include/dt-bindings/interconnect/qcom,sm8250.h b/include/dt-bindings/interconnect/qcom,sm8250.h
+index a4af5cc19271..2a656c02df4b 100644
+--- a/include/dt-bindings/interconnect/qcom,sm8250.h
++++ b/include/dt-bindings/interconnect/qcom,sm8250.h
+@@ -166,4 +166,11 @@
+ #define SLAVE_QDSS_STM			17
+ #define SLAVE_TCU			18
  
--allOf:
--  - $ref: qcom,rpmh-common.yaml#
--
- properties:
-   reg:
-     maxItems: 1
-@@ -91,6 +88,7 @@ properties:
-       - qcom,sm8250-mc-virt
-       - qcom,sm8250-mmss-noc
-       - qcom,sm8250-npu-noc
-+      - qcom,sm8250-qup-virt
-       - qcom,sm8250-system-noc
-       - qcom,sm8350-aggre1-noc
-       - qcom,sm8350-aggre2-noc
-@@ -107,7 +105,19 @@ properties:
- 
- required:
-   - compatible
--  - reg
++#define MASTER_QUP_CORE_0		0
++#define MASTER_QUP_CORE_1		1
++#define MASTER_QUP_CORE_2		2
++#define SLAVE_QUP_CORE_0		3
++#define SLAVE_QUP_CORE_1		4
++#define SLAVE_QUP_CORE_2		5
 +
-+allOf:
-+  - $ref: qcom,rpmh-common.yaml#
-+  - if:
-+      not:
-+        properties:
-+          compatible:
-+            enum:
-+              - qcom,sm8250-qup-virt
-+    then:
-+      required:
-+        - reg
-+
- 
- unevaluatedProperties: false
- 
+ #endif
 
 -- 
 2.41.0
