@@ -2,155 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2C17475D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 18:00:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DC53747601
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 18:02:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbjGDQAt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 12:00:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56180 "EHLO
+        id S230255AbjGDQCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 12:02:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230357AbjGDQAs (ORCPT
+        with ESMTP id S229595AbjGDQCc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 12:00:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3F2B2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 09:00:47 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3647fq4i026251;
-        Tue, 4 Jul 2023 16:00:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FfJmuiv//B9Ey4spwjNOq9qVFQogiEOMCMGlfq5iLe8=;
- b=GVAKhcQAf3K2ujknXCwA+JCL9MyoxZxV24xlIGMSGJFCSc3dCiZlRM3BRhHPjuCzVzr6
- XiEsEuM/s6fL2/pV6ViL34ULg9S+5NomOFQQY8ij8KwlwpZ2fZnTwLw4oHieqA8KE8iP
- ZfCwKUgif2WX+odMcuPLvYaCO2kVJx2xJtO+UjqibkULolPSFTL/p0iXuOMG4+pVG51M
- 73lJ5+TKcUiDbCwBcp32hEMnq2QsIYKU51eZzGVgyCSd5ozp7RuZ+VbqW+UFPPT6j5Dj
- jJBudPt9tC24/OW6/RVVv+2aaeebWQ9CzxkRmtlPJpPauMgSk5p9ekm/H5g99k3vhl+Z 1g== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rkwepkcgr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 04 Jul 2023 16:00:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 364G0TRh016890
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 4 Jul 2023 16:00:29 GMT
-Received: from [10.110.19.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Tue, 4 Jul 2023
- 09:00:27 -0700
-Message-ID: <694033b9-31ef-3394-fbfe-2dbba6754692@quicinc.com>
-Date:   Tue, 4 Jul 2023 09:00:25 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 14/14] drm/msm/dpu: drop dpu_core_perf_destroy()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+        Tue, 4 Jul 2023 12:02:32 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A246910C8
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 09:02:30 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id af79cd13be357-7673180224bso424020385a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 09:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20221208.gappssmtp.com; s=20221208; t=1688486550; x=1691078550;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vGounWSX2Ta3v2i79JYImPXzwvWuhBfpeJNjehKi004=;
+        b=rc0Z7y7TRSX2d+1KPwiGFAhYt8WzwvmJqI3TYwOtVT7uvUJyHaeN5LaGt1mKP6LKnC
+         uKq/8vW9itima9B31SpAz2mexuJEkJdzIMVLK3cmvR/s+Y7cz9KbMRjSAgMJ+7VFtPVG
+         dIJu6aXSkK+O7myNN/V/OfAmFqOzWcohTDSY287Ugp/Fag9pxnuwih1IXXP6cNdp9XKK
+         lmXRumrxbC3Uemv/foXY+rq8vEePWATO3BKLYjB3LRWaqrVZhwfReNd4+XXK5P6fmFHk
+         ikG+Oh3DBXvPMPhfFoQHTQiPEtlhp2z93JMi/J6KDiEtY7ZJC7WpFdzK/n0WaokgzzGA
+         kRQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688486550; x=1691078550;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vGounWSX2Ta3v2i79JYImPXzwvWuhBfpeJNjehKi004=;
+        b=i2O6534wBcWlrYWb0ZU0YFX6Y3rKToUPV9c9K6OhJtlxr+N3sXj73lZAz5Pw+14Q6n
+         wStjkaxSYeLozgioOf3212YGwxP6pYsrCEbj/K4yxhg4yk4poiYG74xuXs1JvHHjV5gL
+         VQLHCVuG+XStTBnwDkCv7ZlKCpamjXAPwJ/kc8vZqBHglYrArNI315q89oWuzY7XJd6K
+         SxoaEWuzfzGhBynJs37zPbV3p7gJoz32zgCoC37sgbdVVTWPdQqiue8ru55Ewx+V8sa6
+         4x0t0V1ITNQ16VC3k4kdqvcqfCOgEEY7mCs1yKiSVDQbERwmAjE0ypRfYrgiv06BUzAv
+         u3/w==
+X-Gm-Message-State: ABy/qLb2AbUOwVeJ5EvBvcm4YET3CpwlK7kQqsgUAJOYVcg7yXz5zQH4
+        zVoPfjPZ+BQUw8vonlJ+9wmrfQ==
+X-Google-Smtp-Source: APBJJlE+NmKZaXt8xrhE1cfKOONdr0uQa7f/tA9YGQWR7rwjnOqQDPa3QaGrSLMkEeuqZM5bZwMHBg==
+X-Received: by 2002:a05:620a:4096:b0:765:575b:415 with SMTP id f22-20020a05620a409600b00765575b0415mr17754462qko.24.1688486549669;
+        Tue, 04 Jul 2023 09:02:29 -0700 (PDT)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id l15-20020ad4444f000000b0062439f05b87sm12659236qvt.45.2023.07.04.09.02.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jul 2023 09:02:29 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     freedreno@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20230704150354.159882-1-dmitry.baryshkov@linaro.org>
- <20230704150354.159882-15-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230704150354.159882-15-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: lCu8zaiTOKEbTQRJKRUBz7qm7kXCrclN
-X-Proofpoint-GUID: lCu8zaiTOKEbTQRJKRUBz7qm7kXCrclN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-04_10,2023-07-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 adultscore=0 impostorscore=0 clxscore=1015 mlxlogscore=999
- spamscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307040138
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/dpu: add missing flush and fetch bits for DMA4/DMA5 planes
+Date:   Tue,  4 Jul 2023 12:01:04 -0400
+Message-Id: <20230704160106.26055-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Note that with this, DMA4/DMA5 are still non-functional, but at least
+display *something* in modetest instead of nothing or underflow.
 
+Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-On 7/4/2023 8:03 AM, Dmitry Baryshkov wrote:
-> This function does nothing, just clears several data pointers. Drop it
-> now.
-> 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index bbdc95ce374a..52222af5975f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -51,7 +51,7 @@
+ 
+ static const u32 fetch_tbl[SSPP_MAX] = {CTL_INVALID_BIT, 16, 17, 18, 19,
+ 	CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, 0,
+-	1, 2, 3, CTL_INVALID_BIT, CTL_INVALID_BIT};
++	1, 2, 3, 4, 5};
+ 
+ static const struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
+ 		const struct dpu_mdss_cfg *m,
+@@ -206,6 +206,12 @@ static void dpu_hw_ctl_update_pending_flush_sspp(struct dpu_hw_ctl *ctx,
+ 	case SSPP_DMA3:
+ 		ctx->pending_flush_mask |= BIT(25);
+ 		break;
++	case SSPP_DMA4:
++		ctx->pending_flush_mask |= BIT(13);
++		break;
++	case SSPP_DMA5:
++		ctx->pending_flush_mask |= BIT(14);
++		break;
+ 	case SSPP_CURSOR0:
+ 		ctx->pending_flush_mask |= BIT(22);
+ 		break;
+-- 
+2.26.1
 
-Now, it doesnt even do that. Just resets the clk_rate to 0.
-
-> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 10 ----------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 ------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  1 -
->   3 files changed, 17 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> index 608c915a2cab..4b8127932e13 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> @@ -408,16 +408,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
->   }
->   #endif
->   
-> -void dpu_core_perf_destroy(struct dpu_core_perf *perf)
-> -{
-> -	if (!perf) {
-> -		DPU_ERROR("invalid parameters\n");
-> -		return;
-> -	}
-> -
-> -	perf->max_core_clk_rate = 0;
-> -}
-> -
->   int dpu_core_perf_init(struct dpu_core_perf *perf,
->   		const struct dpu_perf_cfg *perf_cfg,
->   		unsigned long max_core_clk_rate)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> index df1fcf28f2a9..a5a9c3389718 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> @@ -66,12 +66,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
->    */
->   void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
->   
-> -/**
-> - * dpu_core_perf_destroy - destroy the given core performance context
-> - * @perf: Pointer to core performance context
-> - */
-> -void dpu_core_perf_destroy(struct dpu_core_perf *perf);
-> -
->   /**
->    * dpu_core_perf_init - initialize the given core performance context
->    * @perf: Pointer to core performance context
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index f01b2278c01a..44b0daf70c4e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1171,7 +1171,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   	return 0;
->   
->   drm_obj_init_err:
-> -	dpu_core_perf_destroy(&dpu_kms->perf);
->   hw_intr_init_err:
->   perf_err:
->   power_error:
