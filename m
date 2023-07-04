@@ -2,88 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A85374734C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 15:50:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A446974735A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 15:55:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230090AbjGDNu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 09:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59180 "EHLO
+        id S231273AbjGDNzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 09:55:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjGDNu0 (ORCPT
+        with ESMTP id S231147AbjGDNzG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 09:50:26 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38044E6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 06:50:24 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f954d7309fso7026697e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 06:50:24 -0700 (PDT)
+        Tue, 4 Jul 2023 09:55:06 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26276EE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 06:55:05 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-c5079a9f1c8so2906964276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 06:55:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688478622; x=1691070622;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8DsZYUEHTqBU3AGKVXdDyeX9gb+lep1XYSsRWjvSZ/I=;
-        b=WKNuf3B5GGVejJYAW9LuXXw4+PS33E2LeapZGIUL6ADxTRm91x8bmjoKpA5mlZ/X8G
-         7MR9wRGTLSrVuf/Fi7gXmHazP0tYZxSi47S5Mnc79Qd2bJEU4PV3an8129x/i9tN2qPm
-         xwnTagR+NSsvrThZpYnCBo8V3Litsui7nf7hPw67DsxGA7YnbaZTdT3eR3D6AuKib2dJ
-         ++f4fKb7Oc//QAvyuv2JJVrlZCTP4vCtTyv8qS/eouEntZBHpKdFVklyGE6vbxGXNijm
-         IrCkUwJuHuiI/FbeBXIh3gusYJqXYK3GOC1E1L5mCqvvqSKmOjPo8/1D6Q/EJMiekREY
-         oW5A==
+        d=linaro.org; s=google; t=1688478904; x=1691070904;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bbInuMOaeGH2/pfUXBP7Ae3B0+gOG6gDsXRs6oqX8sQ=;
+        b=B68oywBDw6QM9sPH3nKNiCHT/pSIoiCPuIIkzAkCxCa8GJ5lpYfWjfDdH0trlCaTJd
+         2xK/cpi/YT3sxzulpr3nj7jYseH50FY4ahSlV4PfRQzRvZwgKh9pOb4hfs8EwW4ovnNp
+         Ju6CXm1AvuUp/Y4cp94R1qefX9ERrpQJto1M4iRQiIQEMybWzU4iCYjJLHo1UEZC95Tt
+         +EgY7Q8FnyB6hjhllftqxmwgCaqTUMtD6gKvd9Wsaj1XoO7T+70WMobYUaP3QofKXC1I
+         52FEykZzJyaJMWXRy27mu3oi48ll39hqlYQKQoZUMp4JlG1KCgZejX9l2AG1uFWaxBPY
+         6PnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688478622; x=1691070622;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8DsZYUEHTqBU3AGKVXdDyeX9gb+lep1XYSsRWjvSZ/I=;
-        b=eSdkrKct5Lu+7K5O7qdJetVfHtCQvdQPWwoL0CHbzxkzaJgbHsApw8AqU8tTipl9E2
-         hkdO8iVaKoMkcUieUnppOo7KY5JSIGoUcnUAFlf2jPT+dL74WHEs19kVyA7lQQlX5+le
-         +g2VpyrP46j+gluljKJGS3Z8h5xRFu6QRXUkEHWz+nDPcpVcmfyv8tUFSbfC2DVBQHce
-         A+qX6BFPSteUdKoo95DeqtCwlCZ2TjxbTf2P+PaT0ePcO6Gq3QrKejysmmDkFcdFrK+v
-         tM3h8sms6GuO4zlCuh9B7jAauNfJvXSM2jAhxjTBMbXCnb5IXhAOh9fpVcC1Yx7PY3Cc
-         aMlg==
-X-Gm-Message-State: AC+VfDxvwEIJLV2ETlHSQD30K67oS2+fX2HV8Cujp3sdcPNBKaiPPM9/
-        HNw768eB+/xjAXSbTwz2D1mt3A==
-X-Google-Smtp-Source: ACHHUZ40dzDwz/sUzcpkcaTq5m/CZjEKlgEj3OYPpc+HneTDxI2+nl4kPhWRf9VGETUxPCD/Rj4GPQ==
-X-Received: by 2002:ac2:4e0c:0:b0:4f4:7a5:e800 with SMTP id e12-20020ac24e0c000000b004f407a5e800mr6424265lfr.10.1688478622464;
-        Tue, 04 Jul 2023 06:50:22 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id f14-20020ac2532e000000b004fb77cb4b8esm4291607lfh.14.2023.07.04.06.50.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jul 2023 06:50:22 -0700 (PDT)
-Message-ID: <3a305852-b44f-0b4b-e8dc-fbb0749ddb18@linaro.org>
-Date:   Tue, 4 Jul 2023 15:50:20 +0200
+        d=1e100.net; s=20221208; t=1688478904; x=1691070904;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bbInuMOaeGH2/pfUXBP7Ae3B0+gOG6gDsXRs6oqX8sQ=;
+        b=ifhuc7IPFJN+S31deuR2gTggcRuNrwqfU5WZ5yRrpLeeBlpj+0KsbPPPjxe6V0Cm8J
+         b8LZ2NmyragjDxMMyZAWc6fyYXqPwaK+AmEAI/Jxj53U7qSLD3VYZgqvk/Y7DVVSJcoo
+         q4PZfCeFl5ajcmGPxm+jnv0YmaQwRRTchlxci1+vGzf83ozqNqcAOrpBBsnjUMOtdLdl
+         lN8J6/Y74M4jyifYn9yDaptzpqYLyQwRxdOlkT3BNPYxXsh2fbYY1b9y5JKN2Cr552RY
+         XKS3YpQmPNQnSNCMfyFXbjqLgSOBCLtvyklSiGRXgv6PsZp66meMuEFBm1fINyKha+ws
+         ApAQ==
+X-Gm-Message-State: ABy/qLZk9HNVdTZ1Xl4DinGvs8uF6f3qzJRANN1RBnfMU0kZuwxd+6qF
+        w+Bjwap+/8/Ku+zaMMPSc0txHXKkVpKufSdoLAGglRuGOanWjBao3g8=
+X-Google-Smtp-Source: APBJJlE/ZZiKuvpdnr9LwWHHgdmOPydDsK5lYvgSF5VC1VJFhX6g20gb+lSl/bQIvqlE5yD64J2YYrOM5X4CtMON5GA=
+X-Received: by 2002:a25:b326:0:b0:c01:287b:41f9 with SMTP id
+ l38-20020a25b326000000b00c01287b41f9mr10447897ybj.59.1688478904309; Tue, 04
+ Jul 2023 06:55:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [RFC PATCH 4/8] ARM: dts: qcom: msm8960-cdp: constraint cpufreq
- regulators
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20230621144019.3219858-1-abel.vesa@linaro.org> <20230621144019.3219858-5-abel.vesa@linaro.org>
+In-Reply-To: <20230621144019.3219858-5-abel.vesa@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 4 Jul 2023 15:54:28 +0200
+Message-ID: <CAPDyKFpPNYYxECPpk0Qbos70WeZgOXCtu7qXGGzvLLizzrdjtA@mail.gmail.com>
+Subject: Re: [RFC PATCH v5 4/4] PM: domains: Add and set generic sync state callback
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230702175045.122041-1-dmitry.baryshkov@linaro.org>
- <20230702175045.122041-5-dmitry.baryshkov@linaro.org>
- <971262d5-98b3-c48e-89fd-ce107275008a@linaro.org>
- <CAA8EJpqvk02LeuS=-pPLUi=0OsBQ0npqioEtYkiNfPm+0EpF8Q@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpqvk02LeuS=-pPLUi=0OsBQ0npqioEtYkiNfPm+0EpF8Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,58 +75,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.07.2023 15:34, Dmitry Baryshkov wrote:
-> On Tue, 4 Jul 2023 at 16:03, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 2.07.2023 19:50, Dmitry Baryshkov wrote:
->>> Add additional constraints to the CPUfreq-related regulators, it is
->>> better be safe than sorry there.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->> I'm squinting quite hard at
->>
->> https://github.com/LineageOS/sony-kernel-msm8960/blob/jb-dev/arch/arm/mach-msm/acpuclock-8960.c
->>
->> but I can't figure out where these min values came from
-> 
-> These should be the minimum values for vdd_min and vdd_dig in
-> l2_freq_tbl_8960_kraitv2 (v1 is unsupported in mainline).
-> See below,
-> 
->>
->> Konrad
->>>  arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts | 4 ++--
->>>  1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts
->>> index 414881d34c60..cba0d1e460a1 100644
->>> --- a/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts
->>> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts
->>> @@ -131,7 +131,7 @@ pm8921_s2: s2 {
->>>               };
->>>
->>>               pm8921_s3: s3 {
->>> -                     regulator-min-microvolt = <500000>;
->>> +                     regulator-min-microvolt = <950000>;
-> 
-> And this is obviously a c&p from 8064. This should be 1050000.
-Okay, please remember to fix all other boards from this patchset too.
+On Wed, 21 Jun 2023 at 16:40, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> For every provider that doesn't register a sync_state callback,
+> register a generic one. This new generic sync_state callback queues up a
+> power off request.
+>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/base/power/domain.c | 23 +++++++++++++++++++++++
+>  include/linux/pm_domain.h   |  3 +++
+>  2 files changed, 26 insertions(+)
+>
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 5967ade160e2..ec16db0599ac 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -654,6 +654,27 @@ static void genpd_queue_power_off_work(struct generic_pm_domain *genpd)
+>         queue_work(pm_wq, &genpd->power_off_work);
+>  }
+>
+> +/**
+> + * pm_genpd_power_off_unused_sync_state - Power off all domains for provider.
+> + * @dev: Provider's device.
+> + *
+> + * Request power off for all unused domains of the provider.
+> + * This should be used exclusively as sync state callback for genpd providers.
+> + */
+> +void pm_genpd_power_off_unused_sync_state(struct device *dev)
+> +{
+> +       struct generic_pm_domain *genpd;
+> +
+> +       mutex_lock(&gpd_list_lock);
+> +
+> +       list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+> +               if (genpd->provider && genpd->provider->dev == dev)
 
-Konrad
-> 
->>>                       regulator-max-microvolt = <1150000>;
->>>                       qcom,switch-mode-frequency = <4800000>;
->>>                       bias-pull-down;
->>> @@ -287,7 +287,7 @@ pm8921_l23: l23 {
->>>               };
->>>
->>>               pm8921_l24: l24 {
->>> -                     regulator-min-microvolt = <750000>;
->>> +                     regulator-min-microvolt = <1050000>;
->>>                       regulator-max-microvolt = <1150000>;
->>>                       bias-pull-down;
->>>               };
-> 
-> 
-> 
+Not all genpds have the ->provider assigned. Moreover, the
+of_genpd_mutex is protecting the list of providers, we should use that
+instead.
+
+> +                       genpd_queue_power_off_work(genpd);
+> +
+> +       mutex_unlock(&gpd_list_lock);
+> +}
+> +EXPORT_SYMBOL_GPL(pm_genpd_power_off_unused_sync_state);
+
+Why does this need to be exported? Is there a provider that assigns
+it's own sync state callback that needs to call this? If that is the
+case, I would prefer to see a user of this API as a part of the series
+too.
+
+> +
+>  /**
+>   * genpd_keep_on - Tells if the domain should skip the power 'off' request
+>   * @genpd: PM domain to be checked.
+> @@ -2329,6 +2350,8 @@ static int genpd_add_provider(struct device_node *np, genpd_xlate_t xlate,
+>         cp->xlate = xlate;
+>         fwnode_dev_initialized(&np->fwnode, true);
+>
+> +       dev_set_drv_sync_state(np->fwnode.dev, pm_genpd_power_off_unused_sync_state);
+> +
+>         mutex_lock(&of_genpd_mutex);
+>         list_add(&cp->link, &of_genpd_providers);
+>         mutex_unlock(&of_genpd_mutex);
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 3eb32c4b6d4f..78164244b89f 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -279,6 +279,9 @@ static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
+>         return -EOPNOTSUPP;
+>  }
+>
+> +static inline void pm_genpd_power_off_unused_sync_state(struct device *dev)
+> +{ }
+> +
+>  static inline int dev_pm_genpd_set_performance_state(struct device *dev,
+>                                                      unsigned int state)
+>  {
+
+Kind regards
+Uffe
