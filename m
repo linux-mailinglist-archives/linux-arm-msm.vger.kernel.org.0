@@ -2,100 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FB5C7473C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 16:12:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADEAD747423
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 16:31:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231660AbjGDOL7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 10:11:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40850 "EHLO
+        id S231211AbjGDObk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 10:31:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231544AbjGDOLp (ORCPT
+        with ESMTP id S229647AbjGDObk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 10:11:45 -0400
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E555F10C1;
-        Tue,  4 Jul 2023 07:11:39 -0700 (PDT)
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-666e97fcc60so3280333b3a.3;
-        Tue, 04 Jul 2023 07:11:39 -0700 (PDT)
+        Tue, 4 Jul 2023 10:31:40 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60BEE49
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 07:31:38 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-c581c758ad8so1864054276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 07:31:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688481098; x=1691073098;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1s6tpBIxe1xSBXEGUtkN8A1uCRjZ4iIBmxQ5Zab/0ts=;
+        b=h1+Ji1dk99JXP0SJEIr4WQDv+OH/RqJXdQXeWtmbPo2Vi07bG3ZBHjZwatELYy0NAv
+         aW+nDri+PgzfWSq3QPU2zRABhWwvwm9PePw01btSEgUMqDMyoPbfllVLQPfwvs0OiECs
+         jGSwATHuHSqKd6QsHO65cB8nvbQPprQpOEJmDj5g5B91/V64WBzrchU0AL4/LW/TyAdB
+         JIQycADRd+qOtc/n5p1NcEzJ0YcpPNgOSt7UwUqwjF+Mou5YMBdBiseWufpEYVRZrGSD
+         zQYS1zIYGvajsNGJ5iPXoeIW1hRnFu44N2H0JYpwPEwkvEM0U1V4awCOIbVa0ni2rFn8
+         /75w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688479899; x=1691071899;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gVWqdQakMSUsv5oj8nSg9QczQrmrUO38b67MhpmWVYY=;
-        b=ZH/KPRP50O9QKZQfFKaA+IfAWPHaD+Gxo1Eu3fP8ZxyDdYI3LJSQtB5pJ1LNZCP35q
-         IiV8TxAZlRORnVGaqCJdzy5BFSME/+DZq9B+IS9yAxJQ4FU3c0sHLNVg4LaQttqWg5hd
-         bM5LMjlOQJCGjfyUqstEXhs3Dd8wimOob7Q0h3RUn4qjwSxiYa/nobSPuoeZEPS9MS42
-         srKFZ70VAwX7m2pI0PgphsbWrm6lh/UXvykFGzcIugoINW1nJ0OhoX+WdVsTs9eNV23E
-         aJtRS4HrQ1C6JxK+hMqI3oWzf0iKWvVdvHE7pO3iCmyrKE+K3UE6Y5185bgItTX1QEDi
-         4JGA==
-X-Gm-Message-State: AC+VfDyguM2YZAAPdq0N9FgoO29YGFEhGKrGIR6kCa7gx3X6HXmDtixw
-        qsAUMcwhyjDMUOAki/oH7fs=
-X-Google-Smtp-Source: ACHHUZ4mKI72SACTkxfTB3tQ6Ji13XYniCvY2MHAxg/n5JeT4DfHtHYI7qLyK+rPyEqNoEPYk2/cWg==
-X-Received: by 2002:a05:6a20:1456:b0:12c:d9cc:340e with SMTP id a22-20020a056a20145600b0012cd9cc340emr10681222pzi.5.1688479899229;
-        Tue, 04 Jul 2023 07:11:39 -0700 (PDT)
-Received: from [192.168.50.14] ([98.51.102.78])
-        by smtp.gmail.com with ESMTPSA id e26-20020a62aa1a000000b00682a9325ffcsm1178509pff.5.2023.07.04.07.11.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jul 2023 07:11:38 -0700 (PDT)
-Message-ID: <739807cf-4551-4760-83e0-a94026b5c1b8@acm.org>
-Date:   Tue, 4 Jul 2023 07:11:37 -0700
+        d=1e100.net; s=20221208; t=1688481098; x=1691073098;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1s6tpBIxe1xSBXEGUtkN8A1uCRjZ4iIBmxQ5Zab/0ts=;
+        b=K5/Y2PQ9+H1si0l+o0ahuHZJUuW5T3yWj3N4Zqi3p0vXLAKbjdeUbTRXQhYBa1Omc8
+         nxkvrMz+Nsntd2uJqcjZdhj+tjLhCbHPWcNWRjaV9J6eJPU6eGlOb6kh5H++GyzLyo5F
+         ZZxWz+1XjiPkUfWSta+rjNKVrRmJf6TzEmieWpHJYrBfJ5Ubwwjfzuec494ukHilJ1I+
+         ayRKpe04pgz2DbLmaKUMw/l7BLS4cqE8dEzwjbRlNqknIMTlYGvAkMdtUXdmrFnxDXPZ
+         uhxhmGEVPPwrvZNXR6BYIekVUKsNsvDSHVdFhQGzrmxykaU9PKplA8LUdvC2x1KHsVl7
+         FWWQ==
+X-Gm-Message-State: ABy/qLbcj6ErCqPVjUzJ3bEpAwFQ0j+7qkoKMcsrUbluAZBI5zqpoe2g
+        s8L9738kFIjw+WlhRalgjIfmIf2PzFpecFcll3YlXg==
+X-Google-Smtp-Source: APBJJlH/CeZw84d35IUxjgDJRQ19GnRGx63FhS41w8DcaINF8V6ZeDXzlG59lhcA54EoqS/uvdnhXQ1uwfKpLMe8QK8=
+X-Received: by 2002:a25:dbd0:0:b0:c11:3daf:7c47 with SMTP id
+ g199-20020a25dbd0000000b00c113daf7c47mr11111491ybf.63.1688481097965; Tue, 04
+ Jul 2023 07:31:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [linux-next:master] BUILD REGRESSION
- 296d53d8f84ce50ffaee7d575487058c8d437335
-Content-Language: en-US
-To:     Marc Zyngier <maz@kernel.org>, kernel test robot <lkp@intel.com>
-Cc:     Andrew Morton <akpm@linux-foundation.org>,
-        Linux Memory Management List <linux-mm@kvack.org>,
-        kunit-dev@googlegroups.com, kvmarm@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kselftest@vger.kernel.org, linux-parisc@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-usb@vger.kernel.org, netdev@vger.kernel.org
-References: <202307032309.v4K1IBoR-lkp@intel.com>
- <7d3d61c694c0e57b096ff7af6277ed6b@kernel.org>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <7d3d61c694c0e57b096ff7af6277ed6b@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
+ <20230620000846.946925-8-dmitry.baryshkov@linaro.org> <b2499f3d-46d4-216e-9142-87d73e26781e@quicinc.com>
+ <CAA8EJpq43fKi=L11cyfBddcP+n994bhFchHcNprnR=Vu823BiA@mail.gmail.com> <9c13ecf8-c093-e145-3a79-d0686fc5d6e7@quicinc.com>
+In-Reply-To: <9c13ecf8-c093-e145-3a79-d0686fc5d6e7@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 4 Jul 2023 17:31:26 +0300
+Message-ID: <CAA8EJpo9kUWvh=HeWG_MF77ExeMA+8z1=mBRwB36886zK27E2Q@mail.gmail.com>
+Subject: Re: [PATCH 7/8] drm/msm/dpu: drop dpu_core_perf_destroy()
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/4/23 00:15, Marc Zyngier wrote:
-> On 2023-07-03 16:11, kernel test robot wrote:
->> tree/branch:
->> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
->> master
->> branch HEAD: 296d53d8f84ce50ffaee7d575487058c8d437335  Add linux-next
->> specific files for 20230703
->>
-> 
-> [...]
-> 
->> Unverified Error/Warning (likely false positive, please contact us if
->> interested):
->>
->> arch/arm64/kvm/mmu.c:147:3-9: preceding lock on line 140
-> 
-> This *is* a false positive. The function is entered with a lock
-> held, it will exit with the lock held as well. Inside the body
-> of the function, we release and reacquire the lock.
+On Tue, 4 Jul 2023 at 03:19, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 7/3/2023 3:59 PM, Dmitry Baryshkov wrote:
+> > On Tue, 4 Jul 2023 at 01:57, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 6/19/2023 5:08 PM, Dmitry Baryshkov wrote:
+> >>> This function does nothing, just clears several data pointers. Drop it
+> >>> now.
+> >>>
+> >>
+> >> This will undo what dpu_core_perf_init() did when an error happens.
+> >>
+> >> Why can we drop that?
+> >
+> > Because nothing will use this data in an error case. There is no need
+> > to clean it.
+> >
+>
+> Usage is one thing for sure but I am still inclined to keep it symmetric
+> with dpu_core_perf_init().
 
-Which tool reported this message? If this message was reported by 
-sparse, has it been considered to add a __must_hold() annotation?
+Through the last several years the kernel was more and more inclined
+to asymmetry here. For example, consider all the demv_ functions. We
+have been removing cleanup and _remove functions all over the place.
+So, I think, I will reiterate this patch.
 
-Thanks,
+>
+> >>
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>> ---
+> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 12 ------------
+> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 ------
+> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  1 -
+> >>>    3 files changed, 19 deletions(-)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> >>> index 78a7e3ea27a4..f779ad544347 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> >>> @@ -394,18 +394,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
+> >>>    }
+> >>>    #endif
+> >>>
+> >>> -void dpu_core_perf_destroy(struct dpu_core_perf *perf)
+> >>> -{
+> >>> -     if (!perf) {
+> >>> -             DPU_ERROR("invalid parameters\n");
+> >>> -             return;
+> >>> -     }
+> >>> -
+> >>> -     perf->max_core_clk_rate = 0;
+> >>> -     perf->core_clk = NULL;
+> >>> -     perf->dev = NULL;
+> >>> -}
+> >>> -
+> >>>    int dpu_core_perf_init(struct dpu_core_perf *perf,
+> >>>                struct drm_device *dev,
+> >>>                const struct dpu_perf_cfg *perf_cfg,
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> >>> index e8a7916b6f71..e1198c104b5e 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> >>> @@ -69,12 +69,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+> >>>     */
+> >>>    void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
+> >>>
+> >>> -/**
+> >>> - * dpu_core_perf_destroy - destroy the given core performance context
+> >>> - * @perf: Pointer to core performance context
+> >>> - */
+> >>> -void dpu_core_perf_destroy(struct dpu_core_perf *perf);
+> >>> -
+> >>>    /**
+> >>>     * dpu_core_perf_init - initialize the given core performance context
+> >>>     * @perf: Pointer to core performance context
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> >>> index 6e62606e32de..4439147d2c35 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> >>> @@ -1162,7 +1162,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+> >>>        return 0;
+> >>>
+> >>>    drm_obj_init_err:
+> >>> -     dpu_core_perf_destroy(&dpu_kms->perf);
+> >>>    hw_intr_init_err:
+> >>>    perf_err:
+> >>>    power_error:
+> >
+> >
+> >
 
-Bart.
 
+
+-- 
+With best wishes
+Dmitry
