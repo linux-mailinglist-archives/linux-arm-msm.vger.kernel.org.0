@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54CDA747828
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 20:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA40E747832
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 20:10:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjGDSG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 14:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49802 "EHLO
+        id S231514AbjGDSKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 14:10:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbjGDSGZ (ORCPT
+        with ESMTP id S231406AbjGDSKS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 14:06:25 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 947EC10D9
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 11:06:23 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fb73ba3b5dso9463912e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 11:06:23 -0700 (PDT)
+        Tue, 4 Jul 2023 14:10:18 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC40310D7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 11:10:15 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b6f943383eso15028771fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 11:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688493982; x=1691085982;
+        d=linaro.org; s=google; t=1688494214; x=1691086214;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nNIWfih+PFK3OLIF8G59ioAmdnhh2DrduAI1lh/uY1U=;
-        b=O94hBhVDk2edtOpkmJVM4EEoGpOXzzJ5Rg1g3pUi+QQMBdAN1my4vlUwZokzsFZJjd
-         egHsvmcO3NLC0jzdPEHfzBtc5w2ZJDdyZsd/tND/3pU0S3BkZux5W9+f2c0vSevu/VYd
-         Py52sSlgsSY+x4AsQqn016OpFEwdXNk7RxgGDUBdqNdU2HPOTI1jGsoj0dn7Jm5eDyWy
-         YVl8UwE0tBvXHBTx6ahL+pYaRlmmEIHZlIjhVTf6BXpoTKHN3loSEzO6ee066as79jMi
-         bM7U720DnZOT8VSYLUbpaXnM8Dqmr0jRvqakX+Mo7tkw8OJyci6nMm4F2nUNdvtKChKI
-         lTZA==
+        bh=vZVADByWajD+t+CUY4Se4uIQW6pfNssor2L/f13xpRE=;
+        b=dcQRRcprAu3XN0C7BImZpG+nU0EeXSlVAvSXS/gC+47zSZaz01TLKMP9KySl7aUTwp
+         cQXhYTUQ8eDK1SKWrXAFxccNlqtBGPB9y0+InNq9x14hKnx+nL/04R9eEmB6ROG37vwc
+         nFYgWIVQTK6ehHTW8SQqgArQ2VcJDvnKCC605Qv0Gf9/deCOXsFFoAWKvgShznc6XtjW
+         EI3uWxr0XE+oYPtuoXDJDLhBFIvK4J+raWc16Q6IxeYKaPrWy/nNou6oLmS1v+V9z/sb
+         23DRaO3cMWXV2PKVq63FXemvDMbkcGzaqd1b/vWWgDmmtLZlHU74HQCd9xCD5gChXgTA
+         DSQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688493982; x=1691085982;
+        d=1e100.net; s=20221208; t=1688494214; x=1691086214;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nNIWfih+PFK3OLIF8G59ioAmdnhh2DrduAI1lh/uY1U=;
-        b=QxjRgfjTq4iXdPG2dD7kiwiBFVvviP02VVEP5TCWeScg2UnB/OMs9RN3bZDpn9DLZg
-         ZN7frrfL4s7CbHoah3WK+UXtdsABJTDQdX2L12TwLrPs/E9XGUyYK+inzyl8y9hjXKgq
-         HB+mbeq5gPc7ifF941mQvYaHbM11xs2GNcaihOTrrion5mk9n/rLRCvZqyPxMAn928dh
-         jG3EXSo8OMRSGmlbVUWxmOg4SHdWYTV5lVwgIexdw7cXRNR5KmFl8F/xHw/z/g/oK+IE
-         nXqfHcGgmCkPUm3HLgAjTdOSAIx485yzdq5ausNTqwBHFsIq2YbpFQT8KfHHbScvOMF+
-         4h/Q==
-X-Gm-Message-State: ABy/qLaUNpelhg8ESpOiOboT+vI+gX+RvQ7UHRYs+twORMNB0weZPQMr
-        /0TQWsd7nz9tNdW4v8DIe2B8dQ==
-X-Google-Smtp-Source: APBJJlFpq1//36blgYI1RKgH0YiOTAjo4RhWReAooBPYyGIAbcZ28qb6BvaS4m9NBUlcEow3dp+djw==
-X-Received: by 2002:a05:6512:3f1:b0:4f7:6976:2070 with SMTP id n17-20020a05651203f100b004f769762070mr8485265lfq.40.1688493981774;
-        Tue, 04 Jul 2023 11:06:21 -0700 (PDT)
+        bh=vZVADByWajD+t+CUY4Se4uIQW6pfNssor2L/f13xpRE=;
+        b=WGvEFOa1HUMVQLnzOYN0XQZytj3+O1teBGcbziWDwh3eFiCIsQBzUZfYZcVqZ79//1
+         M591S8qQMMw5oiQJuMtNXWhh0l54XFXWIB5WjQsVGmxuCMoUr4kvQ1XYyN4NkjhlPi8k
+         QpiE9t8Xw7pWHkaMWo9DlC0y+p32MH1elS0WmuLhvBt2MqR3rSYAthrMmBACnyCJXqsA
+         4bTBZ2bsocKEDMGaLJNM9cYRYS9k0aQh0xahk7RprGGUMFJPjYivgaTZJCPeYykxwotx
+         fSU5VQrflm6USLTmwGQSiouFlEWfQZmx1LZt5/d0qhTfukf2BB0b4ZootGrHHhS2IMHd
+         m4Yw==
+X-Gm-Message-State: ABy/qLYSPYCRLWqfN6FVPyOVkFfmsKw/+meFVmJ7mtPRF5+34418QQqo
+        3qcr9UYj+AygJ03WYYwAHB1Y8A==
+X-Google-Smtp-Source: APBJJlHrnNrnwlPD56QQejDLxMHR4kGkWkgUG38Egxu3JAebh4cEXsTZQro1inS42seg91dtBKUAxg==
+X-Received: by 2002:a2e:8215:0:b0:2b6:cf64:7a8e with SMTP id w21-20020a2e8215000000b002b6cf647a8emr9049787ljg.19.1688494213946;
+        Tue, 04 Jul 2023 11:10:13 -0700 (PDT)
 Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id y25-20020ac255b9000000b004fbb20791f3sm1456202lfg.31.2023.07.04.11.06.20
+        by smtp.gmail.com with ESMTPSA id s24-20020a2e98d8000000b002b6ebc61e85sm1152448ljj.54.2023.07.04.11.10.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jul 2023 11:06:21 -0700 (PDT)
-Message-ID: <8ba85d65-51b7-8a66-f721-edb68e7617a8@linaro.org>
-Date:   Tue, 4 Jul 2023 20:06:19 +0200
+        Tue, 04 Jul 2023 11:10:13 -0700 (PDT)
+Message-ID: <10660989-4f1d-0107-f595-bcfd1ca5ea95@linaro.org>
+Date:   Tue, 4 Jul 2023 20:10:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: pm6150: Add resin and rtc nodes
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: Add support for the Xiaomi SM7125
+ platform
 Content-Language: en-US
 To:     David Wronek <davidwronek@gmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -70,9 +71,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
 References: <20230704163848.169853-2-davidwronek@gmail.com>
- <20230704163848.169853-7-davidwronek@gmail.com>
+ <20230704163848.169853-9-davidwronek@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230704163848.169853-7-davidwronek@gmail.com>
+In-Reply-To: <20230704163848.169853-9-davidwronek@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,42 +86,204 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.07.2023 18:31, David Wronek wrote:
-> Add support for the RTC which is the same as on other PMICs and add the
-> resin child node to the PM6150 PON device and disable it by default.
+On 4.07.2023 18:32, David Wronek wrote:
+> There are 6 Xiaomi smartphones with the SM7125 SoC:
+> 
+> - POCO M2 Pro (gram)
+> - Redmi Note 9S (curtana)
+> - Redmi Note 9 Pro (Global, joyeuse)
+> - Redmi Note 9 Pro (India, curtana)
+> - Redmi Note 9 Pro Max (excalibur)
+> - Redmi Note 10 Lite (curtana)
+> 
+> These devices share a common board design (a.k.a miatoll) with only a
+> few differences. Add support for the common board, as well as support
+> for the global Redmi Note 9 Pro.
 > 
 > Signed-off-by: David Wronek <davidwronek@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/pm6150.dtsi | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm7125-xiaomi-joyeuse.dts   |  16 +
+>  .../boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi  | 420 ++++++++++++++++++
+>  3 files changed, 437 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm6150.dtsi b/arch/arm64/boot/dts/qcom/pm6150.dtsi
-> index 2e6afa296141..9a7c532f7a12 100644
-> --- a/arch/arm64/boot/dts/qcom/pm6150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm6150.dtsi
-> @@ -53,6 +53,14 @@ pm6150_pwrkey: pwrkey {
->  				bias-pull-up;
->  				linux,code = <KEY_POWER>;
->  			};
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 337abc4ceb17..7ef9e7d43904 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -192,6 +192,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-xiaomi-joyeuse.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
+> new file mode 100644
+> index 000000000000..670fd63f3416
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
+> @@ -0,0 +1,16 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2023, David Wronek <davidwronek@gmail.com>
+> + */
 > +
-> +			pm6150_resin: resin {
-> +				compatible = "qcom,pm8941-resin";
-> +				interrupts = <GIC_SPI 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-0x0 (GIC_SPI is a property of the ARM GIC, SPMI uses the interrupts
-field in a rather hacky and specific way)
+> +/dts-v1/;
+> +
+> +#include "sm7125-xiaomi-miatoll.dtsi"
+> +
+> +/ {
+> +	model = "Xiaomi Redmi Note 9 Pro (Global)";
+> +	compatible = "xiaomi,joyeuse", "qcom,sm7125";
+> +
+> +	/* required for bootloader to select correct board */
+> +	qcom,board-id = <0x50022 1>;
+I think you need to amend some list in bindings to allow qcom,abcd-id properties
 
 [...]
 
-> +		rtc@6000 {
-> +			compatible = "qcom,pm8941-rtc";
-> +			reg = <0x6000>, <0x6100>;
-> +			reg-names = "rtc", "alarm";
-> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-IRQ_TYPE_EDGE_RISING
+> +		rmtfs_mem: memory@fa601000 {
+> +			compatible = "qcom,rmtfs-mem";
+> +			reg = <0x0 0xfa601000 0x0 0x200000>;
+> +			no-map;
+> +
+> +			qcom,client-id = <1>;
+> +			qcom,vmid = <15>;
+QCOM_SCM_VMID_MSS_MSA
 
-Konrad
+from
+
+include/dt-bindings/firmware/qcom,scm.h
+
+> +		};
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	regulators-0 {
+> +		compatible = "qcom,pm6150-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vreg_s1a_1p1: smps1 {
+> +			regulator-min-microvolt = <1128000>;
+> +			regulator-max-microvolt = <1128000>;
 > +		};
 > +
->  		pm6150_gpios: gpio@c000 {
->  			compatible = "qcom,pm6150-gpio", "qcom,spmi-gpio";
->  			reg = <0xc000>;
+> +		vreg_s4a_1p0: smps4 {
+> +			regulator-min-microvolt = <824000>;
+> +			regulator-max-microvolt = <1120000>;
+> +		};
+> +
+> +		vreg_s5a_2p0: smps5 {
+> +			regulator-min-microvolt = <1744000>;
+> +			regulator-max-microvolt = <2040000>;
+> +		};
+> +
+> +		vreg_l1a_1p2: ldo1 {
+> +			regulator-min-microvolt = <1178000>;
+> +			regulator-max-microvolt = <1256000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+You want HPM, LPM is not guaranteed to give you the desired voltages.
+
+[...]
+
+> +&sdhc_2 {
+> +	status = "okay";
+Status last, everywhere
+
+Konrad
+> +
+> +	pinctrl-names = "default","sleep";
+> +	pinctrl-0 = <&sdc2_on>;
+> +	pinctrl-1 = <&sdc2_off>;
+> +	vmmc-supply = <&vreg_l9c_2p9>;
+> +	vqmmc-supply = <&vreg_l6c_3p0>;
+> +
+> +	cd-gpios = <&tlmm 69 GPIO_ACTIVE_HIGH>;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <34 4>, <59 4>;
+> +
+> +	sdc2_on: sdc2-on-state {
+> +		clk-pins {
+> +			pins = "sdc2_clk";
+> +			bias-disable;
+> +			drive-strength = <16>;
+> +		};
+> +
+> +		cmd-pins {
+> +			pins = "sdc2_cmd";
+> +			bias-pull-up;
+> +			drive-strength = <10>;
+> +		};
+> +
+> +		data-pins {
+> +			pins = "sdc2_data";
+> +			bias-pull-up;
+> +			drive-strength = <10>;
+> +		};
+> +
+> +		sd-cd-pins {
+> +			pins = "gpio69";
+> +			function = "gpio";
+> +			bias-pull-up;
+> +			drive-strength = <2>;
+> +		};
+> +	};
+> +
+> +	sdc2_off: sdc2-off-state {
+> +		clk-pins {
+> +			pins = "sdc2_clk";
+> +			bias-disable;
+> +			drive-strength = <2>;
+> +		};
+> +
+> +		cmd-pins {
+> +			pins = "sdc2_cmd";
+> +			bias-pull-up;
+> +			drive-strength = <2>;
+> +		};
+> +
+> +		data-pins {
+> +			pins = "sdc2_data";
+> +			bias-pull-up;
+> +			drive-strength = <2>;
+> +		};
+> +
+> +		sd-cd-pins {
+> +			pins = "gpio69";
+> +			function = "gpio";
+> +			bias-pull-up;
+> +			drive-strength = <2>;
+> +		};
+> +	};
+> +};
+> +
+> +&usb_1 {
+> +	qcom,select-utmi-as-pipe-clk;
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +	maximum-speed = "high-speed";
+> +	dr_mode = "peripheral";
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_hsphy {
+> +	vdd-supply = <&vreg_l4a_0p88>;
+> +	vdda-pll-supply = <&vreg_l11a_1p8>;
+> +	vdda-phy-dpdm-supply = <&vreg_l17a_3p1>;
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_qmpphy {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l4a_0p88>;
+> +	vdda-pll-supply = <&vreg_l3c_1p23>;
+> +};
