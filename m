@@ -2,158 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BAE274702E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 13:52:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03387747036
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 13:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbjGDLw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 07:52:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51006 "EHLO
+        id S231305AbjGDL4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 07:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230129AbjGDLw0 (ORCPT
+        with ESMTP id S231288AbjGDL4M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 07:52:26 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A2EAF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 04:52:24 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-be49ca27e1fso6059940276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 04:52:24 -0700 (PDT)
+        Tue, 4 Jul 2023 07:56:12 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ACCAE7A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 04:56:10 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b6f9edac8dso6374231fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 04:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688471543; x=1691063543;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2zZUsNxEO8W5BrVp3ttVh4FhVCcFwHiBUECIJfdtg+8=;
-        b=q8no0c+om45qRmj9VwnPj/EDKVv+jIOYzfXQBpOHkfOFfWd9K+H/MZjTqF78Ch5xa6
-         w0LinXA7jBy2xW6y34gYsGmp2O3/DW1QhngkMSllQey/OwN1CNWm4UvlneB4boTnZzl8
-         sEJd+PSEl+DpLYJX1wjFmrYbyxjiRkUYGYkjb/5VPj+pHEqgRpfBiPhafw4xhoBSqoKT
-         BIcAlEshBBrmdp64EICvUA9eezxcpno811KmdGomdnMjq0ZJoJnJ03kwP+yEJZ3hbsz4
-         XJeBOdoTuhBLik4pND0uf0gDlSGttxNmWJh/7ePZ+e+d+o2bdMmDjsnFyqBIASGQK7YP
-         5kmw==
+        d=linaro.org; s=google; t=1688471768; x=1691063768;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0uWXTtzRor2oUBjLKY36+LrPcrmYgFnt2f4Nhe+LjrM=;
+        b=q7aZvds8czfjlapaHMKIwdPQCwgFWt1IKtjiUHAQPoEjrGHy+mK1M/cJw/cffU0Ex/
+         51J6HJx6cJ6xHxLcXgP4CEfDjmP3DANYxa+CzP1Zb1W3OuA9jgZeOZiVfy1BC4mvsTEs
+         fP0q0VwS+0tKoLbpv8nSSpG1NqhDBnUQxke7uL13g5hg6PTLeeV/TeSezakNs81C/qS8
+         9RQCAwiEsWUwVX2O3EOCXFYfxFnrzRCs/X9Fkb51c/M5OtXEJfDJDHNWMrUEFd771CGX
+         9MJ7CcWyA9A67FuJ5FnAlAoqY9KC8JtcjLvMLUEq+rNwvYFYFZCE55nOZUod6tRWZkzC
+         jHMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688471543; x=1691063543;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2zZUsNxEO8W5BrVp3ttVh4FhVCcFwHiBUECIJfdtg+8=;
-        b=L1j102CC5nQ/TZ6LbMtUdlsOZz8swJG78T6fDSZif0YNN1oPNic5pTLZHCK2+TQUdw
-         iEQzll9XG8+DgEG7C4JMb3p4lyDcLho6ioiAcw23fMyabFYy2OZ+vBGokCTYP7A8z0a8
-         aQc9qBVWvwsIcp+/SrmxicMlhJV9MwkZszeUv3Gwe1oA7PCxdD0R2ytuk81SnTvFbR2r
-         xva2fpz4fwCfmgpetpc4vdUZBO0zjc1AfwAgg0JxIBXQVrA8K6ZMekr7m++GIlhJwMLX
-         sSuTF/cJcg985qVAaNzYCOkwqWHxzMxPbQEdux0mNDYEATu+kPA3MKhTSsz66mXjiPR0
-         E3gw==
-X-Gm-Message-State: ABy/qLYtUD6VGsUcvMxdCcdU1JC/F9s2cTyeBUW1shFAX/3mbcicuc6O
-        TIH0l7izgoKDN+EtYFOX8HQ44+9CJdYRuMVMKa/tpA==
-X-Google-Smtp-Source: APBJJlEGJz7XXswIBp3yKVRenGx4pLHSTSUM32fVZ0/EF1KYhxxc7/LcWGhcmBXtEclVlS3g1nr+UI4/uHcVBBPQggc=
-X-Received: by 2002:a25:ab92:0:b0:c5f:3df2:d26f with SMTP id
- v18-20020a25ab92000000b00c5f3df2d26fmr453097ybi.43.1688471543629; Tue, 04 Jul
- 2023 04:52:23 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688471768; x=1691063768;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0uWXTtzRor2oUBjLKY36+LrPcrmYgFnt2f4Nhe+LjrM=;
+        b=j/k/OpOTAJXw5SXbQyj6S8RHIzQMtqogNG/MxFW6ART7QF5lfvtxEgoxWN5PVrVDZx
+         E80a7Cdp9Y+ZEr2iNbjSK8SUOHp1JeKCyNByLYQ0C8ub8LYPELhG6K4kHdzh7nbfgUv6
+         X8gPY6gqt5mqp1tOImdKzxzv2MAaGoCtgXwu6JOeR3M+t6Q1z8C9Hrk/w0yMztTQfa1L
+         idTr33x9fCsFUtqlpppsf1HMb3dZSHFmnYeeKVGWkDQSPjCYuHkPJUmnOGBHUImctuio
+         70twFvEOCQ/iJOL64O21JYjenhDEx5ukkfrgDW+MlUdxr6h+ZAka4L1YyRB/Xfuliel8
+         bJ5A==
+X-Gm-Message-State: ABy/qLYENScZSmpC+aja81RWslRtzHw76IZKY+PClVd+6riMiR8dcBO0
+        IosCob+hEi5zzJmtgfflctFTGS4O39h3tQP7c9M=
+X-Google-Smtp-Source: APBJJlGw8dBuq5cZbx3NDZwnsFkt0mCIHTN1XIVUiZPCMEUC2O08bCKCyfsRQziZZTLyrzxRi7IvbA==
+X-Received: by 2002:a2e:87cb:0:b0:2b6:e7b7:74b3 with SMTP id v11-20020a2e87cb000000b002b6e7b774b3mr4344677ljj.27.1688471767931;
+        Tue, 04 Jul 2023 04:56:07 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id f6-20020a2e3806000000b00295a96a0f6csm5568146lja.102.2023.07.04.04.56.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Jul 2023 04:56:07 -0700 (PDT)
+Message-ID: <801e16d1-7c41-dd80-3ed5-7e3e1b578d06@linaro.org>
+Date:   Tue, 4 Jul 2023 14:56:06 +0300
 MIME-Version: 1.0
-References: <20230619212519.875673-1-dmitry.baryshkov@linaro.org>
- <20230619212519.875673-5-dmitry.baryshkov@linaro.org> <0aafbba0-52dd-96d9-94a6-0452996e1eba@quicinc.com>
- <974a294c-d85d-a79f-5b83-bbbac12ff7a2@linaro.org> <50855184-1fbf-8e36-f0eb-a46be70b1eca@quicinc.com>
- <CAA8EJprQLpRNHShWWWZeSyKx3erat3Q7WUXhVV1pYp9UtQEgng@mail.gmail.com>
-In-Reply-To: <CAA8EJprQLpRNHShWWWZeSyKx3erat3Q7WUXhVV1pYp9UtQEgng@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 4 Jul 2023 14:52:12 +0300
-Message-ID: <CAA8EJpqysGpZzEs1QGDec9Jian6gDy+SG6a_VormPF_cdq47hA@mail.gmail.com>
-Subject: Re: [PATCH v4 04/19] drm/msm/dpu: drop dpu_mdss_cfg::mdp_count field
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 2/2] clk: qcom: videocc-sm8350: Add SC8280XP support
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230703-topic-8280_videocc-v1-0-8959d4d0a93e@linaro.org>
+ <20230703-topic-8280_videocc-v1-2-8959d4d0a93e@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230703-topic-8280_videocc-v1-2-8959d4d0a93e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 4 Jul 2023 at 13:06, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Tue, 4 Jul 2023 at 07:04, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >
-> >
-> >
-> > On 7/3/2023 7:20 PM, Dmitry Baryshkov wrote:
-> > > On 03/07/2023 05:01, Abhinav Kumar wrote:
-> > >>
-> > >>
-> > >> On 6/19/2023 2:25 PM, Dmitry Baryshkov wrote:
-> > >>> There is always a single MDP TOP block. Drop the mdp_count field and
-> > >>> stop declaring dpu_mdp_cfg instances as arrays.
-> > >>>
-> > >>> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >>> ---
-> > >>
-> > >> The change drops mdp_count and stops using the array which is fine and
-> > >> I will support that.
-> > >>
-> > >> But looking at the pattern I saw while using core_revision, both
-> > >> DPU_MDP_VSYNC_SEL and DPU_MDP_AUDIO_SELECT can also be dropped from
-> > >> the catalog in favor of using core_revision.
-> > >>
-> > >> Hence for that, I request you not to stop passing dpu_mdss_cfg to
-> > >> dpu_hw_mdptop_init as that has the necessary information of
-> > >> core_revision.
-> > >
-> > > Sure, I'll restore it. Please note, however, that it might be better to
-> > > pass struct dpu_caps instead of the full struct dpu_mdss_cfg.
-> > >
-> >
-> > Thanks for restoring.
-> >
-> > Can you pls explain this better? dpu_core_rev is part of dpu_mdss_cfg,
-> > so dpu_caps wont be enough for this one.
->
-> Oh, true. For some reason I thought that version is a part of dpu_caps.
+On 03/07/2023 21:09, Konrad Dybcio wrote:
+> SC8280XP, being a partial derivative of SM8350, shares almost the exact
+> same videocc block. Extend the 8350 driver to support the bigger brother.
+> 
+> The only notable changes are higher possible frequencies on some clocks
+> and some switcheroo within the XO/sleep registers (probably due to some
+> different board crystal configuration).
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-And after additional thought. Maybe it would be better to add a
-separate struct dpu_mdss_version and pass it to the hw block init
-functions?
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->
-> >
-> > >>
-> > >>>   .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  7 +---
-> > >>>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  7 +---
-> > >>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  1 -
-> > >>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    | 38 +++----------------
-> > >>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  8 ++--
-> > >>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  4 +-
-> > >>>   19 files changed, 41 insertions(+), 115 deletions(-)
-> > >
->
->
->
-> --
-> With best wishes
-> Dmitry
+Minor nits below
 
+> ---
+>   drivers/clk/qcom/videocc-sm8350.c | 42 ++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 41 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/qcom/videocc-sm8350.c b/drivers/clk/qcom/videocc-sm8350.c
+> index b148877fc73d..581ad4440615 100644
+> --- a/drivers/clk/qcom/videocc-sm8350.c
+> +++ b/drivers/clk/qcom/videocc-sm8350.c
+> @@ -41,6 +41,10 @@ static const struct pll_vco lucid_5lpe_vco[] = {
+>   	{ 249600000, 1750000000, 0 },
+>   };
+>   
+> +static const struct pll_vco lucid_5lpe_vco_8280[] = {
 
+Nit: _sc8280xp?
+
+> +	{ 249600000, 1800000000, 0 },
+> +};
+> +
+>   static const struct alpha_pll_config video_pll0_config = {
+>   	.l = 0x25,
+>   	.alpha = 0x8000,
+> @@ -159,6 +163,16 @@ static const struct freq_tbl ftbl_video_cc_mvs0_clk_src[] = {
+>   	{ }
+>   };
+>   
+> +static const struct freq_tbl ftbl_video_cc_mvs0_clk_src_8280[] = {
+
+And same here
+
+> +	F(720000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> +	F(1014000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> +	F(1098000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> +	F(1332000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> +	F(1599000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> +	F(1680000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> +	{ }
+> +};
+> +
+>   static struct clk_rcg2 video_cc_mvs0_clk_src = {
+>   	.cmd_rcgr = 0xb94,
+>   	.mnd_width = 0,
+> @@ -181,6 +195,15 @@ static const struct freq_tbl ftbl_video_cc_mvs1_clk_src[] = {
+>   	{ }
+>   };
+>   
+> +static const struct freq_tbl ftbl_video_cc_mvs1_clk_src_8280[] = {
+> +	F(840000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
+> +	F(1098000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
+> +	F(1332000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
+> +	F(1600000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
+> +	F(1800000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
+> +	{ }
+> +};
+> +
+>   static struct clk_rcg2 video_cc_mvs1_clk_src = {
+>   	.cmd_rcgr = 0xbb4,
+>   	.mnd_width = 0,
+> @@ -499,6 +522,7 @@ static struct qcom_cc_desc video_cc_sm8350_desc = {
+>   
+>   static int video_cc_sm8350_probe(struct platform_device *pdev)
+>   {
+> +	u32 video_cc_xo_clk_cbcr = 0xeec;
+>   	struct regmap *regmap;
+>   	int ret;
+>   
+> @@ -510,6 +534,21 @@ static int video_cc_sm8350_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		return ret;
+>   
+> +	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8280xp-videocc")) {
+> +		video_cc_sleep_clk_src.cmd_rcgr = 0xf38;
+> +		video_cc_sleep_clk.halt_reg = 0xf58;
+> +		video_cc_sleep_clk.clkr.enable_reg = 0xf58;
+> +		video_cc_xo_clk_src.cmd_rcgr = 0xf14;
+> +		video_cc_xo_clk_cbcr = 0xf34;
+> +
+> +		video_pll0.vco_table = video_pll1.vco_table = lucid_5lpe_vco_8280;
+> +		/* No change, but assign it for completeness */
+> +		video_pll0.num_vco = video_pll1.num_vco = ARRAY_SIZE(lucid_5lpe_vco_8280);
+> +
+> +		video_cc_mvs0_clk_src.freq_tbl = ftbl_video_cc_mvs0_clk_src_8280;
+> +		video_cc_mvs1_clk_src.freq_tbl = ftbl_video_cc_mvs1_clk_src_8280;
+> +	}
+> +
+>   	regmap = qcom_cc_map(pdev, &video_cc_sm8350_desc);
+>   	if (IS_ERR(regmap)) {
+>   		pm_runtime_put(&pdev->dev);
+> @@ -525,7 +564,7 @@ static int video_cc_sm8350_probe(struct platform_device *pdev)
+>   	 *      video_cc_xo_clk
+>   	 */
+>   	regmap_update_bits(regmap, 0xe58, BIT(0), BIT(0));
+> -	regmap_update_bits(regmap, 0xeec, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, video_cc_xo_clk_cbcr, BIT(0), BIT(0));
+>   
+>   	ret = qcom_cc_really_probe(pdev, &video_cc_sm8350_desc, regmap);
+>   	pm_runtime_put(&pdev->dev);
+> @@ -534,6 +573,7 @@ static int video_cc_sm8350_probe(struct platform_device *pdev)
+>   }
+>   
+>   static const struct of_device_id video_cc_sm8350_match_table[] = {
+> +	{ .compatible = "qcom,sc8280xp-videocc" },
+>   	{ .compatible = "qcom,sm8350-videocc" },
+>   	{ }
+>   };
+> 
 
 -- 
 With best wishes
 Dmitry
+
