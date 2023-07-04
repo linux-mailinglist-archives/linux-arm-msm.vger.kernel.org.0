@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADEAD747423
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 16:31:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CC33747449
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 16:42:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231211AbjGDObk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 10:31:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50800 "EHLO
+        id S230349AbjGDOmo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 10:42:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbjGDObk (ORCPT
+        with ESMTP id S229469AbjGDOmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 10:31:40 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60BEE49
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 07:31:38 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-c581c758ad8so1864054276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 07:31:38 -0700 (PDT)
+        Tue, 4 Jul 2023 10:42:44 -0400
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36B110CB;
+        Tue,  4 Jul 2023 07:42:42 -0700 (PDT)
+Received: by mail-vs1-xe29.google.com with SMTP id ada2fe7eead31-440b9d60606so1920733137.1;
+        Tue, 04 Jul 2023 07:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688481098; x=1691073098;
+        d=gmail.com; s=20221208; t=1688481762; x=1691073762;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1s6tpBIxe1xSBXEGUtkN8A1uCRjZ4iIBmxQ5Zab/0ts=;
-        b=h1+Ji1dk99JXP0SJEIr4WQDv+OH/RqJXdQXeWtmbPo2Vi07bG3ZBHjZwatELYy0NAv
-         aW+nDri+PgzfWSq3QPU2zRABhWwvwm9PePw01btSEgUMqDMyoPbfllVLQPfwvs0OiECs
-         jGSwATHuHSqKd6QsHO65cB8nvbQPprQpOEJmDj5g5B91/V64WBzrchU0AL4/LW/TyAdB
-         JIQycADRd+qOtc/n5p1NcEzJ0YcpPNgOSt7UwUqwjF+Mou5YMBdBiseWufpEYVRZrGSD
-         zQYS1zIYGvajsNGJ5iPXoeIW1hRnFu44N2H0JYpwPEwkvEM0U1V4awCOIbVa0ni2rFn8
-         /75w==
+        bh=cxhjD7KY5JD674i+41mIILyrwvbeMopv+PbB7rT3+IE=;
+        b=qXoDuKf7tijC6nBenqA4HmNXCVz12f5ddVrWo/iBC08Xy5X/GCcU43sZ0mtpwstHzz
+         GGG4rED1L0Z3jHx0ObuuPnqTWgOV3lvgb0UgCTp0CeJLzQJEGAmTwNjVcNLWi2mplii/
+         gTzcErjfLOJvdkMr/rbh3rwy+y80EnZd7ymGi3sD7e4+hc0QpRfU1gEicpQvVZGtzAVf
+         6EUu76BBqp0jaLUX1ZJLF1j0K7hxvYq5PwkFk8Ccvmvlcutquq7I+RgTWyWu/YG1H3fa
+         w3VIu5zXhiZjEGvEfADAqF0uBRfL7T9poR368enlmGkLswEIk/idT17/IjIAC8boz7sh
+         McZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688481098; x=1691073098;
+        d=1e100.net; s=20221208; t=1688481762; x=1691073762;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1s6tpBIxe1xSBXEGUtkN8A1uCRjZ4iIBmxQ5Zab/0ts=;
-        b=K5/Y2PQ9+H1si0l+o0ahuHZJUuW5T3yWj3N4Zqi3p0vXLAKbjdeUbTRXQhYBa1Omc8
-         nxkvrMz+Nsntd2uJqcjZdhj+tjLhCbHPWcNWRjaV9J6eJPU6eGlOb6kh5H++GyzLyo5F
-         ZZxWz+1XjiPkUfWSta+rjNKVrRmJf6TzEmieWpHJYrBfJ5Ubwwjfzuec494ukHilJ1I+
-         ayRKpe04pgz2DbLmaKUMw/l7BLS4cqE8dEzwjbRlNqknIMTlYGvAkMdtUXdmrFnxDXPZ
-         uhxhmGEVPPwrvZNXR6BYIekVUKsNsvDSHVdFhQGzrmxykaU9PKplA8LUdvC2x1KHsVl7
-         FWWQ==
-X-Gm-Message-State: ABy/qLbcj6ErCqPVjUzJ3bEpAwFQ0j+7qkoKMcsrUbluAZBI5zqpoe2g
-        s8L9738kFIjw+WlhRalgjIfmIf2PzFpecFcll3YlXg==
-X-Google-Smtp-Source: APBJJlH/CeZw84d35IUxjgDJRQ19GnRGx63FhS41w8DcaINF8V6ZeDXzlG59lhcA54EoqS/uvdnhXQ1uwfKpLMe8QK8=
-X-Received: by 2002:a25:dbd0:0:b0:c11:3daf:7c47 with SMTP id
- g199-20020a25dbd0000000b00c113daf7c47mr11111491ybf.63.1688481097965; Tue, 04
- Jul 2023 07:31:37 -0700 (PDT)
+        bh=cxhjD7KY5JD674i+41mIILyrwvbeMopv+PbB7rT3+IE=;
+        b=NVqUSAuRHHcB89RqYVobleynYC2hVcXKjZa8hF9UHv20t+JZuHBw4KMzAVhfMiLve+
+         9AoHRnQrrkwS0z2Rn9mnK2p5g7xA9+xvVMtfRZSrJU+LJC1RqHCjcQc6miGc7rXAsG0l
+         B6tZDB7ywdvo6TNJbwjUyntJEaFKVocVNK0gxKPUZruwfi9IypU0EPa7Cjy8xeVpV4bD
+         SylalahU12wYgHPNFPGtUv5QWXjnoGcz6qsCN3+hfwDjgNbcl/bFK2z4bI4fyKdIhQw6
+         qQJFXyohRZb2nHLmOFf6+fh9m3m8O/nvglgaLJGSaSfC6Mnm89iIVXjVjZe7S/O0zdRV
+         fXmg==
+X-Gm-Message-State: ABy/qLZ2Ae9Aizb2N12lDTaYnR9kFA75bm+s+CSMZYT/BXOIeN+jxK9L
+        r+OhSYS7talt7d1xA3zKSxtA4Kw9647eKCy3ibY=
+X-Google-Smtp-Source: APBJJlEzBfrRFFxw3waM7f1ipL7WWKBgZ8jQmyUjVtnbM0TCNsn4+zGfKdFXtaZmMtcuMEXY1XjZXuAM/dQift4uNtI=
+X-Received: by 2002:a67:f3d5:0:b0:443:7170:b048 with SMTP id
+ j21-20020a67f3d5000000b004437170b048mr6639880vsn.27.1688481761915; Tue, 04
+ Jul 2023 07:42:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
- <20230620000846.946925-8-dmitry.baryshkov@linaro.org> <b2499f3d-46d4-216e-9142-87d73e26781e@quicinc.com>
- <CAA8EJpq43fKi=L11cyfBddcP+n994bhFchHcNprnR=Vu823BiA@mail.gmail.com> <9c13ecf8-c093-e145-3a79-d0686fc5d6e7@quicinc.com>
-In-Reply-To: <9c13ecf8-c093-e145-3a79-d0686fc5d6e7@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 4 Jul 2023 17:31:26 +0300
-Message-ID: <CAA8EJpo9kUWvh=HeWG_MF77ExeMA+8z1=mBRwB36886zK27E2Q@mail.gmail.com>
-Subject: Re: [PATCH 7/8] drm/msm/dpu: drop dpu_core_perf_destroy()
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20230702182308.7583-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230702182308.7583-1-krzysztof.kozlowski@linaro.org>
+From:   Jonas Gorski <jonas.gorski@gmail.com>
+Date:   Tue, 4 Jul 2023 16:42:30 +0200
+Message-ID: <CAOiHx=kreUEnqssO7y_+UqAxsnXaLPbwBz8h3JRkdEq+pkdW2A@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: cleanup DTS example whitespaces
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Leo Yan <leo.yan@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-iio@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-phy@lists.infradead.org,
+        linux-remoteproc@vger.kernel.org, linux-usb@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,103 +76,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 4 Jul 2023 at 03:19, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Sun, 2 Jul 2023 at 20:24, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
+> The DTS code coding style expects spaces around '=' sign.
 >
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >
-> On 7/3/2023 3:59 PM, Dmitry Baryshkov wrote:
-> > On Tue, 4 Jul 2023 at 01:57, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 6/19/2023 5:08 PM, Dmitry Baryshkov wrote:
-> >>> This function does nothing, just clears several data pointers. Drop it
-> >>> now.
-> >>>
-> >>
-> >> This will undo what dpu_core_perf_init() did when an error happens.
-> >>
-> >> Why can we drop that?
-> >
-> > Because nothing will use this data in an error case. There is no need
-> > to clean it.
-> >
+> ---
 >
-> Usage is one thing for sure but I am still inclined to keep it symmetric
-> with dpu_core_perf_init().
-
-Through the last several years the kernel was more and more inclined
-to asymmetry here. For example, consider all the demv_ functions. We
-have been removing cleanup and _remove functions all over the place.
-So, I think, I will reiterate this patch.
-
+> Rob,
 >
-> >>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 12 ------------
-> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 ------
-> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  1 -
-> >>>    3 files changed, 19 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >>> index 78a7e3ea27a4..f779ad544347 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> >>> @@ -394,18 +394,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
-> >>>    }
-> >>>    #endif
-> >>>
-> >>> -void dpu_core_perf_destroy(struct dpu_core_perf *perf)
-> >>> -{
-> >>> -     if (!perf) {
-> >>> -             DPU_ERROR("invalid parameters\n");
-> >>> -             return;
-> >>> -     }
-> >>> -
-> >>> -     perf->max_core_clk_rate = 0;
-> >>> -     perf->core_clk = NULL;
-> >>> -     perf->dev = NULL;
-> >>> -}
-> >>> -
-> >>>    int dpu_core_perf_init(struct dpu_core_perf *perf,
-> >>>                struct drm_device *dev,
-> >>>                const struct dpu_perf_cfg *perf_cfg,
-> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >>> index e8a7916b6f71..e1198c104b5e 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-> >>> @@ -69,12 +69,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
-> >>>     */
-> >>>    void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
-> >>>
-> >>> -/**
-> >>> - * dpu_core_perf_destroy - destroy the given core performance context
-> >>> - * @perf: Pointer to core performance context
-> >>> - */
-> >>> -void dpu_core_perf_destroy(struct dpu_core_perf *perf);
-> >>> -
-> >>>    /**
-> >>>     * dpu_core_perf_init - initialize the given core performance context
-> >>>     * @perf: Pointer to core performance context
-> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> >>> index 6e62606e32de..4439147d2c35 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> >>> @@ -1162,7 +1162,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
-> >>>        return 0;
-> >>>
-> >>>    drm_obj_init_err:
-> >>> -     dpu_core_perf_destroy(&dpu_kms->perf);
-> >>>    hw_intr_init_err:
-> >>>    perf_err:
-> >>>    power_error:
-> >
-> >
-> >
+> Maybe this could go via your tree? Rebased on your for-next:
+> v6.4-rc2-45-gf0ac35049606
+> ---
+>  .../bindings/arm/arm,coresight-cti.yaml        | 18 +++++++++---------
+>  .../bindings/arm/keystone/ti,sci.yaml          |  8 ++++----
+>  .../devicetree/bindings/display/msm/gmu.yaml   |  2 +-
+>  .../display/panel/samsung,s6e8aa0.yaml         |  2 +-
+>  .../display/rockchip/rockchip-vop.yaml         |  4 ++--
+>  .../bindings/iio/adc/ti,adc108s102.yaml        |  2 +-
+>  .../bindings/media/renesas,rzg2l-cru.yaml      |  4 ++--
+>  .../devicetree/bindings/media/renesas,vin.yaml |  4 ++--
+>  .../devicetree/bindings/mtd/mtd-physmap.yaml   |  2 +-
+>  .../bindings/net/mediatek-dwmac.yaml           |  2 +-
+>  .../bindings/perf/amlogic,g12-ddr-pmu.yaml     |  4 ++--
+>  .../bindings/phy/mediatek,dsi-phy.yaml         |  2 +-
+>  .../remoteproc/amlogic,meson-mx-ao-arc.yaml    |  2 +-
+>  .../devicetree/bindings/usb/mediatek,mtu3.yaml |  2 +-
+>  .../devicetree/bindings/usb/ti,am62-usb.yaml   |  2 +-
+>  15 files changed, 30 insertions(+), 30 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> index 0c5b875cb654..d6c84b6e7fe6 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> @@ -287,7 +287,7 @@ examples:
+>              arm,trig-in-sigs = <0 1>;
+>              arm,trig-in-types = <PE_DBGTRIGGER
+>                                   PE_PMUIRQ>;
+> -            arm,trig-out-sigs=<0 1 2 >;
+> +            arm,trig-out-sigs = <0 1 2 >;
 
+There's a space before the closing > you could drop as well.
 
-
--- 
-With best wishes
-Dmitry
+Best Regards,
+Jonas
