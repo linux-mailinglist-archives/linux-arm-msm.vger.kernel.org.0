@@ -2,99 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1FC3746D53
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 11:28:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B6C1746DF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 11:48:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231669AbjGDJ2E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 05:28:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49202 "EHLO
+        id S230011AbjGDJsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 05:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231127AbjGDJ2D (ORCPT
+        with ESMTP id S229662AbjGDJsk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 05:28:03 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7082139
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 02:28:00 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-c49777d6e7aso3942747276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 02:28:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688462880; x=1691054880;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e3TXes7w/Rmbj1DkXFlIvKaLc8Xq0FgJi7YMpllWJrA=;
-        b=OoCw2qkjIS9uiDScfmNBkgBtmk4wM2nR69ViCcOw5vgDxOdTw0w90Ian78v4vjjtl0
-         jOEeYH5dAB9l2vu6zowl1gNS4Knq4xtgos/5Krc4brqkt87G6myHuET4b5h9T4eRTzAH
-         jtjIZTpHCpo1bz/be4ypmzT8DzCk4IrLebNiL7On5eSxPZEiLK9zBhExqgVQRAikyZji
-         wGZzLQKaAdUQ3HS8xgMYwa6pZnr3n4D+awAFX88m9wK7eYgFZGHia9ZLhD8kyCBUxQv+
-         sIJsAV8/whbNvJkxelVWjyf9mWZbmCgDDFMaHHF36MAqJDWkM46Xh0+bZPrBIdRrc6bx
-         PIEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688462880; x=1691054880;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e3TXes7w/Rmbj1DkXFlIvKaLc8Xq0FgJi7YMpllWJrA=;
-        b=ltzM3pXPSw5Fsiex9ylzXnJ/21uS+mbTIlvUwX+GzGpTITxHQ8b7ps/+sXC5cW94o5
-         r+rMJvq6A3gtHP0Wa5KfOt2+Vwl24DLpXueC6RoDm8+pXYzJ+23c6IpyhCCZCBb4gyi7
-         +Ge81I6jRK7Po4pV2FyP6Qo2Coo/mC8/7/IwaLborEJz0eHmfF6tBIPDgtjFZ12DTLbQ
-         v43CiIBGPpxZ6Xdozg77j6N1yjKTy/KDOOPclChxx4ZbdeHSBghLQ8PxpUNmeJi8spSh
-         FmOxskkgyDtne831kR3QgE5am/QJlBW9pe5yHlK97q+D4rdQsBKmmJ3Z9dgY7TBQKGZA
-         vpvw==
-X-Gm-Message-State: ABy/qLY5x7Lr6VKX5dB/eHYi425APsOPg4sL7vDxA6DVRjxrLFcQySG8
-        4LV7M4aQyBMTAolin28eGl4EAP5kfhaOYWH6K2u+6Q==
-X-Google-Smtp-Source: APBJJlGjlh3CvPVpKROT51T36lYrYgCT70VTb+HBZrybLXHHEs7NrC37lmVz+67sLTPrYH9vI8gYMaFOi6LN15jfFD0=
-X-Received: by 2002:a25:1d7:0:b0:c4d:96a2:5d96 with SMTP id
- 206-20020a2501d7000000b00c4d96a25d96mr7651767ybb.34.1688462880018; Tue, 04
- Jul 2023 02:28:00 -0700 (PDT)
+        Tue, 4 Jul 2023 05:48:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E847FB5;
+        Tue,  4 Jul 2023 02:48:38 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3646tegw016317;
+        Tue, 4 Jul 2023 09:48:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=kaIoEgXQSLvNdWP2temQuhEV+SjQM9OvqCBa6vyMnIw=;
+ b=AFJpJThmciJsZrMAXer6Pm2JMR6uNUnViN/vTsFdqvQb/GZYIjHFmmEdeBYGpLU8d1C/
+ NUc6Gbs/q++i9rXOgxA3gvowE2Urtx4Oc9Nmmn8Gg6/Pqy97ffGWtwhiLKTkEcN4VvIR
+ jbTLKgGEvOQKSV/+QdZTx4YQQbniwars9eLpvIkzJC90ubFnSvwzQTFZ35ZIq7vNCTbT
+ mUiKL8eeuZMSdGsY3vxg9a2CcdVR9Nc+f9lvrD34/YHONbf55OpWsA0zAp9Vj1GrgPp4
+ cpY7JdSHI03owKcqWwp+P/0qCdUirpVnR5sUubkQIt6RVqod3XHiHN1uW4znRsMBDgZ1 CA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rksyctqp8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Jul 2023 09:48:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3649mWNQ027033
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 4 Jul 2023 09:48:32 GMT
+Received: from [10.50.61.0] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Tue, 4 Jul 2023
+ 02:48:29 -0700
+Message-ID: <eadc6f73-0fbf-80a0-cd1f-84f7fd51f6d7@quicinc.com>
+Date:   Tue, 4 Jul 2023 15:18:26 +0530
 MIME-Version: 1.0
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <2023062814-chance-flounder-f002@gregkh> <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
-In-Reply-To: <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 4 Jul 2023 11:27:48 +0200
-Message-ID: <CACRpkda3CJ7G4-wDPkWmzg6nyCoEfG+u2cQH6KXWNjbftd90ow@mail.gmail.com>
-Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related support
-To:     Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc:     Greg KH <gregkh@linuxfoundation.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>, corbet@lwn.net,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org,
-        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/5] accel/qaic: tighten bounds checking in
+ encode_message()
+To:     Dan Carpenter <dan.carpenter@linaro.org>
+CC:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Carl Vanderlip <quic_carlv@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+        Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <kernel-janitors@vger.kernel.org>
+References: <8dc35a68-7257-41ac-9057-7c89b9ad6e18@moroto.mountain>
+ <1d79cddc-0afb-08c2-8aac-8f3b7761d210@quicinc.com>
+ <fb5f0a0c-c46f-4eec-bfcc-50b4be44c0a7@kadam.mountain>
+Content-Language: en-US
+From:   Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+In-Reply-To: <fb5f0a0c-c46f-4eec-bfcc-50b4be44c0a7@kadam.mountain>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JugXe-HSqS3SWQtnIGt8bEj-dC1RkrL2
+X-Proofpoint-ORIG-GUID: JugXe-HSqS3SWQtnIGt8bEj-dC1RkrL2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-04_05,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ clxscore=1015 mlxlogscore=999 spamscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307040080
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 29, 2023 at 1:12=E2=80=AFAM Rob Herring <robh+dt@kernel.org> wr=
-ote:
 
-> My bigger issue with this whole series is what would this all look
-> like if every SoC vendor upstreamed their own custom dumping
-> mechanism. That would be a mess. (I have similar opinions on the
-> $soc-vendor hypervisors.)
 
-I agree with Rob's stance.
+On 7/4/2023 2:08 PM, Dan Carpenter wrote:
+> On Tue, Jul 04, 2023 at 11:57:51AM +0530, Pranjal Ramajor Asha Kanojiya wrote:
+>>> diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
+>>> index 5c57f7b4494e..a51b1594dcfa 100644
+>>> --- a/drivers/accel/qaic/qaic_control.c
+>>> +++ b/drivers/accel/qaic/qaic_control.c
+>>> @@ -748,7 +748,8 @@ static int encode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
+>>>    	int ret;
+>>>    	int i;
+>>> -	if (!user_msg->count) {
+>>> +	if (!user_msg->count ||
+>>> +	    user_msg->len < sizeof(*trans_hdr)) {
+>>>    		ret = -EINVAL;
+>>>    		goto out;
+>>>    	}
+>>> @@ -765,12 +766,13 @@ static int encode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
+>>>    	}
+>>>    	for (i = 0; i < user_msg->count; ++i) {
+>>> -		if (user_len >= user_msg->len) {
+>>> +		if (user_len >= user_msg->len - sizeof(*trans_hdr)) {
+>> If I understand correctly this check is added to verify if we are left with
+>> trans_hdr size of data. In that case '>' comparison operator should be used.
+> 
+> That was there in the original code and I thought about changing it but
+> I don't like changing things which aren't necessary and == is also
+> invalid so I decided to leave it.
+> 
+I see, I understand your concern about not changing unnecessary things 
+but '>=' is incorrect for reason mentioned above. We need to change that 
+to '>'
+>>
+>>>    			ret = -EINVAL;
+>>>    			break;
+>>>    		}
+>>>    		trans_hdr = (struct qaic_manage_trans_hdr *)(user_msg->data + user_len);
+>>> -		if (user_len + trans_hdr->len > user_msg->len) {
+>>> +		if (trans_hdr->len < sizeof(trans_hdr) ||
+>>> +		    size_add(user_len, trans_hdr->len) > user_msg->len) {
+> 
+> If we change to > then the == will be caught by this check.  So it
+> doesn't affect runtime either way.
+> 
+I fail to see that.
 
-I think it would be useful to get input from the hwtracing developers
-(Alexander and Mathieu) who faced this "necessarily different" issue
-with all the hwtrace mechanisms and found a way out of it. I suspect
-they can have an idea of how this should be abstracted.
+Lets run an example:
+user_len is 0
+user_msg->len is 8
+sizeof(*trans_hdr) is 8
+trans_hdr->len is 8
 
-Yours,
-Linus Walleij
+Above instance is correct and should be processed without error.
+
+So user_len > user_msg->len - sizeof(*trans_hdr) translates to
+(0 > 8 - 8)
+(0 > 0)
+false (No error)
+.
+.
+.
+trans_hdr->len < sizeof(trans_hdr) ||
+size_add(user_len, trans_hdr->len) > user_msg->len, translates to
+8 < 8 || size_add(0, 8) > 8
+false || 8 > 8
+false || false
+false (No error)
+
+Am I missing anything?
+
+> regards,
+> dan carpenter
+> 
