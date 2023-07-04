@@ -2,123 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1F42747141
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 14:25:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CE9274716B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 14:33:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231680AbjGDMZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 08:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39696 "EHLO
+        id S231370AbjGDMdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 08:33:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231281AbjGDMZB (ORCPT
+        with ESMTP id S231923AbjGDMdL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 08:25:01 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73EB21BD3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 05:23:26 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b5c231c23aso89373171fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 05:23:26 -0700 (PDT)
+        Tue, 4 Jul 2023 08:33:11 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E66E72
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 05:33:08 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fb9ae4cef6so8769252e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 05:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688473405; x=1691065405;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uPValZyTZ8WT4pXLvEOIhNkjZRCsSVMvy0kqcxXBZWY=;
-        b=GbdNYU+53uc+CKJ45SjHdFYvihr23ISMMItqnnGph2QrBQp/yUMObVlUB5z18Fww6W
-         V3fldaqEl6L+CEcp8/o4l5MeC26PsbGQXiTDGgZp3Ptioa6a9IES2HzueIOT7VyOTN61
-         bjquV6U0C5dzQJvTdxRdYqxI34m0L0zIo5Tiei5DBfaiYD23RrrjWjomMgQS9bdPis6V
-         cdi8Xj60xM914Rj+lfjdlREdLmdWQ5IpQcBKnJzq9xBHTLacA6ImPgMFeD/Z/Bz5DM0N
-         mXLOunrwwhKfvcGwfdSVKQH4J07PeT/P/5SZDXhbQJk0o2Glnwd5l11l0jV0a4F8Ey0Y
-         lLCg==
+        d=linaro.org; s=google; t=1688473987; x=1691065987;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JzgQQIKNDoBtiJAoujjApNzPmxlwUw+BR/55LC+iVio=;
+        b=CfEh/KBX/LDElugpqwu2sDiT5kzXeo1eUeTMkkVqIJI2SqJcdnjVe2vPA2dqVHS1To
+         /DvB2YRM9V3P7Wch1cEt6adXxVs7BbjGuxZ/Vhq0SLNNWwyq4OPGy+biCdIp3o2brOyo
+         +875WKhU9m/NCiMugZ8F4R84ttG3MSGh4kOeMs+jZRbLoGVYQUh10a/jZqZ4jvHnT92f
+         XaKepWIKwo/gHccmOsMfF2VjUwXlbOtmaelEDM7XXjHvrcvLki6YRaV4K1EGdAg69d9V
+         PdlIrairKLZ2UQLKC1Ir5xWwHix969JD4ISXs3esm7Co8feRDKjFLuBsq1cPMfpDdeQ5
+         G0Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688473405; x=1691065405;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uPValZyTZ8WT4pXLvEOIhNkjZRCsSVMvy0kqcxXBZWY=;
-        b=HPB1R3AKZYM/BaRfvfhJUp1DFT+IdYeLJ7ElRF2YhjRZxw7S2F4HA50QKoP+S0Mjx3
-         PgHK0FrxeCwLZYIOo1zLFmTj2+NaBgWCQDxSEd9qobR+SHOgNv1IWzuCnRbUTQzz/T5h
-         PPQ9CMyTpDpGEQ72ALLj3MT9DYksxXPwuS5a19I51YPbC1hbal0oPWScGpLHNUdujk4s
-         bLBqSewU1hbHabZNDwixBmy+15teV/TDDBFoiL+kC6VuRr96AOzrmRBaX1EjbwZIxhKA
-         TKOsi3pnj5Ce4eHK8OgOOyeMSoLK/ni/jjLPdkBI77EcxjkvW/WU5MZJxkKU0Qf50D9q
-         F5Tg==
-X-Gm-Message-State: ABy/qLYxz6g321VjmoxI3PYRMjI4ozOyxIjQ8bKNPQaNWwIqFNtFQWAz
-        e1M8U8WrObH8uVQ7EISHv69EZQ==
-X-Google-Smtp-Source: APBJJlGhow9mucQnVPsfHwcdatGIOezpi0wujhzokvFVMFGT/fK19zshJEpL7q0k7GTqRVHtWMA6Kw==
-X-Received: by 2002:a2e:7011:0:b0:2b6:e958:d03 with SMTP id l17-20020a2e7011000000b002b6e9580d03mr4190511ljc.30.1688473404846;
-        Tue, 04 Jul 2023 05:23:24 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688473987; x=1691065987;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JzgQQIKNDoBtiJAoujjApNzPmxlwUw+BR/55LC+iVio=;
+        b=lZDtK1nVbTozvphQAJ6BjpfXGs2ataGizsTLWrhi3DFLPMw1y3hTffvcCNKxLGu2ej
+         H7UKiVAm08d9ZMDGRGZnCMVf+dOQXrs7qKiMXOj5WYKcb4vPwDvJCsNsdkV5jz9CJrb+
+         4vpabv3+mmcQpI7T8xGcsYMnY6yygO+TMy8uI+/d3/DqeV7WQMljZpdweK764pY8Ipf/
+         IX0nt9vK518id9KuX8qPO+bhLBJY/bKwmtgSnHf0CrpRs85rMori3rAMOGug/H8E0Hc/
+         tqg2VKKdqbenBtZoQ2li53+XVsf+6NCjotU62bu4G1wjvj/2xx3z77EYuCRwKPWcmipq
+         v4Rw==
+X-Gm-Message-State: ABy/qLZMsxGxTDs0j6Eq8+qG7b95tSCn0jGjW3KOtJyiUxds+WA00/Kp
+        KAEFqXLDd1V9c/9c3tYIy4fHIg==
+X-Google-Smtp-Source: APBJJlES1dFuMDEMs90e8mGzZJHQmmY+3FjM1O68m2ZDGiywI0ysXyovZjddRxhtodG9hlyCBhFx7Q==
+X-Received: by 2002:ac2:4ec5:0:b0:4fb:7de4:c837 with SMTP id p5-20020ac24ec5000000b004fb7de4c837mr8424423lfr.68.1688473987006;
+        Tue, 04 Jul 2023 05:33:07 -0700 (PDT)
 Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id y16-20020a2e9790000000b002b6d465583csm2851817lji.126.2023.07.04.05.23.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jul 2023 05:23:24 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 04 Jul 2023 14:23:18 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8250: Mark SMMUs as DMA coherent
+        by smtp.gmail.com with ESMTPSA id r4-20020a19ac44000000b004fba5c20ab1sm2527946lfc.167.2023.07.04.05.33.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Jul 2023 05:33:06 -0700 (PDT)
+Message-ID: <05666bf0-07f8-1e3a-22bf-fc779e2b7367@linaro.org>
+Date:   Tue, 4 Jul 2023 14:33:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230704-topic-8250_pcie_dmac-v1-2-799603a980b0@linaro.org>
-References: <20230704-topic-8250_pcie_dmac-v1-0-799603a980b0@linaro.org>
-In-Reply-To: <20230704-topic-8250_pcie_dmac-v1-0-799603a980b0@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH V2] PCI: qcom: Use PARF_SLV_ADDR_SPACE_SIZE for ops_2_3_3
+Content-Language: en-US
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        sboyd@kernel.org, mturquette@baylibre.com, mani@kernel.org,
+        lpieralisi@kernel.org, bhelgaas@google.com,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688473400; l=1012;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=VBShug28IBIFJfOo9caAInSc6q5XHytMqyraNym9TJs=;
- b=3Q7TSlPOV0jaUPz/ndqxXhZeVAyVR+DygeEGccfP5sWFJmt2hzoRB/YMfoX+lmk8Wcf//cyYm
- xvYJbE9aEYbC3Kc97Jj+kSOPYiwCaXBnFbflUPm9IZbP5VT0a1NVThO
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Cc:     stable@vger.kernel.org
+References: <20230703175757.2425540-1-quic_srichara@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230703175757.2425540-1-quic_srichara@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SMMUs on SM8250 are cache-coherent. Mark them as such.
+On 3.07.2023 19:57, Sricharan Ramabadhran wrote:
+> PARF_SLV_ADDR_SPACE_SIZE_2_3_3 macro is used for IPQ8074
+> 2_3_3 post_init ops. pcie slave addr size was initially set
+> to 0x358, but was wrongly changed to 0x168 as a part of
+> "PCI: qcom: Remove PCIE20_ prefix from register definitions"
+> Fixing it, by using the right macro PARF_SLV_ADDR_SPACE_SIZE
+> and removing the unused PARF_SLV_ADDR_SPACE_SIZE_2_3_3.
+> 
+> Without this pcie bring up on IPQ8074 is broken now.
+> 
+> Fixes: 39171b33f652 ("PCI: qcom: Remove PCIE20_ prefix from register definitions")
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Fixes: a89441fcd09d ("arm64: dts: qcom: sm8250: add apps_smmu node")
-Fixes: 04a3605b184e ("arm64: dts: qcom: add sm8250 GPU nodes")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 1af0eed9eef5..ccc38c205de3 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2729,6 +2729,7 @@ adreno_smmu: iommu@3da0000 {
- 			clock-names = "ahb", "bus", "iface";
- 
- 			power-domains = <&gpucc GPU_CX_GDSC>;
-+			dma-coherent;
- 		};
- 
- 		slpi: remoteproc@5c00000 {
-@@ -5399,6 +5400,7 @@ apps_smmu: iommu@15000000 {
- 					<GIC_SPI 696 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 697 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-coherent;
- 		};
- 
- 		adsp: remoteproc@17300000 {
-
--- 
-2.41.0
-
+Konrad
+>  [V2] Fixed the 'fixes tag' correctly, subject, right macro usage
+> 
+>  drivers/pci/controller/dwc/pcie-qcom.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 4ab30892f6ef..1689d072fe86 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -43,7 +43,6 @@
+>  #define PARF_PHY_REFCLK				0x4c
+>  #define PARF_CONFIG_BITS			0x50
+>  #define PARF_DBI_BASE_ADDR			0x168
+> -#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x16c /* Register offset specific to IP ver 2.3.3 */
+>  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+>  #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+>  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+> @@ -811,7 +810,7 @@ static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
+>  	u32 val;
+>  
+>  	writel(SLV_ADDR_SPACE_SZ,
+> -		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_2_3_3);
+> +		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+>  
+>  	val = readl(pcie->parf + PARF_PHY_CTRL);
+>  	val &= ~PHY_TEST_PWR_DOWN;
