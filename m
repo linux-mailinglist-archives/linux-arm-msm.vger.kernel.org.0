@@ -2,99 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97C47746BE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 10:30:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04FD3746C1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 10:38:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231578AbjGDIa3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 04:30:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49522 "EHLO
+        id S231802AbjGDIiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 04:38:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbjGDIa2 (ORCPT
+        with ESMTP id S231345AbjGDIiZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 04:30:28 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B18FD7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 01:30:27 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-992b27e1c55so610429066b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 01:30:27 -0700 (PDT)
+        Tue, 4 Jul 2023 04:38:25 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B27139
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 01:38:24 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fba8e2aa52so64188015e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 01:38:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688459425; x=1691051425;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KFaFw3uJoDRm9laNgejEO9i+oEQ6almWqyPQQo3h6WE=;
-        b=ZjbvfgYAzGqBD47D3/HU4Ni1J28WS1B5YSh1SFPyYXLkUmMDIN2E/pEoKqc/thhJnc
-         EJCRBaAk8au/+WFGd77G2GE6y8PU7GEb3mRq5+f5d4AsjuTfTwRls+apoEeBWhb2H5VZ
-         8AFgoOU45puo+4H7CU4UJ2MPQgcTcn8qAw6oRkDUgYsy284cQfmjn08AWh9izQD0rcdj
-         vrBWlheExtcEdjf59szC4Qahl0pCKuKwe1ImyLp1SyyTaCd9WBKmD1dzfyhusWtOzyZk
-         Mu7TrkQto5OAFRBhDsAraehkOhPhhiP6UqlqXlSTelHdbK3qfoZZFOsKQymgmDzpY7rh
-         wzEw==
+        d=linaro.org; s=google; t=1688459902; x=1691051902;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=w0V57ruCKT8g2KRYl0872Ggc1PX88R6CmL+ReT3+2E4=;
+        b=KuahYV1kenec4FVH+QBP0nW573m7azVy/U+M4uh/82HcqTd/trNzBoKgYdN5fuSU+G
+         YnBgOYzF3iW4e5JN5b+S1DhNYgy377h+Wv5X4d1dtUcjhlv59ttycBNm65DPWVggUgAv
+         L1lSgB/kAxfFM/EknQEj+uB/V48Tl6Pds9yHBGblTCYw0C8wiUrzevSM1uNWvhGSGbAW
+         3s5QftmSU4xelg85k1isrCKW3DX/lO4QsO/qjUUgH5zUyaAomLdjMgmQxVA02+4bHN9m
+         WjD5JEZI47QESaCd5kwvISRtXyv4dtgS5+sL+IekaTCZ9O7ZMLzPYG8PxPgaMOn1/x/6
+         cQTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688459425; x=1691051425;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KFaFw3uJoDRm9laNgejEO9i+oEQ6almWqyPQQo3h6WE=;
-        b=Z5dHez0NjIvZdL/uEbCRafb/PGieGepkGQbkYWmJTCREHXVzVTLC4fi6Om09PduJgF
-         CK7vaTPoq1XJw/nVn7tp+Jjc6SwzKmIpCiSVkhViEJ+bOTS2d1myOMylGwfTU3b0wLQR
-         m9cpOzdfjzMKmcY/TQ1eOOZPAQS12XSZ21I9E+FfuZ1mM1ImSVFApwc/R3MhV2y6UUxw
-         WHZq2QwA5qJAL3KOlA4FKW909FR/Re3rYWDpmzG3iQe3vbaGtG6a0+sSUyMoYck7gZ2d
-         FTjL0t15bQSsh/XC3dN94iYLUO13bpcljEbJVNXyqYtOOb9xmPg5ZHK1JLj21/fALNEY
-         aIAw==
-X-Gm-Message-State: ABy/qLaocyNOwNSfEUq4606A2teBb8jRljc/Riotk1SKgfFYp1AedRx+
-        Uv8eZGKr+KEPozcyMbgp7a4mog==
-X-Google-Smtp-Source: APBJJlEe8seu86IJuy45hmgLX9aDLTpaeFtaYyGZDUMtQ9+B79h7OgG0fN5PxW+lwAOJaVYdiyE8pw==
-X-Received: by 2002:a17:906:34c9:b0:982:9b01:a582 with SMTP id h9-20020a17090634c900b009829b01a582mr9389985ejb.1.1688459425722;
-        Tue, 04 Jul 2023 01:30:25 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id a16-20020a170906369000b009887c9b2812sm13234240ejc.8.2023.07.04.01.30.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jul 2023 01:30:25 -0700 (PDT)
-Message-ID: <c6dc324c-2946-3af5-8ddb-11d0a0e824cb@linaro.org>
-Date:   Tue, 4 Jul 2023 10:30:23 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 03/14] dt-bindings: display/msm/gpu: Allow A7xx SKUs
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        d=1e100.net; s=20221208; t=1688459902; x=1691051902;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w0V57ruCKT8g2KRYl0872Ggc1PX88R6CmL+ReT3+2E4=;
+        b=G50/kyTpuKOPJoBKdbv6Xu7lkqcGvCkKGiQzxp1Ylb6OiOKb1vGch7Z4G1JAp2D0hM
+         T3sqW09xpIUzq8FVDwWagziEcb2ioKA2L0mOG5rvMSc/EnZDA+faE/9K7VwwKn90QCPO
+         sdYLr5tBVNg573Fpb0KP4DjMcKWKVcE2yjrZiR//i7O2jy+6oTX+DrJ95vyzBrd1wDx/
+         N7U1pYSt8qRAM+50QLUrM/xGoF9ouFfrVzqy1D3ndZXOiMBzCsh+hENxm+qwsocSCCxg
+         hUFlDNjLSstMy68odaW9+7I9823ciknRumArvamttvsYcm1+9WH9eP6lRYO0AelffyJF
+         zXpA==
+X-Gm-Message-State: AC+VfDzsF+gUYfKb/bUyuWOC5szwpRK2WJ08jUZ4atMelg6XQrTE9Ndh
+        EVHsI1WLtebfPmbH2+grWjdpMw==
+X-Google-Smtp-Source: ACHHUZ4CtBHTSIgBrWtDhVrUr9H6mVr1KJO7Mgb9kq8KYJhSeCz39PgYzNfD0ZElomNA3TYakMGWlg==
+X-Received: by 2002:a7b:cc87:0:b0:3fb:a917:b769 with SMTP id p7-20020a7bcc87000000b003fba917b769mr11141017wma.21.1688459902605;
+        Tue, 04 Jul 2023 01:38:22 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id 4-20020a05600c228400b003fbc216b137sm13093446wmf.3.2023.07.04.01.38.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jul 2023 01:38:20 -0700 (PDT)
+Date:   Tue, 4 Jul 2023 11:38:17 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Cc:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Carl Vanderlip <quic_carlv@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+        Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
- <20230628-topic-a7xx_drmmsm-v1-3-a7f4496e0c12@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230628-topic-a7xx_drmmsm-v1-3-a7f4496e0c12@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH 1/5] accel/qaic: tighten bounds checking in
+ encode_message()
+Message-ID: <fb5f0a0c-c46f-4eec-bfcc-50b4be44c0a7@kadam.mountain>
+References: <8dc35a68-7257-41ac-9057-7c89b9ad6e18@moroto.mountain>
+ <1d79cddc-0afb-08c2-8aac-8f3b7761d210@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1d79cddc-0afb-08c2-8aac-8f3b7761d210@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/06/2023 22:35, Konrad Dybcio wrote:
-> Allow A7xx SKUs, such as the A730 GPU found on SM8450 and friends.
-> They use GMU for all things DVFS, just like most A6xx GPUs.
+On Tue, Jul 04, 2023 at 11:57:51AM +0530, Pranjal Ramajor Asha Kanojiya wrote:
+> > diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
+> > index 5c57f7b4494e..a51b1594dcfa 100644
+> > --- a/drivers/accel/qaic/qaic_control.c
+> > +++ b/drivers/accel/qaic/qaic_control.c
+> > @@ -748,7 +748,8 @@ static int encode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
+> >   	int ret;
+> >   	int i;
+> > -	if (!user_msg->count) {
+> > +	if (!user_msg->count ||
+> > +	    user_msg->len < sizeof(*trans_hdr)) {
+> >   		ret = -EINVAL;
+> >   		goto out;
+> >   	}
+> > @@ -765,12 +766,13 @@ static int encode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
+> >   	}
+> >   	for (i = 0; i < user_msg->count; ++i) {
+> > -		if (user_len >= user_msg->len) {
+> > +		if (user_len >= user_msg->len - sizeof(*trans_hdr)) {
+> If I understand correctly this check is added to verify if we are left with
+> trans_hdr size of data. In that case '>' comparison operator should be used.
+
+That was there in the original code and I thought about changing it but
+I don't like changing things which aren't necessary and == is also
+invalid so I decided to leave it.
+
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
+> >   			ret = -EINVAL;
+> >   			break;
+> >   		}
+> >   		trans_hdr = (struct qaic_manage_trans_hdr *)(user_msg->data + user_len);
+> > -		if (user_len + trans_hdr->len > user_msg->len) {
+> > +		if (trans_hdr->len < sizeof(trans_hdr) ||
+> > +		    size_add(user_len, trans_hdr->len) > user_msg->len) {
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+If we change to > then the == will be caught by this check.  So it
+doesn't affect runtime either way.
 
-Best regards,
-Krzysztof
+regards,
+dan carpenter
 
