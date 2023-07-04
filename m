@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 988997477CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 19:30:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BABA7477F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 19:46:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230521AbjGDRaq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 13:30:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41380 "EHLO
+        id S230200AbjGDRp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 13:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbjGDRap (ORCPT
+        with ESMTP id S229645AbjGDRp5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 13:30:45 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF304E76
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 10:30:43 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-bff89873d34so5391882276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 10:30:43 -0700 (PDT)
+        Tue, 4 Jul 2023 13:45:57 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AA110D5
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 10:45:56 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fafe87c6fbso9114304e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 10:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688491843; x=1691083843;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lZZYhAMS4P0JlyUoFI/yQ9M0e2zsSOScmdbRcE5pQn0=;
-        b=UM9IFKuWSrCweUYM6HcG8i1kc21W08w08Un0FeZKltLdhGE5tddMqCMS0pj3QByN5B
-         df/UvjOowmu9NUv7djy8CQVrlZLzd76LgEgJL362lrQKa2z0wAAF9HPIWBEhEe5sMVDc
-         saIQRfPg/FIwSHJ0jmqopC0sQ5AM8lMyyJOe2rWz4kQAsF6owJqaPxtDyJaqsEZFFDnd
-         7wFNCUVpwICvhKWJ5QJEzE4v0Y+EZRiobt54BSN6kr81pI/JtQ9uzxwEkbhuz0bG1YtK
-         3/M5yDLO90U/nuNJYDq16idE6vUbbxhyHObzHc9mwZ6eGXZVbnS9ZlxtISxR/csninvw
-         bL6w==
+        d=linaro.org; s=google; t=1688492754; x=1691084754;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6NVP63A5kA3bVBWFMHxu9Ll3AzCjFkGOvC1AhTKo6S0=;
+        b=mPxqXiHYbM2soowGCvklymGX0xgtEFNKZco2Giol7Iaqez4s7EY9LdTdQasEQ51xhz
+         A9347mX4EcyDsMmo67CLfz+TzAUyQoTx7bUTendr1daGUQSG2z92MJ4GUYbLkOW7dDC+
+         dZ+Azk8ZtDc8LHP74/HjQAC4cs30MRMlwrWyfE2V0gNQM41RF5+64dXXfkBPd700edXW
+         VdIngYfViBcMU+k8LjmZQ5WPLl5de0tl9VWveYDtO2afKbWdfu8xJqZWyB729nuTB6sg
+         Ky3f4KMfdyUrVvVGaa5pY8V7DyMrZ0TQn+8GihfZnIoaa+JPkA5AodvJHVaKLJ/QAaB5
+         hgAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688491843; x=1691083843;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1688492754; x=1691084754;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lZZYhAMS4P0JlyUoFI/yQ9M0e2zsSOScmdbRcE5pQn0=;
-        b=gpS5HJszCZ6cAYuAn3u1NPezPmmu/zTKQMaln+JoowVdRC9vdVpn6Ftbofu6NktzwS
-         ASjg3RrM3qv1aBg3t7tNiTYE7id/lyGw8yHkWyqguaAvgxcVwV9XkaL7t1bmDQHePm0v
-         Ygn3Bf5UStt/GaktpRKf1rllEx1se7p+0cy4DuZ+ovV6x2X3iw++82Qs+wcqUNAADy25
-         01Xj5gnVMWCsK3XnxPe7AfGhyq+0JPoJyTAD8aroYgs8QN7tQWwqYw9KIi+74Lgs/l5M
-         qFIWcCGnrVsMrS1LMOOT38Vry6gcOwBno5E9Z3MEUAMznn31YII4I3T/Jt6ZrwnYjR6C
-         4eqw==
-X-Gm-Message-State: ABy/qLYpLZBkQlRjJnp2hB3mj0Nux4CQK7g7WnzN1EKt9mis+LrFusqW
-        NEjTs6rWjPaP63viZkLip4iZwpWjH3KN44Y+8Nh/Kw==
-X-Google-Smtp-Source: APBJJlHigHEYKofayb+OxZT57NxYXwngeV93etDN5bhfqo65aLEQgDJMs3OzGpe0jMPLa/Fx9K3i5sg9dz3n6CXd93s=
-X-Received: by 2002:a25:c550:0:b0:c5e:5573:bda with SMTP id
- v77-20020a25c550000000b00c5e55730bdamr1496102ybe.11.1688491843141; Tue, 04
- Jul 2023 10:30:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230704150354.159882-1-dmitry.baryshkov@linaro.org>
- <20230704150354.159882-6-dmitry.baryshkov@linaro.org> <3e31a735-a4d1-c8d4-6a83-53e2687c2f18@quicinc.com>
-In-Reply-To: <3e31a735-a4d1-c8d4-6a83-53e2687c2f18@quicinc.com>
+        bh=6NVP63A5kA3bVBWFMHxu9Ll3AzCjFkGOvC1AhTKo6S0=;
+        b=b6PGKEvsoy4cJYhTspJMN27uhdkdokSOQFa8zhKJb7/SOPzN0Qqbz6hTU10ygjtuLQ
+         y6Kae/ek+xpXhtn/AHrlCB61Kj24J69E+e2odGmjeDJUk8/r46LtJ2AUKBXjAWxFvbdo
+         q0cewcj16hqHAh+5tgeW6ZrJPpxiGyLLN3Mk7+n2TD2kkocMH6aXyKJiBPUBIgZRCBNJ
+         ECx80/bOsE8b6iSHulqwbIVDqLEMBgGHm4PQEwLGohkj9nKdRJtGSw4LQb5KM+dnIWaM
+         KiYW8VBs7Rr2qgewLaUtytVBmDsYElQTeYkc7Gdg+jzIBzHAI1er0EvZ70MVf2FD21dk
+         mPJw==
+X-Gm-Message-State: ABy/qLaZdSM4pkcP6kZHP1j7f18oouYQLK503X6mBzCho/9zRoxw9UBF
+        8vFbJIUOlN7bZvP0xegQOsib5Q==
+X-Google-Smtp-Source: APBJJlHW1odJg4Bh1+LqhExnDN5SfHorKlztMinWGKGapxRceXAGkdkn7U6Fg8SVrbGPdrhXrjirog==
+X-Received: by 2002:a19:e046:0:b0:4fb:82ac:9d23 with SMTP id g6-20020a19e046000000b004fb82ac9d23mr9313764lfj.36.1688492754562;
+        Tue, 04 Jul 2023 10:45:54 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id n25-20020a195519000000b004fb6c61e79bsm4709779lfe.117.2023.07.04.10.45.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jul 2023 10:45:54 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 4 Jul 2023 20:30:32 +0300
-Message-ID: <CAA8EJpos_gPPzyTGc56yQM6h0K8XBJKB2STq6eMZCkRpN4uxbw@mail.gmail.com>
-Subject: Re: [PATCH v2 05/14] drm/msm/dpu: handle perf mode in _dpu_core_perf_crtc_update_bus()
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH v4 0/4] drm/msm: move resource allocation to the _probe function
+Date:   Tue,  4 Jul 2023 20:45:49 +0300
+Message-Id: <20230704174553.216248-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -74,96 +75,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 4 Jul 2023 at 18:55, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 7/4/2023 8:03 AM, Dmitry Baryshkov wrote:
-> > Move perf mode handling for the bandwidth to
-> > _dpu_core_perf_crtc_update_bus() rather than overriding per-CRTC data
-> > and then aggregating known values.
-> >
-> > Note, this changes the fix_core_ab_vote. Previously it would be
-> > multiplied per the CRTC number, now it will be used directly for
-> > interconnect voting.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Break this out into a separate series. This rework doesnt need to be
-> part of this cleanup series.
+This patchset was left untouched for almost a year. Let's reiterate it
+in attempt to solve the long-standing issue.
 
-Sure, why not.
+As discussed several times on IRC, move display subdriver resource
+allocation from kms_init to probe time to let it bail early.
 
->
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 37 +++++++++----------
-> >   1 file changed, 18 insertions(+), 19 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > index 348550ac7e51..42c03a5f1f3e 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > @@ -116,21 +116,9 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
-> >               return;
-> >       }
-> >
-> > -     memset(perf, 0, sizeof(struct dpu_core_perf_params));
-> > -
-> > -     if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > -             perf->bw_ctl = 0;
-> > -             perf->max_per_pipe_ib = 0;
-> > -             perf->core_clk_rate = 0;
-> > -     } else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > -             perf->bw_ctl = kms->perf.fix_core_ab_vote;
-> > -             perf->max_per_pipe_ib = kms->perf.fix_core_ib_vote;
-> > -             perf->core_clk_rate = kms->perf.fix_core_clk_rate;
-> > -     } else {
-> > -             perf->bw_ctl = _dpu_core_perf_calc_bw(kms, crtc);
-> > -             perf->max_per_pipe_ib = kms->catalog->perf->min_dram_ib;
-> > -             perf->core_clk_rate = _dpu_core_perf_calc_clk(kms, crtc, state);
-> > -     }
-> > +     perf->bw_ctl = _dpu_core_perf_calc_bw(kms, crtc);
-> > +     perf->max_per_pipe_ib = kms->catalog->perf->min_dram_ib;
-> > +     perf->core_clk_rate = _dpu_core_perf_calc_clk(kms, crtc, state);
-> >
-> >       DRM_DEBUG_ATOMIC(
-> >               "crtc=%d clk_rate=%llu core_ib=%llu core_ab=%llu\n",
-> > @@ -236,17 +224,28 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> >       struct dpu_core_perf_params perf = { 0 };
-> >       int i, ret = 0;
-> >       u32 avg_bw;
-> > +     u32 peak_bw;
-> >
-> >       if (!kms->num_paths)
-> >               return 0;
-> >
-> > -     dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> > +     if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-> > +             avg_bw = 0;
-> > +             peak_bw = 0;
-> > +     } else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
-> > +             avg_bw = kms->perf.fix_core_ab_vote;
-> > +             peak_bw = kms->perf.fix_core_ib_vote;
-> > +     } else {
-> > +             dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> > +
-> > +             avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
-> > +             peak_bw = perf.max_per_pipe_ib;
-> > +     }
-> >
-> > -     avg_bw = perf.bw_ctl;
-> > -     do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
-> > +     avg_bw /= kms->num_paths;
-> >
-> >       for (i = 0; i < kms->num_paths; i++)
-> > -             icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
-> > +             icc_set_bw(kms->path[i], avg_bw, peak_bw);
-> >
-> >       return ret;
-> >   }
+Changes since v3:
+- Fixed MMIO unmaping in the DPU case.
 
+Changes since v2:
+- Move even more resource allocation in the DPU init path.
 
+Changes since v1:
+- Dropped the applied patch
+- Picked in the patch to pass msm_kms pointer via msm_drv_probe()
+
+Dmitry Baryshkov (4):
+  drm/msm: allow passing struct msm_kms to msm_drv_probe()
+  drm/msm/dpu: move resource allocation to the _probe function
+  drm/msm/mdp4: move resource allocation to the _probe function
+  drm/msm/mdp5: move resource allocation to the _probe function
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 133 +++++++++++------------
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 107 +++++++++---------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 100 ++++++++---------
+ drivers/gpu/drm/msm/msm_drv.c            |   6 +-
+ drivers/gpu/drm/msm/msm_drv.h            |   3 +-
+ 5 files changed, 162 insertions(+), 187 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.39.2
+
