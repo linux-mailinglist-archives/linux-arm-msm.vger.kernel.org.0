@@ -2,307 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A21E746850
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 06:21:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 572F7746940
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 07:57:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbjGDEVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 00:21:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
+        id S230260AbjGDF53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 01:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230256AbjGDEVU (ORCPT
+        with ESMTP id S229610AbjGDF52 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 00:21:20 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BCD11F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 21:20:51 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1b7dfb95761so8348915ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 21:20:51 -0700 (PDT)
+        Tue, 4 Jul 2023 01:57:28 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A13CBE62
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 22:57:26 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-51d80d81d6eso6150962a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 22:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1688444450; x=1691036450;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=linaro.org; s=google; t=1688450245; x=1691042245;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GQygWmEkN5we1RDXz7pkswh4Aib1XAu/CfaGHRydgSY=;
-        b=XeuQJZi5Fn6Y2V9hGSigVM6DlY0AfUTIFIISI4oYWBRMzWCz140HUa7CQjaNBi14bE
-         cHtd8fLDIrCGQBIfQGMwnS/brInUQYbP7hBcfyGRIQ1PjMp/HYkTtUH566cUrbR/ECQ/
-         xgdHBwtI/eZZjW8JzcYMKGfCZEk7y3wKjAqCcQ/GPr5gBl0a/ckeJOpen9Ef2juxuc3/
-         wEqaGSNOBlDbpHGogDBoCGy9PU9WR6GNvGNEKT/s6Kr2TWWm2I0aMPMLKNDBQdCYrtki
-         T6Etm7ZpcAKi7am901F1VomiYro58/OdqGB/tQsJF9HxpWuWHjmLtutUj9PpgNQY85My
-         tCog==
+        bh=ArafajhkK4cFBXCxi4x8GmLW6nX9wjFH15qR/2p7CyM=;
+        b=NtZsucGnDSuql+9fvbmGD0BxyvMogak6Y5smEqXX8YVtwaMtHZZ1C/TGlyDDoMak1a
+         haGaMkG1VU2aV8G9ouvmhF2bUT4R7l4z7IpK6rWEsQOIASdpe/ETlyxhdNMHA1K0IAXI
+         nuqu7D3vk1N5XXGoxqp97McDiFeIx/d2WDA8EXrw/d4mjEHvqQ9Xm/NQoidg4jGB/4tn
+         LQyQINMHJ0B6gUmy6EKdTmk9v8aoK/SbhVsxA7v90azH6n7VT5YSeuUuoLCFlvH9R0G4
+         ovqIMFrBmkbIyBLF5UOq/9OGMltcQdmd2K73ozPB/ooxRpFAkVe78oy5UYKqy/j5tswu
+         V7wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688444450; x=1691036450;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=1e100.net; s=20221208; t=1688450245; x=1691042245;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GQygWmEkN5we1RDXz7pkswh4Aib1XAu/CfaGHRydgSY=;
-        b=NULc0rXBPwhNihTTyYi2vvBYpm+0GmkhnWvioiBH9s7OyKiKo4ymaBssbwJBwtm6FF
-         QHgmGhJYmtKxg+uGgC+8lh7q5P5GDBS7577yM8uR2YGLxi/hKJLsHTVE0dLSPmemRvcW
-         /4os2TibcMdZ8R/8jaQirt8a53NzX5Y288KM/Wr+6baXlX808dClBIzeBPy/vZSzdRKg
-         cEuuKKoDm3DCXpaA69M2lh++nrYMMM1mA4KlO3Z7XdwRxME5ca8HzLOtO+TrmQrnvf8Y
-         zppiF4qI0GHVeVFT5QgHrQx/j9C6FY5vm2smQbcvC0jRuIlI2zT19RKkCxycAXxPdWld
-         2EZg==
-X-Gm-Message-State: ABy/qLbER4FnWXJliO0H7Co1EP2XtovYHsig+dmoAyftsdAaj03E52XH
-        LZDJE31kCiAJJCuXdGnDGrLKY2o9oHhnP9P3zmM=
-X-Google-Smtp-Source: APBJJlGoap5rgOO/5AFt7nvyzJipf1m4SqVj/7RLWlsyusW9U2QREChVOt6WzCmgKb9akbjSddWJzw==
-X-Received: by 2002:a17:903:94:b0:1ac:40f7:8b5a with SMTP id o20-20020a170903009400b001ac40f78b5amr12672869pld.3.1688444450336;
-        Mon, 03 Jul 2023 21:20:50 -0700 (PDT)
-Received: from [10.70.252.135] ([203.208.167.147])
-        by smtp.gmail.com with ESMTPSA id j6-20020a170902c3c600b001b8918da8d1sm3233936plj.80.2023.07.03.21.20.43
+        bh=ArafajhkK4cFBXCxi4x8GmLW6nX9wjFH15qR/2p7CyM=;
+        b=D4ylYUYdsMomT6Mo46U9u25ZptwV7vjUCz0x0plceHx1NABXSW0ImEgsgaskO+WG8n
+         /uIJgja2yXTuy4Hs62QQ8GHvKlhbO2PqtS7xxQz9Jpxbk/0dj2MreBqxIIk+9cRbkIVd
+         dtRwSnsnzBRohaisRvfpdKVEEVl2dlqhnjwVuxii8F1Ca2bmq7qk8HiA1J6eECIfetBJ
+         dVHf0WCkBnaVGyVipqjnHIl/RpFGYaPyYF3vGB4xmHZhV7xn9Kr40N4nEnRJLIKOHfd9
+         0/ugSIdjy8rKEnAHmozfobng0nQzDIefxPqB/cGvztDf929nZahm0cYlf2bawL368qty
+         SdbQ==
+X-Gm-Message-State: ABy/qLY7REMjF0gaXLwQUutks0mFlcHVqMWTTGtAhmemTke0KYcf6uK+
+        MqHJcP2Rx2pMIdP0as89w/klRw==
+X-Google-Smtp-Source: APBJJlGLdz4OnkPHg9QESQPK4xkTqc+rD1zI9xMSBTVlJ3pUKrE8wYmXdm39x7xyr77A57uxd3eyPg==
+X-Received: by 2002:a05:6402:5149:b0:51d:9bf3:40c5 with SMTP id n9-20020a056402514900b0051d9bf340c5mr8832051edd.20.1688450245125;
+        Mon, 03 Jul 2023 22:57:25 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id i21-20020a05640200d500b0051bfc7763c2sm11462697edu.25.2023.07.03.22.57.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jul 2023 21:20:49 -0700 (PDT)
-Message-ID: <38b14080-4ce5-d300-8a0a-c630bca6806b@bytedance.com>
-Date:   Tue, 4 Jul 2023 12:20:41 +0800
+        Mon, 03 Jul 2023 22:57:24 -0700 (PDT)
+Message-ID: <f0609361-6fb6-a446-4e23-646201943923@linaro.org>
+Date:   Tue, 4 Jul 2023 07:57:21 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH 24/29] mm: vmscan: make global slab shrink lockless
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v4 08/21] dt-bindings: reserved-memory: Add qcom,ramoops
+ binding
 Content-Language: en-US
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-To:     Dave Chinner <david@fromorbit.com>
-Cc:     paulmck@kernel.org, Vlastimil Babka <vbabka@suse.cz>,
-        akpm@linux-foundation.org, tkhai@ya.ru, roman.gushchin@linux.dev,
-        djwong@kernel.org, brauner@kernel.org, tytso@mit.edu,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, dm-devel@redhat.com,
-        linux-raid@vger.kernel.org, linux-bcache@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-fsdevel@vger.kernel.org, linux-ext4@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-xfs@vger.kernel.org,
-        linux-btrfs@vger.kernel.org
-References: <20230622085335.77010-1-zhengqi.arch@bytedance.com>
- <20230622085335.77010-25-zhengqi.arch@bytedance.com>
- <cf0d9b12-6491-bf23-b464-9d01e5781203@suse.cz>
- <ZJU708VIyJ/3StAX@dread.disaster.area>
- <a21047bb-3b87-a50a-94a7-f3fa4847bc08@bytedance.com>
- <ZJYaYv4pACmCaBoT@dread.disaster.area>
- <a7baf44a-1eb8-d4e1-d112-93cf9cdb7beb@bytedance.com>
-In-Reply-To: <a7baf44a-1eb8-d4e1-d112-93cf9cdb7beb@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, corbet@lwn.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
+        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
+        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+ <1687955688-20809-9-git-send-email-quic_mojha@quicinc.com>
+ <CAL_JsqJ_TTnGjjB2d8_FKHpWBRG5GHLoWnabCKjsdeZ4QFdNEg@mail.gmail.com>
+ <cacbbb02-732e-076e-50bf-292d20a4d722@quicinc.com>
+ <58a26b9e-a48d-d567-c310-193a2c52521e@linaro.org>
+ <5447f9f8-55b4-8bed-66a6-1c9d62b02c79@quicinc.com>
+ <CAGE=qrq0CuO4J-6yC=YZ4xjL67o9QTqpei0ovX-X_8MLVeEH6g@mail.gmail.com>
+ <ba04bb7b-6599-6f41-09a8-834ee280830d@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ba04bb7b-6599-6f41-09a8-834ee280830d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
-
-On 2023/6/24 19:08, Qi Zheng wrote:
-> Hi Dave,
+On 03/07/2023 17:55, Mukesh Ojha wrote:
 > 
-> On 2023/6/24 06:19, Dave Chinner wrote:
->> On Fri, Jun 23, 2023 at 09:10:57PM +0800, Qi Zheng wrote:
->>> On 2023/6/23 14:29, Dave Chinner wrote:
->>>> On Thu, Jun 22, 2023 at 05:12:02PM +0200, Vlastimil Babka wrote:
->>>>> On 6/22/23 10:53, Qi Zheng wrote:
->>>> Yes, I suggested the IDR route because radix tree lookups under RCU
->>>> with reference counted objects are a known safe pattern that we can
->>>> easily confirm is correct or not.  Hence I suggested the unification
->>>> + IDR route because it makes the life of reviewers so, so much
->>>> easier...
+> 
+> On 7/3/2023 12:50 PM, Krzysztof Kozlowski wrote:
+>> On Mon, 3 Jul 2023 at 08:22, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+>>> On 7/2/2023 1:42 PM, Krzysztof Kozlowski wrote:
+>>>>>> The big difference is if firmware is not deciding where this log
+>>>>>> lives, then it doesn't need to be in DT. How does anything except the
+>>>>>> kernel that allocates the log find the logs?
+>>>>>
+>>>>> Yes, you are correct, firmware is not deciding where the logs lives
+>>>>> instead here, Kernel has reserved the region where the ramoops region
+>>>>> lives and later with the minidump registration where, physical
+>>>>> address/size/virtual address(for parsing) are passed and that is how
+>>>>> firmware is able to know and dump those region before triggering system
+>>>>> reset.
+>>>>
+>>>> Your explanation does not justify storing all this in DT. Kernel can
+>>>> allocate any memory it wishes, store there logs and pass the address to
+>>>> the firmware. That's it, no need for DT.
 >>>
->>> In fact, I originally planned to try the unification + IDR method you
->>> suggested at the beginning. But in the case of CONFIG_MEMCG disabled,
->>> the struct mem_cgroup is not even defined, and root_mem_cgroup and
->>> shrinker_info will not be allocated.  This required more code 
->>> changes, so
->>> I ended up keeping the shrinker_list and implementing the above pattern.
+>>> If you go through the driver, you will know that what it does, is
 >>
->> Yes. Go back and read what I originally said needed to be done
->> first. In the case of CONFIG_MEMCG=n, a dummy root memcg still needs
->> to exist that holds all of the global shrinkers. Then shrink_slab()
->> is only ever passed a memcg that should be iterated.
->>
->> Yes, it needs changes external to the shrinker code itself to be
->> made to work. And even if memcg's are not enabled, we can still use
->> the memcg structures to ensure a common abstraction is used for the
->> shrinker tracking infrastructure....
+>> We talk about bindings and I should not be forced to look at the
+>> driver to be able to understand them. Bindings should stand on their
+>> own.
 > 
-> Yeah, what I imagined before was to define a more concise struct
-> mem_cgroup in the case of CONFIG_MEMCG=n, then allocate a dummy root
-> memcg on system boot:
-> 
-> #ifdef !CONFIG_MEMCG
-> 
-> struct shrinker_info {
->      struct rcu_head rcu;
->      atomic_long_t *nr_deferred;
->      unsigned long *map;
->      int map_nr_max;
-> };
-> 
-> struct mem_cgroup_per_node {
->      struct shrinker_info __rcu    *shrinker_info;
-> };
-> 
-> struct mem_cgroup {
->      struct mem_cgroup_per_node *nodeinfo[];
-> };
-> 
-> #endif
+> Why can't ramoops binding have one more feature where it can add a flag 
+> *dynamic* to indicate the regions are dynamic and it is for platforms
+> where there is another entity 'minidump' who is interested in these
+> regions.
 
-These days I tried doing this:
+Because we do not define dynamic stuff in Devicetree. Dynamic means
+defined by SW or runtime configurable. It is against the entire idea of
+Devicetree which is for non-discoverable hardware.
 
-1. CONFIG_MEMCG && !mem_cgroup_disabled()
-
-    track all global shrinkers with root_mem_cgroup.
-
-2. CONFIG_MEMCG && mem_cgroup_disabled()
-
-    the root_mem_cgroup is also allocated in this case, so still use
-    root_mem_cgroup to track all global shrinkers.
-
-3. !CONFIG_MEMCG
-
-    allocate a dummy memcg during system startup (after cgroup_init())
-    and use it to track all global shrinkers
-
-This works, but needs to modify the startup order of some subsystems,
-because some shrinkers will be registered before root_mem_cgroup is
-allocated, such as:
-
-1. rcu-kfree shrinker in rcu_init()
-2. super block shrinkers in vfs_caches_init()
-
-And cgroup_init() also depends on some file system infrastructure, so
-I made some changes (rough and unorganized):
-
-diff --git a/fs/namespace.c b/fs/namespace.c
-index e157efc54023..6a12d3d0064e 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -4706,7 +4706,7 @@ static void __init init_mount_tree(void)
-
-  void __init mnt_init(void)
-  {
--       int err;
-+       //int err;
-
-         mnt_cache = kmem_cache_create("mnt_cache", sizeof(struct mount),
-                         0, SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT, 
-NULL);
-@@ -4725,15 +4725,7 @@ void __init mnt_init(void)
-         if (!mount_hashtable || !mountpoint_hashtable)
-                 panic("Failed to allocate mount hash table\n");
-
--       kernfs_init();
--
--       err = sysfs_init();
--       if (err)
--               printk(KERN_WARNING "%s: sysfs_init error: %d\n",
--                       __func__, err);
--       fs_kobj = kobject_create_and_add("fs", NULL);
--       if (!fs_kobj)
--               printk(KERN_WARNING "%s: kobj create error\n", __func__);
-         shmem_init();
-         init_rootfs();
-         init_mount_tree();
-diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
-index 7d9c2a63b7cd..d87c67f6f66e 100644
---- a/include/linux/rcupdate.h
-+++ b/include/linux/rcupdate.h
-@@ -119,6 +119,7 @@ static inline void call_rcu_hurry(struct rcu_head 
-*head, rcu_callback_t func)
-
-  /* Internal to kernel */
-  void rcu_init(void);
-+void rcu_shrinker_init(void);
-  extern int rcu_scheduler_active;
-  void rcu_sched_clock_irq(int user);
-  void rcu_report_dead(unsigned int cpu);
-diff --git a/init/main.c b/init/main.c
-index ad920fac325c..4190fc6d10ad 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -1049,14 +1049,22 @@ void start_kernel(void)
-         security_init();
-         dbg_late_init();
-         net_ns_init();
-+       kernfs_init();
-+       if (sysfs_init())
-+               printk(KERN_WARNING "%s: sysfs_init error\n",
-+                       __func__);
-+       fs_kobj = kobject_create_and_add("fs", NULL);
-+       if (!fs_kobj)
-+               printk(KERN_WARNING "%s: kobj create error\n", __func__);
-+       proc_root_init();
-+       cgroup_init();
-         vfs_caches_init();
-         pagecache_init();
-         signals_init();
-         seq_file_init();
--       proc_root_init();
-         nsfs_init();
-         cpuset_init();
--       cgroup_init();
-+       rcu_shrinker_init();
-         taskstats_init_early();
-         delayacct_init();
-
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index d068ce3567fc..71a04ae8defb 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -4953,7 +4953,10 @@ static void __init kfree_rcu_batch_init(void)
-                 INIT_DELAYED_WORK(&krcp->page_cache_work, 
-fill_page_cache_func);
-                 krcp->initialized = true;
-         }
-+}
-
-+void __init rcu_shrinker_init(void)
-+{
-         kfree_rcu_shrinker = shrinker_alloc(0, "rcu-kfree");
-         if (!kfree_rcu_shrinker) {
-                 pr_err("Failed to allocate kfree_rcu() shrinker!\n");
-
-I adjusted it step by step according to the errors reported, and there
-may be hidden problems (needs more review and testing).
-
-In addition, unifying the processing of global and memcg slab shrink
-does have many benefits:
-
-1. shrinker::nr_deferred can be removed
-2. shrinker_list can be removed
-3. simplifies the existing code logic and subsequent lockless processing
-
-But I'm still a bit apprehensive about modifying the boot order. :(
-
-What do you think about this?
-
-Thanks,
-Qi
-
-
-> 
-> But I have a concern: if all global shrinkers are tracking with the
-> info->map of root memcg, a shrinker->id needs to be assigned to them,
-> which will cause info->map_nr_max to become larger than before, then
-> making the traversal of info->map slower.
 > 
 >>
->>> If the above pattern is not safe, I will go back to the unification +
->>> IDR method.
+>>> just create platform device for actual ramoops driver to probe and to
 >>
->> And that is exactly how we got into this mess in the first place....
-> 
-> I only found one similar pattern in the kernel:
-> 
-> fs/smb/server/oplock.c:find_same_lease_key/smb_break_all_levII_oplock/lookup_lease_in_table
-> 
-> But IIUC, the refcount here needs to be decremented after holding
-> rcu lock as I did above.
-> 
-> So regardless of whether we choose unification + IDR in the end, I still
-> want to confirm whether the pattern I implemented above is safe. :)
-> 
-> Thanks,
-> Qi
-> 
+>> Not really justification for Devicetree anyway. Whatever your driver
+>> is doing, is driver's business, not bindings.
 >>
->> -Dave
+>>> provide this it needs exact set of parameters of input what original
+>>> ramoops DT provides, we need to keep it in DT as maintaining this in
+>>> driver will not scale well with different size/parameter size
+>>> requirement for different targets.
+>>
+>> Really? Why? I don't see a problem in scaling. At all.
+> 
+> I had attempted it here,
+> 
+> https://lore.kernel.org/lkml/1683133352-10046-10-git-send-email-quic_mojha@quicinc.com/
+> 
+> but got comments related to hard coding and some in favor of having
+> the same set of properties what ramoops has/provides
+> 
+> https://lore.kernel.org/lkml/e25723bf-be85-b458-a84c-1a45392683bb@gmail.com/
+> 
+> https://lore.kernel.org/lkml/202305161347.80204C1A0E@keescook/
+
+Then you were tricked. I don't get why someone else suggests that
+non-hardware property should be part of Devicetree, but anyway it's the
+call of Devicetree binding maintainers, not someone else. DT is not
+dumping ground for all the system configuration variables.
+
+
+>>
+>>>
+>>>>
+>>>>>
+>>>>> A part of this registration code you can find in 11/21
+>>>>>
+>>>>>> I'm pretty sure I already said all this before.
+>>>>>
+>>>>> Yes, you said this before but that's the reason i came up with vendor
+>>>>> ramoops instead of changing traditional ramoops binding.
+>>>>
+>>>> That's unexpected conclusion. Adding more bindings is not the answer to
+>>>> comment that it should not be in the DTS in the first place.
+>>>
+>>> Please suggest, what is the other way being above text as requirement..
+>>
+>> I do not see any requirement for us there. Forcing me to figure out
+>> how to add non-hardware property to DT is not the way to convince
+>> reviewers. But if you insist - we have ABI for this, called sysfs. If
+>> it is debugging feature, then debugfs.
+> 
+> ramoops already support module params and a way to pass these parameters
+> from bootargs but it also need to know the hard-codes addresses, so, 
+> doing something in sysfs will be again duplication with ramoops driver..
+
+Why do you need hard-coded addresses?
+
+> 
+> If this can be accommodated under ramoops, this will be very small 
+> change, like this
+> 
+> https://lore.kernel.org/lkml/20230622005213.458236-1-isaacmanjarres@google.com/
+
+That's also funny patch - missing bindings updated, missing CC DT
+maintainers.
+
+Best regards,
+Krzysztof
+
