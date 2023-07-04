@@ -2,102 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E676D746686
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 02:24:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDF4B74668D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 02:25:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbjGDAYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jul 2023 20:24:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36106 "EHLO
+        id S229844AbjGDAZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jul 2023 20:25:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjGDAYK (ORCPT
+        with ESMTP id S229534AbjGDAZZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jul 2023 20:24:10 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86DB0E6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 17:24:09 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-c50c797c31bso2260814276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jul 2023 17:24:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688430248; x=1691022248;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7ooo4dM5jALOtaXQ/scLIfMMHfxc7psGFc61PPL8SXI=;
-        b=EC4ri2XnmUEcT5FMvk1S4XnLO2FYde1MbnG23B0qy9D1+GCfXYLTNHmwycc3q0wrcE
-         9B37RTnYYPWSj1v9wdi5dXdv7P3/4Ac7BIxWQZolk/Kc2uYG5d5bT6Ki6Nj0BhODFQ0h
-         CxVJ/BOxEsc/hM59vOeh63h5QiHPa3fXeXu6Uh69oNKD99VHeFA3UrkHyQUKk03TST/h
-         2F6jT9YJ2CJA+LedHj1CNAOT2K44HTN0rTu5jxeb3qp8XEHkUzUOMXKsMhdQoj1Qvral
-         WKGQBBPo37H8byJZb9Cl9z7NEo3oAA2bkSYT44mjeFFp0IrUud2RFaoXTSswBcziv0U3
-         T/lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688430248; x=1691022248;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7ooo4dM5jALOtaXQ/scLIfMMHfxc7psGFc61PPL8SXI=;
-        b=klH0iPUKz8auBIcfNx63VIaglpxmbMrL+ItCHw3U7ADRn4mbxmgkiZLuJCbrCQlFlj
-         OASMdzScxMseChRfs6slZ0DwO6O09e2HJS15pAraV68dmeSnglw1JBrIYemgnSvucIoC
-         DsfNcgnVOjdTl/T2KMDb+borBae5l/k+QA8yF8aXMz9GS1Z5SjL5/4501EBzZkCK4dwe
-         hFnGYiEf89iuL/U7sde58Xi6NyS4tJC3PnUbWtjH94i7wKYvM/aazt0RChXzbWEQEvaa
-         BmgKZtJcrDXmt4CYpYufF7VD62iU50TC4xadnI3RmaXUQSq+5iQIPqps5M6A+0zUH9Mu
-         I8uQ==
-X-Gm-Message-State: ABy/qLZ9/GjfSyhhL+Xq//rec+4W9c6So90oFrxE5hKoIANyfBWV7FAM
-        snlzZqelVbfCJMdXlGFLe+l9LqqqlaPRHLqEahX19A==
-X-Google-Smtp-Source: APBJJlGwBuEBQNkpWTGVzwAN8wHVIS3Z+h6RfADCfyBaNnBSNplPPR2iH9n5YEdPJApMCn3LPV+eq1ag4FSh0bWCATg=
-X-Received: by 2002:a25:3ac5:0:b0:ba8:1aeb:2b68 with SMTP id
- h188-20020a253ac5000000b00ba81aeb2b68mr10197957yba.41.1688430248788; Mon, 03
- Jul 2023 17:24:08 -0700 (PDT)
+        Mon, 3 Jul 2023 20:25:25 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A163E6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jul 2023 17:25:24 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3640PEuJ013322;
+        Tue, 4 Jul 2023 00:25:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ScHfhnkPiOJeu3E6SeNN06wpSh54ebcvMeKrrLxBfV4=;
+ b=Lne1dWsz7jNlvIv+h2qdYNJ5N1vHe6NVgQ4pm5DTc2+G8q3bcEutVExC+7rFzm/Xa6oU
+ EC6YudNQKfQd8H39xPWObwVt+AJoo71c2UwJGB5srZ1t3OjiKV/CvtfxRpI5vsy055fC
+ OnntLlgeeWYqigsMQ1yxwTo6y9PeJhE3QS2Z79SlTAzdYRCxJW8dZn5/H1bCbOWe5zw9
+ m8ecyOsmMJLfNQ8gkVss0MsoXXCjikwV+QDU+O8EHkvlBob7vS2APglJajUaCc9diTFg
+ yeBDxdo/pcLONzKyLA20BP86CGqi0gvKmE5rwkgnVbCh0LBYpFttd5MGfmKEXnybMmeg 0g== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rkw8s1c3a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Jul 2023 00:25:14 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3640PCHH006890
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 4 Jul 2023 00:25:12 GMT
+Received: from [10.110.19.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Mon, 3 Jul 2023
+ 17:25:12 -0700
+Message-ID: <aa639287-4a9b-13b6-57ec-a5ee49340751@quicinc.com>
+Date:   Mon, 3 Jul 2023 17:25:11 -0700
 MIME-Version: 1.0
-References: <20230628-topic-refgen-v3-0-9fbf0e605d23@linaro.org> <b93cb054-fd42-46e5-aef3-dc41b36a85f9@sirena.org.uk>
-In-Reply-To: <b93cb054-fd42-46e5-aef3-dc41b36a85f9@sirena.org.uk>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 4 Jul 2023 03:23:57 +0300
-Message-ID: <CAA8EJpqfF0aep1E26yWQRQT_xUVTQBBUtghGv=hq_2M0w05few@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Qualcomm REFGEN regulator
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 8/8] drm/msm/dpu: remove unused fields from struct
+ dpu_core_perf
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20230620000846.946925-1-dmitry.baryshkov@linaro.org>
+ <20230620000846.946925-9-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230620000846.946925-9-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aYqbUZNK03Kny_Rq1T5vT5WDygDZnl1b
+X-Proofpoint-GUID: aYqbUZNK03Kny_Rq1T5vT5WDygDZnl1b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-03_17,2023-06-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ malwarescore=0 spamscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 mlxlogscore=999
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307040001
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 4 Jul 2023 at 01:59, Mark Brown <broonie@kernel.org> wrote:
->
-> On Mon, Jul 03, 2023 at 08:15:53PM +0200, Konrad Dybcio wrote:
->
-> > Recent Qualcomm SoCs have a REFGEN (reference voltage generator) regulator
-> > responsible for providing a reference voltage to some on-SoC IPs (like DSI
-> > or PHYs). It can be turned off when unused to save power.
-> >
-> > This series introduces the driver for it and lets the DSI driver
-> > consume it.
->
-> What's the expected plan for merging this - should I be applying the DRM
-> patch?
 
-I'd pick the least two patches into msm-next after -rc1.
 
--- 
-With best wishes
-Dmitry
+On 6/19/2023 5:08 PM, Dmitry Baryshkov wrote:
+> Remove dpu_core_perf::dev and dpu_core_perf::debugfs_root fields, they
+> are not used by the code.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 2 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 4 ----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 2 +-
+>   3 files changed, 1 insertion(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> index f779ad544347..7f110d15b101 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> @@ -395,11 +395,9 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
+>   #endif
+>   
+>   int dpu_core_perf_init(struct dpu_core_perf *perf,
+> -		struct drm_device *dev,
+>   		const struct dpu_perf_cfg *perf_cfg,
+>   		struct clk *core_clk)
+>   {
+> -	perf->dev = dev;
+>   	perf->perf_cfg = perf_cfg;
+>   	perf->core_clk = core_clk;
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> index e1198c104b5e..623e2d058695 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> @@ -27,7 +27,6 @@ struct dpu_core_perf_params {
+>   /**
+>    * struct dpu_core_perf - definition of core performance context
+>    * @dev: Pointer to drm device
+
+remove dev from here too
+
+> - * @debugfs_root: top level debug folder
+>    * @perf_cfg: Platform-specific performance configuration
+>    * @core_clk: Pointer to the core clock
+>    * @core_clk_rate: current core clock rate
+> @@ -36,8 +35,6 @@ struct dpu_core_perf_params {
+>    * @enable_bw_release: debug control for bandwidth release
+>    */
+>   struct dpu_core_perf {
+> -	struct drm_device *dev;
+> -	struct dentry *debugfs_root;
+>   	const struct dpu_perf_cfg *perf_cfg;
+>   	struct clk *core_clk;
+>   	u64 core_clk_rate;
+> @@ -77,7 +74,6 @@ void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
+>    * @core_clk: pointer to core clock
+>    */
+>   int dpu_core_perf_init(struct dpu_core_perf *perf,
+> -		struct drm_device *dev,
+>   		const struct dpu_perf_cfg *perf_cfg,
+>   		struct clk *core_clk);
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 4439147d2c35..5297cec68c9c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1115,7 +1115,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>   		dpu_kms->hw_vbif[vbif->id] = hw;
+>   	}
+>   
+> -	rc = dpu_core_perf_init(&dpu_kms->perf, dev, dpu_kms->catalog->perf,
+> +	rc = dpu_core_perf_init(&dpu_kms->perf, dpu_kms->catalog->perf,
+>   			msm_clk_bulk_get_clock(dpu_kms->clocks, dpu_kms->num_clocks, "core"));
+>   	if (rc) {
+>   		DPU_ERROR("failed to init perf %d\n", rc);
