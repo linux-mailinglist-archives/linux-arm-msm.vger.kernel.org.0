@@ -2,75 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 723087474D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 17:04:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FF3D7475B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 17:55:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231483AbjGDPEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 11:04:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34058 "EHLO
+        id S231250AbjGDPzQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 11:55:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231615AbjGDPEJ (ORCPT
+        with ESMTP id S231228AbjGDPzP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 11:04:09 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BEB510CA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 08:04:08 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b5c2433134so71909521fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 08:04:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688483046; x=1691075046;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3xZk5vPk29uIzS1RfjK4BQWFnQ4bvdjXpPHBXHvz4II=;
-        b=NYmiUxpvSBe4mTOK8eLkgFsavb3DP2IC2R4Qi1euCOF3BQjEU+n02DzCTCerxqyiKc
-         axiNoOfGlOwEwEh7j4LoM0FEl8qRwQj9E1ngesL1BlJAqVpG3Zfo9cEHyhYpgDBx6nEk
-         Er6HTxocnXgjch+Fx8VeT6mBmxjveQ9m0ST7bEq/bvLaAzx+EwJaZbSgbgLVbXJoLn+Z
-         NQru2E4W+9Xi2j9e4AVhZnsOqJZ3oi0oas11lMWTXItbQlxf8z2rTdGtGLHT7kUwtXc9
-         FCO/fx7dsyKoZH2AtdevK9UuLLt5PophfiFO10Styur0sAl8JvpqLSmah3K8cyZAarnT
-         aIAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688483046; x=1691075046;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3xZk5vPk29uIzS1RfjK4BQWFnQ4bvdjXpPHBXHvz4II=;
-        b=iuLBbOLRcRmRN/2GOYjy2SX/5QybvoaHdFLgPhVTCob3Hbsedhy33Ua8Ca3e3y0tU7
-         gCyiUg2s662KMU0wXP3SSi4k8bDTObCdEc1026AgRVilS6qDD189OoCaAdI7fCMdlUoI
-         V3ghV+YfmvHDutNTKzIQvbXgTEwxQpDmylQfUPtH23MW6p+3+rS6iO87if1Z0nih+Qw2
-         tong3EAcKnrBLXoRVZhXoIfvOjYQzjh22Zv8oU0j/WJI03qfPhL3p9aozrwNwfNDfp3B
-         5FoBxRG6IdxGALNiI0X+bA01qOVyo+NpyKFR5Xd/xYdEhzJcU3sCS6cZdM4OXJFtlNqG
-         yy/g==
-X-Gm-Message-State: ABy/qLbfPrb8bvEVNJESWHy3exv5skiZXRkLoeWrTtalnWtTsirYylhx
-        cqF+duL1cU/e1UNiMipgmjPoSA==
-X-Google-Smtp-Source: APBJJlGlVAmws/zMk7QPQqjvFWIeZD/9Vb6AMtK23TVaTRNSUSWpkJJOJAyRpJOGtp+pssjCwgW/Pg==
-X-Received: by 2002:a2e:8951:0:b0:2b5:8b02:1000 with SMTP id b17-20020a2e8951000000b002b58b021000mr5575166ljk.8.1688483046494;
-        Tue, 04 Jul 2023 08:04:06 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j10-20020a2e850a000000b002b6ca539d92sm3337354lji.138.2023.07.04.08.04.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jul 2023 08:04:06 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tue, 4 Jul 2023 11:55:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F1D1B2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 08:55:14 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3649CQY2004740;
+        Tue, 4 Jul 2023 15:54:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8Dfj7CGwCb846Fiy1vylo4CUzVUOus05nf8Dn25oYKM=;
+ b=CAJjlM6vsUQunwhAu1U/B/qrDWtD/i6/Nqb+rQlfdCclLaGfjThfTU9mYYXhXRfnqtlt
+ R9SlFcq6zS8dcWDVGjCVW2vL/vpo7LX5UjJo4Y2UyVQwTDr2IfMwTTJD4sOZigSnx0bA
+ k4LiSCVXJQswuE7h43EOPOZ92nuYm4FmkTsy/5QZjxHr89oDEt5Cby910uGF3AGwVcBe
+ GUVjRwugZ57hjex8izZgiMRoHUqWGHFZcq00DConXVQJqd3oDN21XPwjsKSq/gJ+usD4
+ RFEE9Fg/3og1rSQ0xhnrdpZ+QusdjEvYIJT06tiXAuSpH3/ImZvFlDE8oiNJEsH1Mgxq ow== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rm0he2wqa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Jul 2023 15:54:59 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 364FswYV005731
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 4 Jul 2023 15:54:58 GMT
+Received: from [10.110.19.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Tue, 4 Jul 2023
+ 08:54:56 -0700
+Message-ID: <02d7d9c1-6ac4-bf65-d335-e83a2a422e96@quicinc.com>
+Date:   Tue, 4 Jul 2023 08:54:54 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 06/14] drm/msm/dpu: rework core_perf debugfs overrides
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
+CC:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v2 14/14] drm/msm/dpu: drop dpu_core_perf_destroy()
-Date:   Tue,  4 Jul 2023 18:03:54 +0300
-Message-Id: <20230704150354.159882-15-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230704150354.159882-1-dmitry.baryshkov@linaro.org>
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
 References: <20230704150354.159882-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+ <20230704150354.159882-7-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230704150354.159882-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9oz8Z5OwkJ9qldUOOeXNYK0Q_N365ovT
+X-Proofpoint-ORIG-GUID: 9oz8Z5OwkJ9qldUOOeXNYK0Q_N365ovT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-04_10,2023-07-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ suspectscore=0 adultscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=999 spamscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307040138
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,67 +86,188 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This function does nothing, just clears several data pointers. Drop it
-now.
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 10 ----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 ------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  1 -
- 3 files changed, 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 608c915a2cab..4b8127932e13 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -408,16 +408,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
- }
- #endif
- 
--void dpu_core_perf_destroy(struct dpu_core_perf *perf)
--{
--	if (!perf) {
--		DPU_ERROR("invalid parameters\n");
--		return;
--	}
--
--	perf->max_core_clk_rate = 0;
--}
--
- int dpu_core_perf_init(struct dpu_core_perf *perf,
- 		const struct dpu_perf_cfg *perf_cfg,
- 		unsigned long max_core_clk_rate)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index df1fcf28f2a9..a5a9c3389718 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -66,12 +66,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
-  */
- void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
- 
--/**
-- * dpu_core_perf_destroy - destroy the given core performance context
-- * @perf: Pointer to core performance context
-- */
--void dpu_core_perf_destroy(struct dpu_core_perf *perf);
--
- /**
-  * dpu_core_perf_init - initialize the given core performance context
-  * @perf: Pointer to core performance context
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index f01b2278c01a..44b0daf70c4e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1171,7 +1171,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	return 0;
- 
- drm_obj_init_err:
--	dpu_core_perf_destroy(&dpu_kms->perf);
- hw_intr_init_err:
- perf_err:
- power_error:
--- 
-2.39.2
+On 7/4/2023 8:03 AM, Dmitry Baryshkov wrote:
+> Currently debugfs provides separate 'modes' to override calculated
+> MDP_CLK rate and interconnect bandwidth votes. Change that to allow
+> overriding individual values (e.g. one can override just clock or just
+> average bandwidth vote).
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+Can you break this out into a separate series on its own?
+
+I would like to spend more time on this and dont want to hold up the 
+rest of the cleanup part of the series for this.
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 87 ++-----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 10 ---
+>   2 files changed, 9 insertions(+), 88 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> index 42c03a5f1f3e..23a29f159eff 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> @@ -17,20 +17,6 @@
+>   #include "dpu_crtc.h"
+>   #include "dpu_core_perf.h"
+>   
+> -/**
+> - * enum dpu_perf_mode - performance tuning mode
+> - * @DPU_PERF_MODE_NORMAL: performance controlled by user mode client
+> - * @DPU_PERF_MODE_MINIMUM: performance bounded by minimum setting
+> - * @DPU_PERF_MODE_FIXED: performance bounded by fixed setting
+> - * @DPU_PERF_MODE_MAX: maximum value, used for error checking
+> - */
+> -enum dpu_perf_mode {
+> -	DPU_PERF_MODE_NORMAL,
+> -	DPU_PERF_MODE_MINIMUM,
+> -	DPU_PERF_MODE_FIXED,
+> -	DPU_PERF_MODE_MAX
+> -};
+> -
+>   /**
+>    * _dpu_core_perf_calc_bw() - to calculate BW per crtc
+>    * @kms:  pointer to the dpu_kms
+> @@ -229,18 +215,16 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+>   	if (!kms->num_paths)
+>   		return 0;
+>   
+> -	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
+> -		avg_bw = 0;
+> -		peak_bw = 0;
+> -	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED) {
+> +	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+> +
+> +	avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
+> +	peak_bw = perf.max_per_pipe_ib;
+> +
+> +	if (kms->perf.fix_core_ab_vote)
+>   		avg_bw = kms->perf.fix_core_ab_vote;
+> -		peak_bw = kms->perf.fix_core_ib_vote;
+> -	} else {
+> -		dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+>   
+> -		avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
+> -		peak_bw = perf.max_per_pipe_ib;
+> -	}
+> +	if (kms->perf.fix_core_ib_vote)
+> +		peak_bw = kms->perf.fix_core_ib_vote;
+>   
+>   	avg_bw /= kms->num_paths;
+>   
+> @@ -294,12 +278,9 @@ static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+>   	struct drm_crtc *crtc;
+>   	struct dpu_crtc_state *dpu_cstate;
+>   
+> -	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED)
+> +	if (kms->perf.fix_core_clk_rate)
+>   		return kms->perf.fix_core_clk_rate;
+>   
+> -	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM)
+> -		return kms->perf.max_core_clk_rate;
+> -
+>   	drm_for_each_crtc(crtc, kms->dev) {
+>   		if (crtc->enabled) {
+>   			dpu_cstate = to_dpu_crtc_state(crtc->state);
+> @@ -416,54 +397,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+>   
+>   #ifdef CONFIG_DEBUG_FS
+>   
+> -static ssize_t _dpu_core_perf_mode_write(struct file *file,
+> -		    const char __user *user_buf, size_t count, loff_t *ppos)
+> -{
+> -	struct dpu_core_perf *perf = file->private_data;
+> -	u32 perf_mode = 0;
+> -	int ret;
+> -
+> -	ret = kstrtouint_from_user(user_buf, count, 0, &perf_mode);
+> -	if (ret)
+> -		return ret;
+> -
+> -	if (perf_mode >= DPU_PERF_MODE_MAX)
+> -		return -EINVAL;
+> -
+> -	if (perf_mode == DPU_PERF_MODE_FIXED) {
+> -		DRM_INFO("fix performance mode\n");
+> -	} else if (perf_mode == DPU_PERF_MODE_MINIMUM) {
+> -		/* run the driver with max clk and BW vote */
+> -		DRM_INFO("minimum performance mode\n");
+> -	} else if (perf_mode == DPU_PERF_MODE_NORMAL) {
+> -		/* reset the perf tune params to 0 */
+> -		DRM_INFO("normal performance mode\n");
+> -	}
+> -	perf->perf_tune.mode = perf_mode;
+> -
+> -	return count;
+> -}
+> -
+> -static ssize_t _dpu_core_perf_mode_read(struct file *file,
+> -			char __user *buff, size_t count, loff_t *ppos)
+> -{
+> -	struct dpu_core_perf *perf = file->private_data;
+> -	int len;
+> -	char buf[128];
+> -
+> -	len = scnprintf(buf, sizeof(buf),
+> -			"mode %d\n",
+> -			perf->perf_tune.mode);
+> -
+> -	return simple_read_from_buffer(buff, count, ppos, buf, len);
+> -}
+> -
+> -static const struct file_operations dpu_core_perf_mode_fops = {
+> -	.open = simple_open,
+> -	.read = _dpu_core_perf_mode_read,
+> -	.write = _dpu_core_perf_mode_write,
+> -};
+> -
+>   int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
+>   {
+>   	struct dpu_core_perf *perf = &dpu_kms->perf;
+> @@ -488,8 +421,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
+>   			(u32 *)&catalog->perf->min_llcc_ib);
+>   	debugfs_create_u32("min_dram_ib", 0600, entry,
+>   			(u32 *)&catalog->perf->min_dram_ib);
+> -	debugfs_create_file("perf_mode", 0600, entry,
+> -			(u32 *)perf, &dpu_core_perf_mode_fops);
+>   	debugfs_create_u64("fix_core_clk_rate", 0600, entry,
+>   			&perf->fix_core_clk_rate);
+>   	debugfs_create_u64("fix_core_ib_vote", 0600, entry,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> index c965dfbc3007..1b791b170c6b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> @@ -26,14 +26,6 @@ struct dpu_core_perf_params {
+>   	u64 core_clk_rate;
+>   };
+>   
+> -/**
+> - * struct dpu_core_perf_tune - definition of performance tuning control
+> - * @mode: performance mode
+> - */
+> -struct dpu_core_perf_tune {
+> -	u32 mode;
+> -};
+> -
+>   /**
+>    * struct dpu_core_perf - definition of core performance context
+>    * @dev: Pointer to drm device
+> @@ -42,7 +34,6 @@ struct dpu_core_perf_tune {
+>    * @core_clk: Pointer to the core clock
+>    * @core_clk_rate: current core clock rate
+>    * @max_core_clk_rate: maximum allowable core clock rate
+> - * @perf_tune: debug control for performance tuning
+>    * @enable_bw_release: debug control for bandwidth release
+>    * @fix_core_clk_rate: fixed core clock request in Hz used in mode 2
+>    * @fix_core_ib_vote: fixed core ib vote in bps used in mode 2
+> @@ -55,7 +46,6 @@ struct dpu_core_perf {
+>   	struct clk *core_clk;
+>   	u64 core_clk_rate;
+>   	u64 max_core_clk_rate;
+> -	struct dpu_core_perf_tune perf_tune;
+>   	u32 enable_bw_release;
+>   	u64 fix_core_clk_rate;
+>   	u64 fix_core_ib_vote;
