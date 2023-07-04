@@ -2,113 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AEEB746B85
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 10:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 368DC746BCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jul 2023 10:25:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230219AbjGDIHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jul 2023 04:07:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41408 "EHLO
+        id S231252AbjGDIZy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jul 2023 04:25:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231649AbjGDIH2 (ORCPT
+        with ESMTP id S229603AbjGDIZx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jul 2023 04:07:28 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08FE6173F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 01:07:15 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-992f6d7c7fbso435416266b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 01:07:15 -0700 (PDT)
+        Tue, 4 Jul 2023 04:25:53 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4E39E5B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 01:25:51 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-51d9128494cso5013487a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 01:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688458034; x=1691050034;
+        d=linaro.org; s=google; t=1688459150; x=1691051150;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ckr6+/gekGirtr50OHDvvWLDUFdItGBZUEI8k9LrOlw=;
-        b=UNiyzEjhJ69LSQbYfLtTq/zgmjbXfjdCu6wtuRmFMo7YCqIrk7zudyJiKR4rW6awIl
-         dnJLi00KvdsXpgtREiyEZ0OMm7YfeWrhHt2tzGVoORIJwPag0JkN1Vyv9OFvwHu/evFy
-         VrSa2Aryuus+aEtKqcICoA6GSIUy45ropXyB8N6dpD8/xQxyE5hSHMzJONNjTj3EBWCM
-         5fZ4rG7hP4vlIs27OdVGvA+jvfi3qPMkdFN0qQmhCsT5sgmoIv/fPJXp0RQ6S3PP0vQu
-         Z7AocFqwsIksd5j76OUGrZ5N+JEV+nSBIEBgHVD6uG8tuckPPXv/kU84GOrHpXeDiCbw
-         Fc+A==
+        bh=Gwa9ayC7Ak6RXmEufOqadJR2qAcIK0aMmR7v8FlPPcg=;
+        b=CRPRH2PyUYCZ1jK1Qc0h/9aUTyNGCI7F1DbFRKdNYEJzxiLghWmBvg2uQxeUayOqFP
+         faWZ0F5v21L53zpq36yVs/pIuqDnnDVjIakPoMMtwPQbRUxUOqcrd6XKAQp8pp4xkGWa
+         65onm1TjV2PwfEWnJbSi6tTnqFMCXzkFtgLjh+scy4eW3ZXS5ZnwKlwWrFtoqkwVlSSn
+         tG6pZeLXUJ1ajbuUYW2VKt6l/XzX+PborZGxViE8jZZKVDS7eJBohEW+txOVmLAoFBnq
+         djLy9h4thHI27b80+l+Zuuk3VK0dJlWt9Vd4kuMJhYlda1hCqf6OBNbYbZENs7zCMZIi
+         NAlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688458034; x=1691050034;
+        d=1e100.net; s=20221208; t=1688459150; x=1691051150;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ckr6+/gekGirtr50OHDvvWLDUFdItGBZUEI8k9LrOlw=;
-        b=inBdAG8GTbB5z9OcxUsFeXId3Evwg4x0IvvliuwLmZ6Mph70BOM3wi3IE0nAzs14Kg
-         +I9J7VgIWj7TrSrJpaKDdpHPEfykJydXBfADuJKUzaOGwwwFtE5ZLv8JUwpR5PvrsUUw
-         uJTrWG0DuWO7C9sS50h4w53DWtiYKl+kDEz5tjLNfgPP2D4lpAyirm9gDpGV3xx0JMoE
-         d1xn9b+9sHA8QtDDKgHSIgPoSHpBPQxHmJBSY3P94A5wGza8y6pE/MVQT+v0ScSn9jDS
-         BYnGvJzK/nIlHtn1eTDyXg8DslpPSXvq6+DYGvHXjtEWK0se/+A0SCF8VVaauGl4Tr4I
-         4pDg==
-X-Gm-Message-State: ABy/qLYgy1b3WYliBiIi5GV3ZwKpRosdzpqKiv6WS/dCwgys7gOu0bXr
-        DlNSUOOOM+p5ZI6rReHyjw7tUg==
-X-Google-Smtp-Source: APBJJlEABByJGfnIEipqN5UYmx124WgDwPOwjwjrXDp8XkPeDqGP+rQevwMp6ZwRWae2hIQqNmzgFg==
-X-Received: by 2002:a17:906:4e52:b0:992:9a5e:3172 with SMTP id g18-20020a1709064e5200b009929a5e3172mr7727541ejw.59.1688458034232;
-        Tue, 04 Jul 2023 01:07:14 -0700 (PDT)
+        bh=Gwa9ayC7Ak6RXmEufOqadJR2qAcIK0aMmR7v8FlPPcg=;
+        b=MzLNch9CbxszMr61RVEsHocYqy4xz5zlMA4syLwR2E5msjRd/Wxi+67F2o9tUXYv5M
+         KjVzkFGUiraNBXWkMghZGPSH85D89jINXdFnOpjlyM7Km7Znt3ASgxAO/vIAIYVjDdLI
+         XqCtstp0IrXpOaWP9h+93YH3v4fMO93XGWTECU5tClzIO5OtPtBXoC8Of4Xpdz4R0ufU
+         GX0KSVY1ghO1hbTvgGrMaaMy6C3QHdpP3PsWeIv3TW8QcOcDPGj2gYaWfCTTjSoxQNp9
+         ENvpZ7I2NeYPxM+mC5QltcoyHucHisTDRYapLi2t2UcTYgRnOhGbYCKo04584zwVRSDZ
+         6qzw==
+X-Gm-Message-State: ABy/qLZzKDRJq21BUYUKHW3naeu7BeIM6ss2Sat18RY6pc1P7FHTRCAz
+        xjCpOA7dxz2R6OEnV54GI9kYyUuNxewzzKYKEymSoQ==
+X-Google-Smtp-Source: APBJJlHmgyzlsuarhw/Jt8z/t9Vhtcu+0imkXk0L/rtTWGMWw+BjO//QTPgqUJNNXVge1SpoIsgC8w==
+X-Received: by 2002:a05:6402:4496:b0:51d:d41b:26a5 with SMTP id er22-20020a056402449600b0051dd41b26a5mr9166945edb.14.1688459150303;
+        Tue, 04 Jul 2023 01:25:50 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id z9-20020a17090655c900b00992d0de8762sm5975404ejp.216.2023.07.04.01.07.12
+        by smtp.gmail.com with ESMTPSA id t4-20020a05640203c400b0051ded17b30bsm5493120edw.40.2023.07.04.01.25.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jul 2023 01:07:13 -0700 (PDT)
-Message-ID: <7299b735-d613-1306-796c-291f03f3b361@linaro.org>
-Date:   Tue, 4 Jul 2023 10:07:11 +0200
+        Tue, 04 Jul 2023 01:25:49 -0700 (PDT)
+Message-ID: <05fde533-05df-a7c9-c36a-689e476f8c2e@linaro.org>
+Date:   Tue, 4 Jul 2023 10:25:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v12 01/10] cpufreq: blacklist MSM8998 in
- cpufreq-dt-platdev
+Subject: Re: [PATCH 01/14] dt-bindings: display/msm/gmu: Add Adreno 7[34]0 GMU
 Content-Language: en-US
-To:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20230217-topic-cpr3h-v12-0-1a4d050e1e67@linaro.org>
- <20230217-topic-cpr3h-v12-1-1a4d050e1e67@linaro.org>
- <20230628155656.GA542106-robh@kernel.org>
- <20230703041701.ntv2f2h7z2welmvn@vireshk-i7>
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230628-topic-a7xx_drmmsm-v1-0-a7f4496e0c12@linaro.org>
+ <20230628-topic-a7xx_drmmsm-v1-1-a7f4496e0c12@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230703041701.ntv2f2h7z2welmvn@vireshk-i7>
+In-Reply-To: <20230628-topic-a7xx_drmmsm-v1-1-a7f4496e0c12@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/07/2023 06:17, Viresh Kumar wrote:
-> On 28-06-23, 09:56, Rob Herring wrote:
->> On Wed, Jun 28, 2023 at 04:00:40PM +0200, Konrad Dybcio wrote:
->>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>>
->>> Add the MSM8998 to the blacklist since the CPU scaling is handled
->>
->> s/blacklist/denylist/ or s/blacklist/blocklist/
+On 28/06/2023 22:35, Konrad Dybcio wrote:
+> The GMU on the A7xx series is pretty much the same as on the A6xx parts.
+> It's now "smarter", needs a bit less register writes and controls more
+> things (like inter-frame power collapse) mostly internally (instead of
+> us having to write to G[PM]U_[CG]X registers from APPS)
 > 
-> They are already named allowlist and blocklist.
+> The only difference worth mentioning is the now-required DEMET clock,
+> which is strictly required for things like asserting reset lines, not
+> turning it on results in GMU not being fully functional (all OOB requests
+> would fail and HFI would hang after the first submitted OOB).
+> 
+> Describe the A730 and A740 GMU.
+> 
 
-This was about commit msg and subject. They are not named like this.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
