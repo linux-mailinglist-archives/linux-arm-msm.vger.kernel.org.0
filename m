@@ -2,149 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 874A5748572
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 15:52:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBB047485DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 16:19:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232392AbjGENwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 09:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52544 "EHLO
+        id S231658AbjGEOT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 10:19:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232227AbjGENwU (ORCPT
+        with ESMTP id S230094AbjGEOT1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 09:52:20 -0400
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2118.outbound.protection.outlook.com [40.107.215.118])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207EA121;
-        Wed,  5 Jul 2023 06:52:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cIhvO8CWN5qkjZvcshynL7o7x4y8sFYuB07Ycm0pKOx/1XcndGDi3ZK4I6hwkIxAC47cIut9DqjThT1llVIcQ3y9XEOhel+Ul1lC5283EURWJ6A86cEz5wmBEQNFkj3UJrfyF5KlT297fkuKuLKQNg14XoGVM0gxrUv09/NIYyk0+wAWKqfyR2ODOkKPtCRpw5y09nZyYRJZtSbMEfxwaQp6f8/wwbOq11xGlm0RPd2cyTfrF3KQBcfDYWr5jc6Zp3UZH6/b9pu9fmG7QfeMuH0qO0iRgIs2a0Am4UNwOQEz2nli2tRbJNtKqptQzDvmLfuNo0r85FZP9lM02pTt5g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tdb26EYaPAoprJFKtW/qFt1bUD6rf5cw+jKBZQC71QQ=;
- b=Yd/5EEP/IRJxBBCoiW+VanE6mgBDLB1qeSIvkX8z9FcDBYUNtDnZmwolT1/Y5R6CzISrkzPSUsku4joKP9SHTxQpXiQy18+Q4h9U5ntu9Vt7Xhfi63K/2GQYAFEH7OTVP3fNDsw/WyzlQihGJZGYOsNTrYtEFqtkyVlbytscg3ADeWs9ttKdpoTHsrI5tmGkwfGZr5I4DpYNmMe4ephmuS8/maSdCl4jZznckaU+GdUrwqSXIYgq5/3pyTv93dhb6aKHfcMmSbNj42ixRGZ3ovBsyUIE9KA0qXiBw+1TWprKr0HMAna8BgRNxR5dpO070zrg/GtSrTxG26xH1tIUSQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tdb26EYaPAoprJFKtW/qFt1bUD6rf5cw+jKBZQC71QQ=;
- b=ecL7YLPI+vIE1XO25HBZv84WOu8H6UtxfYRFWadHkiyVfy06WtUzmojoyd2bUcst6vE/NxbPwfuGg71KQdEyCpBZKpWi7ItwWpKb3FxheqEOT/tDlytUTu85FsBqDOasAliLfpYk4SKSE5iyv9c5RoQi1LSH/cQncq/YOh3sNct7Rh5nq0cfeIBv6EdlnAaQM6bZNNMROEnRhMy1Oua2Yd9FXj1bKAe3Z++r9IUeG30pZiD4WhwkkgzmEsYejBu+JMUGrJypY9/r0k8e8sPrM67a1CVPfZnHrEkl49rUQcooCKR2P3rx/QxC/MdyhfkavgkB79o3BbbA2ZFoObtUmw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
- by PSAPR06MB3991.apcprd06.prod.outlook.com (2603:1096:301:38::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.17; Wed, 5 Jul
- 2023 13:52:15 +0000
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::fa0e:6c06:7474:285c]) by SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::fa0e:6c06:7474:285c%5]) with mapi id 15.20.6565.016; Wed, 5 Jul 2023
- 13:52:15 +0000
-From:   Yangtao Li <frank.li@vivo.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andi Shyti <andi.shyti@kernel.org>
-Cc:     Yangtao Li <frank.li@vivo.com>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 06/11] i2c: qcom-geni: Convert to devm_platform_ioremap_resource()
-Date:   Wed,  5 Jul 2023 21:51:53 +0800
-Message-Id: <20230705135159.33327-6-frank.li@vivo.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230705135159.33327-1-frank.li@vivo.com>
-References: <20230705135159.33327-1-frank.li@vivo.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYCPR01CA0049.jpnprd01.prod.outlook.com
- (2603:1096:405:2::13) To SEZPR06MB5269.apcprd06.prod.outlook.com
- (2603:1096:101:78::6)
+        Wed, 5 Jul 2023 10:19:27 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E94C10D5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 07:19:25 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-992b2249d82so797350866b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 07:19:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688566764; x=1691158764;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zzg1Rcs4/REQbUAnr+xfpofd5U46nBqWnDZ+dmUTDMg=;
+        b=WRgmBEXA3L6lrnXfNKzwl17gLX243dbZg1O0xaa5KobN6rRNevuYsXqPM1MJ52uENv
+         IqOLTLZgratN6oGZ0J49GnKdK+LUgZmmcWlMvttMyjglkJfNE2SVgthNySLIFbqcy6oH
+         3KDgA7goUatdTGsx2kSJDM3bXxBHKNsRihhm8IyNs5tFunkmevU/a0jqLhSSigRwrlds
+         UOGcxKtLnl2ZeAZfX0PZJRthu44Bc94u7P8GAIwTDXsNl6h2EQZajU7MuzV7VmedUw03
+         inoMViAWywfL13yfVDiC52Zp+vSleNVvf5N3EC2M0DzeFQ+miu2el869eo+QEKuSJjZM
+         LlLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688566764; x=1691158764;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zzg1Rcs4/REQbUAnr+xfpofd5U46nBqWnDZ+dmUTDMg=;
+        b=PzTVlvHqopVVnoNntTaLAXHAthTzfybZQ8jXKdrZG+Tmc9y46Oz+B+N++9Yx43iMP2
+         1/HncyhVSB80U5VDxjbcO9MXHW97tzdidoivboARnROlHF/fi7S3N23BKgfTZcrrL5lR
+         OxN45FrdWysjAPSfv9NwPVKpqLJiZ+9LAc9FLdLCDB+vmkFZjaVH/FypRTUK3//5rd9W
+         RdpYTo2MEGp7FeZuOxMbHm5uTTm0xdUA/T3x0D2RRdt37Zpe+riic33p2zZgZZINMVn2
+         VugGzhSmxGAhgklFX4rKP+2PQQPF7wh7Cu4KARuXrVJSZ3v0uo+GYgUX0BoQrj/bRIpO
+         CU1A==
+X-Gm-Message-State: ABy/qLZmVkQ708lqT9OtcyLGZHRpvRTPv18VnG0P0UDt54NziGPkY//0
+        We8rbxlfez+e8o7mKSj0e5KdzQ==
+X-Google-Smtp-Source: ACHHUZ4eDxk7lH1bbt75+5Z/GkSrqU3s5olRDPv3Ik55v2et8HE8B31Znv4eN2zZg8AXfxdAZBmCUA==
+X-Received: by 2002:a17:906:90d4:b0:991:fef4:bb9 with SMTP id v20-20020a17090690d400b00991fef40bb9mr13117765ejw.58.1688566764162;
+        Wed, 05 Jul 2023 07:19:24 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id xa10-20020a170907b9ca00b00977c7566ccbsm14739232ejc.164.2023.07.05.07.19.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jul 2023 07:19:23 -0700 (PDT)
+Message-ID: <3acd3f26-831d-898f-e3f0-731814eb09b6@linaro.org>
+Date:   Wed, 5 Jul 2023 16:19:20 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|PSAPR06MB3991:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6f142f5f-b2d0-4329-e37e-08db7d5f0a49
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: w2IeqqjDlO7QfFOBsqXubnhyQ391DzSWI6mAY80OxEyKbU8M7NX8drtj1sN054SHUKHjKBUmSe9gFm5lWCvNFrkRI38TsbSTkyrbsOIoele3Tf37LF2sAVVuhcP3ar7Cm2pRZFkp5Rrvf1g1mULHLIEC5XhLMkq0PXIeQ4fzpEEK+0+ih2ZLjZjnHBmCpwvoOz/TMD9lskU0PDBXDj3R2XikAloVgvXa2tCw9DBeyK4Hj/UiCEWdQ1TCeTG3gRmqN1kK9X8qvqRKYNJ/+e8aSFD5pnkHpDfMKuBaij8zQ5cCJ5BIRDgVIujFAjXFyasyddj2Db7JsKuA1442EVPC3PtETnUrQxQUW6EyahnaqLPIF8R2QMQIS0sQ//Zf2dXtnjR8hVx6EN+QlZTSTQCbr8XQ0lB/J/gjejRccZVlYKCcpuf6stXTbsmqyLfi/uzDtnIf4zcJ/S0l8ta8TSWaLnDhz/dqlezwVkoIYkc/GDEcUTkax9CvK61NbLHs5OGXFGJrn1UAwtfdLz+D0B+Zlhpz5NWEHalfK7+cu4TJGlOnjjLt2l63xrnjpuypnN/aRhvwPuWe84o7R2Z+KXjvm15HCro6X/fI96X5m73Y8ckaWpBOPafqCd38gTtJKXg1
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(366004)(346002)(136003)(376002)(39860400002)(451199021)(38100700002)(38350700002)(66476007)(66556008)(4326008)(66946007)(2616005)(186003)(86362001)(6486002)(52116002)(6666004)(36756003)(6512007)(26005)(6506007)(478600001)(110136005)(1076003)(8936002)(8676002)(5660300002)(316002)(2906002)(41300700001)(83380400001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?7q25s2ZuRZgNnQYYRyIpqq2vztAD8gsO1ChBm4sCfQ9UVOBBnOfdJktMl41u?=
- =?us-ascii?Q?Z4rdKHpktZRyP/w8RkXng9GTJdXOBnyp2UhEOISmiSPYll++cfgl/TUjXFKm?=
- =?us-ascii?Q?Ns59u4pgjI4XJN7fs6FshR36AkiBdYhgYmGXc6EczLozRAKpTmq2DRjUS39i?=
- =?us-ascii?Q?BU4Ta9255IhuZqrMEbYaDzvV+0YojNF0LUTq7PjAnTUsJMzq1XqiBD7ATDua?=
- =?us-ascii?Q?QMtKzZwfn0HQeJWSI7r4/F9YR+GG5/DaXodNKowW3XfkXvppRRYuNxAt66i4?=
- =?us-ascii?Q?DQuNCFpOZh4pq2m73IDVJ+6DIOAeEaVAYCsBnhw9CDCD48CpKqbAQMnYNedJ?=
- =?us-ascii?Q?ykqxd0g21lo90kA6uk9R6FIvcDAreiVcpBJJJdyqEQwyYD4Fmclv4u2UNzYi?=
- =?us-ascii?Q?ovDzm/yXLqYCWpqjvTf03zVpcapMSqHLeJC7J3bnQ9WQlXDl3hXpI2vfpxI8?=
- =?us-ascii?Q?EbDTmrWW9SUx3U8E9jZh7RZYR1AhHd7rUxSHIlpXLROCKsoBBvDtWH0+higB?=
- =?us-ascii?Q?Bm0cw95opfWJPYIjN+rp/uWKTPgYOp/T/03Ws/WMPyuj6JpHREIzaR4/uWs1?=
- =?us-ascii?Q?69rnEuQ0MPqmzyt5avO7sgSDTR1x+5A9wAGiyck2pztZgzjv/wP7ns57/qCw?=
- =?us-ascii?Q?yXEaxfp/fhaqMd0QzS5Y7W+f7pgfMLIIcWl2D7FOnU3cOx5MwzRYTVbX4rDm?=
- =?us-ascii?Q?FQU5B23el4jNxXDo8HOe7kkZ/GNXYB9kI41z8B9eT9dZfqC0KELWjBypqQLj?=
- =?us-ascii?Q?B+uY3F9k/D2ufK0d0/y+7660l1RuIfIJAY3O1MIZDY7s/09pNIOeQXUqn6J9?=
- =?us-ascii?Q?6o9oq6C7Tk4Tr2wsjAtO6a+Ujr8m/lP3PE0RPUK+Gk2t5TrSPMwxVtCkJZrJ?=
- =?us-ascii?Q?Kn8Yug9CUX+WDgF1ELH70IocMryszeM+JeIArwp0Bmt7nHcSnEDhwiTsVAIk?=
- =?us-ascii?Q?IYtXFPRONvMmLv8y+zzHmF9zUGNn2YwM4S+DxJzxx/8A+uDF4ZzCUGfmGZtQ?=
- =?us-ascii?Q?Pc5UdTw59UPTHTBo8SgNuH39dv+enpjQhU8j9j26El3VKNRf6eZT5k23U+Q2?=
- =?us-ascii?Q?oN0b/kvjhwg+wO3YONo43y9A7VHmkBevL+4BMYhGN2gCWbj3XswQ054Quqmh?=
- =?us-ascii?Q?RSdUsmNVD9xbZmJqHKuai97Z9J/3RV728sSpfaBikLjCouh9OI3sBG4cMDri?=
- =?us-ascii?Q?Lk9vpNr1uw7ggN0i0JVM/Jtu7JyIzI2Q737T87qdpdCq76sP9QTrSY/meXyN?=
- =?us-ascii?Q?v2uU/lEKBCv8arF1wbrUtTMhyueXxhvYa1uS9bKMosN2wOzHo1MNowUkldQC?=
- =?us-ascii?Q?viDU4+ApSOt1x6Eea2tECG1Wg+bcCJRiyBOKq6RvVvA+mUSdp752wpaltAA4?=
- =?us-ascii?Q?IgiqQkLkYiLykgsDZ6kG6478LoxBNcRMcS/GUYUtKnx15BzuYDZFoA4shFdQ?=
- =?us-ascii?Q?BIehQ2QdrEfSKi2XnStC8M/H3w3z3vMt4kEnII48xx5Ll54vxLhDQBGn7fnU?=
- =?us-ascii?Q?/U6L9A+mMbdohv8vLJKjwJRUjgUQtY3OJMuPuG9Z8sPtFdEgIvVugk3asmu+?=
- =?us-ascii?Q?eyzQZnEyxttzMZ/UbarxlDwMvJxmNo2njcMF9/kU?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6f142f5f-b2d0-4329-e37e-08db7d5f0a49
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2023 13:52:15.2618
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: W9vXbDrDyRdeE0boSKFJombHiCylowMSavCFUvik53PbtGTUrelAerkwT8J+LN7jJWwWnquWG5XhZL4Auy+zRA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR06MB3991
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved memory
+ region
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
+ <20230705053914.9759-2-quic_kbajaj@quicinc.com>
+ <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
+ <db283531-36a2-0535-4fe2-d1571b3fa8cb@quicinc.com>
+ <CAA8EJpotQs_C_b+qvR1gXcasOtcw6SA8hCgJfuHFa7PnvPeobQ@mail.gmail.com>
+ <e285a22e-4943-4c9e-50d6-2dcac30703d3@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <e285a22e-4943-4c9e-50d6-2dcac30703d3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use devm_platform_ioremap_resource() to simplify code.
+On 05/07/2023 13:08, Konrad Dybcio wrote:
+> On 5.07.2023 11:42, Dmitry Baryshkov wrote:
+>> On Wed, 5 Jul 2023 at 10:06, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 7/5/2023 11:19 AM, Dmitry Baryshkov wrote:
+>>>> On Wed, 5 Jul 2023 at 08:40, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>>>>> Add missing reserved regions as described in QDU1000 memory map.
+>>>>>
+>>>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>>>> ---
+>>>>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 26 ++++++++++++++++++++++++
+>>>>>   1 file changed, 26 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>>>>> index 1d22f87fd238..3f5512ec0a90 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>>>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>>>>> @@ -448,6 +448,32 @@ &qupv3_id_0 {
+>>>>>          status = "okay";
+>>>>>   };
+>>>>>
+>>>>> +&reserved_memory{
+>>>>> +       #address-cells = <2>;
+>>>>> +       #size-cells = <2>;
+>>>>> +       ranges;
+>>>>> +
+>>>>> +       ecc_meta_data_reserved_mem:ecc_meta_data_reserved_region@e0000000{
+>>>> no_underscores_in_node_names. Ever.
+>>>>
+>>>> Also, if you have checked other platforms, you'd have seen that other
+>>>> platforms use a much more generic node name for 'memory' nodes (which
+>>>> you should have used too).
+>>>
+>>> These memory nodes are new to QDU platform, so will it be okay if I keep
+>>> these names without region suffix?
+>>
+>> Just use 'memory@abcd'.
+> Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml
+> 
+>   Following the generic-names recommended practice, node names should
+>   reflect the purpose of the node (ie. "framebuffer" or "dma-pool").
+>   Unit address (@<address>) should be appended to the name if the node
+>   is a static allocation.
+> 
 
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Yeah, two minutes too late :)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index b670a67c4fdd..229353e96e09 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -767,7 +767,6 @@ static int setup_gpi_dma(struct geni_i2c_dev *gi2c)
- static int geni_i2c_probe(struct platform_device *pdev)
- {
- 	struct geni_i2c_dev *gi2c;
--	struct resource *res;
- 	u32 proto, tx_depth, fifo_disable;
- 	int ret;
- 	struct device *dev = &pdev->dev;
-@@ -779,8 +778,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 
- 	gi2c->se.dev = dev;
- 	gi2c->se.wrapper = dev_get_drvdata(dev->parent);
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	gi2c->se.base = devm_ioremap_resource(dev, res);
-+	gi2c->se.base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(gi2c->se.base))
- 		return PTR_ERR(gi2c->se.base);
- 
--- 
-2.39.0
+Best regards,
+Krzysztof
 
