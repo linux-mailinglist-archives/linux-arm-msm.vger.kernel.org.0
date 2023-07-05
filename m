@@ -2,284 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A042748F0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 22:39:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3349E748F23
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 22:43:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233325AbjGEUjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 16:39:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44500 "EHLO
+        id S233800AbjGEUne (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 16:43:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232459AbjGEUjy (ORCPT
+        with ESMTP id S233758AbjGEUnb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 16:39:54 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6C019A0;
-        Wed,  5 Jul 2023 13:39:52 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 365KbHvT001589;
-        Wed, 5 Jul 2023 20:39:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Chfx9CSSC4mbgphjXOJP4Eory2csh7EtuNFrELNzAjY=;
- b=N5i0MF1pGIdGArxLHwHCaKcpZDtG7O2UyUMy1MubPQRjFTxJDZBgGAM5WzyBOEO1Cn/B
- 3QNXEEuwahBNfwHNEAUkZUtnyaPj7AMYlKxI4tp9UlXycXgGSgnFOeOIRPDfxMstVbU6
- 0u9UJV35jOCo8ytubUlC5PP5orXMHtCN1RCpPDP+TOG7hUxgxMejRfIDXeLTYSLNVCJ2
- LPYLqTLpXdswqkCl6VJBX5I1/pGb/9gyVg1Up6LVejm4OPsPy0CcDwbhnFcH++m2wjAJ
- 89FFxh2ihHz85xtsiAXSLm/u6jItayutQUq6Mz6CuS3fvAccuTUckyK7ieT0IRuOHMu7 5g== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rnb5a0kfn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Jul 2023 20:39:44 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 365KdhHh007431
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Jul 2023 20:39:43 GMT
-Received: from [10.71.108.78] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Wed, 5 Jul 2023
- 13:39:43 -0700
-Message-ID: <857503f4-c828-3816-1bb0-5ee3567d63e0@quicinc.com>
-Date:   Wed, 5 Jul 2023 13:39:42 -0700
+        Wed, 5 Jul 2023 16:43:31 -0400
+Received: from aposti.net (aposti.net [89.234.176.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4BED19B;
+        Wed,  5 Jul 2023 13:43:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
+        s=mail; t=1688589809;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=wyXkGZNGA5ysK2ltkve4RVlCutN+wjP1W2giIyjMZxk=;
+        b=nScC7Am7eHbPkqLsb+E2gznpiUpMVyfzuF8FL3UiEEkgxgDebdCyG0lG4/LsIyuatJlX4p
+        bLgSjmITOHNmgrkD8zSZN2pAMtILouf7m0vVi2R75j9CXCT1jpDBwzoRZP8oDzs/SSuMLd
+        FF8hRZbcRQMFlzMf9jstb8q8Hg0pEdM=
+From:   Paul Cercueil <paul@crapouillou.net>
+To:     Wolfram Sang <wsa@kernel.org>
+Cc:     linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Paul Cercueil <paul@crapouillou.net>,
+        Elie Morisse <syniurge@gmail.com>,
+        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Kamal Dasu <kdasu.kdev@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Jan Dabros <jsd@semihalf.com>,
+        Jean Delvare <jdelvare@suse.com>,
+        Qii Wang <qii.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Peter Korsgaard <peter@korsgaard.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Conghui Chen <conghui.chen@intel.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Peter Rosin <peda@axentia.se>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: [PATCH 00/23] i2c: Use new PM macros
+Date:   Wed,  5 Jul 2023 22:42:51 +0200
+Message-Id: <20230705204314.89800-1-paul@crapouillou.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 5/5] drm/msm/dpu: Update dev core dump to dump
- registers of sub-blocks
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC:     Rob Clark <robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <quic_jesszhan@quicinc.com>
-References: <20230622-devcoredump_patch-v2-0-9e90a87d393f@quicinc.com>
- <20230622-devcoredump_patch-v2-5-9e90a87d393f@quicinc.com>
- <cebe822f-2c00-4826-a48e-4344379b3e65@linaro.org>
-Content-Language: en-US
-From:   Ryan McCann <quic_rmccann@quicinc.com>
-In-Reply-To: <cebe822f-2c00-4826-a48e-4344379b3e65@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ASMTGw35VvpPEjZpewiGxTFRBmHDJqJw
-X-Proofpoint-ORIG-GUID: ASMTGw35VvpPEjZpewiGxTFRBmHDJqJw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-05_11,2023-07-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- mlxscore=0 impostorscore=0 priorityscore=1501 spamscore=0 mlxlogscore=999
- malwarescore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307050187
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam: Yes
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Wolfram,
 
+This patchset converts the I2C subsystem to use the PM macros that were
+introduced in v5.17, which allow the dev_pm_ops and related callbacks to
+be automatically dropped by the compiler when CONFIG_PM or
+CONFIG_PM_SLEEP are disabled, without having to use #ifdef guards.
 
-On 7/5/2023 1:22 PM, Dmitry Baryshkov wrote:
-> On 05/07/2023 22:30, Ryan McCann wrote:
->> Currently, the device core dump mechanism does not dump registers of
->> sub-blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Edit
->> dpu_kms_mdp_snapshot function to account for sub-blocks.
->>
->> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 106 
->> ++++++++++++++++++++++++--------
->>   1 file changed, 82 insertions(+), 24 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index aa8499de1b9f..c83f5d79e5c5 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -890,62 +890,120 @@ static void dpu_kms_mdp_snapshot(struct 
->> msm_disp_state *disp_state, struct msm_k
->>       int i;
->>       struct dpu_kms *dpu_kms;
->>       const struct dpu_mdss_cfg *cat;
->> +    void __iomem *mmio;
->> +    u32 base;
->>       dpu_kms = to_dpu_kms(kms);
->>       cat = dpu_kms->catalog;
->> +    mmio = dpu_kms->mmio;
->>       pm_runtime_get_sync(&dpu_kms->pdev->dev);
->>       /* dump CTL sub-blocks HW regs info */
->>       for (i = 0; i < cat->ctl_count; i++)
->> -        msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len,
->> -                dpu_kms->mmio + cat->ctl[i].base, "ctl_%d", i);
->> +        msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len, mmio 
->> + cat->ctl[i].base,
->> +                        "%s", cat->ctl[i].name);
-> 
-> This is not relevant to sub-blocks. If you wish to refactor the main 
-> block printing, please split it to a separate commit.
+The point of this, is that all this code is now compiled independently
+of any Kconfig option, which makes bugs and regressions easier to catch.
 
-Ok. I will split this commit into changes pertaining to sub-blocks and 
-changes to how the name of main blocks are printed. I would like to 
-print main block names as they appear in the catalog.
-> 
-> Also, please note that `msm_disp_snapshot_add_block(...., "%s", 
-> block->name)` is redundant. We do not expect formatting characters in 
-> block names. So, "%s" can be dropped.
+This continues the work that has been started in other subsystems (DRM,
+IIO, watchdog).
 
-Here, "%s" is used in order to print the the name of the main block from 
-the catalog. As mentioned above I can implement this in another commit.
-> 
->>       /* dump DSPP sub-blocks HW regs info */
->> -    for (i = 0; i < cat->dspp_count; i++)
->> -        msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len,
->> -                dpu_kms->mmio + cat->dspp[i].base, "dspp_%d", i);
->> +    for (i = 0; i < cat->dspp_count; i++) {
->> +        base = cat->dspp[i].base;
->> +        msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len, 
->> mmio + base, "%s",
->> +                        cat->dspp[i].name);
->> +
->> +        if (cat->dspp[i].sblk && cat->dspp[i].sblk->pcc.len > 0)
->> +            msm_disp_snapshot_add_block(disp_state, 
->> cat->dspp[i].sblk->pcc.len,
->> +                            mmio + base + cat->dspp[i].sblk->pcc.base,
->> +                            "%s_%s", cat->dspp[i].name,
->> +                            cat->dspp[i].sblk->pcc.name);
->> +    }
->> +
->>       /* dump INTF sub-blocks HW regs info */
->>       for (i = 0; i < cat->intf_count; i++)
->> -        msm_disp_snapshot_add_block(disp_state, cat->intf[i].len,
->> -                dpu_kms->mmio + cat->intf[i].base, "intf_%d", i);
->> +        msm_disp_snapshot_add_block(disp_state, cat->intf[i].len, 
->> mmio + cat->intf[i].base,
->> +                        "%s", cat->intf[i].name);
->>       /* dump PP sub-blocks HW regs info */
->> -    for (i = 0; i < cat->pingpong_count; i++)
->> -        msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len,
->> -                dpu_kms->mmio + cat->pingpong[i].base, "pingpong_%d", 
->> i);
->> +    for (i = 0; i < cat->pingpong_count; i++) {
->> +        base = cat->pingpong[i].base;
->> +        msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len, 
->> mmio + base, "%s",
->> +                        cat->pingpong[i].name);
->> +
->> +        /* TE2 block has length of 0, so will not print it */
->> +
->> +        if (cat->pingpong[i].sblk && 
->> cat->pingpong[i].sblk->dither.len > 0)
->> +            msm_disp_snapshot_add_block(disp_state, 
->> cat->pingpong[i].sblk->dither.len,
->> +                            mmio + base + 
->> cat->pingpong[i].sblk->dither.base,
->> +                            "%s_%s", cat->pingpong[i].name,
->> +                            cat->pingpong[i].sblk->dither.name);
->> +    }
->>       /* dump SSPP sub-blocks HW regs info */
->> -    for (i = 0; i < cat->sspp_count; i++)
->> -        msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len,
->> -                dpu_kms->mmio + cat->sspp[i].base, "sspp_%d", i);
->> +    for (i = 0; i < cat->sspp_count; i++) {
->> +        base = cat->sspp[i].base;
->> +        msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len, 
->> mmio + cat->sspp[i].base,
->> +                        "%s", cat->sspp[i].name);
->> +
->> +        if (cat->sspp[i].sblk && cat->sspp[i].sblk->scaler_blk.len > 0)
->> +            msm_disp_snapshot_add_block(disp_state, 
->> cat->sspp[i].sblk->scaler_blk.len,
->> +                            mmio + base + 
->> cat->sspp[i].sblk->scaler_blk.base,
->> +                            "%s_%s", cat->sspp[i].name,
->> +                            cat->sspp[i].sblk->scaler_blk.name);
->> +
->> +        if (cat->sspp[i].sblk && cat->sspp[i].sblk->csc_blk.len > 0)
->> +            msm_disp_snapshot_add_block(disp_state, 
->> cat->sspp[i].sblk->csc_blk.len,
->> +                            mmio + base + 
->> cat->sspp[i].sblk->csc_blk.base,
->> +                            "%s_%s", cat->sspp[i].name,
->> +                            cat->sspp[i].sblk->csc_blk.name);
->> +    }
->>       /* dump LM sub-blocks HW regs info */
->>       for (i = 0; i < cat->mixer_count; i++)
->>           msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len,
->> -                dpu_kms->mmio + cat->mixer[i].base, "lm_%d", i);
->> +                        mmio + cat->mixer[i].base,
->> +                        "%s", cat->mixer[i].name);
->>       /* dump WB sub-blocks HW regs info */
->>       for (i = 0; i < cat->wb_count; i++)
->> -        msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
->> -                dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
->> +        msm_disp_snapshot_add_block(disp_state, cat->wb[i].len, mmio 
->> + cat->wb[i].base,
->> +                        "%s", cat->wb[i].name);
->>       if (cat->mdp[0].features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
->> -        msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
->> -                dpu_kms->mmio + cat->mdp[0].base, "top");
->> +        msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0, mmio 
->> + cat->mdp[0].base,
->> +                        "top");
->>           msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len - 
->> MDP_PERIPH_TOP0_END,
->> -                dpu_kms->mmio + cat->mdp[0].base + 
->> MDP_PERIPH_TOP0_END, "top_2");
->> +                        mmio + cat->mdp[0].base + MDP_PERIPH_TOP0_END,
->> +                        "top_2");
->>       } else {
->> -        msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
->> -                dpu_kms->mmio + cat->mdp[0].base, "top");
->> +        msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len, mmio 
->> + cat->mdp[0].base,
->> +                        "top");
->>       }
->>       /* dump DSC sub-blocks HW regs info */
->> -    for (i = 0; i < cat->dsc_count; i++)
->> -        msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
->> -                dpu_kms->mmio + cat->dsc[i].base, "dsc_%d", i);
->> +    for (i = 0; i < cat->dsc_count; i++) {
->> +        base = cat->dsc[i].base;
->> +
->> +        if (cat->dsc[i].features & BIT(DPU_DSC_HW_REV_1_2)) {
->> +            struct dpu_dsc_blk enc = cat->dsc[i].sblk->enc;
->> +            struct dpu_dsc_blk ctl = cat->dsc[i].sblk->ctl;
->> +
->> +            /* For now, pass in a length of 0 because the DSC_BLK 
->> register space
->> +             * overlaps with the sblks' register space.
->> +             *
->> +             * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW 
->> catalog where
->> +             * applicable.
->> +             */
->> +            msm_disp_snapshot_add_block(disp_state, 0, mmio + base, 
->> "%s", cat->dsc[i].name);
->> +            msm_disp_snapshot_add_block(disp_state, enc.len, mmio + 
->> base + enc.base,
->> +                            "%s_%s", cat->dsc[i].name, enc.name);
->> +            msm_disp_snapshot_add_block(disp_state, ctl.len, mmio + 
->> base + ctl.base,
->> +                            "%s_%s", cat->dsc[i].name, ctl.name);
->> +        } else {
->> +            msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len, 
->> mmio + base, "%s",
->> +                            cat->dsc[i].name);
->> +        }
->> +    }
->>       pm_runtime_put_sync(&dpu_kms->pdev->dev);
->>   }
->>
-> 
+As an added bonus, the diff is 71+/192-, that means less code you will
+have to maintain ;)
+
+The patches generally don't change the behaviour, with a few exceptions,
+that are documented in the corresponding patches.
+
+I would like to draw the attention to a few patches in particular:
+
+- [01/23] the driver most likely does something that it shouldn't do
+  (use the same callbacks for runtime PM and system PM). The patch does
+  not change this behaviour but I have questions.
+
+- [11/23] uses platform_driver.{suspend,resume} instead of the regular
+  .driver.pm. I have no idea why it does that and I believe it doesn't
+  really have to.
+
+- [18/23] I feel like the qup_i2c_suspend / qup_i2c_resume don't really
+  need to exist, and the pm_runtime_force_suspend() /
+  pm_runtime_force_resume() helpers should be used instead, using the
+  DEFINE_RUNTIME_DEV_PM_OPS() macro.
+
+Cheers,
+-Paul
+
+Paul Cercueil (23):
+  i2c: amd-mp2: Remove #ifdef guards for PM related functions
+  i2c: au1550: Remove #ifdef guards for PM related functions
+  i2c: iproc: Remove #ifdef guards for PM related functions
+  i2c: brcmstb: Remove #ifdef guards for PM related functions
+  i2c: davinci: Remove #ifdef guards for PM related functions
+  i2c: designware: Remove #ifdef guards for PM related functions
+  i2c: exynos5: Remove #ifdef guards for PM related functions
+  i2c: hix5hd2: Remove #ifdef guards for PM related functions
+  i2c: i801: Remove #ifdef guards for PM related functions
+  i2c: img-scb: Remove #ifdef guards for PM related functions
+  i2c: kempld: Remove #ifdef guards for PM related functions
+  i2c: lpc2k: Remove #ifdef guards for PM related functions
+  i2c: mt65xx: Remove #ifdef guards for PM related functions
+  i2c: nomadik: Remove #ifdef guards for PM related functions
+  i2c: ocores: Remove #ifdef guards for PM related functions
+  i2c: pnx: Remove #ifdef guards for PM related functions
+  i2c: pxa: Remove #ifdef guards for PM related functions
+  i2c: qup: Remove #ifdef guards for PM related functions
+  i2c: rcar: Remove #ifdef guards for PM related functions
+  i2c: s3c2410: Remove #ifdef guards for PM related functions
+  i2c: sh-mobile: Remove #ifdef guards for PM related functions
+  i2c: virtio: Remove #ifdef guards for PM related functions
+  i2c: mux: pca954x: Remove #ifdef guards for PM related functions
+
+ drivers/i2c/busses/i2c-amd-mp2-pci.c        | 14 +++++--------
+ drivers/i2c/busses/i2c-amd-mp2-plat.c       |  8 ++------
+ drivers/i2c/busses/i2c-amd-mp2.h            |  2 --
+ drivers/i2c/busses/i2c-au1550.c             | 15 +++-----------
+ drivers/i2c/busses/i2c-bcm-iproc.c          | 10 +---------
+ drivers/i2c/busses/i2c-brcmstb.c            |  8 +++-----
+ drivers/i2c/busses/i2c-davinci.c            | 12 +++--------
+ drivers/i2c/busses/i2c-designware-platdrv.c | 22 ++++++---------------
+ drivers/i2c/busses/i2c-exynos5.c            |  8 +++-----
+ drivers/i2c/busses/i2c-hix5hd2.c            | 10 ++++------
+ drivers/i2c/busses/i2c-i801.c               |  6 ++----
+ drivers/i2c/busses/i2c-img-scb.c            | 13 ++++--------
+ drivers/i2c/busses/i2c-kempld.c             |  9 ++-------
+ drivers/i2c/busses/i2c-lpc2k.c              |  8 +-------
+ drivers/i2c/busses/i2c-mt65xx.c             |  8 +++-----
+ drivers/i2c/busses/i2c-nomadik.c            | 14 +++++--------
+ drivers/i2c/busses/i2c-ocores.c             | 10 +++-------
+ drivers/i2c/busses/i2c-pnx.c                | 12 ++++-------
+ drivers/i2c/busses/i2c-pxa.c                |  8 +-------
+ drivers/i2c/busses/i2c-qup.c                | 16 ++++-----------
+ drivers/i2c/busses/i2c-rcar.c               | 10 ++--------
+ drivers/i2c/busses/i2c-s3c2410.c            | 14 +++----------
+ drivers/i2c/busses/i2c-sh_mobile.c          | 12 +++--------
+ drivers/i2c/busses/i2c-virtio.c             |  8 ++------
+ drivers/i2c/muxes/i2c-mux-pca954x.c         |  6 ++----
+ 25 files changed, 71 insertions(+), 192 deletions(-)
+
+-- 
+2.40.1
+
