@@ -2,81 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88BA6747DDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 09:07:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDA81747E48
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 09:32:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231559AbjGEHG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 03:06:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37964 "EHLO
+        id S231503AbjGEHcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 03:32:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbjGEHG6 (ORCPT
+        with ESMTP id S231290AbjGEHcX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 03:06:58 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E60B4CA;
-        Wed,  5 Jul 2023 00:06:57 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3654FZa7017578;
-        Wed, 5 Jul 2023 07:06:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rEM368YRnqn41jsg/aSUs6ygVV/RoLHVCaBrIX1eK/o=;
- b=nMywXl8jWPnIQnsqn6U+zC375AwZ4BkUwSkhFohouOXw8tVB2v7BVyvrQrNxp56PRNq/
- m7X9UkxcXrn0OrNatfO25RGIivBQkVwiMa47Dbchu9HzB8PmoubRU+jJpaXok53v2gUm
- M9k7PL+oxRwq1v2kxC6LAicZc7bHYr2x8Zm58Fw1vYcjM9uM8P6eDn1mCE7oWdJJkDax
- URAhJKnwjBoBk7w4TOiszm1OzT8JzFL8doqKpCjElR9BAueLEe4EqZKZrJ+o7Jgk/dzo
- zwKGIqydArIvGWoslwTQktpiptmT6YxC45xr3LOYc16IVUAPKvq2hcmepqJwi8W0N8DJ 3A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmhf12781-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Jul 2023 07:06:54 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36576r4p021077
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Jul 2023 07:06:53 GMT
-Received: from [10.214.230.142] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Wed, 5 Jul 2023
- 00:06:49 -0700
-Message-ID: <db283531-36a2-0535-4fe2-d1571b3fa8cb@quicinc.com>
-Date:   Wed, 5 Jul 2023 12:36:45 +0530
+        Wed, 5 Jul 2023 03:32:23 -0400
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC82171B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 00:32:11 -0700 (PDT)
+Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: marex@denx.de)
+        by phobos.denx.de (Postfix) with ESMTPSA id 21F6885241;
+        Wed,  5 Jul 2023 09:31:58 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+        s=phobos-20191101; t=1688542319;
+        bh=NsgHjHOtkMUFlzu/DAehFea6k3vOfcJfJ2pn8Oy6jmw=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=iibcjsyndHS6YsbCOJG8wfHKBJxzFPkcWJAF4LH3pAmy1Ak+bOWkFoIifBlXaNA96
+         QLD1WC8DFkvBo/t6KZHwV0IIC8HVP6Qq/sIdq6AToRy5gtwiYCq8X49drt2VVEWcIl
+         +3Tbex9gba1cU3qJ7f8pi74tZlVsHFW6Vzh2RLiDcbIIfbxOpGziGo5D1OVUUydUMP
+         srfKG7ikJ/loPcb1Buo152RyuDeIRLvyxVl6jdJdFs5v5uOO8zgrmq/IYAUJicY5tx
+         v2WWiSoSzqQ5s0krgZ9tSFzqfZi9Sqj40tmvwHrVv4meFxnU+t4eAbXpyx67dT0OPb
+         Vxsj2OCQet4OQ==
+Message-ID: <707c8123-f2be-a803-f4d7-5406c8f32a6b@denx.de>
+Date:   Wed, 5 Jul 2023 09:31:57 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved memory
- region
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
- <20230705053914.9759-2-quic_kbajaj@quicinc.com>
- <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uaV8lcOLbK13ZG0c39-1cqIj44sRRm1-
-X-Proofpoint-ORIG-GUID: uaV8lcOLbK13ZG0c39-1cqIj44sRRm1-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-04_16,2023-07-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 adultscore=0
- suspectscore=0 mlxscore=0 phishscore=0 mlxlogscore=821 spamscore=0
- bulkscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2307050063
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     Jagan Teki <jagan@amarulasolutions.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Amit Pundir <amit.pundir@linaro.org>,
+        dri-devel@lists.freedesktop.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20230403221233.500485-1-marex@denx.de>
+ <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMty3ZBQajyg0SNz+AjQzth_O_EmrZ9cUyfM--0ptJQ5F0MRfg@mail.gmail.com>
+From:   Marek Vasut <marex@denx.de>
+In-Reply-To: <CAMty3ZBQajyg0SNz+AjQzth_O_EmrZ9cUyfM--0ptJQ5F0MRfg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,69 +75,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/5/2023 11:19 AM, Dmitry Baryshkov wrote:
-> On Wed, 5 Jul 2023 at 08:40, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->> Add missing reserved regions as described in QDU1000 memory map.
+On 7/5/23 07:46, Jagan Teki wrote:
+> On Wed, Jul 5, 2023 at 11:09 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 >>
->> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 26 ++++++++++++++++++++++++
->>   1 file changed, 26 insertions(+)
+>> [Adding freedreno@ to cc list]
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> index 1d22f87fd238..3f5512ec0a90 100644
->> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> @@ -448,6 +448,32 @@ &qupv3_id_0 {
->>          status = "okay";
->>   };
+>> On Wed, 5 Jul 2023 at 08:31, Jagan Teki <jagan@amarulasolutions.com> wrote:
+>>>
+>>> Hi Amit,
+>>>
+>>> On Wed, Jul 5, 2023 at 10:15 AM Amit Pundir <amit.pundir@linaro.org> wrote:
+>>>>
+>>>> Hi Marek,
+>>>>
+>>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
+>>>>>
+>>>>> Do not generate the HS front and back porch gaps, the HSA gap and
+>>>>> EOT packet, as these packets are not required. This makes the bridge
+>>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
+>>>>
+>>>> This patch broke display on Dragonboard 845c (SDM845) devboard running
+>>>> AOSP. This is what I see
+>>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
+>>>> Reverting this patch fixes this regression for me.
+>>>
+>>> Might be msm dsi host require proper handling on these updated
+>>> mode_flags? did they?
 >>
->> +&reserved_memory{
->> +       #address-cells = <2>;
->> +       #size-cells = <2>;
->> +       ranges;
->> +
->> +       ecc_meta_data_reserved_mem:ecc_meta_data_reserved_region@e0000000{
-> no_underscores_in_node_names. Ever.
->
-> Also, if you have checked other platforms, you'd have seen that other
-> platforms use a much more generic node name for 'memory' nodes (which
-> you should have used too).
+>> The msm DSI host supports those flags. Also, I'd like to point out
+>> that the patch didn't change the rest of the driver code. So even if
+>> drm/msm ignored some of the flags, it should not have caused the
+>> issue. Most likely the issue is on the lt9611 side. I's suspect that
+>> additional programming is required to make it work with these flags.
+> 
+> True, But I'm not quite sure, most of these mode_flags were handled
+> more on the host. Maybe Marek can comment on this.
 
-These memory nodes are new to QDU platform, so will it be okay if I keep 
-these names without region suffix?
-
-Thanks
-Komal
-
->
->> +               no-map;
->> +               reg = <0x0 0xe0000000 0x0 0x20000000>;
->> +       };
->> +
->> +       harq_buffer_mem:harq_buffer_region@800000000{
->> +               no-map;
->> +               reg = <0x8 0x0 0x0 0x80000000>;
->> +       };
->> +
->> +       tenx_sp_buffer_mem:tenx_sp_buffer_region@880000000{
->> +               no-map;
->> +               reg = <0x8 0x80000000 0x0 0x50000000>;
->> +       };
->> +
->> +       fapi_buffer_mem:fapi_buffer_region@8d0000000{
->> +               no-map;
->> +               reg = <0x8 0xd0000000 0x0 0x20000000>;
->> +       };
->> +};
->> +
->>   &sdhc {
->>          pinctrl-0 = <&sdc_on_state>;
->>          pinctrl-1 = <&sdc_off_state>;
->> --
->> 2.40.1
->>
->
-
+So, we have the same flags, but two different controllers produce 
+different DSI streams ? Do we have any way to analyze the stream 
+produced by each controller, to figure out which one is wrong and which 
+one is right ?
