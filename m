@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59E49747CE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 08:17:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88BA6747DDD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 09:07:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231522AbjGEGRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 02:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38432 "EHLO
+        id S231559AbjGEHG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 03:06:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbjGEGRM (ORCPT
+        with ESMTP id S230286AbjGEHG6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 02:17:12 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D31C410EA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 23:17:10 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b6ef64342aso34256581fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 23:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688537829; x=1691129829;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=90vFHFNv8Z4EnqFJciqEXi399O0ahUbhYDsrlxPDfUA=;
-        b=ZmcAsyvfEgsv3Kwm+U6DlC5Ix5sl36izoQPtKwWwQXUXXk9e96NWXqqiH/MdmdOQ68
-         6Y+kREJdwA7kgrbS+bngxnH+GlQfk/5CvT4xdIbRB8j0e9JsV5KwoLN4h3w4XeVrPOZ9
-         gyopY24vIoXs2o/zSgUQJO189T7kUPedathiv/f1g4jMjrWmJTTsrwIuoM36YCk4epoK
-         3qtnWlIf12SBeOj7oQ1uxCrRsUkLVuE1VzzGPYF/nditBmMYJ2kca1xN+Xl3xlpwHCJd
-         iF0A6izZqoI/LQL0dwhehqI/cgJnzGT/EjBz3nXouh5WwOSXCIM9ILveifP2hrDqEh7P
-         CbOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688537829; x=1691129829;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=90vFHFNv8Z4EnqFJciqEXi399O0ahUbhYDsrlxPDfUA=;
-        b=leeP3752SJwy7k2jGQrPzl/5nYrLWagfi5B9Oy+3RQlDl2autT85mkilnyW8BD5E6X
-         0X91auk9VoqA7pGUQY5y2/mUqZgKInmK9j+GhODKsyvXhdijP0E0Dg+/G39/2dQ2yBCN
-         I2MNxCz9gzU3XzYP31PtJ/Rl7J5kbjIeEGcvfK7Q4bemcGMugU/6/P+x32jwvegCiuiN
-         vpaGuMZcgd1AaFvrpfExUrt3LhnVZhgQpph0Uool4VHvz3XOKXqNm+CADw0ZSH0BEBzK
-         INV3cfKjFWwseZyPYeBXM/YGW4KbKeoR3noIVtrf5cKGl4Omrst7757DsId8z71KtOtr
-         0FRg==
-X-Gm-Message-State: ABy/qLZ4GGjvH81jufHSAy3/6pbGtjCBPrqvDKZ8CMCLLuaCtJGQ64UC
-        Tcf157IymwgYoE2K0BrNYk6YpA==
-X-Google-Smtp-Source: APBJJlFEGjzSwAu/PuXg2rA//CTojQCgKRBCyvzFiOBPJoQUTeMenTuSrLxZqCx2g7wC+7Wnju1qjA==
-X-Received: by 2002:a2e:6a0f:0:b0:2b6:cf18:77e0 with SMTP id f15-20020a2e6a0f000000b002b6cf1877e0mr10155024ljc.48.1688537829112;
-        Tue, 04 Jul 2023 23:17:09 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id r19-20020aa7cfd3000000b0051e06693590sm4552748edy.91.2023.07.04.23.17.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jul 2023 23:17:08 -0700 (PDT)
-Message-ID: <d339d413-5242-0d5a-96f6-c2f670e5e5dc@linaro.org>
-Date:   Wed, 5 Jul 2023 08:17:06 +0200
+        Wed, 5 Jul 2023 03:06:58 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E60B4CA;
+        Wed,  5 Jul 2023 00:06:57 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3654FZa7017578;
+        Wed, 5 Jul 2023 07:06:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=rEM368YRnqn41jsg/aSUs6ygVV/RoLHVCaBrIX1eK/o=;
+ b=nMywXl8jWPnIQnsqn6U+zC375AwZ4BkUwSkhFohouOXw8tVB2v7BVyvrQrNxp56PRNq/
+ m7X9UkxcXrn0OrNatfO25RGIivBQkVwiMa47Dbchu9HzB8PmoubRU+jJpaXok53v2gUm
+ M9k7PL+oxRwq1v2kxC6LAicZc7bHYr2x8Zm58Fw1vYcjM9uM8P6eDn1mCE7oWdJJkDax
+ URAhJKnwjBoBk7w4TOiszm1OzT8JzFL8doqKpCjElR9BAueLEe4EqZKZrJ+o7Jgk/dzo
+ zwKGIqydArIvGWoslwTQktpiptmT6YxC45xr3LOYc16IVUAPKvq2hcmepqJwi8W0N8DJ 3A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmhf12781-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Jul 2023 07:06:54 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36576r4p021077
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Jul 2023 07:06:53 GMT
+Received: from [10.214.230.142] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Wed, 5 Jul 2023
+ 00:06:49 -0700
+Message-ID: <db283531-36a2-0535-4fe2-d1571b3fa8cb@quicinc.com>
+Date:   Wed, 5 Jul 2023 12:36:45 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V7 1/2] dt-bindings: firmware: bootstats: Add the dtschema
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved memory
+ region
 Content-Language: en-US
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1688533340.git.quic_schowdhu@quicinc.com>
- <b3105990e021a71039f621e6c4e70ab05fb348fa.1688533340.git.quic_schowdhu@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b3105990e021a71039f621e6c4e70ab05fb348fa.1688533340.git.quic_schowdhu@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
+ <20230705053914.9759-2-quic_kbajaj@quicinc.com>
+ <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uaV8lcOLbK13ZG0c39-1cqIj44sRRm1-
+X-Proofpoint-ORIG-GUID: uaV8lcOLbK13ZG0c39-1cqIj44sRRm1-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-04_16,2023-07-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 impostorscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 phishscore=0 mlxlogscore=821 spamscore=0
+ bulkscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2307050063
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,82 +85,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2023 07:32, Souradeep Chowdhury wrote:
-> Add the device tree bindings for boot stats. This has 2 properties
-> pre-abl-time and abl-time which records the timestamps for boot
-> stats.
-> 
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> Link: https://lore.kernel.org/linux-arm-kernel/7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com/
-> ---
->  .../bindings/firmware/qcom,bootstats.yaml     | 38 +++++++++++++++++++
->  1 file changed, 38 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,bootstats.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,bootstats.yaml b/Documentation/devicetree/bindings/firmware/qcom,bootstats.yaml
-> new file mode 100644
-> index 000000000000..22e697524058
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,bootstats.yaml
-> @@ -0,0 +1,38 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/firmware/qcom,bootstats.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Boot Stats
 
-This explains nothing...
 
-> +
-> +maintainers:
-> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> +
-> +description: |
+On 7/5/2023 11:19 AM, Dmitry Baryshkov wrote:
+> On Wed, 5 Jul 2023 at 08:40, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>> Add missing reserved regions as described in QDU1000 memory map.
+>>
+>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 26 ++++++++++++++++++++++++
+>>   1 file changed, 26 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>> index 1d22f87fd238..3f5512ec0a90 100644
+>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>> @@ -448,6 +448,32 @@ &qupv3_id_0 {
+>>          status = "okay";
+>>   };
+>>
+>> +&reserved_memory{
+>> +       #address-cells = <2>;
+>> +       #size-cells = <2>;
+>> +       ranges;
+>> +
+>> +       ecc_meta_data_reserved_mem:ecc_meta_data_reserved_region@e0000000{
+> no_underscores_in_node_names. Ever.
+>
+> Also, if you have checked other platforms, you'd have seen that other
+> platforms use a much more generic node name for 'memory' nodes (which
+> you should have used too).
 
-Drop |
+These memory nodes are new to QDU platform, so will it be okay if I keep 
+these names without region suffix?
 
-> +    Qualcomm's proprietary Android boot-loaders capture boot time
+Thanks
+Komal
 
-Wrong indentation.
-
-> +    stats, like the time when the bootloader started execution and
-> +    at what point the bootloader handed over control to the kernel.
-> +    This is captured in the unit of ms in devicetree property.
-> +
-> +properties:
-> +  pre-abl-time:
-> +    description: The property to store the starting point of abl in ms.
-
-String instead of ms? No, this is the craziest idea I saw recently. Use
--ms suffix.
-
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-> +
-> +  abl-time:
-> +    description: The property to store the duration of abl in ms.
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-
-I have no clue what this entire binding is about. Nothing can bind to
-it, no usage explained. Properties are not used to "store the duration".
-This does not look like suitable for DT, drop entire binding.
-
-> +
-> +required:
-> +  - pre-abl-time
-> +  - abl-time
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    bootstats {
-> +        pre-abl-time="17627";
-> +        abl-time="26748";
-
-Missing spaces. Open existing DTS and look at existing coding style.
-
-Best regards,
-Krzysztof
+>
+>> +               no-map;
+>> +               reg = <0x0 0xe0000000 0x0 0x20000000>;
+>> +       };
+>> +
+>> +       harq_buffer_mem:harq_buffer_region@800000000{
+>> +               no-map;
+>> +               reg = <0x8 0x0 0x0 0x80000000>;
+>> +       };
+>> +
+>> +       tenx_sp_buffer_mem:tenx_sp_buffer_region@880000000{
+>> +               no-map;
+>> +               reg = <0x8 0x80000000 0x0 0x50000000>;
+>> +       };
+>> +
+>> +       fapi_buffer_mem:fapi_buffer_region@8d0000000{
+>> +               no-map;
+>> +               reg = <0x8 0xd0000000 0x0 0x20000000>;
+>> +       };
+>> +};
+>> +
+>>   &sdhc {
+>>          pinctrl-0 = <&sdc_on_state>;
+>>          pinctrl-1 = <&sdc_off_state>;
+>> --
+>> 2.40.1
+>>
+>
 
