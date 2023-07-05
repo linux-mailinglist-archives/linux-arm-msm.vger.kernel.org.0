@@ -2,210 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CADF17483B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 14:04:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89FB47483D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 14:11:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbjGEMEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 08:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60670 "EHLO
+        id S231938AbjGEMLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 08:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbjGEMEG (ORCPT
+        with ESMTP id S230100AbjGEMLG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 08:04:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6061706;
-        Wed,  5 Jul 2023 05:04:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        Wed, 5 Jul 2023 08:11:06 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C87BE;
+        Wed,  5 Jul 2023 05:11:05 -0700 (PDT)
+Received: from benjamin-XPS-13-9310.. (unknown [IPv6:2a01:e0a:120:3210:cbfb:e358:222c:d8c1])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 68D2261516;
-        Wed,  5 Jul 2023 12:04:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C41C433C8;
-        Wed,  5 Jul 2023 12:04:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688558643;
-        bh=zpQHiah5pU5ivi5QnyiHH3I+kbG+Eq4swtcEgTjXUaA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZsPAFsMvzkFtlDcZtJDpGIX2qQVVvXrwaEzMc7YGvKZhROXNuKvg722OlAweWXL/Z
-         j/jjr5q2t1u9HoihkQya58R90kZ8PdgAnd8yduFaPMAyXzRdjHcwUMfWJeFXrfIJ3G
-         EjC2RAZc6dMyu2vTUkhLFprfZWTXvfJ96Wi2veiK2ujOoYv4keYHeszKrCwk5uXp9Z
-         fDKdRi4Mtl+hulGM3htJArlZxOiz07hCizRGXwqFm6LXkHSfc7u8w8yTPDRbRer9RX
-         3mpjgitDz4YcBfN48skVFGVMqzApFLpaGUrl/wa9xzf94H/A7MXMOVghnRJEJfUUkP
-         HfXztUJE8FJPA==
-Date:   Wed, 5 Jul 2023 14:04:00 +0200
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: RFC: DSI host capabilities (was: [PATCH RFC 03/10] drm/panel:
- Add LGD panel driver for Sony Xperia XZ3)
-Message-ID: <epds77sccy4cc5cdpoc4ir7sfz5sz3biwep6rbks2nuyqncidu@77gb4t2wy6vn>
-References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
- <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
- <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
- <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
- <617c8f8a-1fc7-c6a0-eaa5-ce75ff2adc1b@linaro.org>
- <CAA8EJppG=MAVpK1J_8bNnkJ23y9NtgY7a2GVResXJvhEKyNsrw@mail.gmail.com>
- <739a8bd9-9ff0-5072-fdae-b64efdf86842@collabora.com>
- <e927cfcd-bf34-5daf-0e24-4dd828106968@linaro.org>
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 354B266020F5;
+        Wed,  5 Jul 2023 13:11:03 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1688559063;
+        bh=0EkrhqfP9XUDXvCh3iJ2AF/1rs8GBjnfIgfGSYhPJMo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=e6SFTrA/Jj+0xACBNA/LjXYY9LHtlF9uNFamKrovQoUdpxcuDIYTWlQSlXqaRrpcZ
+         Dq/N3wsdZeHPIrDsTpHSteNF04Q+7zKvF4sJM6Wv8kZmIw0TME12eRRkqOSUrySuoz
+         IqcVmjQQpgDuHQEZtVa6hhfAClSumhkjq7+Kjs5pWAwt/U/qkATMvIothDaB90hsby
+         wcsNZuJ9PtKJhAiuVkuFd4j3T7F1QxCo9TC5y2utZmibmDhAqxTjpCVGk4CrNbEsN+
+         n+Ouqv0/ZvYpSMoeB3Bp9OLkxm/Aja9VtC4x9ANyRK7exm3NQd4fx4A1m03koZg2Bo
+         z2ZmREQ30ZsHw==
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: [PATCH v4 00/10]  Add DELETE_BUF ioctl
+Date:   Wed,  5 Jul 2023 14:10:46 +0200
+Message-Id: <20230705121056.37017-1-benjamin.gaignard@collabora.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vjd4hy6ibnmkekav"
-Content-Disposition: inline
-In-Reply-To: <e927cfcd-bf34-5daf-0e24-4dd828106968@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Unlike when resolution change on keyframes, dynamic resolution change
+on inter frames doesn't allow to do a stream off/on sequence because
+it is need to keep all previous references alive to decode inter frames.
+This constraint have two main problems:
+- more memory consumption.
+- more buffers in use.
+To solve these issue this series introduce DELETE_BUFS ioctl and remove
+the 32 buffers limit per queue.
 
---vjd4hy6ibnmkekav
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+VP9 conformance tests using fluster give a score of 210/305.
+The 24 resize inter tests (vp90-2-21-resize_inter_* files) are ok
+but require to use postprocessor.
 
-Hi,
+Kernel branch is available here:
+https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v4
 
-On Tue, May 30, 2023 at 03:36:04PM +0300, Dmitry Baryshkov wrote:
-> On 30/05/2023 15:15, AngeloGioacchino Del Regno wrote:
-> > Il 30/05/23 13:44, Dmitry Baryshkov ha scritto:
-> > > On Tue, 30 May 2023 at 10:24, Neil Armstrong
-> > > <neil.armstrong@linaro.org> wrote:
-> > > >=20
-> > > > Hi Marijn, Dmitry, Caleb, Jessica,
-> > > >=20
-> > > > On 29/05/2023 23:11, Marijn Suijten wrote:
-> > > > > On 2023-05-22 04:16:20, Dmitry Baryshkov wrote:
-> > > > > <snip>
-> > > > > > > +=A0=A0 if (ctx->dsi->dsc) {
-> > > > > >=20
-> > > > > > dsi->dsc is always set, thus this condition can be dropped.
-> > > > >=20
-> > > > > I want to leave room for possibly running the panel without DSC (=
-at a
-> > > > > lower resolution/refresh rate, or at higher power consumption if =
-there
-> > > > > is enough BW) by not assigning the pointer, if we get access to p=
-anel
-> > > > > documentation: probably one of the magic commands sent in this dr=
-iver
-> > > > > controls it but we don't know which.
-> > > >=20
-> > > > I'd like to investigate if DSC should perhaps only be enabled if we
-> > > > run non certain platforms/socs ?
-> > > >=20
-> > > > I mean, we don't know if the controller supports DSC and those
-> > > > particular
-> > > > DSC parameters so we should probably start adding something like :
-> > > >=20
-> > > > static drm_dsc_config dsc_params_qcom =3D {}
-> > > >=20
-> > > > static const struct of_device_id panel_of_dsc_params[] =3D {
-> > > > =A0=A0=A0=A0=A0=A0=A0=A0 { .compatible =3D "qcom,sm8150", , .data =
-=3D &dsc_params_qcom },
-> > > > =A0=A0=A0=A0=A0=A0=A0=A0 { .compatible =3D "qcom,sm8250", , .data =
-=3D &dsc_params_qcom },
-> > > > =A0=A0=A0=A0=A0=A0=A0=A0 { .compatible =3D "qcom,sm8350", , .data =
-=3D &dsc_params_qcom },
-> > > > =A0=A0=A0=A0=A0=A0=A0=A0 { .compatible =3D "qcom,sm8450", , .data =
-=3D &dsc_params_qcom },
-> > > > };
-> > >=20
-> > > I think this would damage the reusability of the drivers. The panel
-> > > driver does not actually care if the SoC is SM8350, sunxi-something or
-> > > RCar.
-> > > Instead it cares about host capabilities.
-> > >=20
-> > > I think instead we should extend mipi_dsi_host:
-> > >=20
-> > > #define MIPI_DSI_HOST_MODE_VIDEO BIT(0)
-> > > #define MIPI_DSI_HOST_MODE_CMD=A0 BIT(1)
-> > > #define MIPI_DSI_HOST_VIDEO_SUPPORTS_COMMANDS BIT(2)
-> > > // FIXME: do we need to provide additional caps here ?
-> > >=20
-> > > #define MIPI_DSI_DSC_1_1 BIT(0)
-> > > #define MIPI_DSI_DSC_1_2 BIT(1)
-> > > #define MIPI_DSI_DSC_NATIVE_422 BIT(2)
-> > > #define MIPI_DSI_DSC_NATIVE_420 BIT(3)
-> > > #define MIPI_DSI_DSC_FRAC_BPP BIT(4)
-> > > // etc.
-> > >=20
-> > > struct mipi_dsi_host {
-> > > =A0 // new fields only
-> > > =A0=A0 unsigned long mode_flags;
-> > > =A0=A0 unsigned long dsc_flags;
-> > > };
-> > >=20
-> > > Then the panel driver can adapt itself to the host capabilities and
-> > > (possibly) select one of the internally supported DSC profiles.
-> > >=20
-> >=20
-> > I completely agree about extending mipi_dsi_host, other SoCs could reuse
-> > that and
-> > support for DSC panels would become a lot cleaner.
->=20
-> Sounds good. I will wait for one or two more days (to get the possible
-> feedback on fields/flags/etc) and post an RFC patch to dri-devel.
+GStreamer branch to use DELETE_BUF ioctl and testing dynamic resolution
+change is here:
+https://gitlab.freedesktop.org/benjamin.gaignard1/gstreamer/-/commits/VP9_drc
 
-I just came across that discussion, and couldn't find those patches, did
-you ever send them?
+changes in version 4:
+- Stop using Xarray, instead let queues decide about their own maximum
+  number of buffer and allocate bufs array given that value.
+- Rework offset cookie encoding pattern.
+- Change DELETE_BUF to DELETE_BUFS because it now usable for
+  range of buffer to be symetrical of CREATE_BUFS.
+- Add fixes tags on couple of Verisilicon related patches.
+- Be smarter in Verisilicon postprocessor buffers management.
+- Rebase on top of v6.4
 
-Either way, I'm not really sure it's a good idea to multiply the
-capabilities flags of the DSI host, and we should just stick to the
-spec. If the spec says that we have to support DSC while video is
-output, then that's what the panels should expect.
+changes in version 3:
+- Use Xarray API to store allocated video buffers.
+- No module parameter to limit the number of buffer per queue.
+- Use Xarray inside Verisilicon driver to store postprocessor buffers
+  and remove VB2_MAX_FRAME limit.
+- Allow Versilicon driver to change of resolution while streaming
+- Various fixes the Verisilicon VP9 code to improve fluster score.
+ 
+changes in version 2:
+- Use a dynamic array and not a list to keep trace of allocated buffers.
+  Not use IDR interface because it is marked as deprecated in kernel
+  documentation.
+- Add a module parameter to limit the number of buffer per queue.
+- Add DELETE_BUF ioctl and m2m helpers.
+ 
+Benjamin Gaignard (10):
+  media: videobuf2: Access vb2_queue bufs array through helper functions
+  media: videobuf2: Be more flexible on the number of queue stored
+    buffers
+  media: videobuf2: Rework offset 'cookie' encoding pattern
+  media: verisilicon: Refactor postprocessor to store more buffers
+  media: verisilicon: Store chroma and motion vectors offset
+  media: verisilicon: vp9: Use destination buffer height to compute
+    chroma offset
+  media: verisilicon: postproc: Fix down scale test
+  media: verisilicon: vp9: Allow to change resolution while streaming
+  media: v4l2: Add DELETE_BUFS ioctl
+  media: v4l2: Add mem2mem helpers for DELETE_BUFS ioctl
 
-If a host isn't able to provide that, it's a bug and we should fix the
-controller driver instead of creating a workaround in the core for
-broken drivers.
+ .../userspace-api/media/v4l/user-func.rst     |   1 +
+ .../media/v4l/vidioc-delete-bufs.rst          |  73 +++++
+ .../media/common/videobuf2/videobuf2-core.c   | 304 +++++++++++++-----
+ .../media/common/videobuf2/videobuf2-v4l2.c   |  44 ++-
+ drivers/media/platform/amphion/vpu_dbg.c      |  22 +-
+ .../platform/mediatek/jpeg/mtk_jpeg_core.c    |   6 +-
+ .../vcodec/vdec/vdec_vp9_req_lat_if.c         |   2 +-
+ drivers/media/platform/st/sti/hva/hva-v4l2.c  |   4 +
+ drivers/media/platform/verisilicon/hantro.h   |   9 +-
+ .../media/platform/verisilicon/hantro_drv.c   |   4 +-
+ .../platform/verisilicon/hantro_g2_vp9_dec.c  |  10 +-
+ .../media/platform/verisilicon/hantro_hw.h    |   2 +-
+ .../platform/verisilicon/hantro_postproc.c    | 105 ++++--
+ .../media/platform/verisilicon/hantro_v4l2.c  |  27 +-
+ drivers/media/test-drivers/vim2m.c            |   1 +
+ drivers/media/test-drivers/visl/visl-dec.c    |  28 +-
+ drivers/media/v4l2-core/v4l2-dev.c            |   1 +
+ drivers/media/v4l2-core/v4l2-ioctl.c          |  17 +
+ drivers/media/v4l2-core/v4l2-mem2mem.c        |  20 ++
+ .../staging/media/atomisp/pci/atomisp_ioctl.c |   2 +-
+ include/media/v4l2-ioctl.h                    |   4 +
+ include/media/v4l2-mem2mem.h                  |  12 +
+ include/media/videobuf2-core.h                |  13 +-
+ include/media/videobuf2-v4l2.h                |  11 +
+ include/uapi/linux/videodev2.h                |  17 +
+ 25 files changed, 592 insertions(+), 147 deletions(-)
+ create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst
 
-Another concern I have is that, those broken drivers are usually the
-undocumented ones that already have trouble supporting the most trivial
-setup. Creating more combinations both at the controller and panel level
-will just make it harder for those drivers.
+-- 
+2.39.2
 
-Maxime
-
---vjd4hy6ibnmkekav
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZKVcMAAKCRDj7w1vZxhR
-xeVgAQDMoWfOkJ4iYKGDevKKuJrt/Yox11zWBcNz3kO+JHvKCgEA1xY50FGJLaT2
-cS39fgkgt4dP5e/C3mtQGra1z+NhNgM=
-=LKUp
------END PGP SIGNATURE-----
-
---vjd4hy6ibnmkekav--
