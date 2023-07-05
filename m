@@ -2,139 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F05F748183
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 11:54:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 951C9748216
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 12:26:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231991AbjGEJyh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 05:54:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34678 "EHLO
+        id S231613AbjGEK03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 06:26:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231955AbjGEJyg (ORCPT
+        with ESMTP id S231608AbjGEK03 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 05:54:36 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8184D171B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 02:54:34 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99364ae9596so376167166b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 02:54:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688550873; x=1691142873;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TVAJWg0I/HeACNC/zy3nFezd4dRzO+0cU65ERxt6e5A=;
-        b=IAqlJpp9lEg+99I2kgGQin+C7Sa8Ra+ZU4L5NYtlrWxz2TUT3Kow0t3BcazVaGa7O7
-         6K7OnUF6jg6fALaTASBVpvEq1cshDZqIAW7p3Km4J6adCIl1ltJdrANBcAy0cfMzXzCf
-         4NOPw1ZiPDfwrB9kMgXXzZiy0yrofWNtl/5j/LyKUM8Jbb6/xbUeJfDfJXxtWYwV0tzE
-         C5Xb3LioIcBtVF7nDBESyR+h7NElPUwHUrNWI90czJS3vzDkIawRAY+xetKFUk/E5yol
-         qgZu6zs+QI1JE8PhYVcD/kZTFxd6sUexE5U2OFTb/Mhp2bzrlH8Vu7dx6tPch4Qx50T2
-         7C7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688550873; x=1691142873;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TVAJWg0I/HeACNC/zy3nFezd4dRzO+0cU65ERxt6e5A=;
-        b=TiIUBIqwWLk5zE9DiFeHCkIMINI+EJlRbgwtMZp97o+bCNUq7dnS5DoIsRvMnv0FBJ
-         8tSPAhYe1HJIgMFFeuv3l81NyMZcjOKdrqSlCjjfX2pBDm4222Kt7nI+m1QQozII3e7O
-         3DkBonUmO7LQnfcUPzqVVua1BEw2nrD6bdo1Xh5R2pVV+M3VHn4hyUhpF7zHQGstgwJV
-         kfb30x43I8XzxL2d9gNMHnDTCzZFGWQwWmC5EbuNiuHPy2/1LlbpHTlBxrZc1zFeE7wT
-         L004O4l+8eCkIJkHtdUPIKNFly456H9QJnNCcvsj8K5I2/JpAhH8PVHDPWsY4WcySX31
-         o8Dw==
-X-Gm-Message-State: ABy/qLbOi+d4SYpIGcsaWksFr/4Pduj8+ehA/fnVmVycDvdyJkbG6LCt
-        1xf4ORRFm/WOPaRMu6lLhtpsgR/H80HMptAgMNM=
-X-Google-Smtp-Source: ACHHUZ5W2hGP4f8dXuvYRWTyHfTgVsR/YjxrosQO10baQksmKKLIm3VXDUX8FJMugLE7X2n1g6ZhoA==
-X-Received: by 2002:a17:906:d961:b0:988:c3f9:3ad6 with SMTP id rp1-20020a170906d96100b00988c3f93ad6mr11780382ejb.42.1688550872960;
-        Wed, 05 Jul 2023 02:54:32 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id o18-20020a170906289200b00982b204678fsm14315546ejd.207.2023.07.05.02.54.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 02:54:32 -0700 (PDT)
-Message-ID: <038e7ea3-ef16-2344-6cba-88d7e5caf80c@linaro.org>
-Date:   Wed, 5 Jul 2023 11:54:29 +0200
+        Wed, 5 Jul 2023 06:26:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1368EE47;
+        Wed,  5 Jul 2023 03:26:28 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3659Jh6s021996;
+        Wed, 5 Jul 2023 10:26:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Pd0wPAecbmKewopctyLqhX2dCKdIxlm9ClD+0oDHU/E=;
+ b=ljrs2Ev0EY1kWeYZHIyQID3270Mcv2FKH6Xb/VmZfOG2TV2W25NkzYe4W7N9TJcF1n9W
+ JFGKqGgkg3/HlH+KoVjjuGTdcRxtqhpby+1PPfQXBjyrthrnfP8hDVNEo4krQt/RNvQw
+ /+KcI5P/lt62ZSG/+9WHJOR7uHEexnWAlYL2F0lmfijU9itnxh9JlD5vxXpkPgdJWWOS
+ tRuDXbaYGzrzZli+gv1uFL1SnOAy3K4NGfQ9NlU7OzHDJEf+xMtFCD3/1f2/EIu3dbQ0
+ GAz9Dlj85ZryhWpdDJqrr9XJ8vcyQirkQY1ghacvJmW2ukGQbJ8UGDP9GrdGIOp9/6Ia BQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmhf12jg6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Jul 2023 10:26:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 365AQHHe025285
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Jul 2023 10:26:17 GMT
+Received: from [10.216.2.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 5 Jul
+ 2023 03:25:39 -0700
+Message-ID: <bd91cf3e-3dd3-9ba8-ca66-9bd901984db6@quicinc.com>
+Date:   Wed, 5 Jul 2023 15:55:31 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: Add support for the Xiaomi SM7125
- platform
+Subject: Re: [PATCH] PCI: qcom: configure the parf halt window size to 1GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <bhelgaas@google.com>, <mani@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_ipkumar@quicinc.com>
+References: <20230623045731.29397-1-quic_devipriy@quicinc.com>
+ <c85284d9-c4e9-eae4-2551-5295c4462f3b@linaro.org>
 Content-Language: en-US
-To:     David Wronek <davidwronek@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230704163848.169853-2-davidwronek@gmail.com>
- <20230704163848.169853-9-davidwronek@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230704163848.169853-9-davidwronek@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <c85284d9-c4e9-eae4-2551-5295c4462f3b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rl0j3iXK59rX3RHaJA-fCbG4kiPyeyb_
+X-Proofpoint-ORIG-GUID: rl0j3iXK59rX3RHaJA-fCbG4kiPyeyb_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-05_02,2023-07-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1011 impostorscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 phishscore=0 mlxlogscore=947 spamscore=0
+ bulkscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2307050091
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/07/2023 18:32, David Wronek wrote:
-> There are 6 Xiaomi smartphones with the SM7125 SoC:
-> 
-> - POCO M2 Pro (gram)
-> - Redmi Note 9S (curtana)
-> - Redmi Note 9 Pro (Global, joyeuse)
-> - Redmi Note 9 Pro (India, curtana)
-> - Redmi Note 9 Pro Max (excalibur)
-> - Redmi Note 10 Lite (curtana)
-> 
-> These devices share a common board design (a.k.a miatoll) with only a
-> few differences. Add support for the common board, as well as support
-> for the global Redmi Note 9 Pro.
-> 
-> Signed-off-by: David Wronek <davidwronek@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/sm7125-xiaomi-joyeuse.dts   |  16 +
->  .../boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi  | 420 ++++++++++++++++++
->  3 files changed, 437 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sm7125-xiaomi-miatoll.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 337abc4ceb17..7ef9e7d43904 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -192,6 +192,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-xiaomi-joyeuse.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
-> new file mode 100644
-> index 000000000000..670fd63f3416
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dts
-> @@ -0,0 +1,16 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2023, David Wronek <davidwronek@gmail.com>
 
-I have some doubts that result looking exactly like other file is done
-not as derivative work. Please retain original copyrights.
 
-Best regards,
-Krzysztof
+On 6/23/2023 3:47 PM, Konrad Dybcio wrote:
+> On 23.06.2023 06:57, Devi Priya wrote:
+>> Configure the ADDR_BIT_INDEX of PARF_AXI_MSTR_WR_ADDR_HALT_V2 register with
+>> 0x1E to increase the halt window size to 1GB so that, when new inbound
+>> posted write transactions whose address crosses 1G address range, the
+>> controller would halt all the incoming writes until all the previous AXI
+>> responses are received.
+>>
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> ---
+> Has this been tested on anything except IPQ9574? Does it concern other
+> SoCs?
+This has been tested on IPQ6018 as well.
+> 
+> 
+>>   This patch depends on the below series which adds support for PCIe
+>>   controllers in IPQ9574
+>>   https://lore.kernel.org/linux-arm-msm/20230519090219.15925-1-quic_devipriy@quicinc.com/
+>>
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 9 +++++++++
+>>   1 file changed, 9 insertions(+)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index c7579dfa5b1c..26c40e006120 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -116,6 +116,8 @@
+>>   
+>>   /* PARF_AXI_MSTR_WR_ADDR_HALT register fields */
+>>   #define EN					BIT(31)
+>> +#define ADDR_BIT_INDEX				(BIT(0) | BIT(1) | BIT(2) | \
+>> +						BIT(3) | BIT(4) | BIT(5))
+> You surely should have the names of these bitfields, mind defining them?
+Will use GENMASK(5, 0) as suggested by Mani
+> 
+>>   
+>>   /* PARF_LTSSM register fields */
+>>   #define LTSSM_EN				BIT(8)
+>> @@ -154,6 +156,8 @@
+>>   
+>>   #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
+>>   
+>> +#define PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE	0x1e
+>> +
+>>   #define QCOM_PCIE_1_0_0_MAX_CLOCKS		4
+>>   struct qcom_pcie_resources_1_0_0 {
+>>   	struct clk_bulk_data clks[QCOM_PCIE_1_0_0_MAX_CLOCKS];
+>> @@ -1126,6 +1130,11 @@ static int qcom_pcie_post_init(struct qcom_pcie *pcie)
+>>   
+>>   	writel(0, pcie->parf + PARF_Q2A_FLUSH);
+>>   
+>> +	val = readl(pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
+>> +	val &= ~ADDR_BIT_INDEX;
+>> +	writel(val | PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE, pcie->parf +
+>> +			PARF_AXI_MSTR_WR_ADDR_HALT_V2);
+> val |= ..
+> writel(val, pcie..)
+> 
+> would be more readable
+Okay
 
+Thanks,
+Devi Priya
+> 
+> Konrad
+>> +
+>>   	dw_pcie_dbi_ro_wr_en(pci);
+>>   	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+>>   
