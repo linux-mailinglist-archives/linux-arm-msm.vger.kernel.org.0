@@ -2,175 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 060C37487C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 17:20:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00CB2748852
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 17:49:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232198AbjGEPU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 11:20:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49492 "EHLO
+        id S232416AbjGEPtP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 11:49:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbjGEPU1 (ORCPT
+        with ESMTP id S232587AbjGEPs6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 11:20:27 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5361170B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 08:20:25 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-c49777d6e7aso5686699276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 08:20:25 -0700 (PDT)
+        Wed, 5 Jul 2023 11:48:58 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F921730;
+        Wed,  5 Jul 2023 08:48:57 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-c2743325e2dso1293987276.1;
+        Wed, 05 Jul 2023 08:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688570425; x=1691162425;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NZAMOcL8Jye/af3yaSjbrvGPJfLK9qoKybBywpqSYP8=;
-        b=jaKnyeXhCzI63IG8PAR3T1afvNEDWJ4QxaglwGJLcLAiMtusHzWDfT3R+7QqeoPZAZ
-         9S87eUpSgJkC4oT81fduykICvwaAvcudNefYjQFyUNOfI/gJP9iGPbbXyCqtILscp41s
-         fv5eZVSshl+ws7ZrzhiVFxa9pq6drHc48QRv69rDqGaUcSZW7+bApiwqXpNlTifVPhMU
-         35+5IkVNuj4ZdR1GwzUggPVoIymBswYkanEgiA9MwzWpMe9z0H+QY4B8zVI/HO7DWnsg
-         IsvPUqF7Z4CCu6eOTjFX7WDZxHxX3eTu7pDz0rc2KhrYKd5SuPNEWPB5s7iZXJmWZfmv
-         rjEw==
+        d=gmail.com; s=20221208; t=1688572137; x=1691164137;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rADWg9u/1BJDYIt3vLRjrV0s75Gr6YuZE8thJU8q/rI=;
+        b=VU68UufOWgKJSjdhtCDRT9FixyTZ/q2/t2AjAxdb4F2M3BlToo54fs1FEA0XP6kRql
+         W5h3m/VZtGm790+6AOkFaIhAzmI9P4o0N+GgSJeK1t8yoqoXaoe1CHrlk0UybtpT4gNA
+         EDZX0DbhVcnJOpYLbBRQl8jgYd4Lz4Ux/2a+eJgGHCDEBtpUMyRfy3J+/5bYgUvoBodt
+         VrLsArNFscIKLEbOPBaW9Nzv8cEaT1Xs4eZzPOjYeld6gKoT5gS6wU0Z7A4IUJQQFBoU
+         EvCvAdYlHAO1zihB6YyEbGv3TcoGg/PuONPvNfLljmkjHVO5Hrww0l+mxOHrkOQMP6c2
+         BxRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688570425; x=1691162425;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NZAMOcL8Jye/af3yaSjbrvGPJfLK9qoKybBywpqSYP8=;
-        b=h4PDlnV92K22QMHqCSq8bxJhdofQQL9JIOLC1EWF8yeatBO481Yg7k4ShoOi/BfwT3
-         e1K3XcbVYFPyMrX2XqXb91KTHHn+76Qmh7U1MTh3/uPlNcMvyyQfCT5wU4+lGyLR3/e7
-         Z+T57pkvyYXobEjyr/Tw5ndH+bDZAmyc8W7Ujz1xt5TVydh3oi8ADbw8CyzUWdMVjt7i
-         rXmUSJ1QT08y7UJHv3/HJ1C6AVyj3dLo5PuMw5zLLDH7c/et0Sz6r8k2wDaye2CYFv2L
-         xwQSfcX0YUpUbDbfeh0H1chJrnjd9QQu1hoMlgee6e0R9RYdGdZM848Pr+GmNoSMP/2h
-         HuAg==
-X-Gm-Message-State: ABy/qLaxyxEdtks4D87G5ujFGx9qQsiLWOldwLumTGLSwt6YYzS6S0AZ
-        o9sWuo1oEcOPa/ae5b00+6qgnqgymVmDzgLU/eCTSQ==
-X-Google-Smtp-Source: APBJJlHk1vpTA5uaLaRclVjz1s9mRQt4WsK64OE9PqAsFvnK685YLuTLjbg0z+TgfGketcZHx+yKUNgzIr+d1TtcNtU=
-X-Received: by 2002:a25:bbc2:0:b0:bff:3a4:2354 with SMTP id
- c2-20020a25bbc2000000b00bff03a42354mr17196399ybk.42.1688570425038; Wed, 05
- Jul 2023 08:20:25 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688572137; x=1691164137;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rADWg9u/1BJDYIt3vLRjrV0s75Gr6YuZE8thJU8q/rI=;
+        b=PTq243Yg6wCN3/EE2k0WqWvrzcNZwiqf7bT6w++l2duObLAW5CsbMYNLSuMlYkoj9P
+         idaGsU3xiRPZsdmmT+GyrSCFzWlOhtKOxTdwcczpS3JC7rmdlc8R2evsuK7R10hP8zVj
+         Vh0kQf1rJ0qIPLLz5EusM+lJja3dycyZPR1UyULChSD7byp/HSKW6eUlq+OzrqhTHvsU
+         WOMbwdKozFCD0IknynIihKh4NJnOCwyHsmeGrBVNjrkbe45OmRcpeYtNJjhHo1CoDihd
+         y8ECOOpvKGmrxpiXGioaZI0GWDorNc9+dXEtqo8n40btX5BMm6DPAX1gNiiwkWh88xOi
+         BjOg==
+X-Gm-Message-State: ABy/qLZ9DQ/Vei71T68Wk/KAOOfH4S0MTxz9Jd3jZ2vXA17sdrkKdIaC
+        n4GqR+6EBqZMwRyyzuVsjH/D50wQMndUU+aAfr+j3uEObj2a2aJG
+X-Google-Smtp-Source: APBJJlHPCTYg9Bs30dB81jOMQaHgFQ11PYgkS06RIQYtcad/nb1fw3CXz1aH2kMto4mPbGAQOrv6zcc83hJYsI1n7vM=
+X-Received: by 2002:a25:9f8e:0:b0:c3d:eff4:1c39 with SMTP id
+ u14-20020a259f8e000000b00c3deff41c39mr1717279ybq.12.1688572136950; Wed, 05
+ Jul 2023 08:48:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
- <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
- <617c8f8a-1fc7-c6a0-eaa5-ce75ff2adc1b@linaro.org> <CAA8EJppG=MAVpK1J_8bNnkJ23y9NtgY7a2GVResXJvhEKyNsrw@mail.gmail.com>
- <739a8bd9-9ff0-5072-fdae-b64efdf86842@collabora.com> <e927cfcd-bf34-5daf-0e24-4dd828106968@linaro.org>
- <epds77sccy4cc5cdpoc4ir7sfz5sz3biwep6rbks2nuyqncidu@77gb4t2wy6vn>
- <47a5678c-1eb3-dfc2-a9ac-f8e497455d11@linaro.org> <unsithzszj7awvsmxwr7reshso5ju7u4nssil5tty6pocictf5@gwoltpgeecer>
- <6e070141-8c0e-59ed-8a08-58c3fadb17df@linaro.org> <lidknise4copce3vb2wth4z3fl2p4npsc4u6ajqb6zsp6lnpca@rp6wxcmy2aa4>
-In-Reply-To: <lidknise4copce3vb2wth4z3fl2p4npsc4u6ajqb6zsp6lnpca@rp6wxcmy2aa4>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 5 Jul 2023 18:20:13 +0300
-Message-ID: <CAA8EJpq_VeY=44FqYm7QAT32AR=rmMOV0RtAfNFkb1hpSp29dw@mail.gmail.com>
-Subject: Re: RFC: DSI host capabilities (was: [PATCH RFC 03/10] drm/panel: Add
- LGD panel driver for Sony Xperia XZ3)
-To:     Maxime Ripard <mripard@kernel.org>
-Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Jami Kettunen <jami.kettunen@somainline.org>,
+References: <20230704163848.169853-2-davidwronek@gmail.com>
+ <20230704163848.169853-3-davidwronek@gmail.com> <a0bd842d-b6d0-e126-7b05-e488357330ab@linaro.org>
+In-Reply-To: <a0bd842d-b6d0-e126-7b05-e488357330ab@linaro.org>
+From:   David Wronek <davidwronek@gmail.com>
+Date:   Wed, 5 Jul 2023 17:48:46 +0200
+Message-ID: <CAEoe_eWHbnE2EeWerkZAmGznagCoxB7kXsqtbTUxjtzgdmMRtQ@mail.gmail.com>
+Subject: Re: [PATCH 1/7] dt-bindings: arm: qcom,ids: Add SoC ID for SM7125
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, map220v <map220v300@gmail.com>,
+        Taniya Das <quic_tdas@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 5 Jul 2023 at 17:24, Maxime Ripard <mripard@kernel.org> wrote:
+On Wed, Jul 5, 2023 at 11:46=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> On Wed, Jul 05, 2023 at 04:37:57PM +0300, Dmitry Baryshkov wrote:
-> > > > >
-> > > > > Either way, I'm not really sure it's a good idea to multiply the
-> > > > > capabilities flags of the DSI host, and we should just stick to the
-> > > > > spec. If the spec says that we have to support DSC while video is
-> > > > > output, then that's what the panels should expect.
-> > > >
-> > > > Except some panels supports DSC & non-DSC, Video and Command mode, and
-> > > > all that is runtime configurable. How do you handle that ?
-> > >
-> > > In this case, most of the constraints are going to be on the encoder
-> > > still so it should be the one driving it. The panel will only care about
-> > > which mode has been selected, but it shouldn't be the one driving it,
-> > > and thus we still don't really need to expose the host capabilities.
+> On 04/07/2023 18:31, David Wronek wrote:
+> > From: map220v <map220v300@gmail.com>
 > >
-> > This is an interesting perspective. This means that we can and actually have
-> > to extend the drm_display_mode with the DSI data and compression
-> > information.
->
-> I wouldn't extend drm_display_mode, but extending one of the state
-> structures definitely.
->
-> We already have some extra variables in drm_connector_state for HDMI,
-> I don't think it would be a big deal to add a few for MIPI-DSI.
->
-> We also floated the idea for a while to create bus-specific states, with
-> helpers to match. Maybe it would be a good occasion to start doing it?
->
-> > For example, the panel that supports all four types for the 1080p should
-> > export several modes:
+> > Add the SoC ID for Qualcomm SM7125.
 > >
-> > 1920x1080-command
-> > 1920x1080-command-DSC
-> > 1920x1080-video
-> > 1920x1080-video-DSC
-> >
-> > where video/command and DSC are some kinds of flags and/or information in
-> > the drm_display_mode? Ideally DSC also has several sub-flags, which denote
-> > what kind of configuration is supported by the DSC sink (e.g. bpp, yuv,
-> > etc).
+> > Signed-off-by: map220v <map220v300@gmail.com>
 >
-> So we have two things to do, right? We need to expose what the panel can
-> take (ie, EDID for HDMI), and then we need to tell it what we picked
-> (infoframes).
+> We accept known identities, but this looks like a nickname/pseudonym.
+> Are you sure you got such SoB from map220v?
 >
-> We already express the former in mipi_dsi_device, so we could extend the
-> flags stored there.
+> None of the commits here:
+> https://github.com/map220v/sm7125-mainline/commits/a72q-6.0
+> have signed-off-by. Did you add it by yourself?
 >
-> And then, we need to tie what the DSI host chose to a given atomic state
-> so the panel knows what was picked and how it should set everything up.
-
-This is definitely something we need. Marijn has been stuck with the
-panels that support different models ([1]).
-
-Would you prefer a separate API for this kind of information or
-abusing atomic_enable() is fine from your point of view?
-
-My vote would be for going with existing operations, with the slight
-fear of ending up with another DSI-specific hack (like
-pre_enable_prev_first).
-
+> Best regards,
+> Krzysztof
 >
-> > Another option would be to get this handled via the bus format negotiation,
-> > but that sounds like worse idea to me.
->
-> Yeah, I'm not really fond of the format negociation stuff either.
+(Please ignore my E-Mail from before, I forgot to click "reply all")
 
+I have asked map220v for permission to add their Signed-off-by to the commi=
+ts
+and this is the one they gave me. Is the nickname a problem?
 
-[1] https://lore.kernel.org/linux-arm-msm/20230521-drm-panels-sony-v1-8-541c341d6bee@somainline.org/
-
--- 
-With best wishes
-Dmitry
+Sincerely,
+David
