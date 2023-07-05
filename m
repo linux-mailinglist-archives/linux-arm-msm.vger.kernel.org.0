@@ -2,126 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F33F747C08
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 06:27:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D940D747C1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 06:45:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229838AbjGEE1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 00:27:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42362 "EHLO
+        id S229647AbjGEEpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 00:45:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjGEE1x (ORCPT
+        with ESMTP id S229563AbjGEEpj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 00:27:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7DB510F2;
-        Tue,  4 Jul 2023 21:27:51 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36541Olm027002;
-        Wed, 5 Jul 2023 04:27:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=eYUVnt6Wi+jIiqMPQqigPy6gPw+ZrOvBJs+sKNwn0s0=;
- b=onNdyOX0UsACwxtosHgJ0YmEdC56WnQuijX9mPZUZV9RJLA90LKYtHoWM1SnmTlJPrU4
- E3ygCB2XCfCGpADcRmUvS3eoY2VKQhTRyglDvl6XeluwQLaiLyMUAWg6Br21dtIfnSF6
- tZUK3wCO89TA+91NOCfLx1EHld3BZrH9HRs6owe4B5/h4P5AWTcfOF5Dp/+dlUn+K079
- 4gpbYg2REtagoNI5zc8u+x6U3ktGDuAGjI55G0RiAugj1sfblUNFlP7f/8gyNWBCoznq
- UD1p0iqSwF2ruaOLHzff9c8ATrvwFdUVkXSpGiYYVt0XU4GL72RI7qL8AwRR/wU6blxP 5A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmny98vn6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Jul 2023 04:27:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3654RKQU008607
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Jul 2023 04:27:20 GMT
-Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.7; Tue, 4 Jul 2023
- 21:27:15 -0700
-Message-ID: <9f06d400-be7b-6806-b055-8cc7f11db6ca@quicinc.com>
-Date:   Wed, 5 Jul 2023 09:57:12 +0530
+        Wed, 5 Jul 2023 00:45:39 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C77910F5
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 21:45:38 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id 6a1803df08f44-636274ce31eso45969926d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 21:45:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688532337; x=1691124337;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZvfvXAVyob3htxlBCjHDC3d0cF9EwxU5FiwqJrsNIFQ=;
+        b=h85RDU5faMJMQFRpL11aGFUvNF/ofs+2e1lUAoBYP8SLsCQG3po2qN0EcgfzDFwIBW
+         BzJNoYc7bPOIh3frqeehvRErPNng/ZJBR2F39EflnmYKKm6DTzb/3bJcr9hAhBhde9m0
+         zwEjKFR+OYjRIakJntOIQn1gpnPMeYhebdCLAlsSV1hbUwow1dZC0oJ0jFqPyyaVnVys
+         /XhUDt1TCqEjSEyTswOrSLWS9xN1FOQ1NJQ5gU2oY4dS3UbKAnZ2tXnDtRrX9DXHhJch
+         dHAfi/nlrITlGVNXKe0zxMCLQH6gJ4jzJBZZMFPtOQftUYfdDCv8RiuLOu1NQw5RfO9V
+         xrZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688532337; x=1691124337;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZvfvXAVyob3htxlBCjHDC3d0cF9EwxU5FiwqJrsNIFQ=;
+        b=XoMG4HlzIVSOxQygXxFwQ/uMiraAq/n5SsPN9HghamI2fH71nI8Q272kHtNv+WvfqM
+         ugKv4PJpVfJJDyg6F1KCNw41G42Bidlw/s2J0+e+hwLwEWBTjB3D16M1MeJPeIDGsw4w
+         VTtXmUDtEdAHEH8zY14aH8y26ZY0omSSIKPl/LwvrJoFlDv0RIkYLx4lYkxGdGniTCtW
+         XCPgW2mlXsfO1tRMkkm6S9+ILbcPInHJgFzC61eINtG+8git6WNtlgkrWo1s9Syt4/WU
+         XdMrs6A9rpjVakC4RqXWJLoYUw5GdefF56y2DmieMQ5Gy3gdE+fPHTT4KldDCA9TLXOj
+         Goxw==
+X-Gm-Message-State: ABy/qLa3V9M8hJa5cQd8Aktf8XSMEUB7lkJw0xYIWbT0WXngkEIUzJ0p
+        B6KQYBHXm/VYfHl4wzZNNlDpWrB+8T8CdHSTxSfvvw==
+X-Google-Smtp-Source: APBJJlGJ2wHlfkfB3ZQ1QzikScAKQ6X408nThkn6EJ0gQwXU34hiTOLxSmGlh70SM1vVx/GFl+3ylm2hqxwKnXlu9vc=
+X-Received: by 2002:a05:6214:27c4:b0:635:df49:719c with SMTP id
+ ge4-20020a05621427c400b00635df49719cmr19427849qvb.22.1688532337691; Tue, 04
+ Jul 2023 21:45:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 4/7] clk: qcom: gcc-sc7180: Fix up gcc_sdcc2_apps_clk_src
-Content-Language: en-US
-To:     David Wronek <davidwronek@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, map220v <map220v300@gmail.com>
-References: <20230704163848.169853-2-davidwronek@gmail.com>
- <20230704163848.169853-6-davidwronek@gmail.com>
-From:   Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <20230704163848.169853-6-davidwronek@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Yss-_JO1LGGMGq4qXZE38ClSYKdjeKti
-X-Proofpoint-ORIG-GUID: Yss-_JO1LGGMGq4qXZE38ClSYKdjeKti
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-04_16,2023-07-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1011 priorityscore=1501
- spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 mlxlogscore=992
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307050039
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230403221233.500485-1-marex@denx.de> <20230403221233.500485-2-marex@denx.de>
+In-Reply-To: <20230403221233.500485-2-marex@denx.de>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Wed, 5 Jul 2023 10:15:01 +0530
+Message-ID: <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+To:     Marek Vasut <marex@denx.de>
+Cc:     dri-devel@lists.freedesktop.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Marek,
 
+On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
+>
+> Do not generate the HS front and back porch gaps, the HSA gap and
+> EOT packet, as these packets are not required. This makes the bridge
+> work with Samsung DSIM on i.MX8MM and i.MX8MP.
 
-On 7/4/2023 10:01 PM, David Wronek wrote:
-> From: map220v <map220v300@gmail.com>
-> 
-> Add the PARENT_ENABLE flag to prevent the clock from getting stuck at
-> boot.
-> 
-> Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver for SC7180")
-> Signed-off-by: map220v <map220v300@gmail.com>
-> Signed-off-by: David Wronek <davidwronek@gmail.com>
+This patch broke display on Dragonboard 845c (SDM845) devboard running
+AOSP. This is what I see
+https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
+Reverting this patch fixes this regression for me.
+
+Regards,
+Amit Pundir
+
+>
+> Signed-off-by: Marek Vasut <marex@denx.de>
 > ---
->   drivers/clk/qcom/gcc-sc7180.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index cef3c77564cf..49f36e1df4fa 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -651,6 +651,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
->   		.name = "gcc_sdcc2_apps_clk_src",
->   		.parent_data = gcc_parent_data_5,
->   		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
-> +		.flags = CLK_OPS_PARENT_ENABLE,
-
-Could you please share what Stuck warnings are you observing?
-
->   		.ops = &clk_rcg2_floor_ops,
->   	},
->   };
-
--- 
-Thanks & Regards,
-Taniya Das.
+> Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Jagan Teki <jagan@amarulasolutions.com>
+> Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+> Cc: Jonas Karlman <jonas@kwiboo.se>
+> Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+> Cc: Michael Walle <michael@walle.cc>
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Cc: Robert Foss <rfoss@kernel.org>
+> Cc: dri-devel@lists.freedesktop.org
+> ---
+>  drivers/gpu/drm/bridge/lontium-lt9611.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
+> index a25d21a7d5c19..151efe92711c4 100644
+> --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
+> +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
+> @@ -774,7 +774,9 @@ static struct mipi_dsi_device *lt9611_attach_dsi(struct lt9611 *lt9611,
+>         dsi->lanes = 4;
+>         dsi->format = MIPI_DSI_FMT_RGB888;
+>         dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
+> -                         MIPI_DSI_MODE_VIDEO_HSE;
+> +                         MIPI_DSI_MODE_VIDEO_HSE | MIPI_DSI_MODE_VIDEO_NO_HSA |
+> +                         MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP |
+> +                         MIPI_DSI_MODE_NO_EOT_PACKET;
+>
+>         ret = devm_mipi_dsi_attach(dev, dsi);
+>         if (ret < 0) {
+> --
+> 2.39.2
+>
