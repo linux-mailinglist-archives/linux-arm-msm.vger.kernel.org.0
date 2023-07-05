@@ -2,118 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93FAE747C90
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 07:40:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 896E7747C84
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 07:39:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbjGEFkp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 01:40:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56202 "EHLO
+        id S229951AbjGEFjb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 01:39:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230447AbjGEFko (ORCPT
+        with ESMTP id S229776AbjGEFjb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 01:40:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CFAE7B;
-        Tue,  4 Jul 2023 22:40:43 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3655MGHT020214;
-        Wed, 5 Jul 2023 05:40:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=DBUCHIImMscDsnUUCsVgxa65R40ZGDgdgGftaFAsJPs=;
- b=JPoTSUM+A7uJp1qsh6NFjBdSEmWLT+M1pbBrVA9/BX2CIRS5OnlJWxaKXHhCdVBTTFgo
- hFI+D8gYx4lqByBTEk+xs7gJ6qR7fN4IeTNgfQLMJrQrbYCBFZGDCFwrCV0sgpnYYZDV
- B4wmT57uv8fyQE+Tfz7bAiJ+FC6afDAWGP2w4nF5sfkxU3UJsPGxMRGS+7pAmavVjJe3
- sqfqsK1WjQ32ZcwSkeMkt6MkDVAzGfhuE8oEYaFxmJspuR/1yvObevvwpHXE2/vms4qO
- 1T448pKIOLcMOXZWNsbw/2TSxTvg+JCdl+1lrU03ucVlgiCEWskJm7XKjZZ1Ng3yEbY6 Jw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rn152g4df-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Jul 2023 05:40:40 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3655ed9m024790
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Jul 2023 05:40:39 GMT
-Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.7; Tue, 4 Jul 2023 22:40:36 -0700
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: qru1000-idp: Update reserved memory region
-Date:   Wed, 5 Jul 2023 11:09:14 +0530
-Message-ID: <20230705053914.9759-3-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
-References: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
+        Wed, 5 Jul 2023 01:39:31 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B89C134
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jul 2023 22:39:30 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5774335bb2aso57680717b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jul 2023 22:39:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688535569; x=1691127569;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oZRUZb3Mavh3zQZr0EyamsRHMcZS99pmjV8Wj5+w+qg=;
+        b=x9RjFt6ulqSjQi+8+xXDMCIFQrdt06fwjMPTcE71RERLqQZnJaU5Kj31PMwi3f/DBi
+         2uCscmaq04UgqRS5ZYxtcuaaaNndSjhll2FryhV6h4LWPSoyLaLUXau18fV2SpEfSztf
+         OXsmtSrGr7pI7T+M9d+zNkhQ3w8g7WuXY80r3of1RHia26zfhcXBRZLqxXlQIZC487KG
+         f4cYFubeJ3XdN0iIVWjmQPKB024M9CxBgHkBHuNPIOeRzEiAsutc/e63ypZ2nmv3KBtx
+         bQ/XwTtEDhy9yDWdWAKG4MZLd7lSKV3+4+qSGqBKi+0pzhiRStfNh7nAzYS9VlHcdtTQ
+         5f2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688535569; x=1691127569;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oZRUZb3Mavh3zQZr0EyamsRHMcZS99pmjV8Wj5+w+qg=;
+        b=SOUXF3UZqZJdLF9ZgNj0Ri8o7EyZxpzkYx9/rzW/cyPrlvYtacGSqHob5MAaR4XPua
+         Ulfi+qr/QJfy3Qjc48+UfbwQtCgiogCLKh+EdkmytYydQp7W2QcfrJNQ8lu9+YiOF5nz
+         q/BUIyIlAztGB6K+mWJTDLXFOeaULeT7PoEHjqAaDm3GpLcOp6U3ECBZIdrnaFp2ekZq
+         uRM6UkI9mOpzulRVTFXNIT1HMqZueCKVEK9YbaeSZvUyuGhqwTqqiATICPg2/djNZjW4
+         usKXvoh3JJARcJuTTYlb/FSPfE1IJXQbDrcl33f4YLQUfAbM3UrhuwAws0ZySU315f0m
+         ILFQ==
+X-Gm-Message-State: ABy/qLa+pDzFlViDtZ6Ka0XUEpilAdhbvxu1YP2yGNwca6PId/IYn2Sh
+        IM28VHabfuvItxzv8EnCoRwQ2lC0O+uM9J+Tkt4mZQ==
+X-Google-Smtp-Source: APBJJlF/o0+UnDZwtyE3kuzBDCdbAEQWshCz47kYNXjLYoj6S3T1Qy4vIgjTzrrW/XTGavWVmpml++zCtJ2idlA3dPM=
+X-Received: by 2002:a25:c303:0:b0:c11:bec7:a029 with SMTP id
+ t3-20020a25c303000000b00c11bec7a029mr11967714ybf.46.1688535569460; Tue, 04
+ Jul 2023 22:39:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LJ0OS_9esvq-GzxiXnMGYJqQoIqgp7bW
-X-Proofpoint-ORIG-GUID: LJ0OS_9esvq-GzxiXnMGYJqQoIqgp7bW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-04_16,2023-07-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1015 mlxlogscore=669
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307050051
+References: <20230403221233.500485-1-marex@denx.de> <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com> <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+In-Reply-To: <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 5 Jul 2023 08:39:18 +0300
+Message-ID: <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+To:     Jagan Teki <jagan@amarulasolutions.com>
+Cc:     Amit Pundir <amit.pundir@linaro.org>, Marek Vasut <marex@denx.de>,
+        dri-devel@lists.freedesktop.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing reserved regions as described in QRU1000 memory map.
+[Adding freedreno@ to cc list]
 
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qru1000-idp.dts | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+On Wed, 5 Jul 2023 at 08:31, Jagan Teki <jagan@amarulasolutions.com> wrote:
+>
+> Hi Amit,
+>
+> On Wed, Jul 5, 2023 at 10:15=E2=80=AFAM Amit Pundir <amit.pundir@linaro.o=
+rg> wrote:
+> >
+> > Hi Marek,
+> >
+> > On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
+> > >
+> > > Do not generate the HS front and back porch gaps, the HSA gap and
+> > > EOT packet, as these packets are not required. This makes the bridge
+> > > work with Samsung DSIM on i.MX8MM and i.MX8MP.
+> >
+> > This patch broke display on Dragonboard 845c (SDM845) devboard running
+> > AOSP. This is what I see
+> > https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-dis=
+play/PXL_20230704_150156326.jpg.
+> > Reverting this patch fixes this regression for me.
+>
+> Might be msm dsi host require proper handling on these updated
+> mode_flags? did they?
 
-diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-index 2cc893ae4d10..836804020946 100644
---- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-@@ -448,6 +448,22 @@ &qupv3_id_0 {
- 	status = "okay";
- };
+The msm DSI host supports those flags. Also, I'd like to point out
+that the patch didn't change the rest of the driver code. So even if
+drm/msm ignored some of the flags, it should not have caused the
+issue. Most likely the issue is on the lt9611 side. I's suspect that
+additional programming is required to make it work with these flags.
 
-+&reserved_memory {
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+	ranges;
-+
-+	ecc_meta_data_reserved_mem: ecc_meta_data_reserved_region@f0000000 {
-+		no-map;
-+		reg = <0x0 0xf0000000 0x0 0x10000000>;
-+	};
-+
-+	tenx_sp_mem: tenx_sp_region@800000000 {
-+		no-map;
-+		reg = <0x8 0x0 0x0 0x80000000>;
-+	};
-+};
-+
- &uart7 {
- 	status = "okay";
- };
---
-2.40.1
-
+--=20
+With best wishes
+Dmitry
