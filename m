@@ -2,180 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2970748535
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 15:41:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 874A5748572
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 15:52:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232224AbjGENlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 09:41:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
+        id S232392AbjGENwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 09:52:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230466AbjGENlT (ORCPT
+        with ESMTP id S232227AbjGENwU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 09:41:19 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D5439F;
-        Wed,  5 Jul 2023 06:41:18 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5703d12ab9aso82123897b3.2;
-        Wed, 05 Jul 2023 06:41:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688564477; x=1691156477;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uLq8DTcDk4CKexj0TWcSdnBEWdMB2TY0/NlFdshVB0U=;
-        b=OFrHjgg7tLcB2HzfJaZMfT12TH3YQEf3I1Ry0sn5/D/IzPfGhP2E9ECVQo/6sta5kq
-         zyYDiCaO+ekwhHUDuVIV2OFijUPuOb1T5SoJYo/DJFjKM7fV6s+9X5FxJPxT4UMHB79q
-         w7T7QUqAsi8ynbGD37jDGYATjFg6XKyUFKHIJHQNwDDbCLnGPKNdibld/vbCI+FG/npy
-         mTERib+mBqgY6xyOZnyuqOr7UfBlORxCa/OPZwQJm+b39O7KRwp00vaSdBjnpeJtSCIr
-         JOF+/6YpZsTPt/hsRKKpEXhLsESacSS94t7HJQojchblg0Fz3LqoOFSyDo24xq914QnA
-         h3/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688564477; x=1691156477;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uLq8DTcDk4CKexj0TWcSdnBEWdMB2TY0/NlFdshVB0U=;
-        b=U4yQfbDFxrgLZMfkEMyT7+z3u+e5+IlwcJ6WxiJxPr4034Lu5jLeXonIcYE47UBn2a
-         5orG1ROyF+vSeBJ0R25cLnbr6KnGTjii1m8cfOaw6yt/nIkPkalTvPszxLSpoW5ItP41
-         o8PAtH6sHCp7qQdU6/P3MbXuMKmL2T12iAbQhEJ2s1i7YhJ3drL5XCIxbBTY3z/i4i7G
-         22DDibAaCkXW52Wv1FzlDKcM2tZub2lBYkC0T5CuUaxYsfnB57br3K7d3VFm9ynRzE0L
-         JdWUUFG23LLL+HxWL+ClFDhFQo9tUiV24SNCKK2u4zJmaNOEa7D98Kah1RET6+Gu8g8D
-         rZDQ==
-X-Gm-Message-State: ABy/qLZYqseNKCRmpdbjKHyQlZfQKXkG49+GxITt8wem3qHpO8M8pHAi
-        hKmw9EDiJvyllDlPpNqhygPM24yTJ5rmZkJN9CHlvQmGeo4hK8rlCcY=
-X-Google-Smtp-Source: APBJJlFnAaqBZr9QUj1wiHcfBt+OU6EzMUbau6TvRYcksbylTyeyO/L1BOWmPBoAH5ANWWOliZe5g1A7JaejZ9+8F44=
-X-Received: by 2002:a25:ad06:0:b0:bc6:91e5:7b4e with SMTP id
- y6-20020a25ad06000000b00bc691e57b4emr15559089ybi.13.1688564477164; Wed, 05
- Jul 2023 06:41:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230704163848.169853-2-davidwronek@gmail.com>
- <20230704163848.169853-6-davidwronek@gmail.com> <9f06d400-be7b-6806-b055-8cc7f11db6ca@quicinc.com>
-In-Reply-To: <9f06d400-be7b-6806-b055-8cc7f11db6ca@quicinc.com>
-From:   ungeskriptet <davidwronek@gmail.com>
-Date:   Wed, 5 Jul 2023 15:41:06 +0200
-Message-ID: <CAEoe_eW-0V6uSVhJGaxJc7V=qujkkpn=chBNc5kjpP9XViFPOg@mail.gmail.com>
-Subject: Re: [PATCH 4/7] clk: qcom: gcc-sc7180: Fix up gcc_sdcc2_apps_clk_src
-To:     Taniya Das <quic_tdas@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 5 Jul 2023 09:52:20 -0400
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2118.outbound.protection.outlook.com [40.107.215.118])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207EA121;
+        Wed,  5 Jul 2023 06:52:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cIhvO8CWN5qkjZvcshynL7o7x4y8sFYuB07Ycm0pKOx/1XcndGDi3ZK4I6hwkIxAC47cIut9DqjThT1llVIcQ3y9XEOhel+Ul1lC5283EURWJ6A86cEz5wmBEQNFkj3UJrfyF5KlT297fkuKuLKQNg14XoGVM0gxrUv09/NIYyk0+wAWKqfyR2ODOkKPtCRpw5y09nZyYRJZtSbMEfxwaQp6f8/wwbOq11xGlm0RPd2cyTfrF3KQBcfDYWr5jc6Zp3UZH6/b9pu9fmG7QfeMuH0qO0iRgIs2a0Am4UNwOQEz2nli2tRbJNtKqptQzDvmLfuNo0r85FZP9lM02pTt5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tdb26EYaPAoprJFKtW/qFt1bUD6rf5cw+jKBZQC71QQ=;
+ b=Yd/5EEP/IRJxBBCoiW+VanE6mgBDLB1qeSIvkX8z9FcDBYUNtDnZmwolT1/Y5R6CzISrkzPSUsku4joKP9SHTxQpXiQy18+Q4h9U5ntu9Vt7Xhfi63K/2GQYAFEH7OTVP3fNDsw/WyzlQihGJZGYOsNTrYtEFqtkyVlbytscg3ADeWs9ttKdpoTHsrI5tmGkwfGZr5I4DpYNmMe4ephmuS8/maSdCl4jZznckaU+GdUrwqSXIYgq5/3pyTv93dhb6aKHfcMmSbNj42ixRGZ3ovBsyUIE9KA0qXiBw+1TWprKr0HMAna8BgRNxR5dpO070zrg/GtSrTxG26xH1tIUSQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tdb26EYaPAoprJFKtW/qFt1bUD6rf5cw+jKBZQC71QQ=;
+ b=ecL7YLPI+vIE1XO25HBZv84WOu8H6UtxfYRFWadHkiyVfy06WtUzmojoyd2bUcst6vE/NxbPwfuGg71KQdEyCpBZKpWi7ItwWpKb3FxheqEOT/tDlytUTu85FsBqDOasAliLfpYk4SKSE5iyv9c5RoQi1LSH/cQncq/YOh3sNct7Rh5nq0cfeIBv6EdlnAaQM6bZNNMROEnRhMy1Oua2Yd9FXj1bKAe3Z++r9IUeG30pZiD4WhwkkgzmEsYejBu+JMUGrJypY9/r0k8e8sPrM67a1CVPfZnHrEkl49rUQcooCKR2P3rx/QxC/MdyhfkavgkB79o3BbbA2ZFoObtUmw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+ by PSAPR06MB3991.apcprd06.prod.outlook.com (2603:1096:301:38::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.17; Wed, 5 Jul
+ 2023 13:52:15 +0000
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::fa0e:6c06:7474:285c]) by SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::fa0e:6c06:7474:285c%5]) with mapi id 15.20.6565.016; Wed, 5 Jul 2023
+ 13:52:15 +0000
+From:   Yangtao Li <frank.li@vivo.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, map220v <map220v300@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Andi Shyti <andi.shyti@kernel.org>
+Cc:     Yangtao Li <frank.li@vivo.com>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 06/11] i2c: qcom-geni: Convert to devm_platform_ioremap_resource()
+Date:   Wed,  5 Jul 2023 21:51:53 +0800
+Message-Id: <20230705135159.33327-6-frank.li@vivo.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230705135159.33327-1-frank.li@vivo.com>
+References: <20230705135159.33327-1-frank.li@vivo.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYCPR01CA0049.jpnprd01.prod.outlook.com
+ (2603:1096:405:2::13) To SEZPR06MB5269.apcprd06.prod.outlook.com
+ (2603:1096:101:78::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|PSAPR06MB3991:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6f142f5f-b2d0-4329-e37e-08db7d5f0a49
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: w2IeqqjDlO7QfFOBsqXubnhyQ391DzSWI6mAY80OxEyKbU8M7NX8drtj1sN054SHUKHjKBUmSe9gFm5lWCvNFrkRI38TsbSTkyrbsOIoele3Tf37LF2sAVVuhcP3ar7Cm2pRZFkp5Rrvf1g1mULHLIEC5XhLMkq0PXIeQ4fzpEEK+0+ih2ZLjZjnHBmCpwvoOz/TMD9lskU0PDBXDj3R2XikAloVgvXa2tCw9DBeyK4Hj/UiCEWdQ1TCeTG3gRmqN1kK9X8qvqRKYNJ/+e8aSFD5pnkHpDfMKuBaij8zQ5cCJ5BIRDgVIujFAjXFyasyddj2Db7JsKuA1442EVPC3PtETnUrQxQUW6EyahnaqLPIF8R2QMQIS0sQ//Zf2dXtnjR8hVx6EN+QlZTSTQCbr8XQ0lB/J/gjejRccZVlYKCcpuf6stXTbsmqyLfi/uzDtnIf4zcJ/S0l8ta8TSWaLnDhz/dqlezwVkoIYkc/GDEcUTkax9CvK61NbLHs5OGXFGJrn1UAwtfdLz+D0B+Zlhpz5NWEHalfK7+cu4TJGlOnjjLt2l63xrnjpuypnN/aRhvwPuWe84o7R2Z+KXjvm15HCro6X/fI96X5m73Y8ckaWpBOPafqCd38gTtJKXg1
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(366004)(346002)(136003)(376002)(39860400002)(451199021)(38100700002)(38350700002)(66476007)(66556008)(4326008)(66946007)(2616005)(186003)(86362001)(6486002)(52116002)(6666004)(36756003)(6512007)(26005)(6506007)(478600001)(110136005)(1076003)(8936002)(8676002)(5660300002)(316002)(2906002)(41300700001)(83380400001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?7q25s2ZuRZgNnQYYRyIpqq2vztAD8gsO1ChBm4sCfQ9UVOBBnOfdJktMl41u?=
+ =?us-ascii?Q?Z4rdKHpktZRyP/w8RkXng9GTJdXOBnyp2UhEOISmiSPYll++cfgl/TUjXFKm?=
+ =?us-ascii?Q?Ns59u4pgjI4XJN7fs6FshR36AkiBdYhgYmGXc6EczLozRAKpTmq2DRjUS39i?=
+ =?us-ascii?Q?BU4Ta9255IhuZqrMEbYaDzvV+0YojNF0LUTq7PjAnTUsJMzq1XqiBD7ATDua?=
+ =?us-ascii?Q?QMtKzZwfn0HQeJWSI7r4/F9YR+GG5/DaXodNKowW3XfkXvppRRYuNxAt66i4?=
+ =?us-ascii?Q?DQuNCFpOZh4pq2m73IDVJ+6DIOAeEaVAYCsBnhw9CDCD48CpKqbAQMnYNedJ?=
+ =?us-ascii?Q?ykqxd0g21lo90kA6uk9R6FIvcDAreiVcpBJJJdyqEQwyYD4Fmclv4u2UNzYi?=
+ =?us-ascii?Q?ovDzm/yXLqYCWpqjvTf03zVpcapMSqHLeJC7J3bnQ9WQlXDl3hXpI2vfpxI8?=
+ =?us-ascii?Q?EbDTmrWW9SUx3U8E9jZh7RZYR1AhHd7rUxSHIlpXLROCKsoBBvDtWH0+higB?=
+ =?us-ascii?Q?Bm0cw95opfWJPYIjN+rp/uWKTPgYOp/T/03Ws/WMPyuj6JpHREIzaR4/uWs1?=
+ =?us-ascii?Q?69rnEuQ0MPqmzyt5avO7sgSDTR1x+5A9wAGiyck2pztZgzjv/wP7ns57/qCw?=
+ =?us-ascii?Q?yXEaxfp/fhaqMd0QzS5Y7W+f7pgfMLIIcWl2D7FOnU3cOx5MwzRYTVbX4rDm?=
+ =?us-ascii?Q?FQU5B23el4jNxXDo8HOe7kkZ/GNXYB9kI41z8B9eT9dZfqC0KELWjBypqQLj?=
+ =?us-ascii?Q?B+uY3F9k/D2ufK0d0/y+7660l1RuIfIJAY3O1MIZDY7s/09pNIOeQXUqn6J9?=
+ =?us-ascii?Q?6o9oq6C7Tk4Tr2wsjAtO6a+Ujr8m/lP3PE0RPUK+Gk2t5TrSPMwxVtCkJZrJ?=
+ =?us-ascii?Q?Kn8Yug9CUX+WDgF1ELH70IocMryszeM+JeIArwp0Bmt7nHcSnEDhwiTsVAIk?=
+ =?us-ascii?Q?IYtXFPRONvMmLv8y+zzHmF9zUGNn2YwM4S+DxJzxx/8A+uDF4ZzCUGfmGZtQ?=
+ =?us-ascii?Q?Pc5UdTw59UPTHTBo8SgNuH39dv+enpjQhU8j9j26El3VKNRf6eZT5k23U+Q2?=
+ =?us-ascii?Q?oN0b/kvjhwg+wO3YONo43y9A7VHmkBevL+4BMYhGN2gCWbj3XswQ054Quqmh?=
+ =?us-ascii?Q?RSdUsmNVD9xbZmJqHKuai97Z9J/3RV728sSpfaBikLjCouh9OI3sBG4cMDri?=
+ =?us-ascii?Q?Lk9vpNr1uw7ggN0i0JVM/Jtu7JyIzI2Q737T87qdpdCq76sP9QTrSY/meXyN?=
+ =?us-ascii?Q?v2uU/lEKBCv8arF1wbrUtTMhyueXxhvYa1uS9bKMosN2wOzHo1MNowUkldQC?=
+ =?us-ascii?Q?viDU4+ApSOt1x6Eea2tECG1Wg+bcCJRiyBOKq6RvVvA+mUSdp752wpaltAA4?=
+ =?us-ascii?Q?IgiqQkLkYiLykgsDZ6kG6478LoxBNcRMcS/GUYUtKnx15BzuYDZFoA4shFdQ?=
+ =?us-ascii?Q?BIehQ2QdrEfSKi2XnStC8M/H3w3z3vMt4kEnII48xx5Ll54vxLhDQBGn7fnU?=
+ =?us-ascii?Q?/U6L9A+mMbdohv8vLJKjwJRUjgUQtY3OJMuPuG9Z8sPtFdEgIvVugk3asmu+?=
+ =?us-ascii?Q?eyzQZnEyxttzMZ/UbarxlDwMvJxmNo2njcMF9/kU?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f142f5f-b2d0-4329-e37e-08db7d5f0a49
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2023 13:52:15.2618
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: W9vXbDrDyRdeE0boSKFJombHiCylowMSavCFUvik53PbtGTUrelAerkwT8J+LN7jJWwWnquWG5XhZL4Auy+zRA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR06MB3991
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 5, 2023 at 6:27=E2=80=AFAM Taniya Das <quic_tdas@quicinc.com> w=
-rote:
->
->
->
-> On 7/4/2023 10:01 PM, David Wronek wrote:
-> > From: map220v <map220v300@gmail.com>
-> >
-> > Add the PARENT_ENABLE flag to prevent the clock from getting stuck at
-> > boot.
-> >
-> > Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driv=
-er for SC7180")
-> > Signed-off-by: map220v <map220v300@gmail.com>
-> > Signed-off-by: David Wronek <davidwronek@gmail.com>
-> > ---
-> >   drivers/clk/qcom/gcc-sc7180.c | 1 +
-> >   1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc718=
-0.c
-> > index cef3c77564cf..49f36e1df4fa 100644
-> > --- a/drivers/clk/qcom/gcc-sc7180.c
-> > +++ b/drivers/clk/qcom/gcc-sc7180.c
-> > @@ -651,6 +651,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src =3D {
-> >               .name =3D "gcc_sdcc2_apps_clk_src",
-> >               .parent_data =3D gcc_parent_data_5,
-> >               .num_parents =3D ARRAY_SIZE(gcc_parent_data_5),
-> > +             .flags =3D CLK_OPS_PARENT_ENABLE,
->
-> Could you please share what Stuck warnings are you observing?
->
-> >               .ops =3D &clk_rcg2_floor_ops,
-> >       },
-> >   };
->
-> --
-> Thanks & Regards,
-> Taniya Das.
+Use devm_platform_ioremap_resource() to simplify code.
 
-Without this patch I get the following warning:
-[    0.316057] gcc_sdcc2_apps_clk_src: rcg didn't update its configuration.
-[    0.316081] WARNING: CPU: 4 PID: 75 at
-drivers/clk/qcom/clk-rcg2.c:133 update_config+0xcc/0xdc
-[    0.316226] Modules linked in:
-[    0.316265] CPU: 4 PID: 75 Comm: kworker/u16:2 Not tainted
-6.4.0-next-20230704-sm7125 #51
-[    0.316337] Hardware name: Xiaomi Redmi Note 9 Pro (Global) (DT)
-[    0.316394] Workqueue: events_unbound async_run_entry_fn
-[    0.316453] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
-=3D--)
-[    0.316517] pc : update_config+0xcc/0xdc
-[    0.316560] lr : update_config+0xcc/0xdc
-[    0.316602] sp : ffff80008088b8e0
-[    0.316636] x29: ffff80008088b8e0 x28: 0000000000000000 x27: ffffa9c34c5=
-71d00
-[    0.316708] x26: ffffa9c34c333db0 x25: ffff60d440b5ec10 x24: ffff8000808=
-8bb18
-[    0.316778] x23: ffff60d441704900 x22: 0000000005f5e100 x21: ffffa9c34c5=
-dc548
-[    0.316849] x20: ffffa9c34cc739b8 x19: 0000000000000000 x18: fffffffffff=
-e5f18
-[    0.316918] x17: 0000000000000014 x16: 0000000000000020 x15: 00000000000=
-00048
-[    0.316988] x14: fffffffffffe5f60 x13: ffffa9c34cb5e928 x12: 00000000000=
-003f9
-[    0.317058] x11: 0000000000000153 x10: ffffa9c34cbb88f0 x9 : ffffa9c34cb=
-5e928
-[    0.317128] x8 : 00000000ffffefff x7 : ffffa9c34cbb6928 x6 : 00000000000=
-00153
-[    0.317197] x5 : 0000000000000000 x4 : 40000000fffff153 x3 : 00000000000=
-00000
-[    0.317266] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff60d4402=
-84880
-[    0.317336] Call trace:
-[    0.317365]  update_config+0xcc/0xdc
-[    0.317407]  clk_rcg2_configure+0xb0/0xb8
-[    0.317451]  clk_rcg2_set_floor_rate_and_parent+0x2c/0x44
-[    0.317506]  clk_change_rate+0x7c/0x294
-[    0.317551]  clk_core_set_rate_nolock+0x168/0x274
-[    0.317601]  clk_set_rate+0x38/0x14c
-[    0.317641]  _opp_config_clk_single+0x30/0xa8
-[    0.317687]  _set_opp+0x258/0x468
-[    0.317726]  dev_pm_opp_set_rate+0x180/0x268
-[    0.317770]  sdhci_msm_probe+0x360/0xb4c
-[    0.317815]  platform_probe+0x68/0xc4
-[    0.317859]  really_probe+0x148/0x2b0
-[    0.317900]  __driver_probe_device+0x78/0x12c
-[    0.317947]  driver_probe_device+0x3c/0x15c
-[    0.317994]  __device_attach_driver+0xb8/0x134
-[    0.318040]  bus_for_each_drv+0x84/0xe0
-[    0.318082]  __device_attach_async_helper+0xac/0xd0
-[    0.318132]  async_run_entry_fn+0x34/0xe0
-[    0.318177]  process_one_work+0x1c0/0x334
-[    0.318221]  worker_thread+0x68/0x428
-[    0.318260]  kthread+0x110/0x114
-[    0.318300]  ret_from_fork+0x10/0x20
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Sincerely,
-David
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index b670a67c4fdd..229353e96e09 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -767,7 +767,6 @@ static int setup_gpi_dma(struct geni_i2c_dev *gi2c)
+ static int geni_i2c_probe(struct platform_device *pdev)
+ {
+ 	struct geni_i2c_dev *gi2c;
+-	struct resource *res;
+ 	u32 proto, tx_depth, fifo_disable;
+ 	int ret;
+ 	struct device *dev = &pdev->dev;
+@@ -779,8 +778,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 
+ 	gi2c->se.dev = dev;
+ 	gi2c->se.wrapper = dev_get_drvdata(dev->parent);
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	gi2c->se.base = devm_ioremap_resource(dev, res);
++	gi2c->se.base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(gi2c->se.base))
+ 		return PTR_ERR(gi2c->se.base);
+ 
+-- 
+2.39.0
+
