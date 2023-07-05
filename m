@@ -2,132 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39B7D7480EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 11:34:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5B7B748140
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 11:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231312AbjGEJem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 05:34:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51490 "EHLO
+        id S231867AbjGEJnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 05:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjGEJel (ORCPT
+        with ESMTP id S231894AbjGEJnW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 05:34:41 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A60A7171D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 02:34:39 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-51a52a7d859so976200a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 02:34:39 -0700 (PDT)
+        Wed, 5 Jul 2023 05:43:22 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A234C1BE3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 02:43:05 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-c4cb4919bb9so4367815276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 02:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688549678; x=1691141678;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rXURleKlaTFNIbTJ9xd745LCWhyovyOc9RZu94UdHB4=;
-        b=CkO7C71oRzFMdTiC7jMnovz3eVbsHlOo7s2oEzA8izZprXZqGtqMf9XLy8R4N2Gxkf
-         55gNLjKQjSPI6Tcj+x69U6GC9ejBrOVmAy0igh/p5oCp+ULSywHl8hYtA9lN3do/LdzZ
-         q6ihosgyqrpiui+dUAPSdh9kgyn6Yac1sD1r5xbvHfM1mZnlVBOtsYPR1WEC2gjlCntu
-         bxSgG7aykjmvPo7WvRDYvbUWFW7jtoSe1uw2r8yLSiZSBrtL3isv4932Mtuf0LsRlu+K
-         W69vVRbAPfR443FSD9Yvw83pJCmWZI4KsO6kr2s0C71U1rIKaiJ6P6G3J0zGypTbsPRV
-         Z5zA==
+        d=linaro.org; s=google; t=1688550184; x=1691142184;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=K7MA3dhvd5AQL536c1KKeikZR2ef4a702l13ckFaEQU=;
+        b=L9AH5lj0kONmG34ZPW0ptGEiBwdlqQuyqM/IsSbc93Q5nr0T6/qlGWAa80g/d+6yAy
+         2ul/m1wzuhzxVMvV4WbASw0NuZFyLOes66ES9RdZpR8c2oqH9+3wn1NraIlkwudWdyrJ
+         y7herPZ0dA2jaNmIwaonrz2LV+/fU9NHJFwmU8S9IlyR69k7Uhdamd087eE6TvVIh+Lb
+         Fz21pUZiM36QclWIQn8Egkg/nouVodeWZiB3DFmM6bx1ecSnxtCATq8QsN+/K86FLdyp
+         OGeWVQ8iGGzbqGxFVatyJzCP3TcnJhUFIgqubk/I54LvgfXrJyINXYsBrlR10yIRnTmV
+         pcgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688549678; x=1691141678;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rXURleKlaTFNIbTJ9xd745LCWhyovyOc9RZu94UdHB4=;
-        b=PDAAG2JS8mdB3yggQ6V6X5C4hzMxivaW3of8Ux9a5oSI0EZN1yFd+BSXO8nCA5s/Kp
-         9q2r239zaLnxdRDQ2gmH43rUQ7Yr9NPm+bXG3G6V1bDv2TDjgbXiYFyHWIjq7ANSlCbq
-         z7TFRRUnFa4aezdKoDCxalBHrdThm5pDlJMVoKzAHPc40Ts8Ltxl/krDfc5+DirgUTrJ
-         wb8dK5XrppRX4HdwIWDxo8l0sSOup20g2pWCPnVxiRQpDvYz8d0g9/80QUHQvh+P8M8H
-         sU9W9k23qxIa67m/V6BCGM4wfTijrhW5kle+TgxMB1/WNAFZgX4x7bZtZBspfGAvFYmK
-         P6WQ==
-X-Gm-Message-State: ABy/qLYVcZt2LfbWTaR8i5Vh9WJNR7FNGxXrmSpzMvCrFHx7P6jafaGE
-        8DXt/4bnQSWfzAlUEtXk3G0yig==
-X-Google-Smtp-Source: APBJJlE7J4ROo3gkQLmcRe/QT38WIvVMq1KDJBWjeV0T+MvtcUyDCQfMzHs5dYSdZyD8tkxfaNJ3aw==
-X-Received: by 2002:a05:6402:7c4:b0:51e:da3:1585 with SMTP id u4-20020a05640207c400b0051e0da31585mr1597166edy.9.1688549678158;
-        Wed, 05 Jul 2023 02:34:38 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id p18-20020aa7d312000000b0051a2d2f82fdsm13044557edq.6.2023.07.05.02.34.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 02:34:37 -0700 (PDT)
-Message-ID: <a0631800-f3d5-ff13-b316-9bc027275a82@linaro.org>
-Date:   Wed, 5 Jul 2023 11:34:35 +0200
+        d=1e100.net; s=20221208; t=1688550184; x=1691142184;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K7MA3dhvd5AQL536c1KKeikZR2ef4a702l13ckFaEQU=;
+        b=E25Cg/wA1pENgwhp9thzuj0WvyOrUekXJ64WpXTdsR44fpaOkjlVooxLszl0EMbgcC
+         /z7Ldaab+xjFvjDvVLd2/lFQlqmZPzhhlFynBI/dTKrZnuFnUNKELWnEilahNU4TdVO4
+         urQiKDT5+mUKJc7FNo4YbGBu5Ekn5q3aabHxITrkNkfsxuByVh2rKEFLuvUSlUa7zc/v
+         Ou02i1/QlvPFwzOn1O/2fUpYdT/yqL9Q+DScHHHhYmwHa8iQbw/+zgtuU/E33Ro4OXbj
+         84Rl8otukWxIvshiLIVYo2TXLOSld7fQczqsSSMZH95odQGv9ZDpUkkFstxA/1mao3Wd
+         PJOg==
+X-Gm-Message-State: ABy/qLbjWXpQMtYtBq7J8UcLFe6ifN0yzfgs07DVb4KVq2bCvvLwm4Rb
+        LHfp53W04JLiuamcHjJ5RYd3QGtO4yGm8DnTbNituQ==
+X-Google-Smtp-Source: APBJJlGsPWsHNOshbTpMsle8AZs1Y5nRfjdhbf4L3fxdfM8xWgQ1+olpaNfB03NugXn1ZHwq6FTapqx+BH5ktwKvzpk=
+X-Received: by 2002:a25:e749:0:b0:bce:d4c:e6c9 with SMTP id
+ e70-20020a25e749000000b00bce0d4ce6c9mr13110822ybh.45.1688550184751; Wed, 05
+ Jul 2023 02:43:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V7 1/2] dt-bindings: firmware: bootstats: Add the dtschema
-Content-Language: en-US
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1688533340.git.quic_schowdhu@quicinc.com>
- <b3105990e021a71039f621e6c4e70ab05fb348fa.1688533340.git.quic_schowdhu@quicinc.com>
- <d339d413-5242-0d5a-96f6-c2f670e5e5dc@linaro.org>
- <968fb5d3-6cd8-7850-47e7-682e26f9ee5f@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <968fb5d3-6cd8-7850-47e7-682e26f9ee5f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
+ <20230705053914.9759-2-quic_kbajaj@quicinc.com> <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
+ <db283531-36a2-0535-4fe2-d1571b3fa8cb@quicinc.com>
+In-Reply-To: <db283531-36a2-0535-4fe2-d1571b3fa8cb@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 5 Jul 2023 12:42:53 +0300
+Message-ID: <CAA8EJpotQs_C_b+qvR1gXcasOtcw6SA8hCgJfuHFa7PnvPeobQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved memory region
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2023 10:33, Souradeep Chowdhury wrote:
->>> +    $ref: /schemas/types.yaml#/definitions/string-array
->>> +
->>> +  abl-time:
->>> +    description: The property to store the duration of abl in ms.
->>> +    $ref: /schemas/types.yaml#/definitions/string-array
->>
->> I have no clue what this entire binding is about. Nothing can bind to
->> it, no usage explained. Properties are not used to "store the duration".
->> This does not look like suitable for DT, drop entire binding.
-> 
-> This binding was created as per the suggestion on version 6 of the patch 
-> by Arnd. The idea was that these 2 devicetree properties will be used to 
-> populate the bootstat values from the bootloader and exposed to the user 
-> via /sys/firmware/devicetree/ directly.
-> 
-> Details in the link below:-
-> 
-> https://lore.kernel.org/lkml/7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com/T/#mbdc9ad95fcbb5ad7b56c6996a3933899b42d982c
-> 
-> Can you suggest any alternative way to represent this as a binding?
+On Wed, 5 Jul 2023 at 10:06, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>
+>
+>
+> On 7/5/2023 11:19 AM, Dmitry Baryshkov wrote:
+> > On Wed, 5 Jul 2023 at 08:40, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+> >> Add missing reserved regions as described in QDU1000 memory map.
+> >>
+> >> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 26 ++++++++++++++++++++++++
+> >>   1 file changed, 26 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> >> index 1d22f87fd238..3f5512ec0a90 100644
+> >> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> >> @@ -448,6 +448,32 @@ &qupv3_id_0 {
+> >>          status = "okay";
+> >>   };
+> >>
+> >> +&reserved_memory{
+> >> +       #address-cells = <2>;
+> >> +       #size-cells = <2>;
+> >> +       ranges;
+> >> +
+> >> +       ecc_meta_data_reserved_mem:ecc_meta_data_reserved_region@e0000000{
+> > no_underscores_in_node_names. Ever.
+> >
+> > Also, if you have checked other platforms, you'd have seen that other
+> > platforms use a much more generic node name for 'memory' nodes (which
+> > you should have used too).
+>
+> These memory nodes are new to QDU platform, so will it be okay if I keep
+> these names without region suffix?
 
-Then you should clearly state in the binding how this is going to be
-used and who is going to populate it. Not only in the binding but also
-in commit msg which currently has 0 rationale and answers to "why". Your
-commit msg explained only "what", which is usually obvious and much less
-important. Your commit should stand on its own and should clearly
-explain why we need this feature at all, what problem it solves.
+Just use 'memory@abcd'.
 
-And before you claim that there is some discussion under link or some
-cover letter - these do not matter. Commit and bindings matter.
+>
+> Thanks
+> Komal
+>
+> >
+> >> +               no-map;
+> >> +               reg = <0x0 0xe0000000 0x0 0x20000000>;
+> >> +       };
+> >> +
+> >> +       harq_buffer_mem:harq_buffer_region@800000000{
+> >> +               no-map;
+> >> +               reg = <0x8 0x0 0x0 0x80000000>;
+> >> +       };
+> >> +
+> >> +       tenx_sp_buffer_mem:tenx_sp_buffer_region@880000000{
+> >> +               no-map;
+> >> +               reg = <0x8 0x80000000 0x0 0x50000000>;
+> >> +       };
+> >> +
+> >> +       fapi_buffer_mem:fapi_buffer_region@8d0000000{
+> >> +               no-map;
+> >> +               reg = <0x8 0xd0000000 0x0 0x20000000>;
+> >> +       };
+> >> +};
+> >> +
+> >>   &sdhc {
+> >>          pinctrl-0 = <&sdc_on_state>;
+> >>          pinctrl-1 = <&sdc_off_state>;
+> >> --
+> >> 2.40.1
+> >>
+> >
+>
 
-What's more, I don't think that Arnd's advice is correct here - DT is
-suppose to describe hardware or firmware. These properties are coming
-from firmware but they are not describing any firmware or hardware
-characteristics. Instead they are debugging of current boot status.
 
-I will leave the decision on that for Rob, however anyway binding is
-very vague and incorrect, so I would expect he will come with the same
-concerns regardless whether it is suitable to DT or is not.
-
-
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
