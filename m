@@ -2,137 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBB047485DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 16:19:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FC28748623
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 16:24:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231658AbjGEOT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 10:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36096 "EHLO
+        id S231708AbjGEOX7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 10:23:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbjGEOT1 (ORCPT
+        with ESMTP id S231626AbjGEOXp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 10:19:27 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E94C10D5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 07:19:25 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-992b2249d82so797350866b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 07:19:25 -0700 (PDT)
+        Wed, 5 Jul 2023 10:23:45 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2BB2699
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 07:21:56 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fba74870abso7985831e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 07:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688566764; x=1691158764;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1688566890; x=1691158890;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zzg1Rcs4/REQbUAnr+xfpofd5U46nBqWnDZ+dmUTDMg=;
-        b=WRgmBEXA3L6lrnXfNKzwl17gLX243dbZg1O0xaa5KobN6rRNevuYsXqPM1MJ52uENv
-         IqOLTLZgratN6oGZ0J49GnKdK+LUgZmmcWlMvttMyjglkJfNE2SVgthNySLIFbqcy6oH
-         3KDgA7goUatdTGsx2kSJDM3bXxBHKNsRihhm8IyNs5tFunkmevU/a0jqLhSSigRwrlds
-         UOGcxKtLnl2ZeAZfX0PZJRthu44Bc94u7P8GAIwTDXsNl6h2EQZajU7MuzV7VmedUw03
-         inoMViAWywfL13yfVDiC52Zp+vSleNVvf5N3EC2M0DzeFQ+miu2el869eo+QEKuSJjZM
-         LlLg==
+        bh=S1lxUyn9OeMxYyMrh1OEm/wSr8uEeCcDCyt09KXL8Ds=;
+        b=IOzYGMDGc7kSbNMLtthH5+u+QPR+ojlXRXAGDJlbkCtONgNWS2s6W/QniIe7n/Dhbn
+         Il9o1On7sijd4EjbPA2VvJZjVt3YVJA58p7tog3HwB2gAuIpNdUBBhUWYLq7RfxPoEQZ
+         RVDXel8tcBIxw2aiMk1s1nsJ2dDLx9OXFLPXAVJVgXeGTo2aiLRfJvpGxSMKdLP6Rvds
+         i1dSKAIECsBwCa2m7A6OVBLnopDLpsgBT3msUqsISs75U55o1loP2EQwkLJMUIqDGjWF
+         XxHkmUACOVVzF5CO+b6Oipa2bhD3enf+82nGf9pPxUYCMNaWEqj3icvdS34CtTthC5iM
+         1e6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688566764; x=1691158764;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1688566890; x=1691158890;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zzg1Rcs4/REQbUAnr+xfpofd5U46nBqWnDZ+dmUTDMg=;
-        b=PzTVlvHqopVVnoNntTaLAXHAthTzfybZQ8jXKdrZG+Tmc9y46Oz+B+N++9Yx43iMP2
-         1/HncyhVSB80U5VDxjbcO9MXHW97tzdidoivboARnROlHF/fi7S3N23BKgfTZcrrL5lR
-         OxN45FrdWysjAPSfv9NwPVKpqLJiZ+9LAc9FLdLCDB+vmkFZjaVH/FypRTUK3//5rd9W
-         RdpYTo2MEGp7FeZuOxMbHm5uTTm0xdUA/T3x0D2RRdt37Zpe+riic33p2zZgZZINMVn2
-         VugGzhSmxGAhgklFX4rKP+2PQQPF7wh7Cu4KARuXrVJSZ3v0uo+GYgUX0BoQrj/bRIpO
-         CU1A==
-X-Gm-Message-State: ABy/qLZmVkQ708lqT9OtcyLGZHRpvRTPv18VnG0P0UDt54NziGPkY//0
-        We8rbxlfez+e8o7mKSj0e5KdzQ==
-X-Google-Smtp-Source: ACHHUZ4eDxk7lH1bbt75+5Z/GkSrqU3s5olRDPv3Ik55v2et8HE8B31Znv4eN2zZg8AXfxdAZBmCUA==
-X-Received: by 2002:a17:906:90d4:b0:991:fef4:bb9 with SMTP id v20-20020a17090690d400b00991fef40bb9mr13117765ejw.58.1688566764162;
-        Wed, 05 Jul 2023 07:19:24 -0700 (PDT)
+        bh=S1lxUyn9OeMxYyMrh1OEm/wSr8uEeCcDCyt09KXL8Ds=;
+        b=LT7jXTlm7O5oyQxJd9SLAoYzujp6B1sPXOtlZRPyOqqE/5yQoCf4nlfyNrfAhBiZ48
+         i/NsBVKluRFpUbIA89yqTqzktOFmDPIblS1SBHxX0Csl6Pq5MxnTcoyaUHmwzrL63RLC
+         L8SXc8FGOsH8FrymAeV7nZDdQPmGZ3D0pPjSw9aM9uj6v1t5sKq2F1LPVZTVtxXzkH6r
+         Zk6QnTQvOM4t3369w8JEMjpqFvVpsSTm+MrTO6V46uVeDAmomiGul8nKysdZ5viAJP2k
+         YQ+A2xx/7YzL0Wiw7HFbqG+2NLTZim2vr8t2+qIMG6AIoBJZ4WuUpVJvQCYsq6Rmetpc
+         HiFQ==
+X-Gm-Message-State: ABy/qLZVsT5Q5D/ycs0IbgRsm7h9wmDG3zJABX+uVAF6XHBjOakxKLYf
+        K0modKXI8qYiKN8Cf1cn1PQlzA==
+X-Google-Smtp-Source: APBJJlFwM7hrd9aBAnZ9PPNWHOVOX3Pla6S/uVAF4JZT6y+NwWPmWyPHJjWLuK+ijjCc3OwuDiXlwQ==
+X-Received: by 2002:a05:6512:1196:b0:4f8:5e3c:f3a7 with SMTP id g22-20020a056512119600b004f85e3cf3a7mr14595057lfr.43.1688566890026;
+        Wed, 05 Jul 2023 07:21:30 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id xa10-20020a170907b9ca00b00977c7566ccbsm14739232ejc.164.2023.07.05.07.19.22
+        by smtp.gmail.com with ESMTPSA id w7-20020aa7cb47000000b0051e0ea53eaasm4371298edt.97.2023.07.05.07.21.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 07:19:23 -0700 (PDT)
-Message-ID: <3acd3f26-831d-898f-e3f0-731814eb09b6@linaro.org>
-Date:   Wed, 5 Jul 2023 16:19:20 +0200
+        Wed, 05 Jul 2023 07:21:29 -0700 (PDT)
+Message-ID: <8bd8ffbe-f50d-6e4a-2fdf-3983a76fb5ad@linaro.org>
+Date:   Wed, 5 Jul 2023 16:21:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved memory
- region
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
- <20230705053914.9759-2-quic_kbajaj@quicinc.com>
- <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
- <db283531-36a2-0535-4fe2-d1571b3fa8cb@quicinc.com>
- <CAA8EJpotQs_C_b+qvR1gXcasOtcw6SA8hCgJfuHFa7PnvPeobQ@mail.gmail.com>
- <e285a22e-4943-4c9e-50d6-2dcac30703d3@linaro.org>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved
+ memory region
 Content-Language: en-US
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230705110620.7687-1-quic_kbajaj@quicinc.com>
+ <20230705110620.7687-2-quic_kbajaj@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <e285a22e-4943-4c9e-50d6-2dcac30703d3@linaro.org>
+In-Reply-To: <20230705110620.7687-2-quic_kbajaj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2023 13:08, Konrad Dybcio wrote:
-> On 5.07.2023 11:42, Dmitry Baryshkov wrote:
->> On Wed, 5 Jul 2023 at 10:06, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->>>
->>>
->>>
->>> On 7/5/2023 11:19 AM, Dmitry Baryshkov wrote:
->>>> On Wed, 5 Jul 2023 at 08:40, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->>>>> Add missing reserved regions as described in QDU1000 memory map.
->>>>>
->>>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->>>>> ---
->>>>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 26 ++++++++++++++++++++++++
->>>>>   1 file changed, 26 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>>> index 1d22f87fd238..3f5512ec0a90 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>>> @@ -448,6 +448,32 @@ &qupv3_id_0 {
->>>>>          status = "okay";
->>>>>   };
->>>>>
->>>>> +&reserved_memory{
->>>>> +       #address-cells = <2>;
->>>>> +       #size-cells = <2>;
->>>>> +       ranges;
->>>>> +
->>>>> +       ecc_meta_data_reserved_mem:ecc_meta_data_reserved_region@e0000000{
->>>> no_underscores_in_node_names. Ever.
->>>>
->>>> Also, if you have checked other platforms, you'd have seen that other
->>>> platforms use a much more generic node name for 'memory' nodes (which
->>>> you should have used too).
->>>
->>> These memory nodes are new to QDU platform, so will it be okay if I keep
->>> these names without region suffix?
->>
->> Just use 'memory@abcd'.
-> Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml
+On 05/07/2023 13:06, Komal Bajaj wrote:
+> Add missing reserved regions as described in QDU1000 memory map.
 > 
->   Following the generic-names recommended practice, node names should
->   reflect the purpose of the node (ie. "framebuffer" or "dma-pool").
->   Unit address (@<address>) should be appended to the name if the node
->   is a static allocation.
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> index 1d22f87fd238..47e5e31dde23 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> @@ -448,6 +448,28 @@ &qupv3_id_0 {
+>  	status = "okay";
+>  };
+> 
+> +&reserved_memory{
+> +	ecc_meta_data_mem: memory@e0000000{
 
-Yeah, two minutes too late :)
+Missing spaces before '{'. I was correcting this already:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=66b14154e278807811d67de9fb0d5cc76638d07b
+so it seems I need to keep doing the same.
+
+Anyway, the names should follow purpose, not "memory". See link from Konrad.
+
 
 Best regards,
 Krzysztof
