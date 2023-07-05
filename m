@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEF1C748156
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 11:47:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDE97748163
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 11:49:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbjGEJrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 05:47:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58168 "EHLO
+        id S232539AbjGEJtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 05:49:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230466AbjGEJrK (ORCPT
+        with ESMTP id S231734AbjGEJtF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 05:47:10 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B321712
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 02:47:08 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-992ace062f3so775899066b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 02:47:08 -0700 (PDT)
+        Wed, 5 Jul 2023 05:49:05 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21EB5E72
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 02:49:04 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-51d7f4c1cfeso7671220a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 02:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688550427; x=1691142427;
+        d=linaro.org; s=google; t=1688550542; x=1691142542;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+qZvOCuKtFzTR7vPGrjwngsBt7RydTrhfcDYMvZhiw8=;
-        b=eUSy8p0Mg7RhNCBHhmCblXUAWtklwGxj/93vKnJv3r8/jA/k+PrRQHB/n5Y9+pqFWG
-         QJ5L36IOr4Edpr+OshV1EEofpxOb9XUsm3e0NTFo00j5lzn/2h3MfPHVpMm6sMQ4s0VO
-         6AChbtHcRFLsO08XLTrYDi1ehCZ0HIXucxe6e4fgREiTEN4JwKZXB8xPpMFc+5QdG2M/
-         QpINCWSYcL8KnluLbVuIcGECtF/ipK2oQi4HvVAAJG+1ChtRUx4QmSuI/NhADZf53xsV
-         PYssiwMzpH93sPPS6BUHOmj8ntbrsTTUNDtD1VQXKAzY/+EMq7vNNcs2Y7fxqmk4Fdtm
-         iW/g==
+        bh=h0hymjdKc3LsDVZbTn71V/iWvkbZjVQzkC0ykYCrDKA=;
+        b=yAI+yvX50cia2w9g3lMHPgK1Gj8OjNFJSebhnkV/MYd6/+cOKoXjNTbDKMyAU8SATj
+         YGSwBZUzVqYnNhZ8moPIiSUE50iEZOGh45nlzpgnlzu0Hzl6U/qF0sUrBVfah4MzC51d
+         M78rLVgYEdGjqmGgMJ7BXB3glgWDvDPQe3GVJKbGU6BS7Znls1D02PsZNK3N/IPV30uN
+         jYGpHwl7mu/H6ypDxCFF9NI5/e0K/1J16CYBp46cMl5ZSX+KVceX9ewajZqQyVfRJ2iU
+         ZraZ2nTu2DEeUawCgomituhKmvRfBH5iZMn3zNcA55MQVoKqcL2DWx9A8l9MkT480CUf
+         OQZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688550427; x=1691142427;
+        d=1e100.net; s=20221208; t=1688550542; x=1691142542;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+qZvOCuKtFzTR7vPGrjwngsBt7RydTrhfcDYMvZhiw8=;
-        b=j8tCmrd5L22xOafgAqVYoEKK710K+6htnqvGYH0KpYRGdJjbSsE2TwFs1uJ5/65nRJ
-         3Z7DdSfPCDz9+nm6lAQ4TAdVKq0i42DC9483rnGXT2a6vSz8lG9dPi3kHz5BrT9zAspB
-         iPPrRPIq4hB3cZN+f8cb7pzRCo2EvLXMpVjC38t9jzlYM4ehkyM+n78nIZrP2K9txlR/
-         7FFUwqIb5PYvMenao7fndZ87pHSelJKJnhfVYRV2QqI+2sr/O9/Vb5oMu4X4aLGQ8xX/
-         kDctrEmtmQ8+E6uXqIRyXu4kUWd+rF1CNfMcDMh2jTTal59QoV2Ewmw4VYssF8zv3GrJ
-         uPPw==
-X-Gm-Message-State: ABy/qLZkWKg66R9iI4k4xKL1gKkHGrE3i8fK3GJP2RAeVsAuK2m9S7kG
-        3S23h+d5oKSNfm1DnFitS0FkUA==
-X-Google-Smtp-Source: ACHHUZ7mGwZf3R998XeLI1YA51tEUsLMBv+Cw6Q6BC5GAYD2s2ZUyWeqERykOe3eIHcokghQRKsdvw==
-X-Received: by 2002:a17:907:9859:b0:991:e3c4:c129 with SMTP id jj25-20020a170907985900b00991e3c4c129mr11397957ejc.69.1688550427056;
-        Wed, 05 Jul 2023 02:47:07 -0700 (PDT)
+        bh=h0hymjdKc3LsDVZbTn71V/iWvkbZjVQzkC0ykYCrDKA=;
+        b=bgMf+asbN+ys7cnE5xBYiNaqmCnhUl+0rzhTHKuIisF8Dal/eHxkJLtNDaljQI8eAX
+         0Yc/huqMXLj8y12NXo3Kluiah/r5B9FxuMnsdeWV5hn365TL57f/wB59pLPbtgRP3zGh
+         696DMCJX7c8Mglg22znvtaOjcsODd+oM3xLtL/G3WpKc757xWnnfNVzs9UbteqY9lc+j
+         IIPoICwUQMNuGEmHVnE2vKcYgVRxf/OKMnTpxQVRa9Qg19KrpG440PLNsBiwMbp8c0Vw
+         +mSigb+QrB0PAN6RaluVAltvmhxP4gcoTD4gfD4qXQE6xTeLOrnwvLw8AmEPySxz4a+V
+         +nSQ==
+X-Gm-Message-State: ABy/qLaf2uooxsmBesxO+bs4cmYHhO3kA97ggQiJKTc0eZgu5LhQhjec
+        NGC9aBF2DucgmIsZsL7IadXydg==
+X-Google-Smtp-Source: APBJJlHizyjKeH7/oYcU4+EGoyZ6s2G1hWWl7OQFBPr94hAtXsAhkUwUDD4PlFbie+q6czFqVk7J3w==
+X-Received: by 2002:a17:906:114e:b0:966:5a6c:752d with SMTP id i14-20020a170906114e00b009665a6c752dmr11681724eja.20.1688550542639;
+        Wed, 05 Jul 2023 02:49:02 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id mh9-20020a170906eb8900b00993a37aebc5sm502987ejb.50.2023.07.05.02.47.03
+        by smtp.gmail.com with ESMTPSA id n5-20020a170906088500b0098963eb0c3dsm14325556eje.26.2023.07.05.02.49.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 02:47:06 -0700 (PDT)
-Message-ID: <fe205e01-c065-adbe-33bf-b2acb1058c27@linaro.org>
-Date:   Wed, 5 Jul 2023 11:47:01 +0200
+        Wed, 05 Jul 2023 02:49:02 -0700 (PDT)
+Message-ID: <f888e7e2-9a7d-4525-78a3-cfdecdc8a918@linaro.org>
+Date:   Wed, 5 Jul 2023 11:48:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 2/7] dt-bindings: arm: qcom: Document SM7125 and
- xiaomi,joyeuse board
+Subject: Re: [PATCH 4/7] clk: qcom: gcc-sc7180: Fix up gcc_sdcc2_apps_clk_src
 Content-Language: en-US
 To:     David Wronek <davidwronek@gmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -70,17 +69,18 @@ To:     David Wronek <davidwronek@gmail.com>,
         Taniya Das <tdas@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        map220v <map220v300@gmail.com>
 References: <20230704163848.169853-2-davidwronek@gmail.com>
- <20230704163848.169853-4-davidwronek@gmail.com>
+ <20230704163848.169853-6-davidwronek@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230704163848.169853-4-davidwronek@gmail.com>
+In-Reply-To: <20230704163848.169853-6-davidwronek@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,27 +88,27 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 04/07/2023 18:31, David Wronek wrote:
-> Document the xiaomi,joyeuse board based on the Qualcomm SM7125 SoC.
+> From: map220v <map220v300@gmail.com>
 > 
+> Add the PARENT_ENABLE flag to prevent the clock from getting stuck at
+> boot.
+
+What does it mean that "clock getting stuck at boot"? How a clock can stuck?
+
+> 
+> Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver for SC7180")
+> Signed-off-by: map220v <map220v300@gmail.com>
+
+Same concerns as for other patches with this. Look:
+https://github.com/map220v/sm7125-mainline/commit/e754e5725cb596049df2437d7c857e4d232e87fb
+
+No SoB.
+
 > Signed-off-by: David Wronek <davidwronek@gmail.com>
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
----
-
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you do not know the process, here is a short
-explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tools like b4 can help
-here. However, there's no need to repost patches *only* to add the tags.
-The upstream maintainer will do that for acks received on the version
-they apply.
-
-https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
+Fixes must be either first in series or better sent separately. There is
+no reason for them to be in this patchset in the first place, because
+they are not related.
 
 Best regards,
 Krzysztof
