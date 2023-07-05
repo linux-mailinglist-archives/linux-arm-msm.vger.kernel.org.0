@@ -2,113 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9888F748693
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 16:42:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 517FF7486A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 16:43:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232501AbjGEOme (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 10:42:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48758 "EHLO
+        id S232580AbjGEOnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 10:43:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232573AbjGEOmd (ORCPT
+        with ESMTP id S232629AbjGEOnU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 10:42:33 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC751700
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 07:42:32 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b6f52e1c5cso29841381fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 07:42:32 -0700 (PDT)
+        Wed, 5 Jul 2023 10:43:20 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9D1170B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 07:43:10 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-38c35975545so5403110b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 07:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688568150; x=1691160150;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LvfxYoatLPY+EEK3fZXAaMdZCVIQwiRsXvqBzlQnUio=;
-        b=zrmknDbWs4pXA2BEO+ZZbVS1/Vg3LDziRqcQZVHwrspolpztZ9aKw8dsbUeyoL8GnA
-         dM0/Dhc5+Q7lRSv/a/VL22dNGx7MwcVPNGkmtpX9SMCOS2pmWiPIsLNnVnIx9WNd7tM0
-         ZR86oIFUmaICXXSTI30wkW7hRNvkywplXSXjhqfjOdvt4yMkWcLpKTjNKon4wGbRS/6l
-         PYYYu19Oa0fWNGbPl7ycT0ssWvXEQxdvQ3reESoP9KryJF8Y67EAQMTVC0ht3rKtBdbN
-         eFAd1WgoiuiHIx9lDFPKfSvJIU8lSLjumJwIX2rlsPWOsve6twEcqwH7z2tODLoNwR8K
-         WIVw==
+        d=gmail.com; s=20221208; t=1688568190; x=1691160190;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A14fZKmtNXyFXPY9J+wKEhzDJ4Yasz3lPL7wl3xXT9o=;
+        b=FIi4zGZzJBDn8pZYMtFbQmJtUX0w1mBSjt1CFCfchGzflvfxL8Wc4DBsmeLraczciA
+         c9iMzPtumc7Xwtwy2kxuNtLi8CN/ZTHn6+yoFE2fLEt/S2pr4x8KiX0ZE8vsEy6atGZh
+         nQOJqfMtd1ISqII0qF6v6HwxnxRPyfEjtPKfSrLXcRJUCTheyMsYzTDWLnFXKu1IiGHc
+         RrYKuSULFzNBEjUS1BX/8p66q7y2EKq34iA0HkSwjamLEyAfT1ehovgrDTS6tXrYWaK9
+         vxPzZxEg2GmESH4tLOX8DUX/tYf9P+VGYcDH9R5iOcJYalbTup24ABetIf9ghr2PGPPV
+         gGwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688568150; x=1691160150;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LvfxYoatLPY+EEK3fZXAaMdZCVIQwiRsXvqBzlQnUio=;
-        b=cw4TIvfmUtUbJ0csYAafZ57uWukPlFJWx6wWH3okIClP7LfkLSiO6IJUdoUfp3tQYX
-         f94JBYNw5CvPppo/h268i3ncqicOMPke2wFMz7RpoRbMAFXnNavIcS73rKP5Ca/c2JyH
-         OnGWtNT/FD1lpUom+qCJsZqXw7DsoVMr5p1byt5y5LBq6OFYQnnFZdpBNX9E8WR6bb8q
-         UOMX8tF0YwaeWoPsKxoVOT4mKcGT0+mO5LKGtnADH1mdDMIfybUypy2o+GUsnz3+WHSJ
-         vHFwarx/7r0OTD1U2hAm7yp1q4Q2NVNUb8vBJ3NkQ7dfz6ao60WwzfSlkEl2+3E200GL
-         MkjA==
-X-Gm-Message-State: ABy/qLaYvX6l1yA1ENqij6RamlTeBvNMZl/4TmAMsFmfrlXgDTlKQZi7
-        VeBAS1LhNm9VuvJg6Q+1q+wapwlHTJJ13cbNGd0=
-X-Google-Smtp-Source: APBJJlGYhYhict3tVNgScjd7KiEg9N8T63CfQkYGiQDMubJFxYUP7RMS0Z5BovY5eCZ+8GTsDCAgyQ==
-X-Received: by 2002:a2e:8e89:0:b0:2b6:e536:a2a3 with SMTP id z9-20020a2e8e89000000b002b6e536a2a3mr9007351ljk.19.1688568150187;
-        Wed, 05 Jul 2023 07:42:30 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id xa10-20020a170907b9ca00b00988955f7b5esm14727581ejc.157.2023.07.05.07.42.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jul 2023 07:42:29 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: add missing space before {
-Date:   Wed,  5 Jul 2023 16:42:26 +0200
-Message-Id: <20230705144226.280490-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20221208; t=1688568190; x=1691160190;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=A14fZKmtNXyFXPY9J+wKEhzDJ4Yasz3lPL7wl3xXT9o=;
+        b=ks9tj2gGrWUbxydkVIHBcaorIUtCxSMeVd+HE8i5a0LTi+2d6vzCSJt6RrzpQ3pkxM
+         UNdt0CHjy2iOWUzvjoINTtBQKXt84PMm0jYzZtxJXeh+bxUaEgLp49FwXs8DCLi1bRw2
+         ByM97hO+5jIjlcUKWd1ci/ISeGElArXMliwdL78oGJKWYahhPBG2BCZksZeiaC1FlGqP
+         AX3AlOC0/X+GQutkdZD6aavKhB6Ch10aBHHAa6sIwl0ZayfWCCCO/BO7WAxi4zDIWOYc
+         2WfmRb4EvSVAxvpoy3h4hvTYv336qwb5Hr0+DlSNHUQ8J/S49kBN8ZI90zUJO4+MG4Fj
+         1v6Q==
+X-Gm-Message-State: AC+VfDykI5fMWuHYZrropbCJ5TMHeDrZ7yjNb6bHYQPNq85a3nfRBFbZ
+        kSRme4hagHsslEYr5ymyiqh6+0c3F+tzyRtN+eg=
+X-Google-Smtp-Source: ACHHUZ7wimCD6cHiqgUUi7EIyKNS4Oju/YJSxp80yq2fiPDdvKbbukpLa9lMbEkKnQdf8CYYXHcb5acmpO4Y3of/RI0=
+X-Received: by 2002:a05:6808:164e:b0:39d:adbe:fa29 with SMTP id
+ az14-20020a056808164e00b0039dadbefa29mr17369355oib.4.1688568190086; Wed, 05
+ Jul 2023 07:43:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230704163640.6162-1-robdclark@gmail.com> <CAA8EJpoAZ7z2aURWHs1ouEuTzj2c0O-CypCHmocXO62EpuffsQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpoAZ7z2aURWHs1ouEuTzj2c0O-CypCHmocXO62EpuffsQ@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 5 Jul 2023 07:42:58 -0700
+Message-ID: <CAF6AEGtUq3Y3YjTt1qazWcP4NcH2q_k4p2pfzEcrJMP34n_L+Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/adreno: Fix warn splat for devices without revn
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing whitespace between node name/label and opening {.
+On Tue, Jul 4, 2023 at 10:20=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, 4 Jul 2023 at 19:36, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Recently, a WARN_ON() was introduced to ensure that revn is filled befo=
+re
+> > adreno_is_aXYZ is called. This however doesn't work very well when revn=
+ is
+> > 0 by design (such as for A635).
+> >
+> > Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Fixes: cc943f43ece7 ("drm/msm/adreno: warn if chip revn is verified bef=
+ore being set")
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 9 ++++++---
+> >  1 file changed, 6 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/=
+msm/adreno/adreno_gpu.h
+> > index 65379e4824d9..ef1bcb6b624e 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > @@ -149,7 +149,8 @@ bool adreno_cmp_rev(struct adreno_rev rev1, struct =
+adreno_rev rev2);
+> >
+> >  static inline bool adreno_is_revn(const struct adreno_gpu *gpu, uint32=
+_t revn)
+> >  {
+> > -       WARN_ON_ONCE(!gpu->revn);
+> > +       /* revn can be zero, but if not is set at same time as info */
+> > +       WARN_ON_ONCE(!gpu->info);
+> >
+> >         return gpu->revn =3D=3D revn;
+> >  }
+> > @@ -161,14 +162,16 @@ static inline bool adreno_has_gmu_wrapper(const s=
+truct adreno_gpu *gpu)
+> >
+> >  static inline bool adreno_is_a2xx(const struct adreno_gpu *gpu)
+> >  {
+> > -       WARN_ON_ONCE(!gpu->revn);
+> > +       /* revn can be zero, but if not is set at same time as info */
+> > +       WARN_ON_ONCE(!gpu->info);
+> >
+> >         return (gpu->revn < 300);
+>
+> This is then incorrect for a635 / a690 if they have revn at 0.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8180x.dtsi                    | 2 +-
- arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Fortunately not any more broken that it has ever been.  But as long as
+sc7280/sc8280 have GPU OPP tables, you'd never hit this.  I'm working
+on a better solution for next merge window.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 3c1314e12d08..fe8534538618 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -3429,7 +3429,7 @@ timer@17c20000 {
- 			#size-cells = <1>;
- 			ranges = <0 0 0 0x20000000>;
- 
--			frame@17c21000{
-+			frame@17c21000 {
- 				reg = <0x17c21000 0x1000>,
- 				      <0x17c22000 0x1000>;
- 				frame-number = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-index b841ea9192ae..85e5cf3dc91e 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-@@ -565,7 +565,7 @@ panel_in_0: endpoint {
- 				};
- 			};
- 
--			port@1{
-+			port@1 {
- 				reg = <1>;
- 
- 				panel_in_1: endpoint {
--- 
-2.34.1
+BR,
+-R
 
+> >  }
+> >
+> >  static inline bool adreno_is_a20x(const struct adreno_gpu *gpu)
+> >  {
+> > -       WARN_ON_ONCE(!gpu->revn);
+> > +       /* revn can be zero, but if not is set at same time as info */
+> > +       WARN_ON_ONCE(!gpu->info);
+> >
+> >         return (gpu->revn < 210);
+>
+> And this too.
+>
+> >  }
+> > --
+> > 2.41.0
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
