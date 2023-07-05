@@ -2,79 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 674147482B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 13:09:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95AE87482DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 13:21:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbjGELJF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 07:09:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36874 "EHLO
+        id S231552AbjGELVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 07:21:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbjGELJC (ORCPT
+        with ESMTP id S230126AbjGELVE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 07:09:02 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6697F1721
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 04:09:00 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fb94b1423eso9997218e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 04:09:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688555338; x=1691147338;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8cYA7q56z8UCDFhXJUoPF4Hs2h/3aSmBTFzm6jnknrI=;
-        b=Y+xZrKQcxcOAXxkre6DCpqb6au1aqmB8vgKFGj85xzIzfOiymDrBqiZtj/UhLqDm3K
-         OVzjRe6GslLdtfRjP1KeSmTBsp33eRyFyW4UVguQ9XQjYUoPrpFMaDlg7cQxBzFl/2AD
-         lsbVymnq8oN5KL2oKe89XYM7anov0NoroISe65jydA8HbwudDn6VzZqba8ZqBEPyZFr3
-         JN/Vw3gFp9E+yks3bk8OLaqTTlcEVzM6IxDEmKaFD0og2n6mSksoLEwexfolf5Lgkpk0
-         3bzCmKDIqpO/X2FbOOvynQ9EURWPNejkkDBdICBUg+Wsa1AsLWIIPyB5x7sdUvwKeOIw
-         PUIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688555338; x=1691147338;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8cYA7q56z8UCDFhXJUoPF4Hs2h/3aSmBTFzm6jnknrI=;
-        b=N756lqmc6UNKaHJBiybuoypCxH1LZzJZdstU+zdzOPJeiJ45fFXlqVdDcdo4mZQm9q
-         c7rfm1bPmBJlK6xXu0nzO7Y3z12rNAPW1TvTSYJl906cUVZmDnfRf2KzElQk7CRmeceb
-         262Uu5dt33EB1BLF/e46rGAX3CEA9oKaX/GdlMBROnBx5NTnifJUunj2u0p154rK+gUn
-         g7O/dQOJfTuxR9hDUoiXNMvYxsrPPmQoptst1PXldFPzSS5/vDrzCgchTKg4/4kNWEY4
-         pWQYXbQarUgKIeUNnuhGl9drNInfpbXckC7cDnPUK+RrRg5ZA4pi+XK0xchzossirx47
-         4ldA==
-X-Gm-Message-State: ABy/qLaqyX7DUnIUKOGyvH2WKyV5EbeVilz7m48KY9MF2dGUo2dVKjrF
-        dlzGHOhGvYePTF4+VQ1ihy8tWw==
-X-Google-Smtp-Source: APBJJlFrZLcEbIW4U3eWNaqsqfzHNx73Dkh7DONT0KurkHuqw2NSgkKEkyeBHR4apfFEItXNygI+Cw==
-X-Received: by 2002:a05:6512:2006:b0:4fb:751a:98d5 with SMTP id a6-20020a056512200600b004fb751a98d5mr9981330lfb.18.1688555338635;
-        Wed, 05 Jul 2023 04:08:58 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id er20-20020a05651248d400b004fad8b001f0sm5238764lfb.253.2023.07.05.04.08.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 04:08:58 -0700 (PDT)
-Message-ID: <e285a22e-4943-4c9e-50d6-2dcac30703d3@linaro.org>
-Date:   Wed, 5 Jul 2023 13:08:56 +0200
+        Wed, 5 Jul 2023 07:21:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 516631996;
+        Wed,  5 Jul 2023 04:20:36 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3658dRFG016367;
+        Wed, 5 Jul 2023 11:20:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KcOexi0Vm5W4JbwHJG0UH3/06wW8o2L6Y2Xo4Fh42Ok=;
+ b=Oc2Nzcp+jqISN5auqULXdAHC+BnOzhn5miyvXhxFQjg9pzo4jjoKPBDbgFWbaO5pJckq
+ Zbgshcc1JKPgx9lCKgjcrq6sf1ldRpie3XmlSOVR1K/FCVKD5yoKTMeYJvm/HtbXuEe0
+ udLIucCcdv4j2SmXDyskrO6BCtZNG/WWmgXarErTbMAm3301X5RhTDAqZt7LKyQfucqK
+ zA2FcxoCtAPsQbUEWoKX4AraoE78R6NVw3ARasffHosBR29qMXkhioq/OhGC2gSSoO1l
+ qgO5PE+2wky0lLiwL5voo4/LM6/SWfOf+tmEiFVvGGql5kly+yPSxuJOB+e6KBxsPONP fg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rn2cp8knh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Jul 2023 11:20:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 365BKTn1010550
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Jul 2023 11:20:29 GMT
+Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 5 Jul
+ 2023 04:20:24 -0700
+Message-ID: <17dc53d0-2f30-1d54-ccbe-d829a681ad06@quicinc.com>
+Date:   Wed, 5 Jul 2023 16:50:21 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved memory
- region
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 02/10] dt-bindings: power: Add rpm power domains for SDX75
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230705053914.9759-1-quic_kbajaj@quicinc.com>
- <20230705053914.9759-2-quic_kbajaj@quicinc.com>
- <CAA8EJpo406gV-5H8+y4SJbbRqnWFRo5wrR6a9KJ2arbN61tS2Q@mail.gmail.com>
- <db283531-36a2-0535-4fe2-d1571b3fa8cb@quicinc.com>
- <CAA8EJpotQs_C_b+qvR1gXcasOtcw6SA8hCgJfuHFa7PnvPeobQ@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpotQs_C_b+qvR1gXcasOtcw6SA8hCgJfuHFa7PnvPeobQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linus.walleij@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <sboyd@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
+References: <1688395346-3126-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1688395346-3126-3-git-send-email-quic_rohiagar@quicinc.com>
+ <0d468d08-6410-e424-b4f3-5245cdb0334a@linaro.org>
+ <85456057-c4ef-68a6-4fc5-c9fd03b01b71@quicinc.com>
+ <06506ed7-f861-0bca-8b87-e2da6a6bc789@quicinc.com>
+ <553bd028-aaf3-b128-ae4c-7f938c23e889@linaro.org>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <553bd028-aaf3-b128-ae4c-7f938c23e889@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: V_BG9uQ6c6RhpPFu5K3vUkLH-8H6W2Nt
+X-Proofpoint-ORIG-GUID: V_BG9uQ6c6RhpPFu5K3vUkLH-8H6W2Nt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-05_02,2023-07-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 bulkscore=0 mlxlogscore=644
+ lowpriorityscore=0 suspectscore=0 impostorscore=0 mlxscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307050100
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,85 +88,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5.07.2023 11:42, Dmitry Baryshkov wrote:
-> On Wed, 5 Jul 2023 at 10:06, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->>
->>
->>
->> On 7/5/2023 11:19 AM, Dmitry Baryshkov wrote:
->>> On Wed, 5 Jul 2023 at 08:40, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->>>> Add missing reserved regions as described in QDU1000 memory map.
->>>>
->>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 26 ++++++++++++++++++++++++
->>>>   1 file changed, 26 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>> index 1d22f87fd238..3f5512ec0a90 100644
->>>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>> @@ -448,6 +448,32 @@ &qupv3_id_0 {
->>>>          status = "okay";
->>>>   };
->>>>
->>>> +&reserved_memory{
->>>> +       #address-cells = <2>;
->>>> +       #size-cells = <2>;
->>>> +       ranges;
->>>> +
->>>> +       ecc_meta_data_reserved_mem:ecc_meta_data_reserved_region@e0000000{
->>> no_underscores_in_node_names. Ever.
->>>
->>> Also, if you have checked other platforms, you'd have seen that other
->>> platforms use a much more generic node name for 'memory' nodes (which
->>> you should have used too).
->>
->> These memory nodes are new to QDU platform, so will it be okay if I keep
->> these names without region suffix?
-> 
-> Just use 'memory@abcd'.
-Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml
 
-  Following the generic-names recommended practice, node names should
-  reflect the purpose of the node (ie. "framebuffer" or "dma-pool").
-  Unit address (@<address>) should be appended to the name if the node
-  is a static allocation.
+On 7/5/2023 4:13 PM, Konrad Dybcio wrote:
+> On 5.07.2023 10:54, Rohit Agarwal wrote:
+>> On 7/4/2023 11:47 AM, Rohit Agarwal wrote:
+>>> On 7/3/2023 8:29 PM, Konrad Dybcio wrote:
+>>>> On 3.07.2023 16:42, Rohit Agarwal wrote:
+>>>>> Add RPM power domain bindings for the SDX75 SoC.
+>>>>>
+>>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>>>> ---
+>>>>>    Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
+>>>>>    include/dt-bindings/power/qcom-rpmpd.h                  | 8 ++++++++
+>>>>>    2 files changed, 9 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>>>> index afad313..58e1be8 100644
+>>>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>>>> @@ -40,6 +40,7 @@ properties:
+>>>>>          - qcom,sdm845-rpmhpd
+>>>>>          - qcom,sdx55-rpmhpd
+>>>>>          - qcom,sdx65-rpmhpd
+>>>>> +      - qcom,sdx75-rpmhpd
+>>>>>          - qcom,sm6115-rpmpd
+>>>>>          - qcom,sm6125-rpmpd
+>>>>>          - qcom,sm6350-rpmhpd
+>>>>> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
+>>>>> index 1bf8e87..8092d0d 100644
+>>>>> --- a/include/dt-bindings/power/qcom-rpmpd.h
+>>>>> +++ b/include/dt-bindings/power/qcom-rpmpd.h
+>>>>> @@ -57,6 +57,14 @@
+>>>>>    #define SDX65_CX_AO    4
+>>>>>    #define SDX65_MXC    5
+>>>>>    +/* SDX75 Power Domain Indexes */
+>>>>> +#define SDX75_CX    0
+>>>>> +#define SDX75_CX_AO    1
+>>>>> +#define SDX75_MSS    2
+>>>>> +#define SDX75_MX    3
+>>>>> +#define SDX75_MX_AO    4
+>>>>> +#define SDX75_MXC    5
+>>>> Please instead introduce a set of defines without the SoC prefix
+>>>> (i.e. CX, CX_AO, MX etc.). We've been putting this off for too long
+>>>> and you're the first unlucky guy that submitted new RPMhPD support after
+>>>> we've concluded it'd be the way to go! :D Sadly, we can't replace the
+>>>> existing ones retroactively..
+>>> Surely No issues. Will update it.
+>> I have a doubt here. Cant we completely omit the #defines here and directly index this as 0,1,...
+>> because if the intention of this #defines is to understand the name of the pd then we can get
+>> it from the .name attribute in rpmhpd as well, right?
+>>
+>> The problems with a common set of #define would be, lets say if we define CX_AO as 1 and some platform
+>> doesn't have CX_AO then wouldnt it leave a null entry in the driver entry of that platform?
+> Yes.
+>
+> We already do this in the rpmh clock driver, as:
+>
+> 1. there are domains that all chips share (like CX etc.)
+> 2. wasting a couple of bytes lets us massively save on convolution
+Ok, got it. Looks cleaner.
 
-Konrad
-> 
+Thanks,
+Rohit.
+>
+> Konrad
+>> Thanks,
+>> Rohit.
 >>
->> Thanks
->> Komal
->>
->>>
->>>> +               no-map;
->>>> +               reg = <0x0 0xe0000000 0x0 0x20000000>;
->>>> +       };
->>>> +
->>>> +       harq_buffer_mem:harq_buffer_region@800000000{
->>>> +               no-map;
->>>> +               reg = <0x8 0x0 0x0 0x80000000>;
->>>> +       };
->>>> +
->>>> +       tenx_sp_buffer_mem:tenx_sp_buffer_region@880000000{
->>>> +               no-map;
->>>> +               reg = <0x8 0x80000000 0x0 0x50000000>;
->>>> +       };
->>>> +
->>>> +       fapi_buffer_mem:fapi_buffer_region@8d0000000{
->>>> +               no-map;
->>>> +               reg = <0x8 0xd0000000 0x0 0x20000000>;
->>>> +       };
->>>> +};
->>>> +
->>>>   &sdhc {
->>>>          pinctrl-0 = <&sdc_on_state>;
->>>>          pinctrl-1 = <&sdc_off_state>;
->>>> --
->>>> 2.40.1
->>>>
->>>
->>
-> 
-> 
+>>> Thanks,
+>>> Rohit.
+>>>> Konrad
+>>>>> +
+>>>>>    /* SM6350 Power Domain Indexes */
+>>>>>    #define SM6350_CX    0
+>>>>>    #define SM6350_GFX    1
