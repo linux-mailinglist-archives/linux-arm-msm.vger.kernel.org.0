@@ -2,160 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A622E74821E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 12:28:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0907974825A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 12:43:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232082AbjGEK2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 06:28:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48788 "EHLO
+        id S232099AbjGEKnS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 06:43:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbjGEK2C (ORCPT
+        with ESMTP id S231703AbjGEKnS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 06:28:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2738EE57;
-        Wed,  5 Jul 2023 03:28:01 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3658VJm9007062;
-        Wed, 5 Jul 2023 10:27:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=bV7rJNvmpJ5to4KOLcJiFcl78CQWcc4Ng42UCLOWyNo=;
- b=UNJetcpc21hYbbdPqXRZMpU/4tQI8zFwa8nmfv4o25uI0DMPrB+7592wgTnaubWNSY/M
- sv39zMIZvP4Kunfu0kvmqyCMpU2wmpilC9YjXugkqd4xv9uzSUtN3SgCE3horToGRRsZ
- vga5o4vRcR8kUoNWwyZkSrb7FMHjvjzRevpS9nMNAmE4BuU+G654I/eo8dggbt1znCEm
- BEdFQKO2kzz7wsh/sOLPD9y21TRYDcgRuc56AlbhOfcwt4fPeQedrpP4y9BFKD3eyIE8
- YQfPe2jZamUvG8vFoRInlxAj7ZpfxC0THkHUKc2U+ly3B6hOyIPyu+/LBXUSnKqofDuD pg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rn152gmg2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Jul 2023 10:27:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 365ARq4a001436
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Jul 2023 10:27:52 GMT
-Received: from [10.216.2.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 5 Jul
- 2023 03:27:17 -0700
-Message-ID: <20b7d92d-c3b8-254d-82ec-37a857397e8b@quicinc.com>
-Date:   Wed, 5 Jul 2023 15:57:13 +0530
+        Wed, 5 Jul 2023 06:43:18 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA85C10C3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 03:43:14 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fb7373dd35so718532e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 03:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688553793; x=1691145793;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=12A9qcUVJY2HjTp99aSPBCbjL3RJ6iwTw28gJjZZd5I=;
+        b=maLNQ7kVki8KKtj9rXkDPl0YLHRDT2SzUZQxgQ04P6nRQTNf9aMfk59zaRwYRBZCG9
+         ni8rtwdFGDibilatQ4az5XJvPypiqCCCXGx8fRtqZinJ+3Oa6Gb8/hNwGkpCRLDTOXcO
+         Awbwkh5zMygJoh5wX+Y/FveBTHQBgSaBemz88mlaSWFhb5VBJZ0yzvfWKeVDF6a6YAgL
+         LNEx40Pwr3Ichr2pVfUOm13ReDYKnzGUP+O1zZbM756DqeEu+8FZYHDC/kH1jWdeiRqo
+         hq9Bkq+25oLHiEaKiKk9X6wn6nDNYYV7b3NeMbajI/a6hFO6jcM/v/Nw2aD/zHGTuBYz
+         Ga2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688553793; x=1691145793;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=12A9qcUVJY2HjTp99aSPBCbjL3RJ6iwTw28gJjZZd5I=;
+        b=laIQZZzSiX+XHlwJoPDUt1EhczoyPgOJ0PYKg/O8RXjushFSLlee+kzo2Qj6JmJZLm
+         tFQrNfk/OY/O9DqNpRnG6ugPdpgk6AC90t2lUeG3EClQ4pJRdbGMkKs9aUeO/2gSAmVw
+         SQma1cxDhF8Ax/ZMQB0cly68gU98c+D1PHXt3AExJSu//wPoPsb6f8goS8KENrmkESTs
+         QvqONk5hV5o4KzH9xL4gmZO+8nbf7pXYS45iOHrGYpv233fOGKLxQClaaE+U5g7NeXFs
+         PAA/L5GoTFhuhlzHSNDhNue1bwaKz6f1rLGOJto4mVvlS1fCuSze4MS7BEALLR+GJxhg
+         WWaw==
+X-Gm-Message-State: ABy/qLZ35eBwjlzT9eGgbsiErQRwtfdZhvg440Td6QC0UGDK6SsajLVs
+        5g2wQ1pqh2IRTc3ecioKk/Y6EQ==
+X-Google-Smtp-Source: APBJJlFl4J5Bz/jVEqr/boTDXtZr5d6EOFdZrFDRQJguSRxRTxcwf03MCbEG98IUqQVthdUKAZjqGg==
+X-Received: by 2002:a05:6512:e86:b0:4fb:7624:85a5 with SMTP id bi6-20020a0565120e8600b004fb762485a5mr799188lfb.0.1688553792793;
+        Wed, 05 Jul 2023 03:43:12 -0700 (PDT)
+Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
+        by smtp.gmail.com with ESMTPSA id x8-20020ac24888000000b004fba4e27abesm2988053lfc.241.2023.07.05.03.43.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jul 2023 03:43:12 -0700 (PDT)
+Message-ID: <553bd028-aaf3-b128-ae4c-7f938c23e889@linaro.org>
+Date:   Wed, 5 Jul 2023 12:43:10 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH] PCI: qcom: configure the parf halt window size to 1GB
+Subject: Re: [PATCH 02/10] dt-bindings: power: Add rpm power domains for SDX75
 Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_ipkumar@quicinc.com>
-References: <20230623045731.29397-1-quic_devipriy@quicinc.com>
- <20230624062344.GE5611@thinkpad>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <20230624062344.GE5611@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OgT5wYMFdpYAAaKq6n_uq9WN8uIHoAow
-X-Proofpoint-ORIG-GUID: OgT5wYMFdpYAAaKq6n_uq9WN8uIHoAow
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-05_01,2023-07-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1015 mlxlogscore=781
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307050090
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linus.walleij@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
+        sboyd@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <1688395346-3126-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1688395346-3126-3-git-send-email-quic_rohiagar@quicinc.com>
+ <0d468d08-6410-e424-b4f3-5245cdb0334a@linaro.org>
+ <85456057-c4ef-68a6-4fc5-c9fd03b01b71@quicinc.com>
+ <06506ed7-f861-0bca-8b87-e2da6a6bc789@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <06506ed7-f861-0bca-8b87-e2da6a6bc789@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 5.07.2023 10:54, Rohit Agarwal wrote:
+> 
+> On 7/4/2023 11:47 AM, Rohit Agarwal wrote:
+>>
+>> On 7/3/2023 8:29 PM, Konrad Dybcio wrote:
+>>> On 3.07.2023 16:42, Rohit Agarwal wrote:
+>>>> Add RPM power domain bindings for the SDX75 SoC.
+>>>>
+>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>>> ---
+>>>>   Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
+>>>>   include/dt-bindings/power/qcom-rpmpd.h                  | 8 ++++++++
+>>>>   2 files changed, 9 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>>> index afad313..58e1be8 100644
+>>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>>> @@ -40,6 +40,7 @@ properties:
+>>>>         - qcom,sdm845-rpmhpd
+>>>>         - qcom,sdx55-rpmhpd
+>>>>         - qcom,sdx65-rpmhpd
+>>>> +      - qcom,sdx75-rpmhpd
+>>>>         - qcom,sm6115-rpmpd
+>>>>         - qcom,sm6125-rpmpd
+>>>>         - qcom,sm6350-rpmhpd
+>>>> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
+>>>> index 1bf8e87..8092d0d 100644
+>>>> --- a/include/dt-bindings/power/qcom-rpmpd.h
+>>>> +++ b/include/dt-bindings/power/qcom-rpmpd.h
+>>>> @@ -57,6 +57,14 @@
+>>>>   #define SDX65_CX_AO    4
+>>>>   #define SDX65_MXC    5
+>>>>   +/* SDX75 Power Domain Indexes */
+>>>> +#define SDX75_CX    0
+>>>> +#define SDX75_CX_AO    1
+>>>> +#define SDX75_MSS    2
+>>>> +#define SDX75_MX    3
+>>>> +#define SDX75_MX_AO    4
+>>>> +#define SDX75_MXC    5
+>>> Please instead introduce a set of defines without the SoC prefix
+>>> (i.e. CX, CX_AO, MX etc.). We've been putting this off for too long
+>>> and you're the first unlucky guy that submitted new RPMhPD support after
+>>> we've concluded it'd be the way to go! :D Sadly, we can't replace the
+>>> existing ones retroactively..
+>> Surely No issues. Will update it.
+> 
+> I have a doubt here. Cant we completely omit the #defines here and directly index this as 0,1,...
+> because if the intention of this #defines is to understand the name of the pd then we can get
+> it from the .name attribute in rpmhpd as well, right?
+> 
+> The problems with a common set of #define would be, lets say if we define CX_AO as 1 and some platform
+> doesn't have CX_AO then wouldnt it leave a null entry in the driver entry of that platform?
+Yes.
 
+We already do this in the rpmh clock driver, as:
 
-On 6/24/2023 11:53 AM, Manivannan Sadhasivam wrote:
-> On Fri, Jun 23, 2023 at 10:27:31AM +0530, Devi Priya wrote:
->> Configure the ADDR_BIT_INDEX of PARF_AXI_MSTR_WR_ADDR_HALT_V2 register with
->> 0x1E to increase the halt window size to 1GB so that, when new inbound
->> posted write transactions whose address crosses 1G address range, the
->> controller would halt all the incoming writes until all the previous AXI
->> responses are received.
->>
-> 
-> Can you explain how the value of 0x1e corresponds to 1GB window size?
-2^30 (0x1e) = 1G
-> 
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
->>   This patch depends on the below series which adds support for PCIe
->>   controllers in IPQ9574
->>   https://lore.kernel.org/linux-arm-msm/20230519090219.15925-1-quic_devipriy@quicinc.com/
->>
->>   drivers/pci/controller/dwc/pcie-qcom.c | 9 +++++++++
->>   1 file changed, 9 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index c7579dfa5b1c..26c40e006120 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -116,6 +116,8 @@
->>   
->>   /* PARF_AXI_MSTR_WR_ADDR_HALT register fields */
->>   #define EN					BIT(31)
->> +#define ADDR_BIT_INDEX				(BIT(0) | BIT(1) | BIT(2) | \
->> +						BIT(3) | BIT(4) | BIT(5))
-> 
-> GENMASK(5, 0)
-okay
-> 
->>   
->>   /* PARF_LTSSM register fields */
->>   #define LTSSM_EN				BIT(8)
->> @@ -154,6 +156,8 @@
->>   
->>   #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
->>   
->> +#define PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE	0x1e
-> 
-> GENMASK(4, 1) as these are address bits.
-okay
+1. there are domains that all chips share (like CX etc.)
+2. wasting a couple of bytes lets us massively save on convolution
 
-Thanks,
-Devi Priya
+Konrad
 > 
-> - Mani
+> Thanks,
+> Rohit.
 > 
->> +
->>   #define QCOM_PCIE_1_0_0_MAX_CLOCKS		4
->>   struct qcom_pcie_resources_1_0_0 {
->>   	struct clk_bulk_data clks[QCOM_PCIE_1_0_0_MAX_CLOCKS];
->> @@ -1126,6 +1130,11 @@ static int qcom_pcie_post_init(struct qcom_pcie *pcie)
->>   
->>   	writel(0, pcie->parf + PARF_Q2A_FLUSH);
->>   
->> +	val = readl(pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
->> +	val &= ~ADDR_BIT_INDEX;
->> +	writel(val | PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE, pcie->parf +
->> +			PARF_AXI_MSTR_WR_ADDR_HALT_V2);
->> +
->>   	dw_pcie_dbi_ro_wr_en(pci);
->>   	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
->>   
->> -- 
->> 2.17.1
 >>
-> 
+>> Thanks,
+>> Rohit.
+>>> Konrad
+>>>> +
+>>>>   /* SM6350 Power Domain Indexes */
+>>>>   #define SM6350_CX    0
+>>>>   #define SM6350_GFX    1
