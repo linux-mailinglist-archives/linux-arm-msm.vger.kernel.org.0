@@ -2,107 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACF2F7480A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 11:18:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39B7D7480EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 11:34:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231154AbjGEJSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 05:18:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45196 "EHLO
+        id S231312AbjGEJem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 05:34:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231559AbjGEJSJ (ORCPT
+        with ESMTP id S229532AbjGEJel (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 05:18:09 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE6CA3;
-        Wed,  5 Jul 2023 02:18:08 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3656rfKs004217;
-        Wed, 5 Jul 2023 09:18:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=6zn7ArBE4475+Ku3zKKxsNF3LY3cQy6G6oxLvWSz2mg=;
- b=YAcpR7Nx9WIYIwOexQWz7KEGdAkFAwOlql8oLblCZfnB0a2aeIctVMgZBUA/jlvyiYy8
- uF4oPa94YICHsQEEH66OpFzGZCZF6riioDMJnJA8hGa7mjxHnudK+BNoE8eesdFWxcGQ
- 9+hRdQU/4/vX+YAUnHU3+3gFZqspA615PNAXG29pEXqBxvJn0tqB3O3CIDDOApQ42xZm
- 8P1njlUr193SG545FFxrfKY9kxvoP7zBHxB0RBozVc/khGcOGeIuPRAiejLjXIiVV/gC
- GcrOe+9PW0JV6byvD+7WgFapVwFb/CeeSMTZ1MV8OKhLQb9YgYkj0rgOIdBXVsxqJsTd iQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmhf12e95-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Jul 2023 09:18:05 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3659I4CB012083
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Jul 2023 09:18:04 GMT
-Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.7; Wed, 5 Jul 2023 02:18:01 -0700
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: qru1000-idp: Add reserved gpio list
-Date:   Wed, 5 Jul 2023 14:47:30 +0530
-Message-ID: <20230705091730.32087-3-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230705091730.32087-1-quic_kbajaj@quicinc.com>
-References: <20230705091730.32087-1-quic_kbajaj@quicinc.com>
+        Wed, 5 Jul 2023 05:34:41 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A60A7171D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 02:34:39 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-51a52a7d859so976200a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 02:34:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688549678; x=1691141678;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rXURleKlaTFNIbTJ9xd745LCWhyovyOc9RZu94UdHB4=;
+        b=CkO7C71oRzFMdTiC7jMnovz3eVbsHlOo7s2oEzA8izZprXZqGtqMf9XLy8R4N2Gxkf
+         55gNLjKQjSPI6Tcj+x69U6GC9ejBrOVmAy0igh/p5oCp+ULSywHl8hYtA9lN3do/LdzZ
+         q6ihosgyqrpiui+dUAPSdh9kgyn6Yac1sD1r5xbvHfM1mZnlVBOtsYPR1WEC2gjlCntu
+         bxSgG7aykjmvPo7WvRDYvbUWFW7jtoSe1uw2r8yLSiZSBrtL3isv4932Mtuf0LsRlu+K
+         W69vVRbAPfR443FSD9Yvw83pJCmWZI4KsO6kr2s0C71U1rIKaiJ6P6G3J0zGypTbsPRV
+         Z5zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688549678; x=1691141678;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rXURleKlaTFNIbTJ9xd745LCWhyovyOc9RZu94UdHB4=;
+        b=PDAAG2JS8mdB3yggQ6V6X5C4hzMxivaW3of8Ux9a5oSI0EZN1yFd+BSXO8nCA5s/Kp
+         9q2r239zaLnxdRDQ2gmH43rUQ7Yr9NPm+bXG3G6V1bDv2TDjgbXiYFyHWIjq7ANSlCbq
+         z7TFRRUnFa4aezdKoDCxalBHrdThm5pDlJMVoKzAHPc40Ts8Ltxl/krDfc5+DirgUTrJ
+         wb8dK5XrppRX4HdwIWDxo8l0sSOup20g2pWCPnVxiRQpDvYz8d0g9/80QUHQvh+P8M8H
+         sU9W9k23qxIa67m/V6BCGM4wfTijrhW5kle+TgxMB1/WNAFZgX4x7bZtZBspfGAvFYmK
+         P6WQ==
+X-Gm-Message-State: ABy/qLYVcZt2LfbWTaR8i5Vh9WJNR7FNGxXrmSpzMvCrFHx7P6jafaGE
+        8DXt/4bnQSWfzAlUEtXk3G0yig==
+X-Google-Smtp-Source: APBJJlE7J4ROo3gkQLmcRe/QT38WIvVMq1KDJBWjeV0T+MvtcUyDCQfMzHs5dYSdZyD8tkxfaNJ3aw==
+X-Received: by 2002:a05:6402:7c4:b0:51e:da3:1585 with SMTP id u4-20020a05640207c400b0051e0da31585mr1597166edy.9.1688549678158;
+        Wed, 05 Jul 2023 02:34:38 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id p18-20020aa7d312000000b0051a2d2f82fdsm13044557edq.6.2023.07.05.02.34.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jul 2023 02:34:37 -0700 (PDT)
+Message-ID: <a0631800-f3d5-ff13-b316-9bc027275a82@linaro.org>
+Date:   Wed, 5 Jul 2023 11:34:35 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TxsO0vJrHYVxFoU3rnWBnMOf4z5J5rh3
-X-Proofpoint-ORIG-GUID: TxsO0vJrHYVxFoU3rnWBnMOf4z5J5rh3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-04_16,2023-07-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 adultscore=0
- suspectscore=0 mlxscore=0 phishscore=0 mlxlogscore=806 spamscore=0
- bulkscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2307050084
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH V7 1/2] dt-bindings: firmware: bootstats: Add the dtschema
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1688533340.git.quic_schowdhu@quicinc.com>
+ <b3105990e021a71039f621e6c4e70ab05fb348fa.1688533340.git.quic_schowdhu@quicinc.com>
+ <d339d413-5242-0d5a-96f6-c2f670e5e5dc@linaro.org>
+ <968fb5d3-6cd8-7850-47e7-682e26f9ee5f@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <968fb5d3-6cd8-7850-47e7-682e26f9ee5f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add reserve gpios for QRU1000 IDP platform. These gpios are
-needed for modem subsystem.
+On 05/07/2023 10:33, Souradeep Chowdhury wrote:
+>>> +    $ref: /schemas/types.yaml#/definitions/string-array
+>>> +
+>>> +  abl-time:
+>>> +    description: The property to store the duration of abl in ms.
+>>> +    $ref: /schemas/types.yaml#/definitions/string-array
+>>
+>> I have no clue what this entire binding is about. Nothing can bind to
+>> it, no usage explained. Properties are not used to "store the duration".
+>> This does not look like suitable for DT, drop entire binding.
+> 
+> This binding was created as per the suggestion on version 6 of the patch 
+> by Arnd. The idea was that these 2 devicetree properties will be used to 
+> populate the bootstat values from the bootloader and exposed to the user 
+> via /sys/firmware/devicetree/ directly.
+> 
+> Details in the link below:-
+> 
+> https://lore.kernel.org/lkml/7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com/T/#mbdc9ad95fcbb5ad7b56c6996a3933899b42d982c
+> 
+> Can you suggest any alternative way to represent this as a binding?
 
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qru1000-idp.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+Then you should clearly state in the binding how this is going to be
+used and who is going to populate it. Not only in the binding but also
+in commit msg which currently has 0 rationale and answers to "why". Your
+commit msg explained only "what", which is usually obvious and much less
+important. Your commit should stand on its own and should clearly
+explain why we need this feature at all, what problem it solves.
 
-diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-index 2cc893ae4d10..80dadd2f30a3 100644
---- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-@@ -448,6 +448,10 @@ &qupv3_id_0 {
- 	status = "okay";
- };
+And before you claim that there is some discussion under link or some
+cover letter - these do not matter. Commit and bindings matter.
 
-+&tlmm {
-+	gpio-reserved-ranges = <28 2>;
-+};
-+
- &uart7 {
- 	status = "okay";
- };
---
-2.40.1
+What's more, I don't think that Arnd's advice is correct here - DT is
+suppose to describe hardware or firmware. These properties are coming
+from firmware but they are not describing any firmware or hardware
+characteristics. Instead they are debugging of current boot status.
+
+I will leave the decision on that for Rob, however anyway binding is
+very vague and incorrect, so I would expect he will come with the same
+concerns regardless whether it is suitable to DT or is not.
+
+
+
+Best regards,
+Krzysztof
 
