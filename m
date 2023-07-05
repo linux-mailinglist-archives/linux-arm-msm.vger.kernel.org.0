@@ -2,117 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDA81747E48
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 09:32:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8921E747E97
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 09:51:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231503AbjGEHcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 03:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50656 "EHLO
+        id S229702AbjGEHvs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 03:51:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231290AbjGEHcX (ORCPT
+        with ESMTP id S229752AbjGEHvr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 03:32:23 -0400
-Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC82171B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 00:32:11 -0700 (PDT)
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: marex@denx.de)
-        by phobos.denx.de (Postfix) with ESMTPSA id 21F6885241;
-        Wed,  5 Jul 2023 09:31:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-        s=phobos-20191101; t=1688542319;
-        bh=NsgHjHOtkMUFlzu/DAehFea6k3vOfcJfJ2pn8Oy6jmw=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=iibcjsyndHS6YsbCOJG8wfHKBJxzFPkcWJAF4LH3pAmy1Ak+bOWkFoIifBlXaNA96
-         QLD1WC8DFkvBo/t6KZHwV0IIC8HVP6Qq/sIdq6AToRy5gtwiYCq8X49drt2VVEWcIl
-         +3Tbex9gba1cU3qJ7f8pi74tZlVsHFW6Vzh2RLiDcbIIfbxOpGziGo5D1OVUUydUMP
-         srfKG7ikJ/loPcb1Buo152RyuDeIRLvyxVl6jdJdFs5v5uOO8zgrmq/IYAUJicY5tx
-         v2WWiSoSzqQ5s0krgZ9tSFzqfZi9Sqj40tmvwHrVv4meFxnU+t4eAbXpyx67dT0OPb
-         Vxsj2OCQet4OQ==
-Message-ID: <707c8123-f2be-a803-f4d7-5406c8f32a6b@denx.de>
-Date:   Wed, 5 Jul 2023 09:31:57 +0200
+        Wed, 5 Jul 2023 03:51:47 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 375801701;
+        Wed,  5 Jul 2023 00:51:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1688543503; x=1689148303; i=spasswolf@web.de;
+ bh=c0ZdzERVZUo8BbU5OZ64jOVKUNGIVCbCmjEIjl533e4=;
+ h=X-UI-Sender-Class:Subject:From:To:Cc:Date;
+ b=pRGYCd6qTSy7hoiqmP/UWebMLvpAqH+YKJlUVuAQREP5KIOcaC9/svqJhFTfkDfPVcE6otV
+ GqA+zOGTW8I8U1xiFMLAOCHqXe71Z9uF4ffVPOjk0BMIC868OW7OSbWa7Sj+tmRfxIjVBqvxq
+ f/yjnMGzJsxd7AuTpp2ZQ2WflW5oHHW8QKcAKJ3+6CQryEAKMJYHiU82UU8XvG7V/7D8fJOhO
+ EZPZHOayWMTlQCl9KRPcfRZHmsbuClYsropnUBt/MqqoDLaZbDCVuBVytPm3HEIkHw2wXpwB7
+ Uc6nfNv3mHuEsQBU8YzaCd4vds3UEghPd53Iok/1/2uFbtUskopA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.0.101] ([176.198.191.160]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MGxMN-1qCoZw1v5X-00EAz8; Wed, 05
+ Jul 2023 09:51:43 +0200
+Message-ID: <c27953274997a56f8e0522f9331e733ae92bf25b.camel@web.de>
+Subject: drm_bridges on fairphone-fp3 are enabled in the wrong order
+From:   Bert Karwatzki <spasswolf@web.de>
+To:     linux-kernel@vger.kernel.org
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Luca Weiss <luca@z3ntu.xyz>
+Date:   Wed, 05 Jul 2023 09:51:42 +0200
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
- EOT packet
-Content-Language: en-US
-To:     Jagan Teki <jagan@amarulasolutions.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        dri-devel@lists.freedesktop.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Michael Walle <michael@walle.cc>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20230403221233.500485-1-marex@denx.de>
- <20230403221233.500485-2-marex@denx.de>
- <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
- <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
- <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
- <CAMty3ZBQajyg0SNz+AjQzth_O_EmrZ9cUyfM--0ptJQ5F0MRfg@mail.gmail.com>
-From:   Marek Vasut <marex@denx.de>
-In-Reply-To: <CAMty3ZBQajyg0SNz+AjQzth_O_EmrZ9cUyfM--0ptJQ5F0MRfg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:nIkmF4YOs0B3T9/UEqW3PuJupj40Id5rj6MheFFUcUsLzgpiUpM
+ GQf+3XYw9dfUd3yiK0y/IXx4Zcpz3zW8EKcVJYjAjojo595VX87Rb07jKsCYlhY9+KInS8Q
+ VM4XtCemnuzgLZtomUuOV+Z5MzwZSAQ9zjoGLOUEMG1XnYoA5yWemi6CPHq8cpddYZlyPG/
+ tiOgu5y4VdLQvCVrlN5/w==
+UI-OutboundReport: notjunk:1;M01:P0:I3NgqRShjtA=;CuBUUKhbRfogbg7oDxO5LZ+ry7T
+ gZXX57BfktCzGiGS12PfhNTo17m9M6UykOWRwVrTfeaaJeT/jlwgxMImR+dwWQ0KniGsU1905
+ lQLlChhKlpFIvu2nNhSXUzA5+4ke3ecN/GNZVPdg+DhF0pWE/5M0QJHT6nc8mMAj4tcfrbzJG
+ +7S2m/2hDshGR3ldE0DZL0nVmfoJ+inYBUFjrDVbBpfV2yH2KdT+DXnM1elcLOQJmmTTAb/AD
+ xrP8Y07unPOtUKJtT8iOmGHrW7YKmHGL7E3cNa40+axP1bVz3mUtUmyFsX9zuy3W5uTb9IJ44
+ c9fFCb5nZ9IvsbjcCLQjl5YpsuboVoXM7KLyRIkuWeWbZO12bfJi5NPFc4S3EK8Jb56QVN5FJ
+ /ljeW6SzemI3kZFi7FzTtLJrBNVjmCnnSulouE3XYUoYy35LRemlTk0WLDDbnJ6M0MMZkliqa
+ VxaD3fE8UsrAzX9qMMdXbLFCi2kS4VHBzv0l74T3VZQlxGhpVxilsRsrOWRRho9TEVrPxHutS
+ U6g4JrFZ5sFfELm/HJigUKVorS66PYS2swMQcBbZ1mggNC5c4AlyXrk8OIDpnxiia44DjhV6A
+ XeD8FKFh2D/cQ3xzlnXt9j3LTsf6g9j4/ZW/D19w8hmAdvunkGrywJhnO4dV6c+QVSuIblxqe
+ x0Z08P1IAra8L1NsWVOlggKx9/+9fE32HlL2Uv9i3a42rRNFv6RP5wAbUtI4kCSq/5LI+WPnK
+ lXZnwXV2XKK6hXZSmU9pzqehUoiSGzDRuJuG5iaA3X2jM1Tw6GTO9RF3Zm/1NKXWns6TMbvgG
+ 7d0WqDlyr9AuLEdKXXU4mXTdlkn4gWoK8CoULiaCJDrGuutm89Iy2llYpWUa7ddR52yhcro25
+ aLfZpLmBsHps5HmvYNaEoBovAd26wQWQLuPhX0AGrAZ4zsZxR8W60FxoBoQSC+Q16bYveX5fH
+ mtlGGSJIBICzone1EXfmEiUY79M=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/5/23 07:46, Jagan Teki wrote:
-> On Wed, Jul 5, 2023 at 11:09 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> [Adding freedreno@ to cc list]
->>
->> On Wed, 5 Jul 2023 at 08:31, Jagan Teki <jagan@amarulasolutions.com> wrote:
->>>
->>> Hi Amit,
->>>
->>> On Wed, Jul 5, 2023 at 10:15 AM Amit Pundir <amit.pundir@linaro.org> wrote:
->>>>
->>>> Hi Marek,
->>>>
->>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
->>>>>
->>>>> Do not generate the HS front and back porch gaps, the HSA gap and
->>>>> EOT packet, as these packets are not required. This makes the bridge
->>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
->>>>
->>>> This patch broke display on Dragonboard 845c (SDM845) devboard running
->>>> AOSP. This is what I see
->>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
->>>> Reverting this patch fixes this regression for me.
->>>
->>> Might be msm dsi host require proper handling on these updated
->>> mode_flags? did they?
->>
->> The msm DSI host supports those flags. Also, I'd like to point out
->> that the patch didn't change the rest of the driver code. So even if
->> drm/msm ignored some of the flags, it should not have caused the
->> issue. Most likely the issue is on the lt9611 side. I's suspect that
->> additional programming is required to make it work with these flags.
-> 
-> True, But I'm not quite sure, most of these mode_flags were handled
-> more on the host. Maybe Marek can comment on this.
+The fairphone-fp3 has a drm_panel attached to a dsi bridge. This are added=
+ to
+the bridge_chain in struct drm_encoder in the order dsi, panel. When the
+drm_atomic_bridge_chain_pre_enable these get enabled in the order panel, d=
+si
+because of the list_for_each_entry_reverse. But the drm_panel of the fairp=
+hone-
+fp3 is enabled using mipi_dsi_dcs_write_buffer which only works if the dsi=
+ is
+enabled before the panel.
+ To work around this one can revert
 
-So, we have the same flags, but two different controllers produce 
-different DSI streams ? Do we have any way to analyze the stream 
-produced by each controller, to figure out which one is wrong and which 
-one is right ?
+commit 9e15123eca7942caa8a3e1f58ec0df7d088df149
+Author: Douglas Anderson <dianders@chromium.org>
+Date:   Tue Jan 31 14:18:25 2023 -0800
+
+    drm/msm/dsi: Stop unconditionally powering up DSI hosts at modeset
+
+This leads to a working panel on startup. But when suspending one runs aga=
+in
+into a similar problem. When the bridges are disabled the dsi is disabled =
+first
+which leads to a failure in disabling the panel again because
+mipi_dsi_dcs_write_buffer fails when the dsi is already switched of.
+ As a simple workarund for both problems I have found it works to exchange=
+ the
+order of the bridge chain in drm_endcoder:
+
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index 28b8012a21f2..990f7c68a27c 100644
+=2D-- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -550,6 +555,8 @@ int msm_dsi_manager_ext_bridge_init(u8 id)
+ 		if (ret < 0)
+ 			return ret;
+ 	}
++	/* swap bridges in list */
++	list_swap(&encoder->bridge_chain, encoder->bridge_chain.next);
+
+ 	/* The pipeline is ready, ping encoders if necessary */
+ 	msm_dsi_manager_set_split_display(id);
+
+But this does not look like a portable solution so I wonder if there is a =
+better
+way to do this.
+
+The linux kernel used here is a linux-next-20220630, with several out-of-t=
+ree
+patches which are needed for the msm8953 gpu and the display used in the
+fairphone-fp3 located here: https://github.com/spasswolf/msm8953-linux.git=
+ in
+branch msm8953_iommu_rebase_v2_wlan_modem_ipa_cpufreq_display_debug.
+
+Bert Karwatzki
