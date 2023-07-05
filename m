@@ -2,146 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C27E7748025
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 10:53:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B59A74802D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 10:54:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232211AbjGEIxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 04:53:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35110 "EHLO
+        id S231269AbjGEIy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 04:54:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232207AbjGEIxR (ORCPT
+        with ESMTP id S231317AbjGEIyZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 04:53:17 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1979D
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 01:53:16 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b6ef9ed2fdso35941021fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 01:53:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688547194; x=1691139194;
-        h=content-transfer-encoding:in-reply-to:subject:organization
-         :references:cc:to:content-language:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b/t8zNVTVsg6ienlpH1xhpP3oVWDvisuW/kxWCPhPP0=;
-        b=cpm9X//SVQob0n3MjLFkivgbMHtONndE1zDnTrbx0YHqGfdVRU2UrX0P99g9YorsaW
-         h5nI8n1UwT1L/MOqA6TDen8C4j9jmAwoz4j16Dpp68iSpGr8JhtY4SjGso98NaA967U6
-         AFDIRc1rer8zxF2pfhgo45YWfnUtQNkKgYViqmqnu+ImiecgSNVoeTUqKkOto8Zngx5U
-         r5VdvruhmHifZu+XNUETLZnn5YBTkLZyItura4YlO0mxwkx58tSOehXxxqv+r7lNI/7n
-         oRMnBHnOpPFFqiizWI5na/xnroCdQvCsZ743j0ZR1VmsRHQuD/GEShGeM3SktrptkesQ
-         +JSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688547194; x=1691139194;
-        h=content-transfer-encoding:in-reply-to:subject:organization
-         :references:cc:to:content-language:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=b/t8zNVTVsg6ienlpH1xhpP3oVWDvisuW/kxWCPhPP0=;
-        b=I96Ml+8yyvQwlXDgyQA8NHN9dDSCbReTkj972nANKyMdkX6jqRoY8MUUxj3cgstnf5
-         X3NSnjmzt1QfSLLmOcZ+sE5gwm1Ywkp+eDb8CZ2Asewk0IJ1Jg7Cez29FzPIjX4Ltk1m
-         dWN53AXLPeTZP01nAyFDBkLMj2xVht0GrAaRwjK4S2PSqC7QyasE7L2bnLcLrLjLw0+h
-         sF3QfbA3a5c1hn9lxoFSxO3+bdhafW1/0bsn1rG6HLQNEqKo3YUmBwMgTfoKTkN0tHBs
-         gKs9Tvn7fCKUwrmuTRiBS/zOmQbZHn2AkG+dyb4optGvhfTbHQ1ovvnWyupOz9ZJYnIV
-         v24A==
-X-Gm-Message-State: ABy/qLZrTuYSd9+KT3ibs1VnEhNM53X+SfRPrlOyW8kRtNQ9MYP7ZOkD
-        Tex7oc/xy6ytVmOnTLpZ+4lV+g==
-X-Google-Smtp-Source: APBJJlHOl9QSHA5N0yXsvfULsijCC69VokhWE58vijIuLlqSVU54KuRRZmPjfvqL69mnb9h+eEINGQ==
-X-Received: by 2002:a2e:8ec3:0:b0:2b6:d631:a1a0 with SMTP id e3-20020a2e8ec3000000b002b6d631a1a0mr9872081ljl.12.1688547194393;
-        Wed, 05 Jul 2023 01:53:14 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:65eb:d140:2d45:ee85? ([2a01:e0a:982:cbb0:65eb:d140:2d45:ee85])
-        by smtp.gmail.com with ESMTPSA id z5-20020a05600c220500b003fba6709c68sm1458806wml.47.2023.07.05.01.53.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 01:53:13 -0700 (PDT)
-Message-ID: <92b1146c-be79-4d27-0444-cfc2125547e2@linaro.org>
-Date:   Wed, 5 Jul 2023 10:53:12 +0200
+        Wed, 5 Jul 2023 04:54:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F15E47;
+        Wed,  5 Jul 2023 01:54:24 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3657UkoF005349;
+        Wed, 5 Jul 2023 08:54:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=YoDoblR7kbON3CTgY71+4Rb/WnyCqKR+rW7kULg6i6o=;
+ b=XxvQjaVXkuMj2VdCyXkPeX5yiODteTxShJ5eVF8dMJiT9a3WQdN/ByWuzyH6M0NrIylf
+ TlTk5M19yFyvh+mxyyvm5N1gjuOffKJ5IsUv2ngH8Nv89EJ4IiYJTpccSfKR1tGSQKFl
+ eqAdM7FztmtOAfzUfpb6C1VbDpWfRgx5Ls/7xGhejBLvpuHhA4q5f7dSa/jdRZeX7+eN
+ SQ6zyb011Ip+/XPT9Oto5yrJ1eGRaDpp4FA4eiRC7sIT2N5rGj02880brE4LeH28OalC
+ 2Zxvq242eUHRObFMcELz0Y9bcFDoxHB35iMFLaHTniwOFqfbyrhmXTcd+P5zazWEKbkJ pQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmnw6h9mj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Jul 2023 08:54:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3658sInc007167
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Jul 2023 08:54:18 GMT
+Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 5 Jul
+ 2023 01:54:14 -0700
+Message-ID: <06506ed7-f861-0bca-8b87-e2da6a6bc789@quicinc.com>
+Date:   Wed, 5 Jul 2023 14:24:10 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 02/10] dt-bindings: power: Add rpm power domains for SDX75
 Content-Language: en-US
-To:     Jonathan Marek <jonathan@marek.ca>, freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230704160106.26055-1-jonathan@marek.ca>
-Organization: Linaro Developer Services
-Subject: Re: [PATCH] drm/msm/dpu: add missing flush and fetch bits for
- DMA4/DMA5 planes
-In-Reply-To: <20230704160106.26055-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linus.walleij@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <sboyd@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
+References: <1688395346-3126-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1688395346-3126-3-git-send-email-quic_rohiagar@quicinc.com>
+ <0d468d08-6410-e424-b4f3-5245cdb0334a@linaro.org>
+ <85456057-c4ef-68a6-4fc5-c9fd03b01b71@quicinc.com>
+In-Reply-To: <85456057-c4ef-68a6-4fc5-c9fd03b01b71@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nhIdpD_LGIKz5NV-vTkq9js7nBo1tA30
+X-Proofpoint-ORIG-GUID: nhIdpD_LGIKz5NV-vTkq9js7nBo1tA30
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-04_16,2023-07-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 mlxlogscore=620 adultscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307050081
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/07/2023 18:01, Jonathan Marek wrote:
-> Note that with this, DMA4/DMA5 are still non-functional, but at least
-> display *something* in modetest instead of nothing or underflow.
-> 
-> Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index bbdc95ce374a..52222af5975f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -51,7 +51,7 @@
->   
->   static const u32 fetch_tbl[SSPP_MAX] = {CTL_INVALID_BIT, 16, 17, 18, 19,
->   	CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, 0,
-> -	1, 2, 3, CTL_INVALID_BIT, CTL_INVALID_BIT};
-> +	1, 2, 3, 4, 5};
->   
->   static const struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
->   		const struct dpu_mdss_cfg *m,
-> @@ -206,6 +206,12 @@ static void dpu_hw_ctl_update_pending_flush_sspp(struct dpu_hw_ctl *ctx,
->   	case SSPP_DMA3:
->   		ctx->pending_flush_mask |= BIT(25);
->   		break;
-> +	case SSPP_DMA4:
-> +		ctx->pending_flush_mask |= BIT(13);
-> +		break;
-> +	case SSPP_DMA5:
-> +		ctx->pending_flush_mask |= BIT(14);
-> +		break;
->   	case SSPP_CURSOR0:
->   		ctx->pending_flush_mask |= BIT(22);
->   		break;
 
-It permits displaying something, but the output is still corrupted on both DMA4 & DMA5,
-tested with multiple plane sizes and formats.
+On 7/4/2023 11:47 AM, Rohit Agarwal wrote:
+>
+> On 7/3/2023 8:29 PM, Konrad Dybcio wrote:
+>> On 3.07.2023 16:42, Rohit Agarwal wrote:
+>>> Add RPM power domain bindings for the SDX75 SoC.
+>>>
+>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
+>>>   include/dt-bindings/power/qcom-rpmpd.h                  | 8 ++++++++
+>>>   2 files changed, 9 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml 
+>>> b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>> index afad313..58e1be8 100644
+>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>> @@ -40,6 +40,7 @@ properties:
+>>>         - qcom,sdm845-rpmhpd
+>>>         - qcom,sdx55-rpmhpd
+>>>         - qcom,sdx65-rpmhpd
+>>> +      - qcom,sdx75-rpmhpd
+>>>         - qcom,sm6115-rpmpd
+>>>         - qcom,sm6125-rpmpd
+>>>         - qcom,sm6350-rpmhpd
+>>> diff --git a/include/dt-bindings/power/qcom-rpmpd.h 
+>>> b/include/dt-bindings/power/qcom-rpmpd.h
+>>> index 1bf8e87..8092d0d 100644
+>>> --- a/include/dt-bindings/power/qcom-rpmpd.h
+>>> +++ b/include/dt-bindings/power/qcom-rpmpd.h
+>>> @@ -57,6 +57,14 @@
+>>>   #define SDX65_CX_AO    4
+>>>   #define SDX65_MXC    5
+>>>   +/* SDX75 Power Domain Indexes */
+>>> +#define SDX75_CX    0
+>>> +#define SDX75_CX_AO    1
+>>> +#define SDX75_MSS    2
+>>> +#define SDX75_MX    3
+>>> +#define SDX75_MX_AO    4
+>>> +#define SDX75_MXC    5
+>> Please instead introduce a set of defines without the SoC prefix
+>> (i.e. CX, CX_AO, MX etc.). We've been putting this off for too long
+>> and you're the first unlucky guy that submitted new RPMhPD support after
+>> we've concluded it'd be the way to go! :D Sadly, we can't replace the
+>> existing ones retroactively..
+> Surely No issues. Will update it.
 
-modetest -P 81@93:1080x2400
-and
-modetest -P 87@93:1080x2400
+I have a doubt here. Cant we completely omit the #defines here and 
+directly index this as 0,1,...
+because if the intention of this #defines is to understand the name of 
+the pd then we can get
+it from the .name attribute in rpmhpd as well, right?
 
-Photo of actual display:
-https://people.linaro.org/~neil.armstrong/sm8550-dma5.jpg
-
-Works fine with DMA2 & DMA3 planes with same parameters.
-
-Tested with https://patchwork.freedesktop.org/patch/538277/?series=118074&rev=1, and it doesn't change anything.
-
-I think this is still accurate:
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+The problems with a common set of #define would be, lets say if we 
+define CX_AO as 1 and some platform
+doesn't have CX_AO then wouldnt it leave a null entry in the driver 
+entry of that platform?
 
 Thanks,
-Neil
+Rohit.
+
+>
+> Thanks,
+> Rohit.
+>> Konrad
+>>> +
+>>>   /* SM6350 Power Domain Indexes */
+>>>   #define SM6350_CX    0
+>>>   #define SM6350_GFX    1
