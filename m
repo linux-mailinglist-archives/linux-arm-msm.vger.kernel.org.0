@@ -2,256 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AACC7748DDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 21:32:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42466748E91
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jul 2023 22:09:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234255AbjGETc1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 15:32:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43604 "EHLO
+        id S232176AbjGEUJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jul 2023 16:09:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234239AbjGETc0 (ORCPT
+        with ESMTP id S229945AbjGEUJp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 15:32:26 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C6E173B;
-        Wed,  5 Jul 2023 12:32:23 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 365JWFGA013584;
-        Wed, 5 Jul 2023 19:32:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=3dnyWbQNdUA66aDt+FnwjyRVjoB5u3EevUNmDnWz544=;
- b=ghLcFBbf0sihtuIoqmoNH3uZCY0GU/a6U0O/GfFPUYNLJ18sqq9GyTRUzkTsp0Oaejc0
- 0QeSph8g1CTRhAr46pEINTJW6vBRXelbxJ13Xf/XH1gp0Ap25KKcvptsYEWa+3dx02IZ
- epzcz8jMTm/iBqWJSytg66xAnhthUuYMp0TVifrGsf5+/A177iTwicEg+pjXSOWD2yra
- tTEezpIQgdovHPVLgMcsYh708+Q7XUJgl8fZVWILTyhNwv3nKGKyzdRD4TMJPjCBcII2
- y1nP/q3QtC3LXpCHAQuAuYXo4Q+kdUfKPnRFA23SQiRqD/h/VC+Sib2lTjI3Mir7m7D4 Lg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmny9ash1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Jul 2023 19:32:15 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 365JWEgb027843
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Jul 2023 19:32:14 GMT
-Received: from hu-rmccann-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.7; Wed, 5 Jul 2023 12:32:13 -0700
-From:   Ryan McCann <quic_rmccann@quicinc.com>
-Date:   Wed, 5 Jul 2023 12:30:19 -0700
-Subject: [PATCH v2 5/5] drm/msm/dpu: Update dev core dump to dump registers
- of sub-blocks
+        Wed, 5 Jul 2023 16:09:45 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 296D91730
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 13:09:44 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b6a6f224a1so117958811fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 13:09:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688587782; x=1691179782;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QedvqYyJQViKyDdMD30O1M4fPDEkDaVf9Y43Xrvhkbs=;
+        b=gT9o+qi7q8GI67qc4H1S3zeZyOR3NCtEjmK0kMBoZOTeO4eBGtk6kqTc+1ashkwQ4g
+         GQVIp1YvHYbKOlHdL5mAsdfcLO/RGERkQTLW0IfvDcrRWKwVkAvr0CmU8an6E82KjVW6
+         Ucj9ymEzDo7uDP33JNxTLDI9R22B3AeH8O6HGYoSJA4yz43ZseJkxwt51XIT3TSmNI1n
+         vOkWp+ZH42ubdsgyAVft+AF3xzr2r269xq4FQvq9HjdwNgAdx/Wkmki0UyxiXhrKxQu/
+         mANCf5VBOihpSsQnOFfrROEzMY0EXY059H57mHKkudw/2UEgv0Qyh3kUffcYG9JXaU4f
+         Dc3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688587782; x=1691179782;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QedvqYyJQViKyDdMD30O1M4fPDEkDaVf9Y43Xrvhkbs=;
+        b=DJoaveVSAnxE9/ZPNwgSAyGyk+x+HiX2SeIDGgwExJDxHZXr7oud21h/ca+Gngbv4w
+         oO3l/WFDFoo/DQF7588kYWXsLKaXLnh+Lw6Am1A5v9dc3RvvKF85H1GukzVvUqK8e+P+
+         f1hxo5hTOUvx+vo0LRLlJMAqZYQVq+C9CYcxB1iFHbZKF49Wdh2zteLlOgHZjySip/Nf
+         6r7tbgnJ+sP5RGtCP3Fxltg3lvtu4Njds4VaTZjkGT0dZrB7GhW7lXqhteRja/c34suW
+         bQPOU6kxc0tRBII8NdXGN1zy5cbMmADeKuHNkl6uJCTu6wh+e+//J+kNeJecYxd08oN6
+         ADNw==
+X-Gm-Message-State: ABy/qLZSDMezhL2j0o9RQ4/BBTZ0FKjtxl6ilhR2tKSg/1eC+VAxoCRU
+        hgt/wbc2nRfwOPBYWcP4CCZgzg==
+X-Google-Smtp-Source: APBJJlHHNVJDZhY4e/En6E7OEuxyXThgyg1SBCxz7UAziGWfAUAugUI9omkfweqDp8gyvViv/f1ycw==
+X-Received: by 2002:a2e:8e8d:0:b0:2b6:cf18:7397 with SMTP id z13-20020a2e8e8d000000b002b6cf187397mr10609414ljk.5.1688587782244;
+        Wed, 05 Jul 2023 13:09:42 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id j10-20020a2e850a000000b002b6ca539d92sm3957501lji.138.2023.07.05.13.09.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jul 2023 13:09:41 -0700 (PDT)
+Message-ID: <a718f7c1-4ef1-18c8-33c7-c5da22e92c89@linaro.org>
+Date:   Wed, 5 Jul 2023 23:09:40 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20230622-devcoredump_patch-v2-5-9e90a87d393f@quicinc.com>
-References: <20230622-devcoredump_patch-v2-0-9e90a87d393f@quicinc.com>
-In-Reply-To: <20230622-devcoredump_patch-v2-0-9e90a87d393f@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: RFC: DSI host capabilities (was: [PATCH RFC 03/10] drm/panel: Add
+ LGD panel driver for Sony Xperia XZ3)
+Content-Language: en-GB
+To:     Maxime Ripard <mripard@kernel.org>
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     Rob Clark <robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <quic_jesszhan@quicinc.com>, Ryan McCann <quic_rmccann@quicinc.com>
-X-Mailer: b4 0.13-dev-8a804
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688585532; l=6652;
- i=quic_rmccann@quicinc.com; s=20230622; h=from:subject:message-id;
- bh=cfI2GLOnJfCxwpSlsQ60JvjHBOZXn4VLuygfgy3UEPo=;
- b=Zry+JVouyEeMDxoMM4GBCE+kXRY+gaQswtXw7XgDqWk8ERvUBX3PxZ5d1b1ZVICihi53fm4S1
- Qbrea530m4KD2qGCNxtcNwmnFNQoGNF7W/N1jQFFEBNG5lUemSxbyE9
-X-Developer-Key: i=quic_rmccann@quicinc.com; a=ed25519;
- pk=d/uP3OwPGpj/bTtiHvV1RBZ2S6q4AL6j1+A5y+dmbTI=
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KN6nySe708Y64oOeu1BG5zj_RjzNOOC1
-X-Proofpoint-ORIG-GUID: KN6nySe708Y64oOeu1BG5zj_RjzNOOC1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-05_10,2023-07-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 mlxlogscore=989
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307050178
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Sam Ravnborg <sam@ravnborg.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <617c8f8a-1fc7-c6a0-eaa5-ce75ff2adc1b@linaro.org>
+ <CAA8EJppG=MAVpK1J_8bNnkJ23y9NtgY7a2GVResXJvhEKyNsrw@mail.gmail.com>
+ <739a8bd9-9ff0-5072-fdae-b64efdf86842@collabora.com>
+ <e927cfcd-bf34-5daf-0e24-4dd828106968@linaro.org>
+ <epds77sccy4cc5cdpoc4ir7sfz5sz3biwep6rbks2nuyqncidu@77gb4t2wy6vn>
+ <47a5678c-1eb3-dfc2-a9ac-f8e497455d11@linaro.org>
+ <unsithzszj7awvsmxwr7reshso5ju7u4nssil5tty6pocictf5@gwoltpgeecer>
+ <6e070141-8c0e-59ed-8a08-58c3fadb17df@linaro.org>
+ <lidknise4copce3vb2wth4z3fl2p4npsc4u6ajqb6zsp6lnpca@rp6wxcmy2aa4>
+ <CAA8EJpq_VeY=44FqYm7QAT32AR=rmMOV0RtAfNFkb1hpSp29dw@mail.gmail.com>
+ <djrx34qwb7yen47dmlsym4mg2pib4syncvdy52ma3sin7uhs7j@gi3znayuucnj>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <djrx34qwb7yen47dmlsym4mg2pib4syncvdy52ma3sin7uhs7j@gi3znayuucnj>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the device core dump mechanism does not dump registers of
-sub-blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Edit
-dpu_kms_mdp_snapshot function to account for sub-blocks.
+On 05/07/2023 19:53, Maxime Ripard wrote:
+> On Wed, Jul 05, 2023 at 06:20:13PM +0300, Dmitry Baryshkov wrote:
+>> On Wed, 5 Jul 2023 at 17:24, Maxime Ripard <mripard@kernel.org> wrote:
+>>>
+>>> On Wed, Jul 05, 2023 at 04:37:57PM +0300, Dmitry Baryshkov wrote:
+>>>>>>>
+>>>>>>> Either way, I'm not really sure it's a good idea to multiply the
+>>>>>>> capabilities flags of the DSI host, and we should just stick to the
+>>>>>>> spec. If the spec says that we have to support DSC while video is
+>>>>>>> output, then that's what the panels should expect.
+>>>>>>
+>>>>>> Except some panels supports DSC & non-DSC, Video and Command mode, and
+>>>>>> all that is runtime configurable. How do you handle that ?
+>>>>>
+>>>>> In this case, most of the constraints are going to be on the encoder
+>>>>> still so it should be the one driving it. The panel will only care about
+>>>>> which mode has been selected, but it shouldn't be the one driving it,
+>>>>> and thus we still don't really need to expose the host capabilities.
+>>>>
+>>>> This is an interesting perspective. This means that we can and actually have
+>>>> to extend the drm_display_mode with the DSI data and compression
+>>>> information.
+>>>
+>>> I wouldn't extend drm_display_mode, but extending one of the state
+>>> structures definitely.
+>>>
+>>> We already have some extra variables in drm_connector_state for HDMI,
+>>> I don't think it would be a big deal to add a few for MIPI-DSI.
+>>>
+>>> We also floated the idea for a while to create bus-specific states, with
+>>> helpers to match. Maybe it would be a good occasion to start doing it?
+>>>
+>>>> For example, the panel that supports all four types for the 1080p should
+>>>> export several modes:
+>>>>
+>>>> 1920x1080-command
+>>>> 1920x1080-command-DSC
+>>>> 1920x1080-video
+>>>> 1920x1080-video-DSC
+>>>>
+>>>> where video/command and DSC are some kinds of flags and/or information in
+>>>> the drm_display_mode? Ideally DSC also has several sub-flags, which denote
+>>>> what kind of configuration is supported by the DSC sink (e.g. bpp, yuv,
+>>>> etc).
+>>>
+>>> So we have two things to do, right? We need to expose what the panel can
+>>> take (ie, EDID for HDMI), and then we need to tell it what we picked
+>>> (infoframes).
+>>>
+>>> We already express the former in mipi_dsi_device, so we could extend the
+>>> flags stored there.
+>>>
+>>> And then, we need to tie what the DSI host chose to a given atomic state
+>>> so the panel knows what was picked and how it should set everything up.
+>>
+>> This is definitely something we need. Marijn has been stuck with the
+>> panels that support different models ([1]).
+>>
+>> Would you prefer a separate API for this kind of information or
+>> abusing atomic_enable() is fine from your point of view?
+>>
+>> My vote would be for going with existing operations, with the slight
+>> fear of ending up with another DSI-specific hack (like
+>> pre_enable_prev_first).
+> 
+> I don't think we can get away without getting access to the atomic_state
+> from the panel at least.
+> 
+> Choosing one setup over another is likely going to depend on the mode,
+> and that's only available in the state.
+> 
+> We don't have to go the whole way though and create the sub-classes of
+> drm_connector_state, but I think we should at least provide it to the
+> panel.
+> 
+> What do you think of creating a new set of atomic_* callbacks for
+> panels, call that new set of functions from msm and start from there?
 
-Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 106 ++++++++++++++++++++++++--------
- 1 file changed, 82 insertions(+), 24 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index aa8499de1b9f..c83f5d79e5c5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -890,62 +890,120 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
- 	int i;
- 	struct dpu_kms *dpu_kms;
- 	const struct dpu_mdss_cfg *cat;
-+	void __iomem *mmio;
-+	u32 base;
- 
- 	dpu_kms = to_dpu_kms(kms);
- 
- 	cat = dpu_kms->catalog;
-+	mmio = dpu_kms->mmio;
- 
- 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
- 
- 	/* dump CTL sub-blocks HW regs info */
- 	for (i = 0; i < cat->ctl_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len,
--				dpu_kms->mmio + cat->ctl[i].base, "ctl_%d", i);
-+		msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len, mmio + cat->ctl[i].base,
-+					    "%s", cat->ctl[i].name);
- 
- 	/* dump DSPP sub-blocks HW regs info */
--	for (i = 0; i < cat->dspp_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len,
--				dpu_kms->mmio + cat->dspp[i].base, "dspp_%d", i);
-+	for (i = 0; i < cat->dspp_count; i++) {
-+		base = cat->dspp[i].base;
-+		msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len, mmio + base, "%s",
-+					    cat->dspp[i].name);
-+
-+		if (cat->dspp[i].sblk && cat->dspp[i].sblk->pcc.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->dspp[i].sblk->pcc.len,
-+						    mmio + base + cat->dspp[i].sblk->pcc.base,
-+						    "%s_%s", cat->dspp[i].name,
-+						    cat->dspp[i].sblk->pcc.name);
-+	}
-+
- 
- 	/* dump INTF sub-blocks HW regs info */
- 	for (i = 0; i < cat->intf_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->intf[i].len,
--				dpu_kms->mmio + cat->intf[i].base, "intf_%d", i);
-+		msm_disp_snapshot_add_block(disp_state, cat->intf[i].len, mmio + cat->intf[i].base,
-+					    "%s", cat->intf[i].name);
- 
- 	/* dump PP sub-blocks HW regs info */
--	for (i = 0; i < cat->pingpong_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len,
--				dpu_kms->mmio + cat->pingpong[i].base, "pingpong_%d", i);
-+	for (i = 0; i < cat->pingpong_count; i++) {
-+		base = cat->pingpong[i].base;
-+		msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len, mmio + base, "%s",
-+					    cat->pingpong[i].name);
-+
-+		/* TE2 block has length of 0, so will not print it */
-+
-+		if (cat->pingpong[i].sblk && cat->pingpong[i].sblk->dither.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].sblk->dither.len,
-+						    mmio + base + cat->pingpong[i].sblk->dither.base,
-+						    "%s_%s", cat->pingpong[i].name,
-+						    cat->pingpong[i].sblk->dither.name);
-+	}
- 
- 	/* dump SSPP sub-blocks HW regs info */
--	for (i = 0; i < cat->sspp_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len,
--				dpu_kms->mmio + cat->sspp[i].base, "sspp_%d", i);
-+	for (i = 0; i < cat->sspp_count; i++) {
-+		base = cat->sspp[i].base;
-+		msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len, mmio + cat->sspp[i].base,
-+					    "%s", cat->sspp[i].name);
-+
-+		if (cat->sspp[i].sblk && cat->sspp[i].sblk->scaler_blk.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->sspp[i].sblk->scaler_blk.len,
-+						    mmio + base + cat->sspp[i].sblk->scaler_blk.base,
-+						    "%s_%s", cat->sspp[i].name,
-+						    cat->sspp[i].sblk->scaler_blk.name);
-+
-+		if (cat->sspp[i].sblk && cat->sspp[i].sblk->csc_blk.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->sspp[i].sblk->csc_blk.len,
-+						    mmio + base + cat->sspp[i].sblk->csc_blk.base,
-+						    "%s_%s", cat->sspp[i].name,
-+						    cat->sspp[i].sblk->csc_blk.name);
-+	}
- 
- 	/* dump LM sub-blocks HW regs info */
- 	for (i = 0; i < cat->mixer_count; i++)
- 		msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len,
--				dpu_kms->mmio + cat->mixer[i].base, "lm_%d", i);
-+					    mmio + cat->mixer[i].base,
-+					    "%s", cat->mixer[i].name);
- 
- 	/* dump WB sub-blocks HW regs info */
- 	for (i = 0; i < cat->wb_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
--				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
-+		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len, mmio + cat->wb[i].base,
-+					    "%s", cat->wb[i].name);
- 
- 	if (cat->mdp[0].features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
--		msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
--				dpu_kms->mmio + cat->mdp[0].base, "top");
-+		msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0, mmio + cat->mdp[0].base,
-+					    "top");
- 		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len - MDP_PERIPH_TOP0_END,
--				dpu_kms->mmio + cat->mdp[0].base + MDP_PERIPH_TOP0_END, "top_2");
-+					    mmio + cat->mdp[0].base + MDP_PERIPH_TOP0_END,
-+					    "top_2");
- 	} else {
--		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
--				dpu_kms->mmio + cat->mdp[0].base, "top");
-+		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len, mmio + cat->mdp[0].base,
-+					    "top");
- 	}
- 
- 	/* dump DSC sub-blocks HW regs info */
--	for (i = 0; i < cat->dsc_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
--				dpu_kms->mmio + cat->dsc[i].base, "dsc_%d", i);
-+	for (i = 0; i < cat->dsc_count; i++) {
-+		base = cat->dsc[i].base;
-+
-+		if (cat->dsc[i].features & BIT(DPU_DSC_HW_REV_1_2)) {
-+			struct dpu_dsc_blk enc = cat->dsc[i].sblk->enc;
-+			struct dpu_dsc_blk ctl = cat->dsc[i].sblk->ctl;
-+
-+			/* For now, pass in a length of 0 because the DSC_BLK register space
-+			 * overlaps with the sblks' register space.
-+			 *
-+			 * TODO: Pass in a length of 0 t0 DSC_BLK_1_2 in the HW catalog where
-+			 * applicable.
-+			 */
-+			msm_disp_snapshot_add_block(disp_state, 0, mmio + base, "%s", cat->dsc[i].name);
-+			msm_disp_snapshot_add_block(disp_state, enc.len, mmio + base + enc.base,
-+						    "%s_%s", cat->dsc[i].name, enc.name);
-+			msm_disp_snapshot_add_block(disp_state, ctl.len, mmio + base + ctl.base,
-+						    "%s_%s", cat->dsc[i].name, ctl.name);
-+		} else {
-+			msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len, mmio + base, "%s",
-+						    cat->dsc[i].name);
-+		}
-+	}
- 
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- }
+We are (somewhat) bound by the panel_bridge, but yeah, it seems possible.
 
 -- 
-2.25.1
+With best wishes
+Dmitry
 
