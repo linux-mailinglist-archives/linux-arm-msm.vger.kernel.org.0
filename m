@@ -2,246 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22BA57495C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 08:40:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D505574961B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 09:14:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233704AbjGFGkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 02:40:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55908 "EHLO
+        id S232907AbjGFHOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 03:14:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233702AbjGFGkK (ORCPT
+        with ESMTP id S230321AbjGFHOf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 02:40:10 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F2091BC2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 23:40:08 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bad0c4f6f50so498369276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 23:40:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688625608; x=1691217608;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uFuZqCYd8mXPFwdbDCt+oUvIlNY8jrnxtlOUpCZbLis=;
-        b=jpGr1CU6H7mQ60HH9/2BKuR7fddutdJCelTfZ4hE1iUAoAUne5+EpKwA32TJJZ7AUk
-         +dVpIcojy5nMnPiuf/0N/MSQmDdtLLzjOwsPc3JXFrL2tXwf6ioehYEmP59y3nHxCIeh
-         toFrOHZFCqiTSuGyjhr+x1Yv1OX2Fy9agiZbzBWR92N83x8sXxPw1SupWW6M1h/I4Chx
-         1xJIWHyb+ZQbqWrBEGYckgoqX/3AlLHr6QUL/dHoZdlBBioXGV0efZLq+S2rvypwRnZR
-         wpeOwRKTBhIvQQNkqrka0YpYIb6OLGmiCVsPxN42OcI82vQPYY47sGK5xR78NU+VOiP3
-         nxng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688625608; x=1691217608;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uFuZqCYd8mXPFwdbDCt+oUvIlNY8jrnxtlOUpCZbLis=;
-        b=HQMLHsTQXdLHwDLp0c5AmWbMJqPEWPdV3xnq4CAftjxNDW6drBnTvwRcuOkwv3yWi2
-         FRT4mvwjja51hbMOGG54RqbQfo2OsbHb5Gvkof/wVvsT03Gl8LYNqov1pnLo2A0VcgnQ
-         PA2EfUWmdp/UxpM00eI1HhnP2rZE42jkVVD4X00/PGzltTfYqacISFIE3DQDNEpCmOsV
-         GvpLp+aR8xmLsfiMoghfdKyqHwi71kWTUXyU8vdJhLE1I3NlzJGu0cAzc/OLszcu2sNN
-         LxA9AXsOYX4AmeaJMF4J3LNvqD4BsCkNouaY9DcGkoUKKAArKdqHdqptlzEFv+ccWZQ+
-         cV4w==
-X-Gm-Message-State: ABy/qLaAPVDzopsyOIOypbKsbMeEAa2fraWZcJRCWdu4kBUd/4vnEEb0
-        xtndv/E9J6lL9iQNRNEd8ypPCM3gu6qW8+Zk88pjRQ==
-X-Google-Smtp-Source: APBJJlG7gdBtggFwSWHfxz/MwrCmoDARoTv3JJX1toI8d1Hwd/IwdBN+maLNT9LOwXA+BbkGADSmO4LWAAcK+DC7+hk=
-X-Received: by 2002:a25:c588:0:b0:c5d:a805:eebd with SMTP id
- v130-20020a25c588000000b00c5da805eebdmr3097419ybe.7.1688625607747; Wed, 05
- Jul 2023 23:40:07 -0700 (PDT)
+        Thu, 6 Jul 2023 03:14:35 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105E8DA;
+        Thu,  6 Jul 2023 00:14:31 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3666wNlu017086;
+        Thu, 6 Jul 2023 07:14:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mLX9HctXLehaygJmhaZlpYlkmBKUpfbLQBN+iDU3ijs=;
+ b=H+lmghvIN2SsWxNEcWGdyj/zVCgrSTFRHhK8Cf3S6pJPSP8SNOC9iCFiBumSIccOo3B5
+ wsHfXv1NogLSBjpwgdqns379uNIZVT7vb/m6arKisdcmCYhZtCkpKxLZ08ZVcODcjg8G
+ hH6j0wy7pj0g7dV+xMjeChWZH94/vsgkc4zDPD/9qZJz1f+FaeGMKrZtkAs/wD8j7a/y
+ jUQBN0MKR093M5Jx+5JDDZfRehg57R7TNG+asNnvEnEy0g3dlcvxLFaLClt++wns0d89
+ XYE0k4KwfTYOIQA6s2SWcMtddBH5TXfMGPzzQl9715I8k23/EnACLRzFccEnHkCdeaTM Rg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rnb5a1gfp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Jul 2023 07:14:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3667EEQw024648
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Jul 2023 07:14:14 GMT
+Received: from [10.50.21.118] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 6 Jul
+ 2023 00:14:09 -0700
+Message-ID: <fb36e521-3715-5819-d27d-8fcc6cf9044c@quicinc.com>
+Date:   Thu, 6 Jul 2023 12:43:01 +0530
 MIME-Version: 1.0
-References: <20230706051024.15422-1-quic_ptalari@quicinc.com> <20230706051024.15422-3-quic_ptalari@quicinc.com>
-In-Reply-To: <20230706051024.15422-3-quic_ptalari@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 6 Jul 2023 09:39:56 +0300
-Message-ID: <CAA8EJprU3FhEWodw2rfFiYkw3rg_WaxqZOOQOt=mcp3xfsoJUw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] spi: spi-geni-qcom: Add SPI Device mode support
- for GENI based QuPv3
-To:     Praveen Talari <quic_ptalari@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-        quic_vnivarth@quicinc.com, quic_arandive@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH V7 1/2] dt-bindings: firmware: bootstats: Add the dtschema
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Arnd Bergmann" <arnd@arndb.de>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1688533340.git.quic_schowdhu@quicinc.com>
+ <b3105990e021a71039f621e6c4e70ab05fb348fa.1688533340.git.quic_schowdhu@quicinc.com>
+ <d339d413-5242-0d5a-96f6-c2f670e5e5dc@linaro.org>
+ <968fb5d3-6cd8-7850-47e7-682e26f9ee5f@quicinc.com>
+ <a0631800-f3d5-ff13-b316-9bc027275a82@linaro.org>
+ <20230705193012.GA1642540-robh@kernel.org>
+ <eceb14da-a839-8475-c416-bc694ecade30@linaro.org>
+Content-Language: en-US
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <eceb14da-a839-8475-c416-bc694ecade30@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: bXyKctS3or0ItCMX8z74jttHtJa9znD9
+X-Proofpoint-ORIG-GUID: bXyKctS3or0ItCMX8z74jttHtJa9znD9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-06_04,2023-07-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 spamscore=0 mlxlogscore=902
+ malwarescore=0 lowpriorityscore=0 clxscore=1011 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307060062
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 6 Jul 2023 at 08:12, Praveen Talari <quic_ptalari@quicinc.com> wrote:
->
-> Currently spi geni driver supports only master mode operation.
->
-> Add spi device mode support to GENI based QuPv3.
->
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
-> ---
-> v3 -> v4:
-> - Used existing property spi-slave.
->
-> v2 -> v3:
-> - modified commit message to use device mode instead of slave mode
->
-> v1 -> v2
-> - modified the commit message
-> - added the code changes for code comments
-> ---
->  drivers/spi/spi-geni-qcom.c | 57 +++++++++++++++++++++++++++++++++----
->  1 file changed, 51 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index 206cc04bb1ed..4ec4fdee06b5 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -12,6 +12,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
-> +#include <linux/property.h>
->  #include <linux/soc/qcom/geni-se.h>
->  #include <linux/spi/spi.h>
->  #include <linux/spinlock.h>
-> @@ -52,6 +53,9 @@
->  #define SPI_CS_CLK_DELAY_MSK           GENMASK(19, 10)
->  #define SPI_CS_CLK_DELAY_SHFT          10
->
-> +#define SE_SPI_SLAVE_EN                                (0x2BC)
-> +#define SPI_SLAVE_EN                           BIT(0)
-> +
->  /* M_CMD OP codes for SPI */
->  #define SPI_TX_ONLY            1
->  #define SPI_RX_ONLY            2
-> @@ -99,6 +103,24 @@ struct spi_geni_master {
->         int cur_xfer_mode;
->  };
->
-> +static struct spi_master *get_spi_master(struct device *dev)
-> +{
-> +       struct platform_device *pdev = to_platform_device(dev);
-> +       struct spi_master *spi = platform_get_drvdata(pdev);
-
-You can use dev_get_drvdata() directly, without going through platform_device.
-
-> +
-> +       return spi;
-> +}
-> +
-> +static void spi_slv_setup(struct spi_geni_master *mas)
-> +{
-> +       struct geni_se *se = &mas->se;
-> +
-> +       writel(SPI_SLAVE_EN, se->base + SE_SPI_SLAVE_EN);
-> +       writel(GENI_IO_MUX_0_EN, se->base + GENI_OUTPUT_CTRL);
-> +       writel(START_TRIGGER, se->base + SE_GENI_CFG_SEQ_START);
-> +       dev_dbg(mas->dev, "spi slave setup done\n");
-> +}
-> +
->  static int get_spi_clk_cfg(unsigned int speed_hz,
->                         struct spi_geni_master *mas,
->                         unsigned int *clk_idx,
-> @@ -140,12 +162,18 @@ static void handle_se_timeout(struct spi_master *spi,
->         const struct spi_transfer *xfer;
->
->         spin_lock_irq(&mas->lock);
-> -       reinit_completion(&mas->cancel_done);
->         if (mas->cur_xfer_mode == GENI_SE_FIFO)
->                 writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
->
->         xfer = mas->cur_xfer;
->         mas->cur_xfer = NULL;
-> +
-> +       if (spi->slave) {
-
-A comment here would be nice.
-
-> +               spin_unlock_irq(&mas->lock);
-> +               goto unmap_if_dma;
-> +       }
-> +
-> +       reinit_completion(&mas->cancel_done);
->         geni_se_cancel_m_cmd(se);
->         spin_unlock_irq(&mas->lock);
->
-> @@ -542,6 +570,10 @@ static bool geni_can_dma(struct spi_controller *ctlr,
->         if (mas->cur_xfer_mode == GENI_GPI_DMA)
->                 return true;
->
-> +       /* Set DMA mode for SPI slave. */
-
-SE DMA mode
-
-> +       if (ctlr->slave)
-> +               return true;
-> +
->         len = get_xfer_len_in_words(xfer, mas);
->         fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
->
-> @@ -619,6 +651,7 @@ static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
->
->  static int spi_geni_init(struct spi_geni_master *mas)
->  {
-> +       struct spi_master *spi = get_spi_master(mas->dev);
->         struct geni_se *se = &mas->se;
->         unsigned int proto, major, minor, ver;
->         u32 spi_tx_cfg, fifo_disable;
-> @@ -627,7 +660,14 @@ static int spi_geni_init(struct spi_geni_master *mas)
->         pm_runtime_get_sync(mas->dev);
->
->         proto = geni_se_read_proto(se);
-> -       if (proto != GENI_SE_SPI) {
-> +
-> +       if (spi->slave) {
-> +               if (proto != GENI_SE_SPI_SLAVE) {
-> +                       dev_err(mas->dev, "Invalid proto %d\n", proto);
-> +                       goto out_pm;
-> +               }
-> +               spi_slv_setup(mas);
-> +       } else if (proto != GENI_SE_SPI) {
->                 dev_err(mas->dev, "Invalid proto %d\n", proto);
->                 goto out_pm;
->         }
-> @@ -677,9 +717,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
->         }
->
->         /* We always control CS manually */
-> -       spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
-> -       spi_tx_cfg &= ~CS_TOGGLE;
-> -       writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-> +       if (!spi->slave) {
-> +               spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
-> +               spi_tx_cfg &= ~CS_TOGGLE;
-> +               writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-> +       }
->
->  out_pm:
->         pm_runtime_put(mas->dev);
-> @@ -1072,6 +1114,9 @@ static int spi_geni_probe(struct platform_device *pdev)
->         pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
->         pm_runtime_enable(dev);
->
-> +       if (device_property_read_bool(&pdev->dev, "spi-slave"))
-> +               spi->slave = true;
-> +
->         ret = geni_icc_get(&mas->se, NULL);
->         if (ret)
->                 goto spi_geni_probe_runtime_disable;
-> @@ -1092,7 +1137,7 @@ static int spi_geni_probe(struct platform_device *pdev)
->          * for dma (gsi) mode, the gsi will set cs based on params passed in
->          * TRE
->          */
-> -       if (mas->cur_xfer_mode == GENI_SE_FIFO)
-> +       if (!spi->slave && mas->cur_xfer_mode == GENI_SE_FIFO)
->                 spi->set_cs = spi_geni_set_cs;
->
->         ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
-> --
-> 2.17.1
->
 
 
--- 
-With best wishes
-Dmitry
+On 7/6/2023 2:44 AM, Dmitry Baryshkov wrote:
+> On 05/07/2023 22:30, Rob Herring wrote:
+>> On Wed, Jul 05, 2023 at 11:34:35AM +0200, Krzysztof Kozlowski wrote:
+>>> On 05/07/2023 10:33, Souradeep Chowdhury wrote:
+>>>>>> +    $ref: /schemas/types.yaml#/definitions/string-array
+>>>>>> +
+>>>>>> +  abl-time:
+>>>>>> +    description: The property to store the duration of abl in ms.
+>>>>>> +    $ref: /schemas/types.yaml#/definitions/string-array
+>>>>>
+>>>>> I have no clue what this entire binding is about. Nothing can bind to
+>>>>> it, no usage explained. Properties are not used to "store the 
+>>>>> duration".
+>>>>> This does not look like suitable for DT, drop entire binding.
+>>>>
+>>>> This binding was created as per the suggestion on version 6 of the 
+>>>> patch
+>>>> by Arnd. The idea was that these 2 devicetree properties will be 
+>>>> used to
+>>>> populate the bootstat values from the bootloader and exposed to the 
+>>>> user
+>>>> via /sys/firmware/devicetree/ directly.
+>>>>
+>>>> Details in the link below:-
+>>>>
+>>>> https://lore.kernel.org/lkml/7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com/T/#mbdc9ad95fcbb5ad7b56c6996a3933899b42d982c
+>>>>
+>>>> Can you suggest any alternative way to represent this as a binding?
+>>>
+>>> Then you should clearly state in the binding how this is going to be
+>>> used and who is going to populate it. Not only in the binding but also
+>>> in commit msg which currently has 0 rationale and answers to "why". Your
+>>> commit msg explained only "what", which is usually obvious and much less
+>>> important. Your commit should stand on its own and should clearly
+>>> explain why we need this feature at all, what problem it solves.
+>>>
+>>> And before you claim that there is some discussion under link or some
+>>> cover letter - these do not matter. Commit and bindings matter.
+>>>
+>>> What's more, I don't think that Arnd's advice is correct here - DT is
+>>> suppose to describe hardware or firmware. These properties are coming
+>>> from firmware but they are not describing any firmware or hardware
+>>> characteristics. Instead they are debugging of current boot status.
+>>>
+>>> I will leave the decision on that for Rob, however anyway binding is
+>>> very vague and incorrect, so I would expect he will come with the same
+>>> concerns regardless whether it is suitable to DT or is not.
+>>
+>> My main concern here is not so much having this info in DT, but whether
+>> it's just the start of various properties. Either because there's already
+>> more data and these are just the 2 things you care about now, or because
+>> once we enable this it's an invitation to add more properties.
+>>
+>> Boot timing information seems like something multiple platforms might
+>> want and only having 2 stages isn't extensible.
+> 
+> I preferred the previous implementation idea, where the Linux driver 
+> will parse firmware data, instead of bootloader doing something for us.
+> 
+> Not to mention that that approach would allow us to get boot time stats 
+> on older platforms, without waiting (indefinitely) for the platform 
+> vendor to update the bootloader.
+> 
+>>
+>> Rob
+
+Hi Rob/Krzysztof/Arnd,
+
+We will work on describing the bindings better but can you first give us
+clarity on whether this is something that should be represented on the
+devicetree and what should be the final approach we need to take for 
+boot_stats?
+
+Thanks,
+Souradeep
+
+> 
