@@ -2,81 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14C0174A0D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 17:23:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC1974A0D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 17:23:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233451AbjGFPWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 11:22:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60016 "EHLO
+        id S233556AbjGFPXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 11:23:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233333AbjGFPWw (ORCPT
+        with ESMTP id S233831AbjGFPXJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 11:22:52 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 559FE1BD3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 08:22:50 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so1226940e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 08:22:50 -0700 (PDT)
+        Thu, 6 Jul 2023 11:23:09 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A411BD6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 08:23:08 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b6ef64342aso12602631fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 08:23:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688656968; x=1691248968;
+        d=linaro.org; s=google; t=1688656986; x=1691248986;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WLDwx5tYXULZ7iwRh5vsxvhGwQg4ReHP1YmuaIqwW+E=;
-        b=SDe2oZscSliBoW/Dyy+fqfpgXh2r80xl7bt8ehDYz96nqZ47X5o7+vmmBaI5HuLCMY
-         oONjTYFjoj5Qx55KMlLw/NPQYav5plXtXatbyXvMxRCL+t5x+c2LEqYVPpY5F2IuCY0y
-         3ebG+XVBTFbQQMOo7xeSF+i56QeTu9bAB4SiCfCSmFp6vNklgoJJzK4xA0K/A71bHns3
-         kCgNh/vtird/jioEtgCDL2ytgI/w/de8DIr+UzYIhObOs9ymn3B0xcB/sY7noiex8oUA
-         Vp60NMRHBPkJBIvHahNCyPF4uZboty7xHrAvFiLISDLr2mdD4FcLsv1zTi/MIFKckfq9
-         a9tg==
+        bh=WdvJkszoG2WTtY67CN8XCdp6tfD5oO0tTKafld7lvz0=;
+        b=ywM1c4n1OkVzUIqNTxjUt1vlyKoY2LC3Qedpos1g++zkqm/JCVVC1WiUXn94sEq1Ms
+         5/GYiZPbSe9dJqJ/WY0zkiW670vqLdCATtRGcpg0d9rjAdqZOg3ezVR0KBx4PN8L/g2F
+         x1z9OUgzWpFVyIGW6ePGAckvStupfqImL0ZLTU5sg77HUX9+D1oNC7m4+8TZLeCWqYmf
+         xYL9uaVYFRwRQcOira1I0ctbSCk8ft7zy0+LuaKRNkgVWFvipT2ac5ks+isPg0zTr2Nq
+         yeWiRtjcAyT/gxbw7/qBeu7IZOEhiUuadoVuooM5jWCAKEi6mCWsgpdO0IJNnEcGNZhk
+         xWaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688656968; x=1691248968;
+        d=1e100.net; s=20221208; t=1688656986; x=1691248986;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WLDwx5tYXULZ7iwRh5vsxvhGwQg4ReHP1YmuaIqwW+E=;
-        b=G8+OWvLjmK2F+5fksBgRi8ZnxCG5WMd/DAiln0U+GbzWKrd5bLs32xZJqz9aABp6XY
-         0w3y/Hme6OxXMyzgyLGrDwEfT2lUEmEg6IgHkevZAdsdFnE/N7vuR0W8JXQ0t3nZdz4z
-         a7B1gUXDvfwdyySbjNg7rXelTc/ctsuG64eW21P9eUFpFmjCw9fYVxEqVRY/bwFpRPZo
-         oDCIsEx2i3TDqhM+eWdjUKNMU8C5Xa5eU4sj/Cnup2DExEDDlKEF9cpRXndtGfBcA40I
-         FFVJ/6hNgTkv+0arbjVKnjbZOJGP8h/EeN/sgXtFm/OF1EZPL5eNd/x8lW7+trrxkeQ3
-         B+XQ==
-X-Gm-Message-State: ABy/qLZP1tsIGUX3dMqWg4rpAWXHmbeq7U3wuyeVytiziSR1XPN/b3Jq
-        wzrE5oNs1eWgKfhQbXyHW9TrqjWo3/221DLn7i70HA==
-X-Google-Smtp-Source: APBJJlFn/kZ1GF96lP0K6eJGbdHL5705joKo40xM1P5VZyngJEbnKGTMosEsG0pNFyumxl2JNkxETA==
-X-Received: by 2002:a05:6512:3da8:b0:4fb:8b2a:a4af with SMTP id k40-20020a0565123da800b004fb8b2aa4afmr2281694lfv.2.1688656968504;
-        Thu, 06 Jul 2023 08:22:48 -0700 (PDT)
+        bh=WdvJkszoG2WTtY67CN8XCdp6tfD5oO0tTKafld7lvz0=;
+        b=B64UatNLc7DwuzYs8Y9t2XhnAH+pgqkr85Nti/6hzSZV0RxXb+EfIRcrz/hazhimUJ
+         Qd5GuC/Q5Dt5NwDR/yXc/bPmT4yJhBjfLX0x0SzpM1WA61h/4Jlji0sj/CWLQjJUne8M
+         hyQX+IpFGa5KMkf+wt9Cm9yTbKdPGESmdyyxKnZ7Nsuvj0splsR7csMFGu10f6a9I1Bz
+         B2L5ddzjlq3lbZZ/8+SDVCRr/s+Qcj8I8ZOiyx10z90Mx44WH2WWUgUu588NawyF3WTg
+         tN3oQpKBKyRa4wDtmYj2zbTm+eEw7LzGdLksDjc/Usyw8h7uw31V8EAnwAGhDn+TYNCl
+         JQTQ==
+X-Gm-Message-State: ABy/qLZfg9OJABoNp+MXjytZMz8Xi1GagI6fHSvdYWCRn/UWBpfyHYtk
+        F1R+GJBnLPBPIcJAB6NXMNbAhw==
+X-Google-Smtp-Source: APBJJlELlfY0wD9lt1xSwuQ5SH6WJu54uwvb1v1yMI8PPgqzmXg0veE0Pz1A3cEnIcvXbJX4onJSSg==
+X-Received: by 2002:a2e:9b15:0:b0:2b6:d8cf:2f44 with SMTP id u21-20020a2e9b15000000b002b6d8cf2f44mr1635708lji.13.1688656986366;
+        Thu, 06 Jul 2023 08:23:06 -0700 (PDT)
 Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id j16-20020a19f510000000b004fb75943ab3sm291805lfb.258.2023.07.06.08.22.47
+        by smtp.gmail.com with ESMTPSA id r15-20020a2e94cf000000b002b6efce3f54sm354289ljh.123.2023.07.06.08.23.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jul 2023 08:22:48 -0700 (PDT)
-Message-ID: <d9b08d1b-17b2-00ad-6ffb-c1641eb2cb6f@linaro.org>
-Date:   Thu, 6 Jul 2023 17:22:46 +0200
+        Thu, 06 Jul 2023 08:23:06 -0700 (PDT)
+Message-ID: <f8152ec7-e38f-d215-3e1f-3165912b4031@linaro.org>
+Date:   Thu, 6 Jul 2023 17:23:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 1/3] dt-bindings: power: rpmpd: Add Generic RPM(h) PD
- indexes
+Subject: Re: [PATCH 1/4] dt-bindings: pinctrl: qcom-pmic-gpio: Add pm7550ba
+ support
 Content-Language: en-US
 To:     Rohit Agarwal <quic_rohiagar@quicinc.com>,
-        Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1688647793-20950-1-git-send-email-quic_rohiagar@quicinc.com>
- <1688647793-20950-2-git-send-email-quic_rohiagar@quicinc.com>
- <35b6b086-9b03-49df-b80d-863218b42fae@quicinc.com>
- <a6241054-0f66-53c4-af59-31ceca13bf7c@quicinc.com>
- <b7376555-3ffd-3587-bc91-6c407c43e72e@linaro.org>
- <2d0b3769-ca87-3e18-160d-604c24fac52d@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        agross@kernel.org, andersson@kernel.org, linus.walleij@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <1688650209-25119-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1688650209-25119-2-git-send-email-quic_rohiagar@quicinc.com>
+ <4042fa22-8948-49c9-6e5c-dc8926ed5f99@linaro.org>
+ <6d067262-d8af-f6f3-4ef7-870eafa15f46@quicinc.com>
+ <8b04d830-4710-7f26-09e8-326b69d72396@linaro.org>
+ <a50921ca-c858-dacc-6849-4898fdf7683c@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2d0b3769-ca87-3e18-160d-604c24fac52d@quicinc.com>
+In-Reply-To: <a50921ca-c858-dacc-6849-4898fdf7683c@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,84 +85,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.07.2023 17:15, Rohit Agarwal wrote:
+On 6.07.2023 17:11, Rohit Agarwal wrote:
 > 
-> On 7/6/2023 8:30 PM, Konrad Dybcio wrote:
->> On 6.07.2023 16:47, Rohit Agarwal wrote:
->>> On 7/6/2023 8:00 PM, Pavan Kondeti wrote:
->>>> On Thu, Jul 06, 2023 at 06:19:51PM +0530, Rohit Agarwal wrote:
->>>>> Add Generic RPM(h) Power Domain indexes that can be used
->>>>> for all the Qualcomm SoC henceforth.
+> On 7/6/2023 8:34 PM, Konrad Dybcio wrote:
+>> On 6.07.2023 16:45, Rohit Agarwal wrote:
+>>> On 7/6/2023 8:05 PM, Krzysztof Kozlowski wrote:
+>>>> On 06/07/2023 15:30, Rohit Agarwal wrote:
+>>>>> Add support for the pm7550ba GPIO support to the Qualcomm PMIC GPIO
+>>>>> binding.
 >>>>>
 >>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->>>>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> Does it make sense to give this link [1] so that we know what is
->>>> Konrad's suggestion and the discussion around it?
->>>>
->>>> [1]
->>>> https://lore.kernel.org/all/0d468d08-6410-e424-b4f3-5245cdb0334a@linaro.org/
->>> Yes, could be given in the cover letter.
 >>>>> ---
->> [...]
+>>>>>    Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 3 +++
+>>>> I doubt that all your patches here and other patchsets are v1. Otherwise
+>>>> how did you get my Acks and Rbs? Please use proper versioning and
+>>>> provide changelog.
+>>>>
+>>>> What changed here?
+>>> Actually this is part of the original bigger series [1] that as per Bjorn's suggestion need to be broken
+>>> down according to the subsystem/maintainer.
+>>> Since it got broken down into multiple smaller series, I didnt include the versioning.
+>> All of that information should be included in the cover letter, to
+>> limit confusion both for maintainers and patch workflow tools.
 >>
->>>>> +#define RPMPD_VDDMD        22
->>>>> +#define RPMPD_VDDMD_AO        23
->>>>> +#define RPMPD_LPICX_VFL        24
->>>>> +#define RPMPD_LPIMX_VFL        25
->>>>> +
->>>> How did you come up with this list? A union of all SoCs supported by
->>>> RPMh driver?
->>> Yes, union of all the SoCs and arranged based on frequencies of usage.
->> The latter part is very thoughtful, thanks for taking that into account.
->>
->> That said (and I really don't wanna be picky here, I'm just coming up with
->> ideas a bit later than I'd like to).. Perhaps this patch should be limited
->> to RPMhPD [1] and the definitions could be moved to a new binding, so:
-> So should we not update anything in this old binding and completely move to the new bindings?
-Yes, create qcom,rpmhpd.h and add new common entries there and let this
-ship sink
-
-> rpmhpd.h?
-> Not even rpmpd_* bindings?
-Again, due to [1], let's not touch that for now. We'll worry about that
-when somebody will try to add a new entry to that driver.
+>> Since these patches all come from a separate series, it would be
+>> good for you to version this one as v(BIG_SERIES_REVISION)+1 because
+>> they've already been on LKML at least once. That would especially hold
+>> true if this revision included any changes.
+> Understood. Will send all the smaller series again with v2 as version with changelog.
+v3, this was essentially a v2.
 
 Konrad
 > 
 > Thanks,
 > Rohit.
->> include/dt-bindings/power/qcom,rpmhpd.h
->> // this way we don't have to add RPMHPD_
->> #define CX    0
-> Ok, will remove this as well.
->> which would result in us being able to do:
->>
->> #include ....rpmhpd.h
->> [...]
->> power-domains = <&rpmhpd CX>;
->>
->> in the device tree
->>
->> which is even more concise!
-> 
-> Yes
-> 
-> Thanks,
-> Rohit.
-> 
->>
->> [1] The old RPM SMD platforms have some duplications in the names..
->>      No point in duplicating that. The oldest entries remember 2013 so
->>      it's easy to see how we had some dirt build up there.
->>
 >> Konrad
->>> Thanks,
->>> Rohit.
->>>>>    /* SA8775P Power Domain Indexes */
->>>>>    #define SA8775P_CX    0
->>>>>    #define SA8775P_CX_AO    1
->>>>> -- 
->>>>> 2.7.4
->>>>>
->>>> Thanks,
->>>> Pavan
+>>> [1] https://lore.kernel.org/all/9de424ca-271a-8ed2-5550-658a828c4ea5@quicinc.com/
+>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>>
