@@ -2,57 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8F117493EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 04:54:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 403D27494D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 07:07:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231724AbjGFCyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jul 2023 22:54:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47660 "EHLO
+        id S232912AbjGFFHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 01:07:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbjGFCyP (ORCPT
+        with ESMTP id S232917AbjGFFHR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jul 2023 22:54:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1DB1BC5;
-        Wed,  5 Jul 2023 19:54:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C6CFD61461;
-        Thu,  6 Jul 2023 02:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B43C433C8;
-        Thu,  6 Jul 2023 02:54:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688612053;
-        bh=HenXvbXh+FMHOsANhghfX7JZNcwVNRAhL9A7ZADg4CE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fd/V7FTEXBp1VYm62AoFVVui6Jv9BmsU8Mpp1Sl/o5TIVF4hN2kDBG3LIsMlsqHJB
-         5XZR2Lf/Mc5TKC13GUPSUFDcz1KH1B+LOyHyJmMiy/5Dum1fn+g18Wg6YAmfS/fYmY
-         pBOPjwLHzHDywF8A92FTjlfCue1bWfPI7YGlI+JW18CP+42bhDWF/v7I5TnkKqViLj
-         8e8CYESNdiSZTvML2GSBKeK6CAS986YYHNEm6VJXNnN7curGU4YIDbWRpO3Pnxm8ye
-         BCcskMdJHDvaV3JzlEHAu3M+ibg9Mqeid80tV/N3uSmpWMTH+CyoMfuOqjme+KM+lj
-         KWuEoy7OgLF8Q==
-Date:   Wed, 5 Jul 2023 19:57:54 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Sarannya S <quic_sarannya@quicinc.com>, quic_bjorande@quicinc.com,
-        swboyd@chromium.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>
-Subject: Re: [PATCH V8 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL
- support
-Message-ID: <qobozhguxj5hc5oo3s7iesvznqohi2trf5os2wlpdx737opics@fkq72gprbtfd>
-References: <1687361648-27688-1-git-send-email-quic_sarannya@quicinc.com>
- <1687361648-27688-4-git-send-email-quic_sarannya@quicinc.com>
- <d0e5a6bf-e89f-bcf0-7009-94edfbcf2a83@foss.st.com>
+        Thu, 6 Jul 2023 01:07:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D8021BDC;
+        Wed,  5 Jul 2023 22:07:15 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3664YPK1016968;
+        Thu, 6 Jul 2023 05:07:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5075ivWjn7+CeYd5xn8n2qxVQmk/qDsu8E702IVUmFs=;
+ b=glRPDddQcvVY/TqxUz0Firs24XHqMkH8kqAdHDpMUYUdsZztQFnGo/1KHsHu+k8rt5f7
+ +8YbL2uyyGtX7+Gom3oeNBQcv9HpoJCSUi52jNgbu7SpsuCRxexWh9jqmZws2gnWtoZ9
+ jULNi7Nc6QeuZXIY2ItiqgMkHzm+u55UUCItaKF4ai6tDbKa0eDJaCBdvMxGTugOEh9O
+ 5k3oSTkSJNHFdM/CTPX2SOEi8DaVrCBGZtXbZlPuHlPLicU+DP3sx2DcIU+mi7FG2YZl
+ GKA66BuJXORAhEMOlan9s7N5ag9E1p1XVLxETr7vVvifRrQIAFgUb0TC5+IJRm1VYu8i DQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rmxy92vt6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Jul 2023 05:07:10 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 366579JL011115
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Jul 2023 05:07:09 GMT
+Received: from [10.110.95.239] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 5 Jul
+ 2023 22:07:04 -0700
+Message-ID: <c9307794-c270-dc63-e9ae-329733fb5bdc@quicinc.com>
+Date:   Thu, 6 Jul 2023 10:37:00 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d0e5a6bf-e89f-bcf0-7009-94edfbcf2a83@foss.st.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 2/3] spi: dt-bindings: qcom,spi-geni-qcom: Add SPI
+ device mode support for GENI based QuPv3
+To:     Conor Dooley <conor@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
+        <quic_vtanuku@quicinc.com>, <quic_vnivarth@quicinc.com>,
+        <quic_arandive@quicinc.com>
+References: <20230622135955.941-1-quic_ptalari@quicinc.com>
+ <20230622135955.941-3-quic_ptalari@quicinc.com>
+ <20230622-sustained-marauding-5c6c8a76c834@spud>
+Content-Language: en-US
+From:   Praveen Talari <quic_ptalari@quicinc.com>
+In-Reply-To: <20230622-sustained-marauding-5c6c8a76c834@spud>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3EzByZUEqgzEPNGOwmQHUV2bEv5d_4_f
+X-Proofpoint-ORIG-GUID: 3EzByZUEqgzEPNGOwmQHUV2bEv5d_4_f
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-06_02,2023-07-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 suspectscore=0 clxscore=1011 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 malwarescore=0
+ adultscore=0 phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2307060044
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,75 +88,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 23, 2023 at 11:11:03AM +0200, Arnaud POULIQUEN wrote:
-> On 6/21/23 17:34, Sarannya S wrote:
-[..]
-> > diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-[..]
-> > +	switch (cmd) {
-> > +	case RPMSG_GET_OUTGOING_FLOWCONTROL:
-> > +		eptdev->remote_flow_updated = false;
-> > +		ret = put_user(eptdev->remote_flow_restricted, (int __user *)arg);
-> > +		break;
-> > +	case RPMSG_SET_INCOMING_FLOWCONTROL:
-> > +		set = !!arg;
-> > +		ret = rpmsg_set_flow_control(eptdev->ept, set, eptdev->chinfo.dst);
-> > +		break;
-> > +	case RPMSG_DESTROY_EPT_IOCTL:
-> > +		/* Don't allow to destroy a default endpoint. */
-> > +		if (eptdev->default_ept) {
-> > +			ret = -EINVAL;
-> > +			break;
-> > +		}
-> > +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-> > +		break;
-> > +	default:
-> > +		ret = -EINVAL;
-> > +	}
-> >  
-> > -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-> > +	return ret;
-> >  }
-> >  
-> >  static const struct file_operations rpmsg_eptdev_fops = {
-> > diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
-> > index 1637e68..b0a6c17 100644
-> > --- a/include/uapi/linux/rpmsg.h
-> > +++ b/include/uapi/linux/rpmsg.h
-> > @@ -43,4 +43,14 @@ struct rpmsg_endpoint_info {
-> >   */
-> >  #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
-> >  
-> > +/**
-> > + * Set the flow control for the remote rpmsg char device.
+Hi
 
-We improved the wording elsewhere in the patch, to make the description
-of what the interface controls/exposes. This would benefit from the same
-attention.
-
-And this says "Set" while the ioctl says "GET".
-
-> > + */
-> > +#define RPMSG_GET_OUTGOING_FLOWCONTROL _IOW(0xb5, 0x5, struct rpmsg_endpoint_info)
-> > +
-> > +/**
-> > + * Set the flow control for the local rpmsg char device.
-> > + */
-> > +#define RPMSG_SET_INCOMING_FLOWCONTROL _IOW(0xb5, 0x6, struct rpmsg_endpoint_info)
-> 
-> 
-> Perhaps I missed something, but you use "rpmsg_endpoint_info" as argument.
-> In rpmsg_eptdev_ioctl the argument is treated as a boolean.
-> Seems to me that something is wrong here.
-> 
-
-This is indeed an int in the implementation above.
-
-Regards,
-Bjorn
-
-> regards,
-> Arnaud
-> 
-> > +
-> >  #endif
+On 6/23/2023 12:35 AM, Conor Dooley wrote:
+> On Thu, Jun 22, 2023 at 07:29:54PM +0530, Praveen Talari wrote:
+>> Add a property to configure QUPv3 SE as SPI Device mode.
+>>
+>> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+>> ---
+>> v2 -> v3:
+>> - modified commit message to use device mode instead of slave mode
+> Suitability or w/e of the property aside, I don't understand this.
+> Why not change the *property*, which has far more visibility than the
+> commit message, to use device rather than slave?
+We are going use existing property spi-slave
+>
+> Chers,
+> Conor.
+>
+>> ---
+>>   Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+>> index 2e20ca313ec1..5c7d0293bbf7 100644
+>> --- a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+>> @@ -66,6 +66,10 @@ properties:
+>>     reg:
+>>       maxItems: 1
+>>   
+>> +  qcom,slv-ctrl:
+>> +    description: configure QUPv3 SE as Device mode
+>> +    type: boolean
+>> +
+>>   required:
+>>     - compatible
+>>     - clocks
+>> -- 
+>> 2.17.1
+>>
