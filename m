@@ -2,81 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1B8374A243
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 18:35:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B80B874A301
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 19:20:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbjGFQfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 12:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38500 "EHLO
+        id S232439AbjGFRUK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 13:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbjGFQfm (ORCPT
+        with ESMTP id S231965AbjGFRUJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 12:35:42 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E131727
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 09:35:40 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fbbfaacfc1so1375100e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 09:35:40 -0700 (PDT)
+        Thu, 6 Jul 2023 13:20:09 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD0681BF0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 10:20:07 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id 98e67ed59e1d1-262ef07be72so566099a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 10:20:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688661339; x=1691253339;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YP6pMbBAQx82d9LFHalrVI6LUynmYyQZ/H6dn44Djmk=;
-        b=BRy5pDTiQ2zs/gl9rX2cTtf9ekYsoXL7EahS7K1nGfivSrjwAjkIe4dPTqpvbG7lDb
-         4nKpuNoFKhpBJsXXL4qbx8M/4mF+DBQFxPkCDe0oYB2aRBhLURa3FPyXiBBngGPONotW
-         C/I0PbPQw3FZSGL/3vxbdCU5rp48BaX8wSRjMoJbcoyOnkCOUWpLqCIh1N0tifRO4ObZ
-         wGqqXcvBElmth43cwxuGsVtl2wHtwMIjMoTIPNIS/ZVEEVfRChtT7IsCCPL6Qp9gj0/K
-         3oRZC0jS6IN9zIAU1/84pzNN0PwH5s+CXRcIzF7oHOfJGhwZOTnZhNiQsPviJ1W3l51p
-         aXOQ==
+        d=linaro.org; s=google; t=1688664007; x=1691256007;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k9ea0Od7Ss8KSCo0Ba6GtQFVksMPHnFvx3hnoqe8eeY=;
+        b=fQQ7hzusqcO2Mb5AQ960t54PR7FMZocWeAtbfCtyJZAV8i6B9OQAivVlHoDnpsFN2k
+         Qm1kdgueLRMJUOcbbfNh5RyCkx+scTiJF9FIL0O7an83YsYxsSTrbLNqkX+zGQom84FX
+         /cojomOG2sUxoe2p0zFMkAJIPsHSCKdsdkithdcPNeURi7RxIJBkg79qbywfJVZiuyNA
+         gNhKkyPv5XnliYrKT9IpuCN0GOj2XzFFZVpkj/kqWfUObmt7Y2qSlZNGLazWfyhr7Puk
+         1JsD4mwjtElm4HEK4vJ/PS3VV2CPQtjdj0Tui/QqCQS8H3gOGSjqnXec+bQZHK6nBCUw
+         ytPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688661339; x=1691253339;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YP6pMbBAQx82d9LFHalrVI6LUynmYyQZ/H6dn44Djmk=;
-        b=efT/9Yfyb/BqNlWRdwUWRC+BROLtMQkYQuj39pa8kXRY49xW/3wsurDLA5iLFTk71n
-         3Kd3zysuF0h1XQ8gTDzXEK4lJWyvojQnuzuC/BmptwQMGHd4fg+K0qi8QaERgn83jjpf
-         CvF3f7VHlba/0/iWpzcDB1sSJk9ZTP7zb6UzwLaeAgjusEEge79TBttiJpFMAAa4degT
-         FqJxVP5wFOG7SupKNTeEvCSu2BzdrwlpZH0Vgpp3lEJO1DRG2uNjrYOfkUkSgt3b5nQY
-         zHAlQbT+4s1iY82ZW6rdE9rN5dHBL/yioRC4LdsDu6NFAOblDPfQpltDwUocoKATfz+x
-         9qAQ==
-X-Gm-Message-State: ABy/qLZAdxtHe57a3VuzCrQzXrJudDgNo5EIhp58lvEXpzCQHSvge8Cb
-        tlk6ctd46pJnpFbeQUCcdgksWQ==
-X-Google-Smtp-Source: APBJJlGDp3vceUiFr1kPMxrcDTNPVvpzmiLLKKKO5itkcEey7tHf8gT/kcZeP3gLYzEukAdcCQfL1A==
-X-Received: by 2002:a19:6508:0:b0:4f9:69b8:1e7c with SMTP id z8-20020a196508000000b004f969b81e7cmr1743769lfb.46.1688661338703;
-        Thu, 06 Jul 2023 09:35:38 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id e7-20020ac25467000000b004fb763b5171sm325784lfn.86.2023.07.06.09.35.37
+        d=1e100.net; s=20221208; t=1688664007; x=1691256007;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k9ea0Od7Ss8KSCo0Ba6GtQFVksMPHnFvx3hnoqe8eeY=;
+        b=DOatg981uuDcXyZc2rtwmr5N4eTiOr2lRo50l/MDkLQcJR8H7z1BQjy9Vd8XJGksj5
+         2mUr/FYyH6CR8o+W/IjAImT6MV3lsGgPfKNnu3zMXyKXZQPP08rzhrEWphjzYHKjmTJr
+         J/tz0bzWXXRjIGQrtC/mk+Vf1LpwxgXLVcMOWaFODSRBDQ3rxJXSfHYHCaPFogAERXxZ
+         Bea9XL+QxG0wtVsl66eJzBLFTbW9O9k3T93Di7mrkajCntVF78reCCVI4CBpILjG9O00
+         J0U1q0mDlq9R+INXAAwoHrvKtn6TEdsnBIBBbfN/4LNklC+aSr+zcVfuGBmlFSu82A8T
+         L0Nw==
+X-Gm-Message-State: ABy/qLauqjTilURUofeMvUzDRfn76SX+eoWFVZE4RIEIXSd51DW4doci
+        mkFYt9GXoOzf+Rtr9bEtAsbdqQ==
+X-Google-Smtp-Source: APBJJlGIzD3wgfXmLqpF5j/wbpDQeS0eCZKqUWowt+GLYOi3W+0iK2Ooqw2rQRyVOs7PEhn81abgMw==
+X-Received: by 2002:a17:90a:c690:b0:262:c974:6057 with SMTP id n16-20020a17090ac69000b00262c9746057mr1931210pjt.32.1688664007220;
+        Thu, 06 Jul 2023 10:20:07 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:b0a5:7a22:4bcf:c911])
+        by smtp.gmail.com with ESMTPSA id az9-20020a056a02004900b00519c3475f21sm1431884pgb.46.2023.07.06.10.20.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jul 2023 09:35:38 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 06 Jul 2023 18:35:37 +0200
-Subject: [PATCH] arm64: dts: qcom: sm8350: Use proper CPU compatibles
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230706-topic-sm8350-cpu-compat-v1-1-f8d6a1869781@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAFjtpmQC/x2NQQrCMBAAv1L27EJMrAa/Ih6SzWoX2iRkWxFK/
- 27wOAPD7KDchBXuww6NP6JScofzaQCaQn4zSuoM1lhnbuaKa6lCqIt3o0GqG1JZaljRXqI3nse
- UrINex6CMsYVMU+/zNs9d1sYv+f53j+dx/AALzp1hfgAAAA==
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 06 Jul 2023 10:20:06 -0700 (PDT)
+Date:   Thu, 6 Jul 2023 11:20:03 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Trilok Soni <quic_tsoni@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688661337; l=2791;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=GNy5G2e4ewtEYejU2/KqSKUdoornsUfW/gbpWdaEdvs=;
- b=t11FWiz+JUHLRsWMF8TySNmsOWb3ZgqOKOEpei+brzyI9S/luyVr32TK3svlrh/TMIHnKyoZL
- YitrBxZtn/mBV8lEuj/mO7s5wCOc8nb8vfiFBEtSN+IhCGXDRT92mOX
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        Greg KH <gregkh@linuxfoundation.org>, corbet@lwn.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
+        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        Alex Elder <elder@linaro.org>
+Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
+ support
+Message-ID: <ZKb3wz2eXS6h1yIW@p14s>
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+ <2023062814-chance-flounder-f002@gregkh>
+ <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
+ <cc30660f-dd72-aade-6346-a93c6ad4b695@quicinc.com>
+ <29af84dc-7db8-0c43-07b6-eb743cf25e57@linaro.org>
+ <957a3cdb-6091-8679-ddb0-296db2347291@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <957a3cdb-6091-8679-ddb0-296db2347291@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -87,102 +89,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Kryo names (once again) turned out to be fake. The CPUs report:
+On Mon, Jul 03, 2023 at 02:05:58PM -0700, Trilok Soni wrote:
+> On 7/2/2023 1:29 AM, Krzysztof Kozlowski wrote:
+> > On 30/06/2023 18:04, Mukesh Ojha wrote:
+> > > > 
+> > > > > We don't add layers when they are not needed, and never when there is no
+> > > > > actual user.  If you need the extra "complexity" later, then add it
+> > > > > later when it is needed as who knows when that will ever be.
+> > > > > 
+> > > > > Please redo this series based on that, thanks.
+> > > > 
+> > > > My bigger issue with this whole series is what would this all look
+> > > > like if every SoC vendor upstreamed their own custom dumping
+> > > > mechanism. That would be a mess. (I have similar opinions on the
+> > > > $soc-vendor hypervisors.)
+> > 
+> > Mukesh,
+> > 
+> > LPC CFP is still open. There will be also Android and Kernel Debugging
+> > LPC microconference tracks. Coming with a unified solution could be a
+> > great topic for LPC. Solutions targeting only one user are quite often
+> > frowned upon.
+> 
+> LPC is far out and in November. Can we not have others speak up if they have
+> the similar solution now? We can expand this to linux-kernel and ask for the
+> other SOC vendors to chime in. I am sure that we may have existing solutions
+> which came in for the one user first like Intel RDT if I remember. I am sure
+> ARM MPAM usecase was present at that time but Intel RDT based solution which
+> was x86 specific but accepted.
 
-0x412fd050 (CA55 r2p0) (0 - 3)
-0x411fd410 (CA78 r1p1) (4 - 6)
-0x411fd440 (CX1  r1p1) (7)
+I am not familiar with Intel RDT and Arm MPAM but the community is always
+improving on the way it does things.
 
-Use the compatibles that reflect that.
+LPC is indeed far out in November but it is an opportunity to cover the
+groundwork needed to have this discussion.  It is always best to improve on
+something then introduce something new.  Even better if something specific such
+as Intel RDT and Arm MPAM can be made more generic.  A perfect example is
+hwtracing Linus referred to.  The perf framework wasn't a perfect fit but it was
+enhanced to accommodate our requirements.  I suggest to look at what is currently
+available and come up with a strategy to be presented at LPC - event better if
+you have a prototype.  If you can't find anything or the drawbacks inherent to
+each avenue outweigh the benefits then we can have that conversation at LPC.
 
-Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index ec451c616f3e..8ecfe84ba1b6 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -48,7 +48,7 @@ cpus {
- 
- 		CPU0: cpu@0 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x0>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -72,7 +72,7 @@ L3_0: l3-cache {
- 
- 		CPU1: cpu@100 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x100>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -91,7 +91,7 @@ L2_100: l2-cache {
- 
- 		CPU2: cpu@200 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x200>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -110,7 +110,7 @@ L2_200: l2-cache {
- 
- 		CPU3: cpu@300 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x300>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -129,7 +129,7 @@ L2_300: l2-cache {
- 
- 		CPU4: cpu@400 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x400>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
-@@ -148,7 +148,7 @@ L2_400: l2-cache {
- 
- 		CPU5: cpu@500 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x500>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
-@@ -167,7 +167,7 @@ L2_500: l2-cache {
- 
- 		CPU6: cpu@600 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x600>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
-@@ -186,7 +186,7 @@ L2_600: l2-cache {
- 
- 		CPU7: cpu@700 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-x1";
- 			reg = <0x0 0x700>;
- 			clocks = <&cpufreq_hw 2>;
- 			enable-method = "psci";
-
----
-base-commit: c36ac601a98fb148147640bae219108ee81566f8
-change-id: 20230706-topic-sm8350-cpu-compat-24b808e5dd23
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+> 
+> ---Trilok Soni
