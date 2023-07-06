@@ -2,82 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98FCB749C50
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 14:46:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FB48749C5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 14:47:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231721AbjGFMqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 08:46:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47926 "EHLO
+        id S229515AbjGFMrk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 08:47:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231565AbjGFMqZ (ORCPT
+        with ESMTP id S232103AbjGFMri (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 08:46:25 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77301BE3;
-        Thu,  6 Jul 2023 05:45:54 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 366BnXLk022020;
-        Thu, 6 Jul 2023 12:45:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/eTRKvEprj4j5mhYYTy9ajJZ7xy0mmVqOmJ9KqT9W2o=;
- b=fd7tltda+naNyCbaAzc7N9DGJBZ39pL02ZkCjr005CX4UcZChaWl43wNkBTVd/Dy1p2x
- 2G61ILVKRj9fM1j9l3Zav5G2UxMlR2fO6KgMHQzwCwjbbtICWcpCYN8ahQr1GkyxUUHN
- 44z9Syx0vxTV2tz6jSIUWam64/glM5UIhrpkru4G+V1/PHAGbSxrQQ+sNFDMRW2kBYzI
- iYQFvYgz+LV6Z88uZir0zAq50AYAu26rvA0x2jU63jZ6lGSwl2eYJBPGVyRk1ylYE0M6
- FHurDK33Zfhgn4ZL/AGZxjxcx0HifMuboKJzJjFYORIf3vR5vVEd7bRCtv3bDXwWrR7g 3A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rntctrd9f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Jul 2023 12:45:17 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 366CjGnB026709
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Jul 2023 12:45:16 GMT
-Received: from [10.216.12.242] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 6 Jul
- 2023 05:45:12 -0700
-Message-ID: <0dbd4776-deeb-d62c-e640-c931eb0dd675@quicinc.com>
-Date:   Thu, 6 Jul 2023 18:15:07 +0530
+        Thu, 6 Jul 2023 08:47:38 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB9C1FF5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 05:47:17 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-66767d628e2so525614b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 05:47:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688647636; x=1691239636;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oz3eFvCoH8VMOdDsuRaaEYtU3Bx4lHQ1ug4lyEzFPEw=;
+        b=he4hjKQjYDtk50xePCiH1Ss+IYmU1WredzipkMpOaQuXWkuasuL5cU/UifneRnf62w
+         yR+/ixt6R4ESh2taNjWKC2JYz6DtokxL4qXPHDYcAX17PP8Uq8rBc9V0mGT+oWX0Y5Ad
+         HxZwTPL+OhyGDugSaHl9LDSiKAWTT/jCmw9HDwJ/uS01hFXqopOg+PSv8pGlzJd00SBG
+         +TedV4g39Lnptc8H5kGcrCjsybdSf3El1oJCJHfEtJiH+awHxSe8fmw+F920lribxFYy
+         /KmLdrV6Rez2dZNfb+uQz0UNWhXB7iYJM0PY4quVDjIBMOtvn0nRd8/jP5uZGHTdGtLk
+         Tguw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688647636; x=1691239636;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oz3eFvCoH8VMOdDsuRaaEYtU3Bx4lHQ1ug4lyEzFPEw=;
+        b=A17f/YHCSolb7dIgLmOeDU5hvxDrwdkLAvMZPjXbv+yCc+24CYdyi+ey5n6wxuLnil
+         GWn/wB53NCpRQ3ofxmIiMTZQ+b600w4hmDnqHRARRhsp1XJNVoBgkhtQdeZucpH2YTji
+         qKsupqSeNrKFiamNN3Le/hHaR7XKYOToVG/FQfSVSLuHCwAhxRF+Vw7ihAAy1cUYcTfR
+         OttmtdRfvK+uWPjSK8mGDQCGBvSpk65FRT9hY+tZFmkiA8kYugPnsheLJ7iXBmla1DzW
+         bqpT+Lrnj/2F07rAhkZmpd0UXAjiI5hz5Vj6WDElHA+1L4mJqA5OxC4Yl4VsgEBZw6rn
+         SxUA==
+X-Gm-Message-State: ABy/qLbZ/OeRskjfC01EgCDX9FnKKZrB3zCm8a0c5A8r/f+RYRJVgIep
+        PDOGYBCDTbV+c8YfcKIxPS40
+X-Google-Smtp-Source: APBJJlG7Z3x52Kkhx6a2YCvXWlkBD0byz59sKqA41aeJvXP2WI89Sh2NDFoHMcklC1pDEyShwf+bOg==
+X-Received: by 2002:a05:6a00:1912:b0:682:57f0:7c00 with SMTP id y18-20020a056a00191200b0068257f07c00mr1482885pfi.3.1688647635979;
+        Thu, 06 Jul 2023 05:47:15 -0700 (PDT)
+Received: from localhost.localdomain ([117.216.120.100])
+        by smtp.gmail.com with ESMTPSA id t21-20020a62ea15000000b00666e649ca46sm1227066pfh.101.2023.07.06.05.47.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jul 2023 05:47:15 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org
+Cc:     konrad.dybcio@linaro.org, johan+linaro@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] Revert "clk: gcc-sc8280xp: keep PCIe power-domains always-on"
+Date:   Thu,  6 Jul 2023 18:17:00 +0530
+Message-Id: <20230706124700.12447-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: qdu1000-idp: Update reserved
- memory region
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230705110620.7687-1-quic_kbajaj@quicinc.com>
- <20230705110620.7687-2-quic_kbajaj@quicinc.com>
- <8bd8ffbe-f50d-6e4a-2fdf-3983a76fb5ad@linaro.org>
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <8bd8ffbe-f50d-6e4a-2fdf-3983a76fb5ad@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sobp9K-3SxWSl3pyMkesWLsUugGXyhde
-X-Proofpoint-ORIG-GUID: sobp9K-3SxWSl3pyMkesWLsUugGXyhde
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-06_09,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=630 priorityscore=1501 adultscore=0 spamscore=0 phishscore=0
- malwarescore=0 impostorscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307060114
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,38 +71,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This reverts commit 12d2a4769380f0dc9ba6f827839869db2b81ef00.
 
+With the minimal system suspend support in place for the PCIe driver that
+keeps the interconnect path active, the ALWAYS_ON flags can now be dropped.
 
-On 7/5/2023 7:51 PM, Krzysztof Kozlowski wrote:
-> On 05/07/2023 13:06, Komal Bajaj wrote:
->> Add missing reserved regions as described in QDU1000 memory map.
->>
->> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 22 ++++++++++++++++++++++
->>   1 file changed, 22 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> index 1d22f87fd238..47e5e31dde23 100644
->> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> @@ -448,6 +448,28 @@ &qupv3_id_0 {
->>   	status = "okay";
->>   };
->>
->> +&reserved_memory{
->> +	ecc_meta_data_mem: memory@e0000000{
-> Missing spaces before '{'. I was correcting this already:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=66b14154e278807811d67de9fb0d5cc76638d07b
-> so it seems I need to keep doing the same.
->
-> Anyway, the names should follow purpose, not "memory". See link from Konrad.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/clk/qcom/gcc-sc8280xp.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-Sure, will correct it in the next patch set.
-
->
->
-> Best regards,
-> Krzysztof
->
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index 04a99dbaa57e..07eb6110442c 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -6774,10 +6774,6 @@ static struct gdsc pcie_1_tunnel_gdsc = {
+ 	.flags = VOTABLE,
+ };
+ 
+-/*
+- * The Qualcomm PCIe driver does not yet implement suspend so to keep the
+- * PCIe power domains always-on for now.
+- */
+ static struct gdsc pcie_2a_gdsc = {
+ 	.gdscr = 0x9d004,
+ 	.collapse_ctrl = 0x52128,
+@@ -6786,7 +6782,7 @@ static struct gdsc pcie_2a_gdsc = {
+ 		.name = "pcie_2a_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE,
+ };
+ 
+ static struct gdsc pcie_2b_gdsc = {
+@@ -6797,7 +6793,7 @@ static struct gdsc pcie_2b_gdsc = {
+ 		.name = "pcie_2b_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE,
+ };
+ 
+ static struct gdsc pcie_3a_gdsc = {
+@@ -6808,7 +6804,7 @@ static struct gdsc pcie_3a_gdsc = {
+ 		.name = "pcie_3a_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE,
+ };
+ 
+ static struct gdsc pcie_3b_gdsc = {
+@@ -6819,7 +6815,7 @@ static struct gdsc pcie_3b_gdsc = {
+ 		.name = "pcie_3b_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE,
+ };
+ 
+ static struct gdsc pcie_4_gdsc = {
+@@ -6830,7 +6826,7 @@ static struct gdsc pcie_4_gdsc = {
+ 		.name = "pcie_4_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | ALWAYS_ON,
++	.flags = VOTABLE,
+ };
+ 
+ static struct gdsc ufs_card_gdsc = {
+-- 
+2.25.1
 
