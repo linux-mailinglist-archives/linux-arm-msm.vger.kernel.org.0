@@ -2,159 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40A2A74A394
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 20:07:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4742974A3F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 20:55:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231976AbjGFSHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 14:07:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51388 "EHLO
+        id S230362AbjGFSz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 14:55:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjGFSHl (ORCPT
+        with ESMTP id S231623AbjGFSzZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 14:07:41 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9221F1986;
-        Thu,  6 Jul 2023 11:07:38 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 366Hal47003323;
-        Thu, 6 Jul 2023 18:07:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AnBk3//qqbv6jRGecm2FdBxy7OhNyDeEajuF9tJwEds=;
- b=mtHGrztW01ckZelvZg/jz2727wr5EWlt+nG8bZdvMT5G9TvX6jalxVaq3xTR2Agv9JRE
- jlLuZVS3hthkhojmy6/IoG9HJI37pvOEISy9HBdNrQWujHxD0q8DlHT1y6cZ3HT6G8Rz
- SToS99am8/nuPAbCgXDaZDYtxYJHktlqIF6UbaSx6nWYbDUa57fXXREzzW6vKpCb4XMS
- j+Jtrs6ZtBJ0GxDeURnUWZ1AVcE6UR/OtoHWI8QtmijxV1iVz6yBgYW7xvjrDFiCRy/n
- 4iZGbyv39fpReOY7I4gpL0Z7b/mWDo6tQNsm3M8Zqvpo486yUimuzwqcZbXy49udVNYH 6g== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rn152mb92-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Jul 2023 18:07:11 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 366I7Akq032528
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Jul 2023 18:07:10 GMT
-Received: from [10.110.49.233] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 6 Jul
- 2023 11:07:08 -0700
-Message-ID: <9f054246-d134-25b5-75ee-ff5b4b78d8a4@quicinc.com>
-Date:   Thu, 6 Jul 2023 11:07:08 -0700
+        Thu, 6 Jul 2023 14:55:25 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CCAF1FC6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 11:55:16 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb9fd28025so1513138e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 11:55:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688669715; x=1691261715;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c73ospzpOiJ3HtlgE71gvC44nRlCQXqmHvLoRFp4sL4=;
+        b=ND2+mI66BMUP0EVE1nSaYxo9mWB5eeoIo1gtE7E+zEXop6A8oX/OLRZXrLxEN1LhAh
+         M58ceesFaLsZHJIl14MQQebqOO9dtXDwDrdF0XzK1FztkxRZn8WN4ay8KzkMAA8ePzMb
+         jzf63o8jdzaNDYop5EEeRy3wdHRZDegmCOdKjn14iMOXuAAxvMuitqELUqjRH/oXZAQ6
+         I3uzETwgEkWbFL6nff3d943wAiWYpBMPBH3GKYEqF/32sT2xRB7eQ5OjmibnmSD+ofK8
+         F6W3/mg4BJ2Iii0UkfWEFfFIMkJSCMZjfTy6B8/wrYcM801nR3PGAcFPLDDSMEgJnUXQ
+         C5zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688669715; x=1691261715;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c73ospzpOiJ3HtlgE71gvC44nRlCQXqmHvLoRFp4sL4=;
+        b=AkR/cPMvQoQpE1fkHSRz1TGBNdhFBtO883xdWaRNSarnlB5OMAG9dr93fHyButHjJJ
+         9KUziX8nHv8O87r7Ec5VD8G97rRYZapiEcjNN2DUYPdFS8dnLfJG/EpCvuLA/Yv89BAZ
+         gvu8+YWSfeOVjkqG5pRgl68QWs7Dmkbkc59EGAcP37/92FWjWFcwrAbK2VKXI1r2FO9S
+         j1+qISFqtYdU/6UyEqdrt+jWjtfSyLvxkYegHbV8GDEBtmYsuybTEcoMTnxOZliCUuMO
+         50l1V5GnkmnQAXuR+0+MsFLn9A0DxZAUpMNPCHfmiFQ5GfWGtFcZ8JZr6BFcC9jf3PMI
+         +c0Q==
+X-Gm-Message-State: ABy/qLYX2e6bquXmAd2tN4720IpJt/ZGWxEUY32iI+cQNGADg7nwer6+
+        ELcagBx3ldeTlAYaP5jkO1XiocF1joV73QWqzW0=
+X-Google-Smtp-Source: APBJJlF1X8wbG4TDSUK8MuBW3QmgXhipXcKJo3Ts0Qh54FlI4NjRBynEemoPlOJF9xLjXeRjhk8xZQ==
+X-Received: by 2002:a05:6512:3253:b0:4fa:5e76:7ad4 with SMTP id c19-20020a056512325300b004fa5e767ad4mr2021699lfr.10.1688669714682;
+        Thu, 06 Jul 2023 11:55:14 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id q17-20020ac25151000000b004fb9c625b4asm363910lfd.210.2023.07.06.11.55.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Jul 2023 11:55:14 -0700 (PDT)
+Message-ID: <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
+Date:   Thu, 6 Jul 2023 21:55:13 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
- support
-Content-Language: en-US
-To:     Rob Herring <robh+dt@kernel.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>,
-        Greg KH <gregkh@linuxfoundation.org>, <corbet@lwn.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <keescook@chromium.org>,
-        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <mathieu.poirier@linaro.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <linus.walleij@linaro.org>,
-        <andy.shevchenko@gmail.com>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, Alex Elder <elder@linaro.org>
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <2023062814-chance-flounder-f002@gregkh>
- <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
- <cc30660f-dd72-aade-6346-a93c6ad4b695@quicinc.com>
- <29af84dc-7db8-0c43-07b6-eb743cf25e57@linaro.org>
- <957a3cdb-6091-8679-ddb0-296db2347291@quicinc.com>
- <CAL_JsqK7MHR09U5h01=Gf1ZLeDVCgZdN-W1hQRH3AX+E94_uUg@mail.gmail.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <CAL_JsqK7MHR09U5h01=Gf1ZLeDVCgZdN-W1hQRH3AX+E94_uUg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Zfm93BmM8TzEd0B4HaqTd4YfERv3kG6E
-X-Proofpoint-ORIG-GUID: Zfm93BmM8TzEd0B4HaqTd4YfERv3kG6E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-06_13,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1015 mlxlogscore=999
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307060162
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] drm/msm: Check for the GPU IOMMU during bind
+Content-Language: en-GB
+To:     Jordan Crouse <jorcrous@amazon.com>,
+        freedreno@lists.freedesktop.org
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230309222049.4180579-1-jorcrous@amazon.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230309222049.4180579-1-jorcrous@amazon.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/6/2023 10:40 AM, Rob Herring wrote:
-> On Mon, Jul 3, 2023 at 3:06 PM Trilok Soni <quic_tsoni@quicinc.com> wrote:
->>
->> On 7/2/2023 1:29 AM, Krzysztof Kozlowski wrote:
->>> On 30/06/2023 18:04, Mukesh Ojha wrote:
->>>>>
->>>>>> We don't add layers when they are not needed, and never when there is no
->>>>>> actual user.  If you need the extra "complexity" later, then add it
->>>>>> later when it is needed as who knows when that will ever be.
->>>>>>
->>>>>> Please redo this series based on that, thanks.
->>>>>
->>>>> My bigger issue with this whole series is what would this all look
->>>>> like if every SoC vendor upstreamed their own custom dumping
->>>>> mechanism. That would be a mess. (I have similar opinions on the
->>>>> $soc-vendor hypervisors.)
->>>
->>> Mukesh,
->>>
->>> LPC CFP is still open. There will be also Android and Kernel Debugging
->>> LPC microconference tracks. Coming with a unified solution could be a
->>> great topic for LPC. Solutions targeting only one user are quite often
->>> frowned upon.
->>
->> LPC is far out and in November. Can we not have others speak up if they
->> have the similar solution now? We can expand this to linux-kernel and
->> ask for the other SOC vendors to chime in. I am sure that we may have
->> existing solutions which came in for the one user first like Intel RDT
->> if I remember. I am sure ARM MPAM usecase was present at that time but
->> Intel RDT based solution which was x86 specific but accepted.
+On 10/03/2023 00:20, Jordan Crouse wrote:
+> While booting with amd,imageon on a headless target the GPU probe was
+> failing with -ENOSPC in get_pages() from msm_gem.c.
 > 
-> RDT predated MPAM. resctrl is the kernel feature, and it supports
-> Intel and AMD which are not identical. resctrl is being (extensively)
-> refactored to add in MPAM support.
+> Investigation showed that the driver was using the default 16MB VRAM
+> carveout because msm_use_mmu() was returning false since headless devices
+> use a dummy parent device. Avoid this by extending the existing is_a2xx
+> priv member to check the GPU IOMMU state on all platforms and use that
+> check in msm_use_mmu().
 > 
-> You are not the first here like Intel RDT, so I fail to see the
-> parallel with minidump. We have an existing logging to persistent
-> storage mechanism which is pstore. You should integrate into that
-> rather than grafting something on to the side or underneath.
+> This works for memory allocations but it doesn't prevent the VRAM carveout
+> from being created because that happens before we have a chance to check
+> the GPU IOMMU state in adreno_bind.
 > 
+> There are a number of possible options to resolve this but none of them are
+> very clean. The easiest way is to likely specify vram=0 as module parameter
+> on headless devices so that the memory doesn't get wasted.
 
-Mukesh will chime in once he looks at the hwtracing suggested by Linus W 
-and see if it fits. Mukesh seems have already looked at pstore and 
-discussions/patches are there w/ pstore logic I believe, but it is okay 
-if they are not perfect if we are still not decided on the right 
-framework. Best to decide if the existing frameworks fits or not or we 
-need to create the new one.
+This patch was on my plate for quite a while, please excuse me for 
+taking it so long.
 
-I would still prefer if other SOC vendors chime in here, since I am sure 
-in the Mobile and Embedded world various SOCs may have requirements to 
-get specific portion of the ramdump only for the quick analysis and 
-meeting the storage requirements on the device for its collection.
+I see the following problem with the current code. We have two different 
+instances than can access memory: MDP/DPU and GPU. And each of them can 
+either have or miss the MMU.
 
-As mentioned on another patch, we are fine the submit abstract at LPC 
-debug MC, but I would like the framework discussion to continue so that 
-we can decide during the LPC that either existing frameworks fits the 
-needs or they need to be extended or new fwk is needed.
+For some time I toyed with the idea of determining whether the allocated 
+BO is going to be used by display or by GPU, but then I abandoned it. We 
+can have display BOs being filled by GPU, so handling it this way would 
+complicate things a lot.
 
----Trilok Soni
+This actually rings a tiny bell in my head with the idea of splitting 
+the display and GPU parts to two different drivers, but I'm not sure 
+what would be the overall impact.
+
+More on the msm_use_mmu() below.
+
+> 
+> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+> ---
+> 
+>   drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
+>   drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
+>   drivers/gpu/drm/msm/msm_drv.h              | 2 +-
+>   3 files changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 36f062c7582f..4f19da28f80f 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+>   	DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
+>   		config.rev.minor, config.rev.patchid);
+>   
+> -	priv->is_a2xx = config.rev.core == 2;
+> +	/*
+> +	 * A2xx has a built in IOMMU and all other IOMMU enabled targets will
+> +	 * have an ARM IOMMU attached
+> +	 */
+> +	priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
+>   	priv->has_cached_coherent = config.rev.core >= 6;
+>   
+>   	gpu = info->init(drm);
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index aca48c868c14..a125a351ec90 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
+>   	struct msm_drm_private *priv = dev->dev_private;
+>   
+>   	/*
+> -	 * a2xx comes with its own MMU
+> -	 * On other platforms IOMMU can be declared specified either for the
+> -	 * MDP/DPU device or for its parent, MDSS device.
+> +	 * Return true if the GPU or the MDP/DPU or parent MDSS device has an
+> +	 * IOMMU
+>   	 */
+> -	return priv->is_a2xx ||
+> +	return priv->has_gpu_iommu ||
+>   		device_iommu_mapped(dev->dev) ||
+>   		device_iommu_mapped(dev->dev->parent);
+
+I have a generic feeling that both old an new code is not fully correct. 
+Please correct me if I'm wrong:
+
+We should be using VRAM, if either of the blocks can not use remapped 
+memory. So this should have been:
+
+bool msm_use_mmu()
+{
+  if (!gpu_has_iommu)
+    return false;
+
+  if (have_display_part && !display_has_mmu())
+    return false;
+
+  return true;
+}
+
+What do you think.
+
+>   }
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 9f0c184b02a0..f33f94acd1b9 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -126,7 +126,7 @@ struct msm_drm_private {
+>   	struct msm_gpu *gpu;
+>   
+>   	/* gpu is only set on open(), but we need this info earlier */
+> -	bool is_a2xx;
+> +	bool has_gpu_iommu;
+>   	bool has_cached_coherent;
+>   
+>   	struct drm_fb_helper *fbdev;
+
+-- 
+With best wishes
+Dmitry
+
