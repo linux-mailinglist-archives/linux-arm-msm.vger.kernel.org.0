@@ -2,228 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4BC374A610
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 23:43:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F6C574A722
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 00:35:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232095AbjGFVnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 17:43:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60498 "EHLO
+        id S229529AbjGFWf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 18:35:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230058AbjGFVnK (ORCPT
+        with ESMTP id S229735AbjGFWf2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 17:43:10 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6901FF7;
-        Thu,  6 Jul 2023 14:42:57 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 366LXVql009263;
-        Thu, 6 Jul 2023 21:42:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=NG6ZBkBrzZbuDvIirQPnHenO/FvyuxYx3kz6+WGyraM=;
- b=P25HytVPTYT5X+IP/dNk7Q4YmFZ1waAtR9rQGMzr8Pcjn7eIkqBkkIxD7yYl8mhhSBHH
- CCRlYeIv+VYFUgTn9rhfs5AnXzrImruT5pcz3y1hzGspgPQsyCqt7kn5Gp/wHThyMWG/
- kd5eF5Xw4p4C3dqgrePgLWSXGb+5Y5gDH5mU0QThi7kvZK2sopbWlZk0qJyxcIKQDGTZ
- +TRXzzGCzZyGuLK6VqtYqbYcft/KyfwHy4dfi4ZVjxSydIenOGdjcG7XDlfb8nND8C/U
- eX9A0n0G0Vm/fV3qNM6l5r0PynCwyk+Xvq49pfzRDCOJcPUYSO8dr8OP4bgv55AtzYlh rw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rntctsg19-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Jul 2023 21:42:40 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 366LgdTk017762
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Jul 2023 21:42:39 GMT
-Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 6 Jul 2023 14:42:35 -0700
-From:   Sarannya S <quic_sarannya@quicinc.com>
-To:     <quic_bjorande@quicinc.com>, <arnaud.pouliquen@foss.st.com>,
-        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Sarannya S <quic_sarannya@quicinc.com>,
-        "Bjorn Andersson" <andersson@kernel.org>
-Subject: [PATCH V9 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL support
-Date:   Fri, 7 Jul 2023 03:11:38 +0530
-Message-ID: <1688679698-31274-4-git-send-email-quic_sarannya@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1688679698-31274-1-git-send-email-quic_sarannya@quicinc.com>
-References: <1688679698-31274-1-git-send-email-quic_sarannya@quicinc.com>
+        Thu, 6 Jul 2023 18:35:28 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241CD1703;
+        Thu,  6 Jul 2023 15:35:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1688682924; x=1689287724; i=spasswolf@web.de;
+ bh=lDm9BYjHliSWNZlmoI0mXu6rvzYWfFi612qvmED6Dl8=;
+ h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=r6vYt3ZWxwTrR0Cjd81z/+CG+IPDLKBqQUAVyXhqtJi9juzQxkAAJV1AsCkxLb6Gd6pYihu
+ Gk8RB27X75u9xXZVEglAapn17C5tY4ZPmX2DQEUvjIPrxzoUVBm5UwQPdh8CqJp3lBcGlEPuj
+ Kymk0ynOXV2mjVSZuCZ2HMKelqV8PFQvxuuy6x60f6WKedG9Lm8ENrD32SDTNuYQOuxV/444Q
+ 7iFqJUHMkB4HLFlIYBh5mOfoXbm44pUoIyZu643eUn5y5xrGCMPwsrrBZwItng6nD7d3SdYPz
+ k/bLc94GQO/kfn8n1GiosDMWnTbPE6Nd8cMzZe9iQXZ7p6Bovhkw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.0.101] ([176.198.191.160]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MDMzC-1q78EU2mpS-00Ay3U; Fri, 07
+ Jul 2023 00:35:24 +0200
+Message-ID: <1098fdd1d33248817907b7caacb6a783c4f0a538.camel@web.de>
+Subject: Re: drm_bridges on fairphone-fp3 are enabled in the wrong order
+From:   Bert Karwatzki <spasswolf@web.de>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Luca Weiss <luca@z3ntu.xyz>
+Date:   Fri, 07 Jul 2023 00:35:23 +0200
+In-Reply-To: <CAD=FV=W_WMo4NGMQMYeLGUc_jBM3X4hZAOe-YQw6exBioEtadw@mail.gmail.com>
+References: <c27953274997a56f8e0522f9331e733ae92bf25b.camel@web.de>
+         <CAD=FV=W_WMo4NGMQMYeLGUc_jBM3X4hZAOe-YQw6exBioEtadw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wiiuVh4uZ9stepSFfBkhMnvzAa6xnqgk
-X-Proofpoint-ORIG-GUID: wiiuVh4uZ9stepSFfBkhMnvzAa6xnqgk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-06_15,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 priorityscore=1501 adultscore=0 spamscore=0 phishscore=0
- malwarescore=0 impostorscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307060189
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:cNHpgmWoTzJpug6NgqELcGhatJ30fsV5g6Jk/iwXCqIAduHV+FF
+ 9kRtgWFdoxRyulRuoGW47ytZJVzGf20UTbVyBqO429PZVWAa7GsUEdjjOD5cHGcEoqpmgZh
+ FvYf55K1YZmon9LmZk17UrJvyEORtiIuoY5V06Z2lwo7LlXacPhf9nN9Vhu3Shy59nsNFUB
+ D9pmCcik2km4jd+jjdH4g==
+UI-OutboundReport: notjunk:1;M01:P0:107Lf3KkzTc=;KGG1KrtZgcr1yBCBBOZa32xgulo
+ WLua+kddpCRQpL0zrtInhmpiBb/F29DREpB1hdsx84muYbYtOJV8Fpk2bG1UJa63bMFvHPp7y
+ lx7DX2oAxcfqOk+mz2JtiMRq5duOAQk7a1RJz/U8SHcGb5anQISR3Bw+HFZzxaq6HX6r2TqUY
+ dlIJREbCoAP3+e/hke+3fLaf/jaDiZpHWhkvkdiygrpfIJjHYHsp1G65t0v8SPu3v2PeB+94i
+ /hU5haJH44wHMPKmT3n7M9viE1OioxLEHTcMG8CA+bE+N8WHkNu+3jmQgoTtNcVlWwm4VsyGU
+ wfPq52nzIIhBSpNp8pHn07kT1witZririFhuW1I8kBjD2DUDjnvJHVjR+hK0meSbNTZZO230C
+ 8sUPWcvkdxbwsgbObQeWix5hptVAe1GrrmYPxNRrMFwtZfPKlDWkVidFcw2gEbwu7o4DT992x
+ pe+ENsGl2/UbFxy+/E8si2dgkE6jXoIM2quNQaQXAUsos5/cKoINbzYAFtW03EyZu+eDqB/lD
+ xZVA3PylRlRY+vJN0k72veP4Zi/bTSLMv9HwNZ9eO0MmGN7SJ7haUhSMu1Ygct/MuXhOqjWBo
+ /qMTUNfJQNs2SgxGjhTfBXu8a9F3qznmN7k9ReHStmwdos3Ta4mpys9svNX9HpMcO9ETkfuCJ
+ D0VcUESqM6XYXEBAhAC4pAqqJCRVHHi7nCI6UwpE4yRspOKIjo60aRGDOHFTmhqvpis5lk72f
+ e1F/5JfnZ12wJIm0ZL8/v+X7EsBDf9C/pkmT5CmVCF9X57IVQTHxv1KsZ01uvvbIaOqXxoYPC
+ PQt7WcaHCcZ1PkUiYk1TfkHwQts8mIB/KrI5vFol8vJwEZUT8mHjru/ts9NZ4EHvLS2zdoR1i
+ 7jUXs2gyqael8LEXtM1F8OSuJ3buHTW7tR041/0LhRHDtRmlRFulv8HwCBdYilZdOkNxTgwDS
+ DEqkkRxAigbZP0EglAymcfgM6NY=
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Chris Lew <quic_clew@quicinc.com>
+Am Donnerstag, dem 06.07.2023 um 09:22 -0700 schrieb Doug Anderson:
+> Hi,
+>
+> On Wed, Jul 5, 2023 at 12:51=E2=80=AFAM Bert Karwatzki <spasswolf@web.de=
+> wrote:
+> >
+> > The fairphone-fp3 has a drm_panel attached to a dsi bridge. This are a=
+dded
+> > to
+> > the bridge_chain in struct drm_encoder in the order dsi, panel. When t=
+he
+> > drm_atomic_bridge_chain_pre_enable these get enabled in the order pane=
+l, dsi
+> > because of the list_for_each_entry_reverse. But the drm_panel of the
+> > fairphone-
+> > fp3 is enabled using mipi_dsi_dcs_write_buffer which only works if the=
+ dsi
+> > is
+> > enabled before the panel.
+> > =C2=A0To work around this one can revert
+> >
+> > commit 9e15123eca7942caa8a3e1f58ec0df7d088df149
+> > Author: Douglas Anderson <dianders@chromium.org>
+> > Date:=C2=A0=C2=A0 Tue Jan 31 14:18:25 2023 -0800
+> >
+> > =C2=A0=C2=A0=C2=A0 drm/msm/dsi: Stop unconditionally powering up DSI h=
+osts at modeset
+> >
+> > This leads to a working panel on startup. But when suspending one runs=
+ again
+> > into a similar problem. When the bridges are disabled the dsi is disab=
+led
+> > first
+> > which leads to a failure in disabling the panel again because
+> > mipi_dsi_dcs_write_buffer fails when the dsi is already switched of.
+> > =C2=A0As a simple workarund for both problems I have found it works to=
+ exchange
+> > the
+> > order of the bridge chain in drm_endcoder:
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > index 28b8012a21f2..990f7c68a27c 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > @@ -550,6 +555,8 @@ int msm_dsi_manager_ext_bridge_init(u8 id)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 if (ret < 0)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 retu=
+rn ret;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* swap bridges in list */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 list_swap(&encoder->bridge_chain=
+, encoder->bridge_chain.next);
+> >
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* The pipeline is ready, p=
+ing encoders if necessary */
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 msm_dsi_manager_set_split_d=
+isplay(id);
+> >
+> > But this does not look like a portable solution so I wonder if there i=
+s a
+> > better
+> > way to do this.
+> >
+> > The linux kernel used here is a linux-next-20220630, with several out-=
+of-
+> > tree
+> > patches which are needed for the msm8953 gpu and the display used in t=
+he
+> > fairphone-fp3 located here:
+> > https://github.com/spasswolf/msm8953-linux.git=C2=A0in
+> > branch msm8953_iommu_rebase_v2_wlan_modem_ipa_cpufreq_display_debug.
+>
+> Any chance that "pre_enable_prev_first" works for you? For the best
+> summary I'm aware of this issue, see:
+>
+> https://lore.kernel.org/r/CAD=3DFV=3DX_xonf1Dz0BsNTKm4-zBm+ccKvPO+wEWFVM=
+UVY_2=3Dh3Q@mail.gmail.com
+>
+> -Doug
 
-Add RPMSG_GET_OUTGOING_FLOWCONTROL and RPMSG_SET_INCOMING_FLOWCONTROL
-IOCTL support for rpmsg char device nodes to get/set the low level
-transport signals.
+Yes, this is exactly what I needed. To enable pre_enable_prev_first for th=
+e
+bridge one simply can set panel.prepare_prev_first=3Dtrue in the probe fun=
+ction of
+the panel driver.
 
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
----
- drivers/rpmsg/rpmsg_char.c | 54 ++++++++++++++++++++++++++++++++++++++++------
- include/uapi/linux/rpmsg.h | 10 +++++++++
- 2 files changed, 58 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index a271fce..09833ad 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -52,6 +52,8 @@ static DEFINE_IDA(rpmsg_minor_ida);
-  * @readq:	wait object for incoming queue
-  * @default_ept: set to channel default endpoint if the default endpoint should be re-used
-  *              on device open to prevent endpoint address update.
-+ * remote_flow_restricted: to indicate if the remote has requested for flow to be limited
-+ * remote_flow_updated: to indicate if the flow control has been requested
-  */
- struct rpmsg_eptdev {
- 	struct device dev;
-@@ -68,6 +70,8 @@ struct rpmsg_eptdev {
- 	struct sk_buff_head queue;
- 	wait_queue_head_t readq;
- 
-+	bool remote_flow_restricted;
-+	bool remote_flow_updated;
- };
- 
- int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
-@@ -116,6 +120,18 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
- 	return 0;
- }
- 
-+static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
-+{
-+	struct rpmsg_eptdev *eptdev = priv;
-+
-+	eptdev->remote_flow_restricted = enable;
-+	eptdev->remote_flow_updated = true;
-+
-+	wake_up_interruptible(&eptdev->readq);
-+
-+	return 0;
-+}
-+
- static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- {
- 	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
-@@ -152,6 +168,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- 		return -EINVAL;
- 	}
- 
-+	ept->flow_cb = rpmsg_ept_flow_cb;
- 	eptdev->ept = ept;
- 	filp->private_data = eptdev;
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -172,6 +189,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
- 		eptdev->ept = NULL;
- 	}
- 	mutex_unlock(&eptdev->ept_lock);
-+	eptdev->remote_flow_updated = false;
- 
- 	/* Discard all SKBs */
- 	skb_queue_purge(&eptdev->queue);
-@@ -285,6 +303,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
- 	if (!skb_queue_empty(&eptdev->queue))
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
-+	if (eptdev->remote_flow_updated)
-+		mask |= EPOLLPRI;
-+
- 	mutex_lock(&eptdev->ept_lock);
- 	mask |= rpmsg_poll(eptdev->ept, filp, wait);
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -297,14 +318,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
- {
- 	struct rpmsg_eptdev *eptdev = fp->private_data;
- 
--	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
--		return -EINVAL;
-+	bool set;
-+	int ret;
- 
--	/* Don't allow to destroy a default endpoint. */
--	if (eptdev->default_ept)
--		return -EINVAL;
-+	switch (cmd) {
-+	case RPMSG_GET_OUTGOING_FLOWCONTROL:
-+		eptdev->remote_flow_updated = false;
-+		ret = put_user(eptdev->remote_flow_restricted, (int __user *)arg);
-+		break;
-+	case RPMSG_SET_INCOMING_FLOWCONTROL:
-+		if (arg > 1) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		set = !!arg;
-+		ret = rpmsg_set_flow_control(eptdev->ept, set, eptdev->chinfo.dst);
-+		break;
-+	case RPMSG_DESTROY_EPT_IOCTL:
-+		/* Don't allow to destroy a default endpoint. */
-+		if (eptdev->default_ept) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+		break;
-+	default:
-+		ret = -EINVAL;
-+	}
- 
--	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+	return ret;
- }
- 
- static const struct file_operations rpmsg_eptdev_fops = {
-diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
-index 1637e68..f0c8da2 100644
---- a/include/uapi/linux/rpmsg.h
-+++ b/include/uapi/linux/rpmsg.h
-@@ -43,4 +43,14 @@ struct rpmsg_endpoint_info {
-  */
- #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
- 
-+/**
-+ * Get the flow control state of the remote rpmsg char device.
-+ */
-+#define RPMSG_GET_OUTGOING_FLOWCONTROL _IOR(0xb5, 0x5, int)
-+
-+/**
-+ * Set the flow control state of the local rpmsg char device.
-+ */
-+#define RPMSG_SET_INCOMING_FLOWCONTROL _IOR(0xb5, 0x6, int)
-+
- #endif
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Bert Karwatzki
 
