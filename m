@@ -2,85 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D6AF749562
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 08:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27F5D7495AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 08:35:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233578AbjGFGKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 02:10:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41386 "EHLO
+        id S233650AbjGFGfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 02:35:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233553AbjGFGKR (ORCPT
+        with ESMTP id S233608AbjGFGfe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 02:10:17 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B84A21BF7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 23:09:33 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99384a80af7so29455166b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 23:09:33 -0700 (PDT)
+        Thu, 6 Jul 2023 02:35:34 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93391993
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 23:35:31 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-992ca792065so38440066b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 23:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688623771; x=1691215771;
+        d=linaro.org; s=google; t=1688625330; x=1691217330;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ASMfahTCCTR31kbFV53HclK76U9QaQoyXHB0KJC8e7c=;
-        b=ZIdU45UNL3olfI00eJtIJKgx3twq68In1VUvi4+ics5kf6rjOx83JPX4SFt4TR7V+m
-         cjKs34qcRRmw10v5XDcwYFWvKd7RVhBhbqCdYmzx/QET3EfZN6rvwf3jjtVOY7vUIpLF
-         l8U4PaoHRZpqxfryxVBXO4lxXqQFRhvY+hWZzRb82aomC3GLyrMVIW89TxFTeG3oLXeR
-         oF8e6IRy9pIO5G4X6VbHcgWLg8ydMeVRWfpWumqsCIK1LzLlrkpjFWXigy3jcqIKHOT6
-         9PBplTfq2oy+SRR80u7j9aFnC6AX7UhBC37zTHZwN7FdXY65LN9y75n3eIvLTDIz76Wu
-         OxBQ==
+        bh=/Fcrx7Yb80pNkp2uhYzBT6R9rq95NqVLKKCQ4kXAxd0=;
+        b=jmW5yDabP4Ok8Fr/e5sXXdC2reJet2oCtHDLIyzUXl3RZi/+e8lR3yq1hjaq2ucTd6
+         on95I68Rzc8dD/EKyjP0KklY7Mzf+7LFof+c8R/R4P1iBwS/IEDigfTtU7+0yAWpFV+A
+         ZlQN3IbSxQnLLVuFHLOkROx2k+m3HxVlKpkcu0yjxDkW/9K5JrmIhf/38vBuH3xOoTI9
+         2iZFd29zoiaETJfADJ0bPy8DqF3T2BLt32ioCIOUBatYqruMmT72VvI7KhDnRWlJ5Jno
+         3QnxCNTEXvQpck3Cf9H+87dBECpfJE876XuYTsTxjv5/waJ7PzZQp/1THCKWcW7EnsZS
+         vzcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688623771; x=1691215771;
+        d=1e100.net; s=20221208; t=1688625330; x=1691217330;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ASMfahTCCTR31kbFV53HclK76U9QaQoyXHB0KJC8e7c=;
-        b=S5PDilfmbvL0ButBBCtEBZjjA5lVgJF/nqDKBrF8JbErcomQ7Aoc6vAw8GBxtY4CU8
-         Rvu1tfpmFESAXVyYdZtivxB0R0I/7uK0r+FqXt3iypTkT5FRAIl02pDCmpsaodpBmDLW
-         R/6r88nCTRAAlB2nqArdQGcvig5TmUDc6JVCrSo8bHBKchRqXWQR/gitMPqjmPZT7mr8
-         +sngMUWjhgIV0qPRS7aFQY+zrI/v6swB4iAFvBehrnh8ZXXwovqUZlJtNkF7W3ReGij+
-         b8s6GaIO/Qh4cdb24WSAvcJ58n4Mjrc99YmaoNaARbvcccjBam5Iq0+cB4brT2QHK1+9
-         iKIA==
-X-Gm-Message-State: ABy/qLZPfCXt4VnMmLgpzCrLUINZBpvTC60jTb1jdQG9XU0muWP0yQO4
-        gnQz1p33lsu9FwL/Una+ZdigHg==
-X-Google-Smtp-Source: APBJJlEJYhWKCUxNLn2gxQTdXoxo87IFqc1/LNXMaz/l/0oZ2H2zmsfqlt3EOaTU88nlptY/EVaXZg==
-X-Received: by 2002:a17:906:209d:b0:973:d06d:545f with SMTP id 29-20020a170906209d00b00973d06d545fmr614778ejq.24.1688623771672;
-        Wed, 05 Jul 2023 23:09:31 -0700 (PDT)
+        bh=/Fcrx7Yb80pNkp2uhYzBT6R9rq95NqVLKKCQ4kXAxd0=;
+        b=j+VPAoZ/wX4lvY/KRxHgsyn57Pohr5MWDtFMQfFsswlMuZIiC5+dnwHNya3qPavf8u
+         6fhQgHJ2nhZAOIGWAOnaveaIBmNwOklH3KumAW2iIt/N5kc/FXsauZhoHjwSfe4pG/tJ
+         6vvS0oxWGyKT3uwPAR52IDnl3yode44aqt5Z30sZ0EYHlR/hz0+XLF/gkliYIdgn1jBP
+         /KFXb+jFc5edlsFqlelhB/H1PbpD3pcmlhoZZ7QmCGD4GdyIXpxFz5x20N82zcUoyENQ
+         TXavd5E/XYSG2WzG0LCpcj/yKU853yLNlTFFm8ecxBEVBwgoHhv/eXge0OIytWyKwUpL
+         pjdg==
+X-Gm-Message-State: ABy/qLaHyg2/74z1VLWTFxJWIvakROjYPhiTU7ABQlkrUa1iO95jTGJI
+        VjuyiRA9gXEe1qefFT9e4L0c1A==
+X-Google-Smtp-Source: APBJJlEwPvUUd4Sh/nUSdZr5t/lb9kULYOIyiN8QYiEi0U71/oBuWIa+ml3DArx10T5OowOhav02nA==
+X-Received: by 2002:a17:906:5358:b0:98e:886:f27f with SMTP id j24-20020a170906535800b0098e0886f27fmr786493ejo.20.1688625330457;
+        Wed, 05 Jul 2023 23:35:30 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id r16-20020a170906c29000b00991d54db2acsm367657ejz.44.2023.07.05.23.09.29
+        by smtp.gmail.com with ESMTPSA id gf3-20020a170906e20300b00992665694f7sm383818ejb.107.2023.07.05.23.35.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 23:09:31 -0700 (PDT)
-Message-ID: <f8e5c6de-0ff7-4b8e-d6bd-73be0b8a854c@linaro.org>
-Date:   Thu, 6 Jul 2023 08:09:27 +0200
+        Wed, 05 Jul 2023 23:35:29 -0700 (PDT)
+Message-ID: <6203ab10-c9b2-3ea8-a18e-dfd2905ec83f@linaro.org>
+Date:   Thu, 6 Jul 2023 08:35:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 1/7] dt-bindings: arm: qcom,ids: Add SoC ID for SM7125
+Subject: Re: [PATCH v1 2/6] dt-bindings: phy: qcom,qmp: Add sa8775p QMP PCIe
+ PHY
 Content-Language: en-US
-To:     David Wronek <davidwronek@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org
+Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, map220v <map220v300@gmail.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-References: <20230704163848.169853-2-davidwronek@gmail.com>
- <20230704163848.169853-3-davidwronek@gmail.com>
- <a0bd842d-b6d0-e126-7b05-e488357330ab@linaro.org>
- <CAEoe_eWHbnE2EeWerkZAmGznagCoxB7kXsqtbTUxjtzgdmMRtQ@mail.gmail.com>
+        linux-phy@lists.infradead.org
+References: <1688545032-17748-1-git-send-email-quic_msarkar@quicinc.com>
+ <1688545032-17748-3-git-send-email-quic_msarkar@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAEoe_eWHbnE2EeWerkZAmGznagCoxB7kXsqtbTUxjtzgdmMRtQ@mail.gmail.com>
+In-Reply-To: <1688545032-17748-3-git-send-email-quic_msarkar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,34 +88,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2023 17:48, David Wronek wrote:
-> On Wed, Jul 5, 2023 at 11:46 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 04/07/2023 18:31, David Wronek wrote:
->>> From: map220v <map220v300@gmail.com>
->>>
->>> Add the SoC ID for Qualcomm SM7125.
->>>
->>> Signed-off-by: map220v <map220v300@gmail.com>
->>
->> We accept known identities, but this looks like a nickname/pseudonym.
->> Are you sure you got such SoB from map220v?
->>
->> None of the commits here:
->> https://github.com/map220v/sm7125-mainline/commits/a72q-6.0
->> have signed-off-by. Did you add it by yourself?
->>
->> Best regards,
->> Krzysztof
->>
-> (Please ignore my E-Mail from before, I forgot to click "reply all")
+On 05/07/2023 10:17, Mrinmay Sarkar wrote:
+> Add devicetree YAML binding for Qualcomm QMP PCIe PHY
+> for SA8775p platform.
 > 
-> I have asked map220v for permission to add their Signed-off-by to the commits
-> and this is the one they gave me. Is the nickname a problem?
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> ---
+>  .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> index a0407fc79563..9309066bfcee 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> @@ -23,6 +23,8 @@ properties:
+>        - qcom,sm8350-qmp-gen3x1-pcie-phy
+>        - qcom,sm8550-qmp-gen3x2-pcie-phy
+>        - qcom,sm8550-qmp-gen4x2-pcie-phy
+> +      - qcom,sa8775p-qmp-gen4x2-pcie-phy
+> +      - qcom,sa8775p-qmp-gen4x4-pcie-phy
+>  
+>    reg:
+>      minItems: 1
+> @@ -30,7 +32,7 @@ properties:
+>  
+>    clocks:
+>      minItems: 5
+> -    maxItems: 6
+> +    maxItems: 7
+>  
+>    clock-names:
+>      minItems: 5
+> @@ -39,6 +41,7 @@ properties:
+>        - const: cfg_ahb
+>        - const: ref
+>        - const: rchng
+> +      - const: phy_aux
 
-Yes, because it looks anonymous. We need known identity. Just take the
-ownership of the patches...
+Nope, you didn't test, did you? You cannot just add entries in the
+middle - you break all the boards.
+
+Plus, you clearly missed to update the if:else and all this won't work.
+Just test the bindings before sending them.
+
+>        - const: pipe
+>        - const: pipediv2
+>  
+> @@ -136,6 +139,20 @@ allOf:
+>          clock-names:
+>            minItems: 6
+
+This is not valid anymore.
+
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sa8775p-qmp-gen4x2-pcie-phy
+> +              - qcom,sa8775p-qmp-gen4x4-pcie-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 7
+> +        clock-names:
+> +          maxItems: 7
+
+Keep the same approach for clocks and clock-names. Not min here, max there.
+
+> +
+>    - if:
+>        properties:
+>          compatible:
 
 Best regards,
 Krzysztof
