@@ -2,206 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC69774A517
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 22:48:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A90AB74A54A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 22:54:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229993AbjGFUs4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 16:48:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38344 "EHLO
+        id S232163AbjGFUyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 16:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230170AbjGFUsy (ORCPT
+        with ESMTP id S232248AbjGFUyX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 16:48:54 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA491BC2;
-        Thu,  6 Jul 2023 13:48:51 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 366KgMT3011905;
-        Thu, 6 Jul 2023 20:48:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=C92CpaLMBxsIu1Vqu81H7JOvCBxUCRCAB1bx/1EdNVs=;
- b=FiMipGOqgguR7//NmDgVpWATZ49AlcIFIwA8MnilIUqii87WOujWRYAqudd1AT8eXSGm
- 3OGiAB05/eRg+dKKeI/w8p5CE0U82nIKEloAlgMX6yGJ4eZ7I0oCGbHnBbiW9FnMB21f
- fwXA3rsLK7WcZWWNng97NCU3gDhcZiimtlMBbZa4DqvMTx+gtQTIbjqIM4ubSQEpMzp5
- WSj6582oyYbdiQsfCwBI20v9MF8vg7DVUqGrv6ma/3HZer6ejy5nrOcYAE2OPcW7Uhr3
- koakN6cXEdsJuQPFTo8YB5RrTtvdGYU87nGVb/L/FKH5Mi3lwXX7eQmaosXFR1mLVs8x pg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rn152mkyy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Jul 2023 20:48:45 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 366Kmi0i006918
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Jul 2023 20:48:44 GMT
-Received: from hu-rmccann-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 6 Jul 2023 13:48:43 -0700
-From:   Ryan McCann <quic_rmccann@quicinc.com>
-Date:   Thu, 6 Jul 2023 13:48:37 -0700
-Subject: [PATCH v4 6/6] drm/msm/dpu: Update dev core dump to dump registers
- of sub-blocks
+        Thu, 6 Jul 2023 16:54:23 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241621992
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 13:54:20 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b5c231c23aso18451281fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 13:54:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688676858; x=1691268858;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7RSaQ9WlKcAwcelHXRKRPMrm8csU9PL5No77SGAzfpQ=;
+        b=JUqQ0v/649BZi/7gvHg9AngNzQdko5dlikegW9BhFCFX8oTYJtR2wgz8NX/Ma9PmFl
+         kLtS5wTQVS2xadlnlXmllORS9K9lkcwtcxuy/KRmHEl/UbK2v5vkLpXxmoeZlLCgsvNH
+         bAXxQkll+hlPkpd5K2cqXGqFm1spuDbCuMVAfR2YLXP/8Z+Sfu1zIhVMKz/h5WRn7uaY
+         y7Lsmke+S+4mbEqGSZFPlUZH+bF+O4Gf35Vca/SiNNqW8YzsXtoCO4LOFaIql/8xHT+r
+         Qm49Ff8Et9Pqz6BdYfMHSasbFEdAX4lza2Gr/dx7m/qRwITcEYcM/vAikVoFOvMZOwJV
+         2vmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688676858; x=1691268858;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7RSaQ9WlKcAwcelHXRKRPMrm8csU9PL5No77SGAzfpQ=;
+        b=jVnTe8eT53k7QzYmrWQfHZFE3mDoD5uogX5V3b0ChQM/g86N4rID0y8LIBJehIlMjx
+         zY8MMKnr8NTx1EhkTHSa8/hIr+xKh8TyLOwVjzg8Wugkfx5pWPjW8H5IXGF+SupgV4F8
+         9LrPwwT2ILKsayzrO5nusdk5CSIO3+QVXDBPte8PitxqKca6+06C7OYlgJURvx4abGwl
+         cs+nxLtf9vQG6Lhz1xliMSmysKf8tRe8M4ul5xmGkkkqdoZH0dJpYGzQ/p8QnhkMMP+j
+         BNET7ZJwaClcJ+hBS04RyAfE29pv87SZVD23rPWE9G1DCAeMVJY0sWycWaE7cJV4MCit
+         +kmw==
+X-Gm-Message-State: ABy/qLZmDvWss6vbhBRuyaRpnCSSkk7rjYdwu2uJ+JgIJo5dF+rONb0B
+        MtjBf5NgtK54rZjtYwqehOv+lg==
+X-Google-Smtp-Source: APBJJlEOE7hxfi9AL1aP//s6s/PqKmJrmLwuwd5C2ZlB/pqsJhwHkYt8V/oS5kn34MeHKn3FzqQXlw==
+X-Received: by 2002:a2e:9896:0:b0:2b6:9909:79bd with SMTP id b22-20020a2e9896000000b002b6990979bdmr1909986ljj.24.1688676858175;
+        Thu, 06 Jul 2023 13:54:18 -0700 (PDT)
+Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
+        by smtp.gmail.com with ESMTPSA id z22-20020a05651c023600b002b6de6deb5asm483574ljn.2.2023.07.06.13.54.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Jul 2023 13:54:17 -0700 (PDT)
+Message-ID: <b7853d31-0330-591f-2cea-7aa2a7d7c51e@linaro.org>
+Date:   Thu, 6 Jul 2023 22:54:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2] clk: qcom: gcc-sc8280xp: Allow PCIe GDSCs to enter
+ retention state
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Johan Hovold <johan@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230706140842.18059-1-manivannan.sadhasivam@linaro.org>
+ <ZKbM4vLpk_T3cGWC@hovoldconsulting.com>
+ <34b300ea-072a-5c70-904f-db85ff963f3a@linaro.org>
+Content-Language: en-US
+In-Reply-To: <34b300ea-072a-5c70-904f-db85ff963f3a@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <20230622-devcoredump_patch-v4-6-e304ddbe9648@quicinc.com>
-References: <20230622-devcoredump_patch-v4-0-e304ddbe9648@quicinc.com>
-In-Reply-To: <20230622-devcoredump_patch-v4-0-e304ddbe9648@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     Rob Clark <robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <quic_jesszhan@quicinc.com>, Ryan McCann <quic_rmccann@quicinc.com>
-X-Mailer: b4 0.13-dev-8a804
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1688676521; l=4752;
- i=quic_rmccann@quicinc.com; s=20230622; h=from:subject:message-id;
- bh=AT8Z1kDsBnEI1CH8VhV5WFsBJXsUk7u9tyfOM6NNPIs=;
- b=ArD61lIOSN9L5riubvhRRSqZdKLr3wcNWoKJQQRr1hUeWKFe+4kp2x9d9qNzO12IR4jOn9c0F
- 2lf6IMG6LacD2Dqd3btMjoQh+cWTCU0tYABkv8+QQgKd/YcDVG++Wfb
-X-Developer-Key: i=quic_rmccann@quicinc.com; a=ed25519;
- pk=d/uP3OwPGpj/bTtiHvV1RBZ2S6q4AL6j1+A5y+dmbTI=
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EGQtbjKugXdUTroUMzPeyvsSGSYFesbI
-X-Proofpoint-ORIG-GUID: EGQtbjKugXdUTroUMzPeyvsSGSYFesbI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-06_15,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1015 mlxlogscore=943
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307060182
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the device core dump mechanism does not dump registers of
-sub-blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Edit
-dpu_kms_mdp_snapshot function to account for sub-blocks.
+On 6.07.2023 16:40, Konrad Dybcio wrote:
+> On 6.07.2023 16:17, Johan Hovold wrote:
+>> On Thu, Jul 06, 2023 at 07:38:42PM +0530, Manivannan Sadhasivam wrote:
+>>> With the minimal system suspend support in place for the PCIe driver that
+>>> keeps the interconnect path voted, the ALWAYS_ON flag can now be dropped.
+>>>
+>>> Also, the PWRSTS_RET_ON flag should be used to allow the GDSCs to enter the
+>>> retention state when the parent domain get's turned off during system
+>>> suspend.
+>>>
+>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>> ---
+>>>
+>>> Changes in v2:
+>>>
+>>> * Changed the patch from simple revert to changing the ALWAYS_ON flag to
+>>>   PWRSTS_RET_ON.
+>>>
+>>>  drivers/clk/qcom/gcc-sc8280xp.c | 10 +++++-----
+>>>  1 file changed, 5 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+>>> index 04a99dbaa57e..c59b0f91c87d 100644
+>>> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+>>> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+>>> @@ -6786,7 +6786,7 @@ static struct gdsc pcie_2a_gdsc = {
+>>>  		.name = "pcie_2a_gdsc",
+>>>  	},
+>>>  	.pwrsts = PWRSTS_OFF_ON,
+>>> -	.flags = VOTABLE | ALWAYS_ON,
+>>> +	.flags = VOTABLE | PWRSTS_RET_ON,
+>>>  };
+>>
+>> This is not correct either. PWRSTS_RET_ON is a pwrsts mask...
+> This + please rebase atop that:
+> 
+> https://lore.kernel.org/linux-arm-msm/20230620-topic-sc8280_gccgdsc-v2-0-562c1428c10d@linaro.org/
+Moreover, I tried a similar patch out.
 
-Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 66 ++++++++++++++++++++++++++++++---
- 1 file changed, 60 insertions(+), 6 deletions(-)
+Johan's v6.4 branch + the patchset I linked + removing ALWAYS_ON from gcc
+(so keeping PWRSTS_OFF_ON) and PCIe survives a wakeup-s2idle-wakeup cycle.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 70dbb1204e6c..afc45d597d65 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -903,25 +903,58 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
- 					    cat->ctl[i].base, cat->ctl[i].name);
- 
- 	/* dump DSPP sub-blocks HW regs info */
--	for (i = 0; i < cat->dspp_count; i++)
-+	for (i = 0; i < cat->dspp_count; i++) {
- 		msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len, dpu_kms->mmio +
- 					    cat->dspp[i].base, cat->dspp[i].name);
- 
-+		if (cat->dspp[i].sblk && cat->dspp[i].sblk->pcc.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->dspp[i].sblk->pcc.len,
-+						    dpu_kms->mmio + cat->dspp[i].base +
-+						    cat->dspp[i].sblk->pcc.base, "%s_%s",
-+						    cat->dspp[i].name,
-+						    cat->dspp[i].sblk->pcc.name);
-+	}
-+
- 	/* dump INTF sub-blocks HW regs info */
- 	for (i = 0; i < cat->intf_count; i++)
- 		msm_disp_snapshot_add_block(disp_state, cat->intf[i].len, dpu_kms->mmio +
- 					    cat->intf[i].base, cat->intf[i].name);
- 
- 	/* dump PP sub-blocks HW regs info */
--	for (i = 0; i < cat->pingpong_count; i++)
-+	for (i = 0; i < cat->pingpong_count; i++) {
- 		msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len, dpu_kms->mmio +
- 					    cat->pingpong[i].base, cat->pingpong[i].name);
- 
-+		/* TE2 block has length of 0, so will not print it */
-+
-+		if (cat->pingpong[i].sblk && cat->pingpong[i].sblk->dither.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].sblk->dither.len,
-+						    dpu_kms->mmio + cat->pingpong[i].base +
-+						    cat->pingpong[i].sblk->dither.base, "%s_%s",
-+						    cat->pingpong[i].name,
-+						    cat->pingpong[i].sblk->dither.name);
-+	}
-+
- 	/* dump SSPP sub-blocks HW regs info */
--	for (i = 0; i < cat->sspp_count; i++)
-+	for (i = 0; i < cat->sspp_count; i++) {
- 		msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len, dpu_kms->mmio +
- 					    cat->sspp[i].base, cat->sspp[i].name);
- 
-+		if (cat->sspp[i].sblk && cat->sspp[i].sblk->scaler_blk.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->sspp[i].sblk->scaler_blk.len,
-+						    dpu_kms->mmio + cat->sspp[i].base +
-+						    cat->sspp[i].sblk->scaler_blk.base, "%s_%s",
-+						    cat->sspp[i].name,
-+						    cat->sspp[i].sblk->scaler_blk.name);
-+
-+		if (cat->sspp[i].sblk && cat->sspp[i].sblk->csc_blk.len > 0)
-+			msm_disp_snapshot_add_block(disp_state, cat->sspp[i].sblk->csc_blk.len,
-+						    dpu_kms->mmio + cat->sspp[i].base +
-+						    cat->sspp[i].sblk->csc_blk.base, "%s_%s",
-+						    cat->sspp[i].name,
-+						    cat->sspp[i].sblk->csc_blk.name);
-+	}
-+
- 	/* dump LM sub-blocks HW regs info */
- 	for (i = 0; i < cat->mixer_count; i++)
- 		msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len, dpu_kms->mmio +
-@@ -943,9 +976,30 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
- 	}
- 
- 	/* dump DSC sub-blocks HW regs info */
--	for (i = 0; i < cat->dsc_count; i++)
--		msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len, dpu_kms->mmio +
--					    cat->dsc[i].base, cat->dsc[i].name);
-+	for (i = 0; i < cat->dsc_count; i++) {
-+		if (cat->dsc[i].features & BIT(DPU_DSC_HW_REV_1_2)) {
-+			struct dpu_dsc_blk enc = cat->dsc[i].sblk->enc;
-+			struct dpu_dsc_blk ctl = cat->dsc[i].sblk->ctl;
-+
-+			/* For now, pass in a length of 0 because the DSC_BLK register space
-+			 * overlaps with the sblks' register space.
-+			 *
-+			 * TODO: Pass in a length of 0 to DSC_BLK_1_2 in the HW catalog where
-+			 * applicable.
-+			 */
-+			msm_disp_snapshot_add_block(disp_state, 0, dpu_kms->mmio +
-+						    cat->dsc[i].base, cat->dsc[i].name);
-+			msm_disp_snapshot_add_block(disp_state, enc.len, dpu_kms->mmio +
-+						    cat->dsc[i].base + enc.base, "%s_%s",
-+						    cat->dsc[i].name, enc.name);
-+			msm_disp_snapshot_add_block(disp_state, ctl.len, dpu_kms->mmio +
-+						    cat->dsc[i].base + ctl.base, "%s_%s",
-+						    cat->dsc[i].name, ctl.name);
-+		} else {
-+			msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len, dpu_kms->mmio +
-+						    cat->dsc[i].base, cat->dsc[i].name);
-+		}
-+	}
- 
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- }
+I am however running with clk_ignore_unused, so I don't know how this
+impacts the RPMh system suspend situation.
 
--- 
-2.25.1
+Konrad
 
+> 
+> Konrad
+>>
+>> Johan
