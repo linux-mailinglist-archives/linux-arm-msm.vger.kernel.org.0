@@ -2,120 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 704DE749F33
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 16:40:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8009749F38
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 16:42:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233207AbjGFOku (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 10:40:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59754 "EHLO
+        id S233238AbjGFOmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 10:42:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232151AbjGFOks (ORCPT
+        with ESMTP id S233230AbjGFOmX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 10:40:48 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA2491725
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 07:40:45 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b5c231c23aso12021341fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 07:40:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688654444; x=1691246444;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4fBLCeyDV8gz5W8rqCS0f5i0nF2t1kzIX8PNOEa5TJA=;
-        b=I14hGUZ/D+YDpVAsFMLxaW1D3IoTWnNRQl7SDQG6PS2cEh5BghGT5/l8qRWI1UoRJi
-         sBQWDxNBy93o6VFCf3NMJdjSBqS44l7/t+MvgeYW5wprFNrn9P/hOHnDnPI5rzB+C2Ir
-         0wDbLL302FKEsR/YBj2YQ7pWnFlOssCBQYsTYyKD9/VCe8h69Eqyqt0YjZPKjthZU+H+
-         Xl5N8w/xvpDxWU1MEfnX8Q3ZlXn2LWh4hcofaKEsUuhLoNmdGjNkNHpBIAdKfcni/lgn
-         Vv7cjckIVi4PJ4AU8XmKxL5e33mvoPw3yZHymp6Kl1bIkMfLN7dozBgk9uM8uLXVxcQk
-         MPUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688654444; x=1691246444;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4fBLCeyDV8gz5W8rqCS0f5i0nF2t1kzIX8PNOEa5TJA=;
-        b=CEAkOSX6soIaUwMeevm8qd7AjhnL6x/8wqm0OaBtSlRsno7HP/bMTanjPeivr4WWIo
-         Vf8VcDWmNE8PdOQVNZrQmO4DcGMz52roSE149GC1qtn3wgUv3cy8BEtiPgZssVGa962Y
-         TzW0tT+e4AqZdhxnC4DCjVHRYNDiguAnvIBb2HC0ylNKAoyM/U+s8u4P4iKjBWSh3s0C
-         QqnMCJuZBf+8QQo/vyTk9zAIxMK5/VmdYN8Z3xw0355uUzb96vwZCothPkIlKYl1l/O3
-         Zfv/yHg5GFTuDSWXsNzySizZbId6JioTvNMi7Ft6Ksa5k/I+PQTHAU4T9KF7pt1vnFgC
-         GEEQ==
-X-Gm-Message-State: ABy/qLai/+MyUXrN+Z7Sq3RyrNGkAbtq76VFul0burtbyautDqOO4NGr
-        ZS6tHimjjV0QvovyUmIa2Z7HzA==
-X-Google-Smtp-Source: APBJJlGzDpCn7DV7462QvHiQ7X0BTfS5rvFJ8y//11eUDLorSCqrZ5fF7AS6HL3wWeeNrd77nANB5w==
-X-Received: by 2002:a2e:800b:0:b0:2b6:cb0d:56ae with SMTP id j11-20020a2e800b000000b002b6cb0d56aemr1377202ljg.11.1688654444059;
-        Thu, 06 Jul 2023 07:40:44 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05651c102900b002b6e973f8cfsm345862ljm.36.2023.07.06.07.40.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jul 2023 07:40:43 -0700 (PDT)
-Message-ID: <34b300ea-072a-5c70-904f-db85ff963f3a@linaro.org>
-Date:   Thu, 6 Jul 2023 16:40:42 +0200
+        Thu, 6 Jul 2023 10:42:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E1E10F5;
+        Thu,  6 Jul 2023 07:42:22 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 366Dl7Xi002795;
+        Thu, 6 Jul 2023 14:42:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=cOy/D9wwF+YVZW0ZIhp1zNdTAQ7GSvA0zuPjMg2pfCw=;
+ b=nw9wfHYpWg0E+3+ZIfYtFkz1XsAgPn/DjUrOLy1nvwSnGgp2V9thA5zrnjLtP/j3X82X
+ 3nmTLYDPVDcIDRON8xigEGPBV95p7e49wYTbV0RJjjH7f4dPK17yRSflVy9kUUNfUDFf
+ scFtu8AFM8m2PMZEOkAao1TBwkRc+30HzIUAMwhmwciQFxtpTSEJapLrppUQvyFSZgYU
+ 7zUfsjNPQjdPhliumCEfry8uUHabYCKAQIWde/A6sqS3hyPyScoCrLdilcyrOshlWqCY
+ Y/QsrVKfPiBWhhJAxhkhnopa0U/TZaXmB0C/7U9tthko2eyqUUvuydC9iKl1scNaW3Bw DQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rn152kty6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Jul 2023 14:42:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 366EgHHa005936
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Jul 2023 14:42:17 GMT
+Received: from [10.216.13.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 6 Jul
+ 2023 07:42:13 -0700
+Message-ID: <337a8204-033f-3c00-ffc3-0bd3a6050e54@quicinc.com>
+Date:   Thu, 6 Jul 2023 20:12:09 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2] clk: qcom: gcc-sc8280xp: Allow PCIe GDSCs to enter
- retention state
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 1/3] dt-bindings: power: rpmpd: Add Generic RPM(h) PD
+ indexes
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        johan+linaro@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230706140842.18059-1-manivannan.sadhasivam@linaro.org>
- <ZKbM4vLpk_T3cGWC@hovoldconsulting.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZKbM4vLpk_T3cGWC@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1688647793-20950-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1688647793-20950-2-git-send-email-quic_rohiagar@quicinc.com>
+ <9e25ca29-9e19-b48c-06a7-f748af3fd243@linaro.org>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <9e25ca29-9e19-b48c-06a7-f748af3fd243@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Dk8QoSW3p9f_FB-kWGpmnCZuV4063PEH
+X-Proofpoint-ORIG-GUID: Dk8QoSW3p9f_FB-kWGpmnCZuV4063PEH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-06_11,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1015 mlxlogscore=703
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307060131
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.07.2023 16:17, Johan Hovold wrote:
-> On Thu, Jul 06, 2023 at 07:38:42PM +0530, Manivannan Sadhasivam wrote:
->> With the minimal system suspend support in place for the PCIe driver that
->> keeps the interconnect path voted, the ALWAYS_ON flag can now be dropped.
+
+On 7/6/2023 8:06 PM, Krzysztof Kozlowski wrote:
+> On 06/07/2023 14:49, Rohit Agarwal wrote:
+>> Add Generic RPM(h) Power Domain indexes that can be used
+>> for all the Qualcomm SoC henceforth.
 >>
->> Also, the PWRSTS_RET_ON flag should be used to allow the GDSCs to enter the
->> retention state when the parent domain get's turned off during system
->> suspend.
->>
->> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
->>
->> Changes in v2:
->>
->> * Changed the patch from simple revert to changing the ALWAYS_ON flag to
->>   PWRSTS_RET_ON.
->>
->>  drivers/clk/qcom/gcc-sc8280xp.c | 10 +++++-----
->>  1 file changed, 5 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
->> index 04a99dbaa57e..c59b0f91c87d 100644
->> --- a/drivers/clk/qcom/gcc-sc8280xp.c
->> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
->> @@ -6786,7 +6786,7 @@ static struct gdsc pcie_2a_gdsc = {
->>  		.name = "pcie_2a_gdsc",
->>  	},
->>  	.pwrsts = PWRSTS_OFF_ON,
->> -	.flags = VOTABLE | ALWAYS_ON,
->> +	.flags = VOTABLE | PWRSTS_RET_ON,
->>  };
-> 
-> This is not correct either. PWRSTS_RET_ON is a pwrsts mask...
-This + please rebase atop that:
+>>   include/dt-bindings/power/qcom-rpmpd.h | 49 ++++++++++++++++++++++++++++++++++
+>>   1 file changed, 49 insertions(+)
+> Didn't you just send a patch doing similar? There is no changelog, no
+> versioning, how can anyone figure out which patch is the latest or which
+> one should be ignored?
+No, that patch was removing all the other SoCs macro which was against 
+the ABI.
+So dropping that series completely and this being new series didnt 
+include the versioning.
+Since all the patches in that series needed to be dropped I thought to 
+start a new series.
 
-https://lore.kernel.org/linux-arm-msm/20230620-topic-sc8280_gccgdsc-v2-0-562c1428c10d@linaro.org/
-
-Konrad
-> 
-> Johan
+Thanks,
+Rohit.
+> Best regards,
+> Krzysztof
+>
