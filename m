@@ -2,205 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4742974A3F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 20:55:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E69B74A4D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 22:28:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230362AbjGFSz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 14:55:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35930 "EHLO
+        id S232694AbjGFU2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 16:28:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231623AbjGFSzZ (ORCPT
+        with ESMTP id S229510AbjGFU2A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 14:55:25 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CCAF1FC6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 11:55:16 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb9fd28025so1513138e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 11:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688669715; x=1691261715;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c73ospzpOiJ3HtlgE71gvC44nRlCQXqmHvLoRFp4sL4=;
-        b=ND2+mI66BMUP0EVE1nSaYxo9mWB5eeoIo1gtE7E+zEXop6A8oX/OLRZXrLxEN1LhAh
-         M58ceesFaLsZHJIl14MQQebqOO9dtXDwDrdF0XzK1FztkxRZn8WN4ay8KzkMAA8ePzMb
-         jzf63o8jdzaNDYop5EEeRy3wdHRZDegmCOdKjn14iMOXuAAxvMuitqELUqjRH/oXZAQ6
-         I3uzETwgEkWbFL6nff3d943wAiWYpBMPBH3GKYEqF/32sT2xRB7eQ5OjmibnmSD+ofK8
-         F6W3/mg4BJ2Iii0UkfWEFfFIMkJSCMZjfTy6B8/wrYcM801nR3PGAcFPLDDSMEgJnUXQ
-         C5zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688669715; x=1691261715;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c73ospzpOiJ3HtlgE71gvC44nRlCQXqmHvLoRFp4sL4=;
-        b=AkR/cPMvQoQpE1fkHSRz1TGBNdhFBtO883xdWaRNSarnlB5OMAG9dr93fHyButHjJJ
-         9KUziX8nHv8O87r7Ec5VD8G97rRYZapiEcjNN2DUYPdFS8dnLfJG/EpCvuLA/Yv89BAZ
-         gvu8+YWSfeOVjkqG5pRgl68QWs7Dmkbkc59EGAcP37/92FWjWFcwrAbK2VKXI1r2FO9S
-         j1+qISFqtYdU/6UyEqdrt+jWjtfSyLvxkYegHbV8GDEBtmYsuybTEcoMTnxOZliCUuMO
-         50l1V5GnkmnQAXuR+0+MsFLn9A0DxZAUpMNPCHfmiFQ5GfWGtFcZ8JZr6BFcC9jf3PMI
-         +c0Q==
-X-Gm-Message-State: ABy/qLYX2e6bquXmAd2tN4720IpJt/ZGWxEUY32iI+cQNGADg7nwer6+
-        ELcagBx3ldeTlAYaP5jkO1XiocF1joV73QWqzW0=
-X-Google-Smtp-Source: APBJJlF1X8wbG4TDSUK8MuBW3QmgXhipXcKJo3Ts0Qh54FlI4NjRBynEemoPlOJF9xLjXeRjhk8xZQ==
-X-Received: by 2002:a05:6512:3253:b0:4fa:5e76:7ad4 with SMTP id c19-20020a056512325300b004fa5e767ad4mr2021699lfr.10.1688669714682;
-        Thu, 06 Jul 2023 11:55:14 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id q17-20020ac25151000000b004fb9c625b4asm363910lfd.210.2023.07.06.11.55.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jul 2023 11:55:14 -0700 (PDT)
-Message-ID: <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
-Date:   Thu, 6 Jul 2023 21:55:13 +0300
+        Thu, 6 Jul 2023 16:28:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2148219A5;
+        Thu,  6 Jul 2023 13:27:59 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 366JXVLJ001122;
+        Thu, 6 Jul 2023 20:27:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=q21Hkg1SeAFZRghhSdVTbU3w1zuvGv0Lntvgsg8ofxI=;
+ b=jDyK+IcNcZIo2ck6whOCzJc8DiQQPZnVr2BX4V7VHKg0so/e1lBkIoG6E17dPbiB7Re1
+ pHaxZa3XhFXOEUPWpDxf8PAy1LCVygx2PPEHkZYilpH2SzsV+nRgXnDnVIaCm6FajM3N
+ xmuDdQdfvji/0UH+AMUFx3YvGM0IB9bXCEn4XRcM/yrVR8bau+xjBAmaERf81YGr8GMu
+ uKA61xMlIyP9otuaQsD2OhFuV5QdXGhIZbBZP9Aw+GcFRPfZPjkJsXQBlw497tphfHq9
+ +RMNGeNngqtZn/047oIA87fHDEZu9mcMIcqlRRiG+KoOyJIJV7RL7o9mzGEqwwqimmfW oA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rnx4x0x5a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Jul 2023 20:27:46 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 366KRj2j026329
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Jul 2023 20:27:46 GMT
+Received: from hu-rmccann-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 6 Jul 2023 13:27:45 -0700
+From:   Ryan McCann <quic_rmccann@quicinc.com>
+Subject: [PATCH v3 0/6] Add support to print sub-block registers in dpu hw
+ catalog
+Date:   Thu, 6 Jul 2023 13:26:46 -0700
+Message-ID: <20230622-devcoredump_patch-v3-0-83601b72eb67@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] drm/msm: Check for the GPU IOMMU during bind
-Content-Language: en-GB
-To:     Jordan Crouse <jorcrous@amazon.com>,
-        freedreno@lists.freedesktop.org
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230309222049.4180579-1-jorcrous@amazon.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230309222049.4180579-1-jorcrous@amazon.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAIcjp2QC/4WOQQ7CIBBFr2JYO6ZCpK0r1x5BYwwdBksitEJLN
+ KZ3l3bnRpfvZ/7782aRgqXI9qs3C5RstJ3PINYrhq3yNwKrMzNecFFIzkFTwi6QHl1/7dWALWh
+ TUmWk0VJwlnuNigRNUB7buXk8gYsOPD0HuI9O3eabPpCxz2X3fMnc2jh04bW8kbZz+msxbaEA0
+ XDUiFLtSnl4jBatxw12js2+xP86eHbUVBeqKrWohfl2TNP0AeFSmtQcAQAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+CC:     Rob Clark <robdclark@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <quic_jesszhan@quicinc.com>, Ryan McCann <quic_rmccann@quicinc.com>
+X-Mailer: b4 0.13-dev-8a804
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688675265; l=2395;
+ i=quic_rmccann@quicinc.com; s=20230622; h=from:subject:message-id;
+ bh=i+TPACK4IRxgParuA6RqZUve2po/P32gxGzH3K7rF94=;
+ b=QmFtMLmzhUdV8VplJ3Okj3UVuqjqOf5kzHf4Pilgemk5zUzGhvu/C3ssYN8IK4K0uBfuEvCMO
+ lplDPWc4BP+CqWy5/YnwVglEf5vr3fd2uyv++lC7qLpoxag/0tn5evL
+X-Developer-Key: i=quic_rmccann@quicinc.com; a=ed25519;
+ pk=d/uP3OwPGpj/bTtiHvV1RBZ2S6q4AL6j1+A5y+dmbTI=
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zunmeKmo_uNf7zMVf_Cp29IksrC9gHAD
+X-Proofpoint-GUID: zunmeKmo_uNf7zMVf_Cp29IksrC9gHAD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-06_15,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 mlxscore=0 malwarescore=0
+ suspectscore=0 clxscore=1015 spamscore=0 mlxlogscore=987 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307060179
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/03/2023 00:20, Jordan Crouse wrote:
-> While booting with amd,imageon on a headless target the GPU probe was
-> failing with -ENOSPC in get_pages() from msm_gem.c.
-> 
-> Investigation showed that the driver was using the default 16MB VRAM
-> carveout because msm_use_mmu() was returning false since headless devices
-> use a dummy parent device. Avoid this by extending the existing is_a2xx
-> priv member to check the GPU IOMMU state on all platforms and use that
-> check in msm_use_mmu().
-> 
-> This works for memory allocations but it doesn't prevent the VRAM carveout
-> from being created because that happens before we have a chance to check
-> the GPU IOMMU state in adreno_bind.
-> 
-> There are a number of possible options to resolve this but none of them are
-> very clean. The easiest way is to likely specify vram=0 as module parameter
-> on headless devices so that the memory doesn't get wasted.
+The purpose of this patch series is to add support to print the registers
+of sub-blocks in the DPU hardware catalog and fix the order in which all
+hardware blocks are dumped for a device core dump. This involves:
 
-This patch was on my plate for quite a while, please excuse me for 
-taking it so long.
+1. Changing data structure from stack to queue to fix the printing order
+of the device core dump.
 
-I see the following problem with the current code. We have two different 
-instances than can access memory: MDP/DPU and GPU. And each of them can 
-either have or miss the MMU.
+2. Removing redundant suffix of sub-block names.
 
-For some time I toyed with the idea of determining whether the allocated 
-BO is going to be used by display or by GPU, but then I abandoned it. We 
-can have display BOs being filled by GPU, so handling it this way would 
-complicate things a lot.
+3. Removing redundant prefix of sub-block names.
 
-This actually rings a tiny bell in my head with the idea of splitting 
-the display and GPU parts to two different drivers, but I'm not sure 
-what would be the overall impact.
+4. Eliminating unused variable from relevant macros.
 
-More on the msm_use_mmu() below.
+5. Defining names for sub-blocks that have not yet been defined.
 
-> 
-> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
-> ---
-> 
->   drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
->   drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
->   drivers/gpu/drm/msm/msm_drv.h              | 2 +-
->   3 files changed, 9 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 36f062c7582f..4f19da28f80f 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->   	DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
->   		config.rev.minor, config.rev.patchid);
->   
-> -	priv->is_a2xx = config.rev.core == 2;
-> +	/*
-> +	 * A2xx has a built in IOMMU and all other IOMMU enabled targets will
-> +	 * have an ARM IOMMU attached
-> +	 */
-> +	priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
->   	priv->has_cached_coherent = config.rev.core >= 6;
->   
->   	gpu = info->init(drm);
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index aca48c868c14..a125a351ec90 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
->   	struct msm_drm_private *priv = dev->dev_private;
->   
->   	/*
-> -	 * a2xx comes with its own MMU
-> -	 * On other platforms IOMMU can be declared specified either for the
-> -	 * MDP/DPU device or for its parent, MDSS device.
-> +	 * Return true if the GPU or the MDP/DPU or parent MDSS device has an
-> +	 * IOMMU
->   	 */
-> -	return priv->is_a2xx ||
-> +	return priv->has_gpu_iommu ||
->   		device_iommu_mapped(dev->dev) ||
->   		device_iommu_mapped(dev->dev->parent);
+6. Implementing wrapper function that prints the registers of sub-blocks
+when there is a need.
 
-I have a generic feeling that both old an new code is not fully correct. 
-Please correct me if I'm wrong:
+Sample Output of the sspp_0 block and its sub-blocks for devcore dump:
+======sspp_0======
+...registers
+...
+====sspp_0_scaler====
+...
+...
+====sspp_0_csc====
+...
+...
+====next_block====
+...
 
-We should be using VRAM, if either of the blocks can not use remapped 
-memory. So this should have been:
+---
+Changes in v3:
+- Split sub-block changes and main block changes into two commits
+- Corrected typo in comment located in DSC for loop block
+- Eliminated variables mmio and base
+- Dropped unnecessary "%s"
+- Link to v2: https://lore.kernel.org/r/20230622-devcoredump_patch-v2-0-9e90a87d393f@quicinc.com
 
-bool msm_use_mmu()
-{
-  if (!gpu_has_iommu)
-    return false;
+Changes in v2:
+- Changed spelling "sub block" to "sub-block" or "sblk".
+- Capitalized DPU.
+- Eliminated multiplexer/wrapper function. Inlined instead.
+- Changed if statements from feature checks to length checks.
+- Squashed prefix and suffix patch into one.
+- Link to v1: https://lore.kernel.org/r/20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com
 
-  if (have_display_part && !display_has_mmu())
-    return false;
+---
+Ryan McCann (6):
+      drm/msm: Update dev core dump to not print backwards
+      drm/msm/dpu: Drop unused num argument from relevant macros
+      drm/msm/dpu: Define names for unnamed sblks
+      drm/msm/dpu: Remove redundant prefix/suffix in name of sub-blocks
+      drm/msm/dpu: Refactor printing of main blocks in device core dump
+      drm/msm/dpu: Update dev core dump to dump registers of sub-blocks
 
-  return true;
-}
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 90 +++++++++++-----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 94 ++++++++++++++++++-----
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c |  2 +-
+ 3 files changed, 120 insertions(+), 66 deletions(-)
+---
+base-commit: a0364260213c96f6817f7e85cdce293cb743460f
+change-id: 20230622-devcoredump_patch-df7e8f6fd632
 
-What do you think.
-
->   }
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 9f0c184b02a0..f33f94acd1b9 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -126,7 +126,7 @@ struct msm_drm_private {
->   	struct msm_gpu *gpu;
->   
->   	/* gpu is only set on open(), but we need this info earlier */
-> -	bool is_a2xx;
-> +	bool has_gpu_iommu;
->   	bool has_cached_coherent;
->   
->   	struct drm_fb_helper *fbdev;
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Ryan McCann <quic_rmccann@quicinc.com>
 
