@@ -2,85 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 662697495C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 08:40:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22BA57495C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jul 2023 08:40:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233570AbjGFGkC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 02:40:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55802 "EHLO
+        id S233704AbjGFGkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 02:40:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233266AbjGFGkC (ORCPT
+        with ESMTP id S233702AbjGFGkK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 02:40:02 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D5C198B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 23:40:00 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-98934f000a5so36511166b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 23:40:00 -0700 (PDT)
+        Thu, 6 Jul 2023 02:40:10 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F2091BC2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jul 2023 23:40:08 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bad0c4f6f50so498369276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jul 2023 23:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688625599; x=1691217599;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=g9Lr53a5FzMbobQOgcXx29sEThYjNb3OAfuRJxgypPU=;
-        b=Ojsi/JZ2g42ODEl29O6Pe/nx0eWsLXYUZDLKLcox6/D0JuG4qR5UQSxNxb47yDQSHU
-         4XFMl0nVmZrttdjJyzgT01Lpa8NMss+siHLDEiOmFQ8Rd0BDDLQ9vECwNsz54L34X+Cd
-         ksAlmljSp//0vJufJftwlDcMJuldV2hVMBwjwyWBFHj39WykdbUcfs9RSuAmQ5cb0YaO
-         w9W/r5P+XBRugc5H+NH8vujIz7dQBFt24FVboN7SnobBkw/KRP9TcOpbntcKW8+1UIoj
-         RzbQPCnksoaDLWd9pQleLLFTr19oGDwNoEvQEzAJ5gcyasS4YWsX1V1j51uv4mrrKXvS
-         XPTA==
+        d=linaro.org; s=google; t=1688625608; x=1691217608;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uFuZqCYd8mXPFwdbDCt+oUvIlNY8jrnxtlOUpCZbLis=;
+        b=jpGr1CU6H7mQ60HH9/2BKuR7fddutdJCelTfZ4hE1iUAoAUne5+EpKwA32TJJZ7AUk
+         +dVpIcojy5nMnPiuf/0N/MSQmDdtLLzjOwsPc3JXFrL2tXwf6ioehYEmP59y3nHxCIeh
+         toFrOHZFCqiTSuGyjhr+x1Yv1OX2Fy9agiZbzBWR92N83x8sXxPw1SupWW6M1h/I4Chx
+         1xJIWHyb+ZQbqWrBEGYckgoqX/3AlLHr6QUL/dHoZdlBBioXGV0efZLq+S2rvypwRnZR
+         wpeOwRKTBhIvQQNkqrka0YpYIb6OLGmiCVsPxN42OcI82vQPYY47sGK5xR78NU+VOiP3
+         nxng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688625599; x=1691217599;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g9Lr53a5FzMbobQOgcXx29sEThYjNb3OAfuRJxgypPU=;
-        b=SuRSW2tFRT1R3x4OO1XT2ChkfFEkbLZgFDHtUqre0uvx8WovcMx1+OUg5NKOpizkmo
-         OiBb4lcoJkYt1sKiKGMiiJKqgy6pF+w1wQnGWBPmxJChxPGijCn7WS9mH9Kzkq0RTa/i
-         JjmN0y4hFrEdLQEjV+pek/dn68w53ziPw6W674nYbHsiyUz5/Fe0UhwWjRY9vLJxpoQc
-         hxnQi8rSBZm0bXJtHcj35lR8ukIJzuPMbpb41pejCgvz1JpvNb759zoihiftUHKbJG8G
-         f+CBNK2uD5rBagL+DgQNh/JnDNhMiZTUUiGgpw7+MRGSiX9mtOnpYHWdr78df5oNiDTz
-         gSdQ==
-X-Gm-Message-State: ABy/qLYKbVoZEIdz02LKBdQY9fUBnakFdGROKHHCspCY5h2B+I89Vaz/
-        yxGDOVUVfeXJN4H1xvvvvnUo/g==
-X-Google-Smtp-Source: APBJJlFe3mJbYP5HOYEAflyYq1r1hjT3H2KqDuSD93Sbb4Ats7EOFA2VltdFwHu3Zsd0znCxRd1y2g==
-X-Received: by 2002:a17:906:2a48:b0:988:c3f9:3ad6 with SMTP id k8-20020a1709062a4800b00988c3f93ad6mr540685eje.42.1688625599228;
-        Wed, 05 Jul 2023 23:39:59 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id r11-20020a17090638cb00b00993a508b818sm399619ejd.1.2023.07.05.23.39.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 23:39:58 -0700 (PDT)
-Message-ID: <a450e2e8-307d-49e9-d76d-de397b801a96@linaro.org>
-Date:   Thu, 6 Jul 2023 08:39:54 +0200
+        d=1e100.net; s=20221208; t=1688625608; x=1691217608;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uFuZqCYd8mXPFwdbDCt+oUvIlNY8jrnxtlOUpCZbLis=;
+        b=HQMLHsTQXdLHwDLp0c5AmWbMJqPEWPdV3xnq4CAftjxNDW6drBnTvwRcuOkwv3yWi2
+         FRT4mvwjja51hbMOGG54RqbQfo2OsbHb5Gvkof/wVvsT03Gl8LYNqov1pnLo2A0VcgnQ
+         PA2EfUWmdp/UxpM00eI1HhnP2rZE42jkVVD4X00/PGzltTfYqacISFIE3DQDNEpCmOsV
+         GvpLp+aR8xmLsfiMoghfdKyqHwi71kWTUXyU8vdJhLE1I3NlzJGu0cAzc/OLszcu2sNN
+         LxA9AXsOYX4AmeaJMF4J3LNvqD4BsCkNouaY9DcGkoUKKAArKdqHdqptlzEFv+ccWZQ+
+         cV4w==
+X-Gm-Message-State: ABy/qLaAPVDzopsyOIOypbKsbMeEAa2fraWZcJRCWdu4kBUd/4vnEEb0
+        xtndv/E9J6lL9iQNRNEd8ypPCM3gu6qW8+Zk88pjRQ==
+X-Google-Smtp-Source: APBJJlG7gdBtggFwSWHfxz/MwrCmoDARoTv3JJX1toI8d1Hwd/IwdBN+maLNT9LOwXA+BbkGADSmO4LWAAcK+DC7+hk=
+X-Received: by 2002:a25:c588:0:b0:c5d:a805:eebd with SMTP id
+ v130-20020a25c588000000b00c5da805eebdmr3097419ybe.7.1688625607747; Wed, 05
+ Jul 2023 23:40:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for PCIe
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, quic_shazhuss@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-        quic_nayiluri@quicinc.com,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <1688545032-17748-1-git-send-email-quic_msarkar@quicinc.com>
- <20230705084606.GF11854@thinkpad>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230705084606.GF11854@thinkpad>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230706051024.15422-1-quic_ptalari@quicinc.com> <20230706051024.15422-3-quic_ptalari@quicinc.com>
+In-Reply-To: <20230706051024.15422-3-quic_ptalari@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 6 Jul 2023 09:39:56 +0300
+Message-ID: <CAA8EJprU3FhEWodw2rfFiYkw3rg_WaxqZOOQOt=mcp3xfsoJUw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] spi: spi-geni-qcom: Add SPI Device mode support
+ for GENI based QuPv3
+To:     Praveen Talari <quic_ptalari@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_vnivarth@quicinc.com, quic_arandive@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,27 +71,177 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2023 10:46, Manivannan Sadhasivam wrote:
-> On Wed, Jul 05, 2023 at 01:47:05PM +0530, Mrinmay Sarkar wrote:
->> Update the relavent DT bindings for PCIe, add new config to the phy
->> driver add pcie and phy nodes to the .dtsi file and enable then in 
->> board .dts file for the sa8775p-ride platform.
->>
->> Mrinmay Sarkar (6):
->>   dt-bindings: PCI: qcom: Add sa8775p compatible
->>   dt-bindings: phy: qcom,qmp: Add sa8775p QMP PCIe PHY
->>   PCI: qcom: Add support for sa8775p SoC
->>   phy: qcom-qmp-pcie: add support for sa8775p
->>   arm64: dts: qcom: sa8775p: Add pcie0 and pcie1 nodes
->>   arm64: dts: qcom: sa8775p-ride: enable pcie nodes
-> 
-> Please note that the dts patches should come before driver patches.
+On Thu, 6 Jul 2023 at 08:12, Praveen Talari <quic_ptalari@quicinc.com> wrote:
+>
+> Currently spi geni driver supports only master mode operation.
+>
+> Add spi device mode support to GENI based QuPv3.
+>
+> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+> ---
+> v3 -> v4:
+> - Used existing property spi-slave.
+>
+> v2 -> v3:
+> - modified commit message to use device mode instead of slave mode
+>
+> v1 -> v2
+> - modified the commit message
+> - added the code changes for code comments
+> ---
+>  drivers/spi/spi-geni-qcom.c | 57 +++++++++++++++++++++++++++++++++----
+>  1 file changed, 51 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index 206cc04bb1ed..4ec4fdee06b5 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_opp.h>
+>  #include <linux/pm_runtime.h>
+> +#include <linux/property.h>
+>  #include <linux/soc/qcom/geni-se.h>
+>  #include <linux/spi/spi.h>
+>  #include <linux/spinlock.h>
+> @@ -52,6 +53,9 @@
+>  #define SPI_CS_CLK_DELAY_MSK           GENMASK(19, 10)
+>  #define SPI_CS_CLK_DELAY_SHFT          10
+>
+> +#define SE_SPI_SLAVE_EN                                (0x2BC)
+> +#define SPI_SLAVE_EN                           BIT(0)
+> +
+>  /* M_CMD OP codes for SPI */
+>  #define SPI_TX_ONLY            1
+>  #define SPI_RX_ONLY            2
+> @@ -99,6 +103,24 @@ struct spi_geni_master {
+>         int cur_xfer_mode;
+>  };
+>
+> +static struct spi_master *get_spi_master(struct device *dev)
+> +{
+> +       struct platform_device *pdev = to_platform_device(dev);
+> +       struct spi_master *spi = platform_get_drvdata(pdev);
+
+You can use dev_get_drvdata() directly, without going through platform_device.
+
+> +
+> +       return spi;
+> +}
+> +
+> +static void spi_slv_setup(struct spi_geni_master *mas)
+> +{
+> +       struct geni_se *se = &mas->se;
+> +
+> +       writel(SPI_SLAVE_EN, se->base + SE_SPI_SLAVE_EN);
+> +       writel(GENI_IO_MUX_0_EN, se->base + GENI_OUTPUT_CTRL);
+> +       writel(START_TRIGGER, se->base + SE_GENI_CFG_SEQ_START);
+> +       dev_dbg(mas->dev, "spi slave setup done\n");
+> +}
+> +
+>  static int get_spi_clk_cfg(unsigned int speed_hz,
+>                         struct spi_geni_master *mas,
+>                         unsigned int *clk_idx,
+> @@ -140,12 +162,18 @@ static void handle_se_timeout(struct spi_master *spi,
+>         const struct spi_transfer *xfer;
+>
+>         spin_lock_irq(&mas->lock);
+> -       reinit_completion(&mas->cancel_done);
+>         if (mas->cur_xfer_mode == GENI_SE_FIFO)
+>                 writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+>
+>         xfer = mas->cur_xfer;
+>         mas->cur_xfer = NULL;
+> +
+> +       if (spi->slave) {
+
+A comment here would be nice.
+
+> +               spin_unlock_irq(&mas->lock);
+> +               goto unmap_if_dma;
+> +       }
+> +
+> +       reinit_completion(&mas->cancel_done);
+>         geni_se_cancel_m_cmd(se);
+>         spin_unlock_irq(&mas->lock);
+>
+> @@ -542,6 +570,10 @@ static bool geni_can_dma(struct spi_controller *ctlr,
+>         if (mas->cur_xfer_mode == GENI_GPI_DMA)
+>                 return true;
+>
+> +       /* Set DMA mode for SPI slave. */
+
+SE DMA mode
+
+> +       if (ctlr->slave)
+> +               return true;
+> +
+>         len = get_xfer_len_in_words(xfer, mas);
+>         fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
+>
+> @@ -619,6 +651,7 @@ static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
+>
+>  static int spi_geni_init(struct spi_geni_master *mas)
+>  {
+> +       struct spi_master *spi = get_spi_master(mas->dev);
+>         struct geni_se *se = &mas->se;
+>         unsigned int proto, major, minor, ver;
+>         u32 spi_tx_cfg, fifo_disable;
+> @@ -627,7 +660,14 @@ static int spi_geni_init(struct spi_geni_master *mas)
+>         pm_runtime_get_sync(mas->dev);
+>
+>         proto = geni_se_read_proto(se);
+> -       if (proto != GENI_SE_SPI) {
+> +
+> +       if (spi->slave) {
+> +               if (proto != GENI_SE_SPI_SLAVE) {
+> +                       dev_err(mas->dev, "Invalid proto %d\n", proto);
+> +                       goto out_pm;
+> +               }
+> +               spi_slv_setup(mas);
+> +       } else if (proto != GENI_SE_SPI) {
+>                 dev_err(mas->dev, "Invalid proto %d\n", proto);
+>                 goto out_pm;
+>         }
+> @@ -677,9 +717,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
+>         }
+>
+>         /* We always control CS manually */
+> -       spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+> -       spi_tx_cfg &= ~CS_TOGGLE;
+> -       writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+> +       if (!spi->slave) {
+> +               spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+> +               spi_tx_cfg &= ~CS_TOGGLE;
+> +               writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+> +       }
+>
+>  out_pm:
+>         pm_runtime_put(mas->dev);
+> @@ -1072,6 +1114,9 @@ static int spi_geni_probe(struct platform_device *pdev)
+>         pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
+>         pm_runtime_enable(dev);
+>
+> +       if (device_property_read_bool(&pdev->dev, "spi-slave"))
+> +               spi->slave = true;
+> +
+>         ret = geni_icc_get(&mas->se, NULL);
+>         if (ret)
+>                 goto spi_geni_probe_runtime_disable;
+> @@ -1092,7 +1137,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+>          * for dma (gsi) mode, the gsi will set cs based on params passed in
+>          * TRE
+>          */
+> -       if (mas->cur_xfer_mode == GENI_SE_FIFO)
+> +       if (!spi->slave && mas->cur_xfer_mode == GENI_SE_FIFO)
+>                 spi->set_cs = spi_geni_set_cs;
+>
+>         ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
+> --
+> 2.17.1
 >
 
-Why? DTS is always independent thus usually put at the end of patchset
-or better separate. It is the first time I hear that DTS should be
-before driver.
 
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
