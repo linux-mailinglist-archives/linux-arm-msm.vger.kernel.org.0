@@ -2,175 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A12BF74AF3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 12:59:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B58DF74AF43
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 12:59:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232907AbjGGK7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 06:59:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56664 "EHLO
+        id S232396AbjGGK7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 06:59:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232853AbjGGK7O (ORCPT
+        with ESMTP id S232829AbjGGK7o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 06:59:14 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19249131;
-        Fri,  7 Jul 2023 03:59:13 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3678o5Hd018455;
-        Fri, 7 Jul 2023 10:59:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8gJJ5IU6P+MtTUiYIYbXH9/E0H1QNkTncEMxYSppcfI=;
- b=N88nk4jz6N+3e3sJ3bJWSnKVU/cfWDqOHdPO12joYAqLy6OeW0/3hC6FZwxVeIAkqoGn
- ybD+CuJiG1kvbHJ/yWhn4xMLaZICS7mgPMVzCUOqQznae84NaHAtgTiTySwy+r10hLWc
- U1Ft8Wx/sDsQ5rJH+ZG6jjo8qCnr1XNe1KjDpOUpOXPznM4bWnVsZZFZFXnnPNGyL0UW
- KDfQdd4X2Rg4sAk6ddy//cEBYMi8tF5BRxJmozOECbMIpXsL9Vo3MldVsK5PGGtteCv5
- jotAd76UlTaVNFo8c3C5dxK60ggakqScrEVuYNHdtPciakPYmmrv2ibYxNWInHLx52Ct Pw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpenqrh33-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Jul 2023 10:59:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 367Ax3VN017982
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 7 Jul 2023 10:59:03 GMT
-Received: from [10.216.29.164] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 7 Jul
- 2023 03:58:57 -0700
-Message-ID: <9b8c0bcb-dcaf-ffe2-f2a2-1fa2da0f2f18@quicinc.com>
-Date:   Fri, 7 Jul 2023 16:28:54 +0530
+        Fri, 7 Jul 2023 06:59:44 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA061FF0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 03:59:30 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-c4d1b491095so1856203276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 03:59:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688727569; x=1691319569;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NNa38uLhZwXSXeQR3Wi76tw9kKPxoD61t4HFzT7PJWQ=;
+        b=gjItutFou6ZsZG3k3XeGp/GPEHXtYq9Dkd4W9qWWHIksev2IYZFIQvzlGTFQt33Gvr
+         fwZFEIu6gYdkGca9lnnGs3rQjHt/Ef3esKw7LWa1RRBjv8DItmVS2F6Grn7fLpwceSug
+         hw8i8+HLx3vGXC/plgkUwKzXbMTxQLyCGPLRFodTWNpSrqxPQsHD47p8wNwt2Zrjx+98
+         1uVhnSxRA4qodYSHUY35MZXgaFqLzk2eGbutYTVPmYRRPYP9RG1MPm8w93Iq5X46k9SG
+         Sn1iD7z7mgvdInqhznvfXTGnbgCbteQJW0v78ZwL/gGMYpVmokg3IbB9UJw0Agy9V/E+
+         k93A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688727569; x=1691319569;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NNa38uLhZwXSXeQR3Wi76tw9kKPxoD61t4HFzT7PJWQ=;
+        b=XDPmq9ofZeYxZKgx/BXdnAVaZuAQ29DKTgjDUAsrNbOauBhYmQEZQgmvkDvR7Nw92V
+         OOoufWoS0WZIEBAZ8TpDlEJ0kVzmmaBTQAW2Bd2gUAwLgwgUT2tf0ujSXvnQS8vzpOLJ
+         N8WQd6YcOJNaDMSatG7zb5XrQNHae4tTls5CMM0g/P7bOvMaoJqU71yGPFVBfuvW9NCl
+         QxhKBXWYRd5xfZtxOC9VeV37p7mwY9mQd7X5Af9V0rz6t45Xkw9BUAnqQUqC+lc6m2g/
+         F7JoltktbgnPnW2ryxRuLCbJbsg5TtJkFPrFMyISLdPpLXOxVP1xmQXIRtnMlVQyfSwr
+         P2zQ==
+X-Gm-Message-State: ABy/qLaZha4bC7LdeiwQKp0Zl2RTRdyovm4XC6cB2QB53KQZ/tIFF7lk
+        PlXBcqt839g900pD/K3sAIlmwIB6qODRwDEE8YWouw==
+X-Google-Smtp-Source: APBJJlFVY2c1x8f9yWxGFi7Gqjx6YiNx+1X2xzMvRwI2WDObKD6BPTw+1rw3u/qJggk4NmfAhZLLEMhGTHOiryp/hiI=
+X-Received: by 2002:a25:f302:0:b0:bc8:9925:9c1f with SMTP id
+ c2-20020a25f302000000b00bc899259c1fmr3867943ybs.1.1688727569479; Fri, 07 Jul
+ 2023 03:59:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2 6/8] PCI: qcom: ep: Add wake up host op to
- dw_pcie_ep_ops
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <manivannan.sadhasivam@linaro.org>, <helgaas@kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <krzysztof.kozlowski@linaro.org>,
-        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-References: <1688122331-25478-1-git-send-email-quic_krichai@quicinc.com>
- <1688122331-25478-7-git-send-email-quic_krichai@quicinc.com>
- <20230707061005.GE6001@thinkpad>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20230707061005.GE6001@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vuASJkkl2ceKytvUWJJbYZNbNHPP18Fx
-X-Proofpoint-GUID: vuASJkkl2ceKytvUWJJbYZNbNHPP18Fx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-07_07,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=999 phishscore=0 mlxscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 impostorscore=0 clxscore=1015
- suspectscore=0 adultscore=0 spamscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2307070102
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+References: <20230702174246.121656-1-dmitry.baryshkov@linaro.org> <CACRpkdY0WKDAx1XP6fq2WZeoK6kH+t_weYJPJm1aMnMKb7ZayQ@mail.gmail.com>
+In-Reply-To: <CACRpkdY0WKDAx1XP6fq2WZeoK6kH+t_weYJPJm1aMnMKb7ZayQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 7 Jul 2023 13:59:18 +0300
+Message-ID: <CAA8EJpqsVH+pvngLGLXQ_=81hB16MiXnJu-7W4Bf+z0gkqdtTQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/28] ARM: qcom: apq8064: support CPU frequency scaling
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 7 Jul 2023 at 12:34, Linus Walleij <linus.walleij@linaro.org> wrote=
+:
+>
+> On Sun, Jul 2, 2023 at 7:43=E2=80=AFPM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>
+> > Implement CPUFreq support for one of the oldest supported Qualcomm
+> > platforms, APQ8064. Each core has independent power and frequency
+> > control. Additionally the L2 cache is scaled to follow the CPU
+> > frequencies (failure to do so results in strange semi-random crashes).
+> >
+> > Core voltage is controlled through the SAW2 devices, one for each core.
+> > The L2 has two regulators, vdd-mem and vdd-dig.
+> >
+> > Dependencies: [1].
+> >
+> > [1] https://lore.kernel.org/linux-arm-msm/20230702134320.98831-1-dmitry=
+.baryshkov@linaro.org/
+>
+> Just because it looks so cool, I applied this patches and the prerequisit=
+e
+> to master and booted the result on the APQ8060 DragonBoard, and
+> it still works.
+> Tested-by: Linus Walleij <linus.walleij@linaro.org>
+> (Mostly for the DTS refactoring, which is what affects APQ8060)
+>
+> I guess the APQ8064 cpufreq and APQ8060 isn't actually far
+> apart, so it should be possible to fix APQ8060 as well, but we
+> can take that another day. I always wanted to fix the SAW2
+> regulators.
 
-On 7/7/2023 11:40 AM, Manivannan Sadhasivam wrote:
-> On Fri, Jun 30, 2023 at 04:22:09PM +0530, Krishna chaitanya chundru wrote:
->
-> Subject prefix should be "PCI: qcom-ep:"
->
->> Add wakeup host op to dw_pcie_ep_ops to wake up host.
->> If the EPF asks to send PME trigger the inband PME by writing
->> into the parf registers otherwise toggle wake signal.
->>
-> If the wakeup type is PME, then trigger inband PME by writing to the PARF
-> PARF_PM_CTRL register, otherwise toggle #WAKE.
->
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-qcom-ep.c | 31 +++++++++++++++++++++++++++++++
->>   1 file changed, 31 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> index e75aec4..e382b4b 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> @@ -89,6 +89,7 @@
->>   /* PARF_PM_CTRL register fields */
->>   #define PARF_PM_CTRL_REQ_EXIT_L1		BIT(1)
->>   #define PARF_PM_CTRL_READY_ENTR_L23		BIT(2)
->> +#define PARF_PM_CTRL_XMT_PME			BIT(4)
->>   #define PARF_PM_CTRL_REQ_NOT_ENTR_L1		BIT(5)
->>   
->>   /* PARF_MHI_CLOCK_RESET_CTRL fields */
->> @@ -729,10 +730,40 @@ static void qcom_pcie_ep_init(struct dw_pcie_ep *ep)
->>   		dw_pcie_ep_reset_bar(pci, bar);
->>   }
->>   
->> +static int qcom_pcie_ep_wakeup_host(struct dw_pcie_ep *ep, u8 func_no,
->> +					enum pci_epc_wakeup_host_type type)
->> +{
->> +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
->> +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
->> +	struct device *dev = pci->dev;
->> +	u32 val;
->> +
->> +	if (type == PCI_WAKEUP_TOGGLE_WAKE) {
->> +		dev_dbg(dev, "Waking up the host by toggling WAKE#\n");
->> +		gpiod_set_value_cansleep(pcie_ep->wake, 1);
->> +		usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
->> +		gpiod_set_value_cansleep(pcie_ep->wake, 0);
->> +		return 0;
->> +
->> +	} else if (type == PCI_WAKEUP_SEND_PME) {
->> +		dev_dbg(dev, "Waking up the host using PME\n");
->> +		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
->> +		val |= PARF_PM_CTRL_XMT_PME;
->> +		writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
->> +
->> +	} else {
->> +		dev_err(dev, "Device is not in D3 state wakeup is not supported\n");
->> +		return -EOPNOTSUPP;
-> This is not needed if you use bool. And this debug message is wrong btw since
-> you are not checking whether the device is in D3 state or not.
->
-> - Mani
+APQ8060 (as well as MSM8260 / MSM8660) were a previous generation of
+the cores, Scorpion vs Krait. So far it requires two items to work:
+SCPLL, the core pll driver, and the fixed AVS setting (which might
+also be required for MSM8960). Let me take a glance in the next couple
+of days.
 
-I will change it bool and will remove these.
 
-- KC
 
->
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->>   static const struct dw_pcie_ep_ops pci_ep_ops = {
->>   	.ep_init = qcom_pcie_ep_init,
->>   	.raise_irq = qcom_pcie_ep_raise_irq,
->>   	.get_features = qcom_pcie_epc_get_features,
->> +	.wakeup_host = qcom_pcie_ep_wakeup_host,
->>   };
->>   
->>   static int qcom_pcie_ep_probe(struct platform_device *pdev)
->> -- 
->> 2.7.4
->>
+--=20
+With best wishes
+Dmitry
