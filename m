@@ -2,143 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFA4F74B76C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 21:42:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E0E074B77B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 21:50:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232181AbjGGTmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 15:42:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60546 "EHLO
+        id S231849AbjGGTua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 15:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbjGGTlY (ORCPT
+        with ESMTP id S230163AbjGGTu3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 15:41:24 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119EA213D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 12:39:53 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb9ae4cef6so3690339e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 12:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688758791; x=1691350791;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vU1c/49oWLanKaAejW+DzYDq4MN30Rv8CE3BrFargO4=;
-        b=f22t/0QgU2biLMJ3EILzJv7IMP4A/lRW7TXSYNMbMFKfzqLp9Xs/Z+0v/2zLAg4rYc
-         wNZUnJSd06U+DFK85P1StmNBBfpg8H73sep3agFlqQ9m6dJq2IXhp3YO4T1Cq14apA54
-         crAuyWXmYwI4GOwBZsLRDF9eq3YIO9EtK9+S1fH/Qo6ot/e0mkneA88+2wZcZvWQr1Y0
-         FbZJMdEO4fnPv2hHaMfxdSYaq16MpijN5BOVV9ZcLK8OMAWoqTUgP8/pwVkhXLbFaBMR
-         tBxPhZTpVGj/BTXi5QMeukDz3vN0sbob6PnRfonDh/uQuQTeRxIGxRHCPCbfV2a2X6mJ
-         GmDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688758791; x=1691350791;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vU1c/49oWLanKaAejW+DzYDq4MN30Rv8CE3BrFargO4=;
-        b=U+mO7xzSS7HwwyIEy6QdBUUEJvNKxPwcnyOgiMSt28EvjmRBWdrS00KYBbqTNfTp3t
-         ZrQ2J2cKDdqMCeuXH30T8yeIUiquoTqmHlncLuLj+t1JlMRh3r1pv/Kf/C02cgTgyjyE
-         yGkL98ggkFKlk5waQEOy53C1aaM1bauce8QWn8VxY7F18D49dzaBV2Tujt4rzh62xMb1
-         WMuuJDEzm0OiaNcKCWHQ8ZId9vuSqojbSynXKJHn1nY0mqVrzAUgo6H1R8RaX1vMUje9
-         yWP0kMnkyYNi+p711ayMyH5sT/YAQ0CDM86w7UikRpGZFng3EvjFFP7jzSLrEKbO/rUI
-         TBgA==
-X-Gm-Message-State: ABy/qLbDmNJX731aAXFzj3q+9XGSMDBV2mxk3kn6LQjpvDx2ELCCpiHA
-        E8LQpfRrCjnqy/hYxEH4CAfGMA==
-X-Google-Smtp-Source: APBJJlEZVx588V4IAHYVE54c/6CgIOxr/uFZfiqyxqLh/ZfRYrV+xq3/7BRQY2yCFYEnzOodRdQpHw==
-X-Received: by 2002:a05:6512:3b86:b0:4f9:5396:ed1b with SMTP id g6-20020a0565123b8600b004f95396ed1bmr5635257lfv.28.1688758791247;
-        Fri, 07 Jul 2023 12:39:51 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id q16-20020a19a410000000b004fba759bf44sm778995lfc.277.2023.07.07.12.39.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 12:39:50 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v3 11/11] drm/msm/dpu: drop dpu_core_perf_destroy()
-Date:   Fri,  7 Jul 2023 22:39:42 +0300
-Message-Id: <20230707193942.3806526-12-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230707193942.3806526-1-dmitry.baryshkov@linaro.org>
-References: <20230707193942.3806526-1-dmitry.baryshkov@linaro.org>
+        Fri, 7 Jul 2023 15:50:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA12A19A5;
+        Fri,  7 Jul 2023 12:50:28 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 367DkMQi030246;
+        Fri, 7 Jul 2023 19:50:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=JAGetA1FJmjHvB7yI7i7blpX9qiHsKIfcNy1LGGT8hg=;
+ b=jaCdu/Ikd38ZoE2xZZ6ag8wM6QzEby/gGywa/TCIoz8tcycfV+o8Gd5JMht4XDUvz85v
+ bdV6KCh6rBfta6B8zAHBSSWJkcOOk2uYTOZlNK/gANGyOVLoCrhVzpy4wDxlBl/jg39g
+ g93PaK0sHegaEO6uPUD/Ikvuv6pl7gFMPkpkMkB6DyAfyKYA7j2kaBJ7y0HbYNk9e/gF
+ 74W8ZNDIRNAss+qIUTQQBxYdt1ODXHFqGHTlY6bt2rMTBNdvNhuJ5o3NRPpqGci4Y/xM
+ Xvfm5cKO4Exl1h7bVLGvkGy4vzMWCWiRUqRa0nlPDcWNNwsdWEumQmga3lfveE5FM9yq DA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rp96vtbtc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Jul 2023 19:50:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 367JoHKE027545
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 7 Jul 2023 19:50:17 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 7 Jul 2023 12:50:16 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <okaya@kernel.org>, <vkoul@kernel.org>, <andersson@kernel.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH] dmaengine: qcom_hidma: Update codeaurora email domain
+Date:   Fri, 7 Jul 2023 13:50:03 -0600
+Message-ID: <20230707195003.6619-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vngTDZR4zHUxCb1bG0teU5FCY6A35HkA
+X-Proofpoint-GUID: vngTDZR4zHUxCb1bG0teU5FCY6A35HkA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-07_14,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ clxscore=1011 impostorscore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307070181
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This function does nothing, just clears one struct field. Drop it now.
+The codeaurora.org email domain is defunct and will bounce.
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Update entries to Sinan's kernel.org address which is the address in
+MAINTAINERS for this component.
+
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 10 ----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 ------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  1 -
- 3 files changed, 17 deletions(-)
+ .../ABI/testing/sysfs-platform-hidma          |  2 +-
+ .../ABI/testing/sysfs-platform-hidma-mgmt     | 20 +++++++++----------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index e9d71c0855df..adb932b0f49c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -486,16 +486,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
- }
- #endif
+diff --git a/Documentation/ABI/testing/sysfs-platform-hidma b/Documentation/ABI/testing/sysfs-platform-hidma
+index fca40a54df59..a80aeda85ef6 100644
+--- a/Documentation/ABI/testing/sysfs-platform-hidma
++++ b/Documentation/ABI/testing/sysfs-platform-hidma
+@@ -2,7 +2,7 @@ What:		/sys/devices/platform/hidma-*/chid
+ 		/sys/devices/platform/QCOM8061:*/chid
+ Date:		Dec 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Contains the ID of the channel within the HIDMA instance.
+ 		It is used to associate a given HIDMA channel with the
+diff --git a/Documentation/ABI/testing/sysfs-platform-hidma-mgmt b/Documentation/ABI/testing/sysfs-platform-hidma-mgmt
+index 3b6c5c9eabdc..0373745b4e18 100644
+--- a/Documentation/ABI/testing/sysfs-platform-hidma-mgmt
++++ b/Documentation/ABI/testing/sysfs-platform-hidma-mgmt
+@@ -2,7 +2,7 @@ What:		/sys/devices/platform/hidma-mgmt*/chanops/chan*/priority
+ 		/sys/devices/platform/QCOM8060:*/chanops/chan*/priority
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Contains either 0 or 1 and indicates if the DMA channel is a
+ 		low priority (0) or high priority (1) channel.
+@@ -11,7 +11,7 @@ What:		/sys/devices/platform/hidma-mgmt*/chanops/chan*/weight
+ 		/sys/devices/platform/QCOM8060:*/chanops/chan*/weight
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Contains 0..15 and indicates the weight of the channel among
+ 		equal priority channels during round robin scheduling.
+@@ -20,7 +20,7 @@ What:		/sys/devices/platform/hidma-mgmt*/chreset_timeout_cycles
+ 		/sys/devices/platform/QCOM8060:*/chreset_timeout_cycles
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Contains the platform specific cycle value to wait after a
+ 		reset command is issued. If the value is chosen too short,
+@@ -32,7 +32,7 @@ What:		/sys/devices/platform/hidma-mgmt*/dma_channels
+ 		/sys/devices/platform/QCOM8060:*/dma_channels
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Contains the number of dma channels supported by one instance
+ 		of HIDMA hardware. The value may change from chip to chip.
+@@ -41,7 +41,7 @@ What:		/sys/devices/platform/hidma-mgmt*/hw_version_major
+ 		/sys/devices/platform/QCOM8060:*/hw_version_major
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Version number major for the hardware.
  
--void dpu_core_perf_destroy(struct dpu_core_perf *perf)
--{
--	if (!perf) {
--		DPU_ERROR("invalid parameters\n");
--		return;
--	}
--
--	perf->max_core_clk_rate = 0;
--}
--
- int dpu_core_perf_init(struct dpu_core_perf *perf,
- 		const struct dpu_perf_cfg *perf_cfg,
- 		unsigned long max_core_clk_rate)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index 8cc55752db5e..4186977390bd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -78,12 +78,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
-  */
- void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
+@@ -49,7 +49,7 @@ What:		/sys/devices/platform/hidma-mgmt*/hw_version_minor
+ 		/sys/devices/platform/QCOM8060:*/hw_version_minor
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Version number minor for the hardware.
  
--/**
-- * dpu_core_perf_destroy - destroy the given core performance context
-- * @perf: Pointer to core performance context
-- */
--void dpu_core_perf_destroy(struct dpu_core_perf *perf);
--
- /**
-  * dpu_core_perf_init - initialize the given core performance context
-  * @perf: Pointer to core performance context
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index f01b2278c01a..44b0daf70c4e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1171,7 +1171,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	return 0;
- 
- drm_obj_init_err:
--	dpu_core_perf_destroy(&dpu_kms->perf);
- hw_intr_init_err:
- perf_err:
- power_error:
+@@ -57,7 +57,7 @@ What:		/sys/devices/platform/hidma-mgmt*/max_rd_xactions
+ 		/sys/devices/platform/QCOM8060:*/max_rd_xactions
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Contains a value between 0 and 31. Maximum number of
+ 		read transactions that can be issued back to back.
+@@ -69,7 +69,7 @@ What:		/sys/devices/platform/hidma-mgmt*/max_read_request
+ 		/sys/devices/platform/QCOM8060:*/max_read_request
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Size of each read request. The value needs to be a power
+ 		of two and can be between 128 and 1024.
+@@ -78,7 +78,7 @@ What:		/sys/devices/platform/hidma-mgmt*/max_wr_xactions
+ 		/sys/devices/platform/QCOM8060:*/max_wr_xactions
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Contains a value between 0 and 31. Maximum number of
+ 		write transactions that can be issued back to back.
+@@ -91,7 +91,7 @@ What:		/sys/devices/platform/hidma-mgmt*/max_write_request
+ 		/sys/devices/platform/QCOM8060:*/max_write_request
+ Date:		Nov 2015
+ KernelVersion:	4.4
+-Contact:	"Sinan Kaya <okaya@codeaurora.org>"
++Contact:	"Sinan Kaya <okaya@kernel.org>"
+ Description:
+ 		Size of each write request. The value needs to be a power
+ 		of two and can be between 128 and 1024.
 -- 
-2.39.2
+2.40.1
 
