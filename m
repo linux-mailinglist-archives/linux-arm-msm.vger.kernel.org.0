@@ -2,118 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3218074AB68
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 08:53:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F01B674AB7E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 09:02:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbjGGGxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 02:53:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46498 "EHLO
+        id S229506AbjGGHCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 03:02:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjGGGxd (ORCPT
+        with ESMTP id S229815AbjGGHCe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 02:53:33 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F43B130;
-        Thu,  6 Jul 2023 23:53:32 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3676lEWK017832;
-        Fri, 7 Jul 2023 06:53:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=jSeIcUTc4fFDi+649dihFqOXbWSmjqqdFLpRKOEH0GY=;
- b=bV+SS682GeSkxQOMs6r25u1sLNTEoLbHQ99Pxe4YlKtOmCCxT++3l3MN20MZIrQGOjMx
- HqQbDFenx3L9p4eS9i6uu/o+bnZYuxP5ZRKlQPFRgvVOsELNqFas44nQG/R8c1pdiz6v
- b1zH3rLpAKtxPsOR7M7qoFBDEa0P/zpVtREnPRV1Mn4z/qR2EmU3lj3ct9Rs/Vk/mtp1
- nMXuNVK/qwbWPB4PinH8SLEZwJjGIEF3UbnLjl/SVK3BuqN2psCXrsaP2ncI5+hZEtQ7
- vYBJRo8jZtEUVRPNiUCa86KekVt4n2lo8cxdEUcKMRDzJ2SlnTWfzK3lLLbTDf3fsJHT ZQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rp8a60jd8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Jul 2023 06:53:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3676rL8V010661
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 7 Jul 2023 06:53:21 GMT
-Received: from rohkumar-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 6 Jul 2023 23:53:16 -0700
-From:   Rohit kumar <quic_rohkumar@quicinc.com>
-To:     <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <quic_rohkumar@quicinc.com>,
-        <cychiang@chromium.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH] dt-bindings: sound: Update maintainer email id
-Date:   Fri, 7 Jul 2023 12:22:59 +0530
-Message-ID: <20230707065259.3099569-1-quic_rohkumar@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Fri, 7 Jul 2023 03:02:34 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC53D1709
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 00:02:30 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f9fdb0ef35so2433065e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 00:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688713349; x=1691305349;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AO1EV4DB9mmXIuKbzqs+B0XTIHsZhaa6Bi4nPPvJMnI=;
+        b=vhwbcG4KqnclCRSzjjpJ1T7h0FDVpSVcOk6oufyhiNo7GNRtea0mBdKbdDmaP6Fapd
+         3vB3Nf5zv9fBOGPz33lSrpOUN3E1NIgahBty+zMmLIHl6zdXUfjLwyD5pOoHQqFJvZ7p
+         g5OYewMjz5KaGHoluDNnQ18nxJBYFlSp/GbO/he/JPH7Rk4cX3i7zy1XrWXVcn3hANcc
+         T0UO3u6rgQQGLQPGSHfe2YDO2z7O/2Tx/CAScRCG14wKVhLLDXVCNi2ZNsxalcC6AHEU
+         tGGbToHKIvvCNxOfW+MBNawkEFsMi4Wck38lLK6FilfO4msHdnH8IdAT7khBhpGQaPjI
+         9oxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688713349; x=1691305349;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AO1EV4DB9mmXIuKbzqs+B0XTIHsZhaa6Bi4nPPvJMnI=;
+        b=AL237+4XfMgZQIIUwKNcCmAWiQxUQSm4l/K1MQgrrrWnyTTM+7o9TUQMiMMx6BmZbZ
+         QpXhnDBmmj+JvsGvU2VzXsX1EWp5sBQ0zV3tOncYm7rOEeIpIi6Ur8MVDGkBzOEhfBoY
+         7RUb5PsiRNDbZxsa6uGFZH2BuEvr3r+ob8P4U/aE4t+m1Wz6J7j29ibULW+evQpN8FVe
+         DEE7M3A3cR6ZqONIOaVVCg0XK7VXo/ac5rSarw1BIf9X5ZBLaEYQ/yGX18E+lWtoFmri
+         UzgZxjcpsqGxFnsGHGNaaS466TZuEPGj2NqkvvwjGLZ/eiPZ3z9pC18R40Bk0864SXvW
+         j+nQ==
+X-Gm-Message-State: ABy/qLaRVw7uOHiZH3irFd1BIPYtU1shM8OctjjX3LTLV6NXq4R7YCln
+        zWyhp6QdO7Spuem+rcSEqv9cVg==
+X-Google-Smtp-Source: APBJJlE9taobwIfrQlPCx9nte3vZZOvtAvcAIAuF7ehQfbCcQfO8v4STi1qLh78PqwLoEOBtTQQ90A==
+X-Received: by 2002:a05:6512:3d28:b0:4fb:8802:9554 with SMTP id d40-20020a0565123d2800b004fb88029554mr4116891lfv.6.1688713349008;
+        Fri, 07 Jul 2023 00:02:29 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id n6-20020a05640206c600b0051dd4daf13fsm1649065edy.30.2023.07.07.00.02.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Jul 2023 00:02:28 -0700 (PDT)
+Message-ID: <4cba2af3-e011-bcaa-7ecd-bc35b8f07e72@linaro.org>
+Date:   Fri, 7 Jul 2023 09:02:26 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: e5bfGYX6PDiD6qAYIu_3lmEA-inm5sHE
-X-Proofpoint-GUID: e5bfGYX6PDiD6qAYIu_3lmEA-inm5sHE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-07_02,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 clxscore=1011 phishscore=0 mlxlogscore=999 bulkscore=0
- spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307070061
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] dt-bindings: sound: Update maintainer email id
+Content-Language: en-US
+To:     Rohit kumar <quic_rohkumar@quicinc.com>, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        cychiang@chromium.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230707065259.3099569-1-quic_rohkumar@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230707065259.3099569-1-quic_rohkumar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Updated my mail id to latest quicinc id.
+On 07/07/2023 08:52, Rohit kumar wrote:
+> Updated my mail id to latest quicinc id.
+> 
+> Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
+> ---
 
-Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
----
- .../devicetree/bindings/sound/google,sc7180-trogdor.yaml        | 2 +-
- Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-index 666a95ac22c8..ba5b7728cf33 100644
---- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-+++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Google SC7180-Trogdor ASoC sound card driver
- 
- maintainers:
--  - Rohit kumar <rohitkr@codeaurora.org>
-+  - Rohit kumar <quic_rohkumar@quicinc.com>
-   - Cheng-Yi Chiang <cychiang@chromium.org>
- 
- description:
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-index 6cc8f86c7531..3a559bd07a79 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-@@ -8,7 +8,7 @@ title: Qualcomm Technologies Inc. LPASS CPU dai driver
- 
- maintainers:
-   - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
--  - Rohit kumar <rohitkr@codeaurora.org>
-+  - Rohit kumar <quic_rohkumar@quicinc.com>
- 
- description: |
-   Qualcomm Technologies Inc. SOC Low-Power Audio SubSystem (LPASS) that consist
--- 
-2.25.1
+The subject prefix should be different for ASoC:
+
+ASoC: dt-bindings: Update....
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
