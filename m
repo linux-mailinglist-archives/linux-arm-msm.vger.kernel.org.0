@@ -2,113 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D17774ADD3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 11:34:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71D6074AEEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 12:48:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232519AbjGGJeY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 05:34:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52222 "EHLO
+        id S232772AbjGGKsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 06:48:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232177AbjGGJeX (ORCPT
+        with ESMTP id S232747AbjGGKr5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 05:34:23 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E5DF2108
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 02:34:21 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-bd61dd9a346so1799255276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 02:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688722460; x=1691314460;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=saX3pFAboAcYrHkIs/SI1SEfN7MogeSF5MWoGtRMhFk=;
-        b=tKBHmQhdEqHIX9BwfY1SbILP0xtBAtAEBgnp60bPOiB0PARs0VGJapZZObxOAYPzob
-         8S9c8CGrMLscX7N0s5/idB3/STrzWHy9oaVEktZFa0VRFGEuSDCXnQFMv0L13N4CBMxk
-         p8pRTN2CHhIY56dyDbRLRTwGKtyeg7vcpr1Nd/vZfqQG4Aox5ANsXd53QryhJTlN+dRN
-         xUbMEwRwinN4LxNfqAChlUJCweJmoeYFKT3v42My7/WMj2b7vvRciEuEUvn5IJrK2dWj
-         hDUR3WHh01MVsTWtJqseun93zMx2WNmzS2h3kPeFm7zzQXvQznWld4vxbjD2vSpmZS6n
-         zB3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688722460; x=1691314460;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=saX3pFAboAcYrHkIs/SI1SEfN7MogeSF5MWoGtRMhFk=;
-        b=kpkxkOER6VeuhiT/YJxT30Q9Wx1O4swBlw5UQokhIk5qd4yqk2O6VCirIEBgS44Y6i
-         XLhxONuMcgcuYk0fWi6vKT/KTXaknEyKF1xvcgTgJMJeQ8USyTixffYdCZtlcmZqLxIg
-         iQbyCJU9d5K/eWMNv29na2pqahubSFU4IUhiCkLGIAjg8yz99DaqTBIEvWm44UlE/kEk
-         fu1Ielx8/FrqerN55JBifAA5T3dfyyFsgjSDpCOt4LHX1ExAR3I53vz9FXrm0z2I7EQz
-         FGn7e4r7hEBnsSSxovVxe/YaLPiFyKgjwm+AY/09NJoR7N0DutdLfeTSHQ71Ft7k160A
-         pOyA==
-X-Gm-Message-State: ABy/qLaIegpg/+YFKUnD5sc7vhWqQj6yW2lO/IWG30eoBCeTXrYoqV1D
-        HQlNlB3iALvfewXhNngq5EUUjLosWUDedV4lkOSDTw==
-X-Google-Smtp-Source: APBJJlHjQReiyHI7JmsXYBFcwy7JZZqVtQoKWdLHJhl96Gf33wc5bk2N9yTDiaKvkgT1IOsbohnign+l1TnLkzIZ4Kw=
-X-Received: by 2002:a25:8f89:0:b0:c5e:cb99:6346 with SMTP id
- u9-20020a258f89000000b00c5ecb996346mr3668707ybl.14.1688722460628; Fri, 07 Jul
- 2023 02:34:20 -0700 (PDT)
+        Fri, 7 Jul 2023 06:47:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58832172B;
+        Fri,  7 Jul 2023 03:47:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E9BC7618DE;
+        Fri,  7 Jul 2023 10:47:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB07C433C8;
+        Fri,  7 Jul 2023 10:47:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688726875;
+        bh=2+Zvce+UtmPQdPeheWCTBetX0i9tZ7FMJf6ii5G4SH0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LHm9NStJ4w50skKzyxM3im7oBqdY4W4JckCYR7uICOsvtX0Pf88wjckP0N8LkW7/u
+         s/rf4niaJVFMfBin8LlOYr43TDPJNaxSvXuIg7TpKeSa2aLzL/SspVHIfDd5Rd6Hx+
+         c5T+FNuIkmRmx0tUkI0zNjHfAVccepxlqKwB9t8HZYy3/3bi3YKyOV6/3h0Pj7PhA2
+         vtfhUxnoIiVVN40u4XaWi/7RBujN+ZQ3zHU8/9RUAe2+CLR2ReNRg9W8oI6FWV5eex
+         fttyyTxsPSPV9LI+OVRkyGjXCRzFpzQGXUnO5g84h/jgegm/bAQLOG3m9f6r2eiint
+         it0UZ3aMk6oqw==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qHj0f-0005Ee-1s;
+        Fri, 07 Jul 2023 12:48:21 +0200
+Date:   Fri, 7 Jul 2023 12:48:21 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     "Tim Jiang (QUIC)" <quic_tjiang@quicinc.com>
+Cc:     "marcel@holtmann.org" <marcel@holtmann.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>,
+        "Hemant Gupta (QUIC)" <quic_hemantg@quicinc.com>
+Subject: Re: [PATCH v8] Bluetooth: hci_qca: Add support for Qualcomm
+ Bluetooth SoC QCA2066
+Message-ID: <ZKftdRWz3qf-OFgH@hovoldconsulting.com>
+References: <20230601091355.18097-1-quic_tjiang@quicinc.com>
+ <d3379b451b2f44f5888060b55ba4a412@quicinc.com>
+ <4e60a472b252470db36a065b45d1f605@quicinc.com>
 MIME-Version: 1.0
-References: <20230702174246.121656-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230702174246.121656-1-dmitry.baryshkov@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 7 Jul 2023 11:34:09 +0200
-Message-ID: <CACRpkdY0WKDAx1XP6fq2WZeoK6kH+t_weYJPJm1aMnMKb7ZayQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/28] ARM: qcom: apq8064: support CPU frequency scaling
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4e60a472b252470db36a065b45d1f605@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 2, 2023 at 7:43=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+On Fri, Jul 07, 2023 at 09:30:06AM +0000, Tim Jiang (QUIC) wrote:
+> 
+> 
+> Hi Johan Hovold
+> 
+> 
+> 
+> I fixed some issue based on your comments in previous version, could you help merge this patch ? thank you.
 
-> Implement CPUFreq support for one of the oldest supported Qualcomm
-> platforms, APQ8064. Each core has independent power and frequency
-> control. Additionally the L2 cache is scaled to follow the CPU
-> frequencies (failure to do so results in strange semi-random crashes).
->
-> Core voltage is controlled through the SAW2 devices, one for each core.
-> The L2 has two regulators, vdd-mem and vdd-dig.
->
-> Dependencies: [1].
->
-> [1] https://lore.kernel.org/linux-arm-msm/20230702134320.98831-1-dmitry.b=
-aryshkov@linaro.org/
+For a start, you did not even CC me on v8 so how would I know it exists?
 
-Just because it looks so cool, I applied this patches and the prerequisite
-to master and booted the result on the APQ8060 DragonBoard, and
-it still works.
-Tested-by: Linus Walleij <linus.walleij@linaro.org>
-(Mostly for the DTS refactoring, which is what affects APQ8060)
+I hope someone has told you before, but you should CC people that have
+given you feedback when updating a patch.
 
-I guess the APQ8064 cpufreq and APQ8060 isn't actually far
-apart, so it should be possible to fix APQ8060 as well, but we
-can take that another day. I always wanted to fix the SAW2
-regulators.
+Second, the patch is question is missing a changelog describing what has
+changed since (all) previous versions, so you'd need to fix that before
+I'd look at it again.
 
-Yours,
-Linus Walleij
+Johan
