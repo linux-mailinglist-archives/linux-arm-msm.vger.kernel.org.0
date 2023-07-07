@@ -2,493 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB4DA74B4E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 18:08:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 329E374B5CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 19:27:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbjGGQIm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 12:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46700 "EHLO
+        id S230107AbjGGR10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 13:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjGGQIl (ORCPT
+        with ESMTP id S232151AbjGGR1Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 12:08:41 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A621BF4
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 09:08:39 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id 5614622812f47-3a38953c928so1669622b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 09:08:39 -0700 (PDT)
+        Fri, 7 Jul 2023 13:27:25 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D10F2139
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 10:27:21 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fb73ba3b5dso3528221e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 10:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688746119; x=1691338119;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=46PmY42cuc6IEH0uBVZPS1nuV/dcnfnTIqgf5ZnhKtw=;
-        b=o95CWNnbw/3RTeJhQ2RkpxnUHzbdnB1Xv1L/rUNwcShHAaVlAj4qjP/daP+yP6rKKW
-         7EwAkwxyZT8B7LS/YD7pmly+YH3pd8l8Oa2abVtxoof87ZLNtsSesjEnhLaWnI84aQoZ
-         3WZAbAdrMP3uUUBl6Y7OINYtEc9jjN62549vSwY1zS7ZRAed4tnGAAhRonPrONYCCIZG
-         +cvkS9pzOz62XiMbC1xMrso4Glb5JvRj1gLyUagCnLhfq0vOBeFQv0hT0mnNJyxnvPWw
-         Nqrubl1CgFj5WMlHv1n+MP/Vt53Ia14KCt1EZKBDS6L5Ll/nukXsDfa+i/pSKWzL7c7r
-         zCIQ==
+        d=linaro.org; s=google; t=1688750839; x=1691342839;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Pie0TuI2jx2W3y8h1za0Cn+RvUBauG4amwyIpA5SmOA=;
+        b=X00vIOV2FhhbwPlMjuxAVk83Z8e87CvT7IDRoto1igGEGTSZaJBg5TB3DMOWz4T2X1
+         4EZBkAq4KAUjHG0Om2hDq/tLvQVMqVoTZfMSjxUA24acDg/cSryqGH4p5ZPLrI6r3L8t
+         aHbklzy7lv5HzWxFw430mKS59ecL5nwDtcB8U6A3tOhspdfp2aJNKctMhBNhHElYhYab
+         5eGUX2mY5PC6sE0ka6p2AMyulBmron46nNTFpzq3xlReyCApJe8cBFF+tOFN6lu4j1x1
+         avaLq+YkxNneDKt+5evi/84tRs10m3up9wpEk+RazkMXIVhzlITgeEGa5scAhaBERujF
+         jWRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688746119; x=1691338119;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=46PmY42cuc6IEH0uBVZPS1nuV/dcnfnTIqgf5ZnhKtw=;
-        b=ALrQQt6ql/EQTTi6IVHPz2OA/lRHgKEyGNGIL7c5mh/cA5UCxk6zvrWz0d+LDdiPMn
-         dql2rxXAbU7i469uWN7NfNuRg4drbRmP5YcEWSK3VRZVhfIPYEprVXVlupTlFu9USMPI
-         xtRHP0dsoFhP1iHOKQP1HoANnA/kCY97YwMBoIN2jm+kL7NG60BxYI1Qd6Ww4+f6+38N
-         zQOPg2EBS96pfjaEcIIzxZflZtGIS1t/PagvSxOid2URHJzImQ7x7rDwXOvTINM5UNFw
-         dq+LeQMqY1IRrpBAGUpa3oElvqbzESSWh+lqulfS7iAShO9PAO3ZuxK+KkMSGeY2Cds4
-         gCNw==
-X-Gm-Message-State: ABy/qLaklH7J8XBO1iLchLq0DzrOY94yQ0g0dZyyWoSklKhxAyQx1LHo
-        2pzUPGLRqpooQa4WiLCI5tC++uPPUbroXkVWhaINWxHh
-X-Google-Smtp-Source: APBJJlGDDnttmi/yPMMjoOVu1acz3ZNo1wqNmQdt8bfnRQ+I0RPS+4qlqy6TQgHaOx1gPB+Y16DhCKo9VvGGtn9ZEHA=
-X-Received: by 2002:a54:4484:0:b0:3a1:d210:27e6 with SMTP id
- v4-20020a544484000000b003a1d21027e6mr4699394oiv.15.1688746118876; Fri, 07 Jul
- 2023 09:08:38 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688750839; x=1691342839;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pie0TuI2jx2W3y8h1za0Cn+RvUBauG4amwyIpA5SmOA=;
+        b=FdWSAkx19ijvLIGs1S3ndZ1DVroRYLl9UM5RJqbR3qsOaDfQnliYnLxhFMHh4o/zBj
+         empNnpQzRuxcHhdU6PcCANrjYsX+PcI+oTS38SaegRuNJbX67+bef3oxxFkVp5xfo16q
+         yr86VL3ZmQUGc9kfdkGnrjJJgHL5vO0ubV4bqFd1qvHNQGV7vv9er1JPM3INRNLW8awb
+         9O3d11TEBaYvzsB3FO3ZNZ2DR0RSLVzW9q6LqZC6pHvfxcEQudddIfz2LfKkPxHNbaIl
+         xvOo6UqfOcZGWKpys3WHrTgl5iWiXzE8A50Cz2PjDP6iCo993+Mh8HHe2rcN3UlBsM5R
+         8XUQ==
+X-Gm-Message-State: ABy/qLbeqF1xOCv79QePq7UY+Zfq7TLlqItyKHwwJKq4p02o8/73OIga
+        ekHWreVDw1OGrI7ZAWjpwRmKTdJXBvRDW//8af0=
+X-Google-Smtp-Source: APBJJlGgQ0wGNjCEyJhkPBqPKGqZ6eZBMe0jQXs1JyNCnpqaoR0cmVPsWC8RXhGdVuEkMLwMVl+efg==
+X-Received: by 2002:ac2:5f92:0:b0:4fb:9075:4fca with SMTP id r18-20020ac25f92000000b004fb90754fcamr4290919lfe.11.1688750839465;
+        Fri, 07 Jul 2023 10:27:19 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id l15-20020a19c20f000000b004efae490c51sm752504lfc.240.2023.07.07.10.27.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Jul 2023 10:27:18 -0700 (PDT)
+Message-ID: <cc153fa9-b9e0-f714-ce5b-1a4a0cb55cc7@linaro.org>
+Date:   Fri, 7 Jul 2023 20:27:18 +0300
 MIME-Version: 1.0
-References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-13-robdclark@gmail.com>
- <4cdceddb-033a-6301-163e-89d27152e242@linaro.org>
-In-Reply-To: <4cdceddb-033a-6301-163e-89d27152e242@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 7 Jul 2023 09:08:27 -0700
-Message-ID: <CAF6AEGvtMRnWBQz_KOi5b1p40HjvAAHYdd64kiR3KsKWPBO+bg@mail.gmail.com>
-Subject: Re: [PATCH 12/12] drm/msm/adreno: Switch to chip-id for identifying GPU
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [Freedreno] [PATCH] drm/msm: Check for the GPU IOMMU during bind
+Content-Language: en-GB
+To:     freedreno@lists.freedesktop.org,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Nathan Chancellor <nathan@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        David Airlie <airlied@gmail.com>
+References: <20230309222049.4180579-1-jorcrous@amazon.com>
+ <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
+ <20230707150307.vb4otu5e6hwoadyf@amazon.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230707150307.vb4otu5e6hwoadyf@amazon.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 6, 2023 at 5:25=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro.=
-org> wrote:
->
-> On 6.07.2023 23:10, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Since the revision becomes an opaque identifier with future GPUs, move
-> > away from treating different ranges of bits as having a given meaning.
-> > This means that we need to explicitly list different patch revisions in
-> > the device table.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> [...]
->
-> >
-> > -     if (adreno_cmp_rev(ADRENO_REV(5, 1, 0, ANY_ID), config->rev))
-> > +     /*
-> > +      * Note that we wouldn't have been able to get this far if there =
-is not
-> > +      * a device table entry for this chip_id
-> > +      */
-> Why error-check it then?
->
-> > +     info =3D adreno_find_info(config->chip_id);
-> > +     if (WARN_ON(!info))
-> > +             return ERR_PTR(-EINVAL);
-> > +
-> > +     if (info->revn =3D=3D 510)
-> >               nr_rings =3D 1;
-> [...]
->
-> >
-> > -     chipid =3D adreno_gpu->rev.core << 24;
-> > -     chipid |=3D adreno_gpu->rev.major << 16;
-> > -     chipid |=3D adreno_gpu->rev.minor << 12;
-> > -     chipid |=3D adreno_gpu->rev.patchid << 8;
-> > +     /* Note that the GMU has a slightly different layout for
->
-> /*
->  * Note
->
-> You've almost joined the good side :D
-> > +      * chip_id, for whatever reason, so a bit of massaging
-> > +      * is needed.  The upper 16b are the same, but minor and
-> > +      * patchid are packed in four bits each with the lower
-> > +      * 8b unused:
-> > +      */
-> [...]
->
-> > -             .rev   =3D ADRENO_REV(3, 0, 5, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x03000500),
->
-> 0x03000512 for msm8226-v2
-> 0x03000520 for msm8610
->
-> >               .family =3D ADRENO_3XX,
-> >               .revn  =3D 305,
-> >               .fw =3D {
-> > @@ -66,7 +66,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> >               .init  =3D a3xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(3, 0, 6, 0),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x03000600),
-> >               .family =3D ADRENO_3XX,
-> >               .revn  =3D 307,        /* because a305c is revn=3D=3D306 =
-*/
-> >               .fw =3D {
-> > @@ -77,7 +77,11 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> >               .init  =3D a3xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(3, 2, ANY_ID, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(
-> > +                     0x03020000,
-> > +                     0x03020001,
-> > +                     0x03020002
-> > +             ),
-> >               .family =3D ADRENO_3XX,
-> >               .revn  =3D 320,
-> >               .fw =3D {
-> > @@ -88,7 +92,11 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> >               .init  =3D a3xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(3, 3, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(
-> > +                     0x03030000,
-> drop, prototype broken hw
-> (I think there are also some specific codepaths for that junk,
-> let's rid them too)
->
-> > +                     0x03030001,
-> v2 prod
->
-> > +                     0x03030002
-> msm8974pro
->
-> > +             ),
-> >               .family =3D ADRENO_3XX,
-> >               .revn  =3D 330,
-> >               .fw =3D {
-> > @@ -99,7 +107,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> >               .init  =3D a3xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(4, 0, 5, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x04000500),
-> 0x04000500 msm8939
-> 0x04000510 msm8952 (unsupported today)
->
-> >               .family =3D ADRENO_4XX,
-> >               .revn  =3D 405,
-> >               .fw =3D {
-> > @@ -110,7 +118,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> >               .init  =3D a4xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(4, 2, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x04020000),
-> msm8992, ok
->
-> >               .family =3D ADRENO_4XX,
-> >               .revn  =3D 420,
-> >               .fw =3D {
-> > @@ -121,7 +129,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> >               .init  =3D a4xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(4, 3, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x04030000),
-> 0x04030002 msm8994-v2.1, earlier revs are probably trash piles held
-> together with duct tape knowing the track record of that soc
->
-> >               .family =3D ADRENO_4XX,
-> >               .revn  =3D 430,
-> >               .fw =3D {
-> > @@ -132,7 +140,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> >               .init  =3D a4xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(5, 0, 6, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x05000600),
-> msm8953 ok
->
-> >               .family =3D ADRENO_5XX,
-> >               .revn =3D 506,
-> >               .fw =3D {
-> > @@ -150,7 +158,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .init =3D a5xx_gpu_init,
-> >               .zapfw =3D "a506_zap.mdt",
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(5, 0, 8, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x05000800),
-> 630 ok
->
-> >               .family =3D ADRENO_5XX,
-> >               .revn =3D 508,
-> >               .fw =3D {
-> > @@ -167,7 +175,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .init =3D a5xx_gpu_init,
-> >               .zapfw =3D "a508_zap.mdt",
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(5, 0, 9, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x05000900),
-> 636 ok
->
-> >               .family =3D ADRENO_5XX,
-> >               .revn =3D 509,
-> >               .fw =3D {
-> > @@ -185,7 +193,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               /* Adreno 509 uses the same ZAP as 512 */
-> >               .zapfw =3D "a512_zap.mdt",
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(5, 1, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x05010000),
-> 8976 ok
->
-> >               .family =3D ADRENO_5XX,
-> >               .revn =3D 510,
-> >               .fw =3D {
-> > @@ -200,7 +208,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .inactive_period =3D 250,
-> >               .init =3D a5xx_gpu_init,
-> >       }, {
-> > -             .rev   =3D ADRENO_REV(5, 1, 2, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x05010200),
-> 660 ok
->
-> >               .family =3D ADRENO_5XX,
-> >               .revn =3D 512,
-> >               .fw =3D {
-> > @@ -217,7 +225,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .init =3D a5xx_gpu_init,
-> >               .zapfw =3D "a512_zap.mdt",
-> >       }, {
-> > -             .rev =3D ADRENO_REV(5, 3, 0, 2),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x05030002),
-> 8996 final
->
-> 0x05030004 8996pro
->
-> >               .family =3D ADRENO_5XX,
-> >               .revn =3D 530,
-> >               .fw =3D {
-> > @@ -236,7 +244,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .init =3D a5xx_gpu_init,
-> >               .zapfw =3D "a530_zap.mdt",
-> >       }, {
-> > -             .rev =3D ADRENO_REV(5, 4, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x05040001),
-> 8998 final ok
->
-> >               .family =3D ADRENO_5XX,
-> >               .revn =3D 540,
-> >               .fw =3D {
-> > @@ -254,7 +262,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .init =3D a5xx_gpu_init,
-> >               .zapfw =3D "a540_zap.mdt",
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 1, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06010000),
-> sm6125 ok
-> sm6115 ok
->
-> [...]
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 3, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06030002),
-> my sources say that it should end in 1 for sdm845-v2 and newer
->
-> >               .family =3D ADRENO_6XX_GEN1,
-> >               .revn =3D 630,
-> >               .fw =3D {
-> > @@ -370,7 +378,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .zapfw =3D "a630_zap.mdt",
-> >               .hwcg =3D a630_hwcg,
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 4, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06040001),
-> 8150 ok
->
-> >               .family =3D ADRENO_6XX_GEN2,
-> >               .revn =3D 640,
-> >               .fw =3D {
-> > @@ -388,7 +396,7 @@ static const struct adreno_info gpulist[] =3D {
-> >                       1, 1
-> >               ),
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 5, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06050002),
-> 8250-v2.1 ok
->
-> >               .family =3D ADRENO_6XX_GEN3,
-> >               .revn =3D 650,
-> >               .fw =3D {
-> > @@ -410,7 +418,7 @@ static const struct adreno_info gpulist[] =3D {
-> >                       3, 2
-> >               ),
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 6, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06060001),
-> 8350-v2 ok
->
-> >               .family =3D ADRENO_6XX_GEN4,
-> >               .revn =3D 660,
-> >               .fw =3D {
-> > @@ -426,7 +434,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .hwcg =3D a660_hwcg,
-> >               .address_space_size =3D SZ_16G,
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 3, 5, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06030500),
-> 7280 ok
->
-> >               .family =3D ADRENO_6XX_GEN4,
-> >               .fw =3D {
-> >                       [ADRENO_FW_SQE] =3D "a660_sqe.fw",
-> > @@ -445,7 +453,7 @@ static const struct adreno_info gpulist[] =3D {
-> >                       190, 1
-> >               ),
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 8, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06080000),
-> 8180 probably ok
->
-> >               .family =3D ADRENO_6XX_GEN2,
-> >               .revn =3D 680,
-> >               .fw =3D {
-> > @@ -459,7 +467,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .zapfw =3D "a640_zap.mdt",
-> >               .hwcg =3D a640_hwcg,
-> >       }, {
-> > -             .rev =3D ADRENO_REV(6, 9, 0, ANY_ID),
-> > +             .chip_ids =3D ADRENO_CHIP_IDS(0x06090000),
-> 8280 probably ok
->
-> >               .family =3D ADRENO_6XX_GEN4,
-> >               .fw =3D {
-> >                       [ADRENO_FW_SQE] =3D "a660_sqe.fw",
-> > @@ -494,31 +502,16 @@ MODULE_FIRMWARE("qcom/a630_sqe.fw");
-> >  MODULE_FIRMWARE("qcom/a630_gmu.bin");
-> >  MODULE_FIRMWARE("qcom/a630_zap.mbn");
-> >
-> [...]
->
-> > @@ -612,32 +604,34 @@ static int find_chipid(struct device *dev, struct=
- adreno_rev *rev)
-> >
-> >               if (sscanf(compat, "qcom,adreno-%u.%u", &r, &patch) =3D=
-=3D 2 ||
-> >                   sscanf(compat, "amd,imageon-%u.%u", &r, &patch) =3D=
-=3D 2) {
-> > -                     rev->core =3D r / 100;
-> > +                     uint32_t core, major, minor;
-> > +
-> > +                     core =3D r / 100;
-> >                       r %=3D 100;
-> > -                     rev->major =3D r / 10;
-> > +                     major =3D r / 10;
-> >                       r %=3D 10;
-> > -                     rev->minor =3D r;
-> > -                     rev->patchid =3D patch;
-> > +                     minor =3D r;
-> > +
-> > +                     *chipid =3D (core << 24) |
-> > +                             (major << 16) |
-> > +                             (minor << 8) |
-> > +                             patch;
-> I think a define macro would be nice here
+On 07/07/2023 18:03, Jordan Crouse wrote:
+> On Thu, Jul 06, 2023 at 09:55:13PM +0300, Dmitry Baryshkov wrote:
+>>
+>> On 10/03/2023 00:20, Jordan Crouse wrote:
+>>> While booting with amd,imageon on a headless target the GPU probe was
+>>> failing with -ENOSPC in get_pages() from msm_gem.c.
+>>>
+>>> Investigation showed that the driver was using the default 16MB VRAM
+>>> carveout because msm_use_mmu() was returning false since headless devices
+>>> use a dummy parent device. Avoid this by extending the existing is_a2xx
+>>> priv member to check the GPU IOMMU state on all platforms and use that
+>>> check in msm_use_mmu().
+>>>
+>>> This works for memory allocations but it doesn't prevent the VRAM carveout
+>>> from being created because that happens before we have a chance to check
+>>> the GPU IOMMU state in adreno_bind.
+>>>
+>>> There are a number of possible options to resolve this but none of them are
+>>> very clean. The easiest way is to likely specify vram=0 as module parameter
+>>> on headless devices so that the memory doesn't get wasted.
+>>
+>> This patch was on my plate for quite a while, please excuse me for
+>> taking it so long.
+> 
+> No worries. I'm also chasing a bunch of other stuff too.
+> 
+>> I see the following problem with the current code. We have two different
+>> instances than can access memory: MDP/DPU and GPU. And each of them can
+>> either have or miss the MMU.
+>>
+>> For some time I toyed with the idea of determining whether the allocated
+>> BO is going to be used by display or by GPU, but then I abandoned it. We
+>> can have display BOs being filled by GPU, so handling it this way would
+>> complicate things a lot.
+>>
+>> This actually rings a tiny bell in my head with the idea of splitting
+>> the display and GPU parts to two different drivers, but I'm not sure
+>> what would be the overall impact.
+> 
+> As I now exclusively work on headless devices I would be 100% for this,
+> but I'm sure that our laptop friends might not agree :)
 
-hmm, a macro would just encourage thinking about chip-id as having
-bitfields, which is what I'm trying to get away from ;-)
+I do not know here. This is probably a question to Rob, as he better 
+understands the interaction between GPU and display parts of the userspace.
 
-> >
-> >                       return 0;
-> >               }
-> > +
-> > +             if (sscanf(compat, "qcom,adreno-%08x", chipid) =3D=3D 1)
-> > +                     return 0;
-> >       }
-> >
-> [...]
->
-> >  static inline int adreno_is_7c3(const struct adreno_gpu *gpu)
-> >  {
-> > -     /* The order of args is important here to handle ANY_ID correctly=
- */
-> > -     return adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), gpu->rev);
-> > +     return gpu->info->chip_ids[0] =3D=3D 0x06030500;
-> >  }
-> I'm sorry, but this screams trouble.. and doesn't sound very maintainable=
- :/
->
+> 
+>> More on the msm_use_mmu() below.
+>>
+>>>
+>>> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+>>> ---
+>>>
+>>>    drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
+>>>    drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
+>>>    drivers/gpu/drm/msm/msm_drv.h              | 2 +-
+>>>    3 files changed, 9 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> index 36f062c7582f..4f19da28f80f 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+>>>        DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
+>>>                config.rev.minor, config.rev.patchid);
+>>>
+>>> -     priv->is_a2xx = config.rev.core == 2;
+>>> +     /*
+>>> +      * A2xx has a built in IOMMU and all other IOMMU enabled targets will
+>>> +      * have an ARM IOMMU attached
+>>> +      */
+>>> +     priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
+>>>        priv->has_cached_coherent = config.rev.core >= 6;
+>>>
+>>>        gpu = info->init(drm);
+>>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+>>> index aca48c868c14..a125a351ec90 100644
+>>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>>> @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
+>>>        struct msm_drm_private *priv = dev->dev_private;
+>>>
+>>>        /*
+>>> -      * a2xx comes with its own MMU
+>>> -      * On other platforms IOMMU can be declared specified either for the
+>>> -      * MDP/DPU device or for its parent, MDSS device.
+>>> +      * Return true if the GPU or the MDP/DPU or parent MDSS device has an
+>>> +      * IOMMU
+>>>         */
+>>> -     return priv->is_a2xx ||
+>>> +     return priv->has_gpu_iommu ||
+>>>                device_iommu_mapped(dev->dev) ||
+>>>                device_iommu_mapped(dev->dev->parent);
+>>
+>> I have a generic feeling that both old an new code is not fully correct.
+>> Please correct me if I'm wrong:
+>>
+>> We should be using VRAM, if either of the blocks can not use remapped
+>> memory. So this should have been:
+>>
+>> bool msm_use_mmu()
+>> {
+>>   if (!gpu_has_iommu)
+>>     return false;
+>>
+>>   if (have_display_part && !display_has_mmu())
+>>     return false;
+>>
+>>   return true;
+>> }
+>>
+>> What do you think.
+> 
+> I would have to see (and try) the real code but that seems like it might
+> be reasonable.
 
-why? It is intentionally checking the first chip-id so that nothing
-breaks if later chip-ids are added
+Sure, let me craft it then.
 
-> Apart from all these comments, I don't really see the point of this patch=
-,
-> other than trying to tie together Qualcomm's almost-meaningless chipids o=
-n
-> a7xx into the picture..
->
-> Since they can't even be read back from the hardware, I don't think tryin=
-g
-> to force them into the upstream kernel makes any sense.
+> I would like to hear from some of the a2xx users too
+> because this mostly affects them. On 3xx and newer you've always had the
+> option of not having a MMU for GPU or display but I can't think of any
+> use cases where you wouldn't want it.
 
-Sure, we _could_ pick our own arbitrary identifiers, we don't have to
-align with kgsl.  But that would be a super huge PITA for mesa, which
-has support for both kernels.
+msm8974 doesn't have (working) IOMMU driver. I also think there was an 
+issue somewhere around sdm630/660. And the wonderful msm8992/4, IIRC, 
+also don't have one.
 
-> On a different note, I think we could try to blockify Adreno definitions =
-a
-> bit by splitting things into:
->
-> - Core GPU propeties (revision, fw name, GMEM size)
->
-> - G(P)MU properties
->
-> - Family data (quirks, reg presets in some config struct which could be a
->   union of config structs per generation, hwcg, maybe protected regs ptr
->   should also be moved there)
+Also the headless mode was quite useful for bringing up platforms, as it 
+allowed us to test GPU separately (and ofc. in some cases even w/o MMU).
 
-We do something like this on the mesa side.  But we also get to use
-python tricks to generate code as part of the build process which
-makes things a bit more elegant.
+I have both a2xx (only iMX for now) and a3xx for the tests here, on my 
+desk.
 
-Fwiw, I was already thinking about splitting the gpu "hw catalog" from
-a flat table, to probably something more like a table of tables, so
-that we can split a2xx/a3xx/a4xx/a5xx/a6xx tables into separate files.
-And then we could move hwcg/protect/etc tables into the same file.
-But I thought that might be a bit too conflicty for the a7xx series so
-was thinking to wait until after that landed.. unless you don't think
-it will be a problem.
+-- 
+With best wishes
+Dmitry
 
-BR,
--R
-
-> - Generation data (init function, a2xx and a6xx specifics)
->
-> - Speedbin LUTs matched against socid
->
->
-> or something like that.. there's a whole lot of duplicated data atm
->
-> Konrad
-> >
-> >  static inline int adreno_is_a660(const struct adreno_gpu *gpu)
-> > @@ -358,8 +364,7 @@ static inline int adreno_is_a680(const struct adren=
-o_gpu *gpu)
-> >
-> >  static inline int adreno_is_a690(const struct adreno_gpu *gpu)
-> >  {
-> > -     /* The order of args is important here to handle ANY_ID correctly=
- */
-> > -     return adreno_cmp_rev(ADRENO_REV(6, 9, 0, ANY_ID), gpu->rev);
-> > +     return gpu->info->chip_ids[0] =3D=3D 0x06090000;
-> >  };
-> >  /* check for a615, a616, a618, a619 or any a630 derivatives */
-> >  static inline int adreno_is_a630_family(const struct adreno_gpu *gpu)
