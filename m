@@ -2,179 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B473174B00F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 13:42:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84C4974B01D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 13:45:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232076AbjGGLmO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 07:42:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44536 "EHLO
+        id S229720AbjGGLpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 07:45:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231950AbjGGLmN (ORCPT
+        with ESMTP id S229649AbjGGLpJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 07:42:13 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF0521FFF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 04:42:04 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fb96e2b573so2821936e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 04:42:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688730123; x=1691322123;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8wa7BsPp1pwuUXYKFDe8+3rIlSyzZmk8L9MfJjPY7Hc=;
-        b=Q4+p1BE3f451ZQ4nncfxOhnfmawK6shA59BM3UDHQl20cQtxz2Z6Brt9NDWxt/D6zF
-         xhFDpWZCxjmpgG3BeBjXv9kHbc7lc4rhbQEbM1MhUvpRKiArZwYaJhn4/WOyZIWphda5
-         +tMxSzrkiOdB5eIOQWkp0T2zpZvIIFD+Bgf+CT07wRrad774qCuGuLVpyXuwTb5N6O29
-         gr+EWqyxblX7Bc2lzj6U4A4HJ0cOWE4z1EAtDWKX0inJFDyPH+CwhxukS8rLzLIx+j++
-         38nFy/HGu2k++J+0d/nKQxEREgNDpEzVIn1q4zU/Jfk5IDh+grbthTxVAGwHmG1tKj6f
-         w41A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688730123; x=1691322123;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8wa7BsPp1pwuUXYKFDe8+3rIlSyzZmk8L9MfJjPY7Hc=;
-        b=fnJybpI+WcEQ/4qSCM3OXHFJu/as4vaZS/E0homahPpgHaQVwtP33jFVoHckWLGalW
-         IRyxZGH+WF/zNWLf0bOLOpaDKZjNT+Nqjy8RBDMkubulpCo8IzoPvqZL6lAfuxoFLJoO
-         5a5TORKyJuaZrVRNS0Cc2SrX7sSOMyAOa6bHlPN3sLU0Yhg+pbJQjhad+V9DugwF34x+
-         TOv+VcYk3E2syZptaATDvA8jrI4z+c2VKMYXHWYHTn12zUKplkc5/87DTJHqQtmrOWqg
-         sI8GBT/py0EVwzHBmIR46Z6tU+vdhb7yReeomyIIP75TV+zX+HSsu9pPkMTiF8ypKBOB
-         AnZQ==
-X-Gm-Message-State: ABy/qLbutnrotWcwTOORU8gXBJuTcpHEgNnVpdlRj+9q3ad36rgBBvS8
-        Hjfkq1tTDk6UolEUFSd6rPQN/w==
-X-Google-Smtp-Source: APBJJlHy5isDdras5n41PxiBO6xaM9mbE5GHZK/Y351j80tyDTleBNnaJY5mxZHx/5Y9DkbUDIyIEA==
-X-Received: by 2002:a05:6512:230a:b0:4fb:758c:74ed with SMTP id o10-20020a056512230a00b004fb758c74edmr4579360lfu.35.1688730123070;
-        Fri, 07 Jul 2023 04:42:03 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id 23-20020a05600c025700b003fbc9371193sm2216754wmj.13.2023.07.07.04.42.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 04:42:01 -0700 (PDT)
-Date:   Fri, 7 Jul 2023 14:41:57 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Bo Liu <liubo03@inspur.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Dan Carpenter <error27@gmail.com>,
-        "open list:MHI BUS" <mhi@lists.linux.dev>
-Subject: Re: [PATCH v3 9/9] bus: mhi: ep: wake up host is the MHI state is in
- M3
-Message-ID: <05b4d009-b50b-4971-9220-615f73db4acd@kadam.mountain>
-References: <1688727836-11141-1-git-send-email-quic_krichai@quicinc.com>
- <1688727836-11141-10-git-send-email-quic_krichai@quicinc.com>
+        Fri, 7 Jul 2023 07:45:09 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1BCF128;
+        Fri,  7 Jul 2023 04:45:08 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 71219618EE;
+        Fri,  7 Jul 2023 11:45:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BF5C433C8;
+        Fri,  7 Jul 2023 11:45:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688730307;
+        bh=hYR2v6vBRoKSEbMKL5joI8ALWET1hUcjOO4qG93jcKs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PsZvxJgmvhgRKzram15wtfTjOx0BhHxv/7P6mPVe9jOwW+X5rCqE2Oz1Czz+brTJL
+         3ErR1td/Jo/BdvLOeCTFhC+E5lJfbo2qAI41S4G5xGGV/m1tN33ccTiOd9uz5B6/7b
+         82AIR+NkIalWstvOVKQdaskaPjVKOF/7igDXclcVSkc3O/CuXDMmuAGjJ2ON0hb5yM
+         N2HVIpTitSkC5ycFPdcO9RInOUB7QkML7tTznRCkFsfPp5wvREJfYUVkx77Iocd1gn
+         X3X9IvJglNI8RSRBfb7IL+I7IWqwlIjtfL/B4gGSN8whtaXkBE0+RIGHiMo8J6NvQ6
+         2JwHmH2X4IG9g==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qHju1-0007TH-1n;
+        Fri, 07 Jul 2023 13:45:34 +0200
+Date:   Fri, 7 Jul 2023 13:45:33 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_bgodavar@quicinc.com, quic_hemantg@quicinc.com,
+        mka@chromium.org
+Subject: Re: [PATCH v9] Bluetooth: hci_qca: Add support for Qualcomm
+ Bluetooth SoC QCA2066
+Message-ID: <ZKf63XOPsImef2y2@hovoldconsulting.com>
+References: <20230707113645.10673-1-quic_tjiang@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1688727836-11141-10-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230707113645.10673-1-quic_tjiang@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 07, 2023 at 04:33:56PM +0530, Krishna chaitanya chundru wrote:
-> If the MHI state is in M3 then the most probably the host kept the
-> device in D3 hot or D3 cold, due to that endpoint transctions will not
-> be read by the host, so endpoint wakes up host to bring the host to D0
-> which eventually bring back the MHI state to M0.
+On Fri, Jul 07, 2023 at 07:36:45PM +0800, Tim Jiang wrote:
+> This patch adds support for QCA2066 firmware patch and NVM downloading.
+> as the RF performance of QCA2066 SOC chip from different foundries may
+> vary. Therefore we use different NVM to configure them based on board ID.
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
 > ---
->  drivers/bus/mhi/ep/main.c | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index 6008818..46a8a3c 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -25,6 +25,27 @@ static DEFINE_IDA(mhi_ep_cntrl_ida);
->  static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id);
->  static int mhi_ep_destroy_device(struct device *dev, void *data);
->  
-> +static bool mhi_ep_wake_host(struct mhi_ep_cntrl *mhi_cntrl)
-> +{
-> +	enum mhi_state state;
-> +	bool mhi_reset;
-> +	u32 count = 0;
-> +
-> +	mhi_cntrl->wakeup_host(mhi_cntrl);
-> +
-> +	/* Wait for Host to set the M0 state */
-> +	do {
-> +		msleep(M0_WAIT_DELAY_MS);
-> +		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
-> +		count++;
-> +	} while (state != MHI_STATE_M0 && count < M0_WAIT_COUNT);
-> +
->+	if (state != MHI_STATE_M0)
->+		return false;
 
-Functions which return false on success are an abomination.  Also
-boolean functions should be named for the question they answer such as
-access_ok() or has_feature() etc.
+There is still no changelog here as I explicitly asked you to add.
 
-Actually, I think it's the caller which is wrong.  This returns true on
-success and false on failure.  But the caller assumes true is failure.
-It suggests that this has not been tested.
+You also did not CC all people who have been reviewing your previous
+attempts.
 
-> +
-> +	return true;
-> +}
+If you don't listen to feedback you will never get your patches merged.
 
-Write it like this:
-
-static int mhi_ep_wake_host(struct mhi_ep_cntrl *mhi_cntrl)
-{
-	enum mhi_state state;
-	bool mhi_reset;
-	int count = 0;
-
-	mhi_cntrl->wakeup_host(mhi_cntrl);
-
-	while (count++ < M0_WAIT_COUNT) {
-		msleep(M0_WAIT_DELAY_MS);
-
-		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
-		if (state == MHI_STATE_M0)
-			return 0;
-	}
-	return -ENODEV;
-}
-
-> +
->  static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
->  			     struct mhi_ring_element *el, bool bei)
->  {
-> @@ -464,6 +485,13 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
->  	buf_left = skb->len;
->  	ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
->  
-> +	if (mhi_cntrl->mhi_state == MHI_STATE_M3) {
-> +		if (mhi_ep_wake_host(mhi_cntrl)) {
-> +			dev_err(dev, "Failed to wakeup host\n");
-> +			return -ENODEV;
-> +		}
-
-Then this becomes:
-
-	if (mhi_cntrl->mhi_state == MHI_STATE_M3) {
-		ret = mhi_ep_wake_host(mhi_cntrl);
-		if (ret) {
-			dev_err(dev, "Failed to wakeup host\n");
-			return ret;
-		}
-	}
-
-regards,
-dan carpenter
-
+Johan
