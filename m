@@ -2,136 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00DA974AB08
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 08:21:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54D9874AB2D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 08:35:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232546AbjGGGV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 02:21:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32960 "EHLO
+        id S232177AbjGGGfH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 02:35:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232691AbjGGGU4 (ORCPT
+        with ESMTP id S231918AbjGGGfA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 02:20:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A3572121;
-        Thu,  6 Jul 2023 23:20:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C41E5617A5;
-        Fri,  7 Jul 2023 06:20:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E68C433C8;
-        Fri,  7 Jul 2023 06:20:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688710847;
-        bh=1MeOrvHtUCSYE7kxR6A8QgS00BZuNloT74Tt/wU01dE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=h8EYNPJVallMHAMCnvk+TtxCklhlQ99PghXUPpvTlTwsjqB/AOOLIixUAxHczxZL+
-         9lFKzf0AwxZTZPqzxh7sjgShNrLG8w+R6Oqbw7rkWWCA+ZTjfgoThbxSSPPLHrYhfb
-         EKod1DQM2XatbHv/iaIjEyXSLtsmhCDFJ42EGtxILFkvrMzz46RvI6xpE2fVKKeNZc
-         D6JaUYHq++IqQ5ihn9o8j3nGIqF3MY9sW6bgVS9ApPxh5GROUt3q5yi7daYufAhKcu
-         Pf5aj3RP1cFhiFZdqw08ZpH5EgBsW2y0xZMXXfa5ys3J5qKD3J/kuwZ7sbboqCum1A
-         DQPEexPUSzwlw==
-Date:   Fri, 7 Jul 2023 11:50:31 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Dan Carpenter <error27@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bo Liu <liubo03@inspur.com>,
-        "open list:MHI BUS" <mhi@lists.linux.dev>
-Subject: Re: [PATCH v2 8/8] bus: mhi: ep: wake up host is the MHI state is in
- M3
-Message-ID: <20230707062031.GG6001@thinkpad>
-References: <1688122331-25478-1-git-send-email-quic_krichai@quicinc.com>
- <1688122331-25478-9-git-send-email-quic_krichai@quicinc.com>
+        Fri, 7 Jul 2023 02:35:00 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB241FF2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 23:34:30 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51e29ede885so1893340a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 23:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688711669; x=1691303669;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lo9Ybkp8C7hyjxxxAW7ckg0KRs9g3goLaPeETqx3qFc=;
+        b=roioZ0eYvwTT7tPzv5TyxFc/Ekjoo/kOdQ8i6mdJzkYNlB7+eY0d2uGCC/Hse9ujFg
+         5PMz/RRUmb2OORgU9ftSLxbqkbQbX8WHM0IdjreZyMNIz4u+g06CdggLv4FZvhVf9UDz
+         7Zsy19b8HgsiW/qYZ1aoa9xeRnBGMDYGT+E+t8NzzW3fYB4GhPEeSz10rRCakKZtPwqQ
+         eRsCfqvgQmK00hC+hAXc1HmwnxuNs61Epuegn9DMTBSeArGqbF4UcL4N+jOhb0A0j73c
+         3K9xcAriOUVxYdhpPCZyR/giaoafNyCWEN8q/Gvgcyz8c1xq7lA4hV+RzDIPb2dCZv2f
+         13sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688711669; x=1691303669;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lo9Ybkp8C7hyjxxxAW7ckg0KRs9g3goLaPeETqx3qFc=;
+        b=O7pRlGQEyqojk+2YTfnZVI2UPf7EW/fGLP3diIXOz1IJoxWtPyjwhF2o23a8ZE9g9h
+         qSkYEHcLYkeWbSWfapyBbvOaIkMgkGDypfT1YJhy4JDEtIhzpwUV1ByC6QR4lloaEbEC
+         789Rt+ZTBVIogEWKuSzLb5PMQV6YFe1z2IA8/7jy2Hrrs7wYuwWzkUx/m3y+u/3xWBZ/
+         0KSYrJk3gobMx8PCvDVPocfdGVtCl6Yvw3PIwgFhys88cUZJDT4/4nfdIiGdZ236n9+g
+         GwO3GjNBMP2xtRCFT62pzjbiVbCpYspW/N+E2r9zx3lZ8Zou6FmB38eCg8BQdXgCnpvT
+         jxUg==
+X-Gm-Message-State: ABy/qLbl1cwygZpQZHdMchJN/7D+1He0z1SEKvgiMPumWMCJOOlujETy
+        TN9qaN9ujVD16mUyK66phpY/Ow==
+X-Google-Smtp-Source: APBJJlF2VOmcYgfChy7bMAqvwhS2dCJYj3prVbUZDw9t+pJQ45oDeOR9Pccv8izstFNC8DH9mX8oJg==
+X-Received: by 2002:a17:906:7a08:b0:974:1ef1:81ad with SMTP id d8-20020a1709067a0800b009741ef181admr3494616ejo.4.1688711669248;
+        Thu, 06 Jul 2023 23:34:29 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id y23-20020a170906471700b00993928e4d1bsm1721167ejq.24.2023.07.06.23.34.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Jul 2023 23:34:28 -0700 (PDT)
+Message-ID: <e9b0b9ea-4871-5fec-b859-aebc1a0e6372@linaro.org>
+Date:   Fri, 7 Jul 2023 08:34:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1688122331-25478-9-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 1/4] dt-bindings: pinctrl: qcom-pmic-gpio: Add pm7550ba
+ support
+Content-Language: en-US
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <1688707209-30151-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1688707209-30151-2-git-send-email-quic_rohiagar@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1688707209-30151-2-git-send-email-quic_rohiagar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 30, 2023 at 04:22:11PM +0530, Krishna chaitanya chundru wrote:
-> If the MHI state is in M3 then the most probably the host kept the
-> device in D3 hot or D3 cold, due to that endpoint transctions will not
-> be read by the host, so endpoint needs to bring the host to D0 which
-> eventually bring back the MHI state to M0.
+On 07/07/2023 07:20, Rohit Agarwal wrote:
+> Add support for the pm7550ba GPIO support to the Qualcomm PMIC GPIO
+> binding.
 > 
-
-Endpoint cannot bring the host to D0, it can only wake up the host and the host
-will bring the device to D0.
-
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
->  drivers/bus/mhi/ep/main.c | 16 +++++++++++++++-
->  1 file changed, 15 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index 6008818..42d3791 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -451,12 +451,14 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
->  	struct mhi_ep_cntrl *mhi_cntrl = mhi_dev->mhi_cntrl;
->  	struct mhi_ep_chan *mhi_chan = mhi_dev->dl_chan;
->  	struct device *dev = &mhi_chan->mhi_dev->dev;
-> +	u32 buf_left, read_offset, count = 0;
->  	struct mhi_ring_element *el;
-> -	u32 buf_left, read_offset;
->  	struct mhi_ep_ring *ring;
->  	enum mhi_ev_ccs code;
-> +	enum mhi_state state;
->  	void *read_addr;
->  	u64 write_addr;
-> +	bool mhi_reset;
->  	size_t tr_len;
->  	u32 tre_len;
->  	int ret;
-> @@ -464,6 +466,18 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
->  	buf_left = skb->len;
->  	ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
->  
-> +	if (mhi_cntrl->mhi_state == MHI_STATE_M3) {
-> +		dev_dbg(dev, "wake up by ch id %x\n", mhi_chan->chan);
 
-This is not needed.
 
-> +		mhi_cntrl->wakeup_host(mhi_cntrl);
-> +	}
-> +
-> +	/* Wait for Host to set the M0 state */
-> +	do {
-> +		msleep(M0_WAIT_DELAY_MS);
-> +		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
-> +		count++;
-> +	} while (state != MHI_STATE_M0 && count < M0_WAIT_COUNT);
-> +
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Move this change to a function like mhi_ep_wake_host().
+Best regards,
+Krzysztof
 
-- Mani
-
->  	mutex_lock(&mhi_chan->lock);
->  
->  	do {
-> -- 
-> 2.7.4
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
