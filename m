@@ -2,74 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C82674A8EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 04:24:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D231A74A8F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 04:24:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbjGGCYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jul 2023 22:24:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56116 "EHLO
+        id S231701AbjGGCYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jul 2023 22:24:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbjGGCYc (ORCPT
+        with ESMTP id S229775AbjGGCYv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jul 2023 22:24:32 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081DCB6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 19:24:31 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b6fbf0c0e2so20676831fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 19:24:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688696669; x=1691288669;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lhC47UWtWOHjAnQy7Fquoncsj5V1+v8tog2t7GNq5lg=;
-        b=MwKTwxnFVefFOYITT8KKdPN/dIudZLTeyM71VFCJx38VEpsx1nsIDa0i9byNxJx0BN
-         Thw6PA74fueOBKCw5jck6HY1DtgWEg4CfKw8HGqZQGGGt/3tSKzIAYPc6xa3HLd98q8h
-         u4NMwDBZrPvqMKnmLAovYssEiAaBaBwh9hnjixX68tBoLxnlYT5aUSSQ4Gb5zUohenLv
-         EK9+3soWRgfbT+b0lElOiDycwaCCB8UsNQxD43RIk4nzgmSbWsn0Dc4MQp4meUBtti7E
-         2RvNCUCC8SxSd3yU2/SOYGfFpNmql+WmGujfuHVvQBwEx9bSwAvPr25ffw7ddNDkbXXs
-         vKeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688696669; x=1691288669;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lhC47UWtWOHjAnQy7Fquoncsj5V1+v8tog2t7GNq5lg=;
-        b=CdZfFCcEaJ2JLChJJ0KhgU/hhDga0efvH7ACRRERgKhoLDyGoQgszO5z0q766LP0j2
-         tYqpLxafeEzPVFprtlBX/J0YUw+b2edNfTuBpezf4uMr2l9EMjRO4Fi1uHmUzc33BaRV
-         /kjIVwzby5jbJCDtokLC8vtlfgVkesenZp1liewm09Uqi5Pgg4lVzvK9HrgSZLaoJgOK
-         SgxNqezHSK99xbGS9IXeUAgrQ4DSfng6Qu5J5oVeE120UDI7uj1VWnvXSSzOV2I6LBcI
-         oRKu1fxMBzkckQ//1/o/pcb9SJG2a3brdNkS1rBQBMLVb2B+JizZ39bF6LYROQjp0zm3
-         RaZg==
-X-Gm-Message-State: ABy/qLapFu2Pog7dMLv1fYo9TXrTl7tNMhIet2c+YAGpKN0Ciw2SCc0I
-        Wy39Sp3DczVOMe0QzhjrYwoCMg==
-X-Google-Smtp-Source: APBJJlHrapg208VIiOGrvBEtX3H4Hlw5BHz1SpcrT4SZflIVVLEwj+AtZesWj8J9/Mt5nTcWqZ3XfQ==
-X-Received: by 2002:a2e:95d7:0:b0:2b7:2ea:33c3 with SMTP id y23-20020a2e95d7000000b002b702ea33c3mr2589201ljh.22.1688696669205;
-        Thu, 06 Jul 2023 19:24:29 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id m18-20020a2eb6d2000000b002b6e00a3e19sm562839ljo.132.2023.07.06.19.24.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jul 2023 19:24:28 -0700 (PDT)
-Message-ID: <44b24f54-38a8-8995-ee77-ac453e73c759@linaro.org>
-Date:   Fri, 7 Jul 2023 05:24:28 +0300
+        Thu, 6 Jul 2023 22:24:51 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8B6DB6;
+        Thu,  6 Jul 2023 19:24:49 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3672KpSa027044;
+        Fri, 7 Jul 2023 02:24:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gcKzje3TR7gu11x5qYtexR+kzdaXYRdhFtfgzkm5HMk=;
+ b=kehEMVkpMBEzzPrS6eaxQGgYPySScNX/XBOtOFWNjP9iMeAivByQk5JlElpXdT2mN/yI
+ E29m/0g6n20R62dnAqZrWdQAtgfvr/IH5XyXhqNTYjWB51oE8Hp/zmgpj9bk/O5wpL2u
+ mEE6OOH7WEMsOSqiCB9lnGTT7iMevffo+8AopMnYA8EdtqiEMtlEOA891RrHqmeCOOeM
+ Wi/HDQhybHh8b9GgvB8iP5cQOkbyUcePikvI0Y+iJuOcx2eFWLTY2AXvLYHLhz3K7sS0
+ Q41iIP7r6WJSTyjcvrhR7gqWnMFtljvg5oIcWMGIUlP6MYBu+I7BI5YYNuVKEKYT6EVC Eg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rnvyvhhyf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Jul 2023 02:24:38 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3672Obh8007943
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 7 Jul 2023 02:24:37 GMT
+Received: from [10.110.53.25] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 6 Jul
+ 2023 19:24:36 -0700
+Message-ID: <7f9af9af-6a6c-d47e-8bff-b72f3f451703@quicinc.com>
+Date:   Thu, 6 Jul 2023 19:24:35 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [Freedreno] [PATCH 03/12] drm/msm/adreno: Remove redundant revn
- param
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org
-References: <20230706211045.204925-1-robdclark@gmail.com>
- <20230706211045.204925-4-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230706211045.204925-4-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 5/6] drm/msm/dpu: Refactor printing of main blocks in
+ device core dump
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC:     Rob Clark <robdclark@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <quic_jesszhan@quicinc.com>
+References: <20230622-devcoredump_patch-v4-0-e304ddbe9648@quicinc.com>
+ <20230622-devcoredump_patch-v4-5-e304ddbe9648@quicinc.com>
+ <deb38d54-bf7f-f42a-8b61-f6c8f46370b0@linaro.org>
+ <da04a824-b44c-d6a0-3dfc-f1b8e8272195@quicinc.com>
+ <dc937077-91bd-8c4f-b220-82df11efd215@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <dc937077-91bd-8c4f-b220-82df11efd215@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xL14X_wVIDda8I9QjqeuArXgv5pecif_
+X-Proofpoint-ORIG-GUID: xL14X_wVIDda8I9QjqeuArXgv5pecif_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-06_17,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307070020
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,22 +90,131 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/07/2023 00:10, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+
+
+On 7/6/2023 7:19 PM, Dmitry Baryshkov wrote:
+> On 07/07/2023 03:16, Abhinav Kumar wrote:
+>>
+>>
+>> On 7/6/2023 5:07 PM, Dmitry Baryshkov wrote:
+>>> On 06/07/2023 23:48, Ryan McCann wrote:
+>>>> Currently, the names of main blocks are hardcoded into the
+>>>> msm_disp_snapshot_add_block function rather than using the name that
+>>>> already exists in the catalog. Change this to take the name directly 
+>>>> from
+>>>> the catalog instead of hardcoding it.
+>>>>
+>>>> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 32 
+>>>> ++++++++++++++++----------------
+>>>>   1 file changed, 16 insertions(+), 16 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> index aa8499de1b9f..70dbb1204e6c 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> @@ -899,38 +899,38 @@ static void dpu_kms_mdp_snapshot(struct 
+>>>> msm_disp_state *disp_state, struct msm_k
+>>>>       /* dump CTL sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->ctl_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len,
+>>>> -                dpu_kms->mmio + cat->ctl[i].base, "ctl_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len, 
+>>>> dpu_kms->mmio +
+>>>> +                        cat->ctl[i].base, cat->ctl[i].name);
+>>>
+>>> Splitting on the `+' sign is a bad idea. It makes it harder to read 
+>>> the code. Please keep the first line as is, it is perfectly fine on 
+>>> its own, and do just what you have stated in the commit message: 
+>>> change printed block name.
+>>>
+>>
+>> Actually, I asked Ryan to fix the indent here in the same patch as he 
+>> was touching this code anyway.
+>>
+>> So you would prefer thats left untouched?
 > 
-> This just duplicates what is in adreno_info, and can cause confusion if
-> used before it is set.
+> Yes. The current one was definitely better than splitting in the middle 
+> of a statement.
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  2 --
->   drivers/gpu/drm/msm/adreno/adreno_gpu.c |  1 -
->   drivers/gpu/drm/msm/adreno/adreno_gpu.h | 22 +++++++++-------------
->   3 files changed, 9 insertions(+), 16 deletions(-)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Certainly Yes. Splitting across '+' was the last resort. For some 
+reason, I thought any other option of splitting was breaking checkpatch 
+for ryan so we had to do that. But, for this change it seems like even 
+if we had done like below checkpatch didnt complain.
 
--- 
-With best wishes
-Dmitry
+@@ -900,7 +900,7 @@ static void dpu_kms_mdp_snapshot(struct 
+msm_disp_state *disp_state, struct msm_k
+         /* dump CTL sub-blocks HW regs info */
+         for (i = 0; i < cat->ctl_count; i++)
+                 msm_disp_snapshot_add_block(disp_state, cat->ctl[i].len,
+-                               dpu_kms->mmio + cat->ctl[i].base, 
+"ctl_%d", i);
++                                           dpu_kms->mmio + 
+cat->ctl[i].base, "ctl_%d", i);
 
+But anyway, we can just take care of fixing indentation separately to 
+avoid the hassle.
+
+>>
+>>>>       /* dump DSPP sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->dspp_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len,
+>>>> -                dpu_kms->mmio + cat->dspp[i].base, "dspp_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len, 
+>>>> dpu_kms->mmio +
+>>>> +                        cat->dspp[i].base, cat->dspp[i].name);
+>>>>       /* dump INTF sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->intf_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->intf[i].len,
+>>>> -                dpu_kms->mmio + cat->intf[i].base, "intf_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, cat->intf[i].len, 
+>>>> dpu_kms->mmio +
+>>>> +                        cat->intf[i].base, cat->intf[i].name);
+>>>>       /* dump PP sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->pingpong_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->pingpong[i].len,
+>>>> -                dpu_kms->mmio + cat->pingpong[i].base, 
+>>>> "pingpong_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, 
+>>>> cat->pingpong[i].len, dpu_kms->mmio +
+>>>> +                        cat->pingpong[i].base, cat->pingpong[i].name);
+>>>>       /* dump SSPP sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->sspp_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len,
+>>>> -                dpu_kms->mmio + cat->sspp[i].base, "sspp_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len, 
+>>>> dpu_kms->mmio +
+>>>> +                        cat->sspp[i].base, cat->sspp[i].name);
+>>>>       /* dump LM sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->mixer_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len,
+>>>> -                dpu_kms->mmio + cat->mixer[i].base, "lm_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len, 
+>>>> dpu_kms->mmio +
+>>>> +                        cat->mixer[i].base, cat->mixer[i].name);
+>>>>       /* dump WB sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->wb_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
+>>>> -                dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, cat->wb[i].len, 
+>>>> dpu_kms->mmio +
+>>>> +                        cat->wb[i].base, cat->wb[i].name);
+>>>>       if (cat->mdp[0].features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
+>>>>           msm_disp_snapshot_add_block(disp_state, MDP_PERIPH_TOP0,
+>>>> @@ -944,8 +944,8 @@ static void dpu_kms_mdp_snapshot(struct 
+>>>> msm_disp_state *disp_state, struct msm_k
+>>>>       /* dump DSC sub-blocks HW regs info */
+>>>>       for (i = 0; i < cat->dsc_count; i++)
+>>>> -        msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
+>>>> -                dpu_kms->mmio + cat->dsc[i].base, "dsc_%d", i);
+>>>> +        msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len, 
+>>>> dpu_kms->mmio +
+>>>> +                        cat->dsc[i].base, cat->dsc[i].name);
+>>>>       pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>>>>   }
+>>>>
+>>>
+> 
