@@ -2,79 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D89D74AA5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 07:21:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76DB974AAB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 07:45:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232404AbjGGFVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 01:21:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40634 "EHLO
+        id S232257AbjGGFpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 01:45:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjGGFVC (ORCPT
+        with ESMTP id S231845AbjGGFpM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 01:21:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE22D2684;
-        Thu,  6 Jul 2023 22:20:45 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3674q9Rg028621;
-        Fri, 7 Jul 2023 05:20:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=tk+0xUjaXkcqSWaSR/rbMXpZdnO8MOFFvzF8RgLDr74=;
- b=Z9BzoRL+qF7bKdu44q3Jk3BoC/R0W4vdV4bR9JuzmAuUSSuvXFpdJTEi5VrfSDB6NuW1
- kYw3uHCVHmQJ+/A8YFbpgkRS8b0RYZ1AB3y/6kg3BTQNw1qelGFgI6M6k5ybwXQ8jWKH
- dKtVEIjIFaDuhGRe7tU1ShyySBy/m2qFXhzLQEGp667js7BCeWuJ9fZ9S1ZaCKvFn4Dw
- QBLr377gvTmsLDN3VVLOZBz7gFwRvFrv+0h2D//MrdOYWUMAWqV5HRf+TXD2pvBQzIsl
- pMd7TwlqrIv3IC0/qTZfPqyuZ6J+agry+tRvy7Bavt7vVF3JyLCcyRidEruzqjDykUDu 4Q== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rp9vp097f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Jul 2023 05:20:42 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3675KI4W029603;
-        Fri, 7 Jul 2023 05:20:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3rjd7kp70a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 07 Jul 2023 05:20:18 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3675KH9B029571;
-        Fri, 7 Jul 2023 05:20:18 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3675KGaf029563;
-        Fri, 07 Jul 2023 05:20:18 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id 398854EF7; Fri,  7 Jul 2023 10:50:17 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linus.walleij@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH v3 4/4] pinctrl: qcom-pmic-gpio: Add support for pmx75
-Date:   Fri,  7 Jul 2023 10:50:09 +0530
-Message-Id: <1688707209-30151-5-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1688707209-30151-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1688707209-30151-1-git-send-email-quic_rohiagar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nl6-sXjJkpl2v0qjpaky9Be2sJhsbSVr
-X-Proofpoint-ORIG-GUID: nl6-sXjJkpl2v0qjpaky9Be2sJhsbSVr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-07_02,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 impostorscore=0
- mlxlogscore=930 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2307070049
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        Fri, 7 Jul 2023 01:45:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0054F1BE9;
+        Thu,  6 Jul 2023 22:45:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8812B6172F;
+        Fri,  7 Jul 2023 05:45:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431A9C433C7;
+        Fri,  7 Jul 2023 05:45:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688708710;
+        bh=JCAAcs0eH4fcBRh9GiWMIDfHTh9vSCIDK0dDnFUrOdQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=r4i6mHxi4K5AXjJVKN2O71jAe7SeWukkMNI5oPd8abjnKa9ysGdNuxRHNjHob0lep
+         kniWKEImQ14AADEDOOSrjnwmORZa2RaXq89sdCq94L3JHhG5OSb+bqtb0vcGOtP9dS
+         Pb48Qlr7JnDgnNIGMTnHNvSGR5NIfc7i7R5YVKu79UqLOB+0uznvTvieKLCVUYxogk
+         vz/A+DSAVEAozbApszTGQKAbI5xEwSzIuZSx6rDEpU137VXbNFlKOFqp1hbXPCYXWy
+         dTIzNS5fw5pr/NxZQtuqF4txt/9nK4IUs4kx5TLGFk+yp5Ure7UdEeko1ePvcQdHxe
+         5BuHrC2Pw1PXQ==
+Date:   Fri, 7 Jul 2023 11:14:54 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     manivannan.sadhasivam@linaro.org, helgaas@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>
+Subject: Re: [PATCH v2 1/8] PCI: endpoint: Add dstate change notifier support
+Message-ID: <20230707054454.GA6001@thinkpad>
+References: <1688122331-25478-1-git-send-email-quic_krichai@quicinc.com>
+ <1688122331-25478-2-git-send-email-quic_krichai@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1688122331-25478-2-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,25 +66,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-pmx75 pmic support gpio controller so add compatible in the driver.
+On Fri, Jun 30, 2023 at 04:22:04PM +0530, Krishna chaitanya chundru wrote:
+> Add support to notify the EPF device about the D-state change event
+> from the EPC device.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  Documentation/PCI/endpoint/pci-endpoint.rst |  5 +++++
+>  drivers/pci/endpoint/pci-epc-core.c         | 27 +++++++++++++++++++++++++++
+>  include/linux/pci-epc.h                     |  1 +
+>  include/linux/pci-epf.h                     |  1 +
+>  4 files changed, 34 insertions(+)
+> 
+> diff --git a/Documentation/PCI/endpoint/pci-endpoint.rst b/Documentation/PCI/endpoint/pci-endpoint.rst
+> index 4f5622a..0538cdc 100644
+> --- a/Documentation/PCI/endpoint/pci-endpoint.rst
+> +++ b/Documentation/PCI/endpoint/pci-endpoint.rst
+> @@ -78,6 +78,11 @@ by the PCI controller driver.
+>     Cleanup the pci_epc_mem structure allocated during pci_epc_mem_init().
+>  
+>  
+> +* pci_epc_dstate_change()
+> +
+> +   In order to notify all the function devices that the EPC device has
+> +   changed its D-state.
+> +
+>  EPC APIs for the PCI Endpoint Function Driver
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>  
+> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+> index 6c54fa5..cad360f 100644
+> --- a/drivers/pci/endpoint/pci-epc-core.c
+> +++ b/drivers/pci/endpoint/pci-epc-core.c
+> @@ -785,6 +785,33 @@ void pci_epc_bme_notify(struct pci_epc *epc)
+>  EXPORT_SYMBOL_GPL(pci_epc_bme_notify);
+>  
+>  /**
+> + * pci_epc_dstate_change() - Notify the EPF device that EPC device D-state
+> + *			has changed
+> + * @epc: the EPC device which has change in D-state
+> + * @state: the changed D-state
+> + *
+> + * Invoke to Notify the EPF device that the EPC device has D-state has
+> + * changed.
+> + */
+> +void pci_epc_dstate_change(struct pci_epc *epc, pci_power_t state)
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
- 1 file changed, 1 insertion(+)
+How about "pci_epc_dstate_notity()"?
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index f1918fe..deded9c 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1253,6 +1253,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
- 	/* pmx55 has 11 GPIOs with holes on 3, 7, 10, 11 */
- 	{ .compatible = "qcom,pmx55-gpio", .data = (void *) 11 },
- 	{ .compatible = "qcom,pmx65-gpio", .data = (void *) 16 },
-+	{ .compatible = "qcom,pmx75-gpio", .data = (void *) 16 },
- 	{ },
- };
- 
+Rest looks good.
+
+- Mani
+
+> +{
+> +	struct pci_epf *epf;
+> +
+> +	if (!epc || IS_ERR(epc))
+> +		return;
+> +
+> +	mutex_lock(&epc->list_lock);
+> +	list_for_each_entry(epf, &epc->pci_epf, list) {
+> +		mutex_lock(&epf->lock);
+> +		if (epf->event_ops && epf->event_ops->dstate_change)
+> +			epf->event_ops->dstate_change(epf, state);
+> +		mutex_unlock(&epf->lock);
+> +	}
+> +	mutex_unlock(&epc->list_lock);
+> +}
+> +EXPORT_SYMBOL_GPL(pci_epc_dstate_change);
+> +
+> +/**
+>   * pci_epc_destroy() - destroy the EPC device
+>   * @epc: the EPC device that has to be destroyed
+>   *
+> diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+> index 5cb6940..26a1108 100644
+> --- a/include/linux/pci-epc.h
+> +++ b/include/linux/pci-epc.h
+> @@ -251,4 +251,5 @@ void __iomem *pci_epc_mem_alloc_addr(struct pci_epc *epc,
+>  				     phys_addr_t *phys_addr, size_t size);
+>  void pci_epc_mem_free_addr(struct pci_epc *epc, phys_addr_t phys_addr,
+>  			   void __iomem *virt_addr, size_t size);
+> +void pci_epc_dstate_change(struct pci_epc *epc, pci_power_t state);
+>  #endif /* __LINUX_PCI_EPC_H */
+> diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+> index 4b52807..1d3c2a2 100644
+> --- a/include/linux/pci-epf.h
+> +++ b/include/linux/pci-epf.h
+> @@ -79,6 +79,7 @@ struct pci_epc_event_ops {
+>  	int (*link_up)(struct pci_epf *epf);
+>  	int (*link_down)(struct pci_epf *epf);
+>  	int (*bme)(struct pci_epf *epf);
+> +	int (*dstate_change)(struct pci_epf *epf, pci_power_t state);
+>  };
+>  
+>  /**
+> -- 
+> 2.7.4
+> 
+
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
