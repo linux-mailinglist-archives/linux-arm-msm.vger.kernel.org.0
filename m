@@ -2,74 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 427DC74B7FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 22:37:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06A4774B85E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 22:49:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231953AbjGGUhh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 16:37:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50796 "EHLO
+        id S229631AbjGGUtr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 16:49:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231316AbjGGUhg (ORCPT
+        with ESMTP id S229502AbjGGUtr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 16:37:36 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC211FEB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 13:37:35 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fb863edcb6so3815895e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 13:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688762253; x=1691354253;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wJZCo+Qt7gE7l1ShQuf3LZCI3Z5wl4+iSR6a096SvjI=;
-        b=sHHxdmup4Z2u8y3PBO+GMRckSGmKLerei8gBJSTjHGo+l4LvGkO9jQaRU5/nBPsFs1
-         P7ywZatz6/jK+7zoJP/azP+uo/5nd9r1XK0/eTPDa38Q0XNzhsWVvxaphTQaTpSNfto/
-         OdH3G1jGwvdmsa2rE5st5Ucrb3aI4iikJtnpeBUaZxvALNguPdJT6QzPs/1bujVW62+i
-         Uql6vygteHXbTT1L3ENmg4HMUj2R31KGD1i4KQwnZ+nUKegx/Iph1jW3g6n3XJ8ho+02
-         zw2nbqDjiQR2LXTj0luJ71XvmpPp5P2EdktxRnGek3d9vCjyMxiKMwE841FpbR+73HOB
-         ftvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688762253; x=1691354253;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wJZCo+Qt7gE7l1ShQuf3LZCI3Z5wl4+iSR6a096SvjI=;
-        b=irmwdEHKvPOEwoWndVLpaKXZU7opnsaQ65iumxvmXRYefAiQnipkrLdfJIToVY6mm4
-         1f75qeqLvfGA3ksMYPwokh1YqIIfCxlDOA4V7QhyA5PvacqkD27GpCPqVEo9RQF/QngC
-         B3mKlATOBAuAERxBtSF52GYSGBP02p1k2LcE1n62zL5OeuAqJ8AIUfwRlCdZk/VgkeXP
-         HaHn/BT2jzQ+tN7NZyV2GTRylZkNbxev+ODrdQ9AQHypOeo8CHo2LidDBWJ2Gs58rmJ8
-         1qmOisyimygEwwcj8ISj2DwsjPIUCs83FxvEDQ92FzvGCYqZj0+rVxikDc2bBFoXx8m5
-         th2Q==
-X-Gm-Message-State: ABy/qLZHJTR1B+zHQVJejCjiZa7kcDPwf3EZMIDuVncxuKBfQAfq1YED
-        TzXug/ABGsUGZEkSmR/3+7Omow==
-X-Google-Smtp-Source: APBJJlFjLrnMYE5rZlWtdKMLlkyxmLmT7Qm7lUqHLnVmn4mtWYD72yXzRx09g2+hbFYef0u2xxk7qg==
-X-Received: by 2002:ac2:4e8c:0:b0:4fb:61ea:95dc with SMTP id o12-20020ac24e8c000000b004fb61ea95dcmr4352844lfr.7.1688762253582;
-        Fri, 07 Jul 2023 13:37:33 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d4-20020ac244c4000000b004fb738796casm808899lfm.40.2023.07.07.13.37.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 13:37:33 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 13/13] drm/msm/dpu: use drmm-managed allocation for dpu_encoder_virt
-Date:   Fri,  7 Jul 2023 23:37:24 +0300
-Message-Id: <20230707203724.3820757-14-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230707203724.3820757-1-dmitry.baryshkov@linaro.org>
-References: <20230707203724.3820757-1-dmitry.baryshkov@linaro.org>
+        Fri, 7 Jul 2023 16:49:47 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14C11FEB;
+        Fri,  7 Jul 2023 13:49:45 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 367JoMLO020795;
+        Fri, 7 Jul 2023 20:49:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=VsMEyiopGF1s8z/uSSx+s6O0JMpIfYNGYZY2ht5P2MI=;
+ b=GP/6RrHbX5zsludgi+sOZYtUuhUOct+z/t3yd17ah5uEvdRcnVMUqPrqa6KFq0GFajj1
+ 7RoczTud2X5+VsWFkBZKzfYPGmot163j+6yIoHQ5DifrD2s01aNuw1o5+jUSxOaLedvV
+ xAL4AwWgYoSr1wDmXl4MJFHwaiNUXgH7hydTDeEVRDCuAk3VXZHqU2k+EryvA6cQdAIy
+ OA57Ax6brkXWWLhvqAhS38Bqb7ZLX3wMhJkJOtPBvaZvr5+kdx4QRA9h2fByFMGNxVkg
+ gT7WDYF4L+t5OMO8Z128wpMBI0tWy0oFofCdKbJsbCv5ReJj+qpgOE7FNULBz8cfAsJG Yw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rp96vteqw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Jul 2023 20:49:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 367KnF50013462
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 7 Jul 2023 20:49:15 GMT
+Received: from [10.71.108.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 7 Jul
+ 2023 13:49:14 -0700
+Message-ID: <ee853769-d1ba-5189-1afd-62731c62966c@quicinc.com>
+Date:   Fri, 7 Jul 2023 13:49:13 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v4 6/6] drm/msm/dpu: Update dev core dump to dump
+ registers of sub-blocks
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC:     Rob Clark <robdclark@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <quic_jesszhan@quicinc.com>
+References: <20230622-devcoredump_patch-v4-0-e304ddbe9648@quicinc.com>
+ <20230622-devcoredump_patch-v4-6-e304ddbe9648@quicinc.com>
+ <0493c891-9cde-8284-a988-b6e95135db85@linaro.org>
+From:   Ryan McCann <quic_rmccann@quicinc.com>
+In-Reply-To: <0493c891-9cde-8284-a988-b6e95135db85@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SbXiWfXw_2A7AJZsGZhmCjIqhcDxhsBu
+X-Proofpoint-GUID: SbXiWfXw_2A7AJZsGZhmCjIqhcDxhsBu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-07_14,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307070192
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,104 +89,163 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It is incorrect to use devm-managed memory allocations for DRM data
-structures exposed to userspace. They should use drmm_ allocations.
-Change struct dpu_encoder allocation to use drmm_encoder_alloc(). This
-removes the need to perform any actions on encoder destruction.
+My apologies for the private email, I hit reply instead of reply all by 
+accident.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 44 ++++-----------------
- 1 file changed, 7 insertions(+), 37 deletions(-)
+On 7/6/2023 5:24 PM, Dmitry Baryshkov wrote:
+> On 06/07/2023 23:48, Ryan McCann wrote:
+>> Currently, the device core dump mechanism does not dump registers of
+>> sub-blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Edit
+>> dpu_kms_mdp_snapshot function to account for sub-blocks.
+>>
+>> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 66 
+>> ++++++++++++++++++++++++++++++---
+>>   1 file changed, 60 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 70dbb1204e6c..afc45d597d65 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -903,25 +903,58 @@ static void dpu_kms_mdp_snapshot(struct 
+>> msm_disp_state *disp_state, struct msm_k
+>>                           cat->ctl[i].base, cat->ctl[i].name);
+>>       /* dump DSPP sub-blocks HW regs info */
+>> -    for (i = 0; i < cat->dspp_count; i++)
+>> +    for (i = 0; i < cat->dspp_count; i++) {
+>>           msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len, 
+>> dpu_kms->mmio +
+>>                           cat->dspp[i].base, cat->dspp[i].name);
+>> +        if (cat->dspp[i].sblk && cat->dspp[i].sblk->pcc.len > 0)
+>> +            msm_disp_snapshot_add_block(disp_state, 
+>> cat->dspp[i].sblk->pcc.len,
+>> +                            dpu_kms->mmio + cat->dspp[i].base +
+>> +                            cat->dspp[i].sblk->pcc.base, "%s_%s",
+> 
+> This might look simpler in the following form. Could you please consider 
+> it?
+> 
+> 
+> void *base =  dpu_kms + cat->dspp[i].base;
+> 
+> msm_disp_snapshot_add_block(..., base, cat->dspp[i].name)
+> 
+> if (!cat->dspp[i].sblk)
+>      continue;
+> 
+> if (cat->dspp[i].sblk->pcc.len)
+>      msm_disp_snapshot_add_block(..., base + 
+> cat->dspp[i].sblk->pcc.base, ...);
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index b42176ce4a3a..fef66c6cb488 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -443,23 +443,6 @@ int dpu_encoder_get_linecount(struct drm_encoder *drm_enc)
- 	return linecount;
- }
- 
--static void dpu_encoder_destroy(struct drm_encoder *drm_enc)
--{
--	struct dpu_encoder_virt *dpu_enc = NULL;
--	int i = 0;
--
--	if (!drm_enc) {
--		DPU_ERROR("invalid encoder\n");
--		return;
--	}
--
--	dpu_enc = to_dpu_encoder_virt(drm_enc);
--	DPU_DEBUG_ENC(dpu_enc, "\n");
--
--	drm_encoder_cleanup(drm_enc);
--	mutex_destroy(&dpu_enc->enc_lock);
--}
--
- void dpu_encoder_helper_split_config(
- 		struct dpu_encoder_phys *phys_enc,
- 		enum dpu_intf interface)
-@@ -2365,7 +2348,6 @@ static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
- };
- 
- static const struct drm_encoder_funcs dpu_encoder_funcs = {
--		.destroy = dpu_encoder_destroy,
- 		.late_register = dpu_encoder_late_register,
- 		.early_unregister = dpu_encoder_early_unregister,
- };
-@@ -2376,21 +2358,14 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
--	struct drm_encoder *drm_enc = NULL;
--	struct dpu_encoder_virt *dpu_enc = NULL;
-+	struct dpu_encoder_virt *dpu_enc;
- 	int ret = 0;
- 
--	dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
-+	dpu_enc = drmm_encoder_alloc(dev, struct dpu_encoder_virt, base,
-+				     &dpu_encoder_funcs, drm_enc_mode, NULL);
- 	if (!dpu_enc)
- 		return ERR_PTR(-ENOMEM);
- 
--	ret = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
--			       drm_enc_mode, NULL);
--	if (ret) {
--		devm_kfree(dev->dev, dpu_enc);
--		return ERR_PTR(ret);
--	}
--
- 	drm_encoder_helper_add(&dpu_enc->base, &dpu_encoder_helper_funcs);
- 
- 	spin_lock_init(&dpu_enc->enc_spinlock);
-@@ -2399,8 +2374,10 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
- 	mutex_init(&dpu_enc->rc_lock);
- 
- 	ret = dpu_encoder_setup_display(dpu_enc, dpu_kms, disp_info);
--	if (ret)
--		goto fail;
-+	if (ret) {
-+		DPU_ERROR("failed to setup encoder\n");
-+		return ERR_PTR(-ENOMEM);
-+	}
- 
- 	atomic_set(&dpu_enc->frame_done_timeout_ms, 0);
- 	timer_setup(&dpu_enc->frame_done_timer,
-@@ -2426,13 +2403,6 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
- 	DPU_DEBUG_ENC(dpu_enc, "created\n");
- 
- 	return &dpu_enc->base;
--
--fail:
--	DPU_ERROR("failed to create encoder\n");
--	if (drm_enc)
--		dpu_encoder_destroy(drm_enc);
--
--	return ERR_PTR(ret);
- }
- 
- int dpu_encoder_wait_for_event(struct drm_encoder *drm_enc,
--- 
-2.39.2
+Regarding what we discussed in the private email, is what I had for base 
+in v2
 
+(https://patchwork.freedesktop.org/patch/545690/?series=120249&rev=1)
+
+essentially what you have in mind?
+
+> 
+>> +                            cat->dspp[i].name,
+>> +                            cat->dspp[i].sblk->pcc.name);
+>> +    }
+>> +
+>>       /* dump INTF sub-blocks HW regs info */
+>>       for (i = 0; i < cat->intf_count; i++)
+>>           msm_disp_snapshot_add_block(disp_state, cat->intf[i].len, 
+>> dpu_kms->mmio +
+>>                           cat->intf[i].base, cat->intf[i].name);
+>>       /* dump PP sub-blocks HW regs info */
+>> -    for (i = 0; i < cat->pingpong_count; i++)
+>> +    for (i = 0; i < cat->pingpong_count; i++) {
+>>           msm_disp_snapshot_add_block(disp_state, 
+>> cat->pingpong[i].len, dpu_kms->mmio +
+>>                           cat->pingpong[i].base, cat->pingpong[i].name);
+>> +        /* TE2 block has length of 0, so will not print it */
+>> +
+>> +        if (cat->pingpong[i].sblk && 
+>> cat->pingpong[i].sblk->dither.len > 0)
+>> +            msm_disp_snapshot_add_block(disp_state, 
+>> cat->pingpong[i].sblk->dither.len,
+>> +                            dpu_kms->mmio + cat->pingpong[i].base +
+>> +                            cat->pingpong[i].sblk->dither.base, "%s_%s",
+>> +                            cat->pingpong[i].name,
+>> +                            cat->pingpong[i].sblk->dither.name);
+>> +    }
+>> +
+>>       /* dump SSPP sub-blocks HW regs info */
+>> -    for (i = 0; i < cat->sspp_count; i++)
+>> +    for (i = 0; i < cat->sspp_count; i++) {
+>>           msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len, 
+>> dpu_kms->mmio +
+>>                           cat->sspp[i].base, cat->sspp[i].name);
+>> +        if (cat->sspp[i].sblk && cat->sspp[i].sblk->scaler_blk.len > 0)
+>> +            msm_disp_snapshot_add_block(disp_state, 
+>> cat->sspp[i].sblk->scaler_blk.len,
+>> +                            dpu_kms->mmio + cat->sspp[i].base +
+>> +                            cat->sspp[i].sblk->scaler_blk.base, "%s_%s",
+>> +                            cat->sspp[i].name,
+>> +                            cat->sspp[i].sblk->scaler_blk.name);
+>> +
+>> +        if (cat->sspp[i].sblk && cat->sspp[i].sblk->csc_blk.len > 0)
+>> +            msm_disp_snapshot_add_block(disp_state, 
+>> cat->sspp[i].sblk->csc_blk.len,
+>> +                            dpu_kms->mmio + cat->sspp[i].base +
+>> +                            cat->sspp[i].sblk->csc_blk.base, "%s_%s",
+>> +                            cat->sspp[i].name,
+>> +                            cat->sspp[i].sblk->csc_blk.name);
+>> +    }
+>> +
+>>       /* dump LM sub-blocks HW regs info */
+>>       for (i = 0; i < cat->mixer_count; i++)
+>>           msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len, 
+>> dpu_kms->mmio +
+>> @@ -943,9 +976,30 @@ static void dpu_kms_mdp_snapshot(struct 
+>> msm_disp_state *disp_state, struct msm_k
+>>       }
+>>       /* dump DSC sub-blocks HW regs info */
+>> -    for (i = 0; i < cat->dsc_count; i++)
+>> -        msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len, 
+>> dpu_kms->mmio +
+>> -                        cat->dsc[i].base, cat->dsc[i].name);
+>> +    for (i = 0; i < cat->dsc_count; i++) {
+>> +        if (cat->dsc[i].features & BIT(DPU_DSC_HW_REV_1_2)) {
+>> +            struct dpu_dsc_blk enc = cat->dsc[i].sblk->enc;
+>> +            struct dpu_dsc_blk ctl = cat->dsc[i].sblk->ctl;
+>> +
+>> +            /* For now, pass in a length of 0 because the DSC_BLK 
+>> register space
+>> +             * overlaps with the sblks' register space.
+>> +             *
+>> +             * TODO: Pass in a length of 0 to DSC_BLK_1_2 in the HW 
+>> catalog where
+>> +             * applicable.
+> 
+> Please assume that https://patchwork.freedesktop.org/series/119776/ and 
+> rebase your code on top of it.
+
+Roger.
+
+> 
+>> +             */
+>> +            msm_disp_snapshot_add_block(disp_state, 0, dpu_kms->mmio +
+>> +                            cat->dsc[i].base, cat->dsc[i].name);
+>> +            msm_disp_snapshot_add_block(disp_state, enc.len, 
+>> dpu_kms->mmio +
+>> +                            cat->dsc[i].base + enc.base, "%s_%s",
+>> +                            cat->dsc[i].name, enc.name);
+>> +            msm_disp_snapshot_add_block(disp_state, ctl.len, 
+>> dpu_kms->mmio +
+>> +                            cat->dsc[i].base + ctl.base, "%s_%s",
+>> +                            cat->dsc[i].name, ctl.name);
+>> +        } else {
+>> +            msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len, 
+>> dpu_kms->mmio +
+>> +                            cat->dsc[i].base, cat->dsc[i].name);
+>> +        }
+>> +    }
+>>       pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>>   }
+>>
+> 
