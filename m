@@ -2,250 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8E5774B903
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 23:58:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6949874B9D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 01:12:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232930AbjGGV6w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 17:58:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46888 "EHLO
+        id S229646AbjGGXM4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 19:12:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229773AbjGGV6m (ORCPT
+        with ESMTP id S229458AbjGGXMz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 17:58:42 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7734D2688
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 14:58:18 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-c2cf29195f8so2635004276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 14:58:18 -0700 (PDT)
+        Fri, 7 Jul 2023 19:12:55 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78A281FF9
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 16:12:54 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fb863edcb6so3994608e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 16:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688767094; x=1691359094;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=urIvIMoYHR6wFIwBX4+MGbcbTxdcdrDtNJHB7IMO87E=;
-        b=LzoJ48zhQ01CEQcGZQgcWyFBP2tt4XI/gDQzFMqhrmUWH6IZeqBr+xxsG4aJjf8JEs
-         Cr1OziFQ0fplCqTgPiUF4PS6BCVN5Y7JYJkiI5yL2UQEAJyUY8sJirG5DzWfcgSz+FJR
-         ZfsHZG7gisqF59/YmUNdWD9kvFrYn1CKTWRIsO1jT4KYLLdE46JCyANNif5tyP/09p6E
-         0R5wUAmKSKsMRd8q4QXcQmFVKCxIp1YyPkaRniUbuLuS9YgRC5ZQwvWg2uTFvt8rQo3p
-         af6VVxZT0HF92GXqfPMRZiqT0ouNxurol7mrLGzX7Z9qRb1xYWDVPzR545lQDtGBTrNQ
-         w8ZA==
+        d=linaro.org; s=google; t=1688771573; x=1691363573;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2n/H2No59Vs8LK9WsAaarYGCaij4epyQSN1PdTEfblI=;
+        b=Dla03EkKNz919pj9om1kw3yNUe83gMpfMMk7prnS2fq6OxdIOi0pnAfT8Tw/SoS0vc
+         mHOagzXXHLE6k6Z2hFCGwmhbOGPnSuZf/82RkP3L1qe9h7VqhbDAVbRypCk4YU4vAXlI
+         B7nMDeQ+xjdnZ1oUeR/hUG7NKr3aR8yt3GSo//FKcVdF8L5vJA1JuU8C4gFt4vS8xfmt
+         6v36kZSoZw/PNEPIE+9sLH9ZS8d/aN1gwyrkVW0H59xIQeEL7dO9VRsOObleauXa3rYa
+         ymRioYk5GIyRVwcSPelmy9+upuwVZRNwsvf7E/OdMj3a5Lg8yZkKHFKF5pMb+2aWRKYG
+         afVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688767094; x=1691359094;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1688771573; x=1691363573;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=urIvIMoYHR6wFIwBX4+MGbcbTxdcdrDtNJHB7IMO87E=;
-        b=f/vEn9i1wbPYG/3N5dNRp9q6oDkffjptIPFmzw4ovEOauG8aITkpFjVNvSTSZjXwXG
-         MKZ/uEyHhQdofYHyIIHMoW3bFk0Wt8ehWInIe2Bue3Iz7Zsw50o2h3PIYfHsvOCkVZzV
-         BDDiRx97xDHVWFbodaN8ePdKSTWhBTz0zZUZAwWf3+v52vGeBZwcBkuHhNA15DMocoLt
-         arKdYFVepNsoPhApcLWgmL7L9mlgCF1k2afAhmREjM6/AH/G9k/Fv0YDloIJZKT2q3iC
-         YJbEdO754Hp3GQuPjxzy0Pw1YCEufkMEB9dpHYXSkjqcmNBGYKcwa9g9vf//WNcnCxRF
-         5+6Q==
-X-Gm-Message-State: ABy/qLYHLS1PQyAlIZKhgNcMsLnT6OAD1U1Enb+shBtX/gLT19VgJ4xw
-        T/UBHF6+PpBXAaEYU2FU9cLDMoQjkSWYZHhAomAufJue7CXp6zvW
-X-Google-Smtp-Source: APBJJlEZ0aMW1BynuZY1nBJ104lyyGw5RKn8yW+B+2efS9x6d0pBfqski96kniXhXoHcmqrJCpb/RXTj+uLYfd7aszU=
-X-Received: by 2002:a25:41c8:0:b0:c61:daee:2c8e with SMTP id
- o191-20020a2541c8000000b00c61daee2c8emr4839504yba.63.1688767094263; Fri, 07
- Jul 2023 14:58:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230622-devcoredump_patch-v4-0-e304ddbe9648@quicinc.com>
- <20230622-devcoredump_patch-v4-6-e304ddbe9648@quicinc.com>
- <0493c891-9cde-8284-a988-b6e95135db85@linaro.org> <ee853769-d1ba-5189-1afd-62731c62966c@quicinc.com>
-In-Reply-To: <ee853769-d1ba-5189-1afd-62731c62966c@quicinc.com>
+        bh=2n/H2No59Vs8LK9WsAaarYGCaij4epyQSN1PdTEfblI=;
+        b=Zd6/bKQVRTLstT57kwSO0Vn3ziTfeYRex1Rzo6i5DLigRw1oT7LWEhYD8kohiJeYFy
+         B8NK9V+r8ZXpA/z1qcYODngQPekCxj+mkS3J4Wl8JMpKxJD5YUscbQLIfLcEDv+tMIBd
+         QMVVUXePZ2hJDWmMiEu/ttf2+w/MYCz9R0i6Hcc1NLL5UfEVrpuY66+a1IwiR+JdUVd/
+         oznEVe4Dxw8Si02eQzBrL4mxezyYXa2d6OvRwTslS2m4MqOsci+z03h2qQPsbZI20+WA
+         awhrAep6PivP9Ao0ubW4Ulxj5MY3mkPpfRvCh4EX7ZE6KGG9j3I3yj976aW9K5vmSB9P
+         agkg==
+X-Gm-Message-State: ABy/qLblsJmEILwAZO9tZy+mo6eAdZZFqHfjBNHAM2+gGri9AWHBNq7u
+        40Jq5n+bRSZLmeXbjxS7kOyr8w==
+X-Google-Smtp-Source: APBJJlHaSNkPJSckPK3AAkcQy9zW4vvooecLgJWL8z8f9yFYqF9oVcu6N208L/2isuZAq1kMddZLaQ==
+X-Received: by 2002:ac2:5b9b:0:b0:4fb:79b5:5512 with SMTP id o27-20020ac25b9b000000b004fb79b55512mr4309889lfn.66.1688771572596;
+        Fri, 07 Jul 2023 16:12:52 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id d1-20020ac25441000000b004fb7388360esm841643lfn.188.2023.07.07.16.12.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jul 2023 16:12:52 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 8 Jul 2023 00:58:03 +0300
-Message-ID: <CAA8EJprRtR1obKOOhHN1FAKs9O0na=ZjFBqrphaZ4vW92mSnUQ@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] drm/msm/dpu: Update dev core dump to dump
- registers of sub-blocks
-To:     Ryan McCann <quic_rmccann@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        quic_jesszhan@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 00/13] drm/msm/dpu: use managed memory allocations
+Date:   Sat,  8 Jul 2023 02:12:38 +0300
+Message-Id: <20230707231251.3849701-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 7 Jul 2023 at 23:49, Ryan McCann <quic_rmccann@quicinc.com> wrote:
->
-> My apologies for the private email, I hit reply instead of reply all by
-> accident.
+Please excuse me for sending v2 on the same day, it fixes erorr paths
+for drmm allocation code.
 
-No problem, it happens sometimes.
+In a lots of places in DPU driver memory is allocated by using the
+kzalloc and then manually freed using kfree. However thes memory chunks
+have a well-defined life cycle. They are either a part of the driver's
+runtime and can be devm_kzalloc'ed or are exposed to userspace via the
+DRM objects and thus can be drmm_alloc'ed. Implement corresponding
+runtime resource manangement for the DPU driver.
 
->
-> On 7/6/2023 5:24 PM, Dmitry Baryshkov wrote:
-> > On 06/07/2023 23:48, Ryan McCann wrote:
-> >> Currently, the device core dump mechanism does not dump registers of
-> >> sub-blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Edit
-> >> dpu_kms_mdp_snapshot function to account for sub-blocks.
-> >>
-> >> Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 66
-> >> ++++++++++++++++++++++++++++++---
-> >>   1 file changed, 60 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> >> index 70dbb1204e6c..afc45d597d65 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> >> @@ -903,25 +903,58 @@ static void dpu_kms_mdp_snapshot(struct
-> >> msm_disp_state *disp_state, struct msm_k
-> >>                           cat->ctl[i].base, cat->ctl[i].name);
-> >>       /* dump DSPP sub-blocks HW regs info */
-> >> -    for (i = 0; i < cat->dspp_count; i++)
-> >> +    for (i = 0; i < cat->dspp_count; i++) {
-> >>           msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len,
-> >> dpu_kms->mmio +
-> >>                           cat->dspp[i].base, cat->dspp[i].name);
-> >> +        if (cat->dspp[i].sblk && cat->dspp[i].sblk->pcc.len > 0)
-> >> +            msm_disp_snapshot_add_block(disp_state,
-> >> cat->dspp[i].sblk->pcc.len,
-> >> +                            dpu_kms->mmio + cat->dspp[i].base +
-> >> +                            cat->dspp[i].sblk->pcc.base, "%s_%s",
-> >
-> > This might look simpler in the following form. Could you please consider
-> > it?
-> >
-> >
-> > void *base =  dpu_kms + cat->dspp[i].base;
-> >
-> > msm_disp_snapshot_add_block(..., base, cat->dspp[i].name)
-> >
-> > if (!cat->dspp[i].sblk)
-> >      continue;
-> >
-> > if (cat->dspp[i].sblk->pcc.len)
-> >      msm_disp_snapshot_add_block(..., base +
-> > cat->dspp[i].sblk->pcc.base, ...);
->
-> Regarding what we discussed in the private email, is what I had for base
-> in v2
->
-> (https://patchwork.freedesktop.org/patch/545690/?series=120249&rev=1)
->
-> essentially what you have in mind?
->
-> >
-> >> +                            cat->dspp[i].name,
-> >> +                            cat->dspp[i].sblk->pcc.name);
-> >> +    }
-> >> +
-> >>       /* dump INTF sub-blocks HW regs info */
-> >>       for (i = 0; i < cat->intf_count; i++)
-> >>           msm_disp_snapshot_add_block(disp_state, cat->intf[i].len,
-> >> dpu_kms->mmio +
-> >>                           cat->intf[i].base, cat->intf[i].name);
-> >>       /* dump PP sub-blocks HW regs info */
-> >> -    for (i = 0; i < cat->pingpong_count; i++)
-> >> +    for (i = 0; i < cat->pingpong_count; i++) {
-> >>           msm_disp_snapshot_add_block(disp_state,
-> >> cat->pingpong[i].len, dpu_kms->mmio +
-> >>                           cat->pingpong[i].base, cat->pingpong[i].name);
-> >> +        /* TE2 block has length of 0, so will not print it */
-> >> +
-> >> +        if (cat->pingpong[i].sblk &&
-> >> cat->pingpong[i].sblk->dither.len > 0)
-> >> +            msm_disp_snapshot_add_block(disp_state,
-> >> cat->pingpong[i].sblk->dither.len,
-> >> +                            dpu_kms->mmio + cat->pingpong[i].base +
-> >> +                            cat->pingpong[i].sblk->dither.base, "%s_%s",
-> >> +                            cat->pingpong[i].name,
-> >> +                            cat->pingpong[i].sblk->dither.name);
-> >> +    }
-> >> +
-> >>       /* dump SSPP sub-blocks HW regs info */
-> >> -    for (i = 0; i < cat->sspp_count; i++)
-> >> +    for (i = 0; i < cat->sspp_count; i++) {
-> >>           msm_disp_snapshot_add_block(disp_state, cat->sspp[i].len,
-> >> dpu_kms->mmio +
-> >>                           cat->sspp[i].base, cat->sspp[i].name);
-> >> +        if (cat->sspp[i].sblk && cat->sspp[i].sblk->scaler_blk.len > 0)
-> >> +            msm_disp_snapshot_add_block(disp_state,
-> >> cat->sspp[i].sblk->scaler_blk.len,
-> >> +                            dpu_kms->mmio + cat->sspp[i].base +
-> >> +                            cat->sspp[i].sblk->scaler_blk.base, "%s_%s",
-> >> +                            cat->sspp[i].name,
-> >> +                            cat->sspp[i].sblk->scaler_blk.name);
-> >> +
-> >> +        if (cat->sspp[i].sblk && cat->sspp[i].sblk->csc_blk.len > 0)
-> >> +            msm_disp_snapshot_add_block(disp_state,
-> >> cat->sspp[i].sblk->csc_blk.len,
-> >> +                            dpu_kms->mmio + cat->sspp[i].base +
-> >> +                            cat->sspp[i].sblk->csc_blk.base, "%s_%s",
-> >> +                            cat->sspp[i].name,
-> >> +                            cat->sspp[i].sblk->csc_blk.name);
-> >> +    }
-> >> +
-> >>       /* dump LM sub-blocks HW regs info */
-> >>       for (i = 0; i < cat->mixer_count; i++)
-> >>           msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len,
-> >> dpu_kms->mmio +
-> >> @@ -943,9 +976,30 @@ static void dpu_kms_mdp_snapshot(struct
-> >> msm_disp_state *disp_state, struct msm_k
-> >>       }
-> >>       /* dump DSC sub-blocks HW regs info */
-> >> -    for (i = 0; i < cat->dsc_count; i++)
-> >> -        msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
-> >> dpu_kms->mmio +
-> >> -                        cat->dsc[i].base, cat->dsc[i].name);
-> >> +    for (i = 0; i < cat->dsc_count; i++) {
-> >> +        if (cat->dsc[i].features & BIT(DPU_DSC_HW_REV_1_2)) {
-> >> +            struct dpu_dsc_blk enc = cat->dsc[i].sblk->enc;
-> >> +            struct dpu_dsc_blk ctl = cat->dsc[i].sblk->ctl;
-> >> +
-> >> +            /* For now, pass in a length of 0 because the DSC_BLK
-> >> register space
-> >> +             * overlaps with the sblks' register space.
-> >> +             *
-> >> +             * TODO: Pass in a length of 0 to DSC_BLK_1_2 in the HW
-> >> catalog where
-> >> +             * applicable.
-> >
-> > Please assume that https://patchwork.freedesktop.org/series/119776/ and
-> > rebase your code on top of it.
->
-> Roger.
->
-> >
-> >> +             */
-> >> +            msm_disp_snapshot_add_block(disp_state, 0, dpu_kms->mmio +
-> >> +                            cat->dsc[i].base, cat->dsc[i].name);
-> >> +            msm_disp_snapshot_add_block(disp_state, enc.len,
-> >> dpu_kms->mmio +
-> >> +                            cat->dsc[i].base + enc.base, "%s_%s",
-> >> +                            cat->dsc[i].name, enc.name);
-> >> +            msm_disp_snapshot_add_block(disp_state, ctl.len,
-> >> dpu_kms->mmio +
-> >> +                            cat->dsc[i].base + ctl.base, "%s_%s",
-> >> +                            cat->dsc[i].name, ctl.name);
-> >> +        } else {
-> >> +            msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
-> >> dpu_kms->mmio +
-> >> +                            cat->dsc[i].base, cat->dsc[i].name);
-> >> +        }
-> >> +    }
-> >>       pm_runtime_put_sync(&dpu_kms->pdev->dev);
-> >>   }
-> >>
-> >
+Dependencies: [1].
 
+[1] https://patchwork.freedesktop.org/series/118839/
 
+Changes since v1:
+- Fix error handling for some of drmm_foo_alloc() functions, which
+  return error pointer in case of an error rather than typical NULL.
+
+Dmitry Baryshkov (13):
+  drm/msm/dpu: cleanup dpu_kms_hw_init error path
+  drm/msm/dpu: remove IS_ERR_OR_NULL for dpu_hw_intr_init() error
+    handling
+  drm/msm/dpu: use devres-managed allocation for interrupts data
+  drm/msm/dpu: use devres-managed allocation for VBIF data
+  drm/msm/dpu: use devres-managed allocation for MDP TOP
+  drm/msm/dpu: use devres-managed allocation for HW blocks
+  drm/msm/dpu: drop unused dpu_plane::lock
+  drm/msm/dpu: remove QoS teardown on plane destruction
+  drm/msm/dpu: use drmm-managed allocation for dpu_plane
+  drm/msm/dpu: use drmm-managed allocation for dpu_crtc
+  drm/msm/dpu: use drmm-managed allocation for dpu_encoder_phys
+  drm/msm/dpu: drop dpu_encoder_phys_ops::destroy
+  drm/msm/dpu: use drmm-managed allocation for dpu_encoder_virt
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 25 ++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 77 ++++------------
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  | 10 +--
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 15 +---
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 13 +--
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 21 +----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    | 19 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    | 16 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 12 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    | 10 ++-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c    |  7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c   | 16 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h   | 12 +--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 14 ++-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 11 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   | 15 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   | 12 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c     | 14 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h     | 12 +--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 14 ++-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    | 13 +--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 14 ++-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 13 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 15 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    | 17 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c   | 14 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h   |  8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c     | 14 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h     | 12 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 51 ++++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 59 +++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 90 +++----------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        | 11 +--
+ 36 files changed, 216 insertions(+), 476 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.39.2
+
