@@ -2,108 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A85E774AA2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 07:09:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E756F74AA37
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 07:10:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232211AbjGGFJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 01:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37248 "EHLO
+        id S231636AbjGGFKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 01:10:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231721AbjGGFJK (ORCPT
+        with ESMTP id S232298AbjGGFKy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 01:09:10 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B90421723
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jul 2023 22:09:08 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id d75a77b69052e-40373bc598dso12533191cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jul 2023 22:09:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688706548; x=1691298548;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=T5y/+CDvW4q4nPslYcY1qr6Pi0qBims4XmxOTDD9PnQ=;
-        b=jmAZ/s2rnrg58iaLEWp/D0jLfi84pEOPfMtjwV+XM4n35ALR+55gpg6wPtblbqsnHV
-         ZczdMxtpywYTugmBaFzxWyTIhBD8cd9vVQOo7lUxaJ2Tx3nvWa4XsWjvvt/1pXJKq7wZ
-         FvksSiy5tKxMxWk86f7zeqI5BUWS89/pBvwzh9w7FNPKYyOZKVrH0d7m5xHGU6K7s9jv
-         Ku73xa/+z2jKhNv+mMpsFppD+84S0Q+jd2n7ZDOEddAwzh0K35bagqCMxPItgotJ38c6
-         NK3p8KZnIWSQgC4rE7rhmvhYvDBDiWdV5mho9/kjajiPvgYuClbbedxPlnG1YUvIPObR
-         Mpcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688706548; x=1691298548;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T5y/+CDvW4q4nPslYcY1qr6Pi0qBims4XmxOTDD9PnQ=;
-        b=eQYXi+Q5Pgv35JwYkF54xhUdQ3J0dL3KH0bC7Y4oG/InBRsy+5m+BxhbwOgZEKtR7x
-         3IFc+VH7h5o7A1c2GUMKcNHPSfabjYsVVehwqbclm95qviQiqt5tr4hyH+hdgV9+KH5d
-         bPeDTRZmSloMqEJIYJGXQgbfMii3wpmFoCefz4kEaAVz/H9KW+PjaF1Ix86bdSk29Aad
-         mp8/RDfWVaUfocmw+Ze7BZV6JQdJY0tllS29Z1SrAxrVt4Cy0rMXtsoEay2YAiSAPlh0
-         5EPFxejfKqv2VG5BiwHjZsShmuLzoCMT9ce86QUEmp57HPf9pjqY4khVti2pYq9SlmF6
-         ZJCw==
-X-Gm-Message-State: ABy/qLYCo14Ku6LeRzR6kZP/ek+FWlUY+vSVZNBPcA8PQE3uqOikB4xE
-        E6DbKkOUJ/ZCcy9mzHOcGEt04mIfWRMXyf8Polw/xg==
-X-Google-Smtp-Source: APBJJlF9DniBjLUxlR4EaKPZmHlVkNHy2BHSJ9i5UpfchxFNbdvHQG6nSwlT4BUa3GisoOc1ziTcbK3M7xtQx0kap34=
-X-Received: by 2002:a05:622a:1115:b0:402:9cff:4573 with SMTP id
- e21-20020a05622a111500b004029cff4573mr5331660qty.39.1688706547765; Thu, 06
- Jul 2023 22:09:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230602161246.1855448-1-amit.pundir@linaro.org>
- <358c69ad-fa8a-7386-fe75-92369883ee48@leemhuis.info> <0f6c9dcb-b7f6-fff9-6bed-f4585ea8e487@linaro.org>
- <CAD=FV=Xt2KYGY15+f+nHxkzKnwhHzw1A7=o+5kgCDWvHDv0DNg@mail.gmail.com>
- <20230620155902.clspxncyvpodixft@ripper> <5240ce3f-37fa-2747-92ee-23d71619f3ef@leemhuis.info>
- <CAMi1Hd2zunc=WNUE7KT-423RXTiX6LrY2hcWQdV3Dp3o8RdJtg@mail.gmail.com>
-In-Reply-To: <CAMi1Hd2zunc=WNUE7KT-423RXTiX6LrY2hcWQdV3Dp3o8RdJtg@mail.gmail.com>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Fri, 7 Jul 2023 10:38:31 +0530
-Message-ID: <CAMi1Hd2L-j9GHQH+4O6j6m2+HGy5oEsdMv6Qyp4RaWZDNCj-Bw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes up
-To:     Linux regressions mailing list <regressions@lists.linux.dev>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 7 Jul 2023 01:10:54 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81CF9171D;
+        Thu,  6 Jul 2023 22:10:53 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3670ZoLg031042;
+        Fri, 7 Jul 2023 05:10:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=YdrDcqpkMSX0lIDfhn5Jtl4Kw9FOYwj3ryECOo13J4M=;
+ b=fSdjqGjFYbFOKxLhvTtizebjoSGIi/oGwyXqeebI0vTr2l/naF8r6qccQ/psjcMWeBGO
+ 2j0QC6/KfRRKI+vWcM3dzTuHMKE9NAvt7HWCaSQticxJKMW+A+QqSIAguTK9aRw40qFm
+ mdmz2OA3M+4n4TmeCo8oDan9brjhEXbxNSCAs6AKfv9tZLtl6mI7/rx1sh6cS5VvIWeV
+ F3egcaO/v+NExpq8/EkGJzFOtmdsarl+2WKnBxCvwwdafzA2/LruEzBV6mSfUd+MgCM4
+ kM2xULk6fH1IVo51RMAKEI8JK11zZUD+aZqlA7OK0w6l+Zsa37xwxiZ+FG77/g/puUu5 5A== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rp8a60dw5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Jul 2023 05:10:43 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3675AePU021782;
+        Fri, 7 Jul 2023 05:10:40 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3rjd7kp6f4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 07 Jul 2023 05:10:40 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3675AeCL021771;
+        Fri, 7 Jul 2023 05:10:40 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3675Ae2P021768;
+        Fri, 07 Jul 2023 05:10:40 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 5767F4EF7; Fri,  7 Jul 2023 10:40:39 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        sboyd@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v3 0/2] Add compatible support for SDX75 pmic
+Date:   Fri,  7 Jul 2023 10:40:35 +0530
+Message-Id: <1688706637-28998-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: o1ffP49d2jgZVjVF519mTMUIzUwJKFhc
+X-Proofpoint-GUID: o1ffP49d2jgZVjVF519mTMUIzUwJKFhc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-07_02,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 clxscore=1015 phishscore=0 mlxlogscore=759 bulkscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307070047
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 22 Jun 2023 at 17:18, Amit Pundir <amit.pundir@linaro.org> wrote:
->
-> On Thu, 22 Jun 2023 at 13:17, Linux regression tracking (Thorsten
-> Leemhuis) <regressions@leemhuis.info> wrote:
-> >
-> > Hi, Thorsten here, the Linux kernel's regression tracker. Top-posting
-> > for once, to make this easily accessible to everyone.
-> >
-> > As Linus will likely release 6.4 on this or the following Sunday a quick
-> > status inquiry so I can brief him appropriately: is there any hope the
-> > regression this patch tried to fix will be resolved any time soon?
->
-> We are most likely to miss v6.4. I'm trying to reproduce the crash
-> with tracing enabled, to share some more debug information.
+Hi,
 
-FWIW, I couldn't reproduce this bug on v6.5 merge window commit
-d528014517f2 (Revert ".gitignore: ignore *.cover and *.mbx")
-on 100+ boot tests last night.
-For the time being I'm keeping an eye on it and will trigger the boot
-tests occasionally in the v6.5 development cycle.
+Changes in v3:
+ - Corrected the versioning in this patch series.
+ - Keeping the Ack and Reviewed tags as there is no change in the patch.
+ - Updated the patch series subject as well.
 
->
-> Regards,
-> Amit Pundir
->
+Changes in v2:
+ - Link to v2 series [1] (Added because of versioning mismatch).
+ - Collected Ack and Reviewed tags.
+ - Breaking the original series [2] into smaller series.
+
+This series add compatible strings for pmic chip pm7550ba and
+pmx75 for SDX75.
+
+[1] https://lore.kernel.org/all/1688650940-31388-1-git-send-email-quic_rohiagar@quicinc.com/
+[2] https://lore.kernel.org/all/1688395346-3126-1-git-send-email-quic_rohiagar@quicinc.com/
+
+Rohit Agarwal (2):
+  dt-bindings: mfd: Add compatible for pm7550ba
+  dt-bindings: mfd: Add compatible for pmx75
+
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+-- 
+2.7.4
+
