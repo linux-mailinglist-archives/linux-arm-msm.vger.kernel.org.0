@@ -2,84 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5014274B0FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 14:32:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B89F974B17A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 15:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232196AbjGGMbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 08:31:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59792 "EHLO
+        id S229872AbjGGNJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 09:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbjGGMbC (ORCPT
+        with ESMTP id S229458AbjGGNJL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 08:31:02 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2A162682
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 05:30:55 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b6a16254a4so27468691fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 05:30:55 -0700 (PDT)
+        Fri, 7 Jul 2023 09:09:11 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1812310E2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 06:09:11 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id 46e09a7af769-6b74faaac3bso1705842a34.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 06:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688733054; x=1691325054;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iGvyCAsX8L6WnC8v9SRyT2lXuT9dJtv6Ob7UfVhRf9g=;
-        b=u7ln/9RrvRdtuIdt+mrgHIC4WouXbUjvvcIVfUQeCc9olrHTNL+Xsz/i6tHmVIFHov
-         BT/41CpZZMgWHCcDQQw5z+/9MP7kVM0Op4jNJXt1x0b2k3IDHC+2Y069a/yUZ3q5mmB4
-         14yJrVWZI2i0ymEfyZAe9EfFHKdM6vyxeyAvT/fZFjGyEhjY1anAHfwkflU8qiYZAUFS
-         9b38yUCTryN1/fjlrmgEGzpp91TJS/uGRN0dpd1FKmY9k8L8sKKMNogghvqmKVdocCHY
-         LVLvvpnEhxLZFV6VadxC2JiCNHTjGS/MmLvaQfRwt1yBPMy+M4BSBEjxfw7RumA/1IsH
-         OsgQ==
+        d=gmail.com; s=20221208; t=1688735350; x=1691327350;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z0E8y4fGYzz8yC2ib/jS3nwnW8qCRpxDzJh1d9RvFtk=;
+        b=bpki2qcB+eLIwKnXEUSSAaEJDJ+snThABPQQqXxBPk54/nWPD+eFJNOIKY0Eu1l4Zv
+         5eiBL2uAkyORf0Ah1uVUcK1gnzQ6M9u2zKJR5acbFswGDb+z7LEISpKmvPKboCqgpmUI
+         adnw/HP7agE0y5LkPZsvS5CzIf23ONqpjqVuCn1mu2pdccL6bBVjGDzPgxLjVEJ19ZWI
+         p8Xg7Gr/gVKDCqUgmaMnxRaE83f1k0UXfNTXpkqErsAgP12qJh9KiiLqEpKp12KsYOcp
+         JBngbd2hFo6/rzFuG/3NDQUMdIRMDmrrrbcwHcpL33X0pfwUVBidoFps3OWTd5VzneKV
+         sKlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688733054; x=1691325054;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iGvyCAsX8L6WnC8v9SRyT2lXuT9dJtv6Ob7UfVhRf9g=;
-        b=E8W9CdMXcH/RuNeYNczMR0HS00OHd5a8MqjDhBz/XwG/o/6B+i6gJf7DtQ8GOyL1cj
-         rA9LIvzNtXUyUsWwjZO2wtN/DOw5i0hbkopYiJIf/i/JpBrb99Z9sS1BOA6fBOLGop1Q
-         s0IbEpfGBhjnXGdkf3joYwFoeDf/1TLPn9eJeOAYZuRGlPOExE2QPnue94xTkLQOsUJy
-         80avdIeq8sqYTigy1pdIuFckFtl57JlNKtNqe7weJdv51NSBgDhO5tBkOUPbLQzZoLMG
-         muvZBrWFnohVQYb14w5udkIzrxdmix6BpUkI71eDEzoYMbINXtBrZEv86qzKU13BXv6U
-         rVnw==
-X-Gm-Message-State: ABy/qLYJOfU72VtJM0aydqrhQsfi0mxhvkK9TJtVKUVXjcOK1AiZqLEk
-        H4GS3Rm3E9Bi4gBCnQKK0KXLEw==
-X-Google-Smtp-Source: APBJJlFVEtG496EnoT85BigKA2kUu5jfUK+oufO+W1N79iqyCJ+ptwY0uD9THh4p7PbnlmkyehJ19Q==
-X-Received: by 2002:a2e:9596:0:b0:2b6:d4f7:b7fa with SMTP id w22-20020a2e9596000000b002b6d4f7b7famr3220754ljh.5.1688733053913;
-        Fri, 07 Jul 2023 05:30:53 -0700 (PDT)
-Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
-        by smtp.gmail.com with ESMTPSA id m18-20020a2eb6d2000000b002b6e00a3e19sm751496ljo.132.2023.07.07.05.30.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jul 2023 05:30:53 -0700 (PDT)
-Message-ID: <95ac3e2d-69c6-e795-af68-924000eb318e@linaro.org>
-Date:   Fri, 7 Jul 2023 14:30:52 +0200
+        d=1e100.net; s=20221208; t=1688735350; x=1691327350;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=z0E8y4fGYzz8yC2ib/jS3nwnW8qCRpxDzJh1d9RvFtk=;
+        b=JZ7mJtYge3W8I3jgSaGYwqhtMPKJeRth5Y3dUmmTZDxOKjMd72ak09lpBaz8c6c92k
+         dH9Lh7Px3H46cuQadGruh0YZ3avtlOIyKM+jgaSbvz9cVlYrv/b3rWuiIWRGkuMWxWCl
+         Y17cwI+LQavfSDOZbXbLwcdvV6U+Nryge6XT25bw4Y82fLZRyqwKyYy5EEvxtJWVL2Jf
+         /lBi/fg2+nSPsxTiNszq+Bi3oQo1B004a93bzDbrHdSOV/3L/E4BUMe1KP8b1RE323Iu
+         hVkRY/lJoT66TrF382tO/u94rKGvVBXfIp/1PDyDzjkq/UYkXh5P+ikQg7CfgbwhNFFf
+         kU9A==
+X-Gm-Message-State: ABy/qLYP+7aELjv0HoO/2VBbfUtU5KKrGATGAx3gvtNPYXEMeOdfLkON
+        8XlXJrGX1qSHLQe4pB7Cim4ZORzqontTwMFtbiVsh9/n
+X-Google-Smtp-Source: APBJJlFhB3RwSiUYDs/RkJRayf+qGvXgwPyZgkYCBe721q2QnR1H8+yGO6Q2JKqLHwcJBKrUp3iz8c/Q0GropB3/Hfs=
+X-Received: by 2002:a05:6808:178b:b0:39e:ffc5:c450 with SMTP id
+ bg11-20020a056808178b00b0039effc5c450mr5609673oib.47.1688735350309; Fri, 07
+ Jul 2023 06:09:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: Add SM7125 device tree
-Content-Language: en-US
-To:     David Wronek <davidwronek@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230706124339.134272-1-davidwronek@gmail.com>
- <20230706124339.134272-7-davidwronek@gmail.com>
- <021ad5b4-772d-f2f6-f9ec-bca06db04dd8@linaro.org>
- <CAEoe_eVAeNZVUHgpj64Redx5vg7wfzU4wjgH33TZ7ieoDifH-Q@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAEoe_eVAeNZVUHgpj64Redx5vg7wfzU4wjgH33TZ7ieoDifH-Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-12-robdclark@gmail.com>
+ <3bbcabc4-69d2-93e0-a3e6-60d575b40126@kernel.org>
+In-Reply-To: <3bbcabc4-69d2-93e0-a3e6-60d575b40126@kernel.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 7 Jul 2023 06:09:27 -0700
+Message-ID: <CAF6AEGt5b_8eO6oXEt0mK+Rf0UfaEtB8JC+9fz+Wk=H9nWPuwQ@mail.gmail.com>
+Subject: Re: [PATCH 11/12] dt-bindings: drm/msm/gpu: Extend bindings for chip-id
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,60 +72,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.07.2023 17:36, David Wronek wrote:
-> On Thu, Jul 6, 2023 at 5:25 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->> On 6.07.2023 14:40, David Wronek wrote:
->>> The Snapdragon 720G (sm7125) is software-wise very similar to the
->>> Snapdragon 7c with minor differences in clock speeds and as added here,
->>> it uses the Kryo 465 instead of Kryo 468.
->>>
->>> Signed-off-by: David Wronek <davidwronek@gmail.com>
->>> ---
->> Can you please paste the output of `dmesg | grep "secondary processor"`?
->>
->> That would let us determine the unique identifier of the cores.
->>
->> Konrad
-> I get this output with the command:
-> [    0.005884] CPU1: Booted secondary processor 0x0000000100 [0x51df805e]
-> [    0.007191] CPU2: Booted secondary processor 0x0000000200 [0x51df805e]
-> [    0.008559] CPU3: Booted secondary processor 0x0000000300 [0x51df805e]
-> [    0.010046] CPU4: Booted secondary processor 0x0000000400 [0x51df805e]
-> [    0.011639] CPU5: Booted secondary processor 0x0000000500 [0x51df805e]
-> [    0.014424] CPU6: Booted secondary processor 0x0000000600 [0x51ff804f]
-> [    0.016421] CPU7: Booted secondary processor 0x0000000700 [0x51ff804f]
-Hm okay so they are indeed Qualcomm-branded cores.. Sometimes they use the
-ARM ones and still call it Kryo 
+On Fri, Jul 7, 2023 at 12:26=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.or=
+g> wrote:
+>
+> On 06/07/2023 23:10, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Upcoming GPUs use an opaque chip-id for identifying the GPU.
+>
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC. It might happen, that command when run on an older
+> kernel, gives you outdated entries. Therefore please be sure you base
+> your patches on recent Linux kernel.
 
-btw the implementer id of 0x51 is the ascii code of 'Q', nice quirk
+Oh, whoops, I'd overlooked that I hadn't configured sendemail.cccmd on
+the laptop I was sending this from.  I'll fix that before resending.
 
-Konrad
-> 
-> Sincerely,
-> David
->>>  arch/arm64/boot/dts/qcom/sm7125.dtsi | 16 ++++++++++++++++
->>>  1 file changed, 16 insertions(+)
->>>  create mode 100644 arch/arm64/boot/dts/qcom/sm7125.dtsi
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm7125.dtsi b/arch/arm64/boot/dts/qcom/sm7125.dtsi
->>> new file mode 100644
->>> index 000000000000..12dd72859a43
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/sm7125.dtsi
->>> @@ -0,0 +1,16 @@
->>> +// SPDX-License-Identifier: GPL-2.0
->>> +/*
->>> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->>> + */
->>> +
->>> +#include "sc7180.dtsi"
->>> +
->>> +/* SM7125 uses Kryo 465 instead of Kryo 468 */
->>> +&CPU0 { compatible = "qcom,kryo465"; };
->>> +&CPU1 { compatible = "qcom,kryo465"; };
->>> +&CPU2 { compatible = "qcom,kryo465"; };
->>> +&CPU3 { compatible = "qcom,kryo465"; };
->>> +&CPU4 { compatible = "qcom,kryo465"; };
->>> +&CPU5 { compatible = "qcom,kryo465"; };
->>> +&CPU6 { compatible = "qcom,kryo465"; };
->>> +&CPU7 { compatible = "qcom,kryo465"; };
+BR,
+-R
+
+> You missed at least DT list (maybe more), so this won't be tested by
+> automated tooling. Performing review on untested code might be a waste
+> of time, thus I will skip this patch entirely till you follow the
+> process allowing the patch to be tested.
+>
+> Please kindly resend and include all necessary To/Cc entries.
+>
+> Best regards,
+> Krzysztof
+>
