@@ -2,102 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B89F974B17A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 15:09:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFA9174B28C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 16:05:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbjGGNJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 09:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42248 "EHLO
+        id S232878AbjGGOFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 10:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjGGNJL (ORCPT
+        with ESMTP id S232770AbjGGOFC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 09:09:11 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1812310E2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 06:09:11 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id 46e09a7af769-6b74faaac3bso1705842a34.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 06:09:11 -0700 (PDT)
+        Fri, 7 Jul 2023 10:05:02 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB32210B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 07:04:53 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b698937f85so31152481fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 07:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688735350; x=1691327350;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1688738692; x=1691330692;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z0E8y4fGYzz8yC2ib/jS3nwnW8qCRpxDzJh1d9RvFtk=;
-        b=bpki2qcB+eLIwKnXEUSSAaEJDJ+snThABPQQqXxBPk54/nWPD+eFJNOIKY0Eu1l4Zv
-         5eiBL2uAkyORf0Ah1uVUcK1gnzQ6M9u2zKJR5acbFswGDb+z7LEISpKmvPKboCqgpmUI
-         adnw/HP7agE0y5LkPZsvS5CzIf23ONqpjqVuCn1mu2pdccL6bBVjGDzPgxLjVEJ19ZWI
-         p8Xg7Gr/gVKDCqUgmaMnxRaE83f1k0UXfNTXpkqErsAgP12qJh9KiiLqEpKp12KsYOcp
-         JBngbd2hFo6/rzFuG/3NDQUMdIRMDmrrrbcwHcpL33X0pfwUVBidoFps3OWTd5VzneKV
-         sKlA==
+        bh=8ewLZ7PsrVNiFdNIbfFquaT6V9xwZk4+lwOcXDJHnfw=;
+        b=LnJEhcpAFuO7pDbjxc/tCUP9N9Zz2V0bEFLE2/ucW4oBShV+0u7o1KRGgF17LDQTbb
+         sgFkFKP1gQ4V2YsjwM9u+R00tzKGrVzDNmKpbUSXd/A9lKR+GLgtqu7VYXSh5rvPilOM
+         nrjml2olouJjpWQmDwNOn1I8RKBKaZSwYl2Zizf+mCRaVmYnP1OjqmkM17FxdYq4DSZ3
+         ojeRfm4+YTvMhdknjhdfhpFACf0644lbT889BmVF4pZbyb2vOiqmXcblCsVr9sFRxdqt
+         BGPZlp5bOCJNU2zfB7D751GUCagakr/jVcIXjh4ACQXB7NSIhzZ+O+Qf6iGrmmRFaqtG
+         nKzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688735350; x=1691327350;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1688738692; x=1691330692;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=z0E8y4fGYzz8yC2ib/jS3nwnW8qCRpxDzJh1d9RvFtk=;
-        b=JZ7mJtYge3W8I3jgSaGYwqhtMPKJeRth5Y3dUmmTZDxOKjMd72ak09lpBaz8c6c92k
-         dH9Lh7Px3H46cuQadGruh0YZ3avtlOIyKM+jgaSbvz9cVlYrv/b3rWuiIWRGkuMWxWCl
-         Y17cwI+LQavfSDOZbXbLwcdvV6U+Nryge6XT25bw4Y82fLZRyqwKyYy5EEvxtJWVL2Jf
-         /lBi/fg2+nSPsxTiNszq+Bi3oQo1B004a93bzDbrHdSOV/3L/E4BUMe1KP8b1RE323Iu
-         hVkRY/lJoT66TrF382tO/u94rKGvVBXfIp/1PDyDzjkq/UYkXh5P+ikQg7CfgbwhNFFf
-         kU9A==
-X-Gm-Message-State: ABy/qLYP+7aELjv0HoO/2VBbfUtU5KKrGATGAx3gvtNPYXEMeOdfLkON
-        8XlXJrGX1qSHLQe4pB7Cim4ZORzqontTwMFtbiVsh9/n
-X-Google-Smtp-Source: APBJJlFhB3RwSiUYDs/RkJRayf+qGvXgwPyZgkYCBe721q2QnR1H8+yGO6Q2JKqLHwcJBKrUp3iz8c/Q0GropB3/Hfs=
-X-Received: by 2002:a05:6808:178b:b0:39e:ffc5:c450 with SMTP id
- bg11-20020a056808178b00b0039effc5c450mr5609673oib.47.1688735350309; Fri, 07
- Jul 2023 06:09:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-12-robdclark@gmail.com>
- <3bbcabc4-69d2-93e0-a3e6-60d575b40126@kernel.org>
-In-Reply-To: <3bbcabc4-69d2-93e0-a3e6-60d575b40126@kernel.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 7 Jul 2023 06:09:27 -0700
-Message-ID: <CAF6AEGt5b_8eO6oXEt0mK+Rf0UfaEtB8JC+9fz+Wk=H9nWPuwQ@mail.gmail.com>
-Subject: Re: [PATCH 11/12] dt-bindings: drm/msm/gpu: Extend bindings for chip-id
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     dri-devel@lists.freedesktop.org,
+        bh=8ewLZ7PsrVNiFdNIbfFquaT6V9xwZk4+lwOcXDJHnfw=;
+        b=YC/I90a0BO9nAImtiG3QdSHYW9G7MnEkiwCsNfeWIYEjRivoiSywBaYOc485hCWXIZ
+         SSU6P8y6XDkzRTCwGegqh7/iORID1o6+H/CFY4ijPgSSlMqjoM3mYDEJRljspz5qoPbU
+         XrZy4nArU61Rl1rI+HAqyQw6k3E6ifBE3Ax6RY3pkSOuKLO2juBHW04xDDQ0nXpNeNTD
+         1QTU7r7QmLhrtHaR3h1atCpB1aXOO9rPwv43wJ0xF/Lr/C61xZ55Pdjzp68dK3Cwk8Wi
+         fTFoxUABuzOvCW6TE9wrlUmeYjcqVvPvOeSHfVi3TEEmB2mZRXdVwQtT9BvgC8uhmoux
+         gY7w==
+X-Gm-Message-State: ABy/qLbTrrJVO5P4xzwU7x4AqqLeK6gHfcPPp5+ME8E3Q7zteS7HAXDl
+        MdKFLON4BV8tGsFwibTV9aesyQ==
+X-Google-Smtp-Source: APBJJlE8yrl9/DHLKpG1gXCDtRhglmdeTUefxOCsODcqBZDs1ZGKpyfQog45Q6+FHuTn3i4Na1vMFg==
+X-Received: by 2002:a2e:b0ca:0:b0:2b6:e105:6174 with SMTP id g10-20020a2eb0ca000000b002b6e1056174mr4000524ljl.47.1688738691962;
+        Fri, 07 Jul 2023 07:04:51 -0700 (PDT)
+Received: from uffe-tuxpro14.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
+        by smtp.gmail.com with ESMTPSA id u21-20020a2e8555000000b002b6cb25e3f1sm760341ljj.108.2023.07.07.07.04.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jul 2023 07:04:51 -0700 (PDT)
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 08/18] soc: qcom: Move power-domain drivers to the genpd dir
+Date:   Fri,  7 Jul 2023 16:04:24 +0200
+Message-Id: <20230707140434.723349-9-ulf.hansson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230707140434.723349-1-ulf.hansson@linaro.org>
+References: <20230707140434.723349-1-ulf.hansson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 7, 2023 at 12:26=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.or=
-g> wrote:
->
-> On 06/07/2023 23:10, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Upcoming GPUs use an opaque chip-id for identifying the GPU.
->
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC. It might happen, that command when run on an older
-> kernel, gives you outdated entries. Therefore please be sure you base
-> your patches on recent Linux kernel.
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: <linux-arm-msm@vger.kernel.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+---
+ MAINTAINERS                          | 2 +-
+ drivers/genpd/Makefile               | 1 +
+ drivers/genpd/qcom/Makefile          | 4 ++++
+ drivers/{soc => genpd}/qcom/cpr.c    | 0
+ drivers/{soc => genpd}/qcom/rpmhpd.c | 0
+ drivers/{soc => genpd}/qcom/rpmpd.c  | 0
+ drivers/soc/qcom/Makefile            | 3 ---
+ 7 files changed, 6 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/genpd/qcom/Makefile
+ rename drivers/{soc => genpd}/qcom/cpr.c (100%)
+ rename drivers/{soc => genpd}/qcom/rpmhpd.c (100%)
+ rename drivers/{soc => genpd}/qcom/rpmpd.c (100%)
 
-Oh, whoops, I'd overlooked that I hadn't configured sendemail.cccmd on
-the laptop I was sending this from.  I'll fix that before resending.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9fad7f6033f4..753eea641129 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -17518,7 +17518,7 @@ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+-F:	drivers/soc/qcom/cpr.c
++F:	drivers/genpd/qcom/cpr.c
+ 
+ QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
+ M:	Ilia Lin <ilia.lin@kernel.org>
+diff --git a/drivers/genpd/Makefile b/drivers/genpd/Makefile
+index 1a0a56925756..dfdea14e2a8a 100644
+--- a/drivers/genpd/Makefile
++++ b/drivers/genpd/Makefile
+@@ -4,3 +4,4 @@ obj-y					+= amlogic/
+ obj-y					+= apple/
+ obj-y					+= bcm/
+ obj-y					+= mediatek/
++obj-y					+= qcom/
+diff --git a/drivers/genpd/qcom/Makefile b/drivers/genpd/qcom/Makefile
+new file mode 100644
+index 000000000000..403dfc5af095
+--- /dev/null
++++ b/drivers/genpd/qcom/Makefile
+@@ -0,0 +1,4 @@
++# SPDX-License-Identifier: GPL-2.0
++obj-$(CONFIG_QCOM_CPR)		+= cpr.o
++obj-$(CONFIG_QCOM_RPMPD)	+= rpmpd.o
++obj-$(CONFIG_QCOM_RPMHPD)	+= rpmhpd.o
+diff --git a/drivers/soc/qcom/cpr.c b/drivers/genpd/qcom/cpr.c
+similarity index 100%
+rename from drivers/soc/qcom/cpr.c
+rename to drivers/genpd/qcom/cpr.c
+diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/genpd/qcom/rpmhpd.c
+similarity index 100%
+rename from drivers/soc/qcom/rpmhpd.c
+rename to drivers/genpd/qcom/rpmhpd.c
+diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/genpd/qcom/rpmpd.c
+similarity index 100%
+rename from drivers/soc/qcom/rpmpd.c
+rename to drivers/genpd/qcom/rpmpd.c
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index 99114c71092b..f548a7150bb2 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -3,7 +3,6 @@ CFLAGS_rpmh-rsc.o := -I$(src)
+ obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
+ obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
+ obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
+-obj-$(CONFIG_QCOM_CPR)		+= cpr.o
+ obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
+ obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
+ obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
+@@ -29,8 +28,6 @@ obj-$(CONFIG_QCOM_STATS)	+= qcom_stats.o
+ obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
+ obj-$(CONFIG_QCOM_APR) += apr.o
+ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
+-obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
+-obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
+ obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+ obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+ qcom_ice-objs			+= ice.o
+-- 
+2.34.1
 
-BR,
--R
-
-> You missed at least DT list (maybe more), so this won't be tested by
-> automated tooling. Performing review on untested code might be a waste
-> of time, thus I will skip this patch entirely till you follow the
-> process allowing the patch to be tested.
->
-> Please kindly resend and include all necessary To/Cc entries.
->
-> Best regards,
-> Krzysztof
->
