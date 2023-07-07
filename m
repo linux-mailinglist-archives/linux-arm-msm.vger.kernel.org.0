@@ -2,163 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA9174B28C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 16:05:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 342DA74B368
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 16:57:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232878AbjGGOFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 10:05:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40704 "EHLO
+        id S231627AbjGGO5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 10:57:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232770AbjGGOFC (ORCPT
+        with ESMTP id S229586AbjGGO5I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 10:05:02 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB32210B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 07:04:53 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b698937f85so31152481fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 07:04:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688738692; x=1691330692;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8ewLZ7PsrVNiFdNIbfFquaT6V9xwZk4+lwOcXDJHnfw=;
-        b=LnJEhcpAFuO7pDbjxc/tCUP9N9Zz2V0bEFLE2/ucW4oBShV+0u7o1KRGgF17LDQTbb
-         sgFkFKP1gQ4V2YsjwM9u+R00tzKGrVzDNmKpbUSXd/A9lKR+GLgtqu7VYXSh5rvPilOM
-         nrjml2olouJjpWQmDwNOn1I8RKBKaZSwYl2Zizf+mCRaVmYnP1OjqmkM17FxdYq4DSZ3
-         ojeRfm4+YTvMhdknjhdfhpFACf0644lbT889BmVF4pZbyb2vOiqmXcblCsVr9sFRxdqt
-         BGPZlp5bOCJNU2zfB7D751GUCagakr/jVcIXjh4ACQXB7NSIhzZ+O+Qf6iGrmmRFaqtG
-         nKzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688738692; x=1691330692;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8ewLZ7PsrVNiFdNIbfFquaT6V9xwZk4+lwOcXDJHnfw=;
-        b=YC/I90a0BO9nAImtiG3QdSHYW9G7MnEkiwCsNfeWIYEjRivoiSywBaYOc485hCWXIZ
-         SSU6P8y6XDkzRTCwGegqh7/iORID1o6+H/CFY4ijPgSSlMqjoM3mYDEJRljspz5qoPbU
-         XrZy4nArU61Rl1rI+HAqyQw6k3E6ifBE3Ax6RY3pkSOuKLO2juBHW04xDDQ0nXpNeNTD
-         1QTU7r7QmLhrtHaR3h1atCpB1aXOO9rPwv43wJ0xF/Lr/C61xZ55Pdjzp68dK3Cwk8Wi
-         fTFoxUABuzOvCW6TE9wrlUmeYjcqVvPvOeSHfVi3TEEmB2mZRXdVwQtT9BvgC8uhmoux
-         gY7w==
-X-Gm-Message-State: ABy/qLbTrrJVO5P4xzwU7x4AqqLeK6gHfcPPp5+ME8E3Q7zteS7HAXDl
-        MdKFLON4BV8tGsFwibTV9aesyQ==
-X-Google-Smtp-Source: APBJJlE8yrl9/DHLKpG1gXCDtRhglmdeTUefxOCsODcqBZDs1ZGKpyfQog45Q6+FHuTn3i4Na1vMFg==
-X-Received: by 2002:a2e:b0ca:0:b0:2b6:e105:6174 with SMTP id g10-20020a2eb0ca000000b002b6e1056174mr4000524ljl.47.1688738691962;
-        Fri, 07 Jul 2023 07:04:51 -0700 (PDT)
-Received: from uffe-tuxpro14.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
-        by smtp.gmail.com with ESMTPSA id u21-20020a2e8555000000b002b6cb25e3f1sm760341ljj.108.2023.07.07.07.04.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 07:04:51 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 08/18] soc: qcom: Move power-domain drivers to the genpd dir
-Date:   Fri,  7 Jul 2023 16:04:24 +0200
-Message-Id: <20230707140434.723349-9-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230707140434.723349-1-ulf.hansson@linaro.org>
-References: <20230707140434.723349-1-ulf.hansson@linaro.org>
+        Fri, 7 Jul 2023 10:57:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6E02108;
+        Fri,  7 Jul 2023 07:57:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id ED4BF618E5;
+        Fri,  7 Jul 2023 14:57:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3741C433C8;
+        Fri,  7 Jul 2023 14:57:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688741826;
+        bh=yeNvbti/TUF1YMHu4YqtkoMPEnaprwjXfYPh/fxnHI4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=NwKc2++oblIOWW2LODeugXzaADYwiuZQyWP7UO/CK+APHEhdELFMnIiVqb0guxrso
+         5aQNy9+Vr+I3wQ4L6jLkFGj0mVezOyVD6TRN9Kqu+AHPy7uFtMUfTbfPXOb40ABMEL
+         JXz8EF43WVsCVKfjj/jLRNxadwtdfuVlKT1NXCINWG/CfoliR4gPdj4Qh6YKXGKGRk
+         r8lwYvRHSex9ZyMvQdBSDmIFcXBg1sKoye1oArWHHAOfRjiAr3J3AIUUWqLXpqBkhA
+         0twL0G/bS1wnfK4ayUcsa657doHbWq0XYmA7wX1D7wI7h9li97C4vPlQoeeZCFWvDc
+         KcaDfzpH7BK/Q==
+Date:   Fri, 7 Jul 2023 09:57:03 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org
+Subject: Re: [PATCH v3 0/9] PCI: EPC: Add support to wake up host from D3
+ states
+Message-ID: <20230707145703.GA139553@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1688727836-11141-1-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: <linux-arm-msm@vger.kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
- MAINTAINERS                          | 2 +-
- drivers/genpd/Makefile               | 1 +
- drivers/genpd/qcom/Makefile          | 4 ++++
- drivers/{soc => genpd}/qcom/cpr.c    | 0
- drivers/{soc => genpd}/qcom/rpmhpd.c | 0
- drivers/{soc => genpd}/qcom/rpmpd.c  | 0
- drivers/soc/qcom/Makefile            | 3 ---
- 7 files changed, 6 insertions(+), 4 deletions(-)
- create mode 100644 drivers/genpd/qcom/Makefile
- rename drivers/{soc => genpd}/qcom/cpr.c (100%)
- rename drivers/{soc => genpd}/qcom/rpmhpd.c (100%)
- rename drivers/{soc => genpd}/qcom/rpmpd.c (100%)
+On Fri, Jul 07, 2023 at 04:33:47PM +0530, Krishna chaitanya chundru wrote:
+> Here we propose this patch series to add support in PCI endpoint
+> driver to wake up host from D3 states.
+> 
+> As endpoint cannot send any data/MSI when the D-state is in
+> D3cold or D3hot. Endpoint needs to bring the device back to D0
+> to send any kind of data.
+> 
+> For this endpoint needs to send inband PME the device is in D3 state or
+> toggle wake when the device is D3 cold and vaux is not supplied.
+> 
+> As EPF doestn't know the D-state of the PCI, added a notify op whenever
+> device state changes.
+> 
+> Based on the D-state the EPF driver decides to wake host either by
+> toggling wake or by sending PME.
+> 
+> When the MHI state is in M3 MHI driver will wakeup the host using the
+> wakeup op.
+> 
+> Changes from v2:
+> 	- Addressed review comments made by mani.
+> Changes from v1:
+>         - Moved from RFC patch to regular patch
+>         - Inclueded EPF patch and added a new op patch to notify D-state change
+> 
+> *** BLURB HERE ***
+> 
+> Krishna chaitanya chundru (9):
+>   PCI: endpoint: Add dstate change notifier support
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9fad7f6033f4..753eea641129 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17518,7 +17518,7 @@ L:	linux-pm@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
- F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
--F:	drivers/soc/qcom/cpr.c
-+F:	drivers/genpd/qcom/cpr.c
- 
- QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
- M:	Ilia Lin <ilia.lin@kernel.org>
-diff --git a/drivers/genpd/Makefile b/drivers/genpd/Makefile
-index 1a0a56925756..dfdea14e2a8a 100644
---- a/drivers/genpd/Makefile
-+++ b/drivers/genpd/Makefile
-@@ -4,3 +4,4 @@ obj-y					+= amlogic/
- obj-y					+= apple/
- obj-y					+= bcm/
- obj-y					+= mediatek/
-+obj-y					+= qcom/
-diff --git a/drivers/genpd/qcom/Makefile b/drivers/genpd/qcom/Makefile
-new file mode 100644
-index 000000000000..403dfc5af095
---- /dev/null
-+++ b/drivers/genpd/qcom/Makefile
-@@ -0,0 +1,4 @@
-+# SPDX-License-Identifier: GPL-2.0
-+obj-$(CONFIG_QCOM_CPR)		+= cpr.o
-+obj-$(CONFIG_QCOM_RPMPD)	+= rpmpd.o
-+obj-$(CONFIG_QCOM_RPMHPD)	+= rpmhpd.o
-diff --git a/drivers/soc/qcom/cpr.c b/drivers/genpd/qcom/cpr.c
-similarity index 100%
-rename from drivers/soc/qcom/cpr.c
-rename to drivers/genpd/qcom/cpr.c
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/genpd/qcom/rpmhpd.c
-similarity index 100%
-rename from drivers/soc/qcom/rpmhpd.c
-rename to drivers/genpd/qcom/rpmhpd.c
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/genpd/qcom/rpmpd.c
-similarity index 100%
-rename from drivers/soc/qcom/rpmpd.c
-rename to drivers/genpd/qcom/rpmpd.c
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index 99114c71092b..f548a7150bb2 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -3,7 +3,6 @@ CFLAGS_rpmh-rsc.o := -I$(src)
- obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
- obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
- obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
--obj-$(CONFIG_QCOM_CPR)		+= cpr.o
- obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
- obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
- obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
-@@ -29,8 +28,6 @@ obj-$(CONFIG_QCOM_STATS)	+= qcom_stats.o
- obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
- obj-$(CONFIG_QCOM_APR) += apr.o
- obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
--obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
--obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
- obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
- obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
- qcom_ice-objs			+= ice.o
--- 
-2.34.1
+"D-state" to match the other patches.
 
+>   PCI: qcom-ep: Add support for D-state change notification
+>   PCI: qcom-ep: Update the D-state log
+>   PCI: epf-mhi: Add support for handling D-state notify from EPC
+>   PCI: endpoint: Add wakeup host API to EPC core
+>   pci: dwc: Add wakeup host op to pci_epc_ops
+
+"PCI:" to match the rest.
+
+>   PCI: qcom-ep: Add wake up host op to dw_pcie_ep_ops
+>   PCI: epf-mhi: Add wakeup host op
+>   bus: mhi: ep: wake up host is the MHI state is in M3
+
+"Wake up host ..." to match previous history of the file.
+
+"*if* MHI state is M3"?  (Not "is the ...")
+
+>  Documentation/PCI/endpoint/pci-endpoint.rst     | 11 +++++
+>  drivers/bus/mhi/ep/main.c                       | 28 ++++++++++++
+>  drivers/pci/controller/dwc/pcie-designware-ep.c | 12 +++++
+>  drivers/pci/controller/dwc/pcie-designware.h    |  3 ++
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c       | 36 ++++++++++++++-
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c    | 28 ++++++++++++
+>  drivers/pci/endpoint/pci-epc-core.c             | 58 +++++++++++++++++++++++++
+>  include/linux/mhi_ep.h                          |  4 ++
+>  include/linux/pci-epc.h                         | 12 +++++
+>  include/linux/pci-epf.h                         |  1 +
+>  10 files changed, 192 insertions(+), 1 deletion(-)
+> 
+> -- 
+> 2.7.4
+> 
