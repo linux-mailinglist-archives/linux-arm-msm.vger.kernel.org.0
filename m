@@ -2,132 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A95474B3E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 17:12:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B6E374B4A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 17:53:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233327AbjGGPMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 11:12:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51758 "EHLO
+        id S231849AbjGGPxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 11:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233352AbjGGPMR (ORCPT
+        with ESMTP id S231845AbjGGPxd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 11:12:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E268213C;
-        Fri,  7 Jul 2023 08:12:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE619619D3;
-        Fri,  7 Jul 2023 15:12:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BDAC433C8;
-        Fri,  7 Jul 2023 15:12:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688742731;
-        bh=Ya0LfXrJm2rcUDVejC5YdLCrCcxE/mUzk/Zqpcvn0TI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=FitX0YVhEKf14hYzYIjYke+cBCO98TDEt32PMkOsaT/udyzSouFno+mb6mSFyXXcM
-         27Qe6wy4y3zrlvCH2j+hQMCykLwg8DS0zy0wW968EMHOvNtH6AXv3Ib+4htPbKsMJJ
-         tsFuvtoxiFfobvUdw4JVQG1syV8Rgx0vgPxmWuEcejrtUGRHs3d66znDOBPhhovb8x
-         +e4505LaicY8G9K8WZqJ+3FrrsE5c3LRfeem9XC4CHQh8fN+shOLFflhcJe+eJoB2s
-         IyfUPrPyrwmVWpVYleW48JQqDNFdZmvrWKJGaAN0xdFBXY/WBGi393Ne6KmSzNxmEz
-         4g6EBVLyh6Iiw==
-Date:   Fri, 7 Jul 2023 10:12:09 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Bo Liu <liubo03@inspur.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Dan Carpenter <error27@gmail.com>,
-        "open list:MHI BUS" <mhi@lists.linux.dev>
-Subject: Re: [PATCH v3 9/9] bus: mhi: ep: wake up host is the MHI state is in
- M3
-Message-ID: <20230707151209.GA139708@bhelgaas>
+        Fri, 7 Jul 2023 11:53:33 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8E4311B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 08:53:32 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id 5614622812f47-38c35975545so1871538b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 08:53:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688745212; x=1691337212;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nCL53aP+hS7tciKjFD7blcuEy36DSLX5ukiouHjZxlI=;
+        b=MD0SFOGCQwWl8ocgrw6iXF5GRCdimdJN1uKsubkVald2jn73QqUSrs2jfiZ9sW2j3D
+         ebk7TnC9/dCgGGz5BGLEmEa3vKzJzE37uk+57QETK52SlEJ7SnFYfjj6hGgN2ytCUgYa
+         QpU7ZRFBU30/aL3xfLrxhqyciH8GCvA7ZYjSQhAZTtazVOAmbMkaUOFm11QnGfhYUUGU
+         dHhnfS0m2oIOQOPIdGKq+UF8Vl00Z4R+4g6jynhIT3nCyB2YAmvWWQDj+seEDf61Lc4d
+         95xJhRVU6K9C2maYkCKXfR4M4z4ON1tKB78m4ZEg8/VgxmHr+9KNL+q41AiN8ewg9ljk
+         uk0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688745212; x=1691337212;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nCL53aP+hS7tciKjFD7blcuEy36DSLX5ukiouHjZxlI=;
+        b=Q7y7lqDZHCwHJsz8+sHi9qI3CfoQ5kN/A/2GHxGmTYWP54govJ3VWD7Ht18nC+EblN
+         kLOmIAjmUt1FFCZKjXIQsP78sTXJmM9NEGH5vVRSrt5aIwimWgnClWjgCy6kpmSiJbx1
+         SbJ0xBb8Dfx4BOSGCq5YYdYmrZFuFRiDY61gzXF48RSctFCyrGRWsLElHdbbCWEqYnE+
+         XcrDIfHFtNTMG+kfjwQPICdcGLkGI5J5fkRyzCdCHxy1jyVDNPz5YvJ71bMF8OkVcNEQ
+         LCWqR3P6rQX4vC8XVo8xK817VO4YD60tXlS8BLVRwQ6K/bKdikGQ/5UujB5utFxYIzFm
+         drwA==
+X-Gm-Message-State: ABy/qLawHslWHLzYF7K5Xvro8Slm3Ma7+hP9LJZTSmPnUyPn1Y0C7psr
+        a3tChvpu7B92bDO7HPLkG6qw2i3hvdI+x9OFpco=
+X-Google-Smtp-Source: APBJJlEMVoC5fgJnH4032EslDGIrvj1PozPWtG1GU/u4PiOj3BGo1Mq7H5JFzTWtaNqWO+MPSYBtw7CN6so33VTDo0g=
+X-Received: by 2002:a05:6808:2126:b0:3a3:e61a:c7d8 with SMTP id
+ r38-20020a056808212600b003a3e61ac7d8mr4008620oiw.59.1688745212194; Fri, 07
+ Jul 2023 08:53:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <05b4d009-b50b-4971-9220-615f73db4acd@kadam.mountain>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-6-robdclark@gmail.com>
+ <60df0f9e-9a9c-e55b-6cab-3d89dd90bcdb@linaro.org>
+In-Reply-To: <60df0f9e-9a9c-e55b-6cab-3d89dd90bcdb@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 7 Jul 2023 08:53:21 -0700
+Message-ID: <CAF6AEGs2EGpEaA-sP1Y8cNS5uCyL9gXbe0U3H-jPWSQt1njokw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 05/12] drm/msm/adreno: Use quirk to identify
+ cached-coherent support
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 07, 2023 at 02:41:57PM +0300, Dan Carpenter wrote:
-> On Fri, Jul 07, 2023 at 04:33:56PM +0530, Krishna chaitanya chundru wrote:
-> > If the MHI state is in M3 then the most probably the host kept the
-> > device in D3 hot or D3 cold, due to that endpoint transctions will not
-> > be read by the host, so endpoint wakes up host to bring the host to D0
-> > which eventually bring back the MHI state to M0.
-> > 
-> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+On Thu, Jul 6, 2023 at 7:29=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 07/07/2023 00:10, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > It is better to explicitly list it.  With the move to opaque chip-id's
+> > for future devices, we should avoid trying to infer things like
+> > generation from the numerical value.
+>
+> Would it be better to push this to DT? I mean, we already have a
+> 'dma-cache-coherent' property for it.
+
+I suppose that would also handle the case where some a6xy are coherent
+but others aren't..  OTOH it isn't the case that dma operations are
+coherent, just that they can be.  It depends on smmu pte bits.  Maybe
+that bit of pedanticism doesn't matter since we mostly bypass the dma
+api, but we still do need to (ab)use dma_map_sgtable/dma_unmap_sgtable
+for cache ops
+
+BR,
+-R
+
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
 > > ---
-> >  drivers/bus/mhi/ep/main.c | 28 ++++++++++++++++++++++++++++
-> >  1 file changed, 28 insertions(+)
-> > 
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index 6008818..46a8a3c 100644
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> > @@ -25,6 +25,27 @@ static DEFINE_IDA(mhi_ep_cntrl_ida);
-> >  static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id);
-> >  static int mhi_ep_destroy_device(struct device *dev, void *data);
-> >  
-> > +static bool mhi_ep_wake_host(struct mhi_ep_cntrl *mhi_cntrl)
-> > +{
-> > +	enum mhi_state state;
-> > +	bool mhi_reset;
-> > +	u32 count = 0;
-> > +
-> > +	mhi_cntrl->wakeup_host(mhi_cntrl);
-> > +
-> > +	/* Wait for Host to set the M0 state */
-> > +	do {
-> > +		msleep(M0_WAIT_DELAY_MS);
-> > +		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
-> > +		count++;
-> > +	} while (state != MHI_STATE_M0 && count < M0_WAIT_COUNT);
-> > +
-> >+	if (state != MHI_STATE_M0)
-> >+		return false;
-> 
-> Functions which return false on success are an abomination.  Also
-> boolean functions should be named for the question they answer such
-> as access_ok() or has_feature() etc.
-
-+1.  Also nice if boolean functions do not have side effects, so in
-this case, where mhi_ep_wake_host() *does* something that might fail,
-I think "return 0 for success or negative error value" is easier to
-read.
-
-> Write it like this:
-> 
-> static int mhi_ep_wake_host(struct mhi_ep_cntrl *mhi_cntrl)
-> {
-> 	enum mhi_state state;
-> 	bool mhi_reset;
-> 	int count = 0;
-> 
-> 	mhi_cntrl->wakeup_host(mhi_cntrl);
-> 
-> 	while (count++ < M0_WAIT_COUNT) {
-> 		msleep(M0_WAIT_DELAY_MS);
-> 
-> 		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
-> 		if (state == MHI_STATE_M0)
-> 			return 0;
-> 	}
-> 	return -ENODEV;
-> }
+> >   drivers/gpu/drm/msm/adreno/adreno_device.c | 23 +++++++++++++++------=
+-
+> >   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  1 +
+> >   2 files changed, 17 insertions(+), 7 deletions(-)
+> >
+>
+> --
+> With best wishes
+> Dmitry
+>
