@@ -2,122 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21ACE74AC1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 09:44:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F360F74AC28
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 09:45:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232344AbjGGHof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 03:44:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36886 "EHLO
+        id S232638AbjGGHpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 03:45:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232366AbjGGHoe (ORCPT
+        with ESMTP id S231820AbjGGHpQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 03:44:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D30D1FCE;
-        Fri,  7 Jul 2023 00:44:33 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3676sTCa024231;
-        Fri, 7 Jul 2023 07:44:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=UIGR9bgCyltN2SO4cBQB/3NUEVmyGhECK43ChRaoVuA=;
- b=NSFE1nY5Pq1g91WYwh5W8eoKYlQvMotZS8e0gK3iD+0ZZjVr5WCrETx59zBR0NNBLJCI
- /DnU1a8Q+p+0BieglkOrVSDjCCnVqAdaefTkoEl7bPqTplWjTZPhmrCIRV4pNO5ZxiZH
- SsUqGaVsm9WMh9Hq6RaFE+kCWcBerm/l6xQjQKAzzafH04usT51UNHjOtt9JcJ7y8kEc
- OmCr9Fov/pnqMtWelMou2G4D7/QQx7HPXovpdzO+vIfoSViGgUkaurAfD1y8CJcntFPc
- rykQlRcCinPQ7u5qAo4PzfynW464m38D6BLx58hsWatcMgYpg+4m42R0Fjt5MDOZu2ww Tw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rnvyvj4x9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Jul 2023 07:44:16 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3677iFY2009193
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 7 Jul 2023 07:44:15 GMT
-Received: from rohkumar-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Fri, 7 Jul 2023 00:44:10 -0700
-From:   Rohit kumar <quic_rohkumar@quicinc.com>
-To:     <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <quic_rohkumar@quicinc.com>,
-        <cychiang@chromium.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2] ASoC: dt-bindings: Update maintainer email id
-Date:   Fri, 7 Jul 2023 13:13:36 +0530
-Message-ID: <20230707074337.3120530-1-quic_rohkumar@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Fri, 7 Jul 2023 03:45:16 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273B026AE
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 00:44:59 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id 41be03b00d2f7-52cb8e5e9f5so1087835a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 00:44:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688715898; x=1691307898;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=nc8hsYfP7p2/uQcQVsM1gSYitt4Oq+PGcwvXsUY6Xd0=;
+        b=IfQPY7vmxYj1PcxBJ0L3J2rLmRwRg+zUfuHzIsME0fm2M91udhvySx62cP6yywzzt4
+         KvOhwLh26kqJDnlf4IWE6uxj7II+T9pWexx/jm2CZTWedS1BBLEJ+VGwRDfMJWobxkzU
+         R6+YJfBK93Rs3VXc+oSsLQJWfGGEMgIhMdvo58QveX/EPSvDd/k1YRO1f3p3Fc6t7vwh
+         mrJqYVOH1zbrU1JJY1lCau/2jGzd+C5QrTK9htklBC46EHvzNiHnmjLqmyKv+JJjYf4p
+         j56zOTQY/ZEv19FVy4NWdQaasJ/KK/qNqbFEr1QngwHfGm+fiodQHrhWWd4aOb2naWmT
+         a1rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688715898; x=1691307898;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nc8hsYfP7p2/uQcQVsM1gSYitt4Oq+PGcwvXsUY6Xd0=;
+        b=LvrgvSqy1B7sgYD0QgOj/yloWckUdkTM2QbIjfXIgVEIwG/WCanxx/A34dsLICQ1hg
+         12+BJRgmPiVhy3rnvGATVSL85CypOxev2ZNi8mb63lv/NyjuMNTbMlxTZVpX4VNh6fKU
+         IGUtbx9UVXgUFe8jWvQOW4ji9jGW9jMFWGvUEd3tcZ08Zm7WhNJ9Gt1lvJe9p6da6hbA
+         FgHtZX5JWKdfnCFlCy9EClNYyTxftTmRwvahbTlEP2Ja0Qq+lsqRH/Cq8VY/SfyaEJeA
+         qTwyeWR/Y//l8WR7nGl68OrwkU9Y7VhYjkdVYJyO1VBrscYcVzCZmJjcvxv967nSsl09
+         +8bQ==
+X-Gm-Message-State: ABy/qLaRX7aGrF0kXsdFBblXkR3WxpknbtDwNRJr9rh9C5gP4ziH2s0I
+        tUeepSucSAg/pTCa7NtDoixU
+X-Google-Smtp-Source: APBJJlE1giAF5ktcBdYwyPiW/RITGSYsHtaTsJIfAlizZBMQzPCsDxxmt3RXdsUWwYCMtjhL8i2biA==
+X-Received: by 2002:a05:6a20:8f2a:b0:12f:5f2b:cbb0 with SMTP id b42-20020a056a208f2a00b0012f5f2bcbb0mr10538469pzk.23.1688715898358;
+        Fri, 07 Jul 2023 00:44:58 -0700 (PDT)
+Received: from thinkpad ([117.216.120.82])
+        by smtp.gmail.com with ESMTPSA id z6-20020a633306000000b0051b460fd90fsm2382435pgz.8.2023.07.07.00.44.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jul 2023 00:44:57 -0700 (PDT)
+Date:   Fri, 7 Jul 2023 13:14:49 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 1/3] clk: qcom: gcc-sc8280xp: Add missing GDSC flags
+Message-ID: <20230707074449.GJ6001@thinkpad>
+References: <20230620-topic-sc8280_gccgdsc-v2-0-562c1428c10d@linaro.org>
+ <20230620-topic-sc8280_gccgdsc-v2-1-562c1428c10d@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: q9GijHBQwLKbeBQ9DnMc9Ymoms53_ekI
-X-Proofpoint-ORIG-GUID: q9GijHBQwLKbeBQ9DnMc9Ymoms53_ekI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-07_04,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 phishscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307070070
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230620-topic-sc8280_gccgdsc-v2-1-562c1428c10d@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Updated my mail id to latest quicinc id.
+On Mon, Jun 26, 2023 at 07:48:06PM +0200, Konrad Dybcio wrote:
+> All of the 8280's GCC GDSCs can and should use the retain registers so
+> as not to lose their state when entering lower power modes.
+> 
+> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
----
-v2: Updated commit header
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
- .../devicetree/bindings/sound/google,sc7180-trogdor.yaml        | 2 +-
- Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+- Mani
 
-diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-index 666a95ac22c8..ba5b7728cf33 100644
---- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-+++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Google SC7180-Trogdor ASoC sound card driver
- 
- maintainers:
--  - Rohit kumar <rohitkr@codeaurora.org>
-+  - Rohit kumar <quic_rohkumar@quicinc.com>
-   - Cheng-Yi Chiang <cychiang@chromium.org>
- 
- description:
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-index 6cc8f86c7531..3a559bd07a79 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-@@ -8,7 +8,7 @@ title: Qualcomm Technologies Inc. LPASS CPU dai driver
- 
- maintainers:
-   - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
--  - Rohit kumar <rohitkr@codeaurora.org>
-+  - Rohit kumar <quic_rohkumar@quicinc.com>
- 
- description: |
-   Qualcomm Technologies Inc. SOC Low-Power Audio SubSystem (LPASS) that consist
+> ---
+>  drivers/clk/qcom/gcc-sc8280xp.c | 21 ++++++++++++++-------
+>  1 file changed, 14 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index b90c71637814..64bea886322d 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -6761,7 +6761,7 @@ static struct gdsc pcie_0_tunnel_gdsc = {
+>  		.name = "pcie_0_tunnel_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct gdsc pcie_1_tunnel_gdsc = {
+> @@ -6772,7 +6772,7 @@ static struct gdsc pcie_1_tunnel_gdsc = {
+>  		.name = "pcie_1_tunnel_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE,
+>  };
+>  
+>  /*
+> @@ -6787,7 +6787,7 @@ static struct gdsc pcie_2a_gdsc = {
+>  		.name = "pcie_2a_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE | ALWAYS_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+>  };
+>  
+>  static struct gdsc pcie_2b_gdsc = {
+> @@ -6798,7 +6798,7 @@ static struct gdsc pcie_2b_gdsc = {
+>  		.name = "pcie_2b_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE | ALWAYS_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+>  };
+>  
+>  static struct gdsc pcie_3a_gdsc = {
+> @@ -6809,7 +6809,7 @@ static struct gdsc pcie_3a_gdsc = {
+>  		.name = "pcie_3a_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE | ALWAYS_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+>  };
+>  
+>  static struct gdsc pcie_3b_gdsc = {
+> @@ -6820,7 +6820,7 @@ static struct gdsc pcie_3b_gdsc = {
+>  		.name = "pcie_3b_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE | ALWAYS_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+>  };
+>  
+>  static struct gdsc pcie_4_gdsc = {
+> @@ -6831,7 +6831,7 @@ static struct gdsc pcie_4_gdsc = {
+>  		.name = "pcie_4_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = VOTABLE | ALWAYS_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
+>  };
+>  
+>  static struct gdsc ufs_card_gdsc = {
+> @@ -6840,6 +6840,7 @@ static struct gdsc ufs_card_gdsc = {
+>  		.name = "ufs_card_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct gdsc ufs_phy_gdsc = {
+> @@ -6848,6 +6849,7 @@ static struct gdsc ufs_phy_gdsc = {
+>  		.name = "ufs_phy_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct gdsc usb30_mp_gdsc = {
+> @@ -6856,6 +6858,7 @@ static struct gdsc usb30_mp_gdsc = {
+>  		.name = "usb30_mp_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_RET_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct gdsc usb30_prim_gdsc = {
+> @@ -6864,6 +6867,7 @@ static struct gdsc usb30_prim_gdsc = {
+>  		.name = "usb30_prim_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_RET_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct gdsc usb30_sec_gdsc = {
+> @@ -6872,6 +6876,7 @@ static struct gdsc usb30_sec_gdsc = {
+>  		.name = "usb30_sec_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_RET_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct gdsc emac_0_gdsc = {
+> @@ -6880,6 +6885,7 @@ static struct gdsc emac_0_gdsc = {
+>  		.name = "emac_0_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct gdsc emac_1_gdsc = {
+> @@ -6888,6 +6894,7 @@ static struct gdsc emac_1_gdsc = {
+>  		.name = "emac_1_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+>  };
+>  
+>  static struct clk_regmap *gcc_sc8280xp_clocks[] = {
+> 
+> -- 
+> 2.41.0
+> 
+
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
