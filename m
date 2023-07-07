@@ -2,66 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A96FA74B0B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 14:28:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A1D374B0CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jul 2023 14:29:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232562AbjGGM11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 08:27:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57364 "EHLO
+        id S231492AbjGGM3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 08:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232532AbjGGM10 (ORCPT
+        with ESMTP id S229460AbjGGM3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 08:27:26 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A8F1FE6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 05:27:24 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b8ad907ba4so9792955ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 05:27:24 -0700 (PDT)
+        Fri, 7 Jul 2023 08:29:21 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 150AF2110
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 05:29:20 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b708e49059so24651651fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 05:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688732844; x=1691324844;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NZ8JSt047fABCf/ocyk/dBCgET4YP8jMebMJ8/IUJmo=;
-        b=YD3CkmbM2zj4toDN3vLlUM9Ndf4dprd27VqOEVwc/i1C31rz8qKfl5vWFRXl0Nf4Fb
-         pW1aBpAmxtfFpWf1sQyD7sdH/TgFHyT/5urdJIvv8Pj5ygUmLAnmZXq1/qHN7iCWkhQg
-         So2PWAdkJNKadcI4lS5Vc7KLvW/cDvEoxsrB7UeooiOfImoxAcMf4ObNPuyYOAJ/ScaQ
-         z5vqKc067UzyST7UNmuJNk0VnlM6edmFLCKTeRJaxoATkIn3pUVVHZ1kBevW6g+L9Rfo
-         F51A1yohZjnuRxurnmOe4PeFlwKU8dHaXJMrGTfHQq8byxUldpyOlwDoHx0b7bvAfAh1
-         YCxQ==
+        d=linaro.org; s=google; t=1688732958; x=1691324958;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3H/cw+NDInjs9SJDWXqRf3DMhHgAg+6vWsSVOtVpZfg=;
+        b=REDANDM4w3B+ePj3836UDrxjjHZbaGpUhWUqmjT2GtcbmeqNTTAIdjdKk3IT8nDjX/
+         5Mp0kfFVShE3y436qgbhXcHe5WEaYNc65CS7KIgptRd8QQiBk63ppj103TDaysArodiW
+         77X8HBTfZAmLZNJ2A2Lz45gBZ9HeZMRGwxDZszT2RfwpdOHZyP65QahpzcTrJBya31kY
+         jzpnNAD+V+cCg+nWz2ne5dPragtTz/ISeyKfzWz+qZlABrxHxSxVBvbnzwvyCufdxGTb
+         eJDx9bsIZh4r7QtKgMn4Sl0HXL2WhFLW0q8GbAlp5Qsy98JjD6I+oKEwp2PNNHUKjKEO
+         jTcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688732844; x=1691324844;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NZ8JSt047fABCf/ocyk/dBCgET4YP8jMebMJ8/IUJmo=;
-        b=UGNcs+sAzWAsG4h8I105vuESO9oAK+DZqEVEU9em21w4TuDsi1AYle6rkhic8wL+8L
-         kFGIziCb6xH+7vb3XCMt4+jybOetpieuSswkT8KfcxLbPxld3wwek83TED/2gzzVPWyE
-         NYSJ4budFLFxx4f4MTjce8TtRVQu2CWNQOWKv4k/5Do5kKinTjyN9e8zZzz63maDpFEQ
-         Mfa/k+lVKkcIzX8p+22tmdXmjznWoh4VCYTML2YNmG9sZ5N4+UA3RikRH9RltHfhWLeM
-         LTVHQ+t9nQywRylMAtExfKlR4TpD7asxdvcDCJTUi8uRIh4cEFZdLBb7S7Uq2w5cyoEN
-         ia3g==
-X-Gm-Message-State: ABy/qLYIOXsZVEMX5F3U0dUuqlrltOoJz5QrAPfnkm94Q+EFmGeP1BZ3
-        /z+wdnKHqevIOeeosgtYBAM3
-X-Google-Smtp-Source: APBJJlENIIpeVTgL/DM7JL5TDsVfBcU0N6G5sjkUNneJZr+86lpJjH1tQ4POc0M/GKAA+unbTlw7UA==
-X-Received: by 2002:a17:902:db11:b0:1b8:9ec5:79e2 with SMTP id m17-20020a170902db1100b001b89ec579e2mr4692812plx.1.1688732844320;
-        Fri, 07 Jul 2023 05:27:24 -0700 (PDT)
-Received: from localhost.localdomain ([117.216.120.82])
-        by smtp.gmail.com with ESMTPSA id v5-20020a1709029a0500b001b8b0ac2258sm3144140plp.174.2023.07.07.05.27.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 05:27:23 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org
-Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] soc: qcom: rpmh: Include resource name in the trace event
-Date:   Fri,  7 Jul 2023 17:57:13 +0530
-Message-Id: <20230707122713.37487-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        d=1e100.net; s=20221208; t=1688732958; x=1691324958;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3H/cw+NDInjs9SJDWXqRf3DMhHgAg+6vWsSVOtVpZfg=;
+        b=czftxs+8kxcB3rs8nTnt9zQPKpdb1MlLkL2L/xri+rbfK3TkMiOnodCFhZ7Q23wWEN
+         8FLQ2fPU/oNKxpWEuOnscPDdBaAHV3P9N9NY3M9/C18AehjwroV6sZ8Tdg19OH9GXXXw
+         HOrfz/Gs01Ukg/n07CYWZvdy1Ye919eV6bkjLOs1YKMb4yV8QiCdnt7b+CEUwTl0IUK9
+         aXjZGOVTWnLM95XplI+PVI5xEWqxuekn9ORZOw67frwxzJwLkLHc/1WUsmSQIFMTPvwB
+         sz8P8mLTf/ScLsFEY6sq6pSOWPd/0VK74RHInaLkqwtPg4Z69NK/vr7iw8sbCIHeyhp4
+         socg==
+X-Gm-Message-State: ABy/qLZYl0fPcHbuRBdq8cczH0s+JHXu95zsAaBrJaL7NG3f9clN6x0W
+        id1NU14TYMYOrfq1eJGksaoFXRilS1KjmFe7Z97QjQ==
+X-Google-Smtp-Source: APBJJlFBx0KTotWF/y3AHFvCg4k0qoFwt+zAhreMCg5CF2LKiuYBNnfHTZZaB7irlRCZcN6QQJn0PQ==
+X-Received: by 2002:a05:6512:3a82:b0:4f9:cd02:4af1 with SMTP id q2-20020a0565123a8200b004f9cd024af1mr4221783lfu.34.1688732958325;
+        Fri, 07 Jul 2023 05:29:18 -0700 (PDT)
+Received: from [192.168.1.101] (abyj26.neoplus.adsl.tpnet.pl. [83.9.29.26])
+        by smtp.gmail.com with ESMTPSA id d11-20020ac2544b000000b004fbb1bc1ae0sm669286lfn.163.2023.07.07.05.29.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Jul 2023 05:29:18 -0700 (PDT)
+Message-ID: <f26fed94-c6c2-cc39-62ec-8aee309456eb@linaro.org>
+Date:   Fri, 7 Jul 2023 14:29:16 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v5 0/2] spi-geni-qcom: Add SPI device mode support for
+ GENI based QuPv3
+To:     Praveen Talari <quic_ptalari@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_vnivarth@quicinc.com, quic_arandive@quicinc.com
+References: <20230707051636.5301-1-quic_ptalari@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230707051636.5301-1-quic_ptalari@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,195 +79,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The client drivers of RPMh like rpmhpd and bcm-voter has the name of the
-resource they are dealing with along with the address. So let's include
-the resource name in the RPMh trace event as it avoids doing a post
-processing of the trace event to resolve the resource name its address.
+On 7.07.2023 07:16, Praveen Talari wrote:
+> This series adds spi device mode functionality to geni based Qupv3.
+> The common header file contains spi slave related registers and masks.
+> 
+> Praveen Talari (2):
+>   soc: qcom: geni-se: Add SPI Device mode support for GENI based QuPv3
+>   spi: spi-geni-qcom: Add SPI Device mode support for GENI based QuPv3
+> ---
+> v4 -> v5:
+> - Addressed review comments in driver
+"fix bug" says exactly nothing
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
-
-This patch depends on:
-https://lore.kernel.org/all/20230620230058.428833-1-quic_bjorande@quicinc.com/
-
- drivers/interconnect/qcom/bcm-voter.c |  5 +++--
- drivers/soc/qcom/rpmh.c               |  9 ++++++---
- drivers/soc/qcom/rpmhpd.c             |  1 +
- drivers/soc/qcom/trace-rpmh.h         | 12 ++++++++----
- include/soc/qcom/tcs.h                |  2 ++
- 5 files changed, 20 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-index 8f385f9c2dd3..8cf65ef4e1fb 100644
---- a/drivers/interconnect/qcom/bcm-voter.c
-+++ b/drivers/interconnect/qcom/bcm-voter.c
-@@ -95,7 +95,7 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
- }
- 
- static inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
--			       u32 addr, bool commit, bool wait)
-+			       const char *name, u32 addr, bool commit, bool wait)
- {
- 	bool valid = true;
- 
-@@ -113,6 +113,7 @@ static inline void tcs_cmd_gen(struct tcs_cmd *cmd, u64 vote_x, u64 vote_y,
- 	if (vote_y > BCM_TCS_CMD_VOTE_MASK)
- 		vote_y = BCM_TCS_CMD_VOTE_MASK;
- 
-+	cmd->name = name;
- 	cmd->addr = addr;
- 	cmd->data = BCM_TCS_CMD(commit, valid, vote_x, vote_y);
- 
-@@ -146,7 +147,7 @@ static void tcs_list_gen(struct bcm_voter *voter, int bucket,
- 		wait = commit && (voter->tcs_wait & BIT(bucket));
- 
- 		tcs_cmd_gen(&tcs_list[idx], bcm->vote_x[bucket],
--			    bcm->vote_y[bucket], bcm->addr, commit, wait);
-+			    bcm->vote_y[bucket], bcm->name, bcm->addr, commit, wait);
- 		idx++;
- 		n[batch]++;
- 		/*
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 08e09642d7f5..dfb849f134cd 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -49,6 +49,7 @@
-  * @list: linked list obj
-  */
- struct cache_req {
-+	const char *name;
- 	u32 addr;
- 	u32 sleep_val;
- 	u32 wake_val;
-@@ -127,6 +128,7 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
- 		goto unlock;
- 	}
- 
-+	req->name = cmd->name;
- 	req->addr = cmd->addr;
- 	req->sleep_val = req->wake_val = UINT_MAX;
- 	list_add_tail(&req->list, &ctrlr->cache);
-@@ -405,12 +407,13 @@ static int is_req_valid(struct cache_req *req)
- }
- 
- static int send_single(struct rpmh_ctrlr *ctrlr, enum rpmh_state state,
--		       u32 addr, u32 data)
-+		       const char *name, u32 addr, u32 data)
- {
- 	DEFINE_RPMH_MSG_ONSTACK(NULL, state, NULL, rpm_msg);
- 
- 	/* Wake sets are always complete and sleep sets are not */
- 	rpm_msg.msg.wait_for_compl = (state == RPMH_WAKE_ONLY_STATE);
-+	rpm_msg.cmd[0].name = name;
- 	rpm_msg.cmd[0].addr = addr;
- 	rpm_msg.cmd[0].data = data;
- 	rpm_msg.msg.num_cmds = 1;
-@@ -461,11 +464,11 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
- 				 __func__, p->addr, p->sleep_val, p->wake_val);
- 			continue;
- 		}
--		ret = send_single(ctrlr, RPMH_SLEEP_STATE, p->addr,
-+		ret = send_single(ctrlr, RPMH_SLEEP_STATE, p->name, p->addr,
- 				  p->sleep_val);
- 		if (ret)
- 			goto exit;
--		ret = send_single(ctrlr, RPMH_WAKE_ONLY_STATE, p->addr,
-+		ret = send_single(ctrlr, RPMH_WAKE_ONLY_STATE, p->name, p->addr,
- 				  p->wake_val);
- 		if (ret)
- 			goto exit;
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index f20e2a49a669..770a998c159e 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -543,6 +543,7 @@ static int rpmhpd_send_corner(struct rpmhpd *pd, int state,
- 			      unsigned int corner, bool sync)
- {
- 	struct tcs_cmd cmd = {
-+		.name = pd->res_name,
- 		.addr = pd->addr,
- 		.data = corner,
- 	};
-diff --git a/drivers/soc/qcom/trace-rpmh.h b/drivers/soc/qcom/trace-rpmh.h
-index be6b42ecc1f8..20a920d2202c 100644
---- a/drivers/soc/qcom/trace-rpmh.h
-+++ b/drivers/soc/qcom/trace-rpmh.h
-@@ -21,6 +21,7 @@ TRACE_EVENT(rpmh_tx_done,
- 	TP_STRUCT__entry(
- 			 __string(name, d->name)
- 			 __field(int, m)
-+			 __string(tcs_name, r->cmds[0].name)
- 			 __field(u32, addr)
- 			 __field(u32, data)
- 	),
-@@ -28,12 +29,13 @@ TRACE_EVENT(rpmh_tx_done,
- 	TP_fast_assign(
- 		       __assign_str(name, d->name);
- 		       __entry->m = m;
-+		       __assign_str(tcs_name, r->cmds[0].name);
- 		       __entry->addr = r->cmds[0].addr;
- 		       __entry->data = r->cmds[0].data;
- 	),
- 
--	TP_printk("%s: ack: tcs-m: %d addr: %#x data: %#x",
--		  __get_str(name), __entry->m, __entry->addr, __entry->data)
-+	TP_printk("%s: ack: tcs-m: %d name: %s addr: %#x data: %#x",
-+		  __get_str(name), __entry->m, __get_str(tcs_name), __entry->addr, __entry->data)
- );
- 
- TRACE_EVENT(rpmh_send_msg,
-@@ -49,6 +51,7 @@ TRACE_EVENT(rpmh_send_msg,
- 			 __field(u32, state)
- 			 __field(int, n)
- 			 __field(u32, hdr)
-+			 __string(tcs_name, c->name)
- 			 __field(u32, addr)
- 			 __field(u32, data)
- 			 __field(bool, wait)
-@@ -60,12 +63,13 @@ TRACE_EVENT(rpmh_send_msg,
- 		       __entry->state = state;
- 		       __entry->n = n;
- 		       __entry->hdr = h;
-+		       __assign_str(tcs_name, c->name);
- 		       __entry->addr = c->addr;
- 		       __entry->data = c->data;
- 		       __entry->wait = c->wait;
- 	),
- 
--	TP_printk("%s: tcs(m): %d [%s] cmd(n): %d msgid: %#x addr: %#x data: %#x complete: %d",
-+	TP_printk("%s: tcs(m): %d [%s] cmd(n): %d msgid: %#x name: %s addr: %#x data: %#x complete: %d",
- 		  __get_str(name), __entry->m,
- 		  __print_symbolic(__entry->state,
- 				   { RPMH_SLEEP_STATE, "sleep" },
-@@ -73,7 +77,7 @@ TRACE_EVENT(rpmh_send_msg,
- 				   { RPMH_ACTIVE_ONLY_STATE, "active" }),
- 		  __entry->n,
- 		  __entry->hdr,
--		  __entry->addr, __entry->data, __entry->wait)
-+		  __get_str(tcs_name), __entry->addr, __entry->data, __entry->wait)
- );
- 
- #endif /* _TRACE_RPMH_H */
-diff --git a/include/soc/qcom/tcs.h b/include/soc/qcom/tcs.h
-index 3acca067c72b..65779c4156a1 100644
---- a/include/soc/qcom/tcs.h
-+++ b/include/soc/qcom/tcs.h
-@@ -28,6 +28,7 @@ enum rpmh_state {
- /**
-  * struct tcs_cmd: an individual request to RPMH.
-  *
-+ * @name: the name of the resource
-  * @addr: the address of the resource slv_id:18:16 | offset:0:15
-  * @data: the resource state request
-  * @wait: ensure that this command is complete before returning.
-@@ -39,6 +40,7 @@ enum rpmh_state {
-  *                       (There's no request completion callback)
-  */
- struct tcs_cmd {
-+	const char *name;
- 	u32 addr;
- 	u32 data;
- 	u32 wait;
--- 
-2.25.1
-
+Konrad
+> 
+> v3 -> v4:
+> - Used existing property spi-slave
+> - Hence dropped dt-binding changes
+> 
+> v2 -> v3:
+> - Modified commit message
+> - Addressed comment on dt-binding
+> 
+> v1 -> v2:
+> - Added dt-binding change for spi slave
+> - Modified commit message
+> - Addressed review comments in driver
+> 
+>  drivers/spi/spi-geni-qcom.c      | 53 ++++++++++++++++++++++++++++----
+>  include/linux/soc/qcom/geni-se.h |  9 ++++++
+>  2 files changed, 56 insertions(+), 6 deletions(-)
+> 
