@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 816A774BAAC
+	by mail.lfdr.de (Postfix) with ESMTP id CA83F74BAAD
 	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:04:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230289AbjGHBEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 21:04:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58366 "EHLO
+        id S230290AbjGHBEO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 21:04:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbjGHBEN (ORCPT
+        with ESMTP id S230036AbjGHBEN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 7 Jul 2023 21:04:13 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B81622123
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:11 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b6ff1ad155so45255101fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:11 -0700 (PDT)
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 841D8210C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:12 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b63e5f94f1so31584491fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688778250; x=1691370250;
+        d=linaro.org; s=google; t=1688778251; x=1691370251;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eMAmM9SKw/inKw+h9p1EJrIP33+OT6JDaPBmfl7Oyyg=;
-        b=HAXK+PqbHSV6zSK7BV4lNH0HkMDmOiTv2ZVjb1vJlvSOp8jVHtKfGFqeG0dtrvbWHP
-         mmip+GhJhkhwSU34Nq6G9+wmrRyXKg4TOZ0lvit9CbFU+kUdHl5R4lyEPvDTkV4PHTT0
-         gmTFLzBqdDqKk6jbNL2Sgr8VcmeGkaZ7zXQKlAcVIsyLd7D4mB55L3FLCJFKEXKANc93
-         HXfCxyH6NMsXvGeUEsxXJs2oeaZSqlX5CzonwG+mgIr35/oWa5xM+MK7WtQqrN5RWCtn
-         cHAdnzTi+TaNdx5Z2UFB3MVGZgDdulwFM6I7CLUd4S2rtgldJAj4PdlAJecdcLjnZfMn
-         vh1Q==
+        bh=FhZxoa6vuDbilJsKkx3e64dlv9EEmCnJ4NShTCH1woQ=;
+        b=WR2v2wjRNClqpLniua2drXqwsSn/u6s094y3iOx4FDSbPOJDzvFYcvSuuS7oQbQ0uT
+         X41/1Sd4YLwvjYWux8RPuopUyimF6etV63QOHf1Q29Ehbr5JEFNsmlVBHOMacyP1swDb
+         vUTDTKTZ2+gqFw1FIjJfEqzS5X7Z3J9Ly0zWwratIppJ90QO7l0VQdHX0UxlURhC7GTp
+         10070CTQDC8F50RkRmhqF9WtZG0xJGJG0uja6hq8DJKotKcX6a5i0FKr/OW7rjqNvitB
+         dhJTirrxGWmdm/h1epSePP3FXCkItkE3hjqAGCaY8ilItsvIOwAMNJ1bTBgyK3JGGFCZ
+         kS3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688778250; x=1691370250;
+        d=1e100.net; s=20221208; t=1688778251; x=1691370251;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eMAmM9SKw/inKw+h9p1EJrIP33+OT6JDaPBmfl7Oyyg=;
-        b=WxNgalsrEQIopSqmT5ZaSqGs3LdBodEMVe6cWM+47ETFPL9w/+1EwtkZuj9ujhDwQ8
-         GkLdvbh6Xlbp4p5Px8jusmIbeDUzNwCJeDydkJIGBrNh33hwO4M/wyeHzTNmCT8UZR8g
-         C5+Gzi8ncqZ3Gx5WpbMSDcIdrmXbGEFTlq635rzq0oeGhSq67X97NkVP9e4Ph/mLow3k
-         QhUCgjD8Y5PVQJclMZbOUaNzgapNj6eSOeNDr8//dEhavrtZTpdsx2WNdS6aajqh14nL
-         DtLj/J3rl13SHuKfWfpnqm4TQv1yjAxt8a97DVotT2WbsLUZ83ggtqzwCgH5NyAh8PNR
-         m+3g==
-X-Gm-Message-State: ABy/qLbn3wZZG4X/PzLeb7rxAvuBiz9SGLHvanw/rQDsnjHuFbXOCASc
-        klB9VRk2FUV/Pv+DcvqZVr6N1g==
-X-Google-Smtp-Source: APBJJlHBVidCbm1Ynuoei++jdbP725lfezafJRwmcXXT3obwnVQzaaBL7n17UcKBjmisaTG0LZqGMQ==
-X-Received: by 2002:a05:651c:3ca:b0:2b6:9f95:8118 with SMTP id f10-20020a05651c03ca00b002b69f958118mr3615228ljp.7.1688778250153;
+        bh=FhZxoa6vuDbilJsKkx3e64dlv9EEmCnJ4NShTCH1woQ=;
+        b=CpRrFmTzbzAFhtC7rHIRVwnXl9TNALj9VmoukOPeKgvjpThaD18Sxd1hfPTrES227T
+         3zs7rNE2a0zVB5B8E6nYrtRiQSHTEACYcIjPrPhh9XKzpl3G6OVPcXOJvJGhVoL4KOR0
+         Xgwc+HUzrkC7+BWsyZ9xMO/eju5ScVGyFk6nQszDGRjpy7aGRSIlTeJaZTwKsIwPgv/s
+         zFUAULZUIGUREdN4QjtbGcoP9OHHtB1nUdZwVO4QML9bW+e1Uhk9QeMnblQFJABenLjv
+         Qo9w4jFWeL5MaM/4+rU5NITpSq8Rgw/hFi1tYvmm6fNjUNv9TkBYF8n5IudYE6pCKdq8
+         KtTg==
+X-Gm-Message-State: ABy/qLaKr8Go1gRmOD4YWCCclqqiVWSWoOzNkjPIRhd9DQHffvh76OrS
+        WL9z/1p1c1rS1qfnyelpo6X5/A==
+X-Google-Smtp-Source: APBJJlGvn73jNS+QweO+UmzyrjUSBb1BZwNN5wkpgMNIosKfJKqTYRz4PxGLqAWCoaTWyDbCONrS8g==
+X-Received: by 2002:a05:651c:107b:b0:2b6:d7d2:1a65 with SMTP id y27-20020a05651c107b00b002b6d7d21a65mr3852447ljm.18.1688778250909;
         Fri, 07 Jul 2023 18:04:10 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.09
+        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 18:04:09 -0700 (PDT)
+        Fri, 07 Jul 2023 18:04:10 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 02/17] drm/msm/mdp5: use devres-managed allocation for configuration data
-Date:   Sat,  8 Jul 2023 04:03:52 +0300
-Message-Id: <20230708010407.3871346-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 03/17] drm/msm/mdp5: use devres-managed allocation for CTL manager data
+Date:   Sat,  8 Jul 2023 04:03:53 +0300
+Message-Id: <20230708010407.3871346-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
 References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
@@ -78,102 +78,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use devm_kzalloc to create configuration data structure. This allows us
-to remove corresponding kfree and drop mdp5_cfg_destroy() function.
+Use devm_kzalloc to create CTL manager data structure. This allows us
+to remove corresponding kfree and drop mdp5_ctlm_destroy() function.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 24 +++++-------------------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h |  1 -
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c | 21 ++++-----------------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h |  1 -
  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  2 --
- 3 files changed, 5 insertions(+), 22 deletions(-)
+ 3 files changed, 4 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index 694d54341337..c5179e4c393c 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -1350,23 +1350,17 @@ int mdp5_cfg_get_hw_rev(struct mdp5_cfg_handler *cfg_handler)
- 	return cfg_handler->revision;
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+index 1220f2b20e05..666de99a46a5 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+@@ -681,11 +681,6 @@ void mdp5_ctlm_hw_reset(struct mdp5_ctl_manager *ctl_mgr)
+ 	}
  }
  
--void mdp5_cfg_destroy(struct mdp5_cfg_handler *cfg_handler)
+-void mdp5_ctlm_destroy(struct mdp5_ctl_manager *ctl_mgr)
 -{
--	kfree(cfg_handler);
+-	kfree(ctl_mgr);
 -}
 -
- struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
- 		uint32_t major, uint32_t minor)
+ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+ 		void __iomem *mmio_base, struct mdp5_cfg_handler *cfg_hnd)
  {
- 	struct drm_device *dev = mdp5_kms->dev;
- 	struct mdp5_cfg_handler *cfg_handler;
- 	const struct mdp5_cfg_handler *cfg_handlers;
--	int i, ret = 0, num_handlers;
-+	int i, num_handlers;
+@@ -697,18 +692,16 @@ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+ 	unsigned long flags;
+ 	int c, ret;
  
--	cfg_handler = kzalloc(sizeof(*cfg_handler), GFP_KERNEL);
-+	cfg_handler = devm_kzalloc(dev->dev, sizeof(*cfg_handler), GFP_KERNEL);
- 	if (unlikely(!cfg_handler)) {
+-	ctl_mgr = kzalloc(sizeof(*ctl_mgr), GFP_KERNEL);
++	ctl_mgr = devm_kzalloc(dev->dev, sizeof(*ctl_mgr), GFP_KERNEL);
+ 	if (!ctl_mgr) {
+ 		DRM_DEV_ERROR(dev->dev, "failed to allocate CTL manager\n");
 -		ret = -ENOMEM;
 -		goto fail;
 +		return ERR_PTR(-ENOMEM);
  	}
  
- 	switch (major) {
-@@ -1381,8 +1375,7 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
- 	default:
- 		DRM_DEV_ERROR(dev->dev, "unexpected MDP major version: v%d.%d\n",
- 				major, minor);
--		ret = -ENXIO;
+ 	if (WARN_ON(ctl_cfg->count > MAX_CTL)) {
+ 		DRM_DEV_ERROR(dev->dev, "Increase static pool size to at least %d\n",
+ 				ctl_cfg->count);
+-		ret = -ENOSPC;
 -		goto fail;
-+		return ERR_PTR(-ENXIO);
++		return ERR_PTR(-ENOSPC);
  	}
  
- 	/* only after mdp5_cfg global pointer's init can we access the hw */
-@@ -1396,8 +1389,7 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
- 	if (unlikely(!mdp5_cfg)) {
- 		DRM_DEV_ERROR(dev->dev, "unexpected MDP minor revision: v%d.%d\n",
- 				major, minor);
--		ret = -ENXIO;
--		goto fail;
-+		return ERR_PTR(-ENXIO);
- 	}
+ 	/* initialize the CTL manager: */
+@@ -727,7 +720,7 @@ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+ 			DRM_DEV_ERROR(dev->dev, "CTL_%d: base is null!\n", c);
+ 			ret = -EINVAL;
+ 			spin_unlock_irqrestore(&ctl_mgr->pool_lock, flags);
+-			goto fail;
++			return ERR_PTR(ret);
+ 		}
+ 		ctl->ctlm = ctl_mgr;
+ 		ctl->id = c;
+@@ -755,10 +748,4 @@ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+ 	DBG("Pool of %d CTLs created.", ctl_mgr->nctl);
  
- 	cfg_handler->revision = minor;
-@@ -1406,10 +1398,4 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
- 	DBG("MDP5: %s hw config selected", mdp5_cfg->name);
- 
- 	return cfg_handler;
+ 	return ctl_mgr;
 -
 -fail:
--	if (cfg_handler)
--		mdp5_cfg_destroy(cfg_handler);
+-	if (ctl_mgr)
+-		mdp5_ctlm_destroy(ctl_mgr);
 -
 -	return ERR_PTR(ret);
  }
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
-index c2502cc33864..26c5d8b4ab46 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h
-@@ -121,6 +121,5 @@ int mdp5_cfg_get_hw_rev(struct mdp5_cfg_handler *cfg_hnd);
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
+index c2af68aa77ae..9020e8efc4e4 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
+@@ -17,7 +17,6 @@ struct mdp5_ctl_manager;
+ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+ 		void __iomem *mmio_base, struct mdp5_cfg_handler *cfg_hnd);
+ void mdp5_ctlm_hw_reset(struct mdp5_ctl_manager *ctlm);
+-void mdp5_ctlm_destroy(struct mdp5_ctl_manager *ctlm);
  
- struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
- 		uint32_t major, uint32_t minor);
--void mdp5_cfg_destroy(struct mdp5_cfg_handler *cfg_hnd);
- 
- #endif /* __MDP5_CFG_H__ */
+ /*
+  * CTL prototypes:
 diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 52f176e08690..828634206185 100644
+index 828634206185..e20ead138602 100644
 --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
 +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -629,8 +629,6 @@ static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
- 		mdp5_ctlm_destroy(mdp5_kms->ctlm);
+@@ -625,8 +625,6 @@ static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
+ {
+ 	int i;
+ 
+-	if (mdp5_kms->ctlm)
+-		mdp5_ctlm_destroy(mdp5_kms->ctlm);
  	if (mdp5_kms->smp)
  		mdp5_smp_destroy(mdp5_kms->smp);
--	if (mdp5_kms->cfg)
--		mdp5_cfg_destroy(mdp5_kms->cfg);
  
- 	for (i = 0; i < mdp5_kms->num_intfs; i++)
- 		kfree(mdp5_kms->intfs[i]);
 -- 
 2.39.2
 
