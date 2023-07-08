@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F309574BAB7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:04:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EEB574BAB8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:04:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231929AbjGHBEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S232406AbjGHBEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 7 Jul 2023 21:04:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58426 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbjGHBET (ORCPT
+        with ESMTP id S232785AbjGHBEU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 21:04:19 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C470F210C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:18 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b6b98ac328so38424991fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:18 -0700 (PDT)
+        Fri, 7 Jul 2023 21:04:20 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67AE32123
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:19 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b702319893so38641891fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1688778257; x=1691370257;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EISX21FWLXz1QXdvUtqFaW2f6EH0tEp3Z4D8cCpj34M=;
-        b=kyv3hf8HJcSmH3fJ6FcMv408NUaNI/RTNg9GB4Sr1Qxgr/8bkMStJxWPqwPZcznOSy
-         K67WzScQjeDRLWG/1PcT44R5NOn2ousY68HeQVAerhiffn0v8ELyh4LW2+vawwcRNuPw
-         r0KLm4zmL8k/4f6hEfxjWnlrnxDPiUVaRP6qpHuEC0ySjaGxpjAI3pbNKyTJHSB9+upK
-         ru7qz0mY67QH/eg0mnw3MgIUUjiZu2M4pqukk0srvN7EcQYK+Xb7f8/mw7Q5nJxvcQgM
-         wQ4YzhLgO0rfOeoWKwNlSUt1WCEGVuKRBsKE1VjVbbp1N4S08x2gGpbJFtstbItDiii5
-         MRSw==
+        bh=+38nzESfvK4pAHEPkhscE79q4Wrbr+it00jhvW61XWI=;
+        b=sdozM2tVW3hK0v7eXNQ7BGK8KprAd0AhB7gnwUkjTdZ3pTBbo1Cml7nBUMjDOPvFiL
+         N6SMzCYOfJ5ITbKfZfQpOEwKUcnWINgq3ORCaxzXdCttCSLv/XVw+XexHE0dfdGFgKA7
+         Rrehiext1h/4f5MRtS1MD3ed7lP/ZhRVZyYoYJpPMYX40pepmJkQ/W28W7r8BLHiIV/a
+         myvF3bqZLPuKt0Nysf/lslB/BVSMo9vA/YkbPcRl/smsrX2mdHGxBdk+hh6wADynFwu8
+         exHv4EeC1+45bMLYIRw9yHPJI9RDn/HPhn301z8UHUbo5IvQiOF2gB00DFWrXGF66qxf
+         N39w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1688778257; x=1691370257;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EISX21FWLXz1QXdvUtqFaW2f6EH0tEp3Z4D8cCpj34M=;
-        b=WYsYy0TWkDWl4zR9AHP9iVw3iDL2wN+ybh1x/r7JXe5N6JJWa1S5WWD86ipf0qaGix
-         7GM9DVyfMhMDSQow0zlaYc5brom5HHp6vgP8zsSrGtX/sRVKAP8+6Zx5GQEssd7G2jaN
-         4bBC8abLPyWplA/xKCA9iSR/scmiA6EzQjFaZWlOayJTRlfsuZcVlB+XfppG9ZSo6bI4
-         lpqvHo8lz5MF8XD8wzFfF56i8FHA9smopThEbc36NqAMcxkmRQzMW/y0ZM8n/MJcPY9k
-         WDhaWy7wtxK/QtQxGR+Irdh9nLaL+LS+dVa9lTdg6YOjxOmCrk9zXurBtrjWCf+MAWUe
-         Ny8g==
-X-Gm-Message-State: ABy/qLaltYEhFknoPZOMTIeMZ1vXrTxwPzkgu7R8Zr7DS3Hhpucc9NPH
-        +m05SLH0ATMfERsgdCRfMSFh1w==
-X-Google-Smtp-Source: APBJJlEIW0FoNB5b9BrFSYf40N9wE3CqFzLjv77pyHHsHa8Ek607/fTd3Um2fmarqn1NQHBKYhLeCw==
-X-Received: by 2002:a2e:a311:0:b0:2b6:fa42:1b1d with SMTP id l17-20020a2ea311000000b002b6fa421b1dmr5173406lje.29.1688778257194;
+        bh=+38nzESfvK4pAHEPkhscE79q4Wrbr+it00jhvW61XWI=;
+        b=GXosVoXvTENL9hpZ2PPcqVqAUrMvmFdtMAVD5i/MsyOMs4skoqVcujnO01CsAV9Rvy
+         FZ8wjA62AYamLYLZPyedqr0ugwNbw6OLOV3jCIrXl2DgSWSkAwDmt5D8U2cuuTia+rNI
+         kIoHLMuJ4+ejqAmZo2nznDElYp7xvh28cNP/2MungUY07nnkxJeoU5Uj/k6xV86Q/Rji
+         weAu2d+U6iA/Bm/x68pg1/nsGm0WLcb67RRhT7q7GCOLaHPO7hizxMfny9NPQWjD1QSN
+         TO8MSehuQvZN1174Zcq6KLEvuRhuqZzBMd6jiUi35SGazfi+CQlF3yng9SmTacfchEDU
+         cghw==
+X-Gm-Message-State: ABy/qLY9bBa7NRjMJLvcQZtPOMm9+Apv3z46HgsX8clNEOteF/YCqydH
+        z+770Ti5776TsDTUu6OT8quMTw==
+X-Google-Smtp-Source: APBJJlHbuJdo+mqG+TrLe0BOwo7bSXkWhe4D9znTTjr7ZZzdYW2HQcpr3aNIwJmBjk2wFDHl+KmLVA==
+X-Received: by 2002:a2e:854c:0:b0:2b5:974f:385 with SMTP id u12-20020a2e854c000000b002b5974f0385mr5181028ljj.9.1688778257827;
         Fri, 07 Jul 2023 18:04:17 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.16
+        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 18:04:16 -0700 (PDT)
+        Fri, 07 Jul 2023 18:04:17 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 12/17] drm/msm/mdp4: use drmm-managed allocation for mdp4_crtc
-Date:   Sat,  8 Jul 2023 04:04:02 +0300
-Message-Id: <20230708010407.3871346-13-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 13/17] drm/msm/mdp4: use drmm-managed allocation for mdp4_dsi_encoder
+Date:   Sat,  8 Jul 2023 04:04:03 +0300
+Message-Id: <20230708010407.3871346-14-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
 References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
@@ -78,95 +78,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change struct mdp4_crtc allocation to use drmm_crtc_alloc(). This
-removes the need to perform any actions on CRTC destruction.
+Change struct mdp4_dsi_encoder allocation to use drmm_encoder_alloc().
+This removes the need to perform any actions on this encoder
+destruction.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 33 ++++++++++++-----------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ .../gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c  | 32 +++----------------
+ 1 file changed, 5 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index 169f9de4a12a..5e5c31b44a8a 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -6,6 +6,7 @@
- 
- #include <drm/drm_crtc.h>
- #include <drm/drm_flip_work.h>
-+#include <drm/drm_managed.h>
- #include <drm/drm_mode.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_vblank.h>
-@@ -123,16 +124,6 @@ static void unref_cursor_worker(struct drm_flip_work *work, void *val)
- 	drm_gem_object_put(val);
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+index 39b8fe53c29d..74dafe7106be 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+@@ -26,18 +26,6 @@ static struct mdp4_kms *get_kms(struct drm_encoder *encoder)
+ 	return to_mdp4_kms(to_mdp_kms(priv->kms));
  }
  
--static void mdp4_crtc_destroy(struct drm_crtc *crtc)
+-static void mdp4_dsi_encoder_destroy(struct drm_encoder *encoder)
 -{
--	struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
+-	struct mdp4_dsi_encoder *mdp4_dsi_encoder = to_mdp4_dsi_encoder(encoder);
 -
--	drm_crtc_cleanup(crtc);
--	drm_flip_work_cleanup(&mdp4_crtc->unref_cursor_work);
--
--	kfree(mdp4_crtc);
+-	drm_encoder_cleanup(encoder);
+-	kfree(mdp4_dsi_encoder);
 -}
 -
- /* statically (for now) map planes to mixer stage (z-order): */
- static const int idxs[] = {
- 		[VG1]  = 1,
-@@ -475,7 +466,6 @@ static int mdp4_crtc_cursor_move(struct drm_crtc *crtc, int x, int y)
- 
- static const struct drm_crtc_funcs mdp4_crtc_funcs = {
- 	.set_config = drm_atomic_helper_set_config,
--	.destroy = mdp4_crtc_destroy,
- 	.page_flip = drm_atomic_helper_page_flip,
- 	.cursor_set = mdp4_crtc_cursor_set,
- 	.cursor_move = mdp4_crtc_cursor_move,
-@@ -616,6 +606,13 @@ static const char *dma_names[] = {
- 		"DMA_P", "DMA_S", "DMA_E",
- };
- 
-+static void mdp4_crtc_flip_cleanup(struct drm_device *dev, void *ptr)
-+{
-+	struct mdp4_crtc *mdp4_crtc = ptr;
-+
-+	drm_flip_work_cleanup(&mdp4_crtc->unref_cursor_work);
-+}
-+
- /* initialize crtc */
- struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
- 		struct drm_plane *plane, int id, int ovlp_id,
-@@ -623,10 +620,13 @@ struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
+-static const struct drm_encoder_funcs mdp4_dsi_encoder_funcs = {
+-	.destroy = mdp4_dsi_encoder_destroy,
+-};
+-
+ static void mdp4_dsi_encoder_mode_set(struct drm_encoder *encoder,
+ 				      struct drm_display_mode *mode,
+ 				      struct drm_display_mode *adjusted_mode)
+@@ -148,28 +136,18 @@ static const struct drm_encoder_helper_funcs mdp4_dsi_encoder_helper_funcs = {
+ /* initialize encoder */
+ struct drm_encoder *mdp4_dsi_encoder_init(struct drm_device *dev)
  {
- 	struct drm_crtc *crtc = NULL;
- 	struct mdp4_crtc *mdp4_crtc;
-+	int ret;
+-	struct drm_encoder *encoder = NULL;
++	struct drm_encoder *encoder;
+ 	struct mdp4_dsi_encoder *mdp4_dsi_encoder;
+-	int ret;
  
--	mdp4_crtc = kzalloc(sizeof(*mdp4_crtc), GFP_KERNEL);
--	if (!mdp4_crtc)
--		return ERR_PTR(-ENOMEM);
-+	mdp4_crtc = drmm_crtc_alloc_with_planes(dev, struct mdp4_crtc, base,
-+						plane, NULL,
-+						&mdp4_crtc_funcs, NULL);
-+	if (IS_ERR(mdp4_crtc))
-+		return ERR_CAST(mdp4_crtc);
+-	mdp4_dsi_encoder = kzalloc(sizeof(*mdp4_dsi_encoder), GFP_KERNEL);
+-	if (!mdp4_dsi_encoder) {
+-		ret = -ENOMEM;
+-		goto fail;
+-	}
++	mdp4_dsi_encoder = drmm_encoder_alloc(dev, struct mdp4_dsi_encoder, base,
++					      NULL, DRM_MODE_ENCODER_DSI, NULL);
++	if (IS_ERR(mdp4_dsi_encoder))
++		return ERR_CAST(mdp4_dsi_encoder);
  
- 	crtc = &mdp4_crtc->base;
+ 	encoder = &mdp4_dsi_encoder->base;
  
-@@ -648,9 +648,10 @@ struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
+-	drm_encoder_init(dev, encoder, &mdp4_dsi_encoder_funcs,
+-			 DRM_MODE_ENCODER_DSI, NULL);
+ 	drm_encoder_helper_add(encoder, &mdp4_dsi_encoder_helper_funcs);
  
- 	drm_flip_work_init(&mdp4_crtc->unref_cursor_work,
- 			"unref cursor", unref_cursor_worker);
-+	ret = drmm_add_action_or_reset(dev, mdp4_crtc_flip_cleanup, mdp4_crtc);
-+	if (ret)
-+		return ERR_PTR(ret);
- 
--	drm_crtc_init_with_planes(dev, crtc, plane, NULL, &mdp4_crtc_funcs,
--				  NULL);
- 	drm_crtc_helper_add(crtc, &mdp4_crtc_helper_funcs);
- 
- 	return crtc;
+ 	return encoder;
+-
+-fail:
+-	if (encoder)
+-		mdp4_dsi_encoder_destroy(encoder);
+-
+-	return ERR_PTR(ret);
+ }
+ #endif /* CONFIG_DRM_MSM_DSI */
 -- 
 2.39.2
 
