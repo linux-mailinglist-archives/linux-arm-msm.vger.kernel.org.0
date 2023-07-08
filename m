@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2739874BAB0
+	by mail.lfdr.de (Postfix) with ESMTP id 700F574BAB1
 	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:04:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbjGHBEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 21:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58390 "EHLO
+        id S232134AbjGHBER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 21:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231249AbjGHBEP (ORCPT
+        with ESMTP id S232088AbjGHBEQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 21:04:15 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A41F1210C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:14 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b6ef9ed2fdso40515201fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:14 -0700 (PDT)
+        Fri, 7 Jul 2023 21:04:16 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52998211F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:15 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b6fbf0c0e2so38655751fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1688778253; x=1691370253;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2II3eP/imOK3wgOrSDeLiLVf5Scf+gSw5v2bj8N9xHc=;
-        b=RZocBjiVJprEs93xGEUXJmEZg67XQcLKV4GI9CSye+jwEprd1kpbiEBCi4dgD099JV
-         YUuv3FlJPcrrk20avme4buforkmOmZqUrykOulLb8jpuqbyzt1zzox+/2G8ONG0Ayl2J
-         52RqOEF0K+eI18akuycEowccqK0k7FCGdG5IGSEq9mkN2QELYa7rHjClfupNsgdFjm9g
-         j97SMUhgkLSsLgAPYUOTHGql1pwaTjtiM/oavPOu++HzYBDNh4fVc4azmCHZOPrNNemy
-         F9Mip/77U5cPEGYCIof9tmCKVMOteo3JO6E85mOP/rIqlZs+WvvXorhA1lQvKyXFpldk
-         5f3A==
+        bh=1dDa09IPPKyYg+3VZJKhZ3MpuhgcB8Qzz0Yy6G9C0Hg=;
+        b=sCHFkAXRMGNLN34irJotyEcd+hn9zqPWNSmMxcrmEowScO05PBx1OEgjsErNy7P1PG
+         QXZdrUHEYIPrR+ymYAiUKG58rbU8zL1fG4r51xsbnVKXXBObMbA1X1mCUKC1bVHTQFRS
+         8WIXJ3jMAwr09u8l6CzvDOdFFtbhf//Rub3ZZFqo3T1Qig5jq8ir73cySv3WgSduhQ6p
+         I/25LuuGClWJQrPqfM2rLJPbXDCzGsk+Tgp2/PULNlqG1po4hP2+imGEcEfAidMJoRlQ
+         IcXEeo2rIeVJgfXRzhPgADpTSQ7W/SkLfcN0e2gan23B9L/QREZIqiOTvbrasPG0ICh7
+         faOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1688778253; x=1691370253;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2II3eP/imOK3wgOrSDeLiLVf5Scf+gSw5v2bj8N9xHc=;
-        b=FILPpB/FnepciV0FlhLSjhyDcuHHNHrdFnnV4hjdLPFq8APJaT33romdj8efjH2rAi
-         iHNF/MDT4AO1UJHVkH2Gwj2wn7o/5Yo24ADvGHDhwCm1xhf0Vc5xoPICIr2NGD3ql3Tp
-         mCHIK/8wUtBUyCAYY0ctQykSNI5qp7X88BM9wi0qa7ygaMQUEKRN8QHajXNOUD7Ikqf+
-         etBOQ06dJiNrnHgO3pR6p2l5ifeq5aPaeCCYdNDkEh9faENKKkT37pYFPllTS8pRMQkA
-         qRr42/0NGNoW0lW8QfmCfNbEC6hoe8AE1Em/yxdLbRWhYkr/vAmNn0oowFoupAR4rJuo
-         vkaQ==
-X-Gm-Message-State: ABy/qLaZoPUSdAu0X17TrSdOJ2yMPFIjS1uusDR5Wc+PbkmNHBIXVfq/
-        ZDy/ONq7zO0nwmoUVYmoGd5PXg==
-X-Google-Smtp-Source: APBJJlGP8VAjq6k876CRT56faHFdQfRap+fUYG9xImOyv+dOqSre58JgXws72E9dWNiKNRgoi9Q8oA==
-X-Received: by 2002:a2e:80cd:0:b0:2b6:dd9a:e1d3 with SMTP id r13-20020a2e80cd000000b002b6dd9ae1d3mr4753616ljg.44.1688778253013;
+        bh=1dDa09IPPKyYg+3VZJKhZ3MpuhgcB8Qzz0Yy6G9C0Hg=;
+        b=gEwuztEv0Ohrc2pND/ye51vztJQMotErIB+dhTSV/OOUNJHZOKzdCcznEf22Hr+9Pl
+         ENqcFixIDNlFfvM6tqNnua8Oy4oqMkL+/nHuisOXPlp4MMc5+39RysrkbFKGfw82UnhO
+         xAY3e40CragpfH0uvtBTETj/gpCLesTGrHchOtB5iAGAtqEUtCDfHgR8I0Q7kzTuvcRR
+         dFFoWsxZ/CHIJ9BS0eBWr9XA1ONgZpzrfxzp/fnclOyn5vKyFDLPWX/3LKUREK36MAmk
+         gHRrGjT7FmXihrVq07NcKgVqVupBNIPmdNqjY/TwGMv74f4ZHBWoJiltmziTI/3LABKQ
+         /1ag==
+X-Gm-Message-State: ABy/qLYqFXFICsR5WnFwiT4yMSKlzwyMGCKQFlZRX790Jq/lwnTXT/4L
+        sTQAC5hY1XVV3R/PUUJe/hDVx932J14WCDGfh6A=
+X-Google-Smtp-Source: APBJJlFZI7DJACf80E6XDfRqLGI8AxOmzj91GP7D4NEzNyhKdUniENni2CFKzVBC/CXpA+9+td2koQ==
+X-Received: by 2002:a2e:9c8f:0:b0:2b4:6f0c:4760 with SMTP id x15-20020a2e9c8f000000b002b46f0c4760mr4282505lji.11.1688778253718;
         Fri, 07 Jul 2023 18:04:13 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.12
+        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 18:04:12 -0700 (PDT)
+        Fri, 07 Jul 2023 18:04:13 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 06/17] drm/msm/mdp5: use devres-managed allocation for SMP data
-Date:   Sat,  8 Jul 2023 04:03:56 +0300
-Message-Id: <20230708010407.3871346-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 07/17] drm/msm/mdp5: use devres-managed allocation for INTF data
+Date:   Sat,  8 Jul 2023 04:03:57 +0300
+Message-Id: <20230708010407.3871346-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
 References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
@@ -78,84 +78,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use devm_kzalloc to create SMP data structure. This allows us
-to remove corresponding kfree and drop mdp5_smp_destroy() function.
+Use devm_kzalloc to create INTF data structure. This allows us
+to remove corresponding kfree() call.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  3 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c | 19 ++++---------------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h |  1 -
- 3 files changed, 4 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index be4338a48e52..0a85777625d3 100644
+index 0a85777625d3..fb2b3bf081ee 100644
 --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
 +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -618,9 +618,6 @@ static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
+@@ -616,11 +616,6 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 
+ static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
  {
- 	int i;
- 
--	if (mdp5_kms->smp)
--		mdp5_smp_destroy(mdp5_kms->smp);
+-	int i;
 -
- 	for (i = 0; i < mdp5_kms->num_intfs; i++)
- 		kfree(mdp5_kms->intfs[i]);
- 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-index 56a3063545ec..d7c957207255 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-@@ -370,23 +370,17 @@ void mdp5_smp_dump(struct mdp5_smp *smp, struct drm_printer *p)
- 		drm_modeset_unlock(&mdp5_kms->glob_state_lock);
- }
- 
--void mdp5_smp_destroy(struct mdp5_smp *smp)
--{
--	kfree(smp);
--}
- 
- struct mdp5_smp *mdp5_smp_init(struct mdp5_kms *mdp5_kms, const struct mdp5_smp_block *cfg)
- {
-+	struct drm_device *dev = mdp5_kms->dev;
- 	struct mdp5_smp_state *state;
- 	struct mdp5_global_state *global_state;
- 	struct mdp5_smp *smp = NULL;
--	int ret;
- 
--	smp = kzalloc(sizeof(*smp), GFP_KERNEL);
--	if (unlikely(!smp)) {
--		ret = -ENOMEM;
--		goto fail;
--	}
-+	smp = devm_kzalloc(dev->dev, sizeof(*smp), GFP_KERNEL);
-+	if (unlikely(!smp))
-+		return ERR_PTR(-ENOMEM);
- 
- 	smp->dev = mdp5_kms->dev;
- 	smp->blk_cnt = cfg->mmb_count;
-@@ -400,9 +394,4 @@ struct mdp5_smp *mdp5_smp_init(struct mdp5_kms *mdp5_kms, const struct mdp5_smp_
- 	memcpy(smp->reserved, cfg->reserved, sizeof(smp->reserved));
- 
- 	return smp;
--fail:
--	if (smp)
--		mdp5_smp_destroy(smp);
+-	for (i = 0; i < mdp5_kms->num_intfs; i++)
+-		kfree(mdp5_kms->intfs[i]);
 -
--	return ERR_PTR(ret);
- }
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h
-index ba5618e136c3..d8b6a11413d9 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h
-@@ -68,7 +68,6 @@ struct mdp5_smp;
+ 	if (mdp5_kms->rpm_enabled)
+ 		pm_runtime_disable(&mdp5_kms->pdev->dev);
  
- struct mdp5_smp *mdp5_smp_init(struct mdp5_kms *mdp5_kms,
- 		const struct mdp5_smp_block *cfg);
--void  mdp5_smp_destroy(struct mdp5_smp *smp);
+@@ -741,7 +736,7 @@ static int interface_init(struct mdp5_kms *mdp5_kms)
+ 		if (intf_types[i] == INTF_DISABLED)
+ 			continue;
  
- void mdp5_smp_dump(struct mdp5_smp *smp, struct drm_printer *p);
- 
+-		intf = kzalloc(sizeof(*intf), GFP_KERNEL);
++		intf = devm_kzalloc(dev->dev, sizeof(*intf), GFP_KERNEL);
+ 		if (!intf) {
+ 			DRM_DEV_ERROR(dev->dev, "failed to construct INTF%d\n", i);
+ 			return -ENOMEM;
 -- 
 2.39.2
 
