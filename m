@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DB3974BAB4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:04:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15CA474BAB6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:04:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232533AbjGHBET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 21:04:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58414 "EHLO
+        id S232526AbjGHBEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 21:04:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232526AbjGHBES (ORCPT
+        with ESMTP id S232406AbjGHBET (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 21:04:18 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C37A6210B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:17 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b70404a5a0so39865531fa.2
+        Fri, 7 Jul 2023 21:04:19 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02704211F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:18 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b6f0508f54so38702841fa.3
         for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1688778256; x=1691370256;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=598BryRQCllm5ISOzEN9gochJO1I/MNw3Ujjm+xPuLs=;
-        b=vj5PfahW28Im1lZ0vTFaFlu7Umhyqg3iCSlOaDS8k71IIhB1GZSrJg+c4K6+enjnfl
-         dgBPf+NLFQxVuV7KrbmNnk9eq44WhovgAFRiCdS4fJC9Vq8yPrym8vvbxZcxvA/igfPA
-         8zpNyW+ushWolMOSyiMGHnqPGmCzsRet2Pbmk3DV38NSarDX6F/kjBsQsLwmsRDWaRf5
-         yzj4lbQsxaLaScfsQnBQoRK/O42wlwgq+0A9TqeqndlG5F46A5hTIBrct1SvLPc/4QN4
-         ghSCrv3wkt6RKud+OzoQryZWymibgvPJZhRZhVy4Dwi1RJe7/qH3462XUkJbr74LFK0d
-         acKA==
+        bh=GukvfKi0z1TWMkDJRh+yHJNASBJC4YdRHfEpFVGMNoI=;
+        b=pJTxxLuJBkdwMx7m5SaRQwZoFgOWie7cpKViZlw486T0Fqt0KJAzJtj8Mez+KG1Nok
+         WpR7fT64521Fxjn3L+LUid2ayJpIvPDiimN2rpavZw6q+OX85n1KR5iGe9xwSBcn0ICT
+         tsdj3Z7UDq4J0qibeWE17AlH6kYhXr9vED1qoxei83S2WMb/xGDhA9YIHkKxmaslmlO4
+         JY9jm8yYPsuyUHlYFlECMMBHcmoMIQs0X9/xYTqYqk0vzv7fPgQeH9Ge6uCAilWD/jBI
+         3ehul0bKh1/X5i2q5MqCdK60zHWu0cGoFX6pruSisB8rytQf7z0t2jiWghH0XtsUZIjr
+         S0+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1688778256; x=1691370256;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=598BryRQCllm5ISOzEN9gochJO1I/MNw3Ujjm+xPuLs=;
-        b=kl75RXIz9CWVo3mo34LH9DgsNxhSM3Ku1jViDpcq2JrLxCRTuqM6MA11TW5CnVwqcU
-         szshTO8KLiwdUJWAYiH0IAG9KdOKGtd5kSlkIFxd413/65ptQ0oQT8W7Xl5Dfa0E9QIE
-         7/8WVzLouQudLECDvBrk/4apYMfM0iwbKHZ4t7RUSGqZZHdF2te5+Xz+Ujb7oZRvFhZB
-         qvQ7ASOZfyKBs2q7yCwztIL0siAfRUyuMBPTCUcrK/XRS4WABfrfRBPbufpVIZqD+CWk
-         ekVjusDbinp8Do/J1qZTUvcC5Q9Fn5b1w5Oq94Eoidk0c21DeScTSKTj0VgKRLYRCrSy
-         qC+w==
-X-Gm-Message-State: ABy/qLaTiCykKDg8BILbmc3ma6zzLWhcZTBHVzqWgXw2EUXXNHL7VMI/
-        QXUfH8iBCZiogWMOIf/vq8MpQg==
-X-Google-Smtp-Source: APBJJlG0kajx57KenGJOCjZPD7CvtA81GcxS6VxCtq7C2DZCC5UbaybVopoQ7PdMjLL2U15AzqjOPA==
-X-Received: by 2002:a2e:9b44:0:b0:2b7:a64:91bd with SMTP id o4-20020a2e9b44000000b002b70a6491bdmr4427171ljj.35.1688778255736;
-        Fri, 07 Jul 2023 18:04:15 -0700 (PDT)
+        bh=GukvfKi0z1TWMkDJRh+yHJNASBJC4YdRHfEpFVGMNoI=;
+        b=IiFytWNvN4WR6Sxn3kikmOeZKyIQzdb/jwD3AYVRJi6KBSAwVxsXEGmx92fiANMEGp
+         Q7S9mQBm6Ix3Gn8fjjoScqiBik7OrRjxsnlSTRFHA/afUir4zItg1Yc/jc3QjmWGc/ux
+         htkpzVLt18/AjYdyIQcbfoVwuDYxVOJ6CI3Fi03ifTGMBqvTpGeQsqiRGcd5OEt3HE1r
+         GxA4APpseuFHB9Qztj2I0Kn/IvcaWjZnAnen/TQIdBvxrntGgC5MRC3CCVCal8XCBS/6
+         /lr9rPWfxYFbPo8qTIWEu/YPIxhpfiqTH425iCSOPSFniMBVmloDjUHduJ1Kp1WncDCv
+         QsfQ==
+X-Gm-Message-State: ABy/qLakLzRGVG20ymxQSAxPzM6n2S7gtS5tgvJyyH6IzPsCReYz/jN1
+        X48iyU/DhcnIbeKqY0vK42zl/Q==
+X-Google-Smtp-Source: APBJJlGifSSWCJjyYxl9z+L9go9UKBwvPFokGUOjiaC/BkzBKidtMrn26t73T2+HfmOceLXaDFCGtA==
+X-Received: by 2002:a2e:8750:0:b0:2b6:9f1e:12bf with SMTP id q16-20020a2e8750000000b002b69f1e12bfmr4960295ljj.1.1688778256413;
+        Fri, 07 Jul 2023 18:04:16 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 18:04:15 -0700 (PDT)
+        Fri, 07 Jul 2023 18:04:16 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 10/17] drm/msm/mdp5: use drmm-managed allocation for mdp5_plane
-Date:   Sat,  8 Jul 2023 04:04:00 +0300
-Message-Id: <20230708010407.3871346-11-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 11/17] drm/msm/mdp4: use bulk regulators API for LCDC encoder
+Date:   Sat,  8 Jul 2023 04:04:01 +0300
+Message-Id: <20230708010407.3871346-12-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
 References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
@@ -78,95 +78,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change struct mdp5_plane allocation to use drmm_plane_alloc(). This
-removes the need to perform any actions on plane destruction.
+Switch mdp4_lcdc_encoder to using regulator_bulk_* API instead of
+enumerating regulators by hand.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 40 ++++------------------
- 1 file changed, 6 insertions(+), 34 deletions(-)
+ .../gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c | 51 ++++++-------------
+ 1 file changed, 15 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index bd2c4ac45601..177fc1a56aad 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -17,9 +17,6 @@
- 
- struct mdp5_plane {
- 	struct drm_plane base;
--
--	uint32_t nformats;
--	uint32_t formats[32];
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+index 10eb3e5b218e..67c118bb30ca 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+@@ -18,7 +18,7 @@ struct mdp4_lcdc_encoder {
+ 	struct drm_panel *panel;
+ 	struct clk *lcdc_clk;
+ 	unsigned long int pixclock;
+-	struct regulator *regs[3];
++	struct regulator_bulk_data regs[3];
+ 	bool enabled;
+ 	uint32_t bsc;
  };
- #define to_mdp5_plane(x) container_of(x, struct mdp5_plane, base)
+@@ -271,12 +271,10 @@ static void mdp4_lcdc_encoder_mode_set(struct drm_encoder *encoder,
  
-@@ -38,15 +35,6 @@ static bool plane_enabled(struct drm_plane_state *state)
- 	return state->visible;
- }
- 
--static void mdp5_plane_destroy(struct drm_plane *plane)
--{
--	struct mdp5_plane *mdp5_plane = to_mdp5_plane(plane);
--
--	drm_plane_cleanup(plane);
--
--	kfree(mdp5_plane);
--}
--
- /* helper to install properties which are common to planes and crtcs */
- static void mdp5_plane_install_properties(struct drm_plane *plane,
- 		struct drm_mode_object *obj)
-@@ -139,7 +127,6 @@ static void mdp5_plane_destroy_state(struct drm_plane *plane,
- static const struct drm_plane_funcs mdp5_plane_funcs = {
- 		.update_plane = drm_atomic_helper_update_plane,
- 		.disable_plane = drm_atomic_helper_disable_plane,
--		.destroy = mdp5_plane_destroy,
- 		.reset = mdp5_plane_reset,
- 		.atomic_duplicate_state = mdp5_plane_duplicate_state,
- 		.atomic_destroy_state = mdp5_plane_destroy_state,
-@@ -1014,25 +1001,16 @@ struct drm_plane *mdp5_plane_init(struct drm_device *dev,
+ static void mdp4_lcdc_encoder_disable(struct drm_encoder *encoder)
  {
- 	struct drm_plane *plane = NULL;
- 	struct mdp5_plane *mdp5_plane;
--	int ret;
+-	struct drm_device *dev = encoder->dev;
+ 	struct mdp4_lcdc_encoder *mdp4_lcdc_encoder =
+ 			to_mdp4_lcdc_encoder(encoder);
+ 	struct mdp4_kms *mdp4_kms = get_kms(encoder);
+ 	struct drm_panel *panel;
+-	int i, ret;
  
--	mdp5_plane = kzalloc(sizeof(*mdp5_plane), GFP_KERNEL);
--	if (!mdp5_plane) {
--		ret = -ENOMEM;
+ 	if (WARN_ON(!mdp4_lcdc_encoder->enabled))
+ 		return;
+@@ -301,11 +299,8 @@ static void mdp4_lcdc_encoder_disable(struct drm_encoder *encoder)
+ 
+ 	clk_disable_unprepare(mdp4_lcdc_encoder->lcdc_clk);
+ 
+-	for (i = 0; i < ARRAY_SIZE(mdp4_lcdc_encoder->regs); i++) {
+-		ret = regulator_disable(mdp4_lcdc_encoder->regs[i]);
+-		if (ret)
+-			DRM_DEV_ERROR(dev->dev, "failed to disable regulator: %d\n", ret);
+-	}
++	regulator_bulk_disable(ARRAY_SIZE(mdp4_lcdc_encoder->regs),
++			       mdp4_lcdc_encoder->regs);
+ 
+ 	mdp4_lcdc_encoder->enabled = false;
+ }
+@@ -319,7 +314,7 @@ static void mdp4_lcdc_encoder_enable(struct drm_encoder *encoder)
+ 	struct mdp4_kms *mdp4_kms = get_kms(encoder);
+ 	struct drm_panel *panel;
+ 	uint32_t config;
+-	int i, ret;
++	int ret;
+ 
+ 	if (WARN_ON(mdp4_lcdc_encoder->enabled))
+ 		return;
+@@ -339,11 +334,10 @@ static void mdp4_lcdc_encoder_enable(struct drm_encoder *encoder)
+ 	mdp4_crtc_set_config(encoder->crtc, config);
+ 	mdp4_crtc_set_intf(encoder->crtc, INTF_LCDC_DTV, 0);
+ 
+-	for (i = 0; i < ARRAY_SIZE(mdp4_lcdc_encoder->regs); i++) {
+-		ret = regulator_enable(mdp4_lcdc_encoder->regs[i]);
+-		if (ret)
+-			DRM_DEV_ERROR(dev->dev, "failed to enable regulator: %d\n", ret);
+-	}
++	ret = regulator_bulk_enable(ARRAY_SIZE(mdp4_lcdc_encoder->regs),
++				    mdp4_lcdc_encoder->regs);
++	if (ret)
++		DRM_DEV_ERROR(dev->dev, "failed to enable regulators: %d\n", ret);
+ 
+ 	DBG("setting lcdc_clk=%lu", pc);
+ 	ret = clk_set_rate(mdp4_lcdc_encoder->lcdc_clk, pc);
+@@ -385,7 +379,6 @@ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
+ {
+ 	struct drm_encoder *encoder = NULL;
+ 	struct mdp4_lcdc_encoder *mdp4_lcdc_encoder;
+-	struct regulator *reg;
+ 	int ret;
+ 
+ 	mdp4_lcdc_encoder = kzalloc(sizeof(*mdp4_lcdc_encoder), GFP_KERNEL);
+@@ -411,29 +404,15 @@ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
+ 	}
+ 
+ 	/* TODO: different regulators in other cases? */
+-	reg = devm_regulator_get(dev->dev, "lvds-vccs-3p3v");
+-	if (IS_ERR(reg)) {
+-		ret = PTR_ERR(reg);
+-		DRM_DEV_ERROR(dev->dev, "failed to get lvds-vccs-3p3v: %d\n", ret);
 -		goto fail;
 -	}
-+	mdp5_plane = drmm_universal_plane_alloc(dev, struct mdp5_plane, base,
-+						0xff, &mdp5_plane_funcs,
-+						mdp_rgb_yuv_formats, mdp_rgb_yuv_num_formats,
-+						NULL, type, NULL);
-+	if (IS_ERR(mdp5_plane))
-+		return ERR_CAST(mdp5_plane);
- 
- 	plane = &mdp5_plane->base;
- 
--	mdp5_plane->nformats = mdp_get_formats(mdp5_plane->formats,
--		ARRAY_SIZE(mdp5_plane->formats), false);
+-	mdp4_lcdc_encoder->regs[0] = reg;
 -
--	ret = drm_universal_plane_init(dev, plane, 0xff, &mdp5_plane_funcs,
--			mdp5_plane->formats, mdp5_plane->nformats,
--			NULL, type, NULL);
--	if (ret)
+-	reg = devm_regulator_get(dev->dev, "lvds-pll-vdda");
+-	if (IS_ERR(reg)) {
+-		ret = PTR_ERR(reg);
+-		DRM_DEV_ERROR(dev->dev, "failed to get lvds-pll-vdda: %d\n", ret);
 -		goto fail;
--
- 	drm_plane_helper_add(plane, &mdp5_plane_helper_funcs);
+-	}
+-	mdp4_lcdc_encoder->regs[1] = reg;
++	mdp4_lcdc_encoder->regs[0].supply = "lvds-vccs-3p3v";
++	mdp4_lcdc_encoder->regs[1].supply = "lvds-vccs-3p3v";
++	mdp4_lcdc_encoder->regs[2].supply = "lvds-vdda";
  
- 	mdp5_plane_install_properties(plane, &plane->base);
-@@ -1040,10 +1018,4 @@ struct drm_plane *mdp5_plane_init(struct drm_device *dev,
- 	drm_plane_enable_fb_damage_clips(plane);
+-	reg = devm_regulator_get(dev->dev, "lvds-vdda");
+-	if (IS_ERR(reg)) {
+-		ret = PTR_ERR(reg);
+-		DRM_DEV_ERROR(dev->dev, "failed to get lvds-vdda: %d\n", ret);
++	ret = devm_regulator_bulk_get(dev->dev,
++				      ARRAY_SIZE(mdp4_lcdc_encoder->regs),
++				      mdp4_lcdc_encoder->regs);
++	if (ret)
+ 		goto fail;
+-	}
+-	mdp4_lcdc_encoder->regs[2] = reg;
  
- 	return plane;
--
--fail:
--	if (plane)
--		mdp5_plane_destroy(plane);
--
--	return ERR_PTR(ret);
- }
+ 	return encoder;
+ 
 -- 
 2.39.2
 
