@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91CAA74BA60
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 02:06:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2D2474BA6E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 02:07:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232741AbjGHAGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 20:06:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49642 "EHLO
+        id S232693AbjGHAH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 20:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232707AbjGHAGQ (ORCPT
+        with ESMTP id S232454AbjGHAH0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 20:06:16 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04EBE128
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 17:06:15 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b6ff1ad155so44897861fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 17:06:14 -0700 (PDT)
+        Fri, 7 Jul 2023 20:07:26 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA9CA11B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 17:07:24 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fa48b5dc2eso4010379e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 17:07:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688774773; x=1691366773;
+        d=linaro.org; s=google; t=1688774843; x=1691366843;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uOm6ONPFmI/dV+4chdGjJVecrD5MmlD4Ahx6W6/8yEc=;
-        b=sFzALzpLbJoMKAhx/sceY4MghcwmclKzQE27quEyVSGyYGdsbRROO24OlDOhvq9hq8
-         8sxzqii+IY7IHuS2vEbXUn6uCeIbOUFte0tXGKEFfHGU8wPVu7wADNRanEG+o6drAds3
-         Q4/Uy/J/Bo1tbDWvdqi+2n5Y5ww91fvi6sKyt5qEQZ2SOylx5TzIHXQ5BWmi1FaZ3Rrl
-         IIwdu/LTc53jbRwVlk9DB8w7prWdm4cYFcKk/ipoZjGMzLFnfe+iEUqDIkaIV032/8/D
-         L+mMiXtsJQsD8YYmVnJl6lKZhOJg/teks6r7P+gVVoY+S+/Nb4O6HLy8nFinbWagjAWL
-         vH/A==
+        bh=CLt63cNfTOHwnk/8YjxdfGjECIo1obJeTRgBrDNQw4g=;
+        b=TsMiWw57CK/WW1zqiQCs0o34jJvhwKzckDpp5bJRVvuXb8/gcLg2g2BuMsMiIS3u8H
+         XtsNZvF2SiMjNifAvdpoZI1pAOleYRqddKVHMMzc6MPYaAzbRIsREnEt7ifoMeYld2hH
+         nNt7pzmP1rd/P5ovrP7fiVZjBoRDBBgihyjvmCML0ajc+Ve4EgtnR1AEa1J6i0HBWewg
+         UwdZF8QrJ8LxP7tXJLlA4mb5kVlx1/q8SIaoDkqJU4LBqqbZyvCWQtdHZw3zdfUtYDtm
+         XiOe6xC3gdG1glErYbzWuL9yQ4yOl8kNj+cSR/mmZh0h1xKhzOY0g/Wm1HCCPQSkRPOG
+         Q34w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688774773; x=1691366773;
+        d=1e100.net; s=20221208; t=1688774843; x=1691366843;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uOm6ONPFmI/dV+4chdGjJVecrD5MmlD4Ahx6W6/8yEc=;
-        b=BjDNL267IkUu/ssuhQglTVLWofkK8dmC8ATXfx2BsygWefOtCQfgeowkdDjHAkHREs
-         0z0cOJ2IRQ388Gy1EyIQhZVa+cv64JValflcUjJFbGRM3cHE6QDKQ8kvgeC5+qQelXS/
-         mZrxJRMcqq7xSXTWbFSErcAzZeBB8jYLQAbpg+3yUQgDOPTpFpT+BFmwzossKX8GmwZ+
-         xJjt2F5Df/g5K3TMgOnkXPn7Hwf+0EoaQIbKvVZYV+oPuCjp5l5q6FZ+tFUg+xT+aEQU
-         P8r3BL1U00qKv4R/dNZsxF24eGpjkGZb6yknRCF7ujBU2gL6hxnHztr3n6RQCt70Vikp
-         A2bQ==
-X-Gm-Message-State: ABy/qLbmZ+ysV9YZn1xtorkklI6ZgWbyDIet2jOxfbe5+HgiPzGoVYn+
-        P77NmoVnbWspua22et3rCiI88A==
-X-Google-Smtp-Source: APBJJlHOik++wv/6w70KRSrv0bT3G7Snk21fU2xY9sNvvffzWq/fv3vPH6Vbrndhf8+kCMQIlNUieA==
-X-Received: by 2002:a2e:2e17:0:b0:2b6:cd70:2781 with SMTP id u23-20020a2e2e17000000b002b6cd702781mr2298551lju.12.1688774773242;
-        Fri, 07 Jul 2023 17:06:13 -0700 (PDT)
+        bh=CLt63cNfTOHwnk/8YjxdfGjECIo1obJeTRgBrDNQw4g=;
+        b=Jxxk1W9fbmhOFAV1VqFugz2gB9Pmt2P2Sjomjj7LJI9ioWtA1F5MY/0hvlYX0Dfu7g
+         gLiH2AWOPsQoGCUWk4fkFqlE+Vb7QOmA02/Zhcc0ozM7Xf6XHCYjd5Vq18Am0goNw7iJ
+         eVup7Z0iJfoHIZAugnBLKWpcfDqpzP0ZHOkeLBHJobktH7xtpeMSwzFQGP/gr7WYHian
+         5pk0OOmuarI6cLWokpJy32pBaisxDfO//rSkWTJXOBD2Jd5s6kV4vLk+9mvs9e62rFFP
+         6Znk2IE26CWEYRB+jdu1J28vW3V/1QDhcsEKbBY83DChu+9+B94TzaamJ5Nd9Min6zZt
+         1pAA==
+X-Gm-Message-State: ABy/qLZhqSdLyntVUpsTmRl5KGY+RqzUvE/D8HPrZRoKR0ZNcMM9CyUo
+        1+oUAGTsBdTAtzecvPxVdAZknA==
+X-Google-Smtp-Source: APBJJlFiIH+YImiq0+UkzUR5N2zGiuktwPtPxkgVv/DDbfGw9WFNLBhG0plZ3szl2fD8O+goMG8VJQ==
+X-Received: by 2002:a05:6512:1310:b0:4f1:3d7d:409e with SMTP id x16-20020a056512131000b004f13d7d409emr5608203lfu.0.1688774842857;
+        Fri, 07 Jul 2023 17:07:22 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id u20-20020a2e2e14000000b002b6c61bac2esm988436lju.92.2023.07.07.17.06.12
+        by smtp.gmail.com with ESMTPSA id eo25-20020a056512481900b004fb85ffc82csm853085lfb.10.2023.07.07.17.07.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jul 2023 17:06:12 -0700 (PDT)
-Message-ID: <fc5501cf-c335-81f7-1ad7-26fdc1b6922d@linaro.org>
-Date:   Sat, 8 Jul 2023 03:06:12 +0300
+        Fri, 07 Jul 2023 17:07:22 -0700 (PDT)
+Message-ID: <a9cb7147-613e-8b1a-14c5-bbac6bb24a1a@linaro.org>
+Date:   Sat, 8 Jul 2023 03:07:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v1 1/5] drm/msm/dp: remove pm_runtime_xxx() from
- dp_power.c
+Subject: Re: [PATCH v1 3/5] drm/msm/dp: delete EV_HPD_INIT_SETUP
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
@@ -68,15 +67,15 @@ Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
- <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-4-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1688773943-3887-4-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,66 +83,57 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/07/2023 02:52, Kuogee Hsieh wrote:
-> Since both pm_runtime_resume() and pm_runtime_suspend() are not
-> populated at dp_pm_ops. Those pm_runtime_get/put() functions within
-> dp_power.c will not have any effects in addition to increase/decrease
-> power counter.
-
-Lie.
-
-> Also pm_runtime_xxx() should be executed at top
-> layer.
-
-Why?
-
+> EV_HPD_INIT_SETUP flag is used to trigger the initialization of external
+> DP host controller. Since external DP host controller initialization had
+> been incorporated into pm_runtime_resume(), this flag become obsolete.
+> Lets get rid of it.
 > 
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_power.c | 9 ---------
->   1 file changed, 9 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_display.c | 12 ------------
+>   1 file changed, 12 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
-> index 5cb84ca..ed2f62a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_power.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
-> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 2c5706a..44580c2 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -55,7 +55,6 @@ enum {
+>   enum {
+>   	EV_NO_EVENT,
+>   	/* hpd events */
+> -	EV_HPD_INIT_SETUP,
+>   	EV_HPD_PLUG_INT,
+>   	EV_IRQ_HPD_INT,
+>   	EV_HPD_UNPLUG_INT,
+> @@ -1119,9 +1118,6 @@ static int hpd_event_thread(void *data)
+>   		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
 >   
->   	power = container_of(dp_power, struct dp_power_private, dp_power);
+>   		switch (todo->event_id) {
+> -		case EV_HPD_INIT_SETUP:
+> -			dp_display_host_init(dp_priv);
+> -			break;
+>   		case EV_HPD_PLUG_INT:
+>   			dp_hpd_plug_handle(dp_priv, todo->data);
+>   			break;
+> @@ -1483,15 +1479,7 @@ void __exit msm_dp_unregister(void)
 >   
-> -	pm_runtime_enable(power->dev);
+>   void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+>   {
+> -	struct dp_display_private *dp;
 > -
->   	return dp_power_clk_init(power);
->   }
->   
-> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power *dp_power)
->   	struct dp_power_private *power;
->   
->   	power = container_of(dp_power, struct dp_power_private, dp_power);
+> -	if (!dp_display)
+> -		return;
 > -
-> -	pm_runtime_disable(power->dev);
+> -	dp = container_of(dp_display, struct dp_display_private, dp_display);
+>   
+> -	if (!dp_display->is_edp)
+> -		dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 0);
 >   }
+
+Why do you keep an empty function?
+
 >   
->   int dp_power_init(struct dp_power *dp_power)
-> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
->   
->   	power = container_of(dp_power, struct dp_power_private, dp_power);
->   
-> -	pm_runtime_get_sync(power->dev);
-> -
->   	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
-> -	if (rc)
-> -		pm_runtime_put_sync(power->dev);
->   
->   	return rc;
->   }
-> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
->   	power = container_of(dp_power, struct dp_power_private, dp_power);
->   
->   	dp_power_clk_enable(dp_power, DP_CORE_PM, false);
-> -	pm_runtime_put_sync(power->dev);
->   	return 0;
->   }
->   
+>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
 
 -- 
 With best wishes
