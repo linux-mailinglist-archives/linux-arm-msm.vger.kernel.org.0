@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50CB574BB2F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:54:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7EC774BB36
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:57:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232301AbjGHByy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 21:54:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39808 "EHLO
+        id S230115AbjGHB5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 21:57:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjGHByx (ORCPT
+        with ESMTP id S229955AbjGHB5h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 21:54:53 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC4AC3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:54:51 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b708e49059so36578621fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:54:51 -0700 (PDT)
+        Fri, 7 Jul 2023 21:57:37 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3163E4D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:57:35 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b703cbfaf5so41110421fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688781289; x=1691373289;
+        d=linaro.org; s=google; t=1688781454; x=1691373454;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=npaEU4Jq+DAwfVt4RBA7ILDlsHaYzhtoNC6VoI1b+k0=;
-        b=gPZfaN7wS1UvnJsefZI2XiL3Q1PD5is58lGYunpUxNdO8PPo4qWpmUh/eC4+JWtb9S
-         ih0YWQ10owKrZ25fsuouXL1f/P0wuFOLQvd2UuWt8zbKb2ZjSCoi9NM7QY3rOqt3kJl/
-         cvQveiw9Mq1lVSrYvYYq0DnDclWNRoa16g48QanJvN4fWzttvpr5kqGdyiUTCLba70uH
-         ANznAzqveAcvo9xRQDd9VtlcQphPGkXoofB3pgNU60oP0jeRSq76PDUiFd8AubuDCE1+
-         dnRf4EvB9YuwvGUI8t70eiW54Sia4PKsDjbIxivVKgrPgjPclvJuMCfn9K5fC+lsbK6r
-         oITQ==
+        bh=Wwkh8pKXmB000uFIXf7QzEd4TnjTv7TK1I8MwngSb1U=;
+        b=cB0DDfVlNx81Qa+CdHuaDXkowhn0UIBmUijEi6/MK4yPEa5LPrIl5HUkqW9yOfi+Mj
+         doGsz/KGFFXTl0+Ir/tAb8LAqdtRRZElhL4SOU/DiwFTJnd+1rwJrBJfQi3r4h8IkZFu
+         b4yD7Uy69SEFgGgvHrzAt542Py0zA29Z2csDRAexDnt/4HncnOS1Q6ChYc0kxyoDddgS
+         sVES9b9y1CFvAKw9wfIKtg3XD+welY86e7QwXV04tby9+P4vdcgWxuCrkl7DWxfU7HtS
+         lazyUTHet/c79kSl5R7HDO2wt/FlfM68fEOeovmZ4M5R3tWdLXXmY3RNOF6j3GmZnghL
+         3/Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688781289; x=1691373289;
+        d=1e100.net; s=20221208; t=1688781454; x=1691373454;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=npaEU4Jq+DAwfVt4RBA7ILDlsHaYzhtoNC6VoI1b+k0=;
-        b=FP4+HCFwiDXrdokzvJJkO7mpb+hkBiPeVLTrJ13oko8wyrIzvxfTVuv40810oj7VB/
-         hxGOhg9xlHg9fJKFt8KFN60o8Mj6sxVMmdBS4PpJ/hKPJ3pj7yrjt0AzPs/VDROfhXes
-         /RSnhZwAIs7buA1/tQRp2JAXMKQd+VBUPy5nU4m1jsFR8D7xlGOfZbi47VlujYOqHyYE
-         qQp0dkk+ZprCa1/T019B/VoXa8vuiP0TV0VFI7cVLnLhIZq1x6+PajaYh5T4IegmOP4c
-         h3Pg+4t6KvfTcm0WNnuo3SL2gCclhQBhHpyQj2mYVFG1wBhFXRirzlp5qHGjBn0dzWsa
-         XggQ==
-X-Gm-Message-State: ABy/qLYoaklhLgdd40+unaN9s3uoEMrI6lQSEfAnN9fik9xxEZ3dplEc
-        qx0o+yMEtojKKohmBlZkXK9JPfHQwPDtvquCHqk=
-X-Google-Smtp-Source: APBJJlEqEgf+d4ZF9yehdGdjs2x11q0lZlUuW2aPMwV2iNCRMA3/PB8q3uekMYLKJLMYtpFnAXGJRA==
-X-Received: by 2002:a2e:8e96:0:b0:2b6:e13f:cfd7 with SMTP id z22-20020a2e8e96000000b002b6e13fcfd7mr1075227ljk.4.1688781289298;
-        Fri, 07 Jul 2023 18:54:49 -0700 (PDT)
+        bh=Wwkh8pKXmB000uFIXf7QzEd4TnjTv7TK1I8MwngSb1U=;
+        b=GxggbQxN7s+hj//e7Z3gNmbm0UilTokEVuaU+SAzHaG/kK72Roa40Sm1+8F92GQWCy
+         cqp0H80ReZ4/vnsW590/PNhbZseEN//tQgjEjFd9tr+NVaB+PzEWmZgyGdRlA1lknsBh
+         B/DnbM/ffpknnm0Fc8V9z2aTR8+iEZ6VITYEbHdVhecjC4ZSsHFsYFkt7zuJaeoay3tc
+         BuKth2UCzN5vMK3isLOhXI391UE7B6A8Pp5+hxOqEc4wxphfKFepoEIpEsJq8cTI8Lj8
+         b12wQIgRBgVP9UJCVLwKw5zMyN6jmQEFHgQiWqVjXNIZkAqkbOfcnB1NRAVcENPMvUIT
+         uI5w==
+X-Gm-Message-State: ABy/qLbEF2MDZM75LwqomdEAgKIuH2HzZGT0Ei4/M0aZTRJQRWcvdyqG
+        iiEboJPm3rT5j14uTX+7wp7iDQ==
+X-Google-Smtp-Source: APBJJlFDVaBc1zEui+gCBg4MQrnljMQkMGLMJ5lft3Q2Ug4r1ftxh54PBw/phWz3nZmMH8jMFkZIpQ==
+X-Received: by 2002:a2e:8295:0:b0:2b6:9ab8:9031 with SMTP id y21-20020a2e8295000000b002b69ab89031mr2673029ljg.16.1688781454254;
+        Fri, 07 Jul 2023 18:57:34 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id m15-20020a2e97cf000000b002b6e13fcedcsm1011031ljj.122.2023.07.07.18.54.48
+        by smtp.gmail.com with ESMTPSA id w4-20020a2e9bc4000000b002b475f087desm1022235ljj.56.2023.07.07.18.57.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jul 2023 18:54:48 -0700 (PDT)
-Message-ID: <c6347aed-4beb-078a-2d42-bf2ad335f45e@linaro.org>
-Date:   Sat, 8 Jul 2023 04:54:48 +0300
+        Fri, 07 Jul 2023 18:57:33 -0700 (PDT)
+Message-ID: <014ed874-6481-ba22-c3d7-4c2b082e515d@linaro.org>
+Date:   Sat, 8 Jul 2023 04:57:33 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v5 5/6] drm/msm/dpu: Refactor printing of main blocks in
- device core dump
+Subject: Re: [PATCH v5 6/6] drm/msm/dpu: Update dev core dump to dump
+ registers of sub-blocks
 Content-Language: en-GB
 To:     Ryan McCann <quic_rmccann@quicinc.com>,
         Rob Clark <robdclark@gmail.com>,
@@ -69,15 +69,15 @@ Cc:     Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org, quic_jesszhan@quicinc.com
 References: <20230622-devcoredump_patch-v5-0-67e8b66c4723@quicinc.com>
- <20230622-devcoredump_patch-v5-5-67e8b66c4723@quicinc.com>
+ <20230622-devcoredump_patch-v5-6-67e8b66c4723@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230622-devcoredump_patch-v5-5-67e8b66c4723@quicinc.com>
+In-Reply-To: <20230622-devcoredump_patch-v5-6-67e8b66c4723@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,17 +85,54 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/07/2023 04:24, Ryan McCann wrote:
-> Currently, the names of main blocks are hardcoded into the
-> msm_disp_snapshot_add_block function rather than using the name that
-> already exists in the catalog. Change this to take the name directly from
-> the catalog instead of hardcoding it.
+> Currently, the device core dump mechanism does not dump registers of
+> sub-blocks within the DSPP, SSPP, DSC, and PINGPONG blocks. Edit
+> dpu_kms_mdp_snapshot function to account for sub-blocks.
 > 
 > Signed-off-by: Ryan McCann <quic_rmccann@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 66 +++++++++++++++++++++++++++------
+>   1 file changed, 54 insertions(+), 12 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 7a2787279ba0..f7199a5c45ab 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -890,6 +890,7 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+>   	int i;
+>   	struct dpu_kms *dpu_kms;
+>   	const struct dpu_mdss_cfg *cat;
+> +	void __iomem *base;
+>   
+>   	dpu_kms = to_dpu_kms(kms);
+>   
+> @@ -903,9 +904,16 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+>   				dpu_kms->mmio + cat->ctl[i].base, cat->ctl[i].name);
+>   
+>   	/* dump DSPP sub-blocks HW regs info */
+> -	for (i = 0; i < cat->dspp_count; i++)
+> -		msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len,
+> -				dpu_kms->mmio + cat->dspp[i].base, cat->dspp[i].name);
+> +	for (i = 0; i < cat->dspp_count; i++) {
+> +		base = dpu_kms->mmio + cat->dspp[i].base;
+> +		msm_disp_snapshot_add_block(disp_state, cat->dspp[i].len, base, cat->dspp[i].name);
+> +
+> +		if (cat->dspp[i].sblk && cat->dspp[i].sblk->pcc.len > 0)
+> +			msm_disp_snapshot_add_block(disp_state, cat->dspp[i].sblk->pcc.len,
+> +						    base + cat->dspp[i].sblk->pcc.base, "%s_%s",
+> +						    cat->dspp[i].name,
+> +						    cat->dspp[i].sblk->pcc.name);
+
+Nit (no need to resend to correct this): the "%s_%s" logically fits the 
+next line, as it it related to the names rather than base address.
+
+> +	}
+>   
+>   	/* dump INTF sub-blocks HW regs info */
+>   	for (i = 0; i < cat->intf_count; i++)
 
 -- 
 With best wishes
