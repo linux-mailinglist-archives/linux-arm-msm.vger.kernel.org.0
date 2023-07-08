@@ -2,138 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3C2B74BABC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:04:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA91174BB02
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 03:25:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229747AbjGHBEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 21:04:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58452 "EHLO
+        id S229955AbjGHBZK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 21:25:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbjGHBEX (ORCPT
+        with ESMTP id S230040AbjGHBZH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 21:04:23 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05B92210B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 18:04:22 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b703c900e3so38802801fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 18:04:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688778260; x=1691370260;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fhEI1lIm+DUmqN/L6yAKAjA1YNlc6k+Vw25GanFRW4I=;
-        b=IdgwmdV77LIS3Qf9wLgiOehF2o0nKe1wJx48roRXr4lUKi3GeD+XvlVheVShTEEFuX
-         eOB4xmRHS7bBSFgn/2C8JvSlcPWWJEe4qkkYBaTwusl8U/ZODND3RSQkOgG20TNopc4w
-         vkGcK73EdEOdQ0rAfPIbG/J+Sy6axeIMT4fso+31CFYdS8flu3O0cBztRy7gx3gGqRmr
-         uD+/uyelnPHzKEOWZ/Pvr5kg8Jjb/7AdwzQ0eVatptxge+LLgCTd4Y6OdtCpouEDVCEF
-         N5TUGH1PyeebiV8+F0V+zVArdhz93JkVwXUbZN5rh/CsGLfeVlsHoA+kjd75VsS0BkYj
-         BbPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688778260; x=1691370260;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fhEI1lIm+DUmqN/L6yAKAjA1YNlc6k+Vw25GanFRW4I=;
-        b=Y+GWfAF3INfu1wRNrXEk6wJoW9htY8EffXHpxw/j6/gqS9KimzMGKj+eyUaBjWDf/k
-         WzoFVFMMVqYfCS3nQhn4K6IJHItA9HPXkuEXZv4fyZvUbNEIP7r3w5C1B1Zq/8cMBnxN
-         CB5K3cidxynXuwB7/nABxntLj4OjyFqdVWEppaMNVyBztEM5osu1gtHGKuvZDmgHEU8c
-         wFX+syRG1U67yh7Gq1OCwr258t2SKjuZCcXRo7yixXdT+4L2qcdkdjuZXNkFU7p4ht+d
-         zgkrA94G5OD8+YxJ+8QbKxqmC0NCEc8HnSHwrFaC/60tVOkeeWZEyaHxpHwwn52ScL36
-         KcqA==
-X-Gm-Message-State: ABy/qLYrAchsBhPCT5bc0WPd1GitDg5RZEC/IbG1UQ0yCVogCTPVHfxk
-        Jy7RBPwPsuUK/+nP+sqHAob+2g==
-X-Google-Smtp-Source: APBJJlGI1MnjiDn7TijmPyIOnYvBL3ptuIpFuRuga4F2nq1AVmD3c0RdD3GmqNDv3xebTxq2pTvshQ==
-X-Received: by 2002:a2e:8546:0:b0:2b5:9778:7ce2 with SMTP id u6-20020a2e8546000000b002b597787ce2mr4719432ljj.15.1688778260413;
-        Fri, 07 Jul 2023 18:04:20 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002b6ee99fff2sm1012807lji.34.2023.07.07.18.04.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jul 2023 18:04:20 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 17/17] drm/msm: drop mdp_get_formats()
-Date:   Sat,  8 Jul 2023 04:04:07 +0300
-Message-Id: <20230708010407.3871346-18-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
-References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
+        Fri, 7 Jul 2023 21:25:07 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA0F120;
+        Fri,  7 Jul 2023 18:25:05 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3680xobJ023394;
+        Sat, 8 Jul 2023 01:24:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=dAUH3rNutTBRq0tBWhMCNWIlQTDnOnNFszA5XOxwwqA=;
+ b=HvFqFmjBBY5jDv7l8rUxiZ3MbANYT3DA88uoiCfexoKkS1yhyFApbgia7Q86oRkmLbNo
+ oBOaXtvXyRS7i0DHksHWKJoDMMIKmYjiK6VLGLTsNHWRy8rFS5UZfj0WcFdACmRzqfyZ
+ Ehh7SvP0Q1G7uF7R8ZruHcRE3PRduTrWFfZSAvry2z5ZzMiJFuJRzCdZZXnvF00OKYmK
+ FGJxsgMrkFo6WNOJZHjg4g7r2OEAf0YTct4m4VOuhVh5YcqZ5beFCWJaHHR1/xZ04/NH
+ ZzgpYG1LY7X+wlb3LBvaxSzjVQB+sUOdjPtbKiVfB/rMJLug4NDIhFc9GMEBmmYlvFX9 cw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpcxntd5h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 08 Jul 2023 01:24:58 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3681OuDY015398
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 8 Jul 2023 01:24:57 GMT
+Received: from hu-rmccann-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 7 Jul 2023 18:24:56 -0700
+From:   Ryan McCann <quic_rmccann@quicinc.com>
+Subject: [PATCH v5 0/6] Add support to print sub-block registers in dpu hw
+ catalog
+Date:   Fri, 7 Jul 2023 18:24:39 -0700
+Message-ID: <20230622-devcoredump_patch-v5-0-67e8b66c4723@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANe6qGQC/4XOQW7DIBAF0KtErEuFwQG7q657hERVBcMQIwXsg
+ o1SRb57cXZVpHr5R/PfzJ1kTB4zeTvcScLisx9jDceXA4FBxwtSb2smnHHBJOfUYoExoV3C9DX
+ pGQZqncLOSWel4KT2jM5ITdIRhq35caIhBxrxNtPrEvRl25kSOn973D1/1jz4PI/p5/FGabbpf
+ xdLQxkVhoMFkPqo5Pv34sFHeIUxkM0rfNfg1eixZ7pTVvTCPRti1xDV6IRkjVEcjVTPRrtrtNV
+ AwVprDfay7f4a67r+AsF6YcWkAQAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+CC:     Rob Clark <robdclark@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <quic_jesszhan@quicinc.com>, Ryan McCann <quic_rmccann@quicinc.com>
+X-Mailer: b4 0.13-dev-8a804
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1688779496; l=2946;
+ i=quic_rmccann@quicinc.com; s=20230622; h=from:subject:message-id;
+ bh=UdwkB0d6HBesBoIZfhIANK0u8o/m20N6wYyPH/PPVbY=;
+ b=/U89misig/SeQGpY8arXmlDT/EwmBYbd+EQWvqrk/o/Dz6Hb8tChkzKS47BhJPo5DSeGC4bDH
+ sGvr1tYAD8FAatVVeDq2B45htpXtjjZf7vM3eGyVF1mF5UmgmQorTvL
+X-Developer-Key: i=quic_rmccann@quicinc.com; a=ed25519;
+ pk=d/uP3OwPGpj/bTtiHvV1RBZ2S6q4AL6j1+A5y+dmbTI=
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: X0lMg8W_rh5yKrTQEY_6XEVZ85gcauFk
+X-Proofpoint-ORIG-GUID: X0lMg8W_rh5yKrTQEY_6XEVZ85gcauFk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-07_16,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 mlxlogscore=999 adultscore=0 clxscore=1015 mlxscore=0
+ bulkscore=0 spamscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307080010
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop the function mdp_get_formats(), which became unused after
-converting both MDP4 and MDP5 planes to use static formats arrays.
+The purpose of this patch series is to add support to print the registers
+of sub-blocks in the DPU hardware catalog and fix the order in which all
+hardware blocks are dumped for a device core dump. This involves:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+1. Changing data structure from stack to queue to fix the printing order
+of the device core dump.
+
+2. Removing redundant suffix of sub-block names.
+
+3. Removing redundant prefix of sub-block names.
+
+4. Eliminating unused variable from relevant macros.
+
+5. Defining names for sub-blocks that have not yet been defined.
+
+6. Implementing wrapper function that prints the registers of sub-blocks
+when there is a need.
+
+Sample Output of the sspp_0 block and its sub-blocks for devcore dump:
+======sspp_0======
+...registers
+...
+====sspp_0_scaler====
+...
+...
+====sspp_0_csc====
+...
+...
+====next_block====
+...
+
+This series depends on https://patchwork.freedesktop.org/series/119776/.
+
 ---
- drivers/gpu/drm/msm/disp/mdp_format.c | 24 ------------------------
- drivers/gpu/drm/msm/disp/mdp_kms.h    |  1 -
- 2 files changed, 25 deletions(-)
+Changes in v5:
+- Fixed indentation in refactor main block printing patch
+- Fixed formatting issues to satisfy checkpatch
+- Instead of passing 0 for DSC block, used actual length thanks to https://patchwork.freedesktop.org/series/119776/
+- Link to v4: https://lore.kernel.org/r/20230622-devcoredump_patch-v4-0-e304ddbe9648@quicinc.com
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
-index ba9abe8b3acc..0fe430af9523 100644
---- a/drivers/gpu/drm/msm/disp/mdp_format.c
-+++ b/drivers/gpu/drm/msm/disp/mdp_format.c
-@@ -183,30 +183,6 @@ const uint32_t mdp_rgb_yuv_formats[] = {
- 
- size_t mdp_rgb_yuv_num_formats = ARRAY_SIZE(mdp_rgb_yuv_formats);
- 
--/*
-- * Note:
-- * @rgb_only must be set to true, when requesting
-- * supported formats for RGB pipes.
-- */
--uint32_t mdp_get_formats(uint32_t *pixel_formats, uint32_t max_formats,
--		bool rgb_only)
--{
--	uint32_t i;
--	for (i = 0; i < ARRAY_SIZE(formats); i++) {
--		const struct mdp_format *f = &formats[i];
--
--		if (i == max_formats)
--			break;
--
--		if (rgb_only && MDP_FORMAT_IS_YUV(f))
--			break;
--
--		pixel_formats[i] = f->base.pixel_format;
--	}
--
--	return i;
--}
--
- const struct msm_format *mdp_get_format(struct msm_kms *kms, uint32_t format,
- 		uint64_t modifier)
- {
-diff --git a/drivers/gpu/drm/msm/disp/mdp_kms.h b/drivers/gpu/drm/msm/disp/mdp_kms.h
-index 11402a859574..1b2ccf7e7de6 100644
---- a/drivers/gpu/drm/msm/disp/mdp_kms.h
-+++ b/drivers/gpu/drm/msm/disp/mdp_kms.h
-@@ -91,7 +91,6 @@ struct mdp_format {
- #define to_mdp_format(x) container_of(x, struct mdp_format, base)
- #define MDP_FORMAT_IS_YUV(mdp_format) ((mdp_format)->is_yuv)
- 
--uint32_t mdp_get_formats(uint32_t *formats, uint32_t max_formats, bool rgb_only);
- const struct msm_format *mdp_get_format(struct msm_kms *kms, uint32_t format, uint64_t modifier);
- 
- extern const uint32_t mdp_rgb_formats[];
+Changes in v4:
+- Added review tags
+- Link to v3: https://lore.kernel.org/r/20230622-devcoredump_patch-v3-0-83601b72eb67@quicinc.com
+
+Changes in v3:
+- Split sub-block changes and main block changes into two commits
+- Corrected typo in comment located in DSC for loop block
+- Eliminated variables mmio and base
+- Dropped unnecessary "%s"
+- Link to v2: https://lore.kernel.org/r/20230622-devcoredump_patch-v2-0-9e90a87d393f@quicinc.com
+
+Changes in v2:
+- Changed spelling "sub block" to "sub-block" or "sblk".
+- Capitalized DPU.
+- Eliminated multiplexer/wrapper function. Inlined instead.
+- Changed if statements from feature checks to length checks.
+- Squashed prefix and suffix patch into one.
+- Link to v1: https://lore.kernel.org/r/20230622-devcoredump_patch-v1-0-3b2cdcc6a576@quicinc.com
+
+---
+Ryan McCann (6):
+      drm/msm: Update dev core dump to not print backwards
+      drm/msm/dpu: Drop unused num argument from relevant macros
+      drm/msm/dpu: Define names for unnamed sblks
+      drm/msm/dpu: Remove redundant prefix/suffix in name of sub-blocks
+      drm/msm/dpu: Refactor printing of main blocks in device core dump
+      drm/msm/dpu: Update dev core dump to dump registers of sub-blocks
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 90 +++++++++++------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 74 +++++++++++++++----
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c |  2 +-
+ 3 files changed, 104 insertions(+), 62 deletions(-)
+---
+base-commit: a92b5625851098af521cd92e4c518429b661c8f4
+change-id: 20230622-devcoredump_patch-df7e8f6fd632
+
+Best regards,
 -- 
-2.39.2
+Ryan McCann <quic_rmccann@quicinc.com>
 
