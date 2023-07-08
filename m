@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 181CE74BA90
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 02:32:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 766EC74BA96
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jul 2023 02:34:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231617AbjGHAcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jul 2023 20:32:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55300 "EHLO
+        id S232882AbjGHAeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jul 2023 20:34:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232829AbjGHAcK (ORCPT
+        with ESMTP id S230145AbjGHAeT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jul 2023 20:32:10 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45912105
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 17:32:08 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b6ef64342aso39938111fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 17:32:08 -0700 (PDT)
+        Fri, 7 Jul 2023 20:34:19 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D40DF1BF5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jul 2023 17:34:17 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4fba03becc6so4623527e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jul 2023 17:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688776327; x=1691368327;
+        d=linaro.org; s=google; t=1688776456; x=1691368456;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q555pMz0ACCqnaYtRNQORDbdjk7uTFvrj+Ng60bWYPk=;
-        b=qkWBZNQRZB8rUoWTi8a73uWJ/Le+X7qGCEHXnWJkmNBlAzLw0yuSCFcYa/SQeaiHQJ
-         zlAcS8ezNGvLvtiV3zJW4Whcyi8PRouQau3qCp0K8qFSnWQo+7PSqZkED0Rxm4z6UYJB
-         /GEjDeMVUOULxrK8ZgwjSfSQ/Nsw2SiKts18lI1T6WUj14T+GYrDS65Er9ATfS/awpnp
-         qfWgrfQVeltP8DrvIj0uIbhu03P4+6iyNKYuTadWyZ+CtPW+fyVMDQ433Ui16OUlrebe
-         r86udLnlSGm2dXepVx8bNBtnh+PP9j6TCzNTlz55EbS7XfdoO0VFEdVB8esmmRqqpF8c
-         Mp+w==
+        bh=mFeoEp95ns5po24iiOVjiBNQNFUg9MGx4urbNtotoYk=;
+        b=lcKcuhFKfOWAx1X+tnOMJ+K1D/sCCoVbGIOhFMwhknnb/8pqXuF2YhWbV/pys9Rp09
+         Lv7x0nKnmuvmEuHjh0YoncUHPPFHpScRIu0vyR1sKETI6Cqz8Q5IQWpr7BW8kp58YPAe
+         IISv3vsmHut08KnAs0LqucTYg3fSyt73QMEGLiEnGLextm0RU5KgGI5FaaCZxrSp5H1H
+         UtD94PJBIW8PVN8tPVm8fp4GYR2LJSmcEfuSkUh3/Cwt6BXZ63l+6eiyPv8PCvJ2g0EU
+         lBtAk14Iabxhtv+4nJxJYna2sxUjkAFRu2L5wI5FnfLk2HdMG741BJLfQ5HKwXeMlQdq
+         SVpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688776327; x=1691368327;
+        d=1e100.net; s=20221208; t=1688776456; x=1691368456;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q555pMz0ACCqnaYtRNQORDbdjk7uTFvrj+Ng60bWYPk=;
-        b=CdQ+5IlarJfUZ0Ol9bNdBfiJ3u32PIFXD5L2TUx0AIqc3Jio2X3Z6go8PHHgEu1k2k
-         PT9RyYeZwMTEkvom38WZWG4gpXAwW0j6qtNoYCtpHFavvAhETPABgl80JvvlzSz7iy4l
-         j9VlrtUoRj+OjnIQTlxwrgZ25sHP2sS73Qrg4ikXH9J/LpfYgL1eoMmZ7+8CkndSmuIK
-         D8f3iYKSK4MxwLr7mXxq8Dpswh6DvaZspdHsPWFuJ3o0+gKt/EGg77rtgiA8oyRegRda
-         dVSp/7RExxD46jAnFmhZ0d0n27rGQuI8N8/oxWC5zNXnSgtihOmvYi9iLduUPdFJQSH3
-         C5CA==
-X-Gm-Message-State: ABy/qLYdi++n4EO3Og4xx9VysQEwy1zvgk2fuIKrAkVr7cBfj85ng5+c
-        pDwoUqjdk4jGlm++QozZpJkE6g==
-X-Google-Smtp-Source: APBJJlGRbsFJl71gvzciyjfeCmkrCZ6cjI2nr1P+7D8mkt62xSsu+cIlxy//u7ESzOtHihcmmVOknA==
-X-Received: by 2002:a2e:8e8d:0:b0:2b6:df5d:8e08 with SMTP id z13-20020a2e8e8d000000b002b6df5d8e08mr4312289ljk.28.1688776327148;
-        Fri, 07 Jul 2023 17:32:07 -0700 (PDT)
+        bh=mFeoEp95ns5po24iiOVjiBNQNFUg9MGx4urbNtotoYk=;
+        b=UZqP5AW6OkY1onQtIkjc3BzjCGPBCTj9enhhnjVl+IjOsIdPvjLCLvsypBn4abw6Lm
+         m0G+UQl4bvtAoZPkvVQ1sAE8bGVQcAtVI9RIbYkeHRJAq0Jhzv9jw9yh/GfKTDsZXsPU
+         4vTyJRx5C16P/2pFL5R+mpDW8OTdgy+JZaD5JX9kkkURMyWzLBY7l2hHlAcJQ3+lvMX9
+         1q9NKQ1Q2uHdcXGFVY9vKCApxpAajzIfYmPwJtxS4PbVtEebJq2lM2ltCnrq0tRDsUp7
+         XkN5FM4Dn6LqnXppLjsLQgeUvJTWKxcPR5rO/ShXT/Do4SL3CBqVxPzzLKU27+tWVdFR
+         uN2w==
+X-Gm-Message-State: ABy/qLaET9UVLsG/lEljFPMrX6SLUOp2Gh/xLRpVSs4f+r/m4n7VaVTJ
+        KYdAyPz72UXBaRp7AXAT6wydYw==
+X-Google-Smtp-Source: APBJJlFbdvCfGi2vZqiZbjD944cuLiAoEpBvFyZSDs0zlNPAC2fiTrifdrhglBDLo1qz4kPYAT7OgQ==
+X-Received: by 2002:a19:4f48:0:b0:4f8:5ede:d453 with SMTP id a8-20020a194f48000000b004f85eded453mr2142516lfk.23.1688776456101;
+        Fri, 07 Jul 2023 17:34:16 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id p15-20020a2e804f000000b002b6a32e21casm1001924ljg.40.2023.07.07.17.32.06
+        by smtp.gmail.com with ESMTPSA id j16-20020ac25510000000b004fbb20791f3sm861038lfk.31.2023.07.07.17.34.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jul 2023 17:32:06 -0700 (PDT)
-Message-ID: <0cac7c17-c822-927e-cc15-456b1423689c@linaro.org>
-Date:   Sat, 8 Jul 2023 03:32:06 +0300
+        Fri, 07 Jul 2023 17:34:15 -0700 (PDT)
+Message-ID: <b70e6e98-e5a8-71d7-891a-889c268a7e06@linaro.org>
+Date:   Sat, 8 Jul 2023 03:34:15 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v1 5/5] drm/msm/dp: move of_dp_aux_populate_bus() to probe
- for eDP
+Subject: Re: [PATCH v1 3/5] drm/msm/dp: delete EV_HPD_INIT_SETUP
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
@@ -68,9 +67,9 @@ Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
- <1688773943-3887-6-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-4-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1688773943-3887-6-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1688773943-3887-4-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,218 +83,58 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/07/2023 02:52, Kuogee Hsieh wrote:
-> Move of_dp_aux_populate_bus() to dp_display_probe() for eDP
-> from dp_display_bind() so that probe deferral cases can be
-> handled effectively
+> EV_HPD_INIT_SETUP flag is used to trigger the initialization of external
+> DP host controller. Since external DP host controller initialization had
+> been incorporated into pm_runtime_resume(), this flag become obsolete.
+> Lets get rid of it.
+
+And another question. Between patches #2 and #3 we have both INIT_SETUP 
+event and the PM doing dp_display_host_init(). Will it work correctly?
+
 > 
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_aux.c     | 25 ++++++++++++
->   drivers/gpu/drm/msm/dp/dp_display.c | 79 +++++++++++++++++++------------------
->   2 files changed, 65 insertions(+), 39 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_display.c | 12 ------------
+>   1 file changed, 12 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-> index c592064..c1baffb 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -505,6 +505,21 @@ void dp_aux_unregister(struct drm_dp_aux *dp_aux)
->   	drm_dp_aux_unregister(dp_aux);
->   }
->   
-> +static int dp_wait_hpd_asserted(struct drm_dp_aux *dp_aux,
-> +				 unsigned long wait_us)
-> +{
-> +	int ret;
-> +	struct dp_aux_private *aux;
-> +
-> +	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-> +
-> +	pm_runtime_get_sync(aux->dev);
-> +	ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
-> +	pm_runtime_put_sync(aux->dev);
-> +
-> +	return ret;
-> +}
-> +
->   struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
->   			      bool is_edp)
->   {
-> @@ -528,6 +543,16 @@ struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
->   	aux->catalog = catalog;
->   	aux->retry_cnt = 0;
->   
-> +	/*
-> +	 * Use the drm_dp_aux_init() to use the aux adapter
-> +	 * before registering aux with the DRM device.
-> +	 */
-> +	aux->dp_aux.name = "dpu_dp_aux";
-> +	aux->dp_aux.dev = dev;
-> +	aux->dp_aux.transfer = dp_aux_transfer;
-> +	aux->dp_aux.wait_hpd_asserted = dp_wait_hpd_asserted;
-> +	drm_dp_aux_init(&aux->dp_aux);
-> +
->   	return &aux->dp_aux;
->   }
->   
 > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 185f1eb..7ed4bea 100644
+> index 2c5706a..44580c2 100644
 > --- a/drivers/gpu/drm/msm/dp/dp_display.c
 > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -302,10 +302,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
->   		goto end;
->   	}
+> @@ -55,7 +55,6 @@ enum {
+>   enum {
+>   	EV_NO_EVENT,
+>   	/* hpd events */
+> -	EV_HPD_INIT_SETUP,
+>   	EV_HPD_PLUG_INT,
+>   	EV_IRQ_HPD_INT,
+>   	EV_HPD_UNPLUG_INT,
+> @@ -1119,9 +1118,6 @@ static int hpd_event_thread(void *data)
+>   		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
 >   
-> -	pm_runtime_enable(dev);
-> -	pm_runtime_set_autosuspend_delay(dev, 1000);
-> -	pm_runtime_use_autosuspend(dev);
-> -
->   	return 0;
->   end:
->   	return rc;
-> @@ -322,8 +318,6 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+>   		switch (todo->event_id) {
+> -		case EV_HPD_INIT_SETUP:
+> -			dp_display_host_init(dp_priv);
+> -			break;
+>   		case EV_HPD_PLUG_INT:
+>   			dp_hpd_plug_handle(dp_priv, todo->data);
+>   			break;
+> @@ -1483,15 +1479,7 @@ void __exit msm_dp_unregister(void)
 >   
->   	kthread_stop(dp->ev_tsk);
->   
-> -	of_dp_aux_depopulate_bus(dp->aux);
-> -
->   	dp_power_client_deinit(dp->power);
->   	dp_unregister_audio_driver(dev, dp->audio);
->   	dp_aux_unregister(dp->aux);
-> @@ -1245,6 +1239,29 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
->   	return NULL;
->   }
->   
-> +static void of_dp_aux_depopulate_bus_void(void *data)
-> +{
-> +	of_dp_aux_depopulate_bus(data);
-> +}
-> +
-> +static int dp_display_auxbus_emulation(struct dp_display_private *dp)
-
-Why is it called emulation?
-
-> +{
-> +	struct device *dev = &dp->pdev->dev;
-> +	struct device_node *aux_bus;
-> +	int ret = 0;
-> +
-> +	aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
-> +
-> +	if (aux_bus) {
-> +		ret = devm_of_dp_aux_populate_bus(dp->aux, NULL);
-
-And here you missed the whole point of why we have been asking for. 
-Please add a sensible `done_probing' callback, which will call 
-component_add(). This way the DP component will only be registered when 
-the panel has been probed. Keeping us from the component binding retries 
-and corresponding side effects.
-
-> +
-> +		devm_add_action_or_reset(dev, of_dp_aux_depopulate_bus_void,
-> +					 dp->aux);
-
-Useless, it's already handled by the devm_ part of the 
-devm_of_dp_aux_populate_bus().
-
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->   static int dp_display_probe(struct platform_device *pdev)
+>   void msm_dp_irq_postinstall(struct msm_dp *dp_display)
 >   {
->   	int rc = 0;
-> @@ -1290,8 +1307,18 @@ static int dp_display_probe(struct platform_device *pdev)
->   
->   	platform_set_drvdata(pdev, &dp->dp_display);
->   
-> +	pm_runtime_enable(&pdev->dev);
-> +	pm_runtime_set_autosuspend_delay(&pdev->dev, 1000);
-> +	pm_runtime_use_autosuspend(&pdev->dev);
-
-Can we have this in probe right from the patch #2?
-
-> +
->   	dp_display_request_irq(dp);
->   
-> +	if (dp->dp_display.is_edp) {
-> +		rc = dp_display_auxbus_emulation(dp);
-> +		if (rc)
-> +			DRM_ERROR("eDP aux-bus emulation failed, rc=%d\n", rc);
-> +	}
-> +
->   	rc = component_add(&pdev->dev, &dp_display_comp_ops);
->   	if (rc) {
->   		DRM_ERROR("component add failed, rc=%d\n", rc);
-> @@ -1306,11 +1333,14 @@ static int dp_display_remove(struct platform_device *pdev)
->   	struct dp_display_private *dp = dev_get_dp_display_private(&pdev->dev);
->   
->   	component_del(&pdev->dev, &dp_display_comp_ops);
-> -	dp_display_deinit_sub_modules(dp);
+> -	struct dp_display_private *dp;
 > -
->   	platform_set_drvdata(pdev, NULL);
-> +
-> +	pm_runtime_dont_use_autosuspend(&pdev->dev);
-> +	pm_runtime_disable(&pdev->dev);
->   	pm_runtime_put_sync_suspend(&pdev->dev);
+> -	if (!dp_display)
+> -		return;
+> -
+> -	dp = container_of(dp_display, struct dp_display_private, dp_display);
 >   
-> +	dp_display_deinit_sub_modules(dp);
-> +
->   	return 0;
+> -	if (!dp_display->is_edp)
+> -		dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 0);
 >   }
 >   
-> @@ -1514,31 +1544,10 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
->   
->   static int dp_display_get_next_bridge(struct msm_dp *dp)
->   {
-> -	int rc;
-> +	int rc = 0;
->   	struct dp_display_private *dp_priv;
-> -	struct device_node *aux_bus;
-> -	struct device *dev;
->   
->   	dp_priv = container_of(dp, struct dp_display_private, dp_display);
-> -	dev = &dp_priv->pdev->dev;
-> -	aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
-> -
-> -	if (aux_bus && dp->is_edp) {
-> -		/*
-> -		 * The code below assumes that the panel will finish probing
-> -		 * by the time devm_of_dp_aux_populate_ep_devices() returns.
-> -		 * This isn't a great assumption since it will fail if the
-> -		 * panel driver is probed asynchronously but is the best we
-> -		 * can do without a bigger driver reorganization.
-> -		 */
-> -		rc = of_dp_aux_populate_bus(dp_priv->aux, NULL);
-> -		of_node_put(aux_bus);
-> -		if (rc)
-> -			goto error;
-> -	} else if (dp->is_edp) {
-> -		DRM_ERROR("eDP aux_bus not found\n");
-> -		return -ENODEV;
-> -	}
->   
->   	/*
->   	 * External bridges are mandatory for eDP interfaces: one has to
-> @@ -1551,17 +1560,9 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
->   	if (!dp->is_edp && rc == -ENODEV)
->   		return 0;
->   
-> -	if (!rc) {
-> +	if (!rc)
->   		dp->next_bridge = dp_priv->parser->next_bridge;
-> -		return 0;
-> -	}
->   
-> -error:
-> -	if (dp->is_edp) {
-> -		of_dp_aux_depopulate_bus(dp_priv->aux);
-> -		dp_display_host_phy_exit(dp_priv);
-> -		dp_display_host_deinit(dp_priv);
-> -	}
->   	return rc;
->   }
->   
+>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
 
 -- 
 With best wishes
