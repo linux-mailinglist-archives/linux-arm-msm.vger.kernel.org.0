@@ -2,169 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7449D74C826
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 22:25:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B856174C83A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 22:32:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbjGIUZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jul 2023 16:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55660 "EHLO
+        id S229876AbjGIUcV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jul 2023 16:32:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230118AbjGIUZ3 (ORCPT
+        with ESMTP id S229564AbjGIUcU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jul 2023 16:25:29 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 966BA12A
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 13:25:17 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f122ff663eso5784183e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 13:25:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688934315; x=1691526315;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xuK4zRTQtpemrtJQHlivu+9KOJF/i4juAvKU4fCYtbs=;
-        b=V/vHa2PK+D/qCRPIwFpoIHMlno6WlqZqZXyRqE5l7aVSLTqgaeXJzdsTHYFJDL73ge
-         u3PkNWQ+1ea7I1Vf8ZUm7DnJwBcrLWpyiEfVGHabTyLLOaAEwrjm8AczawyLmVMk+1SZ
-         MFvQdWnEan/H4W1f4jlDXDwTzK/mCz6892wxn8I/ya4jGvDkWx3eblObXkSmT0KEAzpy
-         iyNlVRr8HTQOIfT1k0IHnU4nY8N59gDqMOwXKV+Tlm4lCFSq0lzIldVf/fGAaIVWZGjW
-         +hABB49a1BDv74/TICyl6UbF43fU7DvW/2F9rFH8tcqiIDYiHABJ1qcmvuIx9tYZL7il
-         2GGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688934315; x=1691526315;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xuK4zRTQtpemrtJQHlivu+9KOJF/i4juAvKU4fCYtbs=;
-        b=GogxZt/ym70WPVNA0cAai7G7KzTZSL8bhQqnVy06kZ5zSPsHhhxfmoHjeL+YDwvaba
-         iZOJYqTswEzZDUCd+pXRccCqAxWfekeoxWfoBRndhnQ5H9tILU03m/BGOZNVxX9o31nw
-         nQQII6Dwfdf/5QaL+kfcKKa5mJ5EZcWlixUHHffe/dPEDBCCD7s1XdjmmPrgF5WPQ7ja
-         B4y4vaOagSrWf8LLZ0cKomNbUTxa3wnA806QIzi2QwYgQDKI1SATJEOu6dTnOayK+vUW
-         XKdeBCPl64kEsm9d2x2dOvuYJEr1Kb0FXGZpcngC4tqC7/WapZ4Zu/QSVQHP/bfxj2XS
-         +P/Q==
-X-Gm-Message-State: ABy/qLYvqdjDbMVPxOZO6wBPcJVs0+KITR8e/uQKMvzDks8qUpHAhXTa
-        4i5/Y3WPGO7Lyimk226rFkM40A==
-X-Google-Smtp-Source: APBJJlGUB8GKtg3VepVo22RlSHHMlhbrsC5WpIr5OK9gBeoUlx6CsUUmDEj4Vzo6mPoFTr5l1naNcA==
-X-Received: by 2002:a05:6512:b8c:b0:4f8:6ea5:104b with SMTP id b12-20020a0565120b8c00b004f86ea5104bmr10023114lfv.30.1688934315507;
-        Sun, 09 Jul 2023 13:25:15 -0700 (PDT)
-Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id 8-20020ac24828000000b004fb771a5b2dsm1428774lft.1.2023.07.09.13.25.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Jul 2023 13:25:15 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v6 3/3] drm/bridge_connector: implement oob_hotplug_event
-Date:   Sun,  9 Jul 2023 23:25:11 +0300
-Message-Id: <20230709202511.287794-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230709202511.287794-1-dmitry.baryshkov@linaro.org>
-References: <20230709202511.287794-1-dmitry.baryshkov@linaro.org>
+        Sun, 9 Jul 2023 16:32:20 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BFBFB5;
+        Sun,  9 Jul 2023 13:32:19 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 369KW4WO000690;
+        Sun, 9 Jul 2023 20:32:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=677bkrlxeEMwzyB0BuCAEWPllOKMMw5fsejeI/t9/QE=;
+ b=L2vEtiKPYlnnk3kHP6spOfBR+NVmzIpRzxoRHSt9ScrVZ8RfF6EOwtvG2jY6oO7BSJ7Y
+ UatCi6gu71lLpmfMLXfD3WUPVjQ6S2crFsae8QblCUTd2Lk+qepfjI/g2YNANReRkP4n
+ 4RKlLtMIo4miRkhH1HpB/TehkqWL+7W67FkeuWCebmZMEeC9z9NmKLfTJssP6MbNN4o4
+ 4h3ktlDUvCwDXMXk84O7/PUwC9TnR7IBqMNOPfpR3ALeCZ82E7uWRXnLGMlaH9l5NTcg
+ thM4xRVczoeeqirJLRi6ZoB0Xb7+/rDE5dFI68rNrxHw8mzSUAnr69zOQ9rWeRl6+0Pz JQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpxry23cw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 09 Jul 2023 20:32:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 369KW3r5003806
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 9 Jul 2023 20:32:03 GMT
+Received: from [10.110.47.185] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sun, 9 Jul
+ 2023 13:32:02 -0700
+Message-ID: <10de9309-19f9-18af-3e01-1cda7d76e73e@quicinc.com>
+Date:   Sun, 9 Jul 2023 13:32:01 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH v1 1/5] drm/msm/dp: remove pm_runtime_xxx()
+ from dp_power.c
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_sbillaka@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
+        <quic_jesszhan@quicinc.com>, <freedreno@lists.freedesktop.org>
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
+ <fc5501cf-c335-81f7-1ad7-26fdc1b6922d@linaro.org>
+ <72cb729b-a9d3-3e5b-c70a-0761f47a6779@quicinc.com>
+ <CAA8EJpqKVBKRpFs=sS2rwrJpDP22sNrd00kCYm-b_ZB96O=s5g@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqKVBKRpFs=sS2rwrJpDP22sNrd00kCYm-b_ZB96O=s5g@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 3EuSfpV-3XZDXMxc-7zr6dJM7WFtm3-Q
+X-Proofpoint-GUID: 3EuSfpV-3XZDXMxc-7zr6dJM7WFtm3-Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-09_14,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 impostorscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2307090193
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement the oob_hotplug_event() callback. Translate it to the HPD
-notification sent to the HPD bridge in the chain.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/drm_bridge_connector.c | 29 +++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_bridge_connector.c b/drivers/gpu/drm/drm_bridge_connector.c
-index 84d8d310ef04..364f6e37fbdc 100644
---- a/drivers/gpu/drm/drm_bridge_connector.c
-+++ b/drivers/gpu/drm/drm_bridge_connector.c
-@@ -5,6 +5,8 @@
- 
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- 
- #include <drm/drm_atomic_state_helper.h>
-@@ -107,10 +109,9 @@ static void drm_bridge_connector_hpd_notify(struct drm_connector *connector,
- 	}
- }
- 
--static void drm_bridge_connector_hpd_cb(void *cb_data,
--					enum drm_connector_status status)
-+static void drm_bridge_connector_handle_hpd(struct drm_bridge_connector *drm_bridge_connector,
-+					    enum drm_connector_status status)
- {
--	struct drm_bridge_connector *drm_bridge_connector = cb_data;
- 	struct drm_connector *connector = &drm_bridge_connector->base;
- 	struct drm_device *dev = connector->dev;
- 
-@@ -123,6 +124,21 @@ static void drm_bridge_connector_hpd_cb(void *cb_data,
- 	drm_kms_helper_hotplug_event(dev);
- }
- 
-+static void drm_bridge_connector_hpd_cb(void *cb_data,
-+					enum drm_connector_status status)
-+{
-+	drm_bridge_connector_handle_hpd(cb_data, status);
-+}
-+
-+static void drm_bridge_connector_oob_hotplug_event(struct drm_connector *connector,
-+						   enum drm_connector_status status)
-+{
-+	struct drm_bridge_connector *bridge_connector =
-+		to_drm_bridge_connector(connector);
-+
-+	drm_bridge_connector_handle_hpd(bridge_connector, status);
-+}
-+
- static void drm_bridge_connector_enable_hpd(struct drm_connector *connector)
- {
- 	struct drm_bridge_connector *bridge_connector =
-@@ -216,6 +232,7 @@ static const struct drm_connector_funcs drm_bridge_connector_funcs = {
- 	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
- 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
- 	.debugfs_init = drm_bridge_connector_debugfs_init,
-+	.oob_hotplug_event = drm_bridge_connector_oob_hotplug_event,
- };
- 
- /* -----------------------------------------------------------------------------
-@@ -351,6 +368,12 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
- 		if (!drm_bridge_get_next_bridge(bridge))
- 			connector_type = bridge->type;
- 
-+#ifdef CONFIG_OF
-+		if (!drm_bridge_get_next_bridge(bridge) &&
-+		    bridge->of_node)
-+			connector->fwnode = fwnode_handle_get(of_fwnode_handle(bridge->of_node));
-+#endif
-+
- 		if (bridge->ddc)
- 			ddc = bridge->ddc;
- 
--- 
-2.39.2
+On 7/9/2023 11:00 AM, Dmitry Baryshkov wrote:
+> On Sun, 9 Jul 2023 at 20:22, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 7/7/2023 5:06 PM, Dmitry Baryshkov wrote:
+>>> On 08/07/2023 02:52, Kuogee Hsieh wrote:
+>>>> Since both pm_runtime_resume() and pm_runtime_suspend() are not
+>>>> populated at dp_pm_ops. Those pm_runtime_get/put() functions within
+>>>> dp_power.c will not have any effects in addition to increase/decrease
+>>>> power counter.
+>>>
+>>> Lie.
+>>>
+>>
+>> Even if the commit text is incorrect, review comments like this are not
+>> helping the patch nor the author and will just get ignored anyway.
+> 
+> The review comment might be overreacting, excuse me. I was really
+> impressed by the commit message, which contradicts the basic source
+> code. pm_runtime_get() does a lot more than just increasing the power
+> counter.
+> 
 
+It says within dp_power.c. Nonetheless, please let us know what is 
+missing in the context of this patch like Bjorn did to make it an 
+effective review and we can correct it. In its current form, the review 
+comment is adding no value.
+
+>>>> Also pm_runtime_xxx() should be executed at top
+>>>> layer.
+>>>
+>>> Why?
+>>>
+>>
+>> I guess he meant to centralize this around dp_display.c. Will elaborate
+>> while posting the next rev.
+>>
+>>>>
+>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/dp/dp_power.c | 9 ---------
+>>>>    1 file changed, 9 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c
+>>>> b/drivers/gpu/drm/msm/dp/dp_power.c
+>>>> index 5cb84ca..ed2f62a 100644
+>>>> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+>>>> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+>>>> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
+>>>>        power = container_of(dp_power, struct dp_power_private, dp_power);
+>>>> -    pm_runtime_enable(power->dev);
+>>>> -
+>>>>        return dp_power_clk_init(power);
+>>>>    }
+>>>> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power
+>>>> *dp_power)
+>>>>        struct dp_power_private *power;
+>>>>        power = container_of(dp_power, struct dp_power_private, dp_power);
+>>>> -
+>>>> -    pm_runtime_disable(power->dev);
+>>>>    }
+>>>>    int dp_power_init(struct dp_power *dp_power)
+>>>> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
+>>>>        power = container_of(dp_power, struct dp_power_private, dp_power);
+>>>> -    pm_runtime_get_sync(power->dev);
+>>>> -
+>>>>        rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+>>>> -    if (rc)
+>>>> -        pm_runtime_put_sync(power->dev);
+>>>>        return rc;
+>>>>    }
+>>>> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
+>>>>        power = container_of(dp_power, struct dp_power_private, dp_power);
+>>>>        dp_power_clk_enable(dp_power, DP_CORE_PM, false);
+>>>> -    pm_runtime_put_sync(power->dev);
+>>>>        return 0;
+>>>>    }
+>>>
+> 
+> 
+> 
