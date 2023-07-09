@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD44974C6E6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 20:00:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92FC874C7F3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 22:02:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230245AbjGISAQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jul 2023 14:00:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48166 "EHLO
+        id S229626AbjGIUCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jul 2023 16:02:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjGISAO (ORCPT
+        with ESMTP id S229441AbjGIUCk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jul 2023 14:00:14 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87EC2107
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 11:00:12 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-c6cad6a3998so3380259276.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 11:00:12 -0700 (PDT)
+        Sun, 9 Jul 2023 16:02:40 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B1F2FE
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 13:02:38 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b703d7ed3aso60215291fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 13:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688925611; x=1691517611;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=u4DBsm9V7fTDvKx918DKQDmxOgvOJF74sUuwO0ox2Ec=;
-        b=vxRgIcDZCdKysN9u5e/P0Mk+1qTauAmLbQGUgHGKEnTrrVjVfF8aRQgXNkdpwNKtso
-         z8OW1HHfk+BP9+3b0NYGgmo1cqC1dNep8cPJs0DCf5IEpOOl2YUrPVFZ3c6yFCuGZy4i
-         SVHYFmCtbVn9/s2hoZJ49WHlQH59W90pfh9lA/eb/+pugtDqnZJc/0IJahTTiqaY4Vzk
-         1WrlPZDLO5SgPrk6xtqbFrFD6MccqYfdC9JgfnhpS9uXoCHuwqdGVsGecaY9zjvID2l4
-         PyqhTrEHJkApgYxcRt6QgGsaPi7YlwCJmtJ/KwTYz07w+dIONIm5ui/y8eKvNjaOtX+M
-         Syrg==
+        d=linaro.org; s=google; t=1688932957; x=1691524957;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jCcj07yvsLCgStmlHgG/uNQV/0r0pToqwEhw7f3W7gs=;
+        b=C3GEHCjRKLUhz6+3uXo5hOlbMFAcI2l8LNwNnFLqm+3wcfHlPHpnLXz3qeS8JFwf/j
+         IaY+LWCFQ/RIpOJM+XAR+cyoKclYDsy5dhXtj+l/TnuuRhK4cr09OiJiO1ji4PjMTPqJ
+         qc1KgvrwF8sN/9DSnthx8Js13z6m45pbWJ7Nmx9qdIB/PiVatI+8uHbM62K7rUkQ5avs
+         aOvWPvQppcepDy5L2POPpqQ1Tq6hSpv60LgYVBdfJ5ULuTUvkisWzXpzy+BY7LtKIgR9
+         kfhlEwd4/ehNBX+2eXRbwD39vXfr7mqmySMC0Gdh7lvOxQ+zlYG0BDfzGPRVWxU+Bmw9
+         8CZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688925611; x=1691517611;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1688932957; x=1691524957;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=u4DBsm9V7fTDvKx918DKQDmxOgvOJF74sUuwO0ox2Ec=;
-        b=YsyOuS27NqLupuEOnFKBsFikPnTgn3c7kfDD/oH8fMKlOPioVLCBZWIpx7QJ+fxmLs
-         WXLbvx1JvIW6FVL4ip3kqa1c+ahC49UtaeD7iwZPUVWa9+hNmvQl2ZSOy/B4L+5i/ma1
-         SjooIujsmIL6E8puP4N6muPUEuMm2yCe+0c306I6ukt2fdtXRbGJ4yeKzyRPtQuy+z6k
-         jhTYBl+RcxvAp/mlkUSUjnUAVwAktowcW/FgUO+kXZi0NB0FzXtT8CBVI8N2Y57KZMve
-         yAhGME3fESh9lLTBdzngPQurWlWJscBRfthpb3MxE6Nv/lU5ke7DqfJF48r0uZ6am43m
-         97wg==
-X-Gm-Message-State: ABy/qLYDo1pVRIEN2cyGWmRZ/DV+EwLxGfuR/Zwdbkz4k508Feiud15I
-        c/ZncP/IkTpPqmllTlXgcNERPJjM73yP3sSba0WqHw==
-X-Google-Smtp-Source: APBJJlEWXBHCrZHA3JCHjoudX7Ecgk5TDBCrrA3oUgTtzhr9PEaNnulSiA1S6XZKAEopv26+3p9AtmwqEhS9liy+4l4=
-X-Received: by 2002:a81:92d3:0:b0:579:f8f2:b5b5 with SMTP id
- j202-20020a8192d3000000b00579f8f2b5b5mr9459703ywg.41.1688925611714; Sun, 09
- Jul 2023 11:00:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
- <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
- <fc5501cf-c335-81f7-1ad7-26fdc1b6922d@linaro.org> <72cb729b-a9d3-3e5b-c70a-0761f47a6779@quicinc.com>
-In-Reply-To: <72cb729b-a9d3-3e5b-c70a-0761f47a6779@quicinc.com>
+        bh=jCcj07yvsLCgStmlHgG/uNQV/0r0pToqwEhw7f3W7gs=;
+        b=Xsip2ylBGdUgzl/HyzPH9pXPHjKCxDb/I0MJgbuPKqjNDQ77MS5c8ID2pubFaIMNja
+         UGaWEx7/CB6FPnAvUcjcrW1uduDc6UtqQEMn/5NqREs6Lr8EFNIo1ywakC0ustAnA6zx
+         a1zpNYuqirGwMRoM6w8LWB5plQvL8t1u/1AiS7yAy2nseKmaxG/09023CP3yqkkEuLOF
+         ri1mPnHjcnTbqGnpznVP5vtkmX7EiR7gwzx9KDOpLx0CNQ+9BBkkVrCTVlI41wahj7td
+         NIsT6fB8BKh6z6tprCSYJU3ypGP3FOMBFHHxW4ru7GtLSROR8llY0pUEfzYqFBDBKHJP
+         BZ4g==
+X-Gm-Message-State: ABy/qLYPRDMbNzvaD/5AVSEurUZkn78g0r8yIrqQs0NDEN0/XxbqKLjQ
+        Ml01OWPRsdNzh0pWu6FiHUqKVw==
+X-Google-Smtp-Source: APBJJlGJj4K51WW7zDaRKwaOtxeXigI0fGuJqg9z0pgryn7DFxU0GLT8MRXrvx+ZfUSp23l3Ay+Skw==
+X-Received: by 2002:a2e:3606:0:b0:2b6:a057:8098 with SMTP id d6-20020a2e3606000000b002b6a0578098mr6798509lja.0.1688932956707;
+        Sun, 09 Jul 2023 13:02:36 -0700 (PDT)
+Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
+        by smtp.gmail.com with ESMTPSA id c6-20020a2e6806000000b002b6cba03427sm1689580lja.79.2023.07.09.13.02.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Jul 2023 13:02:36 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 9 Jul 2023 21:00:00 +0300
-Message-ID: <CAA8EJpqKVBKRpFs=sS2rwrJpDP22sNrd00kCYm-b_ZB96O=s5g@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v1 1/5] drm/msm/dp: remove pm_runtime_xxx()
- from dp_power.c
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_sbillaka@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marijn.suijten@somainline.org, quic_jesszhan@quicinc.com,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: [PATCH v2] usb: typec: qcom: properly detect Audio Accessory mode  peripherals
+Date:   Sun,  9 Jul 2023 23:02:35 +0300
+Message-Id: <20230709200235.265674-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -76,81 +74,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 9 Jul 2023 at 20:22, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 7/7/2023 5:06 PM, Dmitry Baryshkov wrote:
-> > On 08/07/2023 02:52, Kuogee Hsieh wrote:
-> >> Since both pm_runtime_resume() and pm_runtime_suspend() are not
-> >> populated at dp_pm_ops. Those pm_runtime_get/put() functions within
-> >> dp_power.c will not have any effects in addition to increase/decrease
-> >> power counter.
-> >
-> > Lie.
-> >
->
-> Even if the commit text is incorrect, review comments like this are not
-> helping the patch nor the author and will just get ignored anyway.
+Detect and report if the Audio Accessory device has been attached to the
+corresponding USB-C port.
 
-The review comment might be overreacting, excuse me. I was really
-impressed by the commit message, which contradicts the basic source
-code. pm_runtime_get() does a lot more than just increasing the power
-counter.
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
 
-> >> Also pm_runtime_xxx() should be executed at top
-> >> layer.
-> >
-> > Why?
-> >
->
-> I guess he meant to centralize this around dp_display.c. Will elaborate
-> while posting the next rev.
->
-> >>
-> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/dp/dp_power.c | 9 ---------
-> >>   1 file changed, 9 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c
-> >> b/drivers/gpu/drm/msm/dp/dp_power.c
-> >> index 5cb84ca..ed2f62a 100644
-> >> --- a/drivers/gpu/drm/msm/dp/dp_power.c
-> >> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
-> >> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
-> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
-> >> -    pm_runtime_enable(power->dev);
-> >> -
-> >>       return dp_power_clk_init(power);
-> >>   }
-> >> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power
-> >> *dp_power)
-> >>       struct dp_power_private *power;
-> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
-> >> -
-> >> -    pm_runtime_disable(power->dev);
-> >>   }
-> >>   int dp_power_init(struct dp_power *dp_power)
-> >> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
-> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
-> >> -    pm_runtime_get_sync(power->dev);
-> >> -
-> >>       rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
-> >> -    if (rc)
-> >> -        pm_runtime_put_sync(power->dev);
-> >>       return rc;
-> >>   }
-> >> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
-> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
-> >>       dp_power_clk_enable(dp_power, DP_CORE_PM, false);
-> >> -    pm_runtime_put_sync(power->dev);
-> >>       return 0;
-> >>   }
-> >
+Changes since v1:
+- Fixed typo in commit subject (Bjorn)
+- Removed 'the' in the commit message (Sergei)
 
+---
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+index 94285f64b67d..56df04af2d2b 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+@@ -214,6 +214,11 @@ int qcom_pmic_typec_port_get_cc(struct pmic_typec_port *pmic_typec_port,
+ 		if (ret)
+ 			goto done;
+ 		switch (val & DETECTED_SRC_TYPE_MASK) {
++		case AUDIO_ACCESS_RA_RA:
++			val = TYPEC_CC_RA;
++			*cc1 = TYPEC_CC_RA;
++			*cc2 = TYPEC_CC_RA;
++			break;
+ 		case SRC_RD_OPEN:
+ 			val = TYPEC_CC_RD;
+ 			break;
 -- 
-With best wishes
-Dmitry
+2.39.2
+
