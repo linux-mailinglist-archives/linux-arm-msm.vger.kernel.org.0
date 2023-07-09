@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 752DA74C6BD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 19:28:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1150B74C6C6
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 19:38:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229534AbjGIR26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jul 2023 13:28:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40086 "EHLO
+        id S230194AbjGIRig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jul 2023 13:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230394AbjGIR25 (ORCPT
+        with ESMTP id S229450AbjGIRif (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jul 2023 13:28:57 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8046F4
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 10:28:55 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f76a0a19d4so5430482e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 10:28:55 -0700 (PDT)
+        Sun, 9 Jul 2023 13:38:35 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738E7106
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 10:38:34 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b6a6f224a1so59401871fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 10:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688923734; x=1691515734;
+        d=linaro.org; s=google; t=1688924313; x=1691516313;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0dKYNbBXcnp2npYERmD6OwPGyF18Ls7/g1iPD2dIqkc=;
-        b=dfvQYsS7R+9f1XZdiGS878gaVCwz8HtDNvKnKs0ASwuLeupgac1jJp7J9xH4GzjbAY
-         NQh0ZJIJbNgu9ulCqAlxsRu5ytNxmmDT+J2ghMVKnTLbPvRujFaZbfUFFvuJh5UdRlLj
-         1d5kXM3W/Jmyj6N0q3TJhydMquk1WYpfx7L4R5goXwCW24P4fAZ9fXPwATcnY7OQe5gE
-         D28Sy29i3ySLj8RGkJNV+aSpm9IszgF4mLHoHl0IJ6zCdgdUNPA0MIIr87CSquaofV69
-         OSFE6YPYLYDiBkzahm+h0QNSD1s9gKwzLgN0IH2urcw0C+zvQu46Qb/9aSwBEOqKRJ1r
-         oUqg==
+        bh=uKdFK7UFqnvYacu1+A6rrJuMR3ECAGc1EkArluB3bgk=;
+        b=EIkf7oR5mHW9ET9xqLGWmH4Ta4buPeq5JYwnaGxV7KgwHJhjiZAAn+pwWuKxkK85er
+         FHdhAaPDbMalggKP+KMlk2RZeNPqNfSdPHxXe7wGgQjX7+aEWFxH2Yi8mYkh0G7Uz8vf
+         GaF5eP91LxL2tP0QIV4ylOgkaw/q8hietq+8CT2P3ofhn9Q8DDgPBA+TGNcjdWm4eoa2
+         ZOuKYZ0V+IbiqZ0S9eBkUstRhJfMMuGgZPtnhfI2j8fHE3ErWA8S9kel41lJGl3d5Pgb
+         t6JSpp4glxoK1C2ESCIMLEliDRw+HAkoWo12C/LvTKHWZFv9rmegd8+77qRq6dHcXXoj
+         +NpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688923734; x=1691515734;
+        d=1e100.net; s=20221208; t=1688924313; x=1691516313;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0dKYNbBXcnp2npYERmD6OwPGyF18Ls7/g1iPD2dIqkc=;
-        b=Tc4eA4zQYycND4MFo2XTRCL16w5Gbd1AJfE5Qzkjs6NoFiOZdqKjpH4/Mx5xHZL6T+
-         P15sOnfboql6u/9vc5K8SXPOcWigyJ3s89KzcOiu+a9+YDYDQdRVRJ/4WeWxynomrcyK
-         wm6IHtIWS3vMXwREze9xF57F4zqLQWq1egCKKcZnunQvRDCNEDrtdyNYIxU7ll60mKJB
-         mOjucbWGiX83h8iWl2hpwScU3nnopyGAkPFUz0gUF9LyZ2ORyTipzIgw6NNcetlE7qWC
-         h0JgIstklJM+FSAmD9RVaOd5Eq15x8iesMGweaQ7sLYi2Js/3q9JEE/pYUp2f5FvQUSL
-         nDYw==
-X-Gm-Message-State: ABy/qLaN23U2jDSS8hIgjPwSLYU9TiRcIZPxgdQ0/h5pQkf+Mu8iucKp
-        vXJl0B2l4Yb0lAqi74hS0taYmw==
-X-Google-Smtp-Source: APBJJlHpqhfp6mspgLh/7s1bioqqe7qjN0nmeg08p4aZ9KLzrTcfmxw29nR5V2f5KNKf7t9FIuexLQ==
-X-Received: by 2002:a05:6512:3d14:b0:4fb:8afa:4dc9 with SMTP id d20-20020a0565123d1400b004fb8afa4dc9mr9176209lfv.49.1688923733365;
-        Sun, 09 Jul 2023 10:28:53 -0700 (PDT)
+        bh=uKdFK7UFqnvYacu1+A6rrJuMR3ECAGc1EkArluB3bgk=;
+        b=MpqXu59YxZJ2aViafQ+7oDd7jgZPGsmrypuaUeQeAtEUnpuV3E+uLILB+8h+xFlaAZ
+         7NN8r5i/iEoqHte5YQZPJ502TeC3HepqZTPFJZelAhL4RfDhTiHvKAEdbMEJvli69xiq
+         nQxnms7el8nlWcT9ePTvkkwjy16lKZUh3Jj4lT2ZAAxk4e/ARW/K0qvoAq8VB49IwljB
+         wIFhlY52cCTAKf1XckzGRDVkRv+tLIUP+2WcimlmjoHxoy+VGTMOLkvy2NHp1uIj2xRp
+         Hy6fFl7qYuZmxw60wh4jpipRxPxWts8BH5rnVggku6RArHp4VvS4CoGXBbGMTOPfPBBe
+         h3iw==
+X-Gm-Message-State: ABy/qLZyQiipx6SDzdQRNWQ1XaYx3DHaruUtI8Wgwq7SaNcHoflLWa0G
+        h7OkgKSK1awZe6OyKiFygyfjkQ==
+X-Google-Smtp-Source: APBJJlHNb+8tglQs8vHY4lZ2CClvauiq1wbcrsR8u43ZfraYF4Na+06BhXn1BYHVWuszx3GTUShS9A==
+X-Received: by 2002:a2e:b166:0:b0:2b7:117:e54 with SMTP id a6-20020a2eb166000000b002b701170e54mr8428516ljm.4.1688924312739;
+        Sun, 09 Jul 2023 10:38:32 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id n2-20020aa7c782000000b0051de3e1323dsm4641086eds.95.2023.07.09.10.28.50
+        by smtp.gmail.com with ESMTPSA id l25-20020a1709066b9900b009894b476310sm5014978ejr.163.2023.07.09.10.38.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 09 Jul 2023 10:28:52 -0700 (PDT)
-Message-ID: <8b2dd686-382a-f490-7b6e-9603d939bad7@linaro.org>
-Date:   Sun, 9 Jul 2023 19:28:49 +0200
+        Sun, 09 Jul 2023 10:38:32 -0700 (PDT)
+Message-ID: <3b417e21-1726-a026-cd53-e68cc49b56fc@linaro.org>
+Date:   Sun, 9 Jul 2023 19:38:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 11/11] dt-bindings: iio: remove QCOM ADC files from iio
- folder
+Subject: Re: [PATCH 05/11] iio: adc: qcom-spmi-adc5: remove support for ADC7
+ compatible string
 Content-Language: en-US
 To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -69,20 +69,17 @@ To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Jonathan Cameron <jic23@kernel.org>,
         Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org
 Cc:     linux-arm-msm-owner@vger.kernel.org
 References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
- <20230708072835.3035398-12-quic_jprakash@quicinc.com>
+ <20230708072835.3035398-6-quic_jprakash@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230708072835.3035398-12-quic_jprakash@quicinc.com>
+In-Reply-To: <20230708072835.3035398-6-quic_jprakash@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,40 +88,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/07/2023 09:28, Jishnu Prakash wrote:
-> Now that the ADC dt-binding paths have been updated everywhere
-> to use the files copied to the 'iio/adc' folder, remove them
-> from the 'iio' folder.
+> Now that usage of "ADC7" name has been replaced with usage of "ADC5
+> Gen2" name everywhere, remove the "qcom,spmi-adc7" compatible string.
 > 
 > Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
 > ---
+>  drivers/iio/adc/qcom-spmi-adc5.c | 4 ----
 
-Nothing this was explained in previous patches... We should not have to
-read patchset from the end to understand what is happening here. Anyway,
-your commits lack rationale why this is done. Without it, this is pure
-churn which breaks users. ABI breaks need to be explained in the commit
-msg and come with some reason.
+Your patchset is not bisectable. Neither this patch nor cover letter
+marked this. This is not correct and will lead to broken kernels.
 
-...
+Even if not considering bisectability, this basically breaks the ABI
+without any explanation and rationale.
 
-> -/* 400k pull-up3 */
-> -#define ADC5_GEN3_AMUX1_THM_400K_PU		0x64
-> -#define ADC5_GEN3_AMUX2_THM_400K_PU		0x65
-> -#define ADC5_GEN3_AMUX3_THM_400K_PU		0x66
-> -#define ADC5_GEN3_AMUX4_THM_400K_PU		0x67
-> -#define ADC5_GEN3_AMUX5_THM_400K_PU		0x68
-> -#define ADC5_GEN3_AMUX6_THM_400K_PU		0x69
-> -#define ADC5_GEN3_AMUX1_GPIO_400K_PU		0x6a
-> -#define ADC5_GEN3_AMUX2_GPIO_400K_PU		0x6b
-> -#define ADC5_GEN3_AMUX3_GPIO_400K_PU		0x6c
-> -#define ADC5_GEN3_AMUX4_GPIO_400K_PU		0x6d
-> -
-> -/* 1/3 Divider */
-> -#define ADC5_GEN3_AMUX1_GPIO_DIV3		0x8a
-> -#define ADC5_GEN3_AMUX2_GPIO_DIV3		0x8b
-> -#define ADC5_GEN3_AMUX3_GPIO_DIV3		0x8c
-
-You just added these defines in previous patches. Don't add them to
-incorrect places just to fix it second later.
+Breaking ABI just because you want to rename something, is not the way
+to go, so NAK. Sorry.
 
 Best regards,
 Krzysztof
