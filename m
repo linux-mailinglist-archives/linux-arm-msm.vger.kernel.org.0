@@ -2,256 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3697974C6CC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 19:41:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD44974C6E6
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 20:00:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231432AbjGIRle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jul 2023 13:41:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42986 "EHLO
+        id S230245AbjGISAQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jul 2023 14:00:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230492AbjGIRld (ORCPT
+        with ESMTP id S229450AbjGISAO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jul 2023 13:41:33 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 512B9FA
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 10:41:31 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-992af8b3b1bso484057366b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 10:41:31 -0700 (PDT)
+        Sun, 9 Jul 2023 14:00:14 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87EC2107
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 11:00:12 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-c6cad6a3998so3380259276.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 11:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688924490; x=1691516490;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9oeKoSQqGnKyOhvK1kMTJPXEjPeVsm/hf9GdEualz/s=;
-        b=vMNlkobbdhJz+MoQIMwxINl916JGFbmOshhhboGc9QS0at7vhlLfF+DcLaLhtjbtEC
-         K+LG9umoc4J1NFxFsfZs0ep+c4sdpVURBXS3TVMJRuJbPnn5Gp6yicHFDVdpau0N7DJC
-         sLmxR3I/Qqh92wKk4WpNNZRBOiijx1IXCzqaOwZ8d0fGrMz9XntFIYRl5/yIcjUm6Khe
-         NdroJi5r7Kz0IiEoh0uNbu5bpLx0szc0plQjYFLF3AT2hBiaC3kmRGrBHnx6AC8gS0FA
-         OX2jrrTKou9iskNn7vRpYdO1taGbBZVXRyq7EsU3B/YQQGWEq+/7Joe+6pNzx9L3btDh
-         RSYQ==
+        d=linaro.org; s=google; t=1688925611; x=1691517611;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=u4DBsm9V7fTDvKx918DKQDmxOgvOJF74sUuwO0ox2Ec=;
+        b=vxRgIcDZCdKysN9u5e/P0Mk+1qTauAmLbQGUgHGKEnTrrVjVfF8aRQgXNkdpwNKtso
+         z8OW1HHfk+BP9+3b0NYGgmo1cqC1dNep8cPJs0DCf5IEpOOl2YUrPVFZ3c6yFCuGZy4i
+         SVHYFmCtbVn9/s2hoZJ49WHlQH59W90pfh9lA/eb/+pugtDqnZJc/0IJahTTiqaY4Vzk
+         1WrlPZDLO5SgPrk6xtqbFrFD6MccqYfdC9JgfnhpS9uXoCHuwqdGVsGecaY9zjvID2l4
+         PyqhTrEHJkApgYxcRt6QgGsaPi7YlwCJmtJ/KwTYz07w+dIONIm5ui/y8eKvNjaOtX+M
+         Syrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688924490; x=1691516490;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9oeKoSQqGnKyOhvK1kMTJPXEjPeVsm/hf9GdEualz/s=;
-        b=KlFD+5kyyXxYKFSSmXKd5mpPC3eGXdtLnApWK/TB5TypcAsL4gfQo4yrOKLAU/DEAD
-         toTBKtsJF2KyOMMGdinNs/zSxOhy6RtS4gzHLo0KrfulYFZwDzmh4V4t7BS1PaIxzvrg
-         xE027tgzf2i7Iiec4xpLCRof8FDwWevJgtHzY3+e6+1FwJ3rOHetOZUbIvr3XejAdVLI
-         uVAB711uSZc3go6NhnddLSLvhNEkHCgGGmeWvJXAdIesqjaZPjDLlzNY89o8UGuAeHsY
-         OckpeSLSqowxcth30seZPJg8JhStfUhmJpcC1/tXwsPPEEOzpvIOXnoCccPYfLRDIy4A
-         NTOw==
-X-Gm-Message-State: ABy/qLaSdGxPWVK24guCjg8miSnENunwhwsaQzC5ZtlEeyQjTfD0z/Ar
-        53n7FCKt+w9sBvyGg8Mjr8TQuA==
-X-Google-Smtp-Source: APBJJlHvRXJCSdZxiouXi07KpghTnQuXPR5PnU1C68ap3XHWWr3uMG+uW1w42kwNzkNLCiNxe4U2pQ==
-X-Received: by 2002:a17:906:5a6e:b0:965:9602:1f07 with SMTP id my46-20020a1709065a6e00b0096596021f07mr10035969ejc.39.1688924489848;
-        Sun, 09 Jul 2023 10:41:29 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id r11-20020a17090638cb00b00992b510089asm5031895ejd.84.2023.07.09.10.41.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 09 Jul 2023 10:41:29 -0700 (PDT)
-Message-ID: <0b5771b3-31b1-c17c-2be4-9b71538078bb@linaro.org>
-Date:   Sun, 9 Jul 2023 19:41:25 +0200
+        d=1e100.net; s=20221208; t=1688925611; x=1691517611;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u4DBsm9V7fTDvKx918DKQDmxOgvOJF74sUuwO0ox2Ec=;
+        b=YsyOuS27NqLupuEOnFKBsFikPnTgn3c7kfDD/oH8fMKlOPioVLCBZWIpx7QJ+fxmLs
+         WXLbvx1JvIW6FVL4ip3kqa1c+ahC49UtaeD7iwZPUVWa9+hNmvQl2ZSOy/B4L+5i/ma1
+         SjooIujsmIL6E8puP4N6muPUEuMm2yCe+0c306I6ukt2fdtXRbGJ4yeKzyRPtQuy+z6k
+         jhTYBl+RcxvAp/mlkUSUjnUAVwAktowcW/FgUO+kXZi0NB0FzXtT8CBVI8N2Y57KZMve
+         yAhGME3fESh9lLTBdzngPQurWlWJscBRfthpb3MxE6Nv/lU5ke7DqfJF48r0uZ6am43m
+         97wg==
+X-Gm-Message-State: ABy/qLYDo1pVRIEN2cyGWmRZ/DV+EwLxGfuR/Zwdbkz4k508Feiud15I
+        c/ZncP/IkTpPqmllTlXgcNERPJjM73yP3sSba0WqHw==
+X-Google-Smtp-Source: APBJJlEWXBHCrZHA3JCHjoudX7Ecgk5TDBCrrA3oUgTtzhr9PEaNnulSiA1S6XZKAEopv26+3p9AtmwqEhS9liy+4l4=
+X-Received: by 2002:a81:92d3:0:b0:579:f8f2:b5b5 with SMTP id
+ j202-20020a8192d3000000b00579f8f2b5b5mr9459703ywg.41.1688925611714; Sun, 09
+ Jul 2023 11:00:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 07/11] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-Content-Language: en-US
-To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linus.walleij@linaro.org, Jonathan.Cameron@huawei.com,
-        sboyd@kernel.org, dmitry.baryshkov@linaro.org,
-        quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
-        quic_kamalw@quicinc.com, quic_jestar@quicinc.com,
-        marijn.suijten@somainline.org, andriy.shevchenko@linux.intel.com,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Cosmin Tanislav <demonsingur@gmail.com>,
-        Mike Looijmans <mike.looijmans@topic.nl>,
-        Ramona Bolboaca <ramona.bolboaca@analog.com>,
-        ChiYuan Huang <cy_huang@richtek.com>,
-        Ibrahim Tilki <Ibrahim.Tilki@analog.com>,
-        William Breathitt Gray <william.gray@linaro.org>,
-        Lee Jones <lee@kernel.org>,
-        =?UTF-8?Q?Leonard_G=c3=b6hrs?= <l.goehrs@pengutronix.de>,
-        Haibo Chen <haibo.chen@nxp.com>, linux-iio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     linux-arm-msm-owner@vger.kernel.org
-References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
- <20230708072835.3035398-8-quic_jprakash@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230708072835.3035398-8-quic_jprakash@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
+ <fc5501cf-c335-81f7-1ad7-26fdc1b6922d@linaro.org> <72cb729b-a9d3-3e5b-c70a-0761f47a6779@quicinc.com>
+In-Reply-To: <72cb729b-a9d3-3e5b-c70a-0761f47a6779@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 9 Jul 2023 21:00:00 +0300
+Message-ID: <CAA8EJpqKVBKRpFs=sS2rwrJpDP22sNrd00kCYm-b_ZB96O=s5g@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v1 1/5] drm/msm/dp: remove pm_runtime_xxx()
+ from dp_power.c
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_sbillaka@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marijn.suijten@somainline.org, quic_jesszhan@quicinc.com,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/07/2023 09:28, Jishnu Prakash wrote:
-> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
-> with all SW communication to ADC going through PMK8550 which
-> communicates with other PMICs through PBS. One major difference is
-> that the register interface used here is that of an SDAM present on
+On Sun, 9 Jul 2023 at 20:22, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 7/7/2023 5:06 PM, Dmitry Baryshkov wrote:
+> > On 08/07/2023 02:52, Kuogee Hsieh wrote:
+> >> Since both pm_runtime_resume() and pm_runtime_suspend() are not
+> >> populated at dp_pm_ops. Those pm_runtime_get/put() functions within
+> >> dp_power.c will not have any effects in addition to increase/decrease
+> >> power counter.
+> >
+> > Lie.
+> >
+>
+> Even if the commit text is incorrect, review comments like this are not
+> helping the patch nor the author and will just get ignored anyway.
 
-...
+The review comment might be overreacting, excuse me. I was really
+impressed by the commit message, which contradicts the basic source
+code. pm_runtime_get() does a lot more than just increasing the power
+counter.
 
-
-> +static int adc5_gen3_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct iio_dev *indio_dev;
-> +	struct adc5_chip *adc;
-> +	struct regmap *regmap;
-> +	int ret, i, irq;
-> +	u32 *reg;
-> +	char buf[20];
-> +
-> +	regmap = dev_get_regmap(dev->parent, NULL);
-> +	if (!regmap)
-> +		return -ENODEV;
-> +
-> +	indio_dev = devm_iio_device_alloc(dev, sizeof(*adc));
-> +	if (!indio_dev)
-> +		return -ENOMEM;
-> +
-> +	adc = iio_priv(indio_dev);
-> +	adc->regmap = regmap;
-> +	adc->dev = dev;
-> +
-> +	ret = device_property_count_u32(dev, "reg");
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	adc->num_sdams = ret;
-> +
-> +	reg = devm_kcalloc(dev, adc->num_sdams, sizeof(u32), GFP_KERNEL);
-> +	if (!reg)
-> +		return -ENOMEM;
-> +
-> +	ret = device_property_read_u32_array(dev, "reg", reg, adc->num_sdams);
-> +	if (ret) {
-> +		dev_err(adc->dev, "Failed to read reg property, ret=%d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	adc->base = devm_kcalloc(adc->dev, adc->num_sdams, sizeof(*adc->base), GFP_KERNEL);
-> +	if (!adc->base)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < adc->num_sdams; i++) {
-> +		adc->base[i].base_addr = reg[i];
-> +
-> +		irq = platform_get_irq(pdev, i);
-> +		if (irq < 0) {
-> +			dev_err(adc->dev, "Failed to get SDAM%d irq, ret=%d\n", i, irq);
-> +			return irq;
-
-return dev_err_probe
-
-> +		}
-> +		adc->base[i].irq = irq;
-> +
-> +		scnprintf(buf, sizeof(buf), "adc-sdam%d", i);
-> +		adc->base[i].irq_name = devm_kstrdup(adc->dev, buf, GFP_KERNEL);
-> +		if (!adc->base[i].irq_name)
-> +			return -ENOMEM;
-> +	}
-> +
-> +	platform_set_drvdata(pdev, adc);
-> +
-> +	init_completion(&adc->complete);
-> +	mutex_init(&adc->lock);
-> +
-> +	ret = adc5_get_fw_data(adc);
-> +	if (ret < 0) {
-> +		dev_err(adc->dev, "adc get dt data failed, ret=%d\n", ret);
-
-return dev_err_probe
-
-> +		return ret;
-> +	}
-> +
-> +	for (i = 0; i < adc->num_sdams; i++) {
-> +		ret = devm_request_irq(dev, adc->base[i].irq, adc5_gen3_isr,
-> +					0, adc->base[i].irq_name, adc);
-> +		if (ret < 0) {
-> +			dev_err(adc->dev, "Getting IRQ %d failed, ret=%d\n", adc->base[i].irq, ret);
-
-return dev_err_probe
-
-> +			return ret;
-> +		}
-> +	}
-> +
-> +	ret = adc_tm_register_tzd(adc);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	if (adc->n_tm_channels)
-> +		INIT_WORK(&adc->tm_handler_work, tm_handler_work);
-> +
-> +	indio_dev->name = pdev->name;
-> +	indio_dev->modes = INDIO_DIRECT_MODE;
-> +	indio_dev->info = &adc5_gen3_info;
-> +	indio_dev->channels = adc->iio_chans;
-> +	indio_dev->num_channels = adc->nchannels;
-> +
-> +	return devm_iio_device_register(dev, indio_dev);
-> +}
-> +
-> +static int adc5_gen3_exit(struct platform_device *pdev)
-> +{
-> +	struct adc5_chip *adc = platform_get_drvdata(pdev);
-> +	u8 data = 0;
-> +	int i, sdam_index;
-> +
-> +	mutex_lock(&adc->lock);
-> +	/* Disable all available channels */
-> +	for (i = 0; i < adc->num_sdams * 8; i++) {
-> +		sdam_index = i / 8;
-> +		data = MEAS_INT_DISABLE;
-> +		adc5_gen3_write(adc, sdam_index, ADC5_GEN3_TIMER_SEL, &data, 1);
-> +
-> +		/* To indicate there is an actual conversion request */
-> +		data = ADC5_GEN3_CHAN_CONV_REQ | (i - (sdam_index * 8));
-> +		adc5_gen3_write(adc, sdam_index, ADC5_GEN3_PERPH_CH, &data, 1);
-> +
-> +		data = ADC5_GEN3_CONV_REQ_REQ;
-> +		adc5_gen3_write(adc, sdam_index, ADC5_GEN3_CONV_REQ, &data, 1);
-> +	}
-> +
-> +	mutex_unlock(&adc->lock);
-> +
-> +	if (adc->n_tm_channels)
-> +		cancel_work_sync(&adc->tm_handler_work);
-> +
-> +	return 0;
-> +}
-> +
-> +static struct platform_driver adc5_gen3_driver = {
-> +	.driver = {
-> +		.name = "qcom-spmi-adc5-gen3",
-> +		.of_match_table = adc5_match_table,
-> +	},
-> +	.probe = adc5_gen3_probe,
-> +	.remove = adc5_gen3_exit,
-> +};
-> +module_platform_driver(adc5_gen3_driver);
-> +
-> +MODULE_ALIAS("platform:qcom-spmi-adc5-gen3");
-
-Drop alias. If you need it, it means you screwed ID tables or your DTS.
+> >> Also pm_runtime_xxx() should be executed at top
+> >> layer.
+> >
+> > Why?
+> >
+>
+> I guess he meant to centralize this around dp_display.c. Will elaborate
+> while posting the next rev.
+>
+> >>
+> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/dp/dp_power.c | 9 ---------
+> >>   1 file changed, 9 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c
+> >> b/drivers/gpu/drm/msm/dp/dp_power.c
+> >> index 5cb84ca..ed2f62a 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+> >> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
+> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
+> >> -    pm_runtime_enable(power->dev);
+> >> -
+> >>       return dp_power_clk_init(power);
+> >>   }
+> >> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power
+> >> *dp_power)
+> >>       struct dp_power_private *power;
+> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
+> >> -
+> >> -    pm_runtime_disable(power->dev);
+> >>   }
+> >>   int dp_power_init(struct dp_power *dp_power)
+> >> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
+> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
+> >> -    pm_runtime_get_sync(power->dev);
+> >> -
+> >>       rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+> >> -    if (rc)
+> >> -        pm_runtime_put_sync(power->dev);
+> >>       return rc;
+> >>   }
+> >> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
+> >>       power = container_of(dp_power, struct dp_power_private, dp_power);
+> >>       dp_power_clk_enable(dp_power, DP_CORE_PM, false);
+> >> -    pm_runtime_put_sync(power->dev);
+> >>       return 0;
+> >>   }
+> >
 
 
-Best regards,
-Krzysztof
 
+-- 
+With best wishes
+Dmitry
