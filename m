@@ -2,93 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AE5F74C03E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 03:04:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45AEB74C065
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 04:30:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbjGIBEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Jul 2023 21:04:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56052 "EHLO
+        id S229713AbjGICab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Jul 2023 22:30:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjGIBEW (ORCPT
+        with ESMTP id S229437AbjGICaa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Jul 2023 21:04:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80886E43
-        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Jul 2023 18:04:21 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36910Dvl009532;
-        Sun, 9 Jul 2023 01:03:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iQXB7TR04UyGGj4mBOEpT+1563r66btmPpPOk9MO784=;
- b=VWbuUjSSCpWeLSF0AkQ3yDlfcxTgBuAMz0vsHyOOyXAdqVB2KIxB/ywyI5dCumbOHR4B
- IS9832qiPSzBWiZ/0lTzp8Tv2B0UYLiM8qo6yayuFW6UO6fo0H+COyLQxfWhj14AFyz9
- RofDuWWL1ZkXakl98b3jq2hJY/A4kAhssbyQB7r0qgmEaXLLxBtYbdk94unJY9yozKRF
- Tr/Z1ovXF27UXvU8aWHcp8IKxBOE3L0cjm9GljsjBse0/vMBSIjif0bZLlPRL5ZO95b9
- z+HakZFU2xfY9UK5/sfkZS7F3UoQ8WY2N6Anjg8fD3cVFsN/BfcGylsp9jhEwsKokqYD Jw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpxry15jc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 09 Jul 2023 01:03:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36913nnO005397
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 9 Jul 2023 01:03:50 GMT
-Received: from [10.110.47.185] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sat, 8 Jul
- 2023 18:03:48 -0700
-Message-ID: <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
-Date:   Sat, 8 Jul 2023 18:03:46 -0700
+        Sat, 8 Jul 2023 22:30:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4482D3;
+        Sat,  8 Jul 2023 19:30:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4718960B33;
+        Sun,  9 Jul 2023 02:30:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512C8C433C7;
+        Sun,  9 Jul 2023 02:30:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688869828;
+        bh=ItIXstYBIf26ydCVUwNTGQ8bzQETS0wWyOugToWg6xI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rljtrtr6N1Xg7x+eEkOzkkjBTpfqiPR4gddlslCXE5hpN5FsiP7h8xeap44eWqx7D
+         jzIcl1iLR7Li9APPIOpJX3KG/0FcUGDM+/TbcejzQVXKJpZpkkyfbzC+CnHsWC15pK
+         LWqkJMdMOi4wX/qzJY6ZrnGjE8x57EyFcHyWYvJeRrgZLbveMHDhpwIKIhnCaL9p9X
+         F+HoGbug16qmmnB/iPxbKnCwEjJGtHnZtuc7EV35Aj8uBpNd548gdqyVa4OJICoGGf
+         V8y4mEfYhbSEaRcPCYy4LzXJbnUeZeHAHEByytT01QrAm5S0EsSKac3C2bW0KJMnJZ
+         ShuMY4wtatn+g==
+Date:   Sat, 8 Jul 2023 19:34:05 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/5] drm/msm/dp: remove pm_runtime_xxx() from
+ dp_power.c
+Message-ID: <fiq6zjzptjdnktdcofyqpaqf2gmddvkschebp7imlmfxatew3x@iaptll3dzfuf>
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
- EOT packet
-Content-Language: en-US
-To:     <neil.armstrong@linaro.org>, Amit Pundir <amit.pundir@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Jagan Teki <jagan@amarulasolutions.com>,
-        Marek Vasut <marex@denx.de>, <dri-devel@lists.freedesktop.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Michael Walle <michael@walle.cc>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20230403221233.500485-1-marex@denx.de>
- <20230403221233.500485-2-marex@denx.de>
- <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
- <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
- <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
- <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
- <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
- <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uokp6R2nLoOmnVSUOKGhziKeZtBK6Flg
-X-Proofpoint-GUID: uokp6R2nLoOmnVSUOKGhziKeZtBK6Flg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-08_16,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1011
- suspectscore=0 impostorscore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2307090007
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -97,158 +63,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/7/2023 1:47 AM, Neil Armstrong wrote:
-> On 07/07/2023 09:18, Neil Armstrong wrote:
->> Hi,
->>
->> On 06/07/2023 11:20, Amit Pundir wrote:
->>> On Wed, 5 Jul 2023 at 11:09, Dmitry Baryshkov
->>> <dmitry.baryshkov@linaro.org> wrote:
->>>>
->>>> [Adding freedreno@ to cc list]
->>>>
->>>> On Wed, 5 Jul 2023 at 08:31, Jagan Teki <jagan@amarulasolutions.com> 
->>>> wrote:
->>>>>
->>>>> Hi Amit,
->>>>>
->>>>> On Wed, Jul 5, 2023 at 10:15 AM Amit Pundir 
->>>>> <amit.pundir@linaro.org> wrote:
->>>>>>
->>>>>> Hi Marek,
->>>>>>
->>>>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
->>>>>>>
->>>>>>> Do not generate the HS front and back porch gaps, the HSA gap and
->>>>>>> EOT packet, as these packets are not required. This makes the bridge
->>>>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
->>>>>>
->>>>>> This patch broke display on Dragonboard 845c (SDM845) devboard 
->>>>>> running
->>>>>> AOSP. This is what I see
->>>>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
->>>>>> Reverting this patch fixes this regression for me.
->>>>>
->>>>> Might be msm dsi host require proper handling on these updated
->>>>> mode_flags? did they?
->>>>
->>>> The msm DSI host supports those flags. Also, I'd like to point out
->>>> that the patch didn't change the rest of the driver code. So even if
->>>> drm/msm ignored some of the flags, it should not have caused the
->>>> issue. Most likely the issue is on the lt9611 side. I's suspect that
->>>> additional programming is required to make it work with these flags.
->>>
->>> I spent some time today on smoke testing these flags (individually and
->>> in limited combination) on DB845c, to narrow down this breakage to one
->>> or more flag(s) triggering it. Here are my observations in limited
->>> testing done so far.
->>>
->>> There is no regression with MIPI_DSI_MODE_NO_EOT_PACKET when enabled
->>> alone and system boots to UI as usual.
->>>
->>> MIPI_DSI_MODE_VIDEO_NO_HFP always trigger the broken display as in the
->>> screenshot[1] shared earlier as well.
->>>
->>> Adding either of MIPI_DSI_MODE_VIDEO_NO_HSA and
->>> MIPI_DSI_MODE_VIDEO_NO_HBP always result in no display, unless paired
->>> with MIPI_DSI_MODE_VIDEO_NO_HFP and in that case we get the broken
->>> display as reported.
->>>
->>> In short other than MIPI_DSI_MODE_NO_EOT_PACKET flag, all other flags
->>> added in this commit break the display on DB845c one way or another.
->>
->> I think the investigation would be to understand why samsung-dsim 
->> requires
->> such flags and/or what are the difference in behavior between MSM DSI 
->> and samsung DSIM
->> for those flags ?
->>
->> If someone has access to the lt9611 datasheet, so it requires 
->> HSA/HFP/HBP to be
->> skipped ? and does MSM DSI and samsung DSIM skip them in the same way ?
-> 
-> I think there's a mismatch, where on one side this flags sets the link 
-> in LP-11 while
-> in HSA/HFP/HPB while on the other it completely removes those blanking 
-> packets.
-> 
-> The name MIPI_DSI_MODE_VIDEO_NO_HBP suggests removal of HPB, not LP-11 
-> while HPB.
-> the registers used in both controllers are different:
-> - samsung-dsim: DSIM_HBP_DISABLE_MODE
-> - msm dsi: DSI_VID_CFG0_HBP_POWER_STOP
-> 
-> The first one suggest removing the packet, while the second one suggests 
-> powering
-> off the line while in the blanking packet period.
-> 
-> @Abhinav, can you comment on that ?
+On Fri, Jul 07, 2023 at 04:52:19PM -0700, Kuogee Hsieh wrote:
+> Since both pm_runtime_resume() and pm_runtime_suspend() are not
+> populated at dp_pm_ops. Those pm_runtime_get/put() functions within
+> dp_power.c will not have any effects in addition to increase/decrease
+> power counter. Also pm_runtime_xxx() should be executed at top
+> layer.
 > 
 
-I dont get what it means by completely removes blanking packets in DSIM.
+Getting/putting the runtime PM state affects the vote for the GDSC. So I
+would suggest that you move this after patch 2, to not create a gap in
+the git history of lacking GDSC votes.
 
-It should be replacing those periods with LP11 too.
+Regards,
+Bjorn
 
-The traffic mode being used on this bridge is 
-MIPI_DSI_MODE_VIDEO_SYNC_PULSE which is "Non-Burst Mode with Sync Pulses".
-
-As per this traffic mode in the DSI spec,
-
-"Normally, periods shown as HSA (Horizontal Sync Active), HBP 
-(Horizontal Back Porch) and HFP (Horizontal Front Porch) are filled by 
-Blanking Packets, with lengths (including packet overhead)  calculated 
-to match the period specified by the peripheral’s data sheet. 
-Alternatively, if there is sufficient time to transition from HS to LP 
-mode and back again, a timed interval in LP mode may substitute for a 
-Blanking Packet, thus saving power. During HSA, HBP and HFP periods, the 
-bus should stay in the LP-11 state."
-
-So we can either send the blanking packets or transition to LP state and 
-those 3 flags are controlling exactly that during those periods for MSM 
-driver.
-
-If you stop sending the blanking packets, you need to replace that gap 
-with LP.
-
-One reason I can think of why this could break with MSM is perhaps we do 
-not have sufficient time in those periods for the LP-HS transition like 
-the spec has written.
-
-1) What is the resolution which is getting broken on db845c with this? I 
-would like to know the full drm_display_mode for it to see how much time 
-we have in those periods. Is any resolution working or all are broken.
-
-2) I also do not completely get the last line of the DSI spec on this 
-traffic mode. Is it suggesting that we *must* use only LP11 for those 
-periods in this traffic mode? I need to check little more on that. 
-Because if thats the case the change is doing just that and we need to 
-investigate the MSM failure little more. If not and its indeed optional 
-to save power like the DSI spec says, then its weird why DSIM should be 
-blank without that too.
-
-
-> @Jagan, Andrezej So you have any documentation on what 
-> DSIM_xxx_DISABLE_MODE does ?
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_power.c | 9 ---------
+>  1 file changed, 9 deletions(-)
 > 
-> @Dmitry, so you have access to the lt9611 datasheet to know what's 
-> needed here ?
-> 
-> Neil
-> 
->>
->> Neil
->>
->>>
->>> Regards,
->>> Amit Pundir
->>> [1] 
->>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg
->>>
->>>>
->>>> -- 
->>>> With best wishes
->>>> Dmitry
->>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
+> index 5cb84ca..ed2f62a 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
+>  
+>  	power = container_of(dp_power, struct dp_power_private, dp_power);
+>  
+> -	pm_runtime_enable(power->dev);
+> -
+>  	return dp_power_clk_init(power);
+>  }
+>  
+> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power *dp_power)
+>  	struct dp_power_private *power;
+>  
+>  	power = container_of(dp_power, struct dp_power_private, dp_power);
+> -
+> -	pm_runtime_disable(power->dev);
+>  }
+>  
+>  int dp_power_init(struct dp_power *dp_power)
+> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
+>  
+>  	power = container_of(dp_power, struct dp_power_private, dp_power);
+>  
+> -	pm_runtime_get_sync(power->dev);
+> -
+>  	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+> -	if (rc)
+> -		pm_runtime_put_sync(power->dev);
+>  
+>  	return rc;
+>  }
+> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
+>  	power = container_of(dp_power, struct dp_power_private, dp_power);
+>  
+>  	dp_power_clk_enable(dp_power, DP_CORE_PM, false);
+> -	pm_runtime_put_sync(power->dev);
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.7.4
 > 
