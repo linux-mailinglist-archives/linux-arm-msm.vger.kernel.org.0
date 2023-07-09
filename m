@@ -2,145 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D25874C693
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 19:19:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E9D274C69E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 19:22:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230356AbjGIRT2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jul 2023 13:19:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35384 "EHLO
+        id S229818AbjGIRWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jul 2023 13:22:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbjGIRT1 (ORCPT
+        with ESMTP id S230243AbjGIRWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jul 2023 13:19:27 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F8E8129
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jul 2023 10:19:25 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-51d95aed33aso4352104a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jul 2023 10:19:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688923164; x=1691515164;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BxMRy4/ZX59Gjw8AFiUdNiqxbSxqjUU/VT1J6LS1+jY=;
-        b=V3PEFRinVlmUISMSTEBWWi+A+Id5wM6lxDwOU5Ky/AF6+yTwoHLw2Q5AA3CoCEHmzQ
-         oJE2pG3XUai0Tf0ZrgoXcn3+DjuBTQJ5b4fGjgAXVP6eYAhLmshKgn3f2NQ9t8RMjG3c
-         l7hg59kXci3I98oc9o04zV8mrReORbwQR1IbhKEV0hCCLtTCEEMvZwVZVilrhetfjUbC
-         7bEBBCAWrnWMOh2zGgeQXrQndvWixlVOIB6Pclf9jmXCbYAq+YolUYbxEzifRZLxxgFv
-         NjIGMFVHN91iI6PCoFJLXPw5PRP2jwI8Ii4SSaOfHJ/i4TXjfEvwoebT1CU9DwYQOGUm
-         KqKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688923164; x=1691515164;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BxMRy4/ZX59Gjw8AFiUdNiqxbSxqjUU/VT1J6LS1+jY=;
-        b=M+QGqJHx6enChSvBdWbUtLsQ23wz4oPK4MltQqiZeouIyLgG7yNQgyHv4apLPv9Dva
-         Krb+oCKRQl5ITztndUg+KJuLA46vL1hmt3WcvpdQgatwhWABji/Qcn390q73WI3nOVUO
-         eMpsHJzaYMI3B64MMmRyZqimZo7FsV9frL29e86yylg+VY2+GeKakqExVzLWcTpOwLw/
-         advg8+D4hMAh2Eof45BM/lewNQ3PTGSgNB7jBun1W2tNmjdaaGfzD3kHQ+Gzkc1UOCXY
-         hDNLG0YzZbhD5L5lGsj5swbLg5HQdm03i+y+JZSX03oFzoUrZlkWtt0w/WEpxyXvjt5x
-         JTAQ==
-X-Gm-Message-State: ABy/qLYYq9lEFLUHePa9WV19+iC6e5N+DFqN+RlNCYH9UlM8UhgloFx+
-        I3KMyFJl68QQuiuM3RNTlZi6tw==
-X-Google-Smtp-Source: APBJJlEKpLkUgb+Yuq/DwGb4Fz4U6Dm6A0KYZoHWxDN1MSqyW/la+01BJEq2DinOqGC6jvLPHm86Kg==
-X-Received: by 2002:a17:906:cc57:b0:989:21e4:6c6e with SMTP id mm23-20020a170906cc5700b0098921e46c6emr8879153ejb.53.1688923163998;
-        Sun, 09 Jul 2023 10:19:23 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id c21-20020a170906341500b00992ab0262c9sm5024947ejb.147.2023.07.09.10.19.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 09 Jul 2023 10:19:23 -0700 (PDT)
-Message-ID: <dffc7942-d9b6-e291-9cab-9a1642225fc3@linaro.org>
-Date:   Sun, 9 Jul 2023 19:19:20 +0200
+        Sun, 9 Jul 2023 13:22:13 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27995FA;
+        Sun,  9 Jul 2023 10:22:11 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 369HLtmI031886;
+        Sun, 9 Jul 2023 17:21:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5d1LgLh9nuNOMR33H8pyxp1UrgRxhQg0BTYHoVJ3Cgc=;
+ b=OzWUlCRJ0jA20PW4d7zDSdX1t1ZztKIRUkcvZi7QUxREjf/AekRrcYWpfdeX4DYvHyHv
+ nx6G4uSsKbIkwMyLRwqYCEmB8SKgHEzbe7P+dlPfbJRev3SHndCHAEdzpgJkmJCbCkLV
+ QdQx+H4OfWajzRe7gz8nkkvJp6mT1UXq8IAD78j2QNSR8eq55wi2bZgx0skpE5RyvD4Q
+ gHFRMLGq1TJgXb9vSY4JJDNaIkDQ6Q/FX6kI9oq9CmbuTvoMFBt0OtD/w+Maw5Mbw18c
+ pBUx6QEcEmjrfKM1KlvZQ9jV/Z/p5LBC8hg4jeY1rWDdu0EwZdfp3Zmky3sScPGVRXAE +A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rq01dhumt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 09 Jul 2023 17:21:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 369HLsho027370
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 9 Jul 2023 17:21:54 GMT
+Received: from [10.110.47.185] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sun, 9 Jul
+ 2023 10:21:53 -0700
+Message-ID: <72cb729b-a9d3-3e5b-c70a-0761f47a6779@quicinc.com>
+Date:   Sun, 9 Jul 2023 10:21:52 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 04/11] iio: adc: Update bindings to remove support for
- ADC7 name used on QCOM PMICs
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH v1 1/5] drm/msm/dp: remove pm_runtime_xxx()
+ from dp_power.c
 Content-Language: en-US
-To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linus.walleij@linaro.org, Jonathan.Cameron@huawei.com,
-        sboyd@kernel.org, dmitry.baryshkov@linaro.org,
-        quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
-        quic_kamalw@quicinc.com, quic_jestar@quicinc.com,
-        marijn.suijten@somainline.org, andriy.shevchenko@linux.intel.com,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, Luca Weiss <luca@z3ntu.xyz>,
-        linux-iio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Cc:     linux-arm-msm-owner@vger.kernel.org
-References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
- <20230708072835.3035398-5-quic_jprakash@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230708072835.3035398-5-quic_jprakash@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC:     <quic_sbillaka@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
+        <quic_jesszhan@quicinc.com>, <freedreno@lists.freedesktop.org>
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
+ <fc5501cf-c335-81f7-1ad7-26fdc1b6922d@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <fc5501cf-c335-81f7-1ad7-26fdc1b6922d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9CUYSeYKYggZIPaTeM2g9ggGYsSPPaJb
+X-Proofpoint-GUID: 9CUYSeYKYggZIPaTeM2g9ggGYsSPPaJb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-09_12,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ priorityscore=1501 clxscore=1015 adultscore=0 mlxlogscore=999
+ malwarescore=0 lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307090163
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/07/2023 09:28, Jishnu Prakash wrote:
-> Now that usage of "ADC7" name has been replaced with usage of "ADC5
-> Gen2" name everywhere, remove all support for "ADC7" name.
-
-Why?
 
 
+On 7/7/2023 5:06 PM, Dmitry Baryshkov wrote:
+> On 08/07/2023 02:52, Kuogee Hsieh wrote:
+>> Since both pm_runtime_resume() and pm_runtime_suspend() are not
+>> populated at dp_pm_ops. Those pm_runtime_get/put() functions within
+>> dp_power.c will not have any effects in addition to increase/decrease
+>> power counter.
 > 
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
-> ---
->  .../bindings/iio/adc/qcom,spmi-vadc.yaml      |  5 +-
->  .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |  1 -
->  .../dt-bindings/iio/qcom,spmi-adc7-pm8350.h   | 63 -------------
->  .../dt-bindings/iio/qcom,spmi-adc7-pm8350b.h  | 88 -------------------
->  .../dt-bindings/iio/qcom,spmi-adc7-pmk8350.h  | 46 ----------
->  .../dt-bindings/iio/qcom,spmi-adc7-pmr735a.h  | 28 ------
->  .../dt-bindings/iio/qcom,spmi-adc7-pmr735b.h  | 28 ------
->  include/dt-bindings/iio/qcom,spmi-vadc.h      | 76 ----------------
->  8 files changed, 1 insertion(+), 334 deletions(-)
->  delete mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
->  delete mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pm8350b.h
->  delete mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
->  delete mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735a.h
->  delete mode 100644 include/dt-bindings/iio/qcom,spmi-adc7-pmr735b.h
+> Lie.
 > 
-> diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> index f886977de165..eb7d16e385ad 100644
-> --- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> +++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> @@ -26,7 +26,6 @@ properties:
->            - qcom,spmi-vadc
->            - qcom,spmi-adc5
->            - qcom,spmi-adc-rev2
-> -          - qcom,spmi-adc7
 
-NAK. You did not explained why dropping existing compatible is correct,
-expected and okay.
+Even if the commit text is incorrect, review comments like this are not 
+helping the patch nor the author and will just get ignored anyway.
 
-Also:
+>> Also pm_runtime_xxx() should be executed at top
+>> layer.
+> 
+> Why?
+> 
 
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching.
+I guess he meant to centralize this around dp_display.c. Will elaborate 
+while posting the next rev.
 
-
-
-Best regards,
-Krzysztof
-
+>>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_power.c | 9 ---------
+>>   1 file changed, 9 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c 
+>> b/drivers/gpu/drm/msm/dp/dp_power.c
+>> index 5cb84ca..ed2f62a 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+>> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
+>>       power = container_of(dp_power, struct dp_power_private, dp_power);
+>> -    pm_runtime_enable(power->dev);
+>> -
+>>       return dp_power_clk_init(power);
+>>   }
+>> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power 
+>> *dp_power)
+>>       struct dp_power_private *power;
+>>       power = container_of(dp_power, struct dp_power_private, dp_power);
+>> -
+>> -    pm_runtime_disable(power->dev);
+>>   }
+>>   int dp_power_init(struct dp_power *dp_power)
+>> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
+>>       power = container_of(dp_power, struct dp_power_private, dp_power);
+>> -    pm_runtime_get_sync(power->dev);
+>> -
+>>       rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+>> -    if (rc)
+>> -        pm_runtime_put_sync(power->dev);
+>>       return rc;
+>>   }
+>> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
+>>       power = container_of(dp_power, struct dp_power_private, dp_power);
+>>       dp_power_clk_enable(dp_power, DP_CORE_PM, false);
+>> -    pm_runtime_put_sync(power->dev);
+>>       return 0;
+>>   }
+> 
