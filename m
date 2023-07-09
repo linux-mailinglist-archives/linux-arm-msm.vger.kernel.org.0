@@ -2,116 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65EBD74C022
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 02:17:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AE5F74C03E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 03:04:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229437AbjGIARv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Jul 2023 20:17:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52176 "EHLO
+        id S229520AbjGIBEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Jul 2023 21:04:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjGIARu (ORCPT
+        with ESMTP id S229436AbjGIBEW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Jul 2023 20:17:50 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD6BE4A
-        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Jul 2023 17:17:49 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fbc0314a7bso5079909e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Jul 2023 17:17:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688861867; x=1691453867;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hXWnFB7TlbQAIBfashq2bcvidLQkeNd93VaQ06HpejY=;
-        b=ZB3UmJkUNHrpmLoSMK7CiCJU8nagw5wA75E1RX1uTir/KXmH93d7Gi9L/RoidCPC8j
-         MUaefqyJmWCr13p7Nyqrzx3zjcb9FqK785hczrENqg+MxMpuVvGTRE48spM0UN48u4cB
-         jHvTY6h0NWE2+GbToaHwImbR8E5mKOj8mUeE8UdGLeGTLtlVp84i5ueyla6RWn3f7h15
-         GazlMAiMtGm7l2cKrEEEViHmZ3baV7QjgG/4WN3KsMLoUiSpJXSGCyNWNmkcG+Y3sOXX
-         4GD5gpgWxMwRrG69uZqiSnK2Mrtv08C5XYSfZc+WAGNiwVID4wWYQTvU0hwaYwZDcs6K
-         S7rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688861867; x=1691453867;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hXWnFB7TlbQAIBfashq2bcvidLQkeNd93VaQ06HpejY=;
-        b=Nzsqm0fdGEXOTYV/WqVGQqWORlu7zp+iCiYA7hSsyt3WprvKtOpLmn32w7ikoc8O4p
-         OBZtcVadBpLMJRyk8mnCHPFQbzfryfm+61WMPthwocdisaaYUxa5a+huqI+qhno80ocI
-         eDhjF+AuJ/0yLP06u3wXPX4o320CCTPyuxcWnywIj5pY/vd/ulB2E09qBL1WF7vY1x7O
-         8XKTEFJROYmSlAzxg18Sc3CBFddyk73DzcNDxEiF0vvvjizacKB9EO/fQCcrAYQspfgu
-         YMHb6Wzq0xOp3EU2v9aam48zR6JDT3w2uAMaJyorLUCnLk4oCC7Pi/TajuuVgW78h4su
-         jZ5A==
-X-Gm-Message-State: ABy/qLY9BCpCgu3S1DaYtmB3eJ7Ykpbv/4FyJYbCJXiTMFQFyRlugaQJ
-        v9HzjDVh0do7oSvhVlexGFfpCg==
-X-Google-Smtp-Source: APBJJlHcRSy2r13NftwBi/jBgQovyjb73CXtDZGgb+OPim7zXhimjf2EkQsW/S9IRmXnTnCzoCjLAw==
-X-Received: by 2002:a05:6512:6c7:b0:4fb:8eec:ce47 with SMTP id u7-20020a05651206c700b004fb8eecce47mr7154821lff.58.1688861867171;
-        Sat, 08 Jul 2023 17:17:47 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l3-20020ac24303000000b004fbb207ee0asm1157667lfh.206.2023.07.08.17.17.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Jul 2023 17:17:46 -0700 (PDT)
-Message-ID: <4bd12281-63ed-ecb4-ae66-7ae63bdb1655@linaro.org>
-Date:   Sun, 9 Jul 2023 03:17:46 +0300
+        Sat, 8 Jul 2023 21:04:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80886E43
+        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Jul 2023 18:04:21 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36910Dvl009532;
+        Sun, 9 Jul 2023 01:03:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=iQXB7TR04UyGGj4mBOEpT+1563r66btmPpPOk9MO784=;
+ b=VWbuUjSSCpWeLSF0AkQ3yDlfcxTgBuAMz0vsHyOOyXAdqVB2KIxB/ywyI5dCumbOHR4B
+ IS9832qiPSzBWiZ/0lTzp8Tv2B0UYLiM8qo6yayuFW6UO6fo0H+COyLQxfWhj14AFyz9
+ RofDuWWL1ZkXakl98b3jq2hJY/A4kAhssbyQB7r0qgmEaXLLxBtYbdk94unJY9yozKRF
+ Tr/Z1ovXF27UXvU8aWHcp8IKxBOE3L0cjm9GljsjBse0/vMBSIjif0bZLlPRL5ZO95b9
+ z+HakZFU2xfY9UK5/sfkZS7F3UoQ8WY2N6Anjg8fD3cVFsN/BfcGylsp9jhEwsKokqYD Jw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpxry15jc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 09 Jul 2023 01:03:51 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36913nnO005397
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 9 Jul 2023 01:03:50 GMT
+Received: from [10.110.47.185] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sat, 8 Jul
+ 2023 18:03:48 -0700
+Message-ID: <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
+Date:   Sat, 8 Jul 2023 18:03:46 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v8 08/11] arm64: dts: qcom: qrb5165-rb5: Switch on Type-C
- VBUS boost
-Content-Language: en-GB
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, luca.weiss@fairphone.com,
-        lujianhua000@gmail.com, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     konrad.dybcio@linaro.org, caleb.connolly@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
-References: <20230515133643.3621656-1-bryan.odonoghue@linaro.org>
- <20230515133643.3621656-9-bryan.odonoghue@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230515133643.3621656-9-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+Content-Language: en-US
+To:     <neil.armstrong@linaro.org>, Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Jagan Teki <jagan@amarulasolutions.com>,
+        Marek Vasut <marex@denx.de>, <dri-devel@lists.freedesktop.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20230403221233.500485-1-marex@denx.de>
+ <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
+ <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
+ <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: uokp6R2nLoOmnVSUOKGhziKeZtBK6Flg
+X-Proofpoint-GUID: uokp6R2nLoOmnVSUOKGhziKeZtBK6Flg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-08_16,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1011
+ suspectscore=0 impostorscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2307090007
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/05/2023 16:36, Bryan O'Donoghue wrote:
-> Switch on VBUS for the Type-C port. We need to support a higher amperage
-> than the bootloader set 2 Amps.
+
+
+On 7/7/2023 1:47 AM, Neil Armstrong wrote:
+> On 07/07/2023 09:18, Neil Armstrong wrote:
+>> Hi,
+>>
+>> On 06/07/2023 11:20, Amit Pundir wrote:
+>>> On Wed, 5 Jul 2023 at 11:09, Dmitry Baryshkov
+>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>
+>>>> [Adding freedreno@ to cc list]
+>>>>
+>>>> On Wed, 5 Jul 2023 at 08:31, Jagan Teki <jagan@amarulasolutions.com> 
+>>>> wrote:
+>>>>>
+>>>>> Hi Amit,
+>>>>>
+>>>>> On Wed, Jul 5, 2023 at 10:15 AM Amit Pundir 
+>>>>> <amit.pundir@linaro.org> wrote:
+>>>>>>
+>>>>>> Hi Marek,
+>>>>>>
+>>>>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
+>>>>>>>
+>>>>>>> Do not generate the HS front and back porch gaps, the HSA gap and
+>>>>>>> EOT packet, as these packets are not required. This makes the bridge
+>>>>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
+>>>>>>
+>>>>>> This patch broke display on Dragonboard 845c (SDM845) devboard 
+>>>>>> running
+>>>>>> AOSP. This is what I see
+>>>>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
+>>>>>> Reverting this patch fixes this regression for me.
+>>>>>
+>>>>> Might be msm dsi host require proper handling on these updated
+>>>>> mode_flags? did they?
+>>>>
+>>>> The msm DSI host supports those flags. Also, I'd like to point out
+>>>> that the patch didn't change the rest of the driver code. So even if
+>>>> drm/msm ignored some of the flags, it should not have caused the
+>>>> issue. Most likely the issue is on the lt9611 side. I's suspect that
+>>>> additional programming is required to make it work with these flags.
+>>>
+>>> I spent some time today on smoke testing these flags (individually and
+>>> in limited combination) on DB845c, to narrow down this breakage to one
+>>> or more flag(s) triggering it. Here are my observations in limited
+>>> testing done so far.
+>>>
+>>> There is no regression with MIPI_DSI_MODE_NO_EOT_PACKET when enabled
+>>> alone and system boots to UI as usual.
+>>>
+>>> MIPI_DSI_MODE_VIDEO_NO_HFP always trigger the broken display as in the
+>>> screenshot[1] shared earlier as well.
+>>>
+>>> Adding either of MIPI_DSI_MODE_VIDEO_NO_HSA and
+>>> MIPI_DSI_MODE_VIDEO_NO_HBP always result in no display, unless paired
+>>> with MIPI_DSI_MODE_VIDEO_NO_HFP and in that case we get the broken
+>>> display as reported.
+>>>
+>>> In short other than MIPI_DSI_MODE_NO_EOT_PACKET flag, all other flags
+>>> added in this commit break the display on DB845c one way or another.
+>>
+>> I think the investigation would be to understand why samsung-dsim 
+>> requires
+>> such flags and/or what are the difference in behavior between MSM DSI 
+>> and samsung DSIM
+>> for those flags ?
+>>
+>> If someone has access to the lt9611 datasheet, so it requires 
+>> HSA/HFP/HBP to be
+>> skipped ? and does MSM DSI and samsung DSIM skip them in the same way ?
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 6 ++++++
->   1 file changed, 6 insertions(+)
+> I think there's a mismatch, where on one side this flags sets the link 
+> in LP-11 while
+> in HSA/HFP/HPB while on the other it completely removes those blanking 
+> packets.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index dd924331b0eea..b326bdeeb7742 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -1338,3 +1338,9 @@ &qup_spi0_data_clk {
->   	drive-strength = <6>;
->   	bias-disable;
->   };
-> +
-> +&pm8150b_vbus {
-> +	regulator-min-microamp = <500000>;
-> +	regulator-max-microamp = <3000000>;
-> +	status = "okay";
-> +};
+> The name MIPI_DSI_MODE_VIDEO_NO_HBP suggests removal of HPB, not LP-11 
+> while HPB.
+> the registers used in both controllers are different:
+> - samsung-dsim: DSIM_HBP_DISABLE_MODE
+> - msm dsi: DSI_VID_CFG0_HBP_POWER_STOP
+> 
+> The first one suggest removing the packet, while the second one suggests 
+> powering
+> off the line while in the blanking packet period.
+> 
+> @Abhinav, can you comment on that ?
+> 
 
-Note, you are placing this declaration (and further changes in the next 
-patches) at the end of the file, in the pinctrl area. Please move them 
-up into a correct place.
+I dont get what it means by completely removes blanking packets in DSIM.
 
--- 
-With best wishes
-Dmitry
+It should be replacing those periods with LP11 too.
 
+The traffic mode being used on this bridge is 
+MIPI_DSI_MODE_VIDEO_SYNC_PULSE which is "Non-Burst Mode with Sync Pulses".
+
+As per this traffic mode in the DSI spec,
+
+"Normally, periods shown as HSA (Horizontal Sync Active), HBP 
+(Horizontal Back Porch) and HFP (Horizontal Front Porch) are filled by 
+Blanking Packets, with lengths (including packet overhead)  calculated 
+to match the period specified by the peripheral’s data sheet. 
+Alternatively, if there is sufficient time to transition from HS to LP 
+mode and back again, a timed interval in LP mode may substitute for a 
+Blanking Packet, thus saving power. During HSA, HBP and HFP periods, the 
+bus should stay in the LP-11 state."
+
+So we can either send the blanking packets or transition to LP state and 
+those 3 flags are controlling exactly that during those periods for MSM 
+driver.
+
+If you stop sending the blanking packets, you need to replace that gap 
+with LP.
+
+One reason I can think of why this could break with MSM is perhaps we do 
+not have sufficient time in those periods for the LP-HS transition like 
+the spec has written.
+
+1) What is the resolution which is getting broken on db845c with this? I 
+would like to know the full drm_display_mode for it to see how much time 
+we have in those periods. Is any resolution working or all are broken.
+
+2) I also do not completely get the last line of the DSI spec on this 
+traffic mode. Is it suggesting that we *must* use only LP11 for those 
+periods in this traffic mode? I need to check little more on that. 
+Because if thats the case the change is doing just that and we need to 
+investigate the MSM failure little more. If not and its indeed optional 
+to save power like the DSI spec says, then its weird why DSIM should be 
+blank without that too.
+
+
+> @Jagan, Andrezej So you have any documentation on what 
+> DSIM_xxx_DISABLE_MODE does ?
+> 
+> @Dmitry, so you have access to the lt9611 datasheet to know what's 
+> needed here ?
+> 
+> Neil
+> 
+>>
+>> Neil
+>>
+>>>
+>>> Regards,
+>>> Amit Pundir
+>>> [1] 
+>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg
+>>>
+>>>>
+>>>> -- 
+>>>> With best wishes
+>>>> Dmitry
+>>
+> 
