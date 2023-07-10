@@ -2,196 +2,439 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F35B74DF1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 22:21:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5F6A74DF62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 22:35:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbjGJUVN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 16:21:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38260 "EHLO
+        id S231582AbjGJUfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 16:35:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbjGJUVN (ORCPT
+        with ESMTP id S230377AbjGJUfU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 16:21:13 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F765BB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 13:21:12 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id 006d021491bc7-55b85b94bb0so2635575eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 13:21:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689020471; x=1691612471;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zQI7m/PWW5lx/D1YlUvsvyQDeza06QWfMVyhiJmEv7Y=;
-        b=RnAddbMZgLA1Og/B+xpbcbXdBD0VrjWG1NaGXJ07JDYcAd7mttQcInm7ak3KUcgvgs
-         VS/Oe21tZHO5LUJob8/k9ycA1yIIonZKDl9Tsngj9Y9j9dmgyGPmNz0T/kdFyrD/sxpu
-         oa8nxCKP/L9NkWSJY76ShahPBYulQi1uuR9tUl/FqW7e7i3Z/93fPceRg8+H/CVD3Nwv
-         EngiLnl6gHr2OGQKcwmma/JwnOR5EkHKRGE0Hp6iSQiuiB8uoXP7m5/bzTzCJzzSFAks
-         HUlsePXzctmi0WIBbohNSjrp+UNMVnGJhKYcZYRcMGNSK8Jj3UrTV5rAp38VjhXNkDYb
-         ayug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689020471; x=1691612471;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zQI7m/PWW5lx/D1YlUvsvyQDeza06QWfMVyhiJmEv7Y=;
-        b=Yo40x3031FD8uOhrN8z37KcN8maYtfRqH6EYNqzFBuS/aUrW2wIG4dVO10ZY7glMlB
-         xbjaBiRSEV5IQn+uvum1DkA6ruhHNnW7kKMvxAx2yjB/3iNgdHUZbwOy4b+ziST3WSw6
-         /uF9ERQMgCvbwRutkCCVQsZsByMrf7hcu8Zj+OygRKsgYM0BLz+ndYFTAPlODYYOKE8D
-         kEpxM21igf4hT9DQqQ8AW8CX6zGhZ+jPfT7f+CaZNhPUJH1jYtq3uK9var9A0pGZSFkd
-         SV252M0C0Y+LrDSRGcsq6JByTqPTii7iY75Itjq0LAWNh/xfzDO8nz8Z3rPqhYkkMr/r
-         msPA==
-X-Gm-Message-State: ABy/qLaZgRnLVr7QbNQg0L2cUkCTXCyzs8E/RDug0nQAIwXlvfOd9RQ/
-        K13qyZaUfYMQflBMnpTylj7zrg4ffmFl4gzxUWU=
-X-Google-Smtp-Source: APBJJlFMuBmCDJiTe5d+q61B/wbJExJt0gPJw1oc4QmfseKkn8o+8hegLmwGvAiXF6SS3Y9BxgIni1lufhYJje9rRSo=
-X-Received: by 2002:a05:6870:e2c9:b0:1b7:3065:abe with SMTP id
- w9-20020a056870e2c900b001b730650abemr3891540oad.26.1689020471456; Mon, 10 Jul
- 2023 13:21:11 -0700 (PDT)
+        Mon, 10 Jul 2023 16:35:20 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A919319A;
+        Mon, 10 Jul 2023 13:35:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1689021304; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=DNg5rL5+sCVoiV6TmCQrGiA61e4SEX0d3Em8DuAVgRi0GtAq3ZJd/mLU54lFjrIGKD
+    1xhgMDp/Ib5QbDS4USilcorvbvOhVT9V1Q1LGWD6wj03XMoy6h6FB3iYgvxUeg+226qI
+    kjIlUzVXojyiWV8t3CY7UXKiMF1MKLHCtldbzuI3HjPctrDMkrsypeaxDetrJ1Wpka7t
+    NQyOlY5zHnUp3SGEbTqcaFhDmt3UJUwUMShivTZsEDbyKtlR4nMopPB+G5lPKC8NsSj5
+    KtuiCD+5/x+SdsvKWzFRARxc4ythrqf8kPauHVV0N71xScdjdRFh94h1GAdUcJuyqz87
+    KBAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1689021304;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=EgkGBW2vWZBjdhXymr3xsa79kz5LK9EjluZIRwNQy6s=;
+    b=ROyQ7xeW/X+9SjX719qZdfd2Vt5GUMgIoKxmzD4DCy/Owkk94586xQ30Lg5TdS13ph
+    apQFor2dB/aZlen42S6gdvnUjX/i0tRqxMD+qDql9AXfrShRnJR02JdqL/gz/m32VBil
+    Cgj8YZiNtLw/289noN0PRNUWfe8zI5NVAz/TP0hHfeGWhKZC/xUN5OcbWg7lgd9CJE8q
+    IAPUz5SrTvjx4qE59gvDD96V5K35U8VgIxikM2Ag6qC37u2hKyx9HzIza7VNHEigf8ip
+    QcRSJv2OdOPACWX2gUGpRU6z58tyhXnquP+QkMvJyrVrXuhgFYkmbAVU0Qtdjdi6NmVX
+    bY+Q==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1689021304;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=EgkGBW2vWZBjdhXymr3xsa79kz5LK9EjluZIRwNQy6s=;
+    b=gj0X9hMd9gqG1K1mBhhQ/E0NZoOQ5IQQS6XQRS28EE3DxHDvLI6OwP5zN44cPnkbLv
+    MD6MuCoARD9GxIGODQZfKApNASQlQ61HrsLja2Tl3PdVUehrlvYAhRXxYnqXw2Fy4pWT
+    UxMOZ/+q+jjPZu2HqDhri44Dp8UfajW/DYbkT4vOUCPtnZ08xUOxYA8mtSRbY6KhBLOV
+    0or3FhJXB8yGDbE4t9KYt9guCJoifnOBU5s/LF2sszfGYbtzxuAXsd3wsDg3AR1XLmM+
+    gjeKOLTvafSgCKaB8I7BEHYGZPAsz4fh0+6dHRVrY2R097kTCRsYmakiOXGZQvJ1Y7rX
+    ED9w==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1689021304;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=EgkGBW2vWZBjdhXymr3xsa79kz5LK9EjluZIRwNQy6s=;
+    b=JwDht8Qzba5Iq9svVBZbDDJQVfvArgNRjDER7qZ+kXg/N7jbut6ZfL04+2PYNMK3r8
+    hyoHSRX5EFHbBXoq//DQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOj79w=="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
+    with ESMTPSA id D0d0a8z6AKZ3Eoi
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 10 Jul 2023 22:35:03 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Date:   Mon, 10 Jul 2023 22:34:52 +0200
+Subject: [PATCH v3] remoteproc: qcom: Use of_reserved_mem_lookup()
 MIME-Version: 1.0
-References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-11-robdclark@gmail.com>
- <1ecc63d0-db62-c8aa-74b7-36ad2eff89a1@linaro.org>
-In-Reply-To: <1ecc63d0-db62-c8aa-74b7-36ad2eff89a1@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 10 Jul 2023 13:21:00 -0700
-Message-ID: <CAF6AEGtJifJZd94iP4n65mrcOda9L367NJGNpR8R2x1kjVZGmQ@mail.gmail.com>
-Subject: Re: [PATCH 10/12] drm/msm/adreno: Add helper for formating chip-id
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230710-rproc-of-rmem-v3-1-eea7f0a33590@gerhold.net>
+X-B4-Tracking: v=1; b=H4sIAGtrrGQC/32NQQ6CMBREr0K69hvaWqWuvIdx0cIHmkBLfrHRE
+ O5uYedCk9m8Sd7MwiKSw8iuxcIIk4su+AzyULC6N75DcE1mJkohSyU00EShhtACjTjCpdGSt+e
+ cE7LsWBMRLBlf99nyz2HI5UTYutd+cn9k7l2cA733z8S39td84sBBWY6yqqrSWHPrkPowNEePM
+ 9u2kvjrCyhBK5TaaqVVpb79dV0/Q6TSbgEBAAA=
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 6, 2023 at 4:36=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro.=
-org> wrote:
->
-> On 6.07.2023 23:10, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > This is used in a few places, including one that is parsed by userspace
-> > tools.  So let's standardize it a bit better.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> Userspace parsed this weird string instead of the hex-based chipid?
->
-> weird^2
+Reserved memory can be either looked up using the generic function
+of_address_to_resource() or using the special of_reserved_mem_lookup().
+The latter has the advantage that it ensures that the referenced memory
+region was really reserved and is not e.g. status = "disabled".
 
-AFAICT it is just crashdec (the creatively named tool for parsing gpu
-devcore dumps) which parses using "%u.%u.%u.%u"..  I suppose one
-_could_ make the argument that, since userspace doesn't yet support
-any device where "%x.%x.%x.%x" parsing would be different, we could
-get away with switching to hex without it being an ABI break..
+of_reserved_mem also supports allocating reserved memory dynamically at
+boot time. This works only when using of_reserved_mem_lookup() since
+there won't be a fixed address in the device tree.
 
-BR,
--R
+Switch the code to use of_reserved_mem_lookup(), similar to
+qcom_q6v5_wcss.c which is using it already. There is no functional
+difference for static reserved memory allocations.
 
-> Konrad
-> >  drivers/gpu/drm/msm/adreno/adreno_device.c |  8 +++-----
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 19 ++++++++-----------
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  6 ++++++
-> >  3 files changed, 17 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
-rm/msm/adreno/adreno_device.c
-> > index dcd6363ac7b0..fd2e183bce60 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -661,14 +661,12 @@ static int adreno_bind(struct device *dev, struct=
- device *master, void *data)
-> >       info =3D adreno_info(config.rev);
-> >
-> >       if (!info) {
-> > -             dev_warn(drm->dev, "Unknown GPU revision: %u.%u.%u.%u\n",
-> > -                     config.rev.core, config.rev.major,
-> > -                     config.rev.minor, config.rev.patchid);
-> > +             dev_warn(drm->dev, "Unknown GPU revision: %"ADRENO_CHIPID=
-_FMT"\n",
-> > +                     ADRENO_CHIPID_ARGS(config.rev));
-> >               return -ENXIO;
-> >       }
-> >
-> > -     DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
-> > -             config.rev.minor, config.rev.patchid);
-> > +     DBG("Found GPU: %"ADRENO_CHIPID_FMT, ADRENO_CHIPID_ARGS(config.re=
-v));
-> >
-> >       priv->is_a2xx =3D info->family < ADRENO_3XX;
-> >       priv->has_cached_coherent =3D
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/=
-msm/adreno/adreno_gpu.c
-> > index 75ff7fb46099..1a982a926f21 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -847,10 +847,9 @@ void adreno_show(struct msm_gpu *gpu, struct msm_g=
-pu_state *state,
-> >       if (IS_ERR_OR_NULL(state))
-> >               return;
-> >
-> > -     drm_printf(p, "revision: %d (%d.%d.%d.%d)\n",
-> > -                     adreno_gpu->info->revn, adreno_gpu->rev.core,
-> > -                     adreno_gpu->rev.major, adreno_gpu->rev.minor,
-> > -                     adreno_gpu->rev.patchid);
-> > +     drm_printf(p, "revision: %u (%"ADRENO_CHIPID_FMT")\n",
-> > +                     adreno_gpu->info->revn,
-> > +                     ADRENO_CHIPID_ARGS(adreno_gpu->rev));
-> >       /*
-> >        * If this is state collected due to iova fault, so fault related=
- info
-> >        *
-> > @@ -921,10 +920,9 @@ void adreno_dump_info(struct msm_gpu *gpu)
-> >       struct adreno_gpu *adreno_gpu =3D to_adreno_gpu(gpu);
-> >       int i;
-> >
-> > -     printk("revision: %d (%d.%d.%d.%d)\n",
-> > -                     adreno_gpu->info->revn, adreno_gpu->rev.core,
-> > -                     adreno_gpu->rev.major, adreno_gpu->rev.minor,
-> > -                     adreno_gpu->rev.patchid);
-> > +     printk("revision: %u (%"ADRENO_CHIPID_FMT")\n",
-> > +                     adreno_gpu->info->revn,
-> > +                     ADRENO_CHIPID_ARGS(adreno_gpu->rev));
-> >
-> >       for (i =3D 0; i < gpu->nr_rings; i++) {
-> >               struct msm_ringbuffer *ring =3D gpu->rb[i];
-> > @@ -1105,9 +1103,8 @@ int adreno_gpu_init(struct drm_device *drm, struc=
-t platform_device *pdev,
-> >               speedbin =3D 0xffff;
-> >       adreno_gpu->speedbin =3D (uint16_t) (0xffff & speedbin);
-> >
-> > -     gpu_name =3D devm_kasprintf(dev, GFP_KERNEL, "%d.%d.%d.%d",
-> > -                     rev->core, rev->major, rev->minor,
-> > -                     rev->patchid);
-> > +     gpu_name =3D devm_kasprintf(dev, GFP_KERNEL, "%"ADRENO_CHIPID_FMT=
-,
-> > +                     ADRENO_CHIPID_ARGS(config->rev));
-> >       if (!gpu_name)
-> >               return -ENOMEM;
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/=
-msm/adreno/adreno_gpu.h
-> > index 2fa14dcd4e40..73e7155f164c 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > @@ -66,6 +66,12 @@ struct adreno_rev {
-> >  #define ADRENO_REV(core, major, minor, patchid) \
-> >       ((struct adreno_rev){ core, major, minor, patchid })
-> >
-> > +/* Helper for formating the chip_id in the way that userspace tools li=
-ke
-> > + * crashdec expect.
-> > + */
-> > +#define ADRENO_CHIPID_FMT "u.%u.%u.%u"
-> > +#define ADRENO_CHIPID_ARGS(_r) (_r).core, (_r).major, (_r).minor, (_r)=
-.patchid
-> > +
-> >  struct adreno_gpu_funcs {
-> >       struct msm_gpu_funcs base;
-> >       int (*get_timestamp)(struct msm_gpu *gpu, uint64_t *value);
+While at it this also adds two missing of_node_put() calls in
+qcom_q6v5_pas.c.
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Changes in v3:
+- Revert additional rmem->size checks: None of the existing users of
+  of_reserved_mem_lookup() have it so it sounds better to handle this 
+  internally in of_reserved_mem. I'll work on a separate patch series
+  to improve this independently of this one. (Caleb)
+- Link to v2: https://lore.kernel.org/r/20230529-rproc-of-rmem-v2-0-95e39b959585@gerhold.net
+
+Changes in v2:
+- Add missing check for rmem (Bjorn)
+- Add checks for rmem->size to ensure dynamic reserved memory was 
+  really allocated
+- Link to v1: https://lore.kernel.org/r/20230529-rproc-of-rmem-v1-1-5b1e38880aba@gerhold.net
+---
+See e.g. [1] for an example of dynamically allocated reserved memory.
+(This patch does *not* depend on [1] and is useful without as well...)
+
+NOTE: Changes in qcom_q6v5_adsp.c and qcom_q6v5_pas.c are untested,
+I only checked qcom_q6v5_mss.c and qcom_wcnss.c on MSM8916/DB410c.
+The code changes are pretty similar for all of those though.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
+---
+ drivers/remoteproc/qcom_q6v5_adsp.c | 24 ++++++++---------
+ drivers/remoteproc/qcom_q6v5_mss.c  | 33 ++++++++++++++----------
+ drivers/remoteproc/qcom_q6v5_pas.c  | 51 ++++++++++++++++++++-----------------
+ drivers/remoteproc/qcom_wcnss.c     | 24 ++++++++---------
+ 4 files changed, 69 insertions(+), 63 deletions(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 6777a3bd6226..d3caaa551916 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -14,8 +14,8 @@
+ #include <linux/kernel.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_runtime.h>
+@@ -637,28 +637,26 @@ static int adsp_init_mmio(struct qcom_adsp *adsp,
+ 
+ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ {
++	struct reserved_mem *rmem = NULL;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	node = of_parse_phandle(adsp->dev->of_node, "memory-region", 0);
+-	if (!node) {
+-		dev_err(adsp->dev, "no memory-region specified\n");
++	if (node)
++		rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++
++	if (!rmem) {
++		dev_err(adsp->dev, "unable to resolve memory-region\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	of_node_put(node);
+-	if (ret)
+-		return ret;
+-
+-	adsp->mem_phys = adsp->mem_reloc = r.start;
+-	adsp->mem_size = resource_size(&r);
++	adsp->mem_phys = adsp->mem_reloc = rmem->base;
++	adsp->mem_size = rmem->size;
+ 	adsp->mem_region = devm_ioremap_wc(adsp->dev,
+ 				adsp->mem_phys, adsp->mem_size);
+ 	if (!adsp->mem_region) {
+ 		dev_err(adsp->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, adsp->mem_size);
++			&rmem->base, adsp->mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 70bffc9f33f6..69b90dc32d8a 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -15,7 +15,6 @@
+ #include <linux/kernel.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
+ #include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+@@ -1875,8 +1874,6 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ 	struct device_node *child;
+ 	struct reserved_mem *rmem;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	/*
+ 	 * In the absence of mba/mpss sub-child, extract the mba and mpss
+@@ -1891,15 +1888,20 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ 		of_node_put(child);
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
++	if (!node) {
++		dev_err(qproc->dev, "no mba memory-region specified\n");
++		return -EINVAL;
++	}
++
++	rmem = of_reserved_mem_lookup(node);
+ 	of_node_put(node);
+-	if (ret) {
++	if (!rmem) {
+ 		dev_err(qproc->dev, "unable to resolve mba region\n");
+-		return ret;
++		return -EINVAL;
+ 	}
+ 
+-	qproc->mba_phys = r.start;
+-	qproc->mba_size = resource_size(&r);
++	qproc->mba_phys = rmem->base;
++	qproc->mba_size = rmem->size;
+ 
+ 	if (!child) {
+ 		node = of_parse_phandle(qproc->dev->of_node,
+@@ -1910,15 +1912,20 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ 		of_node_put(child);
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
++	if (!node) {
++		dev_err(qproc->dev, "no mpss memory-region specified\n");
++		return -EINVAL;
++	}
++
++	rmem = of_reserved_mem_lookup(node);
+ 	of_node_put(node);
+-	if (ret) {
++	if (!rmem) {
+ 		dev_err(qproc->dev, "unable to resolve mpss region\n");
+-		return ret;
++		return -EINVAL;
+ 	}
+ 
+-	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+-	qproc->mpss_size = resource_size(&r);
++	qproc->mpss_phys = qproc->mpss_reloc = rmem->base;
++	qproc->mpss_size = rmem->size;
+ 
+ 	if (!child) {
+ 		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 3153d82037e7..58f8b81f6d52 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -13,8 +13,8 @@
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_runtime.h>
+@@ -533,9 +533,8 @@ static void adsp_pds_detach(struct qcom_adsp *adsp, struct device **pds,
+ 
+ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ {
++	struct reserved_mem *rmem;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	node = of_parse_phandle(adsp->dev->of_node, "memory-region", 0);
+ 	if (!node) {
+@@ -543,17 +542,19 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
++	rmem = of_reserved_mem_lookup(node);
+ 	of_node_put(node);
+-	if (ret)
+-		return ret;
++	if (!rmem) {
++		dev_err(adsp->dev, "unable to resolve memory-region\n");
++		return -EINVAL;
++	}
+ 
+-	adsp->mem_phys = adsp->mem_reloc = r.start;
+-	adsp->mem_size = resource_size(&r);
++	adsp->mem_phys = adsp->mem_reloc = rmem->base;
++	adsp->mem_size = rmem->size;
+ 	adsp->mem_region = devm_ioremap_wc(adsp->dev, adsp->mem_phys, adsp->mem_size);
+ 	if (!adsp->mem_region) {
+ 		dev_err(adsp->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, adsp->mem_size);
++			&rmem->base, adsp->mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -566,16 +567,19 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	if (ret)
+-		return ret;
++	rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++	if (!rmem) {
++		dev_err(adsp->dev, "unable to resolve dtb memory-region\n");
++		return -EINVAL;
++	}
+ 
+-	adsp->dtb_mem_phys = adsp->dtb_mem_reloc = r.start;
+-	adsp->dtb_mem_size = resource_size(&r);
++	adsp->dtb_mem_phys = adsp->dtb_mem_reloc = rmem->base;
++	adsp->dtb_mem_size = rmem->size;
+ 	adsp->dtb_mem_region = devm_ioremap_wc(adsp->dev, adsp->dtb_mem_phys, adsp->dtb_mem_size);
+ 	if (!adsp->dtb_mem_region) {
+ 		dev_err(adsp->dev, "unable to map dtb memory region: %pa+%zx\n",
+-			&r.start, adsp->dtb_mem_size);
++			&rmem->base, adsp->dtb_mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -584,29 +588,28 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 
+ static int adsp_assign_memory_region(struct qcom_adsp *adsp)
+ {
++	struct reserved_mem *rmem = NULL;
+ 	struct qcom_scm_vmperm perm;
+ 	struct device_node *node;
+-	struct resource r;
+ 	int ret;
+ 
+ 	if (!adsp->region_assign_idx)
+ 		return 0;
+ 
+ 	node = of_parse_phandle(adsp->dev->of_node, "memory-region", adsp->region_assign_idx);
+-	if (!node) {
+-		dev_err(adsp->dev, "missing shareable memory-region\n");
++	if (node)
++		rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++	if (!rmem) {
++		dev_err(adsp->dev, "unable to resolve shareable memory-region\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	if (ret)
+-		return ret;
+-
+ 	perm.vmid = QCOM_SCM_VMID_MSS_MSA;
+ 	perm.perm = QCOM_SCM_PERM_RW;
+ 
+-	adsp->region_assign_phys = r.start;
+-	adsp->region_assign_size = resource_size(&r);
++	adsp->region_assign_phys = rmem->base;
++	adsp->region_assign_size = rmem->size;
+ 	adsp->region_assign_perms = BIT(QCOM_SCM_VMID_HLOS);
+ 
+ 	ret = qcom_scm_assign_mem(adsp->region_assign_phys,
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 1ed0647bc962..334a9c75dad6 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -14,8 +14,8 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/io.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_runtime.h>
+@@ -506,27 +506,25 @@ static int wcnss_request_irq(struct qcom_wcnss *wcnss,
+ 
+ static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
+ {
++	struct reserved_mem *rmem = NULL;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	node = of_parse_phandle(wcnss->dev->of_node, "memory-region", 0);
+-	if (!node) {
+-		dev_err(wcnss->dev, "no memory-region specified\n");
++	if (node)
++		rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++
++	if (!rmem) {
++		dev_err(wcnss->dev, "unable to resolve memory-region\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	of_node_put(node);
+-	if (ret)
+-		return ret;
+-
+-	wcnss->mem_phys = wcnss->mem_reloc = r.start;
+-	wcnss->mem_size = resource_size(&r);
++	wcnss->mem_phys = wcnss->mem_reloc = rmem->base;
++	wcnss->mem_size = rmem->size;
+ 	wcnss->mem_region = devm_ioremap_wc(wcnss->dev, wcnss->mem_phys, wcnss->mem_size);
+ 	if (!wcnss->mem_region) {
+ 		dev_err(wcnss->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, wcnss->mem_size);
++			&rmem->base, wcnss->mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+
+---
+base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
+change-id: 20230529-rproc-of-rmem-7d931f61f64e
+
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
+
