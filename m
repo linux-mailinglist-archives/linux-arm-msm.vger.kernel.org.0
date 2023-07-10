@@ -2,81 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F15674D3F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 12:55:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2232C74D405
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 12:57:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231839AbjGJKzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 06:55:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54262 "EHLO
+        id S229897AbjGJK5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 06:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231604AbjGJKy5 (ORCPT
+        with ESMTP id S229837AbjGJK5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 06:54:57 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E725BCC;
-        Mon, 10 Jul 2023 03:54:50 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36A8ZASL019211;
-        Mon, 10 Jul 2023 10:54:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=8LCSMAKm1ZqPLKYXRzvM3CzSOKdJTxyt7kA4dOURNFQ=;
- b=Lwc41t1og1MtbmQYgaIPRgq3q5mAXXXblK/eeliaM5d8CxwGVXVHad0cSoHog3ZMfLHp
- BjJ+wPbr/cWOLtghQASHpDAs5X8qTKttanl2/ilrzhWiddjcTd1Wa4NkrHkLR/3qX3L1
- 6KQf+pl4FWtjYSEGOqKUFd7BR4WDzX39OYUR4MY7qaVv7gqrni81GqY1EdLnq5Ta8L08
- P8YHUWPrsAPtZumsTEmt3DFGQFu76/s4dL82pHcwRiLD0gOR0ZTr3/257uk9eH34Sqy1
- pN0sVBt2YJJ0mu3i/sQPZAhkO6/pndxj+zhnmjZr9cv5VfZxLfLzXHpUvPZskRG/SOJV Kg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpyd6uc5g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Jul 2023 10:54:47 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36AAskgQ001679
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Jul 2023 10:54:46 GMT
-Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 10 Jul 2023 03:54:42 -0700
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_saahtoma@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH 2/2] soc: qcom: socinfo: drop the IPQ5019 SoC ID
-Date:   Mon, 10 Jul 2023 16:24:19 +0530
-Message-ID: <20230710105419.1228966-3-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230710105419.1228966-1-quic_kathirav@quicinc.com>
-References: <20230710105419.1228966-1-quic_kathirav@quicinc.com>
+        Mon, 10 Jul 2023 06:57:20 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBCF29C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 03:57:18 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-c15a5ed884dso5096143276.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 03:57:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1688986638; x=1691578638;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hQ+EFWyqPVcfn5r85TOW215yYJLlf1C3/IC93ziXGxY=;
+        b=PzhQlBjaM4jeJGSImOyz1ZKexDQBVzCzztUYmrsaN8K16WDBb8fafy5vLGyNBlt6mf
+         YwpccViGjravk9wLkiCI5xn+RuLKdPAsmmKgGjN0lola57N+ovFkc9d7ML9ZycPz/ZXR
+         P/HMedJSWHo/bKlp7bC4Q1/4hVmVJkUiQoSHMGWfFl8lJcp7GyXCtCgwIS6fvv0Dx9ib
+         rtPBLZdkjbf69RbFhk+5P96bRPH4uTf0b0P/u9iBrsPiAuAxnEixR/q9fkcmRN5vSsqN
+         AALX1wIbFTHR2g1R2V9+N+pN5JYWUxN/7egH+CCmSEDE/jhi2fCEEu0fJJM+TXHzrHKc
+         E/LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688986638; x=1691578638;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hQ+EFWyqPVcfn5r85TOW215yYJLlf1C3/IC93ziXGxY=;
+        b=TCvVP7DRgW2shHxQDM1/svG2sNoyft0Rx2FHSj52jRcTgXdcqNZF8l++OdIxQzS/Id
+         9y2XqjPhIhXv6dy+N88gTX7oq1Dyb0GwO2isEBL2tj67TX1GgTaCyuJ/mVHMaEPzio7i
+         Fd8Kqj+19Ej2qKEET243yCn2VFM9SJyXdLCD5YqxIBKE1YcGaD+91FbcrStN1NDkI5sc
+         7om2OJeymglale5+c9UhktouCJAVAKqUJ9Z96z4xczymTwMshbllVubMU68H9ldOlL8z
+         HDQn5xUrKWYIjdkF6Ds9ELgO9JGApFCQ9iXUcrbPxGoolFWyAKtb+bPVFac1gC7nlu/0
+         pWTg==
+X-Gm-Message-State: ABy/qLYimH+NzPPJ76Yrn0zebYtY9IitjneUphAHShDpMvo1W3KnvrCt
+        OL/vzpG0FXfT9jEWLjjt5EKE9LwGiWoNA8Q4Xs2FPg==
+X-Google-Smtp-Source: APBJJlFP31r0f+V4DbCx5wQyP+r7v8c+VPJ9DzC9fX2DwSE7AhcEXpNB8BSIrlMcH1EsJCOxstOmKdIeJSUGELnMiTg=
+X-Received: by 2002:a25:2d18:0:b0:c72:c9fc:79ff with SMTP id
+ t24-20020a252d18000000b00c72c9fc79ffmr5108472ybt.54.1688986637931; Mon, 10
+ Jul 2023 03:57:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MJg3QluK1KwwGb8dA9EiUu_mIl6gbxga
-X-Proofpoint-ORIG-GUID: MJg3QluK1KwwGb8dA9EiUu_mIl6gbxga
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-10_08,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- adultscore=0 spamscore=0 phishscore=0 mlxlogscore=729 priorityscore=1501
- clxscore=1015 bulkscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2307100098
+References: <20230709201309.274306-1-dmitry.baryshkov@linaro.org>
+ <20230709201309.274306-3-dmitry.baryshkov@linaro.org> <0408a6f6-356e-af6a-3e32-1781aec2854f@linaro.org>
+ <74aa7196-e76c-a1c8-9b0f-1d5f236d3467@linaro.org>
+In-Reply-To: <74aa7196-e76c-a1c8-9b0f-1d5f236d3467@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 10 Jul 2023 13:57:06 +0300
+Message-ID: <CAA8EJpppsaKqKY0V9O1JMUGiE8USzg8b0ZPZwn-0bwg1wYD6Tw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] usb: typec: qcom-pmic-typec: register drm_bridge
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,25 +75,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ5019 SoC is not available in production. Lets drop it.
+On Mon, 10 Jul 2023 at 13:04, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 10.07.2023 12:02, Bryan O'Donoghue wrote:
+> > On 09/07/2023 21:13, Dmitry Baryshkov wrote:
+> >> The current approach to handling DP on bridge-enabled platforms requires
+> >> a chain of DP bridges up to the USB-C connector. Register a last DRM
+> >> bridge for such chain.
+> >>
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> ---
+> >>   drivers/usb/typec/tcpm/Kconfig                |  1 +
+> >>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 39 +++++++++++++++++++
+> >>   2 files changed, 40 insertions(+)
+> >>
+> >> diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
+> >> index 5d393f520fc2..0b2993fef564 100644
+> >> --- a/drivers/usb/typec/tcpm/Kconfig
+> >> +++ b/drivers/usb/typec/tcpm/Kconfig
+> >> @@ -79,6 +79,7 @@ config TYPEC_WCOVE
+> >>   config TYPEC_QCOM_PMIC
+> >>       tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
+> >>       depends on ARCH_QCOM || COMPILE_TEST
+> >> +    depends on DRM || DRM=n
+> >>       help
+> >>         A Type-C port and Power Delivery driver which aggregates two
+> >>         discrete pieces of silicon in the PM8150b PMIC block: the
+> >> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> >> index a905160dd860..0722fb8d75c4 100644
+> >> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> >> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> >> @@ -17,6 +17,9 @@
+> >>   #include <linux/usb/role.h>
+> >>   #include <linux/usb/tcpm.h>
+> >>   #include <linux/usb/typec_mux.h>
+> >> +
+> >> +#include <drm/drm_bridge.h>
+> >> +
+> >>   #include "qcom_pmic_typec_pdphy.h"
+> >>   #include "qcom_pmic_typec_port.h"
+> >>   @@ -33,6 +36,9 @@ struct pmic_typec {
+> >>       struct pmic_typec_port    *pmic_typec_port;
+> >>       bool            vbus_enabled;
+> >>       struct mutex        lock;        /* VBUS state serialization */
+> >> +#ifdef CONFIG_DRM
+> >> +    struct drm_bridge    bridge;
+> >> +#endif
+> >
+> > IMO there's no reason to ifdef the structure. Its up to you if you want to change it nor not, I have no strong feelings about it.
+> +1, there's no ifdefs in the drm_bridge.h header that would make this not compile
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
- drivers/soc/qcom/socinfo.c | 1 -
- 1 file changed, 1 deletion(-)
+It is quite typical to idef unused structure fields. For example
+OF-related fields are frequently ifdef'ed.
+Let's see what the maintainers will say.
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 4d49945b3a35..78293ab13c87 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -406,7 +406,6 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(QRU1000) },
- 	{ qcom_board_id(QDU1000) },
- 	{ qcom_board_id(QDU1010) },
--	{ qcom_board_id(IPQ5019) },
- 	{ qcom_board_id(QRU1032) },
- 	{ qcom_board_id(QRU1052) },
- 	{ qcom_board_id(QRU1062) },
+>
+> Konrad
+> >
+> > Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> >
+> > ---
+> > bod
+
+
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
