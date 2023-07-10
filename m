@@ -2,168 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55CA074D97B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 17:04:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D36574D9B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 17:18:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233382AbjGJPEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 11:04:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32782 "EHLO
+        id S230247AbjGJPS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 11:18:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233440AbjGJPEE (ORCPT
+        with ESMTP id S229517AbjGJPS1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 11:04:04 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 817A9E0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 08:04:02 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-c6833e6e326so5608798276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 08:04:02 -0700 (PDT)
+        Mon, 10 Jul 2023 11:18:27 -0400
+Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B82E9A0;
+        Mon, 10 Jul 2023 08:18:26 -0700 (PDT)
+Received: by mail-vs1-xe2d.google.com with SMTP id ada2fe7eead31-440afc96271so1615371137.3;
+        Mon, 10 Jul 2023 08:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689001441; x=1691593441;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=r0GBXtQWMUWeqQq+M5AIorJEQ/4p4IESUvPrQzMKy+M=;
-        b=iEBN/N+QcxljrJHYIWuE+HoYXXfM68wAdM8Wm0+9I2lG+AypKCQomrHX7m9EfWNUUE
-         268XP2Q8qkFniawu7y5JeR+wKZ3LCnYSwbLJfUO/vJR1vcOVJWMvMENqzhPflvUpcNwR
-         C6mfiP9EJbVcKMkGhvHXE/WWgADzufmHmTdmMaVkOfDkFqpR71rbGEJ6GbnM74w9JTnj
-         yr5PMM4avI4kR2QmQXwxm9hmq/mRQXzd7kE/WGhSG3qzKd+Zb6ajvrXEF86d2RInsE8O
-         cCV3rmRQNoZXrmfQ5E9imjuRN7OuMC0qW9/9fbjuMnBRcyomXrAPyn1QxrRt8crYgVAm
-         2O4w==
+        d=gmail.com; s=20221208; t=1689002306; x=1691594306;
+        h=content-transfer-encoding:mime-version:user-agent:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nk/tMPeysHbj6DG2MWqpBx4I4BpKdtIsUv79T+mui8M=;
+        b=SnqpO5UCkMrcTnl+PPgVLsLMk3yTDFyBZdQbJ4RwwIuak/JKzzThb4uYCR64tfHrj4
+         MU4iYEHgLDaA+n5dewHkfX8YWRvu7v47cUxYVe+6WZEd3+iqQpltq8sdqiddtedwDl8T
+         5DgX96BNY19CtJsJ5iKSYVYKOBzzIw9Z0wz1agPQbDW3gx4b/jgt+YSqn+5RZofHzSg+
+         WYQj1flh8rCHzHCZxNEuaVYP9Tnl/EduL4KF6KgQVLubpfVx7BWWOzO1Y61w9vuY7fYX
+         DHED3Iqxl5KEeeZn9rHDGZ/gVzJYlPtmR5/zUEUHGtI9Z+tCRWG0bZvz71CsNCo1VhyL
+         O+NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689001441; x=1691593441;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=r0GBXtQWMUWeqQq+M5AIorJEQ/4p4IESUvPrQzMKy+M=;
-        b=gqgzG1FB1mDNNJeqaZEvNiKmHvjRVupPZM53gTzFhLKmP0+5JrPdV7IHyxp6eH2OfX
-         PP9xDcodrocS0f4jyfmcHkuRfBiWBP0l+cwOEZy/bdy/a3vNeoDiNHSy72DwXt6V+F3w
-         pA+Nm5NtlcTeQ8Q2CuiU3XRVQBC492arSHN6Qo+me81/7me3dBZDafw8GHhjutFHPkbn
-         64D9zAn8MWTd4KGKZwf9S73jKfLHRkiZ8lonPQ980sovNb4LGlrXRTGE14pFBN9Zk5ps
-         mfLtIyl0o7m7OQ2WBkLoAuTX0dJMI0PPApJvlFeIWP5aFrFOpaFHeBqzigChID9kahqS
-         yAvA==
-X-Gm-Message-State: ABy/qLZbNDe+4+w6DcpAsVRgFtdGjdk0rHGxydJiL21hSBVSv76JSNcr
-        OJWQKcJUID4QBxRGCsVlqfhxph41nyU513qk2aqtvQ==
-X-Google-Smtp-Source: APBJJlEJ+v7IyZNE4+O1DY+AP+nWBc1ijQcdBtFYtRjvRTYfVZL2z4RX3IQkK7LQvB90yqbgAv2UGG3DiZz3q0QuY0o=
-X-Received: by 2002:a25:fe06:0:b0:c85:cab:30ad with SMTP id
- k6-20020a25fe06000000b00c850cab30admr2675569ybe.35.1689001441594; Mon, 10 Jul
- 2023 08:04:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230710103735.1375847-1-quic_ipkumar@quicinc.com>
- <20230710103735.1375847-7-quic_ipkumar@quicinc.com> <96e52c65-6216-91ba-8d2b-197f86433d98@linaro.org>
- <8661411f-ea47-2a7a-ceb4-6c37978c3a75@quicinc.com>
-In-Reply-To: <8661411f-ea47-2a7a-ceb4-6c37978c3a75@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 10 Jul 2023 18:03:50 +0300
-Message-ID: <CAA8EJpoTy5sxFpK8=KqmR5zjj_Kt18hX_CJqvQbxHDmBqmduGw@mail.gmail.com>
-Subject: Re: [PATCH 6/6] thermal/drivers/tsens: Add IPQ5332 support
-To:     Praveenkumar I <quic_ipkumar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_varada@quicinc.com
+        d=1e100.net; s=20221208; t=1689002306; x=1691594306;
+        h=content-transfer-encoding:mime-version:user-agent:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nk/tMPeysHbj6DG2MWqpBx4I4BpKdtIsUv79T+mui8M=;
+        b=FFfozGQB0XHhk0cMuKSXy9Dzyn8P0qEhzuaa0gD6m8tlbBhb4U641Upd8BR4UHkoIJ
+         8fJjsffI50JfUZwciW5RqTwSZb1/A9VEEcvbfwL9X/Ilz5LjVdoeFiwpZpq6rwuNmTOv
+         YTQ2MQRmFXFmTO1oQ44MYLv+7covjB51GGQ5DdfSmI5MIAqP2tzJQyI7rlEidbHe3UES
+         xQTsBbO0zvGZ2lKea8YnoAy7IVRtx84F0/aauTs1ZGY517V+k5faUPpBciu6dqjUJYYL
+         DJHUs53Cp02Vn2vesMiOii5mZIJvZAorqP8oQhAadp5ItSrVuKnBFNbou2sGqtJC4qiW
+         o+bg==
+X-Gm-Message-State: ABy/qLbLzmaz8BQCaHK/Oh4Ls++NuE73NAFqq5nnTyxz+U3ly2eky5XC
+        7W/hWhYsSqdjUg64uqvvnWE=
+X-Google-Smtp-Source: APBJJlFeFyLL5NPCV2JXugyOjd4PAFNNHsbFoE2alRis3wt6fg1fTGiuEu30ypOCm7xnXGVcs18peA==
+X-Received: by 2002:a67:f899:0:b0:443:69fd:362e with SMTP id h25-20020a67f899000000b0044369fd362emr5601647vso.16.1689002305583;
+        Mon, 10 Jul 2023 08:18:25 -0700 (PDT)
+Received: from sinankaya-ThinkPad-P14s-Gen-2i ([2600:4040:445f:b200:1342:c418:5933:82e4])
+        by smtp.gmail.com with ESMTPSA id d15-20020a0ce44f000000b00623950fbe48sm5699939qvm.41.2023.07.10.08.18.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Jul 2023 08:18:25 -0700 (PDT)
+Message-ID: <c04665563ada371e993153338aa856df3afa8469.camel@gmail.com>
+Subject: Re: [PATCH] dmaengine: qcom_hidma: Update codeaurora email domain
+From:   Sinan Kaya <franksinankaya@gmail.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, okaya@kernel.org,
+        vkoul@kernel.org, andersson@kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+Date:   Mon, 10 Jul 2023 11:18:24 -0400
+In-Reply-To: <20230707195003.6619-1-quic_jhugo@quicinc.com>
+References: <20230707195003.6619-1-quic_jhugo@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5-0ubuntu1 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 Jul 2023 at 16:47, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
->
->
-> On 7/10/2023 4:54 PM, Dmitry Baryshkov wrote:
-> > On 10/07/2023 13:37, Praveenkumar I wrote:
-> >> IPQ5332 uses tsens v2.3.3 IP and it is having combined interrupt as
-> >> like IPQ8074. But as the SoCs does not have RPM, kernel needs to
-> >> take care of sensor enablement and calibration. Hence introduced
-> >> new ops and data for IPQ5332 and reused the feature_config from
-> >> IPQ8074.
-> >>
-> >> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> >> ---
-> >>   drivers/thermal/qcom/tsens-v2.c | 13 +++++++++++++
-> >>   drivers/thermal/qcom/tsens.c    |  3 +++
-> >>   drivers/thermal/qcom/tsens.h    |  2 +-
-> >>   3 files changed, 17 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/thermal/qcom/tsens-v2.c
-> >> b/drivers/thermal/qcom/tsens-v2.c
-> >> index db48b1d95348..8b6e3876fd2c 100644
-> >> --- a/drivers/thermal/qcom/tsens-v2.c
-> >> +++ b/drivers/thermal/qcom/tsens-v2.c
-> >> @@ -237,6 +237,19 @@ struct tsens_plat_data data_ipq8074 = {
-> >>       .fields    = tsens_v2_regfields,
-> >>   };
-> >>   +static const struct tsens_ops ops_ipq5332_v2 = {
-> >
-> > Please drop v2. It is unclear if it refers to tsens being v2 or being
-> > specific to ipq5332 v2.
-> Sure, will drop v2.
-> >
-> >> +    .init        = init_common,
-> >> +    .get_temp    = get_temp_tsens_valid,
-> >> +    .calibrate    = tsens_v2_calibration,
-> >> +};
-> >> +
-> >> +struct tsens_plat_data data_ipq5332 = {
-> >> +    .sensors_to_en    = 0xF800,
-> >
-> > This doesn't seem to match the offsets that you have enabled in the DTSI.
-> In order to overcome the DT binding check failure, added all the
-> available QFPROM offsets in the DTSI. Else DT binding check failing on
-> "nvmem-cell-names".
+On Fri, 2023-07-07 at 13:50 -0600, Jeffrey Hugo wrote:
+> The codeaurora.org email domain is defunct and will bounce.
+> 
+> 
+> 
+> Update entries to Sinan's kernel.org address which is the address in
+> 
+> MAINTAINERS for this component.
+> 
+> 
+> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> 
+> ---
 
-This is not a way to overcome issues in DT bindings. Please fix DT
-bindings instead by using alternatives, enums, etc.
-
-> >
-> >> +    .ops        = &ops_ipq5332_v2,
-> >> +    .feat        = &ipq8074_feat,
-> >> +    .fields        = tsens_v2_regfields,
-> >> +};
-> >> +
-> >>   /* Kept around for backward compatibility with old msm8996.dtsi */
-> >>   struct tsens_plat_data data_8996 = {
-> >>       .num_sensors    = 13,
-> >> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> >> index 169690355dad..e8ba2901cda8 100644
-> >> --- a/drivers/thermal/qcom/tsens.c
-> >> +++ b/drivers/thermal/qcom/tsens.c
-> >> @@ -1140,6 +1140,9 @@ static const struct of_device_id tsens_table[] = {
-> >>       }, {
-> >>           .compatible = "qcom,ipq8074-tsens",
-> >>           .data = &data_ipq8074,
-> >> +    }, {
-> >> +        .compatible = "qcom,ipq5332-tsens",
-> >> +        .data = &data_ipq5332,
-> >>       }, {
-> >>           .compatible = "qcom,mdm9607-tsens",
-> >>           .data = &data_9607,
-> >> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> >> index f8897bc8944e..36040f9beebc 100644
-> >> --- a/drivers/thermal/qcom/tsens.h
-> >> +++ b/drivers/thermal/qcom/tsens.h
-> >> @@ -701,6 +701,6 @@ extern struct tsens_plat_data data_8226,
-> >> data_8909, data_8916, data_8939, data_8
-> >>   extern struct tsens_plat_data data_tsens_v1, data_8976, data_8956;
-> >>     /* TSENS v2 targets */
-> >> -extern struct tsens_plat_data data_8996, data_ipq8074, data_tsens_v2;
-> >> +extern struct tsens_plat_data data_8996, data_ipq8074, data_ipq5332,
-> >> data_tsens_v2;
-> >>     #endif /* __QCOM_TSENS_H__ */
-> >
-> --
-> Thanks,
-> Praveenkumar
+Acked-By: Sinan Kaya <okaya@kernel.org>
 
 
 
--- 
-With best wishes
-Dmitry
