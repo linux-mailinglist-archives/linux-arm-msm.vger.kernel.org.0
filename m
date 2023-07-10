@@ -2,192 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D0D274D795
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 15:31:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8195774D79A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 15:31:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231552AbjGJNbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 09:31:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40998 "EHLO
+        id S232167AbjGJNbU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 09:31:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230350AbjGJNbP (ORCPT
+        with ESMTP id S232079AbjGJNbS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 09:31:15 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 649C4E9;
-        Mon, 10 Jul 2023 06:31:14 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36A8W9hm014016;
-        Mon, 10 Jul 2023 13:31:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3hwh85pHwsS6x8LnhvlF7324O3jhtNQ7GklRf9cJmts=;
- b=jk/i9G8b5wwlSu0eDSmbmCoNul/VM00OGI99LDi1b4rQoUg+w3P2dB/4a859qvS2kTV/
- YBVB1aS9JcMH7cVPzvuVdVUv3QIYsL/48VDN235x2dF9oMv2ton64dkQ0cCdnOe6ocwa
- 0vzFmjsgHZcYuOPsef6ox7ELg7G5Z0UEvqBN+3a872j4EeE4hC+0j3xN+vBBNlnFgd3/
- oYBQaWL/zuiRmv0G3eW6A5pldUEIH8wWYg1B8ptUOo0Q86eam7PbUkDPnbHcfbztpS3t
- SyZUYyS6sGfRWG+4ekG1hsjSnRhzq2A4zseC13cOwXghoJnsn9riXY3PPa5+YBkXhBnC SQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpyd6usyk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Jul 2023 13:31:07 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36ADV63K016422
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Jul 2023 13:31:06 GMT
-Received: from [10.201.3.91] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 10 Jul
- 2023 06:31:01 -0700
-Message-ID: <bcd02a91-e7c0-a104-f19c-50b26c86e484@quicinc.com>
-Date:   Mon, 10 Jul 2023 19:00:58 +0530
+        Mon, 10 Jul 2023 09:31:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA633E9;
+        Mon, 10 Jul 2023 06:31:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5DDC860B8D;
+        Mon, 10 Jul 2023 13:31:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D03C433C7;
+        Mon, 10 Jul 2023 13:31:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1688995876;
+        bh=1TvHTk0OvZW5mauoWR+EvpE5IuZ2XI67qVt1FK3GGiA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EBHY3sJD7EWCavU+5I3QVagZ5RrjcoWTRlOqCjdxndRxyARrJv6y64nXnrKcDGhvl
+         yE1E5RyOPOIpv0cwUlhUItiysrnmmS7fGqEE5xRcGwUQB+SK1+52uTmQQ5l5PduAbz
+         8alNCnMB5IF7Ezy6fvQxEgPcJlnmNnusOXZgCLGc=
+Date:   Mon, 10 Jul 2023 15:31:13 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] usb: typec: qcom-pmic-typec: register drm_bridge
+Message-ID: <2023071052-hedging-blurb-2a20@gregkh>
+References: <20230709201309.274306-1-dmitry.baryshkov@linaro.org>
+ <20230709201309.274306-3-dmitry.baryshkov@linaro.org>
+ <0408a6f6-356e-af6a-3e32-1781aec2854f@linaro.org>
+ <74aa7196-e76c-a1c8-9b0f-1d5f236d3467@linaro.org>
+ <CAA8EJpppsaKqKY0V9O1JMUGiE8USzg8b0ZPZwn-0bwg1wYD6Tw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq5332: Add thermal zone nodes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>
-References: <20230710103735.1375847-1-quic_ipkumar@quicinc.com>
- <20230710103735.1375847-6-quic_ipkumar@quicinc.com>
- <3f6ab4b4-b5f5-5807-0cb4-8ae782bd6044@linaro.org>
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-In-Reply-To: <3f6ab4b4-b5f5-5807-0cb4-8ae782bd6044@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OkdKxaFWYqvEpGt7AnvdKcADRr11QWNx
-X-Proofpoint-ORIG-GUID: OkdKxaFWYqvEpGt7AnvdKcADRr11QWNx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-10_10,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- adultscore=0 spamscore=0 phishscore=0 mlxlogscore=999 priorityscore=1501
- clxscore=1015 bulkscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2307100121
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpppsaKqKY0V9O1JMUGiE8USzg8b0ZPZwn-0bwg1wYD6Tw@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jul 10, 2023 at 01:57:06PM +0300, Dmitry Baryshkov wrote:
+> On Mon, 10 Jul 2023 at 13:04, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >
+> > On 10.07.2023 12:02, Bryan O'Donoghue wrote:
+> > > On 09/07/2023 21:13, Dmitry Baryshkov wrote:
+> > >> The current approach to handling DP on bridge-enabled platforms requires
+> > >> a chain of DP bridges up to the USB-C connector. Register a last DRM
+> > >> bridge for such chain.
+> > >>
+> > >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >> ---
+> > >>   drivers/usb/typec/tcpm/Kconfig                |  1 +
+> > >>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 39 +++++++++++++++++++
+> > >>   2 files changed, 40 insertions(+)
+> > >>
+> > >> diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
+> > >> index 5d393f520fc2..0b2993fef564 100644
+> > >> --- a/drivers/usb/typec/tcpm/Kconfig
+> > >> +++ b/drivers/usb/typec/tcpm/Kconfig
+> > >> @@ -79,6 +79,7 @@ config TYPEC_WCOVE
+> > >>   config TYPEC_QCOM_PMIC
+> > >>       tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
+> > >>       depends on ARCH_QCOM || COMPILE_TEST
+> > >> +    depends on DRM || DRM=n
+> > >>       help
+> > >>         A Type-C port and Power Delivery driver which aggregates two
+> > >>         discrete pieces of silicon in the PM8150b PMIC block: the
+> > >> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> > >> index a905160dd860..0722fb8d75c4 100644
+> > >> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> > >> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> > >> @@ -17,6 +17,9 @@
+> > >>   #include <linux/usb/role.h>
+> > >>   #include <linux/usb/tcpm.h>
+> > >>   #include <linux/usb/typec_mux.h>
+> > >> +
+> > >> +#include <drm/drm_bridge.h>
+> > >> +
+> > >>   #include "qcom_pmic_typec_pdphy.h"
+> > >>   #include "qcom_pmic_typec_port.h"
+> > >>   @@ -33,6 +36,9 @@ struct pmic_typec {
+> > >>       struct pmic_typec_port    *pmic_typec_port;
+> > >>       bool            vbus_enabled;
+> > >>       struct mutex        lock;        /* VBUS state serialization */
+> > >> +#ifdef CONFIG_DRM
+> > >> +    struct drm_bridge    bridge;
+> > >> +#endif
+> > >
+> > > IMO there's no reason to ifdef the structure. Its up to you if you want to change it nor not, I have no strong feelings about it.
+> > +1, there's no ifdefs in the drm_bridge.h header that would make this not compile
+> 
+> It is quite typical to idef unused structure fields. For example
+> OF-related fields are frequently ifdef'ed.
+> Let's see what the maintainers will say.
 
-On 7/10/2023 4:53 PM, Dmitry Baryshkov wrote:
-> On 10/07/2023 13:37, Praveenkumar I wrote:
->> This patch adds thermal zone nodes for sensors present in
->> IPQ5332.
->>
->> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 72 +++++++++++++++++++++++++++
->>   1 file changed, 72 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi 
->> b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> index a1e3527178c0..8b276aeca53e 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> @@ -527,4 +527,76 @@ timer {
->>                    <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | 
->> IRQ_TYPE_LEVEL_LOW)>,
->>                    <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | 
->> IRQ_TYPE_LEVEL_LOW)>;
->>       };
->> +
->> +    thermal-zones {
->> +        rfa-0-thermal{
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 11>;
->> +
->> +            trips {
->> +                rfa-0-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +
->> +        rfa-1-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 12>;
->> +
->> +            trips {
->> +                rfa-1-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +
->> +        misc-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 13>;
->> +
->> +            trips {
->> +                misc-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +
->> +        cpu-top-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 14>;
->> +
->> +            trips {
->> +                cpu-top-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->
-> Could you please add a passive cooling devices for the CPU?
-Sure, will add the passive trip.
->
->> +        };
->> +
->> +        top-glue-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 15>;
->> +
->> +            trips {
->> +                top-glue-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +    };
->>   };
->
---
-Thanks,
-Praveenkumar
+Please do not put #ifdef in .c files.
+
+If it's not needed, please remove.
+
+thanks,
+
+greg k-h
