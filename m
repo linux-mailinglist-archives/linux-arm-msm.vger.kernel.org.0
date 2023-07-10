@@ -2,105 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B65674DBBE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 18:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD12174DBC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 18:57:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231687AbjGJQ5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 12:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55558 "EHLO
+        id S231574AbjGJQ5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 12:57:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231418AbjGJQ5R (ORCPT
+        with ESMTP id S231664AbjGJQ5n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 12:57:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAFF9198;
-        Mon, 10 Jul 2023 09:57:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4A3D161130;
-        Mon, 10 Jul 2023 16:57:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013E7C433C8;
-        Mon, 10 Jul 2023 16:57:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689008234;
-        bh=IIro+PYudoCpsNeH2Llkq/gmEiqeLq8TswCPO5UnD6k=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=p7yUWoNb8JNe5qIMp13em9m8Rzsc1ghhta/kWFSe5/qi4pD5l1Kdd3nTIbhSAnB41
-         W8C1J2axQqESm/vo5JFAn+FCzJ9O92y9klVgFoPPFBocvgHANqPMFGPKWSy1cah2AJ
-         6B66a+6OSbM4vJnoAPeTpJQU1ZveA0PYXoTV6fut7sflD58+Jtel0GfBpq6p2nXiCt
-         M0xsvZQxCC0EolQkXizKejaZaayP6VSNsobrYWwUH758W9Nr9zRBh1oYMDG5FsShL0
-         zQI22BV9Iz/Ww1LFbCTyWKHKLILGMYlknCcvjk0BqOW9V/aTLFc+59pabBeheGKNwr
-         5euI/OtpKjArA==
-Date:   Mon, 10 Jul 2023 17:56:59 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Amit Kumar Mahapatra via Alsa-devel 
-        <alsa-devel@alsa-project.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Sanjay R Mehta <sanju.mehta@amd.com>,
-        Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Subject: Re: [PATCH v2 03/15] spi: Replace if-else-if by bitops and
- multiplications
-Message-ID: <24e71654-bc79-42ac-86d1-4e6100f6893a@sirena.org.uk>
-References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
- <20230710154932.68377-4-andriy.shevchenko@linux.intel.com>
+        Mon, 10 Jul 2023 12:57:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2CED7;
+        Mon, 10 Jul 2023 09:57:41 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36AFe7Te025393;
+        Mon, 10 Jul 2023 16:57:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=DKbIA33gjqsk6nz+ZEZEzCxJNQ4CzWXAhxFOzytqpJM=;
+ b=VBS0Uw3Y1YedjdFlfQ1V93d29qkN6wOe6SLqBsWqYLp2aBPUjUrAJIRl+jBt1UrHK+jq
+ e2vnLvJ9rY9PnzzYEBp+mRMnNCyCI614qlisbAjP60edCI0fPxF/K0UWz96KlWFutcrY
+ Tyl50m9tT073Q39VN3XXBy0MrMV/XljkHJvqttUk8Z33A2B47p6ANSYg1BmqHjnjoEOV
+ /Q4e8/CnBA5E/zwCLLaX9F/pjlBDZsemTxLc6hR72O81bNvlKllt7UpGJVl1n+6cbRWa
+ nYnw6KNwekTMZbfEPxf2TKW/OBg5EBCeZ2XKqbNri6gknzPtF9R2Ugytwid7DKmhnR5X GA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rrfw292mk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 10 Jul 2023 16:57:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36AGvSgm004749
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 10 Jul 2023 16:57:28 GMT
+Received: from [10.110.55.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 10 Jul
+ 2023 09:57:27 -0700
+Message-ID: <9df52052-93fd-75a4-b54c-02ed9554e15f@quicinc.com>
+Date:   Mon, 10 Jul 2023 09:57:25 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fI+fdz2D5/EEE42m"
-Content-Disposition: inline
-In-Reply-To: <20230710154932.68377-4-andriy.shevchenko@linux.intel.com>
-X-Cookie: Do you have lysdexia?
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v1 4/5] drm/msm/dp: move relevant dp initialization code
+ from bind() to probe()
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-5-git-send-email-quic_khsieh@quicinc.com>
+ <121f82ad-9d5d-6d7f-b4ae-9a371ab49ef7@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <121f82ad-9d5d-6d7f-b4ae-9a371ab49ef7@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4iYB8ft1qYH3bK8WHo_8s9xffwdETDSQ
+X-Proofpoint-GUID: 4iYB8ft1qYH3bK8WHo_8s9xffwdETDSQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-10_12,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ malwarescore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 mlxlogscore=999 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307100153
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -108,40 +89,141 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---fI+fdz2D5/EEE42m
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Mon, Jul 10, 2023 at 06:49:20PM +0300, Andy Shevchenko wrote:
-
-> -		if (xfer->bits_per_word <= 8)
-> -			maxsize = maxwords;
-> -		else if (xfer->bits_per_word <= 16)
-> -			maxsize = 2 * maxwords;
-> -		else
-> -			maxsize = 4 * maxwords;
-> -
-> +		maxsize = maxwords * roundup_pow_of_two(BITS_TO_BYTES(xfer->bits_per_word));
-
-This will change the behaviour if bits_per_word is more than 32.  That
-is validated out elsewhere but I shouldn't have had to go around
-checking the code to confirm that this is the case.  This is the sort of
-thing that should be highlighted when doing this sort of edge case
-stylistic change.
-
---fI+fdz2D5/EEE42m
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSsOFsACgkQJNaLcl1U
-h9A2Ywf+KXUPki4n4OHbYfUF8KSXIYSkZGLAugrUbcI1dW/wY8+0fLYP8+4w9V+j
-f81LA7/NDs1aRdnIEAvy6JRWhsUGKyHHKw42xpXD6MqtamipzOaVSYaL2Hr3ZuqC
-22p4KuNl0BAuHc+iyOWLpX7/btG8mweyZNWYjDbaB3duv4usx8Pis5kQu9HrTvfw
-e1repiQ4pqd5PGfhReO1fGbR6QIhoswiEm/9yfkZTQs1HAIOpRAePL2XPZD3sBuj
-pehvlOvP2yRq1fOxYVWGxXH8dhavS5t/mUlzyTYI7VxMD2HUZD1EiZ2uYcmntUEl
-y8tiLDQIFQRb++F+IFf0SjU+vXe0UQ==
-=tuUl
------END PGP SIGNATURE-----
-
---fI+fdz2D5/EEE42m--
+On 7/7/2023 5:11 PM, Dmitry Baryshkov wrote:
+> On 08/07/2023 02:52, Kuogee Hsieh wrote:
+>> In preparation of moving edp of_dp_aux_populate_bus() to
+>> dp_display_probe(), move dp_display_request_irq(),
+>> dp->parser->parse() and dp_power_client_init() to dp_display_probe()
+>> too.
+>>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 48 
+>> +++++++++++++++++--------------------
+>>   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
+>>   2 files changed, 22 insertions(+), 27 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 44580c2..185f1eb 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -290,12 +290,6 @@ static int dp_display_bind(struct device *dev, 
+>> struct device *master,
+>>           goto end;
+>>       }
+>>   -    rc = dp_power_client_init(dp->power);
+>> -    if (rc) {
+>> -        DRM_ERROR("Power client create failed\n");
+>> -        goto end;
+>> -    }
+>> -
+>>       rc = dp_register_audio_driver(dev, dp->audio);
+>>       if (rc) {
+>>           DRM_ERROR("Audio registration Dp failed\n");
+>> @@ -752,6 +746,12 @@ static int dp_init_sub_modules(struct 
+>> dp_display_private *dp)
+>>           goto error;
+>>       }
+>>   +    rc = dp->parser->parse(dp->parser);
+>> +    if (rc) {
+>> +        DRM_ERROR("device tree parsing failed\n");
+>> +        goto error;
+>> +    }
+>> +
+>>       dp->catalog = dp_catalog_get(dev, &dp->parser->io);
+>>       if (IS_ERR(dp->catalog)) {
+>>           rc = PTR_ERR(dp->catalog);
+>> @@ -768,6 +768,12 @@ static int dp_init_sub_modules(struct 
+>> dp_display_private *dp)
+>>           goto error;
+>>       }
+>>   +    rc = dp_power_client_init(dp->power);
+>> +    if (rc) {
+>> +        DRM_ERROR("Power client create failed\n");
+>> +        goto error;
+>> +    }
+>> +
+>>       dp->aux = dp_aux_get(dev, dp->catalog, dp->dp_display.is_edp);
+>>       if (IS_ERR(dp->aux)) {
+>>           rc = PTR_ERR(dp->aux);
+>> @@ -1196,26 +1202,20 @@ static irqreturn_t dp_display_irq_handler(int 
+>> irq, void *dev_id)
+>>       return ret;
+>>   }
+>>   -int dp_display_request_irq(struct msm_dp *dp_display)
+>> +static int dp_display_request_irq(struct dp_display_private *dp)
+>>   {
+>>       int rc = 0;
+>> -    struct dp_display_private *dp;
+>> -
+>> -    if (!dp_display) {
+>> -        DRM_ERROR("invalid input\n");
+>> -        return -EINVAL;
+>> -    }
+>> -
+>> -    dp = container_of(dp_display, struct dp_display_private, 
+>> dp_display);
+>> +    struct device *dev = &dp->pdev->dev;
+>>   -    dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+>>       if (!dp->irq) {
+>> -        DRM_ERROR("failed to get irq\n");
+>> -        return -EINVAL;
+>> +        dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+>> +        if (!dp->irq) {
+>> +            DRM_ERROR("failed to get irq\n");
+>> +            return -EINVAL;
+>> +        }
+>>       }
+>
+> Use platform_get_irq() from probe() function.
+>
+>>   -    rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
+>> -            dp_display_irq_handler,
+>> +    rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
+>>               IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+>
+>
+>>       if (rc < 0) {
+>>           DRM_ERROR("failed to request IRQ%u: %d\n",
+>> @@ -1290,6 +1290,8 @@ static int dp_display_probe(struct 
+>> platform_device *pdev)
+>>         platform_set_drvdata(pdev, &dp->dp_display);
+>>   +    dp_display_request_irq(dp);
+>> +
+>
+> Error checking?
+> Are we completely ready to handle interrupts at this point?
+not until dp_display_host_init() is called which will be called from 
+pm_runtime_resume() later.
+>
+>>       rc = component_add(&pdev->dev, &dp_display_comp_ops);
+>>       if (rc) {
+>>           DRM_ERROR("component add failed, rc=%d\n", rc);
+>> @@ -1574,12 +1576,6 @@ int msm_dp_modeset_init(struct msm_dp 
+>> *dp_display, struct drm_device *dev,
+>>         dp_priv = container_of(dp_display, struct dp_display_private, 
+>> dp_display);
+>>   -    ret = dp_display_request_irq(dp_display);
+>> -    if (ret) {
+>> -        DRM_ERROR("request_irq failed, ret=%d\n", ret);
+>> -        return ret;
+>> -    }
+>> -
+>>       ret = dp_display_get_next_bridge(dp_display);
+>>       if (ret)
+>>           return ret;
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h 
+>> b/drivers/gpu/drm/msm/dp/dp_display.h
+>> index 1e9415a..b3c08de 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+>> @@ -35,7 +35,6 @@ struct msm_dp {
+>>   int dp_display_set_plugged_cb(struct msm_dp *dp_display,
+>>           hdmi_codec_plugged_cb fn, struct device *codec_dev);
+>>   int dp_display_get_modes(struct msm_dp *dp_display);
+>> -int dp_display_request_irq(struct msm_dp *dp_display);
+>>   bool dp_display_check_video_test(struct msm_dp *dp_display);
+>>   int dp_display_get_test_bpp(struct msm_dp *dp_display);
+>>   void dp_display_signal_audio_start(struct msm_dp *dp_display);
+>
