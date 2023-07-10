@@ -2,235 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ECF874C87A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jul 2023 23:51:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8005374CA56
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 05:22:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbjGIVvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jul 2023 17:51:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35792 "EHLO
+        id S229811AbjGJDWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jul 2023 23:22:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229680AbjGIVvL (ORCPT
+        with ESMTP id S229743AbjGJDWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jul 2023 17:51:11 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 084ABEE;
-        Sun,  9 Jul 2023 14:51:09 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 369LoqsD006096;
-        Sun, 9 Jul 2023 21:50:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=//hNLQCxQJojF0Z4grwBRq1Jh4qS7v4et90KGoyFSvs=;
- b=iCCGMdQMpzGb/cRyT0omvIye65FQbG6Mm7rNyFss/FhrJtg3gXt8/x0h54VNjwUN+N43
- 1kTdGzBRCe5LsCMW+g6WE9xRfZdeDumVJLV48yYQK54ZziHBjVgsunqO0rK4Jt/GB+53
- GhnEyvGlAtYVkfeDtFAPu9wV14/PWbdv95XkR3sxfaeuRrKnNxPrmxpQIhmAeq4pr6f6
- VlalzE8njy8hx20VPSnp1jCm55jKLq8F7uw8/2le0bgv0/SJDXekyAffcKPJwcm2GrSw
- LInvGua/d1Vwm+iyQekzjnTdIsztRKDBdIT1t55xeUY6zu7qAajBzlXx33EwYULtvTDT pg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpxry2565-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 09 Jul 2023 21:50:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 369LopR2028736
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 9 Jul 2023 21:50:51 GMT
-Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Sun, 9 Jul 2023 14:50:47 -0700
-Date:   Mon, 10 Jul 2023 03:20:44 +0530
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jordan Crouse <jorcrous@amazon.com>
-CC:     <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
-        <linux-arm-msm@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Nathan Chancellor" <nathan@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        David Airlie <airlied@gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm: Check for the GPU IOMMU during bind
-Message-ID: <2xnvyjlwuxft2uk2pirlbvbrg7krcb4alz7yyna72g4t2qrrfm@qtawbelv3n4l>
-References: <20230309222049.4180579-1-jorcrous@amazon.com>
- <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
- <20230707150307.vb4otu5e6hwoadyf@amazon.com>
- <cc153fa9-b9e0-f714-ce5b-1a4a0cb55cc7@linaro.org>
+        Sun, 9 Jul 2023 23:22:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2670DAB;
+        Sun,  9 Jul 2023 20:22:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 87F9760DC5;
+        Mon, 10 Jul 2023 03:22:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53014C433C8;
+        Mon, 10 Jul 2023 03:22:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1688959331;
+        bh=YcxiXHNloaFRi6noZ3KfceLLhf+oYnIyVeAJVHnE0vs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QMWLUddGYqWdAaJF1R64AjEaXHV4y+/Bh/Q6kBlhDBDj9e87gXA26nB4DX+71/C/R
+         SY+pBqrHabcnv3AU5ZZV7TB6JnAk6SA8J+vVpnCjRA7Qz7iIvA5SI0XWppl/lWtm4f
+         Esiry+uzcxZ8Hdpzjb7BotPMVJiZFRGPLkDTXBxbvXpBguM88waFNnFSnOO9rQV0t7
+         b863Va21AFVJ+EPn8lofk3VKE7GZAWgL4vY8z1wIYU0hFIWaOXVQyjgW/IKbKcC+g4
+         jujn2ebHBIqCMq7quOlesT5EO6klMBq/FJ/B8rzeAFOgyr3SDgNSH5jKioU3625bjf
+         VqDM12yARNbsg==
+Date:   Mon, 10 Jul 2023 08:52:02 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_ipkumar@quicinc.com
+Subject: Re: [PATCH] PCI: qcom: configure the parf halt window size to 1GB
+Message-ID: <20230710032202.GA4677@thinkpad>
+References: <20230623045731.29397-1-quic_devipriy@quicinc.com>
+ <20230624062344.GE5611@thinkpad>
+ <20b7d92d-c3b8-254d-82ec-37a857397e8b@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cc153fa9-b9e0-f714-ce5b-1a4a0cb55cc7@linaro.org>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0kHMDWBrY4vwMO9XHyagsCFiCcJgcAQk
-X-Proofpoint-GUID: 0kHMDWBrY4vwMO9XHyagsCFiCcJgcAQk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-09_16,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1011
- suspectscore=0 impostorscore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2307090206
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20b7d92d-c3b8-254d-82ec-37a857397e8b@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 07, 2023 at 08:27:18PM +0300, Dmitry Baryshkov wrote:
+On Wed, Jul 05, 2023 at 03:57:13PM +0530, Devi Priya wrote:
 > 
-> On 07/07/2023 18:03, Jordan Crouse wrote:
-> > On Thu, Jul 06, 2023 at 09:55:13PM +0300, Dmitry Baryshkov wrote:
-> > > 
-> > > On 10/03/2023 00:20, Jordan Crouse wrote:
-> > > > While booting with amd,imageon on a headless target the GPU probe was
-> > > > failing with -ENOSPC in get_pages() from msm_gem.c.
-> > > > 
-> > > > Investigation showed that the driver was using the default 16MB VRAM
-> > > > carveout because msm_use_mmu() was returning false since headless devices
-> > > > use a dummy parent device. Avoid this by extending the existing is_a2xx
-> > > > priv member to check the GPU IOMMU state on all platforms and use that
-> > > > check in msm_use_mmu().
-> > > > 
-> > > > This works for memory allocations but it doesn't prevent the VRAM carveout
-> > > > from being created because that happens before we have a chance to check
-> > > > the GPU IOMMU state in adreno_bind.
-> > > > 
-> > > > There are a number of possible options to resolve this but none of them are
-> > > > very clean. The easiest way is to likely specify vram=0 as module parameter
-> > > > on headless devices so that the memory doesn't get wasted.
-> > > 
-> > > This patch was on my plate for quite a while, please excuse me for
-> > > taking it so long.
-> > 
-> > No worries. I'm also chasing a bunch of other stuff too.
-> > 
-> > > I see the following problem with the current code. We have two different
-> > > instances than can access memory: MDP/DPU and GPU. And each of them can
-> > > either have or miss the MMU.
-> > > 
-> > > For some time I toyed with the idea of determining whether the allocated
-> > > BO is going to be used by display or by GPU, but then I abandoned it. We
-> > > can have display BOs being filled by GPU, so handling it this way would
-> > > complicate things a lot.
-> > > 
-> > > This actually rings a tiny bell in my head with the idea of splitting
-> > > the display and GPU parts to two different drivers, but I'm not sure
-> > > what would be the overall impact.
-> > 
-> > As I now exclusively work on headless devices I would be 100% for this,
-> > but I'm sure that our laptop friends might not agree :)
 > 
-> I do not know here. This is probably a question to Rob, as he better
-> understands the interaction between GPU and display parts of the userspace.
+> On 6/24/2023 11:53 AM, Manivannan Sadhasivam wrote:
+> > On Fri, Jun 23, 2023 at 10:27:31AM +0530, Devi Priya wrote:
+> > > Configure the ADDR_BIT_INDEX of PARF_AXI_MSTR_WR_ADDR_HALT_V2 register with
+> > > 0x1E to increase the halt window size to 1GB so that, when new inbound
+> > > posted write transactions whose address crosses 1G address range, the
+> > > controller would halt all the incoming writes until all the previous AXI
+> > > responses are received.
+> > > 
+> > 
+> > Can you explain how the value of 0x1e corresponds to 1GB window size?
+> 2^30 (0x1e) = 1G
+> > 
 
-I fully support this if it is feasible.
+So 0x1e selects 2^30 in the hardware? If so, please document it in the commit
+message.
 
-In our architecture, display and GPU are completely independent subsystems.
-Like Jordan mentioned, there are IOT products without display. And I wouldn't
-be surprised if there is a product with just display and uses software rendering.
+- Mani
 
--Akhil
-
-> 
+> > > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> > > ---
+> > >   This patch depends on the below series which adds support for PCIe
+> > >   controllers in IPQ9574
+> > >   https://lore.kernel.org/linux-arm-msm/20230519090219.15925-1-quic_devipriy@quicinc.com/
+> > > 
+> > >   drivers/pci/controller/dwc/pcie-qcom.c | 9 +++++++++
+> > >   1 file changed, 9 insertions(+)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index c7579dfa5b1c..26c40e006120 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -116,6 +116,8 @@
+> > >   /* PARF_AXI_MSTR_WR_ADDR_HALT register fields */
+> > >   #define EN					BIT(31)
+> > > +#define ADDR_BIT_INDEX				(BIT(0) | BIT(1) | BIT(2) | \
+> > > +						BIT(3) | BIT(4) | BIT(5))
 > > 
-> > > More on the msm_use_mmu() below.
-> > > 
-> > > > 
-> > > > Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
-> > > > ---
-> > > > 
-> > > >    drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
-> > > >    drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
-> > > >    drivers/gpu/drm/msm/msm_drv.h              | 2 +-
-> > > >    3 files changed, 9 insertions(+), 6 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > > index 36f062c7582f..4f19da28f80f 100644
-> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > > @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
-> > > >        DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
-> > > >                config.rev.minor, config.rev.patchid);
-> > > > 
-> > > > -     priv->is_a2xx = config.rev.core == 2;
-> > > > +     /*
-> > > > +      * A2xx has a built in IOMMU and all other IOMMU enabled targets will
-> > > > +      * have an ARM IOMMU attached
-> > > > +      */
-> > > > +     priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
-> > > >        priv->has_cached_coherent = config.rev.core >= 6;
-> > > > 
-> > > >        gpu = info->init(drm);
-> > > > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > > > index aca48c868c14..a125a351ec90 100644
-> > > > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > > > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > > > @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
-> > > >        struct msm_drm_private *priv = dev->dev_private;
-> > > > 
-> > > >        /*
-> > > > -      * a2xx comes with its own MMU
-> > > > -      * On other platforms IOMMU can be declared specified either for the
-> > > > -      * MDP/DPU device or for its parent, MDSS device.
-> > > > +      * Return true if the GPU or the MDP/DPU or parent MDSS device has an
-> > > > +      * IOMMU
-> > > >         */
-> > > > -     return priv->is_a2xx ||
-> > > > +     return priv->has_gpu_iommu ||
-> > > >                device_iommu_mapped(dev->dev) ||
-> > > >                device_iommu_mapped(dev->dev->parent);
-> > > 
-> > > I have a generic feeling that both old an new code is not fully correct.
-> > > Please correct me if I'm wrong:
-> > > 
-> > > We should be using VRAM, if either of the blocks can not use remapped
-> > > memory. So this should have been:
-> > > 
-> > > bool msm_use_mmu()
-> > > {
-> > >   if (!gpu_has_iommu)
-> > >     return false;
-> > > 
-> > >   if (have_display_part && !display_has_mmu())
-> > >     return false;
-> > > 
-> > >   return true;
-> > > }
-> > > 
-> > > What do you think.
+> > GENMASK(5, 0)
+> okay
 > > 
-> > I would have to see (and try) the real code but that seems like it might
-> > be reasonable.
+> > >   /* PARF_LTSSM register fields */
+> > >   #define LTSSM_EN				BIT(8)
+> > > @@ -154,6 +156,8 @@
+> > >   #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
+> > > +#define PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE	0x1e
+> > 
+> > GENMASK(4, 1) as these are address bits.
+> okay
 > 
-> Sure, let me craft it then.
-> 
-> > I would like to hear from some of the a2xx users too
-> > because this mostly affects them. On 3xx and newer you've always had the
-> > option of not having a MMU for GPU or display but I can't think of any
-> > use cases where you wouldn't want it.
-> 
-> msm8974 doesn't have (working) IOMMU driver. I also think there was an issue
-> somewhere around sdm630/660. And the wonderful msm8992/4, IIRC, also don't
-> have one.
-> 
-> Also the headless mode was quite useful for bringing up platforms, as it
-> allowed us to test GPU separately (and ofc. in some cases even w/o MMU).
-> 
-> I have both a2xx (only iMX for now) and a3xx for the tests here, on my desk.
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+> Thanks,
+> Devi Priya
+> > 
+> > - Mani
+> > 
+> > > +
+> > >   #define QCOM_PCIE_1_0_0_MAX_CLOCKS		4
+> > >   struct qcom_pcie_resources_1_0_0 {
+> > >   	struct clk_bulk_data clks[QCOM_PCIE_1_0_0_MAX_CLOCKS];
+> > > @@ -1126,6 +1130,11 @@ static int qcom_pcie_post_init(struct qcom_pcie *pcie)
+> > >   	writel(0, pcie->parf + PARF_Q2A_FLUSH);
+> > > +	val = readl(pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
+> > > +	val &= ~ADDR_BIT_INDEX;
+> > > +	writel(val | PARF_AXI_MSTR_WR_ADDR_HALT_WINDOW_SIZE, pcie->parf +
+> > > +			PARF_AXI_MSTR_WR_ADDR_HALT_V2);
+> > > +
+> > >   	dw_pcie_dbi_ro_wr_en(pci);
+> > >   	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> > > -- 
+> > > 2.17.1
+> > > 
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
