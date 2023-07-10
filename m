@@ -2,185 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3BAB74D50B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 14:14:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4005674D5F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 14:45:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231319AbjGJMOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 08:14:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56688 "EHLO
+        id S231920AbjGJMpF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 08:45:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231447AbjGJMOs (ORCPT
+        with ESMTP id S231189AbjGJMpF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 08:14:48 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 792A618F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 05:14:43 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb863edcb6so6732066e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 05:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688991282; x=1691583282;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FIUM80sem4wvBeLJM7gxDVfcq4hFkz0TAKhA7YTlha0=;
-        b=CM/h05LBdzNNfatrfLN7zDsRHxIyJPeh8P7N3VasIH7sCErwoKYRQ91NRoDT5golq6
-         yOn7zwL2WdLaAv5e6i+XlpCa2l7ihZ+ZZFHumn3zhPG1pvLmVcKk9v8LoVR0RASM4zia
-         752kRYDPMnoBOu/DcBTnXFNP2ZS8mmIrd0FUJh1w0qSKsAM/lB92/dJ/lqG8tlhuF7YG
-         OEOQ5afhhJ1lRobu64KC9GvqqrjFKqDXF/w0hcc5CcSh3Kk7pA1WzlIWT/q7JIvIZk0E
-         SGIiMhNtPZmIVrr5QCvH01XCPBbkzHNmv1b6dVbHDxIu3miA27BXakVo2zqhHL5+cnvF
-         Pjgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688991282; x=1691583282;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FIUM80sem4wvBeLJM7gxDVfcq4hFkz0TAKhA7YTlha0=;
-        b=MOmps2JF8BgPqz/JLxxQJKu5mfTs37cfDB9Xpdcmq4QJ7qZ2gvoybqLqSlAu6xwYlM
-         klHNc06BYy3QMBUNk5DzeLICiGMzbO9ZcdYjO1wR/u4wtkyUktg2IB+U4Krif8Gbl7o1
-         98FrG2IGeDJr3NAY5jSb3SNLZqcWVtYmECu8wOaabFVBdSO3lgMaRlKdJxw4kY8Kf8dN
-         gPv+TSOVYu46qSLQr3t6hFRQl5IUBFGrrPuOzeOGCTm4mOajbAeoNr6/QXAhlr6bfIxq
-         7szwz+HuqZH2ATBWQViSysGYewRGii8cJH3xVczEOIT4Lh7sX4XQxZPJU4FrbppJsJ2K
-         MtYw==
-X-Gm-Message-State: ABy/qLbH+VGfgb7rTtOq6b2IbsC3BAh0ALDSGAw0mlLg3XIpkxi+uOid
-        uwgk0lxSXg2C7PdbTTE+qru62Q==
-X-Google-Smtp-Source: APBJJlEggwbPNBYWyFhjvfF6GLwQ/BHHtenN1h2x1ww8Fde/Lb05kPWkKWYva1WKoqvyG5xx6CJVPw==
-X-Received: by 2002:a05:6512:239f:b0:4fb:77d6:89c3 with SMTP id c31-20020a056512239f00b004fb77d689c3mr11852649lfv.12.1688991281113;
-        Mon, 10 Jul 2023 05:14:41 -0700 (PDT)
-Received: from [192.168.1.101] (abxj141.neoplus.adsl.tpnet.pl. [83.9.3.141])
-        by smtp.gmail.com with ESMTPSA id e7-20020ac25467000000b004fb763b5171sm1678441lfn.86.2023.07.10.05.14.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jul 2023 05:14:40 -0700 (PDT)
-Message-ID: <b1346bc7-4bf0-e885-c3d4-6fac01516bf4@linaro.org>
-Date:   Mon, 10 Jul 2023 14:14:39 +0200
+        Mon, 10 Jul 2023 08:45:05 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B876EB;
+        Mon, 10 Jul 2023 05:45:01 -0700 (PDT)
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36ABWJS9027612;
+        Mon, 10 Jul 2023 14:44:53 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=y4vhLbDxnpig5dCdMLGROChfvNNa99P9Q2XNlg4LdNQ=;
+ b=b6rVFXKN+JV4FditmO3exGIRgBmpBr5eTi/3rWzM2bWqpDo4GD9L5Xpra9x+fu7KKSO7
+ 6R+pmTqdfDDNxIHgxkxo8+9CmXUWPkLjXqS4MB5OO2HIEhDnYOdy2utKH2TsML30ONrF
+ HhSIzN2fK+w0fa+Ar1HzGvv59yqYqYZifYreCqqXNT9PSTmuEIdG28Qw7gGmF1J1SlHI
+ cENzbu6wdcZbmnRQnsZtw0q1VVwf5hNF8OOg57LFICKv8RV7ZD2EG/1fQqq/zdFKCv40
+ IcdEZeHEVBn/Dz/wLoUqkzV9VFg0kpd31IGpGAkElVsU63rApGc3pcVnCsOWrKdE0cuN sg== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3rre8vt3hm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 10 Jul 2023 14:44:53 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 2D1C7100066;
+        Mon, 10 Jul 2023 14:44:48 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 05DB223C6A4;
+        Mon, 10 Jul 2023 14:44:48 +0200 (CEST)
+Received: from [10.252.15.83] (10.252.15.83) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Mon, 10 Jul
+ 2023 14:44:46 +0200
+Message-ID: <6985175f-719a-bd4d-e95e-021b70234c8a@foss.st.com>
+Date:   Mon, 10 Jul 2023 14:44:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq5332: Add thermal zone nodes
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V9 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL
+ support
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Praveenkumar I <quic_ipkumar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, amitk@kernel.org, thara.gopinath@gmail.com,
-        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_varada@quicinc.com
-References: <20230710103735.1375847-1-quic_ipkumar@quicinc.com>
- <20230710103735.1375847-6-quic_ipkumar@quicinc.com>
- <3f6ab4b4-b5f5-5807-0cb4-8ae782bd6044@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <3f6ab4b4-b5f5-5807-0cb4-8ae782bd6044@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+To:     Sarannya S <quic_sarannya@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+References: <1688679698-31274-1-git-send-email-quic_sarannya@quicinc.com>
+ <1688679698-31274-4-git-send-email-quic_sarannya@quicinc.com>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Organization: STMicroelectronics
+In-Reply-To: <1688679698-31274-4-git-send-email-quic_sarannya@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.252.15.83]
+X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-10_09,2023-07-06_02,2023-05-22_02
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10.07.2023 13:23, Dmitry Baryshkov wrote:
-> On 10/07/2023 13:37, Praveenkumar I wrote:
->> This patch adds thermal zone nodes for sensors present in
->> IPQ5332.
->>
->> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 72 +++++++++++++++++++++++++++
->>   1 file changed, 72 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> index a1e3527178c0..8b276aeca53e 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> @@ -527,4 +527,76 @@ timer {
->>                    <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
->>                    <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
->>       };
->> +
->> +    thermal-zones {
->> +        rfa-0-thermal{
-thermal {
 
 
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 11>;
->> +
->> +            trips {
-Indentation seems off, tab size for kernel code is 8 spaces.
+On 7/6/23 23:41, Sarannya S wrote:
+> From: Chris Lew <quic_clew@quicinc.com>
+> 
+> Add RPMSG_GET_OUTGOING_FLOWCONTROL and RPMSG_SET_INCOMING_FLOWCONTROL
+> IOCTL support for rpmsg char device nodes to get/set the low level
+> transport signals.
+> 
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+> ---
+>  drivers/rpmsg/rpmsg_char.c | 54 ++++++++++++++++++++++++++++++++++++++++------
+>  include/uapi/linux/rpmsg.h | 10 +++++++++
+>  2 files changed, 58 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+> index a271fce..09833ad 100644
+> --- a/drivers/rpmsg/rpmsg_char.c
+> +++ b/drivers/rpmsg/rpmsg_char.c
+> @@ -52,6 +52,8 @@ static DEFINE_IDA(rpmsg_minor_ida);
+>   * @readq:	wait object for incoming queue
+>   * @default_ept: set to channel default endpoint if the default endpoint should be re-used
+>   *              on device open to prevent endpoint address update.
+> + * remote_flow_restricted: to indicate if the remote has requested for flow to be limited
+> + * remote_flow_updated: to indicate if the flow control has been requested
+>   */
+>  struct rpmsg_eptdev {
+>  	struct device dev;
+> @@ -68,6 +70,8 @@ struct rpmsg_eptdev {
+>  	struct sk_buff_head queue;
+>  	wait_queue_head_t readq;
+>  
+> +	bool remote_flow_restricted;
+> +	bool remote_flow_updated;
+>  };
+>  
+>  int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+> @@ -116,6 +120,18 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+>  	return 0;
+>  }
+>  
+> +static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
+> +{
+> +	struct rpmsg_eptdev *eptdev = priv;
+> +
+> +	eptdev->remote_flow_restricted = enable;
+> +	eptdev->remote_flow_updated = true;
+> +
+> +	wake_up_interruptible(&eptdev->readq);
+> +
+> +	return 0;
+> +}
+> +
+>  static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  {
+>  	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
+> @@ -152,6 +168,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  		return -EINVAL;
+>  	}
+>  
+> +	ept->flow_cb = rpmsg_ept_flow_cb;
+>  	eptdev->ept = ept;
+>  	filp->private_data = eptdev;
+>  	mutex_unlock(&eptdev->ept_lock);
+> @@ -172,6 +189,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
+>  		eptdev->ept = NULL;
+>  	}
+>  	mutex_unlock(&eptdev->ept_lock);
+> +	eptdev->remote_flow_updated = false;
+>  
+>  	/* Discard all SKBs */
+>  	skb_queue_purge(&eptdev->queue);
+> @@ -285,6 +303,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
+>  	if (!skb_queue_empty(&eptdev->queue))
+>  		mask |= EPOLLIN | EPOLLRDNORM;
+>  
+> +	if (eptdev->remote_flow_updated)
+> +		mask |= EPOLLPRI;
+> +
+>  	mutex_lock(&eptdev->ept_lock);
+>  	mask |= rpmsg_poll(eptdev->ept, filp, wait);
+>  	mutex_unlock(&eptdev->ept_lock);
+> @@ -297,14 +318,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+>  {
+>  	struct rpmsg_eptdev *eptdev = fp->private_data;
+>  
+> -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
+> -		return -EINVAL;
+> +	bool set;
+> +	int ret;
+>  
+> -	/* Don't allow to destroy a default endpoint. */
+> -	if (eptdev->default_ept)
+> -		return -EINVAL;
+> +	switch (cmd) {
+> +	case RPMSG_GET_OUTGOING_FLOWCONTROL:
+> +		eptdev->remote_flow_updated = false;
+> +		ret = put_user(eptdev->remote_flow_restricted, (int __user *)arg);
+> +		break;
+> +	case RPMSG_SET_INCOMING_FLOWCONTROL:
+> +		if (arg > 1) {
+> +			ret = -EINVAL;
+> +			break;
+> +		}
+> +		set = !!arg;
+> +		ret = rpmsg_set_flow_control(eptdev->ept, set, eptdev->chinfo.dst);
+> +		break;
+> +	case RPMSG_DESTROY_EPT_IOCTL:
+> +		/* Don't allow to destroy a default endpoint. */
+> +		if (eptdev->default_ept) {
+> +			ret = -EINVAL;
+> +			break;
+> +		}
+> +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +		break;
+> +	default:
+> +		ret = -EINVAL;
+> +	}
+>  
+> -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +	return ret;
+>  }
+>  
+>  static const struct file_operations rpmsg_eptdev_fops = {
+> diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
+> index 1637e68..f0c8da2 100644
+> --- a/include/uapi/linux/rpmsg.h
+> +++ b/include/uapi/linux/rpmsg.h
+> @@ -43,4 +43,14 @@ struct rpmsg_endpoint_info {
+>   */
+>  #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
+>  
+> +/**
+> + * Get the flow control state of the remote rpmsg char device.
+> + */
+> +#define RPMSG_GET_OUTGOING_FLOWCONTROL _IOR(0xb5, 0x5, int)
+> +
+> +/**
+> + * Set the flow control state of the local rpmsg char device.
+> + */
+> +#define RPMSG_SET_INCOMING_FLOWCONTROL _IOR(0xb5, 0x6, int)
+> +
 
-Konrad
->> +                rfa-0-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +
->> +        rfa-1-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 12>;
->> +
->> +            trips {
->> +                rfa-1-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +
->> +        misc-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 13>;
->> +
->> +            trips {
->> +                misc-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +
->> +        cpu-top-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 14>;
->> +
->> +            trips {
->> +                cpu-top-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
-> 
-> Could you please add a passive cooling devices for the CPU?
-> 
->> +        };
->> +
->> +        top-glue-thermal {
->> +            polling-delay-passive = <0>;
->> +            polling-delay = <0>;
->> +            thermal-sensors = <&tsens 15>;
->> +
->> +            trips {
->> +                top-glue-critical {
->> +                    temperature = <125000>;
->> +                    hysteresis = <1000>;
->> +                    type = "critical";
->> +                };
->> +            };
->> +        };
->> +    };
->>   };
-> 
+Seems that it is not the use to document the parameters for IOCTL
+but I wonder if documenting the use of the RPMSG_GET_OUTGOING_FLOWCONTROL
+and RPMSG_SET_INCOMING_FLOWCONTROL parameter could help users to implement
+the IOCTL...
+
+For the series
+Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+
+Thanks,
+Arnaud
+
+>  #endif
