@@ -2,84 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDA8174D839
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 15:55:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8834674D94C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 16:48:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbjGJNzP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 09:55:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
+        id S229469AbjGJOsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 10:48:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjGJNzP (ORCPT
+        with ESMTP id S229679AbjGJOsK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 09:55:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF0BD2;
-        Mon, 10 Jul 2023 06:55:10 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36ADPucq026574;
-        Mon, 10 Jul 2023 13:55:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=whUwVB7INIWJNXg+OG8YCm4ASRp/lBqDVjOAb8dV+KY=;
- b=gynTmW7cezZV7+q+Mc/Rr3Q0sCRPndMs8M82x6Yi3ZzTdkixGhXMN3plN5Z1OT9q6hN7
- PGIEK0Crmo+lpRA+aFlChKY78vF/hYu7T4+k4ObskHSQeuyY/yncUYg90VzMuNLbnWrc
- Xyyc1hK4du6YTzFymOPrrLGtkRIZ5oThlNg81ZlvLWGcq7HZtpOvaGp/XD/ygg3A8YOL
- veIbXWPvDTxddTuiLF2cVc4+vesrPLLL8CPfUMmBfRynocQ6Q9Z1aO/Iecg0TTzVZMUv
- 1kcuoGfpeD9TUOMcYM6sbmuhSHENPy2FzpA8dOPJ7VDtGubHsdinchZ+JjbjJ8xUiaVP QQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rrf5mgtcj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Jul 2023 13:55:05 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36ADt4vv027070
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Jul 2023 13:55:04 GMT
-Received: from [10.201.3.91] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 10 Jul
- 2023 06:54:59 -0700
-Message-ID: <6c2ac08b-c36a-510a-944c-26baffe74b9d@quicinc.com>
-Date:   Mon, 10 Jul 2023 19:24:56 +0530
+        Mon, 10 Jul 2023 10:48:10 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD79D114
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 07:48:08 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-98df3dea907so562675666b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 07:48:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689000487; x=1691592487;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0zUz1F8t9WEy32K0WQzvG/tkTggRTR3113BWQqc0TAA=;
+        b=OkpkR98UNKE1L7UjqB/hs8uZpKo2qzBIvbd3JgkfDo7ePiifR3C2gqjY3qh3r7Umni
+         9eEQptj5rNxCtADx0qUDxJPbMot36PYWDZ9B5RxmrZguWpF2VUdGIqFxnWM4Keil68w7
+         Rd+8K23yFKYKY+WRwR808JqH5nm5OUFVnmETF+LsbIKb43Expt9IR4XAda30Glg4CerA
+         n3qzdFYtrM9cigbYW3x16/IfrpF2bA+KqQGNmUgTCbLkf6kKCTuNL0+s+oAdQ6gkXqvH
+         FkSbRhp3EDX/iTfKRzSmGoRn4KC9BSbRtsx0RJ1izQOCEEHJU0kSiYDx2+o60sdJzc7R
+         LDLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689000487; x=1691592487;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0zUz1F8t9WEy32K0WQzvG/tkTggRTR3113BWQqc0TAA=;
+        b=GyyAb5qxHybfLvwaXKpFFSkiYrZYR4NameRGRjLn8mAxc6HwSHl3jlsIiZ8smD7ThB
+         fLx5byR6V2x0WZpxvuqJ9D/hy0ChnfQcVl0lXqQsEG2948ECskC21qqfNlsGYS/6z3b9
+         v7STpSrmt8/EJpD8eP9zSJA8JQxSvpwqKa6rqQCwjJZ3OHj/AVv2StybAIxYMeDryy+L
+         LLn8b363XGj2xXQ8x1uH1MwLHundwuPSPs5R9rytgb5wYWjacayudVcbIEM0H36TC+9y
+         Cz5V3N29CNFYiUCKn1uywAV6vhd6vPp7pTMOo2yUD6FqTK/xBwyIRF23mAJlHQ9HCBTu
+         H/IA==
+X-Gm-Message-State: ABy/qLa8KT9G4J5eRqK+2wE3XRu0u5eJQySbNKyk8LWBvIhUBx9eq+L8
+        jrJObD+BX1arzR7naOYLsJfaXA==
+X-Google-Smtp-Source: APBJJlH4AXkRENLH/gW901quCxj9gQR9PgVXbmX2ni6qf+0KlpuIOL301ZCHjSNB/cdAHbYqljwGBg==
+X-Received: by 2002:a17:906:300b:b0:98e:1deb:cb03 with SMTP id 11-20020a170906300b00b0098e1debcb03mr10212757ejz.56.1689000487153;
+        Mon, 10 Jul 2023 07:48:07 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id j17-20020a170906279100b00982a352f078sm6181160ejc.124.2023.07.10.07.48.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jul 2023 07:48:06 -0700 (PDT)
+Message-ID: <beddd5fc-bfb6-6ca8-8137-efed029516ca@linaro.org>
+Date:   Mon, 10 Jul 2023 16:48:04 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq5332: Add thermal zone nodes
-Content-Language: en-US
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+Subject: Re: [PATCH v3] arm64: dts: qcom: sdm845-db845c: Mark cont splash
+ memory region as reserved
+To:     Amit Pundir <amit.pundir@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>
-References: <20230710103735.1375847-1-quic_ipkumar@quicinc.com>
- <20230710103735.1375847-6-quic_ipkumar@quicinc.com>
- <3f6ab4b4-b5f5-5807-0cb4-8ae782bd6044@linaro.org>
- <b1346bc7-4bf0-e885-c3d4-6fac01516bf4@linaro.org>
- <01149ed4-8a8c-e0e0-d140-1f17a1f0c1fd@quicinc.com>
-In-Reply-To: <01149ed4-8a8c-e0e0-d140-1f17a1f0c1fd@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rPBxY3TrhAXrbiFmTRmkA1vO92Lmy5f9
-X-Proofpoint-ORIG-GUID: rPBxY3TrhAXrbiFmTRmkA1vO92Lmy5f9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-10_10,2023-07-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- priorityscore=1501 phishscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2307100125
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Bryan Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230616065123.3710734-1-amit.pundir@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230616065123.3710734-1-amit.pundir@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -90,115 +86,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 16/06/2023 08:51, Amit Pundir wrote:
+> Adding a reserved memory region for the framebuffer memory
+> (the splash memory region set up by the bootloader).
+> 
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> ---
+> v3: Point this reserved region to MDSS.
+> 
+> v2: Updated commit message.
+> 
+> There was some dicussion on v1 but it didn't go anywhere,
+> https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u.
+> The general consensus is that this memory should be freed and be
+> made resuable but that (releasing this piece of memory) has been
+> tried before and it is not trivial to return the reserved memory
+> node to the system RAM pool in this case.
+> 
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> index df2fde9063dc..503136eb9c06 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> @@ -101,6 +101,14 @@ hdmi_con: endpoint {
+>  		};
+>  	};
+>  
+> +	reserved-memory {
+> +		/* Cont splash region set up by the bootloader */
+> +		cont_splash_mem: framebuffer@9d400000 {
+> +			reg = <0x0 0x9d400000 0x0 0x2400000>;
+> +			no-map;
+> +		};
+> +	};
+> +
+>  	lt9611_1v8: lt9611-vdd18-regulator {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "LT9611_1V8";
+> @@ -517,6 +525,7 @@ &i2c14 {
+>  };
+>  
+>  &mdss {
+> +	memory-region = <&cont_splash_mem>;
 
-On 7/10/2023 7:04 PM, Praveenkumar I wrote:
->
-> On 7/10/2023 5:44 PM, Konrad Dybcio wrote:
->> On 10.07.2023 13:23, Dmitry Baryshkov wrote:
->>> On 10/07/2023 13:37, Praveenkumar I wrote:
->>>> This patch adds thermal zone nodes for sensors present in
->>>> IPQ5332.
->>>>
->>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/ipq5332.dtsi | 72 
->>>> +++++++++++++++++++++++++++
->>>>    1 file changed, 72 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi 
->>>> b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->>>> index a1e3527178c0..8b276aeca53e 100644
->>>> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->>>> @@ -527,4 +527,76 @@ timer {
->>>>                     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | 
->>>> IRQ_TYPE_LEVEL_LOW)>,
->>>>                     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | 
->>>> IRQ_TYPE_LEVEL_LOW)>;
->>>>        };
->>>> +
->>>> +    thermal-zones {
->>>> +        rfa-0-thermal{
->> thermal {
-> In all other DTS, name is 'thermal-zones". Hence followed the same.
-Sorry, understood now. Will give space after "rfa-0-thermal"
->>
->>>> +            polling-delay-passive = <0>;
->>>> +            polling-delay = <0>;
->>>> +            thermal-sensors = <&tsens 11>;
->>>> +
->>>> +            trips {
->> Indentation seems off, tab size for kernel code is 8 spaces.
-> Sure, will check the indent and update in next patch.
->>
->> Konrad
->>>> +                rfa-0-critical {
->>>> +                    temperature = <125000>;
->>>> +                    hysteresis = <1000>;
->>>> +                    type = "critical";
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +
->>>> +        rfa-1-thermal {
->>>> +            polling-delay-passive = <0>;
->>>> +            polling-delay = <0>;
->>>> +            thermal-sensors = <&tsens 12>;
->>>> +
->>>> +            trips {
->>>> +                rfa-1-critical {
->>>> +                    temperature = <125000>;
->>>> +                    hysteresis = <1000>;
->>>> +                    type = "critical";
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +
->>>> +        misc-thermal {
->>>> +            polling-delay-passive = <0>;
->>>> +            polling-delay = <0>;
->>>> +            thermal-sensors = <&tsens 13>;
->>>> +
->>>> +            trips {
->>>> +                misc-critical {
->>>> +                    temperature = <125000>;
->>>> +                    hysteresis = <1000>;
->>>> +                    type = "critical";
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +
->>>> +        cpu-top-thermal {
->>>> +            polling-delay-passive = <0>;
->>>> +            polling-delay = <0>;
->>>> +            thermal-sensors = <&tsens 14>;
->>>> +
->>>> +            trips {
->>>> +                cpu-top-critical {
->>>> +                    temperature = <125000>;
->>>> +                    hysteresis = <1000>;
->>>> +                    type = "critical";
->>>> +                };
->>>> +            };
->>> Could you please add a passive cooling devices for the CPU?
->>>
->>>> +        };
->>>> +
->>>> +        top-glue-thermal {
->>>> +            polling-delay-passive = <0>;
->>>> +            polling-delay = <0>;
->>>> +            thermal-sensors = <&tsens 15>;
->>>> +
->>>> +            trips {
->>>> +                top-glue-critical {
->>>> +                    temperature = <125000>;
->>>> +                    hysteresis = <1000>;
->>>> +                    type = "critical";
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +    };
->>>>    };
-> -- 
-> Thanks,
-> Praveenkumar
+Just to be sure: does this pass the dtbs_check testing? I would say it
+does not and wasn't tested :(
+
+Best regards,
+Krzysztof
+
