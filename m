@@ -2,365 +2,465 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ED1E74D118
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 11:10:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A21674D199
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 11:34:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231208AbjGJJKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 05:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41516 "EHLO
+        id S232625AbjGJJeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 05:34:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231189AbjGJJKg (ORCPT
+        with ESMTP id S232199AbjGJJd7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 05:10:36 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68901FA;
-        Mon, 10 Jul 2023 02:10:34 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id DFECC1F747;
-        Mon, 10 Jul 2023 09:10:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1688980231; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=l+p4EX1FVzBOQoGOcOf386rIUw6gZjfldInPfSHEuhU=;
-        b=UMKbcCVa8pp9s0yYj4q8apZvI7ylWmCoLh0IThmzNRKXQi7SiSsBr7bN7jOJHtZEvy0BUg
-        uUZej/nY1hx6BETxDiC8aX+IJWSwWpKVefJsOxILJTfLMKtxlY6M6ggZSC5EredHBk9i9w
-        whqHI8xcChQH8XtITKAyqnPM04/SHFw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1688980231;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=l+p4EX1FVzBOQoGOcOf386rIUw6gZjfldInPfSHEuhU=;
-        b=KT0j+kZdbc+QU6qi5+FrO5UOv4k28KucU74/0t/x9ml5MLj0RLQDowMbs2qB4t92R88HYj
-        vrZpWorkcTJ7IxAg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 47F4F1361C;
-        Mon, 10 Jul 2023 09:10:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id ROV0EAfLq2Q1IAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 10 Jul 2023 09:10:31 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     javierm@redhat.com, noralf@tronnes.org
-Cc:     dri-devel@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Moritz Duge <MoritzDuge@kolahilft.de>,
-        Torsten Krah <krah.tm@gmail.com>,
-        Paul Schyska <pschyska@gmail.com>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Inki Dae <inki.dae@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, stable@vger.kernel.org
-Subject: [PATCH] drm/client: Send hotplug event after registering a client
-Date:   Mon, 10 Jul 2023 11:10:17 +0200
-Message-ID: <20230710091029.27503-1-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.41.0
+        Mon, 10 Jul 2023 05:33:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F76110D3;
+        Mon, 10 Jul 2023 02:32:30 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36A8e92o005226;
+        Mon, 10 Jul 2023 09:32:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=16ATSE0CtOFh/8jVPBIuN4he3PgzMAsFGOsa7cmjT4s=;
+ b=KSzAimm9fYvukMPecgMqnkPFezO7oE4vvZlwHQbyTNiQkaP3/7LIa7ngRxNyYv7QBX/+
+ 0aTeNSp9cIh+bDb/TIdtqjr9YJutPNShb1wnoy1I05ZfcIbJ6L06L47DbCLIKJ5Ch3hB
+ KxEKcGBOrJS691VYmoHGwQfe5lnwIeTBVKoaXf/Yoo9grvspshJehKUvLRtdTpKdSSOg
+ Sbugaya5jVsX0AOvVHep+tXOLHxqXLqignd8mYSx39SaEEFdiSaA12ZR1EXN/cXVWXbU
+ 4jPUVjAqDl6DXu/7s5NXlf+VYvuGTUL+PL+79xpiZXfe7kcVbYhy0mFsafKUw8qhQVOZ ng== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rpwgm38nb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 10 Jul 2023 09:32:25 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36A9WOv4019457
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 10 Jul 2023 09:32:24 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 10 Jul 2023 02:32:19 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_saahtoma@quicinc.com>
+Subject: [PATCH] clk: qcom: clk-alpha-pll: Use determine_rate instead of round_rate
+Date:   Mon, 10 Jul 2023 15:02:06 +0530
+Message-ID: <20230710093206.18894-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: j5arkFWOqtWuhqFNVF84zutg5zDlv7vl
+X-Proofpoint-ORIG-GUID: j5arkFWOqtWuhqFNVF84zutg5zDlv7vl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-10_05,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=914 mlxscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2307100086
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Generate a hotplug event after registering a client to allow the
-client to configure its display. Remove the hotplug calls from the
-existing clients for fbdev emulation. This change fixes a concurrency
-bug between registering a client and receiving events from the DRM
-core. The bug is present in the fbdev emulation of all drivers.
+The round_rate() API returns a long value as the errors are reported using
+negative error codes. This leads to long overflow when the clock rate
+exceeds 2GHz.As the clock controller treats the clock rate above signed
+long max as an error, use determine_rate in place of round_rate as the
+determine_rate API does not possess such limitations.
 
-The fbdev emulation currently generates a hotplug event before
-registering the client to the device. For each new output, the DRM
-core sends an additional hotplug event to each registered client.
-
-If the DRM core detects first output between sending the artificial
-hotplug and registering the device, the output's hotplug event gets
-lost. If this is the first output, the fbdev console display remains
-dark. This has been observed with amdgpu and fbdev-generic.
-
-Fix this by adding hotplug generation directly to the client's
-register helper drm_client_register(). Registering the client and
-receiving events are serialized by struct drm_device.clientlist_mutex.
-So an output is either configured by the initial hotplug event, or
-the client has already been registered.
-
-The bug was originally added in commit 6e3f17ee73f7 ("drm/fb-helper:
-generic: Call drm_client_add() after setup is done"), in which adding
-a client and receiving a hotplug event switched order. It was hidden,
-as most hardware and drivers have at least on static output configured.
-Other drivers didn't use the internal DRM client or still had struct
-drm_mode_config_funcs.output_poll_changed set. That callback handled
-hotplug events as well. After not setting the callback in amdgpu in
-commit 0e3172bac3f4 ("drm/amdgpu: Don't set struct
-drm_driver.output_poll_changed"), amdgpu did not show a framebuffer
-console if output events got lost. The bug got copy-pasted from
-fbdev-generic into the other fbdev emulation.
-
-Reported-by: Moritz Duge <MoritzDuge@kolahilft.de>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2649
-Fixes: 6e3f17ee73f7 ("drm/fb-helper: generic: Call drm_client_add() after setup is done")
-Fixes: 8ab59da26bc0 ("drm/fb-helper: Move generic fbdev emulation into separate source file")
-Fixes: b79fe9abd58b ("drm/fbdev-dma: Implement fbdev emulation for GEM DMA helpers")
-Fixes: 63c381552f69 ("drm/armada: Implement fbdev emulation as in-kernel client")
-Fixes: 49953b70e7d3 ("drm/exynos: Implement fbdev emulation as in-kernel client")
-Fixes: 8f1aaccb04b7 ("drm/gma500: Implement client-based fbdev emulation")
-Fixes: 940b869c2f2f ("drm/msm: Implement fbdev emulation as in-kernel client")
-Fixes: 9e69bcd88e45 ("drm/omapdrm: Implement fbdev emulation as in-kernel client")
-Fixes: e317a69fe891 ("drm/radeon: Implement client-based fbdev emulation")
-Fixes: 71ec16f45ef8 ("drm/tegra: Implement fbdev emulation as in-kernel client")
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Moritz Duge <MoritzDuge@kolahilft.de>
-Tested-by: Torsten Krah <krah.tm@gmail.com>
-Tested-by: Paul Schyska <pschyska@gmail.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Noralf Trønnes <noralf@tronnes.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Inki Dae <inki.dae@samsung.com>
-Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Mikko Perttunen <mperttunen@nvidia.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-samsung-soc@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Cc: amd-gfx@lists.freedesktop.org
-Cc: linux-tegra@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.2+
+Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 ---
- drivers/gpu/drm/armada/armada_fbdev.c     |  4 ----
- drivers/gpu/drm/drm_client.c              | 21 +++++++++++++++++++++
- drivers/gpu/drm/drm_fbdev_dma.c           |  4 ----
- drivers/gpu/drm/drm_fbdev_generic.c       |  4 ----
- drivers/gpu/drm/exynos/exynos_drm_fbdev.c |  4 ----
- drivers/gpu/drm/gma500/fbdev.c            |  4 ----
- drivers/gpu/drm/msm/msm_fbdev.c           |  4 ----
- drivers/gpu/drm/omapdrm/omap_fbdev.c      |  4 ----
- drivers/gpu/drm/radeon/radeon_fbdev.c     |  4 ----
- drivers/gpu/drm/tegra/fbdev.c             |  4 ----
- 10 files changed, 21 insertions(+), 36 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 128 +++++++++++++++++--------------
+ 1 file changed, 71 insertions(+), 57 deletions(-)
 
-diff --git a/drivers/gpu/drm/armada/armada_fbdev.c b/drivers/gpu/drm/armada/armada_fbdev.c
-index 3943e89cc06c..e40a95e51785 100644
---- a/drivers/gpu/drm/armada/armada_fbdev.c
-+++ b/drivers/gpu/drm/armada/armada_fbdev.c
-@@ -209,10 +209,6 @@ void armada_fbdev_setup(struct drm_device *dev)
- 		goto err_drm_client_init;
- 	}
- 
--	ret = armada_fbdev_client_hotplug(&fbh->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&fbh->client);
- 
- 	return;
-diff --git a/drivers/gpu/drm/drm_client.c b/drivers/gpu/drm/drm_client.c
-index f6292ba0e6fc..037e36f2049c 100644
---- a/drivers/gpu/drm/drm_client.c
-+++ b/drivers/gpu/drm/drm_client.c
-@@ -122,13 +122,34 @@ EXPORT_SYMBOL(drm_client_init);
-  * drm_client_register() it is no longer permissible to call drm_client_release()
-  * directly (outside the unregister callback), instead cleanup will happen
-  * automatically on driver unload.
-+ *
-+ * Registering a client generates a hotplug event that allows the client
-+ * to set up its display from pre-existing outputs. The client must have
-+ * initialized its state to able to handle the hotplug event successfully.
-  */
- void drm_client_register(struct drm_client_dev *client)
- {
- 	struct drm_device *dev = client->dev;
-+	int ret;
- 
- 	mutex_lock(&dev->clientlist_mutex);
- 	list_add(&client->list, &dev->clientlist);
-+
-+	if (client->funcs && client->funcs->hotplug) {
-+		/*
-+		 * Perform an initial hotplug event to pick up the
-+		 * display configuration for the client. This step
-+		 * has to be performed *after* registering the client
-+		 * in the list of clients, or a concurrent hotplug
-+		 * event might be lost; leaving the display off.
-+		 *
-+		 * Hold the clientlist_mutex as for a regular hotplug
-+		 * event.
-+		 */
-+		ret = client->funcs->hotplug(client);
-+		if (ret)
-+			drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
-+	}
- 	mutex_unlock(&dev->clientlist_mutex);
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index e4ef645f65d1..4d9085f83d6b 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -744,22 +744,24 @@ static int clk_alpha_pll_hwfsm_set_rate(struct clk_hw *hw, unsigned long rate,
+ 					clk_alpha_pll_hwfsm_is_enabled);
  }
- EXPORT_SYMBOL(drm_client_register);
-diff --git a/drivers/gpu/drm/drm_fbdev_dma.c b/drivers/gpu/drm/drm_fbdev_dma.c
-index 8217f1ddc007..f9b1f7cd31b7 100644
---- a/drivers/gpu/drm/drm_fbdev_dma.c
-+++ b/drivers/gpu/drm/drm_fbdev_dma.c
-@@ -248,10 +248,6 @@ void drm_fbdev_dma_setup(struct drm_device *dev, unsigned int preferred_bpp)
- 		goto err_drm_client_init;
- 	}
  
--	ret = drm_fbdev_dma_client_hotplug(&fb_helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&fb_helper->client);
+-static long clk_alpha_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+-				     unsigned long *prate)
++static int clk_alpha_pll_determine_rate(struct clk_hw *hw,
++					struct clk_rate_request *req)
+ {
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l, alpha_width = pll_alpha_width(pll);
+ 	u64 a;
+ 	unsigned long min_freq, max_freq;
  
- 	return;
-diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
-index 98ae703848a0..b9343fb6cf13 100644
---- a/drivers/gpu/drm/drm_fbdev_generic.c
-+++ b/drivers/gpu/drm/drm_fbdev_generic.c
-@@ -339,10 +339,6 @@ void drm_fbdev_generic_setup(struct drm_device *dev, unsigned int preferred_bpp)
- 		goto err_drm_client_init;
- 	}
+-	rate = alpha_pll_round_rate(rate, *prate, &l, &a, alpha_width);
+-	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
+-		return rate;
++	req->rate = alpha_pll_round_rate(req->rate, req->best_parent_rate,
++					 &l, &a, alpha_width);
++	if (!pll->vco_table || alpha_pll_find_vco(pll, req->rate))
++		return 0;
  
--	ret = drm_fbdev_generic_client_hotplug(&fb_helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&fb_helper->client);
+ 	min_freq = pll->vco_table[0].min_freq;
+ 	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
  
- 	return;
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-index fdf65587f1fe..226310c765d8 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-@@ -215,10 +215,6 @@ void exynos_drm_fbdev_setup(struct drm_device *dev)
- 	if (ret)
- 		goto err_drm_client_init;
+-	return clamp(rate, min_freq, max_freq);
++	req->rate = clamp(req->rate, min_freq, max_freq);
++	return 0;
+ }
  
--	ret = exynos_drm_fbdev_client_hotplug(&fb_helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&fb_helper->client);
+ static unsigned long
+@@ -906,12 +908,15 @@ static int alpha_pll_huayra_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	return 0;
+ }
  
- 	return;
-diff --git a/drivers/gpu/drm/gma500/fbdev.c b/drivers/gpu/drm/gma500/fbdev.c
-index 955cbe9f05a7..054426549fc6 100644
---- a/drivers/gpu/drm/gma500/fbdev.c
-+++ b/drivers/gpu/drm/gma500/fbdev.c
-@@ -328,10 +328,6 @@ void psb_fbdev_setup(struct drm_psb_private *dev_priv)
- 		goto err_drm_fb_helper_unprepare;
- 	}
+-static long alpha_pll_huayra_round_rate(struct clk_hw *hw, unsigned long rate,
+-					unsigned long *prate)
++static int alpha_pll_huayra_determine_rate(struct clk_hw *hw,
++					   struct clk_rate_request *req)
+ {
+ 	u32 l, a;
  
--	ret = psb_fbdev_client_hotplug(&fb_helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&fb_helper->client);
+-	return alpha_huayra_pll_round_rate(rate, *prate, &l, &a);
++	req->rate = alpha_huayra_pll_round_rate(req->rate,
++						req->best_parent_rate,
++						&l, &a);
++	return 0;
+ }
  
- 	return;
-diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-index b933a85420f6..bf1e17dc4550 100644
---- a/drivers/gpu/drm/msm/msm_fbdev.c
-+++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -246,10 +246,6 @@ void msm_fbdev_setup(struct drm_device *dev)
- 		goto err_drm_fb_helper_unprepare;
- 	}
+ static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
+@@ -1030,7 +1035,7 @@ const struct clk_ops clk_alpha_pll_ops = {
+ 	.disable = clk_alpha_pll_disable,
+ 	.is_enabled = clk_alpha_pll_is_enabled,
+ 	.recalc_rate = clk_alpha_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = clk_alpha_pll_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_ops);
+@@ -1040,7 +1045,7 @@ const struct clk_ops clk_alpha_pll_huayra_ops = {
+ 	.disable = clk_alpha_pll_disable,
+ 	.is_enabled = clk_alpha_pll_is_enabled,
+ 	.recalc_rate = alpha_pll_huayra_recalc_rate,
+-	.round_rate = alpha_pll_huayra_round_rate,
++	.determine_rate = alpha_pll_huayra_determine_rate,
+ 	.set_rate = alpha_pll_huayra_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_huayra_ops);
+@@ -1050,7 +1055,7 @@ const struct clk_ops clk_alpha_pll_hwfsm_ops = {
+ 	.disable = clk_alpha_pll_hwfsm_disable,
+ 	.is_enabled = clk_alpha_pll_hwfsm_is_enabled,
+ 	.recalc_rate = clk_alpha_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = clk_alpha_pll_hwfsm_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_hwfsm_ops);
+@@ -1060,7 +1065,7 @@ const struct clk_ops clk_alpha_pll_fixed_trion_ops = {
+ 	.disable = clk_trion_pll_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_trion_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_trion_ops);
  
--	ret = msm_fbdev_client_hotplug(&helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&helper->client);
+@@ -1094,25 +1099,25 @@ static const struct clk_div_table clk_alpha_2bit_div_table[] = {
+ 	{ }
+ };
  
- 	return;
-diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-index b7ccce0704a3..fe6639c1cdf3 100644
---- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-+++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-@@ -318,10 +318,6 @@ void omap_fbdev_setup(struct drm_device *dev)
+-static long
+-clk_alpha_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
+-				 unsigned long *prate)
++static int clk_alpha_pll_postdiv_determine_rate(struct clk_hw *hw,
++						struct clk_rate_request *req)
+ {
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 	const struct clk_div_table *table;
++	unsigned long rate = req->rate;
  
- 	INIT_WORK(&fbdev->work, pan_worker);
+ 	if (pll->width == 2)
+ 		table = clk_alpha_2bit_div_table;
+ 	else
+ 		table = clk_alpha_div_table;
  
--	ret = omap_fbdev_client_hotplug(&helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&helper->client);
+-	return divider_round_rate(hw, rate, prate, table,
+-				  pll->width, CLK_DIVIDER_POWER_OF_TWO);
++	req->rate = divider_round_rate(hw, rate, &req->best_parent_rate, table,
++				       pll->width, CLK_DIVIDER_POWER_OF_TWO);
++	return 0;
+ }
  
- 	return;
-diff --git a/drivers/gpu/drm/radeon/radeon_fbdev.c b/drivers/gpu/drm/radeon/radeon_fbdev.c
-index ab9c1abbac97..f941e2e7cae6 100644
---- a/drivers/gpu/drm/radeon/radeon_fbdev.c
-+++ b/drivers/gpu/drm/radeon/radeon_fbdev.c
-@@ -383,10 +383,6 @@ void radeon_fbdev_setup(struct radeon_device *rdev)
- 		goto err_drm_client_init;
- 	}
+-static long
+-clk_alpha_pll_postdiv_round_ro_rate(struct clk_hw *hw, unsigned long rate,
+-				    unsigned long *prate)
++static int clk_alpha_pll_postdiv_determine_ro_rate(struct clk_hw *hw,
++						   struct clk_rate_request *req)
+ {
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 	u32 ctl, div;
+@@ -1124,9 +1129,11 @@ clk_alpha_pll_postdiv_round_ro_rate(struct clk_hw *hw, unsigned long rate,
+ 	div = 1 << fls(ctl);
  
--	ret = radeon_fbdev_client_hotplug(&fb_helper->client);
--	if (ret)
--		drm_dbg_kms(rdev->ddev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&fb_helper->client);
+ 	if (clk_hw_get_flags(hw) & CLK_SET_RATE_PARENT)
+-		*prate = clk_hw_round_rate(clk_hw_get_parent(hw), div * rate);
++		req->best_parent_rate = clk_hw_round_rate(clk_hw_get_parent(hw),
++							  div * req->rate);
++	req->rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, div);
  
- 	return;
-diff --git a/drivers/gpu/drm/tegra/fbdev.c b/drivers/gpu/drm/tegra/fbdev.c
-index e74d9be981c7..d042234e1807 100644
---- a/drivers/gpu/drm/tegra/fbdev.c
-+++ b/drivers/gpu/drm/tegra/fbdev.c
-@@ -225,10 +225,6 @@ void tegra_fbdev_setup(struct drm_device *dev)
- 	if (ret)
- 		goto err_drm_client_init;
+-	return DIV_ROUND_UP_ULL((u64)*prate, div);
++	return 0;
+ }
  
--	ret = tegra_fbdev_client_hotplug(&helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&helper->client);
+ static int clk_alpha_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -1145,13 +1152,13 @@ static int clk_alpha_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
  
- 	return;
+ const struct clk_ops clk_alpha_pll_postdiv_ops = {
+ 	.recalc_rate = clk_alpha_pll_postdiv_recalc_rate,
+-	.round_rate = clk_alpha_pll_postdiv_round_rate,
++	.determine_rate = clk_alpha_pll_postdiv_determine_rate,
+ 	.set_rate = clk_alpha_pll_postdiv_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_ops);
+ 
+ const struct clk_ops clk_alpha_pll_postdiv_ro_ops = {
+-	.round_rate = clk_alpha_pll_postdiv_round_ro_rate,
++	.determine_rate = clk_alpha_pll_postdiv_determine_ro_rate,
+ 	.recalc_rate = clk_alpha_pll_postdiv_recalc_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_ro_ops);
+@@ -1393,7 +1400,7 @@ const struct clk_ops clk_alpha_pll_fabia_ops = {
+ 	.is_enabled = clk_alpha_pll_is_enabled,
+ 	.set_rate = alpha_pll_fabia_set_rate,
+ 	.recalc_rate = alpha_pll_fabia_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_fabia_ops);
+ 
+@@ -1402,7 +1409,7 @@ const struct clk_ops clk_alpha_pll_fixed_fabia_ops = {
+ 	.disable = alpha_pll_fabia_disable,
+ 	.is_enabled = clk_alpha_pll_is_enabled,
+ 	.recalc_rate = alpha_pll_fabia_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_fabia_ops);
+ 
+@@ -1452,14 +1459,16 @@ clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	return (parent_rate / div);
+ }
+ 
+-static long
+-clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
+-				 unsigned long *prate)
++static int
++clk_trion_pll_postdiv_determine_rate(struct clk_hw *hw,
++				     struct clk_rate_request *req)
+ {
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 
+-	return divider_round_rate(hw, rate, prate, pll->post_div_table,
+-				  pll->width, CLK_DIVIDER_ROUND_CLOSEST);
++	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
++				       pll->post_div_table, pll->width,
++				       CLK_DIVIDER_ROUND_CLOSEST);
++	return 0;
+ };
+ 
+ static int
+@@ -1485,18 +1494,21 @@ clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ const struct clk_ops clk_alpha_pll_postdiv_trion_ops = {
+ 	.recalc_rate = clk_trion_pll_postdiv_recalc_rate,
+-	.round_rate = clk_trion_pll_postdiv_round_rate,
++	.determine_rate = clk_trion_pll_postdiv_determine_rate,
+ 	.set_rate = clk_trion_pll_postdiv_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_trion_ops);
+ 
+-static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
+-				unsigned long rate, unsigned long *prate)
++static int
++clk_alpha_pll_postdiv_fabia_determine_rate(struct clk_hw *hw,
++					   struct clk_rate_request *req)
+ {
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 
+-	return divider_round_rate(hw, rate, prate, pll->post_div_table,
+-				pll->width, CLK_DIVIDER_ROUND_CLOSEST);
++	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
++				       pll->post_div_table, pll->width,
++					CLK_DIVIDER_ROUND_CLOSEST);
++	return 0;
+ }
+ 
+ static int clk_alpha_pll_postdiv_fabia_set_rate(struct clk_hw *hw,
+@@ -1531,7 +1543,7 @@ static int clk_alpha_pll_postdiv_fabia_set_rate(struct clk_hw *hw,
+ 
+ const struct clk_ops clk_alpha_pll_postdiv_fabia_ops = {
+ 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
+-	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
++	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
+ 	.set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
+@@ -1683,7 +1695,7 @@ const struct clk_ops clk_alpha_pll_trion_ops = {
+ 	.disable = clk_trion_pll_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_trion_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = alpha_pll_trion_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_trion_ops);
+@@ -1694,14 +1706,14 @@ const struct clk_ops clk_alpha_pll_lucid_ops = {
+ 	.disable = clk_trion_pll_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_trion_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = alpha_pll_trion_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_ops);
+ 
+ const struct clk_ops clk_alpha_pll_postdiv_lucid_ops = {
+ 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
+-	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
++	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
+ 	.set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
+@@ -1753,7 +1765,7 @@ const struct clk_ops clk_alpha_pll_agera_ops = {
+ 	.disable = clk_alpha_pll_disable,
+ 	.is_enabled = clk_alpha_pll_is_enabled,
+ 	.recalc_rate = alpha_pll_fabia_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = clk_alpha_pll_agera_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_agera_ops);
+@@ -1918,7 +1930,7 @@ const struct clk_ops clk_alpha_pll_lucid_5lpe_ops = {
+ 	.disable = alpha_pll_lucid_5lpe_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_trion_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = alpha_pll_lucid_5lpe_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_5lpe_ops);
+@@ -1928,13 +1940,13 @@ const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops = {
+ 	.disable = alpha_pll_lucid_5lpe_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_trion_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_lucid_5lpe_ops);
+ 
+ const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops = {
+ 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
+-	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
++	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
+ 	.set_rate = clk_lucid_5lpe_pll_postdiv_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_5lpe_ops);
+@@ -2087,7 +2099,7 @@ const struct clk_ops clk_alpha_pll_zonda_ops = {
+ 	.disable = clk_zonda_pll_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_trion_pll_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = clk_zonda_pll_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_zonda_ops);
+@@ -2277,13 +2289,13 @@ const struct clk_ops clk_alpha_pll_fixed_lucid_evo_ops = {
+ 	.disable = alpha_pll_lucid_evo_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = alpha_pll_lucid_evo_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_fixed_lucid_evo_ops);
+ 
+ const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops = {
+ 	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
+-	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
++	.determine_rate = clk_alpha_pll_postdiv_fabia_determine_rate,
+ 	.set_rate = clk_lucid_evo_pll_postdiv_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_evo_ops);
+@@ -2294,7 +2306,7 @@ const struct clk_ops clk_alpha_pll_lucid_evo_ops = {
+ 	.disable = alpha_pll_lucid_evo_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = alpha_pll_lucid_evo_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = alpha_pll_lucid_5lpe_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_lucid_evo_ops);
+@@ -2305,7 +2317,7 @@ const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops = {
+ 	.disable = alpha_pll_reset_lucid_evo_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = alpha_pll_lucid_evo_recalc_rate,
+-	.round_rate = clk_alpha_pll_round_rate,
++	.determine_rate = clk_alpha_pll_determine_rate,
+ 	.set_rate = alpha_pll_lucid_5lpe_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_reset_lucid_evo_ops);
+@@ -2341,22 +2353,24 @@ static unsigned long clk_rivian_evo_pll_recalc_rate(struct clk_hw *hw,
+ 	return parent_rate * l;
+ }
+ 
+-static long clk_rivian_evo_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+-					  unsigned long *prate)
++static int clk_rivian_evo_pll_determine_rate(struct clk_hw *hw,
++					     struct clk_rate_request *req)
+ {
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	unsigned long min_freq, max_freq;
+ 	u32 l;
+ 	u64 a;
+ 
+-	rate = alpha_pll_round_rate(rate, *prate, &l, &a, 0);
+-	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
+-		return rate;
++	req->rate = alpha_pll_round_rate(req->rate, req->best_parent_rate,
++					 &l, &a, 0);
++	if (!pll->vco_table || alpha_pll_find_vco(pll, req->rate))
++		return 0;
+ 
+ 	min_freq = pll->vco_table[0].min_freq;
+ 	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
+ 
+-	return clamp(rate, min_freq, max_freq);
++	req->rate = clamp(req->rate, min_freq, max_freq);
++	return 0;
+ }
+ 
+ const struct clk_ops clk_alpha_pll_rivian_evo_ops = {
+@@ -2364,7 +2378,7 @@ const struct clk_ops clk_alpha_pll_rivian_evo_ops = {
+ 	.disable = alpha_pll_lucid_5lpe_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_rivian_evo_pll_recalc_rate,
+-	.round_rate = clk_rivian_evo_pll_round_rate,
++	.determine_rate = clk_rivian_evo_pll_determine_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_rivian_evo_ops);
+ 
 -- 
-2.41.0
+2.17.1
 
