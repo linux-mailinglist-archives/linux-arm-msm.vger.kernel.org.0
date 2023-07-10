@@ -2,134 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E93B74DC88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 19:31:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DE6674DCEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jul 2023 20:01:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231543AbjGJRb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 13:31:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50854 "EHLO
+        id S230358AbjGJSA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 14:00:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230402AbjGJRb2 (ORCPT
+        with ESMTP id S231679AbjGJSA6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 13:31:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B03E187;
-        Mon, 10 Jul 2023 10:31:26 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8BA1D61169;
-        Mon, 10 Jul 2023 17:31:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DD5C433C7;
-        Mon, 10 Jul 2023 17:31:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689010285;
-        bh=yBEMuGoWHM9zUe+iAIatKlGNoEB//1WfSxUw+0SuQ6A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VttBOl+eNlj1/cgq3G8qxJc+Ah7b5ZQ04PTV+EG6CFR2pRgYe6JyXMHkH1/K5bemV
-         K7OqUHz9qrkCqPetZgj1nNcc9MMYdr/B9tGDE8jYkIXmiDAP6OS06Xl3q0kgh5hEpC
-         MvMnLChy3z1cQdkugx0ULecDib0F8BZscQJjcD6lCQGmAOZWkJumwmB1iP89ewG1mK
-         rAm6IHAnieSj0S2DZ5vLDOR0ISwF5BNq2Bv8GkENsnzbMGMTAKoGpz+DIGvt6qDstD
-         H+akvWxjFGPRQ19Fycx48iyLC1xdJ/ddnyN9qoFnjn+84u3R5jM1KfNYx9ZqQrj7XX
-         kUC1BkFYkCtCQ==
-Date:   Mon, 10 Jul 2023 18:31:12 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Amit Kumar Mahapatra via Alsa-devel 
-        <alsa-devel@alsa-project.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Sanjay R Mehta <sanju.mehta@amd.com>,
-        Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Subject: Re: [PATCH v2 00/15] spi: Header and core clean up and refactoring
-Message-ID: <58c6f76a-8028-4ce8-a101-d5feb3b40897@sirena.org.uk>
-References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
+        Mon, 10 Jul 2023 14:00:58 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EACB511B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 11:00:53 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b6ef9ed2fdso78221011fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 11:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689012052; x=1691604052;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dPczIFUT5swcmN5pPJIcNlKf/rMlVyDjhcPHAsFTnXg=;
+        b=R5D0I9Ir5SJAEDqpFN2S2SzstQAB5rTv/SjvJKvIqEDQYGzRbO9SgbV0OT3gDos6oO
+         dCBDBnCZ/YuIzEmD5J9EG83fcQnUdDpfVn7O06RjZlztrWnwRtBM5VyZwCo6wDlS3FBI
+         wxht3EPVzkNUKV71SvDM9NqGwa+GC4HFmeNrQVDX2TEKL/xS8mhWKxBLnoHQUhjOf7zd
+         Mt8wmEO9RCryQH+mxNwIFOoqCtGhmKttA/SMX5oqxU8WrbS5yywTkKNkx+6bqshngfY1
+         yLL5X0gq8F9RiJO8MElyZnebyCjLw0M6Uo/qCMP7uQ0SdBk+BD/i7IKIBhHUqKxx5md1
+         fUlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689012052; x=1691604052;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dPczIFUT5swcmN5pPJIcNlKf/rMlVyDjhcPHAsFTnXg=;
+        b=S+oGATEXDSC/JO/38Y9lThBzR/ykZITAboRmUxOhrNcskDEq8axkmLnE2rMIGXiHzZ
+         EnU+7rDj2EB4esap7PUIZSEfBmFfu1pjM1UjxjRg17/ir+c8rFFYsWoJzviae5w/m3sU
+         WazYMxq8JwrK+mnrE+TXrHcmsb8YqKlRG2lHiHjVMyfgSUqGUIOOzF7B4h4PjZoV99M7
+         3mf3zV/EF68yOXAsipIpRpoMHxCPeYf/I9HE5FBa/U/7NckaebvHn3LAbk6sPwQz/3gb
+         7S3tnyAY/fQPtJeiSMzlCj3769Kc5BAHBet0LTWVR3oZsAUPp6SfC4/A8F99OGULTEYu
+         doEQ==
+X-Gm-Message-State: ABy/qLZyvil3hpIT9GJ1gMww7PROlZ1ZzvCe6HdeuZMiFG6JNeVPSm4p
+        Alg3m4lXaiL3mb0FMQlTWXPYkw==
+X-Google-Smtp-Source: APBJJlFmZm9+86iGEXvex6hgMwhGxAlxtSK/mzvgG+u333wcjJZCS7fwoTcXY4jPp/goq79ZGQNU+g==
+X-Received: by 2002:a2e:880a:0:b0:2b6:cc93:4ecb with SMTP id x10-20020a2e880a000000b002b6cc934ecbmr12115534ljh.43.1689012052149;
+        Mon, 10 Jul 2023 11:00:52 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id h17-20020a2e9011000000b002b6c92fa161sm74538ljg.61.2023.07.10.11.00.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jul 2023 11:00:51 -0700 (PDT)
+Message-ID: <ebafc2ec-947f-0c9f-4ac3-14f66468b63c@linaro.org>
+Date:   Mon, 10 Jul 2023 21:00:50 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Mtt0ZQ3K6jQ9xKnG"
-Content-Disposition: inline
-In-Reply-To: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
-X-Cookie: Do you have lysdexia?
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [Freedreno] [PATCH v1 1/5] drm/msm/dp: remove pm_runtime_xxx()
+ from dp_power.c
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_sbillaka@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marijn.suijten@somainline.org, quic_jesszhan@quicinc.com,
+        freedreno@lists.freedesktop.org
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-2-git-send-email-quic_khsieh@quicinc.com>
+ <fc5501cf-c335-81f7-1ad7-26fdc1b6922d@linaro.org>
+ <72cb729b-a9d3-3e5b-c70a-0761f47a6779@quicinc.com>
+ <CAA8EJpqKVBKRpFs=sS2rwrJpDP22sNrd00kCYm-b_ZB96O=s5g@mail.gmail.com>
+ <10de9309-19f9-18af-3e01-1cda7d76e73e@quicinc.com>
+ <8a8b24ea-1abf-922c-439e-50a27cf2e5fa@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <8a8b24ea-1abf-922c-439e-50a27cf2e5fa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 10/07/2023 20:25, Kuogee Hsieh wrote:
+> 
+> On 7/9/2023 1:32 PM, Abhinav Kumar wrote:
+>>
+>>
+>> On 7/9/2023 11:00 AM, Dmitry Baryshkov wrote:
+>>> On Sun, 9 Jul 2023 at 20:22, Abhinav Kumar 
+>>> <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 7/7/2023 5:06 PM, Dmitry Baryshkov wrote:
+>>>>> On 08/07/2023 02:52, Kuogee Hsieh wrote:
+>>>>>> Since both pm_runtime_resume() and pm_runtime_suspend() are not
+>>>>>> populated at dp_pm_ops. Those pm_runtime_get/put() functions within
+>>>>>> dp_power.c will not have any effects in addition to increase/decrease
+>>>>>> power counter.
+>>>>>
+>>>>> Lie.
+>>>>>
+>>>>
+>>>> Even if the commit text is incorrect, review comments like this are not
+>>>> helping the patch nor the author and will just get ignored anyway.
+>>>
+>>> The review comment might be overreacting, excuse me. I was really
+>>> impressed by the commit message, which contradicts the basic source
+>>> code. pm_runtime_get() does a lot more than just increasing the power
+>>> counter.
+>>>
+>>
+>> It says within dp_power.c. Nonetheless, please let us know what is 
+>> missing in the context of this patch like Bjorn did to make it an 
+>> effective review and we can correct it. In its current form, the 
+>> review comment is adding no value.
+>>
+> I am new in pm.
+> 
+> Any recommendation to revise this commit test?
 
---Mtt0ZQ3K6jQ9xKnG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I'd say, squash patches 1 and 2 and then state in the commit message 
+that you are changing pm_runtime code paths because you want to power up 
+the device from the runtime callbacks rather than just waking up the 
+device in the power up path.
 
-On Mon, Jul 10, 2023 at 06:49:17PM +0300, Andy Shevchenko wrote:
-> Various cleanups and refactorings of the SPI header and core parts
-> united in a single series. It also touches drivers under SPI subsystem
-> folder on the pure renaming purposes of some constants.
+Generally it is much easier to justify changing from A to B rather than 
+just dropping A and then adding B.
 
-I've queued 1-3, 6-8 and 11- for CI thanks.
+> 
+>>>>>> Also pm_runtime_xxx() should be executed at top
+>>>>>> layer.
+>>>>>
+>>>>> Why?
+>>>>>
+>>>>
+>>>> I guess he meant to centralize this around dp_display.c. Will elaborate
+>>>> while posting the next rev.
+>>>>
+>>>>>>
+>>>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>>>> ---
+>>>>>>    drivers/gpu/drm/msm/dp/dp_power.c | 9 ---------
+>>>>>>    1 file changed, 9 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c
+>>>>>> b/drivers/gpu/drm/msm/dp/dp_power.c
+>>>>>> index 5cb84ca..ed2f62a 100644
+>>>>>> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+>>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+>>>>>> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power 
+>>>>>> *dp_power)
+>>>>>>        power = container_of(dp_power, struct dp_power_private, 
+>>>>>> dp_power);
+>>>>>> -    pm_runtime_enable(power->dev);
+>>>>>> -
+>>>>>>        return dp_power_clk_init(power);
+>>>>>>    }
+>>>>>> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power
+>>>>>> *dp_power)
+>>>>>>        struct dp_power_private *power;
+>>>>>>        power = container_of(dp_power, struct dp_power_private, 
+>>>>>> dp_power);
+>>>>>> -
+>>>>>> -    pm_runtime_disable(power->dev);
+>>>>>>    }
+>>>>>>    int dp_power_init(struct dp_power *dp_power)
+>>>>>> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
+>>>>>>        power = container_of(dp_power, struct dp_power_private, 
+>>>>>> dp_power);
+>>>>>> -    pm_runtime_get_sync(power->dev);
+>>>>>> -
+>>>>>>        rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+>>>>>> -    if (rc)
+>>>>>> -        pm_runtime_put_sync(power->dev);
+>>>>>>        return rc;
+>>>>>>    }
+>>>>>> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
+>>>>>>        power = container_of(dp_power, struct dp_power_private, 
+>>>>>> dp_power);
+>>>>>>        dp_power_clk_enable(dp_power, DP_CORE_PM, false);
+>>>>>> -    pm_runtime_put_sync(power->dev);
+>>>>>>        return 0;
+>>>>>>    }
+>>>>>
+>>>
+>>>
+>>>
 
---Mtt0ZQ3K6jQ9xKnG
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+With best wishes
+Dmitry
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSsQF8ACgkQJNaLcl1U
-h9CQ2gf+NebuHlkBa9zrhzmcGhSrtVx5yFCLP0dHaZVPMEHj6t0rIpQGodx2xOq0
-MawEB/JvvnMHpCvUoGGUXGsTcLiBB3uxADywJKyPkitWM3W/9LMAGRwpdnyV/zbN
-i4RuTGjLyFnoHuDdf82cL/5f3EFsLn1J3rl3cUDAv1c3U+WpZReA4OO9s9QhlqJU
-GfQoV1As2DUX49504bC2EfuPpa4wYIWrR1fT8ApGCZXs3KUQpgTWQ7iH4X48fdbY
-5gE1rQID66FMT2d78FRZkVmqej6wFqYr34G0zD2Lf/qC+ZsTSvvy4YExJhNnts1Q
-Md56GS1p2fjwWtBGCvs3Gmlg6zcmtQ==
-=CQab
------END PGP SIGNATURE-----
-
---Mtt0ZQ3K6jQ9xKnG--
