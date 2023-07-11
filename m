@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CEAA74F6F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 19:21:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6383874F705
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 19:21:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232569AbjGKRVD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 13:21:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35140 "EHLO
+        id S232879AbjGKRVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 13:21:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232428AbjGKRUs (ORCPT
+        with ESMTP id S232873AbjGKRVY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 13:20:48 -0400
+        Tue, 11 Jul 2023 13:21:24 -0400
 Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77EF9170C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 10:20:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BBC21BC0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 10:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689096009; x=1720632009;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=dWz/cu97liJBUQbHnYgLle48DwvZm+4+fW9Lp2y1SMU=;
-  b=cYVYV5Eq5JVLBQnbc3eSx+5DiSa5S1aIMvhfa2WEmtqyAkGWFR0dU8GR
-   NlnFrYws85JBVWogJCR/zI2SkPrtyXbVIhYy2V/Fjpgnmo5C76EG6l6Ca
-   JPg2h+VyV5UKP2vyD0HRfwt0UWuhiIWmcPMEOqsulk51svL6k/OIRw3o2
-   H2zK40KJJ58LOOtk/MxcnvBFLmm/ZDwYu+C/4ovjxni95qUQbedA/1pWB
-   HdmGOgJgtw4Txpaqwx7B9kLzYxTFYjC+7Iip/j+BABbaVnZg8pCNOVl+6
-   XBo2IT2gySBBgwqVOROd7hdr5e/ah+BF0UHixSuftOjpg09GxLT8ebc9H
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="362148732"
+  t=1689096040; x=1720632040;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=30sabh/p1/O/QZ5qTRNNcuYMznetHRhsRBrUeoewA/U=;
+  b=S5lr5PGvJmnkzbB9l6NSMYU6j6n+fGtJ7wfCN1bqVgryd+fH0PNmsaS6
+   RMHMfl9I5oD1ZQatXe3hvM6052aBJr1F0rEIu1hquCe7fL6bMMMn4p46b
+   SkpTj98Le09CycJn1YTOBvPUJELKm8AMBi3+QwL6J4kC+aWEtZUxYPpZM
+   QeYg0ij9ItbFBf+WYZi96ZoWqPC87LrvaRJLQcbBz4lzTmghhgFvoeijG
+   arQEaGl5rVBsxrk3jKu2Km1l5Qgkh2eUhyf+vpWks5TaVkmHYGUKXXNMs
+   FYq0GEaZuOnWqhxHbT+ekkngaKJItLpIX78MJyHDunFp3rfrfP4qaMzZd
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="362148760"
 X-IronPort-AV: E=Sophos;i="6.01,197,1684825200"; 
-   d="scan'208";a="362148732"
+   d="scan'208";a="362148760"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 10:19:16 -0700
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 10:19:18 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="715240815"
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="715240816"
 X-IronPort-AV: E=Sophos;i="6.01,197,1684825200"; 
-   d="scan'208";a="715240815"
+   d="scan'208";a="715240816"
 Received: from black.fi.intel.com ([10.237.72.28])
   by orsmga007.jf.intel.com with ESMTP; 11 Jul 2023 10:17:53 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id F1E3A128; Tue, 11 Jul 2023 20:17:58 +0300 (EEST)
+        id 0ED90F7; Tue, 11 Jul 2023 20:17:59 +0300 (EEST)
 From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To:     Mark Brown <broonie@kernel.org>,
         Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
@@ -95,10 +95,12 @@ Cc:     Sanjay R Mehta <sanju.mehta@amd.com>,
         Masami Hiramatsu <mhiramat@kernel.org>,
         Richard Cochran <richardcochran@gmail.com>,
         Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH v3 00/14] spi: Header and core clean up and refactoring
-Date:   Tue, 11 Jul 2023 20:17:42 +0300
-Message-Id: <20230711171756.86736-1-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v3 01/14] spi: Remove unneeded OF node NULL checks
+Date:   Tue, 11 Jul 2023 20:17:43 +0300
+Message-Id: <20230711171756.86736-2-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.40.0.1.gaa8946217a0b
+In-Reply-To: <20230711171756.86736-1-andriy.shevchenko@linux.intel.com>
+References: <20230711171756.86736-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -111,86 +113,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Various cleanups and refactorings of the SPI header and core parts
-united in a single series. It also touches drivers under SPI subsystem
-folder on the pure renaming purposes of some constants.
+In the couple of places the NULL check of OF node is implied by the call
+that takes it as a parameter. Drop the respective duplicate checks.
 
-No functional change intended (with some subtle shortcuts which are
-explained in the respective commit messages).
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> # MediaTek
+---
+ drivers/spi/spi.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-Changelog v3:
-- dropped controversial used to be patches 3,4,8,10 (Mark)
-- amended many commit messages (Mark)
-- added tag to patch 1 (AngeloGioacchino)
-- split used to be patch 2 to patches 2 & 3 for better review (Mark)
-- rewritten used to be patch 5 to patches 4 & 5 (Mark, Sebastian)
-- added new patch 7
-- fixed typos and added tag to patch 12 (Serge)
-
-v2: 20230710154932.68377-1-andriy.shevchenko@linux.intel.com
-
-Changelog v2:
-- added new patches 3,4,5,10,13,14
-- massaged comment and kernel doc in patch 9
-- split used to be patch 4 to patches 11,12
-- covered a few things in SPI core in patch 15
-- amended commit message for above (Mark)
-- reshuffled patches in the series for better logical grouping
-
-Andy Shevchenko (14):
-  spi: Remove unneeded OF node NULL checks
-  spi: Deduplicate IDR allocation code in spi_register_controller()
-  spi: Refactor bus number assigning code in spi_register_controller()
-  spi: Remove code duplication in spi_add_device*()
-  spi: Kill spi_add_device_locked()
-  spi: Use sysfs_emit() to instead of s*printf()
-  spi: Use BITS_TO_BYTES()
-  spi: Sort headers alphabetically
-  spi: Use struct_size() helper
-  spi: Get rid of old SPI_MASTER_NO_TX & SPI_MASTER_NO_RX
-  spi: Get rid of old SPI_MASTER_MUST_TX & SPI_MASTER_MUST_RX
-  spi: Rename SPI_MASTER_GPIO_SS to SPI_CONTROLLER_GPIO_SS
-  spi: Convert to SPI_CONTROLLER_HALF_DUPLEX
-  spi: Fix spelling typos and acronyms capitalization
-
- drivers/spi/spi-amd.c             |   2 +-
- drivers/spi/spi-at91-usart.c      |   2 +-
- drivers/spi/spi-ath79.c           |   2 +-
- drivers/spi/spi-atmel.c           |   4 +-
- drivers/spi/spi-bitbang-txrx.h    |  16 +--
- drivers/spi/spi-bitbang.c         |   8 +-
- drivers/spi/spi-cavium-thunderx.c |   2 +-
- drivers/spi/spi-davinci.c         |   2 +-
- drivers/spi/spi-dw-core.c         |   2 +-
- drivers/spi/spi-falcon.c          |   2 +-
- drivers/spi/spi-fsl-lpspi.c       |   2 +-
- drivers/spi/spi-gpio.c            |  10 +-
- drivers/spi/spi-imx.c             |   2 +-
- drivers/spi/spi-lp8841-rtc.c      |  10 +-
- drivers/spi/spi-meson-spicc.c     |   2 +-
- drivers/spi/spi-mt65xx.c          |   2 +-
- drivers/spi/spi-mxs.c             |   2 +-
- drivers/spi/spi-omap-uwire.c      |   2 +-
- drivers/spi/spi-orion.c           |   2 +-
- drivers/spi/spi-pci1xxxx.c        |   2 +-
- drivers/spi/spi-pic32-sqi.c       |   2 +-
- drivers/spi/spi-pic32.c           |   2 +-
- drivers/spi/spi-qcom-qspi.c       |   2 +-
- drivers/spi/spi-rb4xx.c           |   2 +-
- drivers/spi/spi-rockchip-sfc.c    |   2 +-
- drivers/spi/spi-rockchip.c        |   2 +-
- drivers/spi/spi-sifive.c          |   2 +-
- drivers/spi/spi-slave-mt27xx.c    |   2 +-
- drivers/spi/spi-sprd-adi.c        |   2 +-
- drivers/spi/spi-stm32.c           |   2 +-
- drivers/spi/spi-ti-qspi.c         |   2 +-
- drivers/spi/spi-xcomm.c           |   2 +-
- drivers/spi/spi-xtensa-xtfpga.c   |   2 +-
- drivers/spi/spi.c                 | 211 +++++++++++++-----------------
- include/linux/spi/spi.h           | 173 ++++++++++++------------
- include/trace/events/spi.h        |   2 +-
- 36 files changed, 238 insertions(+), 252 deletions(-)
-
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 9291b2a0e887..8f3282a71c63 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2399,9 +2399,6 @@ static void of_register_spi_devices(struct spi_controller *ctlr)
+ 	struct spi_device *spi;
+ 	struct device_node *nc;
+ 
+-	if (!ctlr->dev.of_node)
+-		return;
+-
+ 	for_each_available_child_of_node(ctlr->dev.of_node, nc) {
+ 		if (of_node_test_and_set_flag(nc, OF_POPULATED))
+ 			continue;
+@@ -3134,7 +3131,7 @@ int spi_register_controller(struct spi_controller *ctlr)
+ 		if (WARN(id < 0, "couldn't get idr"))
+ 			return id == -ENOSPC ? -EBUSY : id;
+ 		ctlr->bus_num = id;
+-	} else if (ctlr->dev.of_node) {
++	} else {
+ 		/* Allocate dynamic bus number using Linux idr */
+ 		id = of_alias_get_id(ctlr->dev.of_node, "spi");
+ 		if (id >= 0) {
 -- 
 2.40.0.1.gaa8946217a0b
 
