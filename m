@@ -2,169 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0648D74E449
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 04:34:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 560FB74E584
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 05:53:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbjGKCeP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 22:34:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37854 "EHLO
+        id S230124AbjGKDxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 23:53:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbjGKCeP (ORCPT
+        with ESMTP id S229545AbjGKDxk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 22:34:15 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEEAD1A2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 19:34:13 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b6ff1a637bso81612141fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 19:34:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689042852; x=1691634852;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dIxtCFBPEeOEWz1SJom8ZygG3Y0AOhRCbY7bAJ+qiuQ=;
-        b=xgdVhhvdX/yyxvlj3Bos9cHJuzXF0kdw6Mqur096mSEEqyTPx0jE0i8ENIM2pJjRo4
-         S5ux6foxwzMn8GFLGv5DHs5zHezuFwTjk/v8mUHiaFHLO+/nIHk1pOXpBXkJPA653nsu
-         z1Au2FMPE1Y/Y6cjfMOz0D6JKOgUahBHcVUAkZ0N6aqHHCjB5PYuQYbeA6Y1tCq2TlV5
-         LZAtq1G6W3nh5V4fr/dwIai4qtfI9W3YdhRJydyheDu4Dnqn1AyaeDtfR6YEM6IzKPFu
-         owMKVeBdRijOs9eMyS0dxo0RUzi+RR7XKPmtvwAhAj1shTXj6ULiFkkcqqVGvcsL8sng
-         QwJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689042852; x=1691634852;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dIxtCFBPEeOEWz1SJom8ZygG3Y0AOhRCbY7bAJ+qiuQ=;
-        b=TgbqfHOsOlrFZAPBHLTcIPZQnZHmbRiW2nCbHC3DCUWNZFNvrKK61pdvfBqaDBlil+
-         Q9TAiQUPrBCVxCu8erwdJbAxzg+8Zkh5ldQ1MAm3PkOXNA2UIlE7/OHEmteJbd+RmOFH
-         lGI4Mnek/aN08YT04XvBhjWBESqmVHASyJbezUpWZEQZasfJgrff/6PSfg3RV/ukq7/k
-         hsJcJOz3Erk6giDlmCABDxWj9dJjddrupopDcsM749p8li2g69lZh/ltiEuydotton1D
-         AHg7aB1rFomx/7SbXBRYDe/3NGp4lUK+1me3PYCkmDqJfXfwiEOCwy53/76B0CiL/6+9
-         4vQQ==
-X-Gm-Message-State: ABy/qLYKIxbhGSiOamX/hKXm+YNEvDYRlrNmsopoFfP6E84HUN1KJyvN
-        1lGgz2r5qe0cHdclOP/SeKGijg==
-X-Google-Smtp-Source: APBJJlEptrQrqyHjC6cqmVnpsJGqLlJMEYX1DkC5u6EJbqyQ3k0GlRsXAivEGq9K8CZ/3eC6lMUxrg==
-X-Received: by 2002:ac2:5b9a:0:b0:4fb:78a0:dd32 with SMTP id o26-20020ac25b9a000000b004fb78a0dd32mr11363966lfn.60.1689042851984;
-        Mon, 10 Jul 2023 19:34:11 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id v9-20020a197409000000b004fbae67c51fsm121275lfe.294.2023.07.10.19.34.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jul 2023 19:34:11 -0700 (PDT)
-Message-ID: <a25b58b4-9b94-928b-cdde-eccd56f1e444@linaro.org>
-Date:   Tue, 11 Jul 2023 05:34:10 +0300
+        Mon, 10 Jul 2023 23:53:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E7F2E40;
+        Mon, 10 Jul 2023 20:53:38 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36B2eLjI000866;
+        Tue, 11 Jul 2023 03:53:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Y51Rb3xBFKSWbNiAFhFAaKy6yZ/VFaiLjuxQF6NMt+Q=;
+ b=Ni9igqJFTJMgTLZaMVnDqL+F/omHGJqjUpMTLJb8iO78pl+PtpW1D0fYTvbrdwyqLuz+
+ GMsVGPAasuQ0lW2W7YR+dMcMPl7tIbmjX5ZXdkdn0hCWramo+a79gTHotkzFACbwWx2D
+ KBjvks+Wqh/9UN099KTETm13KkI4a913HHUL1ycUARviyrA5TBrgRwcnGq29gFcRwNTN
+ 4aZQPnZ7XAgCqjq3lpsPwSzG8MVMDfjNiNlXQ5Z8E57FbOSsIbpsHOq5nLl6v0tsCUAa
+ MGCZG1vMvlyl5S04MfqDyOkijUSAzaLfpU+1fkqYDiVIQ+wjVDnnVD+hzeT9AYlHBmHN Yw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rrwk0r5uc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 03:53:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36B3rGSw002770
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 03:53:16 GMT
+Received: from [10.110.35.225] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 10 Jul
+ 2023 20:53:15 -0700
+Message-ID: <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com>
+Date:   Mon, 10 Jul 2023 20:52:48 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 04/11] drm/msm/dpu: drop separate dpu_core_perf_tune
- overrides
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230707193942.3806526-1-dmitry.baryshkov@linaro.org>
- <20230707193942.3806526-5-dmitry.baryshkov@linaro.org>
- <729de13d-6fb7-ff1c-8660-4710d914258b@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <729de13d-6fb7-ff1c-8660-4710d914258b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+CC:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>
+References: <20230621185949.2068-1-quic_amelende@quicinc.com>
+ <20230621185949.2068-2-quic_amelende@quicinc.com>
+ <20230626135857.GA3118929-robh@kernel.org>
+ <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
+ <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: gZGUOrXrM8rBPOSYsejZsCbBX1Ykjj12
+X-Proofpoint-ORIG-GUID: gZGUOrXrM8rBPOSYsejZsCbBX1Ykjj12
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-10_18,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ spamscore=0 mlxlogscore=832 priorityscore=1501 adultscore=0
+ impostorscore=0 malwarescore=0 suspectscore=0 mlxscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307110033
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 05:31, Abhinav Kumar wrote:
+
+
+On 7/1/2023 4:03 AM, Krzysztof Kozlowski wrote:
+> On 29/06/2023 03:19, Anjelique Melendez wrote:
 > 
-> 
-> On 7/7/2023 12:39 PM, Dmitry Baryshkov wrote:
->> The values in struct dpu_core_perf_tune are fixed per the core perf
->> mode. Drop the 'tune' values and substitute them with known values when
->> performing perf management.
+>>>> +examples:
+>>>> +  - |
+>>>> +    pmic {
+>>>> +      #address-cells = <1>;
+>>>> +      #size-cells = <0>;
+>>>> +
+>>>> +      qcom,pbs@7400 {
+>>>> +        compatible = "qcom,pbs";
+>>>> +        reg = <0x7400>;
+>>>> +      };
+>>>
+>>> Why do you need a child node for this? Is there more than 1 instance in 
+>>> a PMIC? Every sub-function of a PMIC doesn't have to have a DT node.
+>>>
 >>
->> Note: min_bus_vote was not used at all, so it is just silently dropped.
->>
+>> We currently have another downstream driver (which is planned to get upstreamed)
+>> which also needs a handle to a pbs device in order to properly trigger events. 
 > 
-> Interesting ..... should bring this back properly. Will take it up.
+> I don't see how does it answer Rob's concerns. Neither mine about
+> incomplete binding. You don't need pbs node here for that.
+> 
+> Anyway, whatever you have downstream also does not justify any changes.
+> Either upstream these so we can see it or drop this binding.
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Ack, thanks.
+On PMI632, peripherals are partitioned over 2 different SIDs
+(https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n42
+and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n149).
+Unfortunately, the pbs peripheral and the lpg peripherals are on different
+PMI632 devices and therefore have different regmaps.
+ 
+If we get rid of the pbs node we need to get a handle to the proper regmap.
+I see two possible options, we could either introduce a new client property
+which points to a peripheral on the same device as pbs.
 
-> 
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 29 ++++++++-----------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  4 ---
->>   2 files changed, 12 insertions(+), 21 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> index 05d340aa18c5..348550ac7e51 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> @@ -235,7 +235,7 @@ static int _dpu_core_perf_crtc_update_bus(struct 
->> dpu_kms *kms,
->>   {
->>       struct dpu_core_perf_params perf = { 0 };
->>       int i, ret = 0;
->> -    u64 avg_bw;
->> +    u32 avg_bw;
-> 
-> avg_bw seems unused in this patch, so unrelated change?
-> 
->>       if (!kms->num_paths)
->>           return 0;
->> @@ -291,10 +291,16 @@ void dpu_core_perf_crtc_release_bw(struct 
->> drm_crtc *crtc)
->>   static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
->>   {
->> -    u64 clk_rate = kms->perf.perf_tune.min_core_clk;
->> +    u64 clk_rate;
->>       struct drm_crtc *crtc;
->>       struct dpu_crtc_state *dpu_cstate;
->> +    if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED)
->> +        return kms->perf.fix_core_clk_rate;
->> +
->> +    if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM)
->> +        return kms->perf.max_core_clk_rate;
->> +
->>       drm_for_each_crtc(crtc, kms->dev) {
->>           if (crtc->enabled) {
->>               dpu_cstate = to_dpu_crtc_state(crtc->state);
->> @@ -305,11 +311,6 @@ static u64 
->> _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
->>           }
->>       }
->> -    if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED)
->> -        clk_rate = kms->perf.fix_core_clk_rate;
->> -
->> -    DRM_DEBUG_ATOMIC("clk:%llu\n", clk_rate);
->> -
-> 
-> Why dont you move both FIXED and MINIMUM handling below instead of above.
-> 
-> So that they will just override the clk_rate and you can keep this 
-> useful log here and it matches where the function is.
+i.e.
+	led-controller {
+		compatible = "qcom,pmi632-lpg";
+      		#address-cells = <1>;
+      		#size-cells = <0>;
+      		#pwm-cells = <2>;
+     		nvmem-names = "lpg_chan_sdam";
+      		nvmem = <&pmi632_sdam7>;
+      		qcom,pbs-phandle = <&pmi632_gpios>;
+      		..... 
+	};
+Then when client is probing could do something like the following to get the regmap
 
-I can keep the log in the next version. The logic was quite simple: 
-there is no need to loop over CRTCs if we know that we are overriding 
-the value.
+	dn = of_parse_phandle(node, "qcom,pbs-phandle", 0);
+	pdev = of_find_device_by_node(dn);
+	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
 
-> 
-> This chunk looks better that way.
-> 
-> <skipping the rest as it LGTM>
 
--- 
-With best wishes
-Dmitry
 
+Or we could use the nvmem phandle and just have something like this in client's probe
+
+	dn = of_parse_phandle(node, "nvmem", 0);
+	pdev = of_find_device_by_node(dn);
+	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
+
+
+
+Let me know what your thoughts are on this.
+
+Thanks,
+Anjelique
