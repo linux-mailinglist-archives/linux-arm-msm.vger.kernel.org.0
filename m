@@ -2,127 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99DFA74ED30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 13:49:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E551374ED7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 14:01:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbjGKLtO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 07:49:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35198 "EHLO
+        id S231395AbjGKMBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 08:01:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbjGKLtN (ORCPT
+        with ESMTP id S230258AbjGKMBj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 07:49:13 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FF3BE5C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 04:49:12 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b6ff1ada5dso88801981fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 04:49:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689076150; x=1691668150;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=syIX5f3BVplskvsPj2jqIH8Yzy7BC8OkHkFGG82RJ/w=;
-        b=koGH/spMREVvPSOADIGliABI0/jUQmqUi2xVTQaOZHmwCn8DcsEmNa6zK3YAV1Sx5o
-         ccjW1egfchB3GbYkCuEfiowAaHvqAD6jNeMornYuh6r+HfUMUuT0MsvkbdzEQCTATupi
-         +vixRXoDNV2h7cnFvTzMe7nHWxAdpH78HG3flVMpueVFh4Bln5gkFK7XNrUwQ0qporeu
-         BuZ7NDV3PQLfLP5ABgs9Ul9+KoO6WDBONCPkfET6g67oPZS/K4QhRsudmWAIenV0rssc
-         n/nQKSgZIwh1Yfe/t55+EFSkqbHQgcIBnMRoAz6+xw6PNNgwRv6yeXfPlUxyd3Ibnus1
-         N0WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689076150; x=1691668150;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=syIX5f3BVplskvsPj2jqIH8Yzy7BC8OkHkFGG82RJ/w=;
-        b=AKyGXzyIaYT4PvkymLUozBvTFFV9qdEiTIw/Jk0Q9iWu2zwwwhT1hRWwzPP0aKl5+3
-         s7ZLe50xN32bZSBDCPOO3lDT7KeS+Lc1jWTfu09IiJhmrzwpWSZWxwBHrAt/rWKPu73a
-         J3by0zPCpWKfCtovtTMnDr8rNUo2CeP+RBG19o5De+si/4HuJrxm0fpdPftgi5ZvxV+v
-         ayJsNiuGfz3LIQZ4PyU7MGyNHswGlQK7twEITcIYpWo7Y5bGFSFotJ9H+kh2Ry+aK7VT
-         MpeAgZItB159qKUEun5z5nEyWsqyWaAAcSmkbaWPxVfzrzAQ/+ukGafPq6n2DAlfrFe2
-         NR9w==
-X-Gm-Message-State: ABy/qLZeu7E+ED/2pJmR7hjCAIshcc38LUuXv06rj/sV1YvtMQycLcmI
-        lKp/dCpfDwXyf4H3yzyMY1UZ/w==
-X-Google-Smtp-Source: APBJJlGrZarNyQ0bfbOBxKSRI1o5UGsXz+/5i/jS3Wsvlq23VlMMaZsOEkXx7H0ZYJWGj9E9P0Mrlg==
-X-Received: by 2002:a2e:9e58:0:b0:2b6:e12f:267 with SMTP id g24-20020a2e9e58000000b002b6e12f0267mr3092406ljk.5.1689076150497;
-        Tue, 11 Jul 2023 04:49:10 -0700 (PDT)
-Received: from [192.168.1.101] (abyl96.neoplus.adsl.tpnet.pl. [83.9.31.96])
-        by smtp.gmail.com with ESMTPSA id j9-20020a2e8249000000b002b69f44646bsm425540ljh.17.2023.07.11.04.49.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 04:49:10 -0700 (PDT)
-Message-ID: <fd262c97-29fe-ecd3-52d4-9fcf1d9b63f2@linaro.org>
-Date:   Tue, 11 Jul 2023 13:49:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250-sony-xperia: correct GPIO keys
- wakeup again
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Tue, 11 Jul 2023 08:01:39 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FA4E77;
+        Tue, 11 Jul 2023 05:01:37 -0700 (PDT)
+Received: from mercury (dyndsl-091-248-213-212.ewe-ip-backbone.de [91.248.213.212])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 3BE4E6607007;
+        Tue, 11 Jul 2023 13:01:35 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1689076895;
+        bh=VpEG3ri1MmPk1vvBqKyVzFd1wmdbrZrML5Y0FqY4wUg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HQDJgxlTR8vo1RaEsB3D+nH2+IRG9QN4tbrCrAaA85UTPwMmgGSzMeLBmp8bq8Ej6
+         pgwZP23sqCYBHYEmhmfwkK6ZwddZDGY5nvAyjCHRxCLhh+PU1kHLVi4qEYii04KpmG
+         cZIBzK40pXQjgo62B5RaZ5YhAs3eAX9lyz/b27cO1rLw+fmbUEzB/bIkdWz6tNdnsD
+         l37m5GS8joB/wsoJ81rU7USdQhqBwTSytws8Gf8fo6kkpx4AITWu33A+o3yUYXuRI2
+         WpJS6erpP2P9LRQMv/o3BmpdZLgyRs0csbkK1sM9hkgaBX9fGW0SBkbzX/Ag+Cs0tn
+         nvbJMMzvoOh0A==
+Received: by mercury (Postfix, from userid 1000)
+        id 34BCD106765E; Tue, 11 Jul 2023 14:01:33 +0200 (CEST)
+Date:   Tue, 11 Jul 2023 14:01:33 +0200
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Amit Kumar Mahapatra via Alsa-devel 
+        <alsa-devel@alsa-project.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        Sanjay R Mehta <sanju.mehta@amd.com>,
+        Radu Pirea <radu_nicolae.pirea@upb.ro>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230711063011.16222-1-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230711063011.16222-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+Subject: Re: [PATCH v2 05/15] spi: Remove code duplication in
+ spi_add_device_locked()
+Message-ID: <20230711120133.45drgk46y4cz7aut@mercury.elektranox.org>
+References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
+ <20230710154932.68377-6-andriy.shevchenko@linux.intel.com>
+ <7557bada-3076-4d6e-a5c5-d368433706e2@sirena.org.uk>
+ <ZK03rBqoQ0IZz617@smile.fi.intel.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="fcthwhge3iyvg2gl"
+Content-Disposition: inline
+In-Reply-To: <ZK03rBqoQ0IZz617@smile.fi.intel.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.07.2023 08:30, Krzysztof Kozlowski wrote:
-> gpio-keys,wakeup is a deprecated property:
-> 
->   m8250-sony-xperia-edo-pdx206.dtb: gpio-keys: key-camera-focus: Unevaluated properties are not allowed ('gpio-key,wakeup' was unexpected)
-> 
-> Fixes: a422c6a91a66 ("arm64: dts: qcom: sm8250-edo: Rectify gpio-keys")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> It's a damn Groundhog day. I already fixed all the occurences in
-> 77a7e3942871 ("arm64: dts: qcom: sm8250-sony-xperia: correct GPIO keys
-> wakeup")!
-> ---
-Sorry.. this was an old lingering patch that I failed to retest.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+--fcthwhge3iyvg2gl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-> index cd27794739a5..ecdc20bc10f5 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-> @@ -60,7 +60,7 @@ key-camera-focus {
->  			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
->  			debounce-interval = <15>;
->  			linux,can-disable;
-> -			gpio-key,wakeup;
-> +			wakeup-source;
->  		};
->  
->  		key-camera-snapshot {
-> @@ -69,7 +69,7 @@ key-camera-snapshot {
->  			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
->  			debounce-interval = <15>;
->  			linux,can-disable;
-> -			gpio-key,wakeup;
-> +			wakeup-source;
->  		};
->  
->  		key-vol-down {
+Hi,
+
+On Tue, Jul 11, 2023 at 02:06:20PM +0300, Andy Shevchenko wrote:
+> On Mon, Jul 10, 2023 at 06:16:22PM +0100, Mark Brown wrote:
+> > On Mon, Jul 10, 2023 at 06:49:22PM +0300, Andy Shevchenko wrote:
+> > > Seems by unknown reason, probably some kind of mis-rebase,
+> > > the commit 0c79378c0199 ("spi: add ancillary device support")
+> > > adds a dozen of duplicating lines of code. Drop them.
+> > >=20
+> > > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > > ---
+> > >  drivers/spi/spi.c | 11 -----------
+> > >  1 file changed, 11 deletions(-)
+> > >=20
+> > > diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+> > > index c99ee4164f11..46cbda383228 100644
+> > > --- a/drivers/spi/spi.c
+> > > +++ b/drivers/spi/spi.c
+> > > @@ -712,17 +712,6 @@ EXPORT_SYMBOL_GPL(spi_add_device);
+> > >  static int spi_add_device_locked(struct spi_device *spi)
+> > >  {
+> > >  	struct spi_controller *ctlr =3D spi->controller;
+> > > -	struct device *dev =3D ctlr->dev.parent;
+> > > -
+> > > -	/* Chipselects are numbered 0..max; validate. */
+> > > -	if (spi_get_chipselect(spi, 0) >=3D ctlr->num_chipselect) {
+> > > -		dev_err(dev, "cs%d >=3D max %d\n", spi_get_chipselect(spi, 0),
+> > > -			ctlr->num_chipselect);
+> > > -		return -EINVAL;
+> > > -	}
+> > > -
+> > > -	/* Set the bus ID string */
+> > > -	spi_dev_set_name(spi);
+> >=20
+> > I see that this is duplicating spi_add_device() (and we really could do
+> > better with code sharing there I think) but I can't immediately see
+> > where the duplication that's intended to be elimiated is here - where
+> > else in the one call path that spi_add_device_locked() has would we do
+> > the above?  Based on the changelog I was expecting to see some
+> > duplicated code in the function itself.
+>=20
+> Oh, by some reason Sebastian wasn't in this rather long Cc list.
+> Added him.
+>=20
+> Reading again I don't see any useful explanation why that piece of code h=
+as to
+> be duplicated among these two functions. It's 100% a copy.
+>=20
+> Sebastian, can you shed some light here?
+
+The patch in this thread is obviously wrong. It results in the
+checks never beeing called for spi_add_device_locked(). The copy is
+in spi_add_device() and those two are not calling into each other.
+
+But it should be fine to move the code to the start of
+__spi_add_device(), which allows removing the duplication. In that
+case the code will be run with the add_lock held, which is probably
+what I was worried about two years ago. Looking at it again, the
+lock is held anyways in case of spi_add_device_locked().
+
+Greetings,
+
+-- Sebastian
+
+--fcthwhge3iyvg2gl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmStRJIACgkQ2O7X88g7
++pp6dQ//QWqSMddfA8JIA4/cd4pYKRoojbIso2JQaAhIWBB48KjH/GX7xoNCH4Ig
+MRloAncuXxqH1quGGpphBRJL2bAKVRcinKKtYdwCyM6P422hjD5GqVDKOr2H1u2f
+4+wWcKeKNk5ect4iYj/kRZYYpdlJzxK1hsd7bCwBCz3I0k7rlxqIg5td7e/7Q7CC
+4bvNEtL0Ub1iB+vzDNoqNKN48Bp87xr+kM1wSDsDhPqf1TrTmxgOFIYNmy2x+XuV
+20ZRE4olEfUMFlPNNCaAurOPVZmclVstzBUwRhU7uVBH4/ZnbY02wsklP0D8SbV8
+inFOurRiLtWaRSQfkwMEF2DAp4l5a6eWVyuy5Rf0mdVmgq9bgeXFycbiYkOM6Gsz
+aQ0g5SV64PYZSwPljucB28GrWfLdDNlp693elljAeDElhbF1bqhbVozqhkyfH5Ih
+J4wpwr/DgZaW31B0V/sQVlJTIRtjAmIRgydid81aaSOzXmW0B+Pu74EU/cMNcy0f
+iSGRdSPX+eA5OPNHQWPz1RQvJOHMVrMBXTdSCeVzZdV4VSTZSv9/LL922e9qK2DB
+yGQTeUox+5d2hdcQlSmo+LQGhiZiiJ9qoVWPsWjhNwbb3fh3HCSP9X/BJHNNGzqr
+WU6SN8gRjCaL3/i5pT08DOL6WdKhn/qo8EzCnOBxloSjD2uF1Ic=
+=v6T3
+-----END PGP SIGNATURE-----
+
+--fcthwhge3iyvg2gl--
