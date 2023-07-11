@@ -2,75 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C21974E26A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 02:04:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7017974E446
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 04:32:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230311AbjGKAEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jul 2023 20:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32944 "EHLO
+        id S231429AbjGKCcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jul 2023 22:32:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbjGKAEF (ORCPT
+        with ESMTP id S231687AbjGKCcO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jul 2023 20:04:05 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E911A7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 17:04:03 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b6ef64342aso80510761fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 17:04:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689033842; x=1691625842;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=V/dX5K/ss3x0ciVNd3aGlR4JXcHpqL/PpCCOLWFx+LU=;
-        b=bff2RHeCIczRdsZbNq2tUaXQiFpucPzuUmWWOXPGQ4SAr6olSBCt7WL2nUpZzrF1gt
-         gSZ5+lUbOASJpXJ7IOfH4AFidBOgj6GWWYBt11VauuiijYUhlF5WfrY7wSo/OxxeDNc6
-         xRVL5RXhcVFwIlByLXbXlxUmm92OXePSiiOIzo0nWCKvww3YXP09N1ZkyvNCI3s99k+3
-         /iqXTuI7JeiDVN9e2Rm3Y9BqzR9g1BEeGNtqi/XqjG2y4FYwQ5WxL7Mz5lw931ZCyU0+
-         qkrWyozbhuySBBMS+nsM3Ok7XruduIOm5IOquzTEVTlFWfgtVtMKTxf0GbIrdCeaw08k
-         nfKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689033842; x=1691625842;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V/dX5K/ss3x0ciVNd3aGlR4JXcHpqL/PpCCOLWFx+LU=;
-        b=UJ3c4PImRo/M7vvv3HP132HXUzqIAFjV09py/5lr6qjfILrTestc8sa0mYCSbWBS8Q
-         PpVrPhe7vy6VVato6BJJNX2Q3d/0UeyD/qLodTxO2Rz0q5926qvfgdHSl2tsYuds1DoL
-         2NO6EsNGukdnprxi2oNsxuM8kL59IXSFAH/QlWBQJgKUpRR6ER7ecbfj86dNJmG/wDEU
-         UmCxB9gX9nUSMw5p4kaE7nKjXaMKmDAweBVcrAhgWSc/fOqXMFOudTjMjEBlJMLXnL7k
-         G38sORgHldajQ1Vw/Lo3znNH8vbpokbQdR2RqM3DjZvdUCTFH4kI1RUQU8frBIk79wzP
-         U/BQ==
-X-Gm-Message-State: ABy/qLbIgl6f7Lw7xjykFzqWbkZgvfTZ8LpeJGPp+dGozPoVDL7oKw7q
-        wUMcPXc8WmuWJWXG/BIPH89tFg==
-X-Google-Smtp-Source: APBJJlEuKphZX/mQW/8zaQsAfg/oLoPfdo42uJwdfWTi2a1CBy9Un701xs1VX++nJ0yk9il+OIo1vw==
-X-Received: by 2002:a2e:8eca:0:b0:2b6:a827:164f with SMTP id e10-20020a2e8eca000000b002b6a827164fmr11447647ljl.10.1689033841931;
-        Mon, 10 Jul 2023 17:04:01 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id n24-20020a2e86d8000000b002b6cde9f325sm173232ljj.105.2023.07.10.17.04.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jul 2023 17:04:01 -0700 (PDT)
-Message-ID: <25c12da7-e79d-af19-fbc9-47ebf7041406@linaro.org>
-Date:   Tue, 11 Jul 2023 03:04:00 +0300
+        Mon, 10 Jul 2023 22:32:14 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A200D10CA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 19:32:08 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36B2Aob2007693;
+        Tue, 11 Jul 2023 02:31:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xD5SsMtOnNufdqNgaLLKWwccIQ4sQv48THVGulvdeZo=;
+ b=UwDdYrKJjNq6RHaz13GCYZZaKIlS5MOH00uYNX8NMSqq6+iOX0WvyKwP9U+JVe8osV/n
+ DfgvfJvEwR3FgORNkaSzOJYpcRfeCF1tx80YdLXSl4B5OqWN0e5c0Aq1nEGT9umXqqqR
+ 3jc8ZD5jyVG0ie+V9yPh7lUdg+UuAtsT1cicixJ6fQ27DOOZs747+ZVQ27otXAjuTskv
+ QBOuf/gGs7razK52Nfv8Wg31LDK+aPOOQDLMsj6+X5NYk1MVS15bc412g6mq9CzYn1bT
+ EmCtwJ01nOptqGzrtSHlxKkycXGYSG5xJF+JclxV8o73D/R5S/2Jh6Tpkyar9dkrSrGF EQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rrwm1g27t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 02:31:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36B2Vp66014728
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 02:31:51 GMT
+Received: from [10.110.47.185] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 10 Jul
+ 2023 19:31:50 -0700
+Message-ID: <729de13d-6fb7-ff1c-8660-4710d914258b@quicinc.com>
+Date:   Mon, 10 Jul 2023 19:31:49 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2] drm/msm/dsi: Enable BURST_MODE for command mode for
- DSI 6G v1.3+
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 04/11] drm/msm/dpu: drop separate dpu_core_perf_tune
+ overrides
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230608-b4-add-burst-mode-v2-1-2ff468457d46@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230608-b4-add-burst-mode-v2-1-2ff468457d46@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230707193942.3806526-1-dmitry.baryshkov@linaro.org>
+ <20230707193942.3806526-5-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230707193942.3806526-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7NeTYd12_-HjGjfBzYRpd7eOn9rwoNGl
+X-Proofpoint-GUID: 7NeTYd12_-HjGjfBzYRpd7eOn9rwoNGl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-10_18,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=999
+ phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307110021
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
@@ -81,59 +87,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/06/2023 23:31, Jessica Zhang wrote:
-> During a frame transfer in command mode, there could be frequent
-> LP11 <-> HS transitions when multiple DCS commands are sent mid-frame or
-> if the DSI controller is running on slow clock and is throttled. To
-> minimize frame latency due to these transitions, it is recommended to
-> send the frame in a single burst.
-> 
-> This feature is supported for DSI 6G 1.3 and above, thus enable burst
-> mode if supported.
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
-> Changes in v2:
-> - Moved MDP_CTRL2 register setting to dsi_ctrl_config() (Dmitry/Marijn)
-> - Read previous value of MDP_CTRL2 register before writing to it
->    (Dmitry)
-> - Link to v1: https://lore.kernel.org/r/20230608-b4-add-burst-mode-v1-1-55dfbcfada55@quicinc.com
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 7 +++++++
->   1 file changed, 7 insertions(+)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+On 7/7/2023 12:39 PM, Dmitry Baryshkov wrote:
+> The values in struct dpu_core_perf_tune are fixed per the core perf
+> mode. Drop the 'tune' values and substitute them with known values when
+> performing perf management.
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 3f6dfb4f9d5a..cdb404885f3c 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -752,6 +752,13 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
->   		/* Always insert DCS command */
->   		data |= DSI_CMD_CFG1_INSERT_DCS_COMMAND;
->   		dsi_write(msm_host, REG_DSI_CMD_CFG1, data);
+> Note: min_bus_vote was not used at all, so it is just silently dropped.
+> 
+
+Interesting ..... should bring this back properly. Will take it up.
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 29 ++++++++-----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  4 ---
+>   2 files changed, 12 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> index 05d340aa18c5..348550ac7e51 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> @@ -235,7 +235,7 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+>   {
+>   	struct dpu_core_perf_params perf = { 0 };
+>   	int i, ret = 0;
+> -	u64 avg_bw;
+> +	u32 avg_bw;
+>   
+
+avg_bw seems unused in this patch, so unrelated change?
+
+>   	if (!kms->num_paths)
+>   		return 0;
+> @@ -291,10 +291,16 @@ void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc)
+>   
+>   static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+>   {
+> -	u64 clk_rate = kms->perf.perf_tune.min_core_clk;
+> +	u64 clk_rate;
+>   	struct drm_crtc *crtc;
+>   	struct dpu_crtc_state *dpu_cstate;
+>   
+> +	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED)
+> +		return kms->perf.fix_core_clk_rate;
 > +
-> +		if (msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
-> +				msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3) {
-
-Nit: please intent in future to the same level (vim: "set cino=(0").
-
-> +			data = dsi_read(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2);
-> +			data |= DSI_CMD_MODE_MDP_CTRL2_BURST_MODE;
-> +			dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, data);
-> +		}
+> +	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM)
+> +		return kms->perf.max_core_clk_rate;
+> +
+>   	drm_for_each_crtc(crtc, kms->dev) {
+>   		if (crtc->enabled) {
+>   			dpu_cstate = to_dpu_crtc_state(crtc->state);
+> @@ -305,11 +311,6 @@ static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+>   		}
 >   	}
 >   
->   	dsi_write(msm_host, REG_DSI_CMD_DMA_CTRL,
-> 
-> ---
-> base-commit: a0364260213c96f6817f7e85cdce293cb743460f
-> change-id: 20230608-b4-add-burst-mode-a5bb144069fa
-> 
-> Best regards,
+> -	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_FIXED)
+> -		clk_rate = kms->perf.fix_core_clk_rate;
+> -
+> -	DRM_DEBUG_ATOMIC("clk:%llu\n", clk_rate);
+> -
 
--- 
-With best wishes
-Dmitry
+Why dont you move both FIXED and MINIMUM handling below instead of above.
 
+So that they will just override the clk_rate and you can keep this 
+useful log here and it matches where the function is.
+
+This chunk looks better that way.
+
+<skipping the rest as it LGTM>
