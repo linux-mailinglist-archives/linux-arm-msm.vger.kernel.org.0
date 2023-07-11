@@ -2,106 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B09074F792
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 19:54:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDC6474F7C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 20:09:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231888AbjGKRyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 13:54:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50932 "EHLO
+        id S229868AbjGKSJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 14:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231308AbjGKRyT (ORCPT
+        with ESMTP id S229626AbjGKSJV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 13:54:19 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF4D8E75;
-        Tue, 11 Jul 2023 10:54:18 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1b895a06484so30662265ad.1;
-        Tue, 11 Jul 2023 10:54:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689098058; x=1691690058;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=51D9c0yVqzyFZCZkTJ0kt3i/VPXv4eay4HZNWC1auNY=;
-        b=Gcs0mnql8X3fsKI4gmoydVQVgblWa79bdy2+0+otEJiCi1adxEiy9VHGCNDkKW8YgL
-         6Tt4mVCfrwo+Xatv5kG92nimpb5P60z2S93KR3RYlAvisz1GWKFOg6YorffdFlFMDDOJ
-         pp/XRTTmTQ1jHfu/tgDyNpMc0wg8iCiurHDY60lrPMVMu0BTYD7oO+BIZP/mWORRAYBa
-         yKYa+i5BQVwpyqPFx2ihW0gtMLfuTNwSVN/XUtxaHT3xsoFO60hB1dnHH7sJ4bGBO2PY
-         X41+jBiiHzyQsx1XITHYpYrLHA65bjv/X2UQqfBt0J4wkWATpMj38zKnDmeMI4HMWJq5
-         o4gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689098058; x=1691690058;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=51D9c0yVqzyFZCZkTJ0kt3i/VPXv4eay4HZNWC1auNY=;
-        b=i/fqAkQgzeLI3aL6XAiaKZDjUO23sN/4DYTvJrbKupGpRA8ix+PBGPrtHAwQY80mSg
-         8bIvEAEOjN+OxvQ8NncgzI7++zEf7NiGFaAz4aSQBpW0pQHhS5iRIOh7ihEzyo+z5As1
-         bePBH4BPb9mj9T/B3liWS2KhvaBJrZ3T+yl2oUyPsUgDpGpqiJ2pZi2AjUQx0D32QdBs
-         1rRZH7hMmWs8h+fLNAWIE93DaGr3znQu5kp7FcEy/1m1MaX1xAQ+3kchOPxbirmdyHeI
-         XEQCFjJ+qnFGu+1tG59oXy4mrLl3IEKa8WDJz/IWKzrkRhVW9RplwFbl0D096KHvD+O0
-         X70g==
-X-Gm-Message-State: ABy/qLbflvVfFMZJJSkuyV/rsHMHTehikqtVzEHA/aHzDqUZQCmyYcia
-        WNHIq2BXsH2pAn9JHYS+blk=
-X-Google-Smtp-Source: APBJJlFiqtZa561h/NtpWyoYGEjlQjCnGiocVAnOqtntgECALUFn5OzNYw/w9eCMwwNevLA/drwf9A==
-X-Received: by 2002:a17:902:e54a:b0:1b7:f99f:63c9 with SMTP id n10-20020a170902e54a00b001b7f99f63c9mr16862415plf.67.1689098058301;
-        Tue, 11 Jul 2023 10:54:18 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
-        by smtp.gmail.com with ESMTPSA id x11-20020a170902820b00b001b8a85489a3sm2191062pln.262.2023.07.11.10.54.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 10:54:17 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
+        Tue, 11 Jul 2023 14:09:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC3910D2;
+        Tue, 11 Jul 2023 11:09:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id ADC9E615B7;
+        Tue, 11 Jul 2023 18:09:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DAEC433C8;
+        Tue, 11 Jul 2023 18:09:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689098959;
+        bh=lxqKz1fXilmbmExU5zZS6bRZAzz+KDaE3lki+iQDT04=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mRzHUvso7igjJ85rG5JnTVXKoWxeK6ia3uk/4VKeURbmokAEfS/G9Ij4JpSvUUigl
+         mIjjkQhRVO3TFqmDQB93wr1Ud7j/USyGKLdt7zMcWY37deDSD6g9Kp2r2gJ+OdG8YV
+         qcnzn5Pw1TfpLgdL1xg1eo0JuT8Gq79EkmCowzdwfDpswYxCVL52z3fL9y8t9Haacq
+         vhozEjrWqS0sKaSn8w9dbVQ90EnRAy2SVtSrku678YVJSSfCHaaWODVaAHStqp74P9
+         JuQnNuGk6zKRPC/SNJLWlSF3sSufpUe1JeHlC8R4rW2xN95iWdiM4hvuFser/vk2od
+         lVkQobz+HUvBQ==
+Date:   Tue, 11 Jul 2023 19:09:14 +0100
+From:   Conor Dooley <conor@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/adreno: Fix snapshot BINDLESS_DATA size
-Date:   Tue, 11 Jul 2023 10:54:07 -0700
-Message-ID: <20230711175409.157800-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/4] dt-bindings: interconnect: qcom,msm8998-bwmon: Add
+ SM6350 bwmon instances
+Message-ID: <20230711-happiest-unworldly-15ed297b668d@spud>
+References: <20230711-topic-sm638250_bwmon-v1-0-bd4bb96b0673@linaro.org>
+ <20230711-topic-sm638250_bwmon-v1-2-bd4bb96b0673@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="bUr6myj+mW8Jbc5x"
+Content-Disposition: inline
+In-Reply-To: <20230711-topic-sm638250_bwmon-v1-2-bd4bb96b0673@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
 
-The incorrect size was causing "CP | AHB bus error" when snapshotting
-the GPU state on a6xx gen4 (a660 family).
+--bUr6myj+mW8Jbc5x
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/26
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Jul 11, 2023 at 04:35:14PM +0200, Konrad Dybcio wrote:
+> SM6350 has a BWMONv4 for LLCC and a BWMONv5 for CPU. Document them.
+>=20
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-index 790f55e24533..e788ed72eb0d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-@@ -206,7 +206,7 @@ static const struct a6xx_shader_block {
- 	SHADER(A6XX_SP_LB_3_DATA, 0x800),
- 	SHADER(A6XX_SP_LB_4_DATA, 0x800),
- 	SHADER(A6XX_SP_LB_5_DATA, 0x200),
--	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x2000),
-+	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x800),
- 	SHADER(A6XX_SP_CB_LEGACY_DATA, 0x280),
- 	SHADER(A6XX_SP_UAV_DATA, 0x80),
- 	SHADER(A6XX_SP_INST_TAG, 0x80),
--- 
-2.41.0
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
+Cheers,
+Conor.
+
+> ---
+>  Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml |=
+ 2 ++
+>  1 file changed, 2 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-=
+bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bw=
+mon.yaml
+> index 51ba6490c951..73f809cdb783 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.y=
+aml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.y=
+aml
+> @@ -29,6 +29,7 @@ properties:
+>                - qcom,sc7280-cpu-bwmon
+>                - qcom,sc8280xp-cpu-bwmon
+>                - qcom,sdm845-cpu-bwmon
+> +              - qcom,sm6350-llcc-bwmon
+>                - qcom,sm8250-cpu-bwmon
+>                - qcom,sm8550-cpu-bwmon
+>            - const: qcom,sdm845-bwmon    # BWMON v4, unified register spa=
+ce
+> @@ -36,6 +37,7 @@ properties:
+>            - enum:
+>                - qcom,sc7180-llcc-bwmon
+>                - qcom,sc8280xp-llcc-bwmon
+> +              - qcom,sm6350-cpu-bwmon
+>                - qcom,sm8250-llcc-bwmon
+>                - qcom,sm8550-llcc-bwmon
+>            - const: qcom,sc7280-llcc-bwmon
+>=20
+> --=20
+> 2.41.0
+>=20
+
+--bUr6myj+mW8Jbc5x
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZK2aygAKCRB4tDGHoIJi
+0gXbAQC1U8xbWc2YXj6Lizngzmt9aqAMIpsEZeEr2Fd1zb5vIwD9H4L8PrT/tC5m
+FaYfRdCrN7jpeAlDILxLRyT/1lBHTQM=
+=GcWR
+-----END PGP SIGNATURE-----
+
+--bUr6myj+mW8Jbc5x--
