@@ -2,167 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C78A74E6A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 07:59:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC9B074E6BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 08:05:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230289AbjGKF7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 01:59:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40608 "EHLO
+        id S230187AbjGKGF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 02:05:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbjGKF7D (ORCPT
+        with ESMTP id S229931AbjGKGF0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 01:59:03 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000ED1A4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 22:58:58 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-51e526e0fe4so3703730a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 22:58:58 -0700 (PDT)
+        Tue, 11 Jul 2023 02:05:26 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2C481A2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 23:05:20 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51cff235226so10587769a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 23:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689055137; x=1691647137;
+        d=linaro.org; s=google; t=1689055519; x=1691647519;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zj3IQ/+F48JuMncJJrePBBu6AGCGhuyGEx5VtKIoCXU=;
-        b=McekgwoCljPM2KEtKpnvtIRNOeILG/FO93/d4byH4ZeL1iebUIDZqSRrxOmWzXC3/t
-         KjFY8hSEL9RgFj3P3Uo5Bj21XHiExkgMjcTLlOJMpxBSDXRoxpMSYq2HSByo8zBYiOkr
-         JxNGQV0m58YUFgXgK7GK9wZEQboZOcKg+yYo9hokH4EBf8F1jMFOqe3rSeQaunudKY5h
-         UXQV2YxC1ZnmRJCzni/slhDX0CIhO8vyuUO+Nav0WJAKHfufiSAaOw3bKNtn2eJCpAca
-         +N+7P7J+35vfV9lf3VH9cv81CoHC51hqnnEQX4DnVcJGCg7HTMIu/zWOjOTH6nlurGz0
-         ft6g==
+        bh=AC/v+alvX1Ux7o0mLM8VEKbEBX4L3Bcit3ns/2uK+uQ=;
+        b=nYXt282Ji1hHCwDemEBQaaq0nbq6SNgxSVDIcAQSHBsXfbAses1Nd7rMQ3zdrDnuMW
+         VIU1ElSVy1W1dSWy/Ip2eruSKYV3k8E0EY29YwIZFdPWY9MhzK6YWnYor+w5HLAkxx/l
+         aqNrh9aZmuL51vNKqngpjMqb1wzBYx7Abj/rzzIgt04t6LhBy86DffTOqH/sguIQRhWR
+         00JCysh50/m5I+5hkphR9TkQH93N/TAfpgL7XQTAKysJxLBFJb+KGQnAad9MJWPmsNqt
+         CiFAEEKbAq+YfZiFCs+aBKQ+TwSqm+B0Ma5zxjRrdfEDjGzeBKiHvPI9vrhi0H1wKO4t
+         VTMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689055137; x=1691647137;
+        d=1e100.net; s=20221208; t=1689055519; x=1691647519;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zj3IQ/+F48JuMncJJrePBBu6AGCGhuyGEx5VtKIoCXU=;
-        b=OKdy8tbVw0BtnTxS3mPVpfTqpvWmg8/BkmoXFUSK4gFk1rB2PFREO492TX8XzuXXS+
-         4zVl0vonoOLFpdsZQGBJz/6oEUURrfXiCJW9D8yh/tuf3JiQdp+TQx6OfaMqMH7ZvhUw
-         rtQ4lNaPf6UvrjNAMc023pn32vbHWIxxo0bZZWKkB8e81VGgKwS1bdEoroT8BIzbY9JB
-         iXCGRPoNXmUnDQIRL9e0R+Ff5VsuOnl3T6bIK/zBddYIWk3BSc3pkQ3YwlibOSFgHzwb
-         IsHV9YZQhE8+RTNVKI7fVih4YSdnQmwlw+bvEc589nEjadQlpHLJ33AOPY0ElaOT7qzE
-         8AZw==
-X-Gm-Message-State: ABy/qLayAnPoxq9LwVOzUchaD0Sqr7OGbuPcG2FGiebj+x9Cu1sWf5Of
-        pGoWnpVKeHg8Ego7sjSZFL8yKQ==
-X-Google-Smtp-Source: APBJJlEWvdPL7dZZTCHCeeBpGza2Z5DICi24muBnEuZv4fopMf/NWNWeX5K9l6Q1G7KCTu5VKgRYeg==
-X-Received: by 2002:a05:6402:2022:b0:51d:9e0c:1396 with SMTP id ay2-20020a056402202200b0051d9e0c1396mr14420488edb.35.1689055137425;
-        Mon, 10 Jul 2023 22:58:57 -0700 (PDT)
+        bh=AC/v+alvX1Ux7o0mLM8VEKbEBX4L3Bcit3ns/2uK+uQ=;
+        b=Yh2wxlDDUI80mhQ4RilPbJ0yV2szfKStnUFKq20BaBxaJRsjVE7cr6KHGhR3dVxQ+e
+         H9ugHX0F/YtYHyers+A6n2WEGXPsEeSf93Lw7ppox/gBbuQLbf9t35YZgX47ZrVN4mw6
+         aSo8DxOi1rzgzLn1s2fveOoO0hi8nqNP+0/XkvHtPQQXoFQM1tWgkq67F3Q7Txz+7otx
+         EqvEkqj13RshbRgxPNU0LjqpsuBbYb7P+QMBCRzhLWDSs/U1R83EdTO3jJfb2ZuGlGYj
+         rvbtOU7ijEncMN27FBeWx9ltscVNQe4UzLvfCr+AOvBbFbAw552d0TLnck5NdXqFUnh0
+         3V0g==
+X-Gm-Message-State: ABy/qLYTYa1k3RZ2VuCDBz85j97hXYB4f3W7RNeTx3qQci1uF9L+dJCu
+        TaHh+CEWmvtrJtWULRvbOvN9ig==
+X-Google-Smtp-Source: APBJJlF3I7gaQ8rojVCnwHAF/JElZnuxq7lN5zjhUK/kwyrZI/npJdGy9L1JhSNfaeBpKTZpn0qVgw==
+X-Received: by 2002:aa7:d1cb:0:b0:51d:ec4b:d873 with SMTP id g11-20020aa7d1cb000000b0051dec4bd873mr19386801edp.16.1689055519313;
+        Mon, 10 Jul 2023 23:05:19 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id bo28-20020a0564020b3c00b0051df5bd1cd8sm692565edb.65.2023.07.10.22.58.56
+        by smtp.gmail.com with ESMTPSA id z17-20020aa7c651000000b0051df54c6a27sm705688edr.56.2023.07.10.23.05.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jul 2023 22:58:57 -0700 (PDT)
-Message-ID: <431faa87-d152-5f7a-40fd-8b6fe26f0bb9@linaro.org>
-Date:   Tue, 11 Jul 2023 07:58:55 +0200
+        Mon, 10 Jul 2023 23:05:18 -0700 (PDT)
+Message-ID: <8eb986f2-3268-65cd-9210-ef1fca4f8259@linaro.org>
+Date:   Tue, 11 Jul 2023 08:05:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
+Subject: Re: [PATCH v2 1/2] dt-bindings: regulator: Add PMX75 compatible
 Content-Language: en-US
-To:     Anjelique Melendez <quic_amelende@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     pavel@ucw.cz, lee@kernel.org, thierry.reding@gmail.com,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        u.kleine-koenig@pengutronix.de, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
-References: <20230621185949.2068-1-quic_amelende@quicinc.com>
- <20230621185949.2068-2-quic_amelende@quicinc.com>
- <20230626135857.GA3118929-robh@kernel.org>
- <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
- <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
- <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1689054415-11281-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1689054415-11281-2-git-send-email-quic_rohiagar@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com>
+In-Reply-To: <1689054415-11281-2-git-send-email-quic_rohiagar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 05:52, Anjelique Melendez wrote:
-> 
-> 
-> On 7/1/2023 4:03 AM, Krzysztof Kozlowski wrote:
->> On 29/06/2023 03:19, Anjelique Melendez wrote:
->>
->>>>> +examples:
->>>>> +  - |
->>>>> +    pmic {
->>>>> +      #address-cells = <1>;
->>>>> +      #size-cells = <0>;
->>>>> +
->>>>> +      qcom,pbs@7400 {
->>>>> +        compatible = "qcom,pbs";
->>>>> +        reg = <0x7400>;
->>>>> +      };
->>>>
->>>> Why do you need a child node for this? Is there more than 1 instance in 
->>>> a PMIC? Every sub-function of a PMIC doesn't have to have a DT node.
->>>>
->>>
->>> We currently have another downstream driver (which is planned to get upstreamed)
->>> which also needs a handle to a pbs device in order to properly trigger events. 
->>
->> I don't see how does it answer Rob's concerns. Neither mine about
->> incomplete binding. You don't need pbs node here for that.
->>
->> Anyway, whatever you have downstream also does not justify any changes.
->> Either upstream these so we can see it or drop this binding.
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> On PMI632, peripherals are partitioned over 2 different SIDs
-> (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n42
-> and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n149).
-> Unfortunately, the pbs peripheral and the lpg peripherals are on different
-> PMI632 devices and therefore have different regmaps.
->  
-> If we get rid of the pbs node we need to get a handle to the proper regmap.
-> I see two possible options, we could either introduce a new client property
-> which points to a peripheral on the same device as pbs.
-> 
-> i.e.
-> 	led-controller {
-> 		compatible = "qcom,pmi632-lpg";
->       		#address-cells = <1>;
->       		#size-cells = <0>;
->       		#pwm-cells = <2>;
->      		nvmem-names = "lpg_chan_sdam";
->       		nvmem = <&pmi632_sdam7>;
->       		qcom,pbs-phandle = <&pmi632_gpios>;
->       		..... 
-> 	};
-> Then when client is probing could do something like the following to get the regmap
-> 
-> 	dn = of_parse_phandle(node, "qcom,pbs-phandle", 0);
-> 	pdev = of_find_device_by_node(dn);
-> 	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
-> 
-> 
-> 
-> Or we could use the nvmem phandle and just have something like this in client's probe
-> 
-> 	dn = of_parse_phandle(node, "nvmem", 0);
-> 	pdev = of_find_device_by_node(dn);
-> 	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
-> 
-> 
-> 
-> Let me know what your thoughts are on this.
+On 11/07/2023 07:46, Rohit Agarwal wrote:
+> Add PMX75 compatibles for PMIC found in SDX75 platform.
+> While at it, update the entry for SDX65 as well.
 
-Rob asked you - "Is there more than 1 instance in a PMIC?" - and you did
-not answer positively, just mentioned something about drivers in
-downstream, which do not matter. So is the answer for that question:
-yes, you have two instances of the same PMIC differing by presence of
-PBS and other features"?
+Everything is an update...
+
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+>  .../bindings/regulator/qcom,rpmh-regulator.yaml    | 22 +++++++++++++++++++++-
+>  1 file changed, 21 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> index b949850..72b533c 100644
+> --- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> @@ -53,6 +53,7 @@ description: |
+>        For PMR735A, smps1 - smps3, ldo1 - ldo7
+>        For PMX55, smps1 - smps7, ldo1 - ldo16
+>        For PMX65, smps1 - smps8, ldo1 - ldo21
+> +      For PMX75, smps1 - smps10, ldo1 - ldo21
+>  
+>  properties:
+>    compatible:
+> @@ -84,6 +85,7 @@ properties:
+>        - qcom,pmr735a-rpmh-regulators
+>        - qcom,pmx55-rpmh-regulators
+>        - qcom,pmx65-rpmh-regulators
+> +      - qcom,pmx75-rpmh-regulators
+>  
+>    qcom,pmic-id:
+>      description: |
+> @@ -424,10 +426,28 @@ allOf:
+>          vdd-l11-l13-supply: true
+>        patternProperties:
+>          "^vdd-l[1347]-supply$": true
+> -        "^vdd-l1[0245789]-supply$": true
+> +        "^vdd-l1[024579]-supply$": true
+
+Why? Does not look related at all.
+
 
 Best regards,
 Krzysztof
