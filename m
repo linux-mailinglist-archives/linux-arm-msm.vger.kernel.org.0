@@ -2,161 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CD5874F171
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:15:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1788474F19E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:17:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230402AbjGKOPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 10:15:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52436 "EHLO
+        id S233199AbjGKORt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 10:17:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232422AbjGKOPO (ORCPT
+        with ESMTP id S233553AbjGKORg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 10:15:14 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B31E69;
-        Tue, 11 Jul 2023 07:15:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7D3066150D;
-        Tue, 11 Jul 2023 14:15:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209CBC433C9;
-        Tue, 11 Jul 2023 14:14:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689084907;
-        bh=A+lgFSqWg8vRgir1XqFzY9nIE1Cw0dwqFBu8P2BdZBc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KwXQpO0JwJwS2tync5AfGpO9HXb9u4mgZfpWRxyxjmWV7o23oHa66oSgLBUqWen2D
-         ZlOHsSEyXpzrsEeWWEmLhLLitAzI15911I18ub63ARZldiwGDK6EeLi3B34Qy+IEG4
-         waxyA6VmnpE80hBohYtayTpWfyRhiz5yBCu2xfPCie7wDB1OJGO5pfFeIe7TmhLaf6
-         2F7TtEpspxDmIAOKWfQt4n5/QaTo60Dymh5zBKNq1hnkXPOMFNsHXFu721qfrAekf9
-         KAql0ORVXuf2YxOmwhPq6tE1iNaCTZM61qgKsPoZvWs0hppRNFtMcBrTT4RcCr66z6
-         VpMXSzxRgleHw==
-Date:   Tue, 11 Jul 2023 15:14:54 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Amit Kumar Mahapatra via Alsa-devel 
-        <alsa-devel@alsa-project.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Sanjay R Mehta <sanju.mehta@amd.com>,
-        Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
+        Tue, 11 Jul 2023 10:17:36 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9026D1BC9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:17:24 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fa16c6a85cso8874712e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:17:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689085043; x=1691677043;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S/1+z4Oh2qIePs0s4NVjlcNLT1pnOR5AaMR/48q31LA=;
+        b=P5jp+xhu28AAk7XNGFmJD9SiCBYgeHh6Rc+G/8Hu4cIA1BD13tzIbLx6yskUBROJWy
+         ax+Q0mfFDvsSqBVaokS2Nqlbvsx5YiXMYFndLYxXTyBzClJtt4Y812wa5TVlAscc0KMI
+         MaX6QHP1yJoeFJ/Qojgu+3H+rxDJvdZCU+Gn6hnp4+C0lp1F6U3tAbAw3ugAtvPViqOJ
+         4ORxp2i5tgLiTotwWFj8flZfl8mYSe2fm5y1Ror557H4d9Z/lZKwOO2YLLrWvbDKgIwG
+         w5//Aec1ngaRptQyjN9j/GbpJuZ+C6nybrvOpEl8Z3E9j6Qhu7g+6fC/k3dYgeO5x5Gb
+         tdVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689085043; x=1691677043;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=S/1+z4Oh2qIePs0s4NVjlcNLT1pnOR5AaMR/48q31LA=;
+        b=Y+2CI0p8CrL5Hrs7OUM39ac7iyAYlE+TtG5duYU7cVwsch4qQReD0yBPp7MiAutCgf
+         RLHqvJ0SS/5BXcs+SQ2GsbCoG8ggh+dwI1A7ax31dDF+Grzy6WB6zNMv/COobNvYhs+w
+         k1F+E0pK/FzyzTzoaaj82hBZIDTXcTQ6ang6yk5a0+v5XNcNXv/SvOvfIHRbnvNTLJvE
+         1b4CQ7PtanarH8vAr5tDm2WgCK3XmKxSA2CjXzY3lsOjiMVyQwidLkfjfLH7MtUKCGKp
+         5ouEIrsPzOA2rSO+gysBWlAhPtW3qlxHvRSTP67zv2uPQWI43Wj9JxX8WlNNLlbv0SeV
+         o9NQ==
+X-Gm-Message-State: ABy/qLZ1icDX0cIqQuuhURhC2B8TmbmrB7BEcZb+RGvvl3xkQQ+lFV52
+        IfzVxvMI8XfT3PuRkyQGGIAG+A==
+X-Google-Smtp-Source: APBJJlHTET9tI1w9qimMxj3wg5UhYJX6q7FfUg9Dh2HRppnZLsCdcU04K3ynI+g5BexwO06m3jb8jA==
+X-Received: by 2002:a19:2d54:0:b0:4f6:140b:743 with SMTP id t20-20020a192d54000000b004f6140b0743mr11990724lft.25.1689085042601;
+        Tue, 11 Jul 2023 07:17:22 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id eo17-20020a056512481100b004fba9e6a0a0sm340256lfb.55.2023.07.11.07.17.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jul 2023 07:17:22 -0700 (PDT)
+Message-ID: <849dcb13-8059-f50b-4f5c-d8946f7c598c@linaro.org>
+Date:   Tue, 11 Jul 2023 17:17:21 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 50/53] interconnect: qcom: sm8350: Point display paths to
+ the display RSC
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Subject: Re: [PATCH v2 04/15] spi: Replace open coded
- spi_controller_xfer_timeout()
-Message-ID: <5959b123-09e3-474b-9ab0-68d71cfdd9a2@sirena.org.uk>
-References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
- <20230710154932.68377-5-andriy.shevchenko@linux.intel.com>
- <cfaffa00-4b61-4d81-8675-70295844513b@sirena.org.uk>
- <ZK02efTYxV3czigr@smile.fi.intel.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MZrPSMfLUzZVYlnE"
-Content-Disposition: inline
-In-Reply-To: <ZK02efTYxV3czigr@smile.fi.intel.com>
-X-Cookie: marriage, n.:
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
+ <20230708-topic-rpmh_icc_rsc-v1-50-b223bd2ac8dd@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230708-topic-rpmh_icc_rsc-v1-50-b223bd2ac8dd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/07/2023 15:18, Konrad Dybcio wrote:
+> The _DISP paths are expected to go through the DISP RSC. Point them to the
+> correct place.
+> 
+> Fixes: d26a56674497 ("interconnect: qcom: Add SM8350 interconnect provider driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/interconnect/qcom/sm8350.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
+> index c48f96ff8575..0466ba5d939a 100644
+> --- a/drivers/interconnect/qcom/sm8350.c
+> +++ b/drivers/interconnect/qcom/sm8350.c
+> @@ -1609,7 +1609,7 @@ static struct qcom_icc_bcm bcm_sn14 = {
+>   static struct qcom_icc_bcm bcm_acv_disp = {
+>   	.name = "ACV",
+>   	.keepalive = false,
+> -	.voter_idx = 0,
+> +	.voter_idx = 1,
 
---MZrPSMfLUzZVYlnE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Shouldn't this value come from a enum? Otherwise a magic '1' is... a magic.
 
-On Tue, Jul 11, 2023 at 02:01:13PM +0300, Andy Shevchenko wrote:
-> On Mon, Jul 10, 2023 at 06:30:32PM +0100, Mark Brown wrote:
-> > On Mon, Jul 10, 2023 at 06:49:21PM +0300, Andy Shevchenko wrote:
+>   	.num_nodes = 1,
+>   	.nodes = { &ebi_disp },
+>   };
+> @@ -1617,7 +1617,7 @@ static struct qcom_icc_bcm bcm_acv_disp = {
+>   static struct qcom_icc_bcm bcm_mc0_disp = {
+>   	.name = "MC0",
+>   	.keepalive = false,
+> -	.voter_idx = 0,
+> +	.voter_idx = 1,
+>   	.num_nodes = 1,
+>   	.nodes = { &ebi_disp },
+>   };
+> @@ -1625,7 +1625,7 @@ static struct qcom_icc_bcm bcm_mc0_disp = {
+>   static struct qcom_icc_bcm bcm_mm0_disp = {
+>   	.name = "MM0",
+>   	.keepalive = false,
+> -	.voter_idx = 0,
+> +	.voter_idx = 1,
+>   	.num_nodes = 1,
+>   	.nodes = { &qns_mem_noc_hf_disp },
+>   };
+> @@ -1633,7 +1633,7 @@ static struct qcom_icc_bcm bcm_mm0_disp = {
+>   static struct qcom_icc_bcm bcm_mm1_disp = {
+>   	.name = "MM1",
+>   	.keepalive = false,
+> -	.voter_idx = 0,
+> +	.voter_idx = 1,
+>   	.num_nodes = 2,
+>   	.nodes = { &qxm_mdp0_disp, &qxm_mdp1_disp },
+>   };
+> @@ -1641,7 +1641,7 @@ static struct qcom_icc_bcm bcm_mm1_disp = {
+>   static struct qcom_icc_bcm bcm_mm4_disp = {
+>   	.name = "MM4",
+>   	.keepalive = false,
+> -	.voter_idx = 0,
+> +	.voter_idx = 1,
+>   	.num_nodes = 1,
+>   	.nodes = { &qns_mem_noc_sf_disp },
+>   };
+> @@ -1649,7 +1649,7 @@ static struct qcom_icc_bcm bcm_mm4_disp = {
+>   static struct qcom_icc_bcm bcm_mm5_disp = {
+>   	.name = "MM5",
+>   	.keepalive = false,
+> -	.voter_idx = 0,
+> +	.voter_idx = 1,
+>   	.num_nodes = 1,
+>   	.nodes = { &qxm_rot_disp },
+>   };
+> @@ -1657,7 +1657,7 @@ static struct qcom_icc_bcm bcm_mm5_disp = {
+>   static struct qcom_icc_bcm bcm_sh0_disp = {
+>   	.name = "SH0",
+>   	.keepalive = false,
+> -	.voter_idx = 0,
+> +	.voter_idx = 1,
+>   	.num_nodes = 1,
+>   	.nodes = { &qns_llcc_disp },
+>   };
+> 
 
-> > > + * Assume speed to be 100 kHz if it's not defined at the time of invocation.
+-- 
+With best wishes
+Dmitry
 
-> > You didn't mention this bit in the changelog, and I'm not 100% convinced
-> > it was the best idea in the first place.  It's going to result in some
-> > very big timeouts if it goes off, and we really should be doing
-> > validation much earlier in the process.
-
-> Okay, let's drop this change.
-
-Like I say we *should* be fine with the refactoring without this, or at
-least if it's an issue we should improve the validation.
-
-> > > +	u32 speed_hz = xfer->speed_hz ?: 100000;
-
-> > Not only the ternery operator, but the version without the second
-> > argument for extra clarity!
-
-> Elvis can be interpreted as "A _or_ B (if A is false/0)".
-> Some pieces related to SPI use Elvis already IIRC.
-
-I understand what it means, I just don't find it's adding clarity most
-of the times it's used (there's a few places where it is useful like
-pasting in strings in formats).  There are some examples that I'd
-complain about in the code, most of them predating me working on SPI too
-much, but I'm not a fan.
-
---MZrPSMfLUzZVYlnE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmStY90ACgkQJNaLcl1U
-h9DeQQf+MxpgOv6egcsQtreuAtaq7Ev7HPCaH6MbusHDNH2hElvH+GmEYjovkV6m
-h3LadU5OvktJBaXfjDQRjU71Cbf70/Nlo8I3WN5V4iRKzqWtfMV16ZStvy2+1Rx/
-jHek+Aib8L8SiwlzvD6WB163yHCsSn5KBv2Pqp95DjGWamTl918onxXzSS6g2j5A
-ib1Mz8aOXWBsiIdaFTQ3NoK7Uvnykzp1X2uGcfrRZuPWQNVvpJs/wt5iOuTpuEws
-6O2PEgJext+6CeKBCv8pCvpex2QsVtDKLnDVvmDX4Oa2impxsxSIjLyVbZfbJ480
-4XviYIQ2LNlTFidlbAAqqEafOQrvRg==
-=WM20
------END PGP SIGNATURE-----
-
---MZrPSMfLUzZVYlnE--
