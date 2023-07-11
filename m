@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BDA874E8E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 10:21:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67B6074E8EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 10:21:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbjGKIVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 04:21:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41398 "EHLO
+        id S230148AbjGKIVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 04:21:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbjGKIVO (ORCPT
+        with ESMTP id S229573AbjGKIVU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 04:21:14 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B448AE6A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 01:21:12 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f76a0a19d4so8300472e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 01:21:12 -0700 (PDT)
+        Tue, 11 Jul 2023 04:21:20 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 337209C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 01:21:19 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fbc244d307so61727635e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 01:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689063671; x=1691655671;
+        d=linaro.org; s=google; t=1689063677; x=1691655677;
         h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
          :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JxKFYbOeCPJfNoXrqBvsNS7aUlyz8/ToZjQNETQXPms=;
-        b=dryEFzZ8771JS+Yz/dl8licnIGIt8/TaieUZTo0dhTADBi5ZZqEDWzTFcVSZW69cg/
-         mte2HvFAYmplwn1fBsdMb+RWFF48RZQvnQUBSK6yI0MffjBx6rI3seun21yOv6kvRD8E
-         vmiZwUPuOprz76Ocv/+VsASegG9eiN6uEbI2Z//moFEHtC8cvy7ZUhGNtso7/Umcx/kS
-         LQ+jB49gBpqdD6Ad3FL3RFij4OL+kGLjV28h2RJhrFqpSP8qB0yVIehwgyCEd5/qMqx+
-         t7JANG/W5CdKOH1Z5N+A9Kqraq/860FoFfc5hx7jh+lyr4VV1DJbxou5WR5DXDeBuj1b
-         /8Fg==
+        bh=2awPYd3HXRNroCTB0hVa1fxOdnTXbZ1UrJBzoM/lTFw=;
+        b=sNdncJFBQWQQHoBuyDo6nEnrz9dHPFyKME3hzDj1IFW+Oe+v7zgrzJTAL5xygdkm9E
+         EDmIrvmOywHsTYUSlT5hMCo+dtaEIp+GAEeAcHtpcD60xyWBARQ8uXJ/hHbV5FIA8lIG
+         FTi26w/cmcPxCDxGBzPZnzkX6n890G9ffwdxsFdI7MnSiectzhfLylsg7jW/81IllmrH
+         pCg/Lni8M4xbPkNyRfWFmy6gY3ijd7CYyutJZCDL9+uv13+a2JT/If67dNSa9UPMXv30
+         +EeMbu/1hp6juM26OoZl5ugUCMk7oxM55pVndPW0YSquNXNB1KF9FgOAUcKR06WI4qFV
+         lWVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689063671; x=1691655671;
+        d=1e100.net; s=20221208; t=1689063677; x=1691655677;
         h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
          :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JxKFYbOeCPJfNoXrqBvsNS7aUlyz8/ToZjQNETQXPms=;
-        b=EObH//4oM7CxkBM5Xkwgbvq0e7oIfsVwbLbt8dyzTzSQzptBa47pN8kz4iaJI5l3oY
-         M9r6OLv+HTA/XS39TH3orvOtfVYsPX5likm3VnOSkRb0Guxnwx+uivNCAvShYUuo4B0f
-         qXlNUgHQ1EZNcO7QRv9fL9ZZyljDBaskDUg6r481Ttv2P71mnttkxtU0pLssk2nhhCrl
-         zWuLO4dvxRpsP1Zf+8tDZD0C2F2ibC6FwNeJ59kDAj99gY8yh7Ik/ZxBaDC1G0SiOZ/R
-         EZN/zI91CSNFZww26Zyu7zQky4zT0atp2JgrPkLZbJrzbJPY7LnVDRtKL15H8rzqQuyg
-         5jcA==
-X-Gm-Message-State: ABy/qLZuRVO5w6eP3P5VAqOBMcf3ChJq6Tk2ysNCkAzChiCB+Fifsl5g
-        xiEsC0z8oIeJvZ+uEZm2JNUSx30BO0URNjZkwbo=
-X-Google-Smtp-Source: APBJJlHWUMrcVV3AYfFcvmBu9p2eYaCi43r7UtCO6sh8OlRoN1RLLiuy84UaeWKCcjPqImedBSZb8w==
-X-Received: by 2002:a05:6512:3f3:b0:4fb:772a:af19 with SMTP id n19-20020a05651203f300b004fb772aaf19mr10748069lfq.34.1689063670997;
-        Tue, 11 Jul 2023 01:21:10 -0700 (PDT)
+        bh=2awPYd3HXRNroCTB0hVa1fxOdnTXbZ1UrJBzoM/lTFw=;
+        b=hpMhC0KMrI5fcwzSiA2h2EEN3X5JQr6XqW4UeFrOZygCNGUVoEqs03Cw41ocOpQiQz
+         hiVDoWg71Fp1gRDF26ag6Sf2BpSewM+kPTi2LQfQOw6YrTwXmw4LVq8RG0iMV3B8C6UF
+         aPGzfFhiwQPLG/wHPw7xVfQlAZqZYlQGRZ4AOAd21HnXjcLvzD+Sdujcr0aUKdSpt/1h
+         ibzEn3G4ahw2JWhkbUrfsCjKRigwEM5GQK/Hd4TVLRwxj305dW9EiEgSMjkbaBAz2wnp
+         cGDYS/FrUUDiw2vu3tw3vWJVGEXpCD7hqdHLx7v2xOUTAoWNnzPLXWjZelhAGQPEm08Z
+         Ak8w==
+X-Gm-Message-State: ABy/qLaEp7SEoNwLsMB8vm0UHw61Bz4hTK9cuBXyGkRmhg4Nlc0TIsMy
+        Iu49+SBa7cEH2VAx89jqCBpm1DcGmRTcJZCc2nc=
+X-Google-Smtp-Source: APBJJlF0sfiUbbYqGKeYHW/O/nho5Vvwq2P2b8qilFz9LEbAguLpt78XKqS7uFSN5tRMm3Cd+LFlrg==
+X-Received: by 2002:a1c:f706:0:b0:3fb:b637:22a7 with SMTP id v6-20020a1cf706000000b003fbb63722a7mr16076656wmh.4.1689063677747;
+        Tue, 11 Jul 2023 01:21:17 -0700 (PDT)
 Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id o6-20020a5d4a86000000b0030e5bd253aasm1567187wrq.39.2023.07.11.01.21.09
+        by smtp.gmail.com with ESMTPSA id c18-20020a7bc012000000b003fbd2a9e94asm1825480wmb.31.2023.07.11.01.21.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 01:21:10 -0700 (PDT)
-Date:   Tue, 11 Jul 2023 11:21:06 +0300
+        Tue, 11 Jul 2023 01:21:16 -0700 (PDT)
+Date:   Tue, 11 Jul 2023 11:21:13 +0300
 From:   Dan Carpenter <dan.carpenter@linaro.org>
 To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
 Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
@@ -58,9 +58,8 @@ Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
         Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         kernel-janitors@vger.kernel.org
-Subject: [PATCH 4/5 v4] accel/qaic: move and expand integer overflow checks
- for map_user_pages()
-Message-ID: <ZK0Q8hNiX5JlUPm3@moroto>
+Subject: [PATCH 5/5 v4] accel/qaic: Fix a leak in map_user_pages()
+Message-ID: <ZK0Q+ZuONTsBG+1T@moroto>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -75,50 +74,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The integer overflow checking for find_and_map_user_pages() was done in
-encode_dma().  Presumably this was to do it before the allocation.  But
-it's not super important that the failure path is a fast path and it
-hurts readability to put the check so far from the where the variable is
-used.
-
-Move the check to find_and_map_user_pages() instead and add some more
-additional potential integer overflow checks.
+If get_user_pages_fast() allocates some pages but not as many as we
+wanted, then the current code leaks those pages.  Call put_page() on
+the pages before returning.
 
 Fixes: 129776ac2e38 ("accel/qaic: Add control path")
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 ---
 no change
 
- drivers/accel/qaic/qaic_control.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/accel/qaic/qaic_control.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index 23680f5f1902..d5ce36cb351f 100644
+index d5ce36cb351f..9a6f80f31c65 100644
 --- a/drivers/accel/qaic/qaic_control.c
 +++ b/drivers/accel/qaic/qaic_control.c
-@@ -402,6 +402,12 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
+@@ -425,9 +425,12 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
+ 	}
  
- 	xfer_start_addr = in_trans->addr + resources->xferred_dma_size;
+ 	ret = get_user_pages_fast(xfer_start_addr, nr_pages, 0, page_list);
+-	if (ret < 0 || ret != nr_pages) {
+-		ret = -EFAULT;
++	if (ret < 0)
+ 		goto free_page_list;
++	if (ret != nr_pages) {
++		nr_pages = ret;
++		ret = -EFAULT;
++		goto put_pages;
+ 	}
  
-+	if (in_trans->size == 0 ||
-+	    in_trans->addr + in_trans->size < in_trans->addr ||
-+	    in_trans->addr + resources->xferred_dma_size < in_trans->addr ||
-+	    in_trans->size + offset_in_page(xfer_start_addr) < resources->xferred_dma_size)
-+		return -EINVAL;
-+
- 	need_pages = DIV_ROUND_UP(in_trans->size + offset_in_page(xfer_start_addr) -
- 				  resources->xferred_dma_size, PAGE_SIZE);
- 
-@@ -564,9 +570,6 @@ static int encode_dma(struct qaic_device *qdev, void *trans, struct wrapper_list
- 		     QAIC_MANAGE_EXT_MSG_LENGTH)
- 		return -ENOMEM;
- 
--	if (in_trans->addr + in_trans->size < in_trans->addr || !in_trans->size)
--		return -EINVAL;
--
- 	xfer = kmalloc(sizeof(*xfer), GFP_KERNEL);
- 	if (!xfer)
- 		return -ENOMEM;
+ 	sgt = kmalloc(sizeof(*sgt), GFP_KERNEL);
 -- 
 2.39.2
 
