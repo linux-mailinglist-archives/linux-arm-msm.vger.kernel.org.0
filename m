@@ -2,137 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDBF474F315
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 17:11:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F31A74F370
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 17:30:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231537AbjGKPLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 11:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35344 "EHLO
+        id S230331AbjGKPa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 11:30:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231579AbjGKPLM (ORCPT
+        with ESMTP id S232179AbjGKPaZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 11:11:12 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4805810EF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 08:11:10 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fba1288bbdso8580087e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 08:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689088268; x=1691680268;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PAxsMN4SFjq3m6zL5WwDeg6MGUvFZCHkp0p5DhC8jiU=;
-        b=pk8yZoZ4fiKzO+Y1DNF7w6tIFmoqUHj8ImS15hj+NXeOnhaVKqQP5EgtldYF9/ow61
-         Wrx/QvB3XHDsu/AZLeWmTlLnDW9UzXhdNXvRLqH0oeJ//FM72QQKe4Rk5V/3RgA6hshB
-         0nOuREWD02QbuHEYBuN73coL6HsPJ/5LwNNw+EPm7o5NckGq5Il+IC4fPfrjpy8mSuej
-         /R1fXe7ol5aJXn8MPVeCET/zQ2fpziUnN0tSt5fvXIs2Biypc9FB0VpRkt9QqdEf47/F
-         3QSkYznGE45VU1VLbk0cEGmxo9xy7WsstisdvfBtscnpzw60gtOEqbhSJpSJFzczs8tK
-         fTRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689088268; x=1691680268;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PAxsMN4SFjq3m6zL5WwDeg6MGUvFZCHkp0p5DhC8jiU=;
-        b=V+UmMrpEnyvEBdhWCLZW7IDqsiAPwztFriML8F2JVp2fhXhp7zoHeRwZWrKRmgd7jt
-         XLyLIikEKOl0nuWjUZ2lhr0WyCgNLwgwI5Mriow29n0ydQouxnxYL4QJKm0sFL8Zv8zD
-         Up+OPe5bTVIFfP+2mo9Jl6hcAOPANpZjlcCZN2BDONdqKZaaEZm4TbXLU/wre0Zt3L8X
-         Sgwfg0FxolHeYorw18rJAO4f3KqFRN7jo9e2T6QotUrQxbbi9jRP2G9HkzaC2J3m6xwH
-         2ogYDErI0RjClrh7chDPCTSX9J5lNaw6aTKrgDn+yaee2t4kZhJjjuFiY5O13iTKODzT
-         tJYA==
-X-Gm-Message-State: ABy/qLan0zaywJzu2lAhyXD/hR7aAq5aAQiN0so3nvY8POnuNkkjUDC0
-        9bJ2nLyTHDytB3r9wWvPtp5b3Q==
-X-Google-Smtp-Source: APBJJlF5q6dJCBUSCWvxVV/e6sC6FQtfNmRX//BtPXMe2TwxHGHFdxn9o2CMlUlZ6UDSdlPDtbczug==
-X-Received: by 2002:a05:6512:33ce:b0:4f9:596d:c803 with SMTP id d14-20020a05651233ce00b004f9596dc803mr17340726lfg.53.1689088268494;
-        Tue, 11 Jul 2023 08:11:08 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id b26-20020ac247fa000000b004fbb207ee0asm352885lfp.206.2023.07.11.08.11.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 08:11:07 -0700 (PDT)
-Message-ID: <6746ceb6-dac4-ee8e-411f-8de0ff8f12e0@linaro.org>
-Date:   Tue, 11 Jul 2023 18:11:07 +0300
+        Tue, 11 Jul 2023 11:30:25 -0400
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E0D136;
+        Tue, 11 Jul 2023 08:30:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689089424; x=1720625424;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=WtKHEzd9TLb1fy9g0AvI3P/4wH5wHUCXn6+ARbR9U1s=;
+  b=hBr5izgDJD/+xQBRT3DHHo56zIVWGr+PwRKeYslY6byoAX8dVJKP/IlP
+   XY2wrXphIylhXd4071LpUGpDRQMvcVoheqR2xYz/VGZeg1ocw+At12Ode
+   PTC74t9K5YYezReTYPdi0oDkc/r4Djo/4nZ5gRCaOUN1m4d3t/zLJe6Xq
+   ptVaXtDqdCnfmUoyRk80WfAin8VYCXMblITX/1QZeF3sZhL4mF4qsSzh9
+   LDYiFacjAfODc99/FRomUQEFDlayLL1LDWMqsytLRRHjVZhB0ff9c6TOl
+   QyJW3PUvicDt5m4ta+3WiJMbTZ535Wn09jYYEWE781W+LtuVQ9dAC9WKE
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="428346794"
+X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
+   d="scan'208";a="428346794"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 08:30:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="698462660"
+X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
+   d="scan'208";a="698462660"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga006.jf.intel.com with ESMTP; 11 Jul 2023 08:30:10 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1qJFJX-001swf-0G;
+        Tue, 11 Jul 2023 18:30:07 +0300
+Date:   Tue, 11 Jul 2023 18:30:06 +0300
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Amit Kumar Mahapatra via Alsa-devel 
+        <alsa-devel@alsa-project.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        Sanjay R Mehta <sanju.mehta@amd.com>,
+        Radu Pirea <radu_nicolae.pirea@upb.ro>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+Subject: Re: [PATCH v2 04/15] spi: Replace open coded
+ spi_controller_xfer_timeout()
+Message-ID: <ZK11flZf/1grJ1Bd@smile.fi.intel.com>
+References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
+ <20230710154932.68377-5-andriy.shevchenko@linux.intel.com>
+ <cfaffa00-4b61-4d81-8675-70295844513b@sirena.org.uk>
+ <ZK02efTYxV3czigr@smile.fi.intel.com>
+ <5959b123-09e3-474b-9ab0-68d71cfdd9a2@sirena.org.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 1/3] dt-bindings: power: rpmhpd: Add Generic RPMh PD
- indexes
-Content-Language: en-GB
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1689054169-10800-1-git-send-email-quic_rohiagar@quicinc.com>
- <1689054169-10800-2-git-send-email-quic_rohiagar@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1689054169-10800-2-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5959b123-09e3-474b-9ab0-68d71cfdd9a2@sirena.org.uk>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 08:42, Rohit Agarwal wrote:
-> Add Generic RPMh Power Domain indexes that can be used
-> for all the Qualcomm SoC henceforth.
+On Tue, Jul 11, 2023 at 03:14:54PM +0100, Mark Brown wrote:
+> On Tue, Jul 11, 2023 at 02:01:13PM +0300, Andy Shevchenko wrote:
+> > On Mon, Jul 10, 2023 at 06:30:32PM +0100, Mark Brown wrote:
+> > > On Mon, Jul 10, 2023 at 06:49:21PM +0300, Andy Shevchenko wrote:
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   include/dt-bindings/power/qcom-rpmhpd.h | 30 ++++++++++++++++++++++++++++++
->   1 file changed, 30 insertions(+)
->   create mode 100644 include/dt-bindings/power/qcom-rpmhpd.h
+> > > > + * Assume speed to be 100 kHz if it's not defined at the time of invocation.
 > 
-> diff --git a/include/dt-bindings/power/qcom-rpmhpd.h b/include/dt-bindings/power/qcom-rpmhpd.h
-> new file mode 100644
-> index 0000000..4da2e04
-> --- /dev/null
-> +++ b/include/dt-bindings/power/qcom-rpmhpd.h
-> @@ -0,0 +1,30 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_POWER_QCOM_RPMHPD_H
-> +#define _DT_BINDINGS_POWER_QCOM_RPMHPD_H
-> +
-> +/* Generic RPMH Power Domain Indexes */
-> +#define CX               0
-> +#define MX               1
-> +#define CX_AO            2
-> +#define MX_AO            3
-> +#define GFX              4
-> +#define MSS              5
-> +#define EBI              6
-> +#define LCX              7
-> +#define LMX              8
-> +#define MMCX             9
-> +#define MMCX_AO          10
-> +#define MXC              11
-> +#define MXC_AO           12
-> +#define NSP              13
-> +#define NSP0             14
-> +#define NSP1             15
-> +#define QPHY             16
-> +#define DDR              17
-> +#define XO               18
+> > > You didn't mention this bit in the changelog, and I'm not 100% convinced
+> > > it was the best idea in the first place.  It's going to result in some
+> > > very big timeouts if it goes off, and we really should be doing
+> > > validation much earlier in the process.
+> 
+> > Okay, let's drop this change.
+> 
+> Like I say we *should* be fine with the refactoring without this, or at
+> least if it's an issue we should improve the validation.
 
-I went through the existing defines. If we adopt the order of defines 
-for sm8550, we can migrate that platform and all of sm8[234]50 without 
-breaking ABI. This would be a minor gain, but still something.
+For the speeds < 1000 Hz, this change will lead to the div by 0 crash.
+It seems that the current code which this one removes is better than
+the spi_controller_xfer_timeout() provides.
 
-> +
-> +#endif
+If anything, the spi_controller_xfer_timeout() should be improved first.
+So, for now I drop this for sure. Maybe in the future we can come back
+to it.
 
 -- 
-With best wishes
-Dmitry
+With Best Regards,
+Andy Shevchenko
+
 
