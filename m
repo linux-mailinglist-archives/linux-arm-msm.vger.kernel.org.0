@@ -2,149 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 549F474F82D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 20:54:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6C7D74F8D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 22:12:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231144AbjGKSyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 14:54:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45678 "EHLO
+        id S231789AbjGKUMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 16:12:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230314AbjGKSyN (ORCPT
+        with ESMTP id S231252AbjGKUMo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 14:54:13 -0400
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2055.outbound.protection.outlook.com [40.107.244.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13704BC;
-        Tue, 11 Jul 2023 11:54:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FSEo5lv1f/BLskulr7knyySZN0mRsWpWkYOBZNaOJKrCo1f/8atiNah0n4Xd1lwl5Pf2nI/nHcB1kLZ5/ceACHJJRiNXHOQmsuSnAzrX6gf7Ji8ppikjOUZwU8+n7nhT4SeDNNcnEDWvRPX+8tQR1sIN4EbfzWWiDFzbQPNU9/Vm9xT7Pqsb9ny7tGPiDdXzQzerp53URpen1+/dGwBQHy9yJq4ONXluLTyMr7KIjhHBhDcQzlXB7Bou58Jjusv5WF7Na+VnTfJ+u2DPm4Jwh3k3uDArIZk7rqyO2c2nq9HoeQ3s/N0nfvlUw44KYO6QKAApHjU27hKY/QANrpmPiw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9qPOywUylNDoD4N7IvkAXUdMQFOsCQl6ZNhHdj9+U/s=;
- b=DlyK8eBh7lrsKgQke34DEtQwzWsyPWu3ISYb8kb8g/OYjcq7DlNeXUUihcCzkMlnRhYn280fLvZQcbIZk0XMShL+I8A5XFmKy/1yzyVfxSGcuHLnbtuT1yLbH9p4HHNkqFRkVQrUdouYPQivXZQfeImCW7yxu6PCC5e4jJlebQHukROm2dj3uCQmnAOoUtG2l8v+5fNuB3ACQ3SNSv7wq5ciKvSYFywECct/kQN51RlBd95NAc+OI6c8TVq2Dzthk8B+shYEYKJ037S567fXRawjPg8rkf14gZTP3vx3jzI88G4GaWcyi0pIRC2A/reTny2fQzF8W6v+iLgqvR6raQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=sightlineapplications.com; dmarc=pass action=none
- header.from=sightlineapplications.com; dkim=pass
- header.d=sightlineapplications.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sightlineapplications.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9qPOywUylNDoD4N7IvkAXUdMQFOsCQl6ZNhHdj9+U/s=;
- b=IARat9lDEEDl12jimYFD9ZC3YGRjl5HdGGHO0HInLey2u18YhfOYhkQjsvv4zbSy66KHi9a0HrJmeCWVffHY1dPAP789FF5TNlIBpMj8LT1ZeU56Tl06uNrbAGi5SNQPUBSPGq8el6AJSKQifM8ryXhCJTXBKPQ0rC4J8dRYCvxnIJn33CT1OtwT2hZFfZBJpvFWsbzhH/yBzqfXFUDXaT8U0xkSmPhv2pRv22qpLaNR+wUpyDzCk+bHuaEUQu/ADY9iB/GL8x9HDDHfgyBIZqPr6neNDLpYwXgJ5SOxzZSHkaciOaFNlFwBI4F/hb8545B7fgLJmdf1dkUqiu5MTQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=sightlineapplications.com;
-Received: from SN4PR18MB4918.namprd18.prod.outlook.com (2603:10b6:806:215::8)
- by LV3PR18MB5687.namprd18.prod.outlook.com (2603:10b6:408:1a4::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.32; Tue, 11 Jul
- 2023 18:54:09 +0000
-Received: from SN4PR18MB4918.namprd18.prod.outlook.com
- ([fe80::c27a:8a05:c369:eb0b]) by SN4PR18MB4918.namprd18.prod.outlook.com
- ([fe80::c27a:8a05:c369:eb0b%6]) with mapi id 15.20.6565.028; Tue, 11 Jul 2023
- 18:54:08 +0000
-From:   Patrick Whewell <patrick.whewell@sightlineapplications.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        William Gray <william.gray@linaro.org>,
-        Patrick Whewell <patrick.whewell@sightlineapplications.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] media: venus: Fix firmware path for sm8250
-Date:   Tue, 11 Jul 2023 11:53:30 -0700
-Message-Id: <20230711185330.10106-1-patrick.whewell@sightlineapplications.com>
-X-Mailer: git-send-email 2.25.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SN7P220CA0009.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:806:123::14) To SN4PR18MB4918.namprd18.prod.outlook.com
- (2603:10b6:806:215::8)
+        Tue, 11 Jul 2023 16:12:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15160139;
+        Tue, 11 Jul 2023 13:12:38 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36BJvus8023024;
+        Tue, 11 Jul 2023 20:12:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=XK8CbwDtingZVZz2UI5lv9/T4CRj46yMkQLDKpZJq/E=;
+ b=p4wlZKcbo7BLG8CXcm//xGXNZatpBPCosXRwbPs2db/RMTGo8+5Ulxz7qRP4T/s9sFjt
+ wxAue5lpDRUoqqv4DzbtLBJmgim6ZtAW3Br5V1b4tnBrMqajaoS0K2LADRB5DAlfD3A7
+ ejEe8REPL49iAiIYstfr/lIBN4TQzgdk4Jjl207mgSiQJKMrLY35yIs9T+aPQM1I9b2v
+ VYswbThU6S73mGpUoN9eNhWYSV9Gnr6ReIe9aBsnv9/H9WEMI4BX+w2A56d/xXcteHJV
+ J4GJG9erp0KDehp3SUeMNX5ySsX1wKz+cGKDwPOWuG8KuICQPLGNMVTIMgRqHW1pvZwU bQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rsct5843x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 20:12:22 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36BKCLsI027435
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 20:12:21 GMT
+Received: from [10.110.96.48] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 11 Jul
+ 2023 13:12:21 -0700
+Message-ID: <71e1f36f-8fd8-9d61-d563-577d4fb54f10@quicinc.com>
+Date:   Tue, 11 Jul 2023 13:12:20 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR18MB4918:EE_|LV3PR18MB5687:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9804f98-d278-4805-4b97-08db82403534
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: V3nZ+nK8fIcQ3C3DdnkWmxBPwoSqxIxz3f1FjRdoJ2HxELG9/DZrMZioMf8IB6YF0Ap7V3loE4jZZbFXnZAbHm1n5FIkDwTWIzGny7vFb14V4k0aJdgvegfsV8Sd7aMm3VkJTxISyE2DyVrBKT+HLtzJ/F/OoDdnSfvA2B7zb8/SQ0Y8yuVu8kKsaMS9QTeCiuqi+Yp3QUZUb1K7dfw2BgnZfOLvauLqHsS+tFUqFHKrCp6Jt0kJaEZbgCkG6hb9swyW6IuaFpnsnK+yGtxJX+rwWzoMSTMqr1b2jXe/OlukGAKgFmLzX5sl80SHrJrWkeApx1Bch2fKyHMJjClYUH8h/hv24dWdaOAFUYTM+p2aoV39h/7azrnrW3w86CzWtTxFqnYzdjqX+RKqMJWldh4wUT+RylIS7AXMprkKKwZCddLVFZLc3O5kn9fsfoQmnu77jvNHZzJGwPYm4lCDfI7k+zNFCMn25flH0Nb/1SDqj2fz4E9udSzqzPIW0NuvsRVDzvtUCl4MeYz0cfr7UIqrsveolwuZn1qOrmlzkooZKoSYE73l02IxKzyS43EEvvc2ceMIVIazi0RmSuIP0Qz/TBqcdu6FqK3soyIKxwHYDgPaDcyNrrthaHKHs01Ypm00wrgdWyAJM5ky8j2/ZA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR18MB4918.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(366004)(346002)(136003)(396003)(376002)(39840400004)(109986019)(451199021)(38350700002)(38100700002)(36756003)(86362001)(8936002)(7416002)(5660300002)(478600001)(6506007)(1076003)(41300700001)(44832011)(8676002)(186003)(6512007)(26005)(2616005)(4744005)(2906002)(316002)(6666004)(4326008)(52116002)(66556008)(66946007)(6486002)(54906003)(83380400001)(66476007)(266003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gkgAxjnAKkziyMLGQYb/Y9OG2ldXcPSaBLlak41YsA6zSTgndUUPGa/WYb91?=
- =?us-ascii?Q?dNXxTKVhk8XT0c1Kb/6f4Z6IqMyyzuBYQU7miotGeuLuOfLaf1laYNldZHDm?=
- =?us-ascii?Q?owlsYM/TTTtJwiPHmbR8iFXZwS5YS6CDA0TwRg02v88uuZwLFcvwLu+BtX8S?=
- =?us-ascii?Q?BbBNUcURTyP8Ooua5F84vEJ9fzlzT6pJj+au42dtr0gtinkecVUJ6v0JPWJc?=
- =?us-ascii?Q?XAK+s3T9OABQjY/ZEAKHBUyhE4OlCkrKF9V2aAieZ7wojYN13hlpJxb/dL6W?=
- =?us-ascii?Q?9rpireIuJl7YVXOWFljsirSAtLgZ2CXcZRiU+VeRGBUSLa4EokWUYTXkse9H?=
- =?us-ascii?Q?034qElCWlkVWoKsS/NCZYZYCpLi7VfnK/LlQc+cbEsZlCYJvd3Nyq93puUPY?=
- =?us-ascii?Q?ls0SlUsbeqonGT9DQTIk4rlsOPhEildMDKBDhD9nMv82cGz++OpMwMP5YiWq?=
- =?us-ascii?Q?OMyN/iXDNndDV9+W3rWW9JjeFbQIOPASmS75DEgAf77oDGA1zTwoE7/iC0TF?=
- =?us-ascii?Q?nBsi/+fRrH4nXEnPfTmfB+oZq65AOHhZLwxJvhoptJk6qp/EjJtkTUxOKQRa?=
- =?us-ascii?Q?dgpijFgCwRx0o4knRN/T87LpqTA7QFSg4EZYDAhVgzMmrnwzBAuE9VVkLEyd?=
- =?us-ascii?Q?K7ghQdsux2+y4XJeSeN1E5dRmujDXeLgcaN0i9okihyR68xKgEz4WULzNNaf?=
- =?us-ascii?Q?9Dj9wobrFDo3JW7J+4BLb7wcBtWDFqibmhQq/4yRYZFE56uU03ZJQEom5nEo?=
- =?us-ascii?Q?JAKXNFwy8izBe7L5kRYSG5j9TO0450a6+TJNPH2pLvTTh0mLz/SJ09Me92NF?=
- =?us-ascii?Q?O5Aq13tBofIA5eflZxSczkxHX+5HTqg6ISdL/E9NJhkVqwTNenIodFeCDQMs?=
- =?us-ascii?Q?r0SH+Jw2Wxchb8oKgP7UNmkHEV0CLLpm7IEvb3ME5eeSaCzdm4J3AOForTcj?=
- =?us-ascii?Q?jgFKteynJoo5Xc0jr3nKToizWIhffBMsXwUm7IYr6cP67+qYEGDejyWX2zqD?=
- =?us-ascii?Q?zr4MwiFXgXRUGethccr4zeVyNOwrvbxsJlz/VMlQmYSrAAzsHnsOefMnkqkH?=
- =?us-ascii?Q?C8n+psJ9QQeLX0WbMAHJMZmmR7d067wqHvkspDgdjQSv6m0Tv85Ic+Cj8PMj?=
- =?us-ascii?Q?WhaPyvyrYfgRybvIFL2/uhOpBEaUykn8voJcv5CYnkX+jPU+ddoDsTxAHwOQ?=
- =?us-ascii?Q?ttuiDqdcilaMKKvHGosKT3ppcGcTgbi6xT6ZBDlRQ0VinhEc4dWGMb5cMYoq?=
- =?us-ascii?Q?+06ynjd7VrnDFS/A06o1QshicvPskSiiO37L3+bjfo28zPOYwagVCbwMWQm/?=
- =?us-ascii?Q?jvXWhnyHSIqNpjuYCXUuqIyGBapBG4vMP3l83t7TYLHQpGbQBElx0eQlinLp?=
- =?us-ascii?Q?A3bV0xdhTRkC9sworV+cOgMZDsvalT8ftuSd82bfSSrpqntboApkWYnKxfIK?=
- =?us-ascii?Q?T0ug7gWqBvhzmFpX+VQknOsKwXDCg7i+C0O6CPHc1qoNTEg/hcCmk+RTxDX/?=
- =?us-ascii?Q?kxh2TLLVgyVACuExCPUJDNR+61kbTw+spKJo5S+IgDdaryJjOhedjapL/d5k?=
- =?us-ascii?Q?k2Hg+sZYUes5AaKY1KP3XREKbUKLHk0LxhjJjJoFzYmlqSNAu5HmD/NhXWNA?=
- =?us-ascii?Q?KpEmcAcua6DYFHaX8HsRWo/Av3RzUWTs24DlE+SiZxEN?=
-X-OriginatorOrg: sightlineapplications.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9804f98-d278-4805-4b97-08db82403534
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR18MB4918.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jul 2023 18:54:08.8349
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 6f56283c-2197-4913-9761-239c8b420cf0
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DkSO9S4S7Qg0BGO/LLFqNg6cLE6RduoP3hNVVRl4HfbRdVj7zMjNLqEQjT1LHjs5ngl3ip+2IfmKXww58N32kNH5nSCdpZo/9EYUlsvgKd0s2OP5iPf5kSwr6kGAztrfb5jY7yTi99p/+IKKtoy6gg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR18MB5687
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+CC:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>
+References: <20230621185949.2068-1-quic_amelende@quicinc.com>
+ <20230621185949.2068-2-quic_amelende@quicinc.com>
+ <20230626135857.GA3118929-robh@kernel.org>
+ <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
+ <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
+ <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com>
+ <431faa87-d152-5f7a-40fd-8b6fe26f0bb9@linaro.org>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <431faa87-d152-5f7a-40fd-8b6fe26f0bb9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ctyahuE-8dnZUq7BnQQNZI5HiKd2li5P
+X-Proofpoint-ORIG-GUID: ctyahuE-8dnZUq7BnQQNZI5HiKd2li5P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-11_12,2023-07-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ malwarescore=0 bulkscore=0 suspectscore=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 mlxscore=0 phishscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307110182
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The firmware path for the sm8250 resources is incorrect. This fixes the
-path to address the firmware correctly.
 
-Signed-off-by: Patrick Whewell <patrick.whewell@sightlineapplications.com>
----
- drivers/media/platform/qcom/venus/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 2ae867cb4c48..348085f8fc9c 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -814,7 +814,7 @@ static const struct venus_resources sm8250_res = {
- 	.vmem_size = 0,
- 	.vmem_addr = 0,
- 	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/vpu-1.0/venus.mdt",
-+	.fwname = "qcom/vpu-1.0/venus.mbn",
- };
- 
- static const struct freq_tbl sc7280_freq_table[] = {
--- 
-2.25.1
+On 7/10/2023 10:58 PM, Krzysztof Kozlowski wrote:
+> On 11/07/2023 05:52, Anjelique Melendez wrote:
+>>
+>>
+>> On 7/1/2023 4:03 AM, Krzysztof Kozlowski wrote:
+>>> On 29/06/2023 03:19, Anjelique Melendez wrote:
+>>>
+>>>>>> +examples:
+>>>>>> +  - |
+>>>>>> +    pmic {
+>>>>>> +      #address-cells = <1>;
+>>>>>> +      #size-cells = <0>;
+>>>>>> +
+>>>>>> +      qcom,pbs@7400 {
+>>>>>> +        compatible = "qcom,pbs";
+>>>>>> +        reg = <0x7400>;
+>>>>>> +      };
+>>>>>
+>>>>> Why do you need a child node for this? Is there more than 1 instance in 
+>>>>> a PMIC? Every sub-function of a PMIC doesn't have to have a DT node.
+>>>>>
+>>>>
+>>>> We currently have another downstream driver (which is planned to get upstreamed)
+>>>> which also needs a handle to a pbs device in order to properly trigger events. 
+>>>
+>>> I don't see how does it answer Rob's concerns. Neither mine about
+>>> incomplete binding. You don't need pbs node here for that.
+>>>
+>>> Anyway, whatever you have downstream also does not justify any changes.
+>>> Either upstream these so we can see it or drop this binding.
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+>> On PMI632, peripherals are partitioned over 2 different SIDs
+>> (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n42
+>> and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n149).
+>> Unfortunately, the pbs peripheral and the lpg peripherals are on different
+>> PMI632 devices and therefore have different regmaps.
+>>  
+>> If we get rid of the pbs node we need to get a handle to the proper regmap.
+>> I see two possible options, we could either introduce a new client property
+>> which points to a peripheral on the same device as pbs.
+>>
+>> i.e.
+>> 	led-controller {
+>> 		compatible = "qcom,pmi632-lpg";
+>>       		#address-cells = <1>;
+>>       		#size-cells = <0>;
+>>       		#pwm-cells = <2>;
+>>      		nvmem-names = "lpg_chan_sdam";
+>>       		nvmem = <&pmi632_sdam7>;
+>>       		qcom,pbs-phandle = <&pmi632_gpios>;
+>>       		..... 
+>> 	};
+>> Then when client is probing could do something like the following to get the regmap
+>>
+>> 	dn = of_parse_phandle(node, "qcom,pbs-phandle", 0);
+>> 	pdev = of_find_device_by_node(dn);
+>> 	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
+>>
+>>
+>>
+>> Or we could use the nvmem phandle and just have something like this in client's probe
+>>
+>> 	dn = of_parse_phandle(node, "nvmem", 0);
+>> 	pdev = of_find_device_by_node(dn);
+>> 	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
+>>
+>>
+>>
+>> Let me know what your thoughts are on this.
+> 
+> Rob asked you - "Is there more than 1 instance in a PMIC?" - and you did
+> not answer positively, just mentioned something about drivers in
+> downstream, which do not matter. So is the answer for that question:
+> yes, you have two instances of the same PMIC differing by presence of
+> PBS and other features"?
+> 
+Sorry that was a misunderstanding on my part.
+Yes, answer to Rob's question should have been "We have two instances of PMI632,
+where one instance holds the pbs peripheral and the other holds the lpg
+peripherals. The child node for pbs is needed so lpg client can access
+the PMI632 regmap which contains the pbs peripheral."
+
+Thanks,
+Anjelique 
+
 
