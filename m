@@ -2,82 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E8D574F26A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:36:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC21174F2B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:51:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233280AbjGKOgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 10:36:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45346 "EHLO
+        id S232871AbjGKOv6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 10:51:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232959AbjGKOfz (ORCPT
+        with ESMTP id S232262AbjGKOv5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 10:35:55 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D6F61738
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:35:28 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fb7373dd35so8598322e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:35:28 -0700 (PDT)
+        Tue, 11 Jul 2023 10:51:57 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE7110C7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:51:55 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b6a6f224a1so95377201fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689086122; x=1691678122;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WsIqWYC9/diWISQr1ELVqdM7UPfiMlya6fflWvKUqUc=;
-        b=C9HzQSY7qbYF7DQrVuV45BdThQ1q7mr6ajP4SxckGWTD0eWJ+QSt+I0Fv/eEFc8XVe
-         VW9bt2f04Bcim7GKBHcXOEevpWjaqZa8X8vhAGaIlARtDX55Ac7XRpHXqCMbO9wnO3jq
-         o8w8l6Vmabu9PBVWHH7DaIvIyZ96KwN3fKG35lccrxL2LZKuonKvrZ12wPxpzMjrMzM1
-         SQfPLL+3DhtimYBTWJO4qOT/LcwFWYXUjOA1pru7wtc7Wn9Qx1ktPHgpqaSR1MxzDvR+
-         sFTDcTfIaggOYegxgW8fsa05dIwLR1i1dMZ92GicSU8vKbQWBF24y6gpvNdEJBhMPjMO
-         dW0A==
+        d=linaro.org; s=google; t=1689087114; x=1691679114;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p2XsPmwSqX9Gd1WyomM6zWpuzgKDAWrgDwIrAbNMU7I=;
+        b=rsu2irE1H4DrWMvUp7Lbi5cNv2peQjK2wFAaVi1AlCBW47LZuUhKBJmSyO8Q9/i8sD
+         nVR+Wt2h+zrq0KNpIqvqoObhen7ZLbRN+cFzSWJ/kBtlo4aw9ocsYGQ0GdgC8QljXPtv
+         ygL+FJqzVrAo7EywuGIGZfI8dAS98PbxOPSXwhJc1/ACyHp4auMPOyi4OT63gDNE8vYi
+         Nhzq2h7BoPIMex64gYhD6jzohC3+Rq8TWJWY7zBPVXI7EV7F7CS5D/QZyjP/GZZqD7JM
+         L0pIrCmRbe3v2tSoCrOt8bNFQoApv+iI3lTXR8GItmyoOqFG25A0kVQ6BEvNIRy2oyQ3
+         GGFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689086122; x=1691678122;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WsIqWYC9/diWISQr1ELVqdM7UPfiMlya6fflWvKUqUc=;
-        b=Hjcfo5ItiC3EriIK3IN1rUdcTz7IYwqukqt6fPoXQKthPbOTGOzwPJ9PeezP3O4Qlm
-         fTQFU6XevaOWsLM05rfMg3hsP2AtURKRjiH9DLyQCAoS3p5CsAPZcwrvmziUA0XzRe/B
-         i3lpCeknbgT9oNwoKmIFjuxmG2zXPK5idYGH/S+sXETaHZFru8MWBZuzdIGY5nQ9mBVP
-         pdvu8vKdBxgMUlL7Ji33DIwdH/kWACQfNy1ku9SLyKQ+MoLj4fbANFbni89m16X0QDh4
-         5Gr45x/BrSmzsMGAzApAdDT23TG6fn5+2V53ehzEW5rDu2MuaJseSfn7W/5BLkKJH+Gi
-         7vbA==
-X-Gm-Message-State: ABy/qLarzFb720EuhD3NTBDkLlgaJvP7Y/x21D00JxZcBpVtJz4PqyWU
-        AXwUupviAkl/IRAc4//8BNC2TA==
-X-Google-Smtp-Source: APBJJlHMrPzRYvNus54mewrCEndyYiWMbpP50sNu4jQM87SbQ5c2iO3a0v5YJmfbwRuMml6nyEau2A==
-X-Received: by 2002:a2e:7c1a:0:b0:2b6:f85a:20af with SMTP id x26-20020a2e7c1a000000b002b6f85a20afmr6512049ljc.4.1689086121846;
-        Tue, 11 Jul 2023 07:35:21 -0700 (PDT)
-Received: from [192.168.1.101] (abyl96.neoplus.adsl.tpnet.pl. [83.9.31.96])
-        by smtp.gmail.com with ESMTPSA id o11-20020a2e90cb000000b002b71c128ea0sm484221ljg.117.2023.07.11.07.35.20
+        d=1e100.net; s=20221208; t=1689087114; x=1691679114;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p2XsPmwSqX9Gd1WyomM6zWpuzgKDAWrgDwIrAbNMU7I=;
+        b=K3ZVJ6RArniV/iNOFmEWxAuF8vrLn95qFHq7p3zN9YZTl+CaLiaQvGKBMsxu7Zrh0N
+         CnUqShnsRZvw64fkgnXmaWSA96CnL6+3qRBBOAXp3tdDpH3zqzMzta4YRfoE4FdVajkV
+         0ckN62fKZGhfLhzatB/Hp41oaJvSu7YWo+TSMRnaFt6S9hBqKnSXD3DT5AjHPKKnUxEA
+         nRUu4F33Mxo4X/ATAoMKCwrPljsWEuky74u7rzXiXweuo3XajEwxN0/KaNZ87hL/SCev
+         OamEuoOr8wbUy86Ziir364/Gmxment+rPHJP3XJ/ZWsi8jR5ldpEmJN/SGaJRcHlxSQ3
+         8WCA==
+X-Gm-Message-State: ABy/qLaonGAH4RI1vBUBrt9JGG6kVXc7LlBoMMDH4wjoVgM/pqRi6iUS
+        RigEez3+bq0RP01J7FvCWFaM3Q==
+X-Google-Smtp-Source: APBJJlEsnz+jmijOqb/3+xiSUoZqe+lJUQAWRgjneiCrf6EOnQnP3uZ2g1TWr9YlHGHSF2b40Waenw==
+X-Received: by 2002:a2e:7c18:0:b0:2b6:e651:8591 with SMTP id x24-20020a2e7c18000000b002b6e6518591mr5441446ljc.37.1689087114101;
+        Tue, 11 Jul 2023 07:51:54 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id a10-20020a2eb16a000000b002b6ee363337sm492454ljm.120.2023.07.11.07.51.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 07:35:21 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 11 Jul 2023 16:35:16 +0200
-Subject: [PATCH 4/4] arm64: dts: qcom: sm6350: Add BWMONs
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230711-topic-sm638250_bwmon-v1-4-bd4bb96b0673@linaro.org>
-References: <20230711-topic-sm638250_bwmon-v1-0-bd4bb96b0673@linaro.org>
-In-Reply-To: <20230711-topic-sm638250_bwmon-v1-0-bd4bb96b0673@linaro.org>
+        Tue, 11 Jul 2023 07:51:53 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1689086115; l=2717;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=0XE3+DwbePvBDrBAILTBPGuFKg1IJ0tvtE/4fmfHL3g=;
- b=Q1Ph6t4Tb0bPztBcT/QeOqbjmwx1KKiJJz4quBT8sWaMCl4zkOn81Q9Au3JxmbebyjiRSxBFU
- LwH7Ic5riwzA7p80kIXPOIMHQUT3c1Gcop6wzfXssnCfhrH1P3LjOao
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+Subject: [PATCH v4 00/11] phy: qcom-qmp-ufs: convert to newer style of bindings
+Date:   Tue, 11 Jul 2023 17:51:42 +0300
+Message-Id: <20230711145153.4167820-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -88,124 +76,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the CPU and LLC BWMONs (skip the NPU ones for now) on sm6350.
+Reviewing several patchsets for newer platforms made me understand that
+having two styles of QMP PHY bindings causes confusion. Despite binding
+documents having notes telling that old bindings should be used for
+older platforms, it is too easy to attempt adding new platform with
+older QMP PHY binding. Thus let's have just a single documented style of
+bindings.
 
-There are 3 more NPU BWMONs, but these are skipped for now.
+Changes since v3:
+ - Rebased on top of phy-next
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 97 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+Changes since v2:
+ - Moved status property to the last place for msm8998, sdm845 (Konrad)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index c2b5d56ba242..8f66306d1de3 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1723,6 +1723,103 @@ npu_noc: interconnect@9990000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		pmu@90b6300 {
-+			compatible = "qcom,sm6350-llcc-bwmon", "qcom,sdm845-bwmon";
-+			reg = <0x0 0x090b6300 0x0 0x600>;
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			operating-points-v2 = <&llcc_bwmon_opp_table>;
-+			interconnects = <&clk_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+
-+			llcc_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-0 {
-+					opp-peak-kBps = <2288000>;
-+				};
-+
-+				opp-1 {
-+					opp-peak-kBps = <4577000>;
-+				};
-+
-+				opp-2 {
-+					opp-peak-kBps = <7110000>;
-+				};
-+
-+				opp-3 {
-+					opp-peak-kBps = <9155000>;
-+				};
-+
-+				opp-4 {
-+					opp-peak-kBps = <12298000>;
-+				};
-+
-+				opp-5 {
-+					opp-peak-kBps = <14236000>;
-+				};
-+
-+			};
-+		};
-+
-+		pmu@90cd000 {
-+			compatible = "qcom,sm6350-cpu-bwmon", "qcom,sc7280-llcc-bwmon";
-+			reg = <0x0 0x090cd000 0x0 0x1000>;
-+			interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			operating-points-v2 = <&cpu_bwmon_opp_table>;
-+			interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+
-+			cpu_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-0 {
-+					opp-peak-kBps = <762000>;
-+				};
-+
-+				opp-1 {
-+					opp-peak-kBps = <1144000>;
-+				};
-+
-+				opp-2 {
-+					opp-peak-kBps = <1720000>;
-+				};
-+
-+				opp-3 {
-+					opp-peak-kBps = <2086000>;
-+				};
-+
-+				opp-4 {
-+					opp-peak-kBps = <2597000>;
-+				};
-+
-+				opp-5 {
-+					opp-peak-kBps = <2929000>;
-+				};
-+
-+				opp-6 {
-+					opp-peak-kBps = <3879000>;
-+				};
-+
-+				opp-7 {
-+					opp-peak-kBps = <5161000>;
-+				};
-+
-+				opp-8 {
-+					opp-peak-kBps = <5931000>;
-+				};
-+
-+				opp-9 {
-+					opp-peak-kBps = <6881000>;
-+				};
-+
-+				opp-10 {
-+					opp-peak-kBps = <7980000>;
-+				};
-+			};
-+		};
-+
- 		usb_1: usb@a6f8800 {
- 			compatible = "qcom,sm6350-dwc3", "qcom,dwc3";
- 			reg = <0 0x0a6f8800 0 0x400>;
+Changes since v1:
+ - Split large patchset into smaller parts
+ - Rebased on phy/next
+
+Dmitry Baryshkov (11):
+  dt-bindings: phy: migrate QMP UFS PHY bindings to
+    qcom,sc8280xp-qmp-ufs-phy.yaml
+  phy: qcom-qmp-ufs: populate offsets configuration
+  arm64: dts: qcom: msm8996: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: msm8998: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sdm845: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm6115: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm6350: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8150: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8250: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8350: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8450: switch UFS QMP PHY to new style of bindings
+
+ .../phy/qcom,msm8996-qmp-ufs-phy.yaml         | 228 ------------------
+ .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |  48 +++-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  25 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  18 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  19 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          |  17 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  18 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  20 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  20 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |  28 +--
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  28 +--
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       |  10 +
+ 12 files changed, 114 insertions(+), 365 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
 
 -- 
-2.41.0
+2.39.2
 
