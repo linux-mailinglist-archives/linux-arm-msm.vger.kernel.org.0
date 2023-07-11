@@ -2,58 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7136B74F645
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 19:00:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CEAA74F6F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 19:21:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231266AbjGKRAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 13:00:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53428 "EHLO
+        id S232569AbjGKRVD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 13:21:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbjGKRAk (ORCPT
+        with ESMTP id S232428AbjGKRUs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 13:00:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2462895;
-        Tue, 11 Jul 2023 10:00:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AE20461589;
-        Tue, 11 Jul 2023 17:00:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375B2C433C8;
-        Tue, 11 Jul 2023 17:00:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689094839;
-        bh=346yK9h/7alRf5IvzPQUD+x2Jl0TUTmpOJfnmMXPzMs=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=d/r7syOuC9xcDqahSv9EGz3F+6tSYZ6NqfFl2aYlRlZ6y1j1qb/VL9lsp7ztLPnzY
-         ihmbSoQAu1NjvsVRCiz/s7W8/7vD+tfPefZYWU5pQKVIJgrZvNvtmTgE6SsshthQsD
-         /so3nPlkrq9yO8xyPSa/ngYuTsbAakSzPupVKNx3l9NqC1pjBOeQr3h/sqYf5q+yJp
-         LrhKsy+qCtxx4xMvIr2wEG9u1TGX6LJ7Eeaql4OGpB0XEdHg0BNpNP05xM8mKLf5IM
-         /7D5PijpzJoJOwk3DxozYfVsLdKHlnAeTMrisuXWBKSdcO4O4wnzEVYyRLeh/DhJEu
-         Zy0tT04KaGfrA==
-Message-ID: <d3837825-5169-7dcf-3c65-a39c60ff6f95@kernel.org>
-Date:   Tue, 11 Jul 2023 20:00:34 +0300
-MIME-Version: 1.0
-Subject: Re: [PATCH] serial: qcom-geni: use icc tag defines
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 11 Jul 2023 13:20:48 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77EF9170C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 10:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689096009; x=1720632009;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=dWz/cu97liJBUQbHnYgLle48DwvZm+4+fW9Lp2y1SMU=;
+  b=cYVYV5Eq5JVLBQnbc3eSx+5DiSa5S1aIMvhfa2WEmtqyAkGWFR0dU8GR
+   NlnFrYws85JBVWogJCR/zI2SkPrtyXbVIhYy2V/Fjpgnmo5C76EG6l6Ca
+   JPg2h+VyV5UKP2vyD0HRfwt0UWuhiIWmcPMEOqsulk51svL6k/OIRw3o2
+   H2zK40KJJ58LOOtk/MxcnvBFLmm/ZDwYu+C/4ovjxni95qUQbedA/1pWB
+   HdmGOgJgtw4Txpaqwx7B9kLzYxTFYjC+7Iip/j+BABbaVnZg8pCNOVl+6
+   XBo2IT2gySBBgwqVOROd7hdr5e/ah+BF0UHixSuftOjpg09GxLT8ebc9H
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="362148732"
+X-IronPort-AV: E=Sophos;i="6.01,197,1684825200"; 
+   d="scan'208";a="362148732"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 10:19:16 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10768"; a="715240815"
+X-IronPort-AV: E=Sophos;i="6.01,197,1684825200"; 
+   d="scan'208";a="715240815"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orsmga007.jf.intel.com with ESMTP; 11 Jul 2023 10:17:53 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id F1E3A128; Tue, 11 Jul 2023 20:17:58 +0300 (EEST)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Mark Brown <broonie@kernel.org>,
+        Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Amit Kumar Mahapatra via Alsa-devel 
+        <alsa-devel@alsa-project.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org
+Cc:     Sanjay R Mehta <sanju.mehta@amd.com>,
+        Radu Pirea <radu_nicolae.pirea@upb.ro>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230711160516.30502-1-johan+linaro@kernel.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20230711160516.30502-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Heiko Stuebner <heiko@sntech.de>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH v3 00/14] spi: Header and core clean up and refactoring
+Date:   Tue, 11 Jul 2023 20:17:42 +0300
+Message-Id: <20230711171756.86736-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.40.0.1.gaa8946217a0b
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,29 +111,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.07.23 19:05, Johan Hovold wrote:
-> Use the Qualcomm interconnect defines rather than magic numbers for the
-> icc tags also in the restore() PM callback.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Various cleanups and refactorings of the SPI header and core parts
+united in a single series. It also touches drivers under SPI subsystem
+folder on the pure renaming purposes of some constants.
 
-Reviewed-by: Georgi Djakov <djakov@kernel.org>
+No functional change intended (with some subtle shortcuts which are
+explained in the respective commit messages).
 
-> ---
->   drivers/tty/serial/qcom_geni_serial.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 444c74eeab7d..88ed5bbe25a8 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1757,7 +1757,7 @@ static int qcom_geni_serial_sys_hib_resume(struct device *dev)
->   	private_data = uport->private_data;
->   
->   	if (uart_console(uport)) {
-> -		geni_icc_set_tag(&port->se, 0x7);
-> +		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ALWAYS);
->   		geni_icc_set_bw(&port->se);
->   		ret = uart_resume_port(private_data->drv, uport);
->   		/*
+Changelog v3:
+- dropped controversial used to be patches 3,4,8,10 (Mark)
+- amended many commit messages (Mark)
+- added tag to patch 1 (AngeloGioacchino)
+- split used to be patch 2 to patches 2 & 3 for better review (Mark)
+- rewritten used to be patch 5 to patches 4 & 5 (Mark, Sebastian)
+- added new patch 7
+- fixed typos and added tag to patch 12 (Serge)
+
+v2: 20230710154932.68377-1-andriy.shevchenko@linux.intel.com
+
+Changelog v2:
+- added new patches 3,4,5,10,13,14
+- massaged comment and kernel doc in patch 9
+- split used to be patch 4 to patches 11,12
+- covered a few things in SPI core in patch 15
+- amended commit message for above (Mark)
+- reshuffled patches in the series for better logical grouping
+
+Andy Shevchenko (14):
+  spi: Remove unneeded OF node NULL checks
+  spi: Deduplicate IDR allocation code in spi_register_controller()
+  spi: Refactor bus number assigning code in spi_register_controller()
+  spi: Remove code duplication in spi_add_device*()
+  spi: Kill spi_add_device_locked()
+  spi: Use sysfs_emit() to instead of s*printf()
+  spi: Use BITS_TO_BYTES()
+  spi: Sort headers alphabetically
+  spi: Use struct_size() helper
+  spi: Get rid of old SPI_MASTER_NO_TX & SPI_MASTER_NO_RX
+  spi: Get rid of old SPI_MASTER_MUST_TX & SPI_MASTER_MUST_RX
+  spi: Rename SPI_MASTER_GPIO_SS to SPI_CONTROLLER_GPIO_SS
+  spi: Convert to SPI_CONTROLLER_HALF_DUPLEX
+  spi: Fix spelling typos and acronyms capitalization
+
+ drivers/spi/spi-amd.c             |   2 +-
+ drivers/spi/spi-at91-usart.c      |   2 +-
+ drivers/spi/spi-ath79.c           |   2 +-
+ drivers/spi/spi-atmel.c           |   4 +-
+ drivers/spi/spi-bitbang-txrx.h    |  16 +--
+ drivers/spi/spi-bitbang.c         |   8 +-
+ drivers/spi/spi-cavium-thunderx.c |   2 +-
+ drivers/spi/spi-davinci.c         |   2 +-
+ drivers/spi/spi-dw-core.c         |   2 +-
+ drivers/spi/spi-falcon.c          |   2 +-
+ drivers/spi/spi-fsl-lpspi.c       |   2 +-
+ drivers/spi/spi-gpio.c            |  10 +-
+ drivers/spi/spi-imx.c             |   2 +-
+ drivers/spi/spi-lp8841-rtc.c      |  10 +-
+ drivers/spi/spi-meson-spicc.c     |   2 +-
+ drivers/spi/spi-mt65xx.c          |   2 +-
+ drivers/spi/spi-mxs.c             |   2 +-
+ drivers/spi/spi-omap-uwire.c      |   2 +-
+ drivers/spi/spi-orion.c           |   2 +-
+ drivers/spi/spi-pci1xxxx.c        |   2 +-
+ drivers/spi/spi-pic32-sqi.c       |   2 +-
+ drivers/spi/spi-pic32.c           |   2 +-
+ drivers/spi/spi-qcom-qspi.c       |   2 +-
+ drivers/spi/spi-rb4xx.c           |   2 +-
+ drivers/spi/spi-rockchip-sfc.c    |   2 +-
+ drivers/spi/spi-rockchip.c        |   2 +-
+ drivers/spi/spi-sifive.c          |   2 +-
+ drivers/spi/spi-slave-mt27xx.c    |   2 +-
+ drivers/spi/spi-sprd-adi.c        |   2 +-
+ drivers/spi/spi-stm32.c           |   2 +-
+ drivers/spi/spi-ti-qspi.c         |   2 +-
+ drivers/spi/spi-xcomm.c           |   2 +-
+ drivers/spi/spi-xtensa-xtfpga.c   |   2 +-
+ drivers/spi/spi.c                 | 211 +++++++++++++-----------------
+ include/linux/spi/spi.h           | 173 ++++++++++++------------
+ include/trace/events/spi.h        |   2 +-
+ 36 files changed, 238 insertions(+), 252 deletions(-)
+
+-- 
+2.40.0.1.gaa8946217a0b
 
