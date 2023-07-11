@@ -2,164 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ACB574F1CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:22:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A584D74F1F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:22:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233506AbjGKOWC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 10:22:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59458 "EHLO
+        id S232836AbjGKOWg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 10:22:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232013AbjGKOVw (ORCPT
+        with ESMTP id S233443AbjGKOWQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 10:21:52 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35189199A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:21:29 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fbbfaacfc1so9264390e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:21:29 -0700 (PDT)
+        Tue, 11 Jul 2023 10:22:16 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC821728
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:21:59 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b6a6f224a1so94727271fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:21:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689085287; x=1691677287;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kmUPzGEd9b2mcw9T8mFnw1Yxkb2+JnWrNijHr7xIcuI=;
-        b=StVO58mC4uRlLbQia8BsbrUTAPZ9qwbkvIkGshFkyeiLlWSDJxOglfC/y3mPwBxYZl
-         U+/sy3Uon0nHALLekkVWAiNrHDytJKpDz0QUkgCTdmvkQgyJ9uWk0GbRCasVPBjn5sbB
-         TdVyPB0MEI0iWM4Pp7fM/m2f81LnzzocyErpQRo8/9kvmpVCa0rXh2NJiv1yDF+TSIjG
-         WL/Fswe3GTIZPKWlbB9PZZzqcqWpXs6Jrpkfk1ZaTlm5BzM85peRsuS4PO/XiMjYMxRC
-         BxqxWPIS2FlzLMNRcjBEQN86dbolLmckdG3X11GFp34EoXyQeCnylJpD93Dxt715NdVQ
-         UFVQ==
+        d=linaro.org; s=google; t=1689085316; x=1691677316;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m4OHhf//BH7yn6Q/Ot3BJTEK+Wcory0adfABT5r6wUE=;
+        b=tyWb6Y5kdmHtSYc89DJi1+pl8lGEj05MyNn/Zv1MCiy8+izcQ+Vp8EUkoZ3o5QHUwA
+         QErrdevOrnHl7ZVkvMXUf5eAJmT2FEEibUl/eWrQFeNZ5KhBM8sF6D7pkY6P8hiLEneC
+         RXgxh2TOoi7msRqZWLV9/qhG+9WxnnjEehnGHMJ6AGiD5rTirRDezXqOaBLNrTCD+PQW
+         QwHIRS1IncPuoOgatcUULna+4VK6MKjmstJl+hUQ13m5n/xq/u1V84O9WBN+ddOTjFVV
+         U6Q0NOeB+I1oiAcI7+NKaB6fFMJ9Qdtnp4IuEu3LCMGqkKMu0JvVAku8l8gWrRwBwPoA
+         PX8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689085287; x=1691677287;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kmUPzGEd9b2mcw9T8mFnw1Yxkb2+JnWrNijHr7xIcuI=;
-        b=W8niIvaZOWNRWQB1sONPLPUbnaGTWJMtpmFA4ynp/81ZUc2sPOQ1tqvLS+gvyNpUfm
-         GLeS7bvwJNYgPu2I8X/ZW/VKUbuBon9LOvDgT++iibOXrK7eEa/ebMC52PDn1PvD8xrN
-         0hIlCJ+LqJ5zyzk7qZk2ul/r+0KhVDbPcUY8/h/lT+wB0R11MIKbRYgmBz7xwCdHgu6K
-         PaqKxs6w1SdM/R7KpO8IWoxeB8iiU5/GqTStxWVzw8EYzN4wEnKKRhXf4M3QB+jV8BTx
-         QcGOiGP0wWpEyu1CJpSRxHmlPgrf/0A4wOEfDufOEaZw8KcPG4Uu3yVR3b73ZrKvcpzn
-         7k/Q==
-X-Gm-Message-State: ABy/qLYEBcU5t0gaX2FwUBmivzm9ALTz+hCiHFXH/H4CqBccSpfNs7ZS
-        9tWf9Dmf8x2IRRE7FL6aQeUUpg==
-X-Google-Smtp-Source: APBJJlGGd0BJTHp96g3V9AE1cOKMZOPmEz3SSo5nfPuTaPLXgh5DNMltDB/etEPzUkQiIafUXhOV3w==
-X-Received: by 2002:ac2:51bb:0:b0:4fb:90c6:c31a with SMTP id f27-20020ac251bb000000b004fb90c6c31amr11259667lfk.14.1689085287277;
-        Tue, 11 Jul 2023 07:21:27 -0700 (PDT)
-Received: from uffe-tuxpro14.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
-        by smtp.gmail.com with ESMTPSA id x7-20020ac259c7000000b004f84b36a24fsm340318lfn.51.2023.07.11.07.21.25
+        d=1e100.net; s=20221208; t=1689085316; x=1691677316;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=m4OHhf//BH7yn6Q/Ot3BJTEK+Wcory0adfABT5r6wUE=;
+        b=e40Q0+rplWVPsV9RWHWJXne9XO8HaEw0oTOwCgCStz5usnZyYUaJyH7PWHOqEOA3ic
+         kg/Fq+v1QCquvnNJzao4brqmDdoT21pw8E5GENZXuQrJq/6/05evN7q2KeIRW8BuOlmR
+         qj/L6mdmt6NPhxW+ltd0WVqsI0/MDF91FhHV1qSh3kmS+3GuVLm/Ue1uiRLYKTwm8CmH
+         UC/lp3FkqyY6Qp6brSve+PgX7qs3lO/0CscJv2p3UCMXse5vsirVKskrCsJUK8PUwRpm
+         eVeBS8rTDxXFHlWiF5CQVZV3QWkX46EGhKAZlUiRbAbXyhoDPZev9qWuE3uBdzM9X0+P
+         2PcA==
+X-Gm-Message-State: ABy/qLaVMOqdjoxFHhXIAvdU0ejY6TCg6g6HHad0UlOMeX+OKk1jdAH0
+        BcUYm8IAtXVyRotSwyyKrrvf4g==
+X-Google-Smtp-Source: APBJJlFAMhH5pIJfp4bCLgKjGyunfjO3nmFym3bFGd0v6tXuy2T+eDybgK8uyTe2IuT1NOb+EJ5WvA==
+X-Received: by 2002:a2e:8887:0:b0:2b6:e719:324e with SMTP id k7-20020a2e8887000000b002b6e719324emr12798365lji.49.1689085315755;
+        Tue, 11 Jul 2023 07:21:55 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id v9-20020a2e87c9000000b002b6b4424a28sm487934ljj.13.2023.07.11.07.21.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 07:21:26 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Tue, 11 Jul 2023 07:21:55 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 08/18] soc: qcom: Move power-domain drivers to the genpd dir
-Date:   Tue, 11 Jul 2023 16:21:24 +0200
-Message-Id: <20230711142124.751652-1-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 0/5] arm64: dts: qcom: qrb5165-rb5: enable DP support
+Date:   Tue, 11 Jul 2023 17:21:44 +0300
+Message-Id: <168908465040.1869384.6896423598850742702.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230709041926.4052245-1-dmitry.baryshkov@linaro.org>
+References: <20230709041926.4052245-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To simplify with maintenance let's move the qcom power-domain drivers to
-the new genpd directory. Going forward, patches are intended to be managed
-through a separate git tree, according to MAINTAINERS.
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: <linux-arm-msm@vger.kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
- MAINTAINERS                          | 2 +-
- drivers/genpd/Makefile               | 1 +
- drivers/genpd/qcom/Makefile          | 4 ++++
- drivers/{soc => genpd}/qcom/cpr.c    | 0
- drivers/{soc => genpd}/qcom/rpmhpd.c | 0
- drivers/{soc => genpd}/qcom/rpmpd.c  | 0
- drivers/soc/qcom/Makefile            | 3 ---
- 7 files changed, 6 insertions(+), 4 deletions(-)
- create mode 100644 drivers/genpd/qcom/Makefile
- rename drivers/{soc => genpd}/qcom/cpr.c (100%)
- rename drivers/{soc => genpd}/qcom/rpmhpd.c (100%)
- rename drivers/{soc => genpd}/qcom/rpmpd.c (100%)
+On Sun, 09 Jul 2023 07:19:21 +0300, Dmitry Baryshkov wrote:
+> Implement DisplayPort support for the Qualcomm RB5 platform.
+> 
+> Note: while testing this, I had link training issues with several
+> dongles with DP connectors. Other DisplayPort-USB-C dongles (with HDMI
+> or VGA connectors) work perfectly.
+> 
+> Dependencies: [1]
+> Soft-dependencies: [2], [3]
+> 
+> [...]
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 77629ab4a5f0..9abd868abfc8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17524,7 +17524,7 @@ L:	linux-pm@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
- F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
--F:	drivers/soc/qcom/cpr.c
-+F:	drivers/genpd/qcom/cpr.c
- 
- QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
- M:	Ilia Lin <ilia.lin@kernel.org>
-diff --git a/drivers/genpd/Makefile b/drivers/genpd/Makefile
-index 1a0a56925756..dfdea14e2a8a 100644
---- a/drivers/genpd/Makefile
-+++ b/drivers/genpd/Makefile
-@@ -4,3 +4,4 @@ obj-y					+= amlogic/
- obj-y					+= apple/
- obj-y					+= bcm/
- obj-y					+= mediatek/
-+obj-y					+= qcom/
-diff --git a/drivers/genpd/qcom/Makefile b/drivers/genpd/qcom/Makefile
-new file mode 100644
-index 000000000000..403dfc5af095
---- /dev/null
-+++ b/drivers/genpd/qcom/Makefile
-@@ -0,0 +1,4 @@
-+# SPDX-License-Identifier: GPL-2.0
-+obj-$(CONFIG_QCOM_CPR)		+= cpr.o
-+obj-$(CONFIG_QCOM_RPMPD)	+= rpmpd.o
-+obj-$(CONFIG_QCOM_RPMHPD)	+= rpmhpd.o
-diff --git a/drivers/soc/qcom/cpr.c b/drivers/genpd/qcom/cpr.c
-similarity index 100%
-rename from drivers/soc/qcom/cpr.c
-rename to drivers/genpd/qcom/cpr.c
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/genpd/qcom/rpmhpd.c
-similarity index 100%
-rename from drivers/soc/qcom/rpmhpd.c
-rename to drivers/genpd/qcom/rpmhpd.c
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/genpd/qcom/rpmpd.c
-similarity index 100%
-rename from drivers/soc/qcom/rpmpd.c
-rename to drivers/genpd/qcom/rpmpd.c
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index 99114c71092b..f548a7150bb2 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -3,7 +3,6 @@ CFLAGS_rpmh-rsc.o := -I$(src)
- obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
- obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
- obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
--obj-$(CONFIG_QCOM_CPR)		+= cpr.o
- obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
- obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
- obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
-@@ -29,8 +28,6 @@ obj-$(CONFIG_QCOM_STATS)	+= qcom_stats.o
- obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
- obj-$(CONFIG_QCOM_APR) += apr.o
- obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
--obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
--obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
- obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
- obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
- qcom_ice-objs			+= ice.o
+Applied, thanks!
+
+[1/5] dt-bindings: display: msm: dp-controller: document SM8250 compatible
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/5ce85953cc45
+
+Best regards,
 -- 
-2.34.1
-
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
