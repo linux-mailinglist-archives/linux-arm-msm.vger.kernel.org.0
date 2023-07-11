@@ -2,82 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FE9D74EBFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 12:50:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A95174EC0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 12:56:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230325AbjGKKu4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 06:50:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34486 "EHLO
+        id S229659AbjGKK4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 06:56:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231344AbjGKKuu (ORCPT
+        with ESMTP id S230426AbjGKK4z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 06:50:50 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19EFE10F9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 03:50:45 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fbf09a9139so33459e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 03:50:45 -0700 (PDT)
+        Tue, 11 Jul 2023 06:56:55 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99ECF10DF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 03:56:50 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bfe6ea01ff5so6579419276.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 03:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689072643; x=1691664643;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bsGi/AQ335IJGc0/2vjFnmujn9OC9GFlHTvDDV21i/A=;
-        b=f7135Ulf7UCPzIlDgN8JSjgnk07yDLhUb2aPUrU1eDBE0N0EcRLNRFMZBBXLp5Ccip
-         bL67M06ldcD1RLf7M2jrS8WszIOqJbnXpGz9xpPY+T+pyTi1rCmL4yQS4ps36Xn6zfJu
-         sWOugdafZ4eqTVEn9FuMecWADk0o2FA/Qh0+DTtDiDGVEaCkTKMj3NFWa3q9kIwDYsfa
-         mFSh1RfVgY/dYGdZ7uvgwxolsNzcCAqgboq4vY0KyC/SxF5iCCo7ZDSN3A4LF4b7laHA
-         KT4xXDjYyGp7wJHtGqGE1W+SQOlvY8+kT1NGRpolGFZCrg1o3qN6IFvfb8EmzStLHZ7x
-         rIKA==
+        d=linaro.org; s=google; t=1689073009; x=1691665009;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HdEaMTzs+XXYjIuNpNh0IB+VB2+ffqlErSPxppKly84=;
+        b=Oa3YES42WQZkvCdA4koWnUpLL2D0QOzWZX2FRa1J8kpaIF8KxxO899oAxgPcDii+mf
+         L62gaL0y/3AW214fk6W/3Y+TJ187apOGonUDW+cSR8dxC2VaD9Q5yOeGI44FLo3RLUnr
+         5IpE/r6yoWZ4xLpGCda2Fa6PqMF07yiNzh8Ts3rr2MqOoKfUENUkYYx0YxfSYtIFeNCs
+         ZIOWKwxdIpBFtvkmWRq4QjmBDK4VRrRveAbKR9n6I22WAPS7Vyr2oYfCSvC1lQ63GOhu
+         N+YDYeg/AVpef7fPS197nTqUlJvk59sBuvZVaLXo3H0VNYYlH0cQEmbi1bzmkAeE2ekJ
+         7Elg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689072643; x=1691664643;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bsGi/AQ335IJGc0/2vjFnmujn9OC9GFlHTvDDV21i/A=;
-        b=QgQG9IPSZBLUByIuaVgLZd28z4tWvjF+2DDkc2gXC0O9FHygSSd5eYcbO4gkbOZaI4
-         VUID0TBOKhJV+Q1fc16Xqf0gwjGnIc+VNn70CzbOwbR3LXhDm2iFxzCz01xfO7ucSUD/
-         HBNFT6EtvwADA32QUc4LzqaRCGK5SBT/sLOT0+QmNvhpRHaFgLRpCjOcE+3yqY7Ytq45
-         t3QhuKJ724x6JwPjQH4y8yEYjV3bInZE5F8xffRdrJLuG07t4Ac6v4Uy6ltNyvKi9dQ6
-         YZpvPYT2vCjsFBIHdjPXxqLMRg72pMsp9iCX96B0JFHSlyM6q1WlR5+iYEKRHdyT0qcJ
-         layA==
-X-Gm-Message-State: ABy/qLaomo76qSJugM1NnbW5WTLr2G3oZau/lw1nbL/vHvJUqw3Ir1b1
-        Y1Vy3V34KBcfQvGm7IhJTQWaVg==
-X-Google-Smtp-Source: APBJJlEptb+2D+nj3iuROjTRLvM3l5qghg6uMyWCLwNxDusZhnMczLeb8VnyZfZojAIEfAgXqwB6Yg==
-X-Received: by 2002:a05:6512:534:b0:4fb:242:6e05 with SMTP id o20-20020a056512053400b004fb02426e05mr12578120lfc.3.1689072643173;
-        Tue, 11 Jul 2023 03:50:43 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id r6-20020ac25a46000000b004fbae25fcc4sm268584lfn.61.2023.07.11.03.50.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 03:50:42 -0700 (PDT)
-Message-ID: <31075ecb-7e3c-302f-a668-b872017e19b3@linaro.org>
-Date:   Tue, 11 Jul 2023 13:50:42 +0300
+        d=1e100.net; s=20221208; t=1689073009; x=1691665009;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HdEaMTzs+XXYjIuNpNh0IB+VB2+ffqlErSPxppKly84=;
+        b=Ds4x/Xpt0xU7XEYQbG6nbBEWfxok+knU0cEaL8TC5+vPxMS3Mw1m1cKrZ05Y87mhCW
+         GNPGgvxdqYFEfJpjxlWtAiJ4mPBlrEBnCHhVRaQBvqBsWDEPY5OPz1M2e+DYGm1FD7eZ
+         3DVmk7n97YhMZjaWfb1MTiSpcHUbGd/cpeVcRPTxzoH2P3bBo6eGf6I+upl2CPHymL+9
+         gglIBO3up08JmYzpXS8va0zdvs70NpS9UTnlqwpVsqArEjvWCJ3Fgo2dDHojZ7A5lVhh
+         aNHa8rPcnO4GRlghpBLJBd58b5paPqeWroiWJiMMy/lFX25Y5zihB+XnLqqVzxddqwvv
+         n4Ug==
+X-Gm-Message-State: ABy/qLaSlzRmjKbsojlEgNnqqBWLayTLjob8aRCpoDgQ1RtE1iKjrxi4
+        QV1iIDJNh94gLXD92PjG38zSpwGO4nYDcqSexOtVJg==
+X-Google-Smtp-Source: APBJJlE4WlJSuO4jMeeQVAWrkXELPSY1mvn3a2ov6yizHaUPLiP+tNgBMZ3KeFS1IUMUQAXM3bCfZGEsW2Dq7aPed1E=
+X-Received: by 2002:a25:5842:0:b0:c39:e0f5:8616 with SMTP id
+ m63-20020a255842000000b00c39e0f58616mr12999616ybb.46.1689073009292; Tue, 11
+ Jul 2023 03:56:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 4/6] clk: qcom: Add NSS clock Controller driver for
- IPQ9574
-Content-Language: en-GB
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        richardcochran@gmail.com, arnd@arndb.de, geert+renesas@glider.be,
-        neil.armstrong@linaro.org, nfraprado@collabora.com,
-        rafal@milecki.pl, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        netdev@vger.kernel.org
-Cc:     quic_saahtoma@quicinc.com
-References: <20230711093529.18355-1-quic_devipriy@quicinc.com>
- <20230711093529.18355-5-quic_devipriy@quicinc.com>
+References: <20230711-topic-rb1_regulator-v1-1-bc4398c35800@linaro.org>
+ <CAA8EJpoeAeitC=_pbAxFATfxx8UK-4cAQ=Zr3nKc0jhAdoG5fg@mail.gmail.com> <43d290c9-fdec-4832-242e-6732d9f0ea6c@linaro.org>
+In-Reply-To: <43d290c9-fdec-4832-242e-6732d9f0ea6c@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230711093529.18355-5-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Date:   Tue, 11 Jul 2023 13:56:38 +0300
+Message-ID: <CAA8EJpozgj=MvYo=eHx1a1YD4gkXEvqHvuvp_mUBXfGMjhYWGA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qrb2210-rb1: Add regulators
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,208 +74,198 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 12:35, Devi Priya wrote:
-> Add Networking Sub System Clock Controller(NSSCC) driver for ipq9574 based
-> devices.
-> 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->   drivers/clk/qcom/Kconfig         |    6 +
->   drivers/clk/qcom/Makefile        |    1 +
->   drivers/clk/qcom/nsscc-ipq9574.c | 3080 ++++++++++++++++++++++++++++++
->   3 files changed, 3087 insertions(+)
->   create mode 100644 drivers/clk/qcom/nsscc-ipq9574.c
-> 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 263e55d75e3f..5556063d204f 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -195,6 +195,12 @@ config IPQ_GCC_9574
->   	  i2c, USB, SD/eMMC, etc. Select this for the root clock
->   	  of ipq9574.
->   
-> +config IPQ_NSSCC_9574
-> +	tristate "IPQ9574 NSS Clock Controller"
-> +	depends on IPQ_GCC_9574
-> +	help
-> +	  Support for NSS clock controller on ipq9574 devices.
-> +
->   config MSM_GCC_8660
->   	tristate "MSM8660 Global Clock Controller"
->   	depends on ARM || COMPILE_TEST
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index e6e294274c35..8ba882186bff 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -29,6 +29,7 @@ obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
->   obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
->   obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
->   obj-$(CONFIG_IPQ_GCC_9574) += gcc-ipq9574.o
-> +obj-$(CONFIG_IPQ_NSSCC_9574)	+= nsscc-ipq9574.o
->   obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
->   obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
->   obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
-> diff --git a/drivers/clk/qcom/nsscc-ipq9574.c b/drivers/clk/qcom/nsscc-ipq9574.c
-> new file mode 100644
-> index 000000000000..b6bed0d24059
-> --- /dev/null
-> +++ b/drivers/clk/qcom/nsscc-ipq9574.c
-> @@ -0,0 +1,3080 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/clk-provider.h>
-> +#include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/regmap.h>
-> +
-> +#include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
-> +#include <dt-bindings/reset/qcom,ipq9574-nsscc.h>
-> +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-pll.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "clk-regmap-divider.h"
-> +#include "clk-regmap-mux.h"
-> +#include "common.h"
-> +#include "reset.h"
-> +
-> +/* Need to match the order of clocks in DT binding */
-> +enum {
-> +	DT_BIAS_PLL_CC_CLK,
-> +	DT_BIAS_PLL_NSS_NOC_CLK,
-> +	DT_BIAS_PLL_UBI_NC_CLK,
-> +	DT_GCC_GPLL0_OUT_AUX,
-> +	DT_UNIPHY0_GCC_RX_CLK,
-> +	DT_UNIPHY0_GCC_TX_CLK,
-> +	DT_UNIPHY1_GCC_RX_CLK,
-> +	DT_UNIPHY1_GCC_TX_CLK,
-> +	DT_UNIPHY2_GCC_RX_CLK,
-> +	DT_UNIPHY2_GCC_TX_CLK,
-> +	DT_XO,
-> +};
-> +
-> +enum {
-> +	P_BIAS_PLL_CC_CLK,
-> +	P_BIAS_PLL_NSS_NOC_CLK,
-> +	P_BIAS_PLL_UBI_NC_CLK,
-> +	P_GCC_GPLL0_OUT_AUX,
-> +	P_UBI32_PLL_OUT_MAIN,
-> +	P_UNIPHY0_GCC_RX_CLK,
-> +	P_UNIPHY0_GCC_TX_CLK,
-> +	P_UNIPHY1_GCC_RX_CLK,
-> +	P_UNIPHY1_GCC_TX_CLK,
-> +	P_UNIPHY2_GCC_RX_CLK,
-> +	P_UNIPHY2_GCC_TX_CLK,
-> +	P_XO,
-> +};
-> +
-> +static const struct alpha_pll_config ubi32_pll_config = {
-> +	.l = 0x3e,
-> +	.alpha = 0x6666,
-> +	.config_ctl_val = 0x200d4aa8,
-> +	.config_ctl_hi_val = 0x3c,
-> +	.main_output_mask = BIT(0),
-> +	.aux_output_mask = BIT(1),
-> +	.pre_div_val = 0x0,
-> +	.pre_div_mask = BIT(12),
-> +	.post_div_val = 0x0,
-> +	.post_div_mask = GENMASK(9, 8),
-> +	.alpha_en_mask = BIT(24),
-> +	.test_ctl_val = 0x1c0000c0,
-> +	.test_ctl_hi_val = 0x4000,
-> +};
-> +
-> +static struct clk_alpha_pll ubi32_pll_main = {
-> +	.offset = 0x28000,
-> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_NSS_HUAYRA],
-> +	.flags = SUPPORTS_DYNAMIC_UPDATE,
-> +	.clkr = {
-> +		.hw.init = &(const struct clk_init_data) {
-> +			.name = "ubi32_pll_main",
-> +			.parent_data = &(const struct clk_parent_data) {
-> +				.index = DT_XO,
-> +			},
-> +			.num_parents = 1,
-> +			.ops = &clk_alpha_pll_huayra_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_alpha_pll_postdiv ubi32_pll = {
-> +	.offset = 0x28000,
-> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_NSS_HUAYRA],
-> +	.width = 2,
-> +	.clkr.hw.init = &(const struct clk_init_data) {
-> +		.name = "ubi32_pll",
-> +		.parent_hws = (const struct clk_hw *[]) {
-> +			&ubi32_pll_main.clkr.hw
-> +		},
-> +		.num_parents = 1,
-> +		.ops = &clk_alpha_pll_postdiv_ro_ops,
-> +		.flags = CLK_SET_RATE_PARENT,
-> +	},
-> +};
-> +
+On Tue, 11 Jul 2023 at 13:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 11.07.2023 12:44, Dmitry Baryshkov wrote:
+> > On Tue, 11 Jul 2023 at 13:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> Add and assign RPM regulators coming from PM2250.
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> [...]
+>
+> >> +               pm2250_l5: l5 {
+> >> +                       /* CSI/DSI */
+> >> +                       regulator-min-microvolts = <1232000>;
+> >> +                       regulator-max-microvolts = <1232000>;
+> >> +                       regulator-allow-set-load;
+> >> +                       regulator-boot-on;
+> >
+> > why?
+> >
+> To answer all of the questions in one go:
+>
+> "it's because the regulator is enabled at boot"
 
-[skipped the rest, LGTM]
+I was more concerned about the following part:
+      If the bootloader didn't leave it on then OS should turn it on at boot ...
 
-  +
-> +static int nss_cc_ipq9574_probe(struct platform_device *pdev)
-> +{
-> +	struct regmap *regmap;
-> +	struct qcom_cc_desc nsscc_ipq9574_desc = nss_cc_ipq9574_desc;
-> +
-> +	regmap = qcom_cc_map(pdev, &nsscc_ipq9574_desc);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	/* SW Workaround for UBI Huayra PLL */
-> +	regmap_update_bits(regmap, 0x2800C, BIT(26), BIT(26));
+Please remind me, are we declaring them as boot-on so that the
+regulator core can turn them off later if they are unused?
 
-Can we directly set the correct value via ubi32_pll_config.test_ctl_val ?
+>
+> Konrad
+> >> +               };
+> >> +
+> >> +               pm2250_l6: l6 {
+> >> +                       /* DRAM PLL */
+> >> +                       regulator-min-microvolts = <928000>;
+> >> +                       regulator-max-microvolts = <928000>;
+> >> +                       regulator-always-on;
+> >> +                       regulator-boot-on;
+> >> +               };
+> >> +
+> >> +               pm2250_l7: l7 {
+> >> +                       /* Wi-Fi CX/MX */
+> >> +                       regulator-min-microvolts = <664000>;
+> >> +                       regulator-max-microvolts = <664000>;
+> >> +               };
+> >> +
+> >> +               /*
+> >> +                * L8 - VDD_LPI_CX
+> >> +                * L9 - VDD_LPI_MX
+> >> +                */
+> >> +
+> >> +               pm2250_l10: l10 {
+> >> +                       /* Wi-Fi RFA */
+> >> +                       regulator-min-microvolts = <1300000>;
+> >> +                       regulator-max-microvolts = <1300000>;
+> >> +               };
+> >> +
+> >> +               pm2250_l11: l11 {
+> >> +                       /* GPS RF1 */
+> >> +                       regulator-min-microvolts = <1000000>;
+> >> +                       regulator-max-microvolts = <1000000>;
+> >> +                       regulator-boot-on;
+> >
+> > Shouldn't it be handled by the modem on its own?
+> >
+> >> +               };
+> >> +
+> >> +               pm2250_l12: l12 {
+> >> +                       /* USB PHYs */
+> >> +                       regulator-min-microvolts = <928000>;
+> >> +                       regulator-max-microvolts = <928000>;
+> >> +                       regulator-allow-set-load;
+> >> +                       regulator-boot-on;
+> >
+> > You guess the question (and further on)
+> >
+> >> +               };
+> >> +
+> >> +               pm2250_l13: l13 {
+> >> +                       /* USB/QFPROM/PLLs */
+> >> +                       regulator-min-microvolts = <1800000>;
+> >> +                       regulator-max-microvolts = <1800000>;
+> >> +                       regulator-allow-set-load;
+> >> +                       regulator-boot-on;
+> >> +               };
+> >> +
+> >> +               pm2250_l14: l14 {
+> >> +                       /* SDHCI1 VQMMC */
+> >> +                       regulator-min-microvolts = <1800000>;
+> >> +                       regulator-max-microvolts = <1800000>;
+> >> +                       regulator-allow-set-load;
+> >> +                       /* Broken hardware, never turn it off! */
+> >> +                       regulator-always-on;
+> >> +               };
+> >> +
+> >> +               pm2250_l15: l15 {
+> >> +                       /* WCD/DSI/BT VDDIO */
+> >> +                       regulator-min-microvolts = <1800000>;
+> >> +                       regulator-max-microvolts = <1800000>;
+> >> +                       regulator-allow-set-load;
+> >> +                       regulator-always-on;
+> >> +                       regulator-boot-on;
+> >> +               };
+> >> +
+> >> +               pm2250_l16: l16 {
+> >> +                       /* GPS RF2 */
+> >> +                       regulator-min-microvolts = <1800000>;
+> >> +                       regulator-max-microvolts = <1800000>;
+> >> +                       regulator-boot-on;
+> >> +               };
+> >> +
+> >> +               pm2250_l17: l17 {
+> >> +                       regulator-min-microvolts = <3000000>;
+> >> +                       regulator-max-microvolts = <3000000>;
+> >> +               };
+> >> +
+> >> +               pm2250_l18: l18 {
+> >> +                       /* VDD_PXn */
+> >> +                       regulator-min-microvolts = <1800000>;
+> >> +                       regulator-max-microvolts = <1800000>;
+> >> +               };
+> >> +
+> >> +               pm2250_l19: l19 {
+> >> +                       /* VDD_PXn */
+> >> +                       regulator-min-microvolts = <1800000>;
+> >> +                       regulator-max-microvolts = <1800000>;
+> >> +               };
+> >> +
+> >> +               pm2250_l20: l20 {
+> >> +                       /* SDHCI1 VMMC */
+> >> +                       regulator-min-microvolts = <2856000>;
+> >> +                       regulator-max-microvolts = <2856000>;
+> >> +                       regulator-allow-set-load;
+> >> +               };
+> >> +
+> >> +               pm2250_l21: l21 {
+> >> +                       /* SDHCI2 VMMC */
+> >> +                       regulator-min-microvolts = <2960000>;
+> >> +                       regulator-max-microvolts = <3300000>;
+> >> +                       regulator-allow-set-load;
+> >> +                       regulator-boot-on;
+> >> +               };
+> >> +
+> >> +               pm2250_l22: l22 {
+> >> +                       /* Wi-Fi */
+> >> +                       regulator-min-microvolts = <3312000>;
+> >> +                       regulator-max-microvolts = <3312000>;
+> >> +               };
+> >> +       };
+> >> +};
+> >> +
+> >>  &sdhc_1 {
+> >> +       vmmc-supply = <&pm2250_l20>;
+> >> +       vqmmc-supply = <&pm2250_l14>;
+> >>         pinctrl-0 = <&sdc1_state_on>;
+> >>         pinctrl-1 = <&sdc1_state_off>;
+> >>         pinctrl-names = "default", "sleep";
+> >> @@ -61,6 +322,8 @@ &sdhc_1 {
+> >>  };
+> >>
+> >>  &sdhc_2 {
+> >> +       vmmc-supply = <&pm2250_l21>;
+> >> +       vqmmc-supply = <&pm2250_l4>;
+> >>         cd-gpios = <&tlmm 88 GPIO_ACTIVE_LOW>;
+> >>         pinctrl-0 = <&sdc2_state_on &sd_det_in_on>;
+> >>         pinctrl-1 = <&sdc2_state_off &sd_det_in_off>;
+> >> @@ -104,6 +367,9 @@ &usb {
+> >>  };
+> >>
+> >>  &usb_hsphy {
+> >> +       vdd-supply = <&pm2250_l12>;
+> >> +       vdda-pll-supply = <&pm2250_l13>;
+> >> +       vdda-phy-dpdm-supply = <&pm2250_l21>;
+> >>         status = "okay";
+> >>  };
+> >>
+> >>
+> >> ---
+> >> base-commit: 8e4b7f2f3d6071665b1dfd70786229c8a5d6c256
+> >> change-id: 20230711-topic-rb1_regulator-44c4ade93246
+> >>
+> >> Best regards,
+> >> --
+> >> Konrad Dybcio <konrad.dybcio@linaro.org>
+> >>
+> >
+> >
 
-> +
-> +	clk_alpha_pll_configure(&ubi32_pll_main, regmap, &ubi32_pll_config);
-> +
-> +	return qcom_cc_really_probe(pdev, &nsscc_ipq9574_desc, regmap);
-> +}
-> +
-> +static struct platform_driver nss_cc_ipq9574_driver = {
-> +	.probe = nss_cc_ipq9574_probe,
-> +	.driver = {
-> +		.name = "qcom,nsscc-ipq9574",
-> +		.of_match_table = nss_cc_ipq9574_match_table,
-> +	},
-> +};
-> +
-> +static int __init nss_cc_ipq9574_init(void)
-> +{
-> +	return platform_driver_register(&nss_cc_ipq9574_driver);
-> +}
-> +subsys_initcall(nss_cc_ipq9574_init);
-> +
-> +static void __exit nss_cc_ipq9574_exit(void)
-> +{
-> +	platform_driver_unregister(&nss_cc_ipq9574_driver);
-> +}
-> +module_exit(nss_cc_ipq9574_exit);
 
-module_platform_driver ?
-
-> +
-> +MODULE_DESCRIPTION("QTI NSS_CC IPQ9574 Driver");
-> +MODULE_LICENSE("GPL");
 
 -- 
 With best wishes
 Dmitry
-
