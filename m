@@ -2,178 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E96474EB25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 11:52:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F1A074EB2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 11:54:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231828AbjGKJwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 05:52:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40540 "EHLO
+        id S230391AbjGKJyq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 05:54:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231439AbjGKJwk (ORCPT
+        with ESMTP id S230073AbjGKJyp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 05:52:40 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D633AB7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:52:38 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-51e57874bfdso2931135a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:52:38 -0700 (PDT)
+        Tue, 11 Jul 2023 05:54:45 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1F93A8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:54:43 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-993a37b79e2so694794666b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689069157; x=1691661157;
+        d=linaro.org; s=google; t=1689069282; x=1691661282;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FBsilH/Wv3zx61Y3YrX4aQgolpw0cneKejaXzy4ijj8=;
-        b=M1/Bdaz18qU7zhpTw3JrWIef953afBThaEeBSQLenn8lypb4Busu05MRQ131YVTFrc
-         vSymi9Xzu2lNP6QcJeKXI2PUyWWBgTd0az4L8gguXUb1okX+aWunPfeV8CNJHz3+wXvE
-         N3+CnAA148l2wzBXeEQc1m9L7Lb9r0KAHoUUAq6Nv2TQ6sVRj19CB1Kc2TNvX0bVzUNh
-         ivIp11tU/7ULtKdgj5fHWwrdKYhY4Q9ZOrUBnjlbuZfDA8zyTza+Ivt/r3MyZfuO+uRK
-         LQw1PjNHOSRR87elFjhfmlKw9CIOKvQD6MN6KWGzvGW67k1hWMUXv9TWg/Fd/g1vBGmA
-         U2pg==
+        bh=TmE4v52q1Ad8B5XbVBXzvr3xxDgynpotAOjnuTuCObk=;
+        b=tA955queu1D9GTW3c+allmX+oZ+L+E+pwDxlbjo7kOEKyX57j53zqmMgskx6y8Wsc/
+         eS4O/hvW2Hf7Cwzug7V5j1MgO1RLtCa55aZHvg5gcFsCeMH01VHmf2E4dkrkJSiCxhsP
+         MRz9geTVL0jD+4Me96lelD2sQ8M64NPqjL1zX9vM/+msTSIyoHGrFX3SYlfB1u/0QAVu
+         vlFTD0LpsOuRqxFs87hDT4GMpiJHVT3mFUreI3RaVae5Hn9H7SpcU9WpAi+WMB/U+Ogd
+         WWlW7vLnnHg6kXWoEh62O8X7BcggkHW9Jpp7XfrdKbbXWhBQ4MjUFEuro6gsZYJc87RI
+         1Btg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689069157; x=1691661157;
+        d=1e100.net; s=20221208; t=1689069282; x=1691661282;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FBsilH/Wv3zx61Y3YrX4aQgolpw0cneKejaXzy4ijj8=;
-        b=KJkQJIHcN0P2dGXN5gleUP6/oCBHFiMjOsdSEBWL+fUNQYaaFalykdbLBjXOaTlZY4
-         pb0cyd8RiHaUqFI6TkHZSAvzo6avQVjOATzzPXw8v0aCvZtnLgLgEYN0UrRnAeUOm4i8
-         1MRbeAZNc/hw8z1DdWDTUULPfUY+KXYjzxJP4RAkfBF7anvnCu5L1RDaQhLp/FRVQ/Tv
-         ChuAqCVUYrGPZTCIyB/gNz913s1cj1ymjfywIG3rtxL/tcKQi1sBEfyQ3/5SiAy14b3h
-         OQWJ9vThN6QEp5RUqNLRleAIg/f0ZHLCq2TKHLk+93zmepjgqHuOX+7K8LcvVzdRsz33
-         ohVw==
-X-Gm-Message-State: ABy/qLaQfxljHydS3dikv4CMxS7BXWVZBuuB9MplU97nheBINa1XNUgo
-        3n6S5K5NW22ihXU60IQM9n6ShQ==
-X-Google-Smtp-Source: APBJJlFBJKAac6woquP4clYjY/LaBb0bcQDlEU9gjKJqKd2vFIvqN9xMWLAmsWBMrN2nm2FyhgBsCA==
-X-Received: by 2002:aa7:cb0c:0:b0:51d:a724:48d1 with SMTP id s12-20020aa7cb0c000000b0051da72448d1mr13930604edt.23.1689069157328;
-        Tue, 11 Jul 2023 02:52:37 -0700 (PDT)
+        bh=TmE4v52q1Ad8B5XbVBXzvr3xxDgynpotAOjnuTuCObk=;
+        b=OLcVVphWc80nr5wtBDGpNgYynuTwzZ7g0N7nznF9+KKyy3QCbnRuKFLnxuEHyZo7p4
+         /tjIZQnDbEwT0965yCs7/VtByUgKW8Y45M/aBREXv0zxy8RSug9AE37Q2t+iXGh0lXYP
+         IJL48Tku+sEsiE2B9lwH3X8F5jCWMuZULFXZxGBVMaBNGVH9LgZgNHCJKMEpeWQaOfBo
+         2VaST/+R7uGWg9PJFTxg60shCEEemnvuL9818wmew4wIPO5myaN2iXTuFBz17vDizdKc
+         5/u5wIzIs36kqxnPudl309OPDIkAYyjbuLln+sAxq96RIf8rNewVYuvmNuvghqVosknH
+         56Lw==
+X-Gm-Message-State: ABy/qLbtDVyKQGNNTbhUO4rl22WsdvDHpUw6Fx6DKqKW4yB19WloVB56
+        bk99dF5u3uLHdnrGg5KL6TP3iw==
+X-Google-Smtp-Source: APBJJlExFhFXNm2eIyUDkRqdil/jnDmLUCHQeTiyjjUKMfJHW1Sp3RxBNmLgFFJOg5gZFfRAogTakQ==
+X-Received: by 2002:a17:906:15:b0:993:f611:7c95 with SMTP id 21-20020a170906001500b00993f6117c95mr10263757eja.39.1689069282221;
+        Tue, 11 Jul 2023 02:54:42 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id l7-20020aa7c3c7000000b0051e229d04fcsm987488edr.70.2023.07.11.02.52.35
+        by smtp.gmail.com with ESMTPSA id j8-20020a170906830800b009927d4d7a6bsm941783ejx.53.2023.07.11.02.54.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 02:52:36 -0700 (PDT)
-Message-ID: <37aa7ae8-206e-3a48-b90d-22d49e86c675@linaro.org>
-Date:   Tue, 11 Jul 2023 11:52:35 +0200
+        Tue, 11 Jul 2023 02:54:41 -0700 (PDT)
+Message-ID: <5f16f5c0-c63e-9e16-b55d-ac90977bc863@linaro.org>
+Date:   Tue, 11 Jul 2023 11:54:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 1/6] dt-bindings: thermal: tsens: Add nvmem cells for
- calibration data
+Subject: Re: [PATCH 3/6] dt-bindings: clock: Add ipq9574 NSSCC clock and reset
+ definitions
 Content-Language: en-US
-To:     Praveenkumar I <quic_ipkumar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, amitk@kernel.org,
-        thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_varada@quicinc.com
-References: <20230710103735.1375847-1-quic_ipkumar@quicinc.com>
- <20230710103735.1375847-2-quic_ipkumar@quicinc.com>
- <09e33a89-c060-69b1-b94f-b21c45d1d249@linaro.org>
- <59ea653e-c5da-71cb-eb85-1aa3c72e2089@quicinc.com>
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        richardcochran@gmail.com, arnd@arndb.de, geert+renesas@glider.be,
+        neil.armstrong@linaro.org, nfraprado@collabora.com,
+        rafal@milecki.pl, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        netdev@vger.kernel.org
+Cc:     quic_saahtoma@quicinc.com
+References: <20230711093529.18355-1-quic_devipriy@quicinc.com>
+ <20230711093529.18355-4-quic_devipriy@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <59ea653e-c5da-71cb-eb85-1aa3c72e2089@quicinc.com>
+In-Reply-To: <20230711093529.18355-4-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 11:39, Praveenkumar I wrote:
+On 11/07/2023 11:35, Devi Priya wrote:
+> Add NSSCC clock and reset definitions for ipq9574.
 > 
-> On 7/11/2023 1:40 AM, Krzysztof Kozlowski wrote:
->> On 10/07/2023 12:37, Praveenkumar I wrote:
->>> Add TSENS V2 calibration nvmem cells for IPQ5332
->>>
->>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>> ---
->>>   .../bindings/thermal/qcom-tsens.yaml          | 26 +++++++++++++++++--
->>>   1 file changed, 24 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> index 27e9e16e6455..8b7863c3989e 100644
->>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> @@ -91,7 +91,7 @@ properties:
->>>       maxItems: 2
->>>   
->>>     nvmem-cells:
->>> -    oneOf:
->>> +    anyOf:
->>>         - minItems: 1
->>>           maxItems: 2
->>>           description:
->>> @@ -106,9 +106,13 @@ properties:
->>>           description: |
->>>             Reference to nvmem cells for the calibration mode, two calibration
->>>             bases and two cells per each sensor, main and backup copies, plus use_backup cell
->>> +      - maxItems: 17
->>> +        description: |
->>> +          V2 of TSENS, reference to nvmem cells for the calibration mode, two calibration
->>> +          bases and one cell per each sensor
->> I think this is already included in one of the previous entries.
->> Otherwise, are you sure that all new devices will have exactly 17 entries?
-> Previous entries does not support TSENS version 2.X.X QFPROM. TSENS V2 
-> QFPROM has mode, base0, base1 and s[0-15]+_offset.
-> Ideally it should be like,
-> - minItems: 4
-> - maxItems: 19
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,ipq9574-nsscc.yaml    |  76 +++++++++
+>  .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
+>  .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
+>  3 files changed, 362 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+>  create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+> new file mode 100644
+> index 000000000000..1e8754760785
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,ipq9574-nsscc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Networking Sub System Clock & Reset Controller on IPQ9574
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Anusha Rao <quic_anusha@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm networking sub system clock control module provides the clocks,
+> +  resets and power domains on IPQ9574
+> +
+> +  See also::
+> +    include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+> +    include/dt-bindings/reset/qcom,ipq9574-nsscc.h
+> +
 
-I see it covered:
-minItems: 5
-maxItems: 35
+Reference gcc.yaml and drop all duplicated properties.
 
-I think 17 is between 5 and 35.
-
-> But dt binding check fails in oneOf / anyOf condition. So added the 
-> IPQ5332 properties which is exactly 17.
->>
->>>   
->>>     nvmem-cell-names:
->>> -    oneOf:
->>> +    anyOf:
->>>         - minItems: 1
->>>           items:
->>>             - const: calib
->>> @@ -205,6 +209,24 @@ properties:
->>>             - const: s9_p2_backup
->>>             - const: s10_p1_backup
->>>             - const: s10_p2_backup
->>> +      - items:
->>> +          - const: mode
->>> +          - const: base0
->>> +          - const: base1
->>> +          - const: s0_offset
->>> +          - const: s3_offset
->>> +          - const: s4_offset
->>> +          - const: s5_offset
->>> +          - const: s6_offset
->>> +          - const: s7_offset
->>> +          - const: s8_offset
->>> +          - const: s9_offset
->>> +          - const: s10_offset
->>> +          - const: s11_offset
->>> +          - const: s12_offset
->>> +          - const: s13_offset
->>> +          - const: s14_offset
->>> +          - const: s15_offset
->> Don't introduce new naming style. Existing uses s[0-9]+, without offset
->> suffix. Why this should be different?
-> As I mentioned above, s[0-9]+_p1 / s[0-9]+p2 is for TSENS V1. TSENS V2 
-> QFPROM layout is different from the existing one.
-
-I know, I did not write about p1/p2.
-
-> I would like to add mode, base0, base1 and 16 patterns 
-> '^s[0-15]+_offset$'. But DT binding check is failing in oneOf/ anyOf 
-> condintion.
-
-This does not explain why you need different style - this "offset" suffix.
 
 Best regards,
 Krzysztof
