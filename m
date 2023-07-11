@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECE9E74E850
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 09:45:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D606874E854
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 09:47:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231497AbjGKHp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 03:45:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55452 "EHLO
+        id S231393AbjGKHrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 03:47:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231528AbjGKHpQ (ORCPT
+        with ESMTP id S229468AbjGKHrT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 03:45:16 -0400
+        Tue, 11 Jul 2023 03:47:19 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF6EE75
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 00:45:06 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33869122;
+        Tue, 11 Jul 2023 00:47:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3D16361365
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:45:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699D7C433C7;
-        Tue, 11 Jul 2023 07:45:02 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C22DE61366;
+        Tue, 11 Jul 2023 07:47:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963F8C433C7;
+        Tue, 11 Jul 2023 07:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689061505;
-        bh=TtqMpM4hW9AyV/Tt+Gydfd5XB5pw625KQ3mnbG3pd44=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=qPjCG+heQ/6Lr135KxiYrFt07VW7BfjXXzHEfKRbDcx8eFfxVfBoF67MpxEKYYALP
-         mKzZQAzfXWH78LKfbO27R2FHXSfGxsC0qBXX1fz5CIkq3vxAzVbtBdz0v37cjPPdhM
-         0Ux4AJvyLrfZlUHtspdwEh2pdzPQV6BK6Z0gjMzu8HFQ7NGYhn6M74oAJhC8wLgwZy
-         MqpOylsvpUVqJP5deghUAC1Rdckwpuo+Vvv12UQsDwGRPPPUM4gaWL6vbkU4fNtUyr
-         Vaqn8lqzLbgxppmjXISmqiqEQdF0WFao1iiV2Nw9IUlVpK1RUwB0AyRuQ8ZvHlJ1WC
-         3IoJu2ivsK4Og==
+        s=k20201202; t=1689061638;
+        bh=OP40hzcD9aIJl6PAxgLW22+e1ssFnxcYrWBCFmU8cdI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=V7ouqfIuCuSheYK2UN0/IIK+hPzrUrDoCDTqWcy3tBl+Fp9Tiq82xyNjsDZxfL1ly
+         +hqFwjdaMT7seZbX34HMcmtjQtALqXPdoR5uuLY4e+96I12F8h0NycpKvfu/qyJOTd
+         ILubK8aWaTtg9G0AjZ/Su88xEDy/Sk7fVTgUijFbhknPtC1i5+XUOpUI4Qugmo6qMQ
+         UKXBrpmO5R32XJMfyMp2AFKvPxz/OBHFYShxK47pLMfDJMWbekNT2Y5dLuARvNYA0u
+         9NcJacfm5YCrmeplVu6UaOlKJzCW7HprIG5e+tGQcZ2U3fbe5ALLyrJ3Ir4ox13iFB
+         I6Tp2i1FT9LUg==
+Date:   Tue, 11 Jul 2023 13:17:13 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        freedreno@lists.freedesktop.org
-In-Reply-To: <20230621153317.1025914-1-dmitry.baryshkov@linaro.org>
-References: <20230621153317.1025914-1-dmitry.baryshkov@linaro.org>
-Subject: Re: [RESEND PATCH 0/7] phy: qcom: qmp-combo: rework register
- access
-Message-Id: <168906150192.189433.12057457685611728687.b4-ty@kernel.org>
-Date:   Tue, 11 Jul 2023 13:15:01 +0530
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 0/5] phy: qcom-qmp-usb: split away legacy USB+DP code
+Message-ID: <ZK0JAW8VIYreQWzw@matsya>
+References: <20230531023415.1209301-1-dmitry.baryshkov@linaro.org>
+ <168906148935.189433.9157580042783820391.b4-ty@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <168906148935.189433.9157580042783820391.b4-ty@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,39 +64,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Wed, 21 Jun 2023 18:33:10 +0300, Dmitry Baryshkov wrote:
-> For some reason I used the wrong script to send this patchset, resend it
-> including proper (linux-phy & maintainers) recipients.
+On 11-07-23, 13:14, Vinod Koul wrote:
 > 
-> The patch at [1], which added another function just to have v4 vs v6
-> register address difference prompted me to take a look at the combo PHY
-> driver. We already have mechanism, register layout descriptions, for
-> coping with register address differences, which I ignored while adding
-> v4 support. It looks like nowadays this has exploded somehow, resulting
-> inseveral almost-identicatical functions.
+> On Wed, 31 May 2023 05:34:10 +0300, Dmitry Baryshkov wrote:
+> > While working on the QMP binding cleanup, I noticed that USB QMP driver
+> > supports both simple USB PHYs (which should be updated) and USB-only
+> > part of USB+DP PHYs (which are largely legacy and don't need to be
+> > updated). To ease further cleanup perform a quick cleanup of the last
+> > remaining USB+DP PHY (on sm8150 platform) and split the legacy codepath
+> > from the USB QMP PHY driver.
+> > 
+> > [...]
 > 
-> [...]
+> Applied, thanks!
+> 
+> [1/5] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: add sm8150 USB+DP PHY
+>       commit: b484e246a21433daaabd8678347c96f8339bf818
+> [2/5] phy: qcom-qmp-combo: add support for the USB+DP PHY on SM8150 platform
+>       commit: 4daee20877df04b96bc36752acdc41dfc581b34c
+> [3/5] arm64: dts: qcom: sm8150: turn first USB PHY into USB+DP PHY
+>       (no commit info)
 
-Applied, thanks!
+b4 messed up 3 is not picked up, rest are
 
-[1/7] phy: qcom: qmp-combo: correct bias0_en programming
-      commit: 8fa60f5ab940ba732644c996c3570b78b10b8fdc
-[2/7] phy: qcom: qmp-combo: reuse register layouts for more registers
-      commit: 211ddf1d89cfb6be8aead2092c95bb285bf790b6
-[3/7] phy: qcom: qmp-combo: reuse register layouts for even more registers
-      commit: 01f363f4eb0c0c35aa88a0ff2a329c4d88dc1da0
-[4/7] phy: qcom: qmp-combo: reuse register layouts for some more registers
-      commit: 245fa640ea46ad430cd962351fef0618f71ffda9
-[5/7] phy: qcom: qmp-combo: drop similar functions
-      commit: f4ed3532ca7422811083d15a204f91b8f5f8b49a
-[6/7] phy: qcom: qmp-combo: drop qmp_v6_dp_aux_init()
-      commit: 8e4137dc4eac0982aeb4f3fd103598a41c4f165d
-[7/7] phy: qcom: qmp-combo: extract common function to setup clocks
-      commit: 315a1a400d9c6533823e3e3af9b07cb4d0555f77
+> [4/5] dt-bindings: phy: qcom,msm8996-qmp-usb3-phy: drop legacy bindings
+>       commit: c30d437e92d20741a6db7ece024e15a0f5af6bcc
+> [5/5] phy: qcom-qmp-usb: split off the legacy USB+dp_com support
+>       commit: 770025644d971229c86fb97796268b8363c2c70a
+> 
+> Best regards,
+> -- 
+> ~Vinod
+> 
+> 
+> 
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
 
-Best regards,
 -- 
 ~Vinod
-
-
