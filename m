@@ -2,80 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 242E974E9E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 11:10:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0C1774EA46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 11:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231649AbjGKJKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 05:10:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41220 "EHLO
+        id S231706AbjGKJYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 05:24:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231516AbjGKJKC (ORCPT
+        with ESMTP id S231782AbjGKJYP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 05:10:02 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FD99A6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:10:00 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9926623e367so697974966b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:10:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689066599; x=1691658599;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5N3hprEj7uW61mEh1PLDp0Q1DNyZBWQj8+LgzS5pZjk=;
-        b=QdhI+G0us/wRUovMvFBoDxaVrr1D2kXaqcFOBXBysRxpd9/JAOEvYC5Azqr/4bXd9C
-         2Hns9sOmPiD4OF4ZAWG1LwuKMKUkjRA0Ll+cNK2dllIWysa/kC8Zq26K20brokd/guzw
-         VCWzzegCT/1iBz6CQsJOYLA7/GFkZL48vBJ2ill9V8c7V6Dnr4E9Rnk0kHegTSzephkE
-         R9Wma9xNRMXHbvgPbr0KUVdppiNS7L2d5sQwDq6EiMS3vnraSDdi9vZ1fHqNdScshEGS
-         2VM/GigwG7m8/K4jgt7INO5MEcLppVpgoJIJ5wS/1RenxLJTtbvsW+/aJKy49RzdoVcx
-         Rdrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689066599; x=1691658599;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5N3hprEj7uW61mEh1PLDp0Q1DNyZBWQj8+LgzS5pZjk=;
-        b=FJ5/wRfC8L1k7olDKO0Okrt8h6u4TwWQ8IaJITDIAhA2D/UnFqDp8Hk0lrv05tchkE
-         tWwVLW6J/oZV4f+tbjb2qCZirFio+sKE+7yEeK7ei+6zf1VIqOisZCkXKKkFDBmz0giI
-         zBGW02vYkC7uR+DM4jva46gm8wLPDuPKltZbo8cwOdX8JNM06vB0q7A1/ODNPDmP82H4
-         UIorf48Tuen5XrQ6Wtv9umhr/Rg6XBol+dET/Ut0MdLmaBIZX2R/EyTLjdbn7JxxVIvx
-         09b3jSABZ+mDuQKHphWr9UjFQJtL/T9fXIITEwV/MFcIZDc0huVPNTJQvq4GOLP+z04z
-         kQIQ==
-X-Gm-Message-State: ABy/qLZPoa75Ih9Yo49XCaczTkACDQqjnRS8eXUuYUZsV1lw6c22FKV2
-        3fRMPPCh8oMl01VT/bYZVs8DBQ==
-X-Google-Smtp-Source: APBJJlHuUznV9FamEEhrbhzUGIBPlyjuZX2GlDThZC5NIevHwpPGzwg6VUScC9DVii5Ol7Xa/ot7uw==
-X-Received: by 2002:a17:907:75db:b0:992:9a5e:3172 with SMTP id jl27-20020a17090775db00b009929a5e3172mr13467303ejc.59.1689066599181;
-        Tue, 11 Jul 2023 02:09:59 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id w22-20020a170906131600b009927a49ba94sm868727ejb.169.2023.07.11.02.09.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 02:09:58 -0700 (PDT)
-Message-ID: <8d3aa7fe-69fd-d0c1-9a94-32c3c7b18ed5@linaro.org>
-Date:   Tue, 11 Jul 2023 11:09:55 +0200
+        Tue, 11 Jul 2023 05:24:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26BF12709;
+        Tue, 11 Jul 2023 02:19:41 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36B7MFmm006543;
+        Tue, 11 Jul 2023 09:19:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=66OXzw/seGmBC3V8Ne4w+goktO+Rr3Yb5H56bkzW5qw=;
+ b=DOp+P+dwJojxpAU8xofcNtBoYaF/ORRLt+RC+q0KTFUv9Eg59OArYTH1GSol56RNzMq4
+ RZkHuOgLf43cp/8xCWqySx6GvyARWovAt4JV2+o3MBJixiydR3y74G6kwZ1mtb+4J20p
+ 2CxEQgAuTWY1pulk8nlXAcjD98ndS6XvfIniQ+i5DERSlXJm8DdQvehQfa0BelmA+2NJ
+ HDGDUVwd2hViRJORuQe9T4HxjvWei8W2FCsdtNUzFueUTyvSllDXqR01CtZtDaYnKdSX
+ ewERjQDeOdmecha7dI1++yIj7gDqNhKjmtOHz8dapa2WBJpbqfqrdmIi/wwemuC07rO2 nA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rs279r9ek-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 09:19:33 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36B9JEx8012420
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 09:19:15 GMT
+Received: from [10.201.3.91] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 11 Jul
+ 2023 02:19:09 -0700
+Message-ID: <1c178228-2b83-e319-129f-4524b5a1bc8b@quicinc.com>
+Date:   Tue, 11 Jul 2023 14:49:06 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v3 3/6] phy: qcom-m31: Introduce qcom,m31 USB phy driver
+Subject: Re: [PATCH 2/6] thermal/drivers/tsens: Add TSENS enable and
+ calibration support for V2
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
-        will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
-        geert+renesas@glider.be, neil.armstrong@linaro.org,
-        nfraprado@collabora.com, broonie@kernel.org, rafal@milecki.pl,
-        quic_srichara@quicinc.com, quic_varada@quicinc.org,
-        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <cover.1689065318.git.quic_varada@quicinc.com>
- <2489ac0b07c14e61bc471716e97237c385daec86.1689065318.git.quic_varada@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2489ac0b07c14e61bc471716e97237c385daec86.1689065318.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_varada@quicinc.com>
+References: <20230710103735.1375847-1-quic_ipkumar@quicinc.com>
+ <20230710103735.1375847-3-quic_ipkumar@quicinc.com>
+ <cf2cae88-e226-8df1-6c4f-543b683cbc8c@linaro.org>
+ <a03d6823-2084-e4c6-1c9d-853127956f69@quicinc.com>
+ <CAA8EJpo+r48uj1-X6O0r3wOodydMfMrPQHt+afXO7PNGqCJk3A@mail.gmail.com>
+From:   Praveenkumar I <quic_ipkumar@quicinc.com>
+In-Reply-To: <CAA8EJpo+r48uj1-X6O0r3wOodydMfMrPQHt+afXO7PNGqCJk3A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Mwp1QFcII3dTu3gLbL2Bjk5odOjJ3A8e
+X-Proofpoint-GUID: Mwp1QFcII3dTu3gLbL2Bjk5odOjJ3A8e
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-11_04,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 adultscore=0 clxscore=1015 mlxlogscore=999
+ malwarescore=0 phishscore=0 lowpriorityscore=0 mlxscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2307110083
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
@@ -86,147 +90,365 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 10:51, Varadarajan Narayanan wrote:
-> Add the M31 USB2 phy driver.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v1:
-> 	Combine driver, makefile and kconfig into 1 patch
-> 	Remove 'qscratch' region and its usage. The controller driver takes care
-> 	of those settings
-> 	Use compatible/data to handle ipq5332 init
-> 	Drop the default case
-> 	Get resources by index instead of name as there is only one resource
-> 	Add clock
-> 	Fix review comments in the driver
-> ---
->  drivers/phy/qualcomm/Kconfig        |  11 ++
->  drivers/phy/qualcomm/Makefile       |   1 +
->  drivers/phy/qualcomm/phy-qcom-m31.c | 256 ++++++++++++++++++++++++++++++++++++
->  3 files changed, 268 insertions(+)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-m31.c
-> 
-> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-> index 97ca595..76be191 100644
-> --- a/drivers/phy/qualcomm/Kconfig
-> +++ b/drivers/phy/qualcomm/Kconfig
-> @@ -197,3 +197,14 @@ config PHY_QCOM_SGMII_ETH
->  	help
->  	  Enable this to support the internal SerDes/SGMII PHY on various
->  	  Qualcomm chipsets.
-> +
-> +config PHY_QCOM_M31_USB
-> +	tristate "Qualcomm M31 HS PHY driver support"
-> +	depends on (USB || USB_GADGET) && ARCH_QCOM
-> +	select USB_PHY
-> +	help
-> +	  Enable this to support M31 HS PHY transceivers on Qualcomm chips
-> +	  with DWC3 USB core. It handles PHY initialization, clock
-> +	  management required after resetting the hardware and power
-> +	  management. This driver is required even for peripheral only or
-> +	  host only mode configurations.
-> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-> index b030858..0b5dd66 100644
-> --- a/drivers/phy/qualcomm/Makefile
-> +++ b/drivers/phy/qualcomm/Makefile
-> @@ -22,3 +22,4 @@ obj-$(CONFIG_PHY_QCOM_USB_SS)		+= phy-qcom-usb-ss.o
->  obj-$(CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2)+= phy-qcom-snps-femto-v2.o
->  obj-$(CONFIG_PHY_QCOM_IPQ806X_USB)	+= phy-qcom-ipq806x-usb.o
->  obj-$(CONFIG_PHY_QCOM_SGMII_ETH)	+= phy-qcom-sgmii-eth.o
-> +obj-$(CONFIG_PHY_QCOM_M31_USB)		+= phy-qcom-m31.o
-> diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
-> new file mode 100644
-> index 0000000..8700728
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-m31.c
-> @@ -0,0 +1,256 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Copyright (c) 2014-2016, 2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/reset.h>
-> +#include <linux/slab.h>
-> +#include <linux/usb/of.h>
-> +#include <linux/usb/phy.h>
-> +
-> +enum clk_reset_action {
-> +	CLK_RESET_DEASSERT	= 0,
-> +	CLK_RESET_ASSERT	= 1
-> +};
 
-Drop entire enum. I don't see it being used.
-
-...
-
-> +
-> +static int m31usb_phy_probe(struct platform_device *pdev)
-> +{
-> +	const struct m31_priv_data *data;
-> +	struct device *dev = &pdev->dev;
-> +	struct m31usb_phy *qphy;
-> +	int ret;
-> +
-> +	qphy = devm_kzalloc(dev, sizeof(*qphy), GFP_KERNEL);
-> +	if (!qphy)
-> +		return -ENOMEM;
-> +
-> +	qphy->phy.dev = dev;
-> +
-> +	qphy->base = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(qphy->base))
-> +		return PTR_ERR(qphy->base);
-> +
-> +	qphy->phy_reset = devm_reset_control_get_exclusive_by_index(dev, 0);
-> +	if (IS_ERR(qphy->phy_reset))
-> +		return PTR_ERR(qphy->phy_reset);
-> +
-> +	qphy->cfg_ahb_clk = devm_clk_get(dev, "cfg_ahb");
-
-How do you handle errors? I don't see it.
-
-> +	platform_set_drvdata(pdev, qphy);
-> +
-> +	data = of_device_get_match_data(dev);
-> +	qphy->regs = data->regs;
-> +	qphy->ulpi_mode = data->ulpi_mode;
-> +
-> +	qphy->phy.label			= "m31-usb-phy";
-> +	qphy->phy.init			= m31usb_phy_init;
-> +	qphy->phy.shutdown		= m31usb_phy_shutdown;
-> +	qphy->phy.type			= USB_PHY_TYPE_USB2;
-> +
-> +	ret = usb_add_phy_dev(&qphy->phy);
-> +
-> +	return ret;
-> +}
-> +
-> +static void m31usb_phy_remove(struct platform_device *pdev)
-> +{
-> +	struct m31usb_phy *qphy = platform_get_drvdata(pdev);
-> +
-> +	usb_remove_phy(&qphy->phy);
-> +}
-> +
-> +struct m31_priv_data m31_ipq5332_data = {
-
-static const
-
-> +	.ulpi_mode = false,
-> +	.regs = m31_ipq5332_regs,
-> +};
-
-
-Best regards,
-Krzysztof
-
+On 7/10/2023 8:32 PM, Dmitry Baryshkov wrote:
+> On Mon, 10 Jul 2023 at 16:22, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
+>>
+>> On 7/10/2023 4:49 PM, Dmitry Baryshkov wrote:
+>>> On 10/07/2023 13:37, Praveenkumar I wrote:
+>>>> SoCs without RPM have to enable sensors and calibrate from the kernel.
+>>>> Though TSENS IP supports 16 sensors, not all are used. So added
+>>>> sensors_to_en in tsens data help enable the relevant sensors.
+>>>>
+>>>> Added new calibration function for V2 as the tsens.c calib function
+>>>> only supports V1.
+>>>>
+>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>> ---
+>>>>    drivers/thermal/qcom/tsens-v2.c | 116 ++++++++++++++++++++++++++++++++
+>>>>    drivers/thermal/qcom/tsens.c    |  37 +++++++++-
+>>>>    drivers/thermal/qcom/tsens.h    |  56 +++++++++++++++
+>>>>    3 files changed, 208 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/thermal/qcom/tsens-v2.c
+>>>> b/drivers/thermal/qcom/tsens-v2.c
+>>>> index 29a61d2d6ca3..db48b1d95348 100644
+>>>> --- a/drivers/thermal/qcom/tsens-v2.c
+>>>> +++ b/drivers/thermal/qcom/tsens-v2.c
+>>>> @@ -6,11 +6,20 @@
+>>>>      #include <linux/bitops.h>
+>>>>    #include <linux/regmap.h>
+>>>> +#include <linux/nvmem-consumer.h>
+>>>>    #include "tsens.h"
+>>>>      /* ----- SROT ------ */
+>>>>    #define SROT_HW_VER_OFF    0x0000
+>>>>    #define SROT_CTRL_OFF        0x0004
+>>>> +#define SROT_MEASURE_PERIOD    0x0008
+>>>> +#define SROT_Sn_CONVERSION    0x0060
+>>>> +#define V2_SHIFT_DEFAULT    0x0003
+>>>> +#define V2_SLOPE_DEFAULT    0x0cd0
+>>>> +#define V2_CZERO_DEFAULT    0x016a
+>>>> +#define ONE_PT_SLOPE        0x0cd0
+>>>> +#define TWO_PT_SHIFTED_GAIN    921600
+>>>> +#define ONE_PT_CZERO_CONST    94
+>>>>      /* ----- TM ------ */
+>>>>    #define TM_INT_EN_OFF            0x0004
+>>>> @@ -59,6 +68,16 @@ static const struct reg_field
+>>>> tsens_v2_regfields[MAX_REGFIELDS] = {
+>>>>        /* CTRL_OFF */
+>>>>        [TSENS_EN]     = REG_FIELD(SROT_CTRL_OFF,    0,  0),
+>>>>        [TSENS_SW_RST] = REG_FIELD(SROT_CTRL_OFF,    1,  1),
+>>>> +    [SENSOR_EN]    = REG_FIELD(SROT_CTRL_OFF,    3,  18),
+>>>> +    [CODE_OR_TEMP] = REG_FIELD(SROT_CTRL_OFF,    21, 21),
+>>>> +
+>>>> +    /* MAIN_MEASURE_PERIOD */
+>>>> +    [MAIN_MEASURE_PERIOD] = REG_FIELD(SROT_MEASURE_PERIOD, 0, 7),
+>>>> +
+>>>> +    /* Sn Conversion */
+>>>> +    REG_FIELD_FOR_EACH_SENSOR16(SHIFT, SROT_Sn_CONVERSION, 23, 24),
+>>>> +    REG_FIELD_FOR_EACH_SENSOR16(SLOPE, SROT_Sn_CONVERSION, 10, 22),
+>>>> +    REG_FIELD_FOR_EACH_SENSOR16(CZERO, SROT_Sn_CONVERSION, 0, 9),
+>>>>          /* ----- TM ------ */
+>>>>        /* INTERRUPT ENABLE */
+>>>> @@ -104,6 +123,103 @@ static const struct reg_field
+>>>> tsens_v2_regfields[MAX_REGFIELDS] = {
+>>>>        [TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
+>>>>    };
+>>>>    +static int tsens_v2_calibration(struct tsens_priv *priv)
+>>>> +{
+>>>> +    struct device *dev = priv->dev;
+>>>> +    u32 mode, base0, base1;
+>>>> +    u32 slope, czero;
+>>>> +    char name[15];
+>>>> +    int i, j, ret;
+>>>> +
+>>>> +    if (priv->num_sensors > MAX_SENSORS)
+>>>> +        return -EINVAL;
+>>>> +
+>>>> +    ret = nvmem_cell_read_variable_le_u32(priv->dev, "mode", &mode);
+>>>> +    if (ret == -ENOENT)
+>>>> +        dev_warn(priv->dev, "Calibration data not present in DT\n");
+>>>> +    if (ret < 0)
+>>>> +        return ret;
+>>>> +
+>>>> +    dev_dbg(priv->dev, "calibration mode is %d\n", mode);
+>>>> +
+>>>> +    ret = nvmem_cell_read_variable_le_u32(priv->dev, "base0", &base0);
+>>>> +    if (ret < 0)
+>>>> +        return ret;
+>>>> +
+>>>> +    ret = nvmem_cell_read_variable_le_u32(priv->dev, "base1", &base1);
+>>>> +    if (ret < 0)
+>>>> +        return ret;
+>>>> +
+>>>> +    /* Read offset values and allocate SHIFT, SLOPE & CZERO regmap
+>>>> for enabled sensors */
+>>>> +    for (i = 0; i < priv->num_sensors; i++) {
+>>>> +        if (!(priv->sensors_to_en & (0x1 << i)))
+>>>> +            continue;
+>>>> +
+>>>> +        ret = snprintf(name, sizeof(name), "s%d_offset",
+>>>> priv->sensor[i].hw_id);
+>>>> +        if (ret < 0)
+>>>> +            return ret;
+>>>> +
+>>>> +        ret = nvmem_cell_read_variable_le_u32(priv->dev, name,
+>>>> &priv->sensor[i].offset);
+>>>> +        if (ret)
+>>>> +            return ret;
+>>>> +
+>>>> +        for (j = SHIFT_0; j <= CZERO_0; j++) {
+>>>> +            int idx = (i * 3) + j;
+>>>> +
+>>>> +            priv->rf[idx] = devm_regmap_field_alloc(dev,
+>>>> priv->srot_map,
+>>>> +                                priv->fields[idx]);
+>>>> +            if (IS_ERR(priv->rf[idx]))
+>>>> +                return PTR_ERR(priv->rf[idx]);
+>>> I think, allocating data structures for 48 regfields, which are
+>>> written just once, to be an overkill.
+>> Can we change it to single field for each sensor. For example,
+>> CONVERSION_0 instead of SHIFT_0, SLOPE_0 and CZERO_0? This way it will
+>> be max 16 regfields.
+> If you move writing of the registers to the loop, you won't need
+> regfields. You can just call regmap_update_bits. The point is that you
+> don't have to allocate a one-time instance.
+Sure, will update in next patch.
+>
+>>>> +        }
+>>>> +    }
+>>>> +
+>>>> +    /* Based on calib mode, program SHIFT, SLOPE and CZERO for
+>>>> enabled sensors */
+>>>> +    switch (mode) {
+>>>> +    case TWO_PT_CALIB:
+>>>> +        slope = (TWO_PT_SHIFTED_GAIN / (base1 - base0));
+>>>> +
+>>>> +        for (i = 0; i < priv->num_sensors; i++) {
+>>>> +            if (!(priv->sensors_to_en & (0x1 << i)))
+>>>> +                continue;
+>>>> +
+>>>> +            int idx = i * 3;
+>>>> +
+>>>> +            czero = (base0 + priv->sensor[i].offset - ((base1 -
+>>>> base0) / 3));
+>>>> +            regmap_field_write(priv->rf[SHIFT_0 + idx],
+>>>> V2_SHIFT_DEFAULT);
+>>>> +            regmap_field_write(priv->rf[SLOPE_0 + idx], slope);
+>>>> +            regmap_field_write(priv->rf[CZERO_0 + idx], czero);
+>>>> +        }
+>>>> +        fallthrough;
+>>>> +    case ONE_PT_CALIB2:
+>>>> +        for (i = 0; i < priv->num_sensors; i++) {
+>>>> +            if (!(priv->sensors_to_en & (0x1 << i)))
+>>>> +                continue;
+>>>> +
+>>>> +            int idx = i * 3;
+>>>> +
+>>>> +            czero = base0 + priv->sensor[i].offset -
+>>>> ONE_PT_CZERO_CONST;
+>>>> +            regmap_field_write(priv->rf[SHIFT_0 + idx],
+>>>> V2_SHIFT_DEFAULT);
+>>>> +            regmap_field_write(priv->rf[SLOPE_0 + idx], ONE_PT_SLOPE);
+>>>> +            regmap_field_write(priv->rf[CZERO_0 + idx], czero);
+>>>> +        }
+>>>> +        break;
+>>>> +    default:
+>>>> +        dev_dbg(priv->dev, "calibrationless mode\n");
+>>>> +        for (i = 0; i < priv->num_sensors; i++) {
+>>>> +            if (!(priv->sensors_to_en & (0x1 << i)))
+>>>> +                continue;
+>>>> +
+>>>> +            int idx = i * 3;
+>>>> +
+>>>> +            regmap_field_write(priv->rf[SHIFT_0 + idx],
+>>>> V2_SHIFT_DEFAULT);
+>>>> +            regmap_field_write(priv->rf[SLOPE_0 + idx],
+>>>> V2_SLOPE_DEFAULT);
+>>>> +            regmap_field_write(priv->rf[CZERO_0 + idx],
+>>>> V2_CZERO_DEFAULT);
+>>>> +        }
+>>>> +    }
+>>> This code iterates over the sensors field several times. Please
+>>> consider extracting a function that handles all setup for a single
+>>> sensor, then calling it in a loop (I should probably do the same for
+>>> tsens-v0/v1 too).
+>> Sure. After reading the mode0, base0 and base1 from QFPROM, we can call
+>> a function in a loop to setup the calibration for each sensor.
+>>>> +
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>>    static const struct tsens_ops ops_generic_v2 = {
+>>>>        .init        = init_common,
+>>>>        .get_temp    = get_temp_tsens_valid,
+>>>> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+>>>> index 98c356acfe98..169690355dad 100644
+>>>> --- a/drivers/thermal/qcom/tsens.c
+>>>> +++ b/drivers/thermal/qcom/tsens.c
+>>>> @@ -974,7 +974,7 @@ int __init init_common(struct tsens_priv *priv)
+>>>>        ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
+>>>>        if (ret)
+>>>>            goto err_put_device;
+>>>> -    if (!enabled) {
+>>>> +    if (!enabled && !priv->sensors_to_en) {
+>>>>            dev_err(dev, "%s: device not enabled\n", __func__);
+>>>>            ret = -ENODEV;
+>>>>            goto err_put_device;
+>>>> @@ -1006,6 +1006,40 @@ int __init init_common(struct tsens_priv *priv)
+>>>>            goto err_put_device;
+>>>>        }
+>>>>    +    /* Do TSENS initialization if required */
+>>>> +    if (priv->sensors_to_en) {
+>>> Maybe it would be better to explicitly add VER_2_X_NO_RPM and check it
+>>> here?
+>> Sure, will add a separate version macro.
+>>>> +        priv->rf[CODE_OR_TEMP] = devm_regmap_field_alloc(dev,
+>>>> priv->srot_map,
+>>>> + priv->fields[CODE_OR_TEMP]);
+>>>> +        if (IS_ERR(priv->rf[CODE_OR_TEMP])) {
+>>>> +            ret = PTR_ERR(priv->rf[CODE_OR_TEMP]);
+>>>> +            goto err_put_device;
+>>>> +        }
+>>>> +
+>>>> +        priv->rf[MAIN_MEASURE_PERIOD] =
+>>>> +            devm_regmap_field_alloc(dev, priv->srot_map,
+>>>> +                        priv->fields[MAIN_MEASURE_PERIOD]);
+>>>> +        if (IS_ERR(priv->rf[MAIN_MEASURE_PERIOD])) {
+>>>> +            ret = PTR_ERR(priv->rf[MAIN_MEASURE_PERIOD]);
+>>>> +            goto err_put_device;
+>>>> +        }
+>>>> +
+>>>> +        regmap_field_write(priv->rf[TSENS_SW_RST], 0x1);
+>>>> +
+>>>> +        /* Update measure period to 2ms */
+>>>> +        regmap_field_write(priv->rf[MAIN_MEASURE_PERIOD], 0x1);
+>>>> +
+>>>> +        /* Enable available sensors */
+>>>> +        regmap_field_write(priv->rf[SENSOR_EN], priv->sensors_to_en);
+>>>> +
+>>>> +        /* Real temperature format */
+>>>> +        regmap_field_write(priv->rf[CODE_OR_TEMP], 0x1);
+>>>> +
+>>>> +        regmap_field_write(priv->rf[TSENS_SW_RST], 0x0);
+>>>> +
+>>>> +        /* Enable TSENS */
+>>>> +        regmap_field_write(priv->rf[TSENS_EN], 0x1);
+>>>> +    }
+>>>> +
+>>>>        /* This loop might need changes if enum regfield_ids is
+>>>> reordered */
+>>>>        for (j = LAST_TEMP_0; j <= UP_THRESH_15; j += 16) {
+>>>>            for (i = 0; i < priv->feat->max_sensors; i++) {
+>>>> @@ -1282,6 +1316,7 @@ static int tsens_probe(struct platform_device
+>>>> *pdev)
+>>>>          priv->dev = dev;
+>>>>        priv->num_sensors = num_sensors;
+>>>> +    priv->sensors_to_en = data->sensors_to_en;
+>>>>        priv->ops = data->ops;
+>>>>        for (i = 0;  i < priv->num_sensors; i++) {
+>>>>            if (data->hw_ids)
+>>>> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+>>>> index 2805de1c6827..f8897bc8944e 100644
+>>>> --- a/drivers/thermal/qcom/tsens.h
+>>>> +++ b/drivers/thermal/qcom/tsens.h
+>>>> @@ -168,6 +168,58 @@ enum regfield_ids {
+>>>>        TSENS_SW_RST,
+>>>>        SENSOR_EN,
+>>>>        CODE_OR_TEMP,
+>>>> +    /* MEASURE_PERIOD */
+>>>> +    MAIN_MEASURE_PERIOD,
+>>>> +
+>>>> +    /* Sn_CONVERSION */
+>>>> +    SHIFT_0,
+>>>> +    SLOPE_0,
+>>>> +    CZERO_0,
+>>>> +    SHIFT_1,
+>>>> +    SLOPE_1,
+>>>> +    CZERO_1,
+>>>> +    SHIFT_2,
+>>>> +    SLOPE_2,
+>>>> +    CZERO_2,
+>>>> +    SHIFT_3,
+>>>> +    SLOPE_3,
+>>>> +    CZERO_3,
+>>>> +    SHIFT_4,
+>>>> +    SLOPE_4,
+>>>> +    CZERO_4,
+>>>> +    SHIFT_5,
+>>>> +    SLOPE_5,
+>>>> +    CZERO_5,
+>>>> +    SHIFT_6,
+>>>> +    SLOPE_6,
+>>>> +    CZERO_6,
+>>>> +    SHIFT_7,
+>>>> +    SLOPE_7,
+>>>> +    CZERO_7,
+>>>> +    SHIFT_8,
+>>>> +    SLOPE_8,
+>>>> +    CZERO_8,
+>>>> +    SHIFT_9,
+>>>> +    SLOPE_9,
+>>>> +    CZERO_9,
+>>>> +    SHIFT_10,
+>>>> +    SLOPE_10,
+>>>> +    CZERO_10,
+>>>> +    SHIFT_11,
+>>>> +    SLOPE_11,
+>>>> +    CZERO_11,
+>>>> +    SHIFT_12,
+>>>> +    SLOPE_12,
+>>>> +    CZERO_12,
+>>>> +    SHIFT_13,
+>>>> +    SLOPE_13,
+>>>> +    CZERO_13,
+>>>> +    SHIFT_14,
+>>>> +    SLOPE_14,
+>>>> +    CZERO_14,
+>>>> +    SHIFT_15,
+>>>> +    SLOPE_15,
+>>>> +    CZERO_15,
+>>>>          /* ----- TM ------ */
+>>>>        /* TRDY */
+>>>> @@ -524,6 +576,7 @@ struct tsens_features {
+>>>>    /**
+>>>>     * struct tsens_plat_data - tsens compile-time platform data
+>>>>     * @num_sensors: Number of sensors supported by platform
+>>>> + * @sensors_to_en: Sensors to be enabled. Each bit represent a sensor
+>>>>     * @ops: operations the tsens instance supports
+>>>>     * @hw_ids: Subset of sensors ids supported by platform, if not the
+>>>> first n
+>>>>     * @feat: features of the IP
+>>>> @@ -531,6 +584,7 @@ struct tsens_features {
+>>>>     */
+>>>>    struct tsens_plat_data {
+>>>>        const u32        num_sensors;
+>>>> +    const u16        sensors_to_en;
+>>> There is already a similar field, hw_ids. Can it be used instead?
+>> Yes, it can be used. I missed to check this hw_ids. Will change the
+>> num_sensors to 5 and use the hw_ids.
+>>>>        const struct tsens_ops    *ops;
+>>>>        unsigned int        *hw_ids;
+>>>>        struct tsens_features    *feat;
+>>>> @@ -551,6 +605,7 @@ struct tsens_context {
+>>>>     * struct tsens_priv - private data for each instance of the tsens IP
+>>>>     * @dev: pointer to struct device
+>>>>     * @num_sensors: number of sensors enabled on this device
+>>>> + * @sensors_to_en: sensors to be enabled. Each bit represents a sensor
+>>>>     * @tm_map: pointer to TM register address space
+>>>>     * @srot_map: pointer to SROT register address space
+>>>>     * @tm_offset: deal with old device trees that don't address TM and
+>>>> SROT
+>>>> @@ -569,6 +624,7 @@ struct tsens_context {
+>>>>    struct tsens_priv {
+>>>>        struct device            *dev;
+>>>>        u32                num_sensors;
+>>>> +    u16                sensors_to_en;
+>>>>        struct regmap            *tm_map;
+>>>>        struct regmap            *srot_map;
+>>>>        u32                tm_offset;
+>> --
+>> Thanks,
+>> Praveenkumar
+>
+>
