@@ -2,147 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFBD474EC2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 13:01:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2C8174EC30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 13:03:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230482AbjGKLBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 07:01:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39916 "EHLO
+        id S230419AbjGKLD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 07:03:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229921AbjGKLBf (ORCPT
+        with ESMTP id S229921AbjGKLDZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 07:01:35 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81ADDE51;
-        Tue, 11 Jul 2023 04:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689073294; x=1720609294;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=g5docwgn1sedQFCIUNy5vO+RB2jnG5735hob/X5gUzk=;
-  b=UAHxZlT74CdhVAFszHf8/YP/qnudI48ytjXycAzmc5G/W/3vkawJt93q
-   O67ArP6c840w44lX2ZEAKAr30tUJSdH+8QyH9DQ4a4FZimsW5DKPBftPO
-   CjV6Qv88HHwPu10D2kVHPOlGHnzcBAKejOUaBeGARL0uNvQ9F+j4NZgWj
-   7RQ9wV751zxO9F9mTVNI2MM19GTxWuXJsWY/c4b+sEWHsWCildiHim/QJ
-   pDlgGTvzxCq6GrXeXq7dH8gTKA8ngDR3aBmSx4O80yjOmzqe6GcX9+VJ/
-   A2k79fsZjqKZbmdeacQPDRxlsgcZW/cLTEjyOJPLiFJ+YIQ7pY26zk0Xo
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="368087964"
-X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
-   d="scan'208";a="368087964"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 04:01:30 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="715143826"
-X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
-   d="scan'208";a="715143826"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga007.jf.intel.com with ESMTP; 11 Jul 2023 04:01:17 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1qJB7J-001p8E-30;
-        Tue, 11 Jul 2023 14:01:13 +0300
-Date:   Tue, 11 Jul 2023 14:01:13 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Amit Kumar Mahapatra via Alsa-devel 
-        <alsa-devel@alsa-project.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Sanjay R Mehta <sanju.mehta@amd.com>,
-        Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Subject: Re: [PATCH v2 04/15] spi: Replace open coded
- spi_controller_xfer_timeout()
-Message-ID: <ZK02efTYxV3czigr@smile.fi.intel.com>
-References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
- <20230710154932.68377-5-andriy.shevchenko@linux.intel.com>
- <cfaffa00-4b61-4d81-8675-70295844513b@sirena.org.uk>
+        Tue, 11 Jul 2023 07:03:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EEB97;
+        Tue, 11 Jul 2023 04:03:25 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36BANSos006280;
+        Tue, 11 Jul 2023 11:03:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PjPkM5kjONLRkuqPYqLMNd9aEU9tenoe4s6lO9Yqbgc=;
+ b=lgckSqvY/6Jl67N/hRsaS4stiQ8bK+sL3t+mbaSGurTQDCYFAXL7MS2sLiY5xkKP6/lj
+ D41j5gHbf0HIKdqPUFo0F5IPnLpHpz81AyRCnlY8Y6o1xQo9UiivepNCDpM7qYJFde3v
+ SetAW8LpJwXJRKQvWuCCXqlIypOvQVxJMONUWCw7v6UfUWV79yuiPuCvfgidMnbRdyC4
+ IEnSSXcTkLdqCkIjZII5uGiQHdK+XZ6J7P40NyoEsWRaMEJgeMsWTfQe1IFR/qgCIX4i
+ +4ygzqFO2f3HJ39+Q4rGEiLOhkhAg7kTj7m4rUhEUsDdqwarCw2Zy0XfDPlOPn95xC2W uA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rs5918221-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 11:03:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36BB3JMI012148
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 11:03:19 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 11 Jul
+ 2023 04:02:44 -0700
+Message-ID: <a3262be5-be66-661c-1feb-d663a057c2b2@quicinc.com>
+Date:   Tue, 11 Jul 2023 16:32:41 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cfaffa00-4b61-4d81-8675-70295844513b@sirena.org.uk>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: drop the IPQ5019 SoC ID
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_saahtoma@quicinc.com>
+References: <20230710105419.1228966-1-quic_kathirav@quicinc.com>
+ <20230710105419.1228966-2-quic_kathirav@quicinc.com>
+ <d752e5e0-3c34-02ad-6768-42eb2c66e582@linaro.org>
+ <55e55042-5189-15cb-5b0f-4c7f321a4f61@linaro.org>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <55e55042-5189-15cb-5b0f-4c7f321a4f61@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nz0umd8xe7o8q-MpPKcFCc5smIOijV6-
+X-Proofpoint-ORIG-GUID: nz0umd8xe7o8q-MpPKcFCc5smIOijV6-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-11_05,2023-07-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=659
+ bulkscore=0 adultscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2307110099
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 10, 2023 at 06:30:32PM +0100, Mark Brown wrote:
-> On Mon, Jul 10, 2023 at 06:49:21PM +0300, Andy Shevchenko wrote:
-> 
-> > Since the new spi_controller_xfer_timeout() helper appeared,
-> > we may replace open coded variant in spi_transfer_wait().
-> 
-> > + * Assume speed to be 100 kHz if it's not defined at the time of invocation.
-> > + *
-> 
-> You didn't mention this bit in the changelog, and I'm not 100% convinced
-> it was the best idea in the first place.  It's going to result in some
-> very big timeouts if it goes off, and we really should be doing
-> validation much earlier in the process.
 
-Okay, let's drop this change.
+On 7/10/2023 5:40 PM, Konrad Dybcio wrote:
+> On 10.07.2023 13:37, Krzysztof Kozlowski wrote:
+>> On 10/07/2023 12:54, Kathiravan T wrote:
+>>> IPQ5019 SoC is not available in production. Lets drop it.
+>>>
+>>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>>> ---
+>>>   include/dt-bindings/arm/qcom,ids.h | 1 -
+>>>   1 file changed, 1 deletion(-)
+>>>
+>>> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+>>> index bcbe9ee2cdaf..179dd56b2d95 100644
+>>> --- a/include/dt-bindings/arm/qcom,ids.h
+>>> +++ b/include/dt-bindings/arm/qcom,ids.h
+>>> @@ -250,7 +250,6 @@
+>>>   #define QCOM_ID_QRU1000			539
+>>>   #define QCOM_ID_QDU1000			545
+>>>   #define QCOM_ID_QDU1010			587
+>>> -#define QCOM_ID_IPQ5019			569
+>> What about users of this binding? What's the impact on them? When did
+>> the SoC become obsolete and unsupported by Qualcomm? Remember that
+>> ceasing a production does not mean that magically all users of a product
+>> disappear...
+> This + from my experience, SOCID entries are set in stone and freed
+> indices are never reclaimed
 
-> > +	u32 speed_hz = xfer->speed_hz ?: 100000;
-> 
-> Not only the ternery operator, but the version without the second
-> argument for extra clarity!
 
-Elvis can be interpreted as "A _or_ B (if A is false/0)".
-Some pieces related to SPI use Elvis already IIRC.
+This SKU is planned but never productized. That's why I removed it.
 
--- 
-With Best Regards,
-Andy Shevchenko
+May be I should be more precise in the commit title. Should I leave it 
+as it is / remove it?
 
 
+Thanks, Kathiravan T.
+
+>
+> Konrad
+>>
+>> Best regards,
+>> Krzysztof
+>>
