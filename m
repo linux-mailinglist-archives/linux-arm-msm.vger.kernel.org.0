@@ -2,148 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D80DD74E8B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 10:13:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B212974E8DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 10:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231145AbjGKINF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 04:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38144 "EHLO
+        id S229724AbjGKIUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 04:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbjGKINE (ORCPT
+        with ESMTP id S229573AbjGKIUr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 04:13:04 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F378FE3;
-        Tue, 11 Jul 2023 01:13:02 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 6971C660700A;
-        Tue, 11 Jul 2023 09:12:58 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1689063180;
-        bh=2+yn6FDwMd8voKMx1WPt05JiOyMTQxbLsZaEtvbtNN4=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=Fx8WIExUEuJPaY5MFu8knfLP/k0C26AMfNb/AvH/Fmm0WSmwyzjbdouviC0vRIt5c
-         MKvJLE8w0cLrlZEwxmbFWfOjjLGUQZgFi0o1pLWqgdMYxBGlFBGIjiNaupLZ6FnB33
-         j1HPiXlommzYaYv6ce4cvKcTdjN1ewdnVTlkRjRRehst4X7XEwQxnR9ySh21JtPk6b
-         7KLhT/OtiV9F5v6WVi5j7pxhtZflk0tkK/vKZu9Q314nRK+CtbZPcevQ7M0A64UCcq
-         2GUJjcluoW7Hk+VgSk0dx0uk8kgwhRiKCYyXOMoe3dlhEE5DcTiXTswvygvLYV31mr
-         rt/T478FT4VDw==
-Message-ID: <f0b9e2e4-b2c0-4336-0ec4-5afd9f1b6c72@collabora.com>
-Date:   Tue, 11 Jul 2023 10:12:55 +0200
+        Tue, 11 Jul 2023 04:20:47 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84281E5C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 01:20:46 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fbfcc6daa9so44185865e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 01:20:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689063645; x=1691655645;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W8lWjawHlVclNDSWEGq29N0b967SueKiHPqM+v2TDzE=;
+        b=R1G4aF4EVATbvhCL1DAa5FefRu2NkRIzdMHhs4yTRuatv9exyCmRluZgmuU719dwdG
+         ICuOulPDorELuHUtnF1o8xPcKJ8yNsL/D1Kjas181S3VoFyn3Mstdf8dEdanuZIxdVHl
+         Dp1hmNOVIskQOayCud5uFBNXJHvfFyj9BLija0AjxjINIKa8KP9MIEBNEhqe1oRraaL3
+         RsiOWZZoX53yk2Deu1eWgFpFTjPCJbtSO5KbmGsvN5eouOzGX2XO9nfSDwOCgC2Fn5Qs
+         kVaT112Emddn070lXfqdINzaipMC28ujLMkw7ebF8euN/f0Qbt76PJ1I59KkMZ3Zsa4V
+         LZ+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689063645; x=1691655645;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W8lWjawHlVclNDSWEGq29N0b967SueKiHPqM+v2TDzE=;
+        b=LPHqk/cnzA8OgV/LlEkVUDD9SsbQPm3oNqx+FOilzodbjA/kkHu1qMUqxd4wSCb5F1
+         5Xgos+wdJgXCSHG3Yg3vfNhMMivwOw8OPwfE2swux6nOOPP3W37F5kALdv0A9oNEBUYl
+         AE4dfoncRwVj8HQhT1hyQbh403X8i3rIBcHc+Ut9xqtAZKkLBo0CTtU9sYLVjpOLUw+T
+         1JqdPEOZ/M9vYIQjz0tZOHt1kEiN0Ybgb0Qg4vwiP3R/AAUhDS+bufby7e+2gnoCrKge
+         NcNnqTW+vAS4h6POBaXBZrAbtniyC16HFJ3jWeWS93SO955MArb3ciPiTVQu30L+P68r
+         kE4A==
+X-Gm-Message-State: ABy/qLbeWybb12Yq0zqs/K9/wSurg+PoVN6udITwtbIAnGQlihz05+fK
+        tkINuo3gqXZ6/4vFnqse6XlgWg==
+X-Google-Smtp-Source: APBJJlFxViETfwk0NPeCw6JJuzwbQOxNl4JhFOTf4b7WQw+EqA00xL4rHa31voGAKtfFRwsyqvOTVw==
+X-Received: by 2002:a05:600c:2209:b0:3fc:b86:d3fa with SMTP id z9-20020a05600c220900b003fc0b86d3famr7198858wml.1.1689063645070;
+        Tue, 11 Jul 2023 01:20:45 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id n12-20020adff08c000000b0030ada01ca78sm1585438wro.10.2023.07.11.01.20.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jul 2023 01:20:42 -0700 (PDT)
+Date:   Tue, 11 Jul 2023 11:20:38 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
+        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH 0/5 v4] accel/qaic: Improve bounds checking in encode/decode
+Message-ID: <6e935c70-5bd2-4808-bdd9-d664f892b0b5@moroto.mountain>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 01/15] spi: Remove unneeded OF node NULL checks
-Content-Language: en-US
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Mark Brown <broonie@kernel.org>,
-        Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Amit Kumar Mahapatra via Alsa-devel 
-        <alsa-devel@alsa-project.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org
-Cc:     Sanjay R Mehta <sanju.mehta@amd.com>,
-        Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
- <20230710154932.68377-2-andriy.shevchenko@linux.intel.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230710154932.68377-2-andriy.shevchenko@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 10/07/23 17:49, Andy Shevchenko ha scritto:
-> In the couple of places the NULL check of OF node is implied by the call
-> that takes it as a parameter. Drop the respective duplicate checks.
-> 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixed in v4: Send the correct [PATCH 1/5] patch.
 
-Validated against spi-mt65xx, spi-mt7621, spi-mtk-nor, spi-mtk-snfi;
+Fixed in v3: Redo messed up threading
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> # 
-MediaTek
+Fixed two things in v2:  Include the <linux/overflow.h> file.  Change
+the >= in encode and decode to >.
 
-> ---
->   drivers/spi/spi.c | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
-> 
-> diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-> index 9291b2a0e887..8f3282a71c63 100644
-> --- a/drivers/spi/spi.c
-> +++ b/drivers/spi/spi.c
-> @@ -2399,9 +2399,6 @@ static void of_register_spi_devices(struct spi_controller *ctlr)
->   	struct spi_device *spi;
->   	struct device_node *nc;
->   
-> -	if (!ctlr->dev.of_node)
-> -		return;
-> -
->   	for_each_available_child_of_node(ctlr->dev.of_node, nc) {
->   		if (of_node_test_and_set_flag(nc, OF_POPULATED))
->   			continue;
-> @@ -3134,7 +3131,7 @@ int spi_register_controller(struct spi_controller *ctlr)
->   		if (WARN(id < 0, "couldn't get idr"))
->   			return id == -ENOSPC ? -EBUSY : id;
->   		ctlr->bus_num = id;
-> -	} else if (ctlr->dev.of_node) {
-> +	} else {
->   		/* Allocate dynamic bus number using Linux idr */
->   		id = of_alias_get_id(ctlr->dev.of_node, "spi");
->   		if (id >= 0) {
-
-
-
+regards,
+dan carpenter
