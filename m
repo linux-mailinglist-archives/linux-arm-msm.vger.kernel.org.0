@@ -2,223 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E572174EDCD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 14:12:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 825FE74EDEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 14:18:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231223AbjGKMMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 08:12:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47770 "EHLO
+        id S231620AbjGKMSc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 08:18:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231553AbjGKMMY (ORCPT
+        with ESMTP id S231593AbjGKMSb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 08:12:24 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2051E55
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:12:22 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f95bf5c493so8363006e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:12:22 -0700 (PDT)
+        Tue, 11 Jul 2023 08:18:31 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 968B0E5F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:18:27 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b6fdaf6eefso87498901fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689077541; x=1691669541;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jDy7dHlG8mw55snATaE8leDnJkkCCM8iB+BLX9zgGAo=;
-        b=vxXq6OQnnHTv5UKvvxLeU7f2QQGWO+rhZ1z5BVxqZF/VvX7fdLcJg/K0QFEGXgeqc8
-         sxac9dxirDwWLram7+y1DVzbGH4uf/gfxZkKm21kMHFTfyxE95Mnh9xgcHOyLbz6qYL1
-         h0cBsLVpyhlXpveHMk4yk8N/17CCg/njTMGHorgbJguzoH+zqY0Edt7npHYHItmIOUna
-         8l3/L0wIT5Quj6knBD1qENLpuCMPzK3wDOTnEt1sQpUlL3MUwPFCyBUneeeSOUcDdl9A
-         M+puQiKyqSERt1GULiMOYwnKNgReUgWwslZo8GjmeSTi6s0swA0ZCgR/iiDvLhSuj54w
-         6RQA==
+        d=linaro.org; s=google; t=1689077906; x=1691669906;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ge+hjy1ytS3fWV6a0cnAiNI+XNr+wbfujfaDkKlcW1Y=;
+        b=lKGVu4/leGvJTRgUrgFiHw0Xqd08JRXEdUBnLtOufAfgIMn7SPWxrOrNBNKMfsnioR
+         +MTqd/mpBGAIF8ftjonFVh6XzyRm4JZnsDpB1wdipbSk7+CIebXTmGqYjpjjZxvsRYLt
+         yxJ0p1hbGvul44m3GWLQa1GneolSJjYOBOTfyi95zHULpH5LT0nigldAQt9JLneMbyQA
+         eR3S8QkcpjM0lTn9PeBUtdQp4ZuvdYQ8tp3v0hWk2MwtpaukiKA+SZjb+Ejh106ZAkpk
+         8PNE7V3N1x0jSEGQ/GQiCPIYqOabGFccMavoeQzbhokUqH3eTEsA/bjgROlyiv6WhlHc
+         8crw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689077541; x=1691669541;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jDy7dHlG8mw55snATaE8leDnJkkCCM8iB+BLX9zgGAo=;
-        b=ailDbhtnUxjfOoXx8OonxR2Ub6za3Sdtt2GL0OCK2xmCtuK6KKLOmmqBygRvb3qGNI
-         xpYsyJ88Maaxkz27pEzoaO4kbP4+OOmuFvwWsZmqdx58vQ2wbWpL9Jjy2n7bVhJuRBfs
-         9aH+m3tl4EiamVXhtLkQXgaAlNM6LBwJaC/V5X/Lfn/6tWVioIVttVlT6RwHVyxcNqe9
-         k7o/WBX+GjarggD5XQplpq8e5BY8uJJ7WhtGoSz2HJs5xEgp/2LNN1Xu8S0JNzW/plHh
-         xMlX/0nZIyJ9UwLUUBBvI/QqlZo9ysdoqRnXb3K99DfoFwsk121j46t5UuWQCQa65v+e
-         s0mQ==
-X-Gm-Message-State: ABy/qLZ/FxslIZ28JjQQiQKPbF9/u//dXoRR8Oj9gnyUvbWiiolxW9oR
-        cn3CZd4ozBL5l32RmOgtXpfRrA==
-X-Google-Smtp-Source: APBJJlHQ0ExF60LDzFQpwimlhl+fdeOGdxysoQkuC6HFjjJ1PJS4V39IMHE5izdNyJkWsJxQIp39/A==
-X-Received: by 2002:ac2:5f63:0:b0:4fa:fc12:2bdd with SMTP id c3-20020ac25f63000000b004fafc122bddmr12455413lfc.40.1689077540923;
-        Tue, 11 Jul 2023 05:12:20 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id b9-20020a056512024900b004fb738796casm299425lfo.40.2023.07.11.05.12.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 05:12:20 -0700 (PDT)
-Message-ID: <e46c9cce-b4f0-cc56-13b3-7402fc0bdc81@linaro.org>
-Date:   Tue, 11 Jul 2023 15:12:19 +0300
+        d=1e100.net; s=20221208; t=1689077906; x=1691669906;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ge+hjy1ytS3fWV6a0cnAiNI+XNr+wbfujfaDkKlcW1Y=;
+        b=acaBsUbLWsbcWQNK707OrMHBvfDw3buL80A5Wr733TOWcYtqX/+daq0YE9fYpEl7i4
+         KgteMNlqruGWj0nBu51mcIZa+dyrOXMNOVhaWItrXJXBEqqOkkZhJEWVWa7ofaYway/R
+         LKeBGl7cWoyZjx8Ojm2fSYlFzNmAp1O0HJGaSgqr/b9BGtZCnRkyCbt7Db6uE/BSeHSB
+         XdPI4xhl7BNxstft2XaIynzGm/y0jDa40HXO0XrtfjrfkMn+lhLikdLEVzOzs2hRWtrH
+         ig8GOpc2ovWMdqDDVTqdfz6y2ZPwV2sof2qVVNgZDb4yZUcUZbd2u79IL1NzgAE06fCu
+         aFFQ==
+X-Gm-Message-State: ABy/qLa682W7isAa0yqTWNNyqPXWhPu4J2WcOZE0JkfK+L5nA9TY3MQu
+        +rDieo5/VnnWa0WK1lPPKpzjAcO0kbcLrK/oGm/tYw==
+X-Google-Smtp-Source: APBJJlEe7jF73xVl9Xnl+Gn0QpIn+S2PUKPPg/0Lj/trUSzp9bNR52JqL2cta6wvrOqHJ7cTqdyIDA==
+X-Received: by 2002:a2e:9216:0:b0:2b6:ec2b:659 with SMTP id k22-20020a2e9216000000b002b6ec2b0659mr12236809ljg.17.1689077905830;
+        Tue, 11 Jul 2023 05:18:25 -0700 (PDT)
+Received: from [192.168.1.101] (abyl96.neoplus.adsl.tpnet.pl. [83.9.31.96])
+        by smtp.gmail.com with ESMTPSA id d18-20020a2e96d2000000b002b708450951sm435563ljj.88.2023.07.11.05.18.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jul 2023 05:18:25 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 00/53] icc-rpmh multi-RSC voting groundwork
+Date:   Tue, 11 Jul 2023 14:17:59 +0200
+Message-Id: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 05/10] arm64: dts: qcom: sc7180: switch USB+DP QMP PHY
- to new style of bindings
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230521202321.19778-1-dmitry.baryshkov@linaro.org>
- <20230521202321.19778-6-dmitry.baryshkov@linaro.org>
- <2d5b28d3-83f9-15c4-84e0-e6edb3f3333d@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <2d5b28d3-83f9-15c4-84e0-e6edb3f3333d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAHhIrWQC/x2N0QrCMAxFf2Xk2UKsD5v+ishoY2oDsyuJijD27
+ wYfz7kc7gbGKmxwGTZQ/ojJ2hyOhwGopvbgIHdniBhPOOIUXmsXCtqfdRaiWY1Cmc6+YMkRR/A
+ wJ+OQNTWqnrb3srjsykW+/6frbd9/lcHIh3kAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1689077904; l=7841;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Rei3R9n4uCU+u2iJ+J2m+Ko7NiZGPGkR7HWezlPw+hQ=;
+ b=VpWSByJM2AvVTsGuUMxF9PX3d/YlFvF7k1f2BwyYhtmvirx+8MZ+C9lRN6l1gsja9k7POci2c
+ LmuuJeAnqvnBq/QHVgrI4jt5neFMqEcH0znLMWQDoAhPEpr5v31Ieq3
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/05/2023 11:41, Konrad Dybcio wrote:
-> 
-> 
-> On 21.05.2023 22:23, Dmitry Baryshkov wrote:
->> Change the USB QMP PHY to use newer style of QMP PHY bindings (single
->> resource region, no per-PHY subnodes).
->>
->> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 57 ++++++++++------------------
->>   1 file changed, 19 insertions(+), 38 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index ea1ffade1aa1..b07a49e6829a 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -14,6 +14,7 @@
->>   #include <dt-bindings/interconnect/qcom,osm-l3.h>
->>   #include <dt-bindings/interconnect/qcom,sc7180.h>
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->>   #include <dt-bindings/phy/phy-qcom-qusb2.h>
->>   #include <dt-bindings/power/qcom-rpmpd.h>
->>   #include <dt-bindings/reset/qcom,sdm845-aoss.h>
->> @@ -2718,49 +2719,28 @@ usb_1_hsphy: phy@88e3000 {
->>   			nvmem-cells = <&qusb2p_hstx_trim>;
->>   		};
->>   
->> -		usb_1_qmpphy: phy-wrapper@88e9000 {
->> +		usb_1_qmpphy: phy@88e8000 {
->>   			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
->> -			reg = <0 0x088e9000 0 0x18c>,
->> -			      <0 0x088e8000 0 0x3c>,
->> -			      <0 0x088ea000 0 0x18c>;
->> +			reg = <0 0x088e8000 0 0x3000>;
->>   			status = "disabled";
->> -			#address-cells = <2>;
->> -			#size-cells = <2>;
->> -			ranges;
->>   
->>   			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
->> -				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
->>   				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
->> -				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
->> -			clock-names = "aux", "cfg_ahb", "ref", "com_aux";
->> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
->> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>,
->> +				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>;
-> These are unaligned
-> 
-> Other than that:
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Many parts of Qualcomm SoCs are entirely independent of each other and can
+run when the other parts are off. The RPMh system architecture embraces
+this by giving each (loosely defined) subsystem its own connection (as in,
+physical wires) to the AOSS, terminated by per-subsystem RSCs (Resource
+State Coordinators) that barter for power, bandwidth etc.
 
-Ugh. It seems I missed this comment (and your r-b tag) when sending v4. 
-Please excuse me. I'll send v5 in a few days to reduce the simultaneous 
-spam.
+This series introduces the groundwork necessary for voting for resources
+through non-APPS RSCs. It should allow for lower-latency vote adjustments
+(e.g. for very high bandwidth / multiple displays) and could potentially
+allow for full APSS collapse while keeping e.g. MDSS operating (say
+refreshing an image from a RAM buffer).
 
-> 
-> Konrad
->> +			clock-names = "aux",
->> +				      "ref",
->> +				      "com_aux",
->> +				      "usb3_pipe",
->> +				      "cfg_ahb";
->>   
->>   			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
->>   				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
->>   			reset-names = "phy", "common";
->>   
->> -			usb_1_ssphy: usb3-phy@88e9200 {
->> -				reg = <0 0x088e9200 0 0x128>,
->> -				      <0 0x088e9400 0 0x200>,
->> -				      <0 0x088e9c00 0 0x218>,
->> -				      <0 0x088e9600 0 0x128>,
->> -				      <0 0x088e9800 0 0x200>,
->> -				      <0 0x088e9a00 0 0x18>;
->> -				#clock-cells = <0>;
->> -				#phy-cells = <0>;
->> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
->> -				clock-names = "pipe0";
->> -				clock-output-names = "usb3_phy_pipe_clk_src";
->> -			};
->> -
->> -			dp_phy: dp-phy@88ea200 {
->> -				reg = <0 0x088ea200 0 0x200>,
->> -				      <0 0x088ea400 0 0x200>,
->> -				      <0 0x088eaa00 0 0x200>,
->> -				      <0 0x088ea600 0 0x200>,
->> -				      <0 0x088ea800 0 0x200>;
->> -				#clock-cells = <1>;
->> -				#phy-cells = <0>;
->> -			};
->> +			#clock-cells = <1>;
->> +			#phy-cells = <1>;
->>   		};
->>   
->>   		dc_noc: interconnect@9160000 {
->> @@ -2840,7 +2820,7 @@ usb_1_dwc3: usb@a600000 {
->>   				iommus = <&apps_smmu 0x540 0>;
->>   				snps,dis_u2_susphy_quirk;
->>   				snps,dis_enblslpm_quirk;
->> -				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
->> +				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
->>   				phy-names = "usb2-phy", "usb3-phy";
->>   				maximum-speed = "super-speed";
->>   			};
->> @@ -3148,8 +3128,9 @@ mdss_dp: displayport-controller@ae90000 {
->>   					      "ctrl_link_iface", "stream_pixel";
->>   				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
->>   						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
->> -				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
->> -				phys = <&dp_phy>;
->> +				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
->> +							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
->> +				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
->>   				phy-names = "dp";
->>   
->>   				operating-points-v2 = <&dp_opp_table>;
->> @@ -3206,8 +3187,8 @@ dispcc: clock-controller@af00000 {
->>   				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
->>   				 <&dsi_phy 0>,
->>   				 <&dsi_phy 1>,
->> -				 <&dp_phy 0>,
->> -				 <&dp_phy 1>;
->> +				 <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
->> +				 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
->>   			clock-names = "bi_tcxo",
->>   				      "gcc_disp_gpll0_clk_src",
->>   				      "dsi0_phy_pll_out_byteclk",
+On top of that, a rather necessary and overdue cleanup is performed to
+stop adding more and more arguments to the insane preprocessor macros.
 
+Partially reverting (or reimplementing the revert) [1] will be necessary
+to coordinate the rather complex relationship between the DPU and RSC
+drivers.
+
+The "Point x paths to the x RSC" patches won't do anything (check the
+compatibility workaround qcom_icc_pre_aggregate()) until disp_rsc is
+properly described in the device tree, along with its BCM voter),
+but they prepare ground for when that happens.
+
+I was able to test sending requests through the DISP_RSC on SM8450, but
+I had to hack its clocks (_rscc_ in dispcc) to be always-on, as we don't
+have any clk handling for qcom,rpmh-rsc today.
+
+Boot-tested on SM8350 and SM8450, nothing exploded.
+
+[1] https://patchwork.kernel.org/project/dri-devel/patch/1521827074-28424-1-git-send-email-ryadav@codeaurora.org/
+
+Dependencies:
+[2] https://lore.kernel.org/linux-arm-msm/113b50f8-35f6-73fc-4fc9-302262927c5e@quicinc.com/
+[3] https://lore.kernel.org/linux-arm-msm/20230703-topic-8250_qup_icc-v2-0-9ba0a9460be2@linaro.org/
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (53):
+      dt-bindings: interconnect: qcom,icc: Introduce fixed BCM voter indices
+      dt-bindings: interconnect: qcom,bcm-voter: Add qcom,bcm-voter-idx
+      interconnect: qcom: icc-rpmh: Store direct BCM voter references
+      interconnect: qcom: icc-rpmh: Retire dead code
+      interconnect: qcom: icc-rpmh: Implement voting on non-APPS RSCs
+      interconnect: qcom: sc7180: Retire DEFINE_QNODE
+      interconnect: qcom: sdm670: Retire DEFINE_QNODE
+      interconnect: qcom: sdm845: Retire DEFINE_QNODE
+      interconnect: qcom: sdx55: Retire DEFINE_QNODE
+      interconnect: qcom: sdx65: Retire DEFINE_QNODE
+      interconnect: qcom: sm6350: Retire DEFINE_QNODE
+      interconnect: qcom: sm8150: Retire DEFINE_QNODE
+      interconnect: qcom: sm8250: Retire DEFINE_QNODE
+      interconnect: qcom: sm8350: Retire DEFINE_QNODE
+      interconnect: qcom: icc-rpmh: Retire DEFINE_QNODE
+      interconnect: qcom: sc7180: Retire DEFINE_QBCM
+      interconnect: qcom: sdm670: Retire DEFINE_QBCM
+      interconnect: qcom: sdm845: Retire DEFINE_QBCM
+      interconnect: qcom: sdx55: Retire DEFINE_QBCM
+      interconnect: qcom: sdx65: Retire DEFINE_QBCM
+      interconnect: qcom: sm6350: Retire DEFINE_QBCM
+      interconnect: qcom: sm8150: Retire DEFINE_QBCM
+      interconnect: qcom: sm8250: Retire DEFINE_QBCM
+      interconnect: qcom: sm8350: Retire DEFINE_QBCM
+      interconnect: qcom: icc-rpmh: Retire DEFINE_QBCM
+      interconnect: qcom: qdu1000: Explicitly assign voter_idx
+      interconnect: qcom: sa8775p: Explicitly assign voter_idx
+      interconnect: qcom: sc7280: Explicitly assign voter_idx
+      interconnect: qcom: sc8180x: Explicitly assign voter_idx
+      interconnect: qcom: sc8280xp: Explicitly assign voter_idx
+      interconnect: qcom: sm8450: Explicitly assign voter_idx
+      interconnect: qcom: sm8550: Explicitly assign voter_idx
+      arm64: dts: qcom: qdu1000: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sa8775p: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sc7180: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sc7280: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sc8180x: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sc8280xp: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sdm670: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sdm845: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sdx75: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sm6350: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sm8150: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sm8250: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sm8350: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sm8450: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sm8550: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sdx55: add qcom,bcm-voter-idx
+      arm64: dts: qcom: sdx65: add qcom,bcm-voter-idx
+      interconnect: qcom: sm8350: Point display paths to the display RSC
+      interconnect: qcom: sm8450: Point display paths to the display RSC
+      interconnect: qcom: sm8550: Point display paths to the display RSC
+      interconnect: qcom: sm8550: Point camera paths to the camera RSC
+
+ .../bindings/interconnect/qcom,bcm-voter.yaml      |   10 +
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi             |    1 +
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |    1 +
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi              |    2 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |    1 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |    1 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |    2 +
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              |    2 +
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             |    2 +
+ arch/arm64/boot/dts/qcom/sdm670.dtsi               |    2 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |    2 +
+ arch/arm64/boot/dts/qcom/sdx75.dtsi                |    2 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               |    1 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    2 +
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |    2 +
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |    2 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |    2 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |    2 +
+ drivers/interconnect/qcom/bcm-voter.c              |   75 +-
+ drivers/interconnect/qcom/bcm-voter.h              |    9 -
+ drivers/interconnect/qcom/icc-rpmh.c               |   53 +-
+ drivers/interconnect/qcom/icc-rpmh.h               |   14 +-
+ drivers/interconnect/qcom/qdu1000.c                |   11 +
+ drivers/interconnect/qcom/sa8775p.c                |   28 +
+ drivers/interconnect/qcom/sc7180.c                 | 1637 +++++++++++++++--
+ drivers/interconnect/qcom/sc7280.c                 |   27 +
+ drivers/interconnect/qcom/sc8180x.c                |   23 +
+ drivers/interconnect/qcom/sc8280xp.c               |   27 +
+ drivers/interconnect/qcom/sdm670.c                 | 1410 +++++++++++++--
+ drivers/interconnect/qcom/sdm845.c                 | 1683 ++++++++++++++++--
+ drivers/interconnect/qcom/sdx55.c                  |  863 ++++++++-
+ drivers/interconnect/qcom/sdx65.c                  |  850 ++++++++-
+ drivers/interconnect/qcom/sm6350.c                 | 1551 +++++++++++++++--
+ drivers/interconnect/qcom/sm8150.c                 | 1714 ++++++++++++++++--
+ drivers/interconnect/qcom/sm8250.c                 | 1772 +++++++++++++++++--
+ drivers/interconnect/qcom/sm8350.c                 | 1830 ++++++++++++++++++--
+ drivers/interconnect/qcom/sm8450.c                 |   24 +
+ drivers/interconnect/qcom/sm8550.c                 |   42 +
+ include/dt-bindings/interconnect/qcom,icc.h        |    8 +
+ 39 files changed, 12320 insertions(+), 1370 deletions(-)
+---
+base-commit: 82cee168d497ffcb79e4889fe3c7384788e89f4d
+change-id: 20230708-topic-rpmh_icc_rsc-f897080fb207
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
