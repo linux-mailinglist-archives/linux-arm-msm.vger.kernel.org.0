@@ -2,89 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1D4F74E725
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 08:22:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFBA274E71C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 08:20:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbjGKGWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 02:22:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52178 "EHLO
+        id S231439AbjGKGUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 02:20:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231364AbjGKGWh (ORCPT
+        with ESMTP id S231455AbjGKGUn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 02:22:37 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EFECE74
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 23:22:34 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3fb4146e8fcso38171745e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 23:22:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689056552; x=1691648552;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zU1H95+JdGa0jLKaOOBSIowzO/e5Eobe9bWmmv0ie58=;
-        b=mCwwQh58+I6Vg1tWHZXgWb1BDWqLVOuhY7rprGezPQXcAgvpFycJaGnvK3NGUWCDoQ
-         ytVTghV/qznmFMwVx/3zgIC4ZtTlEWb5AiKLLYfsGCFtw/uVArS8+KwWxEO9LzB0Jd4d
-         1xOYUT6To1Iji9qHRike1ZnsHJEKWSbFeJtektcZm+KopE0l5cn3Uw6MaXkaKoTlJ3v0
-         LQFN6V8PKLvhM4hXioTtZKXyvFdGzEPmqutoSPSoL7Ka47h+LhowR1+E/NI80O/zcYSA
-         9hBvHtgT+ekDu22Zgpc0LYkr7w2KrJThweBfgsLRRbDZkc3xZmFAwFnQxyCNqHHoZxiC
-         oUyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689056552; x=1691648552;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zU1H95+JdGa0jLKaOOBSIowzO/e5Eobe9bWmmv0ie58=;
-        b=WpZ6iEXLdBqsI7lBHN4awqhlsu33yvDcgMF5aBKxZvn4BXoa1GRXXN0il20dw/BAVN
-         EXt+s5kN44lCxdYNcIvZbKRtpbkAntgo9hph3txQ/B2v9gdH5A9q9CDUWfTJisryI+qY
-         ZPACX8wkVQIQ6d5p/ZtTNx2TBlM0lpvPsp4XVY11RHlW0THT3CL8+FjUqk60e1pv+7We
-         sGfqumdqSMeZPGbch4carbUab0OjDYYFkzblpYc6qcEGy545GedaZtkC1a7at/Fr+G2r
-         /HjI2l1mKgbyODW9rUdSAmkUwpKVVXKjk15EVelsMrvK0+BWA3BpIDIt87whVPd5p21J
-         dBpQ==
-X-Gm-Message-State: ABy/qLai933TiesngJaTVM/HN1ZqAWjOOR+S/QYZ7PzBl9BGcrRUE4aH
-        1uW+HS3O3lNY4OzcPoxDnvqaTw==
-X-Google-Smtp-Source: APBJJlGHAqGinu5QiM0MBt8JJ7Qkz0GLqDgkZt5uCZPsLKj+wgA2Y0+e1RzUBir6Dr0MAbYmFbvaBw==
-X-Received: by 2002:a1c:770b:0:b0:3f7:c92:57a0 with SMTP id t11-20020a1c770b000000b003f70c9257a0mr13580551wmi.14.1689056552667;
-        Mon, 10 Jul 2023 23:22:32 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id s21-20020a7bc395000000b003fbc89af035sm1566982wmj.17.2023.07.10.23.22.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jul 2023 23:22:31 -0700 (PDT)
-Date:   Tue, 11 Jul 2023 09:20:17 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH 1/5 v3] accel/qaic: tighten bounds checking in
- encode_message()
-Message-ID: <a40baccf-2b9f-4a20-a353-8e470fc5b45c@kadam.mountain>
-References: <ZKzx5nA6Z/0yhBJj@moroto>
- <ZKzyXx0z1gWDDJII@moroto>
+        Tue, 11 Jul 2023 02:20:43 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD623E64;
+        Mon, 10 Jul 2023 23:20:40 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36B6FnmP016803;
+        Tue, 11 Jul 2023 06:20:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+2ZiUbyMYv/205uO8QalqLbAh7JCv4nDq6D/czLSgFY=;
+ b=ImaRKuIWgVXEti6G5vN5sb65Ay3Egqk/fY00wl6Is93NXbSJBFJevZCMu9D5mHA+4Tup
+ 4tFcLlnGaWMPc8Dhe0ETKMHYLX/YYTaBoNa73aCMPtTvapScK76WjPQPRdIbRYYY3C/5
+ ubbcs3PJarP3jKFPTRaIL5RUrLOc8+4yTyKdevIHzJ5zNWRu84A/+n0PuKrDk3dIrqg3
+ KLyLYzsdLKakeY8lK9LQHpAQi6cC3sHMwKBLARUKPYW4Mm+GS/O3vicPPQNfqkxPgD+0
+ 2oEXUPF09rE1cDJYfr37v9FwrWdXokzn9RFmjtleOHPPFkKwf/zcrVhmz4AbraCPch0W SQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rs1mnr0cs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 06:20:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36B6KZcQ016219
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 06:20:35 GMT
+Received: from [10.214.27.248] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 10 Jul
+ 2023 23:20:32 -0700
+Message-ID: <3f1c7089-87ad-ffc2-4978-d7a8664c462f@quicinc.com>
+Date:   Tue, 11 Jul 2023 11:50:29 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZKzyXx0z1gWDDJII@moroto>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v3 2/3] dt-bindings: power: Add compatible for sdx75
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1689054169-10800-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1689054169-10800-3-git-send-email-quic_rohiagar@quicinc.com>
+ <afbab9c3-ae67-1a30-6fc5-e031f9f30286@linaro.org>
+ <0060bd2f-3884-ba12-08a6-ae7975d22e65@linaro.org>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <0060bd2f-3884-ba12-08a6-ae7975d22e65@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vzffEDKszhnezJo56n2p0ga19OJeJOz3
+X-Proofpoint-GUID: vzffEDKszhnezJo56n2p0ga19OJeJOz3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-11_03,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
+ mlxlogscore=490 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307110054
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-NAK.
 
-Wow.  I really screwed this up.  I didn't mean to send this patch.  I
-have a correct patch still sitting in my postponed messages.
+On 7/11/2023 11:25 AM, Krzysztof Kozlowski wrote:
+> On 11/07/2023 07:53, Krzysztof Kozlowski wrote:
+>> On 11/07/2023 07:42, Rohit Agarwal wrote:
+>>> Add a compatible string that can be used to list PDs for sdx75.
+>>>
+>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>> ---
+>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+> Ah, I forgot: you miss device name in subject prefixes. You do not add
+> here sdx75 to all power bindings, do you? This applies to all your
+> patches and commits.
+Do you mean I need to update the subject as this?
 
-I will send v4 in twenty minutes.
+dt-bindings: power: sdx75: Add compatible for sdx75
 
-regards,
-dan carpenter
+Thanks,
+Rohit.
 
+> Best regards,
+> Krzysztof
+>
