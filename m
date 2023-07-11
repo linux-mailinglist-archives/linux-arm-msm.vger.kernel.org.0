@@ -2,143 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8B0E74EC1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 12:59:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37DA574EC1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 12:59:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231251AbjGKK7V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 06:59:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38000 "EHLO
+        id S231267AbjGKK7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 06:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231349AbjGKK7T (ORCPT
+        with ESMTP id S231345AbjGKK71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 06:59:19 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B17710E3;
-        Tue, 11 Jul 2023 03:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689073143; x=1720609143;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+zeFSMPLY2Z95wTb4g4rf/2HnStio6yWOtQ5rXla3Pk=;
-  b=mTNTKDu7LA+Zt1wBLxFqLkILl1YdNUY6QDnzQYtnSr7jte9LeHFAftz2
-   8rMzbhp7MAt+jLSlRkCvmDK7uiTwJJEvPjLUlXBppb6bff5lk3XMJDQbc
-   3t50eAeQfSQjP6zL8FaNHlp+y3iUjZP9PFW24U+XIlJole21Uk0BBJKa3
-   wQ6VlOUI+WenLDX6jcnLSbMXKlyvhoIybxJC1bR0JGuipjwiYyHp5+0mv
-   G/FjrEsO2GXOEM4J6kOH+aAPWbZccn2Eso4hK74NSBsZpmhjr6D6lgmVL
-   kAS2NKLwMZE07iHahbWQUphJ6Erxhth3gGvyxvTpx53tZNv8XnYHqxOZ5
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="450948914"
-X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
-   d="scan'208";a="450948914"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2023 03:59:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="721055869"
-X-IronPort-AV: E=Sophos;i="6.01,196,1684825200"; 
-   d="scan'208";a="721055869"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga002.jf.intel.com with ESMTP; 11 Jul 2023 03:58:49 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1qJB4v-001p5g-2V;
-        Tue, 11 Jul 2023 13:58:45 +0300
-Date:   Tue, 11 Jul 2023 13:58:45 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Amit Kumar Mahapatra via Alsa-devel 
-        <alsa-devel@alsa-project.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Sanjay R Mehta <sanju.mehta@amd.com>,
-        Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Subject: Re: [PATCH v2 03/15] spi: Replace if-else-if by bitops and
- multiplications
-Message-ID: <ZK015fKTOK5wjck+@smile.fi.intel.com>
-References: <20230710154932.68377-1-andriy.shevchenko@linux.intel.com>
- <20230710154932.68377-4-andriy.shevchenko@linux.intel.com>
- <24e71654-bc79-42ac-86d1-4e6100f6893a@sirena.org.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <24e71654-bc79-42ac-86d1-4e6100f6893a@sirena.org.uk>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Tue, 11 Jul 2023 06:59:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05CD0E55;
+        Tue, 11 Jul 2023 03:59:25 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36BAMFS3004738;
+        Tue, 11 Jul 2023 10:59:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=Arf4vm6RhaE0vAgoXKr4ABZcfNQlS9/Cz4o9CeH6l7I=;
+ b=UnA/XQoU/3Mwm/nq0oQhB+ECEik3FNrakCIC1xu28fqLHL0feEQAeWOsPilkudvvTyAq
+ sLfyjpyZKZ8cWsMStUm0wRvVysa+bz/ie3EVWDzi60Zo3AG6g325E7FWlhdlOVhNM35E
+ 6CHLaiNWQ88KU8F/9Qsr3DVm0bXtTi4+wLcrIF9BmWD7r+/USu3GasaVvJXQ6pykOIMP
+ BOd08PXX2HtjNk2vjyZL/pOrKqOP+J2gIcAqLARD0vksHpFgk4nlr3ZMsL1tMZco/Gas
+ VC1frngTVPQjV7KUeRMgyPl2QCJpB0uEMPuOnFz3sI9ZUelQkwwpQFjKT6c5Eev4cb7m PA== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rs59181t6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 10:59:22 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36BAxIX2010695;
+        Tue, 11 Jul 2023 10:59:18 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3rq0vm3cat-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 11 Jul 2023 10:59:18 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36BAxIEB010690;
+        Tue, 11 Jul 2023 10:59:18 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-narepall-hyd.qualcomm.com [10.213.107.70])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 36BAxHx9010689;
+        Tue, 11 Jul 2023 10:59:18 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3995025)
+        id 68139500995; Tue, 11 Jul 2023 16:29:17 +0530 (+0530)
+From:   Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+To:     quic_nitirawa@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+Subject: [PATCH V2] arm64: dts: qcom: sa8775p-ride: Update L4C parameters
+Date:   Tue, 11 Jul 2023 16:29:14 +0530
+Message-Id: <20230711105915.30581-1-quic_narepall@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Jcsf8D-Fx8ljWZ8t8uM09iH5z0p3nj7z
+X-Proofpoint-ORIG-GUID: Jcsf8D-Fx8ljWZ8t8uM09iH5z0p3nj7z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-11_05,2023-07-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=927
+ bulkscore=0 adultscore=0 impostorscore=0 clxscore=1011 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2307110099
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 10, 2023 at 05:56:59PM +0100, Mark Brown wrote:
-> On Mon, Jul 10, 2023 at 06:49:20PM +0300, Andy Shevchenko wrote:
-> 
-> > -		if (xfer->bits_per_word <= 8)
-> > -			maxsize = maxwords;
-> > -		else if (xfer->bits_per_word <= 16)
-> > -			maxsize = 2 * maxwords;
-> > -		else
-> > -			maxsize = 4 * maxwords;
-> > -
-> > +		maxsize = maxwords * roundup_pow_of_two(BITS_TO_BYTES(xfer->bits_per_word));
-> 
-> This will change the behaviour if bits_per_word is more than 32.  That
-> is validated out elsewhere but I shouldn't have had to go around
-> checking the code to confirm that this is the case.  This is the sort of
-> thing that should be highlighted when doing this sort of edge case
-> stylistic change.
+L4c is the supply for UFS vccq, As per UFS spec range of vccq is
+1.14V to 1.26V, There are stability issues when operating at
+marginal voltage. Hence configure the min and max vccq voltages
+to 1.2V.
 
-Right, I have to add this into commit message of v3.
+Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+index ab767cfa51ff..26f5a4e0ffed 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
++++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+@@ -153,8 +153,8 @@
+ 
+ 		vreg_l4c: ldo4 {
+ 			regulator-name = "vreg_l4c";
+-			regulator-min-microvolt = <1100000>;
+-			regulator-max-microvolt = <1300000>;
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 			/*
+ 			 * FIXME: This should have regulator-allow-set-load but
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.17.1
 
