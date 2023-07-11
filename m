@@ -2,62 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14C6874ED25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 13:46:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99DFA74ED30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 13:49:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbjGKLqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 07:46:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33688 "EHLO
+        id S229801AbjGKLtO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 07:49:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230204AbjGKLqq (ORCPT
+        with ESMTP id S229987AbjGKLtN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 07:46:46 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1217136
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 04:46:43 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-bcb6dbc477eso5034140276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 04:46:43 -0700 (PDT)
+        Tue, 11 Jul 2023 07:49:13 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FF3BE5C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 04:49:12 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b6ff1ada5dso88801981fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 04:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689076003; x=1691668003;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eaziZ94maZm3wxKZN4/6tJUYjnO13qJHKuU4Kto9J+o=;
-        b=gklfGfriPTido+OOaffg1UM/Xt3uZGiaFzQbkRiEj6Tmj1LRVBgGCZaGtlgvjvifMZ
-         wrfFgFRTGYkxKlE33IPeQPj3eak7jhg1sOM6XgI45GwHmBazMNL2tFZChE7wPpT2h1cg
-         Cu1Pp+6QIYTx4XPJXH5xPxdukAFLNb9SKlLGhEME+TjBVzOaMPNinHjcxv76viZC3dOS
-         E1MTllmiwz+oAUOrySRoWfKd1qxbHKEQQP2MEkVD4eoxfuIR22ihmtKZIGYeDwpuHqcl
-         ON7a+xowJIHUTdys1HPKAECxgvtZ8p6TPWspMn2Vfl7u0Oqi3biZcKpXQNfjl6eKeijQ
-         KxQQ==
+        d=linaro.org; s=google; t=1689076150; x=1691668150;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=syIX5f3BVplskvsPj2jqIH8Yzy7BC8OkHkFGG82RJ/w=;
+        b=koGH/spMREVvPSOADIGliABI0/jUQmqUi2xVTQaOZHmwCn8DcsEmNa6zK3YAV1Sx5o
+         ccjW1egfchB3GbYkCuEfiowAaHvqAD6jNeMornYuh6r+HfUMUuT0MsvkbdzEQCTATupi
+         +vixRXoDNV2h7cnFvTzMe7nHWxAdpH78HG3flVMpueVFh4Bln5gkFK7XNrUwQ0qporeu
+         BuZ7NDV3PQLfLP5ABgs9Ul9+KoO6WDBONCPkfET6g67oPZS/K4QhRsudmWAIenV0rssc
+         n/nQKSgZIwh1Yfe/t55+EFSkqbHQgcIBnMRoAz6+xw6PNNgwRv6yeXfPlUxyd3Ibnus1
+         N0WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689076003; x=1691668003;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eaziZ94maZm3wxKZN4/6tJUYjnO13qJHKuU4Kto9J+o=;
-        b=Xd3Otx0kKkZx5Lb3qg4VZBnGuwrkTj1NpHv1/Iz1mLX2R1+PaiH2mXTFv2EQgQKvDH
-         vUouwVK5rNFw6POk9GM3QoDJY7TyJQiCz3jrbmp4A8DCX3RzIt0qN8QJK8UQKBQaiA7i
-         PfAaNYtopGV0YGb3cKfGsucFrtJkSbbiehkl/dcCIrGraaJCOQ6UFsj01YxHFSmOcM01
-         l1F/R/SQZPdh4fk3qPE00FD5tbTLBWLZxu+jESpwv0gKl5TC3lxK9jOgl06KLAOUUaje
-         WAMRju+MPyiqQGKHIQ9FmbuQUJubgRun+QlzqvGN5icHUdC7n1AVXxamq+CyVKQOGay8
-         Niug==
-X-Gm-Message-State: ABy/qLYVOdycB6wUK2SOwVrLRKLT++fSVyM3nS8b61GIM1KsytzlLNq9
-        bi4ZxLthH+7roDj4AW3l9nY/C/F4DXiDsiiTauNLCA==
-X-Google-Smtp-Source: APBJJlEpthk74V4DSnuNchB9wf9luhREksQ4SwvkR+x6SOjLik7NxDv46DS6NX9oodSkOtJqYBdIsGCwVZYsO2rYqFM=
-X-Received: by 2002:a25:b34c:0:b0:c61:e9b6:82a5 with SMTP id
- k12-20020a25b34c000000b00c61e9b682a5mr11991300ybg.39.1689076002952; Tue, 11
- Jul 2023 04:46:42 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689076150; x=1691668150;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=syIX5f3BVplskvsPj2jqIH8Yzy7BC8OkHkFGG82RJ/w=;
+        b=AKyGXzyIaYT4PvkymLUozBvTFFV9qdEiTIw/Jk0Q9iWu2zwwwhT1hRWwzPP0aKl5+3
+         s7ZLe50xN32bZSBDCPOO3lDT7KeS+Lc1jWTfu09IiJhmrzwpWSZWxwBHrAt/rWKPu73a
+         J3by0zPCpWKfCtovtTMnDr8rNUo2CeP+RBG19o5De+si/4HuJrxm0fpdPftgi5ZvxV+v
+         ayJsNiuGfz3LIQZ4PyU7MGyNHswGlQK7twEITcIYpWo7Y5bGFSFotJ9H+kh2Ry+aK7VT
+         MpeAgZItB159qKUEun5z5nEyWsqyWaAAcSmkbaWPxVfzrzAQ/+ukGafPq6n2DAlfrFe2
+         NR9w==
+X-Gm-Message-State: ABy/qLZeu7E+ED/2pJmR7hjCAIshcc38LUuXv06rj/sV1YvtMQycLcmI
+        lKp/dCpfDwXyf4H3yzyMY1UZ/w==
+X-Google-Smtp-Source: APBJJlGrZarNyQ0bfbOBxKSRI1o5UGsXz+/5i/jS3Wsvlq23VlMMaZsOEkXx7H0ZYJWGj9E9P0Mrlg==
+X-Received: by 2002:a2e:9e58:0:b0:2b6:e12f:267 with SMTP id g24-20020a2e9e58000000b002b6e12f0267mr3092406ljk.5.1689076150497;
+        Tue, 11 Jul 2023 04:49:10 -0700 (PDT)
+Received: from [192.168.1.101] (abyl96.neoplus.adsl.tpnet.pl. [83.9.31.96])
+        by smtp.gmail.com with ESMTPSA id j9-20020a2e8249000000b002b69f44646bsm425540ljh.17.2023.07.11.04.49.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jul 2023 04:49:10 -0700 (PDT)
+Message-ID: <fd262c97-29fe-ecd3-52d4-9fcf1d9b63f2@linaro.org>
+Date:   Tue, 11 Jul 2023 13:49:08 +0200
 MIME-Version: 1.0
-References: <20230711-topic-rb1_regulator-v1-1-bc4398c35800@linaro.org>
- <CAA8EJpoeAeitC=_pbAxFATfxx8UK-4cAQ=Zr3nKc0jhAdoG5fg@mail.gmail.com>
- <43d290c9-fdec-4832-242e-6732d9f0ea6c@linaro.org> <CAA8EJpozgj=MvYo=eHx1a1YD4gkXEvqHvuvp_mUBXfGMjhYWGA@mail.gmail.com>
- <775764d2-5457-9150-74ca-6e14fa5b2870@linaro.org>
-In-Reply-To: <775764d2-5457-9150-74ca-6e14fa5b2870@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 11 Jul 2023 14:46:31 +0300
-Message-ID: <CAA8EJpraMoY6W9WfE1i3HNZ-AxcSD6UwCkRReM1mnrcB2YH7VQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qrb2210-rb1: Add regulators
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250-sony-xperia: correct GPIO keys
+ wakeup again
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -65,223 +67,62 @@ Cc:     Andy Gross <agross@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20230711063011.16222-1-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230711063011.16222-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 Jul 2023 at 14:41, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 11.07.2023 12:56, Dmitry Baryshkov wrote:
-> > On Tue, 11 Jul 2023 at 13:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >> On 11.07.2023 12:44, Dmitry Baryshkov wrote:
-> >>> On Tue, 11 Jul 2023 at 13:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>
-> >>>> Add and assign RPM regulators coming from PM2250.
-> >>>>
-> >>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>>> ---
-> >> [...]
-> >>
-> >>>> +               pm2250_l5: l5 {
-> >>>> +                       /* CSI/DSI */
-> >>>> +                       regulator-min-microvolts = <1232000>;
-> >>>> +                       regulator-max-microvolts = <1232000>;
-> >>>> +                       regulator-allow-set-load;
-> >>>> +                       regulator-boot-on;
-> >>>
-> >>> why?
-> >>>
-> >> To answer all of the questions in one go:
-> >>
-> >> "it's because the regulator is enabled at boot"
-> >
-> > I was more concerned about the following part:
-> >       If the bootloader didn't leave it on then OS should turn it on at boot ...
-> >
-> > Please remind me, are we declaring them as boot-on so that the
-> > regulator core can turn them off later if they are unused?
-> In the Linux implementation, yes.
+On 11.07.2023 08:30, Krzysztof Kozlowski wrote:
+> gpio-keys,wakeup is a deprecated property:
+> 
+>   m8250-sony-xperia-edo-pdx206.dtb: gpio-keys: key-camera-focus: Unevaluated properties are not allowed ('gpio-key,wakeup' was unexpected)
+> 
+> Fixes: a422c6a91a66 ("arm64: dts: qcom: sm8250-edo: Rectify gpio-keys")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> It's a damn Groundhog day. I already fixed all the occurences in
+> 77a7e3942871 ("arm64: dts: qcom: sm8250-sony-xperia: correct GPIO keys
+> wakeup")!
+> ---
+Sorry.. this was an old lingering patch that I failed to retest.
 
-Ack.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
->
-> Konrad
-> >
-> >>
-> >> Konrad
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l6: l6 {
-> >>>> +                       /* DRAM PLL */
-> >>>> +                       regulator-min-microvolts = <928000>;
-> >>>> +                       regulator-max-microvolts = <928000>;
-> >>>> +                       regulator-always-on;
-> >>>> +                       regulator-boot-on;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l7: l7 {
-> >>>> +                       /* Wi-Fi CX/MX */
-> >>>> +                       regulator-min-microvolts = <664000>;
-> >>>> +                       regulator-max-microvolts = <664000>;
-> >>>> +               };
-> >>>> +
-> >>>> +               /*
-> >>>> +                * L8 - VDD_LPI_CX
-> >>>> +                * L9 - VDD_LPI_MX
-> >>>> +                */
-> >>>> +
-> >>>> +               pm2250_l10: l10 {
-> >>>> +                       /* Wi-Fi RFA */
-> >>>> +                       regulator-min-microvolts = <1300000>;
-> >>>> +                       regulator-max-microvolts = <1300000>;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l11: l11 {
-> >>>> +                       /* GPS RF1 */
-> >>>> +                       regulator-min-microvolts = <1000000>;
-> >>>> +                       regulator-max-microvolts = <1000000>;
-> >>>> +                       regulator-boot-on;
-> >>>
-> >>> Shouldn't it be handled by the modem on its own?
-> >>>
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l12: l12 {
-> >>>> +                       /* USB PHYs */
-> >>>> +                       regulator-min-microvolts = <928000>;
-> >>>> +                       regulator-max-microvolts = <928000>;
-> >>>> +                       regulator-allow-set-load;
-> >>>> +                       regulator-boot-on;
-> >>>
-> >>> You guess the question (and further on)
-> >>>
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l13: l13 {
-> >>>> +                       /* USB/QFPROM/PLLs */
-> >>>> +                       regulator-min-microvolts = <1800000>;
-> >>>> +                       regulator-max-microvolts = <1800000>;
-> >>>> +                       regulator-allow-set-load;
-> >>>> +                       regulator-boot-on;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l14: l14 {
-> >>>> +                       /* SDHCI1 VQMMC */
-> >>>> +                       regulator-min-microvolts = <1800000>;
-> >>>> +                       regulator-max-microvolts = <1800000>;
-> >>>> +                       regulator-allow-set-load;
-> >>>> +                       /* Broken hardware, never turn it off! */
-> >>>> +                       regulator-always-on;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l15: l15 {
-> >>>> +                       /* WCD/DSI/BT VDDIO */
-> >>>> +                       regulator-min-microvolts = <1800000>;
-> >>>> +                       regulator-max-microvolts = <1800000>;
-> >>>> +                       regulator-allow-set-load;
-> >>>> +                       regulator-always-on;
-> >>>> +                       regulator-boot-on;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l16: l16 {
-> >>>> +                       /* GPS RF2 */
-> >>>> +                       regulator-min-microvolts = <1800000>;
-> >>>> +                       regulator-max-microvolts = <1800000>;
-> >>>> +                       regulator-boot-on;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l17: l17 {
-> >>>> +                       regulator-min-microvolts = <3000000>;
-> >>>> +                       regulator-max-microvolts = <3000000>;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l18: l18 {
-> >>>> +                       /* VDD_PXn */
-> >>>> +                       regulator-min-microvolts = <1800000>;
-> >>>> +                       regulator-max-microvolts = <1800000>;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l19: l19 {
-> >>>> +                       /* VDD_PXn */
-> >>>> +                       regulator-min-microvolts = <1800000>;
-> >>>> +                       regulator-max-microvolts = <1800000>;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l20: l20 {
-> >>>> +                       /* SDHCI1 VMMC */
-> >>>> +                       regulator-min-microvolts = <2856000>;
-> >>>> +                       regulator-max-microvolts = <2856000>;
-> >>>> +                       regulator-allow-set-load;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l21: l21 {
-> >>>> +                       /* SDHCI2 VMMC */
-> >>>> +                       regulator-min-microvolts = <2960000>;
-> >>>> +                       regulator-max-microvolts = <3300000>;
-> >>>> +                       regulator-allow-set-load;
-> >>>> +                       regulator-boot-on;
-> >>>> +               };
-> >>>> +
-> >>>> +               pm2250_l22: l22 {
-> >>>> +                       /* Wi-Fi */
-> >>>> +                       regulator-min-microvolts = <3312000>;
-> >>>> +                       regulator-max-microvolts = <3312000>;
-> >>>> +               };
-> >>>> +       };
-> >>>> +};
-> >>>> +
-> >>>>  &sdhc_1 {
-> >>>> +       vmmc-supply = <&pm2250_l20>;
-> >>>> +       vqmmc-supply = <&pm2250_l14>;
-> >>>>         pinctrl-0 = <&sdc1_state_on>;
-> >>>>         pinctrl-1 = <&sdc1_state_off>;
-> >>>>         pinctrl-names = "default", "sleep";
-> >>>> @@ -61,6 +322,8 @@ &sdhc_1 {
-> >>>>  };
-> >>>>
-> >>>>  &sdhc_2 {
-> >>>> +       vmmc-supply = <&pm2250_l21>;
-> >>>> +       vqmmc-supply = <&pm2250_l4>;
-> >>>>         cd-gpios = <&tlmm 88 GPIO_ACTIVE_LOW>;
-> >>>>         pinctrl-0 = <&sdc2_state_on &sd_det_in_on>;
-> >>>>         pinctrl-1 = <&sdc2_state_off &sd_det_in_off>;
-> >>>> @@ -104,6 +367,9 @@ &usb {
-> >>>>  };
-> >>>>
-> >>>>  &usb_hsphy {
-> >>>> +       vdd-supply = <&pm2250_l12>;
-> >>>> +       vdda-pll-supply = <&pm2250_l13>;
-> >>>> +       vdda-phy-dpdm-supply = <&pm2250_l21>;
-> >>>>         status = "okay";
-> >>>>  };
-> >>>>
-> >>>>
-> >>>> ---
-> >>>> base-commit: 8e4b7f2f3d6071665b1dfd70786229c8a5d6c256
-> >>>> change-id: 20230711-topic-rb1_regulator-44c4ade93246
-> >>>>
-> >>>> Best regards,
-> >>>> --
-> >>>> Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>>>
-> >>>
-> >>>
-> >
-> >
-> >
-
-
-
--- 
-With best wishes
-Dmitry
+Konrad
+>  arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> index cd27794739a5..ecdc20bc10f5 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> @@ -60,7 +60,7 @@ key-camera-focus {
+>  			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
+>  			debounce-interval = <15>;
+>  			linux,can-disable;
+> -			gpio-key,wakeup;
+> +			wakeup-source;
+>  		};
+>  
+>  		key-camera-snapshot {
+> @@ -69,7 +69,7 @@ key-camera-snapshot {
+>  			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
+>  			debounce-interval = <15>;
+>  			linux,can-disable;
+> -			gpio-key,wakeup;
+> +			wakeup-source;
+>  		};
+>  
+>  		key-vol-down {
