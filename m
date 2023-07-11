@@ -2,153 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 624EC74F2C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:52:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B53A874F2D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:59:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231852AbjGKOwH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 10:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57740 "EHLO
+        id S230155AbjGKO7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 10:59:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232158AbjGKOwG (ORCPT
+        with ESMTP id S229785AbjGKO7H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 10:52:06 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8989510C7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:52:04 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b6b98ac328so89270841fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:52:04 -0700 (PDT)
+        Tue, 11 Jul 2023 10:59:07 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FB210CA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:59:06 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fb9fd28025so8727314e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689087122; x=1691679122;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jZ5/YeWN2vH9hoiK+P3gfGMmpSC0FP7W9NmgzJ5mais=;
-        b=yr7f3jV+k9S6hICYgTybG2grsXar0/ghmE+6ibMy7VvWpt0I7fTSiKFPP30HVJVzEp
-         GWffay68vYAYpOlsH+hj5UNWzW4swDPSmg9wQ/vzmyXInqZCvRX7r/JmGAcfJfP9RAYa
-         FH+SykhODC3AlyqV060rf69ymX2uV7SaFfpiuvJaKuyHo8jLLwhD6/XnTYGfrc2cTosJ
-         jWi8yGfZmxv1MlzS+y7DHAox7LavCYM1SAsqVvuHf7R5q8Phw02EMfjV+gvp9gBz2bO2
-         52mASvetUG8O0Oixg/XdUmO+lJlE1FUK8BxLb0var9qjIT9wiUN9smvfea41auxqvJHF
-         IAvQ==
+        d=linaro.org; s=google; t=1689087544; x=1691679544;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/BBSi3Y2p51GXr/kdqXZWgeltZiMvocxuPhmv54PXCk=;
+        b=m+crFpHVwUmNM1IevtAkCKRHO2NdXi4Nv5/sUrEBbC/6G0nqVk8jGFXEAycB2kX3/L
+         yvpyGo1nZPsvQ4GyyX94zgLaMZrnPUkVphABTvta+rc1eml+Om6KmMMO4if+VkCc8nnE
+         RZE1XinaqSkpC3X7oR2fPKc479VXNwDGzIsXrzYOrRVxNtPGrJ7S2R6gHn0TFLuVKh0C
+         g18BnSXimKeLS0zSqaCI37EeNROn24C5wMu4bX6B61wwlkKwyDqcfqCGMWfVui+WP4co
+         73Qj8z6Gln/VVpK0hrN3zfZDaXosWyu5cy62er1WWnY1FcXuqsNq0aeer9cm3PdNkqGK
+         nScQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689087122; x=1691679122;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jZ5/YeWN2vH9hoiK+P3gfGMmpSC0FP7W9NmgzJ5mais=;
-        b=OtCkbntlF2SC8H02UK+2223zd0oMpsUvXtYWYOQHdiPXOY+J1eHrSTE5QycYPcykD/
-         7+ZqUT7EnKY5zfKon1qGmRegDJyfHwUS0pGUg/iX7iSzmZ4JF27lvtxi0ySUHQOTOeS1
-         xNzZRMNMX3IFeSyMBd5f2D4D0ZLUwWqvsbXfJdJ9ZE1WoiNMUd1abnp0hmSxiMo5R1Si
-         kJLszbAjanjYtHbRVC8A5/4ud2+MJepI8d/g2CwWt0bgGW7TtlHWZAvuRi8tOLS6YBVe
-         A7mrXX8fIArDVsQWb0YvDTCIvSXrHjtiIePTGdXrZo+uyZ5CAP5MJ+kTaaK9yff63gWh
-         7e2A==
-X-Gm-Message-State: ABy/qLbP6damBJVbur3VzlLulK17saXtEc8/bklAfgIsb5elQSDyn/1a
-        gJcwxsXgy6exKUJ+kymkAhl1iw==
-X-Google-Smtp-Source: APBJJlGeEPrDv2hHQXiM96uVSNcPNAXzQ4roA03VkgGmnapJFG9SQrvgr4gXd5wKG5vjmAymqfwAyw==
-X-Received: by 2002:a2e:9015:0:b0:2b6:de41:b72f with SMTP id h21-20020a2e9015000000b002b6de41b72fmr14342668ljg.4.1689087122656;
-        Tue, 11 Jul 2023 07:52:02 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a10-20020a2eb16a000000b002b6ee363337sm492454ljm.120.2023.07.11.07.52.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 07:52:02 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
-Subject: [PATCH v4 11/11] arm64: dts: qcom: sm8450: switch UFS QMP PHY to new style of bindings
-Date:   Tue, 11 Jul 2023 17:51:53 +0300
-Message-Id: <20230711145153.4167820-12-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230711145153.4167820-1-dmitry.baryshkov@linaro.org>
-References: <20230711145153.4167820-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1689087544; x=1691679544;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/BBSi3Y2p51GXr/kdqXZWgeltZiMvocxuPhmv54PXCk=;
+        b=NHEaysf7G84R+Iiq4alNSTWrAusm9GeeYFDSgtBX7ztWMvkh8OLffPuRnNaJ7N22Bk
+         cruxraMg6tAQH+ZgiwCRcYkJChX2exzvmrXBCjSQJp2IL0cuVhc0YWo+88rVkCZRnEDz
+         FwCzk7XaFpRHbd046YdIC0BD+M1dbkAmtmaGG9zdXeIDYr4235ZcMlatdqHEwc65WKB+
+         B95nAKT7ryk85AilhrrlvvQs7o/7y/hrV40lToRrRbyJ+3X3OKv4xoLndss63QljUK7k
+         vRQlRfyLNMvX2IG6WvQ7D2dsW/zG81plEu6v0q3kh8tJ1CME+689HK7LdckSnHi9gzpX
+         TEaw==
+X-Gm-Message-State: ABy/qLa4mDMwhwjJpc70zE3aim1cV9eZUVsdJX87vMdQpwccfvG++eXZ
+        s9sRO9K4maui5wTUeJfawjoy2Q==
+X-Google-Smtp-Source: APBJJlEmv479eisRoP1W7B2jI6/9ZRK/5ke7XvBE3vPvencrHGUfD1y6xArNgZUCsv/KhIU2Uxl+bg==
+X-Received: by 2002:a05:6512:128a:b0:4f8:5ab0:68c4 with SMTP id u10-20020a056512128a00b004f85ab068c4mr16389336lfs.59.1689087544345;
+        Tue, 11 Jul 2023 07:59:04 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id j14-20020a19f50e000000b004f7618c67a7sm349351lfb.76.2023.07.11.07.59.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jul 2023 07:59:03 -0700 (PDT)
+Message-ID: <4330df82-77a9-27ce-3f24-144718cc082e@linaro.org>
+Date:   Tue, 11 Jul 2023 17:59:03 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 1/3] dt-bindings: power: rpmhpd: Add Generic RPMh PD
+ indexes
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1689054169-10800-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1689054169-10800-2-git-send-email-quic_rohiagar@quicinc.com>
+ <2040226e-9b45-b409-3edd-a5b86d86daa8@linaro.org>
+ <8a3124ce-a11d-2491-eaee-1695cec70b17@quicinc.com>
+ <e885383b-a231-75a1-32ce-bf850f0cb022@linaro.org>
+ <8c3468f0-3069-95e3-e2f1-279fca78a578@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <8c3468f0-3069-95e3-e2f1-279fca78a578@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
-resource region, no per-PHY subnodes).
+On 11/07/2023 14:44, Konrad Dybcio wrote:
+> On 11.07.2023 08:22, Krzysztof Kozlowski wrote:
+>> On 11/07/2023 08:17, Rohit Agarwal wrote:
+>>>
+>>> On 7/11/2023 11:22 AM, Krzysztof Kozlowski wrote:
+>>>> On 11/07/2023 07:42, Rohit Agarwal wrote:
+>>>>> Add Generic RPMh Power Domain indexes that can be used
+>>>>> for all the Qualcomm SoC henceforth.
+>>>>>
+>>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>>>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>> ---
+>>>>>    include/dt-bindings/power/qcom-rpmhpd.h | 30 ++++++++++++++++++++++++++++++
+>>>>>    1 file changed, 30 insertions(+)
+>>>>>    create mode 100644 include/dt-bindings/power/qcom-rpmhpd.h
+>>>>>
+>>>>> diff --git a/include/dt-bindings/power/qcom-rpmhpd.h b/include/dt-bindings/power/qcom-rpmhpd.h
+>>>>> new file mode 100644
+>>>>> index 0000000..4da2e04
+>>>>> --- /dev/null
+>>>>> +++ b/include/dt-bindings/power/qcom-rpmhpd.h
+>>>> Filename based on compatible.
+>>> This is not specific for SDX75. These are generic ones that should be
+>>> used for all other targets.
+>>> Konrad suggested in v1 to avoid target specific prefixes everytime and
+>>> to create a new generic
+>>> dt-bindings that can be reused.
+>>>>> @@ -0,0 +1,30 @@
+>>>>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+>>>>> +/*
+>>>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>> + */
+>>>>> +
+>>>>> +#ifndef _DT_BINDINGS_POWER_QCOM_RPMHPD_H
+>>>>> +#define _DT_BINDINGS_POWER_QCOM_RPMHPD_H
+>>>>> +
+>>>>> +/* Generic RPMH Power Domain Indexes */
+>>>>> +#define CX               0
+>>>> These are very generic names, usually not used in global headers. Please
+>>>> use some reasonable prefix.
+>>> This was based on the suggestion from Konrad in v2 to drop the RPMHPD
+>>> prefix and we can go only with names like CX, etc.
+>>
+>> I don't think having so generic name in tree-wide header is good idea.
+> Conversely, I think that it would be very clear in files including this header.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 28 ++++++++++------------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+It is expected to be included into dtsi and into rpmhpd driver (only). 
+However I'd also suggest adding some generic prefix (e.g. RPMHPD_CX). 
+Just `CX' is too short and has a sensible possibility of getting  a 
+symbol conflict.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 1668d97ce459..e130e66e8a53 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -751,9 +751,9 @@ gcc: clock-controller@100000 {
- 				 <&pcie0_lane>,
- 				 <&pcie1_lane>,
- 				 <0>,
--				 <&ufs_mem_phy_lanes 0>,
--				 <&ufs_mem_phy_lanes 1>,
--				 <&ufs_mem_phy_lanes 2>,
-+				 <&ufs_mem_phy 0>,
-+				 <&ufs_mem_phy 1>,
-+				 <&ufs_mem_phy 2>,
- 				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
- 			clock-names = "bi_tcxo",
- 				      "sleep_clk",
-@@ -4122,7 +4122,7 @@ ufs_mem_hc: ufshc@1d84000 {
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x3000>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_mem_phy_lanes>;
-+			phys = <&ufs_mem_phy>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -4171,10 +4171,8 @@ ufs_mem_hc: ufshc@1d84000 {
- 
- 		ufs_mem_phy: phy@1d87000 {
- 			compatible = "qcom,sm8450-qmp-ufs-phy";
--			reg = <0 0x01d87000 0 0x1c4>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+			reg = <0 0x01d87000 0 0x1000>;
-+
- 			clock-names = "ref", "ref_aux", "qref";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-@@ -4182,17 +4180,11 @@ ufs_mem_phy: phy@1d87000 {
- 
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
--			status = "disabled";
- 
--			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x188>,
--				      <0 0x01d87600 0 0x200>,
--				      <0 0x01d87c00 0 0x200>,
--				      <0 0x01d87800 0 0x188>,
--				      <0 0x01d87a00 0 0x200>;
--				#clock-cells = <1>;
--				#phy-cells = <0>;
--			};
-+			#clock-cells = <1>;
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
- 		};
- 
- 		ice: crypto@1d88000 {
+> 
+> Konrad
+>> CX can mean anything.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
