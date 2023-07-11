@@ -2,79 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1321474EB52
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 11:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD4E774EB7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 12:09:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232124AbjGKJ7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 05:59:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43442 "EHLO
+        id S229837AbjGKKJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 06:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231719AbjGKJ7H (ORCPT
+        with ESMTP id S229928AbjGKKJd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 05:59:07 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C12651735
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:57:38 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-992acf67388so633836466b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 02:57:38 -0700 (PDT)
+        Tue, 11 Jul 2023 06:09:33 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC8DDF9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 03:09:30 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fb77f21c63so8720151e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 03:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689069456; x=1691661456;
+        d=linaro.org; s=google; t=1689070169; x=1691662169;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pWka34Gw82nr/cFSWzXWk0N4X377rpeIdKu/sRdqI3w=;
-        b=E1S24mQwOCmHBBy4DRz23P23yqDhq4uQrWy8X+IpX1HgWvgkeoZGsrBB2i8xYNJHHM
-         xlurGXGi5+SjP8v3G/hEvZe0C+M+f66ThjHsH4P+pX9c/3M8Fci/ZNBvMek7IyA4HTOJ
-         MPMOXUu1nCzSWFL+cFpgZFhVMg5sftDhY0mCg11oRSjMlEK4wlQlhOuHPb19J12NtjU5
-         1kVvl4of2Hl53/F0KLI/r7bxd+x3RAmU3+D3Adf/AvZZxcXSaFO1plhemYa++54LP1bY
-         XjL25qbN6DhcAUZ0tjQ4rFYbrxcgRjqztmb0BYCyRB/+W7zvT4v7c25HXZYcgzLcsrTL
-         Sp+w==
+        bh=7dRYhDe8BiVEV0EBlHbMEnxi5wvB4qWMFbFVB8lXRts=;
+        b=aFgnj794CZ/PSLsUzrOXSBGzhI4B7HswMutmsFqschHSz8cORA+/pDetACQMnLtiVf
+         SmrzCFCT/cs+yM6BikKD/fqtRXullzc+RV31vTmrAL7rMnzI7g16FM72t2KqZivXVtiL
+         fMRV7ruLnrIMLDcjsLJWEglSNQS1EXdKxUdtJ7xeV2OpYxq6LtL3o6/GCUCTxNGksEAq
+         OaXuZwr3JCMIQ1l/iQaAsAXZe5TMsMdztIpr3EeEXtf9nprw/1zwlBw+P4lNXSRt+M6k
+         rXc9W4f0n7upozPz3dJJtgCxGq6YYdfg3Q3boXohjB+hDA1PLH4SmzjbP61YS/E3XkvU
+         pJlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689069456; x=1691661456;
+        d=1e100.net; s=20221208; t=1689070169; x=1691662169;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pWka34Gw82nr/cFSWzXWk0N4X377rpeIdKu/sRdqI3w=;
-        b=RWFmQ5OFi9InBj30zg+aQefDZieoEKTjbznxoGS4nJlJZc7lL0fy9YHCWDA92p64mE
-         YyX1Z+ESwnsjlPYCy29KTmhxkEig803GsSB3QrFXNSn7ZxbKBa9/JoyHIJEwZPzLUzcI
-         FOBSiZzkaDEPhKn1DBBkvVW2XZSa1bgQ5pWzw+nPh8fpx9KJsXcLeq1Rtx0z7THQ1PUP
-         mHE0otpnaIFA07QC2C2VSHB09qkcSRHKaJ/uhKcsFx+Oj8HijXd2YiQ0U2u5D/S7KEiB
-         4PaYp92Lgvx7JDI8KX0W8ALasQcqiEFbVtBcsa+E+3b2KVpmh4Wiei/1fHOJp4PHrac7
-         D+Ug==
-X-Gm-Message-State: ABy/qLbEQbTu0/Mhacqc6x9yJsjKGR15UUY3qodKdXTKxKwVGbjmPXuD
-        FIrR7y8mfLkjoIlXdV2qgP69ZQ==
-X-Google-Smtp-Source: APBJJlGrct9CF3NdgozgtT88PsYl+iuo0rr8yPDlmRTaY5g+azPTKOqK7kxmUAT7dEu+Y7gYM6DatA==
-X-Received: by 2002:a17:907:12ce:b0:983:cb6c:8aa3 with SMTP id vp14-20020a17090712ce00b00983cb6c8aa3mr13056484ejb.59.1689069456550;
-        Tue, 11 Jul 2023 02:57:36 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id s10-20020a170906354a00b00982be08a9besm926457eja.172.2023.07.11.02.57.34
+        bh=7dRYhDe8BiVEV0EBlHbMEnxi5wvB4qWMFbFVB8lXRts=;
+        b=cI7JO4yhYzQGCmSG/ueFmD4RJHaxu3F1IhcgX78+9nBfG/I6+jsxpOqTYU1UjC0FK9
+         3bT7CJ/OUB6YASqfAgYPzjCrk/CpaRHnUE5SyTk4fl3X3SJEXjRt0MrNVKLUIK98sqXv
+         4DO/QtS5TO+5UxP1i95CttWDVa9QypjcPJ7ZYtisGSkFH3T27YIQ8z88TacMQXq8zEWY
+         S3wiusCLaNXxsbRXc4pLTmqvhGfu5vqZozrWCM3pI2Oe03Xri4UAQrANvYyH4hbmpwhm
+         SJxt1zB3v3BOmyyivsKh/wfKgalimAJIdov32hbYgMTYOXh8u9UiyeEWwu9yRtXg6Qke
+         tiAg==
+X-Gm-Message-State: ABy/qLZDp/+WNcSY78vuAXh0vJhn/PYbPPc6Ho64AGIty6tUqU+LKvUw
+        GgEINWmeW2TuPISHX8fJpoGNpgiu4rffY7b0T4A=
+X-Google-Smtp-Source: APBJJlHdaYP6KQEeXomKRN9uoCu1+yo8uHO71sdRJ/mNUCNoupGWQiJZQ4tH2nJN9kqa4WSAGURoBQ==
+X-Received: by 2002:a05:6512:2346:b0:4fb:7be5:8f4e with SMTP id p6-20020a056512234600b004fb7be58f4emr3008339lfu.6.1689070168929;
+        Tue, 11 Jul 2023 03:09:28 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id 15-20020ac2482f000000b004fb88fffd19sm256372lft.146.2023.07.11.03.09.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 02:57:36 -0700 (PDT)
-Message-ID: <05554015-6b08-c194-9d27-af5539e3ce46@linaro.org>
-Date:   Tue, 11 Jul 2023 11:57:34 +0200
+        Tue, 11 Jul 2023 03:09:28 -0700 (PDT)
+Message-ID: <1090089b-2fa9-9781-51a8-38957e261bfd@linaro.org>
+Date:   Tue, 11 Jul 2023 13:09:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq9574: Add support for nsscc node
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        richardcochran@gmail.com, arnd@arndb.de, geert+renesas@glider.be,
-        neil.armstrong@linaro.org, nfraprado@collabora.com,
-        rafal@milecki.pl, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        netdev@vger.kernel.org
-Cc:     quic_saahtoma@quicinc.com
-References: <20230711093529.18355-1-quic_devipriy@quicinc.com>
- <20230711093529.18355-6-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230711093529.18355-6-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] drm/client: Send hotplug event after registering a client
+Content-Language: en-GB
+To:     Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
+        noralf@tronnes.org
+Cc:     Daniel Vetter <daniel.vetter@ffwll.ch>,
+        dri-devel@lists.freedesktop.org,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        amd-gfx@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        Russell King <linux@armlinux.org.uk>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Paul Schyska <pschyska@gmail.com>,
+        Torsten Krah <krah.tm@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        freedreno@lists.freedesktop.org,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Moritz Duge <MoritzDuge@kolahilft.de>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+References: <20230710091029.27503-1-tzimmermann@suse.de>
+ <325dad0e-38ff-9f60-efc9-0fd711d63267@linaro.org>
+ <117aea3d-c316-509d-7be7-ade155b4ae85@suse.de>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <117aea3d-c316-509d-7be7-ade155b4ae85@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -85,73 +98,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 11:35, Devi Priya wrote:
-> Add a node for the nss clock controller found on ipq9574 based devices.
+On 11/07/2023 09:07, Thomas Zimmermann wrote:
+> Hi
 > 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 44 +++++++++++++++++++++++++++
->  1 file changed, 44 insertions(+)
+> Am 10.07.23 um 23:11 schrieb Dmitry Baryshkov:
+> [...]
+>>> ---
+>>>   drivers/gpu/drm/armada/armada_fbdev.c     |  4 ----
+>>>   drivers/gpu/drm/drm_client.c              | 21 +++++++++++++++++++++
+>>>   drivers/gpu/drm/drm_fbdev_dma.c           |  4 ----
+>>>   drivers/gpu/drm/drm_fbdev_generic.c       |  4 ----
+>>>   drivers/gpu/drm/exynos/exynos_drm_fbdev.c |  4 ----
+>>>   drivers/gpu/drm/gma500/fbdev.c            |  4 ----
+>>>   drivers/gpu/drm/msm/msm_fbdev.c           |  4 ----
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # msm
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index f120c7c52351..257ce4a5bfd5 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -10,6 +10,8 @@
->  #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-> +#include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
-> +#include <dt-bindings/reset/qcom,ipq9574-nsscc.h>
->  
->  / {
->  	interrupt-parent = <&intc>;
-> @@ -17,6 +19,30 @@
->  	#size-cells = <2>;
->  
->  	clocks {
-> +		bias_pll_cc_clk: bias-pll-cc-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <1200000000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		bias_pll_nss_noc_clk: bias-pll-nss-noc-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <461500000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		bias_pll_ubi_nc_clk: bias-pll-ubi-nc-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <353000000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		gcc_gpll0_out_aux: gcc-gpll0-out-aux {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <800000000>;
-> +			#clock-cells = <0>;
-> +		};
+> Thanks.
+> 
+>>
+>>>   drivers/gpu/drm/omapdrm/omap_fbdev.c      |  4 ----
+>>>   drivers/gpu/drm/radeon/radeon_fbdev.c     |  4 ----
+>>>   drivers/gpu/drm/tegra/fbdev.c             |  4 ----
+>>>   10 files changed, 21 insertions(+), 36 deletions(-)
+>>
+>> BTW: As you have been clearing this area. I see that significant 
+>> amount of DRM drivers use exactly the same code for 
+>> msm_fbdev_client_funcs and for the significant part of 
+>> foo_fbdev_setup(). Do you have any plans for moving that into a 
+>> library / generic code? If not, I can take a look at crafting the patch.
+>>
+> 
+> You're not the first to ask. :) I've so far not attempted to address 
+> this duplication. I've been bitten by premature helperization before, so 
+> I wanted to wait a bit longer. A lot of the fbdev and client code is 
+> changing quite a bit. After things stabilized, I want to to try to do 
+> some more code sharing.
 
-Isn't this GCC clock?
+Ack, thank you for sharing this.
 
-> +
->  		sleep_clk: sleep-clk {
->  			compatible = "fixed-clock";
->  			#clock-cells = <0>;
-> @@ -620,6 +646,24 @@
->  				status = "disabled";
->  			};
->  		};
-> +
-> +		nsscc: nsscc@39b00000 {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
