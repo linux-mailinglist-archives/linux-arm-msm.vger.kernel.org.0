@@ -2,128 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C30D074E6FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 08:14:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30F2374E705
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 08:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231213AbjGKGOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 02:14:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47966 "EHLO
+        id S230091AbjGKGQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 02:16:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230353AbjGKGOK (ORCPT
+        with ESMTP id S229947AbjGKGP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 02:14:10 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3861E5;
-        Mon, 10 Jul 2023 23:14:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3E6BD6132D;
-        Tue, 11 Jul 2023 06:14:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4947DC433C8;
-        Tue, 11 Jul 2023 06:14:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689056044;
-        bh=OX+EN9qbWJzWqP/kGmkt0uY4vfp67tjShrtEo3vYIIs=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=XHcBvWqqsh7Y/fCXX+ln3tRKqpaTOfV7QFUKmY0Z4YHGpV+NhQLCAY4cdZI23ruHi
-         W9CFe8hSqcGwczouqGiLmr8f43f2Utzg5fSvzYLisoobL+zCYv/wy98p8wUoz3QYv4
-         4n9XddiPtuFKdmapWP43qzI5xeFzn8ehyngy+KMrdsbdtfhUQw00d1o1sQga/64v3z
-         4P4hG6aiJsyY+iq6QlvA6AbUTlAQv+4QiS28YlRd6TStwI22re/xO4GQAiYO3M5vyj
-         cp4YFXUYJNGbqQusxqTYDGjToyBF8BEnDvebrxUKo8lDGfI9pEIotFmWep2UUYi61K
-         9AUJW4mzRXafw==
-Message-ID: <02fe7c1e-cb6a-14bc-73fc-04956a2b8396@kernel.org>
-Date:   Tue, 11 Jul 2023 08:13:55 +0200
+        Tue, 11 Jul 2023 02:15:59 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42BBFE5;
+        Mon, 10 Jul 2023 23:15:58 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36B6Fcuu019060;
+        Tue, 11 Jul 2023 06:15:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=dM7/ZnZfOBpFxzcTE0r5c6y7E8JjAk//H9NvG5BBSZA=;
+ b=WfE+OZq8r7UUeByWjlxHd8Mg8hzhbqCPT5vhpVN8M2+vjiCzwg64Xs0diQ2bq+MfZJSn
+ vgJm1C9E7BwtO3bCXn3ZLF1Gbq7jbR+/V5sASSYPOcBPe7f/ADymj1rbM1btw+dyHJmB
+ kc3JXfqX+wLROhrJ7SiaoPWmF39AnqEg+bWlfedJrgxmJkRvHrZh2z4Vs9fHsGyi5lIN
+ Cm/G/LMshMtn5KcNA7nOtBf6zjsMJaYSE2icWLOkYMqyBBDFgCU0lU96wc/eSjfOOdNg
+ zwbleb0+slJ9aSp7YfJTU6fbVI9SOm9PLsY0wnL9CkG54aNkDoHo119SK+5wd3o2Di8s UA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rs0kpg3h6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 06:15:38 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36B6FZAd007429
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jul 2023 06:15:35 GMT
+Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 10 Jul
+ 2023 23:15:30 -0700
+Message-ID: <e125c79b-3aea-da04-ab54-e532d4e54bfe@quicinc.com>
+Date:   Tue, 11 Jul 2023 11:45:27 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-serranove: Add
- RT5033 PMIC with charger
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v3 9/9] bus: mhi: ep: wake up host is the MHI state is in
+ M3
 Content-Language: en-US
-To:     Jakob Hauser <jahau@rocketmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Raymond Hackley <raymondhackley@protonmail.com>,
-        Henrik Grimler <henrik@grimler.se>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230619203743.8136-1-jahau.ref@rocketmail.com>
- <20230619203743.8136-1-jahau@rocketmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20230619203743.8136-1-jahau@rocketmail.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Bjorn Helgaas <helgaas@kernel.org>,
+        Dan Carpenter <dan.carpenter@linaro.org>
+CC:     <manivannan.sadhasivam@linaro.org>, <linux-pci@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <krzysztof.kozlowski@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Bo Liu <liubo03@inspur.com>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Dan Carpenter <error27@gmail.com>,
+        "open list:MHI BUS" <mhi@lists.linux.dev>
+References: <20230707151209.GA139708@bhelgaas>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20230707151209.GA139708@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xWVVvg5VB4J3HzVVqqRw1ImNyGtgHVI4
+X-Proofpoint-ORIG-GUID: xWVVvg5VB4J3HzVVqqRw1ImNyGtgHVI4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-11_02,2023-07-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ suspectscore=0 clxscore=1011 malwarescore=0 phishscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 mlxlogscore=999 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307110054
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/06/2023 22:37, Jakob Hauser wrote:
-> For the regulators, apply the same settings as in the downstream
-> devicetree [1], including the "regulator-always-on" for the SAFE_LDO.
-> For the voltage of SAFE_LDO, however, there is only one voltage of 4.9 V
-> available in the mainline driver [2][3].
-> 
-> The values of the battery data evolve from following sources:
-> - precharge current: 450 mA corresponds to the default value of the chip. It
->   doesn't get changed by the downstream Android driver. Therefore let's stick
->   to this value.
-> - constant charge current: The 1000 mA are taken from the downstream devicetree
->   of the serranove battery. It's not easy to spot. The value is in the line
->   "input_current_limit" [4]. The rows are according to the power supply type,
->   the 4th value stands for "main supply" [5]. That's the value used by the
->   Android driver when a charging cable is plugged into the device.
-> - charge termination current: In the downstream devicetree of the battery
->   that's the line "full_check_current_1st", which contains the 150 mA [6].
-> - precharge voltage: This one doesn't get set in the downstream Android driver.
->   The chip's default is 2.8 V. That seemed too low to have a notable effect of
->   handling the battery gentle. The chosen value of 3.5 V is a bit arbitrary
->   and possibly rather high. As the device is already several years old and
->   therefore most batteries too, a value on the safe side seems reasonable.
-> - constant charge voltage: The value of 4.35 V is set in the line
->   "chg_float_voltage" of the downstream battery devicetree [7].
-> 
-> The "connector" sub-node in the extcon node, the "battery" node in the
-> general section and the line "power-supplies" in the fuel-gauge node result
-> from the way of implementation documented in the dt-bindings of
-> rt5033-charger [8] and mfd rt5033 [9].
-> 
-> [1] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-eur-r03.dtsi#L135-L181
-> [2] https://github.com/torvalds/linux/blob/v6.3/include/linux/mfd/rt5033-private.h#L211-L212
-> [3] https://github.com/torvalds/linux/blob/v6.3/drivers/regulator/rt5033-regulator.c#L83
-> [4] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L100
-> [5] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/include/linux/power_supply.h#L173-L177
-> [6] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L102
-> [7] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L95
-> [8] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/power/supply/richtek,rt5033-charger.yaml?h=next-20230616
-> [9] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/mfd/richtek,rt5033.yaml?h=next-20230616
-> 
-> Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
-> ---
-> The patch is based on linux-next "next-20230616".
-> 
-> The driver rt5033-charger was just recently added to linux-next.
 
-This appeared in today's next next-20230711 and causes new warnings
+On 7/7/2023 8:42 PM, Bjorn Helgaas wrote:
+> On Fri, Jul 07, 2023 at 02:41:57PM +0300, Dan Carpenter wrote:
+>> On Fri, Jul 07, 2023 at 04:33:56PM +0530, Krishna chaitanya chundru wrote:
+>>> If the MHI state is in M3 then the most probably the host kept the
+>>> device in D3 hot or D3 cold, due to that endpoint transctions will not
+>>> be read by the host, so endpoint wakes up host to bring the host to D0
+>>> which eventually bring back the MHI state to M0.
+>>>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>> ---
+>>>   drivers/bus/mhi/ep/main.c | 28 ++++++++++++++++++++++++++++
+>>>   1 file changed, 28 insertions(+)
+>>>
+>>> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+>>> index 6008818..46a8a3c 100644
+>>> --- a/drivers/bus/mhi/ep/main.c
+>>> +++ b/drivers/bus/mhi/ep/main.c
+>>> @@ -25,6 +25,27 @@ static DEFINE_IDA(mhi_ep_cntrl_ida);
+>>>   static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id);
+>>>   static int mhi_ep_destroy_device(struct device *dev, void *data);
+>>>   
+>>> +static bool mhi_ep_wake_host(struct mhi_ep_cntrl *mhi_cntrl)
+>>> +{
+>>> +	enum mhi_state state;
+>>> +	bool mhi_reset;
+>>> +	u32 count = 0;
+>>> +
+>>> +	mhi_cntrl->wakeup_host(mhi_cntrl);
+>>> +
+>>> +	/* Wait for Host to set the M0 state */
+>>> +	do {
+>>> +		msleep(M0_WAIT_DELAY_MS);
+>>> +		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
+>>> +		count++;
+>>> +	} while (state != MHI_STATE_M0 && count < M0_WAIT_COUNT);
+>>> +
+>>> +	if (state != MHI_STATE_M0)
+>>> +		return false;
+>> Functions which return false on success are an abomination.  Also
+>> boolean functions should be named for the question they answer such
+>> as access_ok() or has_feature() etc.
+> +1.  Also nice if boolean functions do not have side effects, so in
+> this case, where mhi_ep_wake_host() *does* something that might fail,
+> I think "return 0 for success or negative error value" is easier to
+> read.
 
-msm8916-samsung-serranove.dtb: extcon@14: 'connector' does not match any
-of the regexes: 'pinctrl-[0-9]+'
-https://krzk.eu/#/builders/90/builds/40/steps/17/logs/stdio
+sure Dan and Bjorn I will replace bool with int return type as suggested 
+in the next patch series.
 
-The commit mentions rt5033, but that is not the schema being here
-tested, so clearly this is wrong or bindings were not updated.
+- KC
 
-Please fix (and test your future patches).
-
-Best regards,
-Krzysztof
-
+>> Write it like this:
+>>
+>> static int mhi_ep_wake_host(struct mhi_ep_cntrl *mhi_cntrl)
+>> {
+>> 	enum mhi_state state;
+>> 	bool mhi_reset;
+>> 	int count = 0;
+>>
+>> 	mhi_cntrl->wakeup_host(mhi_cntrl);
+>>
+>> 	while (count++ < M0_WAIT_COUNT) {
+>> 		msleep(M0_WAIT_DELAY_MS);
+>>
+>> 		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
+>> 		if (state == MHI_STATE_M0)
+>> 			return 0;
+>> 	}
+>> 	return -ENODEV;
+>> }
