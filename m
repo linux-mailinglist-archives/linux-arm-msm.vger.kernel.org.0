@@ -2,110 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3F9F74E6F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 08:13:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C30D074E6FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 08:14:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbjGKGNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 02:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47732 "EHLO
+        id S231213AbjGKGOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 02:14:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231260AbjGKGNR (ORCPT
+        with ESMTP id S230353AbjGKGOK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 02:13:17 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACFCE64
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 23:13:14 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3fbc77e76abso55797385e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jul 2023 23:13:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689055993; x=1691647993;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2awPYd3HXRNroCTB0hVa1fxOdnTXbZ1UrJBzoM/lTFw=;
-        b=ua13UnqckABF68hPbE6UQ667TIjzCruxMjbB+tXJdXEa5EnCIObMJPMAD1R6ih5FN+
-         JSDlVQCQB2uLnwfDQ7ZFI5078E/gjT4swVWLVME+lexeTTp9f5Nwu5uD7ed0ZC9kHlun
-         gOdU13Q336J1sSiOeGR+RIDHdUGw6fQ8WVZn1eFK++9PZA8LTuITH/cSh4tyuQURLHY5
-         4uDMwuPJIyBzzcKmJurnxSzpG5uLLkRHUJoOjKBxHPVNihrOHgvrHyq11YOWUG9TuFUZ
-         caxybXwFxRLKvH8iExuZLD6a9ctf4YWj3ODfdf2BSKfn4lu9qpFDOuTZOpcxRWapfihS
-         iZQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689055993; x=1691647993;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2awPYd3HXRNroCTB0hVa1fxOdnTXbZ1UrJBzoM/lTFw=;
-        b=BId8wQzUEiJKkBXXi/qMgehmnwC2NFUkgJ8NebESrTZq6+lUu8iV8NBlXLYm/eW/Gy
-         FKVEYdDrGZoCn2lzoDMGri88zkNhinKmuWKxOxN0DQCFzJr3rcu2LFlYrqH2QIX73iu/
-         nKoSumds9qCUySv1P9IUUE7gXB/+nY1r0iIue+rEoqunMP9NFeClM4Xm23nS8JxghHgi
-         GI4up04ComiYvdsCM9wM49yyQvTLtbRRaTbFLXbbuwe5rI1zrKRTnkOjZ9FUOzdWt1EC
-         TooR4uDMiRXyWoOMN8Xvh9g4QDncjznSzSNiMIIyfRshHq9+Z7m/ZR5984ZMjmVQR8R8
-         /XSw==
-X-Gm-Message-State: ABy/qLbhAV1+9WU3i3aJ6MC6461h+Ikd6nMEiTLmH7rNIXmiEdzwa1zG
-        onOnhiv4CFxvbqxvLarYZkxccg==
-X-Google-Smtp-Source: APBJJlGcVeS8URI28QoRPtrIWEWXAZd+Ufs2ZNLU4RJde8pqFYDhqzEmnE1m+xncQYFNft/X/DotqA==
-X-Received: by 2002:adf:e682:0:b0:315:a17d:dbc6 with SMTP id r2-20020adfe682000000b00315a17ddbc6mr3020069wrm.14.1689055993304;
-        Mon, 10 Jul 2023 23:13:13 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id c6-20020adffb46000000b0030ae3a6be4asm1263546wrs.72.2023.07.10.23.13.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jul 2023 23:13:12 -0700 (PDT)
-Date:   Tue, 11 Jul 2023 09:13:08 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        kernel-janitors@vger.kernel.org
-Subject: [PATCH 5/5 v3] accel/qaic: Fix a leak in map_user_pages()
-Message-ID: <8666cc78-3e15-435e-9c4e-15502ac75bcd@moroto.mountain>
+        Tue, 11 Jul 2023 02:14:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3861E5;
+        Mon, 10 Jul 2023 23:14:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3E6BD6132D;
+        Tue, 11 Jul 2023 06:14:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4947DC433C8;
+        Tue, 11 Jul 2023 06:14:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689056044;
+        bh=OX+EN9qbWJzWqP/kGmkt0uY4vfp67tjShrtEo3vYIIs=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=XHcBvWqqsh7Y/fCXX+ln3tRKqpaTOfV7QFUKmY0Z4YHGpV+NhQLCAY4cdZI23ruHi
+         W9CFe8hSqcGwczouqGiLmr8f43f2Utzg5fSvzYLisoobL+zCYv/wy98p8wUoz3QYv4
+         4n9XddiPtuFKdmapWP43qzI5xeFzn8ehyngy+KMrdsbdtfhUQw00d1o1sQga/64v3z
+         4P4hG6aiJsyY+iq6QlvA6AbUTlAQv+4QiS28YlRd6TStwI22re/xO4GQAiYO3M5vyj
+         cp4YFXUYJNGbqQusxqTYDGjToyBF8BEnDvebrxUKo8lDGfI9pEIotFmWep2UUYi61K
+         9AUJW4mzRXafw==
+Message-ID: <02fe7c1e-cb6a-14bc-73fc-04956a2b8396@kernel.org>
+Date:   Tue, 11 Jul 2023 08:13:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZKzx5nA6Z/0yhBJj@moroto>
-X-Mailer: git-send-email haha only kidding
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-serranove: Add
+ RT5033 PMIC with charger
+Content-Language: en-US
+To:     Jakob Hauser <jahau@rocketmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Raymond Hackley <raymondhackley@protonmail.com>,
+        Henrik Grimler <henrik@grimler.se>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230619203743.8136-1-jahau.ref@rocketmail.com>
+ <20230619203743.8136-1-jahau@rocketmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20230619203743.8136-1-jahau@rocketmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If get_user_pages_fast() allocates some pages but not as many as we
-wanted, then the current code leaks those pages.  Call put_page() on
-the pages before returning.
+On 19/06/2023 22:37, Jakob Hauser wrote:
+> For the regulators, apply the same settings as in the downstream
+> devicetree [1], including the "regulator-always-on" for the SAFE_LDO.
+> For the voltage of SAFE_LDO, however, there is only one voltage of 4.9 V
+> available in the mainline driver [2][3].
+> 
+> The values of the battery data evolve from following sources:
+> - precharge current: 450 mA corresponds to the default value of the chip. It
+>   doesn't get changed by the downstream Android driver. Therefore let's stick
+>   to this value.
+> - constant charge current: The 1000 mA are taken from the downstream devicetree
+>   of the serranove battery. It's not easy to spot. The value is in the line
+>   "input_current_limit" [4]. The rows are according to the power supply type,
+>   the 4th value stands for "main supply" [5]. That's the value used by the
+>   Android driver when a charging cable is plugged into the device.
+> - charge termination current: In the downstream devicetree of the battery
+>   that's the line "full_check_current_1st", which contains the 150 mA [6].
+> - precharge voltage: This one doesn't get set in the downstream Android driver.
+>   The chip's default is 2.8 V. That seemed too low to have a notable effect of
+>   handling the battery gentle. The chosen value of 3.5 V is a bit arbitrary
+>   and possibly rather high. As the device is already several years old and
+>   therefore most batteries too, a value on the safe side seems reasonable.
+> - constant charge voltage: The value of 4.35 V is set in the line
+>   "chg_float_voltage" of the downstream battery devicetree [7].
+> 
+> The "connector" sub-node in the extcon node, the "battery" node in the
+> general section and the line "power-supplies" in the fuel-gauge node result
+> from the way of implementation documented in the dt-bindings of
+> rt5033-charger [8] and mfd rt5033 [9].
+> 
+> [1] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-eur-r03.dtsi#L135-L181
+> [2] https://github.com/torvalds/linux/blob/v6.3/include/linux/mfd/rt5033-private.h#L211-L212
+> [3] https://github.com/torvalds/linux/blob/v6.3/drivers/regulator/rt5033-regulator.c#L83
+> [4] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L100
+> [5] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/include/linux/power_supply.h#L173-L177
+> [6] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L102
+> [7] https://github.com/msm8916-mainline/linux-downstream/blob/GT-I9195I/arch/arm/boot/dts/samsung/msm8916/msm8916-sec-serranovelte-battery-r01.dtsi#L95
+> [8] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/power/supply/richtek,rt5033-charger.yaml?h=next-20230616
+> [9] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/mfd/richtek,rt5033.yaml?h=next-20230616
+> 
+> Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
+> ---
+> The patch is based on linux-next "next-20230616".
+> 
+> The driver rt5033-charger was just recently added to linux-next.
 
-Fixes: 129776ac2e38 ("accel/qaic: Add control path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
----
-no change
+This appeared in today's next next-20230711 and causes new warnings
 
- drivers/accel/qaic/qaic_control.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+msm8916-samsung-serranove.dtb: extcon@14: 'connector' does not match any
+of the regexes: 'pinctrl-[0-9]+'
+https://krzk.eu/#/builders/90/builds/40/steps/17/logs/stdio
 
-diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index d5ce36cb351f..9a6f80f31c65 100644
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -425,9 +425,12 @@ static int find_and_map_user_pages(struct qaic_device *qdev,
- 	}
- 
- 	ret = get_user_pages_fast(xfer_start_addr, nr_pages, 0, page_list);
--	if (ret < 0 || ret != nr_pages) {
--		ret = -EFAULT;
-+	if (ret < 0)
- 		goto free_page_list;
-+	if (ret != nr_pages) {
-+		nr_pages = ret;
-+		ret = -EFAULT;
-+		goto put_pages;
- 	}
- 
- 	sgt = kmalloc(sizeof(*sgt), GFP_KERNEL);
--- 
-2.39.2
+The commit mentions rt5033, but that is not the schema being here
+tested, so clearly this is wrong or bindings were not updated.
+
+Please fix (and test your future patches).
+
+Best regards,
+Krzysztof
 
