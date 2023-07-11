@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E34774EDAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 14:09:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADBC674EDA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 14:09:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231499AbjGKMJr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 08:09:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45982 "EHLO
+        id S231700AbjGKMJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 08:09:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231479AbjGKMJf (ORCPT
+        with ESMTP id S231545AbjGKMJf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 11 Jul 2023 08:09:35 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF1C1710
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:09:19 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f96d680399so8212050e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:09:19 -0700 (PDT)
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92FC81717
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:09:20 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fba8f2197bso9076606e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 05:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1689077358; x=1691669358;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GYvqjBfxkgmiMBZUUwcthBjjokrMLk1dwARAQgxYIjE=;
-        b=r4eZ8UoGVz2TYBjU1fvYgDLBs5BJc760MnbswMpJoGIYEWEECPn+W1kI7BTlVKTPGA
-         ti8Dq2/3dYper4ypBolrBZS7yxw2hSlam0/k0mfFXGfzct6KsOw8V9M1NXIIp3nCTe74
-         LCq1TY/MVrPFcZ3fLWByCymiFZKvzCzH1TbjIOFvtnwoMvxCMh7cgV1T9eEpO1ImRrM4
-         KIecXich7nMEePl9ttUBNpx7dTaqWB8qdSMLnPZomB85h0dsWbOCKQJOU4Fn6IOZ0SVn
-         b7QSfhDgUZRI3mYe7SmyO7m0uR3AfIh+jD6CI0mZHbG2PsGIRa2wXziI/VOhWA1pAqtA
-         IhEA==
+        bh=arzL30+hBbUOM20bk4ZB/6VxoeYctCJ9hVqas1NvDpg=;
+        b=bsoY20Og15ONm81zKjVhy39Abte+H2vDLZ9X+Ek6Upe0kyI58Ag9YAikXWDeoEBNnk
+         d1WSfuFHjNDG4YoKQUA1QMOLb3INNsdhwndUZHe+8biJbKrSAkNCBPyjXWCzGWGhxn8C
+         4bVgT+8x+grMeUfcXQJlu8XubewJCLH1nB2DtCqjUJ7zUuh2pNLF94rEvT2aL5ctj3l7
+         oOEV57dAMkxQDyZxUBybN7rP1VUaEWYQta7qAXEhurpITWbSuPECSm+PMgEGHHi96bHP
+         2WoukAFEsApiHeKfe03/vM867Vs5cPYFN1BIXZ7ViTktG9yy9via/fplV9bJYNsYx/Ag
+         ED9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1689077358; x=1691669358;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GYvqjBfxkgmiMBZUUwcthBjjokrMLk1dwARAQgxYIjE=;
-        b=G1zQLy0ZO77mMBVvQEznwfKBPnKX5TtfhamVlmZHJtosOLZUX1BhxruULl2QyvijOi
-         hE3Ku7hyqUIzKF3KjfNrEDCXwRNPtJPOJlT0jE7h4p8k+Kj8RX2lm+YurqA8i12mMPbn
-         zjPVpE3rUYkCz2x10aLbbKCsudBhjMbFr4fpEvcInGDs+HExZ0gQ86xcFiGJ7/w6XCuK
-         eietxdW/bXOzDUKQH7X3iRG5IhW1dD5dstO48lWeBUvBpZU+NDFwXyoZpx5FtFabkLtC
-         BpXSG0XnTXBiuiM92mOcuIurikM6dS7//UQDMRXjex1Rm1J7n3wQ7DG2e/3lJpRSReVl
-         IEQQ==
-X-Gm-Message-State: ABy/qLY7YrFoDZHpPNADU+DPpd/idWStyQQAHM2O/vlz5HmecOxNztf0
-        tq5Wn0rEGrnv9u2dQQuJTiy8FDXsVjiq8sQC6hE=
-X-Google-Smtp-Source: APBJJlHFfvG11hX/1g0/cXespU3CjKpgL/ZaAuN8gYgf8pU9CR4jvRIpKiNyqLy0Gv/TMZN9CfLPpg==
-X-Received: by 2002:ac2:4894:0:b0:4fb:242:6dfa with SMTP id x20-20020ac24894000000b004fb02426dfamr12374463lfc.57.1689077357917;
-        Tue, 11 Jul 2023 05:09:17 -0700 (PDT)
+        bh=arzL30+hBbUOM20bk4ZB/6VxoeYctCJ9hVqas1NvDpg=;
+        b=IoL9PsOC/KBXm5S8wPp0b1MGYE/cUb7zd4bx0wXr4AtC6pvTAygSVGBaZV7nnsb84e
+         yAJF7sGdZL4+1gG6+WWGOEcAxnrfB+OUs8OjwSuyly1ofZQZXdznwcjPZiLFkWq71mLn
+         OQsiue74AsaIxpmXrcBPAFBvP1VVi8HWXv4jwtrckTTWqihLR1xEOjcdD0wfV9wJYfrz
+         S5LkCdRU61JLIqekoQ4B9s5BTTQbgptY4Esi1euRP2ZB2oBkyMVNNFWD6M8C830KNRSQ
+         XqAe8M9+DgXC7aUdPg5pINGPp9UUU+S7eu85JkfcUw+vs9caDHmQZeTPP6yI57H8RMPT
+         Qy7w==
+X-Gm-Message-State: ABy/qLbRbkCsR7RnCB1LiSYHw/xYyk0LUkLG72ILc7oQWuTPkFVansnm
+        7Rv6AeueN3kuOuk3ZTnK+4XDdg==
+X-Google-Smtp-Source: APBJJlEZuKqyBjj4DK+n5B7eU0dRxk/PG6DT2ABOE9ABXo0ksnmVMNtHBVv/+ErTJRXosetnfQC3Ow==
+X-Received: by 2002:a05:6512:10d4:b0:4fb:7592:cc7a with SMTP id k20-20020a05651210d400b004fb7592cc7amr13998891lfg.20.1689077358548;
+        Tue, 11 Jul 2023 05:09:18 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id h22-20020ac25976000000b004fbbd818568sm291447lfp.137.2023.07.11.05.09.17
+        by smtp.gmail.com with ESMTPSA id h22-20020ac25976000000b004fbbd818568sm291447lfp.137.2023.07.11.05.09.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 05:09:17 -0700 (PDT)
+        Tue, 11 Jul 2023 05:09:18 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,415 +60,279 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v4 01/10] dt-bindings: phy: migrate combo QMP PHY bindings to qcom,sc8280xp-qmp-usb43dp-phy.yaml
-Date:   Tue, 11 Jul 2023 15:09:07 +0300
-Message-Id: <20230711120916.4165894-2-dmitry.baryshkov@linaro.org>
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+Subject: [PATCH v4 02/10] phy: qcom-qmp-combo: simplify clock handling
+Date:   Tue, 11 Jul 2023 15:09:08 +0300
+Message-Id: <20230711120916.4165894-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230711120916.4165894-1-dmitry.baryshkov@linaro.org>
 References: <20230711120916.4165894-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Migrate legacy bindings (described in qcom,sc7180-qmp-usb3-dp-phy.yaml)
-to qcom,sc8280xp-qmp-usb43dp-phy.yaml. This removes a need to declare
-the child PHY node or split resource regions.
+For the existing PHYs for new binding we are going to drop ref_clk_src
+clock and always use ref clock. Rather than introducing additional code
+to handle legacy vs current bindings (and clock names), use
+devm_clk_bulk_get_optional() when new bindings are used and
+devm_clk_bulk_get_all() when legacy bindings are in place.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml      | 284 ------------------
- .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |  46 ++-
- 2 files changed, 44 insertions(+), 286 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 67 ++++++++---------------
+ 1 file changed, 23 insertions(+), 44 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-deleted file mode 100644
-index 3c9728938391..000000000000
---- a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-+++ /dev/null
-@@ -1,284 +0,0 @@
--# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
--
--%YAML 1.2
-----
--$id: http://devicetree.org/schemas/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml#
--$schema: http://devicetree.org/meta-schemas/core.yaml#
--
--title: Qualcomm QMP USB3 DP PHY controller (SC7180)
--
--description:
--  The QMP PHY controller supports physical layer functionality for a number of
--  controllers on Qualcomm chipsets, such as, PCIe, UFS and USB.
--
--  Note that these bindings are for SoCs up to SC8180X. For newer SoCs, see
--  qcom,sc8280xp-qmp-usb43dp-phy.yaml.
--
--maintainers:
--  - Wesley Cheng <quic_wcheng@quicinc.com>
--
--properties:
--  compatible:
--    oneOf:
--      - enum:
--          - qcom,sc7180-qmp-usb3-dp-phy
--          - qcom,sc8180x-qmp-usb3-dp-phy
--          - qcom,sdm845-qmp-usb3-dp-phy
--          - qcom,sm8150-qmp-usb3-dp-phy
--          - qcom,sm8250-qmp-usb3-dp-phy
--      - items:
--          - enum:
--              - qcom,sc7280-qmp-usb3-dp-phy
--          - const: qcom,sm8250-qmp-usb3-dp-phy
--
--  reg:
--    items:
--      - description: Address and length of PHY's USB serdes block.
--      - description: Address and length of the DP_COM control block.
--      - description: Address and length of PHY's DP serdes block.
--
--  reg-names:
--    items:
--      - const: usb
--      - const: dp_com
--      - const: dp
--
--  "#address-cells":
--    enum: [ 1, 2 ]
--
--  "#size-cells":
--    enum: [ 1, 2 ]
--
--  ranges: true
--
--  clocks:
--    minItems: 3
--    maxItems: 4
--
--  clock-names:
--    minItems: 3
--    maxItems: 4
--
--  power-domains:
--    maxItems: 1
--
--  orientation-switch:
--    description: Flag the port as possible handler of orientation switching
--    type: boolean
--
--  resets:
--    items:
--      - description: reset of phy block.
--      - description: phy common block reset.
--
--  reset-names:
--    items:
--      - const: phy
--      - const: common
--
--  vdda-phy-supply:
--    description:
--      Phandle to a regulator supply to PHY core block.
--
--  vdda-pll-supply:
--    description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
--
--  vddp-ref-clk-supply:
--    description:
--      Phandle to a regulator supply to any specific refclk pll block.
--
--# Required nodes:
--patternProperties:
--  "^usb3-phy@[0-9a-f]+$":
--    type: object
--    additionalProperties: false
--    description:
--      The USB3 PHY.
--
--    properties:
--      reg:
--        items:
--          - description: Address and length of TX.
--          - description: Address and length of RX.
--          - description: Address and length of PCS.
--          - description: Address and length of TX2.
--          - description: Address and length of RX2.
--          - description: Address and length of pcs_misc.
--
--      clocks:
--        items:
--          - description: pipe clock
--
--      clock-names:
--        deprecated: true
--        items:
--          - const: pipe0
--
--      clock-output-names:
--        items:
--          - const: usb3_phy_pipe_clk_src
--
--      '#clock-cells':
--        const: 0
--
--      '#phy-cells':
--        const: 0
--
--    required:
--      - reg
--      - clocks
--      - '#clock-cells'
--      - '#phy-cells'
--
--  "^dp-phy@[0-9a-f]+$":
--    type: object
--    additionalProperties: false
--    description:
--      The DP PHY.
--
--    properties:
--      reg:
--        items:
--          - description: Address and length of TX.
--          - description: Address and length of RX.
--          - description: Address and length of PCS.
--          - description: Address and length of TX2.
--          - description: Address and length of RX2.
--
--      '#clock-cells':
--        const: 1
--
--      '#phy-cells':
--        const: 0
--
--    required:
--      - reg
--      - '#clock-cells'
--      - '#phy-cells'
--
--required:
--  - compatible
--  - reg
--  - "#address-cells"
--  - "#size-cells"
--  - ranges
--  - clocks
--  - clock-names
--  - resets
--  - reset-names
--  - vdda-phy-supply
--  - vdda-pll-supply
--
--allOf:
--  - if:
--      properties:
--        compatible:
--          enum:
--            - qcom,sc7180-qmp-usb3-dp-phy
--            - qcom,sdm845-qmp-usb3-dp-phy
--    then:
--      properties:
--        clocks:
--          items:
--            - description: Phy aux clock
--            - description: Phy config clock
--            - description: 19.2 MHz ref clk
--            - description: Phy common block aux clock
--        clock-names:
--          items:
--            - const: aux
--            - const: cfg_ahb
--            - const: ref
--            - const: com_aux
--
--  - if:
--      properties:
--        compatible:
--          enum:
--            - qcom,sc8180x-qmp-usb3-dp-phy
--            - qcom,sm8150-qmp-usb3-dp-phy
--    then:
--      properties:
--        clocks:
--          items:
--            - description: Phy aux clock
--            - description: 19.2 MHz ref clk
--            - description: Phy common block aux clock
--        clock-names:
--          items:
--            - const: aux
--            - const: ref
--            - const: com_aux
--
--  - if:
--      properties:
--        compatible:
--          enum:
--            - qcom,sm8250-qmp-usb3-dp-phy
--    then:
--      properties:
--        clocks:
--          items:
--            - description: Phy aux clock
--            - description: Board XO source
--            - description: Phy common block aux clock
--        clock-names:
--          items:
--            - const: aux
--            - const: ref_clk_src
--            - const: com_aux
--
--additionalProperties: false
--
--examples:
--  - |
--    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
--    usb_1_qmpphy: phy-wrapper@88e9000 {
--        compatible = "qcom,sdm845-qmp-usb3-dp-phy";
--        reg = <0x088e9000 0x18c>,
--              <0x088e8000 0x10>,
--              <0x088ea000 0x40>;
--        reg-names = "usb", "dp_com", "dp";
--        #address-cells = <1>;
--        #size-cells = <1>;
--        ranges = <0x0 0x088e9000 0x2000>;
--
--        clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
--                 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
--                 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
--                 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
--        clock-names = "aux", "cfg_ahb", "ref", "com_aux";
--
--        resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
--                 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
--        reset-names = "phy", "common";
--
--        vdda-phy-supply = <&vdda_usb2_ss_1p2>;
--        vdda-pll-supply = <&vdda_usb2_ss_core>;
--
--        orientation-switch;
--
--        usb3-phy@200 {
--            reg = <0x200 0x128>,
--                  <0x400 0x200>,
--                  <0xc00 0x218>,
--                  <0x600 0x128>,
--                  <0x800 0x200>,
--                  <0xa00 0x100>;
--            #clock-cells = <0>;
--            #phy-cells = <0>;
--            clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
--            clock-output-names = "usb3_phy_pipe_clk_src";
--        };
--
--        dp-phy@88ea200 {
--            reg = <0xa200 0x200>,
--                  <0xa400 0x200>,
--                  <0xaa00 0x200>,
--                  <0xa600 0x200>,
--                  <0xa800 0x200>;
--            #clock-cells = <1>;
--            #phy-cells = <0>;
--        };
--    };
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-index ef1c02d8ac88..9af203dc8793 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-@@ -16,8 +16,14 @@ description:
- properties:
-   compatible:
-     enum:
-+      - qcom,sc7180-qmp-usb3-dp-phy
-+      - qcom,sc7280-qmp-usb3-dp-phy
-+      - qcom,sc8180x-qmp-usb3-dp-phy
-       - qcom,sc8280xp-qmp-usb43dp-phy
-+      - qcom,sdm845-qmp-usb3-dp-phy
-       - qcom,sm6350-qmp-usb3-dp-phy
-+      - qcom,sm8150-qmp-usb3-dp-phy
-+      - qcom,sm8250-qmp-usb3-dp-phy
-       - qcom,sm8350-qmp-usb3-dp-phy
-       - qcom,sm8450-qmp-usb3-dp-phy
-       - qcom,sm8550-qmp-usb3-dp-phy
-@@ -26,14 +32,17 @@ properties:
-     maxItems: 1
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 36eb516f9170..3a98234eb16a 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -1359,9 +1359,6 @@ struct qmp_phy_cfg {
+ 	int (*calibrate_dp_phy)(struct qmp_combo *qmp);
+ 	void (*dp_aux_init)(struct qmp_combo *qmp);
  
-   clocks:
--    maxItems: 4
-+    minItems: 4
-+    maxItems: 5
+-	/* clock ids to be requested */
+-	const char * const *clk_list;
+-	int num_clks;
+ 	/* resets to be requested */
+ 	const char * const *reset_list;
+ 	int num_resets;
+@@ -1403,6 +1400,7 @@ struct qmp_combo {
  
-   clock-names:
-+    minItems: 4
-     items:
-       - const: aux
-       - const: ref
-       - const: com_aux
-       - const: usb3_pipe
-+      - const: cfg_ahb
+ 	struct clk *pipe_clk;
+ 	struct clk_bulk_data *clks;
++	int num_clks;
+ 	struct reset_control_bulk_data *resets;
+ 	struct regulator_bulk_data *vregs;
  
-   power-domains:
-     maxItems: 1
-@@ -85,7 +94,6 @@ required:
-   - reg
-   - clocks
-   - clock-names
--  - power-domains
-   - resets
-   - reset-names
-   - vdda-phy-supply
-@@ -93,6 +101,40 @@ required:
-   - "#clock-cells"
-   - "#phy-cells"
+@@ -1463,19 +1461,10 @@ static inline void qphy_clrbits(void __iomem *base, u32 offset, u32 val)
+ }
  
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sc7180-qmp-usb3-dp-phy
-+            - qcom,sdm845-qmp-usb3-dp-phy
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 5
-+        clock-names:
-+          maxItems: 5
-+    else:
-+      properties:
-+        clocks:
-+          maxItems: 4
-+        clock-names:
-+          maxItems: 4
+ /* list of clocks required by phy */
+-static const char * const qmp_v3_phy_clk_l[] = {
++static const char * const qmp_combo_phy_clk_l[] = {
+ 	"aux", "cfg_ahb", "ref", "com_aux",
+ };
+ 
+-static const char * const qmp_v4_phy_clk_l[] = {
+-	"aux", "ref", "com_aux",
+-};
+-
+-/* the primary usb3 phy on sm8250 doesn't have a ref clock */
+-static const char * const qmp_v4_sm8250_usbphy_clk_l[] = {
+-	"aux", "ref_clk_src", "com_aux"
+-};
+-
+ /* list of resets */
+ static const char * const msm8996_usb3phy_reset_l[] = {
+ 	"phy", "common",
+@@ -1549,8 +1538,6 @@ static const struct qmp_phy_cfg sc7180_usb3dpphy_cfg = {
+ 	.configure_dp_phy	= qmp_v3_configure_dp_phy,
+ 	.calibrate_dp_phy	= qmp_v3_calibrate_dp_phy,
+ 
+-	.clk_list		= qmp_v3_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
+ 	.reset_list		= sc7180_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(sc7180_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -1594,8 +1581,6 @@ static const struct qmp_phy_cfg sdm845_usb3dpphy_cfg = {
+ 	.configure_dp_phy	= qmp_v3_configure_dp_phy,
+ 	.calibrate_dp_phy	= qmp_v3_calibrate_dp_phy,
+ 
+-	.clk_list		= qmp_v3_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -1641,8 +1626,6 @@ static const struct qmp_phy_cfg sc8180x_usb3dpphy_cfg = {
+ 	.configure_dp_phy	= qmp_v4_configure_dp_phy,
+ 	.calibrate_dp_phy	= qmp_v4_calibrate_dp_phy,
+ 
+-	.clk_list		= qmp_v4_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -1689,8 +1672,6 @@ static const struct qmp_phy_cfg sc8280xp_usb43dpphy_cfg = {
+ 	.configure_dp_phy	= qmp_v4_configure_dp_phy,
+ 	.calibrate_dp_phy	= qmp_v4_calibrate_dp_phy,
+ 
+-	.clk_list		= qmp_v4_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -1734,8 +1715,6 @@ static const struct qmp_phy_cfg sm6350_usb3dpphy_cfg = {
+ 	.configure_dp_phy	= qmp_v3_configure_dp_phy,
+ 	.calibrate_dp_phy	= qmp_v3_calibrate_dp_phy,
+ 
+-	.clk_list		= qmp_v4_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -1779,8 +1758,6 @@ static const struct qmp_phy_cfg sm8250_usb3dpphy_cfg = {
+ 	.configure_dp_phy	= qmp_v4_configure_dp_phy,
+ 	.calibrate_dp_phy	= qmp_v4_calibrate_dp_phy,
+ 
+-	.clk_list		= qmp_v4_sm8250_usbphy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_sm8250_usbphy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -1829,8 +1806,6 @@ static const struct qmp_phy_cfg sm8350_usb3dpphy_cfg = {
+ 	.configure_dp_phy	= qmp_v4_configure_dp_phy,
+ 	.calibrate_dp_phy	= qmp_v4_calibrate_dp_phy,
+ 
+-	.clk_list		= qmp_v4_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -1879,8 +1854,6 @@ static const struct qmp_phy_cfg sm8550_usb3dpphy_cfg = {
+ 	.calibrate_dp_phy	= qmp_v4_calibrate_dp_phy,
+ 
+ 	.regs			= qmp_v6_usb3phy_regs_layout,
+-	.clk_list		= qmp_v4_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+@@ -2433,7 +2406,7 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
+ 		goto err_disable_regulators;
+ 	}
+ 
+-	ret = clk_bulk_prepare_enable(cfg->num_clks, qmp->clks);
++	ret = clk_bulk_prepare_enable(qmp->num_clks, qmp->clks);
+ 	if (ret)
+ 		goto err_assert_reset;
+ 
+@@ -2483,7 +2456,7 @@ static int qmp_combo_com_exit(struct qmp_combo *qmp, bool force)
+ 
+ 	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+ 
+-	clk_bulk_disable_unprepare(cfg->num_clks, qmp->clks);
++	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+ 
+ 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+ 
+@@ -2762,7 +2735,6 @@ static void qmp_combo_disable_autonomous_mode(struct qmp_combo *qmp)
+ static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
+ {
+ 	struct qmp_combo *qmp = dev_get_drvdata(dev);
+-	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 
+ 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->mode);
+ 
+@@ -2774,7 +2746,7 @@ static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
+ 	qmp_combo_enable_autonomous_mode(qmp);
+ 
+ 	clk_disable_unprepare(qmp->pipe_clk);
+-	clk_bulk_disable_unprepare(cfg->num_clks, qmp->clks);
++	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+ 
+ 	return 0;
+ }
+@@ -2782,7 +2754,6 @@ static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
+ static int __maybe_unused qmp_combo_runtime_resume(struct device *dev)
+ {
+ 	struct qmp_combo *qmp = dev_get_drvdata(dev);
+-	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	int ret = 0;
+ 
+ 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->mode);
+@@ -2792,14 +2763,14 @@ static int __maybe_unused qmp_combo_runtime_resume(struct device *dev)
+ 		return 0;
+ 	}
+ 
+-	ret = clk_bulk_prepare_enable(cfg->num_clks, qmp->clks);
++	ret = clk_bulk_prepare_enable(qmp->num_clks, qmp->clks);
+ 	if (ret)
+ 		return ret;
+ 
+ 	ret = clk_prepare_enable(qmp->pipe_clk);
+ 	if (ret) {
+ 		dev_err(dev, "pipe_clk enable failed, err=%d\n", ret);
+-		clk_bulk_disable_unprepare(cfg->num_clks, qmp->clks);
++		clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+ 		return ret;
+ 	}
+ 
+@@ -2870,9 +2841,8 @@ static int qmp_combo_reset_init(struct qmp_combo *qmp)
+ 
+ static int qmp_combo_clk_init(struct qmp_combo *qmp)
+ {
+-	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	struct device *dev = qmp->dev;
+-	int num = cfg->num_clks;
++	int num = ARRAY_SIZE(qmp_combo_phy_clk_l);
+ 	int i;
+ 
+ 	qmp->clks = devm_kcalloc(dev, num, sizeof(*qmp->clks), GFP_KERNEL);
+@@ -2880,9 +2850,11 @@ static int qmp_combo_clk_init(struct qmp_combo *qmp)
+ 		return -ENOMEM;
+ 
+ 	for (i = 0; i < num; i++)
+-		qmp->clks[i].id = cfg->clk_list[i];
++		qmp->clks[i].id = qmp_combo_phy_clk_l[i];
+ 
+-	return devm_clk_bulk_get(dev, num, qmp->clks);
++	qmp->num_clks = num;
 +
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sc8280xp-qmp-usb43dp-phy
-+            - qcom,sm6350-qmp-usb3-dp-phy
-+            - qcom,sm8550-qmp-usb3-dp-phy
-+    then:
-+      required:
-+        - power-domains
-+    else:
-+      properties:
-+        power-domains: false
-+
- additionalProperties: false
++	return devm_clk_bulk_get_optional(dev, num, qmp->clks);
+ }
  
- examples:
+ static void phy_clk_release_provider(void *res)
+@@ -3088,6 +3060,12 @@ static int phy_dp_clks_register(struct qmp_combo *qmp, struct device_node *np)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = devm_clk_bulk_get_all(qmp->dev, &qmp->clks);
++	if (ret < 0)
++		return ret;
++
++	qmp->num_clks = ret;
++
+ 	return 0;
+ }
+ 
+@@ -3357,6 +3335,7 @@ static int qmp_combo_parse_dt(struct qmp_combo *qmp)
+ 	const struct qmp_combo_offsets *offs = cfg->offsets;
+ 	struct device *dev = qmp->dev;
+ 	void __iomem *base;
++	int ret;
+ 
+ 	if (!offs)
+ 		return -EINVAL;
+@@ -3386,6 +3365,10 @@ static int qmp_combo_parse_dt(struct qmp_combo *qmp)
+ 	}
+ 	qmp->dp_dp_phy = base + offs->dp_dp_phy;
+ 
++	ret = qmp_combo_clk_init(qmp);
++	if (ret)
++		return ret;
++
+ 	qmp->pipe_clk = devm_clk_get(dev, "usb3_pipe");
+ 	if (IS_ERR(qmp->pipe_clk)) {
+ 		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
+@@ -3434,10 +3417,6 @@ static int qmp_combo_probe(struct platform_device *pdev)
+ 
+ 	mutex_init(&qmp->phy_mutex);
+ 
+-	ret = qmp_combo_clk_init(qmp);
+-	if (ret)
+-		return ret;
+-
+ 	ret = qmp_combo_reset_init(qmp);
+ 	if (ret)
+ 		return ret;
 -- 
 2.39.2
 
