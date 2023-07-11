@@ -2,149 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B53A874F2D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 16:59:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 376C874F2FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 17:09:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230155AbjGKO7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 10:59:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59694 "EHLO
+        id S229505AbjGKPIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 11:08:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229785AbjGKO7H (ORCPT
+        with ESMTP id S230258AbjGKPIo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 10:59:07 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FB210CA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:59:06 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fb9fd28025so8727314e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 07:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689087544; x=1691679544;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/BBSi3Y2p51GXr/kdqXZWgeltZiMvocxuPhmv54PXCk=;
-        b=m+crFpHVwUmNM1IevtAkCKRHO2NdXi4Nv5/sUrEBbC/6G0nqVk8jGFXEAycB2kX3/L
-         yvpyGo1nZPsvQ4GyyX94zgLaMZrnPUkVphABTvta+rc1eml+Om6KmMMO4if+VkCc8nnE
-         RZE1XinaqSkpC3X7oR2fPKc479VXNwDGzIsXrzYOrRVxNtPGrJ7S2R6gHn0TFLuVKh0C
-         g18BnSXimKeLS0zSqaCI37EeNROn24C5wMu4bX6B61wwlkKwyDqcfqCGMWfVui+WP4co
-         73Qj8z6Gln/VVpK0hrN3zfZDaXosWyu5cy62er1WWnY1FcXuqsNq0aeer9cm3PdNkqGK
-         nScQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689087544; x=1691679544;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/BBSi3Y2p51GXr/kdqXZWgeltZiMvocxuPhmv54PXCk=;
-        b=NHEaysf7G84R+Iiq4alNSTWrAusm9GeeYFDSgtBX7ztWMvkh8OLffPuRnNaJ7N22Bk
-         cruxraMg6tAQH+ZgiwCRcYkJChX2exzvmrXBCjSQJp2IL0cuVhc0YWo+88rVkCZRnEDz
-         FwCzk7XaFpRHbd046YdIC0BD+M1dbkAmtmaGG9zdXeIDYr4235ZcMlatdqHEwc65WKB+
-         B95nAKT7ryk85AilhrrlvvQs7o/7y/hrV40lToRrRbyJ+3X3OKv4xoLndss63QljUK7k
-         vRQlRfyLNMvX2IG6WvQ7D2dsW/zG81plEu6v0q3kh8tJ1CME+689HK7LdckSnHi9gzpX
-         TEaw==
-X-Gm-Message-State: ABy/qLa4mDMwhwjJpc70zE3aim1cV9eZUVsdJX87vMdQpwccfvG++eXZ
-        s9sRO9K4maui5wTUeJfawjoy2Q==
-X-Google-Smtp-Source: APBJJlEmv479eisRoP1W7B2jI6/9ZRK/5ke7XvBE3vPvencrHGUfD1y6xArNgZUCsv/KhIU2Uxl+bg==
-X-Received: by 2002:a05:6512:128a:b0:4f8:5ab0:68c4 with SMTP id u10-20020a056512128a00b004f85ab068c4mr16389336lfs.59.1689087544345;
-        Tue, 11 Jul 2023 07:59:04 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id j14-20020a19f50e000000b004f7618c67a7sm349351lfb.76.2023.07.11.07.59.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jul 2023 07:59:03 -0700 (PDT)
-Message-ID: <4330df82-77a9-27ce-3f24-144718cc082e@linaro.org>
-Date:   Tue, 11 Jul 2023 17:59:03 +0300
+        Tue, 11 Jul 2023 11:08:44 -0400
+Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC7DA100;
+        Tue, 11 Jul 2023 08:08:42 -0700 (PDT)
+Date:   Tue, 11 Jul 2023 15:08:31 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1689088119; x=1689347319;
+        bh=VIjn5Sgr+XaI5m5nuTNBKwgTaDZhQimElHATfB00U6o=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=hQD30D9TLLyDcO2bVl3okDKDs2kzhhC5933d/BlWVXxUwQTaMAx3k3rghCgId7t20
+         k6HMSplZ3mlQOqHW09SZiGGpWfONV5kXZs53aG1Ih0OouFOKpT6AWs4loYxgwXJBdG
+         yUJdaQEcExbliNS5agrIVUaRAlobvtUZR3TVaqds=
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Gergo Koteles <soyer@irl.hu>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     Jonathan Corbet <corbet@lwn.net>, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] Input: add ABS_SND_PROFILE
+Message-ID: <65708872-3209-bd7b-d873-45e75a9e34bb@connolly.tech>
+In-Reply-To: <20230407171103.5jf46g4hw3fed7dn@ripper>
+References: <cover.1677022414.git.soyer@irl.hu> <1a4752739568afbdbaaff48436d2bb595d2bda0d.1677022414.git.soyer@irl.hu> <20230407171103.5jf46g4hw3fed7dn@ripper>
+Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 1/3] dt-bindings: power: rpmhpd: Add Generic RPMh PD
- indexes
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1689054169-10800-1-git-send-email-quic_rohiagar@quicinc.com>
- <1689054169-10800-2-git-send-email-quic_rohiagar@quicinc.com>
- <2040226e-9b45-b409-3edd-a5b86d86daa8@linaro.org>
- <8a3124ce-a11d-2491-eaee-1695cec70b17@quicinc.com>
- <e885383b-a231-75a1-32ce-bf850f0cb022@linaro.org>
- <8c3468f0-3069-95e3-e2f1-279fca78a578@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <8c3468f0-3069-95e3-e2f1-279fca78a578@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/07/2023 14:44, Konrad Dybcio wrote:
-> On 11.07.2023 08:22, Krzysztof Kozlowski wrote:
->> On 11/07/2023 08:17, Rohit Agarwal wrote:
->>>
->>> On 7/11/2023 11:22 AM, Krzysztof Kozlowski wrote:
->>>> On 11/07/2023 07:42, Rohit Agarwal wrote:
->>>>> Add Generic RPMh Power Domain indexes that can be used
->>>>> for all the Qualcomm SoC henceforth.
->>>>>
->>>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->>>>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>> ---
->>>>>    include/dt-bindings/power/qcom-rpmhpd.h | 30 ++++++++++++++++++++++++++++++
->>>>>    1 file changed, 30 insertions(+)
->>>>>    create mode 100644 include/dt-bindings/power/qcom-rpmhpd.h
->>>>>
->>>>> diff --git a/include/dt-bindings/power/qcom-rpmhpd.h b/include/dt-bindings/power/qcom-rpmhpd.h
->>>>> new file mode 100644
->>>>> index 0000000..4da2e04
->>>>> --- /dev/null
->>>>> +++ b/include/dt-bindings/power/qcom-rpmhpd.h
->>>> Filename based on compatible.
->>> This is not specific for SDX75. These are generic ones that should be
->>> used for all other targets.
->>> Konrad suggested in v1 to avoid target specific prefixes everytime and
->>> to create a new generic
->>> dt-bindings that can be reused.
->>>>> @@ -0,0 +1,30 @@
->>>>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->>>>> +/*
->>>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>>> + */
->>>>> +
->>>>> +#ifndef _DT_BINDINGS_POWER_QCOM_RPMHPD_H
->>>>> +#define _DT_BINDINGS_POWER_QCOM_RPMHPD_H
->>>>> +
->>>>> +/* Generic RPMH Power Domain Indexes */
->>>>> +#define CX               0
->>>> These are very generic names, usually not used in global headers. Please
->>>> use some reasonable prefix.
->>> This was based on the suggestion from Konrad in v2 to drop the RPMHPD
->>> prefix and we can go only with names like CX, etc.
->>
->> I don't think having so generic name in tree-wide header is good idea.
-> Conversely, I think that it would be very clear in files including this header.
 
-It is expected to be included into dtsi and into rpmhpd driver (only). 
-However I'd also suggest adding some generic prefix (e.g. RPMHPD_CX). 
-Just `CX' is too short and has a sensible possibility of getting  a 
-symbol conflict.
 
-> 
-> Konrad
->> CX can mean anything.
+On 07/04/2023 18:11, Bjorn Andersson wrote:
+> On Wed, Feb 22, 2023 at 01:10:33AM +0100, Gergo Koteles wrote:
+>> ABS_SND_PROFILE used to describe the state of a multi-value sound profil=
+e
+>> switch. This will be used for the alert-slider on OnePlus phones or othe=
+r
+>> phones.
 >>
->> Best regards,
->> Krzysztof
+>> Profile values added as SND_PROFLE_(SILENT|VIBRATE|RING) identifiers
+>> to input-event-codes.h so they can be used from DTS.
+>>
+>> Signed-off-by: Gergo Koteles <soyer@irl.hu>
+>> ---
+>>  Documentation/input/event-codes.rst    | 6 ++++++
+>>  drivers/hid/hid-debug.c                | 1 +
+>>  include/uapi/linux/input-event-codes.h | 9 +++++++++
+>>  3 files changed, 16 insertions(+)
+>>
+>> diff --git a/Documentation/input/event-codes.rst b/Documentation/input/e=
+vent-codes.rst
+>> index b4557462edd7..d43336e64d6a 100644
+>> --- a/Documentation/input/event-codes.rst
+>> +++ b/Documentation/input/event-codes.rst
+>> @@ -241,6 +241,12 @@ A few EV_ABS codes have special meanings:
+>>      emitted only when the selected profile changes, indicating the newl=
+y
+>>      selected profile value.
+>>
+...
+>>
+>> +/*
+>> + * ABS_SND_PROFILE values
+>> + */
+>> +
+>> +#define SND_PROFILE_SILENT=090x00
+>> +#define SND_PROFILE_VIBRATE=090x01
+>> +#define SND_PROFILE_RING=090x02
+>=20
+> The patch looks good to me, bu I'd need these header file additions in
+> order to merge the dts patch. Could I get an ack and take it through the
+> Qualocmm tree, or could you pick it up for 6.4, and then I can merge the
+> dts change after that?
+
+Bump, I think this might have gotten lost.
+>=20
+> Regards,
+> Bjorn
+>=20
+>> +
+>>  #endif
+>> --
+>> 2.39.2
 >>
 
--- 
-With best wishes
-Dmitry
+--=20
+Kind Regards,
+Caleb
 
