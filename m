@@ -2,75 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 26D3F74F58B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 18:33:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 578E674F5DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jul 2023 18:44:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233192AbjGKQdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 12:33:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33628 "EHLO
+        id S233346AbjGKQoc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 12:44:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233379AbjGKQdC (ORCPT
+        with ESMTP id S232243AbjGKQoI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 12:33:02 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 482361FD7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 09:32:49 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b701e1ca63so94730101fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jul 2023 09:32:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689093167; x=1691685167;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VWtpptzPuOCoLkyZBw7yYHV5FeI36rJVjotbONsdA94=;
-        b=WFibieZ2v0r4nWPy0J1wGTrFtOXxVksWo9Ycvtk6r1viqsBFsWV1+2Luw0tJWYEc2d
-         EybaDJGcl9KBnd0R2+PpSfAnadC6cUCuzXIeMjWw73PxDtrOeheXj3MKd/apxW9S3ScJ
-         Bl58mCaKB5LUAOIUynXr102zB7CYguU8HSAJLcDpZc+IWY8x5SiZcHZRkmcdW0/ue2oa
-         8aXF0EdL9nkFqQ8NQ6NYa+DFo+gCiYHKk0xm586Z7LI3nLfD/P1f+sXgZTNlbdV9CQLJ
-         zPkvhLIsOegU5GpzkADKnE1GLB+w6gcz5zA7aFFk4hLsPcOTQHM9yDbvmbKV8wZAXdVk
-         LFCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689093167; x=1691685167;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VWtpptzPuOCoLkyZBw7yYHV5FeI36rJVjotbONsdA94=;
-        b=k5ZKodcnd16p7fZIo/C8q0omrsuVHUAJ/UlYQNFZFrXFw0vaL51HDj3k1gdTd+oMt2
-         vmmoF6Ii8cXW7l9Nma54dgzzb2AXyg17vfk8jjmvWb0k32Pc6nIffmxAR8f8dlLZWQUA
-         SeYpX4LGFK0jBU+NQk5b1o0mQYLu3l0/rUp+y+/HR4PB4oDxqZYDA/h2gFxWQn9OV+8G
-         slI0HpREAsFOPqhHY5xbXBQgHIoVZuuh4evVyWNZgvhplE/7JA03HOSOscyTEMSk97xU
-         luI2Yb+eMRp/FQlqduKCw7D1e2WHhhWy44o9ZZhcW3aqwDj8JAES0sy60Q+VammnV9Sj
-         nvHQ==
-X-Gm-Message-State: ABy/qLYpg53IyXpaj7M2w9SM55ClasUl8CJAdAaIiF0nbFrgnA50GSeI
-        8uBE6UeJ94hkmoASJklAuU20XzfQFvLSOPAKiXQ=
-X-Google-Smtp-Source: APBJJlH1If/svLi3ZvVSK9N5XCgAEROHhzB3qlp5M8M0oO6v2qngfJe3MewXHmdWauY1GePpYxisCh5XUDIQqNBIkDk=
-X-Received: by 2002:a05:651c:120c:b0:2b6:fc80:c45f with SMTP id
- i12-20020a05651c120c00b002b6fc80c45fmr12883371lja.13.1689093167200; Tue, 11
- Jul 2023 09:32:47 -0700 (PDT)
+        Tue, 11 Jul 2023 12:44:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF261BE8;
+        Tue, 11 Jul 2023 09:43:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E0FBD61426;
+        Tue, 11 Jul 2023 16:43:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8F1C433C9;
+        Tue, 11 Jul 2023 16:43:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689093834;
+        bh=YWbs68UIgZRzU1siQoXBAlJn+q/gZ5KT+J9UVrgDd8k=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=o7rpzdvW3SfZVmcm+fcan04N/XVrO+5kVWagZNCg8nI3li5UYSHWeWBX+eFqjlPD+
+         U9jWTNObax5fAwbtBfcHjrCBSwmUu3HhqLAzlvbKrtrhlzxptFcBA/AYMPDE+t/L2J
+         M2A7Fp4pEFR+va4a0K+LLmh6kkLDExKzlR+P7NGF0COhOpnPCNjse8TEYsae3f+NK7
+         K5IQL7js96lOsuoPbG7h2qI6rla6wvmlLnSHyGJcbrJoh43ARwNqxr+MrQoqhtYVhS
+         vXyiH0qhIw9ejMuJ+FioLsfgUwylD8OFNOGdrj2H+ZChbIL67an8qGaJxsqym1Kmsd
+         SnVQySdlW9usg==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Yangtao Li <frank.li@vivo.com>
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20230705081856.13734-1-frank.li@vivo.com>
+References: <20230705081856.13734-1-frank.li@vivo.com>
+Subject: Re: [PATCH 1/5] dmaengine: qcom: gpi: Use
+ devm_platform_get_and_ioremap_resource()
+Message-Id: <168909383153.208679.15343948792914219046.b4-ty@kernel.org>
+Date:   Tue, 11 Jul 2023 22:13:51 +0530
 MIME-Version: 1.0
-Received: by 2002:a17:907:1c16:b0:986:7a95:9cc0 with HTTP; Tue, 11 Jul 2023
- 09:32:46 -0700 (PDT)
-Reply-To: mrsvl06@gmail.com
-From:   Veronica Lee <nd4846496@gmail.com>
-Date:   Tue, 11 Jul 2023 18:32:46 +0200
-Message-ID: <CAPadVRx=24t+dtCfxOJ-H_QTG0496dY-ZfFTyFRXoPSEnRePwA@mail.gmail.com>
-Subject: re
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-16nXnNeV150g15nXp9eZ16jXqteZINep157Xl9eUINec15TXkteZ16Ig15DXnNeZ15og16nXldeR
-INeZ16kg15zXmSDXnteZ15nXnCDXkdei15HXqCDXnNec15Ag16rXkteV15HXlCDXkNeg15kg157X
-lteb15nXqA0K15zXkteR15kg15fXldeW15Qg16nXkNeg15kg16jXldem15Qg15zXqdeq16Mg15DX
-ldeq15og15fXlteV16gg15DXnNeZ15kg15zXpNeo15jXmdedINeg15XXodek15nXnSDXkNeg15kg
-157Xl9eb15QNCteQ16DXkA0K
+
+On Wed, 05 Jul 2023 16:18:52 +0800, Yangtao Li wrote:
+> Convert platform_get_resource(), devm_ioremap_resource() to a single
+> call to devm_platform_get_and_ioremap_resource(), as this is exactly
+> what this function does.
+> 
+> 
+
+Applied, thanks!
+
+[1/5] dmaengine: qcom: gpi: Use devm_platform_get_and_ioremap_resource()
+      commit: d9313d9f1fbc14cae5147c5130bea54aa76ad65f
+[2/5] dmaengine: qcom_hidma: Use devm_platform_get_and_ioremap_resource()
+      commit: a189107deb574fd08018bbf2fe5cd86450a54b13
+[3/5] dmaengine: qcom: hidma_mgmt: Use devm_platform_get_and_ioremap_resource()
+      commit: fe6c2622473f3756a09bd6c42cffca6fbdce391c
+[4/5] dmaengine: shdmac: Convert to devm_platform_ioremap_resource()
+      commit: 0976421c5a339b1b1a89cfba4471a6de761130ed
+[5/5] dmaengine: stm32-dma: Use devm_platform_get_and_ioremap_resource()
+      commit: b402a7eeaa35aaa3300a4ba6bd5b381112ae183c
+
+Best regards,
+-- 
+~Vinod
+
+
