@@ -2,96 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EEF5750835
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:27:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 604B9750843
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:28:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233215AbjGLM1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 08:27:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46294 "EHLO
+        id S233391AbjGLM2N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 08:28:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233163AbjGLM1D (ORCPT
+        with ESMTP id S233332AbjGLM2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 08:27:03 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0A561BEA;
-        Wed, 12 Jul 2023 05:26:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2C4C6617AF;
-        Wed, 12 Jul 2023 12:26:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA20C433C7;
-        Wed, 12 Jul 2023 12:26:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689164812;
-        bh=W3smyjCEDQCZ7N9U5xTsAijdASzIF9l4tZ+KT93zqNo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PbHJHjNSm0fHEbmnjn/xqszft8Exw4uVANi9F/2nCEsVcTkKb+GvzopoYiu5/w3cc
-         j5G5hy+ON1v9ZjRezYwd14KXa7vkLKvtlYhq9Ju3UFmjx7uMAmBRTeGaGcazJwvA0Y
-         Q1/bZE0VpRL04w5CTcNeI/QVEAQvTtZeZubA3VYpSw4NT2izVpLKqhwLpmYRMCLStx
-         DGugihHBitupae5T+moP6G4KEyW6oaH+EHr63xWtl09l0BR+1TrPEr3cD483dq4UgP
-         R21ef/YAU++ezyWjlpZiUdB+7k5majlClVWxh7xXHDO66lb8zDi29cQO3AQUcDMMkV
-         8ts/ohS+YYEjQ==
-Date:   Wed, 12 Jul 2023 17:56:41 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     loic.poulain@linaro.org, fabio.porcedda@gmail.com,
-        bhelgaas@google.com, song.fc@gmail.com, duke_xinanwen@163.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for Dell DW5932e
-Message-ID: <20230712122641.GD102757@thinkpad>
-References: <20230712083741.7615-1-slark_xiao@163.com>
+        Wed, 12 Jul 2023 08:28:11 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF2D100
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:28:09 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-55b22f82ac8so467310a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:28:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689164889; x=1691756889;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ss8TgyARGa8R7ybKRI+zpQEGya6RyvZhqG69g7/1a8o=;
+        b=NnzMcvhNkva7W/6wMnD1NIt4d16zGTpmIwpmOCHrZ1AKi+58Iov+hYhrevzoxaG23M
+         DKVaJDXt1r0D5uqk5/Cn9l4UIAphvkLp5P5t+hLcKPmaJavcvaKfRmB1cfKI+4JoJpkY
+         iQ/JdPMOrCT1S1zJFwGY68TnLS6RhPY654cXCS29XMK2r3V4HxoYfNWMSq1/FjL23XTX
+         VmXu28hNGsataMoEAO5RK3usYZUkxBY+X226SsecxgM7Sb1W4ZB1IhxLySlk4OIbYypT
+         6V9xvckoZY9DPC8H2eqLrKtts5I2cztY0ZnjZE/6ua/BlQ23IG8wEuqgxihLs5TUR4cu
+         1Ypg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689164889; x=1691756889;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ss8TgyARGa8R7ybKRI+zpQEGya6RyvZhqG69g7/1a8o=;
+        b=cGz4a6cxgiALFpVd2A4MRkDPMGKeMHt7k3lh+KWKpkT2g0fKuH7QVElOT3A0zTmkpC
+         FfTC9tN7489OLamyYD12anD7dJ5KbxkegQhjGvqpdy2SxTB3fb6EBAY6pFBQiEjXq0Ro
+         4/iI+Pm/AB5vsiz7W1eGO/bb5rgRyeYMEsSOk9jQYMPH8dQ7kNA+sNmFg6Iw9LXmU93y
+         kaO2OiVADR7IM+6jWyuiw4qax3Ul8t/TINprCG9xAtd1b0GcVGTnvzYYjB9odZeFMJWF
+         fmsA87AjXqpSRuvWEwPgqKPykOAg8lD7bhjs1wO+Gv7dEsmtNyaN94rD61gxiEgXzLDk
+         9z2A==
+X-Gm-Message-State: ABy/qLasB/0CTH0cIZ1YKzSvr09ZgXvqBraJwJkpAb/2s/ZKmMDV+yvQ
+        wipQSYnYhoASm2S2rb6ozqFe
+X-Google-Smtp-Source: APBJJlG8ThheU5sQFDWNEBk5rKV899ROC1JFcrlLVU6uGeLmUaZENZV8342hP8okBYkTpASRWYL/FQ==
+X-Received: by 2002:a17:90b:1d07:b0:25b:f105:8372 with SMTP id on7-20020a17090b1d0700b0025bf1058372mr2517491pjb.5.1689164888909;
+        Wed, 12 Jul 2023 05:28:08 -0700 (PDT)
+Received: from thinkpad ([117.207.27.131])
+        by smtp.gmail.com with ESMTPSA id q4-20020a17090a4f8400b00264c262a033sm10665538pjh.12.2023.07.12.05.27.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jul 2023 05:28:08 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 17:57:50 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
+Subject: Re: [PATCH 00/14] UFS: Add OPP and interconnect support
+Message-ID: <20230712122750.GE102757@thinkpad>
+References: <20230712103213.101770-1-manivannan.sadhasivam@linaro.org>
+ <20230712104044.GA102214@thinkpad>
+ <3523988f-fa51-ce44-ded7-9f3c7acbf65e@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230712083741.7615-1-slark_xiao@163.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <3523988f-fa51-ce44-ded7-9f3c7acbf65e@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 12, 2023 at 04:37:41PM +0800, Slark Xiao wrote:
-> The DW5932e has 2 variants: eSIM(DW5932e-eSIM) and non-eSIM(DW5932e).
-> Both of them are designed based on Qualcomm SDX62 and it will
-> align with the Foxconn sdx65 settings.
+On Wed, Jul 12, 2023 at 03:18:38PM +0300, Dmitry Baryshkov wrote:
+> On 12/07/2023 13:40, Manivannan Sadhasivam wrote:
+> > On Wed, Jul 12, 2023 at 04:01:55PM +0530, Manivannan Sadhasivam wrote:
+> > > Hi,
+> > > 
+> > > This series adds OPP (Operating Points) support to UFSHCD driver and
+> > > interconnect support to Qcom UFS driver.
+> > > 
+> > 
+> > Missed to cc SCSI folks. Will be resending this series. Sorry for the noise.
 > 
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> I'd say, there is a need for the resend anyway, the series got duplicate
+> patch indices.
+> 
 
-Applied to mhi-next!
+Yeah, my script screwed up. Will wait for some time to get comments before
+resending though.
 
 - Mani
 
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+> > 
+> > - Mani
+> > 
+> > > Motivation behind adding OPP support is to scale both clocks as well as
+> > > regulators/performance state dynamically. Currently, UFSHCD just scales
+> > > clock frequency during runtime with the help of "freq-table-hz" property
+> > > defined in devicetree. With the addition of OPP tables in devicetree (as
+> > > done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+> > > both clocks and performance state of power domain which helps in power
+> > > saving.
+> > > 
+> > > For the addition of OPP support to UFSHCD, there are changes required to
+> > > the OPP framework and devfreq drivers which are also added in this series.
+> > > 
+> > > Finally, interconnect support is added to Qcom UFS driver for scaling the
+> > > interconnect path dynamically. This is required to avoid boot crash in
+> > > recent SoCs and also to save power during runtime. More information is
+> > > available in patch 13/13.
+> > > 
+> > > Credits
+> > > =======
+> > > 
+> > > This series is a continuation of previous work by Krzysztof Kozlowski [1]
+> > > and Brian Masney [2]. Ideally, this could've split into two series (OPP
+> > > and interconnect) but since there will be a dependency in the devicetree,
+> > > I decided to keep them in a single series.
+> > > 
+> > > Testing
+> > > =======
+> > > 
+> > > This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
+> > > development boards.
+> > > 
+> > > Merging Strategy
+> > > ================
+> > > 
+> > > An immutable branch might be required between OPP and SCSI trees because of
+> > > the API dependency (devfreq too). And I leave it up to the maintainers to
+> > > decide.
+> > > 
+> > > Thanks,
+> > > Mani
+> > > 
+> > > [1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+> > > [2] https://lore.kernel.org/all/20221117104957.254648-1-bmasney@redhat.com/
+> > > 
+> > > Krzysztof Kozlowski (2):
+> > >    dt-bindings: ufs: common: add OPP table
+> > >    arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
+> > > 
+> > > Manivannan Sadhasivam (12):
+> > >    dt-bindings: opp: Increase maxItems for opp-hz property
+> > >    arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC
+> > >    arm64: dts: qcom: sdm845: Fix the min frequency of "ice_core_clk"
+> > >    arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
+> > >    OPP: Introduce dev_pm_opp_find_freq_{ceil/floor}_indexed() APIs
+> > >    OPP: Introduce dev_pm_opp_get_freq_indexed() API
+> > >    PM / devfreq: Switch to dev_pm_opp_find_freq_{ceil/floor}_indexed()
+> > >      APIs
+> > >    scsi: ufs: core: Add OPP support for scaling clocks and regulators
+> > >    scsi: ufs: host: Add support for parsing OPP
+> > >    arm64: dts: qcom: sdm845: Add interconnect paths to UFSHC
+> > >    arm64: dts: qcom: sm8250: Add interconnect paths to UFSHC
+> > >    scsi: ufs: qcom: Add support for scaling interconnects
+> > > 
+> > >   .../devicetree/bindings/opp/opp-v2-base.yaml  |   2 +-
+> > >   .../devicetree/bindings/ufs/ufs-common.yaml   |  34 ++++-
+> > >   arch/arm64/boot/dts/qcom/sdm845.dtsi          |  47 ++++--
+> > >   arch/arm64/boot/dts/qcom/sm8250.dtsi          |  43 ++++--
+> > >   drivers/devfreq/devfreq.c                     |  14 +-
+> > >   drivers/opp/core.c                            |  76 ++++++++++
+> > >   drivers/ufs/core/ufshcd.c                     | 142 ++++++++++++++----
+> > >   drivers/ufs/host/ufs-qcom.c                   | 131 +++++++++++++++-
+> > >   drivers/ufs/host/ufs-qcom.h                   |   3 +
+> > >   drivers/ufs/host/ufshcd-pltfrm.c              | 116 ++++++++++++++
+> > >   include/linux/pm_opp.h                        |  26 ++++
+> > >   include/ufs/ufshcd.h                          |   4 +
+> > >   12 files changed, 574 insertions(+), 64 deletions(-)
+> > > 
+> > > -- 
+> > > 2.25.1
+> > > 
+> > 
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 9ca0dc3a3bfe..07172789b197 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -625,6 +625,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* T99W510 (sdx24), variant 3 */
->  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f2),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
-> +	/* DW5932e-eSIM (sdx62), With eSIM */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f5),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
-> +	/* DW5932e (sdx62), Non-eSIM*/
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f9),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
->  	/* MV31-W (Cinterion) */
->  	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
->  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
 > -- 
-> 2.25.1
+> With best wishes
+> Dmitry
 > 
 
 -- 
