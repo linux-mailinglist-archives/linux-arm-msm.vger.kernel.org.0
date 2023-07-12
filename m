@@ -2,80 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A5D8750769
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:03:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF60B750771
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:04:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232267AbjGLMDI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 08:03:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54232 "EHLO
+        id S232415AbjGLMEo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 08:04:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231237AbjGLMDE (ORCPT
+        with ESMTP id S232351AbjGLMEm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 08:03:04 -0400
+        Wed, 12 Jul 2023 08:04:42 -0400
 Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC642E42
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:03:02 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9922d6f003cso883112466b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:03:02 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F6C1991
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:04:38 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-992b27e1c55so836236466b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689163381; x=1691755381;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1689163477; x=1691755477;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=s9msiQhE0J2p91vHOA4ZOCDcv/a0GBjpu+sTeuRVydw=;
-        b=cXsyAbo+BPyMLEl5aWd0tgYnpgsKnblSdATvOzyhjigswuH/EaO1l8LeXOQmuuN3KI
-         ndwFf631jU6/x3Am/LAgubiXLCwbOYVcdVWZH1+NF0Tf3cZfY7SeAu1mI6OHOk2KlUoc
-         oTOdmAUcl+La8mJhoRdA+o5qk67coofVaGoEWzeWyAfKk54DuLyMeW++MLxr4pZj9aXz
-         gzS1OTVySo+GvEAB8MzJXTE8/0kfOybinr8atZWvRZ5hyEb2/Z10rq/FCxXlmAeT07x+
-         T/8mUugctYfVnWKHgJO8HNkpdsepFYImoU7d77lnosAMV72FWyCKZk5HB+WHy58M5k8k
-         v+zw==
+        bh=Vd8MWhBmnS04Aiq7zVFQ14FEWv2Wo1c1C/C8yhC8Id0=;
+        b=le6F9keT9ljyZRT5LbljxlaxWV9KiNZrUSeA+19dTnDjTdmXMhX81547hhEgNeEDDF
+         VbcmPtnmrFSi79AfNcRSZbQoPngqE2SvJAHz6iKdJdoCm1FKq/9ktwvIfQg+n09vtIcP
+         hV4vqfPMWYvffaGUXXZG+/CSxcJaqZxE1eyEXsL2KA7gJyGqjFYeqEgtXJopeu5ln9UM
+         Nxu6R3QwA/89rDDHwoZa/FObzIDipuAVIaE1TCSKwaEmJ+aurE+Jq2r7W1ggN/HVqOJJ
+         1NQV+twNkAQrdsb73PMisqrTKmyiMIVh8/LEkQKOmkndnbnL27kHHsyDdYeYgcFvF6HN
+         uWug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689163381; x=1691755381;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1689163477; x=1691755477;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s9msiQhE0J2p91vHOA4ZOCDcv/a0GBjpu+sTeuRVydw=;
-        b=P4CZnljCSGbdITnzh0PlESGnwiobq2AZ4PDbM7MVhX4ij+KfiFWLNdznIkF6LQqogT
-         NJHt+WtDjWxqcL+xrcv5PGxoLSYpA8rH+tam2FodrGk3l+ifHayl4B/axnncccp79kVO
-         8SvOKUcWXR+O9uliIDyVDakWqzvtGiVsjMGjdMTNIoMSTtaf+Cl6RZ+ugs/cbjNm17yv
-         JODNW6kRBk9/FEmCofgfA/g4KpjMeYiDV+HwWKo+ZZh99Tq+b4Fb1JztYNjOgBpNm4WG
-         FqsZYK3z6WdR0VUEVkhcKvVmE9V7cJvWLLNV+aImhnVlcaGMnUkSmW5QJvSz1vaI+JIS
-         10bg==
-X-Gm-Message-State: ABy/qLaiDJjUst55DwoeCL2cHKP9jbgyEn4Gs4cPHSl1nJwoif+O14Oh
-        5xVG14XPt8e8AxFLxVz1xs6hNw==
-X-Google-Smtp-Source: APBJJlHzdhJk4indcnSb7Y9CQRJsIol7Y1AeSF5J4g7RpsKNs/GqdicRCCJ2FZRXBWmLAzS7nZse2Q==
-X-Received: by 2002:a17:906:7a0b:b0:993:ff93:cf8f with SMTP id d11-20020a1709067a0b00b00993ff93cf8fmr10916036ejo.8.1689163381364;
-        Wed, 12 Jul 2023 05:03:01 -0700 (PDT)
+        bh=Vd8MWhBmnS04Aiq7zVFQ14FEWv2Wo1c1C/C8yhC8Id0=;
+        b=BUwlpBa5v3pQuBAWuwggLZr6vhc1KYzHKmsqCoMirAp3FbigcdMbbbAAKGgq1S5q2a
+         pJLWG25+tYwfnhOyfs+mbTMqPmzZw66A1yztL8xhQXlcNJU7mMUi47VyLNWaM0XERCan
+         vx7SSOlFPDdE0dnz4HK7/+LvuvVv7KtsBHswCY3mjaFbv6f7Zt3nbHfJumpchTQ0BnrY
+         QGF9pGkVaFGZJxntLjblC0VwdEGMQe6QcBUjnNsqeR3hSCu6DVvoTwuUkGmot+elLUVQ
+         arm4wBgQmYJoYOdtHdYI6vxaVzQCEV+em6WHLYkjdQxyOR+itjT5oAksj8iHA++V5Wg+
+         OXpw==
+X-Gm-Message-State: ABy/qLZoxQCn+ikf2B3K9gDn49LTGj17dRlE9xCXHxIh1xPD6+00swu7
+        PSEDB/eF0bxE9aZx0jB9YclkgA==
+X-Google-Smtp-Source: APBJJlHnPryYP9w3uG+1r8eDpkL93+kzmPWH5LYuGcs+JVPilF1y9IKiQbU4pJxkZeGKp6ZOswvrYA==
+X-Received: by 2002:a17:906:2202:b0:993:fe68:569c with SMTP id s2-20020a170906220200b00993fe68569cmr10347515ejs.6.1689163477302;
+        Wed, 12 Jul 2023 05:04:37 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id q3-20020a1709066b0300b0099290e2c163sm2441851ejr.204.2023.07.12.05.02.54
+        by smtp.gmail.com with ESMTPSA id z25-20020a170906271900b009786c8249d6sm2502172ejc.175.2023.07.12.05.04.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jul 2023 05:03:00 -0700 (PDT)
-Message-ID: <08da796b-f1a9-19dc-cde6-67414927d2a6@linaro.org>
-Date:   Wed, 12 Jul 2023 14:02:51 +0200
+        Wed, 12 Jul 2023 05:04:36 -0700 (PDT)
+Message-ID: <13555184-1708-befd-1f2c-5e6f7e04a6ce@linaro.org>
+Date:   Wed, 12 Jul 2023 14:04:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: ipq5332: Add USB related nodes
+Subject: Re: [PATCH v4 4/6] arm64: dts: qcom: ipq5332: Add USB related nodes
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
         gregkh@linuxfoundation.org, catalin.marinas@arm.com,
         will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
         geert+renesas@glider.be, neil.armstrong@linaro.org,
-        nfraprado@collabora.com, broonie@kernel.org, rafal@milecki.pl,
+        nfraprado@collabora.com, rafal@milecki.pl,
         quic_srichara@quicinc.com, quic_varada@quicinc.org,
         quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-References: <cover.1689065318.git.quic_varada@quicinc.com>
- <23b259b72c8f6faad99f09c37ac8b7b6b027cea1.1689065318.git.quic_varada@quicinc.com>
- <ddd97ecd-bf4b-85c8-1f0b-8ca175799076@linaro.org>
- <20230712112815.GA21004@varda-linux.qualcomm.com>
+References: <cover.1689160067.git.quic_varada@quicinc.com>
+ <1f99805b6437aa8d6eaa4663e8d27b98ee595f00.1689160067.git.quic_varada@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230712112815.GA21004@varda-linux.qualcomm.com>
+In-Reply-To: <1f99805b6437aa8d6eaa4663e8d27b98ee595f00.1689160067.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,23 +86,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2023 13:28, Varadarajan Narayanan wrote:
->>> +
->>> +		usb2: usb2@8a00000 {
->>
->> It does not look like you tested the DTS against bindings. Please run
->> `make dtbs_check` (see
->> Documentation/devicetree/bindings/writing-schema.rst or
->> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
->> for instructions).
+On 12/07/2023 13:38, Varadarajan Narayanan wrote:
+> Add USB phy and controller nodes.
 > 
-> 'make dtbs_check' passed. The '2' in 'usb2' is to indicate USB v2.
-> There is one more USB v3 controller in this SoC. Hence, to
-> differentiate between the two used 'usb2'.
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v4:
+> 	Change node name
+> 	Remove blank line
+> 	'make CHECK_DTBS=y DT_SCHEMA_FILES=qcom qcom/ipq5332-rdp441.dtb' passed
+> v1:
+> 	Rename phy node
+> 	Change compatible from m31,ipq5332-usb-hsphy -> qcom,ipq5332-usb-hsphy
+> 	Remove 'qscratch' from phy node
+> 	Fix alignment and upper-case hex no.s
+> 	Add clock definition for the phy
+> 	Remove snps,ref-clock-period-ns as it is not used. dwc3_ref_clk_period()
+> 	in dwc3/core.c takes the frequency from ref clock and calculates fladj
+> 	as appropriate.
+> ---
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 53 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
 > 
-> Hope that is ok.
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> index 8bfc2db..8118356 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> @@ -405,6 +405,59 @@
+>  				status = "disabled";
+>  			};
+>  		};
+> +
+> +		usbphy0: usb-phy@7b000 {
+> +			compatible = "qcom,ipq5332-usb-hsphy";
+> +			reg = <0x0007b000 0x12c>;
+> +
+> +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
+> +			clock-names = "cfg_ahb";
+> +
+> +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		usb2: usb2@8a00000 {
 
-Nope, unfortunately it is not.
+So you responded to my comments, wait ten minutes and send v2? No need
+to wait for my feedback, right?
+
+No, it's not ok. This is "usb", not "usb2". Are you saying you have
+second device with the same address?
 
 Best regards,
 Krzysztof
