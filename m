@@ -2,153 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6776751184
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 21:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFE5B7511B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 22:11:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232263AbjGLTu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 15:50:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38848 "EHLO
+        id S232178AbjGLULt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 16:11:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231948AbjGLTu0 (ORCPT
+        with ESMTP id S232187AbjGLULr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 15:50:26 -0400
-Received: from sonic301-22.consmr.mail.ir2.yahoo.com (sonic301-22.consmr.mail.ir2.yahoo.com [77.238.176.99])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A8511989
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 12:50:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1689191415; bh=RWAkhT59zZM0AfIRKdW4h+zvOFYdEnDRJrBHYKcnTxc=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=H7hNWhlGBkazO4KwCcPCf5NX6O+ItnAOS1kkPsx/K9jfr2B/Vxk9k3CZ4fcty4xK/snGPHD7NrRmAi8b7+F0lBi5lTcni9/CODrfwjqXNKxsGBwf1ccNPKsBqpsIaS09S6ARQ5M94ob8oVe6qaxi2SghSRmRokKn6c/UtmxLZt0UtENrhf3sMqskVyOgBFcGSXyMv5lnBe71Z1aqp75bjKe2djR830DWhPMCUdKqld3GJgZJxhI0Yn2WRh9b7ia/Qb7NX7fiR9q0Qm7dJ/p4pejNOd7NG9Xz3gv/I2LFZ2rxhjE6WCr4pI9XnY463zfHx4ca/gf09F3db0CtzTntjQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1689191415; bh=THHorsTaa2MP6suR4fxi9S6ZelrgpwGnQq4ICMK7tnE=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=n5zVIvvJgk6F9L8BVOze0V7ytu+p3x22rafAjYaflyQCaUnRKGDIEt0R2kPys2TFYp2HO+Yc1VuaJ1WMAseF8V2uuMYv7NImW4saEtqv/v4Tg6WUCORlP+rXjeyxDd6xgXtdJm9QUnDytxonmQQfULwkGX8iYiVr2aR7IcHvbLJ6nniNQ9eiRDlOIWI9DNqjMdxKhhh7G+d9P9kG076j964jAzPI8q84FKU6RuDd6x6B09nU4o2H4QGnmjzBHSO1Jj0h0orVKaSkuVbN9TCQsdyIyJwQlE9ZrwbQiNaAfl0Kx+h65dlh/WL3H33kR9YA7hIzcTY292b9p3FENb/gcg==
-X-YMail-OSG: qG6Nc_4VM1mLFs8qAvV_3_6TP6d54il25rPdfU6sjqginxCWIK0ZgcUKoSDQrlh
- tJbB83PTJq21Qd9717vagpunf_bUoVTBMC810ebsvniL03kFGi18NVKKqVWZiQC90PwGXa_.EqVo
- LX92bHwnge7RsAkc9VLNoIKZfzzx0IrKm1izqfYJDuGejnaZkqH2yhHdbmm_b2ugrYtKCi735KGE
- VZnIAboImERQl90iYBTryDC89o3La7Nj7K65TZSD9ajze0w809Xrmh6fd571qYsN7I4ZOBspr1It
- BKKzTTQ4Z7fivbYwOTJeaZPYnQvJ2QdYpW90Av9AzdCG7fUi2_A7Yz7wIqehLMpz0F2aeBtWltWw
- A1KacSoaMM3y4kBxQB7jL_1E2SaDRm2Mge.xqenitqxV47n8eP8PQXthj_LcipHdrb2AzAduiE9Q
- XU.GhrkJPQF9V22G_06TinTgJ.7_aPclvcmALBVRxqN7OUvimnaPhd64GMgpjz_NUHaokOU8QBu9
- qkGVb_fwJBksZ_sPeOe1SEseOoxuveqjhZJZ20aLv0TnXyc.TxlXQrJ0dbTzALyKdVhVRPWzcUxj
- EqUu3xeu0fbx1hLvbqhFSF1cW.9olau8rAGzlY1Az1ZuE6cLL9tXTEuzAiLcowlzwxA5z9IeLabO
- laPOLltC1Onako3uTcTyheZQ6FwrTtpbl4Lz907_2jplPAQUD.Zcd3poY3IeZf98lg_Q7Hn3NBpr
- juh_E70P20pah_BLCDs0aAFBelRNAxnfSq0QrsFhC9MWhVdBq_R9mc32MsPhfCz2mhxquNcjQR94
- An8LqymU_u719TuUYCgtEzkzC9h915aCpQ6Fsnt0urHg_i9AYQ_zeQvL6IDZEISOVRbpJK989lUa
- Slyb6dakvZ2LbXSK0z3J2OA_.KxADNDiRgxbgEOO_oGyv7ieeEoDWOBtb0UWaFTCfTheo5Hm9k3T
- u9_Elo3mzeaIFX4ZA89fJiSYZ3FfMfaqsARFCacJXJktLHG_VFd8QrHuIZGFOLLHgYrx0HfRl0zH
- xALfmwUlYU7EbUa_DOtCrUBhkrTtsIEWMhVaMoBHvdO.LMOD2MFbJRIn06fnYcQO4tu3kA28x8Fu
- WgUu4SCQZLL8RFQN0wCBauPqes8pD8aBE4jGPzhnCw2Vh1Nciam_V.qFZGEOI0LrTGUsajVWUUkB
- 8Kzuh52vgcRhju6Wg.RwHV3XbLC._0W9zpSdz4ldU0jl4AAXpFku_hUL7jzfZh0ctWa.rx0qfTFf
- sXiMjQeecr0tKHacvO5ufywzEUPyqZ3MX91wWS3HX6Lijr56nLND8kLxHRj4vH0Jh9uayLhZMgQI
- QGrFOArC8J24gwa3p7QckD73qW_sOrp05.W_hplkfIKxbTmRf_7gwfleQI18aSlYQCJ5POKKULvz
- BMXNyCJ.sMh27cz1OYiHx.yFPpBxPpXgKUqJKQYseXosozxCEHViUoIQeOW4OsmPrigfIP7aaL8.
- yEOG8F3rLvX_TIB2wxUz11c2IilySDrFvKXgiANSBKNYM70RFcR4su9hS5ByKFJO69sDN.QOh.a8
- FQe5EsdfRWA7U4FWod9CM8xP3LEBptgwE1ldSkY_ZHr.SVqBa97esQGGD9p0scVtgAAWDX9VIB3w
- 2ETBjkJu6gCeFp2tCt4zFWGARPHpMU79sdABPPfvSgO2uVpKH96VJvOPwZ5qI3uB9Czffz_vR7mw
- MQqkBD6FFr.ZiGFFK_.6.EXpvHMNjRq4ByHX2xI0_AFMq0kYvW9rD78WhNrW4.zyJpR9_KwjsMta
- Re8iH0IHFRJ2xjXadhWxHD4o0wPkaG33md7lu59KLkArXCUiJKCzRb_3rezdVIkFMXDfQft8i8WA
- RKJeLZgExLNb9Oy1GFF7I5S2OB4k4zbD5tE0lZT4UtxK7p.8nxw7n84gxyKUsSjaytC.yWfNb.Xt
- A2RH9A8scvpdFDmu.BMgqI120nHJ4nr5a9RhLmLZ6QzqCdVDrXC1BBiROKQ5W7JiasAq5Skunmtj
- b3cg.tLICYuE9ZZQbGOlOl2pD1H3iGXu_8cV2ADKx.OVqWc1s36SjBchQ.g0KA8FGx523YC9rBRx
- bnsEEtdXKl4lZ9s25t8HbEbAa_5waLUaG5xJpTJsCoIO9O8r5Th8Ed5KXt9J6C2aZVyTSAt5hF9J
- UCSYI6N5xDzPMfR8hkpbh80h7CrEK05.nQZNFXPNBZfXwRdFOx1XW6dyTOTgqrN3f0Lxwp2eFIO7
- FGHfs3pitFCEgy8pP8YSoYVxANoY2XnWYwv32IUbnPLRIP4tOPOoWaCZuPnnAU.71tm_.PAAlV9f
- NhxN4RY_pu.Fy2KOOOf75YQ--
-X-Sonic-MF: <jahau@rocketmail.com>
-X-Sonic-ID: f03bcd76-0802-4e51-a492-99ad6d1058e2
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic301.consmr.mail.ir2.yahoo.com with HTTP; Wed, 12 Jul 2023 19:50:15 +0000
-Received: by hermes--production-ir2-7858d959bd-hmv8h (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID ca8b1e30b4f74ff6f1793e599fa400fa;
-          Wed, 12 Jul 2023 19:50:14 +0000 (UTC)
-Message-ID: <3376e14a-4fc7-160e-509e-8dcbe627ef62@rocketmail.com>
-Date:   Wed, 12 Jul 2023 21:50:12 +0200
+        Wed, 12 Jul 2023 16:11:47 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8DA12117
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 13:11:41 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3128fcd58f3so33440f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 13:11:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689192700; x=1691784700;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mxj0vkKKD043p6PHtWv3KkxyrVuCumGrpEKjLxYyWJQ=;
+        b=nnOJSC6xtHB4u5pCaZlk7uAp1eT3XU5je1VAzlkF6Vx52tz4YCBE6or4dtGPTXb1QI
+         ENoIbxBCkQRdaTd9ySKijp9AbYUSQ+miYOJyXZFv41HAaCRiieTP4j/mi6QJntvokFWe
+         UUeMlwqlagtjaAJ9X4gj9j+6Lk7mfEY+wrYLV7YYImdbVNQmRMDE1URwWD7BW8bhyEbJ
+         1NNNraeHrZnYHBSUAx0hdIyampNie/FR8i69RREFAbv4r/AmFmBXQPLC2WDGIK5VSwqI
+         2ff5phLH+ZlbQ95x3OWEfEQ6dumLOmkkH169uiKB65YXw/b6QecFdq4tQV0ppcwumSYf
+         l8HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689192700; x=1691784700;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mxj0vkKKD043p6PHtWv3KkxyrVuCumGrpEKjLxYyWJQ=;
+        b=OqPeYwrZaRGl2b9+9ZfM0DRd64n+eCya7wZ4X+QEP97I1xYOzgg+fUeolKvRFb1Hsq
+         1gXnrhIpGjG5q2BMZhe1yY+euqtoQYjsBTfM4Xm/stydU9zRye3X0io1dK8PFOfzeLeM
+         3f/oHpx0rb8GPSul//grNhCLYVwJc4MRU8ywyzz2lUlDxJ1Gcihq7dLEXUNFasYYlf5L
+         BuD8WJvfjN2k+oVDGRwe5JeD9m545Drkf4d9hORJ+RmTf3X+9iw4Z6sFLqmXUhDuwQNi
+         1biZ9x8t5w1tpIvBgnBq1+qBbLDE41RqCh369ahzvOyo/LftSLBbwfb/Cr7dyoZaxwmr
+         8v9A==
+X-Gm-Message-State: ABy/qLZ3X7WNxL4b/kc+TKyVEhng4d29x/tc0Z5PX7yaF8nNWTvnGS8O
+        ntEMO8qKFCY1ZwOZ5f1KLqalbA==
+X-Google-Smtp-Source: APBJJlH+0TnOotXAYGx0jlKszWQEPcLmBqrbTs+ppgRqQnCJSOcv3BjmwS9Xi3KE3eQBYYJyEmjIng==
+X-Received: by 2002:adf:fd4f:0:b0:315:a74c:f627 with SMTP id h15-20020adffd4f000000b00315a74cf627mr5448716wrs.16.1689192700077;
+        Wed, 12 Jul 2023 13:11:40 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id qo11-20020a170907212b00b00992b0745548sm2935867ejb.152.2023.07.12.13.11.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 13:11:39 -0700 (PDT)
+Message-ID: <7ecf968b-45b2-c6b7-86a7-8d8caccf5002@linaro.org>
+Date:   Wed, 12 Jul 2023 22:11:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-serranove: Add
- RT5033 PMIC with charger
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Raymond Hackley <raymondhackley@protonmail.com>,
-        Henrik Grimler <henrik@grimler.se>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230619203743.8136-1-jahau.ref@rocketmail.com>
- <20230619203743.8136-1-jahau@rocketmail.com>
- <02fe7c1e-cb6a-14bc-73fc-04956a2b8396@kernel.org>
+Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
 Content-Language: en-US
-From:   Jakob Hauser <jahau@rocketmail.com>
-In-Reply-To: <02fe7c1e-cb6a-14bc-73fc-04956a2b8396@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-X-Mailer: WebService/1.1.21638 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Anjelique Melendez <quic_amelende@quicinc.com>,
+        Rob Herring <robh@kernel.org>, pavel@ucw.cz, lee@kernel.org,
+        thierry.reding@gmail.com, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org
+References: <20230621185949.2068-1-quic_amelende@quicinc.com>
+ <20230621185949.2068-2-quic_amelende@quicinc.com>
+ <20230626135857.GA3118929-robh@kernel.org>
+ <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
+ <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
+ <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com>
+ <431faa87-d152-5f7a-40fd-8b6fe26f0bb9@linaro.org>
+ <71e1f36f-8fd8-9d61-d563-577d4fb54f10@quicinc.com>
+ <69c01f0f-4eb0-bb44-a238-5c9ce5beede9@linaro.org>
+ <CAA8EJppCSnEg1GjX8CavxRPiiE19JwVAOTspjWJR-OzdQMcu+g@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJppCSnEg1GjX8CavxRPiiE19JwVAOTspjWJR-OzdQMcu+g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgS3J6eXN6dG9mLA0KDQpDYzogUm9iLCBDaGFud29vICYgTXl1bmdKb28NCg0KT24gMTEu
-MDcuMjMgMDg6MTMsIEtyenlzenRvZiBLb3psb3dza2kgd3JvdGU6DQouLi4NCj4gVGhpcyBh
-cHBlYXJlZCBpbiB0b2RheSdzIG5leHQgbmV4dC0yMDIzMDcxMSBhbmQgY2F1c2VzIG5ldyB3
-YXJuaW5ncw0KPiANCj4gbXNtODkxNi1zYW1zdW5nLXNlcnJhbm92ZS5kdGI6IGV4dGNvbkAx
-NDogJ2Nvbm5lY3RvcicgZG9lcyBub3QgbWF0Y2ggYW55DQo+IG9mIHRoZSByZWdleGVzOiAn
-cGluY3RybC1bMC05XSsnDQo+IGh0dHBzOi8va3J6ay5ldS8jL2J1aWxkZXJzLzkwL2J1aWxk
-cy80MC9zdGVwcy8xNy9sb2dzL3N0ZGlvDQo+IA0KPiBUaGUgY29tbWl0IG1lbnRpb25zIHJ0
-NTAzMywgYnV0IHRoYXQgaXMgbm90IHRoZSBzY2hlbWEgYmVpbmcgaGVyZQ0KPiB0ZXN0ZWQs
-IHNvIGNsZWFybHkgdGhpcyBpcyB3cm9uZyBvciBiaW5kaW5ncyB3ZXJlIG5vdCB1cGRhdGVk
-Lg0KPiANCj4gUGxlYXNlIGZpeCAoYW5kIHRlc3QgeW91ciBmdXR1cmUgcGF0Y2hlcykuDQoN
-ClRoZSBpbXBsZW1lbnRhdGlvbiB5b3Ugc2VlIGluIHRoaXMgcGF0Y2ggZm9sbG93cyB0aGUg
-Z3VpZGFuY2Ugb2YgeW91cnMgDQphbmQgUm9i4oCZcy4gSSBhbHJlYWR5IGV4cHJlc3NlZCBt
-eSBkaXNjb250ZW50IGFib3V0IGl0IGJlZm9yZS4NCg0KVG8gc29sdmUgdGhlIG1lc3NhZ2Us
-IHRoZSBkdC1iaW5kaW5ncyBvZiBleHRjb24gZGV2aWNlIHNtNTUwMi1tdWljIFsxXSANCndv
-dWxkIG5lZWQgdG8gYmUgY2hhbmdlZCB0byBhbGxvdyBhICJjb25uZWN0b3IiIHN1Yi1ub2Rl
-LiBUaGF04oCZcyBub3QgdGhlIA0KcmlnaHQgYXBwcm9hY2guDQoNCkkgc3RpbGwgaGF2ZSB0
-aGUgaW1wcmVzc2lvbiB0aGF0IHRoZSBjdXJyZW50IGltcGxlbWVudGF0aW9uIGlzIGJhc2Vk
-IG9uIA0KbWlzdW5kZXJzdGFuZGluZ3MuIEkgZG8gdGhpbmsgUm9i4oCZcyBjb21tZW50IHRo
-YXQgZXhjb24gcGhhbmRsZSBiZWluZyANCmRlcHJlY2F0ZWQgWzJdIGlzIHZhbGlkIGZvciB0
-aGUgVVNCIHN1YnN5c3RlbS4gWW91ciBzdWdnZXN0aW9uIHRvIGNoZWNrIA0KInBvcnRzIGdy
-YXBoIiwgIm9yaWVudGF0aW9uIiBhbmQgInVzYi1yb2xlLXN3aXRjaCIgYXBwbGllcyB0byBV
-U0IgDQpzdWJzeXN0ZW0gYXMgd2VsbCBbM10uIFJvYiB0b29rIHRoZSB0aW1lIHRvIGFkZCBt
-b3JlIGV4cGxhbmF0aW9uIFs0XSBidXQgDQppdOKAmXMgc3RpbGwgYWJvdXQgaGFuZGxpbmcg
-Y29ubmVjdG9ycyBpbiB0aGUgbW9yZSBzdHJpY3Qgc2Vuc2UsIHdoaWNoIGlzIA0KY2lyY2xp
-bmcgYXJvdW5kIFVCUyBzdWJzeXN0ZW0uDQoNClRoZXNlIGRpc2N1c3Npb25zIGxlZCB0byBh
-IHN0cmFuZ2VseSBtaXhlZC11cCByZXN1bHQuIEkgd2FzIHB1c2hlZCB0byANCmltcGxlbWVu
-dCB0aGUgVVNCIHN1YnN5c3RlbSBjb25uZWN0b3IgYXBwcm9hY2ggdXBvbiBhbiBleGN0b24g
-c3Vic3lzdGVtIA0KZGV2aWNlLiBBcyB0aGUgc3RhbmRhcmQgVVNCIGNvbm5lY3RvciBhcHBy
-b2FjaCBkaWRu4oCZdCBmaXQsIHdlIHN3aXRjaGVkIA0KdG8gYSB2ZW5kb3Itc3BlY2lmaWMg
-Y29ubmVjdG9yIHBoYW5kbGUgWzVdLiBJbiBmYWN0IGl04oCZcyBraW5kIG9mIGEgDQp3b3Jr
-YXJvdW5kIGZvciB0aGUgZXh0Y29uIHBoYW5kbGUuDQoNClRoZSBleHRjb24gZGV2aWNlIHNt
-NTUwNCBpcyBhIHJlYWwgcGllY2Ugb2YgaGFyZHdhcmUuIEl04oCZcyBub3QgaGFuZGxlZCAN
-CmJ5IFVTQiBzdWJzeXN0ZW0gYnV0IGJ5IGV4dGNvbiBzdWJzeXN0ZW0uIFRoZSBleGN0b24g
-c3Vic3lzdGVtIGhhcyBhIA0KbWV0aG9kIGltcGxlbWVudGVkIHRvIGdldCB0aGUgZGV2aWNl
-IGJ5IHBoYW5kbGUgWzZdLg0KDQpJIHRoZXJlZm9yZSBwcm9wb3NlIHRvIHVzZSB0aGUgcGhh
-bmRsZSBvZiB0aGUgZXh0Y29uIHN1YnN5c3RlbS4gSSBtZWFuIA0KZXh0Y29uIHN1YnN5c3Rl
-bSwgbm90IFVTQiBzdWJzeXN0ZW0uIEluIGNhc2UgeW91IGRpc2FncmVlLCBJIGtpbmRseSBh
-c2sgDQp5b3UgdG8gdGFrZSBtb3JlIHRpbWUgdG8gYW5zd2VyIGluIG1vcmUgZGV0YWlsIGFu
-ZCBlc3BlY2lhbGx5IA0KY2FzZS1yZWxhdGVkLiBBbmQgc3BlY2lmaWNhbGx5IHRvIEtyenlz
-enRvZiBJIGFzayBmb3IgbW9yZSBwb2xpdGVuZXNzIGluIA0KeW91ciB3YXkgb2YgY29tbXVu
-aWNhdGluZy4gSSB1bmRlcnN0YW5kIHlvdeKAmXJlIGFuc3dlcmluZyBodW5kcmVkcyBvZiAN
-CnJlcXVlc3RzIGEgZGF5IGJ1dCB0aGUgY29tbXVuaWNhdGlvbiB3ZSBoYWQgaW4gdGhlIHBh
-c3Qgd2Vla3MgaXMgcmVhbGx5IA0KZnJ1c3RyYXRpbmcuDQoNClsxXSANCmh0dHBzOi8vZ2l0
-Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3RvcnZhbGRzL2xpbnV4Lmdp
-dC90cmVlL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9leHRjb24vc2lsaWNv
-bm1pdHVzLHNtNTUwMi1tdWljLnlhbWw/aD12Ni41LXJjMQ0KWzJdIA0KaHR0cHM6Ly9sb3Jl
-Lmtlcm5lbC5vcmcvbGludXgtcG0vY292ZXIuMTY3NzYyMDY3Ny5naXQuamFoYXVAcm9ja2V0
-bWFpbC5jb20vVC8jbTFmNTdhMzZkNTM0ZTY3N2Y4NDE1OGU2ODg2YzEzNDBlMDM2YWI1YzYN
-ClszXSANCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xpbnV4LXBtL2NvdmVyLjE2ODI2MzY5
-MjkuZ2l0LmphaGF1QHJvY2tldG1haWwuY29tL1QvI203NjcyYWQwNTU5MGU0MTIzYmE1NjIy
-YmM1OWE5YjRkY2MwZjcwZTNhDQpbNF0gDQpodHRwczovL2xvcmUua2VybmVsLm9yZy9saW51
-eC1wbS9jb3Zlci4xNjgyNjM2OTI5LmdpdC5qYWhhdUByb2NrZXRtYWlsLmNvbS9ULyNtNjVk
-YjA3MDlmMGFkM2ZlYWM2YzI4OWY2NWJlNWEzNTFjYWNkMjgzNQ0KWzVdIA0KaHR0cHM6Ly9s
-b3JlLmtlcm5lbC5vcmcvbGludXgtcG0vMjAyMzA1MDYxNTU0MzUuMzAwNS0xLWphaGF1QHJv
-Y2tldG1haWwuY29tL1QvI20yYWE2NTJjNDFiYWQ5M2Q2MDA0MmQ4MzFjNjM5N2U3ODM4ZDNj
-YmZjDQpbNl0gDQpodHRwczovL2dpdC5rZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVs
-L2dpdC90b3J2YWxkcy9saW51eC5naXQvdHJlZS9kcml2ZXJzL2V4dGNvbi9leHRjb24uYz9o
-PXY2LjUtcmMxI24xNDE3DQoNCktpbmQgcmVnYXJkcywNCkpha29iDQo=
+On 12/07/2023 16:35, Dmitry Baryshkov wrote:
+>>>> Rob asked you - "Is there more than 1 instance in a PMIC?" - and you did
+>>>> not answer positively, just mentioned something about drivers in
+>>>> downstream, which do not matter. So is the answer for that question:
+>>>> yes, you have two instances of the same PMIC differing by presence of
+>>>> PBS and other features"?
+>>>>
+>>> Sorry that was a misunderstanding on my part.
+>>> Yes, answer to Rob's question should have been "We have two instances of PMI632,
+>>> where one instance holds the pbs peripheral and the other holds the lpg
+>>> peripherals. The child node for pbs is needed so lpg client can access
+>>> the PMI632 regmap which contains the pbs peripheral."
+>>
+>> I guess I miss here something. What is "LPG client"? I don't understand
+>> why this LPG client needs existence of PBS node, to be able to get the
+>> regmap.
+>>
+>> PBS is a child of PMIC, so it can get regmap from the parent. What's
+>> more, which DT property passes the regmap from PMIC to LPG client?
+> 
+> There are some PMICs which claim two SPMI SIDs. For such PMICs, each
+> SID is a separate device, so it is not directly possible to get the
+> regmap of the other SID.
+
+OK, maybe after implementing all the review changes - including dropping
+that singleton pattern - this will be clearer. Please send new version
+and we will discuss it from there.
+
+Thank you.
+Best regards,
+Krzysztof
+
