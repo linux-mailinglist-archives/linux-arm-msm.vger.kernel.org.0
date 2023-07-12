@@ -2,120 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DB8D7507B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:11:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C505A7507CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:12:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232444AbjGLML5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 08:11:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33056 "EHLO
+        id S231887AbjGLMMf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 08:12:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232822AbjGLML4 (ORCPT
+        with ESMTP id S231488AbjGLMMe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 08:11:56 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB0B510F7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:11:54 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b5c2433134so8939601fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:11:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689163913; x=1691755913;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eBc4Z1Y1zebVUroJaOG/o6ErZXTZ6AcqVlSzVZrpB88=;
-        b=nJNmpfEk8S76fbVGigNfGc0BvtLNFJdjd+r3VwE/1hrlLt8ZhhK4lyCxHqPtG8nQof
-         u5/cfAMjKOyGcp5pMQbgsLb5kgU6j6rXVB2nN/0pOsqP5PQOODwedY9YX2kJ42er42K6
-         Qnv+AImFdjLwwv6UVxuIKB5HlHs3ANZrqASyJnCxEK2pBXIzFdbLAe0wf34kbcxuOig/
-         N+XyBSgFv1KwJfvK5Jlb0J1QVAz7qmIpuUQvgtZiKOWvK65pqTvbgrKs+AOXcPHFh2hN
-         P93iEal7y+9G4Mche2pDWI3wdVIRu43pKpU3Rthbif5rpyJxZG8IRHVZPx5MChcji4G4
-         NfVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689163913; x=1691755913;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eBc4Z1Y1zebVUroJaOG/o6ErZXTZ6AcqVlSzVZrpB88=;
-        b=UD28y0LV4AY6V42RmwL8RVWreNAaV3M4qCp3DIWgbuwOCvw/6wsJgqmyOgT5IjbMVF
-         qPMG1TbiwGKXXXeNKzjgnuj/sT+TLMlVaSQ2/HUH8xRrvwau5rJBIm1c4JoPI+cS5Zec
-         WPfBVYeSrHzJGAe4CQg9fwzviXRJLqsdcM80Er0o+zb/0c/tbUh+H2DunFisE1csC8lX
-         9Xq/TyBB2LI6JIYmnoAN7SAX2szfPLPzGMg8wrzy3twO7IWi2Sswkvl9Grp6URzZRFoE
-         E3/NhUsSshZZyW2/AUSPjvuGB3d7m9HvUrAoLCOYXXMefR9yQkjm+xW2z1NNN1d9Po+2
-         LL5A==
-X-Gm-Message-State: ABy/qLaGaJ+1KAA6NglokCfgEnZfLZ2GpOWWziqlEoW+3GCpDSOTDHJX
-        wkLwsc+5e5QpTOKHHXkUgRHEvQ==
-X-Google-Smtp-Source: APBJJlGtEozDIiwGo5Hr5stOPzTjNEVsokSgpKgX9YqK8Yt5hsuXek3dga4YrnOV3hAUl2bg67YYCQ==
-X-Received: by 2002:a2e:a608:0:b0:2b6:9f95:8118 with SMTP id v8-20020a2ea608000000b002b69f958118mr789748ljp.7.1689163912826;
-        Wed, 12 Jul 2023 05:11:52 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id p14-20020a2ea40e000000b002b6c8cf48bfsm913135ljn.104.2023.07.12.05.11.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 05:11:52 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 12 Jul 2023 08:12:34 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B5F7E65;
+        Wed, 12 Jul 2023 05:12:33 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9C5A5617A4;
+        Wed, 12 Jul 2023 12:12:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF63C433C8;
+        Wed, 12 Jul 2023 12:12:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689163952;
+        bh=9Vrfyl+qNlhjUuYQ+DzG4/zZwn6xt7e/Cc1IJTbESnE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oSvkq3tqbXDLMRHAppG6fxYvOgma2Nw98ZLx5gO+HrZQArhxjxHK/Xlq37JNxEzyx
+         tRA502ufSiNAfgUGKOOwAqi9D/hNkVOATfE6wsCmkJxQ32gR3+ejocFOcVqncpsFVY
+         TAibI8d/hNOZCz99pK+oVTZzrn8sVuc5lYo8tfoN6cb80MfWziZF8mm+S5YcFoDn0r
+         u3uOhy1zo7nsF1jdCoGE6qlfIuDCjfvUlZDGbKyqbs7em2nmxoa5/8qiqv5dVyoyA7
+         hxcb2ftuH1r04yO31m6lGwRULaElhMnhJFK+MEvwBqEkVf3+webOjYxU7Is1ShgxfO
+         Q44nnk8GlLs+w==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qJYho-0005to-1X;
+        Wed, 12 Jul 2023 14:12:29 +0200
+Date:   Wed, 12 Jul 2023 14:12:28 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 8/8] arm64: dts: qcom: sm8450: provide MDSS cfg interconnect
-Date:   Wed, 12 Jul 2023 15:11:45 +0300
-Message-Id: <20230712121145.1994830-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230712121145.1994830-1-dmitry.baryshkov@linaro.org>
-References: <20230712121145.1994830-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v9 06/10] usb: dwc3: qcom: Add support to read IRQ's
+ related to multiport
+Message-ID: <ZK6YrLMn9r39zEeB@hovoldconsulting.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-7-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230621043628.21485-7-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the MDSS cfg-cpu bus vote on the SM8450 platform.
+On Wed, Jun 21, 2023 at 10:06:24AM +0530, Krishna Kurapati wrote:
+> Add support to read Multiport IRQ's related to quad port controller
+> of SA8295 Device.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 108 +++++++++++++++++++++++++++++------
+>  1 file changed, 91 insertions(+), 17 deletions(-)
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+> +static int dwc3_qcom_setup_mp_irq(struct platform_device *pdev)
+> +{
+> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> +	char irq_name[15];
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 595533aeafc4..0b01f3027ee3 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -13,6 +13,7 @@
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/phy/phy-qcom-qmp.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,sm8450.h>
- #include <dt-bindings/soc/qcom,gpr.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-@@ -2672,8 +2673,12 @@ mdss: display-subsystem@ae00000 {
- 
- 			/* same path used twice */
- 			interconnects = <&mmss_noc MASTER_MDP_DISP 0 &mc_virt SLAVE_EBI1_DISP 0>,
--					<&mmss_noc MASTER_MDP_DISP 0 &mc_virt SLAVE_EBI1_DISP 0>;
--			interconnect-names = "mdp0-mem", "mdp1-mem";
-+					<&mmss_noc MASTER_MDP_DISP 0 &mc_virt SLAVE_EBI1_DISP 0>,
-+					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			interconnect-names = "mdp0-mem",
-+					     "mdp1-mem",
-+					     "cpu-cfg";
- 
- 			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
- 
--- 
-2.40.1
+The interrupt device-name string can not be allocated on the stack or
+reused as it is stored directly in each irqaction structure.
 
+This can otherwise lead to random crashes when accessing
+/proc/interrupts:
+
+	https://lore.kernel.org/lkml/ZK6IV_jJPICX5r53@hovoldconsulting.com/
+
+> +	int irq;
+> +	int ret;
+> +	int i;
+> +
+> +	for (i = 0; i < 4; i++) {
+> +		if (qcom->dp_hs_phy_irq[i])
+> +			continue;
+> +
+> +		sprintf(irq_name, "dp%d_hs_phy_irq", i+1);
+> +		irq = dwc3_qcom_get_irq(pdev, irq_name, -1);
+> +		if (irq > 0) {
+> +			irq_set_status_flags(irq, IRQ_NOAUTOEN);
+> +			ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+> +					qcom_dwc3_resume_irq,
+> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> +					irq_name, qcom);
+> +			if (ret) {
+> +				dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
+> +				return ret;
+> +			}
+> +		}
+> +
+> +		qcom->dp_hs_phy_irq[i] = irq;
+> +	}
+
+Johan
