@@ -2,83 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9506750ECB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 18:41:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD275750EDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 18:44:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233185AbjGLQl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 12:41:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43586 "EHLO
+        id S232049AbjGLQoH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 12:44:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233011AbjGLQlx (ORCPT
+        with ESMTP id S229668AbjGLQoH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 12:41:53 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B15A12112
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 09:41:31 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-666e97fcc60so5001450b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 09:41:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689180091; x=1691772091;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JG8l8l0Mu0+pNnnrqeaG4m1soj2ykxAUEUS5bx3yBLM=;
-        b=nOVty0dxCm9ug10ZW6YA4SiPykK8fhs51YLTIqnJH0kZlbVVhI7O9WUrwR6tjjNKjj
-         pjTJV5x3YzJdUXE/qZgKkXTCycTgxV8QhZT5b2tLGOsVvWg0iKKKn1NiGoSIelNMIFF8
-         wvVy/4WcmAgVSyEPfcfBP9GpE19ZH2CxfVWfCdrbDwsxh8Q1tHvTWMerWIQOQMdN0RKa
-         9uVX4w64lFAyVM3eKkqwxn2jIxsvuPIQLTvj4d42T2vXU2Bj1lJOlhZIrjllVHjfP+1z
-         l35/O6o9ObnWMvl5igPCdwrdL5FWv1qfezKmqBr/MJS7ujAumef6LFZnsKuft5dCUop4
-         LX3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689180091; x=1691772091;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JG8l8l0Mu0+pNnnrqeaG4m1soj2ykxAUEUS5bx3yBLM=;
-        b=fqM+oqAJlutZlJHh2qPvWsOvbObaNwTTSS1HY0wDYPYuMiK3IFZQpp9faDaxYBcCjW
-         esQ4ueAtHEWF/PatLByGZCjp1y7oa0SGBeayN477eVdWA25mL7tcJAXdGN8h7H08S7iE
-         Z+oN1TuvKyqEvj5JbJ94qwsxZFadQi6q/c7bgZp6hDtOiMc+ksK0VCKaXX9ncSLirbYR
-         8P4x8IV5tPbUzrxGL+BAGiFApwHgauifxiW9JIg6iXl43b2vSRUCCb94fZidnR2FKLUe
-         p0YLdR6qhFEkt/jBlaDLZEpT1yERDGaYX61y/pok7w+vYtNH21ZiVQmzjVA5IQcKaNOR
-         UdXg==
-X-Gm-Message-State: ABy/qLbBaCbQfxb26XWOMSQWAEsbKgEw8FwHFTSZwoMYZTNnZlkSiznO
-        kVyRInB7vdzcBXYPhajtf+AF
-X-Google-Smtp-Source: APBJJlEP45rbWedRrUg7MPlYZwbsPDhir8/t9WkxHshZaYuyK4SnAsKjBbOxXXv4A+DrfqbwTsIBSA==
-X-Received: by 2002:a05:6a00:2196:b0:64c:c5f9:1533 with SMTP id h22-20020a056a00219600b0064cc5f91533mr18788238pfi.33.1689180090850;
-        Wed, 12 Jul 2023 09:41:30 -0700 (PDT)
-Received: from thinkpad ([117.207.27.131])
-        by smtp.gmail.com with ESMTPSA id b20-20020aa78714000000b00682bbb65852sm3953029pfo.176.2023.07.12.09.41.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 09:41:30 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 22:11:14 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
-Subject: Re: [PATCH 14/14] scsi: ufs: qcom: Add support for scaling
- interconnects
-Message-ID: <20230712164114.GH102757@thinkpad>
-References: <20230712103213.101770-1-manivannan.sadhasivam@linaro.org>
- <20230712103213.101770-19-manivannan.sadhasivam@linaro.org>
- <107aad9f-40c0-f32b-9f74-6c82ee6785bf@linaro.org>
+        Wed, 12 Jul 2023 12:44:07 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC1E136;
+        Wed, 12 Jul 2023 09:44:06 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D95B961828;
+        Wed, 12 Jul 2023 16:44:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB35AC433C8;
+        Wed, 12 Jul 2023 16:44:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689180245;
+        bh=YEyyeDnxoiSpMFUKd5oNis2MAXGoo/XvAQnqVJuUlDE=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=uHg6uj6zsJlQUP4cWQQQs4yFGNPZUUSmDjeoBLVnfHhXBnT+lNcme+Ap1QWwolTFg
+         14tlsvwLBP0mKWMAo38v30sbufZihfkFseLEMjHkcYqAUNEutSoY5xWMKVbgmr451+
+         O5Q7APdUmvQIwBiVjPnfjcUbZR0zB5eBvFk5NlBdZO+AT9gWzJD7vkjhi/4s+yNtle
+         rmBoksdTG34Warlcn3ANcwkyspyf2himKZU2pTcnr62PSED/yyRMYMzPbAhfePFkXQ
+         kcAu5pFt5hiQennsH80m4hp6w1X2Ix7BC7ES6rETaJJq9Kg+3mgWU4t2qcZUBvuAOE
+         SM6bQR8cFvqmQ==
+Message-ID: <c7ed2eb2-3b0a-a75e-bca9-641f802d6e15@kernel.org>
+Date:   Wed, 12 Jul 2023 18:43:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <107aad9f-40c0-f32b-9f74-6c82ee6785bf@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH V1 0/3] Add notifier call chain to Embedded USB Debug(EUD)
+ driver
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        gregkh@linuxfoundation.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1689148711.git.quic_schowdhu@quicinc.com>
+From:   Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <cover.1689148711.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,299 +64,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 12, 2023 at 04:22:51PM +0300, Dmitry Baryshkov wrote:
-> On 12/07/2023 13:32, Manivannan Sadhasivam wrote:
-> > Qcom SoCs require scaling the interconnect paths for proper working of the
-> > peripherals connected through interconnects. Even for accessing the UFS
-> > controller, someone should setup the interconnect paths. So far, the
-> > bootloaders used to setup the interconnect paths before booting linux as
-> > they need to access the UFS storage for things like fetching boot firmware.
-> > But with the advent of multi boot options, bootloader nowadays like in
-> > SA8540p SoC do not setup the interconnect paths at all.
-> > 
-> > So trying to configure UFS in the absence of the interconnect path
-> > configuration, results in boot crash.
-> > 
-> > To fix this issue and also to dynamically scale the interconnects (UFS-DDR
-> > and CPU-UFS), interconnect API support is added to the Qcom UFS driver.
-> > With this support, the interconnect paths are scaled dynamically based on
-> > the gear configuration.
-> > 
-> > During the early stage of ufs_qcom_init(), ufs_qcom_icc_init() will setup
-> > the paths to max bandwidth to allow configuring the UFS registers. Touching
-> > the registers without configuring the icc paths would result in a crash.
-> > However, we don't really need to set max vote for the icc paths as any
-> > minimal vote would suffice. But the max value would allow initialization to
-> > be done faster. After init, the bandwidth will get updated using
-> > ufs_qcom_icc_update_bw() based on the gear and lane configuration.
-> > 
-> > The bandwidth values defined in ufs_qcom_bw_table struct are taken from
-> > Qcom downstream vendor devicetree source and are calculated as per the
-> > UFS3.1 Spec, Section 6.4.1, HS Gear Rates. So it is fixed across platforms.
-> > 
-> > Cc: Brian Masney <bmasney@redhat.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/ufs/host/ufs-qcom.c | 131 +++++++++++++++++++++++++++++++++++-
-> >   drivers/ufs/host/ufs-qcom.h |   3 +
-> >   2 files changed, 133 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > index 8d6fd4c3324f..8a3132d45a65 100644
-> > --- a/drivers/ufs/host/ufs-qcom.c
-> > +++ b/drivers/ufs/host/ufs-qcom.c
-> > @@ -7,6 +7,7 @@
-> >   #include <linux/time.h>
-> >   #include <linux/clk.h>
-> >   #include <linux/delay.h>
-> > +#include <linux/interconnect.h>
-> >   #include <linux/module.h>
-> >   #include <linux/of.h>
-> >   #include <linux/platform_device.h>
-> > @@ -46,6 +47,49 @@ enum {
-> >   	TSTBUS_MAX,
-> >   };
-> > +#define QCOM_UFS_MAX_GEAR 4
-> > +#define QCOM_UFS_MAX_LANE 2
-> > +
-> > +enum {
-> > +	MODE_MIN,
-> > +	MODE_PWM,
-> > +	MODE_HS_RA,
-> > +	MODE_HS_RB,
-> > +	MODE_MAX,
+
+
+On 12.07.2023 10:22, Souradeep Chowdhury wrote:
+> This patch series adds the notifier chain to the Embedded USB Debug(EUD) driver.
+> The notifier chain is used to check the role switch status of EUD. Since EUD can
+> function only in device mode, other modules trying to do role-switch on the same
+> port have to first check the EUD status by calling this notifier chain and based
+> on the status proceed or block their role-switching step. The modules can call
+> the notifier through the call eud_notifier_call_chain and pass their own
+> role switch state as the argument. This chain will also be able to handle the
+> scenario of multiple modules switching roles on the same port since this can
+> create a priority and ordering among them for conflict resolution.
 > 
-> MODE_MIN and MODE_MAX seem to be unused
+> Souradeep Chowdhury (3):
+>   usb: misc: Add the interface for notifier call for Embedded USB
+>     Debugger(EUD)
+>   usb: misc: Add notifier call chain to Embedded USB Debug(EUD) driver
+>   MAINTAINERS: Add the header file entry for Embedded USB debugger(EUD)
+Please actually CC all maintainers, as present in the MAINTAINERS file..
+
+Consider using b4:
+
+https://b4.docs.kernel.org/en/latest/index.html
+
+Konrad
 > 
-
-No, they are used in the driver.
-
-> > +};
-> > +
-> > +struct __ufs_qcom_bw_table {
-> > +	u32 bw1;
-> > +	u32 bw2;
+>  MAINTAINERS                          |  1 +
+>  drivers/usb/misc/qcom_eud.c          | 52 ++++++++++++++++++++++++++--
+>  drivers/usb/misc/qcom_eud_notifier.h | 10 ++++++
+>  3 files changed, 61 insertions(+), 2 deletions(-)
+>  create mode 100644 drivers/usb/misc/qcom_eud_notifier.h
 > 
-> Please consider:
+> --
+> 2.17.1
 > 
-> s/bw1/mem_bw/
-> s/bw2/cfg_bw/
-> 
-
-Ok.
-
-> > +} ufs_qcom_bw_table[MODE_MAX + 1][QCOM_UFS_MAX_GEAR + 1][QCOM_UFS_MAX_LANE + 1] = {
-> 
-> I'd say, these +1's are slightly confusing and unnecessary.
-> 
-
-These max values itself are used in the table. Without adding 1 to them, we will
-end up with out of bounds access.
-
-> > +	[MODE_MIN][0][0] = { 0,		0 },	/* Bandwidth values are in KB/s */
-> 
-> I'd say, this becomes impossible to check. Can you please structure it?
-
-What do you mean by "impossible to check"?
-
-> Either by inclusion:
-> 
-> [MODE_PWM] = {
->   [1] = {
->      [1] = { .. },
->      [2] = { .. },
->   },
->   // etc.
-
-Now, this seems confusion to me. The existing table looks fine IMO.
-
-> };
-> 
-> Also, do we have defines for gears? Can we use them instead of indices?
-> 
-
-There are defines for the gears but not for lanes. So I ended up using numbers
-for simplicity.
-
-- Mani
-
-> > +	[MODE_PWM][1][1] = { 922,	1000 },
-> > +	[MODE_PWM][2][1] = { 1844,	1000 },
-> > +	[MODE_PWM][3][1] = { 3688,	1000 },
-> > +	[MODE_PWM][4][1] = { 7376,	1000 },
-> > +	[MODE_PWM][1][2] = { 1844,	1000 },
-> > +	[MODE_PWM][2][2] = { 3688,	1000 },
-> > +	[MODE_PWM][3][2] = { 7376,	1000 },
-> > +	[MODE_PWM][4][2] = { 14752,	1000 },
-> > +	[MODE_HS_RA][1][1] = { 127796,	1000 },
-> > +	[MODE_HS_RA][2][1] = { 255591,	1000 },
-> > +	[MODE_HS_RA][3][1] = { 1492582,	102400 },
-> > +	[MODE_HS_RA][4][1] = { 2915200,	204800 },
-> > +	[MODE_HS_RA][1][2] = { 255591,	1000 },
-> > +	[MODE_HS_RA][2][2] = { 511181,	1000 },
-> > +	[MODE_HS_RA][3][2] = { 1492582,	204800 },
-> > +	[MODE_HS_RA][4][2] = { 2915200,	409600 },
-> > +	[MODE_HS_RB][1][1] = { 149422,	1000 },
-> > +	[MODE_HS_RB][2][1] = { 298189,	1000 },
-> > +	[MODE_HS_RB][3][1] = { 1492582,	102400 },
-> > +	[MODE_HS_RB][4][1] = { 2915200,	204800 },
-> > +	[MODE_HS_RB][1][2] = { 298189,	1000 },
-> > +	[MODE_HS_RB][2][2] = { 596378,	1000 },
-> > +	[MODE_HS_RB][3][2] = { 1492582,	204800 },
-> > +	[MODE_HS_RB][4][2] = { 2915200,	409600 },
-> > +	[MODE_MAX][0][0] = { 7643136, 307200 },
-> > +};
-> > +
-> >   static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
-> >   static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
-> > @@ -789,6 +833,51 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
-> >   	}
-> >   }
-> > +static int ufs_qcom_icc_set_bw(struct ufs_qcom_host *host, u32 bw1, u32 bw2)
-> > +{
-> > +	struct device *dev = host->hba->dev;
-> > +	int ret;
-> > +
-> > +	ret = icc_set_bw(host->icc_ddr, 0, bw1);
-> > +	if (ret < 0) {
-> > +		dev_err(dev, "failed to set bandwidth request: %d\n", ret);
-> > +		return ret;
-> > +	}
-> > +
-> > +	ret = icc_set_bw(host->icc_cpu, 0, bw2);
-> > +	if (ret < 0) {
-> > +		dev_err(dev, "failed to set bandwidth request: %d\n", ret);
-> > +		return ret;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static struct __ufs_qcom_bw_table ufs_qcom_get_bw_table(struct ufs_qcom_host *host)
-> > +{
-> > +	struct ufs_pa_layer_attr *p = &host->dev_req_params;
-> > +	int gear = max_t(u32, p->gear_rx, p->gear_tx);
-> > +	int lane = max_t(u32, p->lane_rx, p->lane_tx);
-> > +
-> > +	if (ufshcd_is_hs_mode(p)) {
-> > +		if (p->hs_rate == PA_HS_MODE_B)
-> > +			return ufs_qcom_bw_table[MODE_HS_RB][gear][lane];
-> > +		else
-> > +			return ufs_qcom_bw_table[MODE_HS_RA][gear][lane];
-> > +	} else {
-> > +		return ufs_qcom_bw_table[MODE_PWM][gear][lane];
-> > +	}
-> > +}
-> > +
-> > +static int ufs_qcom_icc_update_bw(struct ufs_qcom_host *host)
-> > +{
-> > +	struct __ufs_qcom_bw_table bw_table;
-> > +
-> > +	bw_table = ufs_qcom_get_bw_table(host);
-> > +
-> > +	return ufs_qcom_icc_set_bw(host, bw_table.bw1, bw_table.bw2);
-> > +}
-> > +
-> >   static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
-> >   				enum ufs_notify_change_status status,
-> >   				struct ufs_pa_layer_attr *dev_max_params,
-> > @@ -852,6 +941,8 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
-> >   		memcpy(&host->dev_req_params,
-> >   				dev_req_params, sizeof(*dev_req_params));
-> > +		ufs_qcom_icc_update_bw(host);
-> > +
-> >   		/* disable the device ref clock if entered PWM mode */
-> >   		if (ufshcd_is_hs_mode(&hba->pwr_info) &&
-> >   			!ufshcd_is_hs_mode(dev_req_params))
-> > @@ -981,7 +1072,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
-> >   	switch (status) {
-> >   	case PRE_CHANGE:
-> > -		if (!on) {
-> > +		if (on) {
-> > +			ufs_qcom_icc_update_bw(host);
-> > +		} else {
-> >   			if (!ufs_qcom_is_link_active(hba)) {
-> >   				/* disable device ref_clk */
-> >   				ufs_qcom_dev_ref_clk_ctrl(host, false);
-> > @@ -993,6 +1086,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
-> >   			/* enable the device ref clock for HS mode*/
-> >   			if (ufshcd_is_hs_mode(&hba->pwr_info))
-> >   				ufs_qcom_dev_ref_clk_ctrl(host, true);
-> > +		} else {
-> > +			ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MIN][0][0].bw1,
-> > +					    ufs_qcom_bw_table[MODE_MIN][0][0].bw2);
-> >   		}
-> >   		break;
-> >   	}
-> > @@ -1031,6 +1127,34 @@ static const struct reset_control_ops ufs_qcom_reset_ops = {
-> >   	.deassert = ufs_qcom_reset_deassert,
-> >   };
-> > +static int ufs_qcom_icc_init(struct ufs_qcom_host *host)
-> > +{
-> > +	struct device *dev = host->hba->dev;
-> > +	int ret;
-> > +
-> > +	host->icc_ddr = devm_of_icc_get(dev, "ufs-ddr");
-> > +	if (IS_ERR(host->icc_ddr))
-> > +		return dev_err_probe(dev, PTR_ERR(host->icc_ddr),
-> > +				    "failed to acquire interconnect path\n");
-> > +
-> > +	host->icc_cpu = devm_of_icc_get(dev, "cpu-ufs");
-> > +	if (IS_ERR(host->icc_cpu))
-> > +		return dev_err_probe(dev, PTR_ERR(host->icc_cpu),
-> > +				    "failed to acquire interconnect path\n");
-> > +
-> > +	/*
-> > +	 * Set Maximum bandwidth vote before initializing the UFS controller and
-> > +	 * device. Ideally, a minimal interconnect vote would suffice for the
-> > +	 * initialization, but a max vote would allow faster initialization.
-> > +	 */
-> > +	ret = ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MAX][0][0].bw1,
-> > +				  ufs_qcom_bw_table[MODE_MAX][0][0].bw2);
-> > +	if (ret < 0)
-> > +		return dev_err_probe(dev, ret, "failed to set bandwidth request\n");
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >   /**
-> >    * ufs_qcom_init - bind phy with controller
-> >    * @hba: host controller instance
-> > @@ -1085,6 +1209,10 @@ static int ufs_qcom_init(struct ufs_hba *hba)
-> >   		}
-> >   	}
-> > +	err = ufs_qcom_icc_init(host);
-> > +	if (err)
-> > +		goto out_variant_clear;
-> > +
-> >   	host->device_reset = devm_gpiod_get_optional(dev, "reset",
-> >   						     GPIOD_OUT_HIGH);
-> >   	if (IS_ERR(host->device_reset)) {
-> > @@ -1282,6 +1410,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
-> >   				    dev_req_params->pwr_rx,
-> >   				    dev_req_params->hs_rate,
-> >   				    false);
-> > +		ufs_qcom_icc_update_bw(host);
-> >   		ufshcd_uic_hibern8_exit(hba);
-> >   	}
-> > diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> > index 6289ad5a42d0..dc27395ecba1 100644
-> > --- a/drivers/ufs/host/ufs-qcom.h
-> > +++ b/drivers/ufs/host/ufs-qcom.h
-> > @@ -206,6 +206,9 @@ struct ufs_qcom_host {
-> >   	struct clk *tx_l1_sync_clk;
-> >   	bool is_lane_clks_enabled;
-> > +	struct icc_path *icc_ddr;
-> > +	struct icc_path *icc_cpu;
-> > +
-> >   #ifdef CONFIG_SCSI_UFS_CRYPTO
-> >   	struct qcom_ice *ice;
-> >   #endif
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
