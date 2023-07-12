@@ -2,129 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 166DE75132E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:05:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A0F475133F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:11:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjGLWF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 18:05:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57570 "EHLO
+        id S232424AbjGLWLp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 18:11:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbjGLWFY (ORCPT
+        with ESMTP id S232392AbjGLWLn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 18:05:24 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E83FC0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:05:23 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b72161c6e9so16603581fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:05:23 -0700 (PDT)
+        Wed, 12 Jul 2023 18:11:43 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA681FCC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:42 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fb9fd28025so75364e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689199521; x=1689804321;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+IGnoejHJpmmAQXtyei84p3PqvM4LyL/Zj9/Bp1HQGk=;
-        b=nSD1kvERFovNn1kT4bbHHTmbsphj27nYbGwJl5B42HnL/ZdSXJvFjBULLgqy4Uh801
-         teO4HFmJygX9+PaR7h8YZuWs8GEF6Xke1LKdvZfzrNZ8WHbU/CCDU+XRnr2h+mbaiati
-         i7xI2CQNVBGmOsTzmASIplGvjgxDyjsZh62PlPv+cq6QEZSdjqkUaETFaVQcvB4IwEDy
-         oHTAqSlwHC8o8T8n1uBFofKVcLFuItG6nviMs4iDRRT4R9gNAj9K0TUqTZvvGygYZ4wA
-         uquf2rnVavjLs/zGa49HoQma+kYS0dZuaI7fS4e9JjLSIFxM2nS5KHyXtvSQQ/HeKWIB
-         33jQ==
+        d=linaro.org; s=google; t=1689199900; x=1689804700;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4RiBxelklL66UAOz090rtZPINsn9CcVuq61oI6xDxFI=;
+        b=WQf8BcV6FGMCMjo247gbz4AswWQHxO3/liFJtppvv0PloXb6Wm1lojUVQvkAp0TlCM
+         89h+biD8WQFYm7aOP05ySqSn4UH1cGrpk7Z1K87ZL+H/Y9dfy3+RRfs1bpobz4yWlspP
+         ka8YJeKSzdJh+xtyy/y3f+D3bwOnIEXYk7cFabpgGpOuMS7aHm0QM8fMVOxobyCeCHC0
+         gHqgC3J6kmcRKgD80CCizAN/8mL853U/+eEmwWOLKMSD9NK3oPfJvjZylpjO87VsRb4c
+         EeVNv+6W+YpGjcBenwP/iuH+KOqIzMlh+tQYyo9fH31PuQKXTYoT8/yYXxgv7kxDOvKV
+         TStA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689199521; x=1689804321;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+IGnoejHJpmmAQXtyei84p3PqvM4LyL/Zj9/Bp1HQGk=;
-        b=edMtK9CDwaqhtwlG4gOdUyzQQEeIAVXA+I0n8ekEzEWpyNSa2v9Kqn47HZTy+/TXQ5
-         cmZVcws2UD1G0uEk+7wXcXee2hrC3LkxfQRwBMSlZbNw0vhhylputGsqkalnYaoJ79rR
-         ayquMQxp6ecfzWSc6svrsF6xckDgku+Xq7cPNgEPS3Ip22dHB7jsEkm/wQ9Ihb3fiO6l
-         5mgalpw6e2Je3/Nnh96LAayz5WJG/FlkzIrH2Ux0oiBjcfwF1TEauNcTZO3Y0AyD1vNs
-         jexLyZPRdMOIL/LTQxE2rVuCWMdCKMSAuTVEQw55ZyBCompr+KhABCRIdMTDWFON/mIN
-         0tVA==
-X-Gm-Message-State: ABy/qLY5Zzgty2c3iI93A/ueiXoKHHjEM7T1daMngIPAxmhyLsQ3gSE9
-        YzzPK6jBpq6OooIJ2NvRbLrDSA==
-X-Google-Smtp-Source: APBJJlHYiTYghZ8lRE0BlmpMRWpmX7B6Hk6Acw5gNjaSSY+PfA0RFMceJZLm/WVODd2nENY/KAlzlA==
-X-Received: by 2002:a05:6512:110e:b0:4fb:7f45:bcb6 with SMTP id l14-20020a056512110e00b004fb7f45bcb6mr1223425lfg.16.1689199521563;
-        Wed, 12 Jul 2023 15:05:21 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id r12-20020a19ac4c000000b004f87893ce21sm869646lfc.3.2023.07.12.15.05.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jul 2023 15:05:21 -0700 (PDT)
-Message-ID: <b4a5291e-6925-829f-a690-7384786fbd88@linaro.org>
-Date:   Thu, 13 Jul 2023 01:05:20 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 2/8] drm/msm/mdss: correct UBWC programming for SM8550
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+        d=1e100.net; s=20221208; t=1689199900; x=1689804700;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4RiBxelklL66UAOz090rtZPINsn9CcVuq61oI6xDxFI=;
+        b=JCteelgOO4ThdjG+6cfJF/jRHwnDgcYmNbO9hKhI4V5ukzBJ9hJXXof8i0V6IOc9m/
+         ksVlM5OJEVarAiTk1zXFDuj3KSQHlhDxFSMU/Jx+iLQKLItrXX4enXNERYQQUuNDJbMt
+         afaz1AJ3Cm8qzRi+SZyJ82mgekQs2+h692/lin70qm62nrhnVsA5/jD89PrdFeZWz0Ex
+         CsyxL+nduNW1MQL3Hhk+mmXpW1fwnT9H7+jhc6oI0PrrPBn4bB44EFHwseIxxtVBcgNZ
+         C7R60mnyDq2hfl0rVixFuQwWLgIcrnKV9/6vPvgYDEc6TdHYy87hfMZAHS7CZER5HXem
+         siZQ==
+X-Gm-Message-State: ABy/qLYyyugBcWE+S2rwHzBqaALePIxyZAs/Jpq9lVa/bgvCyGb15+lm
+        d2h1qypjtmc1gR/WFQlIWA/buw==
+X-Google-Smtp-Source: APBJJlFMDe0JLw2pB86fwpjn6gTtyQ7nxVTmEY6hl0L4dX+byLo+fFMtJhgj7lYJwP7aDAzsjXRO8A==
+X-Received: by 2002:a05:6512:3090:b0:4f8:4512:c844 with SMTP id z16-20020a056512309000b004f84512c844mr20337601lfd.48.1689199900381;
+        Wed, 12 Jul 2023 15:11:40 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id q16-20020ac25290000000b004f62fdf61fdsm856193lfm.204.2023.07.12.15.11.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jul 2023 15:11:40 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-References: <20230712121145.1994830-1-dmitry.baryshkov@linaro.org>
- <20230712121145.1994830-3-dmitry.baryshkov@linaro.org>
- <9744c1a3-1e13-0c73-9add-4651c0401f8a@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9744c1a3-1e13-0c73-9add-4651c0401f8a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Subject: [PATCH v4 00/11] drm/msm/dpu: cleanup dpu_core_perf module
+Date:   Thu, 13 Jul 2023 01:11:28 +0300
+Message-Id: <20230712221139.313729-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/07/2023 01:02, Abhinav Kumar wrote:
-> 
-> 
-> On 7/12/2023 5:11 AM, Dmitry Baryshkov wrote:
->> The SM8550 platform employs newer UBWC decoder, which requires slightly
->> different programming.
->>
->> Fixes: a2f33995c19d ("drm/msm: mdss: add support for SM8550")
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> Do we also need another fixes tag
-> 
-> Fixes: d68db6069a8e ("drm/msm/mdss: convert UBWC setup to use match data")
+Apply several cleanups to the DPU's core_perf module.
 
-No. We do not need to fix the conversion. Only the sm8550 setup.
+Changes since v3:
+- Dropped avg_bw type change (Abhinav)
+- Removed core_perf from the commit cubject (Abhinav)
 
-> 
-> Also, this was previously part of 
-> https://patchwork.freedesktop.org/series/118074/ .
-> 
-> In this one its after the bindings change.
-> 
-> For easier picking into -fixes, will you be moving this ahead of the 
-> bindings change and OR do you want to keep this part of the old series 
-> as it seems better suited there.
-> 
-> I think even if I pick this for -fixes, rest of this series can be 
-> rebased without issues. But let me know what you would prefer.
+Changes since v2:
+- Dropped perf tuning patches for now (Abhinav)
+- Restored kms variable assignment in dpu_core_perf_crtc_release_bw
+  (LKP)
+- Fixed description for the last patch (Abhinav)
 
+Changes since v1:
+- Reworked overrides for the perf parameters instead of completely
+  dropping them. Abhinav described why these overrides are useful.
+- Moved max clock rate determination to dpu_kms.c
 
-I had rejects with the original series (and 0 reviews), so it was easier 
-to push that as a part of this series too.
+Dmitry Baryshkov (11):
+  drm/msm/dpu: drop enum dpu_core_perf_data_bus_id
+  drm/msm/dpu: core_perf: extract bandwidth aggregation function
+  drm/msm/dpu: core_perf: bail earlier if there are no ICC paths
+  drm/msm/dpu: drop separate dpu_core_perf_tune overrides
+  drm/msm/dpu: rework indentation in dpu_core_perf
+  drm/msm/dpu: drop the dpu_core_perf_crtc_update()'s stop_req param
+  drm/msm/dpu: use dpu_perf_cfg in DPU core_perf code
+  drm/msm/dpu: remove unused fields from struct dpu_core_perf
+  drm/msm/dpu: remove extra clk_round_rate() call
+  drm/msm/dpu: move max clock decision to dpu_kms.
+  drm/msm/dpu: drop dpu_core_perf_destroy()
 
-I'm fine with you pulling either of the patches into -fixes.
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 187 +++++++-----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  48 +----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  14 +-
+ 4 files changed, 96 insertions(+), 159 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.39.2
 
