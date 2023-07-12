@@ -2,77 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5782B74FCD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 03:49:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF3D274FDB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 05:30:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229931AbjGLBs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jul 2023 21:48:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60482 "EHLO
+        id S231200AbjGLDaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jul 2023 23:30:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbjGLBs7 (ORCPT
+        with ESMTP id S229931AbjGLDaX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jul 2023 21:48:59 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57511E77;
-        Tue, 11 Jul 2023 18:48:58 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36C1NjwK031759;
-        Wed, 12 Jul 2023 01:48:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=EWcZrFBokUNXA5MWY2Gfua1jZDwquuKinWM129p9ets=;
- b=juepHxDHq4RLDDTthSJ84bjB9E/+BRDUAP43/i5cuJblpBNMUeOeQ+y84KM36RoXRSRy
- 7iFNv1JVAfMYqkSHGxP0nizsjGgovuzYY0ThcontPmo85X+jGaB6p5fXXBSP6x+CBZVk
- LLAtcEHLb+/mbTH72hiL6puc0j0/lELq5GfoBut2dUNnMJF/FzWOojWJr0Edf4iZcIU1
- QXzaOuQoVHmPRzWI3glyUdS8lxPrdE+6BfGMtNsduCmMW6GdBVdD5Et/IKN8XeF7dwhz
- tDy73ez765srGH2qiiMhNoiGKuALRYt24CCcNqT/GESJ+sVeH73+85+d63XcUYoPx8UX uw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rsgar875y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 01:48:51 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36C1mp9B005540
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 01:48:51 GMT
-Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Tue, 11 Jul 2023 18:48:47 -0700
-From:   Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_skakitap@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Taniya Das" <quic_tdas@quicinc.com>
-Subject: [RESEND] clk: qcom: rcg: Update rcg configuration before enabling it
-Date:   Wed, 12 Jul 2023 07:18:12 +0530
-Message-ID: <20230712014812.3337992-1-quic_skakitap@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Tue, 11 Jul 2023 23:30:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A6AD10C2;
+        Tue, 11 Jul 2023 20:30:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0FAD4616CC;
+        Wed, 12 Jul 2023 03:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6047EC433CA;
+        Wed, 12 Jul 2023 03:30:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689132621;
+        bh=nf8s+njeK8OMoPoLEn08q8t0z0oB7UZlF/uGzfV+kxQ=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=uxU3r6W9obyLdEo5Qg2fFf+Yr/eImZxrHX8NjSw7HPFSShWnwX+JhEpvb/5V589qT
+         jYNimClhQOiN5TLD7OasoZTeSwZYArJexemm4XQOJLCnCBsESSj1zbpt7qKn935un0
+         y/u5xlRhi3lqB57AFG13I6Hr104tf6nCWI+FwEZwXivW+gLjUybX5CRDJAONvSNBNm
+         uNzGIp8Wf//cTSX+Fb4oWHcfEWB5ukjF39qgCDIGSWtMq0Qp4O3Ooc9X43yy+avi4Z
+         GGAYMWEmsi1NvSjWaRolqaYs1pzUWcz0xaZRAJ8GmAy5TSnVnbnLsUYk3noD9oW8Y3
+         UhewL4cmnqeog==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 46137E4D006;
+        Wed, 12 Jul 2023 03:30:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BLNQQmV3UXjnbcXaDp56xIW3SuiHsTDd
-X-Proofpoint-ORIG-GUID: BLNQQmV3UXjnbcXaDp56xIW3SuiHsTDd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-11_14,2023-07-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- mlxlogscore=637 spamscore=0 priorityscore=1501 impostorscore=0
- phishscore=0 clxscore=1011 adultscore=0 malwarescore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307120013
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Subject: Re: [PATCH net-next] MAINTAINERS: Add another mailing list for QUALCOMM
+ ETHQOS ETHERNET DRIVER
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <168913262128.27250.10319125912738064702.git-patchwork-notify@kernel.org>
+Date:   Wed, 12 Jul 2023 03:30:21 +0000
+References: <20230710195240.197047-1-ahalaney@redhat.com>
+In-Reply-To: <20230710195240.197047-1-ahalaney@redhat.com>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
+        mcoquelin.stm32@gmail.com, pabeni@redhat.com, kuba@kernel.org,
+        edumazet@google.com, davem@davemloft.net, joabreu@synopsys.com,
+        alexandre.torgue@foss.st.com, peppe.cavallaro@st.com,
+        bhupesh.sharma@linaro.org, vkoul@kernel.org,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,42 +64,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Taniya Das <quic_tdas@quicinc.com>
+Hello:
 
-If rcg is in disabled state when clk_rcg2_shared_set_rate is called, the
-new configuration is written to the configuration register but it won't be
-effective in h/w yet because update bit won't be set if rcg is in disabled
-state. Since the new configuration is not yet updated in h/w, dirty bit of
-configuration register will be set in such case. Clear the dirty bit and
-update the rcg to proper new configuration by setting the update bit before
-enabling the rcg.
+This patch was applied to netdev/net.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
----
-Resending this patch as there is no review for 2 months.
+On Mon, 10 Jul 2023 14:50:57 -0500 you wrote:
+> linux-arm-msm is the list most people subscribe to in order to receive
+> updates about Qualcomm related drivers. Make sure changes for the
+> Qualcomm ethernet driver make it there.
+> 
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
 
- drivers/clk/qcom/clk-rcg2.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Here is the summary with links:
+  - [net-next] MAINTAINERS: Add another mailing list for QUALCOMM ETHQOS ETHERNET DRIVER
+    https://git.kernel.org/netdev/net/c/e522c1bd0ab4
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index e22baf3a7112..b25635feb617 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -982,7 +982,13 @@ static int clk_rcg2_set_force_enable(struct clk_hw *hw)
- {
- 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
- 	const char *name = clk_hw_get_name(hw);
--	int ret, count;
-+	int ret, count, val;
-+
-+	if (!__clk_is_enabled(hw->clk)) {
-+		regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CMD_REG, &val);
-+		if (val & CMD_DIRTY_CFG)
-+			update_config(rcg);
-+	}
- 
- 	ret = regmap_update_bits(rcg->clkr.regmap, rcg->cmd_rcgr + CMD_REG,
- 				 CMD_ROOT_EN, CMD_ROOT_EN);
+You are awesome, thank you!
 -- 
-2.25.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
