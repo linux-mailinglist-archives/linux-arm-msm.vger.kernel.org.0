@@ -2,223 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA2C6750FD5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 19:41:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E0E975106A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 20:23:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231651AbjGLRlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 13:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
+        id S231368AbjGLSXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 14:23:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231641AbjGLRlM (ORCPT
+        with ESMTP id S229506AbjGLSXA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 13:41:12 -0400
-Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4844D1980
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 10:41:11 -0700 (PDT)
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: marex@denx.de)
-        by phobos.denx.de (Postfix) with ESMTPSA id DDAFC86B58;
-        Wed, 12 Jul 2023 19:41:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-        s=phobos-20191101; t=1689183670;
-        bh=Fp7N3sRZ5ZZmDH2BLoJqfemPcNUZIJugo+MlROK92bI=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=Uq18a/yFaOczmeV5zZFlgJ4fjjkfIRbjlf8KFSi+JpLdC1nq7jPr9602ABRQaddvI
-         uk/0NkNrfR7uOWANzEihuYFfaQW7lTrodu4AUhIWktGeUN8yOf07X3B24bVcIPBx3H
-         PwUUKDnZtutxe+GXLQjqrGnku+6dUIpFSD/zryAnemXh4IGOh5rJoOm/ch/HuLB4+T
-         /yVsdFaMIiMCeOa8QcUESB1Jz0uSv165L8Xfwv2Yy+f0dYxSssCuwXPRuc6BNpw11v
-         /b47GGRbLqHJ0AVtkt7I3YZZcw5xuWsQrk0EU9ix+OrEfkKjqbyK7JQAqjojUGTlfy
-         XEckFi/345/mw==
-Message-ID: <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
-Date:   Wed, 12 Jul 2023 19:41:08 +0200
+        Wed, 12 Jul 2023 14:23:00 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF061BEC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 11:22:58 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3158a5e64b6so5638237f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 11:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689186177; x=1691778177;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zEptLORFsPcNRSNWyiLt/qdXLZFMpFLB74XceY7kfJs=;
+        b=NESOhrM+60c9TaKgiaIunf+PqQPIiBLE3dQ9ohYJ10UGNBLpP71Pw63cm5FCYIQjg3
+         vSc2vV0+vin0J4kZHikU2XhxSSio4lTYEvE7XeY9L/9ItYK7ivFTsbK5Pj0hTkJ9tTB/
+         Gs6wNB5zXnFjWLNd7Ufb4RBx6gDD2Vxn0UIl5v/LvKGUOxH3+AOBGj+TZJlH+DD0kbaL
+         9D6MmYT5Ykym5O/lqMR7yo0pcdpbSAzVh0ESz3OyXUgikztzX9ojWLoCNPXXK5ALnJwl
+         t06OlCkmiXzr8v5veQMH/kDwu63CaY1xtE2+K7TTax0s7lRchOGCX3cK1VPlHl+d7+Nr
+         zfkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689186177; x=1691778177;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zEptLORFsPcNRSNWyiLt/qdXLZFMpFLB74XceY7kfJs=;
+        b=T01iQVDgPm+JwkHfn83Ag2/uM/A7o/3PBD8xoxhUwfnR1y+4ISMN8h5j7BxVc1UnUH
+         CAiXzloayZoLtEuWqPA4eF6C3VroYzb7MEU4YvKLnccm4+6B0YHzu6iX13vVbFg/HGFc
+         CTrAyeEISxXMvJbj6+Px8g9TkyBzoeMgfC9nV6kSlslh97Tq/w2ZPAPUTaB/dwCkj55a
+         4mb1whMWAUNwwE1r/C2m/o8zkOER1sdMWC9UijWBpg7Sx/mRodXPgRJZweR1s0lRztPZ
+         oJmxi4QZEozEL5dBmxPaIUfIFlk7EXYTYUmu8CYU6e9h5SN+7FjA4RjuIMbWiwM7XG/0
+         wlgg==
+X-Gm-Message-State: ABy/qLbdxG50j9ZhKOPN0fzvqOaet8kNZYvCVYfE4B58kUlo9jubIGji
+        Q1IUQSTRuvwFP2u4yZ7zKJyUa8s8junO299lkhAL5FVeEPBRuAls
+X-Google-Smtp-Source: APBJJlHMQns32yY3qDu99XriZAQm+PfgqTyCkmM5Rr4OFbIo1eXyU4SfgLsCdRIpUXiTRIT4A3OFVAGT/QWgUoAtj1k=
+X-Received: by 2002:a5d:51cc:0:b0:314:121d:8cbf with SMTP id
+ n12-20020a5d51cc000000b00314121d8cbfmr13778455wrv.25.1689186176882; Wed, 12
+ Jul 2023 11:22:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
- EOT packet
-Content-Language: en-US
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        neil.armstrong@linaro.org, Amit Pundir <amit.pundir@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jagan Teki <jagan@amarulasolutions.com>,
-        dri-devel@lists.freedesktop.org, Robert Foss <rfoss@kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Michael Walle <michael@walle.cc>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20230403221233.500485-1-marex@denx.de>
- <20230403221233.500485-2-marex@denx.de>
- <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
- <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
- <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
- <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
- <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
- <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
- <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
-From:   Marek Vasut <marex@denx.de>
-In-Reply-To: <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+References: <cover.1689148711.git.quic_schowdhu@quicinc.com> <18212c7abbb8c833cc07f8500d4905b79c49ec59.1689148711.git.quic_schowdhu@quicinc.com>
+In-Reply-To: <18212c7abbb8c833cc07f8500d4905b79c49ec59.1689148711.git.quic_schowdhu@quicinc.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Wed, 12 Jul 2023 23:52:45 +0530
+Message-ID: <CAH=2Ntz8JEGp_Atsv3iToUG1WdLKvdt5GYu7a=LwgmgY7v0rvw@mail.gmail.com>
+Subject: Re: [PATCH V1 2/3] usb: misc: Add notifier call chain to Embedded USB
+ Debug(EUD) driver
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/9/23 03:03, Abhinav Kumar wrote:
-> 
-> 
-> On 7/7/2023 1:47 AM, Neil Armstrong wrote:
->> On 07/07/2023 09:18, Neil Armstrong wrote:
->>> Hi,
->>>
->>> On 06/07/2023 11:20, Amit Pundir wrote:
->>>> On Wed, 5 Jul 2023 at 11:09, Dmitry Baryshkov
->>>> <dmitry.baryshkov@linaro.org> wrote:
->>>>>
->>>>> [Adding freedreno@ to cc list]
->>>>>
->>>>> On Wed, 5 Jul 2023 at 08:31, Jagan Teki 
->>>>> <jagan@amarulasolutions.com> wrote:
->>>>>>
->>>>>> Hi Amit,
->>>>>>
->>>>>> On Wed, Jul 5, 2023 at 10:15 AM Amit Pundir 
->>>>>> <amit.pundir@linaro.org> wrote:
->>>>>>>
->>>>>>> Hi Marek,
->>>>>>>
->>>>>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
->>>>>>>>
->>>>>>>> Do not generate the HS front and back porch gaps, the HSA gap and
->>>>>>>> EOT packet, as these packets are not required. This makes the 
->>>>>>>> bridge
->>>>>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
->>>>>>>
->>>>>>> This patch broke display on Dragonboard 845c (SDM845) devboard 
->>>>>>> running
->>>>>>> AOSP. This is what I see
->>>>>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
->>>>>>> Reverting this patch fixes this regression for me.
->>>>>>
->>>>>> Might be msm dsi host require proper handling on these updated
->>>>>> mode_flags? did they?
->>>>>
->>>>> The msm DSI host supports those flags. Also, I'd like to point out
->>>>> that the patch didn't change the rest of the driver code. So even if
->>>>> drm/msm ignored some of the flags, it should not have caused the
->>>>> issue. Most likely the issue is on the lt9611 side. I's suspect that
->>>>> additional programming is required to make it work with these flags.
->>>>
->>>> I spent some time today on smoke testing these flags (individually and
->>>> in limited combination) on DB845c, to narrow down this breakage to one
->>>> or more flag(s) triggering it. Here are my observations in limited
->>>> testing done so far.
->>>>
->>>> There is no regression with MIPI_DSI_MODE_NO_EOT_PACKET when enabled
->>>> alone and system boots to UI as usual.
->>>>
->>>> MIPI_DSI_MODE_VIDEO_NO_HFP always trigger the broken display as in the
->>>> screenshot[1] shared earlier as well.
->>>>
->>>> Adding either of MIPI_DSI_MODE_VIDEO_NO_HSA and
->>>> MIPI_DSI_MODE_VIDEO_NO_HBP always result in no display, unless paired
->>>> with MIPI_DSI_MODE_VIDEO_NO_HFP and in that case we get the broken
->>>> display as reported.
->>>>
->>>> In short other than MIPI_DSI_MODE_NO_EOT_PACKET flag, all other flags
->>>> added in this commit break the display on DB845c one way or another.
->>>
->>> I think the investigation would be to understand why samsung-dsim 
->>> requires
->>> such flags and/or what are the difference in behavior between MSM DSI 
->>> and samsung DSIM
->>> for those flags ?
->>>
->>> If someone has access to the lt9611 datasheet, so it requires 
->>> HSA/HFP/HBP to be
->>> skipped ? and does MSM DSI and samsung DSIM skip them in the same way ?
->>
->> I think there's a mismatch, where on one side this flags sets the link 
->> in LP-11 while
->> in HSA/HFP/HPB while on the other it completely removes those blanking 
->> packets.
->>
->> The name MIPI_DSI_MODE_VIDEO_NO_HBP suggests removal of HPB, not LP-11 
->> while HPB.
->> the registers used in both controllers are different:
->> - samsung-dsim: DSIM_HBP_DISABLE_MODE
->> - msm dsi: DSI_VID_CFG0_HBP_POWER_STOP
->>
->> The first one suggest removing the packet, while the second one 
->> suggests powering
->> off the line while in the blanking packet period.
->>
->> @Abhinav, can you comment on that ?
->>
-> 
-> I dont get what it means by completely removes blanking packets in DSIM.
+Hi Souradeep,
 
-MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped by DSIM.
+On Wed, 12 Jul 2023 at 13:58, Souradeep Chowdhury
+<quic_schowdhu@quicinc.com> wrote:
+>
+> Add the notifier call chain to EUD driver. The notifier call chain
+> is added to check the role-switch status of EUD. When multiple
+> modules are switching roles on the same port, they need to call this
+> notifier to check the role-switch status of EUD. If EUD is disabled,
+> then the modules can go for the role-switch, otherwise it needs to
+> be blocked. The notifier chain can be used to link multiple modules
+> switching roles on the same port and create a ordering, priority and
+> conflict resolution among them. The wrapper functions are defined here
+> which can be used to register a notifier block to the chain, deregister
+> it and also call the chain.
+>
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> ---
+>  drivers/usb/misc/qcom_eud.c | 52 +++++++++++++++++++++++++++++++++++--
+>  1 file changed, 50 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> index 7f371ea1248c..e6c97a2cf2df 100644
+> --- a/drivers/usb/misc/qcom_eud.c
+> +++ b/drivers/usb/misc/qcom_eud.c
+> @@ -11,10 +11,13 @@
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/slab.h>
+>  #include <linux/sysfs.h>
+>  #include <linux/usb/role.h>
+> +#include "qcom_eud_notifier.h"
+>
+>  #define EUD_REG_INT1_EN_MASK   0x0024
+>  #define EUD_REG_INT_STATUS_1   0x0044
+> @@ -22,14 +25,16 @@
+>  #define EUD_REG_VBUS_INT_CLR   0x0080
+>  #define EUD_REG_CSR_EUD_EN     0x1014
+>  #define EUD_REG_SW_ATTACH_DET  0x1018
+> -#define EUD_REG_EUD_EN2                0x0000
+> +#define EUD_REG_EUD_EN2        0x0000
+>
+>  #define EUD_ENABLE             BIT(0)
+> -#define EUD_INT_PET_EUD                BIT(0)
 
-Maybe there is a need for new set of flags which differentiate between 
-HBP skipped (i.e. NO HBP) and HBP LP11 ?
+These indentation issues are already addressed in my EUD patches.
+Please rebase your patches on the same to reuse those.
 
-> It should be replacing those periods with LP11 too.
-> 
-> The traffic mode being used on this bridge is 
-> MIPI_DSI_MODE_VIDEO_SYNC_PULSE which is "Non-Burst Mode with Sync Pulses".
-> 
-> As per this traffic mode in the DSI spec,
-> 
-> "Normally, periods shown as HSA (Horizontal Sync Active), HBP 
-> (Horizontal Back Porch) and HFP (Horizontal Front Porch) are filled by 
-> Blanking Packets, with lengths (including packet overhead)  calculated 
-> to match the period specified by the peripheral’s data sheet. 
-> Alternatively, if there is sufficient time to transition from HS to LP 
-> mode and back again, a timed interval in LP mode may substitute for a 
-> Blanking Packet, thus saving power. During HSA, HBP and HFP periods, the 
-> bus should stay in the LP-11 state."
-> 
-> So we can either send the blanking packets or transition to LP state and 
-> those 3 flags are controlling exactly that during those periods for MSM 
-> driver.
-> 
-> If you stop sending the blanking packets, you need to replace that gap 
-> with LP.
+> +#define EUD_INT_PET_EUD        BIT(0)
+>  #define EUD_INT_VBUS           BIT(2)
+>  #define EUD_INT_SAFE_MODE      BIT(4)
+>  #define EUD_INT_ALL            (EUD_INT_VBUS | EUD_INT_SAFE_MODE)
+>
+> +static RAW_NOTIFIER_HEAD(eud_nh);
+> +
+>  struct eud_chip {
+>         struct device                   *dev;
+>         struct usb_role_switch          *role_sw;
+> @@ -41,6 +46,42 @@ struct eud_chip {
+>         bool                            usb_attached;
+>  };
+>
+> +int eud_register_notify(struct notifier_block *nb)
+> +{
+> +       return raw_notifier_chain_register(&eud_nh, nb);
+> +}
+> +EXPORT_SYMBOL_GPL(eud_register_notify);
+> +
+> +void eud_unregister_notify(struct notifier_block *nb)
+> +{
+> +       raw_notifier_chain_unregister(&eud_nh, nb);
+> +}
+> +EXPORT_SYMBOL_GPL(eud_unregister_notify);
+> +
+> +void eud_notifier_call_chain(unsigned long role_switch_state)
+> +{
+> +       raw_notifier_call_chain(&eud_nh, role_switch_state, NULL);
+> +}
+> +EXPORT_SYMBOL_GPL(eud_notifier_call_chain);
 
-I don't think that's what MIPI_DSI_MODE_VIDEO_NO_HBP means, the way I 
-understand MIPI_DSI_MODE_VIDEO_NO_HBP is that it skips the HBP 
-completely. So if you want HBP, then do not set 
-MIPI_DSI_MODE_VIDEO_NO_HBP . And if you want LP11 during HBP, that is I 
-think up to the controller (or maybe another new flag?).
+Probably I missed it, but you have not provided any example users of
+these APIs in the patchset or reference to another one which shows how
+these APIs are used.
 
-> One reason I can think of why this could break with MSM is perhaps we do 
-> not have sufficient time in those periods for the LP-HS transition like 
-> the spec has written.
-> 
-> 1) What is the resolution which is getting broken on db845c with this? I 
-> would like to know the full drm_display_mode for it to see how much time 
-> we have in those periods. Is any resolution working or all are broken.
-> 
-> 2) I also do not completely get the last line of the DSI spec on this 
-> traffic mode. Is it suggesting that we *must* use only LP11 for those 
-> periods in this traffic mode? I need to check little more on that. 
-> Because if thats the case the change is doing just that and we need to 
-> investigate the MSM failure little more. If not and its indeed optional 
-> to save power like the DSI spec says, then its weird why DSIM should be 
-> blank without that too.
+> +static int eud_vbus_spoof_attach_detach(struct notifier_block *nb, unsigned long event,
+> +                                       void *data)
+> +{
+> +       struct device_node *eud = of_find_compatible_node(NULL, NULL, "qcom,eud");
+> +       struct device *eud_device = bus_find_device_by_of_node(&platform_bus_type, eud);
+> +       struct eud_chip  *eud_data = dev_get_drvdata(eud_device);
+> +
+> +       if (eud_data->enabled  && event != USB_ROLE_DEVICE)
+> +               return NOTIFY_BAD;
+> +       else
+> +               return NOTIFY_OK;
+> +}
+> +
+> +static struct notifier_block eud_notifier = {
+> +       .notifier_call = eud_vbus_spoof_attach_detach,
+> +       .priority = 1,
 
-[...]
+Why do you need a 'priority = 1' here, it can be 0 or even lower?
+
+Thanks,
+Bhupesh
+
+> +};
+> +
+>  static int enable_eud(struct eud_chip *priv)
+>  {
+>         writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+> @@ -196,6 +237,10 @@ static int eud_probe(struct platform_device *pdev)
+>                 return dev_err_probe(chip->dev, ret,
+>                                 "failed to add role switch release action\n");
+>
+> +       ret = eud_register_notify(&eud_notifier);
+> +       if (ret)
+> +               return dev_err_probe(chip->dev, ret, "failed to register notifier\n");
+> +
+>         chip->base = devm_platform_ioremap_resource(pdev, 0);
+>         if (IS_ERR(chip->base))
+>                 return PTR_ERR(chip->base);
+> @@ -226,6 +271,9 @@ static void eud_remove(struct platform_device *pdev)
+>
+>         device_init_wakeup(&pdev->dev, false);
+>         disable_irq_wake(chip->irq);
+> +       eud_unregister_notify(&eud_notifier);
+> +
+> +       return 0;
+>  }
+>
+>  static const struct of_device_id eud_dt_match[] = {
+> --
+> 2.17.1
+>
