@@ -2,84 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25DC1750301
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 11:25:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF75975032D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 11:33:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232209AbjGLJZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 05:25:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42330 "EHLO
+        id S233159AbjGLJdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 05:33:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230207AbjGLJZt (ORCPT
+        with ESMTP id S232992AbjGLJdp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 05:25:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAE0CFB;
-        Wed, 12 Jul 2023 02:25:46 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36C91E9k014518;
-        Wed, 12 Jul 2023 09:25:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=J/Zh7uenU8KbczbDBlAdiCTIASLzTQsQdjx5cJkR2uk=;
- b=AFsiqYgyANsfgdwojetx+ezgtrck3lw5dCxCy9Uo31uvpadlDZ1HvWd/v6BcWNOPLVpN
- 82o4NiVOdG6H8ApRfWlnbIDg5nuo2Bwboii8wdOEDnr9JQvWB3aAltnDDeQZBZviF+Tp
- /xz7lhx8Ks93WleN72APsG05h2tLAv3I9DTk6r7n2jyTX6dx5SztOhYcRUaF5QaQcwWb
- TtScqrgFpaVDbfcOUHKALWtY3pLjBk/wEXznbr/XqR02CCq0MXvuxdaBtXSO45LdUAfR
- eZnReFEIs6ph7pTJDPotwefsy7lxnJnGLvqB/hwyOWyQ9W3KqGsOvqgZeSpBooPKDS35 JA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rsfeq11ub-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 09:25:43 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36C9PgBd000630
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 09:25:42 GMT
-Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 12 Jul
- 2023 02:25:39 -0700
-Message-ID: <ecbdfce8-0647-1622-b6e6-cb04a15e9923@quicinc.com>
-Date:   Wed, 12 Jul 2023 14:55:35 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v3 1/3] dt-bindings: power: rpmhpd: Add Generic RPMh PD
- indexes
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1689054169-10800-1-git-send-email-quic_rohiagar@quicinc.com>
- <1689054169-10800-2-git-send-email-quic_rohiagar@quicinc.com>
- <6746ceb6-dac4-ee8e-411f-8de0ff8f12e0@linaro.org>
- <77991119-a200-fbfe-5dba-580a0b0d3228@quicinc.com>
- <af0e1e5f-c284-a33a-7626-f143b1a4b30e@linaro.org>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <af0e1e5f-c284-a33a-7626-f143b1a4b30e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Wed, 12 Jul 2023 05:33:45 -0400
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2131.outbound.protection.outlook.com [40.107.117.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 591DC1A8;
+        Wed, 12 Jul 2023 02:33:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=iRvt3qddAdR5r7RGf2s7qjha/zbBTJLL1UGtD8cIcpPzfS+daKULagOBQBTrQwi5It4abM05KwCiMs3Lgvt4bfpjZYGYxc/8DQBaaJKvr4isjW7YUS6PSYanp+jwIo16b2M7Z9/zz8UpwqjF3LRstzXHeADFaedbvo8FdTkXGxoqL3sgMQWQLpG5jBYaJUBd7QRIK/+A2eYhJqL7Pdhp7OrjorulHuFlGinOssKcWKzqLygNe2Lr8HDRlxrY/gEwMy6OV8KhhINTrNA5qHYbEvyeUycpOW6XLhWYJwl6HvAiQ7b/c0ibmQdSbAIybJVERymspvtDl+moZoojZBglHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CYtqx7WfYEGqYG5KEaHeDbzCIJfRJ6FFOI4C7Yrs37A=;
+ b=dmQkgsjHta3e/Q+njezIA60w3jPBUc1ImH6FyFw3BmZn+N8hCxap1ad0WsH2RBTC9JVdFl7etU/mzFOCGRdLEtLJ5/7MWEIPtZnrzq3SAGOlTD2yS0m9LjA7VlNrmNmsBJpM2dIKZLON5oAj2cVy9JG8XKJSx8ZzDOEUx4paR0w8u+GOZ3LzGUiW5N4Xl/pmRcuJ4uBMc7Kk1SbTKbcqGg2gF+fSqw0DlDUPWYu2qO6cs05i2GrGh5EzIE8zKhZXGEs04F78TdkXU29xhnOwcblT7pie45+faycxa3s7dUfVECrH5W0Xx3VB+XQWPCSMfYfTcn/G8HyN1LE0mBH2tw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CYtqx7WfYEGqYG5KEaHeDbzCIJfRJ6FFOI4C7Yrs37A=;
+ b=Gdimz1Mlkqc0IfR2eg6o+8qU5Xlg2AO8LyVhHxTwoDkjr9Hx9S5zO4p4DM+fnbZ6urjPJO2jUQaKrLCb7cXT/2iJ2hwN6ac47Rj76RgpqVIpxuyOOsW4sNpR5NN2LToAB/nHZ43AKKkYQm0ZnmVm+PRGthL7LowEZQhLlqCibvODetTrtkzmstiwbSW1yR5Smyh0BQwI+FtTudWqG+HfkF62+9P8q/oKb8NNWFLzf9/sgnjlTpyQV4gOYbRn9cvsCyt2jPscU8mlhOhnlTzXsTbO+dKYAFAVhLm25fkcQ6j/ZO2e4IJEa5rjtI0eebZDAImjOV2D85UARcdx8s4CIQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+ by SEYPR06MB5985.apcprd06.prod.outlook.com (2603:1096:101:de::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6588.20; Wed, 12 Jul
+ 2023 09:33:38 +0000
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::fa0e:6c06:7474:285c]) by SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::fa0e:6c06:7474:285c%5]) with mapi id 15.20.6565.028; Wed, 12 Jul 2023
+ 09:33:38 +0000
+From:   Yangtao Li <frank.li@vivo.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Yangtao Li <frank.li@vivo.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 03/19] cpufreq: qcom-cpufreq-hw: Convert to platform remove callback returning void
+Date:   Wed, 12 Jul 2023 17:33:06 +0800
+Message-Id: <20230712093322.37322-3-frank.li@vivo.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230712093322.37322-1-frank.li@vivo.com>
+References: <20230712093322.37322-1-frank.li@vivo.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bUy5PaGvs-7-j97CfMkzsgyCkfD3ttyJ
-X-Proofpoint-GUID: bUy5PaGvs-7-j97CfMkzsgyCkfD3ttyJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-12_06,2023-07-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 mlxlogscore=654 suspectscore=0 mlxscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2307120083
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+X-ClientProxiedBy: SG2PR01CA0172.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:28::28) To SEZPR06MB5269.apcprd06.prod.outlook.com
+ (2603:1096:101:78::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|SEYPR06MB5985:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7d3b8a70-de08-4e21-d3d5-08db82bb1242
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: KLllzGyAwtfPcG9/vNkMgFJNwrSdRuEcmy5HzdRW6O3/RaL9i75jPQ1rz3S8M0aTCSx3LV4AvTDcDA0ZKwrINt9TvOGdKT6mgBioLn2Nd6fM+xXcRlYs3BPa87XmSAY9/+lIhchOyeHp33yjfQrnUFSfok0GyO+e3+33ZdXQr9r8fPuMlWiiBYwbihImu0Hfo6mSBWnFzeXLoRcjPAzApok52rihTCOIvSfMaSi07wyV8f1khb38Q1ipUOwql2O7gdAYvdNUPWQxIriqRPWny46M36fng7mpP7YOG67D6P+fknOuOKJW56fA+gtsK3nEN4JDZ5ZsAvQrpp13/bkUPOleFPu5APuyOlxayfkOaurRTgjZuhjFQGpOe9l7hrxbueRJg87LLhjqHFVlOmiOgV/z96VhcP6nE9Sy6VouNCZpQ5XwvvyLZxZCmKaFPJtEwNoQmAMKw2nLUmsa3LMqW8Ex/4ViIgJflsVfid3ZFTEMlH3JRMoK7Z/o8JKUa/we+7OoqREFgsv+3pdLsBg9lNXpAKZ4YwihKP6utY7HaKEeP8QP1w68c+Qe5tMh0/Kn1D/sCzANQC6s+OnjAZiu4jxzIt+aHxUlZcG6BtxosMy+pHYgJHEQa5pBy6QnBFLT
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(346002)(366004)(376002)(39860400002)(136003)(451199021)(186003)(2616005)(110136005)(54906003)(38350700002)(38100700002)(5660300002)(8936002)(52116002)(6666004)(6486002)(86362001)(8676002)(478600001)(316002)(41300700001)(2906002)(4326008)(66476007)(66556008)(66946007)(6506007)(83380400001)(26005)(1076003)(6512007)(36756003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a3FuMUk0cE1wdHRNa0VLbGtrQ2xWaXFEakxrN2xxdnhva3lONm9KTGJoWVFN?=
+ =?utf-8?B?b3J2WHYvTEF0Mnk3UFMza3lrMzU1NzZ6ZStTZnNFa1lXQVBMckkzRFlTeW41?=
+ =?utf-8?B?L1JYMFBSVnJTQU5WdU9UNzFPN0NCYzUxcU14TkY0ZmoyMm5sNS9xVW9oeFRH?=
+ =?utf-8?B?REhOOS9MaUlmRUxDQktaVG1wb2d2T01MaEdtQnB3WW1zaEExd2pCNk9wZStS?=
+ =?utf-8?B?eUNhVEF1cWgzbVdpRnJPN2phUG9WTEFLV1laWmUwWjg2TUlzcHhNeGtESTVE?=
+ =?utf-8?B?MEIrK0xvd2xyL214Rm82cmRqdDZpOVVRUWhxN0E0TUJiaWwyTDBwZGtKd0VW?=
+ =?utf-8?B?VGtnM2E4ZW1LWk9JZ3JEb0pvODlIY1VMN2VyS0dLQzQ3eER5R0VFd3l3ZFlS?=
+ =?utf-8?B?Tko2bENKS0poZGhzaXpmVkpPdDZ4WHBJZWI0Mm1ESkFXd3J1bWt0RjJsUGcx?=
+ =?utf-8?B?NFZsUjBtb3dxZTZYbHc5SURHdDMxZ1lOdHZtSDJXK3hoWWd1aUttU3dpUHc1?=
+ =?utf-8?B?bEplTCswK2ovcHZNcFJtNGtLN1RFd2tOYjZaYTJtZTZwUVpIQWFlZGFCKzNi?=
+ =?utf-8?B?M2ZmUDNqNEptbEgrT01jWlJ4eVAxOU9FSXBsaDFFOHFuREFpNXI3VW5paFZT?=
+ =?utf-8?B?T3EyZ05pWWJzM1RvcmtNcjRpU2lqbm5Bakp2R3NqZlNvQzZ1VXhhSDJIMkhD?=
+ =?utf-8?B?dVNldEpYQk1mRWx1cU5QaEwyRy9iRmYwa056NzNsOGpUUXBCaGNtdnJOWldt?=
+ =?utf-8?B?SGViaW9GcWxPRi9ORml4SnpUQ3ZuWjZUOXMxOStIL0lERnp4OGdTNjUyTGxB?=
+ =?utf-8?B?VWxiUll6M3RQSEJLaDlDS25GclBlaGR6R2EwWE5iT1l2SlUrSDFnVmlZYU9C?=
+ =?utf-8?B?aTYwZ3BmcXBlaVUzMmlPWGZqVFJvWHZabGhIeUZHMzRrV3MrMmhQL2ltNVBp?=
+ =?utf-8?B?UTR1ZFA4bDVKd3VJUGhGSTN5Nm9DZHhmUUg1eHNnR2RyMDVKSG9ZMmo5dXhv?=
+ =?utf-8?B?ZlVHNXhjbjVHU1hDZXNWYUk5am55MjhZWlFhQ0hZcWg0V3dvRk43TlVEajdy?=
+ =?utf-8?B?TklRbEJ5QXlhYmt4eWpwM2UwTUZEZHZlbHcrQWEyNjBhWnAwdDcvWFhIVFJV?=
+ =?utf-8?B?TEhTb3pqMGVwaEhPcHp5QkVNZXZtdSt3UlB1QlVUUVdMUUtGVVZGWEp4SWor?=
+ =?utf-8?B?RlZlUjRkbVdpYWJTUUlleFNXY25hQWlYc1VTeXc4OXlVdCtJMVgwWVNPdnNm?=
+ =?utf-8?B?YTFFUmErL1FGUTVjQ3VSTkYxYTM0bHNVd2RkQVc1eDNxYlJSK2hIb0xCN2pk?=
+ =?utf-8?B?WmZnVUczQURCREFTTUFnQmNtVjlad0s0UmVBcXliYXZRQ1k0cGs4NnB5QVdo?=
+ =?utf-8?B?V3QzNTRWZnFxbzVtbHVtMjY5Zjd0WU9JL3NtcFhQbVhkVHZaOERwWjlhb0o3?=
+ =?utf-8?B?bjRJQmRMeVIzTkRxMGxIc3loSnNDQVFiaXBmV1pMSkNaSEV5Yi9Cajd3bndj?=
+ =?utf-8?B?N1pVY0JpalQ3OCszWjdZQ3R3ZUg3eFFKci8xUHJJQWpBQ0FrWWtPMlZaM0pW?=
+ =?utf-8?B?MkVNQlA3THhYYzFUVjBMaWRFejNRTmE5RmVaSnRJVHVKc3pBWWc4N3BIRHpB?=
+ =?utf-8?B?MDRFQWgrdVMzVmVtb2VGQnM0eTR1V0ZsR05VMlAzYTNtZFg4SzYwWXBuelZ1?=
+ =?utf-8?B?TDdOTE1TUE9GMFJoaGZNSjVYTzVQcDQrQW1nQjVlQXV6NnQvdTUvbzhQakl1?=
+ =?utf-8?B?b2NUZUF1UE1uV0lLZUtRcExSYk1xSG5tR2czTkc5cDluQlEwVWJSN1FXMU43?=
+ =?utf-8?B?NWExUkNVeXowcFFSRFZoemVPVjJ6N3J6eCtoY3hWVDlVay84cUdUUmNXYmpn?=
+ =?utf-8?B?YmplRTNCWStrRlA1ZXdKTTNhTStZdjIzc3dPUm56aEJTaldaU01iOXlSTjg3?=
+ =?utf-8?B?cko1N1FwWlVlTXNCcENVRG5IRHM1SURzYVpkV0lSWnBvZjEzZUdRQy9kbHR1?=
+ =?utf-8?B?RitSUFFhaU9mVDQyV21pblFiN3BLWFdwL29GNzJ6ekdmNFNsS1lNWklLbzZs?=
+ =?utf-8?B?cXgyTWRiUTVxb0xvOGx0cXBBVGZYTldRQ0RNalFGOFRnT3k4UDg1dmhRTitE?=
+ =?utf-8?Q?GDeH1sjBaNDLxEqdB4LFuQ3tq?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d3b8a70-de08-4e21-d3d5-08db82bb1242
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jul 2023 09:33:38.1334
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Q1f+/os1UoNN1Vab/NsiBlheITly3ftcGYfDobxeejzKMrJ0Km68yTXFQQdUhFX5JGeMLia3aywf+prtrJqYpw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5985
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,70 +128,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-On 7/12/2023 2:52 PM, Konrad Dybcio wrote:
-> On 12.07.2023 10:24, Rohit Agarwal wrote:
->> On 7/11/2023 8:41 PM, Dmitry Baryshkov wrote:
->>> On 11/07/2023 08:42, Rohit Agarwal wrote:
->>>> Add Generic RPMh Power Domain indexes that can be used
->>>> for all the Qualcomm SoC henceforth.
->>>>
->>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->>>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>    include/dt-bindings/power/qcom-rpmhpd.h | 30 ++++++++++++++++++++++++++++++
->>>>    1 file changed, 30 insertions(+)
->>>>    create mode 100644 include/dt-bindings/power/qcom-rpmhpd.h
->>>>
->>>> diff --git a/include/dt-bindings/power/qcom-rpmhpd.h b/include/dt-bindings/power/qcom-rpmhpd.h
->>>> new file mode 100644
->>>> index 0000000..4da2e04
->>>> --- /dev/null
->>>> +++ b/include/dt-bindings/power/qcom-rpmhpd.h
->>>> @@ -0,0 +1,30 @@
->>>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->>>> +/*
->>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + */
->>>> +
->>>> +#ifndef _DT_BINDINGS_POWER_QCOM_RPMHPD_H
->>>> +#define _DT_BINDINGS_POWER_QCOM_RPMHPD_H
->>>> +
->>>> +/* Generic RPMH Power Domain Indexes */
->>>> +#define CX               0
->>>> +#define MX               1
->>>> +#define CX_AO            2
->>>> +#define MX_AO            3
->>>> +#define GFX              4
->>>> +#define MSS              5
->>>> +#define EBI              6
->>>> +#define LCX              7
->>>> +#define LMX              8
->>>> +#define MMCX             9
->>>> +#define MMCX_AO          10
->>>> +#define MXC              11
->>>> +#define MXC_AO           12
->>>> +#define NSP              13
->>>> +#define NSP0             14
->>>> +#define NSP1             15
->>>> +#define QPHY             16
->>>> +#define DDR              17
->>>> +#define XO               18
->>> I went through the existing defines. If we adopt the order of defines for sm8550, we can migrate that platform and all of sm8[234]50 without breaking ABI. This would be a minor gain, but still something.
->>>
->> Actually, I added them in the sequence based on the frequency with which they occur in the driver, so that there are less NULL entries created for any target additions. Shouldnt we keep it this way and ignore for previous targets then?
-> Don't bother yourself with this, we've already dragged you through
-> some bindings mess ;)
->
-> Dmitry just noticed that a happy coincidence occured and we could
-> swap out SM8[234]_50 indices with these ones and they would still
-> match. It'd be a separate patch though.
-Yes sure. Will make a separate patch updating entries for these targets.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Thanks,
-Rohit.
-> Konrad
->> Thanks,
->> Rohit.
->>>> +
->>>> +#endif
+Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+---
+ drivers/cpufreq/qcom-cpufreq-hw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index f2830371d25f..f24cf2eddf1e 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -730,16 +730,14 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int qcom_cpufreq_hw_driver_remove(struct platform_device *pdev)
++static void qcom_cpufreq_hw_driver_remove(struct platform_device *pdev)
+ {
+ 	cpufreq_unregister_driver(&cpufreq_qcom_hw_driver);
+-
+-	return 0;
+ }
+ 
+ static struct platform_driver qcom_cpufreq_hw_driver = {
+ 	.probe = qcom_cpufreq_hw_driver_probe,
+-	.remove = qcom_cpufreq_hw_driver_remove,
++	.remove_new = qcom_cpufreq_hw_driver_remove,
+ 	.driver = {
+ 		.name = "qcom-cpufreq-hw",
+ 		.of_match_table = qcom_cpufreq_hw_match,
+-- 
+2.39.0
+
