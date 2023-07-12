@@ -2,245 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72EAE750A0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 15:53:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F16B750A12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 15:53:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbjGLNxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 09:53:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36270 "EHLO
+        id S232463AbjGLNxw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 09:53:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233451AbjGLNxH (ORCPT
+        with ESMTP id S231302AbjGLNxv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 09:53:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0F7B4;
-        Wed, 12 Jul 2023 06:53:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BEE4C617DF;
-        Wed, 12 Jul 2023 13:53:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A345AC433C7;
-        Wed, 12 Jul 2023 13:53:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689169984;
-        bh=0sbyIiczIJDnx26Ch8e9l+qxXeZZ0rwKcMQ0zWjPG2E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hjUTKto8Ioz8iKBRqNaRabBf11Oc7eHOlmTK9M/ZTt8ltDoWCX6CFOzjIGxRlGFY3
-         Gx5jqcVwy1TF/krIPVc4UMyuHZxNLbDekq6CNc/YFW9XZuZPgy9H7AxolbKkWLgnAi
-         r9fpm9kzzSwMYN6Psfg7TVfTW8n0B+mvlh2FTRcCYAZ0ciN3u0JY7dyza48kXnOA9n
-         WMci9hbcuhVOWKEEdS8SZtYhWg6pK+ZLR69YBjxKaOmTAGDWdtxl6Adlqjo21243Qn
-         XbsKfbvDJLN7WkAM0aaNNMoLWVYfSKf0LdY3uyS6mKtDCMS2NYJoRkpPzq+x8hypZP
-         ozEduvqpUbjZw==
-Date:   Wed, 12 Jul 2023 15:53:00 +0200
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-        Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-        dri-devel@lists.freedesktop.org,
-        Vandita Kulkarni <vandita.kulkarni@intel.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Arun R Murthy <arun.r.murthy@intel.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Samuel Holland <samuel@sholland.org>,
-        Matt Roper <matthew.d.roper@intel.com>,
-        Wenjing Liu <wenjing.liu@amd.com>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-        Danilo Krummrich <dakr@redhat.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        spice-devel@lists.freedesktop.org,
-        Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
-        linux-sunxi@lists.linux.dev, Stylon Wang <stylon.wang@amd.com>,
-        Tim Huang <Tim.Huang@amd.com>,
-        Suraj Kandpal <suraj.kandpal@intel.com>,
-        =?utf-8?B?QW5kcsOp?= Almeida <andrealmeid@igalia.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Lucas De Marchi <lucas.demarchi@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Hersen Wu <hersenxs.wu@amd.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>,
-        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-        =?utf-8?Q?=C5=81ukasz?= Bartosik <lb@semihalf.com>,
-        Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>,
-        kernel@pengutronix.de, Alex Deucher <alexander.deucher@amd.com>,
-        freedreno@lists.freedesktop.org,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Zack Rusin <zackr@vmware.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
-        Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-        =?utf-8?B?Sm9zw6k=?= Roberto de Souza <jose.souza@intel.com>,
-        virtualization@lists.linux-foundation.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Yongqin Liu <yongqin.liu@linaro.org>,
-        Mario Limonciello <mario.limonciello@amd.com>,
-        Fei Yang <fei.yang@intel.com>,
-        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        David Lechner <david@lechnology.com>,
-        Julia Lawall <Julia.Lawall@inria.fr>,
-        Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
-        "Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-        David Francis <David.Francis@amd.com>,
-        Aaron Liu <aaron.liu@amd.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        linux-rockchip@lists.infradead.org,
-        Fangzhi Zuo <jerry.zuo@amd.com>,
-        Aurabindo Pillai <aurabindo.pillai@amd.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Jouni =?utf-8?B?SMO2Z2FuZGVy?= <jouni.hogander@intel.com>,
-        Dave Airlie <airlied@redhat.com>, linux-mips@vger.kernel.org,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Animesh Manna <animesh.manna@intel.com>,
-        linux-renesas-soc@vger.kernel.org,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        linux-amlogic@lists.infradead.org, Evan Quan <evan.quan@amd.com>,
-        Michal Simek <michal.simek@amd.com>,
-        linux-arm-kernel@lists.infradead.org, Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Qingqing Zhuo <qingqing.zhuo@amd.com>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Swati Sharma <swati2.sharma@intel.com>,
-        John Stultz <jstultz@google.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Haneen Mohammed <hamohammed.sa@gmail.com>,
-        Anusha Srivatsa <anusha.srivatsa@intel.com>,
-        Dan Carpenter <error27@gmail.com>,
-        Karol Herbst <kherbst@redhat.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        linux-hyperv@vger.kernel.org, Stefan Agner <stefan@agner.ch>,
-        Melissa Wen <melissa.srw@gmail.com>,
-        =?utf-8?B?TWHDrXJh?= Canal <mairacanal@riseup.net>,
-        Luca Coelho <luciano.coelho@intel.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Likun Gao <Likun.Gao@amd.com>, Sam Ravnborg <sam@ravnborg.org>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Deepak Rawat <drawat.floss@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>, Joel Stanley <joel@jms.id.au>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-        Harry Wentland <harry.wentland@amd.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Alan Liu <haoping.liu@amd.com>,
-        Philip Yang <Philip.Yang@amd.com>,
-        Lyude Paul <lyude@redhat.com>, intel-gfx@lists.freedesktop.org,
-        Alison Wang <alison.wang@nxp.com>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Gustavo Sousa <gustavo.sousa@intel.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Deepak R Varma <drv@mailo.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>, Chia-I Wu <olvaffe@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        Khaled Almahallawy <khaled.almahallawy@intel.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Emma Anholt <emma@anholt.net>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Imre Deak <imre.deak@intel.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Roman Li <roman.li@amd.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Rob Clark <robdclark@gmail.com>,
-        Hamza Mahfooz <hamza.mahfooz@amd.com>,
-        David Airlie <airlied@gmail.com>, Marek Vasut <marex@denx.de>,
-        Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-        xen-devel@lists.xenproject.org, Guchun Chen <guchun.chen@amd.com>,
-        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
-        Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
-        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Leo Li <sunpeng.li@amd.com>,
-        Uma Shankar <uma.shankar@intel.com>,
-        Mika Kahola <mika.kahola@intel.com>,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-        Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Vinod Govindapillai <vinod.govindapillai@intel.com>,
-        linux-tegra@vger.kernel.org,
-        Marek =?utf-8?B?T2zFocOhaw==?= <marek.olsak@amd.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        =?utf-8?Q?Joaqu=C3=ADn_Ignacio_Aramend=C3=ADa?= 
-        <samsagax@gmail.com>, Melissa Wen <mwen@igalia.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        linux-mediatek@lists.infradead.org,
-        Fabio Estevam <festevam@gmail.com>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        David Tadokoro <davidbtadokoro@usp.br>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        amd-gfx@lists.freedesktop.org, Jyri Sarha <jyri.sarha@iki.fi>,
-        Yannick Fertre <yannick.fertre@foss.st.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Philippe Cornu <philippe.cornu@foss.st.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Wayne Lin <Wayne.Lin@amd.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Nirmoy Das <nirmoy.das@intel.com>, Lang Yu <Lang.Yu@amd.com>,
-        Lucas Stach <l.stach@pengutronix.de>
-Subject: Re: [PATCH RFC v1 00/52] drm/crtc: Rename struct drm_crtc::dev to
- drm_dev
-Message-ID: <a7h7uovevwdsuuwdqh7g36qgfyq3bt5sx3eba2npyduoyu2icc@pwygetstxdp3>
-References: <20230712094702.1770121-1-u.kleine-koenig@pengutronix.de>
- <94eb6e4d-9384-152f-351b-ebb217411da9@amd.com>
- <20230712110253.paoyrmcbvlhpfxbf@pengutronix.de>
- <o3dc4q27ap6rajsvpfwfvs3z3afekkwbhnclvswkaietciy2kc@unjf67gz5tur>
- <20230712133803.rf26cbg5wz7wsmgl@pengutronix.de>
+        Wed, 12 Jul 2023 09:53:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37AB9E74;
+        Wed, 12 Jul 2023 06:53:50 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36CBRlVV032033;
+        Wed, 12 Jul 2023 13:53:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=WNF/7l4V0z/b41e1Or2MthOLiwBjpuDAS7snjo562Vg=;
+ b=AUSFV0Do5Gu0CMcI4/7ywzgjIokzQMneC6y69Y+05MK8GVF0sevTpp+OiRvyLiY6HhxA
+ FxQqYyvN7AVULK/GR/JZoriCRo0DqvGhYCopUnPPD/3hLeNZPiR+xNN17Xq6zlhtPiup
+ srYRK9Yxk0/U5EeouiN/qWnNOXXc1jEwVUSL1cge0Y6PsJYhV4j+8w5vymNvNofRi83M
+ EPh+I3p21TbMH6yUWMW+1wrY+5zXaRV5AAs4R0zm3voD2aKrnrrV3UUf5fxnq2+l5WtN
+ Q2eUXtQ1dBC5biHNu+Pnxt1V7dsUjxBH6piLNBq6+hRksOUBw577iuXx91TqPvqYFJiO Sg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rser0spry-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Jul 2023 13:53:28 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36CDrQN3010385
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Jul 2023 13:53:27 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 12 Jul
+ 2023 06:53:22 -0700
+Message-ID: <d3849c2a-8826-62a7-1749-0d4b3ee47259@quicinc.com>
+Date:   Wed, 12 Jul 2023 21:53:02 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jyn7gwdek3zlokhs"
-Content-Disposition: inline
-In-Reply-To: <20230712133803.rf26cbg5wz7wsmgl@pengutronix.de>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v6 09/13] Add nodes for dsb edge control
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+References: <1687246361-23607-1-git-send-email-quic_taozha@quicinc.com>
+ <1687246361-23607-10-git-send-email-quic_taozha@quicinc.com>
+ <2023062024-sincere-tripod-95dc@gregkh>
+ <3aca4a55-0dc7-b34c-d2c0-111a96c33ec3@quicinc.com>
+ <e82385f1-de55-4c70-5c5c-35b93a5b2488@arm.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <e82385f1-de55-4c70-5c5c-35b93a5b2488@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: lkv3c6CNrQZrHTcMIFfTohgNMLjs4a0b
+X-Proofpoint-ORIG-GUID: lkv3c6CNrQZrHTcMIFfTohgNMLjs4a0b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-12_08,2023-07-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 mlxscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=999
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307120124
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -249,80 +98,122 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---jyn7gwdek3zlokhs
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 6/20/2023 9:41 PM, Suzuki K Poulose wrote:
+> On 20/06/2023 09:31, Tao Zhang wrote:
+>>
+>> On 6/20/2023 3:37 PM, Greg Kroah-Hartman wrote:
+>>> On Tue, Jun 20, 2023 at 03:32:37PM +0800, Tao Zhang wrote:
+>>>> Add the nodes to set value for DSB edge control and DSB edge
+>>>> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
+>>>> resgisters to configure edge control. DSB edge detection control
+>>>> 00: Rising edge detection
+>>>> 01: Falling edge detection
+>>>> 10: Rising and falling edge detection (toggle detection)
+>>>> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
+>>>> configure mask. Eight 32 bit registers providing DSB interface
+>>>> edge detection mask control.
+>>>>
+>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>>> ---
+>>>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  32 +++++
+>>>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 143 
+>>>> ++++++++++++++++++++-
+>>>>   drivers/hwtracing/coresight/coresight-tpdm.h       |  22 ++++
+>>>>   3 files changed, 196 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git 
+>>>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>>>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>> index 2a82cd0..34189e4a 100644
+>>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>> @@ -60,3 +60,35 @@ Description:
+>>>>           Bit[3] : Set to 0 for low performance mode.
+>>>>                    Set to 1 for high performance mode.
+>>>>           Bit[4:8] : Select byte lane for high performance mode.
+>>>> +
+>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl
+>>>> +Date:        March 2023
+>>>> +KernelVersion    6.5
+>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
+>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+>>>> +Description:
+>>>> +        Read/Write a set of the edge control registers of the DSB
+>>>> +        in TPDM.
+>>>> +
+>>>> +        Expected format is the following:
+>>>> +        <integer1> <integer2> <integer3>
+>>> sysfs is "one value", not 3.  Please never have to parse a sysfs file.
+>>
+>> Do you mean sysfs file can only accept "one value"?
+>>
+>> I see that more than one value are written to the sysfs file 
+>> "trigout_attach".
+>>
+>>>
+>>>> +static ssize_t dsb_edge_ctrl_show(struct device *dev,
+>>>> +                       struct device_attribute *attr,
+>>>> +                       char *buf)
+>>>> +{
+>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>>>> +    ssize_t size = 0;
+>>>> +    unsigned long bytes;
+>>>> +    int i;
+>>>> +
+>>>> +    spin_lock(&drvdata->spinlock);
+>>>> +    for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
+>>>> +        bytes = sysfs_emit_at(buf, size,
+>>>> +                  "Index:0x%x Val:0x%x\n", i,
+>>> Again, no, one value, no "string" needed to parse anything.
+>>
+>> I also see other sysfs files can be read more than one value in other 
+>> drivers.
+>>
+>> Is this "one value" limitation the usage rule of Linux sysfs system?
+>>
+>> Or am I misunderstanding what you mean?
+>
+> Please fix the other sysfs tunables in the following patches.
 
-On Wed, Jul 12, 2023 at 03:38:03PM +0200, Uwe Kleine-K=F6nig wrote:
-> Hello Maxime,
->=20
-> On Wed, Jul 12, 2023 at 02:52:38PM +0200, Maxime Ripard wrote:
-> > On Wed, Jul 12, 2023 at 01:02:53PM +0200, Uwe Kleine-K=F6nig wrote:
-> > > > Background is that this makes merge conflicts easier to handle and =
-detect.
-> > >=20
-> > > Really?
-> >=20
-> > FWIW, I agree with Christian here.
-> >=20
-> > > Each file (apart from include/drm/drm_crtc.h) is only touched once. So
-> > > unless I'm missing something you don't get less or easier conflicts by
-> > > doing it all in a single patch. But you gain the freedom to drop a
-> > > patch for one driver without having to drop the rest with it.
-> >=20
-> > Not really, because the last patch removed the union anyway. So you have
-> > to revert both the last patch, plus that driver one. And then you need
-> > to add a TODO to remove that union eventually.
->=20
-> Yes, with a single patch you have only one revert (but 194 files changed,
-> 1264 insertions(+), 1296 deletions(-)) instead of two (one of them: 1
-> file changed, 9 insertions(+), 1 deletion(-); the other maybe a bit
-> bigger). (And maybe you get away with just reverting the last patch.)
->=20
-> With a single patch the TODO after a revert is "redo it all again (and
-> prepare for a different set of conflicts)" while with the split series
-> it's only "fix that one driver that was forgotten/borked" + reapply that
-> 10 line patch. As the one who gets that TODO, I prefer the latter.
->=20
-> So in sum: If your metric is "small count of reverted commits", you're
-> right. If however your metric is: Better get 95% of this series' change
-> in than maybe 0%, the split series is the way to do it.
+List a new solution for the similar cases below, please see if this 
+design is reasonable?
 
-I guess that's where we disagree: I don't see the point of having 95% of
-it, either 0 or 100.
+1. Two SysFS files("dsb_edge_ctrl_idx" and "dsb_edge_ctrl_val") will be 
+created in this case.
 
-> With me having spend ~3h on this series' changes, it's maybe
-> understandable that I did it the way I did.
+2. First write to the node "dsb_edge_ctrl_idx" to set the index number 
+of the edge detection.
 
-I'm sorry, but that's never been an argument? I'm sure you and I both
-have had series that took much longer dropped because it wasn't the
-right approach.
+3. Then write to the node "dsb_edge_ctrl_val" to set the value of the 
+edge detection.
 
-> FTR: This series was created on top of v6.5-rc1. If you apply it to
-> drm-misc-next you get a (trivial) conflict in patch #2. If I consider to
-> be the responsible maintainer who applies this series, I like being able
-> to just do git am --skip then.=20
+For example, if we need need to set "Falling edge detection" to the edge 
+detection #220-#222, we can issue the following commands.
 
-Or we can ask that the driver is based on drm-misc-next ...
+echo 0xdc > tpdm1/dsb_edge_ctrl_idx
 
-> FTR#2: In drm-misc-next is a new driver
-> (drivers/gpu/drm/loongson/lsdc_crtc.c) so skipping the last patch for
-> now might indeed be a good idea.
+echo 0x1 > tpdm1/dsb_edge_ctrl_val
 
-=2E.. which is going to fix that one too.
+echo 0xdd > tpdm1/dsb_edge_ctrl_idx
 
-Maxime
+echo 0x1 > tpdm1/dsb_edge_ctrl_val
 
---jyn7gwdek3zlokhs
-Content-Type: application/pgp-signature; name="signature.asc"
+echo 0xde > tpdm1/dsb_edge_ctrl_idx
 
------BEGIN PGP SIGNATURE-----
+echo 0x1 > tpdm1/dsb_edge_ctrl_val
 
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZK6wPAAKCRDj7w1vZxhR
-xY/cAP9MfcZQUQhgCUm7SZclTdLuVOlNrClVj1izsCv4zrFrtQD+JUUX9b9K3JdO
-tDqchM2qQCmIMTRzt6ZwyV0l4KQkjgM=
-=G8dy
------END PGP SIGNATURE-----
+If this design is acceptable, we will rewrite other similar nodes based 
+on this solution.
 
---jyn7gwdek3zlokhs--
+Let me know if you have any concerns or good suggestions for this solution.
+
+
+Best,
+
+Tao
+
+>
+> Kind regards
+> Suzuki
+>
+>
