@@ -2,197 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 604B9750843
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:28:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DBE750847
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:28:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233391AbjGLM2N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 08:28:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
+        id S233576AbjGLM2t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 08:28:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233332AbjGLM2L (ORCPT
+        with ESMTP id S232704AbjGLM2r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 08:28:11 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF2D100
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:28:09 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-55b22f82ac8so467310a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:28:09 -0700 (PDT)
+        Wed, 12 Jul 2023 08:28:47 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27C1A9B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:28:46 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b73564e98dso16933711fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689164889; x=1691756889;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Ss8TgyARGa8R7ybKRI+zpQEGya6RyvZhqG69g7/1a8o=;
-        b=NnzMcvhNkva7W/6wMnD1NIt4d16zGTpmIwpmOCHrZ1AKi+58Iov+hYhrevzoxaG23M
-         DKVaJDXt1r0D5uqk5/Cn9l4UIAphvkLp5P5t+hLcKPmaJavcvaKfRmB1cfKI+4JoJpkY
-         iQ/JdPMOrCT1S1zJFwGY68TnLS6RhPY654cXCS29XMK2r3V4HxoYfNWMSq1/FjL23XTX
-         VmXu28hNGsataMoEAO5RK3usYZUkxBY+X226SsecxgM7Sb1W4ZB1IhxLySlk4OIbYypT
-         6V9xvckoZY9DPC8H2eqLrKtts5I2cztY0ZnjZE/6ua/BlQ23IG8wEuqgxihLs5TUR4cu
-         1Ypg==
+        d=linaro.org; s=google; t=1689164924; x=1691756924;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8tVaSPQ+w2G/CXnJTkiMl+cJCOUy3bqRCsdNi00/JW8=;
+        b=Pi/qBYjAwd4/ZfVUGFBdzDeaZwn0K0YWplH7i42dsFzyhqD20c17n8dWPBGUfptqnR
+         WtMDMj4me9MbQ2JKu/0gc3Bdd5vBnFnaOKeWIt1qfbmZ8zmLZmLOkh/f2CTvIk3GGWte
+         GtNtUxBvKALaXfZEY/d+7VtlvduQEonkAnvXZ46fHz1r9F0GB7AGRd/JmIjmh0vkQPt0
+         pvJM9wrXiYfzWDzsJY7v4ixYBEpbSWTYMQ+MnBh/Q62EtwgmhB+dna8T8ZIOukOPRQp0
+         VOVuWZIDAOD0ooouLsS5Zd/z7wQMdRlmCj0OmICRld73YIY11ZeLlIQzw/3kG4LJuvio
+         cT3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689164889; x=1691756889;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1689164924; x=1691756924;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ss8TgyARGa8R7ybKRI+zpQEGya6RyvZhqG69g7/1a8o=;
-        b=cGz4a6cxgiALFpVd2A4MRkDPMGKeMHt7k3lh+KWKpkT2g0fKuH7QVElOT3A0zTmkpC
-         FfTC9tN7489OLamyYD12anD7dJ5KbxkegQhjGvqpdy2SxTB3fb6EBAY6pFBQiEjXq0Ro
-         4/iI+Pm/AB5vsiz7W1eGO/bb5rgRyeYMEsSOk9jQYMPH8dQ7kNA+sNmFg6Iw9LXmU93y
-         kaO2OiVADR7IM+6jWyuiw4qax3Ul8t/TINprCG9xAtd1b0GcVGTnvzYYjB9odZeFMJWF
-         fmsA87AjXqpSRuvWEwPgqKPykOAg8lD7bhjs1wO+Gv7dEsmtNyaN94rD61gxiEgXzLDk
-         9z2A==
-X-Gm-Message-State: ABy/qLasB/0CTH0cIZ1YKzSvr09ZgXvqBraJwJkpAb/2s/ZKmMDV+yvQ
-        wipQSYnYhoASm2S2rb6ozqFe
-X-Google-Smtp-Source: APBJJlG8ThheU5sQFDWNEBk5rKV899ROC1JFcrlLVU6uGeLmUaZENZV8342hP8okBYkTpASRWYL/FQ==
-X-Received: by 2002:a17:90b:1d07:b0:25b:f105:8372 with SMTP id on7-20020a17090b1d0700b0025bf1058372mr2517491pjb.5.1689164888909;
-        Wed, 12 Jul 2023 05:28:08 -0700 (PDT)
-Received: from thinkpad ([117.207.27.131])
-        by smtp.gmail.com with ESMTPSA id q4-20020a17090a4f8400b00264c262a033sm10665538pjh.12.2023.07.12.05.27.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 05:28:08 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 17:57:50 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
-Subject: Re: [PATCH 00/14] UFS: Add OPP and interconnect support
-Message-ID: <20230712122750.GE102757@thinkpad>
-References: <20230712103213.101770-1-manivannan.sadhasivam@linaro.org>
- <20230712104044.GA102214@thinkpad>
- <3523988f-fa51-ce44-ded7-9f3c7acbf65e@linaro.org>
+        bh=8tVaSPQ+w2G/CXnJTkiMl+cJCOUy3bqRCsdNi00/JW8=;
+        b=QSQHPucZzUnGuOcbHCFbNBMKztATPPXKQWA2ATv4baUmveKAiJoN6nfuratR/2piWa
+         yy3hGUeVhQJL0CLa5Edq13uteFbvsTBHYYy/KMM3FD6BUaXTwjUVZ1Dva79hJHxrFYJR
+         U45G/Eh5Pedrl0ge0djyiyEqZm272rXmUVeUlAIfloicrxLTcKQxF8JTOm+44kAFLfdC
+         86xS+1dJ4jD320dlIqvrgoU/gHIkf2tOWxzntUVVVWLAwqeSo3isjsLbqPzqwFgIoOxs
+         Mejdilj7IZ5i/vlFZixCdaIYTvSjmhjCoTGJiSrki3+poZCm1R7VpVaulk/80DPxl/PK
+         lGiQ==
+X-Gm-Message-State: ABy/qLZUwxlLZp1BFwkyxAEdw2T4JyYEbU8h3En6FIIH0fLaQOD73DBf
+        5JYPanFvJhDZ1SCDcWgT0euLdQ==
+X-Google-Smtp-Source: APBJJlG/LDGQeyoCiWq5ImaEz8bka+7iaet3wkQhYdvn6WDMMMOihWIpsZjkOjKq2phaTxUkfWPX/g==
+X-Received: by 2002:a2e:b04a:0:b0:2b6:d0fc:ee18 with SMTP id d10-20020a2eb04a000000b002b6d0fcee18mr13742589ljl.19.1689164924397;
+        Wed, 12 Jul 2023 05:28:44 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id r7-20020a2e94c7000000b002b6fe751b6esm948263ljh.124.2023.07.12.05.28.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 05:28:44 -0700 (PDT)
+Message-ID: <0f98360a-6d88-9a8b-5d60-3d6120e0640f@linaro.org>
+Date:   Wed, 12 Jul 2023 15:28:43 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3523988f-fa51-ce44-ded7-9f3c7acbf65e@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v4 4/6] arm64: dts: qcom: ipq5332: Add USB related nodes
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Varadarajan Narayanan <quic_varada@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
+        will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
+        geert+renesas@glider.be, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, rafal@milecki.pl,
+        quic_srichara@quicinc.com, quic_varada@quicinc.org,
+        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <cover.1689160067.git.quic_varada@quicinc.com>
+ <1f99805b6437aa8d6eaa4663e8d27b98ee595f00.1689160067.git.quic_varada@quicinc.com>
+ <13555184-1708-befd-1f2c-5e6f7e04a6ce@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <13555184-1708-befd-1f2c-5e6f7e04a6ce@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 12, 2023 at 03:18:38PM +0300, Dmitry Baryshkov wrote:
-> On 12/07/2023 13:40, Manivannan Sadhasivam wrote:
-> > On Wed, Jul 12, 2023 at 04:01:55PM +0530, Manivannan Sadhasivam wrote:
-> > > Hi,
-> > > 
-> > > This series adds OPP (Operating Points) support to UFSHCD driver and
-> > > interconnect support to Qcom UFS driver.
-> > > 
-> > 
-> > Missed to cc SCSI folks. Will be resending this series. Sorry for the noise.
+On 12/07/2023 15:04, Krzysztof Kozlowski wrote:
+> On 12/07/2023 13:38, Varadarajan Narayanan wrote:
+>> Add USB phy and controller nodes.
+>>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> ---
+>> v4:
+>> 	Change node name
+>> 	Remove blank line
+>> 	'make CHECK_DTBS=y DT_SCHEMA_FILES=qcom qcom/ipq5332-rdp441.dtb' passed
+>> v1:
+>> 	Rename phy node
+>> 	Change compatible from m31,ipq5332-usb-hsphy -> qcom,ipq5332-usb-hsphy
+>> 	Remove 'qscratch' from phy node
+>> 	Fix alignment and upper-case hex no.s
+>> 	Add clock definition for the phy
+>> 	Remove snps,ref-clock-period-ns as it is not used. dwc3_ref_clk_period()
+>> 	in dwc3/core.c takes the frequency from ref clock and calculates fladj
+>> 	as appropriate.
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 53 +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 53 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> index 8bfc2db..8118356 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> @@ -405,6 +405,59 @@
+>>   				status = "disabled";
+>>   			};
+>>   		};
+>> +
+>> +		usbphy0: usb-phy@7b000 {
+>> +			compatible = "qcom,ipq5332-usb-hsphy";
+>> +			reg = <0x0007b000 0x12c>;
+>> +
+>> +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
+>> +			clock-names = "cfg_ahb";
+>> +
+>> +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
+>> +
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		usb2: usb2@8a00000 {
 > 
-> I'd say, there is a need for the resend anyway, the series got duplicate
-> patch indices.
+> So you responded to my comments, wait ten minutes and send v2? No need
+> to wait for my feedback, right?
 > 
+> No, it's not ok. This is "usb", not "usb2". Are you saying you have
+> second device with the same address?
 
-Yeah, my script screwed up. Will wait for some time to get comments before
-resending though.
-
-- Mani
-
-> > 
-> > - Mani
-> > 
-> > > Motivation behind adding OPP support is to scale both clocks as well as
-> > > regulators/performance state dynamically. Currently, UFSHCD just scales
-> > > clock frequency during runtime with the help of "freq-table-hz" property
-> > > defined in devicetree. With the addition of OPP tables in devicetree (as
-> > > done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
-> > > both clocks and performance state of power domain which helps in power
-> > > saving.
-> > > 
-> > > For the addition of OPP support to UFSHCD, there are changes required to
-> > > the OPP framework and devfreq drivers which are also added in this series.
-> > > 
-> > > Finally, interconnect support is added to Qcom UFS driver for scaling the
-> > > interconnect path dynamically. This is required to avoid boot crash in
-> > > recent SoCs and also to save power during runtime. More information is
-> > > available in patch 13/13.
-> > > 
-> > > Credits
-> > > =======
-> > > 
-> > > This series is a continuation of previous work by Krzysztof Kozlowski [1]
-> > > and Brian Masney [2]. Ideally, this could've split into two series (OPP
-> > > and interconnect) but since there will be a dependency in the devicetree,
-> > > I decided to keep them in a single series.
-> > > 
-> > > Testing
-> > > =======
-> > > 
-> > > This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
-> > > development boards.
-> > > 
-> > > Merging Strategy
-> > > ================
-> > > 
-> > > An immutable branch might be required between OPP and SCSI trees because of
-> > > the API dependency (devfreq too). And I leave it up to the maintainers to
-> > > decide.
-> > > 
-> > > Thanks,
-> > > Mani
-> > > 
-> > > [1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
-> > > [2] https://lore.kernel.org/all/20221117104957.254648-1-bmasney@redhat.com/
-> > > 
-> > > Krzysztof Kozlowski (2):
-> > >    dt-bindings: ufs: common: add OPP table
-> > >    arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
-> > > 
-> > > Manivannan Sadhasivam (12):
-> > >    dt-bindings: opp: Increase maxItems for opp-hz property
-> > >    arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC
-> > >    arm64: dts: qcom: sdm845: Fix the min frequency of "ice_core_clk"
-> > >    arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
-> > >    OPP: Introduce dev_pm_opp_find_freq_{ceil/floor}_indexed() APIs
-> > >    OPP: Introduce dev_pm_opp_get_freq_indexed() API
-> > >    PM / devfreq: Switch to dev_pm_opp_find_freq_{ceil/floor}_indexed()
-> > >      APIs
-> > >    scsi: ufs: core: Add OPP support for scaling clocks and regulators
-> > >    scsi: ufs: host: Add support for parsing OPP
-> > >    arm64: dts: qcom: sdm845: Add interconnect paths to UFSHC
-> > >    arm64: dts: qcom: sm8250: Add interconnect paths to UFSHC
-> > >    scsi: ufs: qcom: Add support for scaling interconnects
-> > > 
-> > >   .../devicetree/bindings/opp/opp-v2-base.yaml  |   2 +-
-> > >   .../devicetree/bindings/ufs/ufs-common.yaml   |  34 ++++-
-> > >   arch/arm64/boot/dts/qcom/sdm845.dtsi          |  47 ++++--
-> > >   arch/arm64/boot/dts/qcom/sm8250.dtsi          |  43 ++++--
-> > >   drivers/devfreq/devfreq.c                     |  14 +-
-> > >   drivers/opp/core.c                            |  76 ++++++++++
-> > >   drivers/ufs/core/ufshcd.c                     | 142 ++++++++++++++----
-> > >   drivers/ufs/host/ufs-qcom.c                   | 131 +++++++++++++++-
-> > >   drivers/ufs/host/ufs-qcom.h                   |   3 +
-> > >   drivers/ufs/host/ufshcd-pltfrm.c              | 116 ++++++++++++++
-> > >   include/linux/pm_opp.h                        |  26 ++++
-> > >   include/ufs/ufshcd.h                          |   4 +
-> > >   12 files changed, 574 insertions(+), 64 deletions(-)
-> > > 
-> > > -- 
-> > > 2.25.1
-> > > 
-> > 
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+Just to emphasise, it's the node name `usb2', which is not fine. DT 
+label `usb2' is (hopefully) fine.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
+
