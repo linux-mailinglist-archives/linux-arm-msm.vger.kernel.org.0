@@ -2,411 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D511A750F93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 19:23:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA2C6750FD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 19:41:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232096AbjGLRXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 13:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35608 "EHLO
+        id S231651AbjGLRlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 13:41:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232968AbjGLRXI (ORCPT
+        with ESMTP id S231641AbjGLRlM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 13:23:08 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3691BF5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 10:23:05 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f96d680399so10900976e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 10:23:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689182583; x=1689787383;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XPaxsksQJ1TH6iZEGOUjk8TgWOqMia45twF/E2He4DE=;
-        b=Z80mvnG823CbpEvanfATB6fSBt9Y0OEy0oKSZYTLVjDlVO/aWjj8Wk2tb9VqYEU0Iw
-         GuLkqv2UAXclv/5WEkc+8uR3uT+vanC8IChXwGaDEkySLOlJ80HPL3/gwHjq0BA4Uczi
-         LXyOg0+agBXPBCGsUcYsY15+sdIeUoS1JyC0U4xr3oX2MDsCyB0inKZUzRipetu3PvnZ
-         IfiQhODECE6jw5NbEce2RsLGugS7cNWGeditPOIGGC7s9XlcNGHtMfJAij+yKSg6qAwV
-         JeLMy99cXrS53UeUrf02zVEFBIkBTS94CjmSX0EbZ7qS+HcLpY2VzpMVH98/QuDPKOGc
-         dE2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689182583; x=1689787383;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XPaxsksQJ1TH6iZEGOUjk8TgWOqMia45twF/E2He4DE=;
-        b=N7ZKmH33eeyslUku5irwwq33AA2JC8Gd8E3W3whMLQyN9MpksL+KqRYFboj5ScHjT/
-         Pgoo5Ippd93G1F7vF9ro98JA0Rwn1YfoBLRESQJxQ/DJ4Mak0DqjaTauCWLlXgs8q5iB
-         DGSxXqBuw4w0Cf/IQuNtQvGWDMCuALV+98ATfx7dQJ5S8wwKTZNlykArZZV1Q9NevnI5
-         zFrfG+Iq3AyG9yMtruxlL/vTqUz1nIJ3UXV1pJJoxlWqdHwQIsvhZYYmgIoQRbUu17OD
-         wK9x4BdtqzAVwPeTbzaaVifqICl2cHs5rmSTy2bo5fNS8IkD9cxtfR2JHxFLuPFtSq1o
-         jppw==
-X-Gm-Message-State: ABy/qLYx7d9rEsZJowf2ORSNlumGqhBaFnxkI5XUViOFFAI2dTOmwSq9
-        G462RBS/ONZeeS8wIu1rZHwNfg==
-X-Google-Smtp-Source: APBJJlGIZtbg43PJ+1uxHAV+h9svTZSPCEN2YoXLV3LMGXeS2aVo8OZgH6vyuK1ny6pAopBcAE9ihg==
-X-Received: by 2002:a05:6512:36c5:b0:4fb:8f79:631 with SMTP id e5-20020a05651236c500b004fb8f790631mr15483556lfs.46.1689182583538;
-        Wed, 12 Jul 2023 10:23:03 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l15-20020ac2554f000000b004fb87638fc4sm796860lfk.19.2023.07.12.10.23.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jul 2023 10:23:03 -0700 (PDT)
-Message-ID: <be734fa0-1b16-0dad-6205-d1f1acb1f179@linaro.org>
-Date:   Wed, 12 Jul 2023 20:23:02 +0300
+        Wed, 12 Jul 2023 13:41:12 -0400
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4844D1980
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 10:41:11 -0700 (PDT)
+Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: marex@denx.de)
+        by phobos.denx.de (Postfix) with ESMTPSA id DDAFC86B58;
+        Wed, 12 Jul 2023 19:41:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+        s=phobos-20191101; t=1689183670;
+        bh=Fp7N3sRZ5ZZmDH2BLoJqfemPcNUZIJugo+MlROK92bI=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=Uq18a/yFaOczmeV5zZFlgJ4fjjkfIRbjlf8KFSi+JpLdC1nq7jPr9602ABRQaddvI
+         uk/0NkNrfR7uOWANzEihuYFfaQW7lTrodu4AUhIWktGeUN8yOf07X3B24bVcIPBx3H
+         PwUUKDnZtutxe+GXLQjqrGnku+6dUIpFSD/zryAnemXh4IGOh5rJoOm/ch/HuLB4+T
+         /yVsdFaMIiMCeOa8QcUESB1Jz0uSv165L8Xfwv2Yy+f0dYxSssCuwXPRuc6BNpw11v
+         /b47GGRbLqHJ0AVtkt7I3YZZcw5xuWsQrk0EU9ix+OrEfkKjqbyK7JQAqjojUGTlfy
+         XEckFi/345/mw==
+Message-ID: <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
+Date:   Wed, 12 Jul 2023 19:41:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 14/14] scsi: ufs: qcom: Add support for scaling
- interconnects
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
-References: <20230712103213.101770-1-manivannan.sadhasivam@linaro.org>
- <20230712103213.101770-19-manivannan.sadhasivam@linaro.org>
- <107aad9f-40c0-f32b-9f74-6c82ee6785bf@linaro.org>
- <20230712164114.GH102757@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230712164114.GH102757@thinkpad>
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
+ EOT packet
+Content-Language: en-US
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        neil.armstrong@linaro.org, Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jagan Teki <jagan@amarulasolutions.com>,
+        dri-devel@lists.freedesktop.org, Robert Foss <rfoss@kernel.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20230403221233.500485-1-marex@denx.de>
+ <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
+ <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
+ <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+ <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
+From:   Marek Vasut <marex@denx.de>
+In-Reply-To: <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
+X-Virus-Status: Clean
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2023 19:41, Manivannan Sadhasivam wrote:
-> On Wed, Jul 12, 2023 at 04:22:51PM +0300, Dmitry Baryshkov wrote:
->> On 12/07/2023 13:32, Manivannan Sadhasivam wrote:
->>> Qcom SoCs require scaling the interconnect paths for proper working of the
->>> peripherals connected through interconnects. Even for accessing the UFS
->>> controller, someone should setup the interconnect paths. So far, the
->>> bootloaders used to setup the interconnect paths before booting linux as
->>> they need to access the UFS storage for things like fetching boot firmware.
->>> But with the advent of multi boot options, bootloader nowadays like in
->>> SA8540p SoC do not setup the interconnect paths at all.
+On 7/9/23 03:03, Abhinav Kumar wrote:
+> 
+> 
+> On 7/7/2023 1:47 AM, Neil Armstrong wrote:
+>> On 07/07/2023 09:18, Neil Armstrong wrote:
+>>> Hi,
 >>>
->>> So trying to configure UFS in the absence of the interconnect path
->>> configuration, results in boot crash.
+>>> On 06/07/2023 11:20, Amit Pundir wrote:
+>>>> On Wed, 5 Jul 2023 at 11:09, Dmitry Baryshkov
+>>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>>
+>>>>> [Adding freedreno@ to cc list]
+>>>>>
+>>>>> On Wed, 5 Jul 2023 at 08:31, Jagan Teki 
+>>>>> <jagan@amarulasolutions.com> wrote:
+>>>>>>
+>>>>>> Hi Amit,
+>>>>>>
+>>>>>> On Wed, Jul 5, 2023 at 10:15 AM Amit Pundir 
+>>>>>> <amit.pundir@linaro.org> wrote:
+>>>>>>>
+>>>>>>> Hi Marek,
+>>>>>>>
+>>>>>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
+>>>>>>>>
+>>>>>>>> Do not generate the HS front and back porch gaps, the HSA gap and
+>>>>>>>> EOT packet, as these packets are not required. This makes the 
+>>>>>>>> bridge
+>>>>>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
+>>>>>>>
+>>>>>>> This patch broke display on Dragonboard 845c (SDM845) devboard 
+>>>>>>> running
+>>>>>>> AOSP. This is what I see
+>>>>>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
+>>>>>>> Reverting this patch fixes this regression for me.
+>>>>>>
+>>>>>> Might be msm dsi host require proper handling on these updated
+>>>>>> mode_flags? did they?
+>>>>>
+>>>>> The msm DSI host supports those flags. Also, I'd like to point out
+>>>>> that the patch didn't change the rest of the driver code. So even if
+>>>>> drm/msm ignored some of the flags, it should not have caused the
+>>>>> issue. Most likely the issue is on the lt9611 side. I's suspect that
+>>>>> additional programming is required to make it work with these flags.
+>>>>
+>>>> I spent some time today on smoke testing these flags (individually and
+>>>> in limited combination) on DB845c, to narrow down this breakage to one
+>>>> or more flag(s) triggering it. Here are my observations in limited
+>>>> testing done so far.
+>>>>
+>>>> There is no regression with MIPI_DSI_MODE_NO_EOT_PACKET when enabled
+>>>> alone and system boots to UI as usual.
+>>>>
+>>>> MIPI_DSI_MODE_VIDEO_NO_HFP always trigger the broken display as in the
+>>>> screenshot[1] shared earlier as well.
+>>>>
+>>>> Adding either of MIPI_DSI_MODE_VIDEO_NO_HSA and
+>>>> MIPI_DSI_MODE_VIDEO_NO_HBP always result in no display, unless paired
+>>>> with MIPI_DSI_MODE_VIDEO_NO_HFP and in that case we get the broken
+>>>> display as reported.
+>>>>
+>>>> In short other than MIPI_DSI_MODE_NO_EOT_PACKET flag, all other flags
+>>>> added in this commit break the display on DB845c one way or another.
 >>>
->>> To fix this issue and also to dynamically scale the interconnects (UFS-DDR
->>> and CPU-UFS), interconnect API support is added to the Qcom UFS driver.
->>> With this support, the interconnect paths are scaled dynamically based on
->>> the gear configuration.
+>>> I think the investigation would be to understand why samsung-dsim 
+>>> requires
+>>> such flags and/or what are the difference in behavior between MSM DSI 
+>>> and samsung DSIM
+>>> for those flags ?
 >>>
->>> During the early stage of ufs_qcom_init(), ufs_qcom_icc_init() will setup
->>> the paths to max bandwidth to allow configuring the UFS registers. Touching
->>> the registers without configuring the icc paths would result in a crash.
->>> However, we don't really need to set max vote for the icc paths as any
->>> minimal vote would suffice. But the max value would allow initialization to
->>> be done faster. After init, the bandwidth will get updated using
->>> ufs_qcom_icc_update_bw() based on the gear and lane configuration.
->>>
->>> The bandwidth values defined in ufs_qcom_bw_table struct are taken from
->>> Qcom downstream vendor devicetree source and are calculated as per the
->>> UFS3.1 Spec, Section 6.4.1, HS Gear Rates. So it is fixed across platforms.
->>>
->>> Cc: Brian Masney <bmasney@redhat.com>
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
->>>    drivers/ufs/host/ufs-qcom.c | 131 +++++++++++++++++++++++++++++++++++-
->>>    drivers/ufs/host/ufs-qcom.h |   3 +
->>>    2 files changed, 133 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->>> index 8d6fd4c3324f..8a3132d45a65 100644
->>> --- a/drivers/ufs/host/ufs-qcom.c
->>> +++ b/drivers/ufs/host/ufs-qcom.c
->>> @@ -7,6 +7,7 @@
->>>    #include <linux/time.h>
->>>    #include <linux/clk.h>
->>>    #include <linux/delay.h>
->>> +#include <linux/interconnect.h>
->>>    #include <linux/module.h>
->>>    #include <linux/of.h>
->>>    #include <linux/platform_device.h>
->>> @@ -46,6 +47,49 @@ enum {
->>>    	TSTBUS_MAX,
->>>    };
->>> +#define QCOM_UFS_MAX_GEAR 4
->>> +#define QCOM_UFS_MAX_LANE 2
->>> +
->>> +enum {
->>> +	MODE_MIN,
->>> +	MODE_PWM,
->>> +	MODE_HS_RA,
->>> +	MODE_HS_RB,
->>> +	MODE_MAX,
+>>> If someone has access to the lt9611 datasheet, so it requires 
+>>> HSA/HFP/HBP to be
+>>> skipped ? and does MSM DSI and samsung DSIM skip them in the same way ?
 >>
->> MODE_MIN and MODE_MAX seem to be unused
+>> I think there's a mismatch, where on one side this flags sets the link 
+>> in LP-11 while
+>> in HSA/HFP/HPB while on the other it completely removes those blanking 
+>> packets.
+>>
+>> The name MIPI_DSI_MODE_VIDEO_NO_HBP suggests removal of HPB, not LP-11 
+>> while HPB.
+>> the registers used in both controllers are different:
+>> - samsung-dsim: DSIM_HBP_DISABLE_MODE
+>> - msm dsi: DSI_VID_CFG0_HBP_POWER_STOP
+>>
+>> The first one suggest removing the packet, while the second one 
+>> suggests powering
+>> off the line while in the blanking packet period.
+>>
+>> @Abhinav, can you comment on that ?
 >>
 > 
-> No, they are used in the driver.
+> I dont get what it means by completely removes blanking packets in DSIM.
 
-Ack, missed that. Will comment inline.
+MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped by DSIM.
 
+Maybe there is a need for new set of flags which differentiate between 
+HBP skipped (i.e. NO HBP) and HBP LP11 ?
+
+> It should be replacing those periods with LP11 too.
 > 
->>> +};
->>> +
->>> +struct __ufs_qcom_bw_table {
->>> +	u32 bw1;
->>> +	u32 bw2;
->>
->> Please consider:
->>
->> s/bw1/mem_bw/
->> s/bw2/cfg_bw/
->>
+> The traffic mode being used on this bridge is 
+> MIPI_DSI_MODE_VIDEO_SYNC_PULSE which is "Non-Burst Mode with Sync Pulses".
 > 
-> Ok.
+> As per this traffic mode in the DSI spec,
 > 
->>> +} ufs_qcom_bw_table[MODE_MAX + 1][QCOM_UFS_MAX_GEAR + 1][QCOM_UFS_MAX_LANE + 1] = {
->>
->> I'd say, these +1's are slightly confusing and unnecessary.
->>
+> "Normally, periods shown as HSA (Horizontal Sync Active), HBP 
+> (Horizontal Back Porch) and HFP (Horizontal Front Porch) are filled by 
+> Blanking Packets, with lengths (including packet overhead)  calculated 
+> to match the period specified by the peripheral’s data sheet. 
+> Alternatively, if there is sufficient time to transition from HS to LP 
+> mode and back again, a timed interval in LP mode may substitute for a 
+> Blanking Packet, thus saving power. During HSA, HBP and HFP periods, the 
+> bus should stay in the LP-11 state."
 > 
-> These max values itself are used in the table. Without adding 1 to them, we will
-> end up with out of bounds access.
-
-
-
+> So we can either send the blanking packets or transition to LP state and 
+> those 3 flags are controlling exactly that during those periods for MSM 
+> driver.
 > 
->>> +	[MODE_MIN][0][0] = { 0,		0 },	/* Bandwidth values are in KB/s */
->>
->> I'd say, this becomes impossible to check. Can you please structure it?
+> If you stop sending the blanking packets, you need to replace that gap 
+> with LP.
+
+I don't think that's what MIPI_DSI_MODE_VIDEO_NO_HBP means, the way I 
+understand MIPI_DSI_MODE_VIDEO_NO_HBP is that it skips the HBP 
+completely. So if you want HBP, then do not set 
+MIPI_DSI_MODE_VIDEO_NO_HBP . And if you want LP11 during HBP, that is I 
+think up to the controller (or maybe another new flag?).
+
+> One reason I can think of why this could break with MSM is perhaps we do 
+> not have sufficient time in those periods for the LP-HS transition like 
+> the spec has written.
 > 
-> What do you mean by "impossible to check"?
+> 1) What is the resolution which is getting broken on db845c with this? I 
+> would like to know the full drm_display_mode for it to see how much time 
+> we have in those periods. Is any resolution working or all are broken.
 > 
->> Either by inclusion:
->>
->> [MODE_PWM] = {
->>    [1] = {
->>       [1] = { .. },
->>       [2] = { .. },
->>    },
->>    // etc.
-> 
-> Now, this seems confusion to me. The existing table looks fine IMO.
+> 2) I also do not completely get the last line of the DSI spec on this 
+> traffic mode. Is it suggesting that we *must* use only LP11 for those 
+> periods in this traffic mode? I need to check little more on that. 
+> Because if thats the case the change is doing just that and we need to 
+> investigate the MSM failure little more. If not and its indeed optional 
+> to save power like the DSI spec says, then its weird why DSIM should be 
+> blank without that too.
 
-Fine with me then, your call!
-
-> 
->> };
->>
->> Also, do we have defines for gears? Can we use them instead of indices?
->>
-> 
-> There are defines for the gears but not for lanes. So I ended up using numbers
-> for simplicity.
-
-My suggestion would be to use them for gears at least. Then it becomes 
-cleaner (and maybe will solve some of my other comments).
-
-> 
-> - Mani
-> 
->>> +	[MODE_PWM][1][1] = { 922,	1000 },
->>> +	[MODE_PWM][2][1] = { 1844,	1000 },
->>> +	[MODE_PWM][3][1] = { 3688,	1000 },
->>> +	[MODE_PWM][4][1] = { 7376,	1000 },
->>> +	[MODE_PWM][1][2] = { 1844,	1000 },
->>> +	[MODE_PWM][2][2] = { 3688,	1000 },
->>> +	[MODE_PWM][3][2] = { 7376,	1000 },
->>> +	[MODE_PWM][4][2] = { 14752,	1000 },
->>> +	[MODE_HS_RA][1][1] = { 127796,	1000 },
->>> +	[MODE_HS_RA][2][1] = { 255591,	1000 },
->>> +	[MODE_HS_RA][3][1] = { 1492582,	102400 },
->>> +	[MODE_HS_RA][4][1] = { 2915200,	204800 },
->>> +	[MODE_HS_RA][1][2] = { 255591,	1000 },
->>> +	[MODE_HS_RA][2][2] = { 511181,	1000 },
->>> +	[MODE_HS_RA][3][2] = { 1492582,	204800 },
->>> +	[MODE_HS_RA][4][2] = { 2915200,	409600 },
->>> +	[MODE_HS_RB][1][1] = { 149422,	1000 },
->>> +	[MODE_HS_RB][2][1] = { 298189,	1000 },
->>> +	[MODE_HS_RB][3][1] = { 1492582,	102400 },
->>> +	[MODE_HS_RB][4][1] = { 2915200,	204800 },
->>> +	[MODE_HS_RB][1][2] = { 298189,	1000 },
->>> +	[MODE_HS_RB][2][2] = { 596378,	1000 },
->>> +	[MODE_HS_RB][3][2] = { 1492582,	204800 },
->>> +	[MODE_HS_RB][4][2] = { 2915200,	409600 },
->>> +	[MODE_MAX][0][0] = { 7643136, 307200 },
->>> +};
->>> +
->>>    static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
->>>    static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
->>> @@ -789,6 +833,51 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
->>>    	}
->>>    }
->>> +static int ufs_qcom_icc_set_bw(struct ufs_qcom_host *host, u32 bw1, u32 bw2)
->>> +{
->>> +	struct device *dev = host->hba->dev;
->>> +	int ret;
->>> +
->>> +	ret = icc_set_bw(host->icc_ddr, 0, bw1);
->>> +	if (ret < 0) {
->>> +		dev_err(dev, "failed to set bandwidth request: %d\n", ret);
->>> +		return ret;
->>> +	}
->>> +
->>> +	ret = icc_set_bw(host->icc_cpu, 0, bw2);
->>> +	if (ret < 0) {
->>> +		dev_err(dev, "failed to set bandwidth request: %d\n", ret);
->>> +		return ret;
->>> +	}
->>> +
->>> +	return 0;
->>> +}
->>> +
->>> +static struct __ufs_qcom_bw_table ufs_qcom_get_bw_table(struct ufs_qcom_host *host)
->>> +{
->>> +	struct ufs_pa_layer_attr *p = &host->dev_req_params;
->>> +	int gear = max_t(u32, p->gear_rx, p->gear_tx);
->>> +	int lane = max_t(u32, p->lane_rx, p->lane_tx);
->>> +
->>> +	if (ufshcd_is_hs_mode(p)) {
->>> +		if (p->hs_rate == PA_HS_MODE_B)
->>> +			return ufs_qcom_bw_table[MODE_HS_RB][gear][lane];
->>> +		else
->>> +			return ufs_qcom_bw_table[MODE_HS_RA][gear][lane];
->>> +	} else {
->>> +		return ufs_qcom_bw_table[MODE_PWM][gear][lane];
->>> +	}
->>> +}
->>> +
->>> +static int ufs_qcom_icc_update_bw(struct ufs_qcom_host *host)
->>> +{
->>> +	struct __ufs_qcom_bw_table bw_table;
->>> +
->>> +	bw_table = ufs_qcom_get_bw_table(host);
->>> +
->>> +	return ufs_qcom_icc_set_bw(host, bw_table.bw1, bw_table.bw2);
->>> +}
->>> +
->>>    static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->>>    				enum ufs_notify_change_status status,
->>>    				struct ufs_pa_layer_attr *dev_max_params,
->>> @@ -852,6 +941,8 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->>>    		memcpy(&host->dev_req_params,
->>>    				dev_req_params, sizeof(*dev_req_params));
->>> +		ufs_qcom_icc_update_bw(host);
->>> +
->>>    		/* disable the device ref clock if entered PWM mode */
->>>    		if (ufshcd_is_hs_mode(&hba->pwr_info) &&
->>>    			!ufshcd_is_hs_mode(dev_req_params))
->>> @@ -981,7 +1072,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
->>>    	switch (status) {
->>>    	case PRE_CHANGE:
->>> -		if (!on) {
->>> +		if (on) {
->>> +			ufs_qcom_icc_update_bw(host);
->>> +		} else {
->>>    			if (!ufs_qcom_is_link_active(hba)) {
->>>    				/* disable device ref_clk */
->>>    				ufs_qcom_dev_ref_clk_ctrl(host, false);
->>> @@ -993,6 +1086,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
->>>    			/* enable the device ref clock for HS mode*/
->>>    			if (ufshcd_is_hs_mode(&hba->pwr_info))
->>>    				ufs_qcom_dev_ref_clk_ctrl(host, true);
->>> +		} else {
->>> +			ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MIN][0][0].bw1,
->>> +					    ufs_qcom_bw_table[MODE_MIN][0][0].bw2);
-
-With MODE_MIN values being initialised to 0, can we use the value 
-directly instead? You are not defining the whole table for MODE_MIN anyway.
-
->>>    		}
->>>    		break;
->>>    	}
->>> @@ -1031,6 +1127,34 @@ static const struct reset_control_ops ufs_qcom_reset_ops = {
->>>    	.deassert = ufs_qcom_reset_deassert,
->>>    };
->>> +static int ufs_qcom_icc_init(struct ufs_qcom_host *host)
->>> +{
->>> +	struct device *dev = host->hba->dev;
->>> +	int ret;
->>> +
->>> +	host->icc_ddr = devm_of_icc_get(dev, "ufs-ddr");
->>> +	if (IS_ERR(host->icc_ddr))
->>> +		return dev_err_probe(dev, PTR_ERR(host->icc_ddr),
->>> +				    "failed to acquire interconnect path\n");
->>> +
->>> +	host->icc_cpu = devm_of_icc_get(dev, "cpu-ufs");
->>> +	if (IS_ERR(host->icc_cpu))
->>> +		return dev_err_probe(dev, PTR_ERR(host->icc_cpu),
->>> +				    "failed to acquire interconnect path\n");
->>> +
->>> +	/*
->>> +	 * Set Maximum bandwidth vote before initializing the UFS controller and
->>> +	 * device. Ideally, a minimal interconnect vote would suffice for the
->>> +	 * initialization, but a max vote would allow faster initialization.
->>> +	 */
->>> +	ret = ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MAX][0][0].bw1,
->>> +				  ufs_qcom_bw_table[MODE_MAX][0][0].bw2);
-
-If this is a static value, can we define it separately? You don't have a 
-full gear/lanes enumeration anyway.
-
->>> +	if (ret < 0)
->>> +		return dev_err_probe(dev, ret, "failed to set bandwidth request\n");
->>> +
->>> +	return 0;
->>> +}
->>> +
->>>    /**
->>>     * ufs_qcom_init - bind phy with controller
->>>     * @hba: host controller instance
->>> @@ -1085,6 +1209,10 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->>>    		}
->>>    	}
->>> +	err = ufs_qcom_icc_init(host);
->>> +	if (err)
->>> +		goto out_variant_clear;
->>> +
->>>    	host->device_reset = devm_gpiod_get_optional(dev, "reset",
->>>    						     GPIOD_OUT_HIGH);
->>>    	if (IS_ERR(host->device_reset)) {
->>> @@ -1282,6 +1410,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
->>>    				    dev_req_params->pwr_rx,
->>>    				    dev_req_params->hs_rate,
->>>    				    false);
->>> +		ufs_qcom_icc_update_bw(host);
->>>    		ufshcd_uic_hibern8_exit(hba);
->>>    	}
->>> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
->>> index 6289ad5a42d0..dc27395ecba1 100644
->>> --- a/drivers/ufs/host/ufs-qcom.h
->>> +++ b/drivers/ufs/host/ufs-qcom.h
->>> @@ -206,6 +206,9 @@ struct ufs_qcom_host {
->>>    	struct clk *tx_l1_sync_clk;
->>>    	bool is_lane_clks_enabled;
->>> +	struct icc_path *icc_ddr;
->>> +	struct icc_path *icc_cpu;
->>> +
->>>    #ifdef CONFIG_SCSI_UFS_CRYPTO
->>>    	struct qcom_ice *ice;
->>>    #endif
->>
->> -- 
->> With best wishes
->> Dmitry
->>
-> 
-
--- 
-With best wishes
-Dmitry
-
+[...]
