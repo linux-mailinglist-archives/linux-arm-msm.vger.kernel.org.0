@@ -2,139 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88F34751380
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:25:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 700B97513AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:40:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbjGLWZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 18:25:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37276 "EHLO
+        id S232380AbjGLWkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 18:40:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjGLWZa (ORCPT
+        with ESMTP id S232444AbjGLWkj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 18:25:30 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F704199E;
-        Wed, 12 Jul 2023 15:25:29 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6689430d803so79225b3a.0;
-        Wed, 12 Jul 2023 15:25:29 -0700 (PDT)
+        Wed, 12 Jul 2023 18:40:39 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95BEB1FD4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:40:35 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1b9c368f4b5so9159025ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689200728; x=1691792728;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p16HJUeFjh0Up2EuZ/dd2QVMrO3mMIhcqelMbrELgUs=;
-        b=AS3vGV8GaYrFYrEl8H7hKOjmb4Es0czMAC6TL+m1BtL8qPw1sXJihYI42F4fQzasCr
-         9C/y54pmvfVY9HMvfXgQdtw4Dg9mHXrMPvs5VDa9hXep9esXb/RyZvxjNfMvsYcmnTMJ
-         ocpZaEc7VznJX4Es9MCc/gosChAkNclEWfsQ1LzguTrGQsuHe8ivx1aoV4U52w3gRZd1
-         qZsRONMzbiDqyWR73A3DZ3K7r1Was6iNreseQs4VmEeXtoGKGC18Wefn0FQ+w4mhF049
-         sjq6dTthUjmgvqR6YZ9s3TqubH7fPlMeM6m33OUtbuIclNjP+ZtOTBA0A25zi/fln4hk
-         NM+Q==
+        d=chromium.org; s=google; t=1689201635; x=1691793635;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=W74OVpeHRuNiX8pMSZJwMLioV1gL07KE3H1a2Sb6peY=;
+        b=QgNyeryYTTACVv5xzPnNBA4fBv8uhd7VsaVJyHLSkvwtHQ661hFCyV66BZ6tioghkS
+         IiSrAN7DKiJZGemA6V8wlUMgmctAMNrRpVUKhk/5Lv33vAAYGSUdGM69pCLaNnlbNOXh
+         8XefLt2O2fzoj5+Y6R5Z6VGjlTW+vbMv4QtDQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689200728; x=1691792728;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p16HJUeFjh0Up2EuZ/dd2QVMrO3mMIhcqelMbrELgUs=;
-        b=c566o7bRynKlnlN+P4cEbyz6vzHUeMRGU4RFWkENyNcViDSAWEVfwBYD8u98AmjpN9
-         eE/JVDeQ/xyrNM9/eXqkE9chQRMDx3OCctW89SYBd2cDrOMr6/gXmxYHLUlUAw1Ighmd
-         NwObLRZb/uQxVR2R/0Orl5NNmChJRLw6KLjOquJ30o+4DTXOTW/GqzsiuFCjfP/Tm24G
-         82UqidNEUdaV0MgQRd+ULivx9YuDH7yChEug46NrKwGGLM+3G+y+Cz9ylLXBsiDcUFwH
-         uf5k6Pp2pGMzKRcfDnr8Vg+A326E1p/Xltns0VPzdtQVlUHXwgyE9knwhCyYQIODAot2
-         2Psg==
-X-Gm-Message-State: ABy/qLYKIX/gsSuYZNTLyqMOCZ17NcFSOX2CmuBOMJJMtGpFfzgVs8HL
-        T2WDvNQtIt2rg/KpmSxxTew=
-X-Google-Smtp-Source: APBJJlG3beF7ERt/uLgX1UHxkuEN/pg8U+e7c3SJSiwKs5FaMN/c4UXTKiygCxqrZPeQl6oKY+i78g==
-X-Received: by 2002:a05:6a00:23ca:b0:668:8596:7524 with SMTP id g10-20020a056a0023ca00b0066885967524mr21229199pfc.20.1689200727294;
-        Wed, 12 Jul 2023 15:25:27 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:69d1:d8aa:25be:a2b6])
-        by smtp.gmail.com with ESMTPSA id i23-20020aa78b57000000b00662610cf7a8sm4174893pfd.172.2023.07.12.15.25.26
+        d=1e100.net; s=20221208; t=1689201635; x=1691793635;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W74OVpeHRuNiX8pMSZJwMLioV1gL07KE3H1a2Sb6peY=;
+        b=kp7FTK3h6KfNgkbwIlwNS3FnINaUB4xquPeXijE7hR3Flxy9zMKHkOUqi1bvPgBZm8
+         Fx9OUFdAV/cLHdEeEfBSk0gosZZRJGwHOuMm2V7PZ5P8uW/8H3U9YIRLh/BPR+84pB3r
+         4QIgZ8JROxoKyliEhCYnPU/gLY7RnH2j81VO7NJYSxeOzw654x3N4YW4bcidYh6uNccR
+         Fk1j3BsKiD50d4UmdJJjZnjaDCCmnANz/OMZRnI3aWKpMYbGAjsX5cSSmBqz8kG/++uu
+         aKu7EmGBuVXMV78mV8OAF/NzKYipSJ4RKm9lXK4ivuK3MOxznui4oUH0dAChdD5YbhBK
+         6ohQ==
+X-Gm-Message-State: ABy/qLavs4Lt/2R/swUh2KFMxxrEFuPk0qUOZ3lisX6oacJ3QdVcCRZh
+        eQH0C5f2Nm/kzMz/HVlbGtlOSg==
+X-Google-Smtp-Source: APBJJlHjYHPAqP5SmPN3RIOl52xjZOYYkXRgyg60M7GK47U7g8k/67db5mDhdwbCY4s7DI8euJG7fA==
+X-Received: by 2002:a17:902:ea03:b0:1b9:d38d:efb1 with SMTP id s3-20020a170902ea0300b001b9d38defb1mr196238plg.8.1689201635138;
+        Wed, 12 Jul 2023 15:40:35 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id d14-20020a170903230e00b001b864add154sm4475679plh.154.2023.07.12.15.40.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 15:25:26 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Fix hw_fence error path cleanup
-Date:   Wed, 12 Jul 2023 15:25:23 -0700
-Message-ID: <20230712222523.7404-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        Wed, 12 Jul 2023 15:40:34 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 15:40:34 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: smem: Use struct_size()
+Message-ID: <202307121540.F8EBBCA1D3@keescook>
+References: <f74328551cfab0262ba353f37d047ac74bf616e1.1689194490.git.christophe.jaillet@wanadoo.fr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f74328551cfab0262ba353f37d047ac74bf616e1.1689194490.git.christophe.jaillet@wanadoo.fr>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed, Jul 12, 2023 at 10:42:15PM +0200, Christophe JAILLET wrote:
+> Use struct_size() instead of hand-writing it, when allocating a structure
+> with a flex array.
+> 
+> This is less verbose.
+> 
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-In an error path where the submit is free'd without the job being run,
-the hw_fence pointer is simply a kzalloc'd block of memory.  In this
-case we should just kfree() it, rather than trying to decrement it's
-reference count.  Fortunately we can tell that this is the case by
-checking for a zero refcount, since if the job was run, the submit would
-be holding a reference to the hw_fence.
+Reviewed-by: Kees Cook <keescook@chromium.org>
 
-Fixes: f94e6a51e17c ("drm/msm: Pre-allocate hw_fence")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_fence.c      |  6 ++++++
- drivers/gpu/drm/msm/msm_gem_submit.c | 14 +++++++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
-index 96599ec3eb78..1a5d4f1c8b42 100644
---- a/drivers/gpu/drm/msm/msm_fence.c
-+++ b/drivers/gpu/drm/msm/msm_fence.c
-@@ -191,6 +191,12 @@ msm_fence_init(struct dma_fence *fence, struct msm_fence_context *fctx)
- 
- 	f->fctx = fctx;
- 
-+	/*
-+	 * Until this point, the fence was just some pre-allocated memory,
-+	 * no-one should have taken a reference to it yet.
-+	 */
-+	WARN_ON(kref_read(&fence->refcount));
-+
- 	dma_fence_init(&f->base, &msm_fence_ops, &fctx->spinlock,
- 		       fctx->context, ++fctx->last_fence);
- }
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 3f1aa4de3b87..9d66498cdc04 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -86,7 +86,19 @@ void __msm_gem_submit_destroy(struct kref *kref)
- 	}
- 
- 	dma_fence_put(submit->user_fence);
--	dma_fence_put(submit->hw_fence);
-+
-+	/*
-+	 * If the submit is freed before msm_job_run(), then hw_fence is
-+	 * just some pre-allocated memory, not a reference counted fence.
-+	 * Once the job runs and the hw_fence is initialized, it will
-+	 * have a refcount of at least one, since the submit holds a ref
-+	 * to the hw_fence.
-+	 */
-+	if (kref_read(&submit->hw_fence->refcount) == 0) {
-+		kfree(submit->hw_fence);
-+	} else {
-+		dma_fence_put(submit->hw_fence);
-+	}
- 
- 	put_pid(submit->pid);
- 	msm_submitqueue_put(submit->queue);
 -- 
-2.41.0
-
+Kees Cook
