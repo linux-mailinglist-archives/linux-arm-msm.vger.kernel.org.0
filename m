@@ -2,103 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ADF2750B3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 16:44:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4BCF750D1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 17:52:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232066AbjGLOol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 10:44:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41978 "EHLO
+        id S233827AbjGLPwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 11:52:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232943AbjGLOoi (ORCPT
+        with ESMTP id S233838AbjGLPwI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 10:44:38 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 117121FC0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:44:33 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3163eb69487so219215f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:44:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689173071; x=1691765071;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2bKIIR9OjtgBpDDvqKxLO6IX1x7WUFG2/ayGOLgpUek=;
-        b=ZApMAuCqQ9Yyv4TWJRovqk71j+frwCNOsbkzGFbvPhTEScmFWELEj5ccqfqPMrqp/X
-         qvX4hrKCwXZeCoqcTGxJLGqXXduYBqQ5mmtCojK7u1PqFkro0sSuFR9lfV9byXcN7+Gl
-         SHofKDLd013XUs/WNs6A+F5tIe7S6/NJ/OqhYzJCC1QOdEnBqXkn/jle01pwcnGvuTm2
-         TZeCxTC/07WBAg5doPXez23CmmUbJKKUrbdbHCWxZGROIADkueUe3ZQMA81gIvsDcKza
-         vX24AxvBco0X8twoxska0+Hjn07NGQlPnJYjLdlcKMCF53kfuJZxhNb2kNkev+ZhIS2y
-         NwlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689173071; x=1691765071;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2bKIIR9OjtgBpDDvqKxLO6IX1x7WUFG2/ayGOLgpUek=;
-        b=EQUTp+2KioNnzqUdLX7wvOwi1mqzD2+tNPAmAh3cOenAz8HZer2jklMMZ3dLnLxFw8
-         BcQ/i07uNxQ5exYzVo28B/AsOptvWwFWAymkV6Or3aB/cEmZWL6/Xlv1VTsUyp0jSC2C
-         XrSgl2c72c0/2nkNEu9f4dr6AHPXGp6+SQNigQ0FUDRsgt9Npiph3jpaDtYCEmdx8n22
-         nabheNDFOugd8MATlEG6zjutw0dFw8Dk0270UL1xQfyNVGHom47tZw5KtmzHdVMnVY6P
-         AO5qbQjJIkjdtQwhIitOOzA49fp/CMwAZDo7fDtOGDBFNfjs9SCNDWXtjAS4kWxtEB2A
-         pUKA==
-X-Gm-Message-State: ABy/qLaP16PC9PSdbmctQFG3g+IKRqqHf+VAKTUr3HS4LXh4atIn5w4S
-        d7JOqlyQ/J0d3u95z0vVb65ZpdcZTru91qadnQg=
-X-Google-Smtp-Source: APBJJlFPG+2s4x3l2bjFKssERNkMbuuHjE2WIpn8o+0mfboYULQzNu5jhtu14gy1VsT0eXo3vSrTUA==
-X-Received: by 2002:a5d:538b:0:b0:314:914:66cc with SMTP id d11-20020a5d538b000000b00314091466ccmr1947027wrv.8.1689173071526;
-        Wed, 12 Jul 2023 07:44:31 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id c7-20020a5d4147000000b003141a3c4353sm5321548wrq.30.2023.07.12.07.44.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 07:44:29 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 17:44:25 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     dmitry.baryshkov@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: [bug report] drm/msm/dsi: do not enable irq handler before powering
- up the host
-Message-ID: <6b3de033-47f3-4699-9a41-d9862d47c8d8@moroto.mountain>
+        Wed, 12 Jul 2023 11:52:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 326AE1FC8;
+        Wed, 12 Jul 2023 08:52:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A7A806189F;
+        Wed, 12 Jul 2023 15:52:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9BBC433C7;
+        Wed, 12 Jul 2023 15:52:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689177126;
+        bh=Jlo10pILmhB7LyeW7g/VTLcTaOOBrUbMZUZ8dB39h6Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=No3bbUwD0BUiHtjkZc7iN36OpXZ7ik+KEIA9CmNLfXXwySm3siMFgoVyM5A1cVVR9
+         9M6HJL4RGvdv0tk2HBXi5Ko8ZGIV/Ao1HmAysKXzYvWPKTlcn/yQ5+/oMlEMPvNILx
+         iERZMg5mI1kVHTilpcdduFdVlvJvsWbt9StcRK4e5oNO9e1GCWYmXUyWbWFYY5Qfj0
+         bwwxvjuXH5aRKiaZ/JNC+bMXHiaAJhaCJhvuUFwLwLRTLETycVO1vDdqlZTmPwexDa
+         wt/skTnMls7PzQe6yruuuaI2dK5V4Xx8fDIbvYVJJQ+TSsWRhIfHB8HtUQaWzvvOYy
+         Ge5AepEf9OI4g==
+Date:   Wed, 12 Jul 2023 17:52:01 +0200
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     Yangtao Li <frank.li@vivo.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 06/11] i2c: qcom-geni: Convert to
+ devm_platform_ioremap_resource()
+Message-ID: <20230712155201.hlp6rtfgwi7d6sg4@intel.intel>
+References: <20230710063351.17490-1-frank.li@vivo.com>
+ <20230710063351.17490-6-frank.li@vivo.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230710063351.17490-6-frank.li@vivo.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Dmitry Baryshkov,
+Hi Yangtao,
 
-The patch bf94ec093d05: "drm/msm/dsi: do not enable irq handler
-before powering up the host" from Oct 2, 2021, leads to the following
-Smatch static checker warning:
+On Mon, Jul 10, 2023 at 02:33:45PM +0800, Yangtao Li wrote:
+> Use devm_platform_ioremap_resource() to simplify code.
+> 
+> Signed-off-by: Yangtao Li <frank.li@vivo.com>
 
-	drivers/gpu/drm/msm/dsi/dsi_host.c:1890 msm_dsi_host_init()
-	warn: irq_of_parse_and_map() returns zero on failure
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org> 
 
-drivers/gpu/drm/msm/dsi/dsi_host.c
-    1882         /* OPP table is optional */
-    1883         ret = devm_pm_opp_of_add_table(&pdev->dev);
-    1884         if (ret && ret != -ENODEV) {
-    1885                 dev_err(&pdev->dev, "invalid OPP table in device tree\n");
-    1886                 return ret;
-    1887         }
-    1888 
-    1889         msm_host->irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
---> 1890         if (msm_host->irq < 0) {
-
-The irq_of_parse_and_map() function returns zero on error.  There are
-several IRQ functions like that.  It's a mess.
-
-So I think this should be if (!msm_host->irq) or possibly if <= 0.
-
-    1891                 ret = msm_host->irq;
-    1892                 dev_err(&pdev->dev, "failed to get irq: %d\n", ret);
-    1893                 return ret;
-    1894         }
-    1895 
-    1896         /* do not autoenable, will be enabled later */
-
-regards,
-dan carpenter
+Andi
