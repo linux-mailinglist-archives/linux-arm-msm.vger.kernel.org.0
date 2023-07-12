@@ -2,367 +2,330 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05F72750983
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 15:23:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 900C17509BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 15:40:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232081AbjGLNXE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 09:23:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48958 "EHLO
+        id S231267AbjGLNkl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 09:40:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233659AbjGLNW4 (ORCPT
+        with ESMTP id S232571AbjGLNkk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 09:22:56 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A1619A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 06:22:54 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b698937f85so114661341fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 06:22:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689168173; x=1691760173;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vJdY0r0c+OQBiyruPlkckpTHmMf63inSmX8kBhtjPIo=;
-        b=At6+ABsjo0n6r+pxO/uwJo3EAAitynpBh4JaHqb2lftgVryeeX7e18z5QoGiN/qhp1
-         f4wejg6o0TyAuHz2FtgssMVkK6rsxGr04mAfsbtUfaulQrW6z59gQvZhXp73m5ZVMCLq
-         Tz5zKSvVoSHznI+x6LdTMqvM1YrP+tBkYXfWOrSCxZnaP7XIWzD/3T5fzMtDrY2ksuyV
-         YYPX4MaIg9yKkEyEKLlckr8hGjyLmMd/1VxnDqcGUhWXpnNjTpYwoyZKmuqWvLfvWNgD
-         t8M29ZjfMF418kO7hMMn2uzk9n8skPMSwRUn00fVAg2SBgp3xVdVz+28nzSbZPWe2ZRm
-         kW3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689168173; x=1691760173;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vJdY0r0c+OQBiyruPlkckpTHmMf63inSmX8kBhtjPIo=;
-        b=edXeUqhBFlUbcCh6MmWEO8ekFYWGhwcOq85BasGHoDYo4SCKoBkI3xKOgbNdJqdmmt
-         Kqmf6sYZPVIuNkORZuRbGYQlHS9kLamtH91LVTC/jbW3zK9iol2XMeFDvoyNsuvwolEH
-         CVSh2+jqFs+gnzl3jpP8dPMNR+cXwK7WsWJggfSy5R9//abBwP1pwfZ+y2Fvhu7Ne8qf
-         a8fEBE/Fg4xTnoLiUIqAvgwzJD/B7mITfB41V1PbrT4bjFtPffn2PAoQ7xBbx0+Dnbeo
-         g5gU2j63cGu06EqwCvD2JxeRilse/xLLeWXB6722cdUCx/3Uj65wbQ7MvsYTOFnkZTnq
-         z0Bw==
-X-Gm-Message-State: ABy/qLaI+zlBrnmMdFoSYqAZQwXsFXdKbpK23pbaCjNri26WeN9bRgPT
-        qw+BekR2ogr7C5P9/s9ZlGgdkA==
-X-Google-Smtp-Source: APBJJlF3qn8wSSD82KbbVvLgpEPjF7dqmfgzaZs+L3SWjow2RfwwBY7n5ke7AHqBXeoqh9k2+e1wCA==
-X-Received: by 2002:a2e:3313:0:b0:2b6:fa3e:f2fa with SMTP id d19-20020a2e3313000000b002b6fa3ef2famr15436572ljc.32.1689168172845;
-        Wed, 12 Jul 2023 06:22:52 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id t21-20020a2e9555000000b002b6ff15226fsm963620ljh.59.2023.07.12.06.22.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jul 2023 06:22:52 -0700 (PDT)
-Message-ID: <107aad9f-40c0-f32b-9f74-6c82ee6785bf@linaro.org>
-Date:   Wed, 12 Jul 2023 16:22:51 +0300
+        Wed, 12 Jul 2023 09:40:40 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0861719B9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 06:40:39 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qJa31-0003SA-EH; Wed, 12 Jul 2023 15:38:27 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qJa2f-00DtzU-Hf; Wed, 12 Jul 2023 15:38:05 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qJa2e-004JeB-NH; Wed, 12 Jul 2023 15:38:04 +0200
+Date:   Wed, 12 Jul 2023 15:38:03 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Maxime Ripard <mripard@kernel.org>
+Cc:     Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+        Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+        dri-devel@lists.freedesktop.org,
+        Vandita Kulkarni <vandita.kulkarni@intel.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Arun R Murthy <arun.r.murthy@intel.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Samuel Holland <samuel@sholland.org>,
+        Matt Roper <matthew.d.roper@intel.com>,
+        Wenjing Liu <wenjing.liu@amd.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Danilo Krummrich <dakr@redhat.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        spice-devel@lists.freedesktop.org,
+        Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+        linux-sunxi@lists.linux.dev, Stylon Wang <stylon.wang@amd.com>,
+        Tim Huang <Tim.Huang@amd.com>,
+        Suraj Kandpal <suraj.kandpal@intel.com>,
+        =?utf-8?B?QW5kcsOp?= Almeida <andrealmeid@igalia.com>,
+        Andi Shyti <andi.shyti@linux.intel.com>,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Hersen Wu <hersenxs.wu@amd.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>,
+        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+        =?utf-8?Q?=C5=81ukasz?= Bartosik <lb@semihalf.com>,
+        Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>,
+        kernel@pengutronix.de, Alex Deucher <alexander.deucher@amd.com>,
+        freedreno@lists.freedesktop.org,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Zack Rusin <zackr@vmware.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
+        Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+        =?utf-8?B?Sm9zw6k=?= Roberto de Souza <jose.souza@intel.com>,
+        virtualization@lists.linux-foundation.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Yongqin Liu <yongqin.liu@linaro.org>,
+        Mario Limonciello <mario.limonciello@amd.com>,
+        Fei Yang <fei.yang@intel.com>,
+        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        David Lechner <david@lechnology.com>,
+        Julia Lawall <Julia.Lawall@inria.fr>,
+        Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
+        "Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+        David Francis <David.Francis@amd.com>,
+        Aaron Liu <aaron.liu@amd.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-rockchip@lists.infradead.org,
+        Fangzhi Zuo <jerry.zuo@amd.com>,
+        Aurabindo Pillai <aurabindo.pillai@amd.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Jouni =?utf-8?B?SMO2Z2FuZGVy?= <jouni.hogander@intel.com>,
+        Dave Airlie <airlied@redhat.com>, linux-mips@vger.kernel.org,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Animesh Manna <animesh.manna@intel.com>,
+        linux-renesas-soc@vger.kernel.org,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        linux-amlogic@lists.infradead.org, Evan Quan <evan.quan@amd.com>,
+        Michal Simek <michal.simek@amd.com>,
+        linux-arm-kernel@lists.infradead.org, Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Qingqing Zhuo <qingqing.zhuo@amd.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Swati Sharma <swati2.sharma@intel.com>,
+        John Stultz <jstultz@google.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        Anusha Srivatsa <anusha.srivatsa@intel.com>,
+        Dan Carpenter <error27@gmail.com>,
+        Karol Herbst <kherbst@redhat.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        linux-hyperv@vger.kernel.org, Stefan Agner <stefan@agner.ch>,
+        Melissa Wen <melissa.srw@gmail.com>,
+        =?utf-8?B?TWHDrXJh?= Canal <mairacanal@riseup.net>,
+        Luca Coelho <luciano.coelho@intel.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Likun Gao <Likun.Gao@amd.com>, Sam Ravnborg <sam@ravnborg.org>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Deepak Rawat <drawat.floss@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>, Joel Stanley <joel@jms.id.au>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Alan Liu <haoping.liu@amd.com>,
+        Philip Yang <Philip.Yang@amd.com>,
+        Lyude Paul <lyude@redhat.com>, intel-gfx@lists.freedesktop.org,
+        Alison Wang <alison.wang@nxp.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Gustavo Sousa <gustavo.sousa@intel.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Deepak R Varma <drv@mailo.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>, Chia-I Wu <olvaffe@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Khaled Almahallawy <khaled.almahallawy@intel.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Emma Anholt <emma@anholt.net>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Imre Deak <imre.deak@intel.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Roman Li <roman.li@amd.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Rob Clark <robdclark@gmail.com>,
+        Hamza Mahfooz <hamza.mahfooz@amd.com>,
+        David Airlie <airlied@gmail.com>, Marek Vasut <marex@denx.de>,
+        Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+        xen-devel@lists.xenproject.org, Guchun Chen <guchun.chen@amd.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Leo Li <sunpeng.li@amd.com>,
+        Uma Shankar <uma.shankar@intel.com>,
+        Mika Kahola <mika.kahola@intel.com>,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Vinod Govindapillai <vinod.govindapillai@intel.com>,
+        linux-tegra@vger.kernel.org,
+        Marek =?utf-8?B?T2zFocOhaw==?= <marek.olsak@amd.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        =?utf-8?Q?Joaqu=C3=ADn_Ignacio_Aramend=C3=ADa?= 
+        <samsagax@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        linux-mediatek@lists.infradead.org,
+        Fabio Estevam <festevam@gmail.com>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        David Tadokoro <davidbtadokoro@usp.br>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        amd-gfx@lists.freedesktop.org, Jyri Sarha <jyri.sarha@iki.fi>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Philippe Cornu <philippe.cornu@foss.st.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Wayne Lin <Wayne.Lin@amd.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Nirmoy Das <nirmoy.das@intel.com>, Lang Yu <Lang.Yu@amd.com>,
+        Lucas Stach <l.stach@pengutronix.de>
+Subject: Re: [PATCH RFC v1 00/52] drm/crtc: Rename struct drm_crtc::dev to
+ drm_dev
+Message-ID: <20230712133803.rf26cbg5wz7wsmgl@pengutronix.de>
+References: <20230712094702.1770121-1-u.kleine-koenig@pengutronix.de>
+ <94eb6e4d-9384-152f-351b-ebb217411da9@amd.com>
+ <20230712110253.paoyrmcbvlhpfxbf@pengutronix.de>
+ <o3dc4q27ap6rajsvpfwfvs3z3afekkwbhnclvswkaietciy2kc@unjf67gz5tur>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 14/14] scsi: ufs: qcom: Add support for scaling
- interconnects
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
-References: <20230712103213.101770-1-manivannan.sadhasivam@linaro.org>
- <20230712103213.101770-19-manivannan.sadhasivam@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230712103213.101770-19-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="aip3kulofrfujcj7"
+Content-Disposition: inline
+In-Reply-To: <o3dc4q27ap6rajsvpfwfvs3z3afekkwbhnclvswkaietciy2kc@unjf67gz5tur>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2023 13:32, Manivannan Sadhasivam wrote:
-> Qcom SoCs require scaling the interconnect paths for proper working of the
-> peripherals connected through interconnects. Even for accessing the UFS
-> controller, someone should setup the interconnect paths. So far, the
-> bootloaders used to setup the interconnect paths before booting linux as
-> they need to access the UFS storage for things like fetching boot firmware.
-> But with the advent of multi boot options, bootloader nowadays like in
-> SA8540p SoC do not setup the interconnect paths at all.
-> 
-> So trying to configure UFS in the absence of the interconnect path
-> configuration, results in boot crash.
-> 
-> To fix this issue and also to dynamically scale the interconnects (UFS-DDR
-> and CPU-UFS), interconnect API support is added to the Qcom UFS driver.
-> With this support, the interconnect paths are scaled dynamically based on
-> the gear configuration.
-> 
-> During the early stage of ufs_qcom_init(), ufs_qcom_icc_init() will setup
-> the paths to max bandwidth to allow configuring the UFS registers. Touching
-> the registers without configuring the icc paths would result in a crash.
-> However, we don't really need to set max vote for the icc paths as any
-> minimal vote would suffice. But the max value would allow initialization to
-> be done faster. After init, the bandwidth will get updated using
-> ufs_qcom_icc_update_bw() based on the gear and lane configuration.
-> 
-> The bandwidth values defined in ufs_qcom_bw_table struct are taken from
-> Qcom downstream vendor devicetree source and are calculated as per the
-> UFS3.1 Spec, Section 6.4.1, HS Gear Rates. So it is fixed across platforms.
-> 
-> Cc: Brian Masney <bmasney@redhat.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   drivers/ufs/host/ufs-qcom.c | 131 +++++++++++++++++++++++++++++++++++-
->   drivers/ufs/host/ufs-qcom.h |   3 +
->   2 files changed, 133 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 8d6fd4c3324f..8a3132d45a65 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -7,6 +7,7 @@
->   #include <linux/time.h>
->   #include <linux/clk.h>
->   #include <linux/delay.h>
-> +#include <linux/interconnect.h>
->   #include <linux/module.h>
->   #include <linux/of.h>
->   #include <linux/platform_device.h>
-> @@ -46,6 +47,49 @@ enum {
->   	TSTBUS_MAX,
->   };
->   
-> +#define QCOM_UFS_MAX_GEAR 4
-> +#define QCOM_UFS_MAX_LANE 2
-> +
-> +enum {
-> +	MODE_MIN,
-> +	MODE_PWM,
-> +	MODE_HS_RA,
-> +	MODE_HS_RB,
-> +	MODE_MAX,
 
-MODE_MIN and MODE_MAX seem to be unused
+--aip3kulofrfujcj7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +};
-> +
-> +struct __ufs_qcom_bw_table {
-> +	u32 bw1;
-> +	u32 bw2;
+Hello Maxime,
 
-Please consider:
+On Wed, Jul 12, 2023 at 02:52:38PM +0200, Maxime Ripard wrote:
+> On Wed, Jul 12, 2023 at 01:02:53PM +0200, Uwe Kleine-K=F6nig wrote:
+> > > Background is that this makes merge conflicts easier to handle and de=
+tect.
+> >=20
+> > Really?
+>=20
+> FWIW, I agree with Christian here.
+>=20
+> > Each file (apart from include/drm/drm_crtc.h) is only touched once. So
+> > unless I'm missing something you don't get less or easier conflicts by
+> > doing it all in a single patch. But you gain the freedom to drop a
+> > patch for one driver without having to drop the rest with it.
+>=20
+> Not really, because the last patch removed the union anyway. So you have
+> to revert both the last patch, plus that driver one. And then you need
+> to add a TODO to remove that union eventually.
 
-s/bw1/mem_bw/
-s/bw2/cfg_bw/
+Yes, with a single patch you have only one revert (but 194 files changed,
+1264 insertions(+), 1296 deletions(-)) instead of two (one of them: 1
+file changed, 9 insertions(+), 1 deletion(-); the other maybe a bit
+bigger). (And maybe you get away with just reverting the last patch.)
 
-> +} ufs_qcom_bw_table[MODE_MAX + 1][QCOM_UFS_MAX_GEAR + 1][QCOM_UFS_MAX_LANE + 1] = {
+With a single patch the TODO after a revert is "redo it all again (and
+prepare for a different set of conflicts)" while with the split series
+it's only "fix that one driver that was forgotten/borked" + reapply that
+10 line patch. As the one who gets that TODO, I prefer the latter.
 
-I'd say, these +1's are slightly confusing and unnecessary.
+So in sum: If your metric is "small count of reverted commits", you're
+right. If however your metric is: Better get 95% of this series' change
+in than maybe 0%, the split series is the way to do it.
 
-> +	[MODE_MIN][0][0] = { 0,		0 },	/* Bandwidth values are in KB/s */
+With me having spend ~3h on this series' changes, it's maybe
+understandable that I did it the way I did.
 
-I'd say, this becomes impossible to check. Can you please structure it?
-Either by inclusion:
+FTR: This series was created on top of v6.5-rc1. If you apply it to
+drm-misc-next you get a (trivial) conflict in patch #2. If I consider to
+be the responsible maintainer who applies this series, I like being able
+to just do git am --skip then.=20
 
-[MODE_PWM] = {
-   [1] = {
-      [1] = { .. },
-      [2] = { .. },
-   },
-   // etc.
-};
+FTR#2: In drm-misc-next is a new driver
+(drivers/gpu/drm/loongson/lsdc_crtc.c) so skipping the last patch for
+now might indeed be a good idea.
 
-Also, do we have defines for gears? Can we use them instead of indices?
+> > So I still like the split version better, but I'm open to a more
+> > verbose reasoning from your side.
+>=20
+> You're doing only one thing here, really: you change the name of a
+> structure field. If it was shared between multiple maintainers, then
+> sure, splitting that up is easier for everyone, but this will go through
+> drm-misc, so I can't see the benefit it brings.
 
-> +	[MODE_PWM][1][1] = { 922,	1000 },
-> +	[MODE_PWM][2][1] = { 1844,	1000 },
-> +	[MODE_PWM][3][1] = { 3688,	1000 },
-> +	[MODE_PWM][4][1] = { 7376,	1000 },
-> +	[MODE_PWM][1][2] = { 1844,	1000 },
-> +	[MODE_PWM][2][2] = { 3688,	1000 },
-> +	[MODE_PWM][3][2] = { 7376,	1000 },
-> +	[MODE_PWM][4][2] = { 14752,	1000 },
-> +	[MODE_HS_RA][1][1] = { 127796,	1000 },
-> +	[MODE_HS_RA][2][1] = { 255591,	1000 },
-> +	[MODE_HS_RA][3][1] = { 1492582,	102400 },
-> +	[MODE_HS_RA][4][1] = { 2915200,	204800 },
-> +	[MODE_HS_RA][1][2] = { 255591,	1000 },
-> +	[MODE_HS_RA][2][2] = { 511181,	1000 },
-> +	[MODE_HS_RA][3][2] = { 1492582,	204800 },
-> +	[MODE_HS_RA][4][2] = { 2915200,	409600 },
-> +	[MODE_HS_RB][1][1] = { 149422,	1000 },
-> +	[MODE_HS_RB][2][1] = { 298189,	1000 },
-> +	[MODE_HS_RB][3][1] = { 1492582,	102400 },
-> +	[MODE_HS_RB][4][1] = { 2915200,	204800 },
-> +	[MODE_HS_RB][1][2] = { 298189,	1000 },
-> +	[MODE_HS_RB][2][2] = { 596378,	1000 },
-> +	[MODE_HS_RB][3][2] = { 1492582,	204800 },
-> +	[MODE_HS_RB][4][2] = { 2915200,	409600 },
-> +	[MODE_MAX][0][0] = { 7643136, 307200 },
-> +};
-> +
->   static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
->   
->   static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
-> @@ -789,6 +833,51 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
->   	}
->   }
->   
-> +static int ufs_qcom_icc_set_bw(struct ufs_qcom_host *host, u32 bw1, u32 bw2)
-> +{
-> +	struct device *dev = host->hba->dev;
-> +	int ret;
-> +
-> +	ret = icc_set_bw(host->icc_ddr, 0, bw1);
-> +	if (ret < 0) {
-> +		dev_err(dev, "failed to set bandwidth request: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = icc_set_bw(host->icc_cpu, 0, bw2);
-> +	if (ret < 0) {
-> +		dev_err(dev, "failed to set bandwidth request: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static struct __ufs_qcom_bw_table ufs_qcom_get_bw_table(struct ufs_qcom_host *host)
-> +{
-> +	struct ufs_pa_layer_attr *p = &host->dev_req_params;
-> +	int gear = max_t(u32, p->gear_rx, p->gear_tx);
-> +	int lane = max_t(u32, p->lane_rx, p->lane_tx);
-> +
-> +	if (ufshcd_is_hs_mode(p)) {
-> +		if (p->hs_rate == PA_HS_MODE_B)
-> +			return ufs_qcom_bw_table[MODE_HS_RB][gear][lane];
-> +		else
-> +			return ufs_qcom_bw_table[MODE_HS_RA][gear][lane];
-> +	} else {
-> +		return ufs_qcom_bw_table[MODE_PWM][gear][lane];
-> +	}
-> +}
-> +
-> +static int ufs_qcom_icc_update_bw(struct ufs_qcom_host *host)
-> +{
-> +	struct __ufs_qcom_bw_table bw_table;
-> +
-> +	bw_table = ufs_qcom_get_bw_table(host);
-> +
-> +	return ufs_qcom_icc_set_bw(host, bw_table.bw1, bw_table.bw2);
-> +}
-> +
->   static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->   				enum ufs_notify_change_status status,
->   				struct ufs_pa_layer_attr *dev_max_params,
-> @@ -852,6 +941,8 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->   		memcpy(&host->dev_req_params,
->   				dev_req_params, sizeof(*dev_req_params));
->   
-> +		ufs_qcom_icc_update_bw(host);
-> +
->   		/* disable the device ref clock if entered PWM mode */
->   		if (ufshcd_is_hs_mode(&hba->pwr_info) &&
->   			!ufshcd_is_hs_mode(dev_req_params))
-> @@ -981,7 +1072,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
->   
->   	switch (status) {
->   	case PRE_CHANGE:
-> -		if (!on) {
-> +		if (on) {
-> +			ufs_qcom_icc_update_bw(host);
-> +		} else {
->   			if (!ufs_qcom_is_link_active(hba)) {
->   				/* disable device ref_clk */
->   				ufs_qcom_dev_ref_clk_ctrl(host, false);
-> @@ -993,6 +1086,9 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
->   			/* enable the device ref clock for HS mode*/
->   			if (ufshcd_is_hs_mode(&hba->pwr_info))
->   				ufs_qcom_dev_ref_clk_ctrl(host, true);
-> +		} else {
-> +			ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MIN][0][0].bw1,
-> +					    ufs_qcom_bw_table[MODE_MIN][0][0].bw2);
->   		}
->   		break;
->   	}
-> @@ -1031,6 +1127,34 @@ static const struct reset_control_ops ufs_qcom_reset_ops = {
->   	.deassert = ufs_qcom_reset_deassert,
->   };
->   
-> +static int ufs_qcom_icc_init(struct ufs_qcom_host *host)
-> +{
-> +	struct device *dev = host->hba->dev;
-> +	int ret;
-> +
-> +	host->icc_ddr = devm_of_icc_get(dev, "ufs-ddr");
-> +	if (IS_ERR(host->icc_ddr))
-> +		return dev_err_probe(dev, PTR_ERR(host->icc_ddr),
-> +				    "failed to acquire interconnect path\n");
-> +
-> +	host->icc_cpu = devm_of_icc_get(dev, "cpu-ufs");
-> +	if (IS_ERR(host->icc_cpu))
-> +		return dev_err_probe(dev, PTR_ERR(host->icc_cpu),
-> +				    "failed to acquire interconnect path\n");
-> +
-> +	/*
-> +	 * Set Maximum bandwidth vote before initializing the UFS controller and
-> +	 * device. Ideally, a minimal interconnect vote would suffice for the
-> +	 * initialization, but a max vote would allow faster initialization.
-> +	 */
-> +	ret = ufs_qcom_icc_set_bw(host, ufs_qcom_bw_table[MODE_MAX][0][0].bw1,
-> +				  ufs_qcom_bw_table[MODE_MAX][0][0].bw2);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "failed to set bandwidth request\n");
-> +
-> +	return 0;
-> +}
-> +
->   /**
->    * ufs_qcom_init - bind phy with controller
->    * @hba: host controller instance
-> @@ -1085,6 +1209,10 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->   		}
->   	}
->   
-> +	err = ufs_qcom_icc_init(host);
-> +	if (err)
-> +		goto out_variant_clear;
-> +
->   	host->device_reset = devm_gpiod_get_optional(dev, "reset",
->   						     GPIOD_OUT_HIGH);
->   	if (IS_ERR(host->device_reset)) {
-> @@ -1282,6 +1410,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
->   				    dev_req_params->pwr_rx,
->   				    dev_req_params->hs_rate,
->   				    false);
-> +		ufs_qcom_icc_update_bw(host);
->   		ufshcd_uic_hibern8_exit(hba);
->   	}
->   
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index 6289ad5a42d0..dc27395ecba1 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -206,6 +206,9 @@ struct ufs_qcom_host {
->   	struct clk *tx_l1_sync_clk;
->   	bool is_lane_clks_enabled;
->   
-> +	struct icc_path *icc_ddr;
-> +	struct icc_path *icc_cpu;
-> +
->   #ifdef CONFIG_SCSI_UFS_CRYPTO
->   	struct qcom_ice *ice;
->   #endif
+I see your argument, but I think mine weights more.
 
--- 
-With best wishes
-Dmitry
+Best regards
+Uwe
 
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--aip3kulofrfujcj7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmSurLsACgkQj4D7WH0S
+/k4sEwf/UuiwqpRpFkDoh5EhwtXKdh8XLT/EutMDLIG+CdmIF7NPxvR+ZXgiD5e9
+BaYtiZNivy0cfbUas4l0w7WekMbHw5MsVttULAGgUP4sLLJ8c2njon3k5JWJA8z4
+W3AKDPJ/uwAYPmFY0mElfTsvDoy/x4EdJqeF7fbHlwdk5NHXWh/7Csw6b4jJBLC2
+ucmM2LxhSR6awQqbXnd/MXgkIap0fsy40En7wKq6B/B3pECguPZg8cChiztq8mVa
+/8DEhoDQWgJ2YzBcMhE+nW+4G/hc51psOIylkBMhZFrvmXZMwMFv+g7UDIJ4jp/N
+4A1ksamP+GbxqozqipxuHSgGp3+6dQ==
+=UcVQ
+-----END PGP SIGNATURE-----
+
+--aip3kulofrfujcj7--
