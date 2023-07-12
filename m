@@ -2,149 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B0E8750B1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 16:35:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7ADF2750B3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 16:44:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232995AbjGLOfU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 10:35:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39242 "EHLO
+        id S232066AbjGLOol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 10:44:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230434AbjGLOfT (ORCPT
+        with ESMTP id S232943AbjGLOoi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 10:35:19 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB2B6127
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:35:17 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-bc379e4c1cbso8063140276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:35:17 -0700 (PDT)
+        Wed, 12 Jul 2023 10:44:38 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 117121FC0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:44:33 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3163eb69487so219215f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:44:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689172517; x=1691764517;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=tbTllEpx0I78Ic+EXBEuRDRVhQRIepaTuBVKvfQ1Ua0=;
-        b=Ea4t93dvufzwmX3xkWz194R62FMWEMLF5hGPXmr+Y8OTIswfM6BhkHA4tXPKbpGZZz
-         BpbPiPy+45hZHL5QeCJSPDi5L96WAq+JXo6qe6DnBsrvcDljaT8VnDtuhoysa3YH4MAN
-         FCvMUb3pmvSTyhzvx6dUX+rQbdiuknJALnYg4PmGZ4I/s2u8i4sFlr8h8VWyDlb0rr34
-         kplTU06AqliDIhK21A/1kQ/6jKyqkrAyMa93dDVzTgSmFFjHQRED64NKu/6fp/G9PGKr
-         T/fvmgnCg2juBVFsD5Y/iZGkvVdKQrdvVvEKcOYHtSxGd7Lbu8Ij10I/RWrKtzgzkRSu
-         bZRg==
+        d=linaro.org; s=google; t=1689173071; x=1691765071;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2bKIIR9OjtgBpDDvqKxLO6IX1x7WUFG2/ayGOLgpUek=;
+        b=ZApMAuCqQ9Yyv4TWJRovqk71j+frwCNOsbkzGFbvPhTEScmFWELEj5ccqfqPMrqp/X
+         qvX4hrKCwXZeCoqcTGxJLGqXXduYBqQ5mmtCojK7u1PqFkro0sSuFR9lfV9byXcN7+Gl
+         SHofKDLd013XUs/WNs6A+F5tIe7S6/NJ/OqhYzJCC1QOdEnBqXkn/jle01pwcnGvuTm2
+         TZeCxTC/07WBAg5doPXez23CmmUbJKKUrbdbHCWxZGROIADkueUe3ZQMA81gIvsDcKza
+         vX24AxvBco0X8twoxska0+Hjn07NGQlPnJYjLdlcKMCF53kfuJZxhNb2kNkev+ZhIS2y
+         NwlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689172517; x=1691764517;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tbTllEpx0I78Ic+EXBEuRDRVhQRIepaTuBVKvfQ1Ua0=;
-        b=lYIz+QinFu3dJOCuFzJVRSBEuARAxJXXn0ysv0rl/o22fKVmU3kEJdFucszmRh2lKB
-         jALoYKAaJQhJSYYEkYVvIA72sOTdFksSVq3r+vssXwhrYzkwIsec2wjXxsfYIsUtwqQn
-         oITq/H1WHF3z8ZkHKgzujUE6n1HPBzObHh6LNbpA5v0ehi9RHHVc0o/Qwnx4udgZ0dPT
-         eiG97IXvqpwHllEEkxShrFaV9I9RGW8FUFF1peDijkJ/KO3N6H8zVaTIKPl9Uy+1isLO
-         RGNgPebdOvTtrmEVz+sRVvYZrlyUMaxl/i7tSCTaZAjhOOrW7xulbEJR7aJzV+r7qeKz
-         AE+w==
-X-Gm-Message-State: ABy/qLaEeWJkEzXr8BO5qCl+FyzcSH+aIB6h9A211fCYAaZG45Foi1OR
-        FHSLHdleA6kstCnmf0gQOaUog4Lwvw1RVfFYGNJdrA==
-X-Google-Smtp-Source: APBJJlFOHb2fSETsP1eqkByIGa7pIKNcHsnSCp51EV4sxfvYWl2o5Ta3vmVszePPggalPaZErD7+82N+DHVr7KfUX1A=
-X-Received: by 2002:a25:1e55:0:b0:c4f:c0eb:451b with SMTP id
- e82-20020a251e55000000b00c4fc0eb451bmr18583653ybe.25.1689172517157; Wed, 12
- Jul 2023 07:35:17 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689173071; x=1691765071;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2bKIIR9OjtgBpDDvqKxLO6IX1x7WUFG2/ayGOLgpUek=;
+        b=EQUTp+2KioNnzqUdLX7wvOwi1mqzD2+tNPAmAh3cOenAz8HZer2jklMMZ3dLnLxFw8
+         BcQ/i07uNxQ5exYzVo28B/AsOptvWwFWAymkV6Or3aB/cEmZWL6/Xlv1VTsUyp0jSC2C
+         XrSgl2c72c0/2nkNEu9f4dr6AHPXGp6+SQNigQ0FUDRsgt9Npiph3jpaDtYCEmdx8n22
+         nabheNDFOugd8MATlEG6zjutw0dFw8Dk0270UL1xQfyNVGHom47tZw5KtmzHdVMnVY6P
+         AO5qbQjJIkjdtQwhIitOOzA49fp/CMwAZDo7fDtOGDBFNfjs9SCNDWXtjAS4kWxtEB2A
+         pUKA==
+X-Gm-Message-State: ABy/qLaP16PC9PSdbmctQFG3g+IKRqqHf+VAKTUr3HS4LXh4atIn5w4S
+        d7JOqlyQ/J0d3u95z0vVb65ZpdcZTru91qadnQg=
+X-Google-Smtp-Source: APBJJlFPG+2s4x3l2bjFKssERNkMbuuHjE2WIpn8o+0mfboYULQzNu5jhtu14gy1VsT0eXo3vSrTUA==
+X-Received: by 2002:a5d:538b:0:b0:314:914:66cc with SMTP id d11-20020a5d538b000000b00314091466ccmr1947027wrv.8.1689173071526;
+        Wed, 12 Jul 2023 07:44:31 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id c7-20020a5d4147000000b003141a3c4353sm5321548wrq.30.2023.07.12.07.44.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jul 2023 07:44:29 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 17:44:25 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     dmitry.baryshkov@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [bug report] drm/msm/dsi: do not enable irq handler before powering
+ up the host
+Message-ID: <6b3de033-47f3-4699-9a41-d9862d47c8d8@moroto.mountain>
 MIME-Version: 1.0
-References: <20230621185949.2068-1-quic_amelende@quicinc.com>
- <20230621185949.2068-2-quic_amelende@quicinc.com> <20230626135857.GA3118929-robh@kernel.org>
- <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com> <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
- <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com> <431faa87-d152-5f7a-40fd-8b6fe26f0bb9@linaro.org>
- <71e1f36f-8fd8-9d61-d563-577d4fb54f10@quicinc.com> <69c01f0f-4eb0-bb44-a238-5c9ce5beede9@linaro.org>
-In-Reply-To: <69c01f0f-4eb0-bb44-a238-5c9ce5beede9@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 12 Jul 2023 17:35:05 +0300
-Message-ID: <CAA8EJppCSnEg1GjX8CavxRPiiE19JwVAOTspjWJR-OzdQMcu+g@mail.gmail.com>
-Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Anjelique Melendez <quic_amelende@quicinc.com>,
-        Rob Herring <robh@kernel.org>, pavel@ucw.cz, lee@kernel.org,
-        thierry.reding@gmail.com, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 12 Jul 2023 at 17:22, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 11/07/2023 22:12, Anjelique Melendez wrote:
->
-> >>>
-> >>> On PMI632, peripherals are partitioned over 2 different SIDs
-> >>> (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n42
-> >>> and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n149).
-> >>> Unfortunately, the pbs peripheral and the lpg peripherals are on different
-> >>> PMI632 devices and therefore have different regmaps.
-> >>>
-> >>> If we get rid of the pbs node we need to get a handle to the proper regmap.
-> >>> I see two possible options, we could either introduce a new client property
-> >>> which points to a peripheral on the same device as pbs.
-> >>>
-> >>> i.e.
-> >>>     led-controller {
-> >>>             compatible = "qcom,pmi632-lpg";
-> >>>                     #address-cells = <1>;
-> >>>                     #size-cells = <0>;
-> >>>                     #pwm-cells = <2>;
-> >>>                     nvmem-names = "lpg_chan_sdam";
-> >>>                     nvmem = <&pmi632_sdam7>;
-> >>>                     qcom,pbs-phandle = <&pmi632_gpios>;
-> >>>                     .....
-> >>>     };
-> >>> Then when client is probing could do something like the following to get the regmap
-> >>>
-> >>>     dn = of_parse_phandle(node, "qcom,pbs-phandle", 0);
-> >>>     pdev = of_find_device_by_node(dn);
-> >>>     pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
-> >>>
-> >>>
-> >>>
-> >>> Or we could use the nvmem phandle and just have something like this in client's probe
-> >>>
-> >>>     dn = of_parse_phandle(node, "nvmem", 0);
-> >>>     pdev = of_find_device_by_node(dn);
-> >>>     pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
-> >>>
-> >>>
-> >>>
-> >>> Let me know what your thoughts are on this.
-> >>
-> >> Rob asked you - "Is there more than 1 instance in a PMIC?" - and you did
-> >> not answer positively, just mentioned something about drivers in
-> >> downstream, which do not matter. So is the answer for that question:
-> >> yes, you have two instances of the same PMIC differing by presence of
-> >> PBS and other features"?
-> >>
-> > Sorry that was a misunderstanding on my part.
-> > Yes, answer to Rob's question should have been "We have two instances of PMI632,
-> > where one instance holds the pbs peripheral and the other holds the lpg
-> > peripherals. The child node for pbs is needed so lpg client can access
-> > the PMI632 regmap which contains the pbs peripheral."
->
-> I guess I miss here something. What is "LPG client"? I don't understand
-> why this LPG client needs existence of PBS node, to be able to get the
-> regmap.
->
-> PBS is a child of PMIC, so it can get regmap from the parent. What's
-> more, which DT property passes the regmap from PMIC to LPG client?
+Hello Dmitry Baryshkov,
 
-There are some PMICs which claim two SPMI SIDs. For such PMICs, each
-SID is a separate device, so it is not directly possible to get the
-regmap of the other SID.
+The patch bf94ec093d05: "drm/msm/dsi: do not enable irq handler
+before powering up the host" from Oct 2, 2021, leads to the following
+Smatch static checker warning:
 
--- 
-With best wishes
-Dmitry
+	drivers/gpu/drm/msm/dsi/dsi_host.c:1890 msm_dsi_host_init()
+	warn: irq_of_parse_and_map() returns zero on failure
+
+drivers/gpu/drm/msm/dsi/dsi_host.c
+    1882         /* OPP table is optional */
+    1883         ret = devm_pm_opp_of_add_table(&pdev->dev);
+    1884         if (ret && ret != -ENODEV) {
+    1885                 dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+    1886                 return ret;
+    1887         }
+    1888 
+    1889         msm_host->irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+--> 1890         if (msm_host->irq < 0) {
+
+The irq_of_parse_and_map() function returns zero on error.  There are
+several IRQ functions like that.  It's a mess.
+
+So I think this should be if (!msm_host->irq) or possibly if <= 0.
+
+    1891                 ret = msm_host->irq;
+    1892                 dev_err(&pdev->dev, "failed to get irq: %d\n", ret);
+    1893                 return ret;
+    1894         }
+    1895 
+    1896         /* do not autoenable, will be enabled later */
+
+regards,
+dan carpenter
