@@ -2,101 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 244B975106F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 20:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1E8875107C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 20:27:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232252AbjGLSZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 14:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36660 "EHLO
+        id S231528AbjGLS07 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 14:26:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbjGLSZN (ORCPT
+        with ESMTP id S232720AbjGLS04 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 14:25:13 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 911001FDE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 11:25:11 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fc02a92dcfso55729325e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 11:25:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689186310; x=1691778310;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3sbg1EWek1f7W/2sEFdDkon2yGXDKs3LeHwQc8htLNA=;
-        b=u8aDDgJFfGEOW7j1I1qdOkKlFoZchHnPUIS3J/GLni+iE4cR2YOajIuM2YRggaMC3h
-         6uA+XGjpRU7QP6aouW5YmWbpBuZCQF2ldrWfpqO9Ew1w/LIuKxq8F3GbV8Zhrxs8nXl4
-         giEnU1DfTzop+e0rFO03HZXrtvwLkWdAb2RuY4XOjw9vNqoIBdtxuEXU0BnULXqYmP4U
-         Oimb1G3d+Q5baKbh7pd9aifjI0pwed+KjiSigPr72D7tN9UKyMpziFYkT7jOYjjjDz1B
-         fOiCtrbqpGCNKsRFD3/fhrpcZT3vvQhLrW171/TOrO0takiyd7/CC5iHf5HZW5CSYtrf
-         PADg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689186310; x=1691778310;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3sbg1EWek1f7W/2sEFdDkon2yGXDKs3LeHwQc8htLNA=;
-        b=PY06jL/OR6mA+oogiWaywU6cNRfZ2I+LsNJsKw8S2qEqbsxGlbASlntkq/Ohst9gM/
-         wFmNma8WGX4I+KfpTJqNNy8N7zmYC+4QtwnEaqGCIMWXeRmfweA3h1f+HSvGZkAEzQ0S
-         P7UohVIEZj17VMxG2dMOg/d09/fIK1llTdMd7Vi+9hOrVkjHkxGWnoQbFNZlDISx7eSP
-         OY7Oe9x1hLadcYDwehqUJoFcKddB7YvhA8ptlgoFLdDloI1lmSylOwZB7zlWojtMtsLD
-         cWubOQOcQ0Xd9W9iVnCWilRcFj5+F70Iq7JUUlTwb8m67LQf45hiBQD/WIFlwEOr4gs2
-         NjGA==
-X-Gm-Message-State: ABy/qLa8kma0XT3g+U4jthQepjtLXkrLBn93Y2YnrKLyA3tpVuAkVj6P
-        Mh1md64TzxmNdHELvMlvlO5zG+UBZt928o57RgIv5w==
-X-Google-Smtp-Source: APBJJlHn5AONiwSv5nuU8XvbEPnAsG7pZFEtpPxaReRewRtCSYUfxoBuL8tsflJhEhaBeE2wBZwKV+fpBuDDMvHrooQ=
-X-Received: by 2002:a5d:4603:0:b0:315:ad1a:5abc with SMTP id
- t3-20020a5d4603000000b00315ad1a5abcmr2917667wrq.5.1689186310079; Wed, 12 Jul
- 2023 11:25:10 -0700 (PDT)
+        Wed, 12 Jul 2023 14:26:56 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38651BEC;
+        Wed, 12 Jul 2023 11:26:54 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36C8e7FA025489;
+        Wed, 12 Jul 2023 18:26:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mtKhEYS2K6X6LBtwPqDWhL1CJqJw4DS1omIajDx5ciM=;
+ b=kdsNgjdUBhmwZnk+aZt4Ujk/GPBTCK1JSvcGs1qbfEfG0k0C5DFS5aahFTePkp85q7XF
+ eM8DdXm1z5VYNHudXdnuG1qObW5tUHywSN61sDIx3uzwlwhfaagtq6237jDS9MnvkTU5
+ dNaTjeqRJoWHDi+azMc2b9hQbhcOYpp0ukEt6oK0AJoqf+DuKhsbvBhgbBtUrT84/+Jp
+ RgBm1OaYv+aOmnpZrP8wH3p2KBKqBINUJ/92aL7G6rbNNgdYgP0hsR4gA8QLj9Njf1KJ
+ BXkt0SAS1hLgfJRfdwbZQiH5pgLishusnE1BFn9ZtD9EUS36cId4phJusmLDc1RBb5Dz oQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rser0tce9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Jul 2023 18:26:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36CIQhJt019354
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Jul 2023 18:26:43 GMT
+Received: from [10.216.46.65] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 12 Jul
+ 2023 11:26:36 -0700
+Message-ID: <ef29e520-7b9c-f581-e70a-250df80d3821@quicinc.com>
+Date:   Wed, 12 Jul 2023 23:56:33 +0530
 MIME-Version: 1.0
-References: <cover.1689148711.git.quic_schowdhu@quicinc.com> <f3ab03c1afadd72ad166d2e421844cfca072f90e.1689148711.git.quic_schowdhu@quicinc.com>
-In-Reply-To: <f3ab03c1afadd72ad166d2e421844cfca072f90e.1689148711.git.quic_schowdhu@quicinc.com>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 12 Jul 2023 23:54:58 +0530
-Message-ID: <CAH=2NtwYbhd6kS7dSYBXJsgW0pcMz8PxgX_BCmFcAiAVYNUzvg@mail.gmail.com>
-Subject: Re: [PATCH V1 3/3] MAINTAINERS: Add the header file entry for
- Embedded USB debugger(EUD)
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v9 06/10] usb: dwc3: qcom: Add support to read IRQ's
+ related to multiport
+To:     Johan Hovold <johan@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        "Wesley Cheng" <quic_wcheng@quicinc.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-7-quic_kriskura@quicinc.com>
+ <ZK6YrLMn9r39zEeB@hovoldconsulting.com>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZK6YrLMn9r39zEeB@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZqQVfb4cm-Gui-6o8lMtobbyBRypXh4P
+X-Proofpoint-ORIG-GUID: ZqQVfb4cm-Gui-6o8lMtobbyBRypXh4P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-12_13,2023-07-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 mlxscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=618
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2307120167
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 12 Jul 2023 at 13:58, Souradeep Chowdhury
-<quic_schowdhu@quicinc.com> wrote:
->
-> Add the entry for Embedded USB Debugger(EUD) header file which contains
-> interface definitions for the EUD notifier chain.
->
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 3be1bdfe8ecc..6d395cc6f45c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -17288,6 +17288,7 @@ L:      linux-arm-msm@vger.kernel.org
->  S:     Maintained
->  F:     Documentation/ABI/testing/sysfs-driver-eud
->  F:     Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-> +F:     drivers/usb/misc/qcom_eud_notifier.h
->  F:     drivers/usb/misc/qcom_eud.c
 
-You can simplify it to 'drivers/usb/misc/qcom_eud*' instead, for
-avoiding repeatedly changing this when new files are added in future.
 
-Thanks,
-Bhupesh
+On 7/12/2023 5:42 PM, Johan Hovold wrote:
+> On Wed, Jun 21, 2023 at 10:06:24AM +0530, Krishna Kurapati wrote:
+>> Add support to read Multiport IRQ's related to quad port controller
+>> of SA8295 Device.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   drivers/usb/dwc3/dwc3-qcom.c | 108 +++++++++++++++++++++++++++++------
+>>   1 file changed, 91 insertions(+), 17 deletions(-)
+> 
+>> +static int dwc3_qcom_setup_mp_irq(struct platform_device *pdev)
+>> +{
+>> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+>> +	char irq_name[15];
+> 
+> The interrupt device-name string can not be allocated on the stack or
+> reused as it is stored directly in each irqaction structure.
+> 
+> This can otherwise lead to random crashes when accessing
+> /proc/interrupts:
+> 
+> 	https://lore.kernel.org/lkml/ZK6IV_jJPICX5r53@hovoldconsulting.com/
+> 
+Hi Johan,
+
+   Sure, will create a static array of names if possible in global 
+section of file and use it to read interrupts.
+
+   Are you fine with seperating out setup_irq and setup_mp_irq functions 
+? Can you please review comments and suggestion on [1].
+
+[1]: 
+https://lore.kernel.org/all/bf62bdf4-cc9e-ba7b-2078-cfd60f5dd237@quicinc.com/
+
+Regards,
+Krishna,
+
+>> +	int irq;
+>> +	int ret;
+>> +	int i;
+>> +
+>> +	for (i = 0; i < 4; i++) {
+>> +		if (qcom->dp_hs_phy_irq[i])
+>> +			continue;
+>> +
+>> +		sprintf(irq_name, "dp%d_hs_phy_irq", i+1);
+>> +		irq = dwc3_qcom_get_irq(pdev, irq_name, -1);
+>> +		if (irq > 0) {
+>> +			irq_set_status_flags(irq, IRQ_NOAUTOEN);
+>> +			ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+>> +					qcom_dwc3_resume_irq,
+>> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+>> +					irq_name, qcom);
+>> +			if (ret) {
+>> +				dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
+>> +				return ret;
+>> +			}
+>> +		}
+>> +
+>> +		qcom->dp_hs_phy_irq[i] = irq;
+>> +	}
+> 
+> Johan
