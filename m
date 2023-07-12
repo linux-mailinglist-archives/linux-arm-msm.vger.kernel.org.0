@@ -2,96 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 333EB7502E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 11:20:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 538D57502F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 11:23:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232754AbjGLJUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 05:20:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37240 "EHLO
+        id S230155AbjGLJXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 05:23:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232267AbjGLJUc (ORCPT
+        with ESMTP id S233278AbjGLJWz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 05:20:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B41B51726;
-        Wed, 12 Jul 2023 02:20:22 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 17CCB616F6;
-        Wed, 12 Jul 2023 09:20:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6B844C433C7;
-        Wed, 12 Jul 2023 09:20:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689153621;
-        bh=Ex71MzvqnoPSUmJRcXm5WZyi4T6gvlCMkVAhvg0LzGE=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=P2zHdNl2EydNK3q5sGc+nCH2LtNPsa7JIIjoTAxTlKKh7qQ07gNuX6wUisB9DoVQl
-         ENjdh05laikc2HkDUjtU7cMbtKj7eEQ9uqVDmfk5khfmej5ymKVwe/u0C9BaK4yAHb
-         oUD6ujNzjFukKAZgg9IcurQYyyPx78FEKUsaDX/q90pS3f9EpBA5TnZ7RfdrvZrGYh
-         M9bZqdA3aBKhP1bLtCyGjciDzFohNdIJO7ZPKYpeHQ1kaSvI3tyBJWwfPUhkcnsTk1
-         hI89322GvO7MdbIPsy4Gi2916nDEb2ydr8eVbynXyDDuoLMz91KWazPkk620WNtl/G
-         +4jUjPfrA1mEw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 47AD5E29F44;
-        Wed, 12 Jul 2023 09:20:21 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 12 Jul 2023 05:22:55 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0590C2127
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 02:22:14 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fb5bcb9a28so10539871e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 02:22:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689153723; x=1691745723;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1NjGqRq5zWFdsly/kg1kDssbJCalEae2wRAUaYUdM+g=;
+        b=htcZzW1OS/gE5qeL+aoGVb+2cnRqTmLWUBuKnWqAyaELuoRXnlY54d5Gk83+MQxl7z
+         dOZuI3IYpxR2VjlVQ18FNEf/0F2Ti57PekZn8/vYah4HtK60xcb5/z5H1qqfyVMsZjR4
+         E2sEvVNJoDfjd4WaHC0+G+55hrvSO4AOB+jqCgzok1wDaKTmh7DfIj6HmyoXGJ+nelAr
+         f3NZOP0q2/UmM/ex2LQHDpoe8erPK8XZKAJNQQ8CJIJ04xtdqeJf9qqG7b0ib8lTo639
+         1sS6yx4//OVp6dpbnWYKfNd9ckc0e3n1yPimpSAPq7OaSqvH4Q5Gy1oUoUngzlam9jTI
+         Wffg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689153723; x=1691745723;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1NjGqRq5zWFdsly/kg1kDssbJCalEae2wRAUaYUdM+g=;
+        b=OT1fS1MF5cS5G30i9RHSXvACsFc5SOx3KDEdMzy277A5V8jONoD+6i1cKF+ezntRFD
+         hoFxhPyAluvGFAToar0yYNOYoNT2DsFG1WginHzy0ut/wOsI77gOB9xcFfbhHUSETO0a
+         E3+Qm3WGV2/f8Ylp7eJ+tCr0E2K+n9JCeLGHHwpmYdGInqfxauzVhCY7eKHQkKNbNl/J
+         VNgjP/vTgK/NFElXOQ4qVEoAWfm/r894PaeQOZAoQW0WpAJvXbOyeFxTUSO5zxGYf097
+         2F1gSOTp6wPnJAhOJDxnnzA3Q8w+ta9lc5q7HfPN+mJKKEn0nFg/PDpg6n364/TkDDG8
+         MkDQ==
+X-Gm-Message-State: ABy/qLYcFER/AdA6tc3Md3kVYfh8QrsGAfbB+eQrrMP7PtwUg7a+zG/O
+        YjbJdwsP2BorKYcgRFvfWSoOoQ==
+X-Google-Smtp-Source: APBJJlEaxJehnHDdYGksUXZVL4/FaFAeZB6Ghl/w8pfsxWfXUSB5H2x9pQGJSkSWkSc2kuQ9f9tb+Q==
+X-Received: by 2002:a05:6512:2025:b0:4f8:6625:f2ca with SMTP id s5-20020a056512202500b004f86625f2camr13186563lfs.61.1689153723165;
+        Wed, 12 Jul 2023 02:22:03 -0700 (PDT)
+Received: from [192.168.1.101] (abxh6.neoplus.adsl.tpnet.pl. [83.9.1.6])
+        by smtp.gmail.com with ESMTPSA id u22-20020ac243d6000000b004fbbf9e58bbsm621222lfl.126.2023.07.12.02.22.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 02:22:02 -0700 (PDT)
+Message-ID: <af0e1e5f-c284-a33a-7626-f143b1a4b30e@linaro.org>
+Date:   Wed, 12 Jul 2023 11:22:01 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 1/3] dt-bindings: power: rpmhpd: Add Generic RPMh PD
+ indexes
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1689054169-10800-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1689054169-10800-2-git-send-email-quic_rohiagar@quicinc.com>
+ <6746ceb6-dac4-ee8e-411f-8de0ff8f12e0@linaro.org>
+ <77991119-a200-fbfe-5dba-580a0b0d3228@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <77991119-a200-fbfe-5dba-580a0b0d3228@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v2 0/3] net: stmmac: dwmac-qcom-ethqos: Improve error
- handling
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <168915362128.1981.13684727730813685010.git-patchwork-notify@kernel.org>
-Date:   Wed, 12 Jul 2023 09:20:21 +0000
-References: <20230710201636.200412-1-ahalaney@redhat.com>
-In-Reply-To: <20230710201636.200412-1-ahalaney@redhat.com>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
-        mcoquelin.stm32@gmail.com, pabeni@redhat.com, kuba@kernel.org,
-        edumazet@google.com, davem@davemloft.net, joabreu@synopsys.com,
-        alexandre.torgue@foss.st.com, peppe.cavallaro@st.com,
-        bhupesh.sharma@linaro.org, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, andrew@lunn.ch,
-        simon.horman@corigine.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This series was applied to netdev/net-next.git (main)
-by David S. Miller <davem@davemloft.net>:
-
-On Mon, 10 Jul 2023 15:06:36 -0500 you wrote:
-> This series includes some very minor quality of life patches in the
-> error handling.
+On 12.07.2023 10:24, Rohit Agarwal wrote:
 > 
-> I recently ran into a few issues where these patches would have made my
-> life easier (messing with the devicetree, dependent driver of this
-> failing, and incorrect kernel configs resulting in this driver not
-> probing).
+> On 7/11/2023 8:41 PM, Dmitry Baryshkov wrote:
+>> On 11/07/2023 08:42, Rohit Agarwal wrote:
+>>> Add Generic RPMh Power Domain indexes that can be used
+>>> for all the Qualcomm SoC henceforth.
+>>>
+>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>   include/dt-bindings/power/qcom-rpmhpd.h | 30 ++++++++++++++++++++++++++++++
+>>>   1 file changed, 30 insertions(+)
+>>>   create mode 100644 include/dt-bindings/power/qcom-rpmhpd.h
+>>>
+>>> diff --git a/include/dt-bindings/power/qcom-rpmhpd.h b/include/dt-bindings/power/qcom-rpmhpd.h
+>>> new file mode 100644
+>>> index 0000000..4da2e04
+>>> --- /dev/null
+>>> +++ b/include/dt-bindings/power/qcom-rpmhpd.h
+>>> @@ -0,0 +1,30 @@
+>>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+>>> +/*
+>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>>> +
+>>> +#ifndef _DT_BINDINGS_POWER_QCOM_RPMHPD_H
+>>> +#define _DT_BINDINGS_POWER_QCOM_RPMHPD_H
+>>> +
+>>> +/* Generic RPMH Power Domain Indexes */
+>>> +#define CX               0
+>>> +#define MX               1
+>>> +#define CX_AO            2
+>>> +#define MX_AO            3
+>>> +#define GFX              4
+>>> +#define MSS              5
+>>> +#define EBI              6
+>>> +#define LCX              7
+>>> +#define LMX              8
+>>> +#define MMCX             9
+>>> +#define MMCX_AO          10
+>>> +#define MXC              11
+>>> +#define MXC_AO           12
+>>> +#define NSP              13
+>>> +#define NSP0             14
+>>> +#define NSP1             15
+>>> +#define QPHY             16
+>>> +#define DDR              17
+>>> +#define XO               18
+>>
+>> I went through the existing defines. If we adopt the order of defines for sm8550, we can migrate that platform and all of sm8[234]50 without breaking ABI. This would be a minor gain, but still something.
+>>
+> Actually, I added them in the sequence based on the frequency with which they occur in the driver, so that there are less NULL entries created for any target additions. Shouldnt we keep it this way and ignore for previous targets then?
+Don't bother yourself with this, we've already dragged you through
+some bindings mess ;)
+
+Dmitry just noticed that a happy coincidence occured and we could
+swap out SM8[234]_50 indices with these ones and they would still
+match. It'd be a separate patch though.
+
+Konrad
 > 
-> [...]
-
-Here is the summary with links:
-  - [net-next,v2,1/3] net: stmmac: dwmac-qcom-ethqos: Use of_get_phy_mode() over device_get_phy_mode()
-    https://git.kernel.org/netdev/net-next/c/a8aa20a64ef2
-  - [net-next,v2,2/3] net: stmmac: dwmac-qcom-ethqos: Use dev_err_probe()
-    https://git.kernel.org/netdev/net-next/c/b2f3d915b4fe
-  - [net-next,v2,3/3] net: stmmac: dwmac-qcom-ethqos: Log more errors in probe
-    https://git.kernel.org/netdev/net-next/c/27381e72a2db
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+> Thanks,
+> Rohit.
+>>> +
+>>> +#endif
+>>
