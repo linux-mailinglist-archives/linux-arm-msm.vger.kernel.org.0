@@ -2,123 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83781750AB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 16:22:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20377750AB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 16:22:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229475AbjGLOWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 10:22:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55354 "EHLO
+        id S231251AbjGLOWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 10:22:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230159AbjGLOWU (ORCPT
+        with ESMTP id S229660AbjGLOWt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 10:22:20 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0015121;
-        Wed, 12 Jul 2023 07:22:18 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36CBiVoI014762;
-        Wed, 12 Jul 2023 14:22:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uiOvXvWQsK7oGSOD73zC5c9T7/tY9kGTmrNQPmH8feU=;
- b=hCZ2BgHBDaeBkGSFtin84VkTwZlKP4xKMHxW5kzddp62+G9TeeOzVTTc2svmNhtGHHrO
- sp+Ty9btk4BkiX2QZtr7EPLpZiz4+HtdykF4NlkYrqn4o3dzbSNCkM3o73c8zAq+vn68
- Wnf3aaB2iOJsJdRYynrqhgSDGCaVjbrO6nuMkd03Wmn+R2+0eXdm4hksC0BQB4ww47Q8
- zJtj14zjoA5Oa/cEC1g7afJ4Z6r916cmaBZGbTSf8L8MZ8uN0l9ni5Djr7U0wAC9cREg
- GR2hFjQegryARlKxkRylLiwXcbCGw/KeuBNmk6n6oOcbEAfi0VkDTgIfJ2YQVcOZFepw Uw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rsf87hpqe-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 14:22:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36CEMDpR031005
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 14:22:13 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 12 Jul
- 2023 07:22:12 -0700
-Message-ID: <c3f1bd05-3594-71b9-39ec-7d4b53a2d2e7@quicinc.com>
-Date:   Wed, 12 Jul 2023 08:22:11 -0600
+        Wed, 12 Jul 2023 10:22:49 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9ABC1995
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:22:40 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so1766882a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 07:22:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689171759; x=1691763759;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IqgIPueFUvObMdtqLpPDVT+S6vncjR3E3Hz6m9Y1oow=;
+        b=cIIzWRE4mtjWnQxfXCjdWnyeBPXXR53TA75FPRduSJYczxPCyzNzrbmb4czW05Prbo
+         J6JcIoLHWVTcj9tmtg45QVny+awIbjTF7+gnYbTIzra6CdEfaka1/j26SzZ4ndm+T3HN
+         l6QV5s6EFKIhjSn6g94sai9Bd7IveDKmX8h4n+GgUTkMkGUN62jEhbN2JscQw85yVC2K
+         zWY8QDfRTYBsKe3JhsN7TmuX/LmIKX46GhMBoM4gLccMBtJfLG4ZhYbbT7IlAFzJRqHL
+         bupDja5RwzdjuRx9LJNEo7O4YhGes2zYaVGfCZIyVPL1CIpUdb0KOLt45d3sHQ1kPfjH
+         UtDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689171759; x=1691763759;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IqgIPueFUvObMdtqLpPDVT+S6vncjR3E3Hz6m9Y1oow=;
+        b=h0Wei3W1Rb/eUeBP2XH2b6tk4YsIKILeLVZTPjHugZ9uk/xxQz8V6dZmAoxFSi6EPm
+         a7vfgMSVoBfuYok5HjmSo32gFR8GZFTV4ouzfYm3GphA00pAwT1udUgoxsnuRoVEQFpd
+         CteJaCWmsX6ZyQfe4t2ONajXykK5MyQM7CIsihZ2IKlkq214cREa6A8VvgFhhmnpEBEm
+         /lhYOtPpUierf17TVRZDB9fjdYFzFX7UkHvN7EWRVl0K3fYDjhm3qDMmZ/9XJ/MmM/eQ
+         ict8jBIFdTfSEqog3sQRNjXtWlsrsXlazyhN3WuB9ToxbqGim+bkIENgQT9KbRbJ81iV
+         BM1Q==
+X-Gm-Message-State: ABy/qLYrMjWd2XykBE4Wd5XscrSu2bl3ZIU6NmRedaujmwXVzL0cYE7+
+        loVz3dN/bm/niBnjJodq9inUiA==
+X-Google-Smtp-Source: APBJJlH4rWD1FiIK9TcwLHZ7qIEY9eOufK42OGUuMk0um7uxrlk9UIxsBVKWnp2Z884Kt/9jVeE4hw==
+X-Received: by 2002:a05:6402:440b:b0:51f:e0f0:f2cd with SMTP id y11-20020a056402440b00b0051fe0f0f2cdmr2774872eda.3.1689171759329;
+        Wed, 12 Jul 2023 07:22:39 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id e3-20020a50ec83000000b0051e0ea53eaasm2833835edr.97.2023.07.12.07.22.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 07:22:38 -0700 (PDT)
+Message-ID: <69c01f0f-4eb0-bb44-a238-5c9ce5beede9@linaro.org>
+Date:   Wed, 12 Jul 2023 16:22:36 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 0/5 v4] accel/qaic: Improve bounds checking in
- encode/decode
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
 Content-Language: en-US
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-CC:     Carl Vanderlip <quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <kernel-janitors@vger.kernel.org>
-References: <6e935c70-5bd2-4808-bdd9-d664f892b0b5@moroto.mountain>
- <0919d2f7-dbb3-2e8b-adb7-f836b21e6482@quicinc.com>
- <9af2a1c9-a59a-4f7e-a195-82cf5cbd68c9@kadam.mountain>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <9af2a1c9-a59a-4f7e-a195-82cf5cbd68c9@kadam.mountain>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Anjelique Melendez <quic_amelende@quicinc.com>,
+        Rob Herring <robh@kernel.org>
+Cc:     pavel@ucw.cz, lee@kernel.org, thierry.reding@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        u.kleine-koenig@pengutronix.de, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
+References: <20230621185949.2068-1-quic_amelende@quicinc.com>
+ <20230621185949.2068-2-quic_amelende@quicinc.com>
+ <20230626135857.GA3118929-robh@kernel.org>
+ <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
+ <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
+ <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com>
+ <431faa87-d152-5f7a-40fd-8b6fe26f0bb9@linaro.org>
+ <71e1f36f-8fd8-9d61-d563-577d4fb54f10@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <71e1f36f-8fd8-9d61-d563-577d4fb54f10@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JnFiaDbBI0YaJtQ2B0jeY0MzS0LEaFAE
-X-Proofpoint-ORIG-GUID: JnFiaDbBI0YaJtQ2B0jeY0MzS0LEaFAE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-12_09,2023-07-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=786 malwarescore=0
- adultscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307120129
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/12/2023 12:30 AM, Dan Carpenter wrote:
-> On Tue, Jul 11, 2023 at 11:33:25AM -0600, Jeffrey Hugo wrote:
->> On 7/11/2023 2:20 AM, Dan Carpenter wrote:
->>> Fixed in v4: Send the correct [PATCH 1/5] patch.
->>>
->>> Fixed in v3: Redo messed up threading
->>>
->>> Fixed two things in v2:  Include the <linux/overflow.h> file.  Change
->>> the >= in encode and decode to >.
->>>
->>> regards,
->>> dan carpenter
->>
->> Did you intentionally drop tags from previous versions?
-> 
-> Sorry, I kept messing up the resends.
-> 
->>
->> For 1-3, 5
->> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->>
->> Looks like 3,5 are reviewed by Pranjal and also good. I see 5 is also
->> reviewed by Dafna.  Expect those to be merged.  1,2 need a review from
->> Pranjal, but I expect all is good and will be merged.
->>
->> I did not see feedback on my question for 4.  Would like your feedback
->> before queuing that one up.
->>
-> 
-> Sorry, again.  Yeah.  I think you're right.  Could we queue the rest and
-> I will resend 4 separately?  I know it's a headache.  If not it's fine,
-> I can resend them all.
+On 11/07/2023 22:12, Anjelique Melendez wrote:
 
-These all seem independent enough that I don't see splitting out 4 as a 
-problem.
+>>>
+>>> On PMI632, peripherals are partitioned over 2 different SIDs
+>>> (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n42
+>>> and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/pmi632.dtsi?h=v6.5-rc1#n149).
+>>> Unfortunately, the pbs peripheral and the lpg peripherals are on different
+>>> PMI632 devices and therefore have different regmaps.
+>>>  
+>>> If we get rid of the pbs node we need to get a handle to the proper regmap.
+>>> I see two possible options, we could either introduce a new client property
+>>> which points to a peripheral on the same device as pbs.
+>>>
+>>> i.e.
+>>> 	led-controller {
+>>> 		compatible = "qcom,pmi632-lpg";
+>>>       		#address-cells = <1>;
+>>>       		#size-cells = <0>;
+>>>       		#pwm-cells = <2>;
+>>>      		nvmem-names = "lpg_chan_sdam";
+>>>       		nvmem = <&pmi632_sdam7>;
+>>>       		qcom,pbs-phandle = <&pmi632_gpios>;
+>>>       		..... 
+>>> 	};
+>>> Then when client is probing could do something like the following to get the regmap
+>>>
+>>> 	dn = of_parse_phandle(node, "qcom,pbs-phandle", 0);
+>>> 	pdev = of_find_device_by_node(dn);
+>>> 	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
+>>>
+>>>
+>>>
+>>> Or we could use the nvmem phandle and just have something like this in client's probe
+>>>
+>>> 	dn = of_parse_phandle(node, "nvmem", 0);
+>>> 	pdev = of_find_device_by_node(dn);
+>>> 	pbs_regmap = dev_get_regmap(&pdev->dev->parent, NULL);
+>>>
+>>>
+>>>
+>>> Let me know what your thoughts are on this.
+>>
+>> Rob asked you - "Is there more than 1 instance in a PMIC?" - and you did
+>> not answer positively, just mentioned something about drivers in
+>> downstream, which do not matter. So is the answer for that question:
+>> yes, you have two instances of the same PMIC differing by presence of
+>> PBS and other features"?
+>>
+> Sorry that was a misunderstanding on my part.
+> Yes, answer to Rob's question should have been "We have two instances of PMI632,
+> where one instance holds the pbs peripheral and the other holds the lpg
+> peripherals. The child node for pbs is needed so lpg client can access
+> the PMI632 regmap which contains the pbs peripheral."
 
--Jeff
+I guess I miss here something. What is "LPG client"? I don't understand
+why this LPG client needs existence of PBS node, to be able to get the
+regmap.
+
+PBS is a child of PMIC, so it can get regmap from the parent. What's
+more, which DT property passes the regmap from PMIC to LPG client?
+
+Best regards,
+Krzysztof
+
