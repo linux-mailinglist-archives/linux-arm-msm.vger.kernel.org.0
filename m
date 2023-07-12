@@ -2,84 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3B227501D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 10:39:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 955627502B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 11:19:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232819AbjGLIjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 04:39:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34072 "EHLO
+        id S231977AbjGLJTE convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 05:19:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232825AbjGLIim (ORCPT
+        with ESMTP id S232571AbjGLJTA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 04:38:42 -0400
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B81CA1998;
-        Wed, 12 Jul 2023 01:38:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=iqmSU
-        ZwzBw1hM5T9jJOZyxbxjgisyiiptjpGYA/61SM=; b=DlQ4LhKM1FT98BQwQJvww
-        4jSnB2wL+d32M/MHYsISXivV5jvklDzN9hoRXsXvLysrJd/RGGdmF7btwC5YAXzO
-        VKsi5V252l5W3UlVWSfTDLwY5IeB9tshY+hgMlyyqYB/LBZMkQ27pD7tDzsoW5mY
-        VuEgVRiN4t9fJiFDMaWmxc=
-Received: from jbd-ThinkPad-X1-Nano-Gen-2.web.setting (unknown [223.160.228.167])
-        by zwqz-smtp-mta-g5-1 (Coremail) with SMTP id _____wBXbUZXZq5kZhRCAA--.6187S2;
-        Wed, 12 Jul 2023 16:37:44 +0800 (CST)
-From:   Slark Xiao <slark_xiao@163.com>
-To:     mani@kernel.org, loic.poulain@linaro.org
-Cc:     fabio.porcedda@gmail.com, bhelgaas@google.com, song.fc@gmail.com,
-        duke_xinanwen@163.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Slark Xiao <slark_xiao@163.com>
-Subject: [PATCH] bus: mhi: host: pci_generic: Add support for Dell DW5932e
-Date:   Wed, 12 Jul 2023 16:37:41 +0800
-Message-Id: <20230712083741.7615-1-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 12 Jul 2023 05:19:00 -0400
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856EB1992;
+        Wed, 12 Jul 2023 02:18:50 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-bff27026cb0so7556505276.1;
+        Wed, 12 Jul 2023 02:18:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689153529; x=1691745529;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kG5q3OE8NA2B1Rd9ySf5DoQyHhC234Q++094p9pDpiY=;
+        b=RbH09Fh2Rwv6i44q4mz6r0oVcyoQAmM6oNtMIiFFXM8FMEcgMyskmz3Tm5oe9glduN
+         IqWw9q6resuXdGdh7FPxWvhQtE2Hs4MEydHvfXDgG8zLVIs1CgOb7B2IIV26ZctgKQkv
+         Z/4OjJM9oki+AhQl/1RlqwpTeqcT0un2SuAH/WoZtgjFJcjDLMAxr7Ybtl6078Lw4/nd
+         3Np3WUiMX/xJ2/zmiRoKAICGUu8Kk/VWWlEeR9GIhkDESuOFtdEcLkUPRtB5KHClxI+I
+         wrmdMjGQQa9/MD/jfjOMmztwvesyEbo4//amxwm9GOqJmSVH33YofGzA3rmvlCLFhE8A
+         yP+Q==
+X-Gm-Message-State: ABy/qLYyo+pKia4zmRJtKbiKpbRDGeTjaZQM1Sme2lFJVvnNv9q+Q4s2
+        FvTaG3BUvfcp7b245UM0zgwDilsuURGXCQ==
+X-Google-Smtp-Source: APBJJlGSFjNRvHJZkkk5bVWMKipJUpBqL7O06x8V3NpRJN+bkNydqcdBtcR9WubwFNCK3NzcOaMKcw==
+X-Received: by 2002:a25:cd85:0:b0:c60:fb80:99f7 with SMTP id d127-20020a25cd85000000b00c60fb8099f7mr15710840ybf.16.1689153529555;
+        Wed, 12 Jul 2023 02:18:49 -0700 (PDT)
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
+        by smtp.gmail.com with ESMTPSA id w8-20020a253008000000b00be4f34d419asm860867ybw.37.2023.07.12.02.18.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 02:18:49 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-c84fd44593aso3341486276.0;
+        Wed, 12 Jul 2023 02:18:49 -0700 (PDT)
+X-Received: by 2002:a25:748e:0:b0:c69:b15:3e79 with SMTP id
+ p136-20020a25748e000000b00c690b153e79mr17478596ybc.28.1689153528941; Wed, 12
+ Jul 2023 02:18:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wBXbUZXZq5kZhRCAA--.6187S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWrZw1xKry3KF18CFWxJF4xWFg_yoW8Jr4DpF
-        4F934jyF4kJr4jyaykt3yDXas8Wan3Gry7KF4xK34Y9F4qyFWYgr92gry2gF15Ka9Yqa1a
-        qFy8XFWjg3WqkF7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0JUbXowUUUUU=
-X-Originating-IP: [223.160.228.167]
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbioxmqZGNfupXBtAAAsS
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L3,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230707074337.3120530-1-quic_rohkumar@quicinc.com>
+In-Reply-To: <20230707074337.3120530-1-quic_rohkumar@quicinc.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Wed, 12 Jul 2023 11:18:35 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXRt_9BzfnaqVJUAS4QdvGBDZk3B+R_cERUykZhyNWtzQ@mail.gmail.com>
+Message-ID: <CAMuHMdXRt_9BzfnaqVJUAS4QdvGBDZk3B+R_cERUykZhyNWtzQ@mail.gmail.com>
+Subject: Re: [PATCH v2] ASoC: dt-bindings: Update maintainer email id
+To:     Rohit kumar <quic_rohkumar@quicinc.com>
+Cc:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        cychiang@chromium.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DW5932e has 2 variants: eSIM(DW5932e-eSIM) and non-eSIM(DW5932e).
-Both of them are designed based on Qualcomm SDX62 and it will
-align with the Foxconn sdx65 settings.
+Hi Rohit,
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
----
- drivers/bus/mhi/host/pci_generic.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Thanks for your patch!
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 9ca0dc3a3bfe..07172789b197 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -625,6 +625,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* T99W510 (sdx24), variant 3 */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f2),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
-+	/* DW5932e-eSIM (sdx62), With eSIM */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f5),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
-+	/* DW5932e (sdx62), Non-eSIM*/
-+	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f9),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
- 	/* MV31-W (Cinterion) */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
- 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
+On Fri, Jul 7, 2023 at 9:49 AM Rohit kumar <quic_rohkumar@quicinc.com> wrote:
+> [PATCH v2] ASoC: dt-bindings: Update maintainer email id
+
+Thank you for stepping forward to become a maintainer for all ASoC
+DT bindings ;-)
+
+> Updated my mail id to latest quicinc id.
+>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
+> ---
+> v2: Updated commit header
+>
+>  .../devicetree/bindings/sound/google,sc7180-trogdor.yaml        | 2 +-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml     | 2 +-
+
+Oh wait, this is not for all of ASoC...
+
+Please use one-line summaries that reflect the actual changes.
+Thanks!
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.25.1
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
