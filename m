@@ -2,134 +2,324 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79364750816
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:22:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA13C750818
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 14:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232225AbjGLMWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 08:22:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42466 "EHLO
+        id S232425AbjGLMWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 08:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231127AbjGLMWb (ORCPT
+        with ESMTP id S231269AbjGLMWe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 08:22:31 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744F5A7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:22:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 035DF6179D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 12:22:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7281BC433CA;
-        Wed, 12 Jul 2023 12:22:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689164549;
-        bh=M+k8Zr2k/NhPdshPSoauj/mUaQGe/FLLsysdC5Ca1+0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EMMVZn8P3U84YXLNOY5GPtApabRHvHEcTrREpLctt/4dSp8uUIBI1/CBCCqiw5jX6
-         ZPdOlm6w1dJsYDHlvtx6TfFfqsCSaf/mRpMgYn2mnGUWYNot1uE3QHdTx4AHju32Ol
-         2V8rh0VGyRMQftS3w2JYfQBHS9GN3SKMYn5Poum+E9z27tk3TYQgUORqh5T5moLcbr
-         seM3KWgHm1nFJO9cqZDX1bZWAql4GP+kItjALRyZ/Wr18cEXJmhTREVIZzjZUOeYdr
-         6s1K8uVCLbcwiJOPl0lJo5c9lI9CQg97Fl+04nJXn+U3n2ORNrX4ZKAbMgJGjglj3Z
-         DZxmZceFgaWEw==
-Date:   Wed, 12 Jul 2023 17:52:16 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Duke =?utf-8?B?WGluKOi+m+WuieaWhyk=?= <duke_xinanwen@163.com>
-Cc:     loic.poulain@linaro.org, slark_xiao@163.com,
-        fabio.porcedda@gmail.com, koen.vandeputte@citymesh.com,
-        song.fc@gmail.com, bhelgaas@google.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, jerry.meng@quectel.com,
-        duke.xin@quectel.com
-Subject: Re: [PATCH v6] bus: mhi: host: pci_generic: Add support for Quectel
- RM520N-GL modem
-Message-ID: <20230712122216.GB102757@thinkpad>
-References: <20230630062318.12114-1-duke_xinanwen@163.com>
+        Wed, 12 Jul 2023 08:22:34 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB2410D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:22:32 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b734aea34aso19943101fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 05:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689164550; x=1691756550;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=q5S3zSEv0yO9SsxtBbGnOkP560bf6i4Hy58Sg3O0KaY=;
+        b=O2buq07F58l8H+wLvgYZrR2IsHS2NVscUoEgvXvp0Q1qrzsgzAyxNEJWhu39YdgtNp
+         lsdTL5koddHjai4I5RV7fmv0QFo5lv0vTNfMFMBhqJtkMdlajohSRt+ThcOV9QcJvJXj
+         yVJm1Vwn13j5HX12GOHY1z6Leoe0xh0j3/IqwR0aIIjetc3Jqr+5iaUAjQDT7AR2tUwY
+         zzOTYl0xrHE+7xYeFJrQdmjZFQP3DhyY7aVoeGmmhalT1aoo/tVMuX/n6zO6zR53lrHm
+         IP+EbwiGBkWPDaDJ55HYckiDycqYBnXcuBCo6sUzDJYcDRiBcr3/2k4zvNQu1q7V33FI
+         iElQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689164550; x=1691756550;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q5S3zSEv0yO9SsxtBbGnOkP560bf6i4Hy58Sg3O0KaY=;
+        b=jnwm99m/NYdNhsMIMxfdgUCoJ8I7sxaL4fKOPf/b8J2CchxQR/b+pMk7XdCd2NCejR
+         kX6teYY1bnTEP9I+9TqLSHRDSRRVrOCbQPunQ0aSqpJOGxXtEG8mkkj9pCm+8sqXUW88
+         OOogSetsRykjgooV3/VpwU7b3twnYfwPTDLrE4kWw6Xyc7QEUv/i2+vsf7bkImDa7/55
+         pHDa0h4MPj2wxgtnSCcs3e1mVV1eHLM8pZpq1v9sKv0pjlSEDjPKaYVZisoukWZ1OVIW
+         BuAmCDfXSt0NluJrlty006iWSWgLjhBWGWwNIlLP/gfHzKDoJiZcyrouYApOSwD9fW+d
+         +tpA==
+X-Gm-Message-State: ABy/qLZjBHacg4fRlqayegekHr3Wo9Oaooo3iPhc+7M+kqS50z68FrLd
+        iwmyAobtAxlZRl3EpQivWLoEJw==
+X-Google-Smtp-Source: APBJJlGkOen3dIIxSEXeFzxeFbsqQh9z/9qhEqpAB3/vx8qovpT7q1OT3ojECQEj1hCvFTiw/FdCwQ==
+X-Received: by 2002:a05:6512:3149:b0:4fb:8de9:ac13 with SMTP id s9-20020a056512314900b004fb8de9ac13mr13710640lfi.23.1689164550426;
+        Wed, 12 Jul 2023 05:22:30 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id s14-20020ac25fae000000b004fba759bf44sm685436lfe.277.2023.07.12.05.22.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 05:22:30 -0700 (PDT)
+Message-ID: <44043ff6-e109-fa66-58c8-08cc25b9a4ad@linaro.org>
+Date:   Wed, 12 Jul 2023 15:22:29 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230630062318.12114-1-duke_xinanwen@163.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 1/5] thermal/drivers/tsens: Add TSENS enable and
+ calibration support for V2
+Content-Language: en-GB
+To:     Praveenkumar I <quic_ipkumar@quicinc.com>, amitk@kernel.org,
+        thara.gopinath@gmail.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_varada@quicinc.com
+References: <20230712113539.4029941-1-quic_ipkumar@quicinc.com>
+ <20230712113539.4029941-2-quic_ipkumar@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230712113539.4029941-2-quic_ipkumar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 29, 2023 at 11:23:18PM -0700, Duke Xin(辛安文) wrote:
-> Add MHI interface definition for RM520 product based on Qualcomm SDX6X chip
+On 12/07/2023 14:35, Praveenkumar I wrote:
+> SoCs without RPM have to enable sensors and calibrate from the kernel.
+> Though TSENS IP supports 16 sensors, not all are used. So used hw_id
+> to enable the relevant sensors.
 > 
-> Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
-
-Applied to mhi-next!
-
-- Mani
-
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> Added new calibration function for V2 as the tsens.c calib function
+> only supports V1.
+> 
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > ---
-> Changelog
+> [v2]:
+> 	Added separate init function for tsens v2 which calls init_common
+> 	and initialize the remaining fields. Reformatted calibrate function
+> 	and used hw_ids for sensors to enable.
 > 
-> v5 -> v6
+>   drivers/thermal/qcom/tsens-v2.c | 144 ++++++++++++++++++++++++++++++++
+>   drivers/thermal/qcom/tsens.c    |   2 +-
+>   drivers/thermal/qcom/tsens.h    |   3 +
+>   3 files changed, 148 insertions(+), 1 deletion(-)
 > 
-> * Update commit message to include the changelog and reviewd tag.
-> 
-> v4 -> v5
-> 
-> * Add patch CC to mhi@lists.linux.dev.
-> 
-> v3 -> v4
-> 
-> * Limit character length to 75 characters and adjusted "project" description to "product".
-> 
-> v2 -> v3
-> 
-> * Sorted add rm520 id in mhi_pci_id_table and modify commit message.
-> 
-> v1 -> v2
-> 
-> * Use [modem_quectel_em1xx_config] compatible instead of duplicating the configuration.
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 70e37c490150..1e7caa62f114 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -352,6 +352,16 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
->  	.sideband_wake = true,
->  };
->  
-> +static const struct mhi_pci_dev_info mhi_quectel_rm5xx_info = {
-> +	.name = "quectel-rm5xx",
-> +	.edl = "qcom/prog_firehose_sdx6x.elf",
-> +	.config = &modem_quectel_em1xx_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.mru_default = 32768,
-> +	.sideband_wake = true,
-> +};
+> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+> index 29a61d2d6ca3..ba74d971fe95 100644
+> --- a/drivers/thermal/qcom/tsens-v2.c
+> +++ b/drivers/thermal/qcom/tsens-v2.c
+> @@ -6,11 +6,23 @@
+>   
+>   #include <linux/bitops.h>
+>   #include <linux/regmap.h>
+> +#include <linux/nvmem-consumer.h>
+>   #include "tsens.h"
+>   
+>   /* ----- SROT ------ */
+>   #define SROT_HW_VER_OFF	0x0000
+>   #define SROT_CTRL_OFF		0x0004
+> +#define SROT_MEASURE_PERIOD	0x0008
+> +#define SROT_Sn_CONVERSION	0x0060
+> +#define V2_SHIFT_DEFAULT	0x0003
+> +#define V2_SLOPE_DEFAULT	0x0cd0
+> +#define V2_CZERO_DEFAULT	0x016a
+> +#define ONE_PT_SLOPE		0x0cd0
+> +#define TWO_PT_SHIFTED_GAIN	921600
+> +#define ONE_PT_CZERO_CONST	94
+> +#define SENSOR_CONVERSION(n)	(((n) * 4) + SROT_Sn_CONVERSION)
+> +#define CONVERSION_SLOPE_SHIFT	10
+> +#define CONVERSION_SHIFT_SHIFT	23
+>   
+>   /* ----- TM ------ */
+>   #define TM_INT_EN_OFF			0x0004
+> @@ -59,6 +71,11 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
+>   	/* CTRL_OFF */
+>   	[TSENS_EN]     = REG_FIELD(SROT_CTRL_OFF,    0,  0),
+>   	[TSENS_SW_RST] = REG_FIELD(SROT_CTRL_OFF,    1,  1),
+> +	[SENSOR_EN]    = REG_FIELD(SROT_CTRL_OFF,    3,  18),
+> +	[CODE_OR_TEMP] = REG_FIELD(SROT_CTRL_OFF,    21, 21),
 > +
->  static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
->  	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
->  	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-> @@ -591,6 +601,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> +	/* RM520N-GL (sdx6x), eSIM */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004),
-> +		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
-> -- 
-> 2.25.1
-> 
+> +	/* MAIN_MEASURE_PERIOD */
+> +	[MAIN_MEASURE_PERIOD] = REG_FIELD(SROT_MEASURE_PERIOD, 0, 7),
+>   
+>   	/* ----- TM ------ */
+>   	/* INTERRUPT ENABLE */
+> @@ -104,6 +121,133 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
+>   	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
+>   };
+>   
+> +static int tsens_v2_calibrate_sensor(struct device *dev, struct tsens_sensor *sensor,
+> +				     struct regmap *map,  u32 mode, u32 base0, u32 base1)
+> +{
+> +	u32 slope, czero, val;
+> +	char name[15];
+> +	int ret;
+> +
+> +	/* Read offset value */
+> +	ret = snprintf(name, sizeof(name), "s%d", sensor->hw_id);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = nvmem_cell_read_variable_le_u32(dev, name, &sensor->offset);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Based on calib mode, program SHIFT, SLOPE and CZERO */
+> +	switch (mode) {
+> +	case TWO_PT_CALIB:
+> +		slope = (TWO_PT_SHIFTED_GAIN / (base1 - base0));
+> +
+> +		czero = (base0 + sensor->offset - ((base1 - base0) / 3));
+> +
+> +		val = (V2_SHIFT_DEFAULT << CONVERSION_SHIFT_SHIFT) |
+> +		      (slope << CONVERSION_SLOPE_SHIFT) | czero;
+> +
+> +		fallthrough;
+> +	case ONE_PT_CALIB2:
+> +		czero = base0 + sensor->offset - ONE_PT_CZERO_CONST;
+> +
+> +		val = (V2_SHIFT_DEFAULT << CONVERSION_SHIFT_SHIFT) |
+> +		      (ONE_PT_SLOPE << CONVERSION_SLOPE_SHIFT) | czero;
+> +
+> +		break;
+> +	default:
+> +		dev_dbg(dev, "calibrationless mode\n");
+> +
+> +		val = (V2_SHIFT_DEFAULT << CONVERSION_SHIFT_SHIFT) |
+> +		      (V2_SLOPE_DEFAULT << CONVERSION_SLOPE_SHIFT) | V2_CZERO_DEFAULT;
+> +	}
+> +
+> +	regmap_write(map, SENSOR_CONVERSION(sensor->hw_id), val);
+> +
+> +	return 0;
+> +}
+> +
+> +static int tsens_v2_calibration(struct tsens_priv *priv)
+> +{
+> +	struct device *dev = priv->dev;
+> +	u32 mode, base0, base1;
+> +	int i, ret;
+> +
+> +	if (priv->num_sensors > MAX_SENSORS)
+> +		return -EINVAL;
+> +
+> +	ret = nvmem_cell_read_variable_le_u32(priv->dev, "mode", &mode);
+> +	if (ret == -ENOENT)
+> +		dev_warn(priv->dev, "Calibration data not present in DT\n");
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
+> +
+> +	ret = nvmem_cell_read_variable_le_u32(priv->dev, "base0", &base0);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = nvmem_cell_read_variable_le_u32(priv->dev, "base1", &base1);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	/* Calibrate each sensor */
+> +	for (i = 0; i < priv->num_sensors; i++) {
+> +		ret = tsens_v2_calibrate_sensor(dev, &priv->sensor[i], priv->srot_map,
+> +						mode, base0, base1);
+> +		if (ret < 0)
+> +			return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int __init init_tsens_v2(struct tsens_priv *priv)
+> +{
+> +	int i, ret;
+> +	u32 val = 0;
+> +	struct device *dev = priv->dev;
+> +
+> +	ret = init_common(priv);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	if (priv->feat->ver_major != VER_2_X_NO_RPM)
+> +		return 0;
+
+No need to, you can rename the function to init_tsens_v2_no_rpm(h?) and 
+use it just for non-rpm platforms.
+
+> +
+> +	priv->rf[CODE_OR_TEMP] = devm_regmap_field_alloc(dev, priv->srot_map,
+> +							 priv->fields[CODE_OR_TEMP]);
+> +	if (IS_ERR(priv->rf[CODE_OR_TEMP]))
+> +		return PTR_ERR(priv->rf[CODE_OR_TEMP]);
+> +
+> +	priv->rf[MAIN_MEASURE_PERIOD] = devm_regmap_field_alloc(dev, priv->srot_map,
+> +								priv->fields[MAIN_MEASURE_PERIOD]);
+> +	if (IS_ERR(priv->rf[MAIN_MEASURE_PERIOD]))
+> +		return PTR_ERR(priv->rf[MAIN_MEASURE_PERIOD]);
+> +
+> +	regmap_field_write(priv->rf[TSENS_SW_RST], 0x1);
+> +
+> +	/* Update measure period to 2ms */
+> +	regmap_field_write(priv->rf[MAIN_MEASURE_PERIOD], 0x1);
+> +
+> +	/* Enable available sensors */
+> +	for (i = 0; i < priv->num_sensors; i++)
+> +		val |= 1 << priv->sensor[i].hw_id;
+> +
+> +	regmap_field_write(priv->rf[SENSOR_EN], val);
+> +
+> +	/* Real temperature format */
+> +	regmap_field_write(priv->rf[CODE_OR_TEMP], 0x1);
+> +
+> +	regmap_field_write(priv->rf[TSENS_SW_RST], 0x0);
+> +
+> +	/* Enable TSENS */
+> +	regmap_field_write(priv->rf[TSENS_EN], 0x1);
+> +
+> +	return 0;
+> +}
+> +
+>   static const struct tsens_ops ops_generic_v2 = {
+>   	.init		= init_common,
+>   	.get_temp	= get_temp_tsens_valid,
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 98c356acfe98..5d2ad3b155ec 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -974,7 +974,7 @@ int __init init_common(struct tsens_priv *priv)
+>   	ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
+>   	if (ret)
+>   		goto err_put_device;
+> -	if (!enabled) {
+> +	if (!enabled && !VER_2_X_NO_RPM) {
+
+You probably meant something else here. `!const' is going to evaluate to 
+false.
+
+>   		dev_err(dev, "%s: device not enabled\n", __func__);
+>   		ret = -ENODEV;
+>   		goto err_put_device;
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 2805de1c6827..b2e8f0f2b466 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -35,6 +35,7 @@ enum tsens_ver {
+>   	VER_0_1,
+>   	VER_1_X,
+>   	VER_2_X,
+> +	VER_2_X_NO_RPM,
+>   };
+>   
+>   enum tsens_irq_type {
+> @@ -168,6 +169,8 @@ enum regfield_ids {
+>   	TSENS_SW_RST,
+>   	SENSOR_EN,
+>   	CODE_OR_TEMP,
+> +	/* MEASURE_PERIOD */
+> +	MAIN_MEASURE_PERIOD,
+>   
+>   	/* ----- TM ------ */
+>   	/* TRDY */
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
+
