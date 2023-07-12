@@ -2,322 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0817B750021
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 09:35:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1359750077
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 09:53:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232035AbjGLHf5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 03:35:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57762 "EHLO
+        id S231888AbjGLHxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 03:53:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232171AbjGLHfl (ORCPT
+        with ESMTP id S229505AbjGLHx0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 03:35:41 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 808A51992;
-        Wed, 12 Jul 2023 00:35:32 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fba8f2197bso10807886e87.3;
-        Wed, 12 Jul 2023 00:35:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689147331; x=1691739331;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/PE2l96LFO78ASyoK1rIpXPjUnfUbV0qJEzUZeBNGTE=;
-        b=Bx3Ueff9WHXlKvS/70TUr1hwkp9KgqrIJ/VQXFUzEq9WtJpNgByppCFtNqcWpKAm+W
-         GVOFUQjPUlazNF8aTjULXG0U1Q56yADKq4tlhQQqPfntdy8qkbOS8qCOyWiH8BUFvk7H
-         uQbkpBOEpbvjcUuRi/KCCAoaf8x1klSRh/KFkN3pnV0Nii/y9rU7Wv8fLAt1ll8FY8Rp
-         YnkzVcYkJej49Xe7MoODZaSLL8T00AmdP5g8LbZPt0Vjna76FCYVG0vbG6k75fET3I3p
-         aV2hDbNDywu0oWjqXD/NbzNEiDowiuqIccux1+7I4x2CX41e27mZh0CdV4SKdeLF8nLC
-         +fjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689147331; x=1691739331;
-        h=mime-version:references:in-reply-to:message-id:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/PE2l96LFO78ASyoK1rIpXPjUnfUbV0qJEzUZeBNGTE=;
-        b=WQJbWxEjR/IwgTBTMey6a2v+ZtJZSjTPENO7F9hijQZ13Mr1miGgDYuKa2QcAfRU6Z
-         Irct8BfYN+ydwT7yLOQgxCfMZ3C9FX0THJ2wDW8ZRxuUWluhx01xfgParNbhujIzSBIZ
-         4UePmYB04n3QQKlHvqCSXk3w8kLCtE1ZZiswR/lnSO1npPrl9bn3X/aeeNb7nbRWYe6o
-         JcAD/Eu8KAfUe0ZtdOzT4ES4eFj1vwRKuM20JfDaaZ2iZ7xvM07MVFzCLbTYxakBWqAp
-         dgT1ai7ReEPgB+0F6mVOoTwJcApoDOCnyPGjMfvrVjPjDE0PwzdKvNGRfC03L1LADZEq
-         IPkg==
-X-Gm-Message-State: ABy/qLYVx+MTsdBUh3zE0ajWK5RGVPmcG26aPp3n6qKAkVpm4W7VHw2N
-        G9djiU5Mqzs9HlFIlPYKwQc=
-X-Google-Smtp-Source: APBJJlECOmtP22hrQRQPHUAyhMTCH4MMW99NWkLufXU/36WFrjC0ehSY2SUAZ6vxYmQzgTOmL8legA==
-X-Received: by 2002:a05:6512:3d28:b0:4fb:8802:9554 with SMTP id d40-20020a0565123d2800b004fb88029554mr18715169lfv.6.1689147330175;
-        Wed, 12 Jul 2023 00:35:30 -0700 (PDT)
-Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id o1-20020ac24341000000b004eff1163c37sm588675lfl.308.2023.07.12.00.35.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 00:35:29 -0700 (PDT)
-Date:   Wed, 12 Jul 2023 10:35:19 +0300
-From:   Pekka Paalanen <ppaalanen@gmail.com>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <contact@emersion.fr>, <laurent.pinchart@ideasonboard.com>,
-        <sebastian.wick@redhat.com>, <ville.syrjala@linux.intel.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <wayland-devel@lists.freedesktop.org>
-Subject: Re: [PATCH RFC v4 2/7] drm: Introduce pixel_source DRM plane
- property
-Message-ID: <20230712103519.1a941d26@eldfell>
-In-Reply-To: <79eb29b5-f018-d92c-b514-5ae0c954ff46@quicinc.com>
-References: <20230404-solid-fill-v4-0-f4ec0caa742d@quicinc.com>
-        <20230404-solid-fill-v4-2-f4ec0caa742d@quicinc.com>
-        <6e3eec49-f798-ff91-8b4d-417d31089296@linaro.org>
-        <20230630112708.4d3a08a7@eldfell>
-        <eb78b4d6-6da2-1cb5-5fab-01d7bf233111@quicinc.com>
-        <e17db728-d91b-a2b3-08a9-1dd1fde9c727@linaro.org>
-        <53ca10d5-c1e0-285a-30b9-4e9a2a1b70c9@quicinc.com>
-        <916d6b67-0f37-3814-4a15-d4a6fd6891ab@linaro.org>
-        <79eb29b5-f018-d92c-b514-5ae0c954ff46@quicinc.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+        Wed, 12 Jul 2023 03:53:26 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E17E6F;
+        Wed, 12 Jul 2023 00:53:23 -0700 (PDT)
+Received: from [192.168.122.1] (ip-185-104-138-31.ptr.icomera.net [185.104.138.31])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 82344CC3EB;
+        Wed, 12 Jul 2023 07:52:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1689148371; bh=W0P04Vhx8qS619L9ZTBVUiI27HUFLd5sCIaoSWjtgkA=;
+        h=From:Date:Subject:To:Cc;
+        b=mxxkdumr4hGkQzgngKVqzaYk5JsKFOFntqLbo5//OKIoSSLA5jeDgGskhA8ZWp/ku
+         K6hKyzCeNgvgFsAWYl8rRXoYC0NOS2eV1ODnuqt11tVotxClSE0L+Ey5kS1s7iyDAY
+         JrSuZ/mUzAIZ29+H1KmQAVSgnf4u/7r+ClNBWAW4=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Date:   Wed, 12 Jul 2023 09:52:07 +0200
+Subject: [PATCH] ARM: dts: qcom: msm8226: provide dsi phy clocks to mmcc
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/Koo4mZ9l75IMKSB1KGUOoX.";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230712-msm8226-dsi-clock-fixup-v1-1-71010b0b89ca@z3ntu.xyz>
+X-B4-Tracking: v=1; b=H4sIAKZbrmQC/x2MSQqAMAwAvyI5G7BR3L4iHrSNGlxpUATx7xaPw
+ zDzgLIXVqijBzxforJvAUwcgZ26bWQUFxgooTQpDOGqa0mUo1NBu+x2xkHu88DOlf3gMmO4ryD
+ Uh+cg/nPTvu8H8H4GGGkAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1085; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=W0P04Vhx8qS619L9ZTBVUiI27HUFLd5sCIaoSWjtgkA=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkrlupfex/RXqA4VNxPMkUWev3LX1aRm99yBmdi
+ T+wnyLBCsSJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZK5bqQAKCRBy2EO4nU3X
+ Vmj+D/93y5smNx9A9xlHXoL5FiCXexitXuiZzcvXyX3QubiH+E++JM4hYX+wW+L7sPUFoqoENbd
+ aHuj9GSSgilf0RfE1cdHE+dFsi5SGQHVCo1cYU8+goWqXhccnBu3hX8Ll2JgS08e+L+QZLZc91U
+ TldzwCN7SNuG4Of+whf1R6L4BSFhLiGEbl80b1Vc5e7GuGpJhGMn2jOPpKAeAomdllY51U86+j0
+ wCKTjym1h7YluHeMWNFjlb7HI8LiAPNJ5dDEoEHT8uoPMLMP23Jh5ZeL1GkrqLCiqb8zd8f3OQT
+ bTnuIL3m9pPToj9JbbV0QEKcPoj7SJWun5LyGQYzgJAZebXAv83xde+Wmy9ZxX9mTUU6s3GnN0E
+ 8E82h/ciX1X5sm+HznoyJsHmfmcWe2rPJB9gD6XEgO/5dxJK3qM31bBzsirx/6azdGqrKPg1z6m
+ rXaVTIm7I44nmc1CNWrv1LV4+orRh56icP1pen2tBprLjpSWJKgoZJl4D62JbBrd7xhFc+vQ93T
+ /GZ+bHvuljtJ9GtOtKsoo2Li/kulLPUsNOfduwMNYSmBaqwIMqBkEmfJWYdYOZoMXn7RSVRGBxB
+ 0EjrhBL4Y02Q/fkU+SnhitQ1aldBKp3Ew0Um4jgbk9R/QEikNYb9hU9LVopbDePPA1thZKuqHMM
+ oeqfMqWAOw8RUkg==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/Koo4mZ9l75IMKSB1KGUOoX.
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Some mmcc clocks have dsi0pll & dsi0pllbyte as clock parents so we
+should provide them in the dt, which I missed in the commit adding the
+mdss nodes.
 
-On Tue, 11 Jul 2023 15:42:28 -0700
-Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+Fixes: d5fb01ad5eb4 ("ARM: dts: qcom: msm8226: Add mdss nodes")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> On 7/11/2023 3:19 PM, Dmitry Baryshkov wrote:
-> > On 12/07/2023 01:07, Jessica Zhang wrote: =20
-> >>
-> >>
-> >> On 7/10/2023 1:11 PM, Dmitry Baryshkov wrote: =20
-> >>> On 10/07/2023 22:51, Jessica Zhang wrote: =20
-> >>>>
-> >>>>
-> >>>> On 6/30/2023 1:27 AM, Pekka Paalanen wrote: =20
-> >>>>> On Fri, 30 Jun 2023 03:42:28 +0300
-> >>>>> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> >>>>> =20
-> >>>>>> On 30/06/2023 03:25, Jessica Zhang wrote: =20
-> >>>>>>> Add support for pixel_source property to drm_plane and related
-> >>>>>>> documentation.
-> >>>>>>>
-> >>>>>>> This enum property will allow user to specify a pixel source for =
-the
-> >>>>>>> plane. Possible pixel sources will be defined in the
-> >>>>>>> drm_plane_pixel_source enum.
-> >>>>>>>
-> >>>>>>> The current possible pixel sources are DRM_PLANE_PIXEL_SOURCE_FB =
-and
-> >>>>>>> DRM_PLANE_PIXEL_SOURCE_COLOR. The default value is *_SOURCE_FB. =
-=20
-> >>>>>>
-> >>>>>> I think, this should come before the solid fill property addition.=
-=20
-> >>>>>> First
-> >>>>>> you tell that there is a possibility to define other pixel=20
-> >>>>>> sources, then
-> >>>>>> additional sources are defined. =20
-> >>>>>
-> >>>>> Hi,
-> >>>>>
-> >>>>> that would be logical indeed. =20
-> >>>>
-> >>>> Hi Dmitry and Pekka,
-> >>>>
-> >>>> Sorry for the delay in response, was out of office last week.
-> >>>>
-> >>>> Acked.
-> >>>> =20
-> >>>>> =20
-> >>>>>>>
-> >>>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >>>>>>> ---
-> >>>>>>> =C2=A0=C2=A0 drivers/gpu/drm/drm_atomic_state_helper.c |=C2=A0 1 +
-> >>>>>>> =C2=A0=C2=A0 drivers/gpu/drm/drm_atomic_uapi.c=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ++
-> >>>>>>> =C2=A0=C2=A0 drivers/gpu/drm/drm_blend.c=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 81=20
-> >>>>>>> +++++++++++++++++++++++++++++++
-> >>>>>>> =C2=A0=C2=A0 include/drm/drm_blend.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0|=C2=A0 2 +
-> >>>>>>> =C2=A0=C2=A0 include/drm/drm_plane.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0| 21 ++++++++
-> >>>>>>> =C2=A0=C2=A0 5 files changed, 109 insertions(+)
-> >>>>>>>
-> >>>>>>> diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c=20
-> >>>>>>> b/drivers/gpu/drm/drm_atomic_state_helper.c
-> >>>>>>> index fe14be2bd2b2..86fb876efbe6 100644
-> >>>>>>> --- a/drivers/gpu/drm/drm_atomic_state_helper.c
-> >>>>>>> +++ b/drivers/gpu/drm/drm_atomic_state_helper.c
-> >>>>>>> @@ -252,6 +252,7 @@ void=20
-> >>>>>>> __drm_atomic_helper_plane_state_reset(struct drm_plane_state=20
-> >>>>>>> *plane_state,
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 plane_state->alpha =3D DRM_B=
-LEND_ALPHA_OPAQUE;
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 plane_state->pixel_blend_mod=
-e =3D DRM_MODE_BLEND_PREMULTI;
-> >>>>>>> +=C2=A0=C2=A0=C2=A0 plane_state->pixel_source =3D DRM_PLANE_PIXEL=
-_SOURCE_FB;
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (plane_state->solid_fill_=
-blob) {
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_=
-property_blob_put(plane_state->solid_fill_blob);
-> >>>>>>> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c=20
-> >>>>>>> b/drivers/gpu/drm/drm_atomic_uapi.c
-> >>>>>>> index a28b4ee79444..6e59c21af66b 100644
-> >>>>>>> --- a/drivers/gpu/drm/drm_atomic_uapi.c
-> >>>>>>> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
-> >>>>>>> @@ -596,6 +596,8 @@ static int=20
-> >>>>>>> drm_atomic_plane_set_property(struct drm_plane *plane,
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_=
-property_blob_put(solid_fill);
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 retu=
-rn ret;
-> >>>>>>> +=C2=A0=C2=A0=C2=A0 } else if (property =3D=3D plane->pixel_sourc=
-e_property) {
-> >>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 state->pixel_source =
-=3D val;
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else if (property =3D=3D p=
-lane->alpha_property) {
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 stat=
-e->alpha =3D val;
-> >>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else if (property =3D=3D p=
-lane->blend_mode_property) { =20
-> >>>>>>
-> >>>>>> I think, it was pointed out in the discussion that=20
-> >>>>>> drm_mode_setplane()
-> >>>>>> (a pre-atomic IOCTL to turn the plane on and off) should also reset
-> >>>>>> pixel_source to FB. =20
-> >>>>
-> >>>> I don't remember drm_mode_setplane() being mentioned in the=20
-> >>>> pixel_source discussion... can you share where it was mentioned? =20
-> >>>
-> >>> https://lore.kernel.org/dri-devel/20230627105849.004050b3@eldfell/
-> >>>
-> >>> Let me quote it here:
-> >>> "Legacy non-atomic UAPI wrappers can do whatever they want, and progr=
-am
-> >>> any (new) properties they want in order to implement the legacy
-> >>> expectations, so that does not seem to be a problem."
-> >>>
-> >>> =20
-> >>>>
-> >>>> I'd prefer to avoid having driver change the pixel_source directly=20
-> >>>> as it could cause some unexpected side effects. In general, I would=
-=20
-> >>>> like userspace to assign the value of pixel_source without driver=20
-> >>>> doing anything "under the hood". =20
-> >>>
-> >>> s/driver/drm core/
-> >>>
-> >>> We have to remain compatible with old userspace, especially with the=
-=20
-> >>> non-atomic one. If the userspace calls=20
-> >>> ioctl(DRM_IOCTL_MODE_SETPLANE), we have to display the specified FB,=
-=20
-> >>> no matter what was the value of PIXEL_SOURCE before this ioctl. =20
-> >>
-> >>
-> >> Got it, thanks the clarification -- I see your point.
-> >>
-> >> I'm already setting plane_state->pixel_source to FB in=20
-> >> __drm_atomic_helper_plane_reset() and it seems to me that all drivers=
-=20
-> >> are calling that within their respective plane_funcs->reset().
-> >>
-> >> Since (as far as I know) reset() is being called for both the atomic=20
-> >> and non-atomic paths, shouldn't that be enough to default pixel_source=
-=20
-> >> to FB for old userspace? =20
-> >=20
-> > No, this will not clean up the state between userspace apps. Currently=
-=20
-> > the rule is simple: call DRM_IOCTL_MODE_SETPLANE, get the image from FB=
-=20
-> > displayed. We should keep it so.
-> >  =20
->=20
-> Ok, so you are considering a use-case where we bootup with a userspace=20
-> (which is aware of pixel_source), that one uses the pixel_source to=20
-> switch the property to solid_color and then we kill this userspace and=20
-> bootup one which is unaware of this property and uses=20
-> DRM_IOCTL_MODE_SETPLANE, then we should default back to FB.
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index b6ae4b7936e3..d2d09f2f3cee 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -404,8 +404,8 @@ mmcc: clock-controller@fd8c0000 {
+ 				 <&gcc GPLL0_VOTE>,
+ 				 <&gcc GPLL1_VOTE>,
+ 				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
+-				 <0>,
+-				 <0>;
++				 <&mdss_dsi0_phy 1>,
++				 <&mdss_dsi0_phy 0>;
+ 			clock-names = "xo",
+ 				      "mmss_gpll0_vote",
+ 				      "gpll0_vote",
 
-Not even that complex. There is no need to reboot and no need to kill
-anything to hit this. A simple VT-switch can switch between two
-different KMS clients, one could be using atomic with solid_fill, and
-the other is an old legacy UAPI user. If the atomic client leaves stuff
-up in KMS state, it would be nice if the legacy app still worked.
+---
+base-commit: 40b055fe7f276cf2c1da47316c52f2ff9255a68a
+change-id: 20230712-msm8226-dsi-clock-fixup-ad8bfd411eb9
 
-Or, maybe it's not a VT-switch but switching from, say, a graphical
-login manager to a desktop or back. The same thing, different KMS
-clients. But in this case it is more likely that userspace follows
-common play rules, so it's less likely to have problematic left-over
-KMS state.
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
 
-Or, maybe you simply quit the atomic KMS client and expect fbcon to
-successfully take over. I don't know what APIs fbcon uses inside the
-kernel, but it definitely should clean up any mess left over by an
-atomic (or legacy) KMS client to make sure it shows itself.
-Traditionally it has failed to do that though, I don't know if things
-are better nowadays (GAMMA_LUT, HDR_OUTPUT_METADATA, probably more).
-
-Switching between two KMS clients is fundamentally problematic. If both
-old and new KMS client are atomic, the kernel cannot simply go
-resetting any KMS state automatically, because the kernel does not
-know which part of state is good to reset and which would just cause
-unwanted flicker and delays. That means that it is up to the two atomic
-KMS clients to agree on common play rules and not leave funny state up.
-IOW, not the kernel's problem, by what I have understood from kernel
-developer opinions.
-
-However, legacy KMS clients are different. As legacy clients, they may
-not even have access to the properties they might need to clean up
-after a previous atomic KMS client. The legacy UAPI is expected to
-be slow and glitchy, but also Just Work(TM), so the kernel can reset
-everything a legacy KMS client would not have access to when a legacy
-KMS client issues drmModeSetPlane or drmModeSetCrtc (pardon for using
-libdrm API functions for the ioctls whose names I never memorised).
-
-
-Thanks,
-pq
-
---Sig_/Koo4mZ9l75IMKSB1KGUOoX.
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmSuV7cACgkQI1/ltBGq
-qqe1bhAAjr/t3vy/wQYTZoNif5ySebXZ0/JcaGv9X5OWb6H3K3IgxruypCHW+Qzu
-fgYX+fFAxl58FaqnMu4USebdshELA9FFrq3dbrNeSWvo9/AzdTeoNhhYatcMlgJq
-H0f5Gs+h2/va7PIav3guMlyVcJYRIT8mzjE5SUrVPDnF8t7lyqbYmdBXE59dEvFD
-xpMP2aRjtEyu4zqP7q9VjK63QddhlOgo/Fl6+3zuaPH0mdEOnO4ZssC2zGB7OL0l
-DwSh6QR7R+os+WVdPFyCZVlp0FbGltSK5UdcsArHKhgNVjwtETrTJHZYmRMmzFzy
-VVez22vHgdijfAsmLG+GHG0eQYkOu8MDujaIi1UooEAa6AGQvvsji9jWfglnN6z6
-+bQLYif2JVhawUc3T/+8+ey5gMDIgRyUzRGv1pa3Z2bUGVRLYtdTQ75POlYtkZM0
-bBK4QKjV8rXVEJ9JTS7ElB6tesFrPSHdQinoAHU3YB4ZPkxksQiLdBfDtnp/4Tca
-p7tFuSVjg1zwWyoUHTADVlgG7BF4IcW6FjeeC657+2S3XFhXSOEV2RE1A+zGICnK
-K2BpLuWqFLepK+LESBfQvKV5plFWrLpIM+5HNIaPt1lwNF4AFVPVGLowOt0oGU0f
-LcKiJzDn6moVLQc5fU8nPrQD9rseXyG2Y6kDSdDC3OFCrSj2jnw=
-=nBtI
------END PGP SIGNATURE-----
-
---Sig_/Koo4mZ9l75IMKSB1KGUOoX.--
