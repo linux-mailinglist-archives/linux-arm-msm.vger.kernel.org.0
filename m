@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3EFA7514CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 01:54:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 349587514DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 01:59:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232550AbjGLXyh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 19:54:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55550 "EHLO
+        id S233266AbjGLX7L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 19:59:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231237AbjGLXyg (ORCPT
+        with ESMTP id S233281AbjGLX7K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 19:54:36 -0400
+        Wed, 12 Jul 2023 19:59:10 -0400
 Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E98921BF2;
-        Wed, 12 Jul 2023 16:54:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15EDB1FF0;
+        Wed, 12 Jul 2023 16:59:09 -0700 (PDT)
 Received: from newone.lan (unknown [10.0.0.1])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 4D01B1601A6;
-        Thu, 13 Jul 2023 01:54:28 +0200 (CEST)
+        by ixit.cz (Postfix) with ESMTPSA id 57387160644;
+        Thu, 13 Jul 2023 01:59:07 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1689206068;
+        t=1689206347;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding;
-        bh=vcAkwKRqCiZaNNizbMfa6cyGO7zi6dKM1cLZ0gd3wME=;
-        b=2ZAExiKvPdBsFv+pEHMckmjbY6M5XKzH6iio1c0Laqil9iawrYicgamHGHQs7+OWXzgNOh
-        v4rME+QfkBHfaxLMYYepXMuRDw53BKwfnTFT0olnYTZ59zfk0d3GOB/kBc/SUo/Ely9cxs
-        gmVJebYn1D+O51Kft5EA+FvhYh+bSS0=
+        bh=HEQ/nBdhcKoJpT1GT432SOJlqlqCZC/w182rCJFbRqc=;
+        b=Jwvxbfb3n3k/qzamA4faHig41Co4uy8auPUWzDCoCKLDwcs6jjZvZMFKGTxkBpInosjJV+
+        1zkUfOK6Fn4KF/Z1/CqUMfZJOAB39YKOYLaZ8drwrh5VLWybY1bbkvPFrDxriWOslBaq5u
+        3QTkMhuPCWR0OMOo2QzYKUdS1YiWQ2M=
 From:   David Heidelberg <david@ixit.cz>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
+        Wesley Cheng <quic_wcheng@quicinc.com>
 Cc:     David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: remoteproc: qcom: adsp: document firmware-name property
-Date:   Thu, 13 Jul 2023 01:54:09 +0200
-Message-Id: <20230712235409.97213-1-david@ixit.cz>
+Subject: [PATCH] dt-bindings: usb: qcom,dwc3: document extcon property
+Date:   Thu, 13 Jul 2023 01:59:02 +0200
+Message-Id: <20230712235902.98557-1-david@ixit.cz>
 X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -57,26 +57,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The driver has support for it already. Only missing bit is dt-binding entry.
+
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 4 ++++
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index 643ee787a81f..fdf659c0e69a 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -44,6 +44,10 @@ properties:
-     maxItems: 1
-     description: Reference to the reserved-memory for the Hexagon core
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index 4875c5b7d5b5..7099b583d21c 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -107,6 +107,10 @@ properties:
+     minItems: 1
+     maxItems: 4
  
-+  firmware-name:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: Name of ADSP firmware
++  extcon:
++    description:
++      Phandle to the extcon device providing the cable state.
 +
- required:
-   - compatible
- 
+   qcom,select-utmi-as-pipe-clk:
+     description:
+       If present, disable USB3 pipe_clk requirement.
 -- 
 2.40.1
 
