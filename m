@@ -2,87 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 153C875091A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 15:02:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC372750945
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 15:11:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233513AbjGLNCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 09:02:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38920 "EHLO
+        id S233222AbjGLNLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 09:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233389AbjGLNCm (ORCPT
+        with ESMTP id S229720AbjGLNLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 09:02:42 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE5F1BD3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 06:02:29 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id 46e09a7af769-6b87d505e28so5674806a34.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 06:02:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689166948; x=1691758948;
-        h=content-transfer-encoding:author:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9T8piHX0bubTIqR5dsadlL99AD9gpATcetHPEAi8jTU=;
-        b=hIzKop+k4OCTCBWq4j/r6OD7aiiXPsd/rQZ1uF4S9TETD/oKB2rDcKczmsx2A0nJe5
-         NWtDC2qPPGP7IM/wx1RvH78MvjJ6gY/YwivETBUZkh+vDWikLxQdZmap/WtbV5U3p2fE
-         p5OoOEvAFa/9bydOqp6ak9+2bf8q660eCyEzrIC/1SHTOj9MIVPWcntYo5Y0VljtGzHE
-         mgZIlmKBdjkeT3791x7XiE800dSX3/EX7xIgtP5kHtO8nVPlbCyb2u7S6JXlPFNTDwAE
-         UGae6a1Zymrpqo19n1nGtitGuwQJG7H3zK3/7eS7IUQfV708JvhyXubPbr6YmxNuc0TL
-         sKPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689166948; x=1691758948;
-        h=content-transfer-encoding:author:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9T8piHX0bubTIqR5dsadlL99AD9gpATcetHPEAi8jTU=;
-        b=A1tdSLwCAiTP8twimsTbySMnDn/k5nXN1VLUMgO2MLuNPIfuxmJMzf89Fw0rvpk5an
-         /YY+9gZKjyxNIMzMzorvd1g2/Gtwg81tqoI/lWzj2NyUIyxNQHCOEUxcBUM9zGFQY/L5
-         H7OTaz0Lamet5kUr8kzIs69ZzFpCQ1WH7jI39MFaFKsPSfKQYT81tEmWsq3FMkp2Kppy
-         QJ51G3QKxXGcp7YsbsSXzp5EMw46luooiYoRUE34amHtJTCjL+rs1PuxcIo/5w0bHPT0
-         lpqirmHq+JqOo4LahhA0eSWH4z6JJ+ekU3BHll82uVHA4TsWpWJ7DAcboO/T/IZUMZbt
-         65vg==
-X-Gm-Message-State: ABy/qLaTPWDxspgkZrt2cSKcFBXk+myQWvkYMGEWlsRfiglFjQ79BK7H
-        Ifiioa1eqrsNGdm7/d1ceauA3Q==
-X-Google-Smtp-Source: APBJJlHMNeteSeTTb43sYC5YqkHocrWysDwQ9MhmzMKypOa+itOUe2NT1zrkO4ZI8Ox9NbZXCTb+1w==
-X-Received: by 2002:a05:6358:341f:b0:135:89d6:22e9 with SMTP id h31-20020a056358341f00b0013589d622e9mr1235888rwd.13.1689166948540;
-        Wed, 12 Jul 2023 06:02:28 -0700 (PDT)
-Received: from x-wing.lan ([49.207.50.231])
-        by smtp.gmail.com with ESMTPSA id p1-20020a639501000000b0054fe07d2f3dsm3417023pgd.11.2023.07.12.06.02.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 06:02:28 -0700 (PDT)
-From:   Amit Pundir <amit.pundir@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 12 Jul 2023 09:11:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D624D12F;
+        Wed, 12 Jul 2023 06:11:01 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36CAeWYV010769;
+        Wed, 12 Jul 2023 13:10:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ZOAEa226UHgucF1PyBKdNu4nV5PA77hJx4XBvTo02ss=;
+ b=TWtq2v9EcOAEMG8WRlN9JBbbzFkqjYa/u5M0FplyDnq0mcD7vTgck4lROFxCo48VfNx2
+ Y0LBOhegHSFWwzliMvZKAJtred6v7pVB+Zvp64Sa1Qfb2MukctgwDwk6fTRgN3JSj4Hn
+ AJLuHmsagTy+LGNs1dsXbwHUmQgyECukiVwsW2t1egxcACST72t/JbI5r5oGGcK2mRLe
+ bVMasfBE1Us05X9HRIxPV1rU41Dnj55r7YHyfx37zch4le3FCOpIjliQlCPVJa5dicST
+ BmhbBvcbWx0dcU2rC7DtrilpbLqBvG/5jeEdC6daWDEq5DKuDfCLqlfinboAdCLQiDHe +Q== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rsfeq1gya-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Jul 2023 13:10:32 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36CDAVHg029228
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Jul 2023 13:10:31 GMT
+Received: from [10.217.217.202] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 12 Jul
+ 2023 06:10:26 -0700
+Message-ID: <d9e4aee1-8cd7-d966-3888-45a808703141@quicinc.com>
+Date:   Wed, 12 Jul 2023 18:40:18 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p: Add interconnect to SMMU
+To:     Robin Murphy <robin.murphy@arm.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Bryan Donoghue <bryan.odonoghue@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Manivannan Sadhasivam" <mani@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: [PATCH 2/2][v4] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory region as reserved
-Date:   Wed, 12 Jul 2023 18:32:15 +0530
-Message-Id: <20230712130215.666924-2-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230712130215.666924-1-amit.pundir@linaro.org>
-References: <20230712130215.666924-1-amit.pundir@linaro.org>
-MIME-Version: 1.0
-Author: Amit Pundir <amit.pundir@linaro.org>
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        Adam Skladowski <a39.skl@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <devicetree@vger.kernel.org>,
+        "linux-kernel @ vger . kernel . org Prasanna Kumar" 
+        <quic_kprasan@quicinc.com>
+References: <20230609054141.18938-1-quic_ppareek@quicinc.com>
+ <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org>
+ <20230609125631.GA29252@hu-ppareek-blr.qualcomm.com>
+ <2881f374-70e2-0057-f43e-7be12d32ae22@arm.com>
+ <c3c12574-fc38-84ae-2a94-3c80fb9fb363@linaro.org>
+ <CAA8EJprqfq0ey2hgBXxf9Zg1Y_MwHP_73EQkwg-W-sRYS7VE8w@mail.gmail.com>
+ <78995241-826f-bf42-9d4b-9ab7c9c9bf7d@arm.com>
+Content-Language: en-US
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <78995241-826f-bf42-9d4b-9ab7c9c9bf7d@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UuRwjnBXZ501cRFdK5MRVb6Kd2Is3AA4
+X-Proofpoint-GUID: UuRwjnBXZ501cRFdK5MRVb6Kd2Is3AA4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-12_08,2023-07-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0 clxscore=1011
+ priorityscore=1501 mlxlogscore=498 suspectscore=0 mlxscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2307120118
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,56 +100,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding a reserved memory region for the framebuffer memory
-(the splash memory region set up by the bootloader).
+Hi,
 
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
-v4: Re-sending this along with a new dt-bindings patch to
-    document memory-region property in qcom,sdm845-mdss
-    schema and keep dtbs_check happy.
+On 6/9/2023 9:09 PM, Robin Murphy wrote:
+> On 2023-06-09 15:56, Dmitry Baryshkov wrote:
+>> On Fri, 9 Jun 2023 at 17:52, Konrad Dybcio <konrad.dybcio@linaro.org> 
+>> wrote:
+>>>
+>>>
+>>>
+>>> On 9.06.2023 16:45, Robin Murphy wrote:
+>>>> On 2023-06-09 13:56, Parikshit Pareek wrote:
+>>>>> On Fri, Jun 09, 2023 at 10:52:26AM +0200, Konrad Dybcio wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 9.06.2023 07:41, Parikshit Pareek wrote:
+>>>>>>> Some qcom SoCs have SMMUs, which need the interconnect bandwidth 
+>>>>>>> to be
+>>>>>>> This series introduce the due support for associated 
+>>>>>>> interconnect, and
+>>>>>>> setting of the due interconnect-bandwidth. Setting due interconnect
+>>>>>>> bandwidth is needed to avoid the issues like [1], caused by not 
+>>>>>>> having
+>>>>>>> due clock votes(indirectly dependent upon interconnect bandwidth).
+>>>>>>
+>>>>>> [1] ???
+>>>>>
+>>>>> My bad. Intended to mention following:
+>>>>> https://lore.kernel.org/linux-arm-msm/20230418165224.vmok75fwcjqdxspe@echanude/
+>>>>
+>>>> This sounds super-dodgy - do you really have to rely on 
+>>>> configuration of the interconnect path from the SMMU's pagetable 
+>>>> walker to RAM to keep a completely different interconnect path 
+>>>> clocked for the CPU to access SMMU registers? You can't just request 
+>>>> the programming interface clock directly like on other SoCs?
+>>> On Qualcomm platforms, particularly so with the more recent ones, some
+>>> clocks are managed by various remote cores. Half of what the 
+>>> interconnect
+>>> infra does on these SoCs is telling one such core to change the 
+>>> internally
+>>> managed clock's rate based on the requested bw.
+>>
+>> But enabling PCIe interconnect to keep SMMU working sounds strange to
+>> me too. Does the fault come from some outstanding PCIe transaction?
+> 
+> The "Injecting instruction/data abort to VM 3" message from the 
+> hypervisor implies that it is the access to SMMU_CR0 from 
+> arm_smmu_shutdown() that's blown up. I can even believe that the SMMU 
+> shares some clocks with the PCIe interconnect, given that its TBU must 
+> be *in* that path from PCIe to memory, at least. However I would 
+> instinctively expect the abstraction layers above to have some notion of 
+> distinct votes for "CPU wants to access SMMU" vs. "SMMU/PCIe wants to 
+> access RAM", given that the latter is liable to need to enable more than 
+> the former if the clock/power gating is as fine-grained as previous SoCs 
+> seem to have been. But maybe my hunch is wrong and this time 
+> everything's just in one big clock domain. I don't know. I'm just here 
+> to ask questions to establish whether this really is the most correct 
+> abstraction or just a lazy bodge to avoid doing the proper thing in some 
+> other driver.
+> 
+> Thanks,
+> Robin.
 
-v3: Point this reserved region to MDSS.
+For this platform to access the SMMU_CR0 we need to have pcie_tcu_clk
+enabled and in order to do so we have to have interconnect vote from
+MASTER_PCIE_[0/1] -> SLAVE_ANOC_PCIE_GEM_NOC so that AOP/RPMH can enable
+aggre_noc_pcie_sf_clk_src which in turns enables bulk of clocks of which
+pcie_tcu_clk is one.
 
-v2: Updated commit message.
+    ---
+   |RAM|
+  ------------       -----      -----------       ----------
+| GEMNOC     |<----| TBU |----| PCIE ANOC |<----| pcie_0/1 |
+  ------------       -----      -----------       ----------
+    ^      ^           ^
+    |      |           |
+    |      v           v
+   ---   -----------------
+  |CPU| |PCIE TCU (smmuv2)|
+   ---   -----------------
 
-There was some dicussion on v1 but it didn't go anywhere,
-https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u.
-The general consensus is that this memory should be freed and be
-made resuable but that (releasing this piece of memory) has been
-tried before and it is not trivial to return the reserved memory
-node to the system RAM pool in this case.
+I think this should be the right driver to implement this to have a sync
+with vote/unvote of the clock while the smmu register is being accessed
+in arm_smmu_shutdown() right !
 
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index d6b464cb61d6..f546f6f57c1e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -101,6 +101,14 @@ hdmi_con: endpoint {
- 		};
- 	};
- 
-+	reserved-memory {
-+		/* Cont splash region set up by the bootloader */
-+		cont_splash_mem: framebuffer@9d400000 {
-+			reg = <0x0 0x9d400000 0x0 0x2400000>;
-+			no-map;
-+		};
-+	};
-+
- 	lt9611_1v8: lt9611-vdd18-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "LT9611_1V8";
-@@ -506,6 +514,7 @@ &i2c14 {
- };
- 
- &mdss {
-+	memory-region = <&cont_splash_mem>;
- 	status = "okay";
- };
- 
--- 
-2.25.1
-
+-Shazad
