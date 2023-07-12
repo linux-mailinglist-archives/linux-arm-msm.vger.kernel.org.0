@@ -2,102 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA4A075136B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:12:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88F34751380
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:25:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232477AbjGLWMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 18:12:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32940 "EHLO
+        id S230041AbjGLWZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 18:25:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232464AbjGLWMx (ORCPT
+        with ESMTP id S229542AbjGLWZa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 18:12:53 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2381FF7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:12:49 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b7430bda8bso5093281fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:12:49 -0700 (PDT)
+        Wed, 12 Jul 2023 18:25:30 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F704199E;
+        Wed, 12 Jul 2023 15:25:29 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6689430d803so79225b3a.0;
+        Wed, 12 Jul 2023 15:25:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689199967; x=1689804767;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kkGA8tuEErOePoNy3EdHOL/zl3SZc+Vt0Ew0ErvT8mU=;
-        b=lH2FqqhDHHDX36mNRP/QdjgoIz4yvtCqadkC3gKCh3ThuFdDHClo2jZlds1KG8lkwN
-         gzJ1nKu4NQmKv7GICs9P1ecvCJkvJw6tau5QrWbeD95xUjPB3Duf0Lw0GYL96cnksZHx
-         ONM9++tCPFu7CDYRl/fufHQOs+oHp46HtoRhfKCd0WZJw/zx/I1QjB0QaFIpjaJ9ULbH
-         r+2nn+E3W4BeDZHWXZh8+igM6t4tIQcxwsup201uccwvNPYAUgJ4mAM3A1NQW1wS/dyV
-         9TNhoN3C48NRAj8nzMNhcUBeTV0x7r1ZcNwq/v4AGTCw00Ub+B3iePymOi4M25mUxDbo
-         xSDg==
+        d=gmail.com; s=20221208; t=1689200728; x=1691792728;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p16HJUeFjh0Up2EuZ/dd2QVMrO3mMIhcqelMbrELgUs=;
+        b=AS3vGV8GaYrFYrEl8H7hKOjmb4Es0czMAC6TL+m1BtL8qPw1sXJihYI42F4fQzasCr
+         9C/y54pmvfVY9HMvfXgQdtw4Dg9mHXrMPvs5VDa9hXep9esXb/RyZvxjNfMvsYcmnTMJ
+         ocpZaEc7VznJX4Es9MCc/gosChAkNclEWfsQ1LzguTrGQsuHe8ivx1aoV4U52w3gRZd1
+         qZsRONMzbiDqyWR73A3DZ3K7r1Was6iNreseQs4VmEeXtoGKGC18Wefn0FQ+w4mhF049
+         sjq6dTthUjmgvqR6YZ9s3TqubH7fPlMeM6m33OUtbuIclNjP+ZtOTBA0A25zi/fln4hk
+         NM+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689199967; x=1689804767;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kkGA8tuEErOePoNy3EdHOL/zl3SZc+Vt0Ew0ErvT8mU=;
-        b=ZbQ54Inl3eKS0lHe/v4aS1eLjGYFgEHvufA19S6LMTa//P7er/nQJdIW0VGNxUfP3r
-         m0PdgSL4bYNCXOXMpEgTEnqRqiEV9xevgW51GtMRMLDuSb7wUfTR1cxM339sBEfYsFHK
-         +YI2DybSfYdJg1ZAyMqX288U+LskFf460lxp/OhNXfRP5xjhKHPyKh3IB/Wo18BcuFFk
-         xnl/t3ferFyysWd3d+7y9dwb1E4LXLMpRJlyD59lu+jvO8S5pnd/rb5LZxedNwf+nD2p
-         vm2mtd6xkSDmBnQ5qFLVp10s2Yey6/4QoXPaReoNYr8DvJhL25TXtWsYjxj8viM/0+cW
-         i4zQ==
-X-Gm-Message-State: ABy/qLZQN6V5WAhx6UXiXrVdS00wkatDMBtILt9SR1A5yLk1U+9ESiV0
-        8O2FVqAMW14RTAbYR3OuVI9Dhw==
-X-Google-Smtp-Source: APBJJlELSBRlCxDuYvGE7L2An9o9WYKFyL7A0pAsvhe/Ya45rkgFuRs7wWsnMf4bQu4Oushng93JFA==
-X-Received: by 2002:a2e:9295:0:b0:2b6:9ed0:46f4 with SMTP id d21-20020a2e9295000000b002b69ed046f4mr18641190ljh.23.1689199967579;
-        Wed, 12 Jul 2023 15:12:47 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c18-20020a2e9d92000000b002b6b7a98c4bsm1167725ljj.77.2023.07.12.15.12.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jul 2023 15:12:47 -0700 (PDT)
-Message-ID: <005a1c19-2ff4-f00b-6c88-42cf343651a8@linaro.org>
-Date:   Thu, 13 Jul 2023 01:12:46 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v5 3/5] drm/msm/dpu: rename all hw_intf structs to have
- dpu_hw prefix
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        d=1e100.net; s=20221208; t=1689200728; x=1691792728;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p16HJUeFjh0Up2EuZ/dd2QVMrO3mMIhcqelMbrELgUs=;
+        b=c566o7bRynKlnlN+P4cEbyz6vzHUeMRGU4RFWkENyNcViDSAWEVfwBYD8u98AmjpN9
+         eE/JVDeQ/xyrNM9/eXqkE9chQRMDx3OCctW89SYBd2cDrOMr6/gXmxYHLUlUAw1Ighmd
+         NwObLRZb/uQxVR2R/0Orl5NNmChJRLw6KLjOquJ30o+4DTXOTW/GqzsiuFCjfP/Tm24G
+         82UqidNEUdaV0MgQRd+ULivx9YuDH7yChEug46NrKwGGLM+3G+y+Cz9ylLXBsiDcUFwH
+         uf5k6Pp2pGMzKRcfDnr8Vg+A326E1p/Xltns0VPzdtQVlUHXwgyE9knwhCyYQIODAot2
+         2Psg==
+X-Gm-Message-State: ABy/qLYKIX/gsSuYZNTLyqMOCZ17NcFSOX2CmuBOMJJMtGpFfzgVs8HL
+        T2WDvNQtIt2rg/KpmSxxTew=
+X-Google-Smtp-Source: APBJJlG3beF7ERt/uLgX1UHxkuEN/pg8U+e7c3SJSiwKs5FaMN/c4UXTKiygCxqrZPeQl6oKY+i78g==
+X-Received: by 2002:a05:6a00:23ca:b0:668:8596:7524 with SMTP id g10-20020a056a0023ca00b0066885967524mr21229199pfc.20.1689200727294;
+        Wed, 12 Jul 2023 15:25:27 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:69d1:d8aa:25be:a2b6])
+        by smtp.gmail.com with ESMTPSA id i23-20020aa78b57000000b00662610cf7a8sm4174893pfd.172.2023.07.12.15.25.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jul 2023 15:25:26 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
-        andersson@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230712012003.2212-1-quic_abhinavk@quicinc.com>
- <20230712012003.2212-4-quic_abhinavk@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230712012003.2212-4-quic_abhinavk@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Fix hw_fence error path cleanup
+Date:   Wed, 12 Jul 2023 15:25:23 -0700
+Message-ID: <20230712222523.7404-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2023 04:20, Abhinav Kumar wrote:
-> dpu_hw_intf has a few instances of structs which do not have
-> the dpu_hw prefix. Lets fix this by renaming those structs
-> and updating the usage of those accordingly.
-> 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 18 +++++++++---------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c    |  6 +++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h    | 12 ++++++------
->   3 files changed, 18 insertions(+), 18 deletions(-)
+From: Rob Clark <robdclark@chromium.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In an error path where the submit is free'd without the job being run,
+the hw_fence pointer is simply a kzalloc'd block of memory.  In this
+case we should just kfree() it, rather than trying to decrement it's
+reference count.  Fortunately we can tell that this is the case by
+checking for a zero refcount, since if the job was run, the submit would
+be holding a reference to the hw_fence.
 
+Fixes: f94e6a51e17c ("drm/msm: Pre-allocate hw_fence")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_fence.c      |  6 ++++++
+ drivers/gpu/drm/msm/msm_gem_submit.c | 14 +++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
+index 96599ec3eb78..1a5d4f1c8b42 100644
+--- a/drivers/gpu/drm/msm/msm_fence.c
++++ b/drivers/gpu/drm/msm/msm_fence.c
+@@ -191,6 +191,12 @@ msm_fence_init(struct dma_fence *fence, struct msm_fence_context *fctx)
+ 
+ 	f->fctx = fctx;
+ 
++	/*
++	 * Until this point, the fence was just some pre-allocated memory,
++	 * no-one should have taken a reference to it yet.
++	 */
++	WARN_ON(kref_read(&fence->refcount));
++
+ 	dma_fence_init(&f->base, &msm_fence_ops, &fctx->spinlock,
+ 		       fctx->context, ++fctx->last_fence);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 3f1aa4de3b87..9d66498cdc04 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -86,7 +86,19 @@ void __msm_gem_submit_destroy(struct kref *kref)
+ 	}
+ 
+ 	dma_fence_put(submit->user_fence);
+-	dma_fence_put(submit->hw_fence);
++
++	/*
++	 * If the submit is freed before msm_job_run(), then hw_fence is
++	 * just some pre-allocated memory, not a reference counted fence.
++	 * Once the job runs and the hw_fence is initialized, it will
++	 * have a refcount of at least one, since the submit holds a ref
++	 * to the hw_fence.
++	 */
++	if (kref_read(&submit->hw_fence->refcount) == 0) {
++		kfree(submit->hw_fence);
++	} else {
++		dma_fence_put(submit->hw_fence);
++	}
+ 
+ 	put_pid(submit->pid);
+ 	msm_submitqueue_put(submit->queue);
 -- 
-With best wishes
-Dmitry
+2.41.0
 
