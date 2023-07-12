@@ -2,143 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28B74751353
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:11:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4791A751366
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:12:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232444AbjGLWL6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 18:11:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60410 "EHLO
+        id S232353AbjGLWMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 18:12:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232443AbjGLWL4 (ORCPT
+        with ESMTP id S232457AbjGLWMh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 18:11:56 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C25A210C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:50 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fbaef9871cso112189e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:50 -0700 (PDT)
+        Wed, 12 Jul 2023 18:12:37 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5064A1989
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:12:34 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fbaef9871cso113049e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:12:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689199909; x=1689804709;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gWwNSVsmh1bG+GHUN/mVATtu1UgwWBFt1a+c6iz+eLk=;
-        b=aSC8OmNhmNYBmv27p0LBeT//vmWVquIGlNLAo9DVDuyMUpao3hRhtVbkxLwaIgYjIf
-         9aN/oFL5YGvo0ML548i7zQra6CVrmrnum5pOjjRsSmwtNNnQa7HlhPCqJd2yc9kI3UUP
-         J7o61wgvilevHxjd+wd7HPUaSOVr/VXtmc523hiOo02VhOFoGTwaFX2phF/zxoQmJTZA
-         t52oDhjY7fdXKoTx5IWX/cSx7iSnJc9axn2DlKN3dxp9OmQvCSkO5ttteZ8rC2ZYnBdc
-         CzfYvbEhRAypUVi58iA9BkVyGLjO/Ortm/lbrqm6RrmfnNHZ/xM23QtKyoA3vBWPvLVq
-         oTlg==
+        d=linaro.org; s=google; t=1689199952; x=1689804752;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EqJysxxH1qyXFydxpNCv52Aaqqbtf6IwIITmwO/wNJQ=;
+        b=JBQeOa4LORI6IiOjXziMyaosDGZUzKT8grbrXHAZmLPrP8dHVOYLwvub8tlUqcaVVB
+         giXaxvW6g9aVaw2k9tFBQPZWgdaMoFodILOEXc0p6pg2IELeA5TWjRWuMDTiAquAfmZK
+         iel7rZZVdH8ucTP/q/y3ILDsYgLTWRT3HzCyTV52VYnyZf9get3Pyq/UdgiF/gO/fnQ3
+         o8xV7l70pRaRwkFWw5v6poV7RzWOfFAyZLuibSMEhV31HywY9qSsdt6tL1rypspLJsgT
+         r8v76q5j/6f5IxrzWM9p/Fa7iwKmT58lhz/qlfvUq8mmmIbvZKm1r927Xd/4s6lDNY3Q
+         v8fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689199909; x=1689804709;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gWwNSVsmh1bG+GHUN/mVATtu1UgwWBFt1a+c6iz+eLk=;
-        b=ZSHmTNCfA92MyuplPCxF3AFJOxHX7WOm6gSGx/5f2KqYeMpUNxdMWyKqYYFGHgexuA
-         YvMz9lxwwLICVg7VoTdga21zA41JApr9V5EZRSYLnvPAOKUpqHai5F0F39Q4lyJFiAef
-         0h+RbuJWWdwypQqu7vOK1ujg8NUkcd9AcOpw6tPofKXjnj3H/tfgAZjvzv8Th9FknZ87
-         7YPB7idCctsB/CyP1epCJTeqBeXpXzxJT3bWDot4WwwzR7PcVg9Xljjn06Iwmn/heSqs
-         ZRZXogIcZkBamSSQF70Mfr0tL5v5/cs9KWMX9Ls9gWK8iL7O4kGx2xyrjiVBIJMnsHd7
-         E6bg==
-X-Gm-Message-State: ABy/qLaM1tenSUB8Vuh6XriBp+jpSWp/N8uv8DF3KuwCr6BnOQP/ZDuS
-        3a73D+SHFV1EUhYi5BPV0XvE3g==
-X-Google-Smtp-Source: APBJJlGE6umXBMHF2GTMhqi3lKCFZW01eI3qr0kPway+oAWpXZmXrZFIpTBWl8K7REtfJgAIu1eD/w==
-X-Received: by 2002:a05:6512:34cf:b0:4f9:69af:9857 with SMTP id w15-20020a05651234cf00b004f969af9857mr15813885lfr.51.1689199909151;
-        Wed, 12 Jul 2023 15:11:49 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id q16-20020ac25290000000b004f62fdf61fdsm856193lfm.204.2023.07.12.15.11.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 15:11:48 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v4 11/11] drm/msm/dpu: drop dpu_core_perf_destroy()
-Date:   Thu, 13 Jul 2023 01:11:39 +0300
-Message-Id: <20230712221139.313729-12-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230712221139.313729-1-dmitry.baryshkov@linaro.org>
-References: <20230712221139.313729-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1689199952; x=1689804752;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EqJysxxH1qyXFydxpNCv52Aaqqbtf6IwIITmwO/wNJQ=;
+        b=fIhU+YHWwLEG7R5qDingA5V9RZHlO+51sME8s5HFzMP72RtspaBzAUII+lfD+IyRSL
+         pPEnrCnir30U40gFItwGbrXIggJcwocUqasNdis5HwqKx+5A6DglbP+cJOG6p5wWIWk5
+         rdDuw8Y42yVxHAVqQyWKqO47eisVF5yHMJcRy7P9yFHW0RQNB6be+33B1lEYsnHNmuIo
+         MImEGxESEuNV0bmPr2YHZFZ7CRVUmYsze4tUgCnvB2JR9z2qnq6b+Xwe0yNbB9FfM/aT
+         U+SNvx2P4qbZAJLFkB6KG1yVGUhrPJq0dmdKO3e8YSOebSynivXxB/LMK2sn5GB0yNih
+         BbYQ==
+X-Gm-Message-State: ABy/qLbEkjDZ1nTvHdv5Ii5iViwCGpVBQ++jclAPXwE2wxBijTbIB4Lc
+        oj25gtBsdtOWFTqLd/QPx5CNjw==
+X-Google-Smtp-Source: APBJJlEYK5pVKISzqJSpYdTFE5+RBHoJVqo0NACxt7MWjJFIbYGhPLLWT27+wIuJW1HjBYGUyJft+g==
+X-Received: by 2002:a05:6512:230a:b0:4fa:a217:1e76 with SMTP id o10-20020a056512230a00b004faa2171e76mr20605162lfu.9.1689199952649;
+        Wed, 12 Jul 2023 15:12:32 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id c5-20020ac25305000000b004f3789c8bd5sm866377lfh.132.2023.07.12.15.12.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 15:12:32 -0700 (PDT)
+Message-ID: <f0778167-17c7-b072-1e44-e8b6cdeb29d6@linaro.org>
+Date:   Thu, 13 Jul 2023 01:12:31 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v5 4/5] drm/msm/dpu: rename enable_compression() to
+ program_intf_cmd_cfg()
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
+        andersson@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230712012003.2212-1-quic_abhinavk@quicinc.com>
+ <20230712012003.2212-5-quic_abhinavk@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230712012003.2212-5-quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This function does nothing, just clears one struct field. Drop it now.
+On 12/07/2023 04:20, Abhinav Kumar wrote:
+> Rename the intf's enable_compression() op to program_intf_cmd_cfg()
+> and allow it to accept a struct intf_cmd_mode_cfg to program
+> all the bits at once. This can be re-used by widebus later on as
+> well as it touches the same register.
+> 
+> changes in v5:
+> 	- rename struct intf_cmd_mode_cfg to dpu_hw_intf_cmd_mode_cfg
+> 	- remove couple of comments
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 8 ++++++--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 8 +++++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 9 +++++++--
+>   3 files changed, 18 insertions(+), 7 deletions(-)
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 10 ----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 ------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  1 -
- 3 files changed, 17 deletions(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 16a4d6c67f4d..31813a322afd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -486,16 +486,6 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
- }
- #endif
- 
--void dpu_core_perf_destroy(struct dpu_core_perf *perf)
--{
--	if (!perf) {
--		DPU_ERROR("invalid parameters\n");
--		return;
--	}
--
--	perf->max_core_clk_rate = 0;
--}
--
- int dpu_core_perf_init(struct dpu_core_perf *perf,
- 		const struct dpu_perf_cfg *perf_cfg,
- 		unsigned long max_core_clk_rate)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index 8cc55752db5e..4186977390bd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -78,12 +78,6 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
-  */
- void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc);
- 
--/**
-- * dpu_core_perf_destroy - destroy the given core performance context
-- * @perf: Pointer to core performance context
-- */
--void dpu_core_perf_destroy(struct dpu_core_perf *perf);
--
- /**
-  * dpu_core_perf_init - initialize the given core performance context
-  * @perf: Pointer to core performance context
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 5bfea4868e43..76ba86d3e436 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1212,7 +1212,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	return 0;
- 
- drm_obj_init_err:
--	dpu_core_perf_destroy(&dpu_kms->perf);
- hw_intr_init_err:
- perf_err:
- power_error:
 -- 
-2.39.2
+With best wishes
+Dmitry
 
