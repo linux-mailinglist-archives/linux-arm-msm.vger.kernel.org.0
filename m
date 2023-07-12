@@ -2,112 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 974F87504C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 12:36:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32E977504DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 12:39:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232332AbjGLKgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 06:36:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50170 "EHLO
+        id S231461AbjGLKjc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 06:39:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232198AbjGLKgU (ORCPT
+        with ESMTP id S232071AbjGLKj3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 06:36:20 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EA5F1BFC;
-        Wed, 12 Jul 2023 03:36:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 89F0C61731;
-        Wed, 12 Jul 2023 10:35:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9964EC433C9;
-        Wed, 12 Jul 2023 10:35:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689158158;
-        bh=1ZR/RKV2DlzbR3SX6BTWRQmsK1bpq2+ZztUMiAfbqKc=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=R9SLZ09m1Rh3AEsPeUTnzP3pcQtwTY1lZJL2z1st0pNXkxRqvxcn/Nmx9tV4p9OF0
-         dfh1or+wnApHIvgivfrqFfPCjcdleJk3HlTrT544ztJCqGqpe7xYEc/sQdCzTcr9uW
-         HDZkEZxfUJR4t/ZezHV8ZmrbzE+sknAXDs+Pf+X9rWmVNtR70N5X9iYYz0+S6vWhXd
-         XWP0U61oJttz8YxhSwptD2oXxk+s22duHZAL11/mNC8Gul82BU/V9jiwNdfZzcL0fW
-         fDG+96uazkTSKaZ9A2UQtBOryEDfydBGaMzMhI+8+Xyp0KR3MUMFyQC7OqBA+tS+KH
-         iipaGVMPqQP7g==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Rob Herring <robh@kernel.org>
-In-Reply-To: <20230628-topic-refgen-v3-0-9fbf0e605d23@linaro.org>
-References: <20230628-topic-refgen-v3-0-9fbf0e605d23@linaro.org>
-Subject: Re: (subset) [PATCH v3 0/4] Qualcomm REFGEN regulator
-Message-Id: <168915815219.10612.17171163066599783994.b4-ty@kernel.org>
-Date:   Wed, 12 Jul 2023 11:35:52 +0100
+        Wed, 12 Jul 2023 06:39:29 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C37B1BDA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 03:39:24 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1b8baa836a5so50158895ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 03:39:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689158364; x=1691750364;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uc+j0nHauw/6H2r/Az5E2Y7roqAWp5N7e9hobTyaCqg=;
+        b=xk+9YY5nxZv7P2Er1PiAlOysRfG7n0Ego+oTOTeYVyvcj2Mpts9mNP4EBrrAoKSPH1
+         MbBcuatIEw+rYXdbhSmpZDhtKfaXRBCbG7PzTZCxh/bdTiws4PEmLNeRJUp2Hwzvn6EL
+         BPVqadL1v3zg69FWg4nk7YftElqeAuWBzyQUsJAVt5j+AWCz3Rs8FHJg/fY8QdgK6GX3
+         DFof6rww0StgwWnEb9iSrIGKPZJCV0tswfFMgVPYv1Cz1NYMBYtvM9yjEldfoVkY9TxD
+         TZ4Wsxj71HFs0q3gmNsH6httxX+5RQsIJ9A2oApHX5sOg3Anx+WYz1iuds3beKDKi7al
+         KNQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689158364; x=1691750364;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uc+j0nHauw/6H2r/Az5E2Y7roqAWp5N7e9hobTyaCqg=;
+        b=S2cCwYPH9WBgB2BKA006AWXqP3mCsVJK/uIM8jeIsrq0zSSfqX/PweM9r/w2KV1NmX
+         0PagKKeSF7kcSjC2pG7211YsWHqHd5J3F0HnmwBd7eZldsl6Fzk398hFPxCUMDiSDVGP
+         o7kxFUvsga2BoMN69PYZ93KwPQM/h05hURjwsp1JMetXyJxpuHkPa8QYq9I8X5+cr67v
+         VXMJ73TXeFBGPQSa1Oto4YUrY/qO7H9AM79ELl249yJkQcPz0HcjV1Nn0feJ5zeR2hm3
+         CcTtYVYibNCGSQlx3d1luLSHAmiMa2LCNCkmlF0BWkaToh6KTvgWltWJCfcrM1o2eD1l
+         gP+w==
+X-Gm-Message-State: ABy/qLar/qJbXSwG/uzTInUXh0Oby5M4hqxcZZfJLrOWmkd3Nyl+bla/
+        qpsCe+/4eWspQ8LRLzXoqa4L/A==
+X-Google-Smtp-Source: APBJJlHRAGuyD7rEdovEfYR0fR9Qln9qmCs18kkA12xObV8qC6TJtJPBNfg92tdmp+ysmBxdorRWwg==
+X-Received: by 2002:a17:902:d3c6:b0:1b8:90bd:d157 with SMTP id w6-20020a170902d3c600b001b890bdd157mr16923020plb.26.1689158364038;
+        Wed, 12 Jul 2023 03:39:24 -0700 (PDT)
+Received: from localhost ([122.172.87.195])
+        by smtp.gmail.com with ESMTPSA id u4-20020a170902b28400b001b8707b70d1sm3612547plr.214.2023.07.12.03.39.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jul 2023 03:39:23 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 16:09:21 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
+Subject: Re: [PATCH 02/14] dt-bindings: opp: Increase maxItems for opp-hz
+ property
+Message-ID: <20230712103921.rvut4r2kgqe6k42e@vireshk-i7>
+References: <20230712103213.101770-1-manivannan.sadhasivam@linaro.org>
+ <20230712103213.101770-3-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230712103213.101770-3-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 03 Jul 2023 20:15:53 +0200, Konrad Dybcio wrote:
-> Recent Qualcomm SoCs have a REFGEN (reference voltage generator) regulator
-> responsible for providing a reference voltage to some on-SoC IPs (like DSI
-> or PHYs). It can be turned off when unused to save power.
+On 12-07-23, 16:01, Manivannan Sadhasivam wrote:
+> Current limit of 16 will be exhausted by platforms specifying the frequency
+> for 9 clocks using opp-hz, like Qcom SDM845 SoC: 9 * 2 (64 bits) = 18
+
+You missed mentioning why you are multiplying by 2 here (I suppose one
+place for /bits/ 64 and one for <freq>.
+
+Also full stop (.) is missing at the end.
+
+> So let's increase the limit to 32 which should be enough for most platforms
+> (hopefully).
 > 
-> This series introduces the driver for it and lets the DSI driver
-> consume it.
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/opp/opp-v2-base.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> [...]
+> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-base.yaml b/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
+> index 47e6f36b7637..e2f8f7af3cf4 100644
+> --- a/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
+> +++ b/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
+> @@ -56,7 +56,7 @@ patternProperties:
+>            need to be configured and that is left for the implementation
+>            specific binding.
+>          minItems: 1
+> -        maxItems: 16
+> +        maxItems: 32
+>          items:
+>            maxItems: 1
+>  
+> -- 
+> 2.25.1
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[1/4] dt-bindings: regulator: Describe Qualcomm REFGEN regulator
-      commit: d16db38c2a66060ee25c6b86ee7b6d66d40fc8e0
-[2/4] regulator: Introduce Qualcomm REFGEN regulator driver
-      commit: 7cbfbe23796086fdb72b681e2c182b02acd36a04
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+-- 
+viresh
