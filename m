@@ -2,109 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 955627502B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 11:19:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 333EB7502E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 11:20:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231977AbjGLJTE convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 05:19:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35392 "EHLO
+        id S232754AbjGLJUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 05:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232571AbjGLJTA (ORCPT
+        with ESMTP id S232267AbjGLJUc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 05:19:00 -0400
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856EB1992;
-        Wed, 12 Jul 2023 02:18:50 -0700 (PDT)
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-bff27026cb0so7556505276.1;
-        Wed, 12 Jul 2023 02:18:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689153529; x=1691745529;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kG5q3OE8NA2B1Rd9ySf5DoQyHhC234Q++094p9pDpiY=;
-        b=RbH09Fh2Rwv6i44q4mz6r0oVcyoQAmM6oNtMIiFFXM8FMEcgMyskmz3Tm5oe9glduN
-         IqWw9q6resuXdGdh7FPxWvhQtE2Hs4MEydHvfXDgG8zLVIs1CgOb7B2IIV26ZctgKQkv
-         Z/4OjJM9oki+AhQl/1RlqwpTeqcT0un2SuAH/WoZtgjFJcjDLMAxr7Ybtl6078Lw4/nd
-         3Np3WUiMX/xJ2/zmiRoKAICGUu8Kk/VWWlEeR9GIhkDESuOFtdEcLkUPRtB5KHClxI+I
-         wrmdMjGQQa9/MD/jfjOMmztwvesyEbo4//amxwm9GOqJmSVH33YofGzA3rmvlCLFhE8A
-         yP+Q==
-X-Gm-Message-State: ABy/qLYyo+pKia4zmRJtKbiKpbRDGeTjaZQM1Sme2lFJVvnNv9q+Q4s2
-        FvTaG3BUvfcp7b245UM0zgwDilsuURGXCQ==
-X-Google-Smtp-Source: APBJJlGSFjNRvHJZkkk5bVWMKipJUpBqL7O06x8V3NpRJN+bkNydqcdBtcR9WubwFNCK3NzcOaMKcw==
-X-Received: by 2002:a25:cd85:0:b0:c60:fb80:99f7 with SMTP id d127-20020a25cd85000000b00c60fb8099f7mr15710840ybf.16.1689153529555;
-        Wed, 12 Jul 2023 02:18:49 -0700 (PDT)
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
-        by smtp.gmail.com with ESMTPSA id w8-20020a253008000000b00be4f34d419asm860867ybw.37.2023.07.12.02.18.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jul 2023 02:18:49 -0700 (PDT)
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-c84fd44593aso3341486276.0;
-        Wed, 12 Jul 2023 02:18:49 -0700 (PDT)
-X-Received: by 2002:a25:748e:0:b0:c69:b15:3e79 with SMTP id
- p136-20020a25748e000000b00c690b153e79mr17478596ybc.28.1689153528941; Wed, 12
- Jul 2023 02:18:48 -0700 (PDT)
+        Wed, 12 Jul 2023 05:20:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B41B51726;
+        Wed, 12 Jul 2023 02:20:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 17CCB616F6;
+        Wed, 12 Jul 2023 09:20:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6B844C433C7;
+        Wed, 12 Jul 2023 09:20:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689153621;
+        bh=Ex71MzvqnoPSUmJRcXm5WZyi4T6gvlCMkVAhvg0LzGE=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=P2zHdNl2EydNK3q5sGc+nCH2LtNPsa7JIIjoTAxTlKKh7qQ07gNuX6wUisB9DoVQl
+         ENjdh05laikc2HkDUjtU7cMbtKj7eEQ9uqVDmfk5khfmej5ymKVwe/u0C9BaK4yAHb
+         oUD6ujNzjFukKAZgg9IcurQYyyPx78FEKUsaDX/q90pS3f9EpBA5TnZ7RfdrvZrGYh
+         M9bZqdA3aBKhP1bLtCyGjciDzFohNdIJO7ZPKYpeHQ1kaSvI3tyBJWwfPUhkcnsTk1
+         hI89322GvO7MdbIPsy4Gi2916nDEb2ydr8eVbynXyDDuoLMz91KWazPkk620WNtl/G
+         +4jUjPfrA1mEw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 47AD5E29F44;
+        Wed, 12 Jul 2023 09:20:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20230707074337.3120530-1-quic_rohkumar@quicinc.com>
-In-Reply-To: <20230707074337.3120530-1-quic_rohkumar@quicinc.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 12 Jul 2023 11:18:35 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdXRt_9BzfnaqVJUAS4QdvGBDZk3B+R_cERUykZhyNWtzQ@mail.gmail.com>
-Message-ID: <CAMuHMdXRt_9BzfnaqVJUAS4QdvGBDZk3B+R_cERUykZhyNWtzQ@mail.gmail.com>
-Subject: Re: [PATCH v2] ASoC: dt-bindings: Update maintainer email id
-To:     Rohit kumar <quic_rohkumar@quicinc.com>
-Cc:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        cychiang@chromium.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v2 0/3] net: stmmac: dwmac-qcom-ethqos: Improve error
+ handling
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <168915362128.1981.13684727730813685010.git-patchwork-notify@kernel.org>
+Date:   Wed, 12 Jul 2023 09:20:21 +0000
+References: <20230710201636.200412-1-ahalaney@redhat.com>
+In-Reply-To: <20230710201636.200412-1-ahalaney@redhat.com>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
+        mcoquelin.stm32@gmail.com, pabeni@redhat.com, kuba@kernel.org,
+        edumazet@google.com, davem@davemloft.net, joabreu@synopsys.com,
+        alexandre.torgue@foss.st.com, peppe.cavallaro@st.com,
+        bhupesh.sharma@linaro.org, vkoul@kernel.org,
+        linux-arm-msm@vger.kernel.org, andrew@lunn.ch,
+        simon.horman@corigine.com
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rohit,
+Hello:
 
-Thanks for your patch!
+This series was applied to netdev/net-next.git (main)
+by David S. Miller <davem@davemloft.net>:
 
-On Fri, Jul 7, 2023 at 9:49 AM Rohit kumar <quic_rohkumar@quicinc.com> wrote:
-> [PATCH v2] ASoC: dt-bindings: Update maintainer email id
+On Mon, 10 Jul 2023 15:06:36 -0500 you wrote:
+> This series includes some very minor quality of life patches in the
+> error handling.
+> 
+> I recently ran into a few issues where these patches would have made my
+> life easier (messing with the devicetree, dependent driver of this
+> failing, and incorrect kernel configs resulting in this driver not
+> probing).
+> 
+> [...]
 
-Thank you for stepping forward to become a maintainer for all ASoC
-DT bindings ;-)
+Here is the summary with links:
+  - [net-next,v2,1/3] net: stmmac: dwmac-qcom-ethqos: Use of_get_phy_mode() over device_get_phy_mode()
+    https://git.kernel.org/netdev/net-next/c/a8aa20a64ef2
+  - [net-next,v2,2/3] net: stmmac: dwmac-qcom-ethqos: Use dev_err_probe()
+    https://git.kernel.org/netdev/net-next/c/b2f3d915b4fe
+  - [net-next,v2,3/3] net: stmmac: dwmac-qcom-ethqos: Log more errors in probe
+    https://git.kernel.org/netdev/net-next/c/27381e72a2db
 
-> Updated my mail id to latest quicinc id.
->
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
-> ---
-> v2: Updated commit header
->
->  .../devicetree/bindings/sound/google,sc7180-trogdor.yaml        | 2 +-
->  Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml     | 2 +-
-
-Oh wait, this is not for all of ASoC...
-
-Please use one-line summaries that reflect the actual changes.
-Thanks!
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
+You are awesome, thank you!
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+
