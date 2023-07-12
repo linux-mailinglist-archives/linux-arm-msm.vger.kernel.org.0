@@ -2,65 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5B58750669
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 13:42:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32656750690
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 13:47:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230263AbjGLLmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 07:42:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33452 "EHLO
+        id S232973AbjGLLrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 07:47:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230360AbjGLLmM (ORCPT
+        with ESMTP id S232824AbjGLLrR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 07:42:12 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D9851998
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 04:41:44 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-977e0fbd742so854156666b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 04:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689162101; x=1691754101;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GkLaNoWskYXvslP1Qpy+TOolPrbyrAyjVa+N07spH6w=;
-        b=GdjQR8SX+x1pUX1Mtuv5xuheRUWPa4xiVxpkVzvnVRdbcp1cUzjP0h14IUqu6A49uh
-         +ILaIzXUf2Mhdwplokt+KkGbaABFpL8/iEI694YXvZbBt7Sog7sBDmxeW+Y0f7ZsOdWe
-         5ofrVDPbBcKUZHkbjXE8r4GO44GkCD/FlM/TEQSYzuMasTPzjCcd+Lq+xCrQ3EVK+2mK
-         pv8A4mjEVcn1b4BRijKkmUZeFw8rnVWf32GcC4Xpfs95QPNVnjLryFYlRJay1WKbzbXy
-         rPBtfLVfj+D1a26xpFSgBL4hhG0LAYfs7ama2jywMK6z6E0r+9Jtm/p/MKJkAvGCu6eJ
-         zd3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689162101; x=1691754101;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GkLaNoWskYXvslP1Qpy+TOolPrbyrAyjVa+N07spH6w=;
-        b=ToqdHL/cv6kTQkBNTlgDe3UYL8BMIvDCnjsY7EW4EyxJ42Y9b1rQ48gMc/hNhxJOkI
-         eXKS0Ki1mj966TvTATUMqEL8DnqWpp9yb5qduozsN9NI27xbsGSCavnG1Ktjle9VqP5a
-         DULJaDQIA7KOCyo7+8jzFgq5KtuEJtCwt5KtqW68D5xHOgOi0oBmZog3TqWlybcIvQmc
-         DxfD1AYvS6q5768EW7FKW9fVR0dLU7ODYEdBXxh7sMM1xtzZ6wPgU06BAr1idOAOpPWt
-         y4nrnlLCmOgJTfQ4kjjBHBujiaVB+90rSUoueOTHeMUxWbibiBzVJFwQg3iYBAr2Iqhx
-         j+qw==
-X-Gm-Message-State: ABy/qLb7p2KeIKU3RALZ+mODHxfYrnYXTv1Z6NnEm7NrbyLaKWPncbEq
-        uGkDSFTkFKFz7hIhPx2MrIquoSEA8sM7HEBZqah8+21pwrRJaRN0Ay8=
-X-Google-Smtp-Source: APBJJlETTVGODR20/rwVslhngoGW4fSKBoGdRTlMwhh0V6YrmWG0usTUtZoVfuLIpCAbQ7YW2JEtyp8nTpjT009g3QQ=
-X-Received: by 2002:a05:6402:1293:b0:51e:5789:a71d with SMTP id
- w19-20020a056402129300b0051e5789a71dmr11910654edv.12.1689162101091; Wed, 12
- Jul 2023 04:41:41 -0700 (PDT)
+        Wed, 12 Jul 2023 07:47:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FCDB1FC1;
+        Wed, 12 Jul 2023 04:47:03 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8C52B617A0;
+        Wed, 12 Jul 2023 11:47:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14254C433C8;
+        Wed, 12 Jul 2023 11:46:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689162422;
+        bh=QhVaK0LsU7eehMipwwCOTnQKn7A7QZ/0f5Q1VZIwGuA=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=GUdoi12+nwBnrPTbxYZ2a9geyEqe0U28by0VFwg6tqYv117M3vJeo7W/c3Pf+4e79
+         r2F0W5C/3UO3uWWhtMs/W70+WVAtPg6XXuuAqOhcLxR9qj9zDMgABk3t4NgHH+Dk/B
+         BxY/P+ZUcLNmE5YBLA+Dtu+huFUqYJwg75B5MHnv4mR/QPOc8U81qsaUeEj81gMPvu
+         /Bu9qNp5H337C4v2CNQhCHMPKOlb4szHXTtmmNdzjicIAk24uoczmt7db7QUR/dBbG
+         p9wmn7CIh20RMyzN0MbM2MyCNcUQhjq/s5IV+/jEfsnU0L2X0zrAXnrgbGzuiRNMiy
+         wFPmrWQk+3Plg==
+From:   Mark Brown <broonie@kernel.org>
+To:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Benjamin Li <benl@squareup.com>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Zac Crosby <zac@squareup.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Lee Jones <lee@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Jun Nie <jun.nie@linaro.org>, Max Chen <mchen@squareup.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        alsa-devel@alsa-project.org, iommu@lists.linux.dev,
+        linux-usb@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh@kernel.org>,
+        Andy Gross <andy.gross@linaro.org>
+In-Reply-To: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
+References: <20230627-topic-more_bindings-v1-0-6b4b6cd081e5@linaro.org>
+Subject: Re: (subset) [PATCH 00/11] Even more msm bindings fixes
+Message-Id: <168916241380.46574.15546639128394124503.b4-ty@kernel.org>
+Date:   Wed, 12 Jul 2023 12:46:53 +0100
 MIME-Version: 1.0
-References: <20230712083741.7615-1-slark_xiao@163.com>
-In-Reply-To: <20230712083741.7615-1-slark_xiao@163.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Wed, 12 Jul 2023 13:41:03 +0200
-Message-ID: <CAMZdPi_qcLYGSUYg+4skkNUzUVSV5Fk1Ohe75ZWwyN7=MpfkUg@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for Dell DW5932e
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     mani@kernel.org, fabio.porcedda@gmail.com, bhelgaas@google.com,
-        song.fc@gmail.com, duke_xinanwen@163.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-099c9
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,12 +89,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 12 Jul 2023 at 10:38, Slark Xiao <slark_xiao@163.com> wrote:
->
-> The DW5932e has 2 variants: eSIM(DW5932e-eSIM) and non-eSIM(DW5932e).
-> Both of them are designed based on Qualcomm SDX62 and it will
-> align with the Foxconn sdx65 settings.
->
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+On Tue, 27 Jun 2023 18:24:16 +0200, Konrad Dybcio wrote:
+> This series contains couple more random dt schema warning fixes, centered
+> around linux-msm.
+> 
+> All of the patches (except) the last two are pretty much independent.
+> Patch 1 is not only a bindings fix, but also a functional one.
+> 
+> 
+> [...]
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[05/11] dt-bindings: sound: Convert pm8916-wcd-analog-codec to YAML
+        commit: e125891c2ed6f6d3f59375caf04d76802c86efae
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
