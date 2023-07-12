@@ -2,164 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87C1D7511CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 22:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9C67511E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 22:40:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231867AbjGLU2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 16:28:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
+        id S231359AbjGLUkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 16:40:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbjGLU2q (ORCPT
+        with ESMTP id S229446AbjGLUkC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 16:28:46 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D375EAC;
-        Wed, 12 Jul 2023 13:28:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 584E86190E;
-        Wed, 12 Jul 2023 20:28:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D182C433C7;
-        Wed, 12 Jul 2023 20:28:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689193721;
-        bh=876vMbdDchntAjuToedm5xOzqNo7Ul0MnYeWWTPdCMY=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=eACfpRiSuGFNCoKwHUokCNLHShdTqUaEB+yMCm7UodrZnAWyb7kRAGYvG6KlYUDbv
-         rDl1Up2Vy9PWNfTaIIcUB6IrXQ4zUdbsCZZUs/s+nmYGC/Gvr2b9nQ8Ysnxl2l1xhz
-         ExXxkoXpDMqS1KBlwTe9yU3BTZ29tp5H0WoWuXg6TFV6wwRusqzIMo1fBfZn9oHmZT
-         f0QYpk700Sb5x7hEM59rBSw1WvJsf7hriq9NVeV4tsv2TkzFkRN3w4TlwrhpAk/KUF
-         Tge3u9Audc6b+N8Ea5awJtdxVlLWvebui2j3Vj6hxjZBXCc5nxitFop6B/mjMRJdz0
-         4Py4QeqjGhFtQ==
-Message-ID: <b8e21ba1-900d-6731-579d-e18c37a97a71@kernel.org>
-Date:   Wed, 12 Jul 2023 22:28:32 +0200
+        Wed, 12 Jul 2023 16:40:02 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4CFF1FF5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 13:39:59 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99384a80af7so6037766b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 13:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689194398; x=1691786398;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qz4ToCmXdGy6EFf4pje8ZW0I5OMeUMjD61j/N7GvqZg=;
+        b=CaEDs0aCkHLRHqomI8ZWgQ9D5tueGB2f5wx/7D+Xq0qUtpCvVYOzHEdx2KfWE+4A/O
+         wyG1Y/5j5kspW+HePPI137Qrrbo4UIGRJRjjj9kMXS/SiP7mGMGnNeRzHp6RZGxDaLwT
+         Wj4yaDvktBkjVDu40fVojjC/OM+Uyw76jji/E9SPJ9FUB8tfJXAwzZ1UIqmZIKlvhhzG
+         Y37ApdXOasBxfbIKB6eRLud1X86IomA2P5LQSOPTFAC2NV8sLEpsylMraMbYKtbjN6Vo
+         pV5wDpVf2r/YGpAiu+4RKLFU2q+f51G3a0mreKNoHisrr+tHJs1dp74jOQ2a2TWpUywk
+         k9BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689194398; x=1691786398;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qz4ToCmXdGy6EFf4pje8ZW0I5OMeUMjD61j/N7GvqZg=;
+        b=TqHAaN3g85eiVorgjo9POC3cHwTpyrYNtpzGZLM/flQdYRJPRes+0NnEpqDUMYspfl
+         MSrL0V0TQTiDjka9jUhX7wQGztR0kr6l5LzBvkJMpTljrYmKTmKP4tGGX2Hh6EN2zUVD
+         bEkPU/pE5WaEcK2o6hPLzB0+zGg/BGyEns9iRGwPpRhZisvXynXXu6Om9AL0blEDmRW5
+         H+aPIwUCOcJvjZVgnL1joitlByvBwiJGROcyf2JlUXlwjOfwmQK1NSIoHbXMLzgPtl2X
+         zFhy9Mdagl+KlSSxQkR8bW8GcwHbJkwJR+P4UfF+L2uR/M1TpD2oKGtbPg8A6fqM5u1N
+         Yzeg==
+X-Gm-Message-State: ABy/qLbGHjumDS++Dl+ykVtTI9IZ2iI78OzWPAmfvlBYSA+DrA8zz9JM
+        HZrH+gLsd2RHLhxu+cYuxQ1yNQ==
+X-Google-Smtp-Source: APBJJlGU9//m8M1Ae9Q5dga1tL9ZcYRoNFsxLts17JPBzFocKxi+fKx1E4/gw1Z7SqsJrzNODCffnA==
+X-Received: by 2002:a17:906:194:b0:993:e752:1a71 with SMTP id 20-20020a170906019400b00993e7521a71mr14142804ejb.9.1689194398389;
+        Wed, 12 Jul 2023 13:39:58 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id gg21-20020a170906e29500b0099207b3bc49sm2990057ejb.30.2023.07.12.13.39.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 13:39:57 -0700 (PDT)
+Message-ID: <3b733848-2745-e6ef-f517-039712bbe7af@linaro.org>
+Date:   Wed, 12 Jul 2023 22:39:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-serranove: Add
- RT5033 PMIC with charger
+Subject: Re: [PATCH 01/53] dt-bindings: interconnect: qcom,icc: Introduce
+ fixed BCM voter indices
 Content-Language: en-US
-To:     Jakob Hauser <jahau@rocketmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Raymond Hackley <raymondhackley@protonmail.com>,
-        Henrik Grimler <henrik@grimler.se>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230619203743.8136-1-jahau.ref@rocketmail.com>
- <20230619203743.8136-1-jahau@rocketmail.com>
- <02fe7c1e-cb6a-14bc-73fc-04956a2b8396@kernel.org>
- <3376e14a-4fc7-160e-509e-8dcbe627ef62@rocketmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <3376e14a-4fc7-160e-509e-8dcbe627ef62@rocketmail.com>
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
+ <20230708-topic-rpmh_icc_rsc-v1-1-b223bd2ac8dd@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230708-topic-rpmh_icc_rsc-v1-1-b223bd2ac8dd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2023 21:50, Jakob Hauser wrote:
-> Hi Krzysztof,
+On 11/07/2023 14:18, Konrad Dybcio wrote:
+> It makes zero (or less) sense to consume BCM voters per interconnect
+> provider. They are shared throughout the entire system and it's enough
+> to keep a single reference to each of them.
 > 
-> Cc: Rob, Chanwoo & MyungJoo
+> Storing them in a shared array at fixed indices will let us improve both
+> the representation of the RPMh architecture (every RSC can hold a resource
+> vote on any bus, they're not limited in that regard) and save as much as
+> kilobytes worth of RAM.
 > 
-> On 11.07.23 08:13, Krzysztof Kozlowski wrote:
-> ...
->> This appeared in today's next next-20230711 and causes new warnings
->>
->> msm8916-samsung-serranove.dtb: extcon@14: 'connector' does not match any
->> of the regexes: 'pinctrl-[0-9]+'
->> https://krzk.eu/#/builders/90/builds/40/steps/17/logs/stdio
->>
->> The commit mentions rt5033, but that is not the schema being here
->> tested, so clearly this is wrong or bindings were not updated.
->>
->> Please fix (and test your future patches).
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  include/dt-bindings/interconnect/qcom,icc.h | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> The implementation you see in this patch follows the guidance of yours 
-> and Rob’s. I already expressed my discontent about it before.
-> 
-> To solve the message, the dt-bindings of extcon device sm5502-muic [1] 
-> would need to be changed to allow a "connector" sub-node. That’s not the 
-> right approach.
-> 
-> I still have the impression that the current implementation is based on 
-> misunderstandings. I do think Rob’s comment that excon phandle being 
-> deprecated [2] is valid for the USB subsystem. Your suggestion to check 
-> "ports graph", "orientation" and "usb-role-switch" applies to USB 
-> subsystem as well [3]. Rob took the time to add more explanation [4] but 
-> it’s still about handling connectors in the more strict sense, which is 
-> circling around UBS subsystem.
-> 
-> These discussions led to a strangely mixed-up result. I was pushed to 
-> implement the USB subsystem connector approach upon an excton subsystem 
-> device. As the standard USB connector approach didn’t fit, we switched 
-> to a vendor-specific connector phandle [5]. In fact it’s kind of a 
-> workaround for the extcon phandle.
-> 
-> The extcon device sm5504 is a real piece of hardware. It’s not handled 
-> by USB subsystem but by extcon subsystem. The excton subsystem has a 
-> method implemented to get the device by phandle [6].
+> diff --git a/include/dt-bindings/interconnect/qcom,icc.h b/include/dt-bindings/interconnect/qcom,icc.h
+> index cd34f36daaaa..9c13ef8a044e 100644
+> --- a/include/dt-bindings/interconnect/qcom,icc.h
+> +++ b/include/dt-bindings/interconnect/qcom,icc.h
+> @@ -23,4 +23,12 @@
+>  #define QCOM_ICC_TAG_ALWAYS		(QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE |\
+>  					 QCOM_ICC_TAG_SLEEP)
+>  
+> +#define ICC_BCM_VOTER_APPS		0
+> +#define ICC_BCM_VOTER_DISP		1
+> +#define ICC_BCM_VOTER_CAM0		2
+> +#define ICC_BCM_VOTER_CAM1		3
+> +#define ICC_BCM_VOTER_CAM2		4
+> +
+> +#define ICC_BCM_VOTER_MAX		64
 
-I am not sure if we discuss the same problem. My email was about the DTS
-and bindings, not whether this works in Linux drivers. From your reply I
-feel that this patch might actually not work? This would be quite
-confusing...
-
-You added new child node "connector" to the siliconmitus,sm5504-muic, so
-all I would expect that we miss here only updating that binding.
-Assuming that your code was working...
-
-> 
-> I therefore propose to use the phandle of the extcon subsystem.
-
-extcon in the bindings? Then we would be back to square one.
-
-> I mean 
-> extcon subsystem, not USB subsystem. In case you disagree, I kindly ask 
-> you to take more time to answer in more detail and especially 
-> case-related.
-
-Assuming your patch works, I think above is quite specific answer - new
-property is missing in sm5504 binding.
-
-
-> And specifically to Krzysztof I ask for more politeness in 
-> your way of communicating. I understand you’re answering hundreds of 
-> requests a day but the communication we had in the past weeks is really 
-> frustrating.
-
-Sorry to hear that, please accept my apologies. I went through all my
-replies to you in past few weeks and could not find any particular
-impolite behavior from my side.
-
-> 
-> [1] 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/extcon/siliconmitus,sm5502-muic.yaml?h=v6.5-rc1
-> [2] 
-> https://lore.kernel.org/linux-pm/cover.1677620677.git.jahau@rocketmail.com/T/#m1f57a36d534e677f84158e6886c1340e036ab5c6
-> [3] 
-> https://lore.kernel.org/linux-pm/cover.1682636929.git.jahau@rocketmail.com/T/#m7672ad05590e4123ba5622bc59a9b4dcc0f70e3a
-> [4] 
-> https://lore.kernel.org/linux-pm/cover.1682636929.git.jahau@rocketmail.com/T/#m65db0709f0ad3feac6c289f65be5a351cacd2835
-> [5] 
-> https://lore.kernel.org/linux-pm/20230506155435.3005-1-jahau@rocketmail.com/T/#m2aa652c41bad93d60042d831c6397e7838d3cbfc
-> [6] 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/extcon/extcon.c?h=v6.5-rc1#n1417
+I proposed to skip the max. If you actually use it, you won't be able to
+change it ever.
 
 
 Best regards,
