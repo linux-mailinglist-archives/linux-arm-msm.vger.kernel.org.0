@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83C8A750515
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 12:48:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A02F775051A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jul 2023 12:48:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232802AbjGLKru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 06:47:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60426 "EHLO
+        id S233092AbjGLKsa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 06:48:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232690AbjGLKrr (ORCPT
+        with ESMTP id S232825AbjGLKsO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 06:47:47 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43E7B19B4;
-        Wed, 12 Jul 2023 03:47:43 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36CAUKpt018634;
-        Wed, 12 Jul 2023 10:47:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=NhtwwmrFLrsgWtVNGMMYdBX94i+RseVMe+iRvC4WikU=;
- b=YtGiLugPMEe8ENFDZaHZLqzMG1fCV1K8JRjgpxpgmfZs6nqpa973fPLSJhaYpo5g7VPt
- LvtC472eo6mhPHMdiA3tFdHrjLhr9OBu0kMCt0BPUpqJ1N2vbECMKAwDesyM2llhuyo+
- 9NIEBauw4U7kCDX2tdoQtq9sCuoZ4oRa1llzPX2TGZRX0fDc4qhbzCeXpXTe44cNk4KD
- IWTUvQewunt+I1NgXaDkZIs1nGZ+KuhoeWXGyngdD7jyLrFqgODEy5KpCXLpPKher2UD
- UzKhkKadUIS1IJ8H6VCxshm02PU/cw+u/JGIBotyoCHCobOer/iokMkngNuLzsr7qyBa sA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rsfeq16na-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 10:47:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36CAlTGW029892
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Jul 2023 10:47:29 GMT
-Received: from [10.204.79.145] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 12 Jul
- 2023 03:47:24 -0700
-Message-ID: <9c766061-5508-c60c-55a1-2cf893f655e2@quicinc.com>
-Date:   Wed, 12 Jul 2023 16:17:21 +0530
+        Wed, 12 Jul 2023 06:48:14 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E0F1BDA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 03:48:07 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1b9c368f4b5so4229225ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 03:48:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1689158887; x=1691750887;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zIVoN8xJJ1apuh5u3RRjUDBxovBp1snddoUz1sWtVUc=;
+        b=BMvGqPrzLoLp9tbS8Yi6csf86apIKKPA5HWYXK9DYb8XNFkNsvZ0WDcihp4d25hQ11
+         Kp4M7rgCghETeCFFVfSft7bWcb5rqBRLKR8vDgX2JBSsSWdZ+NwoRbLyRT0cAW48o5tx
+         k8VWkqL4n8vyampu/AnPvTgSXMGnRjNu6zCuA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689158887; x=1691750887;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zIVoN8xJJ1apuh5u3RRjUDBxovBp1snddoUz1sWtVUc=;
+        b=dHBmGWPrY10G55o1lNpgy+6B4JgSbzyGhE8ytUIkSXgwmnmcj7ZJxOLNhOBq47YGVa
+         GKUfw/2+x6b9fEbrEgnS1Sfg83P+7hDqnFS+Xp6Sk+5P+v/JEWoJlZrgeljRnvB/JZ7d
+         sOP1dg6Zk/ZVC3kHjQRYRi0MINNGIxu0iRa4w0audENEq7jlu2WKuiR+I+053CLarSIX
+         cgEVPB8eAL9lirkrA0AV6emQyomPBNzZA0ruHE50SXg9vQb+Pyp0QJYyV81eFz0T6a+q
+         jZy/6Q1Pa703EWh/VLsFNubPcaEKEJqJ4C4WaTBdKCIksBGl29MuZE7Ts5NRuA53Njon
+         n5QQ==
+X-Gm-Message-State: ABy/qLZVtw7vNDcUt8cwpRRQVCXu6naadmNPGaldn7xMqA5CEdzCdmU6
+        CZLdAthC8t+N1Uw2Z+FPaHBAZA==
+X-Google-Smtp-Source: APBJJlEAi57Syr+e1VCEgUMbZ1p6tYBNaJWe5nyxeKIdojZAG0t41NYxzQsL8d3LNtrPXXR9NgKs8g==
+X-Received: by 2002:a17:902:eccf:b0:1b8:5a42:5145 with SMTP id a15-20020a170902eccf00b001b85a425145mr1488788plh.31.1689158887019;
+        Wed, 12 Jul 2023 03:48:07 -0700 (PDT)
+Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
+        by smtp.gmail.com with ESMTPSA id io12-20020a17090312cc00b001b9dfa24523sm3622055plb.213.2023.07.12.03.48.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jul 2023 03:48:06 -0700 (PDT)
+Date:   Wed, 12 Jul 2023 10:48:01 +0000
+From:   Tomasz Figa <tfiga@chromium.org>
+To:     Hsia-Jun Li <Randy.Li@synaptics.com>
+Cc:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, m.szyprowski@samsung.com,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        hverkuil-cisco@xs4all.nl, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, linux-rockchip@lists.infradead.org,
+        mchehab@kernel.org, linux-staging@lists.linux.dev,
+        ming.qian@nxp.com, kernel@collabora.com,
+        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
+Subject: Re: [PATCH v3 04/11] media: videobuf2: Stop define VB2_MAX_FRAME as
+ global
+Message-ID: <20230712104801.tgawhexpm53ocgd6@chromium.org>
+References: <20230622131349.144160-1-benjamin.gaignard@collabora.com>
+ <20230622131349.144160-5-benjamin.gaignard@collabora.com>
+ <e7444263-0ce5-1575-8cca-1e51b1cfbe9a@synaptics.com>
+ <5cb3f216-5041-a155-5d2c-059dc1f15024@collabora.com>
+ <25b21252-0d3a-3e50-0012-57055f386fee@synaptics.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2] ASoC: dt-bindings: Update maintainer email id
-Content-Language: en-US
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-CC:     <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <cychiang@chromium.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20230707074337.3120530-1-quic_rohkumar@quicinc.com>
- <CAMuHMdXRt_9BzfnaqVJUAS4QdvGBDZk3B+R_cERUykZhyNWtzQ@mail.gmail.com>
-From:   Rohit Kumar <quic_rohkumar@quicinc.com>
-In-Reply-To: <CAMuHMdXRt_9BzfnaqVJUAS4QdvGBDZk3B+R_cERUykZhyNWtzQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ibN9tAFNWnfiJZqiQ04kuYBXdPCS-kxz
-X-Proofpoint-GUID: ibN9tAFNWnfiJZqiQ04kuYBXdPCS-kxz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-12_06,2023-07-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0 clxscore=1011
- priorityscore=1501 mlxlogscore=951 suspectscore=0 mlxscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2307120095
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+In-Reply-To: <25b21252-0d3a-3e50-0012-57055f386fee@synaptics.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,40 +82,210 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jul 03, 2023 at 04:35:30PM +0800, Hsia-Jun Li wrote:
+> 
+> On 7/3/23 16:09, Benjamin Gaignard wrote:
+> > CAUTION: Email originated externally, do not click links or open
+> > attachments unless you recognize the sender and know the content is
+> > safe.
+> > 
+> > 
+> > Le 30/06/2023 à 11:51, Hsia-Jun Li a écrit :
+> > > 
+> > > On 6/22/23 21:13, Benjamin Gaignard wrote:
+> > > > CAUTION: Email originated externally, do not click links or open
+> > > > attachments unless you recognize the sender and know the content is
+> > > > safe.
+> > > > 
+> > > > 
+> > > > After changing bufs arrays to a dynamic allocated array
+> > > > VB2_MAX_FRAME doesn't mean anything for videobuf2 core.
+> > > 
+> > > I think make it 64 which is the VB2_MAX_FRAME in Android GKI kernel is
+> > > more reasonable.
+> > > 
+> > > It would be hard to iterate the whole array, it would go worse with a
+> > > filter. Such iterate may need to go twice because you mix
+> > > post-processing buffer and decoding buffer(with MV) in the same array.
+> > 
+> > Here I don't want to change drivers behavior so I keep the same value.
+> > If it happens that they need more buffers, like for dynamic resolution
+> > change
+> > feature for Verisilicon VP9 decoder, case by case patches will be needed.
+> > 
+> I just don't like the idea that using a variant length array here.
+> 
 
-On 7/12/2023 2:48 PM, Geert Uytterhoeven wrote:
-> Hi Rohit,
->
-> Thanks for your patch!
->
-> On Fri, Jul 7, 2023 at 9:49â€¯AM Rohit kumar <quic_rohkumar@quicinc.com> wrote:
->> [PATCH v2] ASoC: dt-bindings: Update maintainer email id
-> Thank you for stepping forward to become a maintainer for all ASoC
-> DT bindings ;-)
->
->> Updated my mail id to latest quicinc id.
->>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
->> ---
->> v2: Updated commit header
->>
->>   .../devicetree/bindings/sound/google,sc7180-trogdor.yaml        | 2 +-
->>   Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml     | 2 +-
-> Oh wait, this is not for all of ASoC...
->
-> Please use one-line summaries that reflect the actual changes.
-> Thanks!
+"I don't like" is not an argument. We had a number of arguments for
+using a generic helper (originally idr, but later decided to go with
+XArray, because the former is now deprecated) that we pointed out in
+our review comments for previous revisions. It wasn't really about the
+size being variable, but rather avoiding open coding things in vb2 and
+duplicating what's already implemented in generic code.
 
-Sorry, Looks like change is already applied. I will take care of it from 
-next time.
+> And I could explain why you won't need so many buffers for the performance
+> of decoding.
+> 
+> VP9 could support 10 reference frames in dpb.
+> 
+> Even for those frequent resolution changing test set, it would only happen
+> to two resolutions,
+> 
+> 32 would be enough for 20 buffers of two resolution plus golden frames. It
+> also leaves enough slots for re-order latency.
+> 
+> If your case had more two resolutions, likes low->medium->high.
+> 
+> I would suggest just skip the medium resolutions, just allocate the lower
+> one first for fast playback then the highest for all the possible
+> 
+> medium cases. Reallocation happens frequently would only cause memory
+> fragment, nothing benefits your performance.
+> 
 
-Thanks,
+We have mechanisms in the kernel to deal with memory fragmentation
+(migration/compaction) and it would still only matters for the
+pathologic cases of hardware that require physically contiguous memory.
+Modern hardware with proper DMA capabilities can either scatter-gather
+or are equipped with an IOMMU, so the allocation always happens in page
+granularity and fragmentation is avoided.
 
-Rohit
+Best regards,
+Tomasz
 
->
-> Gr{oetje,eeting}s,
->
->                          Geert
->
+> > 
+> > > 
+> > > > Remove it from the core definitions but keep it for drivers internal
+> > > > needs.
+> > > > 
+> > > > Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> > > > ---
+> > > >   drivers/media/common/videobuf2/videobuf2-core.c | 2 ++
+> > > >   drivers/media/platform/amphion/vdec.c | 1 +
+> > > > .../media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c | 2 ++
+> > > >   drivers/media/platform/qcom/venus/hfi.h | 2 ++
+> > > >   drivers/media/platform/verisilicon/hantro_hw.h | 2 ++
+> > > >   drivers/staging/media/ipu3/ipu3-v4l2.c | 2 ++
+> > > >   include/media/videobuf2-core.h | 1 -
+> > > >   include/media/videobuf2-v4l2.h | 4 ----
+> > > >   8 files changed, 11 insertions(+), 5 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/media/common/videobuf2/videobuf2-core.c
+> > > > b/drivers/media/common/videobuf2/videobuf2-core.c
+> > > > index 86e1e926fa45..899783f67580 100644
+> > > > --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> > > > +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> > > > @@ -31,6 +31,8 @@
+> > > > 
+> > > >   #include <trace/events/vb2.h>
+> > > > 
+> > > > +#define VB2_MAX_FRAME  32
+> > > > +
+> > > >   static int debug;
+> > > >   module_param(debug, int, 0644);
+> > > > 
+> > > > diff --git a/drivers/media/platform/amphion/vdec.c
+> > > > b/drivers/media/platform/amphion/vdec.c
+> > > > index 3fa1a74a2e20..b3219f6d17fa 100644
+> > > > --- a/drivers/media/platform/amphion/vdec.c
+> > > > +++ b/drivers/media/platform/amphion/vdec.c
+> > > > @@ -28,6 +28,7 @@
+> > > > 
+> > > >   #define VDEC_MIN_BUFFER_CAP            8
+> > > >   #define VDEC_MIN_BUFFER_OUT            8
+> > > > +#define VB2_MAX_FRAME                  32
+> > > > 
+> > > >   struct vdec_fs_info {
+> > > >          char name[8];
+> > > > diff --git
+> > > > a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+> > > > b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+> > > > index 6532a69f1fa8..a1e0f24bb91c 100644
+> > > > --- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+> > > > +++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+> > > > @@ -16,6 +16,8 @@
+> > > >   #include "../vdec_drv_if.h"
+> > > >   #include "../vdec_vpu_if.h"
+> > > > 
+> > > > +#define VB2_MAX_FRAME  32
+> > > > +
+> > > >   /* reset_frame_context defined in VP9 spec */
+> > > >   #define VP9_RESET_FRAME_CONTEXT_NONE0 0
+> > > >   #define VP9_RESET_FRAME_CONTEXT_NONE1 1
+> > > > diff --git a/drivers/media/platform/qcom/venus/hfi.h
+> > > > b/drivers/media/platform/qcom/venus/hfi.h
+> > > > index f25d412d6553..bd5ca5a8b945 100644
+> > > > --- a/drivers/media/platform/qcom/venus/hfi.h
+> > > > +++ b/drivers/media/platform/qcom/venus/hfi.h
+> > > > @@ -10,6 +10,8 @@
+> > > > 
+> > > >   #include "hfi_helper.h"
+> > > > 
+> > > > +#define VB2_MAX_FRAME                          32
+> > > > +
+> > > >   #define VIDC_SESSION_TYPE_VPE                  0
+> > > >   #define VIDC_SESSION_TYPE_ENC                  1
+> > > >   #define VIDC_SESSION_TYPE_DEC                  2
+> > > > diff --git a/drivers/media/platform/verisilicon/hantro_hw.h
+> > > > b/drivers/media/platform/verisilicon/hantro_hw.h
+> > > > index e83f0c523a30..9e8faf7ba6fb 100644
+> > > > --- a/drivers/media/platform/verisilicon/hantro_hw.h
+> > > > +++ b/drivers/media/platform/verisilicon/hantro_hw.h
+> > > > @@ -15,6 +15,8 @@
+> > > >   #include <media/v4l2-vp9.h>
+> > > >   #include <media/videobuf2-core.h>
+> > > > 
+> > > > +#define VB2_MAX_FRAME  32
+> > > > +
+> > > >   #define DEC_8190_ALIGN_MASK    0x07U
+> > > > 
+> > > >   #define MB_DIM                 16
+> > > > diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c
+> > > > b/drivers/staging/media/ipu3/ipu3-v4l2.c
+> > > > index e530767e80a5..6627b5c2d4d6 100644
+> > > > --- a/drivers/staging/media/ipu3/ipu3-v4l2.c
+> > > > +++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
+> > > > @@ -10,6 +10,8 @@
+> > > >   #include "ipu3.h"
+> > > >   #include "ipu3-dmamap.h"
+> > > > 
+> > > > +#define VB2_MAX_FRAME  32
+> > > > +
+> > > >   /******************** v4l2_subdev_ops ********************/
+> > > > 
+> > > >   #define IPU3_RUNNING_MODE_VIDEO                0
+> > > > diff --git a/include/media/videobuf2-core.h
+> > > > b/include/media/videobuf2-core.h
+> > > > index 77921cf894ef..080b783d608d 100644
+> > > > --- a/include/media/videobuf2-core.h
+> > > > +++ b/include/media/videobuf2-core.h
+> > > > @@ -20,7 +20,6 @@
+> > > >   #include <media/media-request.h>
+> > > >   #include <media/frame_vector.h>
+> > > > 
+> > > > -#define VB2_MAX_FRAME  (32)
+> > > >   #define VB2_MAX_PLANES (8)
+> > > > 
+> > > >   /**
+> > > > diff --git a/include/media/videobuf2-v4l2.h
+> > > > b/include/media/videobuf2-v4l2.h
+> > > > index 5a845887850b..88a7a565170e 100644
+> > > > --- a/include/media/videobuf2-v4l2.h
+> > > > +++ b/include/media/videobuf2-v4l2.h
+> > > > @@ -15,10 +15,6 @@
+> > > >   #include <linux/videodev2.h>
+> > > >   #include <media/videobuf2-core.h>
+> > > > 
+> > > > -#if VB2_MAX_FRAME != VIDEO_MAX_FRAME
+> > > > -#error VB2_MAX_FRAME != VIDEO_MAX_FRAME
+> > > > -#endif
+> > > > -
+> > > >   #if VB2_MAX_PLANES != VIDEO_MAX_PLANES
+> > > >   #error VB2_MAX_PLANES != VIDEO_MAX_PLANES
+> > > >   #endif
+> > > > -- 
+> > > > 2.39.2
+> > > > 
+> -- 
+> Hsia-Jun(Randy) Li
+> 
