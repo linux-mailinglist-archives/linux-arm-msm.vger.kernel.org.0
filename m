@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F2B9751342
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:11:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 469C8751343
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 00:11:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232415AbjGLWLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jul 2023 18:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60142 "EHLO
+        id S229572AbjGLWLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jul 2023 18:11:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232382AbjGLWLp (ORCPT
+        with ESMTP id S232392AbjGLWLq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jul 2023 18:11:45 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 638C61FEE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:43 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fb7373dd35so1636473e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:43 -0700 (PDT)
+        Wed, 12 Jul 2023 18:11:46 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF04A2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:44 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b6f943383eso122670071fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jul 2023 15:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689199901; x=1689804701;
+        d=linaro.org; s=google; t=1689199902; x=1689804702;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NjoI3Dx1Y7JEO/QjjX2Gq34JkRG4tKXD0+CPY31Fy3E=;
-        b=j0/D7wxA4iyH+b7ICVgO4R7WWGxeJrcBs3PzaFpHruiCWDmfPgpDC5T5dTiwIfz5ze
-         teLLgrvkNHULKDrJHgFVYNH5eqUqVq83KVjzTK62+f/2co38A97/vGpm4gtB7dOkby4e
-         X/HyQKcFUdtCxebjznnsaJpiEew17IehcpPRwB8e9ysJMJoCfWx82qTLDkc5D2grgwUX
-         IkYwLPNQ4R9EcS2byO0LIy2dksKIbg6fwoK3QMjiw7UMfdcjT8xhMIkhSOQ142eKSBe5
-         o+MOhfgiUYK4FGViGv+oe+KZcQMz3O8TDAgr/kcWz4i5/jiEGKHG4u3goqELBJuCGYLK
-         L/kg==
+        bh=Ln26l+vUCSi4edYTgivRAGgTHzh3pendnmUbrCgVtyc=;
+        b=eUQJCuEGxoNyAgK0GQU7bsh0VzSVckuvMBafrWEJstVAupgtuOL7xp0UCV8AY/Bvy/
+         N3X7xcBUHIMr7x/hwSHsippDRjIZV6TboLIDmIWlVnDlX0Qbsj/q28ydHIVcT6rEVrkQ
+         d1jBsCMk7totRPk0u+TsWmUfTut317VYbAypkURiykvzGHNw7EnEueJ2SQJ3n4O7Kp1k
+         M/G2TjTWHkyTkeQUtzV0QguF4wm+h3fY1MLeYby8b0mc4IYmrj8scuD+//ehPL/N6V9Z
+         v3qBwC7usWB7s3av551I0iJjUhCd8RGSNj6XWOtYLtpX8O7FF4kS7eoYwK9x9i+VLmYf
+         xHdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689199901; x=1689804701;
+        d=1e100.net; s=20221208; t=1689199902; x=1689804702;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NjoI3Dx1Y7JEO/QjjX2Gq34JkRG4tKXD0+CPY31Fy3E=;
-        b=Yi8Dh/0jrUMkYw8Y/sYaCmH6a4AJIVm6xb7CQvzoWILC3sHHTDAw2yLmfxdlNPA8rW
-         MAH2gKxEAFUFuhD8ohvFd/3lIjCaMAI5i6wvvf/uMHOsK06iNuzEhN79FfvkMLezb7E+
-         wXH/F37/jQ4nUoeU9Vfr5EpjLS8FtaIFnQSNZ8cN2IvN8UtYSGToLhaDN5Nz3goAUxHs
-         X41GtDY6q/DQ/qNOkQH0fDiC4p4tTRDx6tW9eZJGFAaN38sAp8DSDSTpl+sMGh3kmRHZ
-         SplPS+GuE84SbLMsrTPnm2nkhV+Adb5bSaqItCkaJc9fokSeYwuDG6JgkjRaOdf8ZcrZ
-         N1kA==
-X-Gm-Message-State: ABy/qLZryzdMJ3nPW+L2tIewAGMOTytqqQSzsTW8tjdP+Jp9KoA+R6SY
-        GjjrSrjOKENfk98LEkmjwSAVjQ==
-X-Google-Smtp-Source: APBJJlFXWUYjQidB1ObvXIK2k2OVBloUYCnZ3YxIu1veI2yPlLZehMX4vOhmglglknfvr10Tu37Q/A==
-X-Received: by 2002:a05:6512:3f18:b0:4f8:6e50:d6d0 with SMTP id y24-20020a0565123f1800b004f86e50d6d0mr1217938lfa.31.1689199901809;
-        Wed, 12 Jul 2023 15:11:41 -0700 (PDT)
+        bh=Ln26l+vUCSi4edYTgivRAGgTHzh3pendnmUbrCgVtyc=;
+        b=XWsMsrTSxvgiiZ89t106e0+v3c2D3TJ+tUQwI3d9q8XUNswvQu6q2UiK+kYkGp7CcR
+         yX9KKYWS837jel3wtwsi29JbWDtrQP3VH/wtrbdcg0q67Ecv82NyJDgHxytvTNlA59Kq
+         afghN3dOmQhd0H4p62k0ZUyMjVmCVLWoi890ie7PMB+d6yJJSjzGMCrJ8gLYtYqEmhh7
+         srYAKY751jQzLx6foVwM2G6AoFhlD+lumkN1PXojdJ3SQ1MzIXqGlIrXbGjLQE9jE0e6
+         tBSa0/dFvd8XX8GurzG/U63jsDAPtKjeBuMI84uZByWIYIXFiWtTyDgW0nRycBdps5q1
+         Ndpg==
+X-Gm-Message-State: ABy/qLa+hVI9v3E+X5Oxa3+3ko2p37KvF5/j7xwJ9Pm+MRFvZ9oQDQQi
+        N8dmm1VrMskjtx3G4y7h0jypGQ==
+X-Google-Smtp-Source: APBJJlHAcG8o4Mk5Otmnqxt/jCoQlHMizSXykFGZPee/W038aHNo+Hqo6dCCDHs5kBHu5cGYiOPtAQ==
+X-Received: by 2002:a19:6504:0:b0:4fb:8b78:4a93 with SMTP id z4-20020a196504000000b004fb8b784a93mr1712790lfb.7.1689199902781;
+        Wed, 12 Jul 2023 15:11:42 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id q16-20020ac25290000000b004f62fdf61fdsm856193lfm.204.2023.07.12.15.11.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jul 2023 15:11:41 -0700 (PDT)
+        Wed, 12 Jul 2023 15:11:42 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v4 02/11] drm/msm/dpu: core_perf: extract bandwidth aggregation function
-Date:   Thu, 13 Jul 2023 01:11:30 +0300
-Message-Id: <20230712221139.313729-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 03/11] drm/msm/dpu: core_perf: bail earlier if there are no ICC paths
+Date:   Thu, 13 Jul 2023 01:11:31 +0300
+Message-Id: <20230712221139.313729-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230712221139.313729-1-dmitry.baryshkov@linaro.org>
 References: <20230712221139.313729-1-dmitry.baryshkov@linaro.org>
@@ -78,75 +78,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In preparation to refactoring the dpu_core_perf debugfs interface,
-extract the bandwidth aggregation function from
-_dpu_core_perf_crtc_update_bus().
+Skip bandwidth aggregation and return early if there are no interconnect
+paths defined for the DPU device.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 39 +++++++++++--------
- 1 file changed, 22 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 1d9d83d7b99e..333dcfe57800 100644
+index 333dcfe57800..05d340aa18c5 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -206,33 +206,38 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 	return 0;
- }
+@@ -237,11 +237,11 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+ 	int i, ret = 0;
+ 	u64 avg_bw;
  
--static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
--		struct drm_crtc *crtc)
-+static void dpu_core_perf_aggregate(struct drm_device *ddev,
-+				    enum dpu_crtc_client_type curr_client_type,
-+				    struct dpu_core_perf_params *perf)
- {
--	struct dpu_core_perf_params perf = { 0 };
--	enum dpu_crtc_client_type curr_client_type
--					= dpu_crtc_get_client_type(crtc);
--	struct drm_crtc *tmp_crtc;
- 	struct dpu_crtc_state *dpu_cstate;
--	int i, ret = 0;
--	u64 avg_bw;
-+	struct drm_crtc *tmp_crtc;
- 
--	drm_for_each_crtc(tmp_crtc, crtc->dev) {
-+	drm_for_each_crtc(tmp_crtc, ddev) {
- 		if (tmp_crtc->enabled &&
--			curr_client_type ==
--				dpu_crtc_get_client_type(tmp_crtc)) {
-+		    curr_client_type == dpu_crtc_get_client_type(tmp_crtc)) {
- 			dpu_cstate = to_dpu_crtc_state(tmp_crtc->state);
- 
--			perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
--					dpu_cstate->new_perf.max_per_pipe_ib);
-+			perf->max_per_pipe_ib = max(perf->max_per_pipe_ib,
-+						    dpu_cstate->new_perf.max_per_pipe_ib);
- 
--			perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
-+			perf->bw_ctl += dpu_cstate->new_perf.bw_ctl;
- 
--			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu paths:%d\n",
--				  tmp_crtc->base.id,
--				  dpu_cstate->new_perf.bw_ctl, kms->num_paths);
-+			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu\n",
-+					 tmp_crtc->base.id,
-+					 dpu_cstate->new_perf.bw_ctl);
- 		}
- 	}
-+}
-+
-+static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-+		struct drm_crtc *crtc)
-+{
-+	struct dpu_core_perf_params perf = { 0 };
-+	int i, ret = 0;
-+	u64 avg_bw;
-+
-+	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
- 
+-	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+-
  	if (!kms->num_paths)
  		return 0;
+ 
++	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
++
+ 	avg_bw = perf.bw_ctl;
+ 	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
+ 
 -- 
 2.39.2
 
