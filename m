@@ -2,72 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83416752B51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 22:05:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30878752B56
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 22:06:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232405AbjGMUFP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 16:05:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43820 "EHLO
+        id S229643AbjGMUGL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 16:06:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231547AbjGMUFO (ORCPT
+        with ESMTP id S229620AbjGMUGL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 16:05:14 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 860AA2D4B;
-        Thu, 13 Jul 2023 13:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689278713; x=1720814713;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=9JiUrZtZsTMA2CpeUkSmTHTXxe2GKMdio7QpaLZNZ3w=;
-  b=OZHrf/hSTRluFbQYiOPjIjDC3CHRU2TVjHaYYDG8PhkT3FNw8xYwxulh
-   gQmHpXDA5ZUFDVFcczusTvt/rfDgVtCRJOpSryhVLY3+2k0nusUfaWQlN
-   RwsUQIJgDtpDx0V4PvE8VAEGngtEN/5c6Pqr8PSSgnn/rCf9FDg9Lxt9b
-   /0zK3rlIKWEGPYjL8zBoH/Lm3GpEWzrxRgnK8HcuOjo6vFxOX0gYJDiiF
-   jVKabNNx5Hd7f4EaSLWeZ6gFNCSi81s4huAb5H1dbspPSn2mit4/EMHW8
-   yAuhHxz026hT3i8L8gc2UlmZrR++i0AKZaqIFv9IrtmRgcm5TCIqQU8oC
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="364177164"
-X-IronPort-AV: E=Sophos;i="6.01,203,1684825200"; 
-   d="scan'208";a="364177164"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2023 13:05:13 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="757307678"
-X-IronPort-AV: E=Sophos;i="6.01,203,1684825200"; 
-   d="scan'208";a="757307678"
-Received: from lkp-server01.sh.intel.com (HELO c544d7fc5005) ([10.239.97.150])
-  by orsmga001.jf.intel.com with ESMTP; 13 Jul 2023 13:05:08 -0700
-Received: from kbuild by c544d7fc5005 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qK2Yl-0006sX-2T;
-        Thu, 13 Jul 2023 20:05:07 +0000
-Date:   Fri, 14 Jul 2023 04:04:42 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        manivannan.sadhasivam@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 2/8] PCI: qcom-ep: Add support for D-state change
- notification
-Message-ID: <202307140321.wjx00mop-lkp@intel.com>
-References: <1688122331-25478-3-git-send-email-quic_krichai@quicinc.com>
+        Thu, 13 Jul 2023 16:06:11 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E17582D4B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 13:06:09 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36DJxqYt032016;
+        Thu, 13 Jul 2023 20:06:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=GQQFlseTHJXewMnf4AH7VinCynpLCICqRB3T1dO5yFA=;
+ b=XTqJfk1c8Z5Q7SgjaJdrVp+y6pJNXZloQ236O34rLJ4g0XlzBOlxqVSPSKj+UmCVsvYd
+ He9Byw8eMw+fGn8uApG9oD2tkArtiLWbRXetQ6bFJHN3GFb34zWpC3/m9SZAXJXl+h8k
+ 6AU7LrEq5cKuBgX0pK5+sTq9mSuirUy3qz1BKtyqd4mFiCTz1loDnMF3/dCP47b3b6zI
+ bp2THZOL7j4iqfROhBgbAZKVnq3iz6SQ/uzkZ2RH519mMjdrMriC9mRExqApEWFbshvd
+ AURlNx5VWJ0WuvIMxu6L8IAEgzrpTjOQtnPCRr8RPEeJloUg0O7GU3Yw6J7+Fqdy01it cw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rtpu904wy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Jul 2023 20:06:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36DK65PJ024069
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Jul 2023 20:06:05 GMT
+Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 13 Jul 2023 13:06:03 -0700
+Date:   Fri, 14 Jul 2023 01:35:59 +0530
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     Rob Clark <robdclark@gmail.com>
+CC:     <dri-devel@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [PATCH 05/12] drm/msm/adreno: Use quirk to identify
+ cached-coherent support
+Message-ID: <m2r2klrcvgs2qiywx5eetcwwjph6suzjey4hhbon3bhqdsbg7t@lvwdvbhoaqaw>
+References: <20230706211045.204925-1-robdclark@gmail.com>
+ <20230706211045.204925-6-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <1688122331-25478-3-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20230706211045.204925-6-robdclark@gmail.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Ejw8zUvfqETWCo_Wr3Lt5oLEArpleIJp
+X-Proofpoint-ORIG-GUID: Ejw8zUvfqETWCo_Wr3Lt5oLEArpleIJp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-13_08,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 mlxlogscore=999 clxscore=1015 adultscore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307130176
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,90 +80,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+On Thu, Jul 06, 2023 at 02:10:38PM -0700, Rob Clark wrote:
+> 
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> It is better to explicitly list it.  With the move to opaque chip-id's
+> for future devices, we should avoid trying to infer things like
+> generation from the numerical value.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 23 +++++++++++++++-------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  1 +
+>  2 files changed, 17 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index f469f951a907..3c531da417b9 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -256,6 +256,7 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_512K,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
+>  		.init = a6xx_gpu_init,
+>  	}, {
+>  		.rev = ADRENO_REV(6, 1, 9, ANY_ID),
+> @@ -266,6 +267,7 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_512K,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a615_zap.mdt",
+>  		.hwcg = a615_hwcg,
+> @@ -278,6 +280,7 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_1M,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a630_zap.mdt",
+>  		.hwcg = a630_hwcg,
+> @@ -290,6 +293,7 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_1M,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a640_zap.mdt",
+>  		.hwcg = a640_hwcg,
+> @@ -302,7 +306,8 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_1M + SZ_128K,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> -		.quirks = ADRENO_QUIRK_HAS_HW_APRIV,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+> +			ADRENO_QUIRK_HAS_HW_APRIV,
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a650_zap.mdt",
+>  		.hwcg = a650_hwcg,
+> @@ -316,7 +321,8 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_1M + SZ_512K,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> -		.quirks = ADRENO_QUIRK_HAS_HW_APRIV,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+> +			ADRENO_QUIRK_HAS_HW_APRIV,
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a660_zap.mdt",
+>  		.hwcg = a660_hwcg,
+> @@ -329,7 +335,8 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_512K,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> -		.quirks = ADRENO_QUIRK_HAS_HW_APRIV,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+> +			ADRENO_QUIRK_HAS_HW_APRIV,
+>  		.init = a6xx_gpu_init,
+>  		.hwcg = a660_hwcg,
+>  		.address_space_size = SZ_16G,
+> @@ -342,6 +349,7 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_2M,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a640_zap.mdt",
+>  		.hwcg = a640_hwcg,
+> @@ -353,7 +361,8 @@ static const struct adreno_info gpulist[] = {
+>  		},
+>  		.gmem = SZ_4M,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> -		.quirks = ADRENO_QUIRK_HAS_HW_APRIV,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+> +			ADRENO_QUIRK_HAS_HW_APRIV,
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a690_zap.mdt",
+>  		.hwcg = a690_hwcg,
+> @@ -565,9 +574,9 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+>  	if (ret)
+>  		return ret;
+>  
+> -	if (config.rev.core >= 6)
+> -		if (!adreno_has_gmu_wrapper(to_adreno_gpu(gpu)))
+> -			priv->has_cached_coherent = true;
+> +	priv->has_cached_coherent =
+> +		!!(info->quirks & ADRENO_QUIRK_HAS_CACHED_COHERENT) &&
+> +		!adreno_has_gmu_wrapper(to_adreno_gpu(gpu));
+>  
+>  	return 0;
+>  }
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index a7c4a2c536e3..e08d41337169 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -33,6 +33,7 @@ enum {
+>  #define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
+>  #define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
+>  #define ADRENO_QUIRK_HAS_HW_APRIV		BIT(3)
+> +#define ADRENO_QUIRK_HAS_CACHED_COHERENT	BIT(4)
+a shorter ADRENO_IS_IOCOHERENT?
 
-kernel test robot noticed the following build warnings:
+-Akhil
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus linus/master v6.5-rc1 next-20230713]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/PCI-endpoint-Add-dstate-change-notifier-support/20230630-190228
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/1688122331-25478-3-git-send-email-quic_krichai%40quicinc.com
-patch subject: [PATCH v2 2/8] PCI: qcom-ep: Add support for D-state change notification
-config: arm-randconfig-r081-20230713 (https://download.01.org/0day-ci/archive/20230714/202307140321.wjx00mop-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20230714/202307140321.wjx00mop-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202307140321.wjx00mop-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/pci/controller/dwc/pcie-qcom-ep.c:587:23: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted pci_power_t [usertype] state @@     got unsigned int [assigned] [usertype] dstate @@
-   drivers/pci/controller/dwc/pcie-qcom-ep.c:587:23: sparse:     expected restricted pci_power_t [usertype] state
-   drivers/pci/controller/dwc/pcie-qcom-ep.c:587:23: sparse:     got unsigned int [assigned] [usertype] dstate
-
-vim +587 drivers/pci/controller/dwc/pcie-qcom-ep.c
-
-   555	
-   556	/* TODO: Notify clients about PCIe state change */
-   557	static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
-   558	{
-   559		struct qcom_pcie_ep *pcie_ep = data;
-   560		struct dw_pcie *pci = &pcie_ep->pci;
-   561		struct device *dev = pci->dev;
-   562		u32 status = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_STATUS);
-   563		u32 mask = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_MASK);
-   564		pci_power_t state;
-   565		u32 dstate, val;
-   566	
-   567		writel_relaxed(status, pcie_ep->parf + PARF_INT_ALL_CLEAR);
-   568		status &= mask;
-   569	
-   570		if (FIELD_GET(PARF_INT_ALL_LINK_DOWN, status)) {
-   571			dev_dbg(dev, "Received Linkdown event\n");
-   572			pcie_ep->link_status = QCOM_PCIE_EP_LINK_DOWN;
-   573			pci_epc_linkdown(pci->ep.epc);
-   574		} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
-   575			dev_dbg(dev, "Received BME event. Link is enabled!\n");
-   576			pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
-   577			pci_epc_bme_notify(pci->ep.epc);
-   578		} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
-   579			dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
-   580			val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
-   581			val |= PARF_PM_CTRL_READY_ENTR_L23;
-   582			writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
-   583		} else if (FIELD_GET(PARF_INT_ALL_DSTATE_CHANGE, status)) {
-   584			dstate = dw_pcie_readl_dbi(pci, DBI_CON_STATUS) &
-   585						   DBI_CON_STATUS_POWER_STATE_MASK;
-   586			dev_dbg(dev, "Received D%d state event\n", dstate);
- > 587			state = dstate;
-   588			if (dstate == 3) {
-   589				val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
-   590				val |= PARF_PM_CTRL_REQ_EXIT_L1;
-   591				writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
-   592				state = PCI_D3hot;
-   593				if (gpiod_get_value(pcie_ep->reset))
-   594					state = PCI_D3cold;
-   595			}
-   596			pci_epc_dstate_change(pci->ep.epc, state);
-   597		} else if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
-   598			dev_dbg(dev, "Received Linkup event. Enumeration complete!\n");
-   599			dw_pcie_ep_linkup(&pci->ep);
-   600			pcie_ep->link_status = QCOM_PCIE_EP_LINK_UP;
-   601		} else {
-   602			dev_dbg(dev, "Received unknown event: %d\n", status);
-   603		}
-   604	
-   605		return IRQ_HANDLED;
-   606	}
-   607	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+>  
+>  struct adreno_rev {
+>  	uint8_t  core;
+> -- 
+> 2.41.0
+> 
