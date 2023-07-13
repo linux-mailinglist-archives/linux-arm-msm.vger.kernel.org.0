@@ -2,48 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0486A751C4E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 10:55:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DC88751C50
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 10:55:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233298AbjGMIzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 04:55:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
+        id S233661AbjGMIzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 04:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjGMIzI (ORCPT
+        with ESMTP id S233755AbjGMIzL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 04:55:08 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 99C1B1B6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:07 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BAC1B1570
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:49 -0700 (PDT)
-Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 089C03F740
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:06 -0700 (PDT)
-Date:   Thu, 13 Jul 2023 09:54:50 +0100
-From:   Liviu Dudau <liviu.dudau@arm.com>
-To:     Gaosheng Cui <cuigaosheng1@huawei.com>
-Cc:     airlied@gmail.com, daniel@ffwll.ch, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, marijn.suijten@somainline.org,
-        neil.armstrong@linaro.org, sam@ravnborg.org,
-        quic_eberman@quicinc.com, a39.skl@gmail.com,
-        quic_gurus@quicinc.com, angelogioacchino.delregno@somainline.org,
-        james.qian.wang@arm.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 3/3] drm/komeda: Fix IS_ERR() vs NULL check in
- komeda_component_get_avail_scaler()
-Message-ID: <ZK-72h3fVj6PlGB0@e110455-lin.cambridge.arm.com>
-References: <20230713020556.1956639-1-cuigaosheng1@huawei.com>
- <20230713020556.1956639-4-cuigaosheng1@huawei.com>
+        Thu, 13 Jul 2023 04:55:11 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6731E42
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:08 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bd77424c886so436225276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689238508; x=1691830508;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mvy/EMrBnpulduSmMNLqJP+nI2s3mvHLILhwx65lZzg=;
+        b=n/4CMkr4qcI041dReHtmELq5ltPXDA8cbnDEnrDVW/N4+L5e3L8ni+CbAxQU/e4eP5
+         s81fZfsz295AJttgBoNxIGX7U2yru2axJ6M4pCLjn7tHYzkeHlvKC/0TD8ek3UphWmVp
+         05dFtg+DPS8skpG2b2VeGgh/Pt+5p38QTvjygKPWS47F5bmcjEH87Js6jWz5+SLT+dPZ
+         PZJPf0M1fHyqW5i/uzrhIrvPn5QbXq9KgS12S/A896e+ZLcYxOz2AkgHYX21oDVgDRQh
+         6NlYsNu4CcVtjDqZ28LpwMt2g4ZdYNNt1tV22wathsGULaafqPHisoq8qZ2VlxDtkLZm
+         u/VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689238508; x=1691830508;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mvy/EMrBnpulduSmMNLqJP+nI2s3mvHLILhwx65lZzg=;
+        b=NsTjYib4KCp6Wrx4melVXaU9+2l8qh6iS5Xs2tYZosjk6EqN1SmxofHzrUKjX7s5Xz
+         zyURitEpcRTbtwUMV/bhY9F+cVhTgVWgSEAMzDEJUU8wpgGopJta+CItjmBnVQ9i/j4H
+         2qHyOdRBqTZJXUq0KZ80GftXCLFI0P9oJ+VFWqAvbCnn6uTQcfy9HMmrWmSxgHEhJUyF
+         QkgleJSPuOwdyDutDXHWdtt3PFlcTQNu71HiAwv5042qGIYQFbZN/1oiS0jd1IzNOTiU
+         tMbcgvwYmATmP0Zf4KT9b1bHnUGKMWSK65U7P6Qari/ohcWPJRRL1McXJtE4ggIWBGpO
+         VJYg==
+X-Gm-Message-State: ABy/qLaQSY3b5weITsR+X/7Y1Q2JB82JvxXvs4jn+C5SLj86t/1RPCnD
+        pFF/5NxhflUhcPZ+7JAYGvXw3JFOX8g2qwL6TIqS6g==
+X-Google-Smtp-Source: APBJJlHLk2NajIUnrpoa5kWE3qfd685DCFLowb3S1Uu55NjcG42lVYQrHMU7nHsK/lAXhXD6MXiXp51m+5u94OlNxT0=
+X-Received: by 2002:a0d:c884:0:b0:579:e8de:3580 with SMTP id
+ k126-20020a0dc884000000b00579e8de3580mr1101134ywd.9.1689238507937; Thu, 13
+ Jul 2023 01:55:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230713020556.1956639-4-cuigaosheng1@huawei.com>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <1687246361-23607-1-git-send-email-quic_taozha@quicinc.com>
+ <1687246361-23607-10-git-send-email-quic_taozha@quicinc.com>
+ <2023062024-sincere-tripod-95dc@gregkh> <3aca4a55-0dc7-b34c-d2c0-111a96c33ec3@quicinc.com>
+ <e82385f1-de55-4c70-5c5c-35b93a5b2488@arm.com> <d3849c2a-8826-62a7-1749-0d4b3ee47259@quicinc.com>
+In-Reply-To: <d3849c2a-8826-62a7-1749-0d4b3ee47259@quicinc.com>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Thu, 13 Jul 2023 09:54:56 +0100
+Message-ID: <CAJ9a7VgRFDFoZgRQ_J62We7vJ2D_yULH18S5FwAnB4S+oi2npA@mail.gmail.com>
+Subject: Re: [PATCH v6 09/13] Add nodes for dsb edge control
+To:     Tao Zhang <quic_taozha@quicinc.com>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -51,55 +84,142 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+HI Tao,
 
-On Thu, Jul 13, 2023 at 10:05:56AM +0800, Gaosheng Cui wrote:
-> The komeda_pipeline_get_state() returns an ERR_PTR() on failure, we should
-> use IS_ERR() to check the return value.
+On Wed, 12 Jul 2023 at 14:53, Tao Zhang <quic_taozha@quicinc.com> wrote:
+>
+>
+> On 6/20/2023 9:41 PM, Suzuki K Poulose wrote:
+> > On 20/06/2023 09:31, Tao Zhang wrote:
+> >>
+> >> On 6/20/2023 3:37 PM, Greg Kroah-Hartman wrote:
+> >>> On Tue, Jun 20, 2023 at 03:32:37PM +0800, Tao Zhang wrote:
+> >>>> Add the nodes to set value for DSB edge control and DSB edge
+> >>>> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
+> >>>> resgisters to configure edge control. DSB edge detection control
+> >>>> 00: Rising edge detection
+> >>>> 01: Falling edge detection
+> >>>> 10: Rising and falling edge detection (toggle detection)
+> >>>> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
+> >>>> configure mask. Eight 32 bit registers providing DSB interface
+> >>>> edge detection mask control.
+> >>>>
+> >>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> >>>> ---
+> >>>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  32 +++++
+> >>>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 143
+> >>>> ++++++++++++++++++++-
+> >>>>   drivers/hwtracing/coresight/coresight-tpdm.h       |  22 ++++
+> >>>>   3 files changed, 196 insertions(+), 1 deletion(-)
+> >>>>
+> >>>> diff --git
+> >>>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> >>>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> >>>> index 2a82cd0..34189e4a 100644
+> >>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> >>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> >>>> @@ -60,3 +60,35 @@ Description:
+> >>>>           Bit[3] : Set to 0 for low performance mode.
+> >>>>                    Set to 1 for high performance mode.
+> >>>>           Bit[4:8] : Select byte lane for high performance mode.
+> >>>> +
+> >>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl
+> >>>> +Date:        March 2023
+> >>>> +KernelVersion    6.5
+> >>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao
+> >>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+> >>>> +Description:
+> >>>> +        Read/Write a set of the edge control registers of the DSB
+> >>>> +        in TPDM.
+> >>>> +
+> >>>> +        Expected format is the following:
+> >>>> +        <integer1> <integer2> <integer3>
+> >>> sysfs is "one value", not 3.  Please never have to parse a sysfs file.
+> >>
+> >> Do you mean sysfs file can only accept "one value"?
+> >>
+> >> I see that more than one value are written to the sysfs file
+> >> "trigout_attach".
+> >>
+> >>>
+> >>>> +static ssize_t dsb_edge_ctrl_show(struct device *dev,
+> >>>> +                       struct device_attribute *attr,
+> >>>> +                       char *buf)
+> >>>> +{
+> >>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> >>>> +    ssize_t size = 0;
+> >>>> +    unsigned long bytes;
+> >>>> +    int i;
+> >>>> +
+> >>>> +    spin_lock(&drvdata->spinlock);
+> >>>> +    for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
+> >>>> +        bytes = sysfs_emit_at(buf, size,
+> >>>> +                  "Index:0x%x Val:0x%x\n", i,
+> >>> Again, no, one value, no "string" needed to parse anything.
+> >>
+> >> I also see other sysfs files can be read more than one value in other
+> >> drivers.
+> >>
+> >> Is this "one value" limitation the usage rule of Linux sysfs system?
+> >>
+> >> Or am I misunderstanding what you mean?
+> >
+> > Please fix the other sysfs tunables in the following patches.
+>
+> List a new solution for the similar cases below, please see if this
+> design is reasonable?
+>
+> 1. Two SysFS files("dsb_edge_ctrl_idx" and "dsb_edge_ctrl_val") will be
+> created in this case.
+>
+> 2. First write to the node "dsb_edge_ctrl_idx" to set the index number
+> of the edge detection.
+>
+> 3. Then write to the node "dsb_edge_ctrl_val" to set the value of the
+> edge detection.
+>
+> For example, if we need need to set "Falling edge detection" to the edge
+> detection #220-#222, we can issue the following commands.
+>
+> echo 0xdc > tpdm1/dsb_edge_ctrl_idx
+>
+> echo 0x1 > tpdm1/dsb_edge_ctrl_val
+>
+> echo 0xdd > tpdm1/dsb_edge_ctrl_idx
+>
+> echo 0x1 > tpdm1/dsb_edge_ctrl_val
+>
+> echo 0xde > tpdm1/dsb_edge_ctrl_idx
+>
+> echo 0x1 > tpdm1/dsb_edge_ctrl_val
+>
+> If this design is acceptable, we will rewrite other similar nodes based
+> on this solution.
+>
 
-While reviewing the change I've realised that komeda_pipeline_get_state_and_set_crtc()
-is also mishandling the return value from komeda_pipeline_get_state(). If IS_ERR(st) is
-true it should use return ERR_CAST(st), following the same pattern as komeda_pipeline_get_state().
+This index / value model is used in the coresight drivers so should be
+OK - eg etm4 has cntr_idx / cntrldvr / cntr_val / cntr_ctrl, where
+index selects the counter, and the other val registers are applied to
+that counter.
 
-If you don't want to update this patch I can send a separate patch. Otherwise,
-the change looks good to me.
+Mike
 
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+> Let me know if you have any concerns or good suggestions for this solution.
+>
+>
+> Best,
+>
+> Tao
+>
+> >
+> > Kind regards
+> > Suzuki
+> >
+> >
 
-Best regards,
-Liviu
 
-
-> 
-> Fixes: 502932a03fce ("drm/komeda: Add the initial scaler support for CORE")
-> Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-> ---
->  drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c b/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
-> index 3276a3e82c62..e9c92439398d 100644
-> --- a/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
-> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
-> @@ -259,7 +259,7 @@ komeda_component_get_avail_scaler(struct komeda_component *c,
->  	u32 avail_scalers;
->  
->  	pipe_st = komeda_pipeline_get_state(c->pipeline, state);
-> -	if (!pipe_st)
-> +	if (IS_ERR(pipe_st))
->  		return NULL;
->  
->  	avail_scalers = (pipe_st->active_comps & KOMEDA_PIPELINE_SCALERS) ^
-> -- 
-> 2.25.1
-> 
 
 -- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
