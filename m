@@ -2,260 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B53AC751BCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 10:38:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AEE0751BF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 10:44:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234579AbjGMIiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 04:38:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41944 "EHLO
+        id S233346AbjGMIoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 04:44:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234570AbjGMIht (ORCPT
+        with ESMTP id S233363AbjGMInm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 04:37:49 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD474EE0;
-        Thu, 13 Jul 2023 01:31:53 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36D3IrVx007276;
-        Thu, 13 Jul 2023 08:31:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=OvVpve00te1ZwJQ/bOJmWVnItW8H6mKEdRfBTfyFYKo=;
- b=kZFVe1wr7FeYlgrTTILJMwqIA8N9gKsGpZgq/TnEjAbwkrFGUEsYbxKFHc+1awRAR4PF
- /Xxr5YKrmCJBajEjtKTBTjqyS2WOL7S8wHhWSx3P3SZPTy9ORVVREznRidcqLu77LLZU
- nLEP0USo1GjOtRQHon2W+7RUW8ovrbRkX3k4XsCxFrChSK66BttU4g0U7M+6yWa1Zscs
- I+48JrTqTs6/yr5GLhSvxGmiOr1GkGnX7pKln6Py40Kz5gKlQ0rN2SBpC8lC9Mk8dk4e
- bvfd6LHKZ301Xz0eOJHxLng9Q4o9JdlB6yJCQSytep6xVGr1RhfWNAlhd/m9p1OEV3lM 9w== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rshyubcsr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Jul 2023 08:31:49 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36D8VmLO032381
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Jul 2023 08:31:48 GMT
-Received: from hu-ipkumar-blr.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 13 Jul 2023 01:31:18 -0700
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>
-Subject: [PATCH 1/1] arm64: dts: qcom: ipq9574: Add cpu cooling maps
-Date:   Thu, 13 Jul 2023 14:01:01 +0530
-Message-ID: <20230713083101.971525-2-quic_ipkumar@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230713083101.971525-1-quic_ipkumar@quicinc.com>
-References: <20230713083101.971525-1-quic_ipkumar@quicinc.com>
+        Thu, 13 Jul 2023 04:43:42 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD069269F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:41:49 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f95bf5c493so796710e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:41:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689237708; x=1691829708;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ql1POIcuo0TsaMIUAHdPoB5L/Q0A6/AHhI/hDkQRujs=;
+        b=t+TmQwgHNF5uKWW7Uxnk9AfRqeWy8tCvsF/pc9g/2NmcOXFSc5XsWxfhwihNegwkWw
+         RF0LVByoXz5AUEQ+mTgX4KZvx6pvPtBijUDelJbDlWZjnEyyhx3qvgGcX6fIUzhRre4Z
+         09m+mhGwvp13v7+yzxsNopin9Do4PJ3hIi8QSdYBixlUA8RFDUjH5jKG2yeVJwSMUFOj
+         tpoCjwmlL2U7U+NI5fdhQ7l4ds8AjXATovxVykfPt/PAEVF7tmQm3UuwJiSzhcR8+9zs
+         E4LsBecUYzDxQrDSMjArws5hTLEZ194zHYdH+lO9jK+ciz32HWh1urgUAU0dl/J4VqKW
+         0AVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689237708; x=1691829708;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ql1POIcuo0TsaMIUAHdPoB5L/Q0A6/AHhI/hDkQRujs=;
+        b=Rm/66vw2u5e+ehVcYOFXckqp7bUq/c7rw2AyLnTjdQdq8pIazqfZJyuapfY9AoqQjV
+         dNZinvBrlzl9IKDrLpkbTKx7UM1/QR+3ClP438r/KGhE1PRZCYkxZFeiVrl6M+KS0Vgy
+         iANTaBuaheKL04AYUbikstRf5hjWi9dtKojCjp3XdUTEO6RS9v6rmLwGv6g7An8+I94p
+         HgT2EOcEj5RhBONQ99t8CI1Odxm+PAXQxBkzgvnuiAwc6olTXbhE39E+ZJk26affe1Fu
+         TXCTSCfIai/s+6Mvb9C+6kCHTwDMOxZ8rrd2TAWK8w097A36ungpMHl4qcYxAKQcHqz+
+         +aPQ==
+X-Gm-Message-State: ABy/qLbTxipaaA+LcatErFmy9CDKXl24g8snuhHwF+dVXj7NRRm+RGxl
+        vM30T4SVd72BJOzgtwppZJrrbg==
+X-Google-Smtp-Source: APBJJlG2UJSxl2mpB4gj51oF6BFqZoTDX7kP9XHcu2MhIIGhV4rZTmSm0W8uOG4QvddLOulBKjPzbw==
+X-Received: by 2002:ac2:5290:0:b0:4fb:7b2a:78de with SMTP id q16-20020ac25290000000b004fb7b2a78demr708934lfm.45.1689237707997;
+        Thu, 13 Jul 2023 01:41:47 -0700 (PDT)
+Received: from [192.168.1.101] (abyl63.neoplus.adsl.tpnet.pl. [83.9.31.63])
+        by smtp.gmail.com with ESMTPSA id f22-20020ac25336000000b004fba6f38f87sm1027447lfh.24.2023.07.13.01.41.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Jul 2023 01:41:47 -0700 (PDT)
+Message-ID: <9587baf4-2316-494d-fbd1-73a86e742741@linaro.org>
+Date:   Thu, 13 Jul 2023 10:41:45 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RdJODU28XW7RkrD-tIHrTsduXvLDBOnP
-X-Proofpoint-ORIG-GUID: RdJODU28XW7RkrD-tIHrTsduXvLDBOnP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-13_04,2023-07-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 bulkscore=0 spamscore=0 mlxlogscore=859 phishscore=0
- clxscore=1015 mlxscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307130073
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: sm8450: provide MDSS cfg
+ interconnect
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230712121145.1994830-1-dmitry.baryshkov@linaro.org>
+ <20230712121145.1994830-9-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230712121145.1994830-9-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add cpu cooling maps for passive trip points. The cpu cooling
-device states are mapped to cpufreq based scaling frequencies.
+On 12.07.2023 14:11, Dmitry Baryshkov wrote:
+> Add support for the MDSS cfg-cpu bus vote on the SM8450 platform.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 595533aeafc4..0b01f3027ee3 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -13,6 +13,7 @@
+>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>  #include <dt-bindings/phy/phy-qcom-qmp.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+> +#include <dt-bindings/interconnect/qcom,icc.h>
+>  #include <dt-bindings/interconnect/qcom,sm8450.h>
+>  #include <dt-bindings/soc/qcom,gpr.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> @@ -2672,8 +2673,12 @@ mdss: display-subsystem@ae00000 {
+>  
+>  			/* same path used twice */
+>  			interconnects = <&mmss_noc MASTER_MDP_DISP 0 &mc_virt SLAVE_EBI1_DISP 0>,
+> -					<&mmss_noc MASTER_MDP_DISP 0 &mc_virt SLAVE_EBI1_DISP 0>;
+> -			interconnect-names = "mdp0-mem", "mdp1-mem";
+> +					<&mmss_noc MASTER_MDP_DISP 0 &mc_virt SLAVE_EBI1_DISP 0>,
+> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+> +					 &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
+Looking at icc_set_tag occurences in msm-5.10/techpack/display,
+I *think* active-only is only possible for the data bus (MDP-EBI)
 
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 61 +++++++++++++++++++++++----
- 1 file changed, 53 insertions(+), 8 deletions(-)
+Moreover, I think Linux is supposed to cast MDSS votes through the
+APPS RSC (so, nodes without _DISP [1][2]) and conversely, DISP_RSC is
+supposed to active-only votes
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index f120c7c52351..45b24c7d5ac3 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -10,6 +10,7 @@
- #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-+#include <dt-bindings/thermal/thermal.h>
- 
- / {
- 	interrupt-parent = <&intc>;
-@@ -42,6 +43,7 @@ CPU0: cpu@0 {
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
- 			cpu-supply = <&ipq9574_s1>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -54,6 +56,7 @@ CPU1: cpu@1 {
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
- 			cpu-supply = <&ipq9574_s1>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -66,6 +69,7 @@ CPU2: cpu@2 {
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
- 			cpu-supply = <&ipq9574_s1>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -78,6 +82,7 @@ CPU3: cpu@3 {
- 			clock-names = "cpu";
- 			operating-points-v2 = <&cpu_opp_table>;
- 			cpu-supply = <&ipq9574_s1>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		L2_0: l2-cache {
-@@ -727,18 +732,28 @@ cpu0-thermal {
- 			thermal-sensors = <&tsens 10>;
- 
- 			trips {
--				cpu-critical {
-+				cpu0_crit: cpu-critical {
- 					temperature = <120000>;
- 					hysteresis = <10000>;
- 					type = "critical";
- 				};
- 
--				cpu-passive {
-+				cpu0_alert: cpu-passive {
- 					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu0_alert>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu1-thermal {
-@@ -747,18 +762,28 @@ cpu1-thermal {
- 			thermal-sensors = <&tsens 11>;
- 
- 			trips {
--				cpu-critical {
-+				cpu1_crit: cpu-critical {
- 					temperature = <120000>;
- 					hysteresis = <10000>;
- 					type = "critical";
- 				};
- 
--				cpu-passive {
-+				cpu1_alert: cpu-passive {
- 					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu1_alert>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu2-thermal {
-@@ -767,18 +792,28 @@ cpu2-thermal {
- 			thermal-sensors = <&tsens 12>;
- 
- 			trips {
--				cpu-critical {
-+				cpu2_crit: cpu-critical {
- 					temperature = <120000>;
- 					hysteresis = <10000>;
- 					type = "critical";
- 				};
- 
--				cpu-passive {
-+				cpu2_alert: cpu-passive {
- 					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu2_alert>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		cpu3-thermal {
-@@ -787,18 +822,28 @@ cpu3-thermal {
- 			thermal-sensors = <&tsens 13>;
- 
- 			trips {
--				cpu-critical {
-+				cpu3_crit: cpu-critical {
- 					temperature = <120000>;
- 					hysteresis = <10000>;
- 					type = "critical";
- 				};
- 
--				cpu-passive {
-+				cpu3_alert: cpu-passive {
- 					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu3_alert>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 
- 		wcss-phyb-thermal {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Konrad
 
+[1] not that it matters today because it's not implemented yet
+[2] https://lore.kernel.org/linux-arm-msm/20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org
+
+> +			interconnect-names = "mdp0-mem",
+> +					     "mdp1-mem",
+> +					     "cpu-cfg";
+>  
+>  			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
+>  
