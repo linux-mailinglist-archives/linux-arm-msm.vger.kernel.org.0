@@ -2,238 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B856B7528ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 18:40:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33A3675290A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 18:49:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235372AbjGMQjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 12:39:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48502 "EHLO
+        id S235349AbjGMQtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 12:49:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235305AbjGMQjj (ORCPT
+        with ESMTP id S235329AbjGMQsp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 12:39:39 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 85F4A2D7D;
-        Thu, 13 Jul 2023 09:38:26 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A1DA41570;
-        Thu, 13 Jul 2023 09:38:43 -0700 (PDT)
-Received: from [10.57.36.17] (unknown [10.57.36.17])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7E88B3F73F;
-        Thu, 13 Jul 2023 09:37:58 -0700 (PDT)
-Message-ID: <edfd1a85-772d-01e1-12a1-61dcc1cc2068@arm.com>
-Date:   Thu, 13 Jul 2023 17:37:57 +0100
+        Thu, 13 Jul 2023 12:48:45 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E1D02D60
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 09:48:39 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id 6a1803df08f44-634ddd17647so5106476d6.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 09:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689266918; x=1691858918;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zuZZdpDlXu2E+ps9F16vASGwEyrMSuGUChzbHgZ0Zbs=;
+        b=Ogwo7zVaqznAygJZ64nNImcrzVqyHaNv1JhPNxCXMoYrn0vRt8xhbcP4qLsA/hHaCr
+         6YqgywJHZLKtAZ3Xi+JFu9W82Iv59mNGnx8UQgHPfUIKlB7cq+ZRuGSIwskgs+8PP0me
+         bCLT31PX1RJOdqyTZl490fK+v4f/x9LBvXlVA5Vqkp357+/ru6ASnkg3+S+pzWdXeWQj
+         khN23h7A6iGMRVSJ29G8BsWlwtUAnE0s1RlbPMuoDi13f50rIIiIwJ5/R6WUJ46U9Bpp
+         8Hk99ouZpIetg22Y1sn+jcXCPABe0lcId4t3tBbtC3K2fTu6Gbl7aVyMWW/FMOXNjKKc
+         1f6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689266918; x=1691858918;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zuZZdpDlXu2E+ps9F16vASGwEyrMSuGUChzbHgZ0Zbs=;
+        b=WfeFAWdarWIl1ipbwZHAPukeiC4OSWj7Px+W+LJc+FbWb8hUE5R4uMfRTbW+lS33fh
+         i6g6B149GkSbTyH0G20+MQOAfmGFU0OC+PzZ4crQKTCJQahoU3Vx5Q96iQEgYdR6xQC3
+         Nau+qV3Uq24jEhyZbGJhNGj9PTsT+0FkIZjBT5TJ57M+FDNwSklxudsDsMNKz34qP8pm
+         HVA5I4q4tbIp8xcxKfhOQ/v4hjYXyrQeutiVwk3K6gvOn3KYbqouc/okDnwgJla430ID
+         lLEuDMcZjet6PszNKCwuyFz4gY7wGvdk4nxgI2RVoHMH4XzjEynKQB1xjMqJAFIJHXqq
+         w8Fw==
+X-Gm-Message-State: ABy/qLa6LKsPF2LwCfuqwzkLCFSXYJS8sRr+S4qGzHUe9JZBOQxRucEY
+        EarXmQP2IE8huZee3Q1odCJxw35SxW8rLhOT+J/+ww==
+X-Google-Smtp-Source: APBJJlHZwOI2tfJYeqnIeiHgdRI9RlwmUCq3/HcwtNHtwOl/71PhsX6rco20RR1e9u0i0qN9ydSDmR92GEl8DF+4B7U=
+X-Received: by 2002:a0c:e0c9:0:b0:635:dfe1:c203 with SMTP id
+ x9-20020a0ce0c9000000b00635dfe1c203mr1754444qvk.64.1689266918558; Thu, 13 Jul
+ 2023 09:48:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.12.0
-Subject: Re: [PATCH v6 09/13] Add nodes for dsb edge control
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
+References: <20230712130215.666924-1-amit.pundir@linaro.org>
+ <3b677200-a201-680b-391f-fbf73064496a@linaro.org> <CAMi1Hd003r1kJ6e4r2urFtN1BEnCRatLcQ1Q7Eh5wBdj=2WDFA@mail.gmail.com>
+ <CAA8EJpp6yprRL3qzM9pHt2uJ6sb-nPhwas5qm9aDthegSaw7DQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpp6yprRL3qzM9pHt2uJ6sb-nPhwas5qm9aDthegSaw7DQ@mail.gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Thu, 13 Jul 2023 22:18:02 +0530
+Message-ID: <CAMi1Hd14Y4bByO9abr-nFppS2m5CiSyLVQ9ev7+bx55rRL5GjA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: display/msm: qcom,sdm845-mdss: add
+ memory-region property
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1687246361-23607-1-git-send-email-quic_taozha@quicinc.com>
- <1687246361-23607-10-git-send-email-quic_taozha@quicinc.com>
- <2023062024-sincere-tripod-95dc@gregkh>
- <3aca4a55-0dc7-b34c-d2c0-111a96c33ec3@quicinc.com>
- <e82385f1-de55-4c70-5c5c-35b93a5b2488@arm.com>
- <d3849c2a-8826-62a7-1749-0d4b3ee47259@quicinc.com>
- <CAJ9a7VgRFDFoZgRQ_J62We7vJ2D_yULH18S5FwAnB4S+oi2npA@mail.gmail.com>
- <77343663-2d09-53bf-d463-36b979e433ea@arm.com>
- <8cc7b48f-7fde-2f0b-13ca-c8fb23806ded@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <8cc7b48f-7fde-2f0b-13ca-c8fb23806ded@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Bryan Donoghue <bryan.odonoghue@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/07/2023 17:13, Tao Zhang wrote:
-> 
-> On 7/13/2023 5:34 PM, Suzuki K Poulose wrote:
->> On 13/07/2023 09:54, Mike Leach wrote:
->>> HI Tao,
->>>
->>> On Wed, 12 Jul 2023 at 14:53, Tao Zhang <quic_taozha@quicinc.com> wrote:
->>>>
->>>>
->>>> On 6/20/2023 9:41 PM, Suzuki K Poulose wrote:
->>>>> On 20/06/2023 09:31, Tao Zhang wrote:
->>>>>>
->>>>>> On 6/20/2023 3:37 PM, Greg Kroah-Hartman wrote:
->>>>>>> On Tue, Jun 20, 2023 at 03:32:37PM +0800, Tao Zhang wrote:
->>>>>>>> Add the nodes to set value for DSB edge control and DSB edge
->>>>>>>> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
->>>>>>>> resgisters to configure edge control. DSB edge detection control
->>>>>>>> 00: Rising edge detection
->>>>>>>> 01: Falling edge detection
->>>>>>>> 10: Rising and falling edge detection (toggle detection)
->>>>>>>> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
->>>>>>>> configure mask. Eight 32 bit registers providing DSB interface
->>>>>>>> edge detection mask control.
->>>>>>>>
->>>>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>>>>>>> ---
->>>>>>>>    .../ABI/testing/sysfs-bus-coresight-devices-tpdm |  32 +++++
->>>>>>>>    drivers/hwtracing/coresight/coresight-tpdm.c | 143
->>>>>>>> ++++++++++++++++++++-
->>>>>>>>    drivers/hwtracing/coresight/coresight-tpdm.h |  22 ++++
->>>>>>>>    3 files changed, 196 insertions(+), 1 deletion(-)
->>>>>>>>
->>>>>>>> diff --git
->>>>>>>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>>>>>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>>>>>> index 2a82cd0..34189e4a 100644
->>>>>>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>>>>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>>>>>> @@ -60,3 +60,35 @@ Description:
->>>>>>>>            Bit[3] : Set to 0 for low performance mode.
->>>>>>>>                     Set to 1 for high performance mode.
->>>>>>>>            Bit[4:8] : Select byte lane for high performance mode.
->>>>>>>> +
->>>>>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl
->>>>>>>> +Date:        March 2023
->>>>>>>> +KernelVersion    6.5
->>>>>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao
->>>>>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
->>>>>>>> +Description:
->>>>>>>> +        Read/Write a set of the edge control registers of the DSB
->>>>>>>> +        in TPDM.
->>>>>>>> +
->>>>>>>> +        Expected format is the following:
->>>>>>>> +        <integer1> <integer2> <integer3>
->>>>>>> sysfs is "one value", not 3.  Please never have to parse a sysfs 
->>>>>>> file.
->>>>>>
->>>>>> Do you mean sysfs file can only accept "one value"?
->>>>>>
->>>>>> I see that more than one value are written to the sysfs file
->>>>>> "trigout_attach".
->>>>>>
->>>>>>>
->>>>>>>> +static ssize_t dsb_edge_ctrl_show(struct device *dev,
->>>>>>>> +                       struct device_attribute *attr,
->>>>>>>> +                       char *buf)
->>>>>>>> +{
->>>>>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>>>> +    ssize_t size = 0;
->>>>>>>> +    unsigned long bytes;
->>>>>>>> +    int i;
->>>>>>>> +
->>>>>>>> +    spin_lock(&drvdata->spinlock);
->>>>>>>> +    for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
->>>>>>>> +        bytes = sysfs_emit_at(buf, size,
->>>>>>>> +                  "Index:0x%x Val:0x%x\n", i,
->>>>>>> Again, no, one value, no "string" needed to parse anything.
->>>>>>
->>>>>> I also see other sysfs files can be read more than one value in other
->>>>>> drivers.
->>>>>>
->>>>>> Is this "one value" limitation the usage rule of Linux sysfs system?
->>>>>>
->>>>>> Or am I misunderstanding what you mean?
->>>>>
->>>>> Please fix the other sysfs tunables in the following patches.
->>>>
->>>> List a new solution for the similar cases below, please see if this
->>>> design is reasonable?
->>>>
->>>> 1. Two SysFS files("dsb_edge_ctrl_idx" and "dsb_edge_ctrl_val") will be
->>>> created in this case.
->>>>
->>>> 2. First write to the node "dsb_edge_ctrl_idx" to set the index number
->>>> of the edge detection.
->>>>
->>>> 3. Then write to the node "dsb_edge_ctrl_val" to set the value of the
->>>> edge detection.
->>>>
->>>> For example, if we need need to set "Falling edge detection" to the 
->>>> edge
->>>> detection #220-#222, we can issue the following commands.
->>>>
->>>> echo 0xdc > tpdm1/dsb_edge_ctrl_idx
->>>>
->>>> echo 0x1 > tpdm1/dsb_edge_ctrl_val
->>>>
->>>> echo 0xdd > tpdm1/dsb_edge_ctrl_idx
->>>>
->>>> echo 0x1 > tpdm1/dsb_edge_ctrl_val
->>>>
->>>> echo 0xde > tpdm1/dsb_edge_ctrl_idx
->>>>
->>>> echo 0x1 > tpdm1/dsb_edge_ctrl_val
->>>>
->>>> If this design is acceptable, we will rewrite other similar nodes based
->>>> on this solution.
->>>>
->>>
->>> This index / value model is used in the coresight drivers so should be
->>> OK - eg etm4 has cntr_idx / cntrldvr / cntr_val / cntr_ctrl, where
->>> index selects the counter, and the other val registers are applied to
->>> that counter.
->>
->> True. That model is useful when there are variable number of "counters".
->> I guess it doesn't hurt to have a 64bit (or even 32bit) file for each
->> EDCR.
->>
->> e.g, edcr0...edcr15
->>
->> Given there are only 16 of them, it is fine to keep a file for each.
->> This may be grouped under "mgmt" similar to what we have for other
->> components. That way, it can be easily hidden by checking for the
->> presence of DSB.
-> 
-> The number of EDCR registers is not fixed. The maximum range is [0:15].
-> 
-> But the address of the maximum number of the registers will be reserved 
-> first,
-> 
-> and can be accessed safely even if the TPDM doesn't have the maximum number
-> 
-> of  EDCR registers.
-> 
-> And we are not able to dynamically know the number of EDCR registers per 
-> DSB
-> 
-> TPDM.
-> 
-> Can we use our proposal in this case?
+On Thu, 13 Jul 2023 at 21:13, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Thu, 13 Jul 2023 at 18:34, Amit Pundir <amit.pundir@linaro.org> wrote:
+> >
+> > On Wed, 12 Jul 2023 at 18:45, Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On 12/07/2023 16:02, Amit Pundir wrote:
+> > > > Add and document the reserved memory region property
+> > > > in the qcom,sdm845-mdss schema.
+> > > >
+> > > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> > > > ---
+> > > >   .../devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml    | 5 +++++
+> > > >   1 file changed, 5 insertions(+)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml
+> > > > index 6ecb00920d7f..3ea1dbd7e317 100644
+> > > > --- a/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml
+> > > > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sdm845-mdss.yaml
+> > > > @@ -39,6 +39,11 @@ properties:
+> > > >     interconnect-names:
+> > > >       maxItems: 2
+> > > >
+> > > > +  memory-region:
+> > > > +    maxItems: 1
+> > > > +    description:
+> > > > +      Phandle to a node describing a reserved memory region.
+> > > > +
+> > >
+> > > Please add it to mdss-common.yaml instead
+> >
+> > mdss-common.yaml didn't like this property at all and
+> > I ran into a lot of new dtbs_check warnings:
+> > https://www.irccloud.com/pastebin/raw/pEYAeaB1
+> >
+> > I need some help in decoding these please.
+>
+> I'm not sure what happened there (and it's hard to understand without
+> seeing your patch).
 
-Please provide a file edcrN for each of the 0 <= N < 16. That way it is
-easier to avoid locking the index. It doesn't matter how many EDCRs are
-supported, there is a maximum limit and it is always guaranteed to be
-write safe, if some are not implemented. Thus it is much easier from a 
-programming perspective too.
+Yup.. It was my broken patch. I used "For example:" in the property
+description and it tripped off the checks. Didn't realise that
+casually used ":" can break yaml parsing until now. Sorry for all the
+noise.
 
-Suzuki
+Regards,
+Amit Pundir
 
-
-
-> 
-> 
-> Best,
-> 
-> Tao
-> 
->>
->> Suzuki
->>
-
+> But after applying your patch to mdss-common.yaml,
+> `make dt_binding_check' passes:
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> index ccd7d6417523..924fe383e4a1 100644
+> --- a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> @@ -77,6 +77,11 @@ properties:
+>      items:
+>        - description: MDSS_CORE reset
+>
+> +  memory-region:
+> +    maxItems: 1
+> +    description:
+> +      Phandle to a node describing a reserved memory region.
+> +
+>  required:
+>    - reg
+>    - reg-names
+>
+>
+> >
+> > Regards,
+> > Amit Pundir
+> >
+> > >
+> > > >   patternProperties:
+> > > >     "^display-controller@[0-9a-f]+$":
+> > > >       type: object
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+> > >
+>
+>
+>
+> --
+> With best wishes
+> Dmitry
