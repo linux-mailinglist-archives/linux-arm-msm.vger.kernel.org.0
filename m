@@ -2,148 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0FA7751987
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 09:11:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB49A7519B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 09:22:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234260AbjGMHLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 03:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36720 "EHLO
+        id S234242AbjGMHWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 03:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234210AbjGMHKu (ORCPT
+        with ESMTP id S233928AbjGMHWu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 03:10:50 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB0B2691;
-        Thu, 13 Jul 2023 00:10:43 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36D4oi6S001504;
-        Thu, 13 Jul 2023 07:10:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=Bvs+jW+/RxKB8/3YmBJO4p8PBgsIEcxq3wMOfwo8eik=;
- b=Ar99mLwyuVXK7EaD1rHnbAJZv55HoAUyQS3sjV/GaeyMdfc17vi01PvCf1tq6GCR6OB8
- SY/V+xtPBKbKQAW0dIgVJqNgfAvB4fv+fybhW0dMRfvwKA0VK/f9lU4twBPyepV7+GjK
- b4bBbZMnwvY5VwXLOzteeATXFRth/QuH3SG3stEprUQbQ1KOmU98Z+D1RyDcOdRxCDpz
- kW0/j0hU5zHH+41XrhtRmRF+eoU0gUa0IYsajzh4iTu2BqeO1DJf2qfs6XcqzMGY1rP4
- OrzCWaijca63+3wVrtkS5ur548QTKXckwt0bv3pJIuxrZrLUQeJTqZ70lGkBB26Hm38O vg== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rt89trdy6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Jul 2023 07:10:34 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36D7ARW7030237;
-        Thu, 13 Jul 2023 07:10:31 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3rq0vkymjw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 13 Jul 2023 07:10:31 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36D7AVm5030282;
-        Thu, 13 Jul 2023 07:10:31 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 36D7AUd5030281;
-        Thu, 13 Jul 2023 07:10:31 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 4820347AD; Thu, 13 Jul 2023 12:40:30 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Thu, 13 Jul 2023 03:22:50 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD41E172C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 00:22:48 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-3143ccb0f75so577549f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 00:22:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689232967; x=1691824967;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VHcSZV+2M8z59v19UxvSsCTeTm6j87hA7y4TOzZbWzw=;
+        b=It8gQaLEAvP0nzxN+mdYP4PrzdPg5XaK3AXOtOPXv/xobh6ZJdqj5wOWXTa/ZqOlKc
+         V44HC+cqaJCRlBhb3ZfV35U0O0oYNwU0/6bdaIF6+uOheeWrJN0DbS1JAcWvoNhUWg66
+         vDhtDmqTM9IgVCGkoHxRZ+poRY1+h3ZYt8gumlpxhwi2ubslgvKXHRJESbzfyfn8amZY
+         bq8vuOgH0QcpVP36Zy3NDBPYhxbycIZy79z8YJb36Z3a8qqleBjBtAgtY2EGB52jRUpb
+         gJ5A1IrBWsmqXb751fV/KU5p+F/Sg6UJ5sJHHVzs8Ertr0JfEEOMJle6Sd5T/sV6UqR6
+         R87Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689232967; x=1691824967;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VHcSZV+2M8z59v19UxvSsCTeTm6j87hA7y4TOzZbWzw=;
+        b=AHT6o32crt0LOt2RUmHYpS4X0COGBlKZOiA09uH6dajRF6hVjfkB0BdABataLcp36m
+         0KUc8QWFl88W6jzM2T64uCEitZkc6zd4lb0Bhxhj51WapTQ3f8xpBkwFRDPehzH+UlAL
+         Htsk40iT4t0235KzVNnlnVwr2nuZ8lMNlGV2UL/AOqBf+Upug8MGj4FIH6FwYY6WUFEH
+         iYAg2TKCJwx1BuMX+UuSDpm0mMoEc1Zs1kL+FOHQPYVz/5hgWnVh5xbO6OFKYmuHEDm3
+         98e7qKaXYr927ebSuk/cSZVSaHcEEjJE++Mi088Pv919XK9hBv9Wl/SURhRxduZR9hRr
+         pdlg==
+X-Gm-Message-State: ABy/qLbMvz25EMkGl1M6QoIJzHDuA5Fe7wPByRDepAgWjDyyLwZOiDkh
+        kP1vKYk5EayCU+Iwq2RqxiYM7N5GHZ2ICBxN/jFg7A==
+X-Google-Smtp-Source: APBJJlF45MwjLFi8DeoEpYYJ1M2FZY8uWEGy/ynbbzMI6Ae2ik89QxHMItzOQxSzHW/w0qcnq23cuQ==
+X-Received: by 2002:adf:cf11:0:b0:313:e520:936f with SMTP id o17-20020adfcf11000000b00313e520936fmr886273wrj.17.1689232967162;
+        Thu, 13 Jul 2023 00:22:47 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id w16-20020a5d6810000000b003144b50034esm7071384wru.110.2023.07.13.00.22.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jul 2023 00:22:46 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Manivannan Sadhasivam <mani@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Dan Carpenter <error27@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        mhi@lists.linux.dev (open list:MHI BUS)
-Subject: [PATCH v4 9/9] bus: mhi: ep: wake up host if the MHI state is in M3
-Date:   Thu, 13 Jul 2023 12:40:18 +0530
-Message-Id: <1689232218-28265-10-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1689232218-28265-1-git-send-email-quic_krichai@quicinc.com>
-References: <1689232218-28265-1-git-send-email-quic_krichai@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: T15qBKJN9ulkBy-q7XDfJZotAgGCN3OB
-X-Proofpoint-GUID: T15qBKJN9ulkBy-q7XDfJZotAgGCN3OB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-13_04,2023-07-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- spamscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- clxscore=1015 mlxlogscore=966 suspectscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307130061
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [RESEND PATCH v2 0/4] dt-bindings: remoteproc: qcom: fixes
+Date:   Thu, 13 Jul 2023 09:22:38 +0200
+Message-Id: <20230713072242.11268-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the MHI state is in M3 then the most probably the host kept the
-device in D3 hot or D3 cold, due to that endpoint transctions will not
-be read by the host, so endpoint wakes up host to bring the host to D0
-which eventually bring back the MHI state to M0.
+Hi,
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- drivers/bus/mhi/ep/main.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+These were sent in March 2023, resent and pinged.
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 6008818..46a888e 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -25,6 +25,26 @@ static DEFINE_IDA(mhi_ep_cntrl_ida);
- static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id);
- static int mhi_ep_destroy_device(struct device *dev, void *data);
- 
-+static int mhi_ep_wake_host(struct mhi_ep_cntrl *mhi_cntrl)
-+{
-+	enum mhi_state state;
-+	bool mhi_reset;
-+	u32 count = 0;
-+
-+	mhi_cntrl->wakeup_host(mhi_cntrl);
-+
-+	/* Wait for Host to set the M0 state */
-+	while (count++ < M0_WAIT_COUNT) {
-+		msleep(M0_WAIT_DELAY_MS);
-+
-+		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
-+		if (state == MHI_STATE_M0)
-+			return 0;
-+	}
-+
-+	return -ENODEV;
-+}
-+
- static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
- 			     struct mhi_ring_element *el, bool bei)
- {
-@@ -464,6 +484,13 @@ int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, struct sk_buff *skb)
- 	buf_left = skb->len;
- 	ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
- 
-+	if (mhi_cntrl->mhi_state == MHI_STATE_M3) {
-+		if (mhi_ep_wake_host(mhi_cntrl)) {
-+			dev_err(dev, "Failed to wakeup host\n");
-+			return -ENODEV;
-+		}
-+	}
-+
- 	mutex_lock(&mhi_chan->lock);
- 
- 	do {
+https://lore.kernel.org/all/20230331092125.44885-1-krzysztof.kozlowski@linaro.org/
+https://lore.kernel.org/all/5fa6d988-b51a-7c18-b605-ab99ecec8bea@linaro.org/
+
+I already saw two other tries to fix the same issues.
+Please apply to fix the Qualcomm DTS warnings.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (4):
+  dt-bindings: remoteproc: qcom,pas: correct memory-region constraints
+  dt-bindings: remoteproc: qcom,sm6115-pas: correct memory-region
+    constraints
+  dt-bindings: remoteproc: qcom,sm8550-pas: require memory-region
+  dt-bindings: remoteproc: qcom,adsp: bring back firmware-name
+
+ Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml  | 5 +++++
+ .../devicetree/bindings/remoteproc/qcom,pas-common.yaml      | 1 -
+ .../devicetree/bindings/remoteproc/qcom,qcs404-pas.yaml      | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sc7180-pas.yaml      | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sc8180x-pas.yaml     | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml    | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml       | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml      | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sm6350-pas.yaml      | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml      | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sm8350-pas.yaml      | 3 ++-
+ .../devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml      | 1 +
+ 12 files changed, 24 insertions(+), 10 deletions(-)
+
 -- 
-2.7.4
+2.34.1
 
