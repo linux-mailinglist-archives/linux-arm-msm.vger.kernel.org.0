@@ -2,81 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DC88751C50
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 10:55:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6666751CA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 11:06:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233661AbjGMIzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 04:55:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55284 "EHLO
+        id S232052AbjGMJFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 05:05:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233755AbjGMIzL (ORCPT
+        with ESMTP id S234153AbjGMJFJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 04:55:11 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6731E42
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:08 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-bd77424c886so436225276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689238508; x=1691830508;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mvy/EMrBnpulduSmMNLqJP+nI2s3mvHLILhwx65lZzg=;
-        b=n/4CMkr4qcI041dReHtmELq5ltPXDA8cbnDEnrDVW/N4+L5e3L8ni+CbAxQU/e4eP5
-         s81fZfsz295AJttgBoNxIGX7U2yru2axJ6M4pCLjn7tHYzkeHlvKC/0TD8ek3UphWmVp
-         05dFtg+DPS8skpG2b2VeGgh/Pt+5p38QTvjygKPWS47F5bmcjEH87Js6jWz5+SLT+dPZ
-         PZJPf0M1fHyqW5i/uzrhIrvPn5QbXq9KgS12S/A896e+ZLcYxOz2AkgHYX21oDVgDRQh
-         6NlYsNu4CcVtjDqZ28LpwMt2g4ZdYNNt1tV22wathsGULaafqPHisoq8qZ2VlxDtkLZm
-         u/VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689238508; x=1691830508;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mvy/EMrBnpulduSmMNLqJP+nI2s3mvHLILhwx65lZzg=;
-        b=NsTjYib4KCp6Wrx4melVXaU9+2l8qh6iS5Xs2tYZosjk6EqN1SmxofHzrUKjX7s5Xz
-         zyURitEpcRTbtwUMV/bhY9F+cVhTgVWgSEAMzDEJUU8wpgGopJta+CItjmBnVQ9i/j4H
-         2qHyOdRBqTZJXUq0KZ80GftXCLFI0P9oJ+VFWqAvbCnn6uTQcfy9HMmrWmSxgHEhJUyF
-         QkgleJSPuOwdyDutDXHWdtt3PFlcTQNu71HiAwv5042qGIYQFbZN/1oiS0jd1IzNOTiU
-         tMbcgvwYmATmP0Zf4KT9b1bHnUGKMWSK65U7P6Qari/ohcWPJRRL1McXJtE4ggIWBGpO
-         VJYg==
-X-Gm-Message-State: ABy/qLaQSY3b5weITsR+X/7Y1Q2JB82JvxXvs4jn+C5SLj86t/1RPCnD
-        pFF/5NxhflUhcPZ+7JAYGvXw3JFOX8g2qwL6TIqS6g==
-X-Google-Smtp-Source: APBJJlHLk2NajIUnrpoa5kWE3qfd685DCFLowb3S1Uu55NjcG42lVYQrHMU7nHsK/lAXhXD6MXiXp51m+5u94OlNxT0=
-X-Received: by 2002:a0d:c884:0:b0:579:e8de:3580 with SMTP id
- k126-20020a0dc884000000b00579e8de3580mr1101134ywd.9.1689238507937; Thu, 13
- Jul 2023 01:55:07 -0700 (PDT)
+        Thu, 13 Jul 2023 05:05:09 -0400
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B133AAB;
+        Thu, 13 Jul 2023 02:03:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689239039; x=1720775039;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=wpe6dsOBfDPS7D7Sq/hiKhbMpNSn/Y2A1D02VMmRxgw=;
+  b=lNO2CmDfkySi5PYBlHpDlW1wdIciwKrhk4xFk/pjI48942N1c6Itc0T9
+   aiKwOG9XugymilO6br9ayLECAcn2ErjSo0etNnoCxVslvn5FugYrv6AjA
+   I0/rfe6Uxv+PSgh6Rm29PLMHQnw/cIo0rPMQozEeLdy3Ik8OWZYucyGDB
+   iddtXwXhzFrq7fSpXo/F7cSrLSL1ENNLwb1RYCCM/S6ND0jOSHFI18XMB
+   Q1TMw8W2NfddYES3SwmVBS/tvfUAWcICJQZ+cS0DS1Ksv3TBWDdsBa4Ji
+   h0vtJF9j0DdqGpofllAX3/G3MMPLMvwH1PoXMN4rP/J+EErkUV0CCqU8W
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10769"; a="395935090"
+X-IronPort-AV: E=Sophos;i="6.01,202,1684825200"; 
+   d="scan'208";a="395935090"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2023 02:03:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10769"; a="715882508"
+X-IronPort-AV: E=Sophos;i="6.01,202,1684825200"; 
+   d="scan'208";a="715882508"
+Received: from atadj-mobl1.amr.corp.intel.com (HELO localhost) ([10.252.50.30])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2023 02:03:08 -0700
+From:   Jani Nikula <jani.nikula@intel.com>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+        Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+        dri-devel@lists.freedesktop.org,
+        Vandita Kulkarni <vandita.kulkarni@intel.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Arun R Murthy <arun.r.murthy@intel.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Samuel Holland <samuel@sholland.org>,
+        Matt Roper <matthew.d.roper@intel.com>,
+        Wenjing Liu <wenjing.liu@amd.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+        Danilo Krummrich <dakr@redhat.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        spice-devel@lists.freedesktop.org,
+        Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+        linux-sunxi@lists.linux.dev, Stylon Wang <stylon.wang@amd.com>,
+        Tim Huang <Tim.Huang@amd.com>,
+        Suraj Kandpal <suraj.kandpal@intel.com>,
+        =?utf-8?Q?A?= =?utf-8?Q?ndr=C3=A9?= Almeida 
+        <andrealmeid@igalia.com>, Andi Shyti <andi.shyti@linux.intel.com>,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        Leo Li <sunpeng.li@amd.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        Hersen Wu <hersenxs.wu@amd.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Kamlesh Gurudasani <kamlesh.gurudasani@gmail.com>,
+        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+        =?utf-8?Q?=C5=81ukasz?= Bartosik <lb@semihalf.com>,
+        Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>,
+        kernel@pengutronix.de, Alex Deucher <alexander.deucher@amd.com>,
+        freedreno@lists.freedesktop.org,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
+        Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+        =?utf-8?Q?Jos=C3=A9?= Roberto de Souza <jose.souza@intel.com>,
+        virtualization@lists.linux-foundation.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Yongqin Liu <yongqin.liu@linaro.org>,
+        Mario Limonciello <mario.limonciello@amd.com>,
+        Fei Yang <fei.yang@intel.com>,
+        David Lechner <david@lechnology.com>,
+        Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
+        "Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+        David Francis <David.Francis@amd.com>,
+        Aaron Liu <aaron.liu@amd.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-rockchip@lists.infradead.org,
+        Fangzhi Zuo <jerry.zuo@amd.com>,
+        Aurabindo Pillai <aurabindo.pillai@amd.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Jouni =?utf-8?Q?H=C3=B6gander?= <jouni.hogander@intel.com>,
+        Dave Airlie <airlied@redhat.com>, linux-mips@vger.kernel.org,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Animesh Manna <animesh.manna@intel.com>,
+        linux-renesas-soc@vger.kernel.org,
+        Maxime Ripard <mripard@kernel.org>,
+        Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        linux-amlogic@lists.infradead.org, Evan Quan <evan.quan@amd.com>,
+        Michal Simek <michal.simek@amd.com>,
+        linux-arm-kernel@lists.infradead.org, Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Qingqing Zhuo <qingqing.zhuo@amd.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Swati Sharma <swati2.sharma@intel.com>,
+        John Stultz <jstultz@google.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        Anusha Srivatsa <anusha.srivatsa@intel.com>,
+        Dan Carpenter <error27@gmail.com>,
+        Karol Herbst <kherbst@redhat.com>,
+        linux-hyperv@vger.kernel.org, Melissa Wen <melissa.srw@gmail.com>,
+        =?utf-8?Q?Ma=C3=ADra?= Canal <mairacanal@riseup.net>,
+        Luca Coelho <luciano.coelho@intel.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Likun Gao <Likun.Gao@amd.com>, Sam Ravnborg <sam@ravnborg.org>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Deepak Rawat <drawat.floss@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>, Joel Stanley <joel@jms.id.au>,
+        Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Alan Liu <haoping.liu@amd.com>,
+        Philip Yang <Philip.Yang@amd.com>,
+        intel-gfx@lists.freedesktop.org, Alison Wang <alison.wang@nxp.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Gustavo Sousa <gustavo.sousa@intel.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Deepak R Varma <drv@mailo.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Christian =?utf-8?Q?K=C3=B6nig?= <christian.koenig@amd.com>,
+        Khaled Almahallawy <khaled.almahallawy@intel.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Emma Anholt <emma@anholt.net>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Roman Li <roman.li@amd.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Hamza Mahfooz <hamza.mahfooz@amd.com>,
+        Marek Vasut <marex@denx.de>,
+        Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+        xen-devel@lists.xenproject.org, Guchun Chen <guchun.chen@amd.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Uma Shankar <uma.shankar@intel.com>,
+        Mika Kahola <mika.kahola@intel.com>,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Vinod Govindapillai <vinod.govindapillai@intel.com>,
+        linux-tegra@vger.kernel.org,
+        Marek =?utf-8?B?T2zFocOhaw==?= <marek.olsak@amd.com>,
+        =?utf-8?Q?Joaqu=C3=ADn?= Ignacio =?utf-8?Q?Aramend=C3=ADa?= 
+        <samsagax@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        linux-mediatek@lists.infradead.org,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        David Tadokoro <davidbtadokoro@usp.br>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        amd-gfx@lists.freedesktop.org, Jyri Sarha <jyri.sarha@iki.fi>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Philippe Cornu <philippe.cornu@foss.st.com>,
+        Wayne Lin <Wayne.Lin@amd.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Nirmoy Das <nirmoy.das@intel.com>, Lang Yu <Lang.Yu@amd.com>
+Subject: Re: [PATCH RFC v1 00/52] drm/crtc: Rename struct drm_crtc::dev to
+ drm_dev
+In-Reply-To: <20230712161025.22op3gtzgujrhytb@pengutronix.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20230712094702.1770121-1-u.kleine-koenig@pengutronix.de>
+ <87fs5tgpvv.fsf@intel.com>
+ <20230712161025.22op3gtzgujrhytb@pengutronix.de>
+Date:   Thu, 13 Jul 2023 12:03:05 +0300
+Message-ID: <878rbkgp4m.fsf@intel.com>
 MIME-Version: 1.0
-References: <1687246361-23607-1-git-send-email-quic_taozha@quicinc.com>
- <1687246361-23607-10-git-send-email-quic_taozha@quicinc.com>
- <2023062024-sincere-tripod-95dc@gregkh> <3aca4a55-0dc7-b34c-d2c0-111a96c33ec3@quicinc.com>
- <e82385f1-de55-4c70-5c5c-35b93a5b2488@arm.com> <d3849c2a-8826-62a7-1749-0d4b3ee47259@quicinc.com>
-In-Reply-To: <d3849c2a-8826-62a7-1749-0d4b3ee47259@quicinc.com>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Thu, 13 Jul 2023 09:54:56 +0100
-Message-ID: <CAJ9a7VgRFDFoZgRQ_J62We7vJ2D_yULH18S5FwAnB4S+oi2npA@mail.gmail.com>
-Subject: Re: [PATCH v6 09/13] Add nodes for dsb edge control
-To:     Tao Zhang <quic_taozha@quicinc.com>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,142 +235,113 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-HI Tao,
+On Wed, 12 Jul 2023, Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>=
+ wrote:
+> Hello Jani,
+>
+> On Wed, Jul 12, 2023 at 05:34:28PM +0300, Jani Nikula wrote:
+>> On Wed, 12 Jul 2023, Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.=
+de> wrote:
+>> > Hello,
+>> >
+>> > while I debugged an issue in the imx-lcdc driver I was constantly
+>> > irritated about struct drm_device pointer variables being named "dev"
+>> > because with that name I usually expect a struct device pointer.
+>> >
+>> > I think there is a big benefit when these are all renamed to "drm_dev".
+>> > I have no strong preference here though, so "drmdev" or "drm" are fine
+>> > for me, too. Let the bikesheding begin!
+>> >
+>> > Some statistics:
+>> >
+>> > $ git grep -ohE 'struct drm_device *\* *[^ (),;]*' v6.5-rc1 | sort | u=
+niq -c | sort -n
+>> >       1 struct drm_device *adev_to_drm
+>> >       1 struct drm_device *drm_
+>> >       1 struct drm_device          *drm_dev
+>> >       1 struct drm_device        *drm_dev
+>> >       1 struct drm_device *pdev
+>> >       1 struct drm_device *rdev
+>> >       1 struct drm_device *vdev
+>> >       2 struct drm_device *dcss_drv_dev_to_drm
+>> >       2 struct drm_device **ddev
+>> >       2 struct drm_device *drm_dev_alloc
+>> >       2 struct drm_device *mock
+>> >       2 struct drm_device *p_ddev
+>> >       5 struct drm_device *device
+>> >       9 struct drm_device * dev
+>> >      25 struct drm_device *d
+>> >      95 struct drm_device *
+>> >     216 struct drm_device *ddev
+>> >     234 struct drm_device *drm_dev
+>> >     611 struct drm_device *drm
+>> >    4190 struct drm_device *dev
+>> >
+>> > This series starts with renaming struct drm_crtc::dev to drm_dev. If
+>> > it's not only me and others like the result of this effort it should be
+>> > followed up by adapting the other structs and the individual usages in
+>> > the different drivers.
+>>=20
+>> I think this is an unnecessary change. In drm, a dev is usually a drm
+>> device, i.e. struct drm_device *.
+>
+> Well, unless it's not. Prominently there is
+>
+> 	struct drm_device {
+> 		...
+> 		struct device *dev;
+> 		...
+> 	};
+>
+> which yields quite a few code locations using dev->dev which is
+> IMHO unnecessary irritating:
+>
+> 	$ git grep '\<dev->dev' v6.5-rc1 drivers/gpu/drm | wc -l
+> 	1633
+>
+> Also the functions that deal with both a struct device and a struct
+> drm_device often use "dev" for the struct device and then "ddev" for
+> the drm_device (see for example amdgpu_device_get_pcie_replay_count()).
 
-On Wed, 12 Jul 2023 at 14:53, Tao Zhang <quic_taozha@quicinc.com> wrote:
->
->
-> On 6/20/2023 9:41 PM, Suzuki K Poulose wrote:
-> > On 20/06/2023 09:31, Tao Zhang wrote:
-> >>
-> >> On 6/20/2023 3:37 PM, Greg Kroah-Hartman wrote:
-> >>> On Tue, Jun 20, 2023 at 03:32:37PM +0800, Tao Zhang wrote:
-> >>>> Add the nodes to set value for DSB edge control and DSB edge
-> >>>> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
-> >>>> resgisters to configure edge control. DSB edge detection control
-> >>>> 00: Rising edge detection
-> >>>> 01: Falling edge detection
-> >>>> 10: Rising and falling edge detection (toggle detection)
-> >>>> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
-> >>>> configure mask. Eight 32 bit registers providing DSB interface
-> >>>> edge detection mask control.
-> >>>>
-> >>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> >>>> ---
-> >>>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  32 +++++
-> >>>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 143
-> >>>> ++++++++++++++++++++-
-> >>>>   drivers/hwtracing/coresight/coresight-tpdm.h       |  22 ++++
-> >>>>   3 files changed, 196 insertions(+), 1 deletion(-)
-> >>>>
-> >>>> diff --git
-> >>>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> >>>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> >>>> index 2a82cd0..34189e4a 100644
-> >>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> >>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> >>>> @@ -60,3 +60,35 @@ Description:
-> >>>>           Bit[3] : Set to 0 for low performance mode.
-> >>>>                    Set to 1 for high performance mode.
-> >>>>           Bit[4:8] : Select byte lane for high performance mode.
-> >>>> +
-> >>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl
-> >>>> +Date:        March 2023
-> >>>> +KernelVersion    6.5
-> >>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao
-> >>>> Zhang (QUIC) <quic_taozha@quicinc.com>
-> >>>> +Description:
-> >>>> +        Read/Write a set of the edge control registers of the DSB
-> >>>> +        in TPDM.
-> >>>> +
-> >>>> +        Expected format is the following:
-> >>>> +        <integer1> <integer2> <integer3>
-> >>> sysfs is "one value", not 3.  Please never have to parse a sysfs file.
-> >>
-> >> Do you mean sysfs file can only accept "one value"?
-> >>
-> >> I see that more than one value are written to the sysfs file
-> >> "trigout_attach".
-> >>
-> >>>
-> >>>> +static ssize_t dsb_edge_ctrl_show(struct device *dev,
-> >>>> +                       struct device_attribute *attr,
-> >>>> +                       char *buf)
-> >>>> +{
-> >>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> >>>> +    ssize_t size = 0;
-> >>>> +    unsigned long bytes;
-> >>>> +    int i;
-> >>>> +
-> >>>> +    spin_lock(&drvdata->spinlock);
-> >>>> +    for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
-> >>>> +        bytes = sysfs_emit_at(buf, size,
-> >>>> +                  "Index:0x%x Val:0x%x\n", i,
-> >>> Again, no, one value, no "string" needed to parse anything.
-> >>
-> >> I also see other sysfs files can be read more than one value in other
-> >> drivers.
-> >>
-> >> Is this "one value" limitation the usage rule of Linux sysfs system?
-> >>
-> >> Or am I misunderstanding what you mean?
-> >
-> > Please fix the other sysfs tunables in the following patches.
->
-> List a new solution for the similar cases below, please see if this
-> design is reasonable?
->
-> 1. Two SysFS files("dsb_edge_ctrl_idx" and "dsb_edge_ctrl_val") will be
-> created in this case.
->
-> 2. First write to the node "dsb_edge_ctrl_idx" to set the index number
-> of the edge detection.
->
-> 3. Then write to the node "dsb_edge_ctrl_val" to set the value of the
-> edge detection.
->
-> For example, if we need need to set "Falling edge detection" to the edge
-> detection #220-#222, we can issue the following commands.
->
-> echo 0xdc > tpdm1/dsb_edge_ctrl_idx
->
-> echo 0x1 > tpdm1/dsb_edge_ctrl_val
->
-> echo 0xdd > tpdm1/dsb_edge_ctrl_idx
->
-> echo 0x1 > tpdm1/dsb_edge_ctrl_val
->
-> echo 0xde > tpdm1/dsb_edge_ctrl_idx
->
-> echo 0x1 > tpdm1/dsb_edge_ctrl_val
->
-> If this design is acceptable, we will rewrite other similar nodes based
-> on this solution.
->
+Why is specifically struct drm_device *dev so irritating to you?
 
-This index / value model is used in the coresight drivers so should be
-OK - eg etm4 has cntr_idx / cntrldvr / cntr_val / cntr_ctrl, where
-index selects the counter, and the other val registers are applied to
-that counter.
+You lead us to believe it's an outlier in kernel, something that goes
+against common kernel style, but it's really not:
 
-Mike
+$ git grep -how "struct [A-Za-z0-9_]\+ \*dev" | sort | uniq -c | sort -rn |=
+ head -20
+  38494 struct device *dev
+  16388 struct net_device *dev
+   4184 struct drm_device *dev
+   2780 struct pci_dev *dev
+   1916 struct comedi_device *dev
+   1510 struct mlx5_core_dev *dev
+   1057 struct mlx4_dev *dev
+    894 struct b43_wldev *dev
+    762 struct input_dev *dev
+    623 struct usbnet *dev
+    561 struct mlx5_ib_dev *dev
+    525 struct mt76_dev *dev
+    465 struct mt76x02_dev *dev
+    435 struct platform_device *dev
+    431 struct usb_device *dev
+    411 struct mt7915_dev *dev
+    398 struct cx231xx *dev
+    378 struct mei_device *dev
+    363 struct ksz_device *dev
+    359 struct mthca_dev *dev
 
-> Let me know if you have any concerns or good suggestions for this solution.
->
->
-> Best,
->
-> Tao
->
-> >
-> > Kind regards
-> > Suzuki
-> >
-> >
+A good portion of the above also have a dev member.
+
+Are you planning on changing all of the above too, or are you only
+annoyed by drm?
+
+I'm really not convinced at all.
 
 
+BR,
+Jani.
 
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+
+--=20
+Jani Nikula, Intel Open Source Graphics Center
