@@ -2,56 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 265D9752A5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 20:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1E39752A61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 20:37:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231282AbjGMSfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 14:35:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42522 "EHLO
+        id S231559AbjGMShf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 14:37:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjGMSfO (ORCPT
+        with ESMTP id S229611AbjGMShe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 14:35:14 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 537EF2D46
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 11:35:12 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36DHl1Rm020118;
-        Thu, 13 Jul 2023 18:34:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=n8g0ymIu9bbk6UlI5InC0KmOOYnKXfK98lGNJ/QeNiQ=;
- b=mbYBqv5aJ6mJazZV4DxdxV1gYjc9M5MP+WOl6EuIKmcpoKCQw33xbnYjQgjt5Quf8qwz
- AG9UQRO/OR3aJGEKdwn5yV0p/tb/fn11LTc4sWFPay09GMQ/Iny9OAU3M9A7KvzFl7Ks
- Aprekxv47cxJ/hkfYnvRR8LFagts5kCk3CcA9CmLaTWeINuV3nu5rorpVsY9E+zq1qSZ
- 4XKjQLHHqiZDtwZZB0JMLjjngdNRany+BaJOf8IMoI6Wft4aaGFAfXbzuIFjHnG2vFPB
- sEvRIq1q4fxfsDu7V6oPVK0l21IwIpmEsORZLvC2XFFoRIFwEGtCSmuAO3lOruHdpxNh Ug== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rtk1qrky0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Jul 2023 18:34:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36DIYMSB016938
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Jul 2023 18:34:22 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 13 Jul
- 2023 11:34:21 -0700
-Message-ID: <b31c3af2-0fa0-3e8a-c5fc-c4447f9acefe@quicinc.com>
-Date:   Thu, 13 Jul 2023 11:34:21 -0700
+        Thu, 13 Jul 2023 14:37:34 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C6751992
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 11:37:33 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5768a7e3adbso33942947b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 11:37:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=amarulasolutions.com; s=google; t=1689273452; x=1691865452;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=855BqfEppezUio2GynGNklnjmLkHV7KjfetEfSzHlrQ=;
+        b=lMx48Fub46V5otdZym3NvCf+EJ9Fj+dbnSPI4e3xLy4+6qlqewZpDjIqnOQ1751Nn8
+         d3XL9r7T/tgP3ufe0QYXLRIWNxLXGDRAxeZGpPaEOD8KExjyKkzJEbKJ4wdK+dsINy67
+         1ts9zVOdqWh6ryCVhvLzw9SSVovR3+tH0eDcs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689273452; x=1691865452;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=855BqfEppezUio2GynGNklnjmLkHV7KjfetEfSzHlrQ=;
+        b=I0LLpRcFwgLMJyahVh7eEoik7RwOH+NuHs3Lnamnd/9m2TeykQ3YXyNTsaxTey9i0i
+         9gmot8BUwFXWq4q5J+3RhrS3P01JR6x+cQ7MhBmujPXggRsxcH0Fe8XRg+OGmhaFwHE0
+         Hrn93V+bm2t/VUVLlGH4JvVDKupfOf+9N2iyFd+OkQ+9+Zfb+kTzCEb9zG/fOIVUMcnJ
+         FGX/LXUq5/PoDL3BOBzblrfaeHmIkhEMHG67Qe9DOBV7sR/b1195DKEZw70W4I+UQjvJ
+         xqv9B96DxE/EYuHapAkc0xp+NpjIN4UCqbuF4Ogtwv6PzILd5eJZYicJbothwGw/gNAu
+         bv9w==
+X-Gm-Message-State: ABy/qLYpfaVun3EI/Vy8poDoUZoKlfuncZypvY648dx8G6jZ/+PEYUud
+        8neQBw3t+rvPaJHxmMguNwdoNd/vRwvv5SuINU9IKA==
+X-Google-Smtp-Source: APBJJlGuoB5EoXqCREcG0nqtm2A2HHGahl7ZTjfFoM7qApsG87TbwZjaUGeSnEFBgI+M1gJEOoU/JOknwBtv9eTaIPA=
+X-Received: by 2002:a81:6983:0:b0:56d:2e66:4a3f with SMTP id
+ e125-20020a816983000000b0056d2e664a3fmr693950ywc.0.1689273452238; Thu, 13 Jul
+ 2023 11:37:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
+References: <20230403221233.500485-1-marex@denx.de> <20230403221233.500485-2-marex@denx.de>
+ <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
+ <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
+ <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
+ <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
+ <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org> <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
+ <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com> <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
+ <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
+In-Reply-To: <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
+From:   Jagan Teki <jagan@amarulasolutions.com>
+Date:   Fri, 14 Jul 2023 00:07:20 +0530
+Message-ID: <CAMty3ZBZD9WPM=soGYrMmmPVq6U3+WJ40DOzzU=o9oPi02-5xQ@mail.gmail.com>
 Subject: Re: [PATCH 2/2] drm/bridge: lt9611: Do not generate HFP/HBP/HSA and
  EOT packet
-Content-Language: en-US
-To:     Marek Vasut <marex@denx.de>, <neil.armstrong@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Jagan Teki <jagan@amarulasolutions.com>,
-        <dri-devel@lists.freedesktop.org>, Robert Foss <rfoss@kernel.org>,
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marek Vasut <marex@denx.de>
+Cc:     neil.armstrong@linaro.org, Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org, Robert Foss <rfoss@kernel.org>,
         Andrzej Hajda <andrzej.hajda@intel.com>,
         Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
@@ -60,264 +72,176 @@ CC:     Jagan Teki <jagan@amarulasolutions.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Linux regressions mailing list <regressions@lists.linux.dev>,
         freedreno <freedreno@lists.freedesktop.org>
-References: <20230403221233.500485-1-marex@denx.de>
- <20230403221233.500485-2-marex@denx.de>
- <CAMi1Hd0TD=2z_=bcDrht3H_wiLvAFcv8Z-U_r_KUOoeMc6UMjw@mail.gmail.com>
- <CAMty3ZBNFu=f-FS4YFN4wfmiTuk=48nna-vub1eMYwidDt+msg@mail.gmail.com>
- <CAA8EJppbdiUz5m+9EAPnFb916DaS_VKWd30c7_EPWjuid8rtqQ@mail.gmail.com>
- <CAMi1Hd2G5PJmz4wpO1wbdqKd0FA8LBgvRDv2u5ZYAMb5s6Kt0A@mail.gmail.com>
- <d5fb8106-b8f3-0acf-1267-d4d6d0860e25@linaro.org>
- <d28b0090-bd1e-6737-d92b-348dc6c30750@linaro.org>
- <4396d197-f16f-92bd-727c-eb8c78016198@quicinc.com>
- <961b4747-c9f1-a31c-c33c-475b4803f832@denx.de>
- <64c3352f-c2aa-5260-c6ff-4a607ce219a2@quicinc.com>
- <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <f768950b-0406-1f03-86a5-50d5794bb060@denx.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iL5RUT9bnQUXm_pLLfUS0Lka_-P1Qxwg
-X-Proofpoint-GUID: iL5RUT9bnQUXm_pLLfUS0Lka_-P1Qxwg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-13_07,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 suspectscore=0 adultscore=0 mlxscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1015 phishscore=0
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2307130165
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Jul 13, 2023 at 11:39=E2=80=AFPM Abhinav Kumar
+<quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 7/12/2023 10:41 AM, Marek Vasut wrote:
+> > On 7/9/23 03:03, Abhinav Kumar wrote:
+> >>
+> >>
+> >> On 7/7/2023 1:47 AM, Neil Armstrong wrote:
+> >>> On 07/07/2023 09:18, Neil Armstrong wrote:
+> >>>> Hi,
+> >>>>
+> >>>> On 06/07/2023 11:20, Amit Pundir wrote:
+> >>>>> On Wed, 5 Jul 2023 at 11:09, Dmitry Baryshkov
+> >>>>> <dmitry.baryshkov@linaro.org> wrote:
+> >>>>>>
+> >>>>>> [Adding freedreno@ to cc list]
+> >>>>>>
+> >>>>>> On Wed, 5 Jul 2023 at 08:31, Jagan Teki
+> >>>>>> <jagan@amarulasolutions.com> wrote:
+> >>>>>>>
+> >>>>>>> Hi Amit,
+> >>>>>>>
+> >>>>>>> On Wed, Jul 5, 2023 at 10:15=E2=80=AFAM Amit Pundir
+> >>>>>>> <amit.pundir@linaro.org> wrote:
+> >>>>>>>>
+> >>>>>>>> Hi Marek,
+> >>>>>>>>
+> >>>>>>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
+> >>>>>>>>>
+> >>>>>>>>> Do not generate the HS front and back porch gaps, the HSA gap a=
+nd
+> >>>>>>>>> EOT packet, as these packets are not required. This makes the
+> >>>>>>>>> bridge
+> >>>>>>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
+> >>>>>>>>
+> >>>>>>>> This patch broke display on Dragonboard 845c (SDM845) devboard
+> >>>>>>>> running
+> >>>>>>>> AOSP. This is what I see
+> >>>>>>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-bro=
+ken-display/PXL_20230704_150156326.jpg.
+> >>>>>>>> Reverting this patch fixes this regression for me.
+> >>>>>>>
+> >>>>>>> Might be msm dsi host require proper handling on these updated
+> >>>>>>> mode_flags? did they?
+> >>>>>>
+> >>>>>> The msm DSI host supports those flags. Also, I'd like to point out
+> >>>>>> that the patch didn't change the rest of the driver code. So even =
+if
+> >>>>>> drm/msm ignored some of the flags, it should not have caused the
+> >>>>>> issue. Most likely the issue is on the lt9611 side. I's suspect th=
+at
+> >>>>>> additional programming is required to make it work with these flag=
+s.
+> >>>>>
+> >>>>> I spent some time today on smoke testing these flags (individually =
+and
+> >>>>> in limited combination) on DB845c, to narrow down this breakage to =
+one
+> >>>>> or more flag(s) triggering it. Here are my observations in limited
+> >>>>> testing done so far.
+> >>>>>
+> >>>>> There is no regression with MIPI_DSI_MODE_NO_EOT_PACKET when enable=
+d
+> >>>>> alone and system boots to UI as usual.
+> >>>>>
+> >>>>> MIPI_DSI_MODE_VIDEO_NO_HFP always trigger the broken display as in =
+the
+> >>>>> screenshot[1] shared earlier as well.
+> >>>>>
+> >>>>> Adding either of MIPI_DSI_MODE_VIDEO_NO_HSA and
+> >>>>> MIPI_DSI_MODE_VIDEO_NO_HBP always result in no display, unless pair=
+ed
+> >>>>> with MIPI_DSI_MODE_VIDEO_NO_HFP and in that case we get the broken
+> >>>>> display as reported.
+> >>>>>
+> >>>>> In short other than MIPI_DSI_MODE_NO_EOT_PACKET flag, all other fla=
+gs
+> >>>>> added in this commit break the display on DB845c one way or another=
+.
+> >>>>
+> >>>> I think the investigation would be to understand why samsung-dsim
+> >>>> requires
+> >>>> such flags and/or what are the difference in behavior between MSM
+> >>>> DSI and samsung DSIM
+> >>>> for those flags ?
+> >>>>
+> >>>> If someone has access to the lt9611 datasheet, so it requires
+> >>>> HSA/HFP/HBP to be
+> >>>> skipped ? and does MSM DSI and samsung DSIM skip them in the same wa=
+y ?
+> >>>
+> >>> I think there's a mismatch, where on one side this flags sets the
+> >>> link in LP-11 while
+> >>> in HSA/HFP/HPB while on the other it completely removes those
+> >>> blanking packets.
+> >>>
+> >>> The name MIPI_DSI_MODE_VIDEO_NO_HBP suggests removal of HPB, not
+> >>> LP-11 while HPB.
+> >>> the registers used in both controllers are different:
+> >>> - samsung-dsim: DSIM_HBP_DISABLE_MODE
+> >>> - msm dsi: DSI_VID_CFG0_HBP_POWER_STOP
+> >>>
+> >>> The first one suggest removing the packet, while the second one
+> >>> suggests powering
+> >>> off the line while in the blanking packet period.
+> >>>
+> >>> @Abhinav, can you comment on that ?
+> >>>
+> >>
+> >> I dont get what it means by completely removes blanking packets in DSI=
+M.
+> >
+> > MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped by DSIM=
+.
+> >
+> > Maybe there is a need for new set of flags which differentiate between
+> > HBP skipped (i.e. NO HBP) and HBP LP11 ?
+> >
+>
+> No, the section of the MIPI DSI spec I posted below clearly states there
+> are two options:
+>
+> 1) send blanking packets during those periods
+> 2) transition to LP11 during those periods
+>
+> There is no 3rd option in the spec of not doing both like what you are
+> suggesting. So DSIM should also be only transitioning to LP11 during
+> those periods if its not sending the blanking packets with those flags se=
+t.
+>
+> So, there is no need for any new set of flags to differentiate.
+>
+> The flags and their interpretation is correct in MSM driver. I cannot
+> comment on what exactly DSIM does with those flags.
 
+As many of them know all these flags are generic across controllers
+I'm trying to add these flag notations from DSIM controller and how
+they handle the driver.
 
-On 7/13/2023 11:28 AM, Marek Vasut wrote:
-> On 7/13/23 20:09, Abhinav Kumar wrote:
->>
->>
->> On 7/12/2023 10:41 AM, Marek Vasut wrote:
->>> On 7/9/23 03:03, Abhinav Kumar wrote:
->>>>
->>>>
->>>> On 7/7/2023 1:47 AM, Neil Armstrong wrote:
->>>>> On 07/07/2023 09:18, Neil Armstrong wrote:
->>>>>> Hi,
->>>>>>
->>>>>> On 06/07/2023 11:20, Amit Pundir wrote:
->>>>>>> On Wed, 5 Jul 2023 at 11:09, Dmitry Baryshkov
->>>>>>> <dmitry.baryshkov@linaro.org> wrote:
->>>>>>>>
->>>>>>>> [Adding freedreno@ to cc list]
->>>>>>>>
->>>>>>>> On Wed, 5 Jul 2023 at 08:31, Jagan Teki 
->>>>>>>> <jagan@amarulasolutions.com> wrote:
->>>>>>>>>
->>>>>>>>> Hi Amit,
->>>>>>>>>
->>>>>>>>> On Wed, Jul 5, 2023 at 10:15 AM Amit Pundir 
->>>>>>>>> <amit.pundir@linaro.org> wrote:
->>>>>>>>>>
->>>>>>>>>> Hi Marek,
->>>>>>>>>>
->>>>>>>>>> On Wed, 5 Jul 2023 at 01:48, Marek Vasut <marex@denx.de> wrote:
->>>>>>>>>>>
->>>>>>>>>>> Do not generate the HS front and back porch gaps, the HSA gap 
->>>>>>>>>>> and
->>>>>>>>>>> EOT packet, as these packets are not required. This makes the 
->>>>>>>>>>> bridge
->>>>>>>>>>> work with Samsung DSIM on i.MX8MM and i.MX8MP.
->>>>>>>>>>
->>>>>>>>>> This patch broke display on Dragonboard 845c (SDM845) devboard 
->>>>>>>>>> running
->>>>>>>>>> AOSP. This is what I see
->>>>>>>>>> https://people.linaro.org/~amit.pundir/db845c-userdebug/v6.5-broken-display/PXL_20230704_150156326.jpg.
->>>>>>>>>> Reverting this patch fixes this regression for me.
->>>>>>>>>
->>>>>>>>> Might be msm dsi host require proper handling on these updated
->>>>>>>>> mode_flags? did they?
->>>>>>>>
->>>>>>>> The msm DSI host supports those flags. Also, I'd like to point out
->>>>>>>> that the patch didn't change the rest of the driver code. So 
->>>>>>>> even if
->>>>>>>> drm/msm ignored some of the flags, it should not have caused the
->>>>>>>> issue. Most likely the issue is on the lt9611 side. I's suspect 
->>>>>>>> that
->>>>>>>> additional programming is required to make it work with these 
->>>>>>>> flags.
->>>>>>>
->>>>>>> I spent some time today on smoke testing these flags 
->>>>>>> (individually and
->>>>>>> in limited combination) on DB845c, to narrow down this breakage 
->>>>>>> to one
->>>>>>> or more flag(s) triggering it. Here are my observations in limited
->>>>>>> testing done so far.
->>>>>>>
->>>>>>> There is no regression with MIPI_DSI_MODE_NO_EOT_PACKET when enabled
->>>>>>> alone and system boots to UI as usual.
->>>>>>>
->>>>>>> MIPI_DSI_MODE_VIDEO_NO_HFP always trigger the broken display as 
->>>>>>> in the
->>>>>>> screenshot[1] shared earlier as well.
->>>>>>>
->>>>>>> Adding either of MIPI_DSI_MODE_VIDEO_NO_HSA and
->>>>>>> MIPI_DSI_MODE_VIDEO_NO_HBP always result in no display, unless 
->>>>>>> paired
->>>>>>> with MIPI_DSI_MODE_VIDEO_NO_HFP and in that case we get the broken
->>>>>>> display as reported.
->>>>>>>
->>>>>>> In short other than MIPI_DSI_MODE_NO_EOT_PACKET flag, all other 
->>>>>>> flags
->>>>>>> added in this commit break the display on DB845c one way or another.
->>>>>>
->>>>>> I think the investigation would be to understand why samsung-dsim 
->>>>>> requires
->>>>>> such flags and/or what are the difference in behavior between MSM 
->>>>>> DSI and samsung DSIM
->>>>>> for those flags ?
->>>>>>
->>>>>> If someone has access to the lt9611 datasheet, so it requires 
->>>>>> HSA/HFP/HBP to be
->>>>>> skipped ? and does MSM DSI and samsung DSIM skip them in the same 
->>>>>> way ?
->>>>>
->>>>> I think there's a mismatch, where on one side this flags sets the 
->>>>> link in LP-11 while
->>>>> in HSA/HFP/HPB while on the other it completely removes those 
->>>>> blanking packets.
->>>>>
->>>>> The name MIPI_DSI_MODE_VIDEO_NO_HBP suggests removal of HPB, not 
->>>>> LP-11 while HPB.
->>>>> the registers used in both controllers are different:
->>>>> - samsung-dsim: DSIM_HBP_DISABLE_MODE
->>>>> - msm dsi: DSI_VID_CFG0_HBP_POWER_STOP
->>>>>
->>>>> The first one suggest removing the packet, while the second one 
->>>>> suggests powering
->>>>> off the line while in the blanking packet period.
->>>>>
->>>>> @Abhinav, can you comment on that ?
->>>>>
->>>>
->>>> I dont get what it means by completely removes blanking packets in 
->>>> DSIM.
->>>
->>> MIPI_DSI_MODE_VIDEO_NO_HFP means the HBP period is just skipped by DSIM.
->>>
->>> Maybe there is a need for new set of flags which differentiate 
->>> between HBP skipped (i.e. NO HBP) and HBP LP11 ?
->>>
->>
->> No, the section of the MIPI DSI spec I posted below clearly states 
->> there are two options:
->>
->> 1) send blanking packets during those periods
->> 2) transition to LP11 during those periods
->>
->> There is no 3rd option in the spec of not doing both like what you are 
->> suggesting. So DSIM should also be only transitioning to LP11 during 
->> those periods if its not sending the blanking packets with those flags 
->> set.
->>
->> So, there is no need for any new set of flags to differentiate.
->>
->> The flags and their interpretation is correct in MSM driver. I cannot 
->> comment on what exactly DSIM does with those flags.
-> 
-> How do you explain the comment in include/drm/drm_mipi_dsi.h:
-> 
-> 128 /* disable hback-porch area */
-> 129 #define MIPI_DSI_MODE_VIDEO_NO_HBP      BIT(6)
-> 
-> Esp. the "disable" part. That to me reads as "don't send HBP packet".
-> 
+HBP/HFP/HSA mode bits in i.MX8M Mini/Nano/Plus Processor Reference
+Manuals specify a naming conversion as 'disable mode bit' due to its
+bit definition,  0 =3D Enable and 1 =3D Disable.
 
-Yes the LP11 option doesnt send HBP packet. That comment should have 
-said "Dont send HBP packet and use LP11 instead" to match the spec.
+Example HBP (HbpDisableMode)- Specifies HBP disable mode. If this bit
+set, DSI master ignores HBP area in Video mode.
+ 0 =3D Enables
+ 1 =3D Disables
 
+ if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP)
+           reg |=3D DSIM_HFP_DISABLE_MODE;
+ if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP)
+           reg |=3D DSIM_HBP_DISABLE_MODE;
+ if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA)
+            reg |=3D DSIM_HSA_DISABLE_MODE;
 
-Like I said there are two options:
+I'm hoping this will give some information.
 
-1) Send the blanking (HBP) packet
-2) Dont send the packet and transition to LP11
-
-Thats what those flags are controlling and thats what MSM driver does too.
-
-> Where do you see that quote above in the DSI spec (which chapter and 
-> which version do you read) ?
-> 
-
-I am referring "8.11.2 Non-Burst Mode with Sync Pulses" of MIPI DSI 1.2 
-spec ( its slightly old ) but this part doenst change across revisions.
-
->>>> It should be replacing those periods with LP11 too.
->>>>
->>>> The traffic mode being used on this bridge is 
->>>> MIPI_DSI_MODE_VIDEO_SYNC_PULSE which is "Non-Burst Mode with Sync 
->>>> Pulses".
->>>>
->>>> As per this traffic mode in the DSI spec,
->>>>
->>>> "Normally, periods shown as HSA (Horizontal Sync Active), HBP 
->>>> (Horizontal Back Porch) and HFP (Horizontal Front Porch) are filled 
->>>> by Blanking Packets, with lengths (including packet overhead) 
->>>> calculated to match the period specified by the peripheral’s data 
->>>> sheet. Alternatively, if there is sufficient time to transition from 
->>>> HS to LP mode and back again, a timed interval in LP mode may 
->>>> substitute for a Blanking Packet, thus saving power. During HSA, HBP 
->>>> and HFP periods, the bus should stay in the LP-11 state."
->>>>
->>>> So we can either send the blanking packets or transition to LP state 
->>>> and those 3 flags are controlling exactly that during those periods 
->>>> for MSM driver.
->>>>
->>>> If you stop sending the blanking packets, you need to replace that 
->>>> gap with LP.
->>>
->>> I don't think that's what MIPI_DSI_MODE_VIDEO_NO_HBP means, the way I 
->>> understand MIPI_DSI_MODE_VIDEO_NO_HBP is that it skips the HBP 
->>> completely. So if you want HBP, then do not set 
->>> MIPI_DSI_MODE_VIDEO_NO_HBP . And if you want LP11 during HBP, that is 
->>> I think up to the controller (or maybe another new flag?).
->>>
->>
->> No, there is no need of another new flag. There are only two options 
->> as per the spec.
->>
->> In fact, as per my checking with more folks, requiring LP11 during 
->> those periods is something very rare.
->>
->> Because usually horizontal period is usually a very short period, most 
->> of the time we do not use the LP11 option and send the blanking 
->> packets instead.
->>
->> So its something very unusual for DSIM.
->>
->> That being said, I still think my previous question is important.
->>
->> 1) What is the difference between the resolution you are trying Vs 
->> what Amit is trying?
->>
->> 2) Are you both using just standard HDMI monitors?
-> 
-> What is a "standard HDMI monitor" ?
-> I use DELL U2713HM .
-> 
-
-Thats standard enough :)
-
-Please also let us know your resolution (drm_display_mode) to compare 
-with what Amit has.
-
-> [...]
+Thanks,
+Jagan.
