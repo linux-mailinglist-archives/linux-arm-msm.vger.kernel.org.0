@@ -2,221 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C85D6752CFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 00:25:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42FF3752CFD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 00:26:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232438AbjGMWZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 18:25:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
+        id S232533AbjGMW0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 18:26:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230445AbjGMWZs (ORCPT
+        with ESMTP id S231567AbjGMW0O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 18:25:48 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E563B211B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 15:25:45 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id 006d021491bc7-56598263d1dso890810eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 15:25:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689287145; x=1691879145;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/yrMgnrOq8YoZ1fyFC4X0GmYtJswdpvDYlmQRdE3Wk8=;
-        b=ULr8ROoF3EzlQKdgTM1+tdy5qL4xxCoLrep4q98bPjBMQ4J8vKxsCV0blcN2dxfwvw
-         7cTF7EjSB0V26cEDKHVBKh9PkqdVwJ7+358kEu/jCjSjRUtkcuBKkLyA+JYGHdNFg4YI
-         OrZPX7sXMayO4LiZelj05x/Dcfnbcxy7MzmdSVqbn3gpz4kVF2p1AXyCA/rYq2mjkmJ1
-         SDfjq3QW9MFFQZRLEGf2r193fUeyThuhP9/A+VnAxGeTkZvXjNoqNXdoOW+G26tPGgMe
-         QNqroEmGmKc8yd8PMJChFdPfnMISLgdXDJpmZKms49/ZfMbWNE0WttAkrEcNYaTlJQMU
-         SBjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689287145; x=1691879145;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/yrMgnrOq8YoZ1fyFC4X0GmYtJswdpvDYlmQRdE3Wk8=;
-        b=Ptcde2bRRxQPrBOOpKD2HR3q9y9N9CXGBLBnmk73osEFZub+38T3oXgHliYkTqROUC
-         yYXVIM0WfhsI/1Oj/N08nCY2Sean/SdIQjKHx+3jrI5/4bssTuf8iXVqtzessEkQD/ag
-         N1Nzt8kcFBtTzawCVjhzeUEN/wuGq8jWfluUBVB8tArVcWhqTN26MuoBsCehvSN9ILNS
-         qxC+7FfXJxL67Eob6xOyvpadpLSN9ps5Clqdahg3JdQsvRJ+si3iByqHIvX1TdFCmmhE
-         33SjGiZV2O6VFWYPsMf5gU2+12mh0PR0r4KJDVxsFJqDTznSGIU9F7EFdhUarJlIecKc
-         B+AA==
-X-Gm-Message-State: ABy/qLZKP7LDJjMb7f5MG3q7ZYNi2OcffLmWeM9lPh1e7voobMq0viyp
-        MCs7L8X9GIddhXn01AsYj+DfnUrSMr67YPJcd9k=
-X-Google-Smtp-Source: APBJJlF4GeNA7uSMYR+ZAhGDVDHH70LHyPYUnTmXGVAhOUnBYa3Enj9DVwAptUEyvE5jOXLOC5Re9jLDhrFxeeZopAs=
-X-Received: by 2002:a05:6820:51:b0:566:b483:ee00 with SMTP id
- v17-20020a056820005100b00566b483ee00mr2862635oob.5.1689287145043; Thu, 13 Jul
- 2023 15:25:45 -0700 (PDT)
+        Thu, 13 Jul 2023 18:26:14 -0400
+Received: from sonic309-25.consmr.mail.ir2.yahoo.com (sonic309-25.consmr.mail.ir2.yahoo.com [77.238.179.83])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CFD22D66
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 15:26:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1689287168; bh=C+hRNpz31Q1m5e4vLU6zQGZFY5pXxupfUYhNVLntXno=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=USJYYs2JaVO035Ap/Ci4UQas0VIn3O4D9wRYf6rxfZyCMb1F98CQ5bsIUDTUGMXfr296v/FHxgs8qwAUotbCKLNRJ6Xa2ujm7stzYJjgU1M1bVbTQ2LyJcfTQl8gKRpjgq2pZFcKrt2mrUobzHmLNGxyahlxyHxaP+LLDhyXgvi82c6E+d3hK3Ie0aGv/JjvblVuDSLa1Vgsn9eximOhrQyPWlsETBrfxmVXOdSADY2Zxkk1Q4PeqrNq4g1/6thQDTFmx7PM9O0IOzL6xvgAqvKwB2V7QlQnhcj9akcqCPPyHnjRvxrqydzqW70vycezhpVe3XlKdxEejzPYLG3eNg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1689287168; bh=GPYqG2HUuJN6VY9f70ahcJZ4b/xQufqe7GJVwOOAANv=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=b10gJRLTBTj/cCiaEwavS2vZSsQudIxshLVyD6RceMTnMv/jxoQxU8i9O1UgUI/V6Nxd0quLrQX0mNHDjOy2MJjrs6bbYsKK/Kc3Sd5rD1VIsfesMXsdYoMQUs8UxR9cImT2NXirXjNr3NbZKKv7MeWKFzTzRL+KBwLt+NZ+OspnHAXjCmChGfksdbcVx0y2LJ3qvxyv2RWZF7zg5ofpQhgBlUjWLXM0f7BSlximA/KlEw972xg7Hx9n2vdFGqS36F9vvO5KTy9k48820CDP9G557GKbWxLccFC3d3DdBhwGseDzHr69yjNG+iLcZu6nsO/nYBkVg+JRQY/CUhvEaw==
+X-YMail-OSG: kPJKLHUVM1lflqUrRix.AXdc8_iiu.5JCGjGhpEUZkRzYEBO.uEmFMaNyEtosoI
+ B9m5ujlXDoCmqSadM53ifw_tuo8EQ_S52AD6W_Tz8_W3jl05QfEym4CtoEYDnLyn.VeuOleEOVpS
+ dO3tQOzZEe0kfWYpQULUST7Xndyz1O2QCVOAIA53HXWNlbPcFSkLujsK4.q.ZrgJaOJdPwsh4Hhj
+ yq.DMDthzRYPdT8exJXnZhNhrxiPbXglknJYD1VTRQBcJiVpfgKpA0UI6pbabDrV87lHvQr.J6iT
+ G3zAwtIc3NF.CQZaHKGEHF0YZa5JQEZHzrpH2u8XIKZ.7dqDykfTmzTEwxLtUFVvzlG2zfxXcKgu
+ mfTTiS.L3WlNpuesj4CbP1f6NUyyHMdKcIFB57d4yTK4K1wLBY9D2lZ7.f9awoTSGbTdLA3vZ1v2
+ CWW13lRWVBP4kYXEA2O.kyA5k23jKXQ.f.iqgl38HMqeSkHNGZGjOZqfOltAKnec7IODdEbqrG91
+ nSmm9Ednd3OebI93aB_kUQkKSSnni2gVXKl51YZPmdZFJJufiLDBFgiBhKqrW3U.EaEgCxa7bPGY
+ lp6CaWGPQiQceB0_sjiWGQOfT.m1sV0Te.0lc4PPmuIrof06s3kEY8c3OJkgYFttyCOT2jGv7ivV
+ qGCNGGCO8H.5l5D.WpUqAF_YQMtpsqmw7mNVjCGMNVtlTp5z3CI_BpD_yQAR0AD3ZkcboYSAdKU7
+ ohoNrPoAONrZ8DCUULeOKCAyoFX7P4yPlPhV6i5Md.K0UWJ2zgQoYgDXiK0l.Qy43ZXD_YqJ2wtV
+ AI7FWZedhHFXJr0srWfkqpD4SV.vVCfNc3lADxeCVmQMx057.Sxdh2wjm4VXAI0hoWVqRJ5.zEbz
+ l1Q49Vq2osLAKox9ENdhOaC74h6AUO7gnEznmBUZCxHWRK2zo2xOdC9.WXJ8wwlgnih3ks5p6ysd
+ qGdVHV0ShcGbKaw3vD6SQIfKyUKPn.zkpfWvDEK36REj_.HBVOeToQgMMCutC5pTIwMYz2i_rvaF
+ JHFy5qCkWr2W9ZmPVol2YCjjmha1K3hvAAzgfLYro38OURino7ZJUKhkNZIk5Hhhvn19Rph3L4vP
+ boWRgVB82WoS6f4uNGfdE2pV2opAFlxQsM1G.HXNzgwFnTnywNc2cNS_UVpQN6VHI1cB0MphrX91
+ gUivGsrxEjH1Iu3YH0tZqMEmj0KFcWx.S7HDwjJCMcP05BYfHKyhpFFnn0rDi96gikQU.8fWZPQM
+ CG330umALXLT1es6Io9mmHDifc8QzriRq.8AQ6he6KzC2E0DuivU70yyTVifoEPsq9i8MfrRC.pM
+ hHTFmP4fzOqT4EpF7fFIDAYUf1LChH8j0WticwjeZdUvNQ0DwL2xRbQRrD6T1_vs8CKKewqqO1HA
+ y8R8NTg8NLkU.YVgV44Hjm5YXVeDsAc2O4TfidF9BfuBxr0HSz5D6cthyvPEFgzhUW2USY4aymm8
+ uXPPejiWhQj6eZw50hWIVZSLqNq6OPOi1sC3C752BGzNT3nQt8RlpQO7fUp.4I74rSQYNJ6e_HYd
+ S_UXNBP1OcjHEZLpW9BKetU9Z.fcaNX2meaKrKTcT9ErrFCWgZkQmF4zQhVSBbKKrKopc7Yvos7k
+ TnnKXDc4pIVPRPFqTubKxkQRlsQ244gWM8wH9sZfdd_a_P2yNBVaFkGPQUsFi.frZ66elh8Rli4h
+ WRPDewEvRu8mzhA3NHSjaXtNsqOqV40rxwVRpOCNRMk96lOLdZmnFM_YOaEK8FTy9E6_wlb5igdM
+ h8_sFTWpAVLRm2Ub7xF.grCgD2VRFDNBC2qiz9IAJS0KDiWuBImjbDgY6tC5be8VoyySYvNbWgns
+ 27jIJT1DfYw9.YgerbvPc49NoFgcIwiEvQ3Q3PrOV18mwWmQKE6TjZfE6mI74CEiUhWpm_oBWHtw
+ 6gcYiH8lExFL_5kfPacL6Jg_AMKzI46y_2dLaovDS.hRtflkIkGJYY5mRr1hF2g0OHJ1cYQZZ4Bb
+ jEikWR35gDKkA_f_rrLBjN8Tr_9MrtnGUkJ3RLY_YZOz_gT4gzrB4wKilwipRe30oLxrFkY7ToWO
+ O9EtCNkogr0LsK8axpgv1rPHBLpcWrA7YTEm9_RVe5Fx.PU6GJo1dDUocKeTjzdUJP0lKjviIYIV
+ ZMDnYVEhxJtDpm3acNGR4BzODXFpPaY6s16y6kWjDC3yX8KLYVjeWAI4WfyPADXvqF8OBrvsdWAu
+ LJdUhQvmWq4ahseTFw3PIFK.6Pos58U9ZmJyd.HNR7ohy2rBk1nQqy9.oiiQmiae9zQ_oZk8WW1b
+ Fh512UOH_aEtzgdxEzXpI9ofMUQU-
+X-Sonic-MF: <jahau@rocketmail.com>
+X-Sonic-ID: 32c85954-2108-443f-84b7-53f52a82755c
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.ir2.yahoo.com with HTTP; Thu, 13 Jul 2023 22:26:08 +0000
+Received: by hermes--production-ir2-7858d959bd-r4jkj (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 7b21490b2998ee19b22bb7f64882cd48;
+          Thu, 13 Jul 2023 22:26:06 +0000 (UTC)
+Message-ID: <b067e3c0-c2fe-21ce-b398-3f889adbfd06@rocketmail.com>
+Date:   Fri, 14 Jul 2023 00:26:04 +0200
 MIME-Version: 1.0
-References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-6-robdclark@gmail.com>
- <m2r2klrcvgs2qiywx5eetcwwjph6suzjey4hhbon3bhqdsbg7t@lvwdvbhoaqaw>
-In-Reply-To: <m2r2klrcvgs2qiywx5eetcwwjph6suzjey4hhbon3bhqdsbg7t@lvwdvbhoaqaw>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 13 Jul 2023 15:25:33 -0700
-Message-ID: <CAF6AEGt73GpN=7tdHnsytZM4=WqKXMU2WSHpdkTOxVqi+wH1zA@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 05/12] drm/msm/adreno: Use quirk to identify
- cached-coherent support
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-serranove: Add
+ RT5033 PMIC with charger
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Raymond Hackley <raymondhackley@protonmail.com>,
+        Henrik Grimler <henrik@grimler.se>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230619203743.8136-1-jahau.ref@rocketmail.com>
+ <20230619203743.8136-1-jahau@rocketmail.com>
+ <02fe7c1e-cb6a-14bc-73fc-04956a2b8396@kernel.org>
+ <3376e14a-4fc7-160e-509e-8dcbe627ef62@rocketmail.com>
+ <b8e21ba1-900d-6731-579d-e18c37a97a71@kernel.org>
+Content-Language: en-US
+From:   Jakob Hauser <jahau@rocketmail.com>
+In-Reply-To: <b8e21ba1-900d-6731-579d-e18c37a97a71@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+X-Mailer: WebService/1.1.21647 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 13, 2023 at 1:06=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quicin=
-c.com> wrote:
->
-> On Thu, Jul 06, 2023 at 02:10:38PM -0700, Rob Clark wrote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > It is better to explicitly list it.  With the move to opaque chip-id's
-> > for future devices, we should avoid trying to infer things like
-> > generation from the numerical value.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_device.c | 23 +++++++++++++++-------
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  1 +
-> >  2 files changed, 17 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
-rm/msm/adreno/adreno_device.c
-> > index f469f951a907..3c531da417b9 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -256,6 +256,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_512K,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT,
-> >               .init =3D a6xx_gpu_init,
-> >       }, {
-> >               .rev =3D ADRENO_REV(6, 1, 9, ANY_ID),
-> > @@ -266,6 +267,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_512K,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT,
-> >               .init =3D a6xx_gpu_init,
-> >               .zapfw =3D "a615_zap.mdt",
-> >               .hwcg =3D a615_hwcg,
-> > @@ -278,6 +280,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_1M,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT,
-> >               .init =3D a6xx_gpu_init,
-> >               .zapfw =3D "a630_zap.mdt",
-> >               .hwcg =3D a630_hwcg,
-> > @@ -290,6 +293,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_1M,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT,
-> >               .init =3D a6xx_gpu_init,
-> >               .zapfw =3D "a640_zap.mdt",
-> >               .hwcg =3D a640_hwcg,
-> > @@ -302,7 +306,8 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_1M + SZ_128K,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > -             .quirks =3D ADRENO_QUIRK_HAS_HW_APRIV,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT |
-> > +                     ADRENO_QUIRK_HAS_HW_APRIV,
-> >               .init =3D a6xx_gpu_init,
-> >               .zapfw =3D "a650_zap.mdt",
-> >               .hwcg =3D a650_hwcg,
-> > @@ -316,7 +321,8 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_1M + SZ_512K,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > -             .quirks =3D ADRENO_QUIRK_HAS_HW_APRIV,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT |
-> > +                     ADRENO_QUIRK_HAS_HW_APRIV,
-> >               .init =3D a6xx_gpu_init,
-> >               .zapfw =3D "a660_zap.mdt",
-> >               .hwcg =3D a660_hwcg,
-> > @@ -329,7 +335,8 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_512K,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > -             .quirks =3D ADRENO_QUIRK_HAS_HW_APRIV,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT |
-> > +                     ADRENO_QUIRK_HAS_HW_APRIV,
-> >               .init =3D a6xx_gpu_init,
-> >               .hwcg =3D a660_hwcg,
-> >               .address_space_size =3D SZ_16G,
-> > @@ -342,6 +349,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_2M,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT,
-> >               .init =3D a6xx_gpu_init,
-> >               .zapfw =3D "a640_zap.mdt",
-> >               .hwcg =3D a640_hwcg,
-> > @@ -353,7 +361,8 @@ static const struct adreno_info gpulist[] =3D {
-> >               },
-> >               .gmem =3D SZ_4M,
-> >               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-> > -             .quirks =3D ADRENO_QUIRK_HAS_HW_APRIV,
-> > +             .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT |
-> > +                     ADRENO_QUIRK_HAS_HW_APRIV,
-> >               .init =3D a6xx_gpu_init,
-> >               .zapfw =3D "a690_zap.mdt",
-> >               .hwcg =3D a690_hwcg,
-> > @@ -565,9 +574,9 @@ static int adreno_bind(struct device *dev, struct d=
-evice *master, void *data)
-> >       if (ret)
-> >               return ret;
-> >
-> > -     if (config.rev.core >=3D 6)
-> > -             if (!adreno_has_gmu_wrapper(to_adreno_gpu(gpu)))
-> > -                     priv->has_cached_coherent =3D true;
-> > +     priv->has_cached_coherent =3D
-> > +             !!(info->quirks & ADRENO_QUIRK_HAS_CACHED_COHERENT) &&
-> > +             !adreno_has_gmu_wrapper(to_adreno_gpu(gpu));
-> >
-> >       return 0;
-> >  }
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/=
-msm/adreno/adreno_gpu.h
-> > index a7c4a2c536e3..e08d41337169 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > @@ -33,6 +33,7 @@ enum {
-> >  #define ADRENO_QUIRK_FAULT_DETECT_MASK               BIT(1)
-> >  #define ADRENO_QUIRK_LMLOADKILL_DISABLE              BIT(2)
-> >  #define ADRENO_QUIRK_HAS_HW_APRIV            BIT(3)
-> > +#define ADRENO_QUIRK_HAS_CACHED_COHERENT     BIT(4)
-> a shorter ADRENO_IS_IOCOHERENT?
-
-I prefer "HAS" to "IS".. maybe it is just me but "IS" sounds to me
-like all dma is coherent, while in fact gpu mappings can be either
-coherent or not.
-
-I suppose it could be "HAS_IOCOHERENT" but we do use "CACHED_COHERENT"
-elsewhere.
-
-BR,
--R
-
->
-> -Akhil
->
-> >
-> >  struct adreno_rev {
-> >       uint8_t  core;
-> > --
-> > 2.41.0
-> >
+SGkgS3J6eXN6dG9mLA0KDQpPbiAxMi4wNy4yMyAyMjoyOCwgS3J6eXN6dG9mIEtvemxvd3Nr
+aSB3cm90ZToNCj4gT24gMTIvMDcvMjAyMyAyMTo1MCwgSmFrb2IgSGF1c2VyIHdyb3RlOg0K
+Li4uDQo+PiBPbiAxMS4wNy4yMyAwODoxMywgS3J6eXN6dG9mIEtvemxvd3NraSB3cm90ZToN
+Cj4+IC4uLg0KPj4+IFRoaXMgYXBwZWFyZWQgaW4gdG9kYXkncyBuZXh0IG5leHQtMjAyMzA3
+MTEgYW5kIGNhdXNlcyBuZXcgd2FybmluZ3MNCj4+Pg0KPj4+IG1zbTg5MTYtc2Ftc3VuZy1z
+ZXJyYW5vdmUuZHRiOiBleHRjb25AMTQ6ICdjb25uZWN0b3InIGRvZXMgbm90IG1hdGNoIGFu
+eQ0KPj4+IG9mIHRoZSByZWdleGVzOiAncGluY3RybC1bMC05XSsnDQo+Pj4gaHR0cHM6Ly9r
+cnprLmV1LyMvYnVpbGRlcnMvOTAvYnVpbGRzLzQwL3N0ZXBzLzE3L2xvZ3Mvc3RkaW8NCj4+
+Pg0KPj4+IFRoZSBjb21taXQgbWVudGlvbnMgcnQ1MDMzLCBidXQgdGhhdCBpcyBub3QgdGhl
+IHNjaGVtYSBiZWluZyBoZXJlDQo+Pj4gdGVzdGVkLCBzbyBjbGVhcmx5IHRoaXMgaXMgd3Jv
+bmcgb3IgYmluZGluZ3Mgd2VyZSBub3QgdXBkYXRlZC4NCj4+Pg0KPj4+IFBsZWFzZSBmaXgg
+KGFuZCB0ZXN0IHlvdXIgZnV0dXJlIHBhdGNoZXMpLg0KPj4NCj4+IFRoZSBpbXBsZW1lbnRh
+dGlvbiB5b3Ugc2VlIGluIHRoaXMgcGF0Y2ggZm9sbG93cyB0aGUgZ3VpZGFuY2Ugb2YgeW91
+cnMNCj4+IGFuZCBSb2LigJlzLiBJIGFscmVhZHkgZXhwcmVzc2VkIG15IGRpc2NvbnRlbnQg
+YWJvdXQgaXQgYmVmb3JlLg0KPj4NCj4+IFRvIHNvbHZlIHRoZSBtZXNzYWdlLCB0aGUgZHQt
+YmluZGluZ3Mgb2YgZXh0Y29uIGRldmljZSBzbTU1MDItbXVpYyBbMV0NCj4+IHdvdWxkIG5l
+ZWQgdG8gYmUgY2hhbmdlZCB0byBhbGxvdyBhICJjb25uZWN0b3IiIHN1Yi1ub2RlLiBUaGF0
+4oCZcyBub3QgdGhlDQo+PiByaWdodCBhcHByb2FjaC4NCj4+DQo+PiBJIHN0aWxsIGhhdmUg
+dGhlIGltcHJlc3Npb24gdGhhdCB0aGUgY3VycmVudCBpbXBsZW1lbnRhdGlvbiBpcyBiYXNl
+ZCBvbg0KPj4gbWlzdW5kZXJzdGFuZGluZ3MuIEkgZG8gdGhpbmsgUm9i4oCZcyBjb21tZW50
+IHRoYXQgZXhjb24gcGhhbmRsZSBiZWluZw0KPj4gZGVwcmVjYXRlZCBbMl0gaXMgdmFsaWQg
+Zm9yIHRoZSBVU0Igc3Vic3lzdGVtLiBZb3VyIHN1Z2dlc3Rpb24gdG8gY2hlY2sNCj4+ICJw
+b3J0cyBncmFwaCIsICJvcmllbnRhdGlvbiIgYW5kICJ1c2Itcm9sZS1zd2l0Y2giIGFwcGxp
+ZXMgdG8gVVNCDQo+PiBzdWJzeXN0ZW0gYXMgd2VsbCBbM10uIFJvYiB0b29rIHRoZSB0aW1l
+IHRvIGFkZCBtb3JlIGV4cGxhbmF0aW9uIFs0XSBidXQNCj4+IGl04oCZcyBzdGlsbCBhYm91
+dCBoYW5kbGluZyBjb25uZWN0b3JzIGluIHRoZSBtb3JlIHN0cmljdCBzZW5zZSwgd2hpY2gg
+aXMNCj4+IGNpcmNsaW5nIGFyb3VuZCBVQlMgc3Vic3lzdGVtLg0KPj4NCj4+IFRoZXNlIGRp
+c2N1c3Npb25zIGxlZCB0byBhIHN0cmFuZ2VseSBtaXhlZC11cCByZXN1bHQuIEkgd2FzIHB1
+c2hlZCB0bw0KPj4gaW1wbGVtZW50IHRoZSBVU0Igc3Vic3lzdGVtIGNvbm5lY3RvciBhcHBy
+b2FjaCB1cG9uIGFuIGV4Y3RvbiBzdWJzeXN0ZW0NCj4+IGRldmljZS4gQXMgdGhlIHN0YW5k
+YXJkIFVTQiBjb25uZWN0b3IgYXBwcm9hY2ggZGlkbuKAmXQgZml0LCB3ZSBzd2l0Y2hlZA0K
+Pj4gdG8gYSB2ZW5kb3Itc3BlY2lmaWMgY29ubmVjdG9yIHBoYW5kbGUgWzVdLiBJbiBmYWN0
+IGl04oCZcyBraW5kIG9mIGENCj4+IHdvcmthcm91bmQgZm9yIHRoZSBleHRjb24gcGhhbmRs
+ZS4NCj4+DQo+PiBUaGUgZXh0Y29uIGRldmljZSBzbTU1MDQgaXMgYSByZWFsIHBpZWNlIG9m
+IGhhcmR3YXJlLiBJdOKAmXMgbm90IGhhbmRsZWQNCj4+IGJ5IFVTQiBzdWJzeXN0ZW0gYnV0
+IGJ5IGV4dGNvbiBzdWJzeXN0ZW0uIFRoZSBleGN0b24gc3Vic3lzdGVtIGhhcyBhDQo+PiBt
+ZXRob2QgaW1wbGVtZW50ZWQgdG8gZ2V0IHRoZSBkZXZpY2UgYnkgcGhhbmRsZSBbNl0uDQo+
+IA0KPiBJIGFtIG5vdCBzdXJlIGlmIHdlIGRpc2N1c3MgdGhlIHNhbWUgcHJvYmxlbS4gTXkg
+ZW1haWwgd2FzIGFib3V0IHRoZSBEVFMNCj4gYW5kIGJpbmRpbmdzLCBub3Qgd2hldGhlciB0
+aGlzIHdvcmtzIGluIExpbnV4IGRyaXZlcnMuIEZyb20geW91ciByZXBseSBJDQo+IGZlZWwg
+dGhhdCB0aGlzIHBhdGNoIG1pZ2h0IGFjdHVhbGx5IG5vdCB3b3JrPyBUaGlzIHdvdWxkIGJl
+IHF1aXRlDQo+IGNvbmZ1c2luZy4uLg0KPiANCj4gWW91IGFkZGVkIG5ldyBjaGlsZCBub2Rl
+ICJjb25uZWN0b3IiIHRvIHRoZSBzaWxpY29ubWl0dXMsc201NTA0LW11aWMsIHNvDQo+IGFs
+bCBJIHdvdWxkIGV4cGVjdCB0aGF0IHdlIG1pc3MgaGVyZSBvbmx5IHVwZGF0aW5nIHRoYXQg
+YmluZGluZy4NCj4gQXNzdW1pbmcgdGhhdCB5b3VyIGNvZGUgd2FzIHdvcmtpbmcuLi4NCg0K
+VGhlIHBhdGNoIHdvcmtzLg0KDQo+PiBJIHRoZXJlZm9yZSBwcm9wb3NlIHRvIHVzZSB0aGUg
+cGhhbmRsZSBvZiB0aGUgZXh0Y29uIHN1YnN5c3RlbS4NCj4gDQo+IGV4dGNvbiBpbiB0aGUg
+YmluZGluZ3M/IFRoZW4gd2Ugd291bGQgYmUgYmFjayB0byBzcXVhcmUgb25lLg0KDQpJZiBz
+cXVhcmUgb25lIGlzIGEgcmVhc29uYWJsZSBwcm9wb3NhbCwgaXQgc2hvdWxkIGJlIGNvbnNp
+ZGVyZWQuIA0KRGlzY3Vzc2lvbnMgY2FuIGdvIGFzdHJheS4gSXQncyBhIHByb2Nlc3MuDQoN
+ClRoZSBleHRjb24gc3Vic3lzdGVtIG9mZmVycyBtZXRob2RzIHRvIGFjY2VzcyBhbiBleGN0
+b24gZGV2aWNlLiBJZiB0aGVyZSANCmlzIGV4dGNvbiBoYXJkd2FyZSBpbnN0YWxsZWQsIHVz
+aW5nIG9uZSBvZiB0aG9zZSBtZXRob2RzIGlzIGEgcHJldHR5IA0Kc3RyYWlnaHQtZm9yd2Fy
+ZCBhbmQgYW4gb2J2aW91cyBhcHByb2FjaC4NCg0KV2hhdCBzcGVha3MgYWdhaW5zdCB0aGUg
+dXNlIG9mIHRoaXMgbWV0aG9kPyBSb2IgYXJndWVkIHRoYXQgdGhlIA0KY29tcGxleGl0eSBv
+ZiBjb25uZWN0b3IgaW1wbGVtZW50YXRpb24gZ3JldyBvdmVyIHRpbWUgYW5kIHRoZXJlZm9y
+ZSANCnN0YW5kYXJkIGNvbm5lY3RvciBiaW5kaW5ncyBzaG91bGQgYmUgdXNlZC4gSSB1bmRl
+cnN0YW5kIHRoaXMgYW5kIHRoZSANCmV4YW1wbGUgeW91IGxpbmtlZCBpbiB0aGUgcHJldmlv
+dXMgZGlzY3Vzc2lvbiBzaG93cyBzdWNoIGEgY29tcGxleGl0eS4gDQpCdXQgdGhpcyBpcyBh
+Ym91dCBVU0Igc3Vic3lzdGVtLg0KDQpVU0Igc3Vic3lzdGVtIGlzIG5vdCBpbnZvbHZlZCBo
+ZXJlLiBXaHkgaW52b2x2aW5nIGl0IGJ5IGZvcmNlPw0KDQpJIHN1cmUgZG9uJ3QgaGF2ZSB0
+aGUgZnVsbCBwaWN0dXJlLiBIb3dldmVyLCBzbyBmYXIgdGhlIHdob2xlIGRpc2N1c3Npb24g
+DQpzZWVtcyB0byBiZSBiYXNlZCBvbiB0aGUgY29uZnVzaW9uIG9mIGRpZmZlcmVudCBleHRj
+b24gcGhhbmRsZXM6IA0KInZpcnR1YWwiIG9uZXMgaW4gVVNCIHN1YnN5c3RlbSBhbmQgInJl
+YWwiIG9uZXMgaW4gZXh0Y29uIHN1YnN5c3RlbS4gSWYgDQp0aGF0J3MgdGhlIGNhc2UsIHdl
+J3ZlIGJlZW4gZHJpZnRpbmcgaW50byB0aGUgd3JvbmcgZGlyZWN0aW9uIGFsbCB0aGUgdGlt
+ZS4NCg0KPj4gSSBtZWFuDQo+PiBleHRjb24gc3Vic3lzdGVtLCBub3QgVVNCIHN1YnN5c3Rl
+bS4gSW4gY2FzZSB5b3UgZGlzYWdyZWUsIEkga2luZGx5IGFzaw0KPj4geW91IHRvIHRha2Ug
+bW9yZSB0aW1lIHRvIGFuc3dlciBpbiBtb3JlIGRldGFpbCBhbmQgZXNwZWNpYWxseQ0KPj4g
+Y2FzZS1yZWxhdGVkLg0KPiANCj4gQXNzdW1pbmcgeW91ciBwYXRjaCB3b3JrcywgSSB0aGlu
+ayBhYm92ZSBpcyBxdWl0ZSBzcGVjaWZpYyBhbnN3ZXIgLSBuZXcNCj4gcHJvcGVydHkgaXMg
+bWlzc2luZyBpbiBzbTU1MDQgYmluZGluZy4NCg0KSSBkb24ndCB0aGluayB0aGlzIGlzIHRo
+ZSByaWdodCB3YXkgdG8gZ2V0IHJpZCBvZiB0aGUgaXNzdWUuIFN1cmUsIA0KdGVjaG5pY2Fs
+bHkgdGhlIG1lc3NhZ2UgZGlzYXBwZWFycy4gQ29udGVudHdpc2UsIGhvd2V2ZXIsIHdlJ3Jl
+IHNuZWFraW5nIA0KdGhlIGNvbmZ1c2lvbiBvZiBvdXIgZGlzY3Vzc2lvbiBpbnRvIHRoZSBk
+dC1iaW5kaW5ncy4gSW1hZ2luZSB3aGF0IHRoZSANCmRlc2NyaXB0aW9uIG9mIHRoYXQgImNv
+bm5lY3RvciIgcHJvcGVydHkgaW4gDQpzaWxpY29ubWl0dXMsc201NTAyLW11aWMueWFtbCB3
+b3VsZCBsb29rIGxpa2U6ICJTdGFuZGFyZCBVU0IgY29ubmVjdG9yIA0Kbm9kZSBhY2NvcmRp
+bmcgdG8gdXNiLWNvbm5lY3Rvci55YW1sIGZvciBhY2Nlc3NpbmcgdGhlIGV4dGNvbiBkZXZp
+Y2UgdmlhIA0KZGV2aWNldHJlZS4iIEEgZGV2aWNlIGluIHRoZSBleHRjb24gc3Vic3lzdGVt
+IGRvZXNuJ3QgbmVlZCB0aGlzLCB0aGUgDQpleHRjb24gc3Vic3lzdGVtIGFscmVhZHkgcHJv
+dmlkZXMgdGhlIG1ldGhvZCB0byBhY2Nlc3MgdGhlIGV4dGNvbiBkZXZpY2UgDQp2aWEgZGV2
+aWNldHJlZS4NCg0KV2VsbCwgSSBndWVzcyB3ZSB3b3VsZCBzaWxlbnRseSBza2lwIGEgZGVz
+Y3JpcHRpb24gbGlrZSB0aGF0IGJ5IGNoYW5naW5nIA0KImFkZGl0aW9uYWxQcm9wZXJ0aWVz
+IiBmcm9tIGZhbHNlIHRvIHRydWUuDQoNCldoeSBkbyBJIG1ha2UgdXAgc3VjaCBhIGJpZyB0
+aGluZyBpZiB0aGUgbWVzc2FnZSBjb3VsZCBiZSBtYWRlIGRpc2FwcGVhciANCnRoYXQgZWFz
+aWx5IChhbmQgYnVybmluZyB0aW1lIG9mIHlvdXJzLCBzb3JyeSk/IFRoaXMgbWl4LXVwIHdl
+J3JlIA0KaW1wbGVtZW50aW5nIGhlcmUgaXMgY29uZnVzaW5nLiBJdCdzIG5vdCBoZWxwZnVs
+IGZvciBmdXJ0aGVyIGRldmVsb3BtZW50IA0KYW5kIGltcGxlbWVudGF0aW9uIG9mIHJ0NTAz
+MyBhbmQgc2ltaWxhciBoYXJkd2FyZSBhcnJhbmdlbWVudHMuIFRoZSANCmlzc3VlIHRoYXQg
+Y2FtZSB1cCB3aXRoaW4gdGhlIHNhbXN1bmctc2VycmFub3ZlIGR0cyBwYXRjaCBoZXJlIGlz
+IGEgZ29vZCANCmluZGljYXRpb24gb2YgdGhhdC4NCg0KSSBjYW4gcHJlcGFyZSBhIHBhdGNo
+c2V0IHRvIGRpc3NvbHZlIHRoaXMgVVNCL2V4dGNvbiBtaXgtdXAgKGJhc2ljYWxseSANCnNx
+dWFyZSBvbmUsIGFzIHlvdSBjYWxsZWQgaXQpLg0KDQpBbHRlcm5hdGl2ZWx5LCBpZiBhbGwg
+bXkgdHJpZXMgdG8gY2xhcmlmeSBhIHBvc3NpYmxlIG1pc3VuZGVyc3RhbmRpbmcgDQphcmUg
+aW4gdmFpbiBhbmQgbm8gb25lIGVsc2UgaW50ZXJ2ZW5lcywgSSBndWVzcyBJIGhhdmUgbm8g
+b3RoZXIgb3B0aW9uIA0KdGhhbiBwcmVwYXJpbmcgYSBwYXRjaCB0byBjaGFuZ2UgdGhlIGR0
+LWJpbmR1bmdzIG9mIA0Kc2lsaWNvbm1pdHVzLHNtNTUwMi1tdWljLnlhbWwuDQoNCj4+IEFu
+ZCBzcGVjaWZpY2FsbHkgdG8gS3J6eXN6dG9mIEkgYXNrIGZvciBtb3JlIHBvbGl0ZW5lc3Mg
+aW4NCj4+IHlvdXIgd2F5IG9mIGNvbW11bmljYXRpbmcuIEkgdW5kZXJzdGFuZCB5b3XigJly
+ZSBhbnN3ZXJpbmcgaHVuZHJlZHMgb2YNCj4+IHJlcXVlc3RzIGEgZGF5IGJ1dCB0aGUgY29t
+bXVuaWNhdGlvbiB3ZSBoYWQgaW4gdGhlIHBhc3Qgd2Vla3MgaXMgcmVhbGx5DQo+PiBmcnVz
+dHJhdGluZy4NCj4gDQo+IFNvcnJ5IHRvIGhlYXIgdGhhdCwgcGxlYXNlIGFjY2VwdCBteSBh
+cG9sb2dpZXMuIEkgd2VudCB0aHJvdWdoIGFsbCBteQ0KPiByZXBsaWVzIHRvIHlvdSBpbiBw
+YXN0IGZldyB3ZWVrcyBhbmQgY291bGQgbm90IGZpbmQgYW55IHBhcnRpY3VsYXINCj4gaW1w
+b2xpdGUgYmVoYXZpb3IgZnJvbSBteSBzaWRlLg0KDQpJJ20gbm90IHVzZWQgdG8gdGhlIGZh
+c3QtcGFjZWQgaW50ZXJhY3Rpb24gb24gdGhlIGtlcm5lbCBsaXN0cy4gTWF5YmUgSSANCmhh
+dmUgbWlzdGFrZW4gc29tZSBvZiB5b3VyIGNvbW1lbnRzLiBJbiB0aGF0IGNhc2Ugc29ycnkg
+Zm9yIG15IGFjY3VzYXRpb24uDQoNCi4uLg0KDQpLaW5kIHJlZ2FyZHMsDQpKYWtvYg0K
