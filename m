@@ -2,110 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11F3E751E80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 12:11:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0A3A751EBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 12:19:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233469AbjGMKLW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 06:11:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53328 "EHLO
+        id S233398AbjGMKTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 06:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233896AbjGMKLM (ORCPT
+        with ESMTP id S232596AbjGMKTI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 06:11:12 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04BAF26BD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 03:11:11 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-992b66e5affso83110566b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 03:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689243069; x=1691835069;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hdJChzZNxDzjOXLqJ61GLiH0/vTfmrIbg8mkf+gOJHA=;
-        b=XpqauorbRj+16W2KdWYqID1YUOFsG/PLZ+NFNt+BljuZB9a8RP2Z/dH2zY5Ud6LuI2
-         8/Oklpnhec0u39RVTWa6M8TXhm7RiPlh2NpjuLqR3labjm2NuAGTRuIaeld0yiieIcb/
-         CxliVWI5j8uhpr/ofEZOSON3NL7jkUYeC7mLPSZUKgTDzU03htyHcMqlDTNMXow5Y52U
-         dXh16Ij30ycdhACBcsI+r0sBo0JoYAQqmwX/ezXoNyfPctJ9LVHds8EsBM0ldo7qUoG0
-         Ge4g78Zrmpgz+voLuE92FZAmklmu9ryRlMcnyz2NStpskMAELW8xPy1VePTI1sSwjxym
-         aHfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689243069; x=1691835069;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hdJChzZNxDzjOXLqJ61GLiH0/vTfmrIbg8mkf+gOJHA=;
-        b=QpOEi0HmU2sdV3mHPShjsFhdt4+8mwyye6CWeL4/x3tS4pxdycqGrID/m21IQaalfe
-         /J3VSYckQA8xg9GstIXW/oMcot4ODHmtijiJYsw9TzwR1e599Aa4g0jer9jdMHY6y7Dl
-         rSP/xL0pDLLDh4fb8bvCZx0Puavw1jOrut/Nu1NoiTHiR7qL3BQvSE216MI/3bFwi0gq
-         t9TcY7XrG73Rk4FVqqyPbs8TmytvB4FPMmFekBLOnJsOExqgHw+pVwXDgkVQg5gGwSC7
-         mLVTMhUHVBASnN5n94HxC3MJ/Xb91kHgzC29+W+sntfzzREE6L2vsT/TSqtr7UC73M3L
-         cXcQ==
-X-Gm-Message-State: ABy/qLahVDIjuH+/zrnK46sa+o59yB5rIxcg++3t8MH/tJ0VOqJW9Zx1
-        4fNM+kmZN6+dsOg+qb1OZLCP0A==
-X-Google-Smtp-Source: APBJJlHupH2O4PNGjOoIHbXwB5WOyuMkaK5vUVwl67E+lPYsa2Kthyh37XaKqJxQvC4FiojvMkXRgA==
-X-Received: by 2002:a17:906:341b:b0:992:a836:a194 with SMTP id c27-20020a170906341b00b00992a836a194mr788045ejb.59.1689243069359;
-        Thu, 13 Jul 2023 03:11:09 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id x18-20020a170906149200b00989027eb30asm3762868ejc.158.2023.07.13.03.11.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jul 2023 03:11:08 -0700 (PDT)
-Message-ID: <5bc4ddee-fdac-a6c0-c30d-5d0a065e24e9@linaro.org>
-Date:   Thu, 13 Jul 2023 11:11:07 +0100
+        Thu, 13 Jul 2023 06:19:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A432711;
+        Thu, 13 Jul 2023 03:18:53 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 77EDA60B63;
+        Thu, 13 Jul 2023 10:18:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778B0C433C7;
+        Thu, 13 Jul 2023 10:18:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689243532;
+        bh=1GbxYx/CZktSh2mOgXWwsxM2Jwmmh5UkY3gUfBTSD1A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VpPkEf+CJTjlAuYQbmdVdEbBeMM3gNzFmV61fO5Vr/Lg8RVwx9Y1gVJMvr0V4ZRnq
+         1nufVJC5Q7o9f3hNp0t8HwvIk5AnqMh+RFu9inclmIuJ/zEpq4CVtgoRRD61gPjzr0
+         +A4yMoY6spCdIccN2Ox1E4K4pjt2P0xeVa+HKLkKNkpcmc0k3WCEfsM67nnQIQYyEi
+         P6yO8pfXNbqzDx1khjDRuYtwH6Cb+CpwV+eCaOj1S46Vn1mo8Ky665EnEDg6jVP8LN
+         DE87obeGat5nmupF61nGOrJkri+GOpYYGiLAHYiO/HzvMxehz9VonqTLKOexY1VzcN
+         Z032XKfPArTzA==
+Date:   Thu, 13 Jul 2023 11:18:48 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Chengfeng Ye <dg573847474@gmail.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mfd: qcom-pm8xxx: Fix potential deadlock on
+ &chip->pm_irq_lock
+Message-ID: <20230713101848.GM10768@google.com>
+References: <20230628072840.28587-1-dg573847474@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 1/6] dt-bindings: nvmem: qfprom: Add compatible for
- MSM8226
-Content-Language: en-US
-To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230507201225.89694-1-matti.lehtimaki@gmail.com>
- <20230507201225.89694-2-matti.lehtimaki@gmail.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230507201225.89694-2-matti.lehtimaki@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230628072840.28587-1-dg573847474@gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+I'd like some additional eyes-on please.
 
+This is very old code that you're changing and some of the people who
+made the largest contributions are not on Cc.
 
-On 07/05/2023 21:12, Matti Lehtimäki wrote:
-> Document QFPROM compatible for MSM8226.
+On Wed, 28 Jun 2023, Chengfeng Ye wrote:
+> As &chip->pm_irq_lock is acquired by pm8xxx_irq_handler() under irq
+> context, other process context code should disable irq before acquiring
+> the lock.
 > 
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> I think .irq_set_type and .irq_get_irqchip_state callbacks should be
+> executed from process context without irq disabled by default. Thus the
+> same lock acquision should disable irq.
+> 
+> Possible deadlock scenario
+> pm8xxx_irq_set_type()
+>     -> pm8xxx_config_irq()
+>     -> spin_lock(&chip->pm_irq_lock)
+>         <irq interrupt>
+>         -> pm8xxx_irq_handler()
+>         -> pm8xxx_irq_master_handler()
+>         -> pm8xxx_irq_block_handler()
+>         -> pm8xxx_read_block_irq()
+>         -> spin_lock(&chip->pm_irq_lock) (deadlock here)
+> 
+> This flaw was found using an experimental static analysis tool we are
+> developing for irq-related deadlock.
+> 
+> The tentative patch fix the potential deadlock by spin_lock_irqsave().
+> 
+> Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
 > ---
-
-Applied thanks,
-
---srini
->   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
->   1 file changed, 1 insertion(+)
+>  drivers/mfd/qcom-pm8xxx.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> index 2173fe82317d..0baf7819ab46 100644
-> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> @@ -20,6 +20,7 @@ properties:
->             - qcom,apq8084-qfprom
->             - qcom,ipq8064-qfprom
->             - qcom,ipq8074-qfprom
-> +          - qcom,msm8226-qfprom
->             - qcom,msm8916-qfprom
->             - qcom,msm8974-qfprom
->             - qcom,msm8976-qfprom
+> diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
+> index 9a948df8c28d..07c531bd1236 100644
+> --- a/drivers/mfd/qcom-pm8xxx.c
+> +++ b/drivers/mfd/qcom-pm8xxx.c
+> @@ -103,8 +103,9 @@ static int
+>  pm8xxx_config_irq(struct pm_irq_chip *chip, unsigned int bp, unsigned int cp)
+>  {
+>  	int	rc;
+> +	unsigned long flags;
+>  
+> -	spin_lock(&chip->pm_irq_lock);
+> +	spin_lock_irqsave(&chip->pm_irq_lock, flags);
+>  	rc = regmap_write(chip->regmap, SSBI_REG_ADDR_IRQ_BLK_SEL, bp);
+>  	if (rc) {
+>  		pr_err("Failed Selecting Block %d rc=%d\n", bp, rc);
+> @@ -116,7 +117,7 @@ pm8xxx_config_irq(struct pm_irq_chip *chip, unsigned int bp, unsigned int cp)
+>  	if (rc)
+>  		pr_err("Failed Configuring IRQ rc=%d\n", rc);
+>  bail:
+> -	spin_unlock(&chip->pm_irq_lock);
+> +	spin_unlock_irqrestore(&chip->pm_irq_lock, flags);
+>  	return rc;
+>  }
+>  
+> @@ -321,6 +322,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
+>  	struct pm_irq_chip *chip = irq_data_get_irq_chip_data(d);
+>  	unsigned int pmirq = irqd_to_hwirq(d);
+>  	unsigned int bits;
+> +	unsigned long flags;
+>  	int irq_bit;
+>  	u8 block;
+>  	int rc;
+> @@ -331,7 +333,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
+>  	block = pmirq / 8;
+>  	irq_bit = pmirq % 8;
+>  
+> -	spin_lock(&chip->pm_irq_lock);
+> +	spin_lock_irqsave(&chip->pm_irq_lock, flags);
+>  	rc = regmap_write(chip->regmap, SSBI_REG_ADDR_IRQ_BLK_SEL, block);
+>  	if (rc) {
+>  		pr_err("Failed Selecting Block %d rc=%d\n", block, rc);
+> @@ -346,7 +348,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
+>  
+>  	*state = !!(bits & BIT(irq_bit));
+>  bail:
+> -	spin_unlock(&chip->pm_irq_lock);
+> +	spin_unlock_irqrestore(&chip->pm_irq_lock, flags);
+>  
+>  	return rc;
+>  }
+> -- 
+> 2.17.1
+> 
+
+-- 
+Lee Jones [李琼斯]
