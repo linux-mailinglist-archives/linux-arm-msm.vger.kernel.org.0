@@ -2,149 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0A3A751EBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 12:19:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 070BD751F5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 12:59:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233398AbjGMKTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 06:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60206 "EHLO
+        id S231703AbjGMK7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 06:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232596AbjGMKTI (ORCPT
+        with ESMTP id S229913AbjGMK73 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 06:19:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A432711;
-        Thu, 13 Jul 2023 03:18:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 77EDA60B63;
-        Thu, 13 Jul 2023 10:18:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778B0C433C7;
-        Thu, 13 Jul 2023 10:18:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689243532;
-        bh=1GbxYx/CZktSh2mOgXWwsxM2Jwmmh5UkY3gUfBTSD1A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VpPkEf+CJTjlAuYQbmdVdEbBeMM3gNzFmV61fO5Vr/Lg8RVwx9Y1gVJMvr0V4ZRnq
-         1nufVJC5Q7o9f3hNp0t8HwvIk5AnqMh+RFu9inclmIuJ/zEpq4CVtgoRRD61gPjzr0
-         +A4yMoY6spCdIccN2Ox1E4K4pjt2P0xeVa+HKLkKNkpcmc0k3WCEfsM67nnQIQYyEi
-         P6yO8pfXNbqzDx1khjDRuYtwH6Cb+CpwV+eCaOj1S46Vn1mo8Ky665EnEDg6jVP8LN
-         DE87obeGat5nmupF61nGOrJkri+GOpYYGiLAHYiO/HzvMxehz9VonqTLKOexY1VzcN
-         Z032XKfPArTzA==
-Date:   Thu, 13 Jul 2023 11:18:48 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Chengfeng Ye <dg573847474@gmail.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mfd: qcom-pm8xxx: Fix potential deadlock on
- &chip->pm_irq_lock
-Message-ID: <20230713101848.GM10768@google.com>
-References: <20230628072840.28587-1-dg573847474@gmail.com>
+        Thu, 13 Jul 2023 06:59:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBDD21999;
+        Thu, 13 Jul 2023 03:59:28 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36D9e7hD013560;
+        Thu, 13 Jul 2023 10:59:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=0nGbzRJWkCYq6I33cFzKEOWeimag20CQ2GvUJRvf4Vg=;
+ b=PvHtosqlBBdYhs5ODfpFxjWcMKXuuH42bZkGKdWgjazZJXHg1fhWw57zNMteHvqebhAl
+ va/Ui6w8u+K/TIcPdHeZkWcExsRhtaVr0cEk411085BvRDMwjY0SX/po9U9iXJ+Ynr9b
+ YIsjq8Vyi6IV0jXihnDuFdLrQwJiQG1SanUgh+UOedvyDYx9GomLMNw0gzTfDRhdQhb0
+ 6spdJPrEvQ2PbUVhu2LUmdeMHPGI02FxKlqALJY5ldxtoc4nfBzrosCDGs35xGDd/0oH
+ Nxnz9U0AcxbfjhTQ8ErWi3k4NxVHfmbpQ4558vrZappKepdcqYSl7jp1Ehy+nEWuNIJD XQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rt3qfh94d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Jul 2023 10:59:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36DAxNsA021100
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Jul 2023 10:59:23 GMT
+Received: from anusha-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 13 Jul 2023 03:59:20 -0700
+From:   Anusha Rao <quic_anusha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_saahtoma@quicinc.com>, <quic_anusha@quicinc.com>
+Subject: [PATCH V2 0/2] Add common RDP dtsi file for ipq9574
+Date:   Thu, 13 Jul 2023 16:29:07 +0530
+Message-ID: <20230713105909.14209-1-quic_anusha@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230628072840.28587-1-dg573847474@gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: AW7QSpeGw9KlEn6iLDj0zewHNuAhYu5H
+X-Proofpoint-GUID: AW7QSpeGw9KlEn6iLDj0zewHNuAhYu5H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-13_04,2023-07-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxscore=0 suspectscore=0 adultscore=0 priorityscore=1501 mlxlogscore=389
+ phishscore=0 malwarescore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2307130096
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I'd like some additional eyes-on please.
+Some interfaces are common across RDPs.
+Move the common nodes to ipq9574-rdp-common.dtsi.
+Use rdp specific dts file to include interfaces that vary across RDPs.
+Example, ipq9574 has 4 PCIE controllers.
+RDP417 enables PCIE0 and PCIE1, RDP418 enables PCIE2 and PCIE3.
+While at it, add support for WPS buttons.
 
-This is very old code that you're changing and some of the people who
-made the largest contributions are not on Cc.
+Changes in V2:
+	Detailed change logs are added to the respective patches.
 
-On Wed, 28 Jun 2023, Chengfeng Ye wrote:
-> As &chip->pm_irq_lock is acquired by pm8xxx_irq_handler() under irq
-> context, other process context code should disable irq before acquiring
-> the lock.
-> 
-> I think .irq_set_type and .irq_get_irqchip_state callbacks should be
-> executed from process context without irq disabled by default. Thus the
-> same lock acquision should disable irq.
-> 
-> Possible deadlock scenario
-> pm8xxx_irq_set_type()
->     -> pm8xxx_config_irq()
->     -> spin_lock(&chip->pm_irq_lock)
->         <irq interrupt>
->         -> pm8xxx_irq_handler()
->         -> pm8xxx_irq_master_handler()
->         -> pm8xxx_irq_block_handler()
->         -> pm8xxx_read_block_irq()
->         -> spin_lock(&chip->pm_irq_lock) (deadlock here)
-> 
-> This flaw was found using an experimental static analysis tool we are
-> developing for irq-related deadlock.
-> 
-> The tentative patch fix the potential deadlock by spin_lock_irqsave().
-> 
-> Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-> ---
->  drivers/mfd/qcom-pm8xxx.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-> index 9a948df8c28d..07c531bd1236 100644
-> --- a/drivers/mfd/qcom-pm8xxx.c
-> +++ b/drivers/mfd/qcom-pm8xxx.c
-> @@ -103,8 +103,9 @@ static int
->  pm8xxx_config_irq(struct pm_irq_chip *chip, unsigned int bp, unsigned int cp)
->  {
->  	int	rc;
-> +	unsigned long flags;
->  
-> -	spin_lock(&chip->pm_irq_lock);
-> +	spin_lock_irqsave(&chip->pm_irq_lock, flags);
->  	rc = regmap_write(chip->regmap, SSBI_REG_ADDR_IRQ_BLK_SEL, bp);
->  	if (rc) {
->  		pr_err("Failed Selecting Block %d rc=%d\n", bp, rc);
-> @@ -116,7 +117,7 @@ pm8xxx_config_irq(struct pm_irq_chip *chip, unsigned int bp, unsigned int cp)
->  	if (rc)
->  		pr_err("Failed Configuring IRQ rc=%d\n", rc);
->  bail:
-> -	spin_unlock(&chip->pm_irq_lock);
-> +	spin_unlock_irqrestore(&chip->pm_irq_lock, flags);
->  	return rc;
->  }
->  
-> @@ -321,6 +322,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
->  	struct pm_irq_chip *chip = irq_data_get_irq_chip_data(d);
->  	unsigned int pmirq = irqd_to_hwirq(d);
->  	unsigned int bits;
-> +	unsigned long flags;
->  	int irq_bit;
->  	u8 block;
->  	int rc;
-> @@ -331,7 +333,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
->  	block = pmirq / 8;
->  	irq_bit = pmirq % 8;
->  
-> -	spin_lock(&chip->pm_irq_lock);
-> +	spin_lock_irqsave(&chip->pm_irq_lock, flags);
->  	rc = regmap_write(chip->regmap, SSBI_REG_ADDR_IRQ_BLK_SEL, block);
->  	if (rc) {
->  		pr_err("Failed Selecting Block %d rc=%d\n", block, rc);
-> @@ -346,7 +348,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
->  
->  	*state = !!(bits & BIT(irq_bit));
->  bail:
-> -	spin_unlock(&chip->pm_irq_lock);
-> +	spin_unlock_irqrestore(&chip->pm_irq_lock, flags);
->  
->  	return rc;
->  }
-> -- 
-> 2.17.1
-> 
+V1 can be found at
+https://lore.kernel.org/linux-arm-msm/20230614085040.22071-1-quic_anusha@quicinc.com/
 
+This series depends on below patchset for CHECK_DTBS issue
+https://lore.kernel.org/linux-arm-msm/7ceba3df-bee8-9f1d-a27d-85e0b5f35d83@linaro.org/
+
+Anusha Rao (2):
+  arm64: dts: qcom: ipq9574: Add common RDP dtsi file
+  arm64: dts: qcom: ipq9574: Enable WPS buttons
+
+ .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 147 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts   |  67 +-------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   |  95 +----------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts   |  65 +-------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts   |  65 +-------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts   |  66 +-------
+ 6 files changed, 156 insertions(+), 349 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+
+
+base-commit: 40b055fe7f276cf2c1da47316c52f2ff9255a68a
 -- 
-Lee Jones [李琼斯]
+2.17.1
+
