@@ -2,92 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB1C8752A0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 19:52:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59191752A2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 20:07:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbjGMRwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 13:52:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32880 "EHLO
+        id S231250AbjGMSHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 14:07:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230287AbjGMRwN (ORCPT
+        with ESMTP id S229905AbjGMSHk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 13:52:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C6FD2722;
-        Thu, 13 Jul 2023 10:52:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9798161AD7;
-        Thu, 13 Jul 2023 17:52:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D8AC433C9;
-        Thu, 13 Jul 2023 17:52:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689270732;
-        bh=clrj0QY3ZBhqFvGU0WyRdoEeXSfE6WZWhdiNMa9dGVg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=t2tcf9cLZkX811gNZrYMxejiZRyjkv9Eiv1mEFOp6n5RRRI/Xn0wZ2GbO/dGPlWPV
-         fBbwbC43+/sqKutwqQ01/Z8krGnbD0uykM5KXiCBBdBfhThn8CyGWtEeJrnTsylU1J
-         976HK3nr6RP12nne6VKfRWWFTO9Ay3K2j1YBuuVmGiX79/Z2k1JTPxnLiKcHrU+lcU
-         68Ha2PtU9JHioCadwOP6ub9cqkowUS1G7ePHQpUfS4AVeiznNvSXn0Lxxw8WNpeIao
-         S/Xk/Du3ALnIgR++OQr8FHHEPRNjmX8ics6Ay7ONP2+TwvXNtPiu1ZaDX4FTfThocs
-         Dq2/BJ/9PCe9Q==
-Date:   Thu, 13 Jul 2023 23:22:07 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 13 Jul 2023 14:07:40 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CCB12728
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 11:07:36 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fc0aecf15bso8449525e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 11:07:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689271655; x=1691863655;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CLkIfBJthLEH2ccjZlkkGVeGCtWdOkNdkmUQsqDJMeI=;
+        b=rSozWLDr9KZxz25t+9LmW0w3a5QauJcRdaAuzHjJk0JNUg0UhVfn8YOR8E2IpfghAg
+         W2sg1rGv9jsVgWB7OVR0/uQZU/j0OBZH9ui0iEBOiGjdAZ0yQRFWs86iTubRZHmjbMHF
+         tgXQ8r98C5oN1hJANY2clAwfhsOyGpfC1+y7EvowFA0oMiN9tbfgH8uTP6NpWR+MoE+d
+         2B9bBrIsqCW5zyzZdjeAXGj+e7l2mCwvt7/LU/oxzM0bzJddGt3RTArlRUaGyjNDEow3
+         9xd07Dzxr4pwU9n8M+2gP1YgLs1s8w7cD3zL8M9ZCMElvsrlfBrRfjNNQPIXTpq2dGft
+         2Juw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689271655; x=1691863655;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CLkIfBJthLEH2ccjZlkkGVeGCtWdOkNdkmUQsqDJMeI=;
+        b=eiKYOT+e9iJ1Pl/v4mhJKqlplTqUXX+qQ3MLhyuac2DH1zWkwREkGoXO74jKUsRGYJ
+         E0+WorEt1p+ah10uYBJpvP/twsTCqtkJMCz6vG4PGb6IqkJ9nzrTNY7wsrMTbttoZc2y
+         d0It5odU4srUioVIqsm1NPYG7vSWYujYBZVvE8b6oJwTQxMSXoXK0XdfNoNadL2pBd47
+         P2lRg0GJzzzFzMrl85pU7nb7CIPfVmS6mzIvN7TuRh55BQwjJHvokQknEzPOWNdA5xVl
+         obeOuHGBN+adRhG8DpHPVyb9B0KJoPV+gPfCHvy/DsTR8ctjhpQhCEBG2VaLDC2OMVOc
+         b7Qg==
+X-Gm-Message-State: ABy/qLYhx9E8e6lqrmRFNg8VUKHPCsnDNis8MqFwtzxy1Ke0ACymY8s5
+        WUB53HGvSaeE6gEHMkjnrTq4tQ==
+X-Google-Smtp-Source: APBJJlFOlyG41+n+2iJOGB1cYv+oZzqeKv3CFHYA+MueCLFGy8D+v2cUTRR+I9Wmegt+nPSbXQNMyg==
+X-Received: by 2002:a1c:4b18:0:b0:3fa:9e61:19ed with SMTP id y24-20020a1c4b18000000b003fa9e6119edmr2481086wma.23.1689271654801;
+        Thu, 13 Jul 2023 11:07:34 -0700 (PDT)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id gy24-20020a05600c881800b003fbb1ce274fsm866782wmb.0.2023.07.13.11.07.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Jul 2023 11:07:34 -0700 (PDT)
+Message-ID: <78cd6fcb-17e7-450b-759e-bd306ac6c3d0@linaro.org>
+Date:   Thu, 13 Jul 2023 20:07:33 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] thermal/drivers/tsens: make tsens_xxxx_nvmem static
+Content-Language: en-US
+To:     Min-Hua Chen <minhuadotchen@gmail.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yangtao Li <frank.li@vivo.com>, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH 1/5] dmaengine: qcom: gpi: Use
- devm_platform_get_and_ioremap_resource()
-Message-ID: <ZLA5x/4Z8dgCrLjg@matsya>
-References: <20230705081856.13734-1-frank.li@vivo.com>
- <168909383153.208679.15343948792914219046.b4-ty@kernel.org>
- <c3373ebe-2f52-bed7-7f59-98e1268c9af2@linux-m68k.org>
- <ZK6O2b88Nz6J2JeN@matsya>
- <CAMuHMdXiyk6NSGJWwby9VoP98=g0xu-SRAkDtxYqA-DcnOLmrQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230713160415.149381-1-minhuadotchen@gmail.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20230713160415.149381-1-minhuadotchen@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMuHMdXiyk6NSGJWwby9VoP98=g0xu-SRAkDtxYqA-DcnOLmrQ@mail.gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Geert,
-
-On 13-07-23, 10:00, Geert Uytterhoeven wrote:
-> On Wed, Jul 12, 2023 at 1:30 PM Vinod Koul <vkoul@kernel.org> wrote:
-> > On 12-07-23, 11:33, Geert Uytterhoeven wrote:
-> >
-> > Thanks for pointing that out, yes something is messed up for me.
-> >
-> > > However, the standard way is to add a Link: tag pointing to lore
-> > > instead, cfr. [3].
-> >
-> > Yep and if you look at the dmaengine and phy commits for 6.4 they have
-> > "Link" in them, so something is not working, let me fix that up.
+On 13/07/2023 18:04, Min-Hua Chen wrote:
+> This patch fixes the following sparse warnings:
 > 
-> Sorry, hadn't noticed that, so I assumed you were a new user ;-)
+> drivers/thermal/qcom/tsens-v1.c:24:40: sparse: warning: symbol 'tsens_qcs404_nvmem' was not declared. Should it be static?
+> drivers/thermal/qcom/tsens-v0_1.c:26:40: sparse: warning: symbol 'tsens_8916_nvmem' was not declared. Should it be static?
+> drivers/thermal/qcom/tsens-v0_1.c:42:40: sparse: warning: symbol 'tsens_8974_nvmem' was not declared. Should it be static?
+> drivers/thermal/qcom/tsens-v0_1.c:64:40: sparse: warning: symbol 'tsens_8974_backup_nvmem' was not declared. Should it be static?
 > 
-> I saw you have already updated your branches, but FTR, the issue
-> was caused by a new version of git, which broke the hook, cfr. commit
-> 2bb19e740e9b3eb4 ("Documentation: update git configuration for Link:
-> tag") in v6.5-rc1.
+> No functional change intended.
+> 
+> Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+> ---
 
-Yes that was exactly the cause, updating my hook fixed it up. Had to fix
-all the commits in the trees though,    thanks
+Applied, thanks
 
 -- 
-~Vinod
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
