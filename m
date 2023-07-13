@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CD47752B1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 21:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68208752B28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 21:46:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233139AbjGMTk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 15:40:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38802 "EHLO
+        id S229944AbjGMTqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 15:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232854AbjGMTk1 (ORCPT
+        with ESMTP id S230142AbjGMTqf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 15:40:27 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A123269D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 12:40:26 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id 46e09a7af769-6b5d6a05b6dso868746a34.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 12:40:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689277225; x=1689882025;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DX1Gj8EBXXoZzKq8yFIL6/gLwQcq/eP050VPNOLcr5k=;
-        b=d+3IoseYtGQOjFRFOIFKJ45KID+DSbVNElMv9SN/sZUvkets/C0mMbJPNt2jEV+nqt
-         8OSNRc8l1e30bLkl764W0+juLXJbCATuVKHzTRi5rEHQJGXBD0rPWCu9UCyWH5pC3dbP
-         OH/0pO/+PJQzdX5aKdLJE7EovJ6J9GR5Kb2WfYPfWJkL+E6pKAwC8GTo2NiWw7mtdB4T
-         feQuRxNNlhSpsHd2I66mlyU/xVgiwYE2bj/0MNxIycMqJG0M5kusYNwJgMihPICVbYBG
-         924Oghoi3zDnaYR51nBWkfyMBk5YbwOkSPXYXYERRaHUA2wje7cR7NBnXP/DvVP+g53N
-         62mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689277225; x=1689882025;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DX1Gj8EBXXoZzKq8yFIL6/gLwQcq/eP050VPNOLcr5k=;
-        b=eK+0UBnI55oZOB9Olr7ghUGXdXgkD4cKISrAGag7Ok5JOUHH+ImzohL/4Jks4JFozs
-         qTvzpLocUVRmJV1LbVS2q2ijiLzzea1F4bIONmnf40UkBx18vKUCWu1TCgieQY0KJC8o
-         y8ddSbidCyqFC0PYnaCItuEdMYrKprY0v9hWDbTOoZ/JLoF+1EDyTxArajmixlQVVhwJ
-         qO8sGeBTHZA52UA7O57Q/mwq7q9EeCtmg6at62pzDFRyGMZcv6FNkEJRHDRQCBibg376
-         udzhklslOKumoDOcGPeJcw0xOZnxglFG+hfcedJ93iribtnzZLd567gkeHt1q+B1lA+n
-         fXjg==
-X-Gm-Message-State: ABy/qLacdm0UtYy9/nbSiX3hauYIxofx5CfaEy7EqfN511rii80UhXhR
-        upUHfQ29YODz9dt6GV4CLAdVLnwIWmQS0PsA8rgqTjyLLU8EzsWx
-X-Google-Smtp-Source: APBJJlE4geAWgF/c1eSajBp9xhwr1InENP1uaHmvwsBe5xFcZ1TuvNARD6AuNScP0D+MkTip7O/mXlKTUD7UcVFFl1k=
-X-Received: by 2002:a9d:6a50:0:b0:6b9:9288:613c with SMTP id
- h16-20020a9d6a50000000b006b99288613cmr3086600otn.13.1689277225502; Thu, 13
- Jul 2023 12:40:25 -0700 (PDT)
+        Thu, 13 Jul 2023 15:46:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 875182D40
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 12:46:33 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36DIk8mV011801;
+        Thu, 13 Jul 2023 19:46:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=ZMjWNYjfFS1fBTnHIK743de/XPQBIpbXjBcJeB0a23A=;
+ b=grjqAgvjKR+4R3yOJh2OT0FuDmDM0ClyVPaCq8AUF9qhXjSmmcJiN2TUhCDxvj3c1Gvn
+ 78ZzaFmTRp4gza3T5uBBXubd3bCfhbI3kjjUso3ES6Hn2i2GpY8jjNJVXCYE3jw97qPr
+ UTSaETgeuip7VsjXe9axEEz8Tq22JzkTlL/huSVPnIq7K7geylbmU5jSfhcBAqpZDpUK
+ A1IcPZKBA/rmovMXfeQJFhA5W/pLn7O1J5/JkQJVNI5AkglMj202fhzeA4J+4iBu3zmo
+ bgcfGit78sEAZoTpnW4FMnxXIp6COMCwrCgtN8cvPbP+YNLvbmEG+k2HYmsRYVtlVV1g RA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rtptr03q1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Jul 2023 19:46:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36DJkSY0012904
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Jul 2023 19:46:28 GMT
+Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 13 Jul 2023 12:46:26 -0700
+Date:   Fri, 14 Jul 2023 01:16:23 +0530
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH 02/12] drm/msm/adreno: Remove redundant gmem size param
+Message-ID: <iukw2vxcntw2zj35ftwiciu3cl65hpdjyny64jxa75hdbtwhib@kbrqpdoag22z>
+References: <20230706211045.204925-1-robdclark@gmail.com>
+ <20230706211045.204925-3-robdclark@gmail.com>
+ <97693b20-f374-db81-47b0-e77802dfe3a6@linaro.org>
 MIME-Version: 1.0
-References: <20230713020556.1956639-1-cuigaosheng1@huawei.com>
- <20230713020556.1956639-3-cuigaosheng1@huawei.com> <gk5ttqzmz6psggq6xybpsmad63gimlwj6bsbpkhvqfd3htcddc@zveituq6siwa>
-In-Reply-To: <gk5ttqzmz6psggq6xybpsmad63gimlwj6bsbpkhvqfd3htcddc@zveituq6siwa>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 13 Jul 2023 22:40:14 +0300
-Message-ID: <CAA8EJpou=nm54hETj3m3c75Vq9nhTdCKVviXi4C3-PGv7J8s6g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] drm/msm: Fix IS_ERR() vs NULL check in a5xx_submit_in_rb()
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Gaosheng Cui <cuigaosheng1@huawei.com>,
-        g@akhilpo-linux.qualcomm.com, liviu.dudau@arm.com,
-        airlied@gmail.com, daniel@ffwll.ch, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run,
-        marijn.suijten@somainline.org, neil.armstrong@linaro.org,
-        sam@ravnborg.org, quic_eberman@quicinc.com, a39.skl@gmail.com,
-        quic_gurus@quicinc.com, angelogioacchino.delregno@somainline.org,
-        james.qian.wang@arm.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <97693b20-f374-db81-47b0-e77802dfe3a6@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kn6JRL-ElrSQnZ9qLppw4mtOm0DaMo8b
+X-Proofpoint-GUID: kn6JRL-ElrSQnZ9qLppw4mtOm0DaMo8b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-13_08,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ phishscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307130174
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -75,52 +78,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 13 Jul 2023 at 22:08, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> On Thu, Jul 13, 2023 at 10:05:55AM +0800, Gaosheng Cui wrote:
-> >
-> > The msm_gem_get_vaddr() returns an ERR_PTR() on failure, we should
-> > use IS_ERR() to check the return value.
-> >
-> > Fixes: 6a8bd08d0465 ("drm/msm: add sudo flag to submit ioctl")
-> > Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-> > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On Fri, Jul 07, 2023 at 01:22:56AM +0200, Konrad Dybcio wrote:
+> 
+> On 6.07.2023 23:10, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> > 
+> > Even in the ocmem case, the allocated ocmem buffer size should match the
+> > requested size.
+> > 
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
 > > ---
-> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > index a99310b68793..a499e3b350fc 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > @@ -89,7 +89,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
-> >                        * since we've already mapped it once in
-> >                        * submit_reloc()
-> >                        */
-> > -                     if (WARN_ON(!ptr))
-> > +                     if (WARN_ON(IS_ERR(ptr)))
-> nit: can we make this IS_ERR_OR_NULL() check to retain the current
-> validation? A null is catastrophic here. Yeah, I see that the current
-> implementation of ...get_vaddr() doesn't return a NULL.
+> [...]
+> 
+> > +
+> > +	WARN_ON(ocmem_hdl->len != adreno_gpu->info->gmem);
+> I believe this should be an error condition. If the sizes are mismatched,
+> best case scenario you get suboptimal perf and worst case scenario your
+> system explodes.
 
-I generally dislike IS_ERR_OR_NULL, as it is always (incorrectly)
-paired with PTR_ERR. But in the case of void return it would be a
-perfect fit.
+No, the worst case scenarios are subtle bugs like random corruptions,
+pagefaults etc which you debug for months. ;)
 
->
-> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->
-> -Akhil
->
-> >                               return;
-> >
-> >                       for (i = 0; i < dwords; i++) {
-> > --
-> > 2.25.1
-> >
+-Akhil.
 
-
-
--- 
-With best wishes
-Dmitry
+> 
+> Very nice cleanup though!
+> 
+> Konrad
+> >  
+> >  	return 0;
+> >  }
+> > @@ -1097,7 +1098,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+> >  
+> >  	adreno_gpu->funcs = funcs;
+> >  	adreno_gpu->info = adreno_info(config->rev);
+> > -	adreno_gpu->gmem = adreno_gpu->info->gmem;
+> >  	adreno_gpu->revn = adreno_gpu->info->revn;
+> >  	adreno_gpu->rev = *rev;
+> >  
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > index 6830c3776c2d..aaf09c642dc6 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > @@ -77,7 +77,6 @@ struct adreno_gpu {
+> >  	struct msm_gpu base;
+> >  	struct adreno_rev rev;
+> >  	const struct adreno_info *info;
+> > -	uint32_t gmem;  /* actual gmem size */
+> >  	uint32_t revn;  /* numeric revision name */
+> >  	uint16_t speedbin;
+> >  	const struct adreno_gpu_funcs *funcs;
