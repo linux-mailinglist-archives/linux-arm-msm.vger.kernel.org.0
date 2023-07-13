@@ -2,134 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00CB4751BFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 10:45:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0486A751C4E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 10:55:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234546AbjGMIpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 04:45:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47168 "EHLO
+        id S233298AbjGMIzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 04:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233755AbjGMIpC (ORCPT
+        with ESMTP id S229506AbjGMIzI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 04:45:02 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91D4326A8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:44:33 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fba74870abso838430e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:44:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689237872; x=1691829872;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SzJltP0N9vbWqDkRbI3S5sA4acByDrw2zIcLcbamrWE=;
-        b=fihFzxnSouY7eJl+SOC8Q198uWbB8fOqxCQtcEV/RntbNx45AGqWVlyRgCzQq9b1kk
-         vV+o1XKq5ljuIslE1hbE5J1Q9ikKQCJ2Mse43Cf/42PA4HHGRVHgQQvBF1bIDib0bMAF
-         rW4t3yOBI4XtWv+KwGN7My7lqWy2w3V66ww/JySBK7ORb2bpMff29NTq8Qr9IbwBeuRj
-         Xt4FrJwYXrThovxvL6AweP8v/TPzB33+fE1Hv7cTOWkC6lxptE9NiFDAR1h0LzKTa+iF
-         byCO6v66AZSJj6IS72js7iQQ0VbkwU/mHNk8GJ2IImxHwUcfLYkKD6uQ714o/ZAkji9H
-         mJAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689237872; x=1691829872;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzJltP0N9vbWqDkRbI3S5sA4acByDrw2zIcLcbamrWE=;
-        b=gA59OTdVd8C1TGT2yGxg2snoKGyzwiewEJLrvgNA5j9mSOxJhoj1orIhO+zcXSSEWU
-         zklptdFqzx4XCC6205mGw29r1qSuSGgLYX0dGeSTtzpSiV97osWDd4JUcTYzcrp/Sggh
-         8Fz8uDJ5vlpBmyo8vSj3nm9aTKLcUpVHW3g2eSq/7mlX3YDZ+YAA0p45D/T0sGYeai1I
-         y8KYG2ENRdPvmq0lnKlwZa+XSqHJMiyUW2Gv31VcsYJwkWLf32RllkYKZQbBHC//A5wQ
-         SQjt+VTedqqYKp8MTHQ6fNAqjGR1YnBZG8PL7NEwiNWOmOF897QXrIuxZqr1r+kc4mAZ
-         wXuQ==
-X-Gm-Message-State: ABy/qLZCp8BnhVxlCD+ewEy9wKWFQaVwYa/7oIpA4AP9YKOk3iVppwPx
-        RHCCRhAiIOD223wIemHtueOO7w==
-X-Google-Smtp-Source: APBJJlHALJqskp/z/AnSv5g+cG2G4saX7cXknnKeVpNsyj7DiLrjb6QxwzsioyawQtaJIFmI5uwrSA==
-X-Received: by 2002:a05:6512:2346:b0:4fb:7447:e71a with SMTP id p6-20020a056512234600b004fb7447e71amr705159lfu.63.1689237871805;
-        Thu, 13 Jul 2023 01:44:31 -0700 (PDT)
-Received: from [192.168.1.101] (abyl63.neoplus.adsl.tpnet.pl. [83.9.31.63])
-        by smtp.gmail.com with ESMTPSA id p11-20020ac246cb000000b004fb957ac245sm1041160lfo.59.2023.07.13.01.44.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jul 2023 01:44:31 -0700 (PDT)
-Message-ID: <1d0802a7-5ce8-9dbf-4b72-953d53d35718@linaro.org>
-Date:   Thu, 13 Jul 2023 10:44:30 +0200
+        Thu, 13 Jul 2023 04:55:08 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 99C1B1B6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:07 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BAC1B1570
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:49 -0700 (PDT)
+Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 089C03F740
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 01:55:06 -0700 (PDT)
+Date:   Thu, 13 Jul 2023 09:54:50 +0100
+From:   Liviu Dudau <liviu.dudau@arm.com>
+To:     Gaosheng Cui <cuigaosheng1@huawei.com>
+Cc:     airlied@gmail.com, daniel@ffwll.ch, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, marijn.suijten@somainline.org,
+        neil.armstrong@linaro.org, sam@ravnborg.org,
+        quic_eberman@quicinc.com, a39.skl@gmail.com,
+        quic_gurus@quicinc.com, angelogioacchino.delregno@somainline.org,
+        james.qian.wang@arm.com, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 3/3] drm/komeda: Fix IS_ERR() vs NULL check in
+ komeda_component_get_avail_scaler()
+Message-ID: <ZK-72h3fVj6PlGB0@e110455-lin.cambridge.arm.com>
+References: <20230713020556.1956639-1-cuigaosheng1@huawei.com>
+ <20230713020556.1956639-4-cuigaosheng1@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 40/58] mmc: sdhci-msm: Convert to platform remove callback
- returning void
-Content-Language: en-US
-To:     Yangtao Li <frank.li@vivo.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230713080807.69999-1-frank.li@vivo.com>
- <20230713080807.69999-40-frank.li@vivo.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230713080807.69999-40-frank.li@vivo.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230713020556.1956639-4-cuigaosheng1@huawei.com>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13.07.2023 10:07, Yangtao Li wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is (mostly) ignored
-> and this typically results in resource leaks. To improve here there is a
-> quest to make the remove callback return void. In the first step of this
-> quest all drivers are converted to .remove_new() which already returns
-> void.
+Hello,
+
+On Thu, Jul 13, 2023 at 10:05:56AM +0800, Gaosheng Cui wrote:
+> The komeda_pipeline_get_state() returns an ERR_PTR() on failure, we should
+> use IS_ERR() to check the return value.
+
+While reviewing the change I've realised that komeda_pipeline_get_state_and_set_crtc()
+is also mishandling the return value from komeda_pipeline_get_state(). If IS_ERR(st) is
+true it should use return ERR_CAST(st), following the same pattern as komeda_pipeline_get_state().
+
+If you don't want to update this patch I can send a separate patch. Otherwise,
+the change looks good to me.
+
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+
+Best regards,
+Liviu
+
+
 > 
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
-> 
-> Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> Signed-off-by: Yangtao Li <frank.li@vivo.com>
+> Fixes: 502932a03fce ("drm/komeda: Add the initial scaler support for CORE")
+> Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
 > ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-
->  drivers/mmc/host/sdhci-msm.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+>  drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 1c935b5bafe1..80e376802ee0 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2668,7 +2668,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  	return ret;
->  }
+> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c b/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
+> index 3276a3e82c62..e9c92439398d 100644
+> --- a/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
+> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
+> @@ -259,7 +259,7 @@ komeda_component_get_avail_scaler(struct komeda_component *c,
+>  	u32 avail_scalers;
 >  
-> -static int sdhci_msm_remove(struct platform_device *pdev)
-> +static void sdhci_msm_remove(struct platform_device *pdev)
->  {
->  	struct sdhci_host *host = platform_get_drvdata(pdev);
->  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> @@ -2687,7 +2687,6 @@ static int sdhci_msm_remove(struct platform_device *pdev)
->  	if (!IS_ERR(msm_host->bus_clk))
->  		clk_disable_unprepare(msm_host->bus_clk);
->  	sdhci_pltfm_free(pdev);
-> -	return 0;
->  }
+>  	pipe_st = komeda_pipeline_get_state(c->pipeline, state);
+> -	if (!pipe_st)
+> +	if (IS_ERR(pipe_st))
+>  		return NULL;
 >  
->  static __maybe_unused int sdhci_msm_runtime_suspend(struct device *dev)
-> @@ -2740,7 +2739,7 @@ static const struct dev_pm_ops sdhci_msm_pm_ops = {
->  
->  static struct platform_driver sdhci_msm_driver = {
->  	.probe = sdhci_msm_probe,
-> -	.remove = sdhci_msm_remove,
-> +	.remove_new = sdhci_msm_remove,
->  	.driver = {
->  		   .name = "sdhci_msm",
->  		   .of_match_table = sdhci_msm_dt_match,
+>  	avail_scalers = (pipe_st->active_comps & KOMEDA_PIPELINE_SCALERS) ^
+> -- 
+> 2.25.1
+> 
+
+-- 
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
