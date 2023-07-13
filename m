@@ -2,206 +2,644 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42FF3752CFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 00:26:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A826752D41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 00:53:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232533AbjGMW0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 18:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59904 "EHLO
+        id S233666AbjGMWxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 18:53:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231567AbjGMW0O (ORCPT
+        with ESMTP id S231911AbjGMWxk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 18:26:14 -0400
-Received: from sonic309-25.consmr.mail.ir2.yahoo.com (sonic309-25.consmr.mail.ir2.yahoo.com [77.238.179.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CFD22D66
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 15:26:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1689287168; bh=C+hRNpz31Q1m5e4vLU6zQGZFY5pXxupfUYhNVLntXno=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=USJYYs2JaVO035Ap/Ci4UQas0VIn3O4D9wRYf6rxfZyCMb1F98CQ5bsIUDTUGMXfr296v/FHxgs8qwAUotbCKLNRJ6Xa2ujm7stzYJjgU1M1bVbTQ2LyJcfTQl8gKRpjgq2pZFcKrt2mrUobzHmLNGxyahlxyHxaP+LLDhyXgvi82c6E+d3hK3Ie0aGv/JjvblVuDSLa1Vgsn9eximOhrQyPWlsETBrfxmVXOdSADY2Zxkk1Q4PeqrNq4g1/6thQDTFmx7PM9O0IOzL6xvgAqvKwB2V7QlQnhcj9akcqCPPyHnjRvxrqydzqW70vycezhpVe3XlKdxEejzPYLG3eNg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1689287168; bh=GPYqG2HUuJN6VY9f70ahcJZ4b/xQufqe7GJVwOOAANv=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=b10gJRLTBTj/cCiaEwavS2vZSsQudIxshLVyD6RceMTnMv/jxoQxU8i9O1UgUI/V6Nxd0quLrQX0mNHDjOy2MJjrs6bbYsKK/Kc3Sd5rD1VIsfesMXsdYoMQUs8UxR9cImT2NXirXjNr3NbZKKv7MeWKFzTzRL+KBwLt+NZ+OspnHAXjCmChGfksdbcVx0y2LJ3qvxyv2RWZF7zg5ofpQhgBlUjWLXM0f7BSlximA/KlEw972xg7Hx9n2vdFGqS36F9vvO5KTy9k48820CDP9G557GKbWxLccFC3d3DdBhwGseDzHr69yjNG+iLcZu6nsO/nYBkVg+JRQY/CUhvEaw==
-X-YMail-OSG: kPJKLHUVM1lflqUrRix.AXdc8_iiu.5JCGjGhpEUZkRzYEBO.uEmFMaNyEtosoI
- B9m5ujlXDoCmqSadM53ifw_tuo8EQ_S52AD6W_Tz8_W3jl05QfEym4CtoEYDnLyn.VeuOleEOVpS
- dO3tQOzZEe0kfWYpQULUST7Xndyz1O2QCVOAIA53HXWNlbPcFSkLujsK4.q.ZrgJaOJdPwsh4Hhj
- yq.DMDthzRYPdT8exJXnZhNhrxiPbXglknJYD1VTRQBcJiVpfgKpA0UI6pbabDrV87lHvQr.J6iT
- G3zAwtIc3NF.CQZaHKGEHF0YZa5JQEZHzrpH2u8XIKZ.7dqDykfTmzTEwxLtUFVvzlG2zfxXcKgu
- mfTTiS.L3WlNpuesj4CbP1f6NUyyHMdKcIFB57d4yTK4K1wLBY9D2lZ7.f9awoTSGbTdLA3vZ1v2
- CWW13lRWVBP4kYXEA2O.kyA5k23jKXQ.f.iqgl38HMqeSkHNGZGjOZqfOltAKnec7IODdEbqrG91
- nSmm9Ednd3OebI93aB_kUQkKSSnni2gVXKl51YZPmdZFJJufiLDBFgiBhKqrW3U.EaEgCxa7bPGY
- lp6CaWGPQiQceB0_sjiWGQOfT.m1sV0Te.0lc4PPmuIrof06s3kEY8c3OJkgYFttyCOT2jGv7ivV
- qGCNGGCO8H.5l5D.WpUqAF_YQMtpsqmw7mNVjCGMNVtlTp5z3CI_BpD_yQAR0AD3ZkcboYSAdKU7
- ohoNrPoAONrZ8DCUULeOKCAyoFX7P4yPlPhV6i5Md.K0UWJ2zgQoYgDXiK0l.Qy43ZXD_YqJ2wtV
- AI7FWZedhHFXJr0srWfkqpD4SV.vVCfNc3lADxeCVmQMx057.Sxdh2wjm4VXAI0hoWVqRJ5.zEbz
- l1Q49Vq2osLAKox9ENdhOaC74h6AUO7gnEznmBUZCxHWRK2zo2xOdC9.WXJ8wwlgnih3ks5p6ysd
- qGdVHV0ShcGbKaw3vD6SQIfKyUKPn.zkpfWvDEK36REj_.HBVOeToQgMMCutC5pTIwMYz2i_rvaF
- JHFy5qCkWr2W9ZmPVol2YCjjmha1K3hvAAzgfLYro38OURino7ZJUKhkNZIk5Hhhvn19Rph3L4vP
- boWRgVB82WoS6f4uNGfdE2pV2opAFlxQsM1G.HXNzgwFnTnywNc2cNS_UVpQN6VHI1cB0MphrX91
- gUivGsrxEjH1Iu3YH0tZqMEmj0KFcWx.S7HDwjJCMcP05BYfHKyhpFFnn0rDi96gikQU.8fWZPQM
- CG330umALXLT1es6Io9mmHDifc8QzriRq.8AQ6he6KzC2E0DuivU70yyTVifoEPsq9i8MfrRC.pM
- hHTFmP4fzOqT4EpF7fFIDAYUf1LChH8j0WticwjeZdUvNQ0DwL2xRbQRrD6T1_vs8CKKewqqO1HA
- y8R8NTg8NLkU.YVgV44Hjm5YXVeDsAc2O4TfidF9BfuBxr0HSz5D6cthyvPEFgzhUW2USY4aymm8
- uXPPejiWhQj6eZw50hWIVZSLqNq6OPOi1sC3C752BGzNT3nQt8RlpQO7fUp.4I74rSQYNJ6e_HYd
- S_UXNBP1OcjHEZLpW9BKetU9Z.fcaNX2meaKrKTcT9ErrFCWgZkQmF4zQhVSBbKKrKopc7Yvos7k
- TnnKXDc4pIVPRPFqTubKxkQRlsQ244gWM8wH9sZfdd_a_P2yNBVaFkGPQUsFi.frZ66elh8Rli4h
- WRPDewEvRu8mzhA3NHSjaXtNsqOqV40rxwVRpOCNRMk96lOLdZmnFM_YOaEK8FTy9E6_wlb5igdM
- h8_sFTWpAVLRm2Ub7xF.grCgD2VRFDNBC2qiz9IAJS0KDiWuBImjbDgY6tC5be8VoyySYvNbWgns
- 27jIJT1DfYw9.YgerbvPc49NoFgcIwiEvQ3Q3PrOV18mwWmQKE6TjZfE6mI74CEiUhWpm_oBWHtw
- 6gcYiH8lExFL_5kfPacL6Jg_AMKzI46y_2dLaovDS.hRtflkIkGJYY5mRr1hF2g0OHJ1cYQZZ4Bb
- jEikWR35gDKkA_f_rrLBjN8Tr_9MrtnGUkJ3RLY_YZOz_gT4gzrB4wKilwipRe30oLxrFkY7ToWO
- O9EtCNkogr0LsK8axpgv1rPHBLpcWrA7YTEm9_RVe5Fx.PU6GJo1dDUocKeTjzdUJP0lKjviIYIV
- ZMDnYVEhxJtDpm3acNGR4BzODXFpPaY6s16y6kWjDC3yX8KLYVjeWAI4WfyPADXvqF8OBrvsdWAu
- LJdUhQvmWq4ahseTFw3PIFK.6Pos58U9ZmJyd.HNR7ohy2rBk1nQqy9.oiiQmiae9zQ_oZk8WW1b
- Fh512UOH_aEtzgdxEzXpI9ofMUQU-
-X-Sonic-MF: <jahau@rocketmail.com>
-X-Sonic-ID: 32c85954-2108-443f-84b7-53f52a82755c
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.ir2.yahoo.com with HTTP; Thu, 13 Jul 2023 22:26:08 +0000
-Received: by hermes--production-ir2-7858d959bd-r4jkj (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 7b21490b2998ee19b22bb7f64882cd48;
-          Thu, 13 Jul 2023 22:26:06 +0000 (UTC)
-Message-ID: <b067e3c0-c2fe-21ce-b398-3f889adbfd06@rocketmail.com>
-Date:   Fri, 14 Jul 2023 00:26:04 +0200
+        Thu, 13 Jul 2023 18:53:40 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21AB12D66
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 15:53:37 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bcb6dbc477eso1146602276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 15:53:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689288816; x=1689893616;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4I1CeJZnb3c0501E4Os19t5ymKZR3QMe2ukceZzOQc4=;
+        b=KkI/4RLGXLLF/USD341+fWXWCdVNaJvtD+mOLCRYQmV3SNdWW63cRQU2D0jPNstQCW
+         odgMJFT4apiF7XwaNKrgPHy+VyX+uoX3RsWIuHbWpHR2nx8smHjsTB8dk/ixXGI6cfDn
+         dejYVqHRV8UXADwOSFdJM5oWYyFWYUD76daafM4jowMdTtPjzAYtUO+tV40v2KCALImC
+         iUvw5G9mfyB5j20x4JRvlSypsaHrm21K92xRaNCqRkkHn66L5RNt2T2E6R9Ne+bW3yGU
+         1c793xjXfgvvNPtAvVd0jLRzGEf1yZo8xxph1bnZ2yBdEZedc4Jv5UypUXoCWCk9UtUg
+         7RpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689288816; x=1689893616;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4I1CeJZnb3c0501E4Os19t5ymKZR3QMe2ukceZzOQc4=;
+        b=WM1dZoU8Jm0X9mEqmSfnlCA1qebXEq9kVRI39f/s9kYj+Mrx3QWeC2SezxaEDfZqxz
+         4/cVYIYZpxyIkP2g9YpWjs5OSTzkzw8210QNn0xXo5fs44nfAtLv+rO9j++KDwgqz7uD
+         Ujy9ux1UJswf6Sf7qD92N5MOgU03+g3H9vyvW0ugknGVuv4jCbB79w1KSJNqyZFdbWw+
+         K89KiCzI/WSL97C4XoW8r08fD1Vwd0CnG1+47WObGB1aOkwvnyinQ0dNJ00WF8w3NlI3
+         SOdcH2ZUzWRsodLFG9cefpSVd3sOApZ/py8QJcCFVx1TjAQqc78dxR+ZwvCyAwdytYsb
+         us0w==
+X-Gm-Message-State: ABy/qLaSwRAQUMQPoTe68Cr4Qfo9T6g1Ulid3YZUjUQZiXBzuJOAbhPm
+        XorOnF9q08nW907Tn/996Vv+hEYrSuMnHxHzPkDqZw==
+X-Google-Smtp-Source: APBJJlFrBeDsPipMCQbPvXe3qBwhxs8w90oAA+pg6CmEUuFJI5yUsIjM9oCh58KkxaXEMIfPlOH+QmkcAa6Pf4bLxv0=
+X-Received: by 2002:a25:210:0:b0:c4f:1d25:c6f8 with SMTP id
+ 16-20020a250210000000b00c4f1d25c6f8mr2302474ybc.21.1689288816129; Thu, 13 Jul
+ 2023 15:53:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-serranove: Add
- RT5033 PMIC with charger
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-13-robdclark@gmail.com>
+ <ab9f2c65-deb4-1762-4a32-a7046608311e@linaro.org> <vdeu4ecennghygse3ktuqlwfnzqu5jcgscx7bbxh7lmlu2dwc7@ktwknruwjl4n>
+ <CAF6AEGujdBLpV8spq0_Ydv+7-bmd02Z938WJk5E7cCacPB=Hvw@mail.gmail.com>
+In-Reply-To: <CAF6AEGujdBLpV8spq0_Ydv+7-bmd02Z938WJk5E7cCacPB=Hvw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 14 Jul 2023 01:53:24 +0300
+Message-ID: <CAA8EJpp2DHnV68zaDyUW-_tV4t8dcvHmyFkv_JbkYUuuJe8CPQ@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 12/12] drm/msm/adreno: Switch to chip-id for
+ identifying GPU
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        dri-devel@lists.freedesktop.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Raymond Hackley <raymondhackley@protonmail.com>,
-        Henrik Grimler <henrik@grimler.se>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230619203743.8136-1-jahau.ref@rocketmail.com>
- <20230619203743.8136-1-jahau@rocketmail.com>
- <02fe7c1e-cb6a-14bc-73fc-04956a2b8396@kernel.org>
- <3376e14a-4fc7-160e-509e-8dcbe627ef62@rocketmail.com>
- <b8e21ba1-900d-6731-579d-e18c37a97a71@kernel.org>
-Content-Language: en-US
-From:   Jakob Hauser <jahau@rocketmail.com>
-In-Reply-To: <b8e21ba1-900d-6731-579d-e18c37a97a71@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-X-Mailer: WebService/1.1.21647 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgS3J6eXN6dG9mLA0KDQpPbiAxMi4wNy4yMyAyMjoyOCwgS3J6eXN6dG9mIEtvemxvd3Nr
-aSB3cm90ZToNCj4gT24gMTIvMDcvMjAyMyAyMTo1MCwgSmFrb2IgSGF1c2VyIHdyb3RlOg0K
-Li4uDQo+PiBPbiAxMS4wNy4yMyAwODoxMywgS3J6eXN6dG9mIEtvemxvd3NraSB3cm90ZToN
-Cj4+IC4uLg0KPj4+IFRoaXMgYXBwZWFyZWQgaW4gdG9kYXkncyBuZXh0IG5leHQtMjAyMzA3
-MTEgYW5kIGNhdXNlcyBuZXcgd2FybmluZ3MNCj4+Pg0KPj4+IG1zbTg5MTYtc2Ftc3VuZy1z
-ZXJyYW5vdmUuZHRiOiBleHRjb25AMTQ6ICdjb25uZWN0b3InIGRvZXMgbm90IG1hdGNoIGFu
-eQ0KPj4+IG9mIHRoZSByZWdleGVzOiAncGluY3RybC1bMC05XSsnDQo+Pj4gaHR0cHM6Ly9r
-cnprLmV1LyMvYnVpbGRlcnMvOTAvYnVpbGRzLzQwL3N0ZXBzLzE3L2xvZ3Mvc3RkaW8NCj4+
-Pg0KPj4+IFRoZSBjb21taXQgbWVudGlvbnMgcnQ1MDMzLCBidXQgdGhhdCBpcyBub3QgdGhl
-IHNjaGVtYSBiZWluZyBoZXJlDQo+Pj4gdGVzdGVkLCBzbyBjbGVhcmx5IHRoaXMgaXMgd3Jv
-bmcgb3IgYmluZGluZ3Mgd2VyZSBub3QgdXBkYXRlZC4NCj4+Pg0KPj4+IFBsZWFzZSBmaXgg
-KGFuZCB0ZXN0IHlvdXIgZnV0dXJlIHBhdGNoZXMpLg0KPj4NCj4+IFRoZSBpbXBsZW1lbnRh
-dGlvbiB5b3Ugc2VlIGluIHRoaXMgcGF0Y2ggZm9sbG93cyB0aGUgZ3VpZGFuY2Ugb2YgeW91
-cnMNCj4+IGFuZCBSb2LigJlzLiBJIGFscmVhZHkgZXhwcmVzc2VkIG15IGRpc2NvbnRlbnQg
-YWJvdXQgaXQgYmVmb3JlLg0KPj4NCj4+IFRvIHNvbHZlIHRoZSBtZXNzYWdlLCB0aGUgZHQt
-YmluZGluZ3Mgb2YgZXh0Y29uIGRldmljZSBzbTU1MDItbXVpYyBbMV0NCj4+IHdvdWxkIG5l
-ZWQgdG8gYmUgY2hhbmdlZCB0byBhbGxvdyBhICJjb25uZWN0b3IiIHN1Yi1ub2RlLiBUaGF0
-4oCZcyBub3QgdGhlDQo+PiByaWdodCBhcHByb2FjaC4NCj4+DQo+PiBJIHN0aWxsIGhhdmUg
-dGhlIGltcHJlc3Npb24gdGhhdCB0aGUgY3VycmVudCBpbXBsZW1lbnRhdGlvbiBpcyBiYXNl
-ZCBvbg0KPj4gbWlzdW5kZXJzdGFuZGluZ3MuIEkgZG8gdGhpbmsgUm9i4oCZcyBjb21tZW50
-IHRoYXQgZXhjb24gcGhhbmRsZSBiZWluZw0KPj4gZGVwcmVjYXRlZCBbMl0gaXMgdmFsaWQg
-Zm9yIHRoZSBVU0Igc3Vic3lzdGVtLiBZb3VyIHN1Z2dlc3Rpb24gdG8gY2hlY2sNCj4+ICJw
-b3J0cyBncmFwaCIsICJvcmllbnRhdGlvbiIgYW5kICJ1c2Itcm9sZS1zd2l0Y2giIGFwcGxp
-ZXMgdG8gVVNCDQo+PiBzdWJzeXN0ZW0gYXMgd2VsbCBbM10uIFJvYiB0b29rIHRoZSB0aW1l
-IHRvIGFkZCBtb3JlIGV4cGxhbmF0aW9uIFs0XSBidXQNCj4+IGl04oCZcyBzdGlsbCBhYm91
-dCBoYW5kbGluZyBjb25uZWN0b3JzIGluIHRoZSBtb3JlIHN0cmljdCBzZW5zZSwgd2hpY2gg
-aXMNCj4+IGNpcmNsaW5nIGFyb3VuZCBVQlMgc3Vic3lzdGVtLg0KPj4NCj4+IFRoZXNlIGRp
-c2N1c3Npb25zIGxlZCB0byBhIHN0cmFuZ2VseSBtaXhlZC11cCByZXN1bHQuIEkgd2FzIHB1
-c2hlZCB0bw0KPj4gaW1wbGVtZW50IHRoZSBVU0Igc3Vic3lzdGVtIGNvbm5lY3RvciBhcHBy
-b2FjaCB1cG9uIGFuIGV4Y3RvbiBzdWJzeXN0ZW0NCj4+IGRldmljZS4gQXMgdGhlIHN0YW5k
-YXJkIFVTQiBjb25uZWN0b3IgYXBwcm9hY2ggZGlkbuKAmXQgZml0LCB3ZSBzd2l0Y2hlZA0K
-Pj4gdG8gYSB2ZW5kb3Itc3BlY2lmaWMgY29ubmVjdG9yIHBoYW5kbGUgWzVdLiBJbiBmYWN0
-IGl04oCZcyBraW5kIG9mIGENCj4+IHdvcmthcm91bmQgZm9yIHRoZSBleHRjb24gcGhhbmRs
-ZS4NCj4+DQo+PiBUaGUgZXh0Y29uIGRldmljZSBzbTU1MDQgaXMgYSByZWFsIHBpZWNlIG9m
-IGhhcmR3YXJlLiBJdOKAmXMgbm90IGhhbmRsZWQNCj4+IGJ5IFVTQiBzdWJzeXN0ZW0gYnV0
-IGJ5IGV4dGNvbiBzdWJzeXN0ZW0uIFRoZSBleGN0b24gc3Vic3lzdGVtIGhhcyBhDQo+PiBt
-ZXRob2QgaW1wbGVtZW50ZWQgdG8gZ2V0IHRoZSBkZXZpY2UgYnkgcGhhbmRsZSBbNl0uDQo+
-IA0KPiBJIGFtIG5vdCBzdXJlIGlmIHdlIGRpc2N1c3MgdGhlIHNhbWUgcHJvYmxlbS4gTXkg
-ZW1haWwgd2FzIGFib3V0IHRoZSBEVFMNCj4gYW5kIGJpbmRpbmdzLCBub3Qgd2hldGhlciB0
-aGlzIHdvcmtzIGluIExpbnV4IGRyaXZlcnMuIEZyb20geW91ciByZXBseSBJDQo+IGZlZWwg
-dGhhdCB0aGlzIHBhdGNoIG1pZ2h0IGFjdHVhbGx5IG5vdCB3b3JrPyBUaGlzIHdvdWxkIGJl
-IHF1aXRlDQo+IGNvbmZ1c2luZy4uLg0KPiANCj4gWW91IGFkZGVkIG5ldyBjaGlsZCBub2Rl
-ICJjb25uZWN0b3IiIHRvIHRoZSBzaWxpY29ubWl0dXMsc201NTA0LW11aWMsIHNvDQo+IGFs
-bCBJIHdvdWxkIGV4cGVjdCB0aGF0IHdlIG1pc3MgaGVyZSBvbmx5IHVwZGF0aW5nIHRoYXQg
-YmluZGluZy4NCj4gQXNzdW1pbmcgdGhhdCB5b3VyIGNvZGUgd2FzIHdvcmtpbmcuLi4NCg0K
-VGhlIHBhdGNoIHdvcmtzLg0KDQo+PiBJIHRoZXJlZm9yZSBwcm9wb3NlIHRvIHVzZSB0aGUg
-cGhhbmRsZSBvZiB0aGUgZXh0Y29uIHN1YnN5c3RlbS4NCj4gDQo+IGV4dGNvbiBpbiB0aGUg
-YmluZGluZ3M/IFRoZW4gd2Ugd291bGQgYmUgYmFjayB0byBzcXVhcmUgb25lLg0KDQpJZiBz
-cXVhcmUgb25lIGlzIGEgcmVhc29uYWJsZSBwcm9wb3NhbCwgaXQgc2hvdWxkIGJlIGNvbnNp
-ZGVyZWQuIA0KRGlzY3Vzc2lvbnMgY2FuIGdvIGFzdHJheS4gSXQncyBhIHByb2Nlc3MuDQoN
-ClRoZSBleHRjb24gc3Vic3lzdGVtIG9mZmVycyBtZXRob2RzIHRvIGFjY2VzcyBhbiBleGN0
-b24gZGV2aWNlLiBJZiB0aGVyZSANCmlzIGV4dGNvbiBoYXJkd2FyZSBpbnN0YWxsZWQsIHVz
-aW5nIG9uZSBvZiB0aG9zZSBtZXRob2RzIGlzIGEgcHJldHR5IA0Kc3RyYWlnaHQtZm9yd2Fy
-ZCBhbmQgYW4gb2J2aW91cyBhcHByb2FjaC4NCg0KV2hhdCBzcGVha3MgYWdhaW5zdCB0aGUg
-dXNlIG9mIHRoaXMgbWV0aG9kPyBSb2IgYXJndWVkIHRoYXQgdGhlIA0KY29tcGxleGl0eSBv
-ZiBjb25uZWN0b3IgaW1wbGVtZW50YXRpb24gZ3JldyBvdmVyIHRpbWUgYW5kIHRoZXJlZm9y
-ZSANCnN0YW5kYXJkIGNvbm5lY3RvciBiaW5kaW5ncyBzaG91bGQgYmUgdXNlZC4gSSB1bmRl
-cnN0YW5kIHRoaXMgYW5kIHRoZSANCmV4YW1wbGUgeW91IGxpbmtlZCBpbiB0aGUgcHJldmlv
-dXMgZGlzY3Vzc2lvbiBzaG93cyBzdWNoIGEgY29tcGxleGl0eS4gDQpCdXQgdGhpcyBpcyBh
-Ym91dCBVU0Igc3Vic3lzdGVtLg0KDQpVU0Igc3Vic3lzdGVtIGlzIG5vdCBpbnZvbHZlZCBo
-ZXJlLiBXaHkgaW52b2x2aW5nIGl0IGJ5IGZvcmNlPw0KDQpJIHN1cmUgZG9uJ3QgaGF2ZSB0
-aGUgZnVsbCBwaWN0dXJlLiBIb3dldmVyLCBzbyBmYXIgdGhlIHdob2xlIGRpc2N1c3Npb24g
-DQpzZWVtcyB0byBiZSBiYXNlZCBvbiB0aGUgY29uZnVzaW9uIG9mIGRpZmZlcmVudCBleHRj
-b24gcGhhbmRsZXM6IA0KInZpcnR1YWwiIG9uZXMgaW4gVVNCIHN1YnN5c3RlbSBhbmQgInJl
-YWwiIG9uZXMgaW4gZXh0Y29uIHN1YnN5c3RlbS4gSWYgDQp0aGF0J3MgdGhlIGNhc2UsIHdl
-J3ZlIGJlZW4gZHJpZnRpbmcgaW50byB0aGUgd3JvbmcgZGlyZWN0aW9uIGFsbCB0aGUgdGlt
-ZS4NCg0KPj4gSSBtZWFuDQo+PiBleHRjb24gc3Vic3lzdGVtLCBub3QgVVNCIHN1YnN5c3Rl
-bS4gSW4gY2FzZSB5b3UgZGlzYWdyZWUsIEkga2luZGx5IGFzaw0KPj4geW91IHRvIHRha2Ug
-bW9yZSB0aW1lIHRvIGFuc3dlciBpbiBtb3JlIGRldGFpbCBhbmQgZXNwZWNpYWxseQ0KPj4g
-Y2FzZS1yZWxhdGVkLg0KPiANCj4gQXNzdW1pbmcgeW91ciBwYXRjaCB3b3JrcywgSSB0aGlu
-ayBhYm92ZSBpcyBxdWl0ZSBzcGVjaWZpYyBhbnN3ZXIgLSBuZXcNCj4gcHJvcGVydHkgaXMg
-bWlzc2luZyBpbiBzbTU1MDQgYmluZGluZy4NCg0KSSBkb24ndCB0aGluayB0aGlzIGlzIHRo
-ZSByaWdodCB3YXkgdG8gZ2V0IHJpZCBvZiB0aGUgaXNzdWUuIFN1cmUsIA0KdGVjaG5pY2Fs
-bHkgdGhlIG1lc3NhZ2UgZGlzYXBwZWFycy4gQ29udGVudHdpc2UsIGhvd2V2ZXIsIHdlJ3Jl
-IHNuZWFraW5nIA0KdGhlIGNvbmZ1c2lvbiBvZiBvdXIgZGlzY3Vzc2lvbiBpbnRvIHRoZSBk
-dC1iaW5kaW5ncy4gSW1hZ2luZSB3aGF0IHRoZSANCmRlc2NyaXB0aW9uIG9mIHRoYXQgImNv
-bm5lY3RvciIgcHJvcGVydHkgaW4gDQpzaWxpY29ubWl0dXMsc201NTAyLW11aWMueWFtbCB3
-b3VsZCBsb29rIGxpa2U6ICJTdGFuZGFyZCBVU0IgY29ubmVjdG9yIA0Kbm9kZSBhY2NvcmRp
-bmcgdG8gdXNiLWNvbm5lY3Rvci55YW1sIGZvciBhY2Nlc3NpbmcgdGhlIGV4dGNvbiBkZXZp
-Y2UgdmlhIA0KZGV2aWNldHJlZS4iIEEgZGV2aWNlIGluIHRoZSBleHRjb24gc3Vic3lzdGVt
-IGRvZXNuJ3QgbmVlZCB0aGlzLCB0aGUgDQpleHRjb24gc3Vic3lzdGVtIGFscmVhZHkgcHJv
-dmlkZXMgdGhlIG1ldGhvZCB0byBhY2Nlc3MgdGhlIGV4dGNvbiBkZXZpY2UgDQp2aWEgZGV2
-aWNldHJlZS4NCg0KV2VsbCwgSSBndWVzcyB3ZSB3b3VsZCBzaWxlbnRseSBza2lwIGEgZGVz
-Y3JpcHRpb24gbGlrZSB0aGF0IGJ5IGNoYW5naW5nIA0KImFkZGl0aW9uYWxQcm9wZXJ0aWVz
-IiBmcm9tIGZhbHNlIHRvIHRydWUuDQoNCldoeSBkbyBJIG1ha2UgdXAgc3VjaCBhIGJpZyB0
-aGluZyBpZiB0aGUgbWVzc2FnZSBjb3VsZCBiZSBtYWRlIGRpc2FwcGVhciANCnRoYXQgZWFz
-aWx5IChhbmQgYnVybmluZyB0aW1lIG9mIHlvdXJzLCBzb3JyeSk/IFRoaXMgbWl4LXVwIHdl
-J3JlIA0KaW1wbGVtZW50aW5nIGhlcmUgaXMgY29uZnVzaW5nLiBJdCdzIG5vdCBoZWxwZnVs
-IGZvciBmdXJ0aGVyIGRldmVsb3BtZW50IA0KYW5kIGltcGxlbWVudGF0aW9uIG9mIHJ0NTAz
-MyBhbmQgc2ltaWxhciBoYXJkd2FyZSBhcnJhbmdlbWVudHMuIFRoZSANCmlzc3VlIHRoYXQg
-Y2FtZSB1cCB3aXRoaW4gdGhlIHNhbXN1bmctc2VycmFub3ZlIGR0cyBwYXRjaCBoZXJlIGlz
-IGEgZ29vZCANCmluZGljYXRpb24gb2YgdGhhdC4NCg0KSSBjYW4gcHJlcGFyZSBhIHBhdGNo
-c2V0IHRvIGRpc3NvbHZlIHRoaXMgVVNCL2V4dGNvbiBtaXgtdXAgKGJhc2ljYWxseSANCnNx
-dWFyZSBvbmUsIGFzIHlvdSBjYWxsZWQgaXQpLg0KDQpBbHRlcm5hdGl2ZWx5LCBpZiBhbGwg
-bXkgdHJpZXMgdG8gY2xhcmlmeSBhIHBvc3NpYmxlIG1pc3VuZGVyc3RhbmRpbmcgDQphcmUg
-aW4gdmFpbiBhbmQgbm8gb25lIGVsc2UgaW50ZXJ2ZW5lcywgSSBndWVzcyBJIGhhdmUgbm8g
-b3RoZXIgb3B0aW9uIA0KdGhhbiBwcmVwYXJpbmcgYSBwYXRjaCB0byBjaGFuZ2UgdGhlIGR0
-LWJpbmR1bmdzIG9mIA0Kc2lsaWNvbm1pdHVzLHNtNTUwMi1tdWljLnlhbWwuDQoNCj4+IEFu
-ZCBzcGVjaWZpY2FsbHkgdG8gS3J6eXN6dG9mIEkgYXNrIGZvciBtb3JlIHBvbGl0ZW5lc3Mg
-aW4NCj4+IHlvdXIgd2F5IG9mIGNvbW11bmljYXRpbmcuIEkgdW5kZXJzdGFuZCB5b3XigJly
-ZSBhbnN3ZXJpbmcgaHVuZHJlZHMgb2YNCj4+IHJlcXVlc3RzIGEgZGF5IGJ1dCB0aGUgY29t
-bXVuaWNhdGlvbiB3ZSBoYWQgaW4gdGhlIHBhc3Qgd2Vla3MgaXMgcmVhbGx5DQo+PiBmcnVz
-dHJhdGluZy4NCj4gDQo+IFNvcnJ5IHRvIGhlYXIgdGhhdCwgcGxlYXNlIGFjY2VwdCBteSBh
-cG9sb2dpZXMuIEkgd2VudCB0aHJvdWdoIGFsbCBteQ0KPiByZXBsaWVzIHRvIHlvdSBpbiBw
-YXN0IGZldyB3ZWVrcyBhbmQgY291bGQgbm90IGZpbmQgYW55IHBhcnRpY3VsYXINCj4gaW1w
-b2xpdGUgYmVoYXZpb3IgZnJvbSBteSBzaWRlLg0KDQpJJ20gbm90IHVzZWQgdG8gdGhlIGZh
-c3QtcGFjZWQgaW50ZXJhY3Rpb24gb24gdGhlIGtlcm5lbCBsaXN0cy4gTWF5YmUgSSANCmhh
-dmUgbWlzdGFrZW4gc29tZSBvZiB5b3VyIGNvbW1lbnRzLiBJbiB0aGF0IGNhc2Ugc29ycnkg
-Zm9yIG15IGFjY3VzYXRpb24uDQoNCi4uLg0KDQpLaW5kIHJlZ2FyZHMsDQpKYWtvYg0K
+On Fri, 14 Jul 2023 at 01:06, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Thu, Jul 13, 2023 at 2:39=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quic=
+inc.com> wrote:
+> >
+> > On Fri, Jul 07, 2023 at 06:45:42AM +0300, Dmitry Baryshkov wrote:
+> > >
+> > > On 07/07/2023 00:10, Rob Clark wrote:
+> > > > From: Rob Clark <robdclark@chromium.org>
+> > > >
+> > > > Since the revision becomes an opaque identifier with future GPUs, m=
+ove
+> > > > away from treating different ranges of bits as having a given meani=
+ng.
+> > > > This means that we need to explicitly list different patch revision=
+s in
+> > > > the device table.
+> > > >
+> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > ---
+> > > >   drivers/gpu/drm/msm/adreno/a4xx_gpu.c      |   2 +-
+> > > >   drivers/gpu/drm/msm/adreno/a5xx_gpu.c      |  11 +-
+> > > >   drivers/gpu/drm/msm/adreno/a5xx_power.c    |   2 +-
+> > > >   drivers/gpu/drm/msm/adreno/a6xx_gmu.c      |  13 ++-
+> > > >   drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |   9 +-
+> > > >   drivers/gpu/drm/msm/adreno/adreno_device.c | 128 ++++++++++------=
+-----
+> > > >   drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  16 +--
+> > > >   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  51 ++++----
+> > > >   8 files changed, 122 insertions(+), 110 deletions(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/dr=
+m/msm/adreno/a4xx_gpu.c
+> > > > index 715436cb3996..8b4cdf95f445 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> > > > @@ -145,7 +145,7 @@ static void a4xx_enable_hwcg(struct msm_gpu *gp=
+u)
+> > > >     gpu_write(gpu, REG_A4XX_RBBM_CLOCK_DELAY_HLSQ, 0x00220000);
+> > > >     /* Early A430's have a timing issue with SP/TP power collapse;
+> > > >        disabling HW clock gating prevents it. */
+> > > > -   if (adreno_is_a430(adreno_gpu) && adreno_gpu->rev.patchid < 2)
+> > > > +   if (adreno_is_a430(adreno_gpu) && adreno_patchid(adreno_gpu) < =
+2)
+> > > >             gpu_write(gpu, REG_A4XX_RBBM_CLOCK_CTL, 0);
+> > > >     else
+> > > >             gpu_write(gpu, REG_A4XX_RBBM_CLOCK_CTL, 0xAAAAAAAA);
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/dr=
+m/msm/adreno/a5xx_gpu.c
+> > > > index f0803e94ebe5..70d2b5342cd9 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > > > @@ -1744,6 +1744,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_devi=
+ce *dev)
+> > > >     struct msm_drm_private *priv =3D dev->dev_private;
+> > > >     struct platform_device *pdev =3D priv->gpu_pdev;
+> > > >     struct adreno_platform_config *config =3D pdev->dev.platform_da=
+ta;
+> > > > +   const struct adreno_info *info;
+> > > >     struct a5xx_gpu *a5xx_gpu =3D NULL;
+> > > >     struct adreno_gpu *adreno_gpu;
+> > > >     struct msm_gpu *gpu;
+> > > > @@ -1770,7 +1771,15 @@ struct msm_gpu *a5xx_gpu_init(struct drm_dev=
+ice *dev)
+> > > >     nr_rings =3D 4;
+> > > > -   if (adreno_cmp_rev(ADRENO_REV(5, 1, 0, ANY_ID), config->rev))
+> > > > +   /*
+> > > > +    * Note that we wouldn't have been able to get this far if ther=
+e is not
+> > > > +    * a device table entry for this chip_id
+> > > > +    */
+> > > > +   info =3D adreno_find_info(config->chip_id);
+> > > > +   if (WARN_ON(!info))
+> > > > +           return ERR_PTR(-EINVAL);
+> > > > +
+> > > > +   if (info->revn =3D=3D 510)
+> > > >             nr_rings =3D 1;
+> > > >     ret =3D adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, nr_rings=
+);
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_power.c b/drivers/gpu/=
+drm/msm/adreno/a5xx_power.c
+> > > > index 0e63a1429189..7705f8010484 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/a5xx_power.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/a5xx_power.c
+> > > > @@ -179,7 +179,7 @@ static void a540_lm_setup(struct msm_gpu *gpu)
+> > > >     /* The battery current limiter isn't enabled for A540 */
+> > > >     config =3D AGC_LM_CONFIG_BCL_DISABLED;
+> > > > -   config |=3D adreno_gpu->rev.patchid << AGC_LM_CONFIG_GPU_VERSIO=
+N_SHIFT;
+> > > > +   config |=3D adreno_patchid(adreno_gpu) << AGC_LM_CONFIG_GPU_VER=
+SION_SHIFT;
+> > > >     /* For now disable GPMU side throttling */
+> > > >     config |=3D AGC_LM_CONFIG_THROTTLE_DISABLE;
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/dr=
+m/msm/adreno/a6xx_gmu.c
+> > > > index f1bb20574018..a9ba547a120c 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > > @@ -790,10 +790,15 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu =
+*gmu, unsigned int state)
+> > > >     gmu_write(gmu, REG_A6XX_GMU_AHB_FENCE_RANGE_0,
+> > > >             (1 << 31) | (0xa << 18) | (0xa0));
+> > > > -   chipid =3D adreno_gpu->rev.core << 24;
+> > > > -   chipid |=3D adreno_gpu->rev.major << 16;
+> > > > -   chipid |=3D adreno_gpu->rev.minor << 12;
+> > > > -   chipid |=3D adreno_gpu->rev.patchid << 8;
+> > > > +   /* Note that the GMU has a slightly different layout for
+> > > > +    * chip_id, for whatever reason, so a bit of massaging
+> > > > +    * is needed.  The upper 16b are the same, but minor and
+> > > > +    * patchid are packed in four bits each with the lower
+> > > > +    * 8b unused:
+> > > > +    */
+> > > > +   chipid  =3D adreno_gpu->chip_id & 0xffff0000;
+> > > > +   chipid |=3D (adreno_gpu->chip_id << 4) & 0xf000; /* minor */
+> > > > +   chipid |=3D (adreno_gpu->chip_id << 8) & 0x0f00; /* patchid */
+> > >
+> > > I'd beg for explicit FIELD_GET and FIELD_PREP here.
+> > >
+> > > >     gmu_write(gmu, REG_A6XX_GMU_HFI_SFR_ADDR, chipid);
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/dr=
+m/msm/adreno/a6xx_gpu.c
+> > > > index 77b23c004b94..ed075729ca09 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > > @@ -2344,10 +2344,13 @@ struct msm_gpu *a6xx_gpu_init(struct drm_de=
+vice *dev)
+> > > >     /*
+> > > >      * We need to know the platform type before calling into adreno=
+_gpu_init
+> > > >      * so that the hw_apriv flag can be correctly set. Snoop into t=
+he info
+> > > > -    * and grab the revision number
+> > > > +    * and grab the revision number.
+> > > > +    *
+> > > > +    * Note that we wouldn't have been able to get this far if ther=
+e is not
+> > > > +    * a device table entry for this chip_id
+> > >
+> > > Having seen this note twice, shouldn't we explicitly pass adreno_info=
+ to our
+> > > aNxx_gpu_init() functions and then further to adreno_gpu_init()?
+> > >
+> > > >      */
+> > > > -   info =3D adreno_info(config->rev);
+> > > > -   if (!info)
+> > > > +   info =3D adreno_find_info(config->chip_id);
+> > > > +   if (WARN_ON(!info))
+> > > >             return ERR_PTR(-EINVAL);
+> > > >     adreno_gpu->base.hw_apriv =3D !!(info->quirks & ADRENO_QUIRK_HA=
+S_HW_APRIV);
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/g=
+pu/drm/msm/adreno/adreno_device.c
+> > > > index fd2e183bce60..4a718ff33635 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > > @@ -22,7 +22,7 @@ module_param_named(allow_vram_carveout, allow_vra=
+m_carveout, bool, 0600);
+> > > >   static const struct adreno_info gpulist[] =3D {
+> > > >     {
+> > > > -           .rev   =3D ADRENO_REV(2, 0, 0, 0),
+> > > > +           .chip_ids =3D ADRENO_CHIP_IDS(0x02000000),
+> > >
+> > > This begs to use bit masks, but see below
+> > >
+> > > >             .family =3D ADRENO_2XX_GEN1,
+> > > >             .revn  =3D 200,
+> > > >             .fw =3D {
+> > >
+> > > [skipped]
+> > >
+> > > > @@ -77,7 +77,11 @@ static const struct adreno_info gpulist[] =3D {
+> > > >             .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> > > >             .init  =3D a3xx_gpu_init,
+> > > >     }, {
+> > > > -           .rev   =3D ADRENO_REV(3, 2, ANY_ID, ANY_ID),
+> > > > +           .chip_ids =3D ADRENO_CHIP_IDS(
+> > > > +                   0x03020000,
+> > > > +                   0x03020001,
+> > > > +                   0x03020002
+> > >
+> > > definitely a bitmask would help
+> > >
+> > > > +           ),
+> > > >             .family =3D ADRENO_3XX,
+> > > >             .revn  =3D 320,
+> > > >             .fw =3D {
+> > >
+> > > [skipped the rest]
+> > >
+> > > > @@ -494,31 +502,16 @@ MODULE_FIRMWARE("qcom/a630_sqe.fw");
+> > > >   MODULE_FIRMWARE("qcom/a630_gmu.bin");
+> > > >   MODULE_FIRMWARE("qcom/a630_zap.mbn");
+> > > > -static inline bool _rev_match(uint8_t entry, uint8_t id)
+> > > > -{
+> > > > -   return (entry =3D=3D ANY_ID) || (entry =3D=3D id);
+> > > > -}
+> > > > -
+> > > > -bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2=
+)
+> > > > -{
+> > > > -
+> > > > -   return _rev_match(rev1.core, rev2.core) &&
+> > > > -           _rev_match(rev1.major, rev2.major) &&
+> > > > -           _rev_match(rev1.minor, rev2.minor) &&
+> > > > -           _rev_match(rev1.patchid, rev2.patchid);
+> > > > -}
+> > > > -
+> > > > -const struct adreno_info *adreno_info(struct adreno_rev rev)
+> > > > +const struct adreno_info *adreno_find_info(uint32_t chip_id)
+> > > >   {
+> > > > -   int i;
+> > > > -
+> > > >     /* identify gpu: */
+> > > > -   for (i =3D 0; i < ARRAY_SIZE(gpulist); i++) {
+> > > > +   for (int i =3D 0; i < ARRAY_SIZE(gpulist); i++) {
+> > > >             const struct adreno_info *info =3D &gpulist[i];
+> > > >             if (info->machine && !of_machine_is_compatible(info->ma=
+chine))
+> > > >                     continue;
+> > > > -           if (adreno_cmp_rev(info->rev, rev))
+> > > > -                   return info;
+> > > > +           for (int j =3D 0; info->chip_ids[j]; j++)
+> > > > +                   if (info->chip_ids[j] =3D=3D chip_id)
+> > > > +                           return info;
+> > > >     }
+> > > >     return NULL;
+> > > > @@ -598,12 +591,11 @@ struct msm_gpu *adreno_load_gpu(struct drm_de=
+vice *dev)
+> > > >     return NULL;
+> > > >   }
+> > > > -static int find_chipid(struct device *dev, struct adreno_rev *rev)
+> > > > +static int find_chipid(struct device *dev, uint32_t *chipid)
+> > > >   {
+> > > >     struct device_node *node =3D dev->of_node;
+> > > >     const char *compat;
+> > > >     int ret;
+> > > > -   u32 chipid;
+> > > >     /* first search the compat strings for qcom,adreno-XYZ.W: */
+> > > >     ret =3D of_property_read_string_index(node, "compatible", 0, &c=
+ompat);
+> > > > @@ -612,32 +604,34 @@ static int find_chipid(struct device *dev, st=
+ruct adreno_rev *rev)
+> > > >             if (sscanf(compat, "qcom,adreno-%u.%u", &r, &patch) =3D=
+=3D 2 ||
+> > > >                 sscanf(compat, "amd,imageon-%u.%u", &r, &patch) =3D=
+=3D 2) {
+> > > > -                   rev->core =3D r / 100;
+> > > > +                   uint32_t core, major, minor;
+> > > > +
+> > > > +                   core =3D r / 100;
+> > > >                     r %=3D 100;
+> > > > -                   rev->major =3D r / 10;
+> > > > +                   major =3D r / 10;
+> > > >                     r %=3D 10;
+> > > > -                   rev->minor =3D r;
+> > > > -                   rev->patchid =3D patch;
+> > > > +                   minor =3D r;
+> > > > +
+> > > > +                   *chipid =3D (core << 24) |
+> > > > +                           (major << 16) |
+> > > > +                           (minor << 8) |
+> > > > +                           patch;
+> > >
+> > > This starts to look realy crazy. I'd repeat my suggestion of moving t=
+owards
+> > > of_device match data. This would result in some duplication, we'd hav=
+e to
+> > > explicitly list all supported compatibles in the of_match_table. But =
+then we
+> > > can drop all the CHIPID lists from device table and/or manual parsing=
+ of the
+> > > chipid from the compat field.
+> > >
+> > > This way we can have per-SoC overrides, etc.
+> > >
+> > > >                     return 0;
+> > > >             }
+> > > > +
+> > > > +           if (sscanf(compat, "qcom,adreno-%08x", chipid) =3D=3D 1=
+)
+> > > > +                   return 0;
+> > > >     }
+> > > >     /* and if that fails, fall back to legacy "qcom,chipid" propert=
+y: */
+> > > > -   ret =3D of_property_read_u32(node, "qcom,chipid", &chipid);
+> > > > +   ret =3D of_property_read_u32(node, "qcom,chipid", chipid);
+> > > >     if (ret) {
+> > > >             DRM_DEV_ERROR(dev, "could not parse qcom,chipid: %d\n",=
+ ret);
+> > > >             return ret;
+> > > >     }
+> > > > -   rev->core =3D (chipid >> 24) & 0xff;
+> > > > -   rev->major =3D (chipid >> 16) & 0xff;
+> > > > -   rev->minor =3D (chipid >> 8) & 0xff;
+> > > > -   rev->patchid =3D (chipid & 0xff);
+> > > > -
+> > > >     dev_warn(dev, "Using legacy qcom,chipid binding!\n");
+> > > > -   dev_warn(dev, "Use compatible qcom,adreno-%u%u%u.%u instead.\n"=
+,
+> > > > -           rev->core, rev->major, rev->minor, rev->patchid);
+> > > >     return 0;
+> > > >   }
+> > > > @@ -651,22 +645,22 @@ static int adreno_bind(struct device *dev, st=
+ruct device *master, void *data)
+> > > >     struct msm_gpu *gpu;
+> > > >     int ret;
+> > > > -   ret =3D find_chipid(dev, &config.rev);
+> > > > +   ret =3D find_chipid(dev, &config.chip_id);
+> > > >     if (ret)
+> > > >             return ret;
+> > > >     dev->platform_data =3D &config;
+> > > >     priv->gpu_pdev =3D to_platform_device(dev);
+> > > > -   info =3D adreno_info(config.rev);
+> > > > +   info =3D adreno_find_info(config.chip_id);
+> > > >     if (!info) {
+> > > >             dev_warn(drm->dev, "Unknown GPU revision: %"ADRENO_CHIP=
+ID_FMT"\n",
+> > > > -                   ADRENO_CHIPID_ARGS(config.rev));
+> > > > +                   ADRENO_CHIPID_ARGS(config.chip_id));
+> > > >             return -ENXIO;
+> > > >     }
+> > > > -   DBG("Found GPU: %"ADRENO_CHIPID_FMT, ADRENO_CHIPID_ARGS(config.=
+rev));
+> > > > +   DBG("Found GPU: %"ADRENO_CHIPID_FMT, ADRENO_CHIPID_ARGS(config.=
+chip_id));
+> > > >     priv->is_a2xx =3D info->family < ADRENO_3XX;
+> > > >     priv->has_cached_coherent =3D
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/=
+drm/msm/adreno/adreno_gpu.c
+> > > > index 1a982a926f21..1274609a74b1 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > > @@ -326,10 +326,7 @@ int adreno_get_param(struct msm_gpu *gpu, stru=
+ct msm_file_private *ctx,
+> > > >             *value =3D !adreno_is_a650_family(adreno_gpu) ? 0x10000=
+0 : 0;
+> > > >             return 0;
+> > > >     case MSM_PARAM_CHIP_ID:
+> > > > -           *value =3D  (uint64_t)adreno_gpu->rev.patchid |
+> > > > -                    ((uint64_t)adreno_gpu->rev.minor << 8) |
+> > > > -                    ((uint64_t)adreno_gpu->rev.major << 16) |
+> > > > -                    ((uint64_t)adreno_gpu->rev.core  << 24);
+> > > > +           *value =3D adreno_gpu->chip_id;
+> > > >             if (!adreno_gpu->info->revn)
+> > > >                     *value |=3D ((uint64_t) adreno_gpu->speedbin) <=
+< 32;
+> > > >             return 0;
+> > > > @@ -849,7 +846,7 @@ void adreno_show(struct msm_gpu *gpu, struct ms=
+m_gpu_state *state,
+> > > >     drm_printf(p, "revision: %u (%"ADRENO_CHIPID_FMT")\n",
+> > > >                     adreno_gpu->info->revn,
+> > > > -                   ADRENO_CHIPID_ARGS(adreno_gpu->rev));
+> > > > +                   ADRENO_CHIPID_ARGS(adreno_gpu->chip_id));
+> > > >     /*
+> > > >      * If this is state collected due to iova fault, so fault relat=
+ed info
+> > > >      *
+> > > > @@ -922,7 +919,7 @@ void adreno_dump_info(struct msm_gpu *gpu)
+> > > >     printk("revision: %u (%"ADRENO_CHIPID_FMT")\n",
+> > > >                     adreno_gpu->info->revn,
+> > > > -                   ADRENO_CHIPID_ARGS(adreno_gpu->rev));
+> > > > +                   ADRENO_CHIPID_ARGS(adreno_gpu->chip_id));
+> > > >     for (i =3D 0; i < gpu->nr_rings; i++) {
+> > > >             struct msm_ringbuffer *ring =3D gpu->rb[i];
+> > > > @@ -1072,14 +1069,13 @@ int adreno_gpu_init(struct drm_device *drm,=
+ struct platform_device *pdev,
+> > > >     struct adreno_platform_config *config =3D dev->platform_data;
+> > > >     struct msm_gpu_config adreno_gpu_config  =3D { 0 };
+> > > >     struct msm_gpu *gpu =3D &adreno_gpu->base;
+> > > > -   struct adreno_rev *rev =3D &config->rev;
+> > > >     const char *gpu_name;
+> > > >     u32 speedbin;
+> > > >     int ret;
+> > > >     adreno_gpu->funcs =3D funcs;
+> > > > -   adreno_gpu->info =3D adreno_info(config->rev);
+> > > > -   adreno_gpu->rev =3D *rev;
+> > > > +   adreno_gpu->info =3D adreno_find_info(config->chip_id);
+> > > > +   adreno_gpu->chip_id =3D config->chip_id;
+> > > >     /* Only handle the core clock when GMU is not in use (or is abs=
+ent). */
+> > > >     if (adreno_has_gmu_wrapper(adreno_gpu) ||
+> > > > @@ -1104,7 +1100,7 @@ int adreno_gpu_init(struct drm_device *drm, s=
+truct platform_device *pdev,
+> > > >     adreno_gpu->speedbin =3D (uint16_t) (0xffff & speedbin);
+> > > >     gpu_name =3D devm_kasprintf(dev, GFP_KERNEL, "%"ADRENO_CHIPID_F=
+MT,
+> > > > -                   ADRENO_CHIPID_ARGS(config->rev));
+> > > > +                   ADRENO_CHIPID_ARGS(config->chip_id));
+> > > >     if (!gpu_name)
+> > > >             return -ENOMEM;
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/=
+drm/msm/adreno/adreno_gpu.h
+> > > > index 73e7155f164c..18f53c7ab589 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > > @@ -54,23 +54,15 @@ enum adreno_family {
+> > > >   #define ADRENO_QUIRK_HAS_HW_APRIV         BIT(3)
+> > > >   #define ADRENO_QUIRK_HAS_CACHED_COHERENT  BIT(4)
+> > > > -struct adreno_rev {
+> > > > -   uint8_t  core;
+> > > > -   uint8_t  major;
+> > > > -   uint8_t  minor;
+> > > > -   uint8_t  patchid;
+> > > > -};
+> > > > -
+> > > > -#define ANY_ID 0xff
+> > > > -
+> > > > -#define ADRENO_REV(core, major, minor, patchid) \
+> > > > -   ((struct adreno_rev){ core, major, minor, patchid })
+> > > > -
+> > > >   /* Helper for formating the chip_id in the way that userspace too=
+ls like
+> > > >    * crashdec expect.
+> > > >    */
+> > > >   #define ADRENO_CHIPID_FMT "u.%u.%u.%u"
+> > > > -#define ADRENO_CHIPID_ARGS(_r) (_r).core, (_r).major, (_r).minor, =
+(_r).patchid
+> > > > +#define ADRENO_CHIPID_ARGS(_c) \
+> > > > +   (((_c) >> 24) & 0xff), \
+> > > > +   (((_c) >> 16) & 0xff), \
+> > > > +   (((_c) >> 8)  & 0xff), \
+> > > > +   ((_c) & 0xff)
+> > >
+> > > So, we still have some meaning for chipid?
+> > >
+> > > >   struct adreno_gpu_funcs {
+> > > >     struct msm_gpu_funcs base;
+> > > > @@ -87,7 +79,12 @@ extern const struct adreno_reglist a660_hwcg[], =
+a690_hwcg[];
+> > > >   struct adreno_info {
+> > > >     const char *machine;
+> > > > -   struct adreno_rev rev;
+> > > > +   /**
+> > > > +    * @chipids: Table of matching chip-ids
+> > > > +    *
+> > > > +    * Terminated with 0 sentinal
+> > > > +    */
+> > > > +   uint32_t *chip_ids;
+> > > >     enum adreno_family family;
+> > > >     uint32_t revn;
+> > > >     const char *fw[ADRENO_FW_MAX];
+> > > > @@ -107,6 +104,8 @@ struct adreno_info {
+> > > >     uint32_t *speedbins;
+> > > >   };
+> > > > +#define ADRENO_CHIP_IDS(tbl...) (uint32_t[]) { tbl, 0 }
+> > > > +
+> > > >   /*
+> > > >    * Helper to build a speedbin table, ie. the table:
+> > > >    *      fuse | speedbin
+> > > > @@ -125,12 +124,12 @@ struct adreno_info {
+> > > >    */
+> > > >   #define ADRENO_SPEEDBINS(tbl...) (uint32_t[]) { tbl, UINT_MAX }
+> > > > -const struct adreno_info *adreno_info(struct adreno_rev rev);
+> > > > +const struct adreno_info *adreno_find_info(uint32_t chip_id);
+> > > >   struct adreno_gpu {
+> > > >     struct msm_gpu base;
+> > > > -   struct adreno_rev rev;
+> > > >     const struct adreno_info *info;
+> > > > +   uint32_t chip_id;
+> > > >     uint16_t speedbin;
+> > > >     const struct adreno_gpu_funcs *funcs;
+> > > > @@ -179,7 +178,7 @@ struct adreno_ocmem {
+> > > >   /* platform config data (ie. from DT, or pdata) */
+> > > >   struct adreno_platform_config {
+> > > > -   struct adreno_rev rev;
+> > > > +   uint32_t chip_id;
+> > > >   };
+> > > >   #define ADRENO_IDLE_TIMEOUT msecs_to_jiffies(1000)
+> > > > @@ -196,7 +195,15 @@ struct adreno_platform_config {
+> > > >     __ret;                                             \
+> > > >   })
+> > > > -bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2=
+);
+> > > > +static inline uint8_t adreno_patchid(const struct adreno_gpu *gpu)
+> > > > +{
+> > > > +   /* It is probably ok to assume legacy "adreno_rev" format
+> > > > +    * for all a6xx devices, but probably best to limit this
+> > > > +    * to older things.
+> > > > +    */
+> > > > +   WARN_ON_ONCE(gpu->info->family >=3D ADRENO_6XX_GEN1);
+> > > > +   return gpu->chip_id & 0xff;
+> > > > +}
+> > > >   static inline bool adreno_is_revn(const struct adreno_gpu *gpu, u=
+int32_t revn)
+> > > >   {
+> > > > @@ -252,7 +259,7 @@ static inline bool adreno_is_a330(const struct =
+adreno_gpu *gpu)
+> > > >   static inline bool adreno_is_a330v2(const struct adreno_gpu *gpu)
+> > > >   {
+> > > > -   return adreno_is_a330(gpu) && (gpu->rev.patchid > 0);
+> > > > +   return adreno_is_a330(gpu) && (adreno_patchid(gpu) > 0);
+> > > >   }
+> > > >   static inline int adreno_is_a405(const struct adreno_gpu *gpu)
+> > > > @@ -342,8 +349,7 @@ static inline int adreno_is_a650(const struct a=
+dreno_gpu *gpu)
+> > > >   static inline int adreno_is_7c3(const struct adreno_gpu *gpu)
+> > > >   {
+> > > > -   /* The order of args is important here to handle ANY_ID correct=
+ly */
+> > > > -   return adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), gpu->rev);
+> > > > +   return gpu->info->chip_ids[0] =3D=3D 0x06030500;
+> >
+> > Why not use adreno_gpu->chip_id here? Or do we need this check before
+> > adreno_gpu_init()? I thought we got rid of those.
+>
+> This is intentional, because there can be multiple chip-id's for a
+> single table entry, in theory.  But the first chip_id in the gpu table
+> entry should suffice, and is simpler than comparing
+> adreno_gpu->chip_id against each possible match.
+
+But why can't we use of_device_id::data ?
+
+>
+> BR,
+> -R
+>
+> > >
+> > > Ugh. The thing that bugs me isn't even the manual comparison of chip_=
+ids[0],
+> > > but the fact that these two platforms stand aside. I think at the end=
+ we
+> > > should have a single mechanism for checking GPU's SKUs.
+> > >
+> > > Or maybe we should get rid of that completely.
+> > >
+> > > If we get rid of a single gpulist table and move individual GPU info
+> > > definitions to aNxx_gpu.c, we can subclass a generic info structure w=
+ith
+> > > generation-specific data, for example generation-specific quirks, poi=
+nters
+> > > to hcwg or VBIF registers, etc. And then instead of having adreno_is_=
+foo all
+> > > over the code we can migrate most of these checks to data in the gpu =
+info
+> > > data.
+> >
+> > I think the downstream driver does what you described here. It helps to
+> > move more generation-specific data to the table without inflating the
+> > gpu table size.
+> >
+> > -Akhil
+> >
+> > >
+> > > >   }
+> > > >   static inline int adreno_is_a660(const struct adreno_gpu *gpu)
+> > > > @@ -358,8 +364,7 @@ static inline int adreno_is_a680(const struct a=
+dreno_gpu *gpu)
+> > > >   static inline int adreno_is_a690(const struct adreno_gpu *gpu)
+> > > >   {
+> > > > -   /* The order of args is important here to handle ANY_ID correct=
+ly */
+> > > > -   return adreno_cmp_rev(ADRENO_REV(6, 9, 0, ANY_ID), gpu->rev);
+> > > > +   return gpu->info->chip_ids[0] =3D=3D 0x06090000;
+> > > >   };
+> > > >   /* check for a615, a616, a618, a619 or any a630 derivatives */
+> > > >   static inline int adreno_is_a630_family(const struct adreno_gpu *=
+gpu)
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+> > >
+
+
+
+--=20
+With best wishes
+Dmitry
