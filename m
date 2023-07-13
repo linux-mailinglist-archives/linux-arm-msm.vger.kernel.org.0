@@ -2,226 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7AEF751FE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 13:30:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0247975200D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jul 2023 13:37:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233776AbjGMLaH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 07:30:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36682 "EHLO
+        id S234483AbjGMLhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 07:37:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233086AbjGMLaG (ORCPT
+        with ESMTP id S234290AbjGMLhS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 07:30:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7132A18E;
-        Thu, 13 Jul 2023 04:30:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0F25261044;
-        Thu, 13 Jul 2023 11:30:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918FEC433C8;
-        Thu, 13 Jul 2023 11:29:59 +0000 (UTC)
-Date:   Thu, 13 Jul 2023 16:59:48 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        krzysztof.kozlowski@linaro.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v8 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
-Message-ID: <20230713112948.GJ3047@thinkpad>
-References: <1689247213-13569-1-git-send-email-quic_krichai@quicinc.com>
- <1689247213-13569-4-git-send-email-quic_krichai@quicinc.com>
+        Thu, 13 Jul 2023 07:37:18 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E3C271F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 04:37:00 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3fb4146e8ceso5140205e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 04:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689248218; x=1691840218;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yg3+ltae9txCQHkNZ8ew/vDeWxnQVlh8GZjwxVSzsmE=;
+        b=oR6Qq4tUXYxURj2kKLDigQN4hSxPreEHDACih7z6ejaLWNT/QElG/D79Mrsv/vN8Ny
+         0r+3bdojlQyIJB3LRXSzcPJKDF/aM5sJ+YSL+TCEAZEeDugGMvAluBLARlsquemP2c7G
+         z2SwQCcCmLjwvmDNrjwkFlcYyqvL+34h6CqznBAWjXdr7mP7WRdJzviKLXhITRKu9Ttb
+         ZvZopjmcheoHuPhyIIFLJJ+ajtFLN0a1GN6ZnoWFid9e9mYEpsjnYpLALtsm59WrMUpi
+         R3PaSl623Ya0ELHJdgSaXgq5g0X+0yaFSYvq139oVeo2geSlyFbXt84190zfLMR9P+wr
+         lSOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689248218; x=1691840218;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yg3+ltae9txCQHkNZ8ew/vDeWxnQVlh8GZjwxVSzsmE=;
+        b=cfFGPEBEUlsoas8xxtP2d5ofF0/l6doQUU8dFBtwuBxUxY+pgoBIKzoukKLyR6Dquo
+         25QUYGN9C6kDDex+ipSfc7U1vANaAVhmevUjZnsxjMzlV59n/7d1tpFZ8dSWjDrFxNFZ
+         VqEoPUpE0N/nHWLTXbtFoiUheVSiOUEQhhuBzd6KmxfM2fL3VVrokstOHgdFBgYKf/RG
+         tvnd5TLEd64xQpL1FLndy4w3/w+nbaB0UDp5Hb75XedVECO8CVM1w47PSr0TIdnf8dwR
+         EwH83RN2gCUh6Rvdsa53s4Zh9BNnt4n2pPwxumVNmp/1vjvO8uuVhIoU8zfuDBJaQNPR
+         92Xg==
+X-Gm-Message-State: ABy/qLYq1pbTsjO+KMeZYlX7K2ipzo3/ySXjMexfKG8jDCxgBDPMS3VI
+        1aZVl6XCgupJdMqHjqRH6iobww==
+X-Google-Smtp-Source: APBJJlF8GdZS3ShkisOw1onsgke22P9SX9aKJjOQWKfqavy8b9fmDTouU4NBJmZYeT9YO95+hbJ4Tw==
+X-Received: by 2002:a05:600c:2945:b0:3fb:739d:27b2 with SMTP id n5-20020a05600c294500b003fb739d27b2mr1180111wmd.8.1689248218586;
+        Thu, 13 Jul 2023 04:36:58 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id 16-20020a05600c029000b003fc04d13242sm15051331wmk.0.2023.07.13.04.36.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Jul 2023 04:36:57 -0700 (PDT)
+Message-ID: <fb7e557c-c41d-26b9-9018-75c179483314@linaro.org>
+Date:   Thu, 13 Jul 2023 13:36:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1689247213-13569-4-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 2/6] dt-bindings: phy: qcom,m31: Document qcom,m31 USB
+ phy
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
+        will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
+        geert+renesas@glider.be, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org, rafal@milecki.pl,
+        quic_srichara@quicinc.com, quic_varada@quicinc.org,
+        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <cover.1689065318.git.quic_varada@quicinc.com>
+ <77fe66271044a18871e1dfb80bbb481617197d18.1689065318.git.quic_varada@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <77fe66271044a18871e1dfb80bbb481617197d18.1689065318.git.quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 13, 2023 at 04:50:13PM +0530, Krishna chaitanya chundru wrote:
-> Add support for voting interconnect (ICC) bandwidth based
-> on the link speed and width.
+On 11/07/2023 10:51, Varadarajan Narayanan wrote:
+> Document the M31 USB2 phy present in IPQ5332.
 > 
-> This commit is inspired from the basic interconnect support added
-> to pcie-qcom driver in commit c4860af88d0c ("PCI: qcom: Add basic
-> interconnect support").
-> 
-> The interconnect support is kept optional to be backward compatible
-> with legacy devicetrees.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
-
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 72 +++++++++++++++++++++++++++++++
->  1 file changed, 72 insertions(+)
+> v3:
+> 	Incorporate review comments. Will bring in ipq5018 compatible
+> 	string while posting ipq5018 usb patchset.
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 0fe7f06..cf9fc94 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -13,6 +13,7 @@
->  #include <linux/debugfs.h>
->  #include <linux/delay.h>
->  #include <linux/gpio/consumer.h>
-> +#include <linux/interconnect.h>
->  #include <linux/mfd/syscon.h>
->  #include <linux/phy/pcie.h>
->  #include <linux/phy/phy.h>
-> @@ -28,6 +29,7 @@
->  #define PARF_SYS_CTRL				0x00
->  #define PARF_DB_CTRL				0x10
->  #define PARF_PM_CTRL				0x20
-> +#define PARF_PM_STTS				0x24
->  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
->  #define PARF_MHI_BASE_ADDR_LOWER		0x178
->  #define PARF_MHI_BASE_ADDR_UPPER		0x17c
-> @@ -133,6 +135,11 @@
->  #define CORE_RESET_TIME_US_MAX			1005
->  #define WAKE_DELAY_US				2000 /* 2 ms */
->  
-> +#define PCIE_GEN1_BW_MBPS			250
-> +#define PCIE_GEN2_BW_MBPS			500
-> +#define PCIE_GEN3_BW_MBPS			985
-> +#define PCIE_GEN4_BW_MBPS			1969
-> +
->  #define to_pcie_ep(x)				dev_get_drvdata((x)->dev)
->  
->  enum qcom_pcie_ep_link_status {
-> @@ -178,6 +185,8 @@ struct qcom_pcie_ep {
->  	struct phy *phy;
->  	struct dentry *debugfs;
->  
-> +	struct icc_path *icc_mem;
-> +
->  	struct clk_bulk_data *clks;
->  	int num_clks;
->  
-> @@ -253,8 +262,49 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
->  	disable_irq(pcie_ep->perst_irq);
->  }
->  
-> +static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
-> +{
-> +	struct dw_pcie *pci = &pcie_ep->pci;
-> +	u32 offset, status, bw;
-> +	int speed, width;
-> +	int ret;
-> +
-> +	if (!pcie_ep->icc_mem)
-> +		return;
-> +
-> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-> +
-> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
-> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
-> +
-> +	switch (speed) {
-> +	case 1:
-> +		bw = MBps_to_icc(PCIE_GEN1_BW_MBPS);
-> +		break;
-> +	case 2:
-> +		bw = MBps_to_icc(PCIE_GEN2_BW_MBPS);
-> +		break;
-> +	case 3:
-> +		bw = MBps_to_icc(PCIE_GEN3_BW_MBPS);
-> +		break;
-> +	default:
-> +		dev_warn(pci->dev, "using default GEN4 bandwidth\n");
-> +		fallthrough;
-> +	case 4:
-> +		bw = MBps_to_icc(PCIE_GEN4_BW_MBPS);
-> +		break;
-> +	}
-> +
-> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
-> +	if (ret)
-> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +			ret);
-> +}
-> +
->  static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->  {
-> +	struct dw_pcie *pci = &pcie_ep->pci;
->  	int ret;
->  
->  	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
-> @@ -277,8 +327,24 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->  	if (ret)
->  		goto err_phy_exit;
->  
-> +	/*
-> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
-> +	 * to be set before enabling interconnect clocks.
-> +	 *
-> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
-> +	 * for the pcie-mem path.
-> +	 */
-> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(PCIE_GEN1_BW_MBPS));
-> +	if (ret) {
-> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +			ret);
-> +		goto err_phy_off;
-> +	}
-> +
->  	return 0;
->  
-> +err_phy_off:
-> +	phy_power_off(pcie_ep->phy);
->  err_phy_exit:
->  	phy_exit(pcie_ep->phy);
->  err_disable_clk:
-> @@ -289,6 +355,7 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->  
->  static void qcom_pcie_disable_resources(struct qcom_pcie_ep *pcie_ep)
->  {
-> +	icc_set_bw(pcie_ep->icc_mem, 0, 0);
->  	phy_power_off(pcie_ep->phy);
->  	phy_exit(pcie_ep->phy);
->  	clk_bulk_disable_unprepare(pcie_ep->num_clks, pcie_ep->clks);
-> @@ -550,6 +617,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
->  	if (IS_ERR(pcie_ep->phy))
->  		ret = PTR_ERR(pcie_ep->phy);
->  
-> +	pcie_ep->icc_mem = devm_of_icc_get(dev, "pcie-mem");
-> +	if (IS_ERR(pcie_ep->icc_mem))
-> +		ret = PTR_ERR(pcie_ep->icc_mem);
-> +
->  	return ret;
->  }
->  
-> @@ -573,6 +644,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
->  	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
->  		dev_dbg(dev, "Received BME event. Link is enabled!\n");
->  		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
-> +		qcom_pcie_ep_icc_update(pcie_ep);
->  		pci_epc_bme_notify(pci->ep.epc);
->  	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
->  		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
-> -- 
-> 2.7.4
+> v1:
+> 	Rename qcom,m31.yaml -> qcom,ipq5332-usb-hsphy.yaml
+> 	Drop default binding "m31,usb-hsphy"
+> 	Add clock
+> 	Remove 'oneOf' from compatible
+> 	Remove 'qscratch' region from register space as it is not needed
+> 	Remove reset-names
+> 	Fix the example definition
+> ---
+>  .../bindings/phy/qcom,ipq5332-usb-hsphy.yaml       | 49 ++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+> new file mode 100644
+> index 0000000..2cfdd73
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+> @@ -0,0 +1,49 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,ipq5332-usb-hsphy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: M31 (https://www.m31tech.com) USB PHY
+> +
+> +maintainers:
+> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> +  - Varadarajan Narayanan <quic_varada@quicinc.org>
 
--- 
-மணிவண்ணன் சதாசிவம்
+I was wondering why I keep receiving delays/bounces for my emails in
+this thread... and here we have. Please correct your email.
+
+Best regards,
+Krzysztof
+
