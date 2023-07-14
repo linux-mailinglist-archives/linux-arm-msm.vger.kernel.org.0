@@ -2,455 +2,435 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2F837542E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 20:55:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1366754300
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 21:04:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236546AbjGNSys convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 14:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56456 "EHLO
+        id S236712AbjGNTEO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 15:04:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236511AbjGNSyr (ORCPT
+        with ESMTP id S235491AbjGNTEL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 14:54:47 -0400
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F3C358C;
-        Fri, 14 Jul 2023 11:54:45 -0700 (PDT)
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-98e2865e2f2so59416366b.0;
-        Fri, 14 Jul 2023 11:54:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689360884; x=1689965684;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f9Q+l2wgz1odf30ahJjWbv4V4PSTmin8e6j6JZq03ec=;
-        b=SKg7evfguDwyDhIvgwwhQbP76mMPnK1cqne7g4nOcSl3qV4Z8mmOnfEyaDtg6aKBL1
-         BLQCX2ts+NoZj59S8IaxW2JpBVXTObjVxTpq8X207+qqrivCRcFhQ2lnioKsPKxmoYIk
-         kHry3BgCJsS3+brn4TGRRKW143/wuVV4UphbZDqfK7IVIxMgeJcghumjHPIIrnKdtLSl
-         UhyCasp2l4A4v/buBI3LdyWX/HjfhWa4wQipPvQtKgJ1hzzBY8XncOYCMiHPlVTg1oe9
-         N9BwSJUmk21qJMsVkWg1ZlxEIWET0zeg96OjygIUUW6K7CkABc0me01732T78KhJ00K3
-         xNvw==
-X-Gm-Message-State: ABy/qLaIBc5ii5+S+zBS5IfHQr1yzW7kdHRKqIbUCDZ/rk4eUlyb4Yah
-        qgNqp4fehZQcFnRicjPzifCAB8z5hL9HndcY/rU=
-X-Google-Smtp-Source: APBJJlGhaOM79BfPa2VO7mCVX5b0FIZOwxwzZu/FbMxOsMzMxZRHoIVKOP+u0TuNNIMmvmEFgweRKWR164C4QCOMVmY=
-X-Received: by 2002:a17:906:64cb:b0:993:d54b:3e42 with SMTP id
- p11-20020a17090664cb00b00993d54b3e42mr40714ejn.5.1689360883937; Fri, 14 Jul
- 2023 11:54:43 -0700 (PDT)
+        Fri, 14 Jul 2023 15:04:11 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BD435B1;
+        Fri, 14 Jul 2023 12:04:05 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36EI0jod017202;
+        Fri, 14 Jul 2023 19:03:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=OvMTds/aHVidAwUo3z0+1hqD0ocVJh9FDzHqMkJ8vbA=;
+ b=bGhuq2DSRuSHgyQ0DH4cioY65X6m/vpJARrRT0CBU1J5VKi/7c5Lo0RhBIun3mulRQCC
+ /x5UoO5bbO3/XoWHlebDNAjXXYnKWONyNb1+dQoyinj20K3bvWev9ijLSYrcbWoZYhqO
+ cuz2BwO4PEE9Pl055gjYvYuCXheHi3PQMTB+LzeIYVx6IlOiq2309Z3bUQruSHbbwfj7
+ AciBmFCYyUetgMF8AN49iES33eQ7o/y9Joau0PVFsQXgLfjkijPDufYJCpgGJYPf1Hlj
+ 1pSgwsJdQ5/c3fW2IEW8iltozP0qBEIynnOLRMLqYnZ5SJUZvomlJPiueO9DFxvkPeAs ww== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rtpujtm4a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Jul 2023 19:03:57 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36EJ3ukO022412
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Jul 2023 19:03:56 GMT
+Received: from [10.71.109.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 14 Jul
+ 2023 12:03:55 -0700
+Message-ID: <05996344-0e43-7f37-c99a-42c04f91dc83@quicinc.com>
+Date:   Fri, 14 Jul 2023 12:03:55 -0700
 MIME-Version: 1.0
-References: <20230714175008.4064592-1-robh@kernel.org>
-In-Reply-To: <20230714175008.4064592-1-robh@kernel.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Fri, 14 Jul 2023 20:54:32 +0200
-Message-ID: <CAJZ5v0i-OByOSjpxrj5d9S9QHRySK-MEUo+bK_J_4ihsCBmnSg@mail.gmail.com>
-Subject: Re: [PATCH] thermal: Explicitly include correct DT includes
-To:     Rob Herring <robh@kernel.org>
-Cc:     Guillaume La Roque <glaroque@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Markus Mayer <mmayer@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vasily Khoruzhick <anarsoul@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2] drm/msm/dsi: Enable DATABUS_WIDEN for DSI command mode
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>
+CC:     <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230713-add-widebus-support-v2-1-ad0added17b6@quicinc.com>
+ <91bc6348-2030-85dd-1492-1609b392793f@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <91bc6348-2030-85dd-1492-1609b392793f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KFbr8vg0clama5-p1c13LdD7JLEWy3Fo
+X-Proofpoint-ORIG-GUID: KFbr8vg0clama5-p1c13LdD7JLEWy3Fo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-14_09,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ mlxscore=0 priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0 mlxlogscore=999 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307140174
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 14, 2023 at 7:51 PM Rob Herring <robh@kernel.org> wrote:
->
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
 
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
 
-or please let me know if you want me to pick this up.
+On 7/13/2023 6:23 PM, Dmitry Baryshkov wrote:
+> On 14/07/2023 03:21, Jessica Zhang wrote:
+>> DSI 6G v2.5.x+ and DPU 7.x+ support a data-bus widen mode that allows DSI
+>> to send 48 bits of compressed data per pclk instead of 24.
+>>
+>> For all chipsets that support this mode, enable it whenever DSC is
+>> enabled as recommended by the hardware programming guide.
+>>
+>> Only enable this for command mode as we are currently unable to validate
+>> it for video mode.
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>> Note: The dsi.xml.h changes were generated using the headergen2 script in
+>> envytools [2], but the changes to the copyright and rules-ng-ng source 
+>> file
+>> paths were dropped.
+> 
+> Separate commit please, so that it can be replaced by headers sync with 
+> Mesa3d.
 
-Thanks!
+Hi Dmitry,
 
-> ---
->  drivers/thermal/amlogic_thermal.c           | 2 --
->  drivers/thermal/broadcom/bcm2711_thermal.c  | 2 +-
->  drivers/thermal/broadcom/brcmstb_thermal.c  | 2 +-
->  drivers/thermal/hisi_thermal.c              | 2 +-
->  drivers/thermal/imx8mm_thermal.c            | 1 -
->  drivers/thermal/imx_sc_thermal.c            | 1 -
->  drivers/thermal/imx_thermal.c               | 2 +-
->  drivers/thermal/k3_bandgap.c                | 2 +-
->  drivers/thermal/k3_j72xx_bandgap.c          | 2 +-
->  drivers/thermal/mediatek/auxadc_thermal.c   | 1 -
->  drivers/thermal/mediatek/lvts_thermal.c     | 2 +-
->  drivers/thermal/qcom/qcom-spmi-adc-tm5.c    | 1 -
->  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 1 -
->  drivers/thermal/rcar_gen3_thermal.c         | 2 +-
->  drivers/thermal/rcar_thermal.c              | 2 +-
->  drivers/thermal/rzg2l_thermal.c             | 2 +-
->  drivers/thermal/samsung/exynos_tmu.c        | 2 +-
->  drivers/thermal/sprd_thermal.c              | 2 +-
->  drivers/thermal/st/stm_thermal.c            | 2 --
->  drivers/thermal/sun8i_thermal.c             | 2 +-
->  drivers/thermal/tegra/tegra30-tsensor.c     | 2 +-
->  drivers/thermal/thermal_of.c                | 3 +--
->  drivers/thermal/uniphier_thermal.c          | 1 -
->  23 files changed, 15 insertions(+), 26 deletions(-)
->
-> diff --git a/drivers/thermal/amlogic_thermal.c b/drivers/thermal/amlogic_thermal.c
-> index 756b218880a7..81ebbf6de0de 100644
-> --- a/drivers/thermal/amlogic_thermal.c
-> +++ b/drivers/thermal/amlogic_thermal.c
-> @@ -22,8 +22,6 @@
->  #include <linux/mfd/syscon.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_address.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/regmap.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/broadcom/bcm2711_thermal.c b/drivers/thermal/broadcom/bcm2711_thermal.c
-> index c243a76a3471..03ac2d02e9d4 100644
-> --- a/drivers/thermal/broadcom/bcm2711_thermal.c
-> +++ b/drivers/thermal/broadcom/bcm2711_thermal.c
-> @@ -15,8 +15,8 @@
->  #include <linux/kernel.h>
->  #include <linux/mfd/syscon.h>
->  #include <linux/module.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
-> -#include <linux/of_device.h>
->  #include <linux/regmap.h>
->  #include <linux/thermal.h>
->
-> diff --git a/drivers/thermal/broadcom/brcmstb_thermal.c b/drivers/thermal/broadcom/brcmstb_thermal.c
-> index 72d1dbe60b8f..0b73abdaa792 100644
-> --- a/drivers/thermal/broadcom/brcmstb_thermal.c
-> +++ b/drivers/thermal/broadcom/brcmstb_thermal.c
-> @@ -17,8 +17,8 @@
->  #include <linux/interrupt.h>
->  #include <linux/kernel.h>
->  #include <linux/module.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
-> -#include <linux/of_device.h>
->  #include <linux/thermal.h>
->
->  #define AVS_TMON_STATUS                        0x00
-> diff --git a/drivers/thermal/hisi_thermal.c b/drivers/thermal/hisi_thermal.c
-> index 3f09ef8be41a..fb54ed4bf6f0 100644
-> --- a/drivers/thermal/hisi_thermal.c
-> +++ b/drivers/thermal/hisi_thermal.c
-> @@ -13,9 +13,9 @@
->  #include <linux/delay.h>
->  #include <linux/interrupt.h>
->  #include <linux/module.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
->  #include <linux/io.h>
-> -#include <linux/of_device.h>
->  #include <linux/thermal.h>
->
->  #define HI6220_TEMP0_LAG                       (0x0)
-> diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
-> index d4b40869c7d7..e89b11b3f2b9 100644
-> --- a/drivers/thermal/imx8mm_thermal.c
-> +++ b/drivers/thermal/imx8mm_thermal.c
-> @@ -12,7 +12,6 @@
->  #include <linux/module.h>
->  #include <linux/nvmem-consumer.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/slab.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/imx_sc_thermal.c b/drivers/thermal/imx_sc_thermal.c
-> index 8d6b4ef23746..7224f8d21db9 100644
-> --- a/drivers/thermal/imx_sc_thermal.c
-> +++ b/drivers/thermal/imx_sc_thermal.c
-> @@ -8,7 +8,6 @@
->  #include <linux/firmware/imx/sci.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/slab.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/imx_thermal.c b/drivers/thermal/imx_thermal.c
-> index a94ec0a0c9dd..826358cbe810 100644
-> --- a/drivers/thermal/imx_thermal.c
-> +++ b/drivers/thermal/imx_thermal.c
-> @@ -11,7 +11,7 @@
->  #include <linux/mfd/syscon.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
->  #include <linux/regmap.h>
->  #include <linux/thermal.h>
->  #include <linux/nvmem-consumer.h>
-> diff --git a/drivers/thermal/k3_bandgap.c b/drivers/thermal/k3_bandgap.c
-> index 1c3e590157ec..68f59b3735d3 100644
-> --- a/drivers/thermal/k3_bandgap.c
-> +++ b/drivers/thermal/k3_bandgap.c
-> @@ -11,7 +11,7 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_platform.h>
-> +#include <linux/platform_device.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/thermal.h>
->  #include <linux/types.h>
-> diff --git a/drivers/thermal/k3_j72xx_bandgap.c b/drivers/thermal/k3_j72xx_bandgap.c
-> index 5be1f09eeb2c..a5a0fc9b9356 100644
-> --- a/drivers/thermal/k3_j72xx_bandgap.c
-> +++ b/drivers/thermal/k3_j72xx_bandgap.c
-> @@ -10,10 +10,10 @@
->  #include <linux/module.h>
->  #include <linux/init.h>
->  #include <linux/kernel.h>
-> +#include <linux/platform_device.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/err.h>
->  #include <linux/types.h>
-> -#include <linux/of_platform.h>
->  #include <linux/io.h>
->  #include <linux/thermal.h>
->  #include <linux/of.h>
-> diff --git a/drivers/thermal/mediatek/auxadc_thermal.c b/drivers/thermal/mediatek/auxadc_thermal.c
-> index f59d36de20a0..c537aed71017 100644
-> --- a/drivers/thermal/mediatek/auxadc_thermal.c
-> +++ b/drivers/thermal/mediatek/auxadc_thermal.c
-> @@ -15,7 +15,6 @@
->  #include <linux/nvmem-consumer.h>
->  #include <linux/of.h>
->  #include <linux/of_address.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/slab.h>
->  #include <linux/io.h>
-> diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-> index b693fac2d677..054c965ae5e1 100644
-> --- a/drivers/thermal/mediatek/lvts_thermal.c
-> +++ b/drivers/thermal/mediatek/lvts_thermal.c
-> @@ -13,7 +13,7 @@
->  #include <linux/iopoll.h>
->  #include <linux/kernel.h>
->  #include <linux/nvmem-consumer.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
->  #include <linux/reset.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> index 5ddc39b2be32..756ac6842ff9 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -14,7 +14,6 @@
->  #include <linux/interrupt.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/regmap.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> index 0e8ebfcd84c5..78c5cfe6a0c0 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> @@ -10,7 +10,6 @@
->  #include <linux/interrupt.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/regmap.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/rcar_gen3_thermal.c b/drivers/thermal/rcar_gen3_thermal.c
-> index 9029d01e029b..bd2fb8c2e968 100644
-> --- a/drivers/thermal/rcar_gen3_thermal.c
-> +++ b/drivers/thermal/rcar_gen3_thermal.c
-> @@ -11,7 +11,7 @@
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/module.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/rcar_thermal.c b/drivers/thermal/rcar_thermal.c
-> index b8571f7090aa..293f8dd9fe0a 100644
-> --- a/drivers/thermal/rcar_thermal.c
-> +++ b/drivers/thermal/rcar_thermal.c
-> @@ -11,7 +11,7 @@
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/module.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/reboot.h>
-> diff --git a/drivers/thermal/rzg2l_thermal.c b/drivers/thermal/rzg2l_thermal.c
-> index b56981f85306..6b2bf3426f52 100644
-> --- a/drivers/thermal/rzg2l_thermal.c
-> +++ b/drivers/thermal/rzg2l_thermal.c
-> @@ -9,8 +9,8 @@
->  #include <linux/io.h>
->  #include <linux/iopoll.h>
->  #include <linux/math.h>
-> +#include <linux/mod_devicetable.h>
->  #include <linux/module.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/reset.h>
-> diff --git a/drivers/thermal/samsung/exynos_tmu.c b/drivers/thermal/samsung/exynos_tmu.c
-> index 45e5c840d130..58f4d8f7a3fd 100644
-> --- a/drivers/thermal/samsung/exynos_tmu.c
-> +++ b/drivers/thermal/samsung/exynos_tmu.c
-> @@ -15,7 +15,7 @@
->  #include <linux/io.h>
->  #include <linux/interrupt.h>
->  #include <linux/module.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/of_address.h>
->  #include <linux/of_irq.h>
->  #include <linux/platform_device.h>
-> diff --git a/drivers/thermal/sprd_thermal.c b/drivers/thermal/sprd_thermal.c
-> index 2fb90fdad76e..e27c4bdc8912 100644
-> --- a/drivers/thermal/sprd_thermal.c
-> +++ b/drivers/thermal/sprd_thermal.c
-> @@ -6,7 +6,7 @@
->  #include <linux/iopoll.h>
->  #include <linux/module.h>
->  #include <linux/nvmem-consumer.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
->  #include <linux/slab.h>
->  #include <linux/thermal.h>
-> diff --git a/drivers/thermal/st/stm_thermal.c b/drivers/thermal/st/stm_thermal.c
-> index 903fcf1763f1..142a7e5d12f4 100644
-> --- a/drivers/thermal/st/stm_thermal.c
-> +++ b/drivers/thermal/st/stm_thermal.c
-> @@ -14,8 +14,6 @@
->  #include <linux/iopoll.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_address.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/thermal.h>
->
-> diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
-> index 195f3c5d0b38..cca16d632d9f 100644
-> --- a/drivers/thermal/sun8i_thermal.c
-> +++ b/drivers/thermal/sun8i_thermal.c
-> @@ -14,7 +14,7 @@
->  #include <linux/interrupt.h>
->  #include <linux/module.h>
->  #include <linux/nvmem-consumer.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
->  #include <linux/regmap.h>
->  #include <linux/reset.h>
-> diff --git a/drivers/thermal/tegra/tegra30-tsensor.c b/drivers/thermal/tegra/tegra30-tsensor.c
-> index c243e9d76d3c..d911fa60f100 100644
-> --- a/drivers/thermal/tegra/tegra30-tsensor.c
-> +++ b/drivers/thermal/tegra/tegra30-tsensor.c
-> @@ -18,7 +18,7 @@
->  #include <linux/iopoll.h>
->  #include <linux/math.h>
->  #include <linux/module.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm.h>
->  #include <linux/reset.h>
-> diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
-> index 6fb14e521197..c36c7d235cba 100644
-> --- a/drivers/thermal/thermal_of.c
-> +++ b/drivers/thermal/thermal_of.c
-> @@ -10,8 +10,7 @@
->
->  #include <linux/err.h>
->  #include <linux/export.h>
-> -#include <linux/of_device.h>
-> -#include <linux/of_platform.h>
-> +#include <linux/of.h>
->  #include <linux/slab.h>
->  #include <linux/thermal.h>
->  #include <linux/types.h>
-> diff --git a/drivers/thermal/uniphier_thermal.c b/drivers/thermal/uniphier_thermal.c
-> index aef6119cc004..6f32ab61d174 100644
-> --- a/drivers/thermal/uniphier_thermal.c
-> +++ b/drivers/thermal/uniphier_thermal.c
-> @@ -12,7 +12,6 @@
->  #include <linux/mfd/syscon.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/regmap.h>
->  #include <linux/thermal.h>
-> --
-> 2.40.1
->
+Acked.
+
+> 
+>>
+>> [1] https://patchwork.freedesktop.org/series/120580/
+>> [2] https://github.com/freedreno/envytools/
+>>
+>> -- 
+>> Changes in v2:
+>> - Rebased on top of "drm/msm/dpu: Re-introduce dpu core revision"
+>> - Squashed all commits to avoid breaking feature if the series is only 
+>> partially applied
+> 
+> No. Please unsquash it. Please design the series so that the patches 
+> work even if it is only partially applied.
+
+Acked.
+
+> 
+>> - Moved DATABUS_WIDEN bit setting to dsi_ctr_enable() (Marijn)
+>> - Have DPU check if wide bus is requested by output driver (Dmitry)
+>> - Introduced bytes_per_pclk variable for dsi_timing_setup() hdisplay 
+>> adjustment (Marijn)
+>> - Link to v1: 
+>> https://lore.kernel.org/r/20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 10 ++++++----
+>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  4 +++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  3 +++
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  1 +
+>>   drivers/gpu/drm/msm/dsi/dsi.c                      |  5 +++++
+>>   drivers/gpu/drm/msm/dsi/dsi.h                      |  1 +
+>>   drivers/gpu/drm/msm/dsi/dsi.xml.h                  |  1 +
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c                 | 23 
+>> +++++++++++++++++++++-
+>>   drivers/gpu/drm/msm/msm_drv.h                      |  6 ++++++
+>>   9 files changed, 48 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index f0a2a1dca741..6aed63c06c1d 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -2411,6 +2411,7 @@ struct drm_encoder *dpu_encoder_init(struct 
+>> drm_device *dev,
+>>       struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>>       struct drm_encoder *drm_enc = NULL;
+>>       struct dpu_encoder_virt *dpu_enc = NULL;
+>> +    int index = disp_info->h_tile_instance[0];
+>>       int ret = 0;
+>>       dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
+>> @@ -2439,13 +2440,14 @@ struct drm_encoder *dpu_encoder_init(struct 
+>> drm_device *dev,
+>>       timer_setup(&dpu_enc->frame_done_timer,
+>>               dpu_encoder_frame_done_timeout, 0);
+>> -    if (disp_info->intf_type == INTF_DSI)
+>> +    if (disp_info->intf_type == INTF_DSI) {
+>>           timer_setup(&dpu_enc->vsync_event_timer,
+>>                   dpu_encoder_vsync_event_handler,
+> 
+> While you are touching this part, could you please drop 
+> dpu_encoder_vsync_event_handler() and 
+> dpu_encoder_vsync_event_work_handler(), they are useless?
+
+Since these calls aren't related to widebus, I don't think I'll include 
+it in this series. However, I can post this cleanup as a separate patch 
+and add that as a dependency if that's ok.
+
+> 
+>>                   0);
+>> -    else if (disp_info->intf_type == INTF_DP)
+>> -        dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+>> -                priv->dp[disp_info->h_tile_instance[0]]);
+>> +        dpu_enc->wide_bus_en = 
+>> msm_dsi_is_widebus_enabled(priv->dsi[index]);
+>> +    } else if (disp_info->intf_type == INTF_DP) {
+>> +        dpu_enc->wide_bus_en = 
+>> msm_dp_wide_bus_available(priv->dp[index]);
+>> +    }
+>>       INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+>>               dpu_encoder_off_work);
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> index df88358e7037..dace6168be2d 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> @@ -69,8 +69,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+>>                   phys_enc->hw_intf,
+>>                   phys_enc->hw_pp->idx);
+>> -    if (intf_cfg.dsc != 0)
+>> +    if (intf_cfg.dsc != 0) {
+>>           cmd_mode_cfg.data_compress = true;
+>> +        cmd_mode_cfg.wide_bus_en = 
+>> dpu_encoder_is_widebus_enabled(phys_enc->parent);
+>> +    }
+>>       if (phys_enc->hw_intf->ops.program_intf_cmd_cfg)
+>>           
+>> phys_enc->hw_intf->ops.program_intf_cmd_cfg(phys_enc->hw_intf, 
+>> &cmd_mode_cfg);
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> index 8ec6505d9e78..dc6f3febb574 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> @@ -521,6 +521,9 @@ static void 
+>> dpu_hw_intf_program_intf_cmd_cfg(struct dpu_hw_intf *ctx,
+>>       if (cmd_mode_cfg->data_compress)
+>>           intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
+>> +    if (cmd_mode_cfg->wide_bus_en)
+>> +        intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
+>> +
+>>       DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2);
+>>   }
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+>> index 77f80531782b..c539025c418b 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+>> @@ -50,6 +50,7 @@ struct dpu_hw_intf_status {
+>>   struct dpu_hw_intf_cmd_mode_cfg {
+>>       u8 data_compress;    /* enable data compress between dpu and dsi */
+>> +    u8 wide_bus_en;        /* enable databus widen mode */
+>>   };
+>>   /**
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c 
+>> b/drivers/gpu/drm/msm/dsi/dsi.c
+>> index baab79ab6e74..e3cc06c94397 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+>> @@ -17,6 +17,11 @@ struct drm_dsc_config 
+>> *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
+>>       return msm_dsi_host_get_dsc_config(msm_dsi->host);
+>>   }
+>> +bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi)
+>> +{
+>> +    return msm_dsi_host_is_widebus_supported(msm_dsi->host);
+> 
+> This is incorrect. It will enable widebus even for non-DSC cases.
+
+FWIW, all calls for msm_dsi_is_widebus_enabled() and 
+msm_dsi_host_is_widebus_supported() are guarded by a DSC check.
+
+That being said, I also see your point that msm_dsi_is_widebus_enabled() 
+is an incorrect name since this will only check if widebus is supported.
+
+Maybe a better change would be to change msm_dsi_is_widebus_enabled to 
+*_is_widebus_supported(), move the setting of dpu_enc->wide_bus_en for 
+both DP and DSI to dpu_encoder_virt_atomic_enable(), then for DSI set 
+wide_bus_en = dpu_enc->dsc && dsi_is_widebus_supported().
+
+> 
+>> +}
+>> +
+>>   static int dsi_get_phy(struct msm_dsi *msm_dsi)
+>>   {
+>>       struct platform_device *pdev = msm_dsi->pdev;
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h 
+>> b/drivers/gpu/drm/msm/dsi/dsi.h
+>> index bd3763a5d723..219a9f756759 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+>> @@ -134,6 +134,7 @@ int dsi_calc_clk_rate_6g(struct msm_dsi_host 
+>> *msm_host, bool is_bonded_dsi);
+>>   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct 
+>> mipi_dsi_host *host);
+>>   void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
+>>   struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct 
+>> mipi_dsi_host *host);
+>> +bool msm_dsi_host_is_widebus_supported(struct mipi_dsi_host *host);
+>>   /* dsi phy */
+>>   struct msm_dsi_phy;
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h 
+>> b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+>> index a4a154601114..2a7d980e12c3 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+>> @@ -664,6 +664,7 @@ static inline uint32_t 
+>> DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP(enum dsi_rgb_swap v
+>>       return ((val) << DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__SHIFT) & 
+>> DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__MASK;
+>>   }
+>>   #define DSI_CMD_MODE_MDP_CTRL2_BURST_MODE            0x00010000
+>> +#define DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN            0x00100000
+>>   #define REG_DSI_CMD_MODE_MDP_STREAM2_CTRL            0x000001b8
+>>   #define DSI_CMD_MODE_MDP_STREAM2_CTRL_DATA_TYPE__MASK        0x0000003f
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
+>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 645927214871..6ea3476acf0d 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -710,6 +710,14 @@ static void dsi_ctrl_disable(struct msm_dsi_host 
+>> *msm_host)
+>>       dsi_write(msm_host, REG_DSI_CTRL, 0);
+>>   }
+>> +bool msm_dsi_host_is_widebus_supported(struct mipi_dsi_host *host)
+>> +{
+>> +    struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+>> +
+>> +    return msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
+>> +            msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V2_5_0;
+> 
+> Would it be better to push it to the config data, like we did for DP?
+
+I don't think so -- I think adding it to the config data as a feature 
+flag would bloat dsi_cfg.c. It would be simpler and cleaner (IMO) to 
+keep this as a version check.
+
+> 
+>> +}
+>> +
+>>   static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+>>               struct msm_dsi_phy_shared_timings *phy_shared_timings, 
+>> struct msm_dsi_phy *phy)
+>>   {
+>> @@ -757,6 +765,11 @@ static void dsi_ctrl_enable(struct msm_dsi_host 
+>> *msm_host,
+>>               msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3) {
+>>               data = dsi_read(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2);
+>>               data |= DSI_CMD_MODE_MDP_CTRL2_BURST_MODE;
+>> +
+>> +            /* TODO: Allow for video-mode support once tested/fixed */
+>> +            if (msm_host->cfg_hnd->minor >= 
+>> MSM_DSI_6G_VER_MINOR_V2_5_0 && msm_host->dsc)
+> 
+> msm_dsi_is_widebus_enabled() && msm_host->dsc
+
+*_is_widebus_enabled() also checks for major version >= 6G, so calling 
+it here would be a bit redundant as we're already checking for that earlier.
+
+FWIW, I've nested the widebus configuration within the burst mode 
+configuration to keep it so that we only have to read/write the 
+MDP_CTRL2 once.
+
+> 
+>> +                data |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
+>> +
+>>               dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, data);
+>>           }
+>>       }
+>> @@ -894,6 +907,7 @@ static void dsi_timing_setup(struct msm_dsi_host 
+>> *msm_host, bool is_bonded_dsi)
+>>       u32 hdisplay = mode->hdisplay;
+>>       u32 wc;
+>>       int ret;
+>> +    bool widebus_supported = 
+>> msm_dsi_host_is_widebus_supported(&msm_host->base);
+> 
+> s/supported/enabled for this function.
+
+I would like to keep the name as *_is_widebus_supported() since it 
+better reflects the functionality of the helper.
+
+FWIW, the widebus hdisplay adjustments are already guarded by a DSC check.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>>       DBG("");
+>> @@ -914,6 +928,7 @@ static void dsi_timing_setup(struct msm_dsi_host 
+>> *msm_host, bool is_bonded_dsi)
+>>       if (msm_host->dsc) {
+>>           struct drm_dsc_config *dsc = msm_host->dsc;
+>> +        u32 bytes_per_pclk;
+>>           /* update dsc params with timing params */
+>>           if (!dsc || !mode->hdisplay || !mode->vdisplay) {
+>> @@ -937,7 +952,13 @@ static void dsi_timing_setup(struct msm_dsi_host 
+>> *msm_host, bool is_bonded_dsi)
+>>            * pulse width same
+>>            */
+>>           h_total -= hdisplay;
+>> -        hdisplay = 
+>> DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+>> +        if (widebus_supported && !(msm_host->mode_flags & 
+>> MIPI_DSI_MODE_VIDEO))
+>> +            bytes_per_pclk = 6;
+>> +        else
+>> +            bytes_per_pclk = 3;
+>> +
+>> +        hdisplay = 
+>> DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), bytes_per_pclk);
+>> +
+>>           h_total += hdisplay;
+>>           ha_end = ha_start + hdisplay;
+>>       }
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
+>> b/drivers/gpu/drm/msm/msm_drv.h
+>> index 9d9d5e009163..7ff56d09014c 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>> @@ -344,6 +344,7 @@ void msm_dsi_snapshot(struct msm_disp_state 
+>> *disp_state, struct msm_dsi *msm_dsi
+>>   bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
+>>   bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
+>>   bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
+>> +bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi);
+>>   struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
+>>   #else
+>>   static inline void __init msm_dsi_register(void)
+>> @@ -374,6 +375,11 @@ static inline bool msm_dsi_is_master_dsi(struct 
+>> msm_dsi *msm_dsi)
+>>       return false;
+>>   }
+>> +static inline bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi)
+>> +{
+>> +    return false;
+>> +}
+>> +
+>>   static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct 
+>> msm_dsi *msm_dsi)
+>>   {
+>>       return NULL;
+>>
+>> ---
+>> base-commit: 9445fc2942a890e84c74e170ebd7dfb9566e3357
+>> change-id: 20230525-add-widebus-support-f785546ee751
+>>
+>> Best regards,
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
