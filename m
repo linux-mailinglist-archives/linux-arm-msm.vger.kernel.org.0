@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D5947544E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 00:16:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8717B7544F5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 00:30:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbjGNWQh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 18:16:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
+        id S229909AbjGNWaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 18:30:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbjGNWQg (ORCPT
+        with ESMTP id S229745AbjGNWai (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 18:16:36 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA042D65
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 15:16:34 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-cab61f812efso2266077276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 15:16:34 -0700 (PDT)
+        Fri, 14 Jul 2023 18:30:38 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71CB12D48
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 15:30:36 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-c4cb4919bb9so2283595276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 15:30:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689372993; x=1689977793;
+        d=linaro.org; s=google; t=1689373835; x=1689978635;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kts3CdD6qrU2vYqcD7aqi070lkJuyIYvODnsbAxmofs=;
-        b=qB+y+28SVFMQ26XxZe50RZudBx2wAPpm6EJPR3DkzDa8X2mnTD9zyoqL9pB4HGIkVm
-         GENUkkopfRzIzcKGvNefs509dE+pl1LiCWXwZsiSo43w6/CzR/IYOyM/l2dHR15Kr50p
-         ElZj5y6oAGVX86nsv1eySORnMIFosCOSqDwU0C1AyoLZtAD/aC1rSlwuc/HWPot5ulmq
-         C+6rMbMkn0lbcKWsCTNKR+ksbX+9nXGJSMBW2fYyOK6ShK5OEq7ZZVDvHGl9VqWOMUg+
-         XsfGhS/XOMexRpR+PgGHbsta4+OF66gq2dV8TekkKSE2t0SDctML4FhdgrcClUcbLvBu
-         uRmg==
+        bh=YW5FZ1K6diwrH4+nhB/fXam/1SoVM/vT+mwAPHKfWHA=;
+        b=rBbT6LWCBcILoh5Jm0TEi+CRZwEV9gpSIN8HctlOVfxcLiBkQMX3UCtFgBpLXMo6P1
+         yIV2N9Ldwrf6dni7DNdQmGw/QDhCYHcasZcL7ed+QtLHjPz4068kidSh2UIOLM+4SkDN
+         68dqJh4B7CKZ+DcmLJpUkSyswV6pnnXnso9LI+yRxZmi6bj+fO1bRFGD3NnmFA8n9uYe
+         h3JoEtm4s+HkNvJo6Nh/JTVfDQBbLToNy63qj0vBhr01ykDvXb4uOziN3pOoKZPOGxrn
+         9Md4BJb17/qiviTs45CTPiWRss3TkJVw8G3OutWN7LEMnWJPtpTQaKNoh2lqwh5oCYT5
+         3NTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689372993; x=1689977793;
+        d=1e100.net; s=20221208; t=1689373835; x=1689978635;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kts3CdD6qrU2vYqcD7aqi070lkJuyIYvODnsbAxmofs=;
-        b=cgxZJ92veA5kk9RnEwVe7SByCdRlUwf264bn0RrFt5Rrc7kllFEtUSYt+p6v4+3la6
-         cDGa0WKY6sSP3kwTfcfqNM2sxFM4f3bIVSgd24feztPi0+b2e4MSJqWbdCvMq+9MdeOj
-         arztGDR6nQULNt50GEFfp1WLyTCUDSYogSR3BkcDdpcX+EBrpVXt0IIUJBxIoEPsJ7iZ
-         uNPCsoF5y3kRsjQ+tNLlSZqCFLIqZXfP2Saxe7ZgdeyEHadgER5nDsiZ1Cuuylhm/CgX
-         Lvt/N61VWRxwJ2olN+DRgUfECaH71ppR4Z5TiLpgKuJyzgX59rB2c06Fj8UpAWKLc8YA
-         FDjQ==
-X-Gm-Message-State: ABy/qLZUJmbhWQGGN5JuZBo/uj/ubVHQ21mN/sV1cBZ7wexL1M6W9Mzk
-        1wrHHHWsZM4SyY+RLHuchR7j1DtwkCXT6fE8B5v6uA==
-X-Google-Smtp-Source: APBJJlHXgColk5QE+SqsJ2MRfR5FESqwK5EdMnySZKV20SGn6cJbuLfrbDE1NfcramWGe+08z/vEMK390ZGwuuCWKiw=
-X-Received: by 2002:a25:df56:0:b0:bc8:9925:9c1f with SMTP id
- w83-20020a25df56000000b00bc899259c1fmr5498340ybg.1.1689372993126; Fri, 14 Jul
- 2023 15:16:33 -0700 (PDT)
+        bh=YW5FZ1K6diwrH4+nhB/fXam/1SoVM/vT+mwAPHKfWHA=;
+        b=fHF9x9IINSqqXo/A7k8e2FKq4esE7qmGqP7BKRoPZ6R4HtDpizzAtpuk19KPWcvk2f
+         ZR4/ytWtpC5wAb22SsCCKTRedDQhnlikNdz6qzJ9NPjkUTMj6dpAMljn3MToL9E9wINd
+         PvAqupnGpqU2KIscB2VmerCXpUYWQZRwwv2xwAGc0+to+AQqIKQUFwIki6xNT1jf3Eq5
+         X6pHUAtSZiYB7JFVnc8Hh9srUKE6ATSY+33JxuAIQD5yCw7gtS98w/CRBfiodbhl7xR0
+         Q3oHqHWHuFMzb/ba8rSioyybgxKkLmBxXqe80Nrz3rMkNRvIP0xxbNn0FCb3dhNGEiLB
+         PApA==
+X-Gm-Message-State: ABy/qLYUgeEQBz0ceLvUfBjltWzuIWALl23YOmfyfldl29rWw1KYNu99
+        oBmihIHEW1CNSgrFolIHVbKRzIZlkCOtZEQKAsGnUQ==
+X-Google-Smtp-Source: APBJJlHTMsllj2Rlmbc6r+TTnedyb7w6obUup5DXWhx7RuOpqt9hVfQCfdmq0dSgeOHn3qgdFe5RsrKnREF9KfMvZHk=
+X-Received: by 2002:a25:8689:0:b0:c0b:7483:5cf0 with SMTP id
+ z9-20020a258689000000b00c0b74835cf0mr5289905ybk.65.1689373835500; Fri, 14 Jul
+ 2023 15:30:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <20230713-add-widebus-support-v2-1-ad0added17b6@quicinc.com>
- <de0ec44d-c14e-334c-a5a6-76ac2c63b048@linaro.org> <2e48b8d2-ccdb-04e7-88e3-e294ed7382b1@quicinc.com>
-In-Reply-To: <2e48b8d2-ccdb-04e7-88e3-e294ed7382b1@quicinc.com>
+ <91bc6348-2030-85dd-1492-1609b392793f@linaro.org> <05996344-0e43-7f37-c99a-42c04f91dc83@quicinc.com>
+In-Reply-To: <05996344-0e43-7f37-c99a-42c04f91dc83@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 15 Jul 2023 01:16:21 +0300
-Message-ID: <CAA8EJpqBbU1LoUHyK64JBSwpWGYUH4NpDGxcQ=K59NZ33B16Zw@mail.gmail.com>
+Date:   Sat, 15 Jul 2023 01:30:24 +0300
+Message-ID: <CAA8EJppFDcrVdegskSD0TJPOdSzVw_50+Bq+u8LKn26jdKE=tw@mail.gmail.com>
 Subject: Re: [PATCH v2] drm/msm/dsi: Enable DATABUS_WIDEN for DSI command mode
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -65,37 +65,20 @@ Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 14 Jul 2023 at 23:09, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+On Fri, 14 Jul 2023 at 22:03, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 >
 >
 >
-> On 7/14/2023 12:41 AM, Dmitry Baryshkov wrote:
+> On 7/13/2023 6:23 PM, Dmitry Baryshkov wrote:
 > > On 14/07/2023 03:21, Jessica Zhang wrote:
 > >> DSI 6G v2.5.x+ and DPU 7.x+ support a data-bus widen mode that allows DSI
-> >
-> > sm8250 has widebus support in DP and thus in DPU, according to the
-> > published DT. Thus the 'DPU 7.x+' is not fully correct.
->
-> Hi Dmitry,
->
-> Acked -- Will change this to say "DSI 6G v2.5+ supports a data-bus widen
-> mode for DPU 7.x+ that ... " instead.
-
-I'd suggest skipping DPU version at all.
-
->
-> Thanks,
->
-> Jessica Zhang
->
-> >
 > >> to send 48 bits of compressed data per pclk instead of 24.
 > >>
 > >> For all chipsets that support this mode, enable it whenever DSC is
@@ -110,6 +93,15 @@ I'd suggest skipping DPU version at all.
 > >> envytools [2], but the changes to the copyright and rules-ng-ng source
 > >> file
 > >> paths were dropped.
+> >
+> > Separate commit please, so that it can be replaced by headers sync with
+> > Mesa3d.
+>
+> Hi Dmitry,
+>
+> Acked.
+>
+> >
 > >>
 > >> [1] https://patchwork.freedesktop.org/series/120580/
 > >> [2] https://github.com/freedreno/envytools/
@@ -119,6 +111,13 @@ I'd suggest skipping DPU version at all.
 > >> - Rebased on top of "drm/msm/dpu: Re-introduce dpu core revision"
 > >> - Squashed all commits to avoid breaking feature if the series is only
 > >> partially applied
+> >
+> > No. Please unsquash it. Please design the series so that the patches
+> > work even if it is only partially applied.
+>
+> Acked.
+>
+> >
 > >> - Moved DATABUS_WIDEN bit setting to dsi_ctr_enable() (Marijn)
 > >> - Have DPU check if wide bus is requested by output driver (Dmitry)
 > >> - Introduced bytes_per_pclk variable for dsi_timing_setup() hdisplay
@@ -159,6 +158,19 @@ I'd suggest skipping DPU version at all.
 > >> +    if (disp_info->intf_type == INTF_DSI) {
 > >>           timer_setup(&dpu_enc->vsync_event_timer,
 > >>                   dpu_encoder_vsync_event_handler,
+> >
+> > While you are touching this part, could you please drop
+> > dpu_encoder_vsync_event_handler() and
+> > dpu_encoder_vsync_event_work_handler(), they are useless?
+>
+> Since these calls aren't related to widebus, I don't think I'll include
+> it in this series. However, I can post this cleanup as a separate patch
+> and add that as a dependency if that's ok.
+
+Sure, that will work for me. Thank you!
+
+>
+> >
 > >>                   0);
 > >> -    else if (disp_info->intf_type == INTF_DP)
 > >> -        dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
@@ -226,6 +238,27 @@ I'd suggest skipping DPU version at all.
 > >> +bool msm_dsi_is_widebus_enabled(struct msm_dsi *msm_dsi)
 > >> +{
 > >> +    return msm_dsi_host_is_widebus_supported(msm_dsi->host);
+> >
+> > This is incorrect. It will enable widebus even for non-DSC cases.
+>
+> FWIW, all calls for msm_dsi_is_widebus_enabled() and
+> msm_dsi_host_is_widebus_supported() are guarded by a DSC check.
+>
+> That being said, I also see your point that msm_dsi_is_widebus_enabled()
+> is an incorrect name since this will only check if widebus is supported.
+>
+> Maybe a better change would be to change msm_dsi_is_widebus_enabled to
+> *_is_widebus_supported(), move the setting of dpu_enc->wide_bus_en for
+> both DP and DSI to dpu_encoder_virt_atomic_enable(), then for DSI set
+> wide_bus_en = dpu_enc->dsc && dsi_is_widebus_supported().
+
+I think we should change msm_dp_wide_bus_available() to
+msm_dp_wide_bus_enabled(). We don't have a way to tell DP (or DSI) if
+widebus really should be enabled or not. So it would be better to make
+DP and DSI drivers provide is_widebus_enabled function.
+
+>
+> >
 > >> +}
 > >> +
 > >>   static int dsi_get_phy(struct msm_dsi *msm_dsi)
@@ -275,6 +308,17 @@ I'd suggest skipping DPU version at all.
 > >> +
 > >> +    return msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
 > >> +            msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V2_5_0;
+> >
+> > Would it be better to push it to the config data, like we did for DP?
+>
+> I don't think so -- I think adding it to the config data as a feature
+> flag would bloat dsi_cfg.c. It would be simpler and cleaner (IMO) to
+> keep this as a version check.
+
+Ok.
+
+>
+> >
 > >> +}
 > >> +
 > >>   static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
@@ -290,6 +334,43 @@ I'd suggest skipping DPU version at all.
 > >> +            /* TODO: Allow for video-mode support once tested/fixed */
 > >> +            if (msm_host->cfg_hnd->minor >=
 > >> MSM_DSI_6G_VER_MINOR_V2_5_0 && msm_host->dsc)
+> >
+> > msm_dsi_is_widebus_enabled() && msm_host->dsc
+>
+> *_is_widebus_enabled() also checks for major version >= 6G, so calling
+> it here would be a bit redundant as we're already checking for that earlier.
+
+However now you have different checks in two different places.
+
+My suggestion is to have the function msm_dsi_is_widebus_supported(),
+which the rest of the code uses to check if wide bus is actually
+enabled in the HW. If at some point DSI 2.11 drops wide bus support,
+I'd like to see a change at a single place, rather than having changes
+all over the code.
+
+Likewise I'd like to have the function msm_dsi_is_widebus_enabled(),
+which is used by the rest of the code to check if the widebus should
+be actually enabled.
+
+Actually I think we can even drop the is_supported at all() and use
+the following code:
+
+bool msm_dsi_is_widebus_enabled()
+{
+   if (major < 6G || minor < V2_5_0)
+     return false;
+
+   return !!msm_host->dsc;
+}
+
+Then the rest of the code should call this function only.
+
+>
+> FWIW, I've nested the widebus configuration within the burst mode
+> configuration to keep it so that we only have to read/write the
+> MDP_CTRL2 once.
+>
+> >
 > >> +                data |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
 > >> +
 > >>               dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, data);
@@ -302,6 +383,22 @@ I'd suggest skipping DPU version at all.
 > >>       int ret;
 > >> +    bool widebus_supported =
 > >> msm_dsi_host_is_widebus_supported(&msm_host->base);
+> >
+> > s/supported/enabled for this function.
+>
+> I would like to keep the name as *_is_widebus_supported() since it
+> better reflects the functionality of the helper.
+>
+> FWIW, the widebus hdisplay adjustments are already guarded by a DSC check.
+
+See my previous comment.
+
+>
+> Thanks,
+>
+> Jessica Zhang
+>
+> >
 > >>       DBG("");
 > >> @@ -914,6 +928,7 @@ static void dsi_timing_setup(struct msm_dsi_host
 > >> *msm_host, bool is_bonded_dsi)
