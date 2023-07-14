@@ -2,117 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03845753569
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 10:48:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 620217535F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 11:00:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235542AbjGNIrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 04:47:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54000 "EHLO
+        id S235119AbjGNJAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 05:00:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235636AbjGNIrh (ORCPT
+        with ESMTP id S234906AbjGNJAe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 04:47:37 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2A4A2700
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 01:47:34 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-51fdf291330so1967821a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 01:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689324453; x=1691916453;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Xfnzqz2i7m5w9zMzOs0RqunR9vvDiHlmabhYNl07DtU=;
-        b=QRTexeIsaQuwzZmHHH1qWjMfaVgQohb1jM0TSX3h4pKx34oQYn6cbwXTCromOfGYcL
-         Tta5/ZU3WfrIC8LZEwrhwIv6Fl5UViGAHoX4Z40wOK0wfmiDGYo6M1P6RYRh92tvEm1A
-         lgjoNI1FK4t3XozduDsu/mzKG2HtaKxRew6IKwKC+SHAtHe2meEXKda8QekvCoagcIO6
-         KTWXFl0cFonQ/GYkBq3XXft+Mu0GybbpwqYcmIi8CIbvPujfORGmzQPb5wgTdps6gVYC
-         XOQqon7bQHYJpakPB9YpjonH7WCwfyozV/VhsVBrmvQZoqqXDWTApIdqBkRxZJmpK9Mo
-         jkEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689324453; x=1691916453;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xfnzqz2i7m5w9zMzOs0RqunR9vvDiHlmabhYNl07DtU=;
-        b=lp6zJcATG+oYv1+KKopy8D/N4UGyONjqJUNYjHDgsPmx4Tai0QeDojgrxaK2Cf5pMo
-         QcpTPMNZOPyX6wcgzo+Pxnc+Ltf5U3uYmoRXWVy7o7PdW9wqjRLQ88L3Vw6r5q84BsvY
-         LhPbh29lPqxgXWBfdnXrj7MCJUza4AIAPWaqYGVRXVna/uuN/tA8T3hhSZIAASTGFkDQ
-         g/Y8KqFLt1QvTRyfytqi6LPscqH7XOQ9bSmFbwtonK7O3p3jim7tjAWFZj13G49wndEn
-         c+ZhXPYhSlZutESxgOHhL0Nw5OVa8JcKmcIto54YM318CIRn2ZVwp5GGxu0yFGIFfive
-         bIkA==
-X-Gm-Message-State: ABy/qLbIXPyHbdviF2jDtRsFLhFjhBFPSC2GRD/P8dUTqCVpwupTWaYn
-        Tov/dUHc1fpX5xmzW/xjtKGYpg==
-X-Google-Smtp-Source: APBJJlEuf4i2pzMRoEofkzTMljBMlpAzj4iNGEl1v3hbp1MIkjUaSwOo0LcuFm7jwuef4HKv2BzhmA==
-X-Received: by 2002:aa7:d359:0:b0:51e:4bd6:ce4a with SMTP id m25-20020aa7d359000000b0051e4bd6ce4amr4058266edr.11.1689324453302;
-        Fri, 14 Jul 2023 01:47:33 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id w24-20020aa7cb58000000b0051e0f8aac74sm5480662edt.8.2023.07.14.01.47.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jul 2023 01:47:32 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Conor Dooley <conor@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        Fri, 14 Jul 2023 05:00:34 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEA3130CA;
+        Fri, 14 Jul 2023 02:00:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7602961CA0;
+        Fri, 14 Jul 2023 09:00:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9B3C433C8;
+        Fri, 14 Jul 2023 09:00:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689325202;
+        bh=M+6EvDk/Rt4bEptAaw3filSWo8oszwa49cRXibShMp0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=b/5YIdHpk6iQnyFpJJm8fmDHJOV5ekpEpxSmE819bdc9KK+uVXEqt8ZEenpPKWsAr
+         RsxwFFn5yW3t9lV7smxTnmT52KMeXc+y8jp8qPaa7obpdaAl/SqlUR0+Q/0Teh+NHx
+         cyTSic5nmDWE2jklk1kRcMgKTsbWPHUkmOzmU3mpEf57rfh7e2LBC+Y6nKSQgO2uov
+         4oZM54Vd/XJcxTXnoKLxZ80FtL53TV4k3+NQ+cDifa3AUxzMyqQLS2x37NG++bW+U0
+         01rFz5U/g5FXY5YdkT13k3onhrxMont3rL7vG8GQ4wjh+IUTNJ0Mm1JYq+XSdV+Q7y
+         pqrreFIDmL0xQ==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qKEeh-0006YD-1X;
+        Fri, 14 Jul 2023 11:00:03 +0200
+Date:   Fri, 14 Jul 2023 11:00:03 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Nishanth Menon <nm@ti.com>, linux-riscv@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jonathan Corbet <corbet@lwn.net>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, workflows@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] MAINTAINER: samsung: document dtbs_check requirement for Samsung
-Date:   Fri, 14 Jul 2023 10:47:25 +0200
-Message-Id: <20230714084725.27847-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230714084725.27847-1-krzysztof.kozlowski@linaro.org>
-References: <20230714084725.27847-1-krzysztof.kozlowski@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com
+Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
+ for qcom wrapper
+Message-ID: <ZLEOk-9VImJNHYHa@hovoldconsulting.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-7-quic_kriskura@quicinc.com>
+ <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
+ <ZJsDpqttBYtbQ0yg@hovoldconsulting.com>
+ <26ae15d1-4e13-3ab7-6844-3a7d3ed03af4@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <26ae15d1-4e13-3ab7-6844-3a7d3ed03af4@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Samsung ARM/ARM64 SoCs (including legacy S3C64xx and S5PV210) are also
-expected not to bring any new dtbs_check warnings.  In fact this have
-been already enforced and tested since few release.
+On Mon, Jul 03, 2023 at 12:35:48AM +0530, Krishna Kurapati PSSNV wrote:
+> On 6/27/2023 9:13 PM, Johan Hovold wrote:
+> > On Wed, Jun 07, 2023 at 02:16:37PM +0200, Johan Hovold wrote:
+> >> On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
+> >>> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
+> >>> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
+> >>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+> >>> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
+> >>> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
+> >>> +			dev_err(qcom->dev, "HS-PHY%d not in L2\n", i);
+> >>> +	}
+> > 
+> >> When testing this on the X13s I get:
+> >>
+> >> 	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
+> >>
+> >> for the third port, whose status registers always seems to return zero
+> >> (e.g. as if we're checking the wrong register?):
+> >>
+> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 0, pwr_event_stat = 38103c
+> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 1, pwr_event_stat = 38103c
+> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 2, pwr_event_stat = 00
+> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 3, pwr_event_stat = 140030
+> >>
+> >> I verified that everything appears to work as expected on sa8295p-adp.
+> >>
+> >> Do you have any idea of what may be causing this?
+> > 
+> > You never replied to this; do you have any idea why the status register
+> > for the second port seemingly always read back as 0 on the X13s?
 
----
+>   Missed this mail. This never popped up on my system. So no idea what 
+> is different in Lenovo X13s. Might need to check with team internally.
 
-Previous idea was here:
-https://lore.kernel.org/all/20230712084131.127982-1-krzysztof.kozlowski@linaro.org/
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+Did you hear anything back regarding the above?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7405fb6e38c3..9a539af4d775 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2632,6 +2632,7 @@ R:	Alim Akhtar <alim.akhtar@samsung.com>
- L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
- L:	linux-samsung-soc@vger.kernel.org
- S:	Maintained
-+P:	Documentation/process/maintainer-soc-clean-dts.rst
- Q:	https://patchwork.kernel.org/project/linux-samsung-soc/list/
- B:	mailto:linux-samsung-soc@vger.kernel.org
- C:	irc://irc.libera.chat/linux-exynos
--- 
-2.34.1
+Could it even be that the register offset it not correct for sc8280xp?
 
+Johan
