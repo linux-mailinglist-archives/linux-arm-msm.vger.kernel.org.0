@@ -2,53 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 125FA752FB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 05:10:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F281B752FD3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 05:16:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234660AbjGNDKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 23:10:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36772 "EHLO
+        id S234671AbjGNDQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 23:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233207AbjGNDKQ (ORCPT
+        with ESMTP id S234348AbjGNDQr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 23:10:16 -0400
+        Thu, 13 Jul 2023 23:16:47 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF4C2D79;
-        Thu, 13 Jul 2023 20:10:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0434E269D;
+        Thu, 13 Jul 2023 20:16:47 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C077D61BCE;
-        Fri, 14 Jul 2023 03:10:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8144FC433C7;
-        Fri, 14 Jul 2023 03:10:13 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8EEE261BDC;
+        Fri, 14 Jul 2023 03:16:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168F5C433C8;
+        Fri, 14 Jul 2023 03:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689304214;
-        bh=5BiAHoQrMXVFGK2y88m1p5rxNFrlfm6togR8WBdiPzE=;
+        s=k20201202; t=1689304605;
+        bh=e0i15wf+juQwjhj8xsVBTzQPejbjMVB43hjyJlpR3+w=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d5Z8F0bojb30ftX4eYrtpztZ+E+Q8wDW6CuUkAzohButY0tqtfYyHXJlJnU+LviD/
-         5ppTtiBGE4a/IlzAAejSr1l0hFNhpbdaTC2+EZKecpmHoo6WdEqVRxypxIMSe80KWx
-         7EXZ1taUSLG+ElAxfvWgMXGV2G8rRwnobiobNEN/nofrq3WUN7cu2VTAdyJS2nnwuw
-         ozZ+ln8wMoKPvhM+mLntb6lj1c6e3abuY/8Evj3+yNfIXp/lLW6eRyP8B6p/v9IvZE
-         KNITN8ei36/Z2YSVZ9VLwrk3lS5bJMRH4QTPvTADkyOE2U7NSlUk7lynrncuUrFHQB
-         I3OzJ+KTmOq6A==
-Date:   Thu, 13 Jul 2023 20:13:44 -0700
+        b=UbuR3nTRpwIexQVOtZD4uEfYnY+WDhU0xWsLcySwYa1GkdrJ0mTJ8bAgTQhrWu0dB
+         XM7kY9iIbeSmepk4moiR8ELNTbJSttE7FPQhlcJk2Ljn9bMvB328FdwjK7Ai9oelQM
+         gLJ4PFxHEo0v0PMdftqYlcPg/PylC+gicqBI+xVp5ut13a5FEvCNTBsdM5B3foBRnr
+         WRPF62xlmut6RlOTsm/XAIzerTMZP4Pq7kFpci6jmlaIMucDj1a7/X9ZT06An9XUCs
+         bmqkPp4j7QrtVGqkmDNeglawAR6FNaa0jv8ML3YoODrywmMpmN2mGTOOx7mZR01pmy
+         8Ov6Ye56RZapQ==
+Date:   Thu, 13 Jul 2023 20:20:15 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 08/18] soc: qcom: Move power-domain drivers to the
- genpd dir
-Message-ID: <dapyfjkwlrdyybshbidrpuotz7eqsj27mr6z6rx7qekbps34lh@5swfpbhpzgf6>
-References: <20230711142124.751652-1-ulf.hansson@linaro.org>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: usb: qcom,dwc3: document extcon property
+Message-ID: <k3szwvlfadcymr6yfxln7hsm4vcym6wauglhmkbhekrvnzuqvn@pygu7iybuldl>
+References: <20230712235902.98557-1-david@ixit.cz>
+ <84d88d8b-25a1-9b0f-d779-325d048909b7@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230711142124.751652-1-ulf.hansson@linaro.org>
+In-Reply-To: <84d88d8b-25a1-9b0f-d779-325d048909b7@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -59,18 +62,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 11, 2023 at 04:21:24PM +0200, Ulf Hansson wrote:
-> To simplify with maintenance let's move the qcom power-domain drivers to
-> the new genpd directory. Going forward, patches are intended to be managed
-> through a separate git tree, according to MAINTAINERS.
+On Thu, Jul 13, 2023 at 08:37:55AM +0200, Krzysztof Kozlowski wrote:
+> On 13/07/2023 01:59, David Heidelberg wrote:
+> > The driver has support for it already. Only missing bit is dt-binding entry.
 > 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> No, because the child node already has it. We do not need to extcons for
+> one USB. Also another reason is that it should be deprecated.
+> 
 
-Acked-by: Bjorn Andersson <andersson@kernel.org>
+In the current design of the Linux dwc3 driver we actually need both
+nodes to be extcon targets, as both device drivers needs to react to the
+role change. So I think the patch accurately describes the intended
+design of today.
+
+That said, we do not want to do this for the Type-C case, where we use a
+full port node. Combined with other reasons, we really should fix the
+dwc3 driver model so that the core propagates the role changes to the
+glue drivers, and as such I agree that we shouldn't pick this patch.
 
 Regards,
 Bjorn
