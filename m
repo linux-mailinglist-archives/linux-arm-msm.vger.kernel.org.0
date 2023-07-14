@@ -2,67 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAED2753E61
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 17:04:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 128C4753E6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 17:08:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236306AbjGNPEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 11:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38668 "EHLO
+        id S236064AbjGNPIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 11:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236293AbjGNPEf (ORCPT
+        with ESMTP id S234425AbjGNPIG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 11:04:35 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCD8F2700;
-        Fri, 14 Jul 2023 08:04:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:From:References:To:Subject:MIME-Version:Date:
-        Message-ID:Sender:Reply-To:Cc:Content-ID:Content-Description;
-        bh=qkCLhchmFE6Ae0iC8ZYvyTVa+UOqDTQhu4Aq6+1S4Xw=; b=lBOjZeMIMEUpxXjADFtB3DDa77
-        Sssnp153TrRmreFV3fpKhKKAR9RmFUQ9/sx86lLWLcSt7JvFsYwaS6EmQ4ah9MMlG8HtPhRhcJ15g
-        TbkbeNO1mo6++2ARehIbb7ptpTZ1Kq8snGkUvGhpD4FHJXbE0cDfNYrIgaZ/n+xI0fd8Ym7b105kv
-        S/ktaDSWFC+d9pDEBMJDxwR8OJlZ/wTJ9i/sPeVPc/gD5kZXoVoqPNpr9UFHH1p0Q57kMavNI4tqB
-        +dFoIHzlP8ZzxjophTo2TZSsuZmEIjnWNNAa1rp2hmlGpXNU0hrvmNGFX047YrfCnbxpzkHUUplhV
-        KdH/1tqA==;
-Received: from [2601:1c2:980:9ec0::2764]
-        by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-        id 1qKKL7-006TC1-01;
-        Fri, 14 Jul 2023 15:04:13 +0000
-Message-ID: <ccf1e027-1f36-3dfb-af65-c7eea27c89cb@infradead.org>
-Date:   Fri, 14 Jul 2023 08:04:11 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 1/3] MAINTAINERS: soc: reference maintainer profile
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Conor Dooley <conor@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        Fri, 14 Jul 2023 11:08:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6086F2702;
+        Fri, 14 Jul 2023 08:08:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F349761D48;
+        Fri, 14 Jul 2023 15:08:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591D0C433C7;
+        Fri, 14 Jul 2023 15:08:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689347284;
+        bh=ocPhOzFijupIUUD2Bp7JtiNo8d0/cn/ky2mmjm36hgQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RcszFiUEGzq3FlUItGxNuvKWEHBh1AfacWryEi7hRHmCJ4Fd51i5qSG18fpY+OoNM
+         as8q7Ii0vpGch75W8Tqc5213EyPArf+Um+Ic3cT47a/lfbyL7rwZboh/m/Yyevdc7A
+         erYd1dUsqwryTaIohi60la+dY8EVLXwvJTlf3/tDcE3hlwdSoeKM3xKVKxVxprLoVz
+         Vwh5sXKBmLQuRWFmOgtcaXx7CStoALoolBrdO1aYmDhVU++VNpmTWxtEmLUQ4ZsjAW
+         Yf+8SgCp1dMQb64QanX1u9q8bKDcPQWQBhR/D62RAHmdYAqsuc1naL2IWaDyQE9lqT
+         S+YTUzUN7dfpA==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qKKOr-0004qL-0l;
+        Fri, 14 Jul 2023 17:08:05 +0200
+Date:   Fri, 14 Jul 2023 17:08:05 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Nishanth Menon <nm@ti.com>, linux-riscv@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jonathan Corbet <corbet@lwn.net>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, workflows@vger.kernel.org,
-        linux-doc@vger.kernel.org
-References: <20230714084725.27847-1-krzysztof.kozlowski@linaro.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20230714084725.27847-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCH 1/2] serial: qcom-geni: fix opp vote on shutdown
+Message-ID: <ZLFk1Q0pTfYmB5EU@hovoldconsulting.com>
+References: <20230714130214.14552-1-johan+linaro@kernel.org>
+ <20230714130214.14552-2-johan+linaro@kernel.org>
+ <e99b5975-b770-5460-1ce4-cd4eb1a50291@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e99b5975-b770-5460-1ce4-cd4eb1a50291@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,33 +68,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Jul 14, 2023 at 04:29:08PM +0200, Konrad Dybcio wrote:
+> On 14.07.2023 15:02, Johan Hovold wrote:
+> > The operating-performance-point vote needs to be dropped when shutting
+> > down the port to avoid wasting power by keeping resources like power
+> > domains in an unnecessarily high performance state (e.g. when a UART
+> > connected Bluetooth controller is not in use).
+> > 
+> > Fixes: a5819b548af0 ("tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state")
+> > Cc: stable@vger.kernel.org      # 5.9
+> > Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
+> > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> I don't know a whole lot about this subsystem, but the PM call has
+> a pointer to uport which already contains this clock rate.. Is it
+> zeroed out by the core before we reach it, which would prevent us
+> from reusing it?
 
+No, but this driver has other issues and I couldn't be arsed fixing them
+before addressing this bug.
 
-On 7/14/23 01:47, Krzysztof Kozlowski wrote:
-> Mention the SoC maintainer profile in P: entry.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Specifically that uartclk variable can currently be set by userspace...
 
-Yes, please.
+I'll fix that up next week.
 
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f646ba70a01b..b61289fa7891 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1558,6 +1558,7 @@ M:	Olof Johansson <olof@lixom.net>
->  M:	soc@kernel.org
->  L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
->  S:	Maintained
-> +P:	Documentation/process/maintainer-soc.rst
->  C:	irc://irc.libera.chat/armlinux
->  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git
->  F:	Documentation/process/maintainer-soc.rst
-
--- 
-~Randy
+Johan
