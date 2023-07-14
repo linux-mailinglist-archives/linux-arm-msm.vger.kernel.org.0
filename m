@@ -2,370 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8884F753B84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 15:08:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83042753BDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 15:35:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235880AbjGNNIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 09:08:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
+        id S235704AbjGNNfz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 09:35:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231362AbjGNNIc (ORCPT
+        with ESMTP id S235396AbjGNNfr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 09:08:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65941BF9;
-        Fri, 14 Jul 2023 06:08:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3130B61D1A;
-        Fri, 14 Jul 2023 13:08:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B062FC433C7;
-        Fri, 14 Jul 2023 13:08:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689340109;
-        bh=ZhslqMZHPYic+SukuZQhssKNUTXL/XJqa03gcn9IPzM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IZHLGmXQHIvsXjwttHW1CZXeOyA3iBzL6xm2+ZbyKUFtM6Wby8Df1RYuQ6o3VjGsv
-         3XDpkNUsToRrWllx70Fvo6sdFLQUqIqGkzAVYcr8ruLjcp5iXvAx93XNNqopKyILl4
-         2YFoblAQiSbxw3VQkEwk6KYcjZkq/QkXFvDeiWq6vlc5MlStRQ8DkACFO2271RQ22N
-         K2YzqpVu/1VnMFofIaBYeoAj0teiOixTGUhdvIXoCfbTZotBZtniFNIPvvyS+1bggV
-         1Mdd4ipSSTyK2cIGazTpjtZTOPVHE6BZsOcdhP3WQnclQbRwYHXi++Id2viSO+K3xb
-         +XNE0b3FSmnWA==
-Date:   Fri, 14 Jul 2023 18:38:25 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
-        will@kernel.org, p.zabel@pengutronix.de, arnd@arndb.de,
-        geert+renesas@glider.be, neil.armstrong@linaro.org,
-        nfraprado@collabora.com, rafal@milecki.pl,
-        quic_srichara@quicinc.com, quic_varada@quicinc.org,
-        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v4 3/6] phy: qcom-m31: Introduce qcom,m31 USB phy driver
-Message-ID: <ZLFIya5kH216id2h@matsya>
-References: <cover.1689160067.git.quic_varada@quicinc.com>
- <3a8baa278457c62f24504ab817b7ba5431391394.1689160067.git.quic_varada@quicinc.com>
+        Fri, 14 Jul 2023 09:35:47 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A0A1991
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 06:35:43 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id ca18e2360f4ac-786f25bcb40so76972839f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 06:35:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689341743; x=1691933743;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OrrlpET1J++D0rWn+MEFzbX9FlSrTXFzI92fTxQjI5s=;
+        b=mwlleTSR8yEy1PaS939rfY4GuBWcXyWA0t8fIi9rgz1Pxwi/AZM6vk8gypg4p5WTzN
+         3l7l9N0d2tmi5avur0AIPBn2UGUs0QwvXlI0WKiDqpNWGNJ/AuIXhmjcfFnulgwYWBAA
+         X+49Py+hY3mt+d74cTdPjb5XxMIDZJ0xJyxvcIPsfmzc3pIpDwiuVUjUPq/9aBdv2sNL
+         QoI+5pQVpxo8l97IjqVAlNtXgafrbO+bUDvXxazPH9RnXtHMpi/JyiZD99DxSTx/OM2q
+         aPAjXC4cLsATkJFzSo6W+NX6Z7Gy4rEUMpn2BfcMY5Vc6ahqzi+2o9ykaVuui1QUJkr6
+         nvFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689341743; x=1691933743;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OrrlpET1J++D0rWn+MEFzbX9FlSrTXFzI92fTxQjI5s=;
+        b=eACwWfvGCjOW5rSYs/HLPowuGwt2AJpz29gT07HHh22HiHd9/b04sMOqzr+nJ9Y2hd
+         ymc0Df3pyga4EzL6AYKiMHQSZMRnkLbkaVfatULNQIqkHR0Ew3huNzxldtnzkQrZX2Ti
+         gAEMTIcAE1+0/GstM9gIBcf4MBVpCqJil5Vg6OWx1Mh9PCLdswhOyPskt3gajJfSG5j1
+         IWWAk48TVeujzp3kXZZNAx+Ui0Lp5XNtBLNxTAIR3Drc1UWIV6uIXdCKOWSRIgQAZ4F/
+         4SXJSSycFlburazfOHwQE6jp+PwFj5gSnr47MawsWI5UyjFFNfP6F32O8NYdvww+16jQ
+         JuVA==
+X-Gm-Message-State: ABy/qLY2e2vm6wJ3DfDE9/xoJ16MEMlN26y4MMffUygLVVmjs/kv3Swf
+        2ITcNv4ETu5czkcp4Etnu1ZNOA==
+X-Google-Smtp-Source: APBJJlEoST73Soh2t45u8KhAHwB+dZMgEFJ5zGII3htqmtNMTdG4c4gXQU4m3cr5Uaw+nkupDpxMlA==
+X-Received: by 2002:a6b:3c0c:0:b0:785:ff35:f340 with SMTP id k12-20020a6b3c0c000000b00785ff35f340mr4830684iob.14.1689341743082;
+        Fri, 14 Jul 2023 06:35:43 -0700 (PDT)
+Received: from [172.22.22.28] (c-98-61-227-136.hsd1.mn.comcast.net. [98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id v6-20020a6b5b06000000b007870289f4fdsm2623774ioh.51.2023.07.14.06.35.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Jul 2023 06:35:42 -0700 (PDT)
+Message-ID: <c3a8bb16-7016-c3d6-1cf9-0e56535e51e2@linaro.org>
+Date:   Fri, 14 Jul 2023 08:35:40 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3a8baa278457c62f24504ab817b7ba5431391394.1689160067.git.quic_varada@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v14 01/25] docs: gunyah: Introduce Gunyah Hypervisor
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230613172054.3959700-1-quic_eberman@quicinc.com>
+ <20230613172054.3959700-2-quic_eberman@quicinc.com>
+ <cb1d4b05-26f3-22f5-ce8e-813d255cda8a@linaro.org>
+ <5dc7438c-e161-915c-c037-19c5099a274f@quicinc.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <5dc7438c-e161-915c-c037-19c5099a274f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-07-23, 17:08, Varadarajan Narayanan wrote:
-> Add the M31 USB2 phy driver.
+On 7/3/23 5:41 PM, Elliot Berman wrote:
+>> If it's signaled after every message is sent, does it
+>> indicate that the message has been *received* by VM_B
+>> (versus just received and copied by Gunyah)?
+>>
 > 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v4:
-> 	Remove unused enum
-> 	Error handling for devm_clk_get
-> v1:
-> 	Combine driver, makefile and kconfig into 1 patch
-> 	Remove 'qscratch' region and its usage. The controller driver takes care
-> 	of those settings
-> 	Use compatible/data to handle ipq5332 init
-> 	Drop the default case
-> 	Get resources by index instead of name as there is only one resource
-> 	Add clock
-> 	Fix review comments in the driver
-> ---
->  drivers/phy/qualcomm/Kconfig        |  11 ++
->  drivers/phy/qualcomm/Makefile       |   1 +
->  drivers/phy/qualcomm/phy-qcom-m31.c | 256 ++++++++++++++++++++++++++++++++++++
->  3 files changed, 268 insertions(+)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-m31.c
+> To connect some dots: the Tx vIRQ is fired when the reader reads a 
+> message and the number of messages still in the queue decrements to the 
+> "not full" threshold.
 > 
-> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-> index 97ca595..76be191 100644
-> --- a/drivers/phy/qualcomm/Kconfig
-> +++ b/drivers/phy/qualcomm/Kconfig
-> @@ -197,3 +197,14 @@ config PHY_QCOM_SGMII_ETH
->  	help
->  	  Enable this to support the internal SerDes/SGMII PHY on various
->  	  Qualcomm chipsets.
-> +
-> +config PHY_QCOM_M31_USB
+> https://github.com/quic/gunyah-hypervisor/blob/3d4014404993939f898018cfb1935c2d9bfc2830/hyp/ipc/msgqueue/src/msgqueue_common.c#L142-L148
 
-Sorted alphabetically please
+So the Tx vIRQ on the sender is only fired when the state of the
+receiver's Rx queue goes from "full" to "not full".
 
-> +	tristate "Qualcomm M31 HS PHY driver support"
-> +	depends on (USB || USB_GADGET) && ARCH_QCOM
-> +	select USB_PHY
-> +	help
-> +	  Enable this to support M31 HS PHY transceivers on Qualcomm chips
-> +	  with DWC3 USB core. It handles PHY initialization, clock
-> +	  management required after resetting the hardware and power
-> +	  management. This driver is required even for peripheral only or
-> +	  host only mode configurations.
-> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-> index b030858..0b5dd66 100644
-> --- a/drivers/phy/qualcomm/Makefile
-> +++ b/drivers/phy/qualcomm/Makefile
-> @@ -22,3 +22,4 @@ obj-$(CONFIG_PHY_QCOM_USB_SS)		+= phy-qcom-usb-ss.o
->  obj-$(CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2)+= phy-qcom-snps-femto-v2.o
->  obj-$(CONFIG_PHY_QCOM_IPQ806X_USB)	+= phy-qcom-ipq806x-usb.o
->  obj-$(CONFIG_PHY_QCOM_SGMII_ETH)	+= phy-qcom-sgmii-eth.o
-> +obj-$(CONFIG_PHY_QCOM_M31_USB)		+= phy-qcom-m31.o
+Normally there is no signal sent, and a sender sends messages
+until it gets a "queue full" flag back from a gh_msgq_send()
+call.  At that point it should stop sending, until the Tx vIRQ
+fires to indicate the receiver queue has "room" (fewer than
+the "full threshold" messages are consumed).
 
-this one too
+There is no way (at this layer of the protocol) to tell whether
+a given message has been *received*, only that it has been *sent*
+(meaning the hypervisor has accepted it).  And Gunyah provides
+reliable delivery (each message received in send order, exactly
+once).
 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
-> new file mode 100644
-> index 0000000..fd568ef
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-m31.c
-> @@ -0,0 +1,256 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Copyright (c) 2014-2016, 2020, The Linux Foundation. All rights reserved.
-> + */
+Now that I re-read what you said it makes sense and I guess I
+just misunderstood.  There *might* be a way to reword slightly
+to prevent any misinterpretation.
 
-we are in 2023
+Thanks.
 
-> +
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/reset.h>
-> +#include <linux/slab.h>
-> +#include <linux/usb/of.h>
-> +#include <linux/usb/phy.h>
-> +
-> +#define USB2PHY_PORT_UTMI_CTRL1		0x40
-> +
-> +#define USB2PHY_PORT_UTMI_CTRL2		0x44
-> + #define UTMI_ULPI_SEL			BIT(7)
-> + #define UTMI_TEST_MUX_SEL		BIT(6)
-> +
-> +#define HS_PHY_CTRL_REG			0x10
-> + #define UTMI_OTG_VBUS_VALID		BIT(20)
-> + #define SW_SESSVLD_SEL			BIT(28)
-> +
-> +#define USB_PHY_UTMI_CTRL0		0x3c
-> +
-> +#define USB_PHY_UTMI_CTRL5		0x50
-> + #define POR_EN				BIT(1)
-> + #define ATERESET			~BIT(0)
-
-??
-
-> +
-> +#define USB_PHY_HS_PHY_CTRL_COMMON0	0x54
-> + #define COMMONONN			BIT(7)
-> + #define FSEL				BIT(4)
-> + #define RETENABLEN			BIT(3)
-> + #define FREQ_24MHZ			(5 << 4)
-
-Use GENMASK for these
-
-> +
-> +#define USB_PHY_HS_PHY_CTRL2		0x64
-> + #define USB2_SUSPEND_N_SEL		BIT(3)
-> + #define USB2_SUSPEND_N			BIT(2)
-> + #define USB2_UTMI_CLK_EN		BIT(1)
-> +
-> +#define USB_PHY_CFG0			0x94
-> + #define UTMI_PHY_OVERRIDE_EN		BIT(1)
-> +
-> +#define USB_PHY_REFCLK_CTRL		0xa0
-> + #define CLKCORE			BIT(1)
-> +
-> +#define USB2PHY_PORT_POWERDOWN		0xa4
-> + #define POWER_UP			BIT(0)
-> + #define POWER_DOWN			0
-> +
-> +#define USB_PHY_FSEL_SEL		0xb8
-> + #define FREQ_SEL			BIT(0)
-> +
-> +#define USB2PHY_USB_PHY_M31_XCFGI_1	0xbc
-> + #define USB2_0_TX_ENABLE		BIT(2)
-> +
-> +#define USB2PHY_USB_PHY_M31_XCFGI_4	0xc8
-> + #define HSTX_SLEW_RATE_565PS		GENMASK(1, 0)
-> + #define PLL_CHARGING_PUMP_CURRENT_35UA	GENMASK(4, 3)
-> + #define ODT_VALUE_38_02_OHM		GENMASK(7, 6)
-> +
-> +#define USB2PHY_USB_PHY_M31_XCFGI_5	0xcc
-> + #define ODT_VALUE_45_02_OHM		BIT(2)
-> + #define HSTX_PRE_EMPHASIS_LEVEL_0_55MA	BIT(0)
-> +
-> +#define USB2PHY_USB_PHY_M31_XCFGI_11	0xe4
-> + #define XCFG_COARSE_TUNE_NUM		BIT(1)
-> + #define XCFG_FINE_TUNE_NUM		BIT(3)
-> +
-> +struct m31_phy_regs {
-> +	u32 off;
-> +	u32 val;
-> +	u32 delay;
-> +};
-> +
-> +struct m31_priv_data {
-> +	bool				ulpi_mode;
-> +	const struct m31_phy_regs	*regs;
-> +};
-> +
-> +#define M31_REG(__o, __v, __d)	\
-> +	{ .off = __o, .val = __v, .delay = __d }
-> +
-> +#define M31_REG_INVALID			0xffffffffu
-> +
-> +struct m31_phy_regs m31_ipq5332_regs[] = {
-> +	M31_REG(USB_PHY_CFG0, UTMI_PHY_OVERRIDE_EN, 0),
-> +	M31_REG(USB_PHY_UTMI_CTRL5, POR_EN, 15),
-> +	M31_REG(USB_PHY_FSEL_SEL, FREQ_SEL, 0),
-> +	M31_REG(USB_PHY_HS_PHY_CTRL_COMMON0,
-> +		COMMONONN | FREQ_24MHZ | RETENABLEN, 0),
-> +	M31_REG(USB_PHY_UTMI_CTRL5, POR_EN & ATERESET, 0),
-> +	M31_REG(USB_PHY_HS_PHY_CTRL2,
-> +		USB2_SUSPEND_N_SEL | USB2_SUSPEND_N | USB2_UTMI_CLK_EN, 0),
-> +	M31_REG(USB2PHY_USB_PHY_M31_XCFGI_11,
-> +		XCFG_COARSE_TUNE_NUM  | XCFG_FINE_TUNE_NUM, 0),
-> +	M31_REG(USB2PHY_USB_PHY_M31_XCFGI_4,
-> +		HSTX_SLEW_RATE_565PS | PLL_CHARGING_PUMP_CURRENT_35UA |
-> +		ODT_VALUE_38_02_OHM, 0),
-> +	M31_REG(USB2PHY_USB_PHY_M31_XCFGI_1, USB2_0_TX_ENABLE, 0),
-> +	M31_REG(USB2PHY_USB_PHY_M31_XCFGI_5,
-> +		ODT_VALUE_45_02_OHM | HSTX_PRE_EMPHASIS_LEVEL_0_55MA, 4),
-> +	M31_REG(USB_PHY_UTMI_CTRL5, 0x0, 0),
-> +	M31_REG(USB_PHY_HS_PHY_CTRL2, USB2_SUSPEND_N | USB2_UTMI_CLK_EN, 0),
-> +	M31_REG(M31_REG_INVALID, 0, 0),
-> +};
-> +
-> +struct m31usb_phy {
-> +	struct usb_phy			phy;
-> +	void __iomem			*base;
-> +	const struct m31_phy_regs	*regs;
-> +
-> +	struct clk			*cfg_ahb_clk;
-> +	struct reset_control		*phy_reset;
-> +
-> +	bool				cable_connected;
-> +	bool				suspended;
-> +	bool				ulpi_mode;
-> +};
-> +
-> +static void m31usb_phy_enable_clock(struct m31usb_phy *qphy)
-> +{
-> +	const struct m31_phy_regs *regs = qphy->regs;
-> +
-> +	for (; regs->off != M31_REG_INVALID; regs++) {
-
-why have last entry as invalid and check that, this is an array so you
-can use ARRAY_SIZE to define the count of regs
-
-> +		writel(regs->val, qphy->base + regs->off);
-> +		if (regs->delay)
-> +			udelay(regs->delay);
-> +	}
-> +}
-> +
-> +static int m31usb_phy_init(struct usb_phy *phy)
-> +{
-> +	int ret;
-> +	struct m31usb_phy *qphy = container_of(phy, struct m31usb_phy, phy);
-> +
-> +	ret = clk_prepare_enable(qphy->cfg_ahb_clk);
-> +	if (ret) {
-> +		dev_err(phy->dev, "failed to enable cfg ahb clock, %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	/* Perform phy reset */
-> +	reset_control_assert(qphy->phy_reset);
-> +	udelay(5);
-> +	reset_control_deassert(qphy->phy_reset);
-> +
-> +	/* configure for ULPI mode if requested */
-> +	if (qphy->ulpi_mode)
-> +		writel(0x0, qphy->base + USB2PHY_PORT_UTMI_CTRL2);
-> +
-> +	/* Enable the PHY */
-> +	writel(POWER_UP, qphy->base + USB2PHY_PORT_POWERDOWN);
-> +
-> +	/* Make sure above write completed */
-> +	wmb();
-> +
-> +	/* Turn on phy ref clock */
-> +	m31usb_phy_enable_clock(qphy);
-> +
-> +	return 0;
-> +}
-> +
-> +static void m31usb_phy_shutdown(struct usb_phy *phy)
-> +{
-> +	struct m31usb_phy *qphy = container_of(phy, struct m31usb_phy, phy);
-> +
-> +	/* Disable the PHY */
-> +	writel_relaxed(POWER_DOWN, qphy->base + USB2PHY_PORT_POWERDOWN);
-> +	/* Make sure above write completed */
-> +	wmb();
-> +
-> +	clk_disable_unprepare(qphy->cfg_ahb_clk);
-> +}
-> +
-> +static int m31usb_phy_probe(struct platform_device *pdev)
-> +{
-> +	const struct m31_priv_data *data;
-> +	struct device *dev = &pdev->dev;
-> +	struct m31usb_phy *qphy;
-> +	int ret;
-> +
-> +	qphy = devm_kzalloc(dev, sizeof(*qphy), GFP_KERNEL);
-> +	if (!qphy)
-> +		return -ENOMEM;
-> +
-> +	qphy->phy.dev = dev;
-> +
-> +	qphy->base = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(qphy->base))
-> +		return PTR_ERR(qphy->base);
-> +
-> +	qphy->phy_reset = devm_reset_control_get_exclusive_by_index(dev, 0);
-> +	if (IS_ERR(qphy->phy_reset))
-> +		return PTR_ERR(qphy->phy_reset);
-> +
-> +	qphy->cfg_ahb_clk = devm_clk_get(dev, "cfg_ahb");
-> +	if (IS_ERR(qphy->cfg_ahb_clk)) {
-> +		ret = PTR_ERR(qphy->cfg_ahb_clk);
-> +		dev_err(dev, "failed to get cfg_ahb clock, %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	platform_set_drvdata(pdev, qphy);
-> +
-> +	data = of_device_get_match_data(dev);
-> +	qphy->regs = data->regs;
-> +	qphy->ulpi_mode = data->ulpi_mode;
-> +
-> +	qphy->phy.label			= "m31-usb-phy";
-> +	qphy->phy.init			= m31usb_phy_init;
-> +	qphy->phy.shutdown		= m31usb_phy_shutdown;
-> +	qphy->phy.type			= USB_PHY_TYPE_USB2;
-> +
-> +	ret = usb_add_phy_dev(&qphy->phy);
-
-why usb and not devm_phy_create()? It should be generic phy here
-
--- 
-~Vinod
+					-Alex
