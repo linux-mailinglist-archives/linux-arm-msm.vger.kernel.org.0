@@ -2,133 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83042753BDE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 15:35:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3F15753C58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 15:59:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235704AbjGNNfz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 09:35:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40890 "EHLO
+        id S235936AbjGNN7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 09:59:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235396AbjGNNfr (ORCPT
+        with ESMTP id S235900AbjGNN7L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 09:35:47 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A0A1991
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 06:35:43 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id ca18e2360f4ac-786f25bcb40so76972839f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 06:35:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689341743; x=1691933743;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OrrlpET1J++D0rWn+MEFzbX9FlSrTXFzI92fTxQjI5s=;
-        b=mwlleTSR8yEy1PaS939rfY4GuBWcXyWA0t8fIi9rgz1Pxwi/AZM6vk8gypg4p5WTzN
-         3l7l9N0d2tmi5avur0AIPBn2UGUs0QwvXlI0WKiDqpNWGNJ/AuIXhmjcfFnulgwYWBAA
-         X+49Py+hY3mt+d74cTdPjb5XxMIDZJ0xJyxvcIPsfmzc3pIpDwiuVUjUPq/9aBdv2sNL
-         QoI+5pQVpxo8l97IjqVAlNtXgafrbO+bUDvXxazPH9RnXtHMpi/JyiZD99DxSTx/OM2q
-         aPAjXC4cLsATkJFzSo6W+NX6Z7Gy4rEUMpn2BfcMY5Vc6ahqzi+2o9ykaVuui1QUJkr6
-         nvFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689341743; x=1691933743;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OrrlpET1J++D0rWn+MEFzbX9FlSrTXFzI92fTxQjI5s=;
-        b=eACwWfvGCjOW5rSYs/HLPowuGwt2AJpz29gT07HHh22HiHd9/b04sMOqzr+nJ9Y2hd
-         ymc0Df3pyga4EzL6AYKiMHQSZMRnkLbkaVfatULNQIqkHR0Ew3huNzxldtnzkQrZX2Ti
-         gAEMTIcAE1+0/GstM9gIBcf4MBVpCqJil5Vg6OWx1Mh9PCLdswhOyPskt3gajJfSG5j1
-         IWWAk48TVeujzp3kXZZNAx+Ui0Lp5XNtBLNxTAIR3Drc1UWIV6uIXdCKOWSRIgQAZ4F/
-         4SXJSSycFlburazfOHwQE6jp+PwFj5gSnr47MawsWI5UyjFFNfP6F32O8NYdvww+16jQ
-         JuVA==
-X-Gm-Message-State: ABy/qLY2e2vm6wJ3DfDE9/xoJ16MEMlN26y4MMffUygLVVmjs/kv3Swf
-        2ITcNv4ETu5czkcp4Etnu1ZNOA==
-X-Google-Smtp-Source: APBJJlEoST73Soh2t45u8KhAHwB+dZMgEFJ5zGII3htqmtNMTdG4c4gXQU4m3cr5Uaw+nkupDpxMlA==
-X-Received: by 2002:a6b:3c0c:0:b0:785:ff35:f340 with SMTP id k12-20020a6b3c0c000000b00785ff35f340mr4830684iob.14.1689341743082;
-        Fri, 14 Jul 2023 06:35:43 -0700 (PDT)
-Received: from [172.22.22.28] (c-98-61-227-136.hsd1.mn.comcast.net. [98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id v6-20020a6b5b06000000b007870289f4fdsm2623774ioh.51.2023.07.14.06.35.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Jul 2023 06:35:42 -0700 (PDT)
-Message-ID: <c3a8bb16-7016-c3d6-1cf9-0e56535e51e2@linaro.org>
-Date:   Fri, 14 Jul 2023 08:35:40 -0500
+        Fri, 14 Jul 2023 09:59:11 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91EE426B5;
+        Fri, 14 Jul 2023 06:59:06 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36EBrE9l028598;
+        Fri, 14 Jul 2023 13:58:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=RKiLvVyTbirgw09WubHCuDGi667YE5Ck8Aegz+gLNbk=;
+ b=Al2Dhd4xiOamIye89agaIWhnNhc/BlrNT7N3XJa4RqaMarZvbamrlnv52XUB6S8oAOfB
+ 0RKpRZRbDKII9zSuqE4UpBU80qiieWFSb0qk75O/ihlKjM7UXjlPRDKbd0whSI5qleSK
+ 1DaKLX4r2hAxO6MfHJVm+GJ2HlRg1+/EhPck6s/Ft4rP+cxzDXSm/01eo3taVy42tjSi
+ Y2/tSKc82lZOallt1HERDil5XoOd2+6uGMYjpDg70DlJRKWYhfaBQ+9Z0ZSOVRvQ7sE5
+ YQ1Qu2dYhdo5NrNC/NixI0viBZiB6P42+wsocoujQD3bld14zVdt+/Qjo9lwDdk5oruY 9A== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rtpuksum6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Jul 2023 13:58:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36EDwaIP008960
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Jul 2023 13:58:36 GMT
+Received: from [10.216.8.198] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 14 Jul
+ 2023 06:58:29 -0700
+Message-ID: <99084f51-f156-664b-cd69-51bf224674ac@quicinc.com>
+Date:   Fri, 14 Jul 2023 19:28:24 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v14 01/25] docs: gunyah: Introduce Gunyah Hypervisor
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2] firmware: qcom_scm: use the SCM_CONVENTION based on
+ ARM / ARM64
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230613172054.3959700-1-quic_eberman@quicinc.com>
- <20230613172054.3959700-2-quic_eberman@quicinc.com>
- <cb1d4b05-26f3-22f5-ce8e-813d255cda8a@linaro.org>
- <5dc7438c-e161-915c-c037-19c5099a274f@quicinc.com>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <5dc7438c-e161-915c-c037-19c5099a274f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Elliot Berman <eberman@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <quic_eberman@quicinc.com>, <stable@vger.kernel.org>
+References: <20230607045345.25049-1-quic_kathirav@quicinc.com>
+ <2f915104-952f-3e3d-b3d5-4c0400b4f331@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <2f915104-952f-3e3d-b3d5-4c0400b4f331@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: fzRa-E1oNp2sYMYiiNvpk4tNU_tm9ao7
+X-Proofpoint-GUID: fzRa-E1oNp2sYMYiiNvpk4tNU_tm9ao7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-14_06,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1011 bulkscore=0
+ phishscore=0 suspectscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307140126
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/3/23 5:41 PM, Elliot Berman wrote:
->> If it's signaled after every message is sent, does it
->> indicate that the message has been *received* by VM_B
->> (versus just received and copied by Gunyah)?
+
+On 6/20/2023 11:43 AM, Kathiravan T wrote:
+>
+> On 6/7/2023 10:23 AM, Kathiravan T wrote:
+>> During SCM probe, to identify the SCM convention, scm call is made with
+>> SMC_CONVENTION_ARM_64 followed by SMC_CONVENTION_ARM_32. Based on the
+>> result what convention to be used is decided.
 >>
-> 
-> To connect some dots: the Tx vIRQ is fired when the reader reads a 
-> message and the number of messages still in the queue decrements to the 
-> "not full" threshold.
-> 
-> https://github.com/quic/gunyah-hypervisor/blob/3d4014404993939f898018cfb1935c2d9bfc2830/hyp/ipc/msgqueue/src/msgqueue_common.c#L142-L148
+>> IPQ chipsets starting from IPQ807x, supports both 32bit and 64bit kernel
+>> variants, however TZ firmware runs in 64bit mode. When running on 32bit
+>> kernel, scm call is made with SMC_CONVENTION_ARM_64 is causing the
+>> system crash, due to the difference in the register sets between ARM and
+>> AARCH64, which is accessed by the TZ.
+>>
+>> To avoid this, use SMC_CONVENTION_ARM_64 only on ARM64 builds.
+>
+>
+> Gentle Reminder...
 
-So the Tx vIRQ on the sender is only fired when the state of the
-receiver's Rx queue goes from "full" to "not full".
 
-Normally there is no signal sent, and a sender sends messages
-until it gets a "queue full" flag back from a gh_msgq_send()
-call.  At that point it should stop sending, until the Tx vIRQ
-fires to indicate the receiver queue has "room" (fewer than
-the "full threshold" messages are consumed).
+Bjorn,
 
-There is no way (at this layer of the protocol) to tell whether
-a given message has been *received*, only that it has been *sent*
-(meaning the hypervisor has accepted it).  And Gunyah provides
-reliable delivery (each message received in send order, exactly
-once).
+Can you share your thoughts on this patch?
 
-Now that I re-read what you said it makes sense and I guess I
-just misunderstood.  There *might* be a way to reword slightly
-to prevent any misinterpretation.
 
-Thanks.
+Thanks, Kathiravan T.
 
-					-Alex
+
+>
+>
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC 
+>> and legacy conventions")
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+>> Changes in V2:
+>>     - Added the Fixes tag and cc'd stable mailing list
+>>
+>>   drivers/firmware/qcom_scm.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index fde33acd46b7..db6754db48a0 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -171,6 +171,7 @@ static enum qcom_scm_convention 
+>> __get_convention(void)
+>>       if (likely(qcom_scm_convention != SMC_CONVENTION_UNKNOWN))
+>>           return qcom_scm_convention;
+>>   +#if IS_ENABLED(CONFIG_ARM64)
+>>       /*
+>>        * Device isn't required as there is only one argument - no device
+>>        * needed to dma_map_single to secure world
+>> @@ -191,6 +192,7 @@ static enum qcom_scm_convention 
+>> __get_convention(void)
+>>           forced = true;
+>>           goto found;
+>>       }
+>> +#endif
+>>         probed_convention = SMC_CONVENTION_ARM_32;
+>>       ret = __scm_smc_call(NULL, &desc, probed_convention, &res, true);
