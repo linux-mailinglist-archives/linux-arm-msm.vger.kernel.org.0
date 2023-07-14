@@ -2,101 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9C17753FB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 18:18:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53D2F7540EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 19:46:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235663AbjGNQSK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 12:18:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48700 "EHLO
+        id S236300AbjGNRom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 13:44:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235771AbjGNQSI (ORCPT
+        with ESMTP id S236210AbjGNRo3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 12:18:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A279E2707;
-        Fri, 14 Jul 2023 09:18:07 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36ECxOS9021618;
-        Fri, 14 Jul 2023 16:17:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=e6r0TRgzqXyjI0fqkjeUdWf0X1fscclvLj1znvXwemE=;
- b=ADc2PSuMvGyk0xnbVrEkl5PCFzVNMMCzkWCeyc+ymNMBE7ttUW4YPTmWBdaT37wJLsDk
- ZJnF/0xlVaB1f5Iu7qAPKUGwyQTT5uhXwwskcRxkX5ge9/oTKqbp4QM23b9MAu/FfD8U
- t+5qPDZ1gykiqbfOxZkFTgrTlG0x22J8PNX4zChsBYpty2vM/7J2E7kQC+XGCaF/Wdtd
- DSuM118qm9RVCOR6c8VxjKMUOU1UdWgdEXDyBpPtRzFkzk4ymu8UNRemzQgymm9rX9j9
- Ari3LBeU+YGGinXRmM0weY/XU+/wE8terfgfHSdOYtJ8e7LcYQqB4nSjtSSdXC2Grfxq VQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rtpukt6sa-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 14 Jul 2023 16:17:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36EGHei5023085
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 14 Jul 2023 16:17:40 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 14 Jul
- 2023 09:17:40 -0700
-Message-ID: <8482922f-ac4a-32ed-8900-cd5c6191e552@quicinc.com>
-Date:   Fri, 14 Jul 2023 10:17:39 -0600
+        Fri, 14 Jul 2023 13:44:29 -0400
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D67933A82;
+        Fri, 14 Jul 2023 10:44:21 -0700 (PDT)
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3476d0b5295so9349635ab.1;
+        Fri, 14 Jul 2023 10:44:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689356661; x=1691948661;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=okCesB8vq0x8U1gsD/TWacF0WVO1m+nFy/8yiC3iifs=;
+        b=CQ1LlXAjDoaXd37VCFb0rAHw1Q36UVIP9Bh40ePh0xfiFa3+a+caylf2rGA49QS+oZ
+         yDL4PIBKTV+BP/fJyG3MzDNwmDGBHjFWDXn/k7TKAw2N7jwlQ0ogNMBshkkKTs+C2zW/
+         FshMEvcJN6U2rz6Tju3qmSwujreiesVZAAeY+57+okbmGoS+K0I7GdMptiIsJvPLQ5+K
+         PjS7fYbG0HEef0Bi5ue8XKxjGpjG1YG5sFkSKVSJQ9rACMSeSzCPlLQlM9oRtAbsgYP+
+         HlzXsI2UomPFBHllNBso7hxIv8hZ4fdg1YS7XhHDl40Ozc1vjNlCzvU0x4xIhcM9c3tM
+         jAsA==
+X-Gm-Message-State: ABy/qLZOKam16XTnSmlav+kiCDUZD9JookFtc/UrxLVujhDlQx3yNmEi
+        JkPHQ8DGKfNj7yUb7C858g==
+X-Google-Smtp-Source: APBJJlFC2jC+f9N75sk1i5bkaRbQnatr5CTlxojDWcK0dyUdA9EdNzmSrILtuG0RK4PvsUULof8+BQ==
+X-Received: by 2002:a92:dc09:0:b0:345:e5ab:e177 with SMTP id t9-20020a92dc09000000b00345e5abe177mr4830492iln.9.1689356660838;
+        Fri, 14 Jul 2023 10:44:20 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id o14-20020a02cc2e000000b0042acf389acesm2580556jap.71.2023.07.14.10.44.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jul 2023 10:44:20 -0700 (PDT)
+Received: (nullmailer pid 4054150 invoked by uid 1000);
+        Fri, 14 Jul 2023 17:44:18 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
+Subject: [PATCH] cpufreq: Explicitly include correct DT includes
+Date:   Fri, 14 Jul 2023 11:44:13 -0600
+Message-Id: <20230714174414.4054011-1-robh@kernel.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 5/5 v4] accel/qaic: Fix a leak in map_user_pages()
-Content-Language: en-US
-To:     Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Dan Carpenter <dan.carpenter@linaro.org>
-CC:     Carl Vanderlip <quic_carlv@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <kernel-janitors@vger.kernel.org>
-References: <ZK0Q+ZuONTsBG+1T@moroto>
- <f4c35b9b-68a2-1e9e-762a-b1001c495f01@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <f4c35b9b-68a2-1e9e-762a-b1001c495f01@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: X3h7yO552nBI61ryV21eptswdh8imkLU
-X-Proofpoint-GUID: X3h7yO552nBI61ryV21eptswdh8imkLU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-14_07,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 bulkscore=0
- phishscore=0 suspectscore=0 mlxlogscore=763 priorityscore=1501 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307140148
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/14/2023 5:47 AM, Pranjal Ramajor Asha Kanojiya wrote:
-> 
-> 
-> On 7/11/2023 1:51 PM, Dan Carpenter wrote:
->> If get_user_pages_fast() allocates some pages but not as many as we
->> wanted, then the current code leaks those pages.  Call put_page() on
->> the pages before returning.
->>
->> Fixes: 129776ac2e38 ("accel/qaic: Add control path")
->> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-> 
-> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+The DT of_device.h and of_platform.h date back to the separate
+of_platform_bus_type before it as merged into the regular platform bus.
+As part of that merge prepping Arm DT support 13 years ago, they
+"temporarily" include each other. They also include platform_device.h
+and of.h. As a result, there's a pretty much random mix of those include
+files used throughout the tree. In order to detangle these headers and
+replace the implicit includes with struct declarations, users need to
+explicitly include the correct includes.
 
-Pushed to drm-misc-fixes
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ drivers/cpufreq/armada-37xx-cpufreq.c  | 4 +---
+ drivers/cpufreq/mediatek-cpufreq-hw.c  | 3 ++-
+ drivers/cpufreq/ppc_cbe_cpufreq.c      | 2 +-
+ drivers/cpufreq/ppc_cbe_cpufreq_pmi.c  | 1 -
+ drivers/cpufreq/qcom-cpufreq-nvmem.c   | 1 -
+ drivers/cpufreq/scpi-cpufreq.c         | 2 +-
+ drivers/cpufreq/sti-cpufreq.c          | 2 +-
+ drivers/cpufreq/ti-cpufreq.c           | 2 +-
+ drivers/cpufreq/vexpress-spc-cpufreq.c | 1 -
+ 9 files changed, 7 insertions(+), 11 deletions(-)
 
--Jeff
+diff --git a/drivers/cpufreq/armada-37xx-cpufreq.c b/drivers/cpufreq/armada-37xx-cpufreq.c
+index b74289a95a17..bea41ccabf1f 100644
+--- a/drivers/cpufreq/armada-37xx-cpufreq.c
++++ b/drivers/cpufreq/armada-37xx-cpufreq.c
+@@ -14,10 +14,8 @@
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/mfd/syscon.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
+-#include <linux/of_device.h>
+-#include <linux/of_irq.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
+ #include <linux/regmap.h>
+diff --git a/drivers/cpufreq/mediatek-cpufreq-hw.c b/drivers/cpufreq/mediatek-cpufreq-hw.c
+index b22f5cc8a463..c93e14eb6221 100644
+--- a/drivers/cpufreq/mediatek-cpufreq-hw.c
++++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
+@@ -10,8 +10,9 @@
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
++#include <linux/of.h>
+ #include <linux/of_platform.h>
++#include <linux/platform_device.h>
+ #include <linux/slab.h>
+ 
+ #define LUT_MAX_ENTRIES			32U
+diff --git a/drivers/cpufreq/ppc_cbe_cpufreq.c b/drivers/cpufreq/ppc_cbe_cpufreq.c
+index e3313ce63b38..88afc49941b7 100644
+--- a/drivers/cpufreq/ppc_cbe_cpufreq.c
++++ b/drivers/cpufreq/ppc_cbe_cpufreq.c
+@@ -9,7 +9,7 @@
+ 
+ #include <linux/cpufreq.h>
+ #include <linux/module.h>
+-#include <linux/of_platform.h>
++#include <linux/of.h>
+ 
+ #include <asm/machdep.h>
+ #include <asm/cell-regs.h>
+diff --git a/drivers/cpufreq/ppc_cbe_cpufreq_pmi.c b/drivers/cpufreq/ppc_cbe_cpufreq_pmi.c
+index 4fba3637b115..6f0c32592416 100644
+--- a/drivers/cpufreq/ppc_cbe_cpufreq_pmi.c
++++ b/drivers/cpufreq/ppc_cbe_cpufreq_pmi.c
+@@ -11,7 +11,6 @@
+ #include <linux/types.h>
+ #include <linux/timer.h>
+ #include <linux/init.h>
+-#include <linux/of_platform.h>
+ #include <linux/pm_qos.h>
+ #include <linux/slab.h>
+ 
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index a88b6fe5db50..4590c2570086 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -22,7 +22,6 @@
+ #include <linux/module.h>
+ #include <linux/nvmem-consumer.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_opp.h>
+diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
+index fd2c16821d54..ac719aca49b7 100644
+--- a/drivers/cpufreq/scpi-cpufreq.c
++++ b/drivers/cpufreq/scpi-cpufreq.c
+@@ -14,7 +14,7 @@
+ #include <linux/cpumask.h>
+ #include <linux/export.h>
+ #include <linux/module.h>
+-#include <linux/of_platform.h>
++#include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
+ #include <linux/scpi_protocol.h>
+ #include <linux/slab.h>
+diff --git a/drivers/cpufreq/sti-cpufreq.c b/drivers/cpufreq/sti-cpufreq.c
+index 1a63aeea8711..9c542e723a15 100644
+--- a/drivers/cpufreq/sti-cpufreq.c
++++ b/drivers/cpufreq/sti-cpufreq.c
+@@ -13,7 +13,7 @@
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/of_platform.h>
++#include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
+ #include <linux/regmap.h>
+ 
+diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
+index d5cd2fd25cad..3c37d7899660 100644
+--- a/drivers/cpufreq/ti-cpufreq.c
++++ b/drivers/cpufreq/ti-cpufreq.c
+@@ -12,7 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/of.h>
+-#include <linux/of_platform.h>
++#include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+diff --git a/drivers/cpufreq/vexpress-spc-cpufreq.c b/drivers/cpufreq/vexpress-spc-cpufreq.c
+index d295f405c4bb..865e50164803 100644
+--- a/drivers/cpufreq/vexpress-spc-cpufreq.c
++++ b/drivers/cpufreq/vexpress-spc-cpufreq.c
+@@ -18,7 +18,6 @@
+ #include <linux/device.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+-#include <linux/of_platform.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_opp.h>
+ #include <linux/slab.h>
+-- 
+2.40.1
+
