@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 620217535F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 11:00:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C10D875360A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 11:06:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235119AbjGNJAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 05:00:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36030 "EHLO
+        id S235109AbjGNJGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 05:06:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234906AbjGNJAe (ORCPT
+        with ESMTP id S234562AbjGNJGc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 05:00:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEA3130CA;
-        Fri, 14 Jul 2023 02:00:12 -0700 (PDT)
+        Fri, 14 Jul 2023 05:06:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE1D330E9;
+        Fri, 14 Jul 2023 02:06:04 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7602961CA0;
-        Fri, 14 Jul 2023 09:00:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9B3C433C8;
-        Fri, 14 Jul 2023 09:00:02 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 301E961CBD;
+        Fri, 14 Jul 2023 09:05:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849BBC433C7;
+        Fri, 14 Jul 2023 09:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689325202;
-        bh=M+6EvDk/Rt4bEptAaw3filSWo8oszwa49cRXibShMp0=;
+        s=k20201202; t=1689325543;
+        bh=WvoBK4BO8pPPux6zd3qw6bxteYzOyTTKLiAplHoONqg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=b/5YIdHpk6iQnyFpJJm8fmDHJOV5ekpEpxSmE819bdc9KK+uVXEqt8ZEenpPKWsAr
-         RsxwFFn5yW3t9lV7smxTnmT52KMeXc+y8jp8qPaa7obpdaAl/SqlUR0+Q/0Teh+NHx
-         cyTSic5nmDWE2jklk1kRcMgKTsbWPHUkmOzmU3mpEf57rfh7e2LBC+Y6nKSQgO2uov
-         4oZM54Vd/XJcxTXnoKLxZ80FtL53TV4k3+NQ+cDifa3AUxzMyqQLS2x37NG++bW+U0
-         01rFz5U/g5FXY5YdkT13k3onhrxMont3rL7vG8GQ4wjh+IUTNJ0Mm1JYq+XSdV+Q7y
-         pqrreFIDmL0xQ==
+        b=oYQOx+Bf0l+WC841uAxl+EmnmXnIWq6H+9fTX5BHU8AjkSu6g7L7b+35oANMDJ728
+         nF07kgeXFpmztoS8zKDGp2Mz27GCeCt7JKD3hff8XA2o0mBZk4Nge8EXeaoSA0qqDd
+         qNhuCMiEmA07Rm3MnKJy4sU6OriXo4GOhrwjDy9Ec9Pc5KjCTBevCk0VOxFNM3CYsD
+         ptVnuN5pjFgKZDeLU1O5hmNDvs7hmiq9gVknilZkJs2L9wKbYIskaGlSsxtuIOsPB1
+         F2Cf3t/QymtdnWVbbWqiqcXn3WoABZ99gxrxT+xscG187m1AvLnsv/Pm4NX2dphzmo
+         xUI0zL6JveEkw==
 Received: from johan by xi.lan with local (Exim 4.96)
         (envelope-from <johan@kernel.org>)
-        id 1qKEeh-0006YD-1X;
-        Fri, 14 Jul 2023 11:00:03 +0200
-Date:   Fri, 14 Jul 2023 11:00:03 +0200
+        id 1qKEkC-0006bZ-0a;
+        Fri, 14 Jul 2023 11:05:44 +0200
+Date:   Fri, 14 Jul 2023 11:05:44 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
-Message-ID: <ZLEOk-9VImJNHYHa@hovoldconsulting.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
- <ZJsDpqttBYtbQ0yg@hovoldconsulting.com>
- <26ae15d1-4e13-3ab7-6844-3a7d3ed03af4@quicinc.com>
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v9 06/10] usb: dwc3: qcom: Add support to read IRQ's
+ related to multiport
+Message-ID: <ZLEP6Ekh3unSTiCL@hovoldconsulting.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-7-quic_kriskura@quicinc.com>
+ <ZK6YrLMn9r39zEeB@hovoldconsulting.com>
+ <ef29e520-7b9c-f581-e70a-250df80d3821@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <26ae15d1-4e13-3ab7-6844-3a7d3ed03af4@quicinc.com>
+In-Reply-To: <ef29e520-7b9c-f581-e70a-250df80d3821@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -75,44 +76,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 03, 2023 at 12:35:48AM +0530, Krishna Kurapati PSSNV wrote:
-> On 6/27/2023 9:13 PM, Johan Hovold wrote:
-> > On Wed, Jun 07, 2023 at 02:16:37PM +0200, Johan Hovold wrote:
-> >> On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
-
-> >>> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
-> >>> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> >>> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
-> >>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> >>> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
-> >>> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> >>> +			dev_err(qcom->dev, "HS-PHY%d not in L2\n", i);
-> >>> +	}
+On Wed, Jul 12, 2023 at 11:56:33PM +0530, Krishna Kurapati PSSNV wrote:
+> On 7/12/2023 5:42 PM, Johan Hovold wrote:
+> > On Wed, Jun 21, 2023 at 10:06:24AM +0530, Krishna Kurapati wrote:
+> >> Add support to read Multiport IRQ's related to quad port controller
+> >> of SA8295 Device.
+> >>
+> >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> >> ---
+> >>   drivers/usb/dwc3/dwc3-qcom.c | 108 +++++++++++++++++++++++++++++------
+> >>   1 file changed, 91 insertions(+), 17 deletions(-)
 > > 
-> >> When testing this on the X13s I get:
-> >>
-> >> 	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
-> >>
-> >> for the third port, whose status registers always seems to return zero
-> >> (e.g. as if we're checking the wrong register?):
-> >>
-> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 0, pwr_event_stat = 38103c
-> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 1, pwr_event_stat = 38103c
-> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 2, pwr_event_stat = 00
-> >> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 3, pwr_event_stat = 140030
-> >>
-> >> I verified that everything appears to work as expected on sa8295p-adp.
-> >>
-> >> Do you have any idea of what may be causing this?
+> >> +static int dwc3_qcom_setup_mp_irq(struct platform_device *pdev)
+> >> +{
+> >> +	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> >> +	char irq_name[15];
 > > 
-> > You never replied to this; do you have any idea why the status register
-> > for the second port seemingly always read back as 0 on the X13s?
+> > The interrupt device-name string can not be allocated on the stack or
+> > reused as it is stored directly in each irqaction structure.
+> > 
+> > This can otherwise lead to random crashes when accessing
+> > /proc/interrupts:
+> > 
+> > 	https://lore.kernel.org/lkml/ZK6IV_jJPICX5r53@hovoldconsulting.com/
 
->   Missed this mail. This never popped up on my system. So no idea what 
-> is different in Lenovo X13s. Might need to check with team internally.
+>    Sure, will create a static array of names if possible in global 
+> section of file and use it to read interrupts.
 
-Did you hear anything back regarding the above?
+Or just use devm_kasprintf(), which should allow for a cleaner
+implementation.
 
-Could it even be that the register offset it not correct for sc8280xp?
+I've fixed it up like this for my X13s wip branches:
+
+	https://github.com/jhovold/linux/commit/0898b54456bc2f4bd4d420480db98e6758771ace
+ 
+>    Are you fine with seperating out setup_irq and setup_mp_irq functions 
+> ? Can you please review comments and suggestion on [1].
+
+I haven't had time to look at your latest replies yet, but as I already
+said when reviewing v9, it seems you should be using a common helper for
+non-mp and mp.
 
 Johan
