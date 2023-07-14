@@ -2,52 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F32E475316C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 07:45:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0106A75316F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 07:45:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234317AbjGNFp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 01:45:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37418 "EHLO
+        id S234882AbjGNFp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 01:45:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjGNFpZ (ORCPT
+        with ESMTP id S229574AbjGNFp1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 01:45:25 -0400
+        Fri, 14 Jul 2023 01:45:27 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B15892735;
-        Thu, 13 Jul 2023 22:45:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59363211C;
+        Thu, 13 Jul 2023 22:45:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4417761C15;
-        Fri, 14 Jul 2023 05:45:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77E9C433CA;
-        Fri, 14 Jul 2023 05:45:22 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E278F61C0C;
+        Fri, 14 Jul 2023 05:45:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CFEC433A9;
+        Fri, 14 Jul 2023 05:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689313523;
-        bh=lWeTR4OTP/LHNQX3nR3ef7mhD9JpuGc3IjezNw8hmyQ=;
+        s=k20201202; t=1689313525;
+        bh=c2mEckZvwo14N7trNxL1C24iVTUZzDt1jRZMiYQDuQo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=AmX+vmdxxZVR0szLpu/70wAxNovxTxoelEgKxUpfJNpz2R/W2hFnzb10OptCAOPmq
-         ErX86WuLLHc0oTgIUioLd99BySfZAYfcTMDSTD3dnRcNLIzbCpeRTpAuQHxiSEjQkV
-         gkvneArcKbZy0Nw74WB6uNRS4SwOUB3/hnKIE8UgkB8YByyO6tabVz/wxm16ZyfORm
-         rxbqszTiMZVYIQyf0Ou6lIAZ5oBQAJtNrntMseQUPBf4rLX7LmqFVD40Wo20avL54W
-         fPx94ZYTLBRPqdebMwBr66b0wxYyOTsBBOOqO3f349oVzSkr4oU8IWAKI7zx5HkZvs
-         zmrFmnPfDoHiA==
+        b=t1qOzPj11TCBJujmG8cHbTprRRV4bo/tncvX1PAMIiX+Ubkr1S2Y2JM14Ju47GL91
+         h+pU0WpdQIabgbYs0vFT4x2d80Jr7Ma7DBG6B9KRHACwqCvFUenTZLozZmO3ThcGmC
+         0sY5xSp3f6cmjAyXNCahQuOAmQfxILzhxkofk/V0+4pzpvt//mlryVGvu9yhv9zlw2
+         0EvTYKfUflxAlA4DVS+tGTp7csGIwZVoSjrMCY8ueTAce02PXeYDOLKusUppyygKYq
+         MVc8ZW2U4QCvGLj5WhTyRHOMRN5YvDXBM3txWkIeM64cW6DiQCJeR0WjC+nhMm5Uqs
+         FJEk5dXVERHcA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: some sdm850/c630 bits
-Date:   Thu, 13 Jul 2023 22:48:51 -0700
-Message-ID: <168931373094.1571673.7339769841349619122.b4-ty@kernel.org>
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>, Vinod Koul <vkoul@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: (subset) [PATCH 0/7] random msm bindings fixes
+Date:   Thu, 13 Jul 2023 22:48:52 -0700
+Message-ID: <168931373093.1571673.3158979708778276469.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230627-c630-uart-and-1p2-reg-v2-0-496b581935c1@linaro.org>
-References: <20230627-c630-uart-and-1p2-reg-v2-0-496b581935c1@linaro.org>
+In-Reply-To: <20230626-topic-bindingsfixups-v1-0-254ae8642e69@linaro.org>
+References: <20230626-topic-bindingsfixups-v1-0-254ae8642e69@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -62,22 +73,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 29 Jun 2023 22:00:52 +0100, Caleb Connolly wrote:
-> A few DT fixes for the SDM850 laptops
+On Mon, 26 Jun 2023 22:00:22 +0200, Konrad Dybcio wrote:
 > 
-> * Add the missing eDP bridge 1p2 regulator on the c630
-> * Fix bluetooth UART aliases
-> * Enable debug UART on the c630
-> 
+
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: c630: add panel bridge 1p2 regulator
-      commit: 2bc06b7604d214807918dea810b56e0840aa7ba3
-[2/3] arm64: dts: qcom: c630: add debug uart
-      commit: 443042bec49e896705bbfd1969729c9bd69e194f
-[3/3] arm64: dts: qcom: sdm850-*: fix uart6 aliases
-      commit: 2c2f83d9c32ea6e58ad30d88f1edfa67165f151b
+[3/7] arm64: dts: qcom: pm6150l: Add missing short interrupt
+      commit: 7e1f024ef0d1da456f61d00f01dc3287ede915b3
+[4/7] arm64: dts: qcom: pm660l: Add missing short interrupt
+      commit: 9a4ac09db3c7413e334b4abd6b2f6de8930dd781
+[5/7] arm64: dts: qcom: pmi8950: Add missing OVP interrupt
+      commit: 4d77b639531fd85b84a7079c3369908dfaddf8b2
+[6/7] arm64: dts: qcom: pmi8994: Add missing OVP interrupt
+      commit: 8db94432690371b1736e9a2566a9b3d8a73d5a97
+[7/7] arm64: dts: qcom: sc8180x: Add missing 'cache-unified' to L3
+      commit: e4322bb818bbcd36b441de9880fa4ac911a5eb51
 
 Best regards,
 -- 
