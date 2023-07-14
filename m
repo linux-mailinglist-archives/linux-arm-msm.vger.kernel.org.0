@@ -2,89 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD479754316
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 21:15:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AD84754328
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 21:18:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235472AbjGNTPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 15:15:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35552 "EHLO
+        id S235765AbjGNTSH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 15:18:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236195AbjGNTPB (ORCPT
+        with ESMTP id S236052AbjGNTSG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 15:15:01 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87E6635AE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 12:14:59 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3142a9ff6d8so2291436f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 12:14:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689362098; x=1691954098;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=y12WgpFka58+f6g+Nl0WMIlla4WR+fOUMvVj/dW10Y8=;
-        b=qB0NRgmgdTpJof+h7iqbUX75cUEkrKlGAc9n7A3C1HHaj5tV6j3CcN1wD17p1TwpTP
-         eg+WYMwZqQ2cm6mwXWZmiTUSddg2NnWuAH9UkQFliGvXVRlvfm8CbgrZzyLGFjQuoF2d
-         CiQap4YpOViHaT5X0i9JA7d7MKxcN3TNQUmP02fXtCmv8wW2nDcfG7TceliSnxU5xZvN
-         q/fdANHKJXHd6DQF83Kypena3xqmUfr8OZOnaOqmn4yverYr4DAw/cbFT6KIM36dMSH1
-         3zVXArM87g7Y1tsytpHTt0giMxmZJZBiFuPqoHuX0NSl3G+CF2qQRmMfzQ3N5Rj7XQxw
-         hCIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689362098; x=1691954098;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y12WgpFka58+f6g+Nl0WMIlla4WR+fOUMvVj/dW10Y8=;
-        b=adRqKEtgt9Pi47wtD6iefWXTwb7ipeGql8Y0slS7yJbxZCz47sXbLQDsDyHo6soz0h
-         pNWYkv/rXqbB36adGu0OqROyxYaKPfUuWrdDCvGMH2ryesy1nxvjTxQJXHfpJsmwfPvu
-         JwZmP/49Cy+dhavxx+PMY1SqaHzORCN5ajlyd2xeNiRBGws7WmRTxJuwBcnwAniP2hNU
-         DDr0qFRSouaFspSaN3duWb7VAZEkrYUIq8rqIV7ht3LyGGjTLeKVjjpyiJwvXJ4ORY11
-         cUg1OZOsgzsdelWn5q2MmMlwNWaTP/CNmEffgpbjFupX1oerqRpDGEwsoWPk5DZ0jT2x
-         WLUg==
-X-Gm-Message-State: ABy/qLY/LF+Ud2y+sjH/mJdJlwAhejLze/DndZik0ggXauyNcyHK+9mh
-        Yn7IPVDhKcLUTToUB4vwREweDQ==
-X-Google-Smtp-Source: APBJJlFsdTklPzao72K+369OsrAdnINLI412JcepClB5WQXDyqbaFXbRRGvqow3gnANHVJI7a8Qsrg==
-X-Received: by 2002:adf:dd88:0:b0:313:e741:1caa with SMTP id x8-20020adfdd88000000b00313e7411caamr5441671wrl.25.1689362098005;
-        Fri, 14 Jul 2023 12:14:58 -0700 (PDT)
-Received: from [192.168.2.199] (host-92-17-99-126.as13285.net. [92.17.99.126])
-        by smtp.gmail.com with ESMTPSA id t12-20020a5d6a4c000000b00314329f7d8asm11596586wrw.29.2023.07.14.12.14.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Jul 2023 12:14:57 -0700 (PDT)
-Message-ID: <09470a60-6f46-ec0f-9747-f64c0ba81996@linaro.org>
-Date:   Fri, 14 Jul 2023 20:14:56 +0100
+        Fri, 14 Jul 2023 15:18:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E3771FC0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 12:18:06 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36ECv7GJ026462;
+        Fri, 14 Jul 2023 19:17:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=1wDVDRCC7K8Tio5hvLPcb5INci5lIChVVfHQTRRMod4=;
+ b=KHWype9khF3l8NMh/boE9/K2CNDEwDvuGcmeMCIMoe4duj31psug736RLhCfsxUo60cs
+ niVLCkhKVxXlkCFC+4eJ9EJ5Jo1ojNfbrPXgvjfu00fLxfVa+9R4cwxNp2Teig2UBuwP
+ 3IyjAYtTbvNtCQAH7ZFDfz0awlXRTHlOglhri10wW69XxR492jNrI2P+OIZrvjNxPwqu
+ 9rkoT5ENIF2pzMkf4G7rVcW1aCD1TmlSb/S/U4HDpkDta/Ag6cABE/bVr84u5fQ9vab8
+ EeAt+aEwqvJx21i/xwXaHaFohSL7W+xC4iYtbZIoqW9gaitRW3HQxYU8sGBFZFI9/yPP Mg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rtpts2p6x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Jul 2023 19:17:46 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36EJHjAZ007868
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Jul 2023 19:17:45 GMT
+Received: from [10.110.103.248] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 14 Jul
+ 2023 12:17:44 -0700
+Message-ID: <8228c4ce-280d-1795-3598-76753fbb3b38@quicinc.com>
+Date:   Fri, 14 Jul 2023 12:17:43 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: sdm845-db845c: Mark cont splash
- memory region as reserved
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH v3 2/3] drm/msm: Fix IS_ERR() vs NULL check in
+ a5xx_submit_in_rb()
 Content-Language: en-US
-To:     Amit Pundir <amit.pundir@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bryan Donoghue <bryan.odonoghue@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-References: <20230713165238.2814849-1-amit.pundir@linaro.org>
- <20230713165238.2814849-2-amit.pundir@linaro.org>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20230713165238.2814849-2-amit.pundir@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     Gaosheng Cui <cuigaosheng1@huawei.com>, <liviu.dudau@arm.com>,
+        <airlied@gmail.com>, <daniel@ffwll.ch>, <robdclark@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>,
+        <sam@ravnborg.org>, <quic_eberman@quicinc.com>,
+        <a39.skl@gmail.com>, <quic_gurus@quicinc.com>,
+        <angelogioacchino.delregno@somainline.org>,
+        <james.qian.wang@arm.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>
+References: <20230714014820.2186203-1-cuigaosheng1@huawei.com>
+ <20230714014820.2186203-3-cuigaosheng1@huawei.com>
+ <bd0ef83b-bb57-4dce-a866-18ae6a755e96@quicinc.com>
+In-Reply-To: <bd0ef83b-bb57-4dce-a866-18ae6a755e96@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: MBHv5yvFJqYIFwwvNKLn2qEc1lV8-hGk
+X-Proofpoint-ORIG-GUID: MBHv5yvFJqYIFwwvNKLn2qEc1lV8-hGk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-14_09,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999
+ clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307140176
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
@@ -97,62 +91,42 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 13/07/2023 17:52, Amit Pundir wrote:
-> Adding a reserved memory region for the framebuffer memory
-> (the splash memory region set up by the bootloader).
+On 7/14/2023 12:10 PM, Abhinav Kumar wrote:
 > 
-> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> 
+> On 7/13/2023 6:48 PM, Gaosheng Cui wrote:
+>> The msm_gem_get_vaddr() returns an ERR_PTR() on failure, we should
+>> use IS_ERR() to check the return value.
+>>
+> 
+> use IS_ERR_OR_NULL()
+> 
+> I can even fix this while applying
+> 
 
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
-> v5: Re-sending with updated dt-bindings patch in mdss-common
->     schema.
-> 
-> v4: Re-sending this along with a new dt-bindings patch to
->     document memory-region property in qcom,sdm845-mdss
->     schema and keep dtbs_check happy.
-> 
-> v3: Point this reserved region to MDSS.
-> 
-> v2: Updated commit message.
-> 
-> There was some dicussion on v1 but it didn't go anywhere,
-> https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u.
-> The general consensus is that this memory should be freed and be
-> made resuable but that (releasing this piece of memory) has been
-> tried before and it is not trivial to return the reserved memory
-> node to the system RAM pool in this case.
-> 
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index d6b464cb61d6..f546f6f57c1e 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -101,6 +101,14 @@ hdmi_con: endpoint {
->  		};
->  	};
->  
-> +	reserved-memory {
-> +		/* Cont splash region set up by the bootloader */
-> +		cont_splash_mem: framebuffer@9d400000 {
-> +			reg = <0x0 0x9d400000 0x0 0x2400000>;
-> +			no-map;
-> +		};
-> +	};
-> +
->  	lt9611_1v8: lt9611-vdd18-regulator {
->  		compatible = "regulator-fixed";
->  		regulator-name = "LT9611_1V8";
-> @@ -506,6 +514,7 @@ &i2c14 {
->  };
->  
->  &mdss {
-> +	memory-region = <&cont_splash_mem>;
->  	status = "okay";
->  };
->  
+Actually even subject line needs correction, so better you push another 
+rev.
 
--- 
-// Caleb (they/them)
+>> Fixes: 6a8bd08d0465 ("drm/msm: add sudo flag to submit ioctl")
+>> Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c 
+>> b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> index a99310b68793..bbb1bf33f98e 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> @@ -89,7 +89,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, 
+>> struct msm_gem_submit *submit
+>>                * since we've already mapped it once in
+>>                * submit_reloc()
+>>                */
+>> -            if (WARN_ON(!ptr))
+>> +            if (WARN_ON(IS_ERR_OR_NULL(ptr)))
+>>                   return;
+>>               for (i = 0; i < dwords; i++) {
