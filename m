@@ -2,86 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9310C753B33
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 14:41:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B545753B6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 15:04:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235875AbjGNMlB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 08:41:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49154 "EHLO
+        id S235825AbjGNNEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 09:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235786AbjGNMlA (ORCPT
+        with ESMTP id S235147AbjGNNEF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 08:41:00 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46AA030F8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 05:40:57 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fcd615d7d6so2381046e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 05:40:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689338455; x=1691930455;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uO3BaxYCZ+L/uORC+pf07E8D9o0fBToXSlhtH2de7rw=;
-        b=oxGZgrpIfJhQzZIJqF+aBM+mmaE/bK4naa7fvpgtwek3knax53LGE17XpfHcoS3xJn
-         D2ZvIAugeRv+VGHitrRirxUNf87rDIlel0AAT72jssZzbzlpv4CUt+f8lr4B6M1h3jHM
-         g4vfDbzXoldY4o33AmlhFZkSEN0DZNT8RXX8Jtue5cDwZEj4WTj9d8sBIxAGf3T10fRC
-         vmjqbSwVdd4ExBWkuzSB4hJgG/3dXR9deUWKg/pgdXo8IZMDyZ9srMieLZ78bsaA0xJA
-         EPI9sh3PRjXxpoU5GlP1ihK/PGvQyLwWWkl2UvYQZ8A/UBPd7qliGheUntGi69zj5pA2
-         0tcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689338455; x=1691930455;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uO3BaxYCZ+L/uORC+pf07E8D9o0fBToXSlhtH2de7rw=;
-        b=jKyAbRgYtHXJqF8lQalvjLGcZ07NkyloJGsAGQbg/cTfKWxtwmyWXe2FsrqLkzjaQQ
-         cwPaLnt8tcMC6YI4QWvl2o5J+E5yVLq+CsAaDQifTWmYtO5jqgHC30CbCxEqug9yf8g6
-         CVxYyQzabBtOufrF60x9yx1fju+EwxHVzhjJZdaD3jbRGfMZnTVqmuM1Yw3pLz3gtymA
-         OdGeEzsb6sZm2buqSzgKGsiftqnW7yWGPNf19muX8aQFvi9EFkAXhju0yJCEoOKJuJ+D
-         U32FNMqreqGAdjwQJYKbar3FOI+wRJqldUu5I1YKsUWnMGbAAK+lDXZydLHq9Br8iFC0
-         0fcA==
-X-Gm-Message-State: ABy/qLZetQaPgn6u3GeTjkbW8nHWGNmMiU6VAGPKI+Tnc3NPKoK1MPne
-        F1CpYfxbhqun6MI7LxJ1OFrqNQ==
-X-Google-Smtp-Source: APBJJlHlAddaubQ/zueOeGxnPlLqyGKtU17F4/ArIFEtjLQai74eAepMpx7KknX5mdh58a5qmuwxRQ==
-X-Received: by 2002:a05:6512:3705:b0:4fb:7a4e:b573 with SMTP id z5-20020a056512370500b004fb7a4eb573mr3610408lfr.5.1689338455608;
-        Fri, 14 Jul 2023 05:40:55 -0700 (PDT)
-Received: from [192.168.1.101] (abxj146.neoplus.adsl.tpnet.pl. [83.9.3.146])
-        by smtp.gmail.com with ESMTPSA id b6-20020ac25e86000000b004fb2244563fsm1482588lfq.289.2023.07.14.05.40.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jul 2023 05:40:55 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 14 Jul 2023 14:40:48 +0200
-Subject: [PATCH 3/3] arm64: dts: qcom: sc7280: Remove qcom,adsp-bypass-mode
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230714-topic-lpass_lpi_cleanup-v1-3-dc18b5bd14f7@linaro.org>
-References: <20230714-topic-lpass_lpi_cleanup-v1-0-dc18b5bd14f7@linaro.org>
-In-Reply-To: <20230714-topic-lpass_lpi_cleanup-v1-0-dc18b5bd14f7@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 14 Jul 2023 09:04:05 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E9E630D7;
+        Fri, 14 Jul 2023 06:04:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C9BDD61D12;
+        Fri, 14 Jul 2023 13:04:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20175C433C7;
+        Fri, 14 Jul 2023 13:04:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689339843;
+        bh=inXxnXQ/Z52rcwIHwMcs8kHBBJmTFZPs88JABaXwQzU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ZV1mcBUvMyyudY7N7L9HDkThtT3bK+m2/nWhHZsHRebVsD6nKnfE8aRg+WkHelmip
+         x71jGE68/bf3QbDXrSAMMa0W4Q6ujyLqP3f36Pk7gHj59K647rcy5iuFgwm2POPPoc
+         QGnrMpQ+kiQXon+BYABG4/nMQKIyq09R7usgTgD1oDb7F68RE1iPRvZhgXULFju+X3
+         9ymUW2LnFmN5qBGCWTJJHbUgmPvw9PBm9Z21TtFVTs2CP1u/CrW3i6D6AEo3/hSTHX
+         TZN4gXtnQTcluVbyjfKszvDmz5kZA5SMMk/XASSHFDBAdiEf+EhviZ5EPYk4UiYOcp
+         o+G3jvpm2EqBA==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1qKISq-0003ni-1b;
+        Fri, 14 Jul 2023 15:04:04 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1689338449; l=730;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=DyK40mymfrvw8k/ltntuGU1sfhX2SFcLdrpfHTNW0dU=;
- b=qBnOkFZmC996wH1CYdwJcNu3hlwhZiyzrwhXN24QgaMwaVqj+hEgRFwf2kwMfKM31XoMQltpX
- SPVdPsAQ8r9BXTtayuWOtbsupyVAclRjwoHW2RQCeF7FbIyodHXeW5A
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/2] serial: qcom-geni: fix opp vote on shutdown
+Date:   Fri, 14 Jul 2023 15:02:12 +0200
+Message-ID: <20230714130214.14552-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,25 +62,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This property isn't used or defined anymore. Get rid of it.
+This series fixes the missing opp vote removal when closing a serial
+port, which, for example, can lead to wasted power when a UART connected
+Bluetooth controller is not in use.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+Included is also a clean up of a related debug printk.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 925428a5f6ae..ce7d318afd57 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2510,7 +2510,6 @@ lpass_tlmm: pinctrl@33c0000 {
- 			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
- 			reg = <0 0x033c0000 0x0 0x20000>,
- 				<0 0x03550000 0x0 0x10000>;
--			qcom,adsp-bypass-mode;
- 			gpio-controller;
- 			#gpio-cells = <2>;
- 			gpio-ranges = <&lpass_tlmm 0 0 15>;
+Johan
+
+
+Johan Hovold (2):
+  serial: qcom-geni: fix opp vote on shutdown
+  serial: qcom-geni: clean up clock-rate debug printk
+
+ drivers/tty/serial/qcom_geni_serial.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 -- 
 2.41.0
