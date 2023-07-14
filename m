@@ -2,111 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E1137544FC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 00:31:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60B98754509
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 00:40:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbjGNWbp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 18:31:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60804 "EHLO
+        id S230111AbjGNWkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 18:40:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjGNWbo (ORCPT
+        with ESMTP id S229437AbjGNWkJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 18:31:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B6042D48;
-        Fri, 14 Jul 2023 15:31:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F2B6461E0C;
-        Fri, 14 Jul 2023 22:31:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE9BC433C7;
-        Fri, 14 Jul 2023 22:31:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689373902;
-        bh=LNIw34qBX2V8Elz1G1PACLsCQHf7o2a3bkEmgF+nghQ=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=a5xPJKj8IlTbIOuPnQXt8GteRC9OLgnCno7Ijmn5WRzeYBKefbplVia9GSvy5KUgh
-         gXP+k9+GA/G84FRziLIATN2Kv0TcpGUHYAfErQw1bi117SEVskaWLBFYte4V4iAxYd
-         h7wdQcZ0H9102nfO4m9UJvGktHE55k4EfbKXYiE3VN/IG4jnDykYOWUydV0XwCumJA
-         8wa9sv14ToVMeaQBpg1vEKyfsM0d+oHHj5txFXg82qc+QYvb8zsacMTaJG9wyGfGAs
-         75lkK72oMdSBWtQS4mOpj3EeDlTkBJN0qUn2B2iSa9M0PR8l0DKL/zpS8B8qcS1xcX
-         uNHp8zR0M9YLg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Radu Pirea <radu_nicolae.pirea@upb.ro>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Vladimir Oltean <olteanv@gmail.com>, Han Xu <han.xu@nxp.com>,
-        Jean-Marie Verdun <verdun@hpe.com>,
-        Nick Hawkins <nick.hawkins@hpe.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Yogesh Gaur <yogeshgaur.83@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>,
-        =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-        Michal Simek <michal.simek@amd.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-In-Reply-To: <20230714174955.4064174-1-robh@kernel.org>
-References: <20230714174955.4064174-1-robh@kernel.org>
-Subject: Re: [PATCH] spi: Explicitly include correct DT includes
-Message-Id: <168937389002.266788.5461737923596867983.b4-ty@kernel.org>
-Date:   Fri, 14 Jul 2023 23:31:30 +0100
+        Fri, 14 Jul 2023 18:40:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560A73A8E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 15:39:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1689374360;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=a/7QRsG7VMgpCtW8aCf88ACfGWjhwUEcpv469HHRgOI=;
+        b=JMwBmx50dd2q5hPG6sY5AIk48hzREDoTXKxb0uItvHfFFWekKlA8tKUVP13roCDr3uiH1p
+        ZnOBWeUlNFWsqFT0nDNvAq4oNFB+M21mBvgxtKnWbukyysor3E0p+nveJb+T6puHEAI7YL
+        AapEHF7GUlxmqL2LBcOwvmL1L5RqdjM=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-eGm_n8fcN62K2wCwV_c9Fw-1; Fri, 14 Jul 2023 18:39:19 -0400
+X-MC-Unique: eGm_n8fcN62K2wCwV_c9Fw-1
+Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-1b4436d4b6eso4027924fac.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 15:39:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689374358; x=1691966358;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a/7QRsG7VMgpCtW8aCf88ACfGWjhwUEcpv469HHRgOI=;
+        b=eQ/DrihLwUYz7x5CJvgfLdeM2Oo+UyzLTfsmPvzBZuE6KCjBqRh8YyewD0E4IgQdeV
+         xyTSBnvsuaqZyxg42gMf0bPHAEgyNFJj/R0aWzFuyH5MCyTeH6x3edGoeRoUtuPfcXc6
+         KuGVS8buxecOjYHj9Uw2R8azZiD1Y8HCOZctqDhZ9bn6Mp4lWSGRnw9aQRErRL6EA9JZ
+         PjwRiWkpEOmZdBpgE0aXrX+WTkFbUmICZfm8jfohtsTDf9kdC9P0jrT5C5Gxv5BQtHM7
+         JCP5b9REj4cuhkV3N11IKI4t11nixz9vdAz/rBCMoASImbHzQ361YOnTdSRRdL5kEnpY
+         8N/Q==
+X-Gm-Message-State: ABy/qLapmeG4eZZk1FU+eePIexmX+SSOZHwZd/UBXVrRKz6L9U8gGzNm
+        aj9TijlTopCGw7r1KuaWKF4zMcblI59MMOuMvcCGc6ZVEW2HoFChoVRMMoDGTRWcWQuAgOdkLKy
+        xJhTusO0RIcGs0Vuj+vGiHgszog==
+X-Received: by 2002:a05:6870:3452:b0:1b4:7353:bba6 with SMTP id i18-20020a056870345200b001b47353bba6mr7350786oah.44.1689374358417;
+        Fri, 14 Jul 2023 15:39:18 -0700 (PDT)
+X-Google-Smtp-Source: APBJJlGjfS8pSABZlYzgkNkVzYzDjPoSh3mvMe8xoTt6ts91yhdDqXKxDz1dEruBrVUkovoiv2RPdQ==
+X-Received: by 2002:a05:6870:3452:b0:1b4:7353:bba6 with SMTP id i18-20020a056870345200b001b47353bba6mr7350764oah.44.1689374358119;
+        Fri, 14 Jul 2023 15:39:18 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::22])
+        by smtp.gmail.com with ESMTPSA id ec42-20020a0568708c2a00b001b3f0afda0fsm4489026oab.30.2023.07.14.15.39.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jul 2023 15:39:17 -0700 (PDT)
+Date:   Fri, 14 Jul 2023 17:39:15 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Prasad Sodagudi <quic_psodagud@quicinc.com>
+Cc:     "Ninad Naik (QUIC)" <quic_ninanaik@quicinc.com>,
+        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Parikshit Pareek (QUIC)" <quic_ppareek@quicinc.com>,
+        Prasad Sodagudi <psodagud@quicinc.com>,
+        "Prasanna Kumar (QUIC)" <quic_kprasan@quicinc.com>
+Subject: Re: FW: [PATCH] pinctrl: qcom: Add intr_target_width to define
+ intr_target_bit field width
+Message-ID: <20230714223915.4q3pmbqxajkjtltb@halaney-x13s>
+References: <20230714061010.15817-1-quic_ninanaik@quicinc.com>
+ <p5vyji2weclwgshyxbf2evzpzefckzyecjnoada7dvzbuenxsb@55abp36rrbub>
+ <BY5PR02MB6339C6B8A53C5D0CB55E58B7C034A@BY5PR02MB6339.namprd02.prod.outlook.com>
+ <d43a0ce0-c915-a5d2-1d01-549ae08c678e@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d43a0ce0-c915-a5d2-1d01-549ae08c678e@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -114,43 +87,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 14 Jul 2023 11:49:52 -0600, Rob Herring wrote:
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
+On Fri, Jul 14, 2023 at 02:04:05PM -0700, Prasad Sodagudi wrote:
 > 
-> [...]
+> 
+> > -----Original Message-----
+> > From: Andrew Halaney <ahalaney@redhat.com>
+> > Sent: Friday, July 14, 2023 11:17 AM
+> > To: Ninad Naik (QUIC) <quic_ninanaik@quicinc.com>
+> > Cc: andersson@kernel.org; agross@kernel.org; konrad.dybcio@linaro.org; linux-arm-msm@vger.kernel.org; linux-gpio@vger.kernel.org; linux-kernel@vger.kernel.org; Parikshit Pareek (QUIC) <quic_ppareek@quicinc.com>; Prasad Sodagudi <psodagud@quicinc.com>; Prasanna Kumar (QUIC) <quic_kprasan@quicinc.com>
+> > Subject: Re: [PATCH] pinctrl: qcom: Add intr_target_width to define intr_target_bit field width
+> > 
+> > WARNING: This email originated from outside of Qualcomm. Please be wary of any links or attachments, and do not enable macros.
+> > 
+> > On Fri, Jul 14, 2023 at 11:40:09AM +0530, Ninad Naik wrote:
+> > > SA8775 and newer target have added support for an increased number of
+> > > interrupt targets. To implement this change, the intr_target field,
+> > > which is used to configure the interrupt target in the interrupt
+> > > configuration register is increased from 3 bits to 4 bits.
+> > > 
+> > > In accordance to these updates, a new intr_target_width member is
+> > > introduced in msm_pingroup structure. This member stores the value of
+> > > width of intr_target field in the interrupt configuration register.
+> > > This value is used to dynamically calculate and generate mask for
+> > > setting the intr_target field. By default, this mask is set to 3 bit
+> > > wide, to ensure backward compatibility with the older targets.
+> > > 
+> > > Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
 
-Applied to
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+> > 
+> > Thanks for the patch. Naive question (without really reading the code), but what practical affect does this have?
+> > 
+> 
+> Target bits configures irq destination processor on Qualcomm SoC.
+> g->intr_target_kpss_val(0x3) routes the gpio IRQ to application process.
+> On this SoCs target bits length is changed from 3 bits to 4 bits in hw and
+> reset value of g->intr_target_reg register value is 0x1E2. So reset value of
+> target bits is 0xf.  With old logic, when writing
+> g->intr_target_kpss_val(0x3) value result is 0xb instead of 0x3 as top most
+> bit is not getting cleared out and leading to IRQ is not getting fired on
+> application processor. 0xb value is unused on current HW and IRQ would not
+> be fired.
+> 
 
-Thanks!
+Thanks all for the explanations, that makes a lot of sense.
 
-[1/1] spi: Explicitly include correct DT includes
-      commit: 749396cb29a7d82cb5e324bf61be3fc948d97141
+Perhaps briefly summarizing that without this fix platforms using
+more than 3 bits could fail to set/clear the remaining bits, resulting in
+routing the IRQ to the wrong processor subsystem?
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+And with that in mind.. I think this deserves a Fixes tag:
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+    Fixes: f365be092572 ("pinctrl: Add Qualcomm TLMM driver")
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+seems overzealous since until 8775p afaik no upstream platform would
+fall in the > 3 bits category. But, it wouldn't hurt if someone was bringing
+up such a platform on an LTS kernel that has this pinctrl driver.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+At the very least I think:
 
-Thanks,
-Mark
+    Fixes: 4b6b18559927 ("pinctrl: qcom: add the tlmm driver sa8775p platforms")
+
+would be a nice addition in v2.
+
+This definitely works, applying this patch to enable the IRQ for the ethernet
+phy (posting in case I get hit by a bus this weekend, I'll spin properly
+next week):
+
+    ahalaney@halaney-x13s ~/git/linux-next (git)-[remotes/ahalaney/ethernet-phy-irq] % git show                                                                                                                                            :(
+    commit c6d01507db84dcb205e2cd92fb74cdb328f6fcad (HEAD, ahalaney/ethernet-phy-irq)
+    Author: Andrew Halaney <ahalaney@redhat.com>
+    Date:   Fri Jul 14 16:07:01 2023 -0500
+
+        arm64: dts: qcom: sa8775p-ride: Describe ethernet phy irq
+
+        There's an irq hooked up, so let's describe it.
+
+        Prior to TODO UPDATE WITH FINAL PATCH NAME
+        SHA ("pinctrl: qcom: Add intr_target_width to define intr_target_bit field width")
+        one would not see the IRQ fire, despite some (invasive) debugging
+        showing that the GPIO was in fact asserted, resulting in the interface
+        staying down.
+
+        Now that the IRQ is properly routed we can describe it.
+
+        Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+
+    diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+    index b2aa16037707..2b7ef7ad01d5 100644
+    --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+    +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+    @@ -286,6 +286,8 @@ mdio {
+                    sgmii_phy: phy@8 {
+                            reg = <0x8>;
+                            device_type = "ethernet-phy";
+    +
+    +                       interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
+                    };
+            };
+
+
+
+Then testing without/with this pinctrl change...
+
+Without this pinctrl change:
+
+    [root@dhcp19-243-201 ~]# # Ethernet MAC of question
+    [root@dhcp19-243-201 ~]# ls -lah /sys/class/net/eth0
+    lrwxrwxrwx 1 root root 0 May 18 00:00 /sys/class/net/eth0 -> ../../devices/platform/soc@0/23040000.ethernet/net/eth0
+    [root@dhcp19-243-201 ~]# ip -s link show eth0
+    2: eth0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
+        link/ether b2:79:1f:47:c8:45 brd ff:ff:ff:ff:ff:ff
+        RX:  bytes packets errors dropped  missed   mcast
+                 0       0      0       0       0       0
+        TX:  bytes packets errors dropped carrier collsns
+                 0       0      0       0       0       0
+    [root@dhcp19-243-201 ~]# cat /proc/interrupts | grep stmmac-0
+    238:          0          0          0          0          0          0          0          0   msmgpio   7 Edge      stmmac-0:08
+    [root@dhcp19-243-201 ~]#
+
+With it:
+
+    [root@dhcp19-243-28 ~]# ls -lah /sys/class/net/eth0
+    lrwxrwxrwx 1 root root 0 May 18 00:00 /sys/class/net/eth0 -> ../../devices/platform/soc@0/23040000.ethernet/net/eth0
+    [root@dhcp19-243-28 ~]# ip -s link show eth0
+    2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+        link/ether ae:27:eb:55:e4:d0 brd ff:ff:ff:ff:ff:ff
+        RX:  bytes packets errors dropped  missed   mcast
+            588222    9538      0      43       0       0
+        TX:  bytes packets errors dropped carrier collsns
+             16046     181      0       0       0       0
+    [root@dhcp19-243-28 ~]# cat /proc/interrupts | grep stmmac-0
+    237:          1          0          0          0          0          0          0          0   msmgpio   7 Edge      stmmac-0:08
+    [root@dhcp19-243-28 ~]#
+
+Boy can one IRQ and bit make a difference! I spent a few days trying to
+understand why my forward port was failing, and this IRQ was the ultimate issue.
+Thanks for the fix!
+
+- Andrew
 
