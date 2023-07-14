@@ -2,138 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACE14753D62
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 16:29:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5154753D84
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 16:33:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235628AbjGNO3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jul 2023 10:29:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43750 "EHLO
+        id S235923AbjGNOdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jul 2023 10:33:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236023AbjGNO3S (ORCPT
+        with ESMTP id S235460AbjGNOdY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jul 2023 10:29:18 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70DC93AB6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 07:29:11 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f122ff663eso3370529e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 07:29:11 -0700 (PDT)
+        Fri, 14 Jul 2023 10:33:24 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DEE1995
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 07:32:36 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4fba03becc6so3993979e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jul 2023 07:32:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689344949; x=1691936949;
+        d=linaro.org; s=google; t=1689345152; x=1691937152;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=K7XSLJw52T0/1qLiEhQ2mFyEX8hNR7J0cXAXpzjTkNY=;
-        b=Ho4ZjRdLf3WGzWiRolCzfv9gXW/0Psx3vukeJjTNb5OOqvI4xEX5FjRQlTlH0VrjpJ
-         5wjUqnQb6BBfGcQgbH2jWkwjmE+jqezpHa3fGY/MyyF49vWlXwIBwJnolKVlDtgT4ofQ
-         c8Py9ac1aIzpvUIZQPtCmO7g5IhXcGvq1wOimgli2ibG7uUS60HIgoXFwPVaZspW2Rwq
-         kVJUzpAmtRdXbAfMQygzchEnDXSb73F9W+EnelAfBcQkxC6QNfpmiT/95RK27xlhzzhS
-         c1LRyhqN/BBobG0bldsWkzljxPCSpFmL9ar1uyYmdtOCz73tJBp46cMikqLPIcHbv9uk
-         od0A==
+        bh=s1NAGJKSZNME/ufDdSZLdTSg+2nkMD1y8BbgNjzMbFc=;
+        b=aTOWcE1zHEq2JiQ2evcaK1j562NOcJxwlxyiM1wNh/nY/Aq3L7Kycdk5ueWoDrY6Z4
+         WNqOV1tx/tunxBW1wRzGZeajlyCW1Cuc9Gw6Ll1W95Yp9GVUdtRz4iIVv/UJUEU3nu3f
+         5qA5PquwRg6IBJ8fQ/327K1Y35FQDfrXVssEDy02pgn4o1QNnBr7OoCUzW0Z8S3vQZax
+         fawycB+sRbWj28D3bzKIMzLtsbHlZsMKnTp+GKPjguOMJ3GlxEz+vBE2/ofv/o/sROxf
+         WJAkYp7SG7mKssOzZvcGFq+VycZu4jCOyiJ4YtcoqMwG2mVyocJJEEGMNTk78OMe55UC
+         74kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689344949; x=1691936949;
+        d=1e100.net; s=20221208; t=1689345152; x=1691937152;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K7XSLJw52T0/1qLiEhQ2mFyEX8hNR7J0cXAXpzjTkNY=;
-        b=B2RO0mL5kkK3TuJu0dnbJyot6pFlueFQrJSibw406tgJEv/csW6vJevuwUfkr2CkvG
-         9jAsbqgmUv2rBgMnlwtC9y2lC+yuQ8qYQT0Ihanq/Im98QmdS8Rm5GT7xqzSOzglKpLe
-         5gsldAwMM/B8RVkktA4irmwom6Rka97zkAU+IZO0YZeHYSMchgxW695KZnt+pc7gF9pT
-         WcAOVf1u6hVmxIZiagVNQo323QqcxJagN+4fEbXkr56RgRkw7CdKGdXEnh0ChjF09ynr
-         071xTkqcdidUHkX28J0sQZlWXxiq5zW/ohw4cYIJkE5x4cEarJbJI8KeO2LizRGC9r+b
-         59Xg==
-X-Gm-Message-State: ABy/qLZvRjWbZ90+8r7YGtLl2Zpa+5Hj5VJ3mighvxBvZJkdU9Z+qSrJ
-        8xFdG8S7Y5u4CTfxtYgublfoNw==
-X-Google-Smtp-Source: APBJJlFwywm3zM4vbYjAAFhEZVa6kL+w6/fFOY0Ro2l1QhI0tt+F5E2zDMKtpVWsnOkrYMuuTZtsKA==
-X-Received: by 2002:a05:6512:3ca5:b0:4f9:6c44:1bf3 with SMTP id h37-20020a0565123ca500b004f96c441bf3mr4529346lfv.62.1689344949598;
-        Fri, 14 Jul 2023 07:29:09 -0700 (PDT)
+        bh=s1NAGJKSZNME/ufDdSZLdTSg+2nkMD1y8BbgNjzMbFc=;
+        b=bcTctJubRlZuq1KOkWEf78rNoqMSYKg61dFOgelD2dzvqhHysFH9yZ+sndT5+ZSiDq
+         oprvehdFCmLDytHV75BvzS5h4P3t6punXAoBauSBCTa0RusMxxfjCDJowvzG6q9znHb0
+         wG7TdUMvR9R5h13FKRlGRKVh5LVIZ9ynvwddpUcMrC2GvX/faddLz+WKP9u1SdF59u87
+         9SvgzUsxx2sGeJzU51qSOM83Z4unK8Gta2Vo5u2GBR/IFK4RYo4QqhJIH0r7ua7UhYZn
+         LeiNoaaiyvqaO+SvYHKCcEgv2AgtKnA7xfyShknD+wzZAwrI3ZbpmgCuvNLAx5M9CAhj
+         35Mw==
+X-Gm-Message-State: ABy/qLbg1mc5L4C3RTTNx8UJP+0bg0bRJhy7ZPbzy75sFp1SpEH/9lys
+        CiV+w7yF/AE9ETZ3YkGYN3mkVw==
+X-Google-Smtp-Source: APBJJlGtbkPxQHR9k71996y+hIr9CmSCiybVaqnnmBBjO1lkXWyFmx/JesUalIfC2HQ1ymc4p5D39g==
+X-Received: by 2002:a05:6512:202d:b0:4f8:6253:540 with SMTP id s13-20020a056512202d00b004f862530540mr1005744lfs.19.1689345152563;
+        Fri, 14 Jul 2023 07:32:32 -0700 (PDT)
 Received: from [192.168.1.101] (abxj146.neoplus.adsl.tpnet.pl. [83.9.3.146])
-        by smtp.gmail.com with ESMTPSA id w28-20020ac2599c000000b004fb759964a9sm1506768lfn.168.2023.07.14.07.29.08
+        by smtp.gmail.com with ESMTPSA id d28-20020ac244dc000000b004fba1288ab9sm1518364lfm.99.2023.07.14.07.32.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Jul 2023 07:29:09 -0700 (PDT)
-Message-ID: <e99b5975-b770-5460-1ce4-cd4eb1a50291@linaro.org>
-Date:   Fri, 14 Jul 2023 16:29:08 +0200
+        Fri, 14 Jul 2023 07:32:31 -0700 (PDT)
+Message-ID: <ebfbfdf5-2537-e3ce-8416-d80a9bd862d1@linaro.org>
+Date:   Fri, 14 Jul 2023 16:32:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 1/2] serial: qcom-geni: fix opp vote on shutdown
+Subject: Re: [PATCH] pinctrl: qcom: Add intr_target_width to define
+ intr_target_bit field width
 Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>
-References: <20230714130214.14552-1-johan+linaro@kernel.org>
- <20230714130214.14552-2-johan+linaro@kernel.org>
+To:     Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org,
+        agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_ppareek@quicinc.com,
+        psodagud@quicinc.com, quic_kprasan@quicinc.com
+References: <20230714061010.15817-1-quic_ninanaik@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230714130214.14552-2-johan+linaro@kernel.org>
+In-Reply-To: <20230714061010.15817-1-quic_ninanaik@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.07.2023 15:02, Johan Hovold wrote:
-> The operating-performance-point vote needs to be dropped when shutting
-> down the port to avoid wasting power by keeping resources like power
-> domains in an unnecessarily high performance state (e.g. when a UART
-> connected Bluetooth controller is not in use).
+On 14.07.2023 08:10, Ninad Naik wrote:
+> SA8775 and newer target have added support for an increased number of
+> interrupt targets. To implement this change, the intr_target field, which
+> is used to configure the interrupt target in the interrupt configuration
+> register is increased from 3 bits to 4 bits.
 > 
-> Fixes: a5819b548af0 ("tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state")
-> Cc: stable@vger.kernel.org      # 5.9
-> Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> In accordance to these updates, a new intr_target_width member is
+> introduced in msm_pingroup structure. This member stores the value of
+> width of intr_target field in the interrupt configuration register. This
+> value is used to dynamically calculate and generate mask for setting the
+> intr_target field. By default, this mask is set to 3 bit wide, to ensure
+> backward compatibility with the older targets.
+> 
+> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
 > ---
-I don't know a whole lot about this subsystem, but the PM call has
-a pointer to uport which already contains this clock rate.. Is it
-zeroed out by the core before we reach it, which would prevent us
-from reusing it?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+one nit below
+
+>  drivers/pinctrl/qcom/pinctrl-msm.c     | 9 ++++++---
+>  drivers/pinctrl/qcom/pinctrl-msm.h     | 2 ++
+>  drivers/pinctrl/qcom/pinctrl-sa8775p.c | 1 +
+>  3 files changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 2585ef2b2793..6ebcaa2220af 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -1038,6 +1038,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>  	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+>  	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>  	const struct msm_pingroup *g;
+> +	u32 intr_target_mask = 0x7;
+This could be GENMASK(2, 0)
 
 Konrad
->  drivers/tty/serial/qcom_geni_serial.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index b825b05e6137..8be896dbaa88 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -126,6 +126,7 @@ struct qcom_geni_serial_port {
->  	dma_addr_t rx_dma_addr;
->  	bool setup;
->  	unsigned int baud;
-> +	unsigned long clk_rate;
->  	void *rx_buf;
->  	u32 loopback;
->  	bool brk;
-> @@ -1249,6 +1250,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->  			baud * sampling_rate, clk_rate, clk_div);
+>  	unsigned long flags;
+>  	bool was_enabled;
+>  	u32 val;
+> @@ -1074,13 +1075,15 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>  	 * With intr_target_use_scm interrupts are routed to
+>  	 * application cpu using scm calls.
+>  	 */
+> +	if (g->intr_target_width)
+> +		intr_target_mask = GENMASK(g->intr_target_width - 1, 0);
+> +
+>  	if (pctrl->intr_target_use_scm) {
+>  		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
+>  		int ret;
 >  
->  	uport->uartclk = clk_rate;
-> +	port->clk_rate = clk_rate;
->  	dev_pm_opp_set_rate(uport->dev, clk_rate);
->  	ser_clk_cfg = SER_CLK_EN;
->  	ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
-> @@ -1513,10 +1515,13 @@ static void qcom_geni_serial_pm(struct uart_port *uport,
+>  		qcom_scm_io_readl(addr, &val);
+> -
+> -		val &= ~(7 << g->intr_target_bit);
+> +		val &= ~(intr_target_mask << g->intr_target_bit);
+>  		val |= g->intr_target_kpss_val << g->intr_target_bit;
 >  
->  	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF) {
->  		geni_icc_enable(&port->se);
-> +		if (port->clk_rate)
-> +			dev_pm_opp_set_rate(uport->dev, port->clk_rate);
->  		geni_se_resources_on(&port->se);
->  	} else if (new_state == UART_PM_STATE_OFF &&
->  			old_state == UART_PM_STATE_ON) {
->  		geni_se_resources_off(&port->se);
-> +		dev_pm_opp_set_rate(uport->dev, 0);
->  		geni_icc_disable(&port->se);
+>  		ret = qcom_scm_io_writel(addr, val);
+> @@ -1090,7 +1093,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>  				d->hwirq);
+>  	} else {
+>  		val = msm_readl_intr_target(pctrl, g);
+> -		val &= ~(7 << g->intr_target_bit);
+> +		val &= ~(intr_target_mask << g->intr_target_bit);
+>  		val |= g->intr_target_kpss_val << g->intr_target_bit;
+>  		msm_writel_intr_target(val, pctrl, g);
 >  	}
->  }
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+> index 5e4410bed823..1d2f2e904da1 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+> @@ -59,6 +59,7 @@ struct pinctrl_pin_desc;
+>   * @intr_status_bit:      Offset in @intr_status_reg for reading and acking the interrupt
+>   *                        status.
+>   * @intr_target_bit:      Offset in @intr_target_reg for configuring the interrupt routing.
+> + * @intr_target_width:    Number of bits used for specifying interrupt routing target.
+>   * @intr_target_kpss_val: Value in @intr_target_bit for specifying that the interrupt from
+>   *                        this gpio should get routed to the KPSS processor.
+>   * @intr_raw_status_bit:  Offset in @intr_cfg_reg for the raw status bit.
+> @@ -100,6 +101,7 @@ struct msm_pingroup {
+>  	unsigned intr_ack_high:1;
+>  
+>  	unsigned intr_target_bit:5;
+> +	unsigned intr_target_width:5;
+>  	unsigned intr_target_kpss_val:5;
+>  	unsigned intr_raw_status_bit:5;
+>  	unsigned intr_polarity_bit:5;
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+> index 8a5cd15512b9..8fdea25d8d67 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+> @@ -46,6 +46,7 @@
+>  		.intr_enable_bit = 0,		\
+>  		.intr_status_bit = 0,		\
+>  		.intr_target_bit = 5,		\
+> +		.intr_target_width = 4,		\
+>  		.intr_target_kpss_val = 3,	\
+>  		.intr_raw_status_bit = 4,	\
+>  		.intr_polarity_bit = 1,		\
