@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86CEC752EF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 03:55:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C71D7752EF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jul 2023 03:55:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234317AbjGNBzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jul 2023 21:55:13 -0400
+        id S233484AbjGNBzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jul 2023 21:55:12 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234208AbjGNBzM (ORCPT
+        with ESMTP id S234208AbjGNBzL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jul 2023 21:55:12 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36B88272E
+        Thu, 13 Jul 2023 21:55:11 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C97D52D50
         for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 18:55:08 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fb863edcb6so2394954e87.0
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fb9ae4cef6so2373891e87.3
         for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jul 2023 18:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689299706; x=1689904506;
+        d=linaro.org; s=google; t=1689299707; x=1689904507;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=u2R8GLPo3F8VeyUUPPYiTwsophsyopE1mypX9DU3UgI=;
-        b=cTyvGVBL4RgObtDcTFd0796p1eOUOqJOFG0zHyx16YU2FJLc99q2JJuxBZ7dst3PQt
-         NEJBkkltnMEfXVK9BwPfXnwFhJSVzgfIzwQsek/2luwle369ReetjF+MP8WFl5RdSsZG
-         bY7/0euM3Z5FTn5XubGWKY46FvfsP+jA86HbnGCkfKiUIrKP4yu2CdEKCAxJL70obhhr
-         XOBgS0bW6FS1n29isz76WYlzXc4z8dhD4QQkx2pLynWZcZ04bNwWtEIiE4Yk4VQ3OLJS
-         J2Ot0tEMMrh/4tspUvp2ocw3kwdbjKmNAUi9RcQFfDL1bxuHHpS/mYwbKVQ+W46X216x
-         ONVA==
+        bh=2JquCHecjR3dbAA9U6QNcI85J+r2eu2ORSn/fq669QI=;
+        b=pzLMHR1mAk1KQV3ru54HqO7JHXu4tv4ICgOMhdY3t6WWFqP3B2lHYq+WN//EhSKEqW
+         SmvECA2CTPOMY+OlCAufgAo3PwjQoNtil7+HXhRMypwdrOT/gpd9YGvjhR0qcbSaofTD
+         4rJoWcB65M4H3jkt88Ll3SEPdp+R0Dz6AaNgiiFj8MuRDAyhGJV4kE3SwrzDP9yBIcyf
+         aK6WSOSOG7yExB1MJhQ61ShriY47GdvJgIhWKFs0588ESpVVu1vTj4U9fxTO7URarvbO
+         umrRZyce7/22TRM+c15CEAiqeafh/XkCKtM9P2EuKLXdA9SDXngebiAV90HlkQMCVvLT
+         j+dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689299706; x=1689904506;
+        d=1e100.net; s=20221208; t=1689299707; x=1689904507;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=u2R8GLPo3F8VeyUUPPYiTwsophsyopE1mypX9DU3UgI=;
-        b=MMWEy+NasV9ROK1//8WDkmaL7ga40L4sEKuSVIQJ6gwrwRV88OQk7AtEc1k+Sl6Zqj
-         D3UJbqOLlXIZVFHZDMO0MN7d/5dVCTzmlIklGUF/eF6UdeKHFy9EesK6NZZC6BmFAFt7
-         sgkD+TubdaSHfDL8mi8FMWbvrvhzdVUmnMzc0d/q2oKC8UiCXWHGj4ihcRKNNYth0jbk
-         fk+BOokA1M/HxImday4vJb6jBkbEajKpz90AZvmG+qivCG20gDpLgeUZJLL1Txv0ldQW
-         QvOA+Yr+z31Bs8waWMCqgg+ql+J37ygoEguNwpm5Rg4Hl3WV8vhs2lXi4giMiAds/vug
-         mfHg==
-X-Gm-Message-State: ABy/qLbEgppKCzreEhe2T67ulbtTKnYREfeZt/5GGP3KD7i3R6Wr5FSL
-        bQ4cC0UR/nrWVHkZCgpySbHj7g==
-X-Google-Smtp-Source: APBJJlF7JFfjyZZuVQepOGQ8vyQFfh9XQq9rIvBg2RRVG0m0UsV23j3j+4RKC+qtbZRdhbIMPitnWg==
-X-Received: by 2002:ac2:4f16:0:b0:4fb:8f7e:907a with SMTP id k22-20020ac24f16000000b004fb8f7e907amr3127377lfr.36.1689299706349;
-        Thu, 13 Jul 2023 18:55:06 -0700 (PDT)
+        bh=2JquCHecjR3dbAA9U6QNcI85J+r2eu2ORSn/fq669QI=;
+        b=XsmsOT8uQljiyY6mqXZdJRnCSi0DaeS1EtDWHz7UTQQ2GWRfRJUtZqm6uqynW1LTPH
+         CtNYpFHu1kbdbYx/X7fiQ9sErY/8rd7PvkrzB9fRL+MFeb3SagarBF7niUau1jWFGnhX
+         cBlUKReaqpBjbEd0h1fZL4Klc8LAxcXCmET59rHHI1bx4pm6bd5v5tMQ7CDb7cbV3D3C
+         xJ1iegHfNUwNHHRKXR+sYu1CEOmHRhZ7mWXqBFcStXpo/0/KJLu8UTOWQUbBwsgOwnp7
+         /R0MHpsjzPXARKyErGV3Chak1DuhmupOeLcwh/OUTc86pFUegeVUgF38Q+jWKUP4Nq2G
+         MLkw==
+X-Gm-Message-State: ABy/qLYlRXUO7kQn5xQjiSUPOHGQQBJNG4jTpJFu7ugvIOw9fuLDx8O0
+        u+Zy4BMLv16oZD9OKdHNeKkHcg==
+X-Google-Smtp-Source: APBJJlEqY+gt/9wM8NakxtplQkZAgTGBOPl9wANXF1y1GsQH1RjFfBBArLBFEI0Hueu65lE26kdL+g==
+X-Received: by 2002:a05:6512:3b9d:b0:4fb:8c52:611 with SMTP id g29-20020a0565123b9d00b004fb8c520611mr3477364lfv.38.1689299707104;
+        Thu, 13 Jul 2023 18:55:07 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id q8-20020ac25148000000b004f3afa1767dsm1297550lfd.197.2023.07.13.18.55.05
+        by smtp.gmail.com with ESMTPSA id q8-20020ac25148000000b004f3afa1767dsm1297550lfd.197.2023.07.13.18.55.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jul 2023 18:55:05 -0700 (PDT)
+        Thu, 13 Jul 2023 18:55:06 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 3/4] drm/msm/dpu: deduplicate some (most) of SSPP sub-blocks
-Date:   Fri, 14 Jul 2023 04:55:02 +0300
-Message-Id: <20230714015503.3198971-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 4/4] drm/msm/dpu: drop DPU_HW_SUBBLK_INFO macro
+Date:   Fri, 14 Jul 2023 04:55:03 +0300
+Message-Id: <20230714015503.3198971-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230714015503.3198971-1-dmitry.baryshkov@linaro.org>
 References: <20230714015503.3198971-1-dmitry.baryshkov@linaro.org>
@@ -78,1036 +78,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As we have dropped the variadic parts of SSPP sub-blocks declarations,
-deduplicate them now, reducing memory cruft.
+As the subblock info is now mostly gone, inline and drop the macro
+DPU_HW_SUBBLK_INFO.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_5_4_sm6125.h    |  6 +-
- .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  8 +--
- .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  4 +-
- .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |  8 +--
- .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  4 +-
- .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |  4 +-
- .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  8 +--
- .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    | 16 +++---
- .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    | 20 +++----
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 56 +++----------------
- 17 files changed, 102 insertions(+), 144 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 40 ++++++++++---------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index 7d87dc2d7b1b..7aa3738d2edd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -75,7 +75,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1ac,
- 		.features = VIG_MSM8998_MASK,
--		.sblk = &msm8998_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -83,7 +83,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x1ac,
- 		.features = VIG_MSM8998_MASK,
--		.sblk = &msm8998_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -91,7 +91,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x1ac,
- 		.features = VIG_MSM8998_MASK,
--		.sblk = &msm8998_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -99,7 +99,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x1ac,
- 		.features = VIG_MSM8998_MASK,
--		.sblk = &msm8998_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -107,7 +107,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1ac,
- 		.features = DMA_MSM8998_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -115,7 +115,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1ac,
- 		.features = DMA_MSM8998_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -123,7 +123,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1ac,
- 		.features = DMA_CURSOR_MSM8998_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -131,7 +131,7 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x1ac,
- 		.features = DMA_CURSOR_MSM8998_MASK,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index 87459cf40895..02d33ea7e25f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -73,7 +73,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1c8,
- 		.features = VIG_SDM845_MASK_SDMA,
--		.sblk = &sdm845_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -81,7 +81,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x1c8,
- 		.features = VIG_SDM845_MASK_SDMA,
--		.sblk = &sdm845_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -89,7 +89,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x1c8,
- 		.features = VIG_SDM845_MASK_SDMA,
--		.sblk = &sdm845_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -97,7 +97,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x1c8,
- 		.features = VIG_SDM845_MASK_SDMA,
--		.sblk = &sdm845_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -105,7 +105,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1c8,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -113,7 +113,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1c8,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -121,7 +121,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1c8,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -129,7 +129,7 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x1c8,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-index 96c542d620f1..7659ce96548f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -106,7 +106,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -114,7 +114,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f0,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -122,7 +122,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f0,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -130,7 +130,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f0,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -138,7 +138,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x1f0,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-index 4edc1060f05c..2d054c8ccf1f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-@@ -81,7 +81,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -89,7 +89,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -97,7 +97,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -105,7 +105,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x1f0,
- 		.features = VIG_SDM845_MASK,
--		.sblk = &sdm845_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed3,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -113,7 +113,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f0,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -121,7 +121,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f0,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -129,7 +129,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f0,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -137,7 +137,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x1f0,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-index b3bfb897327b..dae37b2ccfef 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-@@ -75,7 +75,7 @@ static const struct dpu_sspp_cfg sm6125_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f0,
- 		.features = VIG_SM6125_MASK,
--		.sblk = &sm6125_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed3lite,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -83,7 +83,7 @@ static const struct dpu_sspp_cfg sm6125_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f0,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -91,7 +91,7 @@ static const struct dpu_sspp_cfg sm6125_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f0,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index f8910dbc1952..854a4b49765b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK_SDMA,
--		.sblk = &sm8250_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK_SDMA,
--		.sblk = &sm8250_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK_SDMA,
--		.sblk = &sm8250_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -106,7 +106,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK_SDMA,
--		.sblk = &sm8250_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -114,7 +114,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -122,7 +122,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -130,7 +130,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -138,7 +138,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-index 8c046eacec7c..c358b161bedc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-@@ -58,7 +58,7 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sc7180_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -66,7 +66,7 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -74,7 +74,7 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-index 473cdbace322..6e4542100205 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-@@ -46,7 +46,7 @@ static const struct dpu_sspp_cfg sm6115_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm6115_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -54,7 +54,7 @@ static const struct dpu_sspp_cfg sm6115_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-index ac716c8dbd7f..14fa820a8a06 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-@@ -66,7 +66,7 @@ static const struct dpu_sspp_cfg sm6350_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sc7180_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -74,7 +74,7 @@ static const struct dpu_sspp_cfg sm6350_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sm6350_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sm6350_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-index 7d9fdd807695..f1ee8bab54af 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-@@ -43,7 +43,7 @@ static const struct dpu_sspp_cfg qcm2290_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_QCM2290_MASK,
--		.sblk = &qcm2290_vig_sblk_0,
-+		.sblk = &qcm2290_vig_sblk,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -51,7 +51,7 @@ static const struct dpu_sspp_cfg qcm2290_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &qcm2290_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-index 5f36f9468853..8cdece6cd80d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-@@ -47,7 +47,7 @@ static const struct dpu_sspp_cfg sm6375_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm6115_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -55,7 +55,7 @@ static const struct dpu_sspp_cfg sm6375_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index b22e6b97c993..078cb32f90bf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -80,7 +80,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -88,7 +88,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -96,7 +96,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -104,7 +104,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x1f8,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -112,7 +112,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -120,7 +120,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -128,7 +128,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -136,7 +136,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 4b2cc62b07ea..0c7662a68232 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -64,7 +64,7 @@ static const struct dpu_sspp_cfg sc7280_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f8,
- 		.features = VIG_SC7280_MASK_SDMA,
--		.sblk = &sc7280_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4_rot_v2,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -72,7 +72,7 @@ static const struct dpu_sspp_cfg sc7280_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f8,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -80,7 +80,7 @@ static const struct dpu_sspp_cfg sc7280_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -88,7 +88,7 @@ static const struct dpu_sspp_cfg sc7280_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f8,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index ec959f85ae2a..322957c61891 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x2ac,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x2ac,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x2ac,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -106,7 +106,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x2ac,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -114,7 +114,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x2ac,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -122,7 +122,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x2ac,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -130,7 +130,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x2ac,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -138,7 +138,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x2ac,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 98a4aaef94d2..ae6d050aa4a9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x32c,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x32c,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x32c,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -106,7 +106,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x32c,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8250_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -114,7 +114,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x32c,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -122,7 +122,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x32c,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -130,7 +130,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x32c,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -138,7 +138,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x32c,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index 7de9eccf9181..6aea57754b15 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -83,7 +83,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x344,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8550_vig_sblk_0,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-@@ -91,7 +91,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x344,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8550_vig_sblk_1,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-@@ -99,7 +99,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x344,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8550_vig_sblk_2,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-@@ -107,7 +107,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x344,
- 		.features = VIG_SC7180_MASK,
--		.sblk = &sm8550_vig_sblk_3,
-+		.sblk = &dpu_vig_sblk_qseed4,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
- 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-@@ -115,7 +115,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x344,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_0,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-@@ -123,7 +123,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x344,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_1,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-@@ -131,7 +131,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x344,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_2,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-@@ -139,7 +139,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x344,
- 		.features = DMA_SDM845_MASK,
--		.sblk = &sdm845_dma_sblk_3,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-@@ -147,7 +147,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_12", .id = SSPP_DMA4,
- 		.base = 0x2c000, .len = 0x344,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sm8550_dma_sblk_4,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 14,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA4,
-@@ -155,7 +155,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
- 		.name = "sspp_13", .id = SSPP_DMA5,
- 		.base = 0x2e000, .len = 0x344,
- 		.features = DMA_CURSOR_SDM845_MASK,
--		.sblk = &sm8550_dma_sblk_5,
-+		.sblk = &dpu_dma_sblk,
- 		.xin_id = 15,
- 		.type = SSPP_TYPE_DMA,
- 		.clk_ctrl = DPU_CLK_CTRL_DMA5,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 63304c2ee6d9..cf185f58ffbb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -291,66 +291,25 @@ static const uint32_t wb2_formats[] = {
- 	.virt_num_formats = ARRAY_SIZE(plane_formats), \
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index cc1800e324dd..61c6caf1b185 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -271,48 +271,50 @@ enum {
+ 	u32 len; \
+ 	unsigned long features
  
--static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
--static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
--static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
--static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
+-/**
+- * MACRO DPU_HW_SUBBLK_INFO - information of HW sub-block inside DPU
+- * @name:              string name for debug purposes
+- * @base:              offset of this sub-block relative to the block
+- *                     offset
+- * @len                register block length of this sub-block
+- */
+-#define DPU_HW_SUBBLK_INFO \
+-	char name[DPU_HW_BLK_NAME_LEN]; \
+-	u32 base; \
+-	u32 len
 -
- static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
- 	.rot_maxheight = 1088,
- 	.rot_num_formats = ARRAY_SIZE(rotation_v2_formats),
- 	.rot_format_list = rotation_v2_formats,
+ /**
+  * struct dpu_scaler_blk: Scaler information
+- * @info:   HW register and features supported by this sub-blk
++ * @name: string name for debug purposes
++ * @base: offset of this sub-block relative to the block offset
++ * @len: register block length of this sub-block
+  * @version: qseed block revision
+  */
+ struct dpu_scaler_blk {
+-	DPU_HW_SUBBLK_INFO;
++	char name[DPU_HW_BLK_NAME_LEN];
++	u32 base;
++	u32 len;
+ 	u32 version;
  };
  
--static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
--static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
--static const struct dpu_sspp_sub_blks sdm845_vig_sblk_2 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
--static const struct dpu_sspp_sub_blks sdm845_vig_sblk_3 =
-+static const struct dpu_sspp_sub_blks dpu_vig_sblk_qseed3 =
- 				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3);
+ struct dpu_csc_blk {
+-	DPU_HW_SUBBLK_INFO;
++	char name[DPU_HW_BLK_NAME_LEN];
++	u32 base;
++	u32 len;
+ };
  
--static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK;
--static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK;
--static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK;
--static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK;
-+static const struct dpu_sspp_sub_blks dpu_vig_sblk_qseed3lite =
-+				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3LITE);
+ /**
+  * struct dpu_pp_blk : Pixel processing sub-blk information
+- * @info:   HW register and features supported by this sub-blk
++ * @name: string name for debug purposes
++ * @base: offset of this sub-block relative to the block offset
++ * @len: register block length of this sub-block
+  * @version: HW Algorithm version
+  */
+ struct dpu_pp_blk {
+-	DPU_HW_SUBBLK_INFO;
++	char name[DPU_HW_BLK_NAME_LEN];
++	u32 base;
++	u32 len;
+ 	u32 version;
+ };
  
--static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
-+static const struct dpu_sspp_sub_blks dpu_vig_sblk_qseed4 =
- 				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
+ /**
+  * struct dpu_dsc_blk - DSC Encoder sub-blk information
+- * @info:   HW register and features supported by this sub-blk
++ * @name: string name for debug purposes
++ * @base: offset of this sub-block relative to the block offset
++ * @len: register block length of this sub-block
+  */
+ struct dpu_dsc_blk {
+-	DPU_HW_SUBBLK_INFO;
++	char name[DPU_HW_BLK_NAME_LEN];
++	u32 base;
++	u32 len;
+ };
  
--static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
-+static const struct dpu_sspp_sub_blks dpu_vig_sblk_qseed4_rot_v2 =
- 			_VIG_SBLK_ROT(DPU_SSPP_SCALER_QSEED4, &dpu_rot_sc7280_cfg_v2);
- 
--static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--
--static const struct dpu_sspp_sub_blks sm6125_vig_sblk_0 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED3LITE);
--
--static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--
--static const struct dpu_sspp_sub_blks sm8550_vig_sblk_0 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--static const struct dpu_sspp_sub_blks sm8550_vig_sblk_1 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--static const struct dpu_sspp_sub_blks sm8550_vig_sblk_2 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--static const struct dpu_sspp_sub_blks sm8550_vig_sblk_3 =
--				_VIG_SBLK(DPU_SSPP_SCALER_QSEED4);
--static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = _DMA_SBLK;
--static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK;
-+static const struct dpu_sspp_sub_blks dpu_dma_sblk = _DMA_SBLK;
- 
- #define _VIG_SBLK_NOSCALE \
- 	{ \
-@@ -362,8 +321,7 @@ static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK;
- 	.virt_num_formats = ARRAY_SIZE(plane_formats), \
- 	}
- 
--static const struct dpu_sspp_sub_blks qcm2290_vig_sblk_0 = _VIG_SBLK_NOSCALE;
--static const struct dpu_sspp_sub_blks qcm2290_dma_sblk_0 = _DMA_SBLK;
-+static const struct dpu_sspp_sub_blks qcm2290_vig_sblk = _VIG_SBLK_NOSCALE;
- 
- /*************************************************************
-  * MIXER sub blocks config
+ /**
 -- 
 2.39.2
 
