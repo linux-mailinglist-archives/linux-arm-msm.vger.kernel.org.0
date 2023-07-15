@@ -2,149 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30BAA7547F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 11:26:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40E2F75488A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 14:36:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230290AbjGOJ0y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 05:26:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55718 "EHLO
+        id S229935AbjGOMg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 08:36:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbjGOJ0w (ORCPT
+        with ESMTP id S229472AbjGOMgZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 05:26:52 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A156B2D75;
-        Sat, 15 Jul 2023 02:26:50 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-1ba4460f0a4so1016438fac.0;
-        Sat, 15 Jul 2023 02:26:50 -0700 (PDT)
+        Sat, 15 Jul 2023 08:36:25 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A9E73A86
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 05:36:23 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b73564e98dso42685281fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 05:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689413210; x=1692005210;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wHphB4LnIXM8B5KTzxaE1knTLhvmv4UUsDUmEXJtUjc=;
-        b=KNtkg40Donc1RJ+Y/N6bMmujMSl9cywEa6fXVSQYqV4W4lT8G1IFlO5DKCTqezy9NY
-         lefwY54PRhNWProidCgY7SJny7AEfavu3g+BjFgAL5dZzNMIElbAwgo4QZnm4OLwjy+V
-         CVJWSo1L7gWOhYkpGKP0r9oukax6+UlfkfofBx8xxPcLUf3ek7zbTjABn/JHDdvTWXCu
-         WWDX31kpkxyfmd7Q/WE+0i7y3grMAoIl2p8ABV+V0g6ZwAueUBzPNbjvXwLF4/1Voo58
-         THpoQ4ecU8W2lHElPdLC420Acx2PDSK/3KkrYlQGhj1Cbwmy3bV4wSFCbbKfSoIqtJyV
-         8cKw==
+        d=linaro.org; s=google; t=1689424581; x=1692016581;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OQh1RqnYtSQG/u4OzhJ8MZUxL/+/aRY/L+fqZJTYF4g=;
+        b=nT4Bg8WYmt+w7liTUcMwOy0n7JPxVjemZTuHxAfPlX6sDs4qi9R91DYWZr0mE4q0Vt
+         XKolK/2BgsetcbJ2A3jICOptLBHtcJhc1aG5l35usGaC/pXzVaP+/09mPB9us7kGWddm
+         7mNqDG9wfwAblk5JuGqvqS+5H18tub6PCIWr+mqrPPixy46quXe5miq8Reowf52xKspA
+         jPiZPL9KMxvEQ9EtbEBSPOb8DMVZ4CUTwLG0ODV3xYlqSpNkI92Izfw0N7LgxOu8JzVW
+         CEcMwhk9gWv+Hy7GYoxMnSX8V4avbWdaAL2VwMMFEKdxRgtZfy+N9r8tneTpcShU5swS
+         Q0Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689413210; x=1692005210;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wHphB4LnIXM8B5KTzxaE1knTLhvmv4UUsDUmEXJtUjc=;
-        b=JiGU52lQ8FfyJkp6QjJQSRzyHbk7kqyAUFscruPUEYIw7RNWvZZ21NHMBrIeQbhqD1
-         6GtMln/NTVUZw49joEErfXV/f6tgMdbGdAZnOfAP2YKB4uuCv6bIGP4HTyjTqlGjSoac
-         grXLh0eefJph+lUq1Z4xoT1vHI8tR8OZP223JRtIXP5ozuQBw1UGNmT266Qc7uFcqybh
-         vajWY4OVbOaEcuuvLzlH5too7GCT7CssvOXAt81dSvNxxrimlcQBf3SlZbhnQKh3/LCx
-         DHTC23/Jwgn4onqFXjA+V5CvyStnfidFSV8/OCeIFgGH00MADcc+bbkWEbELFNACTjkj
-         NYRA==
-X-Gm-Message-State: ABy/qLaY+efmPdXrwZqHx79HVnpLXMlNT08ZV5WWBpmQIssnVrzkVTFm
-        vcyCdAU0RNP7yc8sKOtjzkCWTdpLZNeNCQprWPM=
-X-Google-Smtp-Source: APBJJlGwdJmxyzGjSGIAgoqFi7CGlWiMJBmcsPBzo9lxW5BLyYxxPOYfHlixbBaupkZxkAV8b0mEWpZJ8j8VMX6oWRI=
-X-Received: by 2002:a05:6870:328d:b0:177:a158:9ef6 with SMTP id
- q13-20020a056870328d00b00177a1589ef6mr6679986oac.52.1689413209848; Sat, 15
- Jul 2023 02:26:49 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689424581; x=1692016581;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OQh1RqnYtSQG/u4OzhJ8MZUxL/+/aRY/L+fqZJTYF4g=;
+        b=SG/D9RgsUUedmN/wowZvkM6xWIBnF/Ld0QlGSPLadWl3fya6nck1iJPTzEBQoCZwQA
+         efpJw/ERy9YOZa76sYg2x9rjMjOfeMi6Wc/sj/4S/5ZFOqjYUZ6OaYMH72Z1/Pmk9UAA
+         RAac6VTY58Og/KjS7NXieCIeCu0Ya7pHcf1ONUG0E4tw0Ho3dSbt/Nm3qRtzqNV3Qr3c
+         ip1K9kYrnXq0zYWwSTYkyGSpvd9nMBdxG9HK0GlczLr1IVuKJf99U8LPa7GFtAYNhayf
+         495kxTAmmZ8oKrRNQ5dt0FP/hywPqmF1a7DLyMC1zzf++I0Q8IZDlHs57QkfamRvlh6P
+         KaDw==
+X-Gm-Message-State: ABy/qLZH7C/vev0H9xflWCsipnvPhb4Ao/JU0Las4Tc6ZQnn08aIHdFS
+        DIebKD1MF5PcDd5TNgwmOsnMkA==
+X-Google-Smtp-Source: APBJJlGk2A5i2kVSs9kXxMPfC00oOdJikOH/eqNKi7gO/8COjEdmJWtOg99/mke4kY2DyOA1vU4+Dw==
+X-Received: by 2002:a2e:9159:0:b0:2b6:ece0:a3c1 with SMTP id q25-20020a2e9159000000b002b6ece0a3c1mr6016039ljg.35.1689424581496;
+        Sat, 15 Jul 2023 05:36:21 -0700 (PDT)
+Received: from [192.168.1.101] (abxi167.neoplus.adsl.tpnet.pl. [83.9.2.167])
+        by smtp.gmail.com with ESMTPSA id n17-20020a2e8791000000b002b6ca937d60sm2487484lji.8.2023.07.15.05.36.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 15 Jul 2023 05:36:20 -0700 (PDT)
+Message-ID: <cfafdde2-4ded-517f-7c69-a751e53984e3@linaro.org>
+Date:   Sat, 15 Jul 2023 14:36:18 +0200
 MIME-Version: 1.0
-References: <20230714174841.4061919-1-robh@kernel.org>
-In-Reply-To: <20230714174841.4061919-1-robh@kernel.org>
-From:   Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Date:   Sat, 15 Jul 2023 11:26:38 +0200
-Message-ID: <CAMhs-H-6tAV-+U-4zZDKs47eKCJr+kZ-Op8vR4SyJyE5LK_2aw@mail.gmail.com>
-Subject: Re: [PATCH] phy: Explicitly include correct DT includes
-To:     Rob Herring <robh@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Justin Chen <justin.chen@broadcom.com>,
-        Al Cooper <alcooperx@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Ioana Ciornei <ioana.ciornei@nxp.com>,
-        Yu Chen <chenyu56@huawei.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lubomir Rintel <lkundrak@v3.sk>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Chunfeng Yun <chunfeng.yun@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Wolfgang Grandegger <wg@grandegger.com>,
-        Marc Kleine-Budde <mkl@pengutronix.de>,
-        Alban Bedel <albeu@free.fr>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        JC Kuo <jckuo@nvidia.com>, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        netdev@vger.kernel.org, linux-usb@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 4/6] arm64: dts: qcom: ipq5332: Add USB related nodes
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, gregkh@linuxfoundation.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        arnd@arndb.de, geert+renesas@glider.be, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, rafal@milecki.pl,
+        quic_srichara@quicinc.com, quic_varada@quicinc.org,
+        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <cover.1689160067.git.quic_varada@quicinc.com>
+ <1f99805b6437aa8d6eaa4663e8d27b98ee595f00.1689160067.git.quic_varada@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1f99805b6437aa8d6eaa4663e8d27b98ee595f00.1689160067.git.quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 14, 2023 at 7:49=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
-:
->
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
+On 12.07.2023 13:38, Varadarajan Narayanan wrote:
+> Add USB phy and controller nodes.
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  drivers/phy/ralink/phy-mt7621-pci.c                   | 3 +--
+> v4:
+> 	Change node name
+> 	Remove blank line
+> 	'make CHECK_DTBS=y DT_SCHEMA_FILES=qcom qcom/ipq5332-rdp441.dtb' passed
+DT_SCHEMA_FILES accepts yaml files
 
-Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-
-Thanks,
-    Sergio Paracuellos
+Konrad
+> v1:
+> 	Rename phy node
+> 	Change compatible from m31,ipq5332-usb-hsphy -> qcom,ipq5332-usb-hsphy
+> 	Remove 'qscratch' from phy node
+> 	Fix alignment and upper-case hex no.s
+> 	Add clock definition for the phy
+> 	Remove snps,ref-clock-period-ns as it is not used. dwc3_ref_clk_period()
+> 	in dwc3/core.c takes the frequency from ref clock and calculates fladj
+> 	as appropriate.
+> ---
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 53 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> index 8bfc2db..8118356 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> @@ -405,6 +405,59 @@
+>  				status = "disabled";
+>  			};
+>  		};
+> +
+> +		usbphy0: usb-phy@7b000 {
+> +			compatible = "qcom,ipq5332-usb-hsphy";
+> +			reg = <0x0007b000 0x12c>;
+> +
+> +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
+> +			clock-names = "cfg_ahb";
+> +
+> +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		usb2: usb2@8a00000 {
+> +			compatible = "qcom,ipq5332-dwc3", "qcom,dwc3";
+> +			reg = <0x08af8800 0x400>;
+> +
+> +			interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hs_phy_irq";
+> +
+> +			clocks = <&gcc GCC_USB0_MASTER_CLK>,
+> +				 <&gcc GCC_SNOC_USB_CLK>,
+> +				 <&gcc GCC_USB0_SLEEP_CLK>,
+> +				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +			clock-names = "core",
+> +				      "iface",
+> +				      "sleep",
+> +				      "mock_utmi";
+> +
+> +			resets = <&gcc GCC_USB_BCR>;
+> +
+> +			qcom,select-utmi-as-pipe-clk;
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +
+> +			status = "disabled";
+> +
+> +			usb2_0_dwc: usb@8a00000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0x08a00000 0xe000>;
+> +				clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+> +				clock-names = "ref";
+> +				interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
+> +				usb-phy = <&usbphy0>;
+> +				tx-fifo-resize;
+> +				snps,is-utmi-l1-suspend;
+> +				snps,hird-threshold = /bits/ 8 <0x0>;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_u3_susphy_quirk;
+> +			};
+> +		};
+>  	};
+>  
+>  	timer {
