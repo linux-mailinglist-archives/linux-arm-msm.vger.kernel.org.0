@@ -2,107 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11B4F7549BA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 17:17:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 745F27549C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 17:25:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjGOPRi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 11:17:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60426 "EHLO
+        id S229639AbjGOPZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 11:25:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbjGOPRh (ORCPT
+        with ESMTP id S229584AbjGOPZr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 11:17:37 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FD172D7B;
-        Sat, 15 Jul 2023 08:17:36 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36FEpcVw010251;
-        Sat, 15 Jul 2023 15:17:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pI3A5ie5nsmRsQRouwoNLfld9D1VUu37GlPSLQyEGuQ=;
- b=WXbyuU9etsYl2ZUK/dlGxR7l3/JN4HsojE8RgA91aWg/czLsSfC/t/2qPN1b5bFxlgDv
- 5a82F2nXwrDgr1r57mahncM+ixs++jWCUK0OtlwNo39t7OzvSVnwyDWcYQoB6BKXjXsg
- s6N1vgsBDZPlbLcaHCbIN6+/28cEWEj3tmq7slGNonWKvhv6DOGNVmi3q0B1Kq/wQPkq
- HGQR/6gYryIVSsDYl0Jy+W07sf5RFsEumzar3ipmna0C+rk9hWUO3gcBCutvcjmKaaLh
- Y1O9msKzC4Hf/O9AFzQ6dQ4m9acjbju1nfaB7WbEi8gnMxh4m0KCP2W6bg0Zxi53RbfX OQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3run0erg5u-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 15 Jul 2023 15:17:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36FFHWD2025751
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 15 Jul 2023 15:17:32 GMT
-Received: from [10.216.17.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sat, 15 Jul
- 2023 08:17:27 -0700
-Message-ID: <9b8c6235-838f-1264-865f-7a03889abc2f@quicinc.com>
-Date:   Sat, 15 Jul 2023 20:47:18 +0530
+        Sat, 15 Jul 2023 11:25:47 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE2530C4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 08:25:46 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b6f943383eso43636551fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 08:25:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689434744; x=1692026744;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=shbPr05UiyjsE2A12Cz8ioECY1FGTYKqb/D6v0BvgSo=;
+        b=i2KxqU3iddA1LkaWoohbGdBZvuxZGglZMbr9ibabvadtO9Ujh8BinQX1i9L16117NO
+         2mlvPC1KNgtdtE55aXXzPdzWcgt/HGf/EPQUbCBHcyl8CiFLLhja5eKiROdABtIKOr7e
+         nfNOMfclMP0Ddl8zXN4pZCn8oF0Cy505ew+/TZmCKuXTTbCP5ExOnNtdae0V24Yo+Q3L
+         vD+ajVij5d0IryEJmBl6FT1DETDk7NpPnvKk1R9D9w7TFNAOwaND0efQV2iVhJaL8HXY
+         W7A3zU2x2bY2QSm3K6DcolOFzjHI5ZXQbEd/sb9s3SxRFkUYGmMKacihD7wya5y4gm5N
+         p0kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689434744; x=1692026744;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=shbPr05UiyjsE2A12Cz8ioECY1FGTYKqb/D6v0BvgSo=;
+        b=ZW6lxNHHz2HJmyOXHM+DfpVAYL4MaU6vcpWym7x2b4FebYZDNOg3o9OOxahsEMYzN1
+         8xiTEf89prmRFdYgeufAeVD2FROaCl3pTEhSfUWJ9MBGetI5z3OoAPN5NqnViCtQSxCe
+         3v1QJhFrg7YNrNB2Ni8aidREKrYKA9dhc8jPKHUaCCJwsWXYKXTdtcv6mkdnqMeyg00x
+         ias8ShltMa49SDUNBDiekyCy+/zJaOUi8Q02/5y0csse/+SqimMFNi2agMPveeSzTdBU
+         PKnskgxTsirKVNpyCYudTdQSUkl5MlT9jzFy3RhiPnDS07PSZNw3sTsSw8JpJMPzOPwA
+         gNcw==
+X-Gm-Message-State: ABy/qLb15Zecdru5jYPmJQ+l+/pMOw4AZqnPy638keDv1ry9ukbfIiNk
+        t2yCoqGhfYiStVCWX/9Dhw+dfw==
+X-Google-Smtp-Source: APBJJlHhCxv3Wc+ToD0/nrTtVykhu4juNcrw0mAuwm7FsWE2vsrqxZ5Fi+7mjiJEsHioGiESVp9Mug==
+X-Received: by 2002:a2e:3a13:0:b0:2b6:cd40:21ad with SMTP id h19-20020a2e3a13000000b002b6cd4021admr5215687lja.37.1689434744394;
+        Sat, 15 Jul 2023 08:25:44 -0700 (PDT)
+Received: from [192.168.1.101] (abxi167.neoplus.adsl.tpnet.pl. [83.9.2.167])
+        by smtp.gmail.com with ESMTPSA id s20-20020a2e98d4000000b002b70aff9a97sm2552976ljj.16.2023.07.15.08.25.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 15 Jul 2023 08:25:43 -0700 (PDT)
+Message-ID: <ff7fac16-deaf-4e71-91aa-b2ea66098c9d@linaro.org>
+Date:   Sat, 15 Jul 2023 17:25:41 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 1/2] clk: qcom: ipq5332: drop the mem noc clocks
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 0/2] DSIPHY RPM
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_saahtoma@quicinc.com>
-References: <20230710102807.1189942-1-quic_kathirav@quicinc.com>
- <20230710102807.1189942-2-quic_kathirav@quicinc.com>
- <b8b2db1b-dbfc-591e-f074-1366e5ac576a@linaro.org>
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <b8b2db1b-dbfc-591e-f074-1366e5ac576a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CFfI2QgrRk7aZ3pNaD7LVpj-SVuy-XZE
-X-Proofpoint-ORIG-GUID: CFfI2QgrRk7aZ3pNaD7LVpj-SVuy-XZE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-15_08,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxscore=0 impostorscore=0 adultscore=0 spamscore=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=563
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307150144
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230620-topic-dsiphy_rpm-v2-0-a11a751f34f0@linaro.org>
+ <168908465045.1869384.1893558597710112842.b4-ty@linaro.org>
+ <3b4865d7-2730-1ea9-d75b-a015d27aa84d@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <3b4865d7-2730-1ea9-d75b-a015d27aa84d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 7/15/2023 7:40 PM, Konrad Dybcio wrote:
-> On 10.07.2023 12:28, Kathiravan T wrote:
->> Due to the recent design changes, all the mem noc clocks will be
->> configured by the bootloaders and it will be access protected by the TZ
->> firmware. So drop these clocks from the GCC driver.
+On 11.07.2023 18:31, Dmitry Baryshkov wrote:
+> On 11/07/2023 17:21, Dmitry Baryshkov wrote:
 >>
->> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->> ---
-> Are there any IPQ5332s outside Qualcomm labs that will presumably
-> never get that TZ update?
->
-> Konrad
+>> On Tue, 20 Jun 2023 13:43:19 +0200, Konrad Dybcio wrote:
+>>> Some recent SoCs use power rails that we model as GENPDs to power the
+>>> DSIPHY. This series attempts to make such configurations suspendable.
+>>>
+>>> Tested on SM6375.
+>>>
+>>>
+>>
+>> Applied, thanks!
+>>
+>> [1/2] drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks
+>>        https://gitlab.freedesktop.org/lumag/msm/-/commit/a402e0e61b75
+>> [2/2] drm/msm/dsi: Enable runtime PM
+>>        https://gitlab.freedesktop.org/lumag/msm/-/commit/4e905c2acc9d
+> 
+> Unfortunately this series breaks our CI, see [1], [2]. I had to remove these patches for now.
+> 
+> I suppose this is either because of a probe deferral or because of having subset of drivers built as module. Konrad, could you please take a look?
+I see no reason why it would break things :/
 
-No, this TZ update will shipped as part of the next releases.
+You can see that rpmhpd sync_state has not completed, which means all
+PDs should still be pinned at max vote..
 
-Thanks, Kathiravan T.
+Can we somehow retest it?
 
+If it still fails, can you try enabling runtime pm on dispcc and hooking
+up vddcx?
 
+Konrad
+> 
+> [1] https://gitlab.freedesktop.org/drm/msm/-/jobs/45271774
+> [2] https://gitlab.freedesktop.org/drm/msm/-/jobs/45271775
+> 
