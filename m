@@ -2,86 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD8AD7549D6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 17:37:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C37DA7549E6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 17:48:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbjGOPh5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 11:37:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35792 "EHLO
+        id S230190AbjGOPsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 11:48:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbjGOPh5 (ORCPT
+        with ESMTP id S229441AbjGOPsx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 11:37:57 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D22E30C5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 08:37:55 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4fb41682472so4755675e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 08:37:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689435474; x=1692027474;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S+djRnUBFZhHAwtTKh2Fe3WK0yWfTrmhbES8+t2drAg=;
-        b=F/WKXblS2846S3vhtFpEb05kbGFFIlENzJ3Y4pcrfI+SbTk2Y4XjeUHeOmPFoQ6m1O
-         x80D1f1lE/oBOzx4W4O1p6tc67btDVnx+2hRulVnDMTiwRXyZQAf9uTj6ZZUtuQ0hAI6
-         yfHqyBm4seFNzJXZZK2fZloLVhR8leFeT9tBIW4yX2I/LTStYE2adgLNut/y49pqkE35
-         MGh8Nro99t/oT8bcG+4SdhtWqUs4KCesMWHLWoD3CjvFEDu/0xpQAYX8BmgCqP4l9nMu
-         1U424Wh7sGKB1YCW3gbgD3V6rlXd60Ajl9A14Wi0fImrx5I7WNAlfiNMlZ2/PcB00GN7
-         EHQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689435474; x=1692027474;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S+djRnUBFZhHAwtTKh2Fe3WK0yWfTrmhbES8+t2drAg=;
-        b=VR2Ko7B4eFtiY5RwoFOBUTTxy7ra+ep+tiesLwCemm0KPnAOcWUleiVdrq6/Cr21yi
-         k20AlVGURBI+r4mUACoF/odyjUXqx76Mph/DiwGJMnNBBFncqQejmZ4MU2IXr2gCvSzs
-         6anZzjsX3dirxqv64JQ5AV41AYTB9RnxFAFQfxQW1np1eoSo4wP5doJp1yQwNPthiEmh
-         9Ky3VdUDpx1fKLGR4GFV919msLNpLxaqjwT209Y4SCcy5MMJKJBFR3L9Ceqa0OdqzKHl
-         XEQ5yu6ynjEqArxd7mb+nwt/2UKdCk5AaAY/slJpyUQ8A9WfE4OgLFNS1Mbat8jM4S4q
-         JtzQ==
-X-Gm-Message-State: ABy/qLZJsGE4AzGwthe4XeNrqVP4EFQXO2EosewlTJntMdTJ1s9xdT0N
-        WKxdKzkwUwd9L3QuT8c57/ev5w==
-X-Google-Smtp-Source: APBJJlGnvRzysI6qYnA0eg/NVocOpM6/Wa4ri3O3mzrcMONorQKIeHbh9d9MmdlI//c6wMp6j9RuFg==
-X-Received: by 2002:a05:6512:3f6:b0:4fb:9f93:365f with SMTP id n22-20020a05651203f600b004fb9f93365fmr6291643lfq.38.1689435473901;
-        Sat, 15 Jul 2023 08:37:53 -0700 (PDT)
-Received: from [192.168.1.101] (abxi167.neoplus.adsl.tpnet.pl. [83.9.2.167])
-        by smtp.gmail.com with ESMTPSA id q30-20020ac2511e000000b004fbdeca7b79sm1925808lfb.247.2023.07.15.08.37.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Jul 2023 08:37:53 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Sat, 15 Jul 2023 17:37:52 +0200
-Subject: [PATCH v2] media: camss: Intepret OF graph connections more
- sensibly
+        Sat, 15 Jul 2023 11:48:53 -0400
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A162729;
+        Sat, 15 Jul 2023 08:48:52 -0700 (PDT)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 713BCFF802;
+        Sat, 15 Jul 2023 15:48:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1689436130;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Un+ufkhrXfZqLrVbDU6HeKyr3kcyHpaOW08JuHJOTAQ=;
+        b=FqWexEyC5/ncjoaJwBj4G53wiu8VDHhDUUmjeiui8D15gl2UK0/z1/JhojGPaXb7myBHt0
+        +m0+8luEUYwOnP8t5sbvBF01u6wPPDP8ekc+E+xiI5dXBEOsZg27UBqN6/Cx2Ykd/d38zY
+        Uxi4xN1DsWH3172+Q9prP3vN3AfuAUnTk0v/cqkvsBuezHKkylG8hSiaysYLY7BLSvc/OK
+        X/4nONxCNA9EoFF0A6ADkUMqN/54fCJrQYuzSAtxsbm00dNaTjHSMLlKGNk9Pa5uVm4JDa
+        KtHa+BsMQbwWPxRZR03AmaWLttL4j4jDIfE8mWV10b4zCsVL6+eAIvNGObilXQ==
+Date:   Sat, 15 Jul 2023 17:48:42 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Han Xu <han.xu@nxp.com>,
+        Harvey Hunt <harveyhuntnexus@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Liang Yang <liang.yang@amlogic.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Michal Simek <michal.simek@amd.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Heiko Stuebner <heiko@sntech.de>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Pratyush Yadav <pratyush@kernel.org>,
+        Michael Walle <michael@walle.cc>, devicetree@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH] mtd: Explicitly include correct DT includes
+Message-ID: <20230715174804.6fc2a4c1@xps-13>
+In-Reply-To: <20230714174751.4060439-1-robh@kernel.org>
+References: <20230714174751.4060439-1-robh@kernel.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230614-topic-camss_grpah-v2-1-57d9d5e49038@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAE+9smQC/32NQQrCMBAAv1L2bCRJ00o9+Q8pso1Js1CTsqlFK
- f270Qd4nIFhNsiOyWU4VxuwWylTigX0oQIbMI5O0L0waKlr2SojljSTFRYfOd9GnjGIuvMdGn8
- yWloo3YDZiYEx2lDK+JymImd2nl6/0bUvHCgvid+/76q+9t9iVUKJxpuhUW2tpMfLRBE5HROP0
- O/7/gEKWGVNyAAAAA==
-To:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1689435472; l=1614;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=IWx/Y65eu/NJcdTnG8aoRNmX5OhoUqPGvpZUr4ZM0kY=;
- b=YaoNNiOpYTAMnAIVRNlPWQcOOz1V+Rx9Cdsp/R84UIJLHhRbIeCqOvBhq1+8s3SEE9pgg6i/M
- jrYxMVUClulDsZVtzq87Uxvi5GyMWV97Pakq5etA31OhcYG6QKxXGTW
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,56 +81,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Not all endpoints of camss have to be populated. In fact, most of the
-time they shouldn't be as n-th auxilliary cameras are usually ewaste.
+Hi Rob,
 
-Don't fail probing the entire camss even even one endpoint is not
-linked and throw an error when none is found.
+robh@kernel.org wrote on Fri, 14 Jul 2023 11:47:49 -0600:
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-Changes in v2:
-- Use if-else instead of the ternary operator (Bryan)
-- Drop "RFC"
-- Link to v1: https://lore.kernel.org/r/20230614-topic-camss_grpah-v1-1-5f4b516310fa@linaro.org
----
- drivers/media/platform/qcom/camss/camss.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 1ef26aea3eae..8b75197fa5d7 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1084,9 +1084,8 @@ static int camss_of_parse_ports(struct camss *camss)
- 
- 		remote = of_graph_get_remote_port_parent(node);
- 		if (!remote) {
--			dev_err(dev, "Cannot get remote parent\n");
--			ret = -EINVAL;
--			goto err_cleanup;
-+			of_node_put(node);
-+			continue;
- 		}
- 
- 		csd = v4l2_async_nf_add_fwnode(&camss->notifier,
-@@ -1105,7 +1104,10 @@ static int camss_of_parse_ports(struct camss *camss)
- 		num_subdevs++;
- 	}
- 
--	return num_subdevs;
-+	if (num_subdevs)
-+		return num_subdevs;
-+
-+	return -EINVAL;
- 
- err_cleanup:
- 	of_node_put(node);
+				 was?
 
----
-base-commit: 7c2878be573282a9961c359b806ccf70afe1a6b6
-change-id: 20230614-topic-camss_grpah-39f9a4f7420c
+Otherwise LGTM, I will fix it when applying.
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
+>=20
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
+Thanks,
+Miqu=C3=A8l
