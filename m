@@ -2,127 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1F5F7549A0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 17:11:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE3367549AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 17:12:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbjGOPLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 11:11:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58522 "EHLO
+        id S229919AbjGOPMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 11:12:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbjGOPLR (ORCPT
+        with ESMTP id S229574AbjGOPMV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 11:11:17 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE1BA2D57
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 08:11:16 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4fbb281eec6so4813956e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 08:11:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689433875; x=1692025875;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uahl0JK8EKsnvSfqLyeXPnd2KJauvmsFvzs6gaaLC+Q=;
-        b=cEQKLfs+irNYlu4PHC7FcXJnmKVMQpjgceJ73Dz9W9kZUya7PARB2vlIWIRdz+da8A
-         8Idoso99nNolkI4/+4/SXjxa0c2yRNvDHRgddHTDHOou+7H9yk2qwIaIW8ifTsnvgiLb
-         NzgMpFWltHaUNBoRZHMDbTn9UulcLojYKHAj0uqKPGxg7nOjrBW+/dRrKCZXpQxQ7fR1
-         f7Cykva76SaJ/zEk2/RMDLIqZXn+VSLojMv8az12trqaeY/7X3WNuUmQrojOLV9vczJF
-         qBGP+SjB5KDILKLcusMDcQQwA08HVG7bLs19yn5zq6tNrHztIrEYKn6CtkqUU3RvgsMQ
-         T+sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689433875; x=1692025875;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uahl0JK8EKsnvSfqLyeXPnd2KJauvmsFvzs6gaaLC+Q=;
-        b=dB1cSVZ0xGbI+TntCSAu/4rQf9ipeehbEveXydqcC414fdjZKWYUphcaxw7ZkrmcXG
-         PxwtuKxjOVs/CD8J2uCPZc80vxsb1FxFG4msKtZqKqZLwzRgxfybSAky5GpOpjiOG9rZ
-         14PLTPpgq9Oxld4wHtM56uXF0eECrrQJa9j977DLEH4KRWaJ+OkJq3z3Cvm5aL+syOJ2
-         7FilSX1v09zpRZK6EyF4d1D+KBBL5SBpkehbCoe6/xs/Dy+IlliBHpqcNnaP8KcAWvjp
-         x40cFcPIxzfS1hNN5byR7O44u3YP3tcXFE0pzetDe5VWJnB3FVTqm8nDuJt+1ysQbzRQ
-         U3PQ==
-X-Gm-Message-State: ABy/qLbLEeDdPzXgf5gB9cnw+PFsxU8FF9GNzK6TsDTKRbfuP1j93xSK
-        +PPFWthFt9HIUPwWRAC0FDLyKA==
-X-Google-Smtp-Source: APBJJlF8jICyjjbV1u/4xnF/oNp/tqc4zSp4PrfGF2zGzjcKVvb18AyYpYbdJHF6+FvSU7aOHyw/XA==
-X-Received: by 2002:a05:6512:ea9:b0:4f8:752f:3722 with SMTP id bi41-20020a0565120ea900b004f8752f3722mr6549825lfb.5.1689433875119;
-        Sat, 15 Jul 2023 08:11:15 -0700 (PDT)
-Received: from [192.168.1.101] (abxi167.neoplus.adsl.tpnet.pl. [83.9.2.167])
-        by smtp.gmail.com with ESMTPSA id f15-20020ac2532f000000b004fb745fd232sm1914885lfh.30.2023.07.15.08.11.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Jul 2023 08:11:14 -0700 (PDT)
-Message-ID: <7774d80e-81d4-2283-59ec-87012bb28294@linaro.org>
-Date:   Sat, 15 Jul 2023 17:11:13 +0200
+        Sat, 15 Jul 2023 11:12:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A5E30DF;
+        Sat, 15 Jul 2023 08:12:13 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36FF4oC7025343;
+        Sat, 15 Jul 2023 15:12:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UTLVMD5H2hQdXgJBEgpVsu+vOOSUGqFbFaRRrFxDZPU=;
+ b=EP4nIxlmbgBVujNU69ow7n/TBKiVpeSxohetprIUQV0RMOeVXti2+ajta0UkX0/u6zr5
+ Jsk4aUY9MUMmUPoEi2qnuG8hieuHYM8zipOq7wijPGA9rqFMq17kDiFiEGr/m/ZhMzQi
+ 1n0SdmiBRhoTm1R3jIz8ithnXyhzT2r2vQ3zeBnQsngUmnJWwzQE+Aq60sL7OXzu0ix3
+ p/U0wPETYjn/Rf3gJ1VSuK5K+Y0rCno5G4o9WrOI+8jdP5jyCxsOxPzaJVWWhwjTvPh3
+ QKpqQlwB7jNc0A89b4LTSyNdH4EPVJXXUg9DC+t7Po2AJQC2O7VMJZUxuTjsEcTYRnCx AA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3run0c8fwx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 15 Jul 2023 15:12:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36FFC6QT020749
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 15 Jul 2023 15:12:06 GMT
+Received: from [10.216.17.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sat, 15 Jul
+ 2023 08:12:02 -0700
+Message-ID: <dba8ab0a-c17b-8660-5c5a-803e7f394547@quicinc.com>
+Date:   Sat, 15 Jul 2023 20:41:56 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: qrb5165-rb5: enable displayport
- controller
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2 1/2] dt-bindings: arm: qcom,ids: drop the IPQ5019 SoC
+ ID
+To:     Rob Herring <robh@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230709041926.4052245-1-dmitry.baryshkov@linaro.org>
- <20230709041926.4052245-5-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230709041926.4052245-5-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_saahtoma@quicinc.com>
+References: <20230712041912.398724-1-quic_kathirav@quicinc.com>
+ <20230712041912.398724-2-quic_kathirav@quicinc.com>
+ <20230714155954.GA3919199-robh@kernel.org>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230714155954.GA3919199-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WOZ_kYRlbwCelxT7TKka1zp1Z_2gjxWm
+X-Proofpoint-ORIG-GUID: WOZ_kYRlbwCelxT7TKka1zp1Z_2gjxWm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-15_08,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=857 spamscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ clxscore=1011 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307150143
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9.07.2023 06:19, Dmitry Baryshkov wrote:
-> Enable the onboard displayport controller, connect it to QMP PHY.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index a03f334a3d01..210c60025c32 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -656,6 +656,15 @@ &mdss {
->  	status = "okay";
->  };
->  
-> +&mdss_dp {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_dp_out {
-> +	data-lanes = <0 1>;
-> +	remote-endpoint = <&usb_1_qmpphy_dp_in>;
-> +};
-> +
->  &mdss_dsi0 {
->  	status = "okay";
->  	vdda-supply = <&vreg_l9a_1p2>;
-> @@ -1436,3 +1445,7 @@ pm8150b_typec_sbu_out: endpoint {
->  		};
->  	};
->  };
-> +
-> +&usb_1_qmpphy_dp_in {
-> +	remote-endpoint = <&mdss_dp_out>;
-> +};
+On 7/14/2023 9:29 PM, Rob Herring wrote:
+> On Wed, Jul 12, 2023 at 09:49:11AM +0530, Kathiravan T wrote:
+>> IPQ5019 SoC is never productized. So lets drop it.
+> You need to remove the user before removing the definition.
+
+
+Rob, Currently there are no users for this macro.
+
+
+>
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+>> Changes in V2:
+>> 	- Updated the commit message with the precise information for
+>> 	  dropping this ID
+>>
+>>   include/dt-bindings/arm/qcom,ids.h | 1 -
+>>   1 file changed, 1 deletion(-)
+>>
+>> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+>> index bcbe9ee2cdaf..179dd56b2d95 100644
+>> --- a/include/dt-bindings/arm/qcom,ids.h
+>> +++ b/include/dt-bindings/arm/qcom,ids.h
+>> @@ -250,7 +250,6 @@
+>>   #define QCOM_ID_QRU1000			539
+>>   #define QCOM_ID_QDU1000			545
+>>   #define QCOM_ID_QDU1010			587
+>> -#define QCOM_ID_IPQ5019			569
+>>   #define QCOM_ID_QRU1032			588
+>>   #define QCOM_ID_QRU1052			589
+>>   #define QCOM_ID_QRU1062			590
+>> -- 
+>> 2.34.1
+>>
