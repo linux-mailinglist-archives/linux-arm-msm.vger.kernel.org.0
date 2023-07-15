@@ -2,139 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 764D9754940
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 16:17:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23619754961
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 16:37:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbjGOORD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 10:17:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43490 "EHLO
+        id S229927AbjGOOhY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 10:37:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbjGOORC (ORCPT
+        with ESMTP id S229671AbjGOOhX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 10:17:02 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A3D1358E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:16:58 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b9338e4695so4065531fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:16:58 -0700 (PDT)
+        Sat, 15 Jul 2023 10:37:23 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A5618F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:37:21 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fd32e611e0so1443513e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689430616; x=1692022616;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fo1k/DQJKWK7eKDw0jXd1pagArbjShWTxq504FR2pi8=;
-        b=tarcpxCpvBeEgLF6Ei4kqYI55LYNEEIubN3fx9YaHiIMCPy6euOvXmKkGOFeJ3/GG+
-         LCP1PD2H++CIm2HMtlx5mkcr55kva1rxg6bjpNFRzY/xkLbfFRbckDRKwcgzUhmtUPTi
-         hwVaaqjTmN4TjoBOZuCn+2TVuvpXBa6QRnYMT391I456qSF2Zp7GQHY9YapbJAW1qSJG
-         JmJRThPzrN0lsq14gdkaSnrFJm5vh/07XwAkdnC4uduEuYq149DJOef9qzh5629f/zJz
-         9MMhvz9hwqkikUp3jwF6Iocjdh8jFsttYQaJ7DFUh2OnXQ3vu6DeIL7WwJJOKv/hV+aB
-         KN3A==
+        d=linaro.org; s=google; t=1689431840; x=1692023840;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bEcQ/D91F2eoE0NLtVpOV/Qh8CoDBNXvds7PdOyG4r0=;
+        b=r85unhBYz7KPyAQG8So/p2MeQyCwbBiZ6nk6oV6pi3B+2+9dt95XdqL65vcTMEDlc2
+         UkufQKiJVLo6lrO1Uk8z9y7MDiEIfe7iNxgwgGmeKM96Rg/VQrkEL/IJfhb7BJL6nT+o
+         JeDE7cl3iBv716eICMp8QGCYUKaNJAbAnO8i1mlkLFxKqQYJz6sqgNb8xFhThp7o6nR8
+         j/fZ2DTvchZ3RC2xMJPvnhT5D+7FJtzsvAhuHpEv6IR4KbjukO/rHrZr0pGbjjsic8Uw
+         d45HiWmAyeD1rZ324wYjm0WSGNgvDfx+N/OrAjBlwU/pZIVAvHzLpgvy+W9Dkqz/e9LY
+         q0CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689430616; x=1692022616;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fo1k/DQJKWK7eKDw0jXd1pagArbjShWTxq504FR2pi8=;
-        b=TWKCVjaprYhlBHMgrrSYCpz5dNugZlATzPB7HP/Lq56XjgmE0//wWfd/JGpBKwpJd5
-         maFaXiN7f12JTK/hhFUEP8qE9PYzQ9ldPr6FHssQy+qkRsub2eWTwURrIOzrOQ3xcEzl
-         VXg6DRyjw4RHNXsnd9T6LF2fBXG7Ysi5Ni82yk2LsrEVxEmwFdGlgOE4MxfkT6k7SlTi
-         SMq4Fz6M/GO4UDiPQpSv4VYXqQDSoHV2NuiWAMWSLjF4Pemiha/TcLt5rjRjHnOf/pJ3
-         1wW78PavHz9SDFKGoL/k0nhSjN6SM694hpLHB86QRUyJ9vGBBFwMRLwj4h90i9ZJb0rh
-         NnEA==
-X-Gm-Message-State: ABy/qLaZuqe1ZwF4MXqZx9HtXkYlUECIwHch+P5GYDwSO838hRnKwiGm
-        Q5R+g72cwof2SmWfioRGti1/YQ==
-X-Google-Smtp-Source: APBJJlEptOc8JSycjXgkzv234hYnGER26otvf/5i9LrFcsFMCtV2BuSzRBQLaFKcLo0T1SStc7VYBQ==
-X-Received: by 2002:a2e:9606:0:b0:2b6:cd6a:17f7 with SMTP id v6-20020a2e9606000000b002b6cd6a17f7mr6087996ljh.20.1689430616427;
-        Sat, 15 Jul 2023 07:16:56 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689431840; x=1692023840;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bEcQ/D91F2eoE0NLtVpOV/Qh8CoDBNXvds7PdOyG4r0=;
+        b=W1AN7Arzw2xjXY2OUaqmiplv2gAM+lJqvUry0Lm3iwXd9EnT1zZ4jq7qJwA/BAb0FV
+         y5WQLZWv2Gw+k3EX1JB4ASi3mUAJqgdHH/2GLyToCqn8pS2d6Dgu7uMoMt17qYK7ch31
+         b6RjW5+FdPH+Kst3lEGZdDdHeJamCyxTJitysQo8AYSD6IDGRrA6l8NYbU5nkevdqQkK
+         CAmqGyML5KQ0pwmxcc06qwUL6oH/ogXtC++sssXd7Bfa/Mlf8JDbZ/mnqfAbnqv+Xbwt
+         RzJAnUl6Xlmawy0pvBf6QeJqIBET0KFINsb3H83etbDsicccgNMAcKLxlL1N9aFLOUZ+
+         Jv5w==
+X-Gm-Message-State: ABy/qLY6D+F1o8RAD5FUdOmIBlPJHhHgzGuRO1WZKpOk0X2AMU4KYCIo
+        tbCS+TRUIuaHOEaCevvwFE/oZw==
+X-Google-Smtp-Source: APBJJlH2ZYi2LyhINX8AZmbE/E6LkvR5o50DGgbwXlxuaefMlYTi1FC5ne/EODOjwFSEfDwB1lvPIA==
+X-Received: by 2002:a05:6512:3ee:b0:4fd:b7d4:70ec with SMTP id n14-20020a05651203ee00b004fdb7d470ecmr118222lfq.10.1689431839832;
+        Sat, 15 Jul 2023 07:37:19 -0700 (PDT)
 Received: from [192.168.1.101] (abxi167.neoplus.adsl.tpnet.pl. [83.9.2.167])
-        by smtp.gmail.com with ESMTPSA id r7-20020a2e94c7000000b002b6fe751b6esm2517593ljh.124.2023.07.15.07.16.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Jul 2023 07:16:56 -0700 (PDT)
-Message-ID: <07176a10-0ef6-291a-cfea-71ec39a38427@linaro.org>
-Date:   Sat, 15 Jul 2023 16:16:54 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH V4 2/2] arm64: dts: qcom: ipq9574: enable GPIO based LEDs
-Content-Language: en-US
-To:     Sridharan S N <quic_sridsn@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230616083238.20690-1-quic_sridsn@quicinc.com>
- <20230616083238.20690-3-quic_sridsn@quicinc.com>
+        by smtp.gmail.com with ESMTPSA id 27-20020ac2483b000000b004f858249932sm1927732lft.90.2023.07.15.07.37.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Jul 2023 07:37:19 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230616083238.20690-3-quic_sridsn@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH v3 0/2] Resolve MPM register space situation
+Date:   Sat, 15 Jul 2023 16:37:10 +0200
+Message-Id: <20230328-topic-msgram_mpm-v3-0-2c72f27b4706@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIABavsmQC/4WN0Q6CIBhGX8VxHQ1Bk7rqPVprgL/6bwIOjNWc7
+ x56101dnm/7zllIhIAQyaVYSICEEb3LIA4FMYNyPVBsMxPOuGCCSzr7CQ21sQ/KPuxkqTlJqUF
+ ow88VyTetIlAdlDNDPrrnOOZxCtDha+/c7pkHjLMP7z2bym39UUglZbTUjZSq7molxHVEp4I/+
+ tCTzZb4PwPPBuCVqiTUTcfaL8O6rh9W4TQxCAEAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1689431838; l=2027;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=HY4bja96z3HZK1pydbJM0rSpcC7fy2yGgK79IMSfsXc=;
+ b=I5HQQyjFCoBt+fL13S3iDwYZxgitiRcPGqRZSP+r5mwRBGEBn73r/8ZH/6Peh7i6E/JlH0N5s
+ zEmu+y/cZM5BtDvoS5Dl78Zt9Ji0rfV6PDMjgavVupYjMFafSjR3F9m
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.06.2023 10:32, Sridharan S N wrote:
-> Add support for wlan-2g LED on GPIO 64.
-> 
-> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+v2 -> v3:
+- Fix the example
+- Pick up tags
+- remove the outdated example from the cover letter, check bindings
+  should you want to see one
 
-Konrad
-> Changes in V4:
-> 	- Added patch dependency. This change depends on below patch set
-> 	  https://lore.kernel.org/linux-arm-msm/20230614085040.22071-2-quic_anusha@quicinc.com/
-> 
-> Changes in V3:
-> 	- Updated patch series title. Mentioned platform in series
-> 	  title
-> 
-> Changes in V2:
-> 	- No changes
->  
-> .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 20 +++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> index fd5326dc1773..25424cecd834 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> @@ -34,6 +34,18 @@
->  			debounce-interval = <60>;
->  		};
->  	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		led-0 {
-> +			gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-> +			linux,default-trigger = "phy0tx";
-> +			default-state = "off";
-> +		};
-> +	};
->  };
->  
->  &blsp1_spi0 {
-> @@ -137,6 +149,14 @@
->  		drive-strength = <8>;
->  		bias-pull-up;
->  	};
-> +
-> +	gpio_leds_default: gpio-leds-default-state {
-> +		pins = "gpio64";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
->  };
->  
->  &xo_board_clk {
+The bindings for the wrapper node used in the yaml example are merged
+in qcom/for-next
+
+Link to v2: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org
+
+v1 -> v2:
+- deprecate 'reg', make qcom,rpm-msg-ram required [1/2]
+- Use devm_ioremap() [2/2]
+
+Link to v1: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org
+
+Depends on resolution of https://github.com/devicetree-org/dt-schema/issues/104
+
+The MPM (and some other things, irrelevant to this patchset) resides
+(as far as the ARM cores are concerned, anyway) in a MMIO-mapped region
+that's a portion of the RPM (low-power management core)'s RAM, known
+as the RPM Message RAM. Representing this relation in the Device Tree
+creates some challenges, as one would either have to treat a memory
+region as a bus, map nodes in a way such that their reg-s would be
+overlapping, or supply the nodes with a slice of that region.
+
+This series implements the third option, by adding a qcom,rpm-msg-ram
+property, which has been used for some drivers poking into this region
+before. Bindings ABI compatibility is preserved through keeping the
+"normal" (a.k.a read the reg property and map that region) way of
+passing the register space.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: interrupt-controller: mpm: Pass MSG RAM slice through phandle
+      irqchip: irq-qcom-mpm: Support passing a slice of SRAM as reg space
+
+ .../bindings/interrupt-controller/qcom,mpm.yaml    | 44 +++++++++++++---------
+ drivers/irqchip/irq-qcom-mpm.c                     | 21 +++++++++--
+ 2 files changed, 45 insertions(+), 20 deletions(-)
+---
+base-commit: 7c2878be573282a9961c359b806ccf70afe1a6b6
+change-id: 20230328-topic-msgram_mpm-c688be3bc294
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
