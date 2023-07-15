@@ -2,104 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C37DA7549E6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 17:48:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBDB1754A41
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 18:56:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230190AbjGOPsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 11:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38194 "EHLO
+        id S229621AbjGOQ4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 12:56:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjGOPsx (ORCPT
+        with ESMTP id S229549AbjGOQ43 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 11:48:53 -0400
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A162729;
-        Sat, 15 Jul 2023 08:48:52 -0700 (PDT)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 713BCFF802;
-        Sat, 15 Jul 2023 15:48:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1689436130;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Un+ufkhrXfZqLrVbDU6HeKyr3kcyHpaOW08JuHJOTAQ=;
-        b=FqWexEyC5/ncjoaJwBj4G53wiu8VDHhDUUmjeiui8D15gl2UK0/z1/JhojGPaXb7myBHt0
-        +m0+8luEUYwOnP8t5sbvBF01u6wPPDP8ekc+E+xiI5dXBEOsZg27UBqN6/Cx2Ykd/d38zY
-        Uxi4xN1DsWH3172+Q9prP3vN3AfuAUnTk0v/cqkvsBuezHKkylG8hSiaysYLY7BLSvc/OK
-        X/4nONxCNA9EoFF0A6ADkUMqN/54fCJrQYuzSAtxsbm00dNaTjHSMLlKGNk9Pa5uVm4JDa
-        KtHa+BsMQbwWPxRZR03AmaWLttL4j4jDIfE8mWV10b4zCsVL6+eAIvNGObilXQ==
-Date:   Sat, 15 Jul 2023 17:48:42 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Han Xu <han.xu@nxp.com>,
-        Harvey Hunt <harveyhuntnexus@gmail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Liang Yang <liang.yang@amlogic.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Michal Simek <michal.simek@amd.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Heiko Stuebner <heiko@sntech.de>, Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Pratyush Yadav <pratyush@kernel.org>,
-        Michael Walle <michael@walle.cc>, devicetree@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH] mtd: Explicitly include correct DT includes
-Message-ID: <20230715174804.6fc2a4c1@xps-13>
-In-Reply-To: <20230714174751.4060439-1-robh@kernel.org>
-References: <20230714174751.4060439-1-robh@kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Sat, 15 Jul 2023 12:56:29 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F545FD;
+        Sat, 15 Jul 2023 09:56:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 13DB060BC1;
+        Sat, 15 Jul 2023 16:56:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED3EC433C8;
+        Sat, 15 Jul 2023 16:56:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689440187;
+        bh=j/X9HRq0NyQ4TPbLatI7AanH8hVgXhQxEBtgYHZrvtc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=WLzOSMOdM44mfL5kBzIcDEDGoVjKLBznKxpV0f9t1pKPr4fGqgWst/nE+SffYVFzJ
+         ecp1J7ClSaeYBkpP9Xql0YBcm2Ysrgq1WZ9BCYtWVBYUVFt+5vdj28LpHdOzt4XMRC
+         7h5hIUPFYZmrZwmnr08FoRvo92K+AwgLdhoFRlA8Wxiu/2nrfgozwMFItX3lzZCgZ0
+         uIUp+8KRHfjZnXUCErK23UhwD6s0bRwQpr/VcsjVl3K8hJuTtYWHbcXsRG8gJdgHis
+         w42MPuXFXmkGUxUki4i790/uMkhIcJRfQDdWiGPp1Y6QUw6qy+qltI5CvkRl9evJJQ
+         O0tmUoHRdO6aA==
+Date:   Sat, 15 Jul 2023 17:56:18 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
+Subject: Re: [PATCH v2 1/8] dt-bindings: iio: adc: qcom,spmi-adc7: use
+ predefined channel ids
+Message-ID: <20230715175618.10f00d48@jic23-huawei>
+In-Reply-To: <e8700bea-73d5-8ca2-9517-737c13ad3679@linaro.org>
+References: <20230707123027.1510723-1-dmitry.baryshkov@linaro.org>
+        <20230707123027.1510723-2-dmitry.baryshkov@linaro.org>
+        <e8700bea-73d5-8ca2-9517-737c13ad3679@linaro.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On Mon, 10 Jul 2023 11:03:04 +0200
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
 
-robh@kernel.org wrote on Fri, 14 Jul 2023 11:47:49 -0600:
+> On 07/07/2023 14:30, Dmitry Baryshkov wrote:
+> > Each of qcom,spmi-adc7-pm*.h headers define a set of ADC channels that
+> > can be used for monitoring on thie particular chip. Switch them to use
+> > channel IDs defined in the dt-bindings/iio/qcom,spmi-vadc.h header
+> > instead of specifying the numeric IDs.
+> > 
+> > Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>  
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Best regards,
+> Krzysztof
+> 
 
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-
-				 was?
-
-Otherwise LGTM, I will fix it when applying.
-
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
->=20
-> Signed-off-by: Rob Herring <robh@kernel.org>
+Applied to the togreg branch of iio.git
 
 Thanks,
-Miqu=C3=A8l
+
+Jonathan
