@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D2D075496B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 16:44:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 701BE75496E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 16:45:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbjGOOo0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 10:44:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50242 "EHLO
+        id S229965AbjGOOpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 10:45:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjGOOoZ (ORCPT
+        with ESMTP id S229556AbjGOOpW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 10:44:25 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E89D2715
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:44:22 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f9fdb0ef35so4931443e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:44:22 -0700 (PDT)
+        Sat, 15 Jul 2023 10:45:22 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE9E2707
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:45:20 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so4825340e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:45:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689432260; x=1692024260;
+        d=linaro.org; s=google; t=1689432319; x=1692024319;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vSTbiGWl/f9LXjwAM0s7iS/UViUSFOcV217Gp5upeiY=;
-        b=zFSwrDrcPxFVoikze9dhOfct50farucjZ3BE3PVnzCsLIc0BwyAHzjPxe6hC0jFTt8
-         3dh1ZhW7NsqoFGtfkXGkbRi8SJczQlsoyZ28BUDx2JpId7Yd561/2YuqEpQw4GLoMpjo
-         XcpMn1nn5YE4o1w8jibv2U74oI8ZkkAkWzbFoHGZUBWlWuXeH8f4de8nHlV1p5wJaaLb
-         9Tq2nlWO9iCGPtbMZv880rGfnbbEFIMTHKL9+Jk68cTRKX0wu3a92lzXitbvT2fqrSag
-         UmFuMceTXAdEFbOIGTx7iuWaktSXJorgyF29NyWwD2JT+B61S0fCT9Bp6ONqc1r9dLCp
-         iV7Q==
+        bh=u4EcfZJuKQ20RuePztd2+oZPnl4lVWexyu50zCxyk80=;
+        b=bHcBYV2lGQ5yXfUUDnNTpUS5sLmA/OsHsZPCH6ZXM2IoFZTRkhfGaIF2Pws3q4BJQG
+         rOD9hIRBttzzoflwQknVukwJd5gOX9EBBmhqWjHInCyWLseaTWgHn6JZxj1QRlKdqkUN
+         9j0aTYF+eJ5lExCG0wNNF0Nz8usncmV06q/P42UyyS1HkD5PeE8YLk3tqw9vbI/6tXrh
+         /xlakgYkFf8pqjjR1jDapfFYOjVvCLHwdIgyss2WcCJYRuYdYwApdaZJ02UgtUBp2eUk
+         tcMejnlI43xp8vpCvWYQqiTlUQYgPNQzzpEwEKZiBPBEBs/MpmGjZjrGqOjPywoOhN+l
+         q5MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689432261; x=1692024261;
+        d=1e100.net; s=20221208; t=1689432319; x=1692024319;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vSTbiGWl/f9LXjwAM0s7iS/UViUSFOcV217Gp5upeiY=;
-        b=amqTpW1u2we3nvtY1O+YWcNcdIUvE87emH/FK2nbTrCGOQD2pmnzeI/gbYj7Nn3vOG
-         FpHTvSWtNIiPnwYNKBuZopqPS46EcEMy1N6/i3pauEKUdOd5cFs9SIMw8eTwjhwPT32D
-         xsCycES0LftG/jrUVeov6q1DwHq2tqZXkWtbMttZfQiDqaPXkOYPsG/QPlGEj7rRAGoh
-         wqMJIF8Q6n604Zn1ogC/7ZtbB5VITeWlZhKO4Xaqx6PqDvQ7qpgYo6b5ULkzKSprE5ZB
-         6BBMPLdx6Cy3ClTbyyunSC0dA9wkvknGOGiDMo8dQ32g3URI5KubsBqO87CCziftl9gx
-         5Q/g==
-X-Gm-Message-State: ABy/qLYxPyFfEQ0LjgPavcuX+4OgdO5E1By4RY7I7zHwXmUcAjvqy0ix
-        aAnih2HSj0rbvd3mGilUCKW6Cw==
-X-Google-Smtp-Source: APBJJlGKypXRCCU2rBpdohwglN/0iKXifubS2+iEPFSgy4Ue4OkkYElHGzUjauhRcw4vD0hXKb3L9w==
-X-Received: by 2002:a05:6512:3c96:b0:4fa:f79f:85a with SMTP id h22-20020a0565123c9600b004faf79f085amr6711334lfv.69.1689432260696;
-        Sat, 15 Jul 2023 07:44:20 -0700 (PDT)
+        bh=u4EcfZJuKQ20RuePztd2+oZPnl4lVWexyu50zCxyk80=;
+        b=ifHSqFoxyQ4Oi79dg6FiseViI0CTohN71AIZ3H/wZYTZ6GS+GZtHZjUWGplilqmB6k
+         Q/CvtIElZD2IQm0VS7jVKCcTfr40hBTm5ZieQ/NSyGB5mcu0Av1KxNDW0hVPuQKqRnWi
+         NGp0kKxCM/aMRWxZIWpHDtZEKLsFtJFzM9bgPg/LhPux9JgiGh0TAV3kaM7Kv335+Ogg
+         fkB4I4kePhlVquYrkMJQBx6lcye8unl1A+HL5DJ3aKixGrKO5e+x9J/RL9Ze+6oO7Jbc
+         jaxfAWEu3NDBJBupkhSGi4BPKBMOgh8uK8I6HYfXeL8gljkIp0qt36XlmaLeHhXKmcJT
+         sEXA==
+X-Gm-Message-State: ABy/qLZpleuEvxkchSen851aA5XkrhzScgJO2aPV8EnLA3HBlOH4q/oE
+        81kpjGKFH2sNBs0LOcxUzTu1cg==
+X-Google-Smtp-Source: APBJJlGnBNcV5pZoslsf+BH81Sv+QZRw/Cxxxtw3P5X/b//RW33B0I9CTJjKIfmz/P1rXPDXQbyAnA==
+X-Received: by 2002:a05:6512:3d8a:b0:4f8:70b8:12b1 with SMTP id k10-20020a0565123d8a00b004f870b812b1mr5735526lfv.4.1689432319095;
+        Sat, 15 Jul 2023 07:45:19 -0700 (PDT)
 Received: from [192.168.1.101] (abxi167.neoplus.adsl.tpnet.pl. [83.9.2.167])
-        by smtp.gmail.com with ESMTPSA id q20-20020ac24a74000000b004fb9d7b9915sm1911777lfp.37.2023.07.15.07.44.19
+        by smtp.gmail.com with ESMTPSA id w2-20020a05651203c200b004f87024742fsm1905710lfp.235.2023.07.15.07.45.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Jul 2023 07:44:20 -0700 (PDT)
-Message-ID: <9799a98a-7e41-3b23-f883-bc790e2bba60@linaro.org>
-Date:   Sat, 15 Jul 2023 16:44:18 +0200
+        Sat, 15 Jul 2023 07:45:18 -0700 (PDT)
+Message-ID: <e6ae5c3e-f823-634a-f4e5-b13b238fe6a4@linaro.org>
+Date:   Sat, 15 Jul 2023 16:45:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v3 1/7] clk: qcom: gcc-sc7180: Fix up
- gcc_sdcc2_apps_clk_src
+Subject: Re: [PATCH v3 5/7] arm64: dts: qcom: pm6150: Add resin and rtc nodes
 Content-Language: en-US
 To:     David Wronek <davidwronek@gmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -70,17 +69,18 @@ To:     David Wronek <davidwronek@gmail.com>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org
+        cros-qcom-dts-watchers@chromium.org,
+        Nikita Travkin <nikita@trvn.ru>
 References: <20230715091932.161507-1-davidwronek@gmail.com>
- <20230715091932.161507-2-davidwronek@gmail.com>
+ <20230715091932.161507-6-davidwronek@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230715091932.161507-2-davidwronek@gmail.com>
+In-Reply-To: <20230715091932.161507-6-davidwronek@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,27 +88,49 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 15.07.2023 11:16, David Wronek wrote:
-> Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
-> didn't update its configuration" error.
+> Add support for the RTC which is the same as on other PMICs and add the
+> resin child node to the PM6150 PON device, both disabled by default.
 > 
-> Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver for SC7180")
 > Signed-off-by: David Wronek <davidwronek@gmail.com>
+> Tested-by: Nikita Travkin <nikita@trvn.ru>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/clk/qcom/gcc-sc7180.c | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/pm6150.dtsi | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index cef3c77564cf..49f36e1df4fa 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -651,6 +651,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
->  		.name = "gcc_sdcc2_apps_clk_src",
->  		.parent_data = gcc_parent_data_5,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
-> +		.flags = CLK_OPS_PARENT_ENABLE,
->  		.ops = &clk_rcg2_floor_ops,
->  	},
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/pm6150.dtsi b/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> index 2e6afa296141..af51eb0646ba 100644
+> --- a/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm6150.dtsi
+> @@ -53,6 +53,14 @@ pm6150_pwrkey: pwrkey {
+>  				bias-pull-up;
+>  				linux,code = <KEY_POWER>;
+>  			};
+> +
+> +			pm6150_resin: resin {
+> +				compatible = "qcom,pm8941-resin";
+> +				interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				status = "disabled";
+> +			};
+>  		};
+>  
+>  		pm6150_temp: temp-alarm@2400 {
+> @@ -88,6 +96,14 @@ pm6150_adc_tm: adc-tm@3500 {
+>  			status = "disabled";
+>  		};
+>  
+> +		pm6150_rtc: rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>, <0x6100>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+> +			status = "disabled";
+> +		};
+> +
+>  		pm6150_gpios: gpio@c000 {
+>  			compatible = "qcom,pm6150-gpio", "qcom,spmi-gpio";
+>  			reg = <0xc000>;
