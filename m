@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F169B75492C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 16:10:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 183A7754930
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jul 2023 16:13:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbjGOOKP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jul 2023 10:10:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40396 "EHLO
+        id S229650AbjGOOM7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jul 2023 10:12:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229816AbjGOOKO (ORCPT
+        with ESMTP id S229973AbjGOOMz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jul 2023 10:10:14 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FF2D173F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:10:13 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b701e1ca63so44239161fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:10:13 -0700 (PDT)
+        Sat, 15 Jul 2023 10:12:55 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0482C0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:12:53 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id 5614622812f47-3a36b52b4a4so1791163b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jul 2023 07:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689430211; x=1692022211;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4/HgrrJLRtL0tsKuEEIQX/EB6sVcuOV+jDM348VHvvo=;
-        b=uLHg07ks8ri6zX2K6z4bJBgrPhsb8W2TnnbTH+mlzGJUQvBKFbi3f5JjjVWkAatB7N
-         4xLhLVgjz0ZSpuLEQ9ipOdhI5nI4qTJf9tkZY0T7ngZMlH36382DYNElgHRNeNiDdJeh
-         YOzbPe5pVEZQb6LVG1OKtkd5Sj2M7+pddIBBgnWkVkTnJZjbwxej018ASPhT7PQRPGz2
-         jLMA4wOMzEDDE6wbzMtFeEF35yLka82fhnVmmQo07g2ZydjNTr7EECYmjkFSy4FnZxzt
-         zg4FZlm4SyEel64azdjepD9C/Wi5DF0Dl3QX+NcgsBvF7oiqrCXOEjq7UEPv/E5Tta89
-         /RYw==
+        d=gmail.com; s=20221208; t=1689430373; x=1692022373;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kTHIurDy6gvGsTnE5nzog+Umudwtg/UCtyZzHm5BLaQ=;
+        b=iWhE8lFEziu8ThlgqXgS0ZMU2b440yAokQPM4ejUOUMnLGe7UW+OEGxLdqQgqxK9Xf
+         Ik+ubVkxHZ+2BH0/c4/QqSyhSffKB3TnWgpNzkhI8EKnRoSOvruuC8Ov8NJWo5zS0CHT
+         hdXqybJryJGv3kEKRVwc5Cuu01L347xzjBV+bNb6SbsfVc1VvV/piU4thZ0w7f+zEFAy
+         raYYnVT82HM9PfrguuFo3SGVJVBwGhYLbA2JEzOeNYIh4geZUdwj/PTAN8q6dET0G4Y9
+         h9g1GiJ8KAB4dkpjD62CCBlZc1PgNUKSSsuT63Vna6FWFZY7YNSZpVT2CJlVMc6CR2AR
+         BC8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689430211; x=1692022211;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4/HgrrJLRtL0tsKuEEIQX/EB6sVcuOV+jDM348VHvvo=;
-        b=Rklda1jN5DTtUdx0ciBxlz4Pph+vmFMzC1lW4D4bTtolxjbHIZywibgKzxxyUBet9/
-         iWXB6cYMKotecKxdEjtcygFn+oyuRE2TomywbLiSUpRUBbbmAqeUFiP/PIXQov6mKxko
-         HDpZkPDaJZFYbqvohl8vhAHpLO5+zfymbVaCBYPSRWIOqWtcx5V2zuu2zY28J0DDRBen
-         ugiIYyid8aCoB/E8rwqFAqbfKcdpSb+D+wlsK6dRAmHMVj5Io1h3E14eslVAEWJwOHHq
-         rwVvRDQeaN2J2eYhMl4gg+bzMM/9Mmh6LzWFlZMtHqmH1xSJTXRT/AkZ0BsyB+K4vhwF
-         OdKA==
-X-Gm-Message-State: ABy/qLadBymBjBCNQM6Xv2nalDOzYejObfuObTZyZAmNER5VaZlH8WnR
-        DlpM+3CGXCYizTnPcqM6fLI2sA==
-X-Google-Smtp-Source: APBJJlEMFD+ccsnkWg4VBRDUKkSs7u8L7ZD48yDlojb/6aXDzaXQiB3/wIJNYlFnS8WT1nQsBs0h2Q==
-X-Received: by 2002:a2e:9d12:0:b0:2b9:318e:1423 with SMTP id t18-20020a2e9d12000000b002b9318e1423mr862143lji.12.1689430211525;
-        Sat, 15 Jul 2023 07:10:11 -0700 (PDT)
-Received: from [192.168.1.101] (abxi167.neoplus.adsl.tpnet.pl. [83.9.2.167])
-        by smtp.gmail.com with ESMTPSA id l8-20020a2e8688000000b002b6d3261571sm2507223lji.99.2023.07.15.07.10.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Jul 2023 07:10:11 -0700 (PDT)
-Message-ID: <b8b2db1b-dbfc-591e-f074-1366e5ac576a@linaro.org>
-Date:   Sat, 15 Jul 2023 16:10:09 +0200
+        d=1e100.net; s=20221208; t=1689430373; x=1692022373;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kTHIurDy6gvGsTnE5nzog+Umudwtg/UCtyZzHm5BLaQ=;
+        b=k+8z9UslNQas0EAcvO09GbLCU/gyR7gNTdd2JxKxiOIBjoG0xD4N+/uYDU6yFe3NZK
+         qf8XhYf1oO4utpbYWreQOYy2uAEbYB9aKcy10n241QHmyeffLSCUaoevq4Jj3mr8ZAqh
+         EJAMWPQ7DQPaWzwdfhZ90b0c6BQvS5rxtL7z+3h9x7IsTePqDTZF3/qJfUtNsRzk/gny
+         XVbn9PH04nTBd02MWdSmGAAtpl6dOFozwSurSlxINKqsMAZyUo5u2pMWDpXhNv2Co8LO
+         5cAYdrelR3W4al4J0GduoTrLjMMTPly5budVJqvq/1Swo+J9cuAFUtu5MPPLf0NhKJ8h
+         KRIw==
+X-Gm-Message-State: ABy/qLaGh/x+E7fqOehbt9I0ucge4zvYhXTMr6oQQJoq4X+O017SnFLO
+        daoTp58aYbrKgK0yj5IAvXhJU+xYDL/NBKJ/fHPvFvMR
+X-Google-Smtp-Source: APBJJlGukieqSedPfaXxROehySYI55LMV7KSoAeHgvT/HCubI9rbmsYY5ld/YdlgSkr96f9cIVvx5ywB1o3ngfw/auc=
+X-Received: by 2002:a05:6808:3b0:b0:3a3:e769:44a3 with SMTP id
+ n16-20020a05680803b000b003a3e76944a3mr3343104oie.12.1689430372643; Sat, 15
+ Jul 2023 07:12:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 1/2] clk: qcom: ipq5332: drop the mem noc clocks
-Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_anusha@quicinc.com, quic_saahtoma@quicinc.com
-References: <20230710102807.1189942-1-quic_kathirav@quicinc.com>
- <20230710102807.1189942-2-quic_kathirav@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230710102807.1189942-2-quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+References: <20230706211045.204925-1-robdclark@gmail.com> <20230706211045.204925-13-robdclark@gmail.com>
+ <4cdceddb-033a-6301-163e-89d27152e242@linaro.org> <CAF6AEGvtMRnWBQz_KOi5b1p40HjvAAHYdd64kiR3KsKWPBO+bg@mail.gmail.com>
+ <0e805cae-d311-2b8c-cead-62621288a34f@linaro.org>
+In-Reply-To: <0e805cae-d311-2b8c-cead-62621288a34f@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 15 Jul 2023 07:12:41 -0700
+Message-ID: <CAF6AEGuBsfuCOzteqqvutRs7oBMhqF9q_HEKj1aLEC7aWZw0sg@mail.gmail.com>
+Subject: Re: [PATCH 12/12] drm/msm/adreno: Switch to chip-id for identifying GPU
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,152 +71,146 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10.07.2023 12:28, Kathiravan T wrote:
-> Due to the recent design changes, all the mem noc clocks will be
-> configured by the bootloaders and it will be access protected by the TZ
-> firmware. So drop these clocks from the GCC driver.
-> 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> ---
-Are there any IPQ5332s outside Qualcomm labs that will presumably
-never get that TZ update?
+On Sat, Jul 15, 2023 at 6:38=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> On 7.07.2023 18:08, Rob Clark wrote:
+> > On Thu, Jul 6, 2023 at 5:25=E2=80=AFPM Konrad Dybcio <konrad.dybcio@lin=
+aro.org> wrote:
+> >>
+> >> On 6.07.2023 23:10, Rob Clark wrote:
+> >>> From: Rob Clark <robdclark@chromium.org>
+> >>>
+> >>> Since the revision becomes an opaque identifier with future GPUs, mov=
+e
+> >>> away from treating different ranges of bits as having a given meaning=
+.
+> >>> This means that we need to explicitly list different patch revisions =
+in
+> >>> the device table.
+> >>>
+> >>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>> ---
+> [...]
+>
+> >>>  static inline int adreno_is_7c3(const struct adreno_gpu *gpu)
+> >>>  {
+> >>> -     /* The order of args is important here to handle ANY_ID correct=
+ly */
+> >>> -     return adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), gpu->rev);
+> >>> +     return gpu->info->chip_ids[0] =3D=3D 0x06030500;
+> >>>  }
+> >> I'm sorry, but this screams trouble.. and doesn't sound very maintaina=
+ble :/
+> >>
+> >
+> > why? It is intentionally checking the first chip-id so that nothing
+> > breaks if later chip-ids are added
+> checking for magic numbers and magic array indices at the same time is
+> very prone to breaking, as breaking this check would not at all be easy
+> to spot in code review.
 
-Konrad
->  drivers/clk/qcom/gcc-ipq5332.c | 95 ----------------------------------
->  1 file changed, 95 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-> index a75ab88ed14c..939925baa9eb 100644
-> --- a/drivers/clk/qcom/gcc-ipq5332.c
-> +++ b/drivers/clk/qcom/gcc-ipq5332.c
-> @@ -1635,42 +1635,6 @@ static struct clk_branch gcc_mdio_slave_ahb_clk = {
->  	},
->  };
->  
-> -static struct clk_branch gcc_mem_noc_q6_axi_clk = {
-> -	.halt_reg = 0x19010,
-> -	.halt_check = BRANCH_HALT,
-> -	.clkr = {
-> -		.enable_reg = 0x19010,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(const struct clk_init_data) {
-> -			.name = "gcc_mem_noc_q6_axi_clk",
-> -			.parent_hws = (const struct clk_hw*[]) {
-> -				&gcc_q6_axim_clk_src.clkr.hw,
-> -			},
-> -			.num_parents = 1,
-> -			.flags = CLK_SET_RATE_PARENT,
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
-> -static struct clk_branch gcc_mem_noc_ts_clk = {
-> -	.halt_reg = 0x19028,
-> -	.halt_check = BRANCH_HALT_VOTED,
-> -	.clkr = {
-> -		.enable_reg = 0x19028,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(const struct clk_init_data) {
-> -			.name = "gcc_mem_noc_ts_clk",
-> -			.parent_hws = (const struct clk_hw*[]) {
-> -				&gcc_qdss_tsctr_div8_clk_src.hw,
-> -			},
-> -			.num_parents = 1,
-> -			.flags = CLK_SET_RATE_PARENT,
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
->  static struct clk_branch gcc_nss_ts_clk = {
->  	.halt_reg = 0x17018,
->  	.halt_check = BRANCH_HALT_VOTED,
-> @@ -3339,42 +3303,6 @@ static struct clk_branch gcc_nssnoc_pcnoc_1_clk = {
->  	},
->  };
->  
-> -static struct clk_branch gcc_mem_noc_ahb_clk = {
-> -	.halt_reg = 0x1900c,
-> -	.halt_check = BRANCH_HALT,
-> -	.clkr = {
-> -		.enable_reg = 0x1900c,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(const struct clk_init_data) {
-> -			.name = "gcc_mem_noc_ahb_clk",
-> -			.parent_hws = (const struct clk_hw*[]) {
-> -				&gcc_pcnoc_bfdcd_clk_src.clkr.hw,
-> -			},
-> -			.num_parents = 1,
-> -			.flags = CLK_SET_RATE_PARENT,
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
-> -static struct clk_branch gcc_mem_noc_apss_axi_clk = {
-> -	.halt_reg = 0x1901c,
-> -	.halt_check = BRANCH_HALT_VOTED,
-> -	.clkr = {
-> -		.enable_reg = 0xb004,
-> -		.enable_mask = BIT(6),
-> -		.hw.init = &(const struct clk_init_data) {
-> -			.name = "gcc_mem_noc_apss_axi_clk",
-> -			.parent_hws = (const struct clk_hw*[]) {
-> -				&gcc_apss_axi_clk_src.clkr.hw,
-> -			},
-> -			.num_parents = 1,
-> -			.flags = CLK_SET_RATE_PARENT,
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
->  static struct clk_regmap_div gcc_snoc_qosgen_extref_div_clk_src = {
->  	.reg = 0x2e010,
->  	.shift = 0,
-> @@ -3390,24 +3318,6 @@ static struct clk_regmap_div gcc_snoc_qosgen_extref_div_clk_src = {
->  	},
->  };
->  
-> -static struct clk_branch gcc_mem_noc_qosgen_extref_clk = {
-> -	.halt_reg = 0x19024,
-> -	.halt_check = BRANCH_HALT,
-> -	.clkr = {
-> -		.enable_reg = 0x19024,
-> -		.enable_mask = BIT(0),
-> -		.hw.init = &(const struct clk_init_data) {
-> -			.name = "gcc_mem_noc_qosgen_extref_clk",
-> -			.parent_hws = (const struct clk_hw*[]) {
-> -				&gcc_snoc_qosgen_extref_div_clk_src.clkr.hw,
-> -			},
-> -			.num_parents = 1,
-> -			.flags = CLK_SET_RATE_PARENT,
-> -			.ops = &clk_branch2_ops,
-> -		},
-> -	},
-> -};
-> -
->  static struct clk_regmap *gcc_ipq5332_clocks[] = {
->  	[GPLL0_MAIN] = &gpll0_main.clkr,
->  	[GPLL0] = &gpll0.clkr,
-> @@ -3451,8 +3361,6 @@ static struct clk_regmap *gcc_ipq5332_clocks[] = {
->  	[GCC_LPASS_SWAY_CLK_SRC] = &gcc_lpass_sway_clk_src.clkr,
->  	[GCC_MDIO_AHB_CLK] = &gcc_mdio_ahb_clk.clkr,
->  	[GCC_MDIO_SLAVE_AHB_CLK] = &gcc_mdio_slave_ahb_clk.clkr,
-> -	[GCC_MEM_NOC_Q6_AXI_CLK] = &gcc_mem_noc_q6_axi_clk.clkr,
-> -	[GCC_MEM_NOC_TS_CLK] = &gcc_mem_noc_ts_clk.clkr,
->  	[GCC_NSS_TS_CLK] = &gcc_nss_ts_clk.clkr,
->  	[GCC_NSS_TS_CLK_SRC] = &gcc_nss_ts_clk_src.clkr,
->  	[GCC_NSSCC_CLK] = &gcc_nsscc_clk.clkr,
-> @@ -3573,10 +3481,7 @@ static struct clk_regmap *gcc_ipq5332_clocks[] = {
->  	[GCC_XO_DIV4_CLK] = &gcc_xo_div4_clk.clkr,
->  	[GCC_IM_SLEEP_CLK] = &gcc_im_sleep_clk.clkr,
->  	[GCC_NSSNOC_PCNOC_1_CLK] = &gcc_nssnoc_pcnoc_1_clk.clkr,
-> -	[GCC_MEM_NOC_AHB_CLK] = &gcc_mem_noc_ahb_clk.clkr,
-> -	[GCC_MEM_NOC_APSS_AXI_CLK] = &gcc_mem_noc_apss_axi_clk.clkr,
->  	[GCC_SNOC_QOSGEN_EXTREF_DIV_CLK_SRC] = &gcc_snoc_qosgen_extref_div_clk_src.clkr,
-> -	[GCC_MEM_NOC_QOSGEN_EXTREF_CLK] = &gcc_mem_noc_qosgen_extref_clk.clkr,
->  	[GCC_PCIE3X2_PIPE_CLK_SRC] = &gcc_pcie3x2_pipe_clk_src.clkr,
->  	[GCC_PCIE3X1_0_PIPE_CLK_SRC] = &gcc_pcie3x1_0_pipe_clk_src.clkr,
->  	[GCC_PCIE3X1_1_PIPE_CLK_SRC] = &gcc_pcie3x1_1_pipe_clk_src.clkr,
+It isn't like we can arbitrarily change the chip-id's.. they are abi
+between dt/kernel/userspace.  If they aren't changing, there isn't
+anything to break.
+
+> >
+> >> Apart from all these comments, I don't really see the point of this pa=
+tch,
+> >> other than trying to tie together Qualcomm's almost-meaningless chipid=
+s on
+> >> a7xx into the picture..
+> >>
+> >> Since they can't even be read back from the hardware, I don't think tr=
+ying
+> >> to force them into the upstream kernel makes any sense.
+> >
+> > Sure, we _could_ pick our own arbitrary identifiers, we don't have to
+> > align with kgsl.  But that would be a super huge PITA for mesa, which
+> > has support for both kernels.
+> Perhaps I'm biased towards keeping this kind of stuff out of the kernel,
+> but I'd say that Linux should decide on one logical path.
+
+The kernel is the small part of the driver stack, and we have two
+drivers above in userspace (vk and gallium) which can work on top of
+three different kernels (msm, kgsl, and virtgpu).  So what sounds like
+an easy/clean answer to you, is not necessarily easy/clean in the big
+picture.
+
+So wherever it comes from (and dt is fine, or socid or whatever, and
+it's fine for it to just be an opaque 32b value as long as we don't
+get conflicting values, I don't mind explicitly listing all of the
+possible patch-id's for the legacy scheme) we need to stick with
+CHIP_ID.
+
+> In between us starting this discussion, Qualcomm managed to introduce
+> yet another way of deciding what GPU is present on the system in their
+> downstream driver[1]. We're at like 5 now. Do we wanna keep up each time?
+> New ID rework for A8xx when that comes out one day?
+
+What matters is how they expose it to userspace, not where they get
+the value from.
+
+BR,
+-R
+
+> >
+> >> On a different note, I think we could try to blockify Adreno definitio=
+ns a
+> >> bit by splitting things into:
+> >>
+> >> - Core GPU propeties (revision, fw name, GMEM size)
+> >>
+> >> - G(P)MU properties
+> >>
+> >> - Family data (quirks, reg presets in some config struct which could b=
+e a
+> >>   union of config structs per generation, hwcg, maybe protected regs p=
+tr
+> >>   should also be moved there)
+> >
+> > We do something like this on the mesa side.  But we also get to use
+> > python tricks to generate code as part of the build process which
+> > makes things a bit more elegant.
+> >
+> > Fwiw, I was already thinking about splitting the gpu "hw catalog" from
+> > a flat table, to probably something more like a table of tables, so
+> > that we can split a2xx/a3xx/a4xx/a5xx/a6xx tables into separate files.
+> > And then we could move hwcg/protect/etc tables into the same file.
+> > But I thought that might be a bit too conflicty for the a7xx series so
+> > was thinking to wait until after that landed.. unless you don't think
+> > it will be a problem.
+> Yeah I'd like to get a7xx landed this season..
+>
+> Konrad
+>
+> [1] they now read parts of socinfo from smem and decide the CHIPID and
+>     speedbin based on that, but it's not available on most existing SoCs,
+>     that was thrown in with SOCID v17
+> >
+> > BR,
+> > -R
+> >
+> >> - Generation data (init function, a2xx and a6xx specifics)
+> >>
+> >> - Speedbin LUTs matched against socid
+> >>
+> >>
+> >> or something like that.. there's a whole lot of duplicated data atm
+> >>
+> >> Konrad
+> >>>
+> >>>  static inline int adreno_is_a660(const struct adreno_gpu *gpu)
+> >>> @@ -358,8 +364,7 @@ static inline int adreno_is_a680(const struct adr=
+eno_gpu *gpu)
+> >>>
+> >>>  static inline int adreno_is_a690(const struct adreno_gpu *gpu)
+> >>>  {
+> >>> -     /* The order of args is important here to handle ANY_ID correct=
+ly */
+> >>> -     return adreno_cmp_rev(ADRENO_REV(6, 9, 0, ANY_ID), gpu->rev);
+> >>> +     return gpu->info->chip_ids[0] =3D=3D 0x06090000;
+> >>>  };
+> >>>  /* check for a615, a616, a618, a619 or any a630 derivatives */
+> >>>  static inline int adreno_is_a630_family(const struct adreno_gpu *gpu=
+)
