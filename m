@@ -2,75 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 694A6754EA8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jul 2023 14:52:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02A2F754F97
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jul 2023 18:10:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjGPMwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jul 2023 08:52:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51984 "EHLO
+        id S230085AbjGPQKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jul 2023 12:10:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229617AbjGPMwC (ORCPT
+        with ESMTP id S229954AbjGPQKf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jul 2023 08:52:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE15026AF;
-        Sun, 16 Jul 2023 05:51:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AE74860C97;
-        Sun, 16 Jul 2023 12:51:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13645C433C8;
-        Sun, 16 Jul 2023 12:51:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689511899;
-        bh=S4v2KgibSFbKIsZlQ38KnV9FNhJrX3MV15+dg8ot1js=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=OoMtJPxf7SjsyC9RQZnYmoXwB+n88i+P2G7rOdEkw9RoB5uPg/I4n3t5iPuRiosl7
-         2DKBw0lWtczzb/MSi1ChJDKVVNFP0HzTJfvccGdVovQ/JWfHEXZgCB7TSBCh6XDGnk
-         t4Ug7X+hqG2YWshHr22sGhHjvUj7QsXPsSB1bnj/cxB67nvFpCy+WaWJw0Z1IaDS+L
-         oRxrO9IXemmp0UhqbC8v+VikVtD2cij0PEFzv02BHOI1xfwe1MqZtrinSrrhoGJ5tE
-         jME9UYXynE+aatcqiQxhDW/iIqWj9LuvckE+Zs4neqN20A0+uX/INMlL3Lv7OxkyEj
-         FudMxeewLMnKw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Liam Girdwood <lgirdwood@gmail.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Saravanan Sekar <sravanhome@gmail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Andy Gross <agross@kernel.org>,
+        Sun, 16 Jul 2023 12:10:35 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B36E5E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 09:10:34 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-5216f44d881so2891758a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 09:10:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689523832; x=1692115832;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nunAbpgCigSo1UVgqQbYQX6rYQ6VpmSoXPi9uXeul5Y=;
+        b=y2xuaNJvhTccxmfME73dUThdAMdNSHSc5U+0lgVAL7vIM0EF2D/6bsFtNWat7FEDGU
+         h2TUbwy0IFacHqIdb0oaRB5J481WrwhffhNfdn0efsHtyYK4dE0slDPp4M5axdOo61fp
+         fq0+thbO8VUWFUAGklS0q8c6AKp+CHAtNaBSX76ynbaQw9pSby2VaTqlXPusM5WW+sF2
+         fFkCZHqO6WABZFnlGHFmKCGADv8NquI9gKc5m1xqi2wTu9SSi2dybFfZAW4LVxpHDOtn
+         NP1tOrE2puHNNIe0IBk+hICffWdjYtzvDtqkNLc4+qJDjyxjgrsoKLWmscps/Ov2ZHsC
+         A6Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689523832; x=1692115832;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nunAbpgCigSo1UVgqQbYQX6rYQ6VpmSoXPi9uXeul5Y=;
+        b=Lyx9QuOAYGI7wDBxDQGUdwwOPnzpSD9XVAn8Qu/4oLCaE0J8JeiqOVh+yFfMeR7xP+
+         08w0AFsfz54W6CSkleInzGP2KGUdmNbWRpC0mIVYQugBCk9q8kbWp6ZGO95dsJb1wBVz
+         q7FTSD0Tvz125LCVAu4ELKvpuzFhJrUAwkQTqlELA1CXJuZB60SpaPeClvkmEH2MYpkI
+         8Hyw/eywUterEPvx03u9OAMDMIgnLoJDDeTG13vvmDYt5Le0yvPtJ4SW8P5ZthlVim0R
+         QhVAYvRiyVbd+RaJxriLb+eP69MEXdC+G26jl8Wry7kG0GlEl1qtR/yETVqdQJ4HkFLO
+         yZ0g==
+X-Gm-Message-State: ABy/qLY083mnwWLNvFvPAmBMjXYIxxNO8UJ+Va87n49zEuAzyV8QtioV
+        bhJHzavvVhWc5PS+2+5LJe8qlQ==
+X-Google-Smtp-Source: APBJJlFZE6rc3YYDZaQSlbMBjCQrik0Gl8GkW7cit2/0wyKB/2+MlCfv6DNZXkuiK47emzXn16C42w==
+X-Received: by 2002:a05:6402:3445:b0:51b:f669:9df3 with SMTP id l5-20020a056402344500b0051bf6699df3mr9387480edc.4.1689523832553;
+        Sun, 16 Jul 2023 09:10:32 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id n16-20020a05640206d000b0051e0bf5807bsm8561066edy.49.2023.07.16.09.10.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Jul 2023 09:10:32 -0700 (PDT)
+Message-ID: <ece51c2c-68a0-174e-f454-d44929181ac7@linaro.org>
+Date:   Sun, 16 Jul 2023 18:10:29 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-e2015: Add
+ accelerometer (v2)
+Content-Language: en-US
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-actions@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-In-Reply-To: <20230714174930.4063320-1-robh@kernel.org>
-References: <20230714174930.4063320-1-robh@kernel.org>
-Subject: Re: [PATCH] regulator: Explicitly include correct DT includes
-Message-Id: <168951189379.112004.11594538020708568822.b4-ty@kernel.org>
-Date:   Sun, 16 Jul 2023 13:51:33 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230715210515.13783-1-linmengbo0689@protonmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230715210515.13783-1-linmengbo0689@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,43 +84,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 14 Jul 2023 11:49:28 -0600, Rob Herring wrote:
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
+On 15/07/2023 23:05, Lin, Meng-Bo wrote:
+> v2: fix interrupt-parent = <&msmgpio>;
+
+Changelog goes under ---
+
+
 > 
-> [...]
+> E5, E7 and Grand Max have ST LIS2HH12 accelerometer.
+> Add support for it.
 
-Applied to
+Your subject has weird addon: " (v2)"
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Thanks!
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> ---
+>  .../qcom/msm8916-samsung-e2015-common.dtsi    | 21 +++++++++++++++++--
+>  1 file changed, 19 insertions(+), 2 deletions(-)
 
-[1/1] regulator: Explicitly include correct DT includes
-      commit: 045a44d4c9b32578aacf0811063e5bb741c7c32c
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+Krzysztof
 
