@@ -2,116 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEA63756AFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 19:53:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84B6B756B0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 19:55:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231129AbjGQRxi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 13:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58964 "EHLO
+        id S229708AbjGQRzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 13:55:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbjGQRxh (ORCPT
+        with ESMTP id S229690AbjGQRzl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 13:53:37 -0400
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420731A8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 10:53:36 -0700 (PDT)
-Received: by mail-vk1-xa31.google.com with SMTP id 71dfb90a1353d-4816db26ff1so1151969e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 10:53:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689616415; x=1690221215;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vFofs3943iSVTdX7g+Ij0RCA+3gmMBbIIyZkBj1OkXA=;
-        b=ERr18YFzsG/SvYGVCzmYmjcnnPdM5rf+vbwh9Za0AmemltqZkd6bork/eCer2Wuxx5
-         lt04ghWzHdI+RYAGk12Sh7/Gi0MuW+CIry5u6wI5vZl+6n5xMSCFv085knt8moaZ1hJw
-         NIJQtQa3AoE5JoJ4H1hZ/hl01Q0x8lgwNEgqxSBvDIneU7RVi4UhEoQjDLJ4iGZJes2B
-         8odW0pJBlszMBFztGpXJp+wWOtidsw2L/YbV6Hge6NoyJAdxTSAWVGtoI12q1Zxscyqg
-         NLGt/VBcxkI54VN0I07c0m75ZR055ngGUNKM8t0rrG55Rea7lwoQskItyH1th9HUvwGX
-         APNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689616415; x=1690221215;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vFofs3943iSVTdX7g+Ij0RCA+3gmMBbIIyZkBj1OkXA=;
-        b=e1v5nc7sJJ7n8MRyJ4+TLwc565+6hXzAbbrwXgm8yUVhb2LO5qcsXVIOlOVQAcu7YZ
-         QNmSnKzf+RKpSKebHldwr2X46KGHSwOusVjQsCrEJYRVnuVCOiAXtlWXme9o8OxzI1RE
-         XpVIz32OFwc2URJ1b1HWIXjxoOu3BZJFcR8xe+shpwqkq10oNSi/0SmQCn9EnjDjOWSI
-         WntKI3HQA98AMxQ1aEEvQrnA5pebtMNbxXgx87ciP2q5sPIVEndkbkyGg/pS+UEhIP/l
-         /YoeKvgYpnN10T2MAz/ioo6pd9g2PWiwtus97c/gg9snEaho+ixS7RFM5fKUmwZQagui
-         gb0g==
-X-Gm-Message-State: ABy/qLab3RABGn3VGUZdqE239gr33a0ZzN1NOISfW30nb0UtkcrB/1Ke
-        uOV+aKh3cPJli6qzOIHMInFyvmAtVHvnNoMJ1645VA==
-X-Google-Smtp-Source: APBJJlEuidatGYmLfJsqEJYVBuLsmXe+VImsGqAeLJarjuy0yVjI5kUdsNb9MZEHyhFCDqh5oWqzbKWigWsV/foSG5E=
-X-Received: by 2002:a1f:3f13:0:b0:481:2ff5:c9a9 with SMTP id
- m19-20020a1f3f13000000b004812ff5c9a9mr58017vka.13.1689616415280; Mon, 17 Jul
- 2023 10:53:35 -0700 (PDT)
+        Mon, 17 Jul 2023 13:55:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84AFD1A8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 10:55:40 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36HFVbAb011909;
+        Mon, 17 Jul 2023 17:55:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TBUZ8U/cPXfL5ZEfE5u/WCLkOI2O+FEYA482bH/5CD8=;
+ b=j3SdNFyE9BPlcP/1qW1aUdtRSTz7BcG3DJNSTLYAyVVxtMxKoRMqHVFaWTICB8+I1YNM
+ GPEAjVL2a1kvYr8gEnRgt7rgOckym5DxK+S2Qrzu54fopU3BBYpjIxlpX1tOhVJu/A9m
+ 3quZ6H26WVnvrUCIC4+AuckvWVHhttcW2HLWFWB5Q6GlsoY6ZoY1JSN5Ptwicq3/UIeR
+ xgdzxx3YpyqM10Aa/2U3ByeWaUCKzjSS/BITnHXZ788QtJ1UyS3WgdtMAo2iRkW5SmfR
+ bB8Mby1d77lb++b3+45YhIrBvE+2ZwkjdlTxT+QqIWmEULw6s39zyBf0OwaWwRnI+1aK Jw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rw3yv11mj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 17:55:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36HHtFNx016027
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 17:55:15 GMT
+Received: from [10.110.91.201] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 17 Jul
+ 2023 10:55:15 -0700
+Message-ID: <72867325-8b6f-0863-c637-2ec73583a2fb@quicinc.com>
+Date:   Mon, 17 Jul 2023 10:55:12 -0700
 MIME-Version: 1.0
-References: <20230717065535.2065582-1-quic_srichara@quicinc.com>
- <2023071729-shamrock-evidence-b698@gregkh> <2fc238aa-82c1-383a-9dca-72f979ee3c07@quicinc.com>
-In-Reply-To: <2fc238aa-82c1-383a-9dca-72f979ee3c07@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 17 Jul 2023 20:53:24 +0300
-Message-ID: <CAA8EJpoB6Q5c27-D5HF42+OS7S7bPBGWi_Po0orMxaQ7yx3=1A@mail.gmail.com>
-Subject: Re: [PATCH V4] PCI: qcom: Fixing broken pcie bring up for 2_3_3
- configs ops
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc:     Greg KH <gregkh@linuxfoundation.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org,
-        mani@kernel.org, lpieralisi@kernel.org, bhelgaas@google.com,
-        kw@linux.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 09/11] drm/msm/dpu: remove extra clk_round_rate() call
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230712221139.313729-1-dmitry.baryshkov@linaro.org>
+ <20230712221139.313729-10-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230712221139.313729-10-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4-wYPfq_h5Rmg0ViAPWDc8S8mZaV-wIG
+X-Proofpoint-GUID: 4-wYPfq_h5Rmg0ViAPWDc8S8mZaV-wIG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-17_13,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ bulkscore=0 phishscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307170163
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 17 Jul 2023 at 20:16, Sricharan Ramabadhran
-<quic_srichara@quicinc.com> wrote:
->
->
->
-> On 7/17/2023 7:09 PM, Greg KH wrote:
-> > On Mon, Jul 17, 2023 at 12:25:35PM +0530, Sricharan Ramabadhran wrote:
-> >> PARF_SLV_ADDR_SPACE_SIZE_2_3_3 macro is used for IPQ8074
-> >> 2_3_3 post_init ops. PCIe slave addr size was initially set
-> >> to 0x358, but was wrongly changed to 0x168 as a part of
-> >> commit 39171b33f652 ("PCI: qcom: Remove PCIE20_ prefix from
-> >> register definitions"). Fixing it, by using the right macro
-> >> PARF_SLV_ADDR_SPACE_SIZE and remove the unused
-> >> PARF_SLV_ADDR_SPACE_SIZE_2_3_3.
-> >
-> > Note, you do have a full 72 columns to use, no need to make it smaller.
->
->   ok sure
->
-> >
-> >> Without this pcie bring up on IPQ8074 is broken now.
-> >
-> > I do not understand, something that used to work now breaks, or this is
-> > preventing a new chip from being "brought up"?
-> >
->
->   yes, ipq8074 pcie which was previously working is broken now.
->   This patch fixes it.
-
-So, you need to describe what is broken and why. Mere "it is broken,
-fix it" is not enough.
-
->
->
-> Regards,
->   Sricharan
 
 
+On 7/12/2023 3:11 PM, Dmitry Baryshkov wrote:
+> The dev_pm_opp_set_rate() already contains a call for clk_round_rate for
+> the passed value. Stop calling it manually from
+> _dpu_core_perf_get_core_clk_rate(). It is slightly incorrect to call it
+> this way, as we should round the final calculated clock rate rather than
+> rounding all the intermediate values.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
--- 
-With best wishes
-Dmitry
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
