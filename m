@@ -2,80 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00A01756732
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 17:10:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 332CF756754
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 17:15:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230163AbjGQPKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 11:10:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46250 "EHLO
+        id S230469AbjGQPPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 11:15:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbjGQPKE (ORCPT
+        with ESMTP id S230266AbjGQPPo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 11:10:04 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 495B510CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 08:10:03 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-992e22c09edso559489466b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 08:10:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689606602; x=1692198602;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0QA5RqmiVdq9ytXPcXzIE1eDmERmeAj1yVlVq+29cak=;
-        b=NuXak2it5+OvgxyxGFQ+9iRpkh1horeYhUC/wdQedmHfHg/3yY6Xh4VLBP1JCQXapC
-         8Ccl2xFSqu1J5FyLrEHRJuKTynWfVViteN3zpakLNfc5ExsglOr+2S17zzUCwVMnWUpP
-         NEcdQXu6+M6o32GBJxOzUy5rAajZHVvAXDTGCruAcmMmONxnldvueAHycFkg1iXABtRq
-         K/kLwENns0VXO66ozC33hL1JnR+KEpsyFDaMIQ9I1ypjgDhQLg97euF+yUKoi4uSlstz
-         pACMqfuqb+XuME8Ay3wCEkfKBEC8OQcKpqQ7Tm/WWQlXqcx+yFScZKY+hKKU0HqGNcPn
-         vrQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689606602; x=1692198602;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0QA5RqmiVdq9ytXPcXzIE1eDmERmeAj1yVlVq+29cak=;
-        b=EEoe/3N5geH/BbZcHHn4R7kPiH0n0jllPGhbecvUpV1Owc5lVMPCvDfzI+o7tXYMez
-         oUn2Bbgm1w7qhGmUQcoUap7uKvVsaXcbpF8Rxrdqpg2aaj1+iC0j2C9OC05Xe14SjJq4
-         MJ/2Jl0YEuI1phR5SVf6CyVEoxKDkcJhzGUjUu38eTNrs4Nx1JlnAFeBombk3eWbTRlb
-         r0c0Ia0HYlGN4ss5R83bssFSLJ15Gs63EepC6hDIdSONExswDxVFz5RnbN0HgSx6rZNg
-         m24CtS4ToQkk2s9Ni6clfL37g3Ts2S33Vc11IbBqZQAq5JTKuAzEMD7hrKwTEgM2OoJK
-         dSVQ==
-X-Gm-Message-State: ABy/qLYh5v8BAUaDx14SnGPO8lOFeHm/+4WgIHFhrcspE7Q09/eHCzL6
-        rdqTI1vjQlWtUajubKJgQnbbSA==
-X-Google-Smtp-Source: APBJJlFZWucYJH85n4jsJ42GxhVYcW8vMf3uChkJVcrGjKy3sX2RQAf0T4BKbSW1Z/ebPIkAVIKfug==
-X-Received: by 2002:a17:906:13:b0:993:e752:1a6f with SMTP id 19-20020a170906001300b00993e7521a6fmr13589495eja.6.1689606601763;
-        Mon, 17 Jul 2023 08:10:01 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id bi3-20020a170906a24300b0098d2f703408sm9295246ejb.118.2023.07.17.08.09.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 08:10:00 -0700 (PDT)
-Message-ID: <5bb3e8fe-c947-352c-732b-11a5a1b36d04@linaro.org>
-Date:   Mon, 17 Jul 2023 17:09:58 +0200
+        Mon, 17 Jul 2023 11:15:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D02C9F9;
+        Mon, 17 Jul 2023 08:15:42 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36HCoKJM021976;
+        Mon, 17 Jul 2023 15:15:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=iJVRwGgBDqorv/DdEpo+T+O3KpUQk35Go53H2Mg5u8E=;
+ b=TEv12YQJtRqtcBcMQNYjN2fHJr5tQSNHxSPBRbeabR7qC+/GYg5bqGHdJFIeslN6vbqe
+ t0r5WUxe61FcITS5uXF8c5h2f2Z1vYQxIHEZlk5OQAUm5wvs4XPjdvx3q6TJ/byYBjK/
+ O4kDChun4EJkq6FEjScChAV+6aeWNLEpPVRzW9Aqz66X85l/YBaXVqOsu1Ja8/pokEcm
+ 9POr3DvhDDR9UHf/fMtc0KvSxC5p/nrbH+eLbIG0RVpzVy6xAohlB4wr62q6toem/W5j
+ Gk31paBt7EENzORSPmP3uazlF3ansNOcGb/muMIlszDKDxHbUdRHkRmhzwowjpda4Ws2 Dg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3run1jkrc1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 15:15:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36HFFNXY009272
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 15:15:23 GMT
+Received: from [10.216.3.135] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 17 Jul
+ 2023 08:15:17 -0700
+Message-ID: <02428901-1941-f104-e55b-d197d589a93f@quicinc.com>
+Date:   Mon, 17 Jul 2023 20:45:14 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
- RAM slice through phandle
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v9 06/10] usb: dwc3: qcom: Add support to read IRQ's
+ related to multiport
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+To:     Johan Hovold <johan@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        <quic_jackp@quicinc.com>, Wesley Cheng <quic_wcheng@quicinc.com>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v3-0-2c72f27b4706@linaro.org>
- <20230328-topic-msgram_mpm-v3-1-2c72f27b4706@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230328-topic-msgram_mpm-v3-1-2c72f27b4706@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-7-quic_kriskura@quicinc.com>
+ <ZK6YrLMn9r39zEeB@hovoldconsulting.com>
+ <ef29e520-7b9c-f581-e70a-250df80d3821@quicinc.com>
+ <ZLEP6Ekh3unSTiCL@hovoldconsulting.com>
+ <7c04ebd9-4def-87d6-0640-35fd0ccd20f5@quicinc.com>
+ <9a304650-0360-5509-4922-0818e8e306f5@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <9a304650-0360-5509-4922-0818e8e306f5@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XuMn0I8BfbE4W_gx3_jejELyo-kSgIBF
+X-Proofpoint-GUID: XuMn0I8BfbE4W_gx3_jejELyo-kSgIBF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-17_12,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ bulkscore=0 mlxlogscore=908 priorityscore=1501 mlxscore=0 spamscore=0
+ phishscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307170139
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -86,23 +98,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/07/2023 16:37, Konrad Dybcio wrote:
-> -                           <91 260>;
-> +
-> +    remoteproc-rpm {
-> +      compatible = "qcom,msm8998-rpm-proc", "qcom,rpm-proc";
-> +
-> +        mpm: interrupt-controller {
-
-Messed indentation.
-
-> +            compatible = "qcom,mpm";
-> +            qcom,rpm-msg-ram = <&apss_mpm>;
-> +            interrupts = <GIC_SPI 197 IRQ_TYPE_EDGE_RISING>;
-> +            mboxes = <&apcs_glb 1>;
-> +            interrupt-controller;
 
 
-Best regards,
-Krzysztof
+On 7/16/2023 12:31 AM, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 7/14/2023 4:10 PM, Krishna Kurapati PSSNV wrote:
+>>
+>>
+>> On 7/14/2023 2:35 PM, Johan Hovold wrote:
+>>> On Wed, Jul 12, 2023 at 11:56:33PM +0530, Krishna Kurapati PSSNV wrote:
+>>>> On 7/12/2023 5:42 PM, Johan Hovold wrote:
+>>>>> On Wed, Jun 21, 2023 at 10:06:24AM +0530, Krishna Kurapati wrote:
+>>>>>> Add support to read Multiport IRQ's related to quad port controller
+>>>>>> of SA8295 Device.
+>>>>>>
+>>>>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>>>>> ---
+>>>>>>    drivers/usb/dwc3/dwc3-qcom.c | 108 
+>>>>>> +++++++++++++++++++++++++++++------
+>>>>>>    1 file changed, 91 insertions(+), 17 deletions(-)
+>>>>>
+>>>>>> +static int dwc3_qcom_setup_mp_irq(struct platform_device *pdev)
+>>>>>> +{
+>>>>>> +    struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+>>>>>> +    char irq_name[15];
+>>>>>
+>>>>> The interrupt device-name string can not be allocated on the stack or
+>>>>> reused as it is stored directly in each irqaction structure.
+>>>>>
+>>>>> This can otherwise lead to random crashes when accessing
+>>>>> /proc/interrupts:
+>>>>>
+>>>>>     https://lore.kernel.org/lkml/ZK6IV_jJPICX5r53@hovoldconsulting.com/
+>>>
+>>>>     Sure, will create a static array of names if possible in global
+>>>> section of file and use it to read interrupts.
+>>>
+>>> Or just use devm_kasprintf(), which should allow for a cleaner
+>>> implementation.
+>>>
+>>> I've fixed it up like this for my X13s wip branches:
+>>>
+>>>     https://github.com/jhovold/linux/commit/0898b54456bc2f4bd4d420480db98e6758771ace
+>>>>     Are you fine with seperating out setup_irq and setup_mp_irq 
+>>>> functions
+>>>> ? Can you please review comments and suggestion on [1].
+>>>
+>>> I haven't had time to look at your latest replies yet, but as I already
+>>> said when reviewing v9, it seems you should be using a common helper for
+>>> non-mp and mp.
+>>>
+>> Hi Johan,
+>>
+>>   The gist of my mail was to see if I can defer qcom probe when dwc3 
+>> probe fails/or doesn't happen on of_plat_pop (which is logical) so 
+>> that we can move setup_irq to after dwc3_register_core so that we know 
+>> whether we are MP capable or not. This would help us move all IRQ 
+>> reading into one function.
+>>
+> Hi Johan,
+> 
+>   I see it is difficult to write a common helper. To do so, we need to 
+> know whether the device is MP capable or not in advance. And since it is 
+> not possible to know it before of_plat_pop is done, I see only few ways 
+> to do it:
+> 
+> 1. Based on qcom node compatible string, I can read whether the device 
+> is MP capable or not and get IRQ's accordingly.
+> 
+> 2. Read the port_info in advance but it needs me to go through some DT 
+> props and try getting this info. Or read xhci regs like we are doing in 
+> core (which is not good). Also since some Dt props can be missing, is it 
+> difficult to get the MP capability info before of_plat_pop is done.
+> 
+> 3. Remove IRQ handling completely. Just because the device has IRQ's 
+> present, I don't see a point in adding them to bindings, and because we 
+> added them to bindings, we are making a patch to read them (and since 
+> this is a little challenging, the whole of multiport series is blocked 
+> although I don't need wakeup support on these interrupts right away).
+> 
+> Can't we let the rest of the patches go through and let interrupt 
+> handling for 2nd, 3rd and 4rth ports be taken care later ? I am asking 
+> this because I want the rest of the patches which are in good shape now 
+> (after fixing the nits mentioned) to get merged atleast. I will make 
+> sure to add interrupt handling later in a different series once this is 
+> merged once I send v10.
+> 
+> Or if there is a simpler way to do it, I would be happy to take any 
+> suggestions and complete this missing part in this series itself.
+>
 
+Hi Konrad, Bjorn,
+
+  Can you also let me know your review on this. Can we add a compatible 
+data to dwc3-qcom to identify whether we need to read MP irq's or non-NP 
+irq's and also if it is better to split this series into two. (One for 
+multiport and one for dwc3-qcom IRQ's)
+
+Regards,
+Krishna,
