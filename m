@@ -2,78 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA4C67558FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 03:16:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B11B0755931
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 03:47:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230297AbjGQBQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jul 2023 21:16:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35634 "EHLO
+        id S230225AbjGQBru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jul 2023 21:47:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjGQBQD (ORCPT
+        with ESMTP id S229496AbjGQBrt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jul 2023 21:16:03 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79E7EE50
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 18:16:01 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-666eef03ebdso2529825b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 18:16:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689556561; x=1692148561;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7oYHq1p/oXp0puIhFy9OrnpLdy2w5rBXDTDnolu96uM=;
-        b=lpLLCmgz30TGZmwSdUJe4tDFJz5Fcd74dvul6RV1b10GYjbMvH7ymiHWYqHYwl1XDU
-         AXvc9ttDTLXuhQDQ6AawB/CVruvT818GWrcl+rSI9CtyU4dUNshxytZ8qMbOnyt5hWo/
-         NR2IUmY18rsbM26/5zCo5bACAbL5EdbpNCDmCSeu04IKz2/F38pSlK90Ee6/pp07p8iM
-         2b312nFSgBZHusqLwvGAjAXkWhrRd+L6jTlWmn40iZ2VYBTHzaXHGEHE1QU2mvzpYcw2
-         PcFrQ4ACun+46PghhI95QzcyTb0HxTlK8n0ChaNriwetm1HejWpDgt5yc+9WRH0WWLCv
-         I4/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689556561; x=1692148561;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7oYHq1p/oXp0puIhFy9OrnpLdy2w5rBXDTDnolu96uM=;
-        b=WOuUXkd9H78/w0/y05SuJvrgj4aaNx0H1yqqWBGgSYJKRZf6wZmkcErjcgU4H3z75h
-         oJgLf2RDOwEoZbuipQoGnC0KJ1S54nPist8Cjw56gXA8cXw1P5TmbAH2aslzg23sgM9q
-         1lcUBXkyv1N/BH5kYeutoaMK8CIhUScuSdoudEUZPLS85ikDGXLYTeCBN6m7Dsr6SYu5
-         +5w79AJcho3iCgQhdbxBcw3AB7NKLCT4LWSdgDhfaHRvvaeBpb0E4+HbGj769P401Ya9
-         kG6zBJIhbyDQKwQmc0sk3O1DMfYw+XAfgSLRmQO0qKV/XCMw6DzobesX1Y57FJ6pZ8p8
-         X7lg==
-X-Gm-Message-State: ABy/qLYV8ed5tL9W8D2UzByaK22VgqPe/yL7Ffk5ASd3M6ZDGkcWvAeC
-        L6Wj/OWvaR/Gm9rZTz8Lf91GSg==
-X-Google-Smtp-Source: APBJJlGT729jgOISi92Vcn9sb6yb8hOJik/a8kpi8tvYnR/R2ZGG42BlJaza9mC2BASDQp7lhQ53bw==
-X-Received: by 2002:a05:6a20:2451:b0:126:43f7:e271 with SMTP id t17-20020a056a20245100b0012643f7e271mr12234973pzc.39.1689556560877;
-        Sun, 16 Jul 2023 18:16:00 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:1bdd:1b8b:7a6:78d0])
-        by smtp.gmail.com with ESMTPSA id k10-20020a633d0a000000b0054fe6bae952sm11687701pga.4.2023.07.16.18.15.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Jul 2023 18:16:00 -0700 (PDT)
-Date:   Sun, 16 Jul 2023 19:15:57 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
-        srinivas.kandagatla@linaro.org,
-        Mukesh Ojha <quic_mojha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
-Subject: Re: (subset) [PATCH v3 00/18] Add basic Minidump kernel driver
- support
-Message-ID: <ZLSWTaMtr9UGmrDy@p14s>
-References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
- <168945921478.1805013.7211960599963339759.b4-ty@kernel.org>
+        Sun, 16 Jul 2023 21:47:49 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D79BE5A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 18:47:43 -0700 (PDT)
+Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.54])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4R44dJ1jQ6ztR79;
+        Mon, 17 Jul 2023 09:44:36 +0800 (CST)
+Received: from cgs.huawei.com (10.244.148.83) by
+ kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27; Mon, 17 Jul 2023 09:47:39 +0800
+From:   Gaosheng Cui <cuigaosheng1@huawei.com>
+To:     <liviu.dudau@arm.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>,
+        <sam@ravnborg.org>, <quic_eberman@quicinc.com>,
+        <a39.skl@gmail.com>, <quic_gurus@quicinc.com>,
+        <cuigaosheng1@huawei.com>,
+        <angelogioacchino.delregno@somainline.org>,
+        <james.qian.wang@arm.com>
+CC:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>
+Subject: [PATCH v4 0/3] Fix IS_ERR() vs NULL check for drm
+Date:   Mon, 17 Jul 2023 09:47:36 +0800
+Message-ID: <20230717014739.2952665-1-cuigaosheng1@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <168945921478.1805013.7211960599963339759.b4-ty@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.244.148.83]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ kwepemi500012.china.huawei.com (7.221.188.12)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,26 +55,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 15, 2023 at 03:13:34PM -0700, Bjorn Andersson wrote:
-> 
-> On Wed, 03 May 2023 22:32:14 +0530, Mukesh Ojha wrote:
-> > Minidump is a best effort mechanism to collect useful and predefined data
-> > for first level of debugging on end user devices running on Qualcomm SoCs.
-> > It is built on the premise that System on Chip (SoC) or subsystem part of
-> > SoC crashes, due to a range of hardware and software bugs. Hence, the
-> > ability to collect accurate data is only a best-effort. The data collected
-> > could be invalid or corrupted, data collection itself could fail, and so on.
-> > 
-> > [...]
-> 
-> Applied, thanks!
-> 
-> [01/18] remoteproc: qcom: Expand MD_* as MINIDUMP_*
->         commit: 318da1371246fdc1806011a27138175cfb078687
->
+v4:
+- 1. Update the second patch's commit messages.
+  2. Update the first patch, use dev_err_probe() instead of dev_err().
 
-Krzysztof asked for modifications on this patch.
+  Thanks!
 
-> Best regards,
-> -- 
-> Bjorn Andersson <andersson@kernel.org>
+v3:
+- Update the second patch:
+  1. change IS_ERR to IS_ERR_OR_NULL
+  2. add Dmitry's R-b in this revision:
+  link: https://patchwork.freedesktop.org/patch/511035/?series=110745&rev=1
+
+  Thanks!
+
+v2:
+- I'm sorry I missed some emails, these patches were submitted last year,
+  now let me resend it with the following changes:
+  1. remove the patch: "drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in msm_icc_get()"
+  2. remove the patch: "drm/vc4: kms: Fix IS_ERR() vs NULL check for vc4_kms"
+  3. add "Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>" to the second patch.
+
+  Thanks!
+
+v1:
+- This series contains a few fixup patches, to fix IS_ERR() vs NULL check
+  for drm, and avoid a potential null-ptr-defer issue, too. Thanks!
+
+Gaosheng Cui (3):
+  drm/panel: Fix IS_ERR() vs NULL check in nt35950_probe()
+  drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in a5xx_submit_in_rb()
+  drm/komeda: Fix IS_ERR() vs NULL check in
+    komeda_component_get_avail_scaler()
+
+ drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c | 2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c                      | 2 +-
+ drivers/gpu/drm/panel/panel-novatek-nt35950.c              | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+-- 
+2.25.1
+
