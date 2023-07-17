@@ -2,170 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 885E075613F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 13:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D6D57561A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 13:36:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229974AbjGQLJC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 07:09:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34164 "EHLO
+        id S230039AbjGQLgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 07:36:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbjGQLJB (ORCPT
+        with ESMTP id S229461AbjGQLgI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 07:09:01 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B38E45
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 04:08:59 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b933bbd3eeso29055111fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 04:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689592137; x=1692184137;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eQuNLrwbJ2AdsFbKd9SBZgt7zHVZW51vp7qPZgcDweg=;
-        b=MtFO/Mvc0xspnkoMEh5fsDNS+VVWirzNRAvB3fitk0Dm1zi/YTGv2jOL7Uk8ZI/7B1
-         Y6xasr3dN+h4JKJOdCQLyigRLxdVVZmSpRwZlVCIzZ4dh5hXKGqTmVkPzvKR0dJV2o6a
-         EwepnhROHZ3tM6JAqt/PxVT3mwA4Ue+IjCJWFwI6spHEqNVvKTBiMdIvwTzydidas5Kc
-         PNKkM8pVa+21nvblq8PkjAdVhSDpEWe6PwVA2Hsyd1jXaENlfmfekeWdHfLssfI0dNmd
-         ROb5AZnYMr7mpnhw+TycOgiWldFHoWZpw8KGneC8ulwk8pm/gC2WYUJbbPnufoiIa4RC
-         85Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689592137; x=1692184137;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eQuNLrwbJ2AdsFbKd9SBZgt7zHVZW51vp7qPZgcDweg=;
-        b=TMuZsdyO0E/bmTfDESL3daEXPb6FJC2fgUs4KOPnPcO152fyF4FgcOEyffhJ7zb+Ze
-         XnpX1nV5nlMdWWHEKJoq3KCSWl4uPy1XLHXuLLgHbkpf7yrcdQT+UeF5EUcXaHN5yY5t
-         zaZv9y9z9/E7rwI0QWoknDklgQUpEGkN54BNtehbVGtFJWie8924nq2xIxrI5ar1vFpq
-         Yplijffu5d+Mq60UB3Fdgk4hcvhjygyafCA0m3qB+o8vzN3Xza1VaZ9GGlSoYVscIS2Q
-         l/exB9GKCNMdaSSnK+yHxyCaB6WeIstOYH3+XuHjCyR5CDnX3TLFg0uvWBzWcsSh0KPg
-         nmiw==
-X-Gm-Message-State: ABy/qLauSn7dg1ILCCt0Bml425PkyJokc/F4tpENHKgglAjLlMobN+Qp
-        oQNBfdl0p9qGz0B1ru8h2WJZxg==
-X-Google-Smtp-Source: APBJJlErSTd9piiodlW+ToCtAf2Q4Jwxz8C8FI1Iin32AwNZNKHAg7wzx7U496d2ZHQO+2dysJbLUw==
-X-Received: by 2002:a05:651c:20a:b0:2b6:d8d4:161 with SMTP id y10-20020a05651c020a00b002b6d8d40161mr10907844ljn.43.1689592137230;
-        Mon, 17 Jul 2023 04:08:57 -0700 (PDT)
-Received: from linaro.org ([82.78.74.213])
-        by smtp.gmail.com with ESMTPSA id z3-20020a1709064e0300b00992afee724bsm8989196eju.76.2023.07.17.04.08.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jul 2023 04:08:56 -0700 (PDT)
-Date:   Mon, 17 Jul 2023 14:08:54 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Taniya Das <quic_tdas@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        avel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: gdsc: Add support for set_hwmode_dev
-Message-ID: <ZLUhRlm20xlZ3OJj@linaro.org>
-References: <20230628105652.1670316-1-abel.vesa@linaro.org>
- <20230628105652.1670316-3-abel.vesa@linaro.org>
- <42b1167d-da60-f6c3-67b6-3f6857327396@linaro.org>
- <e94f187e-e444-d18d-eba9-b9a699abdb95@quicinc.com>
+        Mon, 17 Jul 2023 07:36:08 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95D92E4C;
+        Mon, 17 Jul 2023 04:36:07 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (aztw-30-b2-v4wan-166917-cust845.vm26.cable.virginm.net [82.37.23.78])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id AC0DD16C4;
+        Mon, 17 Jul 2023 13:35:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1689593710;
+        bh=Q3mYfdnpaLKlY8/jxmRm80QstU9e0PZzEci91ZZE1j4=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=D34b2nk3MBeIsD4Hh9go1cz7KYgQfaVb0QwyTeWrvQudhj3fcvsR86k18n5c2Eh/a
+         11cp7FnDEwboNqdfvQSni7J+NuSf4nawSesO0QfLQ1Tb/Qq/1vhrC/00e2IYaQomU7
+         muczhfhcRx636pqbzTWg6NH753X76UJuCpEmbpUo=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e94f187e-e444-d18d-eba9-b9a699abdb95@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230714174545.4056287-1-robh@kernel.org>
+References: <20230714174545.4056287-1-robh@kernel.org>
+Subject: Re: [PATCH] drm: Explicitly include correct DT includes
+From:   Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Cc:     devicetree@vger.kernel.org, Ondrej Jirman <megous@megous.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-mips@vger.kernel.org, lima@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Artur Weber <aweber.kernel@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Emma Anholt <emma@anholt.net>,
+        Fabio Estevam <festevam@gmail.com>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Guido =?utf-8?q?G=C3=BCnther?= <agx@sigxcpu.org>,
+        Heiko =?utf-8?q?St=C3=BCbner?= <heiko@sntech.de>,
+        Icenow y Zheng <icenowy@aosc.io>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jerry Han <hanxu5@huaqin.corp-partner.google.com>,
+        Jianhua Lu <lujianhua000@gmail.com>,
+        John Stultz <jstultz@google.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liu Ying <victor.liu@nxp.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Marek Vasut <marex@denx.de>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        Ondrej Jirman <megi@xff.cz>, Orson Zhai <orsonzhai@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Philippe Cornu <philippe.cornu@foss.st.com>,
+        Purism Kernel Team <kernel@puri.sm>,
+        Qiang Yu <yuq825@gmail.com>,
+        Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+        Rob Clark <robdclark@gmail.com>, Rob Herring <robh@kernel.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Steven Price <steven.price@arm.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Yongqin Liu <yongqin.liu@linaro.org>
+Date:   Mon, 17 Jul 2023 12:35:59 +0100
+Message-ID: <168959375926.3515353.7529038208688306372@Monstersaurus>
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-07-10 09:40:14, Taniya Das wrote:
-> Hi Abel,
-> 
-> Thanks for the patch.
-> 
-> On 6/28/2023 10:48 PM, Konrad Dybcio wrote:
-> > On 28.06.2023 12:56, Abel Vesa wrote:
-> > > Implement the GDSC specific genpd set_hwmode_dev callback in order to
-> > > switch the HW control on or off. For any GDSC that supports HW control
-> > > set this callback in order to allow its consumers to control it.
-> > > 
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > This still does nothing to prevent the HW_CTRL state being changed in
-> > init, enable and disable functions.
-> > 
-> > Konrad
-> > >   drivers/clk/qcom/gdsc.c | 22 ++++++++++++++++++++++
-> > >   1 file changed, 22 insertions(+)
-> > > 
-> > > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> > > index 5358e28122ab..9a04bf2e4379 100644
-> > > --- a/drivers/clk/qcom/gdsc.c
-> > > +++ b/drivers/clk/qcom/gdsc.c
-> > > @@ -314,6 +314,26 @@ static int gdsc_enable(struct generic_pm_domain *domain)
-> > >   	return 0;
-> > >   }
-> > > +static int gdsc_set_hwmode_dev(struct generic_pm_domain *domain,
-> > > +			       struct device *dev, bool enable)
-> > > +{
-> > > +	int ret = gdsc_hwctrl(domain_to_gdsc(domain), enable);
-> > > +
-> > > +	if (ret)
-> > > +		goto out;
-> > > +
-> > > +	/*
-> > > +	 * Wait for the GDSC to go through a power down and
-> > > +	 * up cycle.  In case there is a status polling going on
-> > > +	 * before the power cycle is completed it might read an
-> > > +	 * wrong status value.
-> > > +	 */
-> > > +	udelay(1);
-> > > +
-> > > +out:
-> > > +	return ret;
-> > > +}
-> > > +
-> > >   static int gdsc_disable(struct generic_pm_domain *domain)
-> > >   {
-> > >   	struct gdsc *sc = domain_to_gdsc(domain);
-> > > @@ -451,6 +471,8 @@ static int gdsc_init(struct gdsc *sc)
-> > >   		sc->pd.power_off = gdsc_disable;
-> > >   	if (!sc->pd.power_on)
-> > >   		sc->pd.power_on = gdsc_enable;
-> > > +	if (sc->flags & HW_CTRL)
-> > > +		sc->pd.set_hwmode_dev = gdsc_set_hwmode_dev;
-> We do not want to move to SW mode without consumers wanting to move to this
-> mode.
-> 
-> We want a new flag for the consumers wanting to move to this mode. The mode
-> in which the GDSC would be enabled would be in SW mode only.
-> +	if (sc->flags & HW_CTRL_TRIGGER) {
-> +		sc->pd.set_hwmode_dev = gdsc_set_mode;
-> +	}
-> +
+Quoting Rob Herring (2023-07-14 18:45:34)
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
+>=20
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-OK, maybe I'm missing something here.
+>  drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c         | 2 +-
+>  drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c         | 2 ++
+>  drivers/gpu/drm/renesas/rcar-du/rcar_du_vsp.c         | 1 +
+>  drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi.c       | 1 -
+>  drivers/gpu/drm/renesas/rcar-du/rzg2l_mipi_dsi.c      | 1 -
 
-Do you suggest we have GDSCs that, even though they support HW ctrl,
-should not be controllable by the consumer?
+For drivers/gpu/drm/renesas/rcar-du/
 
-Why isn't dev_pm_genpd_set_hwmode good enough? If a consumer doesn't
-want to control it then the consumer can just skip calling the mentioned
-function.
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c b/drivers/gpu/=
+drm/renesas/rcar-du/rcar_du_drv.c
+> index 1ffde19cb87f..3904b0cca814 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+> @@ -12,7 +12,7 @@
+>  #include <linux/io.h>
+>  #include <linux/mm.h>
+>  #include <linux/module.h>
+> -#include <linux/of_device.h>
+> +#include <linux/of.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm.h>
+>  #include <linux/slab.h>
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c b/drivers/gpu/=
+drm/renesas/rcar-du/rcar_du_kms.c
+> index adfb36b0e815..9ff4537c26c8 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+> @@ -20,8 +20,10 @@
+> =20
+>  #include <linux/device.h>
+>  #include <linux/dma-buf.h>
+> +#include <linux/of.h>
+>  #include <linux/of_graph.h>
+>  #include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/wait.h>
+> =20
+>  #include "rcar_du_crtc.h"
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_vsp.c b/drivers/gpu/=
+drm/renesas/rcar-du/rcar_du_vsp.c
+> index 45c05d0ffc70..9cbb5e6e2cba 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_vsp.c
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_vsp.c
+> @@ -22,6 +22,7 @@
+>  #include <linux/bitops.h>
+>  #include <linux/dma-mapping.h>
+>  #include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/scatterlist.h>
+>  #include <linux/slab.h>
+>  #include <linux/videodev2.h>
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi.c b/drivers/gp=
+u/drm/renesas/rcar-du/rcar_mipi_dsi.c
+> index e10e4d4b89a2..db2e6f16f954 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi.c
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi.c
+> @@ -12,7 +12,6 @@
+>  #include <linux/math64.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of_graph.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/reset.h>
+> diff --git a/drivers/gpu/drm/renesas/rcar-du/rzg2l_mipi_dsi.c b/drivers/g=
+pu/drm/renesas/rcar-du/rzg2l_mipi_dsi.c
+> index aa95b85a2964..8048bdca2d6c 100644
+> --- a/drivers/gpu/drm/renesas/rcar-du/rzg2l_mipi_dsi.c
+> +++ b/drivers/gpu/drm/renesas/rcar-du/rzg2l_mipi_dsi.c
+> @@ -10,7 +10,6 @@
+>  #include <linux/iopoll.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_device.h>
+>  #include <linux/of_graph.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_runtime.h>
 
-Or maybe you want this all hidden into the genpd provider?
-
-> 
-> > >   	ret = pm_genpd_init(&sc->pd, NULL, !on);
-> > >   	if (ret)
-> 
-> -- 
-> Thanks & Regards,
-> Taniya Das.
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
