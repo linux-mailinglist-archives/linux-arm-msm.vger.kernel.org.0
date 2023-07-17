@@ -2,112 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 333C2756D9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 21:49:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23C75756DE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 21:59:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbjGQTtt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 15:49:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43686 "EHLO
+        id S229674AbjGQT7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 15:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjGQTts (ORCPT
+        with ESMTP id S230203AbjGQT7k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 15:49:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3708F132
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1689623340;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=m2rRzgR2bCR4WLQV/L/SdDZ43J6JQqvM6vx+FxfFLaM=;
-        b=BxRnQPu3wILjD5g2suqbAlxADBqkznE+MfVxoVGJj5PMUZHfH6ikD5rnL5wHgfkfojYkho
-        zrrjl5wMbux3hn3uRTHjFX1S/O5wQ0Y33tpvbLriRBEGFzpXQJcq18nanxc72t2oBcDsSh
-        JpIoIacYV7ncRGeKJn+WISQCo4/Ik2w=
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-396-348ee_HSMLOcBPdrq17iKA-1; Mon, 17 Jul 2023 15:48:58 -0400
-X-MC-Unique: 348ee_HSMLOcBPdrq17iKA-1
-Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-78f62807a12so511683241.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:48:58 -0700 (PDT)
+        Mon, 17 Jul 2023 15:59:40 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAE0CCC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:59:38 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b703caf344so71830051fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689623977; x=1692215977;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GvxfVjwQCk1tS/oslTGgVT+uAnXvEyTLoAROKgew5sE=;
+        b=M/3X+A8jovHdNAXQEux4zoUGZNz7ogggZLsVe7M2Nx/OFI0I9RvpFZSYOJCoFZmgGj
+         m2aKVDMFvWmWex104EZkKqM4tKCC/vg4w7GcsoHJgayGYn72cNyWUOCAJtyK/bb1Z0FP
+         CX68lfcgb/Ncncjks7En+K3Q+zM1PtT1Ka0/EkQKwsqex5Vt+AsictC4voEk5WAi3aet
+         8jMEEDf/5PCT7M2ajf8GQSN2NX/nc0q16/Zw4QTQxuLU6uHtc+HukY5QdqztFJzKjIjM
+         cfGPuSC+Ae+clZs4XUMg9/s4IgY9Se/TqkH9a71tuq+gJc2dMHjy9+10YQW3OGtACFYW
+         CV8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689623338; x=1692215338;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m2rRzgR2bCR4WLQV/L/SdDZ43J6JQqvM6vx+FxfFLaM=;
-        b=PtNlReo3JqCdA3puLzozqdcs13LEt2f2I1biImiUoTKNz+sw+npdiBg2SQ9vqGSe5Z
-         PdWkrRpplfTibuhi4c4XY9XmfdQ6YzwEehQe8U1WumhFnXH5lGx1ypOOBXuJhHBlZLYk
-         YzjgjjiXkqzX7rowUhm+n9AHuR4LQaJ8A4mvxRY2oD4OsR8ZbaoEwrsIPtuKKn+RLxRE
-         Dg7h2MfoWPo5xH17Gdgw+iLZtCRd1ScCXnPD8vtDs3mVDo0zqmQUlZ/WnM08gAH5+Gey
-         qX/e1ISYRS/q3JJ7LAZjj4Z17MToOG74O+l3yF1gX0EAVwfxnVN1Va6TFi2XrUJ/uJ5j
-         967A==
-X-Gm-Message-State: ABy/qLaq0RMMC70HKbAJnrYPCnFlcwCjoXqP0w8cZVZfbUHidkag5uhg
-        zwE5dnVNMOCBUjrW/6HLfuu/cZHfgmsRCLI35IQtpIc3kf6AvVs4K70SiG19PGQdkF66i4p1LZk
-        k5jgXJmewtbx8oeKpS/iiPByEjw==
-X-Received: by 2002:a67:e3a3:0:b0:443:5ec3:55da with SMTP id j3-20020a67e3a3000000b004435ec355damr5207076vsm.15.1689623338326;
-        Mon, 17 Jul 2023 12:48:58 -0700 (PDT)
-X-Google-Smtp-Source: APBJJlEmuKfhqUNybdA9S/7JJsY6kGCiUUlRIJFJBn/SN8CN1hqWuSmyjKp1TapgDjsKCWociDChlg==
-X-Received: by 2002:a67:e3a3:0:b0:443:5ec3:55da with SMTP id j3-20020a67e3a3000000b004435ec355damr5207071vsm.15.1689623338093;
-        Mon, 17 Jul 2023 12:48:58 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::17])
-        by smtp.gmail.com with ESMTPSA id g15-20020a0caacf000000b006263c531f61sm154184qvb.24.2023.07.17.12.48.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jul 2023 12:48:57 -0700 (PDT)
-Date:   Mon, 17 Jul 2023 14:48:55 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        d=1e100.net; s=20221208; t=1689623977; x=1692215977;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GvxfVjwQCk1tS/oslTGgVT+uAnXvEyTLoAROKgew5sE=;
+        b=ggM8qsI4H87XIvj/KjZNoWdtG3p12kX1vhj0ciDuYlM3wkjLwt7bDU84BOFTVRnIi9
+         5xhLJNQmCl3FXbLeSShNoBq7mg3xMtYM9DQJPjoU6ouJZNNwTI7fUe9MCoixntAZGXe8
+         b6T8bGcwGH2qPoK7y2SkWzg9MQcLIaH9aFbB8W2M5snOqlPHd0j8v80KP/kpXteNvj+F
+         t7LAvUSVyR11ZdhXxROnn+DzRGwu90GNQKc+zfvmhAOtIIz6GO4PY3nj71j2gM/kg0Fd
+         BqwHv+bLeH2j/IXW4/q74iQvLiwikgUj0yj+anSfdjh0pLwoGFjGk9Im/0fVFdSt++fa
+         YKpQ==
+X-Gm-Message-State: ABy/qLZGvl1JLXVy9KonOhoxH/arO5V5qAhmaVbEEw2GTkbBJk8yhtOj
+        l9Vaf+TITrXlUVhOtrxsJKKUnQ==
+X-Google-Smtp-Source: APBJJlHVBwe/J945YiJIdTO2oS6H9TlT4HIVSlpbPkVmkktYvSkLL2/0tr27q6IkeV4DOmf9+oEX3g==
+X-Received: by 2002:a05:6512:40b:b0:4fb:79b5:5512 with SMTP id u11-20020a056512040b00b004fb79b55512mr165033lfk.66.1689623976938;
+        Mon, 17 Jul 2023 12:59:36 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id j9-20020aa7c409000000b0051e362db186sm68110edq.60.2023.07.17.12.59.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jul 2023 12:59:36 -0700 (PDT)
+Message-ID: <6338cc75-e3fe-ba19-3df7-727b63fec245@linaro.org>
+Date:   Mon, 17 Jul 2023 21:59:33 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
+ support
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [RESEND] clk: qcom: rcg: Update rcg configuration before
- enabling it
-Message-ID: <e2xxoobnbtepdsplh2wv6l7k7snncbwssp43pttii4xnjj6egy@r24o4s6klhs7>
-References: <20230712014812.3337992-1-quic_skakitap@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230712014812.3337992-1-quic_skakitap@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
+References: <20230717062547.2086869-1-quic_fenglinw@quicinc.com>
+ <20230717062547.2086869-2-quic_fenglinw@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230717062547.2086869-2-quic_fenglinw@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 12, 2023 at 07:18:12AM +0530, Satya Priya Kakitapalli wrote:
-> From: Taniya Das <quic_tdas@quicinc.com>
+On 17/07/2023 08:25, Fenglin Wu wrote:
+> Add support for vibrator module inside Qualcomm PMI632, PM7250B, PM7325B
+> and PM7550BA PMICs.
 > 
-> If rcg is in disabled state when clk_rcg2_shared_set_rate is called, the
-> new configuration is written to the configuration register but it won't be
-> effective in h/w yet because update bit won't be set if rcg is in disabled
-> state. Since the new configuration is not yet updated in h/w, dirty bit of
-> configuration register will be set in such case. Clear the dirty bit and
-> update the rcg to proper new configuration by setting the update bit before
-> enabling the rcg.
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+> index c8832cd0d7da..642408e2b35f 100644
+> --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+> +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+> @@ -15,6 +15,10 @@ properties:
+>        - qcom,pm8058-vib
+>        - qcom,pm8916-vib
+>        - qcom,pm8921-vib
+> +      - qcom,pmi632-vib
+> +      - qcom,pm7250b-vib
+> +      - qcom,pm7325b-vib
+> +      - qcom,pm7550ba-vib
 
-If I understand correctly you're saying that without this patch:
+Aren't the last two compatible?
 
-    devm_clk_get();
-    clk_set_rate(rate);
-    clk_prepare_enable();
-
-would look like it worked (i.e. clk_get_rate() would return rate), but
-in reality the clock is running at whatever the "default" rate is.
-
-That sounds like it could use a Fixes: tag if so!
-
-Thanks,
-Andrew
+Best regards,
+Krzysztof
 
