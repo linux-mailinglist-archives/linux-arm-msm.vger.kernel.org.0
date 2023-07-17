@@ -2,176 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 756EF756C93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 20:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E010756CFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 21:18:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229802AbjGQS4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 14:56:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47744 "EHLO
+        id S229582AbjGQTSa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 15:18:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbjGQS4W (ORCPT
+        with ESMTP id S229540AbjGQTS3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 14:56:22 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A043119A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 11:56:18 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-bcb6dbc477eso3620768276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 11:56:18 -0700 (PDT)
+        Mon, 17 Jul 2023 15:18:29 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9C191B3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:18:27 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f122ff663eso7787835e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689620176; x=1690224976;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VmA5Jfgc3nz1Zl14c2jQILY12tiDI4u1S5jeAvKKy/0=;
-        b=GSvJRzB5FkiX2KTMvNw528FeF0WPz6XcJT7AyrHMFPDnfcF5HBiDLkcaQmX4LkR3DW
-         zwavBgAoxpMSXTg4u0VFolB5N8PpYDypxdfPrCM3gVETuEGVnvMCXWBHj/k9bhYceN3b
-         kz7HEnc+l7gDiEvMhHC5K24EPxWoaHbklerLX5cQLr7oEt1Zsf6m2EFz5/ZhFtpV03Ou
-         141tOGlSP17tPP76z/PB0V7llWmuoGjSUb25GNJj35FxD95ykA1qTf7HbU21telKOqyk
-         wh7wInk2riLcK99aojYTdZBvps3cwgBrtBWBp3xLyH0FgKfQJ9TWe5QmciQ/s1NZ+WmU
-         AZOw==
+        d=linaro.org; s=google; t=1689621506; x=1692213506;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=l7XTOZSfFrkx226PS4u9KRX8lwqSl60Sf16zxVQzaqY=;
+        b=dTUZGKzV6bxY/9uV1wKYE19Q7F2MG58qHZFvkTTbMZ91qpsJVdhHVv7URystYI43f2
+         OtsFwTJjyODjCbyqjlQGcgVgnV4hd7N5MG68mzQh96I7IucdZZCGvfAzauxj2kdBJpSU
+         ld4Vf37bzlm61jNg14snMgY+0qLii4V2BUaIrZp3t3BB4ZcM5fQh+Due0DF03QzDxnwU
+         258LsVDc/lOoo3q1OFv9qOj6Ek+YB4d/mcPvavfQ98Gspaa/EEpOUqqdqdaz+7BHICMM
+         p3S6uENgkvxQgmOCpdaEF2KU/v0Olleiv0hitvtiy+uS5Ik5LPnfPxnaL3CeTnK1hHSI
+         3xqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689620176; x=1690224976;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VmA5Jfgc3nz1Zl14c2jQILY12tiDI4u1S5jeAvKKy/0=;
-        b=CxOa5oUdZDE96/OGzOzHU/R+plHIlkCp6nT1g1L4rWc+GQnc9/148VlA+ErTA4msGc
-         kirJHzIdPiiu09+WX9pMrOyH1Bk79yVuzWrCXdMZc+T69MNrihbwbmV8ASkCyrRJrl3z
-         fCeXUCSs4/46uR5IvcfH0G6XB+z3WR7fKB5EZhUyznOPQ3G6FG+wf0Uqb0JfM4WcL1i3
-         Mvf7Z2xAizzJ4R/8cIyNltSqekGjX2H+QTb6irxfdHzMTP3MmSsCjjZfhh5Eqv5l3eJj
-         FSJgQY5hNsSh8ZBZdlp+TiDwKJGZqNQFjelslEklQOUpkn3l/cfjG/1v/7QNeYEJelb+
-         PC8A==
-X-Gm-Message-State: ABy/qLY7mf485TRcDa7zMiy0ZKrCTFnwLqkklSeUzrjr5T34jLiem4K4
-        v0F9s+6GOF93Te1HBVOzMTaGAcm5XrA/douZMCi85g==
-X-Google-Smtp-Source: APBJJlGFOfQ8DMAEjRZm1xB6A5WX6wGyAbKiz7ErHiDBzOyNhki1Fo0RqAxT25Iys/8wOesoAjMTz/pWLYUClxB6VQU=
-X-Received: by 2002:a25:b44:0:b0:cb0:3ce5:2bbc with SMTP id
- 65-20020a250b44000000b00cb03ce52bbcmr8967189ybl.16.1689620176514; Mon, 17 Jul
- 2023 11:56:16 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689621506; x=1692213506;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l7XTOZSfFrkx226PS4u9KRX8lwqSl60Sf16zxVQzaqY=;
+        b=dK4O9EAOkJ1RWGdD2wL8ECghV7fFXtMRaxnRnGVxs//TTxIStkT6G9hCDv5QwlGBkr
+         sTu05Wutf3iy5OscaZ9CwtUcDqNWazOnX1y4ksDj1pbpLkPvVMijjPpj7dHlPOEVRaP9
+         JJhRSpB+CJM87vwNIIGRHTiy818WO9pJwlBdI7I/ypBOteSO+D62mDlmdGKKpIU47bU0
+         Pd0zOZC8guuq54DI9GdpYonnjy749RNtyTKFierLP2EaG2RrCCec1ApBjpGtNOE2NKP4
+         FDe6yxLbuOaLtSVKv08DxURnAI+3lxn3QJ/hu2hFKof5dXWY/4rFkjH8D9tV4b0ym8FA
+         sbBQ==
+X-Gm-Message-State: ABy/qLab5MeDTI2VvhwvyII3mRtHR0laEgrlaC5Ph/v5zhUnqNcB3BbF
+        24Ld/FUl4mNECnpAp5L+3iiKyQ==
+X-Google-Smtp-Source: APBJJlEzJrhwbUmixh9VLrPUhgvmGvqCesf8iMHx4lvt2fb32ekuylkBPaMLscNMj1gqk8rsR1ZVBQ==
+X-Received: by 2002:a05:6512:2313:b0:4f9:51b7:a19c with SMTP id o19-20020a056512231300b004f951b7a19cmr10614450lfu.19.1689621506167;
+        Mon, 17 Jul 2023 12:18:26 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id x22-20020ac25dd6000000b004fbab1f023csm50300lfq.138.2023.07.17.12.18.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jul 2023 12:18:25 -0700 (PDT)
+Message-ID: <9b28a17a-fe9c-3ff0-fa1d-320e75e174d0@linaro.org>
+Date:   Mon, 17 Jul 2023 21:18:21 +0200
 MIME-Version: 1.0
-References: <20230712221139.313729-1-dmitry.baryshkov@linaro.org>
- <20230712221139.313729-3-dmitry.baryshkov@linaro.org> <9c594fdb-095d-0c3f-cdd0-bd92304b42cb@quicinc.com>
-In-Reply-To: <9c594fdb-095d-0c3f-cdd0-bd92304b42cb@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 17 Jul 2023 21:56:05 +0300
-Message-ID: <CAA8EJpoW9-EXVKNARzgrO99viz5zmcV2H=kP3iNRhd4NDYhe0Q@mail.gmail.com>
-Subject: Re: [PATCH v4 02/11] drm/msm/dpu: core_perf: extract bandwidth
- aggregation function
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
+ <ZLVsN40kYsvQm1z6@gerhold.net>
+ <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
+ <ZLVyvHnKPdOfqAck@gerhold.net>
+ <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
+ <ZLV5CirE8CZfCjkX@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ZLV5CirE8CZfCjkX@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 17 Jul 2023 at 21:45, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 7/12/2023 3:11 PM, Dmitry Baryshkov wrote:
-> > In preparation to refactoring the dpu_core_perf debugfs interface,
-> > extract the bandwidth aggregation function from
-> > _dpu_core_perf_crtc_update_bus().
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
->
-> Drop the core_perf tag from the subject line.
+On 17.07.2023 19:23, Stephan Gerhold wrote:
+> On Mon, Jul 17, 2023 at 07:11:33PM +0200, Konrad Dybcio wrote:
+>> On 17.07.2023 18:56, Stephan Gerhold wrote:
+>>> On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
+>>>> On 17.07.2023 18:28, Stephan Gerhold wrote:
+>>>>> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
+>>>>>> The GPU_CC block is powered by VDD_CX. Describe that.
+>>>>>>
+>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>>> ---
+>>>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
+>>>>>>  1 file changed, 2 insertions(+)
+>>>>>>
+>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>>>> index 29b5b388cd94..bfaaa1801a4d 100644
+>>>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>>>> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
+>>>>>>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+>>>>>>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+>>>>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+>>>>>> +			power-domains = <&rpmpd SM6115_VDDCX>;
+>>>>>> +			required-opps = <&rpmpd_opp_low_svs>;
+>>>>>
+>>>>> Where is this required-opp coming from? The clocks in gpucc seem to have
+>>>>> different voltage requirements depending on the rates, but we usually
+>>>>> handle that in the OPP tables of the consumer.
+>>>> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
+>>>> but quite obviously the GPU won't work then
+>>>>
+>>>
+>>> The levels needed for the GPU clocks to run should be in the GPU OPP
+>>> table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
+>>>
+>>> I still don't really understand why this is specified here. :)
+>> The GPU_CC block needs this rail to be at a certain power level for
+>> register access. This describes that requirement.
+>>
+> 
+> Can you show where this is defined downstream? On a quick look I didn't
+> see something like that anywhere. Or is this from some secret
+> documentation?
+As far as downstream goes, you can notice that no branch's or RCG's
+vdd tables ever define a level lower than the one I mentioned.
 
-Ack.
-
->
-> The debugfs refactor was dropped from this series if thats what you are
-> referring to here.
->
-> So even this and the next patch dont serve any purpose in this series
-> and should be dropped, Unless you have some reason of keeping them here.
-
-The next patch serves its purpose: it prevents recalculating bandwidth
-if there are no ICC paths (useless math).
-
-This patch separates actual math and control paths. It was required
-for debugfs, but it serves its own purpose too. I'll reflect that in
-the commit message.
-
->
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 39 +++++++++++--------
-> >   1 file changed, 22 insertions(+), 17 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > index 1d9d83d7b99e..333dcfe57800 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-> > @@ -206,33 +206,38 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
-> >       return 0;
-> >   }
-> >
-> > -static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> > -             struct drm_crtc *crtc)
-> > +static void dpu_core_perf_aggregate(struct drm_device *ddev,
-> > +                                 enum dpu_crtc_client_type curr_client_type,
-> > +                                 struct dpu_core_perf_params *perf)
-> >   {
-> > -     struct dpu_core_perf_params perf = { 0 };
-> > -     enum dpu_crtc_client_type curr_client_type
-> > -                                     = dpu_crtc_get_client_type(crtc);
-> > -     struct drm_crtc *tmp_crtc;
-> >       struct dpu_crtc_state *dpu_cstate;
-> > -     int i, ret = 0;
-> > -     u64 avg_bw;
-> > +     struct drm_crtc *tmp_crtc;
-> >
-> > -     drm_for_each_crtc(tmp_crtc, crtc->dev) {
-> > +     drm_for_each_crtc(tmp_crtc, ddev) {
-> >               if (tmp_crtc->enabled &&
-> > -                     curr_client_type ==
-> > -                             dpu_crtc_get_client_type(tmp_crtc)) {
-> > +                 curr_client_type == dpu_crtc_get_client_type(tmp_crtc)) {
-> >                       dpu_cstate = to_dpu_crtc_state(tmp_crtc->state);
-> >
-> > -                     perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
-> > -                                     dpu_cstate->new_perf.max_per_pipe_ib);
-> > +                     perf->max_per_pipe_ib = max(perf->max_per_pipe_ib,
-> > +                                                 dpu_cstate->new_perf.max_per_pipe_ib);
-> >
-> > -                     perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
-> > +                     perf->bw_ctl += dpu_cstate->new_perf.bw_ctl;
-> >
-> > -                     DRM_DEBUG_ATOMIC("crtc=%d bw=%llu paths:%d\n",
-> > -                               tmp_crtc->base.id,
-> > -                               dpu_cstate->new_perf.bw_ctl, kms->num_paths);
-> > +                     DRM_DEBUG_ATOMIC("crtc=%d bw=%llu\n",
-> > +                                      tmp_crtc->base.id,
-> > +                                      dpu_cstate->new_perf.bw_ctl);
-> >               }
-> >       }
-> > +}
-> > +
-> > +static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
-> > +             struct drm_crtc *crtc)
-> > +{
-> > +     struct dpu_core_perf_params perf = { 0 };
-> > +     int i, ret = 0;
-> > +     u64 avg_bw;
-> > +
-> > +     dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
-> >
-> >       if (!kms->num_paths)
-> >               return 0;
-
-
-
--- 
-With best wishes
-Dmitry
+Konrad
