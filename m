@@ -2,75 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9700756E32
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 22:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB697756E6C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 22:38:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230339AbjGQU2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 16:28:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60726 "EHLO
+        id S230357AbjGQUig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 16:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230152AbjGQU2T (ORCPT
+        with ESMTP id S229582AbjGQUig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 16:28:19 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B11188
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:28:17 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-313e742a787so3096661f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:28:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689625696; x=1692217696;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AG7fGvafEd/lisvGfSpBrXxSbQJiXU+xkXO7Ug+DfFg=;
-        b=vJj5ns2hBibr8T92EKehctfcZ+HAd+4WAtmeNlCiv4wgtQ4ZasJ1bDtiJZEbq0CQiQ
-         NnmgFPPDS1HyW3inCNkpGqYhWX20gPZPcA9fZm1YpHOW3GqwSrUSZ1Il2ydvoz/8KgMH
-         MdYu150g8O+++oQ29UG12SoGWx2gCPeb41TY9vEDbPm0uYsA79wlcfWemluSqlP27n2o
-         +RcANGJEzeiy5jrXyyXkIhxkMt3S/xua//9HPgb3N06SMX3mSea+B+/pqfhYPmr9hFIR
-         50/ruasoH6F1g6HQ89H6gC6zpn0BMFH5C13b95ZT7LMhYPIXT8XB5x7ZYN5uBV2pR8ZQ
-         HWRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689625696; x=1692217696;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AG7fGvafEd/lisvGfSpBrXxSbQJiXU+xkXO7Ug+DfFg=;
-        b=kgbRg+h022SaeFvDFQdEBlUwIS7WsGMbhKtY0DiWyznCgQ0hQ20oNsAu/vQ7ZefjjJ
-         84R3DWGISrqlu8FI223NnOgQ0c1/jrQx57E2ZRczRVX+eNP14p1fZN2V9FCaJYors8Ch
-         YC3qddFXPFnU9UwHr521DNTCWKH7N4EXdrJsdzkGKD7u7vXKuAloAmnWRheYQ3UcT0GF
-         keBfe+ANUWAyLmOclI5S8gIJrcJTKhWYd4HXVdQUpG4vhf1MCdMp0f0Ew1HewKusc9lH
-         3lqeKWIGjiWrhQYRx86OwEyeuxQ9G4P6acS4Er/JEPrx51LfAVRmcfHHc0WWZR9G9ODH
-         0rag==
-X-Gm-Message-State: ABy/qLbyGJgWk6ntLyprSMl9BO9lwz6cixVjSyRhMuc16q4wMOIzB9ZC
-        belvBVP6f8ZV5kR/mW9fvwL5xDX9AxYqnMd603M=
-X-Google-Smtp-Source: APBJJlEBrSfU2cS21+fm2MoIe7W+6L9Lpz1+1PzSPvK7sQ+YdcnkmO/+0KK6jHlgouyAycsqc+MvnA==
-X-Received: by 2002:adf:e90a:0:b0:313:f000:5de6 with SMTP id f10-20020adfe90a000000b00313f0005de6mr8649051wrm.16.1689625696336;
-        Mon, 17 Jul 2023 13:28:16 -0700 (PDT)
-Received: from [192.168.2.199] (host-92-17-99-126.as13285.net. [92.17.99.126])
-        by smtp.gmail.com with ESMTPSA id v12-20020adfedcc000000b00314315071bbsm378022wro.38.2023.07.17.13.28.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 13:28:15 -0700 (PDT)
-Message-ID: <34a4a052-b76f-b49d-6703-405d65ffd597@linaro.org>
-Date:   Mon, 17 Jul 2023 21:28:15 +0100
+        Mon, 17 Jul 2023 16:38:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9521A191;
+        Mon, 17 Jul 2023 13:38:34 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36HJPEf4024052;
+        Mon, 17 Jul 2023 20:38:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=b3r2s2v9CXAaqUoHFOKo/VJRNxVE1aoRX/gfgtbGECA=;
+ b=E7yeWWgH6Dad7igAu/fMXSwADs4yEgEuonybI6lwBx2OdVwcl+kljpCPJSGBJLxxrFFQ
+ pMrdpP4pkBvgqqw18PTFLO7nbTWAVeDd/hQVQuL16hdVDMVbdTew/jGwe1jF2IFPedrj
+ 54W1RDk0V7wAv7ClUFnAWauVlAP/cez7n67xBHkWS8oOA+r2ya+CJAszU2w9L7/qthaU
+ e8SiPWniCGyx5CRBVo6CtZVJodJbNaPCUQTS7IXYPnJlEzldXy0k7QwDh2nVjPBmG/WE
+ fCbzcpq6NCx+t0EdgSAae2pL98ki9bP6zj4OGPNH9nfXpgNFMLoiQIlOZAPCiUXoeAmk QA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3run1jcfte-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 20:38:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36HKcNTk031261
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 20:38:23 GMT
+Received: from [10.71.108.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 17 Jul
+ 2023 13:38:22 -0700
+Message-ID: <9b8a01c5-3a82-a9a0-959b-d03e40966f55@quicinc.com>
+Date:   Mon, 17 Jul 2023 13:38:22 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sa8540p-ride: enable rtc
-To:     Eric Chanudet <echanude@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230717182351.3389252-1-echanude@redhat.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1 4/5] drm/msm/dp: move relevant dp initialization code
+ from bind() to probe()
 Content-Language: en-US
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20230717182351.3389252-1-echanude@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
+ <1688773943-3887-5-git-send-email-quic_khsieh@quicinc.com>
+ <121f82ad-9d5d-6d7f-b4ae-9a371ab49ef7@linaro.org>
+ <9df52052-93fd-75a4-b54c-02ed9554e15f@quicinc.com>
+ <3fa812d6-9222-065a-8b40-95c2f2c808a6@linaro.org>
+ <8bc82b4b-b169-a11b-9f5d-eb821b680af7@quicinc.com>
+ <9a9ec559-769c-d593-6eaa-45daa5966cb8@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <9a9ec559-769c-d593-6eaa-45daa5966cb8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -DEmvVULc15A4HTJMHPJ2WwEv0Rp8Yre
+X-Proofpoint-ORIG-GUID: -DEmvVULc15A4HTJMHPJ2WwEv0Rp8Yre
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-17_14,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=999
+ bulkscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307170187
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -82,89 +93,170 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 7/17/2023 10:22 AM, Dmitry Baryshkov wrote:
+> On 17/07/2023 20:16, Kuogee Hsieh wrote:
+>>
+>> On 7/10/2023 11:13 AM, Dmitry Baryshkov wrote:
+>>> On 10/07/2023 19:57, Kuogee Hsieh wrote:
+>>>>
+>>>> On 7/7/2023 5:11 PM, Dmitry Baryshkov wrote:
+>>>>> On 08/07/2023 02:52, Kuogee Hsieh wrote:
+>>>>>> In preparation of moving edp of_dp_aux_populate_bus() to
+>>>>>> dp_display_probe(), move dp_display_request_irq(),
+>>>>>> dp->parser->parse() and dp_power_client_init() to dp_display_probe()
+>>>>>> too.
+>>>>>>
+>>>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>>>> ---
+>>>>>>   drivers/gpu/drm/msm/dp/dp_display.c | 48 
+>>>>>> +++++++++++++++++--------------------
+>>>>>>   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
+>>>>>>   2 files changed, 22 insertions(+), 27 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>>>>>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>>> index 44580c2..185f1eb 100644
+>>>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>>> @@ -290,12 +290,6 @@ static int dp_display_bind(struct device 
+>>>>>> *dev, struct device *master,
+>>>>>>           goto end;
+>>>>>>       }
+>>>>>>   -    rc = dp_power_client_init(dp->power);
+>>>>>> -    if (rc) {
+>>>>>> -        DRM_ERROR("Power client create failed\n");
+>>>>>> -        goto end;
+>>>>>> -    }
+>>>>>> -
+>>>>>>       rc = dp_register_audio_driver(dev, dp->audio);
+>>>>>>       if (rc) {
+>>>>>>           DRM_ERROR("Audio registration Dp failed\n");
+>>>>>> @@ -752,6 +746,12 @@ static int dp_init_sub_modules(struct 
+>>>>>> dp_display_private *dp)
+>>>>>>           goto error;
+>>>>>>       }
+>>>>>>   +    rc = dp->parser->parse(dp->parser);
+>>>>>> +    if (rc) {
+>>>>>> +        DRM_ERROR("device tree parsing failed\n");
+>>>>>> +        goto error;
+>>>>>> +    }
+>>>>>> +
+>>>>>>       dp->catalog = dp_catalog_get(dev, &dp->parser->io);
+>>>>>>       if (IS_ERR(dp->catalog)) {
+>>>>>>           rc = PTR_ERR(dp->catalog);
+>>>>>> @@ -768,6 +768,12 @@ static int dp_init_sub_modules(struct 
+>>>>>> dp_display_private *dp)
+>>>>>>           goto error;
+>>>>>>       }
+>>>>>>   +    rc = dp_power_client_init(dp->power);
+>>>>>> +    if (rc) {
+>>>>>> +        DRM_ERROR("Power client create failed\n");
+>>>>>> +        goto error;
+>>>>>> +    }
+>>>>>> +
+>>>>>>       dp->aux = dp_aux_get(dev, dp->catalog, dp->dp_display.is_edp);
+>>>>>>       if (IS_ERR(dp->aux)) {
+>>>>>>           rc = PTR_ERR(dp->aux);
+>>>>>> @@ -1196,26 +1202,20 @@ static irqreturn_t 
+>>>>>> dp_display_irq_handler(int irq, void *dev_id)
+>>>>>>       return ret;
+>>>>>>   }
+>>>>>>   -int dp_display_request_irq(struct msm_dp *dp_display)
+>>>>>> +static int dp_display_request_irq(struct dp_display_private *dp)
+>>>>>>   {
+>>>>>>       int rc = 0;
+>>>>>> -    struct dp_display_private *dp;
+>>>>>> -
+>>>>>> -    if (!dp_display) {
+>>>>>> -        DRM_ERROR("invalid input\n");
+>>>>>> -        return -EINVAL;
+>>>>>> -    }
+>>>>>> -
+>>>>>> -    dp = container_of(dp_display, struct dp_display_private, 
+>>>>>> dp_display);
+>>>>>> +    struct device *dev = &dp->pdev->dev;
+>>>>>>   -    dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+>>>>>>       if (!dp->irq) {
+>>>>>> -        DRM_ERROR("failed to get irq\n");
+>>>>>> -        return -EINVAL;
+>>>>>> +        dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+>>>>>> +        if (!dp->irq) {
+>>>>>> +            DRM_ERROR("failed to get irq\n");
+>>>>>> +            return -EINVAL;
+>>>>>> +        }
+>>>>>>       }
+>>>>>
+>>>>> Use platform_get_irq() from probe() function.
+>>>>>
+>>>>>>   -    rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
+>>>>>> -            dp_display_irq_handler,
+>>>>>> +    rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
+>>>>>>               IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+>>>>>
+>>>>>
+>>>>>>       if (rc < 0) {
+>>>>>>           DRM_ERROR("failed to request IRQ%u: %d\n",
+>>>>>> @@ -1290,6 +1290,8 @@ static int dp_display_probe(struct 
+>>>>>> platform_device *pdev)
+>>>>>>         platform_set_drvdata(pdev, &dp->dp_display);
+>>>>>>   +    dp_display_request_irq(dp);
+>>>>>> +
+>>>>>
+>>>>> Error checking?
+>>>>> Are we completely ready to handle interrupts at this point?
+>>>> not until dp_display_host_init() is called which will be called 
+>>>> from pm_runtime_resume() later.
+>>>
+>>> But once you request_irq(), you should be ready for the IRQs to be 
+>>> delivered right away.
+>>
+>> At this point, the DP controller interrupts mask bit is not enabled yet.
+>>
+>> Therefore interrupts will not happen until dp_bridge_hpd_enable() is 
+>> called to initialize dp host controller and then enabled mask bits.
+>
+> Are AUX and CTRL interrupts also disabled? What about any 
+> stray/pending interrupts? Just take it as a rule of thumb. Once 
+> request_irq() has been called without the IRQ_NOAUTOEN flag, the 
+> driver should be prepared to handle the incoming interrupt requests.
 
-On 17/07/2023 19:23, Eric Chanudet wrote:
-> SA8540P-ride is one of the Qualcomm platforms that does not have access
-> to UEFI runtime services and on which the RTC registers are read-only,
-> as described in:
-> https://lore.kernel.org/all/20230202155448.6715-1-johan+linaro@kernel.org/
-> 
-> Reserve four bytes in one of the PMIC registers to hold the RTC offset
-> the same way as it was done for sc8280xp-crd which has similar
-> limitations:
->     commit e67b45582c5e ("arm64: dts: qcom: sc8280xp-crd: enable rtc")
-> 
-> One small difference on SA8540P-ride, the PMIC register bank SDAM6 is
-> not writable, so use SDAM7 instead.
-> 
-> Signed-off-by: Eric Chanudet <echanude@redhat.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi | 10 +++++++++-
->  arch/arm64/boot/dts/qcom/sa8540p-ride.dts   | 15 +++++++++++++++
->  2 files changed, 24 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-> index 1221be89b3de..9c5dcad35cce 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-> @@ -14,7 +14,7 @@ pmm8540a: pmic@0 {
->  		#address-cells = <1>;
->  		#size-cells = <0>;
->  
-> -		rtc@6000 {
-> +		pmm8540a_rtc: rtc@6000 {
->  			compatible = "qcom,pm8941-rtc";
->  			reg = <0x6000>, <0x6100>;
->  			reg-names = "rtc", "alarm";
-> @@ -22,6 +22,14 @@ rtc@6000 {
->  			wakeup-source;
->  		};
->  
-> +		pmm8540a_sdam_7: nvram@b610 {
-Johan disabled the SDAM node in their series for sc8280xp. Unless it's
-used on all sa8540p platforms, you should probably also do that here.
+yes, both AUX and CTRL are disabled.
 
-			
-> +			compatible = "qcom,spmi-sdam";
-> +			reg = <0xb610>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges = <0 0xb610 0xb0>;
-			status = "disabled";
+edp population do need irq to handle aux transfer during probe.
 
-With that fix,
+it should work by checking core_initialized flag at irq handle to filter 
+out stray/pending interrupts.
 
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-> +		};
-> +
->  		pmm8540a_gpios: gpio@c000 {
->  			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
->  			reg = <0xc000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> index 5a26974dcf8f..608dd71a3f1c 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> @@ -407,6 +407,21 @@ &pcie3a_phy {
->  	status = "okay";
->  };
->  
-> +&pmm8540a_rtc {
-> +	nvmem-cells = <&rtc_offset>;
-> +	nvmem-cell-names = "offset";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pmm8540a_sdam_7 {
-> +	status = "okay";> +
-> +	rtc_offset: rtc-offset@ac {
-> +		reg = <0xac 0x4>;
-> +	};
-> +};
-> +
->  &qup0 {
->  	status = "okay";
->  };
-
--- 
-// Caleb (they/them)
+>
+>>>>>>       rc = component_add(&pdev->dev, &dp_display_comp_ops);
+>>>>>>       if (rc) {
+>>>>>>           DRM_ERROR("component add failed, rc=%d\n", rc);
+>>>>>> @@ -1574,12 +1576,6 @@ int msm_dp_modeset_init(struct msm_dp 
+>>>>>> *dp_display, struct drm_device *dev,
+>>>>>>         dp_priv = container_of(dp_display, struct 
+>>>>>> dp_display_private, dp_display);
+>>>>>>   -    ret = dp_display_request_irq(dp_display);
+>>>>>> -    if (ret) {
+>>>>>> -        DRM_ERROR("request_irq failed, ret=%d\n", ret);
+>>>>>> -        return ret;
+>>>>>> -    }
+>>>>>> -
+>>>>>>       ret = dp_display_get_next_bridge(dp_display);
+>>>>>>       if (ret)
+>>>>>>           return ret;
+>>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h 
+>>>>>> b/drivers/gpu/drm/msm/dp/dp_display.h
+>>>>>> index 1e9415a..b3c08de 100644
+>>>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+>>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+>>>>>> @@ -35,7 +35,6 @@ struct msm_dp {
+>>>>>>   int dp_display_set_plugged_cb(struct msm_dp *dp_display,
+>>>>>>           hdmi_codec_plugged_cb fn, struct device *codec_dev);
+>>>>>>   int dp_display_get_modes(struct msm_dp *dp_display);
+>>>>>> -int dp_display_request_irq(struct msm_dp *dp_display);
+>>>>>>   bool dp_display_check_video_test(struct msm_dp *dp_display);
+>>>>>>   int dp_display_get_test_bpp(struct msm_dp *dp_display);
+>>>>>>   void dp_display_signal_audio_start(struct msm_dp *dp_display);
+>>>>>
+>>>
+>
