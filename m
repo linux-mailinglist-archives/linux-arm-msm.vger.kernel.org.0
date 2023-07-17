@@ -2,102 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21C0C7558D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 02:21:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA4C67558FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 03:16:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230265AbjGQAVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jul 2023 20:21:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53392 "EHLO
+        id S230297AbjGQBQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jul 2023 21:16:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjGQAVE (ORCPT
+        with ESMTP id S229468AbjGQBQD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jul 2023 20:21:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BAAB1BC;
-        Sun, 16 Jul 2023 17:21:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C4CB960EEB;
-        Mon, 17 Jul 2023 00:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DBCC433C8;
-        Mon, 17 Jul 2023 00:21:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689553263;
-        bh=39EhNC20zHNOUZZftRk8UzXhDqwqVwCGkzx3aUfaMEg=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=CsNvDkbFBm8IHU1W1CEvJizKR5HJ3fu8EBFckaeY8SHPVJwIckWVGHSH9UWtg135k
-         ehS+t47/vQsSJvS9Fc2QgZj9SZe43AzXtWNbfeS60V1EpU0EBYKOPV1ry+4VsCkpMk
-         sElVNTM1a0Odzmu+rOnpY2YBgecji8e8P83ZBnPdDp+siipQpGXmSaUIjZFQfqbr+r
-         2C0iMy8rQ5f1XItfHehoD1rDQee5L0b0e8Fpa/sUhGX+DneXAL6VmSPIYfPOC16mWc
-         ULeE9U5UwGO0UNfz6Mp9G9YHyWxGzFUJZ+VhVL700EZBtWs8lfEL2fGVvB4/EHXSYG
-         xEJ9NCStZWjzg==
-Message-ID: <1ac17275-7972-5161-0bf2-183d628e256e@kernel.org>
-Date:   Mon, 17 Jul 2023 09:20:58 +0900
+        Sun, 16 Jul 2023 21:16:03 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79E7EE50
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 18:16:01 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-666eef03ebdso2529825b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 18:16:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689556561; x=1692148561;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7oYHq1p/oXp0puIhFy9OrnpLdy2w5rBXDTDnolu96uM=;
+        b=lpLLCmgz30TGZmwSdUJe4tDFJz5Fcd74dvul6RV1b10GYjbMvH7ymiHWYqHYwl1XDU
+         AXvc9ttDTLXuhQDQ6AawB/CVruvT818GWrcl+rSI9CtyU4dUNshxytZ8qMbOnyt5hWo/
+         NR2IUmY18rsbM26/5zCo5bACAbL5EdbpNCDmCSeu04IKz2/F38pSlK90Ee6/pp07p8iM
+         2b312nFSgBZHusqLwvGAjAXkWhrRd+L6jTlWmn40iZ2VYBTHzaXHGEHE1QU2mvzpYcw2
+         PcFrQ4ACun+46PghhI95QzcyTb0HxTlK8n0ChaNriwetm1HejWpDgt5yc+9WRH0WWLCv
+         I4/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689556561; x=1692148561;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7oYHq1p/oXp0puIhFy9OrnpLdy2w5rBXDTDnolu96uM=;
+        b=WOuUXkd9H78/w0/y05SuJvrgj4aaNx0H1yqqWBGgSYJKRZf6wZmkcErjcgU4H3z75h
+         oJgLf2RDOwEoZbuipQoGnC0KJ1S54nPist8Cjw56gXA8cXw1P5TmbAH2aslzg23sgM9q
+         1lcUBXkyv1N/BH5kYeutoaMK8CIhUScuSdoudEUZPLS85ikDGXLYTeCBN6m7Dsr6SYu5
+         +5w79AJcho3iCgQhdbxBcw3AB7NKLCT4LWSdgDhfaHRvvaeBpb0E4+HbGj769P401Ya9
+         kG6zBJIhbyDQKwQmc0sk3O1DMfYw+XAfgSLRmQO0qKV/XCMw6DzobesX1Y57FJ6pZ8p8
+         X7lg==
+X-Gm-Message-State: ABy/qLYV8ed5tL9W8D2UzByaK22VgqPe/yL7Ffk5ASd3M6ZDGkcWvAeC
+        L6Wj/OWvaR/Gm9rZTz8Lf91GSg==
+X-Google-Smtp-Source: APBJJlGT729jgOISi92Vcn9sb6yb8hOJik/a8kpi8tvYnR/R2ZGG42BlJaza9mC2BASDQp7lhQ53bw==
+X-Received: by 2002:a05:6a20:2451:b0:126:43f7:e271 with SMTP id t17-20020a056a20245100b0012643f7e271mr12234973pzc.39.1689556560877;
+        Sun, 16 Jul 2023 18:16:00 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:1bdd:1b8b:7a6:78d0])
+        by smtp.gmail.com with ESMTPSA id k10-20020a633d0a000000b0054fe6bae952sm11687701pga.4.2023.07.16.18.15.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Jul 2023 18:16:00 -0700 (PDT)
+Date:   Sun, 16 Jul 2023 19:15:57 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
+Subject: Re: (subset) [PATCH v3 00/18] Add basic Minidump kernel driver
+ support
+Message-ID: <ZLSWTaMtr9UGmrDy@p14s>
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <168945921478.1805013.7211960599963339759.b4-ty@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] reset: Explicitly include correct DT includes
-To:     Rob Herring <robh@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Daire McNamara <daire.mcnamara@microchip.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@amd.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-riscv@lists.infradead.org, linux-amlogic@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230714174939.4063667-1-robh@kernel.org>
-Content-Language: en-US
-From:   Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20230714174939.4063667-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <168945921478.1805013.7211960599963339759.b4-ty@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/15/23 02:49, Rob Herring wrote:
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
+On Sat, Jul 15, 2023 at 03:13:34PM -0700, Bjorn Andersson wrote:
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+> On Wed, 03 May 2023 22:32:14 +0530, Mukesh Ojha wrote:
+> > Minidump is a best effort mechanism to collect useful and predefined data
+> > for first level of debugging on end user devices running on Qualcomm SoCs.
+> > It is built on the premise that System on Chip (SoC) or subsystem part of
+> > SoC crashes, due to a range of hardware and software bugs. Hence, the
+> > ability to collect accurate data is only a best-effort. The data collected
+> > could be invalid or corrupted, data collection itself could fail, and so on.
+> > 
+> > [...]
+> 
+> Applied, thanks!
+> 
+> [01/18] remoteproc: qcom: Expand MD_* as MINIDUMP_*
+>         commit: 318da1371246fdc1806011a27138175cfb078687
+>
 
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Krzysztof asked for modifications on this patch.
 
--- 
-Damien Le Moal
-Western Digital Research
-
+> Best regards,
+> -- 
+> Bjorn Andersson <andersson@kernel.org>
