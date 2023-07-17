@@ -2,133 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 635397560D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 12:48:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2DDB7560EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 12:52:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230178AbjGQKsH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 06:48:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53294 "EHLO
+        id S229827AbjGQKwW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 06:52:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbjGQKsG (ORCPT
+        with ESMTP id S229780AbjGQKwV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 06:48:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45AAA11C;
-        Mon, 17 Jul 2023 03:48:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CEA1961022;
-        Mon, 17 Jul 2023 10:48:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAE1C433C8;
-        Mon, 17 Jul 2023 10:48:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689590884;
-        bh=JgkDVEQnUcZsTjy93XKQFB/XGARPfZgBaldLVAKREBA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LqUU8DAXEdkqhy5bBNxcy4gUOnP3ls2VdQ88D3tVYnKAxRWyLRYfDTaOK1Q2nWgMA
-         dorRX4BAdRwvDPGfa7mB5VDQMt+qajE2Amd/S9bj2eCv82uuZQb5TtTBrb0tDwcjZr
-         fKpDC1jvqLf3j0G1ZgIIQy2gbqTQG7fdca57N3boL6PeI/LD3CJXYq+3uexgxbbYKj
-         DVgfzsHMyW2QXMJwD0Q6HiI7X7K2JuMQqRM6fXTxBvTXS4kqEVdA74Mi4siza8jzkQ
-         KwBmDnN9z9p3DzNerMZ5AP5jj3/kAlwrMKYhsr+goZ/k4Rtal8APtJTxie0XWTPjwM
-         xcPRnRX5K5mjQ==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qLLlx-0007Ck-1b;
-        Mon, 17 Jul 2023 12:48:10 +0200
-Date:   Mon, 17 Jul 2023 12:48:09 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Mon, 17 Jul 2023 06:52:21 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF5E011F;
+        Mon, 17 Jul 2023 03:52:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1689591138; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=ox+TWn0YjWuCr9ogTPXRx5BLCMQ3yFwQY2Ra598jHHESf5+0UYplUvEAoi4BWpjLlG
+    BsjBZMBXNt8EkI7TtS1dFoEtYrILDF5XwvuEMvBwh+wmBCcEv4NCKcYea7N4xj/KuxN5
+    kmxTkamuDfzzYml4ko23t751pjljAc6V6luXkq0vxflnJUZ07sipaFBdzcVX/bhByPLb
+    wcsUqoJFagY5mxQGU613XNhADpFuuH21Vpl6sl7qi3XM62GLNUfVnHfJUq/SderbFB30
+    WQ0Rj/vv8eQPtaV74snQRZ8XOKIgS/T8yE1UadYMAQLY+GP2wzX4m9piFv3i1hl3dPi0
+    elfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1689591138;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=YYfzMVB1ks/ozCqaRZGCAgoaf2X54ab3g5vvPYZoYkg=;
+    b=ZNHyvBjd7TOIHnhT2KGE516JQJ3LPqdADolyXv0JIuBKs25YW5/iAJc4RjlkjrfFOG
+    7eYu1MG/ufAjUQ8z+KBrwXljahT5PKETmlDgkJz3TfySqI+cuv6TluqCA02uKpb3JuuM
+    gaxWNYlJAS7/JV2+XLQi6jdwMJhqEl8+Np12+ZmmsZ+7ai32kOyMltbdAiLSn4xAjfZl
+    c3RVme4DiKgO+E/eo6+d+57GZE0hCScQecxWePeFuyMzNE8u8k8/8SBaOqahH/p9uUie
+    E0iYMUsaYL28ilzgoLtDoC8Nes2naWIPofo/Db4Ud8KC3N8WOjJYl3rZEY+68RVXIQZm
+    ayXw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1689591138;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=YYfzMVB1ks/ozCqaRZGCAgoaf2X54ab3g5vvPYZoYkg=;
+    b=Utp816/NmO5yy4i1ZiSkcp+XPWLk2QuGb2RaawgyY5ns19+MFvzUm4B1C3eMSQLomF
+    7kIWfX+oJ2vAqIRKOAkWGBpIQgoA2yJ2ESCgvCFr5Yy2LokGriFpUGCpbMrIHP0wxSdf
+    727vusGS684tWHh//Aeb9S1mZj9KPJqfAeXfJ3D151l+l1yc4zwleE9aTObSL8GmSq/j
+    qP7dY2UTbL8ECb1tj8B309nZygO7jn3M4qkO1BDnqTIDKBDWBIHnsCOHGadCpclrUvUb
+    +Cg/sQC0f5CIAbNI6TR91jcHGS2ql+aKiZUGxiLAz4K1Ii7XgdGS+rUthienqAQ0O7jK
+    S2BQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1689591138;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=YYfzMVB1ks/ozCqaRZGCAgoaf2X54ab3g5vvPYZoYkg=;
+    b=FO6XUvjXoaKszkTP/sSE4aHR1pJ0Msi1VwxihSi4NtNrWbWSHNTggS2PVF9yYmqwGJ
+    B6/9sHQVwUmvlD2qkcBw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z2L1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
+    with ESMTPSA id D0d0a8z6HAqHXry
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 17 Jul 2023 12:52:17 +0200 (CEST)
+Date:   Mon, 17 Jul 2023 12:52:12 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     djakov@kernel.org
+Cc:     konrad.dybcio@linaro.org, andersson@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] media: camss: Intepret OF graph connections more
- sensibly
-Message-ID: <ZLUcaQN6hCjjulTv@hovoldconsulting.com>
-References: <20230614-topic-camss_grpah-v2-1-57d9d5e49038@linaro.org>
+Subject: Re: [PATCH] interconnect: qcom: icc-rpm: Initialize ret variable to
+ fix smatch error
+Message-ID: <ZLUdXBoMJdSzeZdq@gerhold.net>
+References: <20230717073429.2115015-1-djakov@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230614-topic-camss_grpah-v2-1-57d9d5e49038@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230717073429.2115015-1-djakov@kernel.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 15, 2023 at 05:37:52PM +0200, Konrad Dybcio wrote:
-> Not all endpoints of camss have to be populated. In fact, most of the
-> time they shouldn't be as n-th auxilliary cameras are usually ewaste.
+On Mon, Jul 17, 2023 at 10:34:29AM +0300, djakov@kernel.org wrote:
+> From: Georgi Djakov <djakov@kernel.org>
 > 
-> Don't fail probing the entire camss even even one endpoint is not
-> linked and throw an error when none is found.
+> Fix the following smatch error:
+> drivers/interconnect/qcom/icc-rpm.c:243 qcom_icc_rpm_set() error: uninitialized symbol 'ret'.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Fixes: 32846c4a8f2a ("interconnect: qcom: icc-rpm: Set bandwidth on both contexts")
+> Signed-off-by: Georgi Djakov <djakov@kernel.org>
+
+Thanks for spotting this!
+
 > ---
-> Changes in v2:
-> - Use if-else instead of the ternary operator (Bryan)
-> - Drop "RFC"
-> - Link to v1: https://lore.kernel.org/r/20230614-topic-camss_grpah-v1-1-5f4b516310fa@linaro.org
-> ---
->  drivers/media/platform/qcom/camss/camss.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  drivers/interconnect/qcom/icc-rpm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 1ef26aea3eae..8b75197fa5d7 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1084,9 +1084,8 @@ static int camss_of_parse_ports(struct camss *camss)
+> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+> index 612390b9eb18..6718cc648d75 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.c
+> +++ b/drivers/interconnect/qcom/icc-rpm.c
+> @@ -206,7 +206,7 @@ static int qcom_icc_qos_set(struct icc_node *node)
 >  
->  		remote = of_graph_get_remote_port_parent(node);
->  		if (!remote) {
-> -			dev_err(dev, "Cannot get remote parent\n");
-> -			ret = -EINVAL;
-> -			goto err_cleanup;
-> +			of_node_put(node);
-
-This is broken and could potentially lead to a use after free.
-
-Specifically, the iteration macro already takes care of putting this
-reference.
-
-> +			continue;
->  		}
+>  static int qcom_icc_rpm_set(struct qcom_icc_node *qn, u64 *bw)
+>  {
+> -	int ret, rpm_ctx = 0;
+> +	int ret = 0, rpm_ctx = 0;
+>  	u64 bw_bps;
 >  
->  		csd = v4l2_async_nf_add_fwnode(&camss->notifier,
-> @@ -1105,7 +1104,10 @@ static int camss_of_parse_ports(struct camss *camss)
->  		num_subdevs++;
->  	}
->  
-> -	return num_subdevs;
-> +	if (num_subdevs)
-> +		return num_subdevs;
-> +
-> +	return -EINVAL;
+>  	if (qn->qos.ap_owned)
 
-Please change this so that you test for the error condition rather than
-its inverse for symmetry. That is
+I think it would be a bit clearer to change the "return ret;" at the end
+of the function to "return 0;". The ret variable is only used inside the
+for loop and always handled there, so we always want to return 0 when
+reaching the end of the function.
 
-	if (!num_subdevs)
-		return -EINVAL;
-
-	return num_subdevs;
-
-Returning EINVAL (invalid argument) is perhaps not the best choice, but
-the driver already does so here and in other places so keeping it for
-now should be fine.
-
->  err_cleanup:
->  	of_node_put(node);
-
-Johan
+Thanks,
+Stephan
