@@ -2,80 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95470756E26
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 22:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9700756E32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 22:28:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230236AbjGQUY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 16:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59782 "EHLO
+        id S230339AbjGQU2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 16:28:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjGQUYz (ORCPT
+        with ESMTP id S230152AbjGQU2T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 16:24:55 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04EBE1A5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:24:54 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fbaef9871cso7821961e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:24:53 -0700 (PDT)
+        Mon, 17 Jul 2023 16:28:19 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B11188
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:28:17 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-313e742a787so3096661f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:28:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689625492; x=1692217492;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1689625696; x=1692217696;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gUha6zP+pey617bAE9nj1T4TSqiGgsTLog4w9UJtrTA=;
-        b=IM9hICpwouhsLSCknjO9XjDCzOYULSfgjqbI9PI1W0pRO5I1kCdttJzPT6Zni+6nVC
-         KSix+oSbJvafF2DE0UtQeEQj7n0a58DTw3o+BV33yOtas/TWKno4UiA2phdvv5Y3AbJx
-         XmZTZajZRTM+21aDTZ5s8zJLWJ5CSex2WsR7GDKMiOYrURl/+yOOVAtOPqlaGYystFMZ
-         rvnR5gHQwrjpMIQKZiOfxsz7XM3lsPg4eJhzad74C2geBtz/nXJsPuSr4Rl+qEXXg8zK
-         wRKlXNx+jf9pAP/Lqgf9MRZ1rZn8GskhU0/Uf+mHqOd4AvjAB5GkK/p9m7dJqwTh80U4
-         xCnA==
+        bh=AG7fGvafEd/lisvGfSpBrXxSbQJiXU+xkXO7Ug+DfFg=;
+        b=vJj5ns2hBibr8T92EKehctfcZ+HAd+4WAtmeNlCiv4wgtQ4ZasJ1bDtiJZEbq0CQiQ
+         NnmgFPPDS1HyW3inCNkpGqYhWX20gPZPcA9fZm1YpHOW3GqwSrUSZ1Il2ydvoz/8KgMH
+         MdYu150g8O+++oQ29UG12SoGWx2gCPeb41TY9vEDbPm0uYsA79wlcfWemluSqlP27n2o
+         +RcANGJEzeiy5jrXyyXkIhxkMt3S/xua//9HPgb3N06SMX3mSea+B+/pqfhYPmr9hFIR
+         50/ruasoH6F1g6HQ89H6gC6zpn0BMFH5C13b95ZT7LMhYPIXT8XB5x7ZYN5uBV2pR8ZQ
+         HWRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689625492; x=1692217492;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1689625696; x=1692217696;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gUha6zP+pey617bAE9nj1T4TSqiGgsTLog4w9UJtrTA=;
-        b=JlZKaPb1x1UlbtWlfpNIgvgwM7NGVzfeAfn+Rm/nk6U58ANBEnyxpaCfi2hi5TeL+B
-         F2qTzeFzxMgC7k0sqje+WHHeNO/cit36iQ9uVsBevl+wt0r3UqRp/k4QzghEbu2w2hKE
-         jueZIBTIF1Wu96ZD6qnqNYz12gJi7yNuxEM3VLYrCnBz0RrNYIq8EW59coomJIFCR8rb
-         zjpfWiT/NPYJti9kbdka34QUNzKOoRAudkPCAYyCFPcJNcU0YQVCCuru+RunH2w6MSYb
-         uSWpQTG4Nz07q74AuqqorvRdsP4XCEud9uq4E59QDwskM5UKgfQLQAPwIc0gpFB3Xp6+
-         C6Ig==
-X-Gm-Message-State: ABy/qLY8gGYrNgt9GCELTgIKvwt2saDFrT97tXlp3AwzCtCCstlMtti9
-        s/bx0oJSpSQuBNVs5yjAVhICXQ==
-X-Google-Smtp-Source: APBJJlHTE3P2Yns04At4vfYRLGnCqDQcP7p3/vrNdbYj1jE0GoHxv6VGcAh6LvGVaOV6EEOZYRZ+bw==
-X-Received: by 2002:a05:6512:3f8:b0:4fb:76f7:fde9 with SMTP id n24-20020a05651203f800b004fb76f7fde9mr7271957lfq.30.1689625492258;
-        Mon, 17 Jul 2023 13:24:52 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id p24-20020ac246d8000000b004fb326d4ff0sm75263lfo.77.2023.07.17.13.24.51
+        bh=AG7fGvafEd/lisvGfSpBrXxSbQJiXU+xkXO7Ug+DfFg=;
+        b=kgbRg+h022SaeFvDFQdEBlUwIS7WsGMbhKtY0DiWyznCgQ0hQ20oNsAu/vQ7ZefjjJ
+         84R3DWGISrqlu8FI223NnOgQ0c1/jrQx57E2ZRczRVX+eNP14p1fZN2V9FCaJYors8Ch
+         YC3qddFXPFnU9UwHr521DNTCWKH7N4EXdrJsdzkGKD7u7vXKuAloAmnWRheYQ3UcT0GF
+         keBfe+ANUWAyLmOclI5S8gIJrcJTKhWYd4HXVdQUpG4vhf1MCdMp0f0Ew1HewKusc9lH
+         3lqeKWIGjiWrhQYRx86OwEyeuxQ9G4P6acS4Er/JEPrx51LfAVRmcfHHc0WWZR9G9ODH
+         0rag==
+X-Gm-Message-State: ABy/qLbyGJgWk6ntLyprSMl9BO9lwz6cixVjSyRhMuc16q4wMOIzB9ZC
+        belvBVP6f8ZV5kR/mW9fvwL5xDX9AxYqnMd603M=
+X-Google-Smtp-Source: APBJJlEBrSfU2cS21+fm2MoIe7W+6L9Lpz1+1PzSPvK7sQ+YdcnkmO/+0KK6jHlgouyAycsqc+MvnA==
+X-Received: by 2002:adf:e90a:0:b0:313:f000:5de6 with SMTP id f10-20020adfe90a000000b00313f0005de6mr8649051wrm.16.1689625696336;
+        Mon, 17 Jul 2023 13:28:16 -0700 (PDT)
+Received: from [192.168.2.199] (host-92-17-99-126.as13285.net. [92.17.99.126])
+        by smtp.gmail.com with ESMTPSA id v12-20020adfedcc000000b00314315071bbsm378022wro.38.2023.07.17.13.28.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 13:24:51 -0700 (PDT)
-Message-ID: <5f415647-0cec-b4cd-f9a8-6b6690615498@linaro.org>
-Date:   Mon, 17 Jul 2023 22:24:50 +0200
+        Mon, 17 Jul 2023 13:28:15 -0700 (PDT)
+Message-ID: <34a4a052-b76f-b49d-6703-405d65ffd597@linaro.org>
+Date:   Mon, 17 Jul 2023 21:28:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v8 3/4] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3
- connector
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] arm64: dts: qcom: sa8540p-ride: enable rtc
+To:     Eric Chanudet <echanude@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230717182351.3389252-1-echanude@redhat.com>
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        krzysztof.kozlowski@linaro.org, quic_schowdhu@quicinc.com,
-        gregkh@linuxfoundation.org
-References: <20230717103236.1246771-1-bhupesh.sharma@linaro.org>
- <20230717103236.1246771-4-bhupesh.sharma@linaro.org>
- <ZLUbyocjNT2bGvVt@gerhold.net>
- <CAH=2NtzM=jaVtjeHHO0rY0_wHu9==Jpdz4zx5nCK3gBh2kpL=A@mail.gmail.com>
- <ZLWHwnjjMkJx_ACH@gerhold.net>
- <CAH=2NtxHekJVvzaD5SNhZZmAHXhc=7v4Pr7RMEFNTXXH6x_AgQ@mail.gmail.com>
- <81491f7e-bd2c-7e3c-14c4-a7547d76c307@linaro.org>
- <CAH=2NtxX9jC6-7=bWEWTtgO=5VqX5U_ngnC6vWFZxDJUdsdg+g@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAH=2NtxX9jC6-7=bWEWTtgO=5VqX5U_ngnC6vWFZxDJUdsdg+g@mail.gmail.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20230717182351.3389252-1-echanude@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,94 +81,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.07.2023 22:22, Bhupesh Sharma wrote:
-> On Tue, 18 Jul 2023 at 01:49, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 17.07.2023 22:09, Bhupesh Sharma wrote:
->>> On Mon, 17 Jul 2023 at 23:58, Stephan Gerhold <stephan@gerhold.net> wrote:
->>>>
->>>> On Mon, Jul 17, 2023 at 11:33:40PM +0530, Bhupesh Sharma wrote:
->>>>> On Mon, 17 Jul 2023 at 16:15, Stephan Gerhold <stephan@gerhold.net> wrote:
->>>>>>
->>>>>> On Mon, Jul 17, 2023 at 04:02:35PM +0530, Bhupesh Sharma wrote:
->>>>>>> Add the Embedded USB Debugger(EUD) device tree node for
->>>>>>> SM6115 / SM4250 SoC.
->>>>>>>
->>>>>>> The node contains EUD base register region, EUD mode manager
->>>>>>> register region and TCSR Base register region along with the
->>>>>>> interrupt entry.
->>>>>>>
->>>>>>> [...]
->>>>>>>
->>>>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>>>>>> ---
->>>>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 50 ++++++++++++++++++++++++++++
->>>>>>>  1 file changed, 50 insertions(+)
->>>>>>>
->>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>>>> index 839c603512403..db45337c1082c 100644
->>>>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>>>> [...]
->>>>>>> @@ -789,6 +801,37 @@ gcc: clock-controller@1400000 {
->>>>>>>                       #power-domain-cells = <1>;
->>>>>>>               };
->>>>>>>
->>>>>>> +             eud: eud@1610000 {
->>>>>>> +                     compatible = "qcom,sm6115-eud", "qcom,eud";
->>>>>>> +                     reg = <0x0 0x01610000 0x0 0x2000>,
->>>>>>> +                           <0x0 0x01612000 0x0 0x1000>,
->>>>>>> +                           <0x0 0x003c0000 0x0 0x40000>;
->>>>>>> +                     reg-names = "eud-base", "eud-mode-mgr", "tcsr-base";
->>>>>>
->>>>>> TCSR is a separate hardware block unrelated to the EUD. IMHO it
->>>>>> shouldn't be listed as "reg" here.
->>>>>>
->>>>>> Typically we describe it as syscon and then reference it from other
->>>>>> nodes. See e.g. sm8450.dtsi "tcsr: syscon@1fc0000" referenced in &scm
->>>>>> "qcom,dload-mode = <&tcsr 0x13000>". This is pretty much exactly the
->>>>>> same use case as you have. It also uses this to write something with
->>>>>> qcom_scm_io_writel() at the end.
->>>>>
->>>>> That was discussed a bit during v1 patchset review. Basically, if we
->>>>> use a tcsr syscon approach here, we will need to define a 'qcom,xx'
->>>>> vendor specific dt-property and use something like this in the eud
->>>>> node:
->>>>>
->>>>> qcom,eud-sec-reg = <&tcsr_reg yyyy>
->>>>>
->>>>> which would be then used by the eud driver (via
->>>>> syscon_regmap_lookup_by_phandle()).
->>>>>
->>>>> But for sm6115 / qcm2290 this would be an over complicated solution as
->>>>> normally the eud driver (say sc7280) doesn't need tcsr based secure
->>>>> mode manager access. So defining a new soc / vendor specific
->>>>> dt-property might be an overkill.
->>>>>
->>>>
->>>> IMO a vendor-specific DT property is still better than messing up the
->>>> device separation in the device tree. The same "tcsr-base" reg would
->>>> also appear on the actual tcsr syscon device tree node. Having two
->>>> device tree nodes with the same reg region is generally not valid.
->>>>
->>>> Something like qcom,eud-sec-reg = <&tcsr_reg yyyy> would at least make
->>>> clear that this points into a region that is shared between multiple
->>>> different devices, while adding it as reg suggests that TCSR belongs
->>>> exclusively to EUD.
->>>
->>> I understand your point but since for sm6115 / qcm2290 devices TCSR is
->>> not used for any other purpose than EUD, I still think introducing a
->>> new soc / vendor specific dt-property might be an overkill for this
->>> changeset.
->> Untrue, there's some mumblings around the PHY properties and PSHOLD.
->> I think Stephan may be correct here.
-> 
-> Can you share the links to those discussions?
-It just seemed off to me that TCSR was not used by anything else (even
-from Linux, it would obviously be used by something else higher up in
-the boot chain as it contains various configuration registers), so I
-took a glance at the downstream device tree and I noticed there are
-more users.
 
-Konrad
+
+On 17/07/2023 19:23, Eric Chanudet wrote:
+> SA8540P-ride is one of the Qualcomm platforms that does not have access
+> to UEFI runtime services and on which the RTC registers are read-only,
+> as described in:
+> https://lore.kernel.org/all/20230202155448.6715-1-johan+linaro@kernel.org/
+> 
+> Reserve four bytes in one of the PMIC registers to hold the RTC offset
+> the same way as it was done for sc8280xp-crd which has similar
+> limitations:
+>     commit e67b45582c5e ("arm64: dts: qcom: sc8280xp-crd: enable rtc")
+> 
+> One small difference on SA8540P-ride, the PMIC register bank SDAM6 is
+> not writable, so use SDAM7 instead.
+> 
+> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi | 10 +++++++++-
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts   | 15 +++++++++++++++
+>  2 files changed, 24 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
+> index 1221be89b3de..9c5dcad35cce 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
+> @@ -14,7 +14,7 @@ pmm8540a: pmic@0 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> -		rtc@6000 {
+> +		pmm8540a_rtc: rtc@6000 {
+>  			compatible = "qcom,pm8941-rtc";
+>  			reg = <0x6000>, <0x6100>;
+>  			reg-names = "rtc", "alarm";
+> @@ -22,6 +22,14 @@ rtc@6000 {
+>  			wakeup-source;
+>  		};
+>  
+> +		pmm8540a_sdam_7: nvram@b610 {
+Johan disabled the SDAM node in their series for sc8280xp. Unless it's
+used on all sa8540p platforms, you should probably also do that here.
+
+			
+> +			compatible = "qcom,spmi-sdam";
+> +			reg = <0xb610>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges = <0 0xb610 0xb0>;
+			status = "disabled";
+
+With that fix,
+
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> +		};
+> +
+>  		pmm8540a_gpios: gpio@c000 {
+>  			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
+>  			reg = <0xc000>;
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> index 5a26974dcf8f..608dd71a3f1c 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> @@ -407,6 +407,21 @@ &pcie3a_phy {
+>  	status = "okay";
+>  };
+>  
+> +&pmm8540a_rtc {
+> +	nvmem-cells = <&rtc_offset>;
+> +	nvmem-cell-names = "offset";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pmm8540a_sdam_7 {
+> +	status = "okay";> +
+> +	rtc_offset: rtc-offset@ac {
+> +		reg = <0xac 0x4>;
+> +	};
+> +};
+> +
+>  &qup0 {
+>  	status = "okay";
+>  };
+
+-- 
+// Caleb (they/them)
