@@ -2,133 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9931C7562BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 14:30:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9F067562E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 14:40:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229917AbjGQMam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 08:30:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50688 "EHLO
+        id S230089AbjGQMkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 08:40:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbjGQMal (ORCPT
+        with ESMTP id S229583AbjGQMkN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 08:30:41 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77BE187
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 05:30:39 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b73564e98dso65318751fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 05:30:39 -0700 (PDT)
+        Mon, 17 Jul 2023 08:40:13 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 165621B0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 05:40:12 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4fbaef9871cso6917574e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 05:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689597038; x=1692189038;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1689597610; x=1692189610;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gqQWmYE6mikijhb+URcDev0GUwlO46fou+/8hKL8alM=;
-        b=mWgM8gyI1LxJ1jt6p/Q+x1NKUulK53177cNhF7OyRsJsz7I93+gwnms4okO/iXydlR
-         rTvVNgxyxjBasNNzXg9KcSj21F5063ezsBs5U0OS8gU+stxomq2U81zCOUiSjPGBOPEo
-         ZrLAiSfXQlJEuVxwIC4ByBiE0pEabcdybjTcl9ITBpHF6NR02eFUUhhS6q3fcDBP5nEc
-         x2ocG2P47WWDNEHD5I9l7JxKMx1zKTzhtLv1gD8Hi/5HBTl/aNL3eDr14Dc1PnvSlvwT
-         vvmRM0aLSM2bQsqbMw3m0if2rsV/vJAGYKrPPjpj57qToM/gvKyKFhc2qp0MsPP7eWh5
-         aYBQ==
+        bh=X1Ez0XiPLy9JQwhDNp6ZwsehdR2q+I+6iiZpL3yjjI4=;
+        b=UiJVgcZc1um0ymdVxx7Qz8YrMbZ5xB4BACi8gz+pwwXnG8SCdz1jr2Kmrp5155iLft
+         IT2KWs79Usr6aAuifgRs20Ig3dYOu+ilq80T5wCQnnmfsRXUyn0UDGvpjJ7RYbEjcL+T
+         26//kyqqXmVmLy72Ruxc9hZ1We8tFvU0vdM/eBQlNfP7KnpeA4CsRY8V6MN1o4cGUen9
+         Vsgi9HEt5XLD73q6OA166zRAxYn92xicwXaIW+UMjNv9RobRn+MLFe40UrrzOFe/K/k+
+         dCUZmUjXDMzYJWuK0IPGjpsccDVacA5uoL2KrvZnsCVpt6p7TqjCAP6DURAykm7Cjf/6
+         mSrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689597038; x=1692189038;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1689597610; x=1692189610;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gqQWmYE6mikijhb+URcDev0GUwlO46fou+/8hKL8alM=;
-        b=LSy1szuoT+rUrU+rmCqzeFDK+ozy7WiVfRw2Ok8/0ihqGVfhr7aM0OtUCWoqPxknhH
-         oufNuuAPXNWEEPzfcMj2rIh3tDNApzdgLW/KedEk4BxkiBTNdNSoA8Pz9pOhgW367RDm
-         xvWBn7k2QgsTulRsFE/hPas4fe6vg8MUz4GcHz22jFZjaufubMYH4serUdby05Ujcd4P
-         lgaO5ws2AJX4DSNIlj5kZSa1f6gT7ceuKnj2TRVeoQ0kgmg5duC2Y0Gb4vvTGyfwBbRB
-         mwPWJQhKW+aADqjVV88MXltQPSGLe8jIC1/ip0n0fNk+0B8F/uhzZs3EoiKybEW+fmYe
-         wP8w==
-X-Gm-Message-State: ABy/qLYJ0xkIRflK6OskpiILRTDl5g+dpFoeD/6wq3WTWEpIV6jpFT7H
-        SNiZoJFpmqZi91pyHDq9gM/Qlg==
-X-Google-Smtp-Source: APBJJlGDlL4uhDaQA6bjvwYThu/no32RAotlFuO5WDtVQINe1DbwFu1bJcmSSoEmuJ0ncS3RJ93q0w==
-X-Received: by 2002:a2e:978d:0:b0:2b6:df5d:8e08 with SMTP id y13-20020a2e978d000000b002b6df5d8e08mr8104203lji.28.1689597037933;
-        Mon, 17 Jul 2023 05:30:37 -0700 (PDT)
+        bh=X1Ez0XiPLy9JQwhDNp6ZwsehdR2q+I+6iiZpL3yjjI4=;
+        b=iK+/WL3BzFDUo6QdQSnAQJWoPfDoKFfe6S4rlko9tRLMXcYTT3J1SfvVi88zj8947P
+         AHND2LipAtK4jhzCTXIR1trwEk5Yst6WEN6dR4AQwBx0iJSTPN5sTn7HAyL2kLWwlUeF
+         JaLXWKjqBqHNxJPujcAygSD25pYMvkUJNupHb24Fk7wBkBSSJDt5HPiZisAggVzaB9RI
+         mhW4MTKLeU/BwDr5gVCob6puRKi82k5XEv53Wt2Hfdy2wWzGfWsszX4q+bR2Qkx9fnPJ
+         yPythhYN4kwyY4CvWLWY5caLr4AgYa3p6DZEL68uNkUuSSJo+ddHBjv0VokTUFK0s0Dt
+         o+6w==
+X-Gm-Message-State: ABy/qLZEZJqSLsPfDWGgzC7lFpFyrFQotuf5Tt905ywkswErrR+2AuC9
+        PBPPGD2WUO6MrhLydh/AIlsOwA==
+X-Google-Smtp-Source: APBJJlFlrt06OaGdZfNAxWrHT6kvaDJ+IC4DHu/DkSdZ/pXGp9vkEW0W8pzarXiHkMOaSrbKJEzKkg==
+X-Received: by 2002:a05:6512:3e05:b0:4fd:bdf8:930d with SMTP id i5-20020a0565123e0500b004fdbdf8930dmr2076739lfv.22.1689597610213;
+        Mon, 17 Jul 2023 05:40:10 -0700 (PDT)
 Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id a26-20020a2e861a000000b002b6c9927a3csm3649783lji.37.2023.07.17.05.30.36
+        by smtp.gmail.com with ESMTPSA id w2-20020a05651203c200b004f87024742fsm2791201lfp.235.2023.07.17.05.40.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 05:30:37 -0700 (PDT)
-Message-ID: <f7fa82e3-ee2e-da05-f635-ba93819790ce@linaro.org>
-Date:   Mon, 17 Jul 2023 14:30:36 +0200
+        Mon, 17 Jul 2023 05:40:09 -0700 (PDT)
+Message-ID: <18f2a5b5-5cc2-6bea-ca08-5da218b3192b@linaro.org>
+Date:   Mon, 17 Jul 2023 14:40:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-e2015: Add
- accelerometer
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230715204128.12612-1-linmengbo0689@protonmail.com>
+Subject: Re: [PATCH v2] media: camss: Intepret OF graph connections more
+ sensibly
 Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230614-topic-camss_grpah-v2-1-57d9d5e49038@linaro.org>
+ <ZLUcaQN6hCjjulTv@hovoldconsulting.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230715204128.12612-1-linmengbo0689@protonmail.com>
+In-Reply-To: <ZLUcaQN6hCjjulTv@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.07.2023 22:41, Lin, Meng-Bo wrote:
-> E5, E7 and Grand Max have ST LIS2HH12 accelerometer.
-> Add support for it.
+On 17.07.2023 12:48, Johan Hovold wrote:
+> On Sat, Jul 15, 2023 at 05:37:52PM +0200, Konrad Dybcio wrote:
+>> Not all endpoints of camss have to be populated. In fact, most of the
+>> time they shouldn't be as n-th auxilliary cameras are usually ewaste.
+>>
+>> Don't fail probing the entire camss even even one endpoint is not
+>> linked and throw an error when none is found.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>> Changes in v2:
+>> - Use if-else instead of the ternary operator (Bryan)
+>> - Drop "RFC"
+>> - Link to v1: https://lore.kernel.org/r/20230614-topic-camss_grpah-v1-1-5f4b516310fa@linaro.org
+>> ---
+>>  drivers/media/platform/qcom/camss/camss.c | 10 ++++++----
+>>  1 file changed, 6 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+>> index 1ef26aea3eae..8b75197fa5d7 100644
+>> --- a/drivers/media/platform/qcom/camss/camss.c
+>> +++ b/drivers/media/platform/qcom/camss/camss.c
+>> @@ -1084,9 +1084,8 @@ static int camss_of_parse_ports(struct camss *camss)
+>>  
+>>  		remote = of_graph_get_remote_port_parent(node);
+>>  		if (!remote) {
+>> -			dev_err(dev, "Cannot get remote parent\n");
+>> -			ret = -EINVAL;
+>> -			goto err_cleanup;
+>> +			of_node_put(node);
 > 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-> ---
-Potentially missing Co-Developed-by?
+> This is broken and could potentially lead to a use after free.
+> 
+> Specifically, the iteration macro already takes care of putting this
+> reference.
+/**
+ * for_each_endpoint_of_node - iterate over every endpoint in a device node
+ * @parent: parent device node containing ports and endpoints
+ * @child: loop variable pointing to the current endpoint node
+ *
+ * When breaking out of the loop, of_node_put(child) has to be called manually.
+ */
 
->  .../qcom/msm8916-samsung-e2015-common.dtsi    | 21 +++++++++++++++++--
->  1 file changed, 19 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-> index 0cdd6af7817f..ef7c7ac40e05 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-> @@ -42,10 +42,27 @@ reg_touch_key: regulator-touch-key {
->  
->  &blsp_i2c2 {
->  	/* lis2hh12 accelerometer instead of BMC150 */
-> -	status = "disabled";
-> -
->  	/delete-node/ accelerometer@10;
->  	/delete-node/ magnetometer@12;
-> +
-> +	accelerometer@1d {
-> +		compatible = "st,lis2hh12";
-> +		reg = <0x1d>;
-> +
-> +		interrupt-parent = <&msmgpio>;
-> +		interrupts = <115 IRQ_TYPE_LEVEL_HIGH>;
-interrupts-extended = <&msmgpio 115 IRQ_TYPE_LEVEL_HIGH>;
+>> +			continue;
+>>  		}
+>>  
+>>  		csd = v4l2_async_nf_add_fwnode(&camss->notifier,
+>> @@ -1105,7 +1104,10 @@ static int camss_of_parse_ports(struct camss *camss)
+>>  		num_subdevs++;
+>>  	}
+>>  
+>> -	return num_subdevs;
+>> +	if (num_subdevs)
+>> +		return num_subdevs;
+>> +
+>> +	return -EINVAL;
+> 
+> Please change this so that you test for the error condition rather than
+> its inverse for symmetry. That is
+> 
+> 	if (!num_subdevs)
+> 		return -EINVAL;
+> 
+> 	return num_subdevs;
+Right, this makes more sense
 
 Konrad
-> +
-> +		vdd-supply = <&pm8916_l5>;
-> +		vddio-supply = <&pm8916_l5>;
-> +
-> +		st,drdy-int-pin = <1>;
-> +		mount-matrix = "1", "0", "0",
-> +			       "0", "-1", "0",
-> +			       "0", "0", "1";
-> +
-> +		pinctrl-0 = <&accel_int_default>;
-> +		pinctrl-names = "default";
-> +	};
->  };
->  
->  &reg_motor_vdd {
+> 
+> Returning EINVAL (invalid argument) is perhaps not the best choice, but
+> the driver already does so here and in other places so keeping it for
+> now should be fine.
+> 
+>>  err_cleanup:
+>>  	of_node_put(node);
+> 
+> Johan
