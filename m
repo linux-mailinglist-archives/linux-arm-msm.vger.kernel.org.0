@@ -2,157 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8731D7561BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 13:41:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B86C7561E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 13:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbjGQLlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 07:41:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
+        id S230124AbjGQLqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 07:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjGQLlK (ORCPT
+        with ESMTP id S229714AbjGQLqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 07:41:10 -0400
+        Mon, 17 Jul 2023 07:46:36 -0400
 Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E04CC1BE;
-        Mon, 17 Jul 2023 04:41:07 -0700 (PDT)
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20230717114106epoutp0394faa81bafb89fbaa69b954db878644f~ypNnse1-Q0231802318epoutp03a;
-        Mon, 17 Jul 2023 11:41:06 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20230717114106epoutp0394faa81bafb89fbaa69b954db878644f~ypNnse1-Q0231802318epoutp03a
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED20D1725;
+        Mon, 17 Jul 2023 04:46:06 -0700 (PDT)
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20230717114604epoutp03d9cf6f0cde030e9bb0de6b88c3067832~ypR9V8bxA0525205252epoutp03b;
+        Mon, 17 Jul 2023 11:46:04 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20230717114604epoutp03d9cf6f0cde030e9bb0de6b88c3067832~ypR9V8bxA0525205252epoutp03b
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1689594066;
-        bh=9d2CVEnFtKsWlmnw7DSta8S04nv1hR77bbdJgc7E+sY=;
+        s=mail20170921; t=1689594364;
+        bh=oViY/xWe0rmX6jPt2PJcruz0P2J8Wy/FDnduI3D2vU0=;
         h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=mW1t69FFMk5F/9J89d19d/8rk0/I8ktc6qrWr0W1W9k2SfMmo+k4RNbKruuH0W4KO
-         IeYcvhE3TLwNdfZkhycTxo2BCzEJL1Qxulukn9qEdjd67XiYZejbBWMTHA6KwHGkN1
-         3HT9/rmgtDkGOQic6z6pI4sNH8QB46ERVZcNV7wM=
-Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
-        epcas5p2.samsung.com (KnoxPortal) with ESMTP id
-        20230717114105epcas5p232f17f7af068900e59acb3169588739a~ypNnZqC2R3249032490epcas5p2x;
-        Mon, 17 Jul 2023 11:41:05 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.176]) by
-        epsnrtp4.localdomain (Postfix) with ESMTP id 4R4KsX02hDz4x9Px; Mon, 17 Jul
-        2023 11:41:04 +0000 (GMT)
+        b=Muh2o5dcUl7oHJb40yFjjaRpGMb8m4WZ/DjeIt8G/jDiVVYpgL8v6O9I2Ri5jSEAU
+         +1rOosqoLwA1RRixficAuZfsdx5YOiJa3yt/7UsFaiE0SCpW3mI9LWnsQpRBV9VnUJ
+         uYOOXDFp01wT4/nfHCq3sOHwLUL48vHjdPcH0HLA=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+        epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+        20230717114603epcas5p12dedf9be634dc7264aebcbf18d51b74b~ypR9Dgkfk0923909239epcas5p1-;
+        Mon, 17 Jul 2023 11:46:03 +0000 (GMT)
+Received: from epsmges5p1new.samsung.com (unknown [182.195.38.179]) by
+        epsnrtp2.localdomain (Postfix) with ESMTP id 4R4KzG0QKgz4x9Pv; Mon, 17 Jul
+        2023 11:46:02 +0000 (GMT)
 Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        9E.2B.55173.FC825B46; Mon, 17 Jul 2023 20:41:03 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-        20230717114103epcas5p4c391f54c67e0d321cb3b7fc06b34c2ad~ypNlEEvrO0130501305epcas5p4A;
-        Mon, 17 Jul 2023 11:41:03 +0000 (GMT)
+        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        E0.63.55522.9F925B46; Mon, 17 Jul 2023 20:46:01 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+        20230717114601epcas5p297034d2bf4f5d0ebe191739407be0309~ypR6w15-_0840708407epcas5p2r;
+        Mon, 17 Jul 2023 11:46:01 +0000 (GMT)
 Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20230717114103epsmtrp129ef557e90bfd79ce257e03a12c53348~ypNlChCqi2668426684epsmtrp1J;
-        Mon, 17 Jul 2023 11:41:03 +0000 (GMT)
-X-AuditID: b6c32a50-df1ff7000001d785-88-64b528cf61c6
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20230717114601epsmtrp2991a931224e0153b65397b7f3758cae1~ypR6uyy2U2747727477epsmtrp2N;
+        Mon, 17 Jul 2023 11:46:01 +0000 (GMT)
+X-AuditID: b6c32a49-67ffa7000000d8e2-1e-64b529f9b5dd
 Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
         epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        82.02.30535.EC825B46; Mon, 17 Jul 2023 20:41:03 +0900 (KST)
+        9C.22.30535.9F925B46; Mon, 17 Jul 2023 20:46:01 +0900 (KST)
 Received: from alimakhtar04 (unknown [107.122.12.5]) by epsmtip1.samsung.com
         (KnoxPortal) with ESMTPA id
-        20230717114057epsmtip1b70a8f0a4a28865be9e0c43df95b54a4~ypNflraVL0999709997epsmtip1w;
-        Mon, 17 Jul 2023 11:40:57 +0000 (GMT)
+        20230717114554epsmtip1f5713d9fc208811d64ffa4ab30ad45f7~ypR0XStdz0999809998epsmtip1T;
+        Mon, 17 Jul 2023 11:45:54 +0000 (GMT)
 From:   "Alim Akhtar" <alim.akhtar@samsung.com>
 To:     "'Rob Herring'" <robh@kernel.org>,
-        =?UTF-8?Q?'Marek_Beh=C3=BAn'?= <kabel@kernel.org>,
-        "'Wim Van Sebroeck'" <wim@linux-watchdog.org>,
-        "'Guenter Roeck'" <linux@roeck-us.net>,
-        "'Nicolas Ferre'" <nicolas.ferre@microchip.com>,
-        "'Alexandre Belloni'" <alexandre.belloni@bootlin.com>,
-        "'Claudiu Beznea'" <claudiu.beznea@microchip.com>,
+        "'Guillaume La Roque'" <glaroque@baylibre.com>,
+        "'Rafael J. Wysocki'" <rafael@kernel.org>,
+        "'Daniel Lezcano'" <daniel.lezcano@linaro.org>,
+        "'Amit Kucheria'" <amitk@kernel.org>,
+        "'Zhang Rui'" <rui.zhang@intel.com>,
+        "'Florian Fainelli'" <florian.fainelli@broadcom.com>,
+        "'Broadcom internal kernel review list'" 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        "'Markus Mayer'" <mmayer@broadcom.com>,
         "'Shawn Guo'" <shawnguo@kernel.org>,
         "'Sascha Hauer'" <s.hauer@pengutronix.de>,
         "'Pengutronix Kernel Team'" <kernel@pengutronix.de>,
         "'Fabio Estevam'" <festevam@gmail.com>,
         "'NXP Linux Team'" <linux-imx@nxp.com>,
-        "'Neil Armstrong'" <neil.armstrong@linaro.org>,
-        "'Kevin Hilman'" <khilman@baylibre.com>,
-        "'Jerome Brunet'" <jbrunet@baylibre.com>,
-        "'Martin Blumenstingl'" <martin.blumenstingl@googlemail.com>,
-        "'Matthias Brugger'" <matthias.bgg@gmail.com>,
-        "'AngeloGioacchino Del Regno'" 
-        <angelogioacchino.delregno@collabora.com>,
-        "'Srinivas Neeli'" <srinivas.neeli@amd.com>,
-        "'Shubhrajyoti Datta'" <shubhrajyoti.datta@amd.com>,
-        "'Michal Simek'" <michal.simek@amd.com>,
         "'Andy Gross'" <agross@kernel.org>,
         "'Bjorn Andersson'" <andersson@kernel.org>,
         "'Konrad Dybcio'" <konrad.dybcio@linaro.org>,
+        "'Thara Gopinath'" <thara.gopinath@gmail.com>,
+        =?UTF-8?Q?'Niklas_S=C3=B6derlund'?= <niklas.soderlund@ragnatech.se>,
+        "'Bartlomiej Zolnierkiewicz'" <bzolnier@gmail.com>,
         "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>,
-        "'Xingyu Wu'" <xingyu.wu@starfivetech.com>,
-        "'Samin Guo'" <samin.guo@starfivetech.com>,
+        "'Orson Zhai'" <orsonzhai@gmail.com>,
+        "'Baolin Wang'" <baolin.wang@linux.alibaba.com>,
+        "'Chunyan Zhang'" <zhang.lyra@gmail.com>,
         "'Maxime Coquelin'" <mcoquelin.stm32@gmail.com>,
         "'Alexandre Torgue'" <alexandre.torgue@foss.st.com>,
+        "'Vasily Khoruzhick'" <anarsoul@gmail.com>,
+        "'Yangtao Li'" <tiny.windzz@gmail.com>,
         "'Chen-Yu Tsai'" <wens@csie.org>,
         "'Jernej Skrabec'" <jernej.skrabec@gmail.com>,
-        "'Samuel Holland'" <samuel@sholland.org>
-Cc:     <devicetree@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
+        "'Samuel Holland'" <samuel@sholland.org>,
+        "'Thierry Reding'" <thierry.reding@gmail.com>,
+        "'Jonathan Hunter'" <jonathanh@nvidia.com>,
+        "'Kunihiko Hayashi'" <hayashi.kunihiko@socionext.com>,
+        "'Masami Hiramatsu'" <mhiramat@kernel.org>,
+        "'Matthias Brugger'" <matthias.bgg@gmail.com>,
+        "'AngeloGioacchino Del Regno'" 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
         <linux-amlogic@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-rpi-kernel@lists.infradead.org>,
+        <linux-arm-kernel@lists.infradead.org>,
         <linux-arm-msm@vger.kernel.org>,
+        <linux-renesas-soc@vger.kernel.org>,
         <linux-samsung-soc@vger.kernel.org>,
         <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-sunxi@lists.linux.dev>
-In-Reply-To: <20230714175040.4065660-1-robh@kernel.org>
-Subject: RE: [PATCH] watchdog: Explicitly include correct DT includes
-Date:   Mon, 17 Jul 2023 17:10:56 +0530
-Message-ID: <001e01d9b8a3$9078dbc0$b16a9340$@samsung.com>
+        <linux-sunxi@lists.linux.dev>, <linux-tegra@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>
+In-Reply-To: <20230714175008.4064592-1-robh@kernel.org>
+Subject: RE: [PATCH] thermal: Explicitly include correct DT includes
+Date:   Mon, 17 Jul 2023 17:15:53 +0530
+Message-ID: <001f01d9b8a4$422a3530$c67e9f90$@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-us
-Thread-Index: AQGrqzeGs+cr2wOBWxiBR/YgqcC1ewG7rZ0wsAwSvYA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Tf1RTZRg+3713uxNc54aaX8tszEzBwA0BPwzMkvRqdeLEKX90BHfYPYCM
-        bW5DzIo0YiIGilrhJH6lGD8S2PgxcM5CUAmRhOCgghqwxlRGhRAIo8YG6X/v877Pc573fb7z
-        cXCPSZLHiZWpGaVMLBWw3YjqS17LfFqXV0mE2i4/dL1vgkAHbYUkGrd+A1B1ajBqK4Ko1TRJ
-        otyG6yz0e8d76GFvA44suecAGu4pwFHx17UEGj9YiaHU4zUEuvCgikR5p9yRrq+ThTIvtpAo
-        7XERjtrrstmoPfkGQFmtJgyldfaz0AlTHRt1nTORqD//GoYuFzQR6IsvV6Ec+48sdOHKDRYa
-        qr0FUI0+H0f/Gg0kstfoCHS2bYqNLL2H2GigciGy3S5hIVNhs2Pl+lYM9VmncJSf1YKt86ZT
-        2uxseqgrhaRzSj+hDT2nAV3eW8KizUeqSLpW20PS5qPHSVpXfIhNd3ca2XRRaSmL1p/+nB7Q
-        nwR099gZQFfYDBh9xC4MW7A9LjiGEUsYJZ+RRcklsbLoEMHb4ZHrIwMChSIfURBaLeDLxPFM
-        iCD0nTCfDbFSR8gC/h6xNMHRChOrVIKVa4OV8gQ1w4+Rq9QhAkYhkSr8Fb4qcbwqQRbtK2PU
-        a0RCoV+Ag7gzLuZUaTlL8XMl2NtoOQX2g5tlIA3M4UDKH44+THfUbhwPygigduAM5gJ/A7h/
-        sJntAqMAFthHiVlJ78WamcEFACd0IzPACqA1909smsWmfKDhe41zMJ9Kngstl6qJaYBTNgym
-        38xgT7PmUKthY8Ogc5V51FswP7vFqSaopVB3x+zsc6kgOKZvIl31s7DpZL9zD5xaAQvzH+Cu
-        nfhw3FzIcvUXQmtjg4PPcTivgUUVsdO+kGpxg49z8tgufijUXP6L5arnwftXKklXzYPWIxqn
-        FlI0LJjkudoxcPDsbGKvw59+yyamKTjlBcvqVrpcn4HpE/2YS8mFqRoPF3spTLZ1zAT3Asw8
-        fHjGlIaPtHfwo8BT+9Rd2qfu0j51i/aJWR4gigGPUajio5moAIXIR8Yk/v/mUfJ4HXB+Q+8w
-        Aygpt/vWA4wD6gHk4IL53H+KdRIPrkT88T5GKY9UJkgZVT0IcKSdifMWRMkd/1imjhT5Bwn9
-        AwMD/YNWBYoEC7kPUr6TeFDRYjUTxzAKRjmrwzhzePuxtcT5iYjzpNJPXlX3rbR60pj14tLO
-        7dd/nXcP7+67X2YaTtxr7v/A/TN8p2ZdxatbXotIWvlcz5KOrGXgzq4DGWdtWzMS75qbj/H3
-        fHWXMaQ+fyKBc3sLf6LAsjczaa5nUUao/qq7ZqKdm23ctsYz0esk94+IDRuTd3e9e2w84iP1
-        pxXlsgqh+xu8AfnUNf9ai1XpMX/o1uCHDW6CMTBSHhwejtknl1y9e2B3k/LA0fXLhjhb3//h
-        2mZQ2hoKLw42LnJLMsaFJ+Vve7TLNKIt3rdpSLj5lRUv7dix5eq6NxfrT+u6X85s3uReLUa8
-        Rbg0zfeK1/3H1PByP2vexuCSxYEltnu/SAWEKkYs8saVKvF/ock35w8FAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0ybVRjHc947OPBdmXIKClgvmcWWsU33bBmLc5K9JlOYMd5iIp19QxEo
-        Tbs5t8WICIORIEwmlw6Bjg1CudkyoDAuE5mKyEiBIVFwDtoURIFkBKhbO4FmCd9+ef6X8/9w
-        OFIyTYdwSdrjol6rSpEx/lTrD7IwxdD2FvWOsnECbk7foyB7vpoF92wRgtac/TBci2Go+z4L
-        FX03abhzKw7+meojwVXRiODu5CUSzN+0U+DOvkpATmEbBV1zLSxUXnwErNNjNJzvGWQh979a
-        EkY6yhgY+dKOoGSom4DcMQcNF7o7GBhv7GbBYfqVgB8v9VOQkbkLyj0NNHT9ZKdhof13BG3N
-        JhIedNpY8LRZKagZ9jLgmjrHwMzVYJj/o46G7uqBtcm9QwRMz3pJMJUMEi/LhaxhDyMsjGex
-        Qnn9GcE2eRkJ303V0YIzv4UV2o2TrOAsKGQFq/kcI0yMdTJCbX09LTRf/lyYaS5FwsTqFSRY
-        5m2EkO/ZEf/Y+/771WJK0ieiPupAgr+mpGiF0eVmoE8d3ho6HfVrc5Efh/ndeKqnjclF/pyE
-        v4bw8kQj4xNC8W+WAtbHQbjW62J9JhfCZV81UesCwyuwrersRmAbX7gF/5VJr5tIfpXAbaN2
-        5EvkIHw3fYJed/nxe/CNvn/ROgfxsdhUNkisM8U/i61/OjfuAfxevNrcz/p4K+4vdWy8RvKR
-        OO9OFnrI1aY50jcvArud1bTvHoxnb/StZbm1RftwrSWpAAUZNzUZNzUZNzUZN6UrEWVGUlFn
-        SE1MNUTrdmrFk0qDKtVwQpuo/Cgt1Yo2/qFcbkOd5kVlLyI41IswR8q2BayYrWpJgFp16rSo
-        T/tQfyJFNPSiUI6SBQcsz+WpJXyi6riYLIo6Uf9QJTi/kHRil87CxeTNiJr56+GHYi9eQUkD
-        rVz2Uk1MjLTK/t7tw4NdsRZFwgtNDXn6qtCGpzIH36Q/aD26J93c88Z4/PXbr7UoBqLmAmdD
-        uM/qgkJoNVt0IND+CpPMFL7YXvnL848mTuTvDK+QlodGOYsDpfcejEUePkk7Yj/et1jeFxG6
-        WxZ1beG50r/DTr09WnEwI/JV2960ycWlt5aPZbjvk3n9ix1KrzX5jMwKR99xPmO+IDWJ737N
-        Fz8dl+3Yul0p0YZpyHgd/f2hI9FjxVmjZ79tfmLJKBl1Hxy59aTnmCI8sOn0S3VfRLkej7Xn
-        VMRtUbusP7vCjrxeXdkrj/BoqITxlfo6GWXQqKLlpN6g+h8RaAC+9gMAAA==
-X-CMS-MailID: 20230717114103epcas5p4c391f54c67e0d321cb3b7fc06b34c2ad
+Thread-Index: AQFJ8/MHuIcdR0+KCwgF77BaMZezKwGouk0XsNAaiCA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Te0xTdxTH9+u9vbc6Wa6VhZ8YM+yiEwWkUurB8TAZyHVz080tWdSNdfaO
+        mpa2aYtTs0TGS4FVQJTp5eELRSuoK6ClgHMVJRrfQGVBNkEeFifik6Agaylu/vc5J99zvuf8
+        fjkiQlwq8het15o4g1ahkVCTyVPnAj8IHg6sUYYW3pDB1bsvSRh2FSI4t3cjZFzoRXBqWyTc
+        PIphrOECgkrzeRKGqm8JoPTJTNjbeFUIna0r4PipvwjYX1BCwbm2VAR9e48jSOcPkGDZVUvC
+        toLTJDTcr6FhX9HbYL3rFEL+71doyH5xlIBmezEFzWk3EDwxNyKocQ0IIL/9JA27r50RQLaz
+        Wwg7z9gpyHrKU5CaHgalo5VCOFg+B4oH2mloKtwuhF8HixCUPN1FwFi9jYbuzu0UjJ62ktDX
+        lUXBvWo/aKnYTcGwvZSEkpd5bnJcE0D5HTu9ZCH7sC2DZvm/r1CsraMMsSe7jgnZntwamq3l
+        O2j2YL1LwFotWRR721lPsbWdEWxV2Rb2XtUexJrTBij2twGbgM0dDWX7moeolb6r1ZEqTqHk
+        DAGcdp1OuV6bGCX5ZFXCRwnh8lBpsDQCFkkCtIokLkoSu3xl8NL1GvdPSAI2KDTJ7tRKhdEo
+        WRAdadAlm7gAlc5oipJweqVGL9OHGBVJxmRtYoiWMy2WhoYuDHcLv1OrzKW8UP+0HG0se9VC
+        p6BHB1A2miTCjAw38RYqG00WiZk6hAtarhPe4DHCw3/mTgTPEb54ZCfxuqS8skbgYTHTgLDF
+        Mt/LLoSzuzZ6mGKCse1g5nhbX2bUB/fXnUCegGDaCOwc42mPahKzCB/7o3qcpzGx2Ny9b9yB
+        ZGbj/tr2cfZhIrCtN4fy8lR8cU836WGCmY8P778/MVEAHu45LPTm/bDrfKO7p8jtvBiX5og8
+        vpgZmYwvOfKEXn0s7rMNkl6ehvubvDNgxh8/GWigPLWYYfGBEX9vWoUflJ+YeK8YfLalmPRI
+        CCYQn7Av8Lq+g80vuwXeSh+8LVPsVc/GaQOtE0YzcH5OzsQALL7zopfOQ7P4N/bi39iLf2MX
+        /n+zfYi0oOmc3piUyBnD9VIt9+N/H75Ol2RF44c6b5kNddwZDHEggQg5EBYREl+fIYtVKfZR
+        KjZt5gy6BEOyhjM6ULj7sfMJ/3fX6dyXrjUlSGURoTK5XC6LCJNLJX4+9zNKlGImUWHi1Byn
+        5wyv6wSiSf4pgvcil1VUdM1VP3BubS0qmB47n4blFbHxMbyKTYuO6br0Q9nMD28ecRWt6bVq
+        pc5FPTXpG9aOfdWijOtcEjJDfqtoh+kSm55gadoUvSYuTrgje/nuxxrDF5vTBd8b/AL7qGdr
+        dV8HpeRSh966zn+8fzT17NTG2tym7qHVr1rDf5paabjMFj9/NBJULbbHVAXm16esSPo2aMTW
+        8TBTFTXNaOVXxRd/+s+X5s8dDrWsp73ufd/hi/VVFZlB0WtuJWo0CxSq1C23pwQPqrouqNu+
+        +ays+bJSKcvaauiUnkyJdyX8XFcYLE7OaYwLy4gJOxQvL26x/zKHLtg8ZZbz2RH19P57c0mb
+        hDSqFNJ5hMGo+BfB0HTdMQUAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sf0yUdRzH+z7Pc8/zAB0+3rH4KhOVHW1goFCzD0nEFtkza4mz1cpNvOQZ
+        sOC43YlRTSEEgnMHmGFwwN0pAgHxm4ODDjBAWksPEjuYgAgCB5IXU4sRIgE3N/577fN+f177
+        /PFhScm39HY2TnFKUCnk8T60K9XS4+MdsORnit6XZXUH6/1lCpbmLiHoMSRDRt8MgpasULhV
+        iWG1ow9BjfY6BYvNQwToH+8AQ69VBBN/HobalrskXL5YQkPPcBoCu6EWQbruCgVV+W0UZF1s
+        paBj3sSAscgNGu/bRHCh6yYDmv8qSRhsL6Zh8NwfCB5rexGY5hwEXBipZ6Cgv5MAjW1KBN93
+        ttOQ/URHQ1r6q6BfqRFBacXLUOwYYeDXSzki+GGhCEHJk3wSVi1mBqYmcmhYaW2kwD6ZTcNs
+        syfc/qmAhqV2PQUly3lr1N1PQMW9diY8mP97OIPhdeM3ad48dhXx9ZPVIn4618Twbboxhi+1
+        zBF8Y1U2zY/aLDTfNhHCN11N4WebChGvPeeg+QaHmeBzV/bx9sFFOtLjU9fQaCE+7rSg2ht2
+        wjU2c0KsrPs6udXeRKei/jgNcmEx9xquqDERGuTKSrifEX40bCWcgRceashjnCzFlc/sjLNk
+        R9jRdwWtBzQXgM2lmfR64MHlu2P9j5aNFslNkXgm75bIuZKFsOlZyYbXhXsdV//SvOGVchFY
+        O2Uk15nifPGDtpENFnMh2DxznnbyVvxb4RS1ziS3B2snMtBzLr88Tzrv24WXpstFzrknnrve
+        u+Zn1056A+vPs3lIqttk0m0y6TaZdJu2jYiqQtsEpTohJkEdpAxWCF8EquUJ6iRFTODJxIRG
+        tPGr/v5mZKlaCOxGBIu6EWZJHw/xYlVjtEQcLf/yK0GVGKVKihfU3ciLpXw8xf/Oa6MlXIz8
+        lPC5ICgF1fOUYF22pxJBdYYjhx7uskm2bY0qmt4d8MFBz7yczrQC66Nvgs6kJK6mfFaR9o96
+        dIA61uc9VL1wfOHFlNLxe7aPZ7XL4sDg5Hr3aqIjt5Yq8lqW+b61/8RqkctDv9uW+HdZg0G2
+        szC0VdY5s/OV3W/L9ncVvFAadvodb+UnBaqQB5T8zZdmjpYj6Uj6yN2IA4rC7wIjwrWT4602
+        ss4kO3Yn7PjoXiVH+63ozbWx781Kwiutv0ddK9YwN9L182fveESmfOT+dPSgUdU1MB8uHHp/
+        RXKUHMjdYjsrNZ6xlD21X/sr3zPJzS1N0kBvKXPkVh7YkbqnKVLqNujwdVV0jC3f+PBkWKZx
+        qMzoQ6lj5UH+pEot/x/GmIHyGgQAAA==
+X-CMS-MailID: 20230717114601epcas5p297034d2bf4f5d0ebe191739407be0309
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 CMS-TYPE: 105P
 DLP-Filter: Pass
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20230714175126epcas5p3167cd472115aa6032085393cc801b2d6
-References: <CGME20230714175126epcas5p3167cd472115aa6032085393cc801b2d6@epcas5p3.samsung.com>
-        <20230714175040.4065660-1-robh@kernel.org>
+X-CMS-RootMailID: 20230714175102epcas5p1e1cee0ae2ceb0475e65c73029d4c386c
+References: <CGME20230714175102epcas5p1e1cee0ae2ceb0475e65c73029d4c386c@epcas5p1.samsung.com>
+        <20230714175008.4064592-1-robh@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
@@ -168,301 +178,285 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 > -----Original Message-----
 > From: Rob Herring <robh=40kernel.org>
-> Sent: Friday, July 14, 2023 11:21 PM
-> To: Marek Beh=C3=BAn=20<kabel=40kernel.org>;=20Wim=20Van=20Sebroeck=20<wi=
-m=40linux-=0D=0A>=20watchdog.org>;=20Guenter=20Roeck=20<linux=40roeck-us.ne=
-t>;=20Nicolas=20Ferre=0D=0A>=20<nicolas.ferre=40microchip.com>;=20Alexandre=
-=20Belloni=0D=0A>=20<alexandre.belloni=40bootlin.com>;=20Claudiu=20Beznea=
-=0D=0A>=20<claudiu.beznea=40microchip.com>;=20Shawn=20Guo=20<shawnguo=40ker=
-nel.org>;=0D=0A>=20Sascha=20Hauer=20<s.hauer=40pengutronix.de>;=20Pengutron=
-ix=20Kernel=20Team=0D=0A>=20<kernel=40pengutronix.de>;=20Fabio=20Estevam=20=
-<festevam=40gmail.com>;=20NXP=20Linux=0D=0A>=20Team=20<linux-imx=40nxp.com>=
-;=20Neil=20Armstrong=20<neil.armstrong=40linaro.org>;=0D=0A>=20Kevin=20Hilm=
-an=20<khilman=40baylibre.com>;=20Jerome=20Brunet=0D=0A>=20<jbrunet=40baylib=
-re.com>;=20Martin=20Blumenstingl=0D=0A>=20<martin.blumenstingl=40googlemail=
-.com>;=20Matthias=20Brugger=0D=0A>=20<matthias.bgg=40gmail.com>;=20AngeloGi=
-oacchino=20Del=20Regno=0D=0A>=20<angelogioacchino.delregno=40collabora.com>=
-;=20Srinivas=20Neeli=0D=0A>=20<srinivas.neeli=40amd.com>;=20Shubhrajyoti=20=
-Datta=20<shubhrajyoti.datta=40amd.com>;=0D=0A>=20Michal=20Simek=20<michal.s=
-imek=40amd.com>;=20Andy=20Gross=20<agross=40kernel.org>;=0D=0A>=20Bjorn=20A=
-ndersson=20<andersson=40kernel.org>;=20Konrad=20Dybcio=0D=0A>=20<konrad.dyb=
-cio=40linaro.org>;=20Krzysztof=20Kozlowski=0D=0A>=20<krzysztof.kozlowski=40=
-linaro.org>;=20Alim=20Akhtar=20<alim.akhtar=40samsung.com>;=0D=0A>=20Xingyu=
-=20Wu=20<xingyu.wu=40starfivetech.com>;=20Samin=20Guo=0D=0A>=20<samin.guo=
-=40starfivetech.com>;=20Maxime=20Coquelin=0D=0A>=20<mcoquelin.stm32=40gmail=
-.com>;=20Alexandre=20Torgue=0D=0A>=20<alexandre.torgue=40foss.st.com>;=20Ch=
-en-Yu=20Tsai=20<wens=40csie.org>;=20Jernej=0D=0A>=20Skrabec=20<jernej.skrab=
-ec=40gmail.com>;=20Samuel=20Holland=20<samuel=40sholland.org>=0D=0A>=20Cc:=
-=20devicetree=40vger.kernel.org;=20linux-watchdog=40vger.kernel.org;=20linu=
-x-=0D=0A>=20kernel=40vger.kernel.org;=20linux-arm-kernel=40lists.infradead.=
-org;=20linux-=0D=0A>=20amlogic=40lists.infradead.org;=20linux-mediatek=40li=
-sts.infradead.org;=20linux-arm-=0D=0A>=20msm=40vger.kernel.org;=20linux-sam=
-sung-soc=40vger.kernel.org;=20linux-stm32=40st-=0D=0A>=20md-mailman.stormre=
-ply.com;=20linux-sunxi=40lists.linux.dev=0D=0A>=20Subject:=20=5BPATCH=5D=20=
-watchdog:=20Explicitly=20include=20correct=20DT=20includes=0D=0A>=20=0D=0A>=
-=20The=20DT=20of_device.h=20and=20of_platform.h=20date=20back=20to=20the=20=
-separate=0D=0A>=20of_platform_bus_type=20before=20it=20as=20merged=20into=
-=20the=20regular=20platform=20bus.=0D=0A>=20As=20part=20of=20that=20merge=
-=20prepping=20Arm=20DT=20support=2013=20years=20ago,=20they=20=22temporaril=
-y=22=0D=0A>=20include=20each=20other.=20They=20also=20include=20platform_de=
-vice.h=20and=20of.h.=20As=20a=20result,=0D=0A>=20there's=20a=20pretty=20muc=
-h=20random=20mix=20of=20those=20include=20files=20used=20throughout=20the=
-=0D=0A>=20tree.=20In=20order=20to=20detangle=20these=20headers=20and=20repl=
-ace=20the=20implicit=20includes=20with=0D=0A>=20struct=20declarations,=20us=
-ers=20need=20to=20explicitly=20include=20the=20correct=20includes.=0D=0A>=
-=20=0D=0A>=20Signed-off-by:=20Rob=20Herring=20<robh=40kernel.org>=0D=0A>=20=
----=0D=0A>=20=20drivers/watchdog/armada_37xx_wdt.c=20=7C=201=20-=0D=0A>=20d=
-rivers/watchdog/at91rm9200_wdt.c=20=20=7C=203=20+--=0D=0A>=20=20drivers/wat=
-chdog/cpwd.c=20=20=20=20=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20dr=
-ivers/watchdog/ftwdt010_wdt.c=20=20=20=20=7C=206=20++----=0D=0A>=20=20drive=
-rs/watchdog/imx2_wdt.c=20=20=20=20=20=20=20=20=7C=203=20+--=0D=0A>=20=20dri=
-vers/watchdog/imx7ulp_wdt.c=20=20=20=20=20=7C=201=20-=0D=0A>=20=20drivers/w=
-atchdog/meson_wdt.c=20=20=20=20=20=20=20=7C=204=20++--=0D=0A>=20=20drivers/=
-watchdog/mtk_wdt.c=20=20=20=20=20=20=20=20=20=7C=201=20-=0D=0A>=20=20driver=
-s/watchdog/of_xilinx_wdt.c=20=20=20=7C=203=20+--=0D=0A>=20=20drivers/watchd=
-og/pic32-dmt.c=20=20=20=20=20=20=20=7C=203=20+--=0D=0A>=20=20drivers/watchd=
-og/pic32-wdt.c=20=20=20=20=20=20=20=7C=203=20+--=0D=0A>=20=20drivers/watchd=
-og/pika_wdt.c=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/watch=
-dog/qcom-wdt.c=20=20=20=20=20=20=20=20=7C=201=20-=0D=0A>=20=20drivers/watch=
-dog/rave-sp-wdt.c=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/watchdog/r=
-iowd.c=20=20=20=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/wat=
-chdog/rza_wdt.c=20=20=20=20=20=20=20=20=20=7C=204=20++--=0D=0A>=20=20driver=
-s/watchdog/rzg2l_wdt.c=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers=
-/watchdog/s3c2410_wdt.c=20=20=20=20=20=7C=201=20-=0D=0A=0D=0AFor=20Samsung=
-=20WDT=0D=0AAcked-by:=20Alim=20Akhtar=20<alim.akhtar=40samsung.com>=0D=0A=
-=0D=0A>=20=20drivers/watchdog/sama5d4_wdt.c=20=20=20=20=20=7C=201=20-=0D=0A=
->=20=20drivers/watchdog/sbsa_gwdt.c=20=20=20=20=20=20=20=7C=203=20+--=0D=0A=
->=20=20drivers/watchdog/starfive-wdt.c=20=20=20=20=7C=203=20++-=0D=0A>=20=
-=20drivers/watchdog/stm32_iwdg.c=20=20=20=20=20=20=7C=201=20-=0D=0A>=20=20d=
-rivers/watchdog/sunxi_wdt.c=20=20=20=20=20=20=20=7C=201=20-=0D=0A>=20=20dri=
-vers/watchdog/xilinx_wwdt.c=20=20=20=20=20=7C=204=20++--=0D=0A>=20=2024=20f=
-iles=20changed,=2021=20insertions(+),=2036=20deletions(-)=0D=0A>=20=0D=0A>=
-=20diff=20--git=20a/drivers/watchdog/armada_37xx_wdt.c=0D=0A>=20b/drivers/w=
-atchdog/armada_37xx_wdt.c=0D=0A>=20index=20e58652939f8a..8133a5d05647=20100=
-644=0D=0A>=20---=20a/drivers/watchdog/armada_37xx_wdt.c=0D=0A>=20+++=20b/dr=
-ivers/watchdog/armada_37xx_wdt.c=0D=0A>=20=40=40=20-14,7=20+14,6=20=40=40=
-=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/=
-moduleparam.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=
-=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=
+> Sent: Friday, July 14, 2023 11:20 PM
+> To: Guillaume La Roque <glaroque=40baylibre.com>; Rafael J. Wysocki
+> <rafael=40kernel.org>; Daniel Lezcano <daniel.lezcano=40linaro.org>; Amit
+> Kucheria <amitk=40kernel.org>; Zhang Rui <rui.zhang=40intel.com>; Florian=
+ Fainelli
+> <florian.fainelli=40broadcom.com>; Broadcom internal kernel review list <=
+bcm-
+> kernel-feedback-list=40broadcom.com>; Markus Mayer
+> <mmayer=40broadcom.com>; Shawn Guo <shawnguo=40kernel.org>; Sascha
+> Hauer <s.hauer=40pengutronix.de>; Pengutronix Kernel Team
+> <kernel=40pengutronix.de>; Fabio Estevam <festevam=40gmail.com>; NXP Linu=
+x
+> Team <linux-imx=40nxp.com>; Andy Gross <agross=40kernel.org>; Bjorn Ander=
+sson
+> <andersson=40kernel.org>; Konrad Dybcio <konrad.dybcio=40linaro.org>; Tha=
+ra
+> Gopinath <thara.gopinath=40gmail.com>; Niklas S=C3=B6derlund=0D=0A>=20<ni=
+klas.soderlund=40ragnatech.se>;=20Bartlomiej=20Zolnierkiewicz=0D=0A>=20<bzo=
+lnier=40gmail.com>;=20Krzysztof=20Kozlowski=20<krzysztof.kozlowski=40linaro=
+.org>;=0D=0A>=20Alim=20Akhtar=20<alim.akhtar=40samsung.com>;=20Orson=20Zhai=
+=20<orsonzhai=40gmail.com>;=0D=0A>=20Baolin=20Wang=20<baolin.wang=40linux.a=
+libaba.com>;=20Chunyan=20Zhang=0D=0A>=20<zhang.lyra=40gmail.com>;=20Maxime=
+=20Coquelin=20<mcoquelin.stm32=40gmail.com>;=0D=0A>=20Alexandre=20Torgue=20=
+<alexandre.torgue=40foss.st.com>;=20Vasily=20Khoruzhick=0D=0A>=20<anarsoul=
+=40gmail.com>;=20Yangtao=20Li=20<tiny.windzz=40gmail.com>;=20Chen-Yu=20Tsai=
+=0D=0A>=20<wens=40csie.org>;=20Jernej=20Skrabec=20<jernej.skrabec=40gmail.c=
+om>;=20Samuel=20Holland=0D=0A>=20<samuel=40sholland.org>;=20Thierry=20Redin=
+g=20<thierry.reding=40gmail.com>;=20Jonathan=0D=0A>=20Hunter=20<jonathanh=
+=40nvidia.com>;=20Kunihiko=20Hayashi=0D=0A>=20<hayashi.kunihiko=40socionext=
+.com>;=20Masami=20Hiramatsu=0D=0A>=20<mhiramat=40kernel.org>;=20Matthias=20=
+Brugger=20<matthias.bgg=40gmail.com>;=0D=0A>=20AngeloGioacchino=20Del=20Reg=
+no=20<angelogioacchino.delregno=40collabora.com>=0D=0A>=20Cc:=20devicetree=
+=40vger.kernel.org;=20linux-pm=40vger.kernel.org;=20linux-=0D=0A>=20amlogic=
+=40lists.infradead.org;=20linux-kernel=40vger.kernel.org;=20linux-rpi-=0D=
+=0A>=20kernel=40lists.infradead.org;=20linux-arm-kernel=40lists.infradead.o=
+rg;=20linux-arm-=0D=0A>=20msm=40vger.kernel.org;=20linux-renesas-soc=40vger=
+.kernel.org;=20linux-samsung-=0D=0A>=20soc=40vger.kernel.org;=20linux-stm32=
+=40st-md-mailman.stormreply.com;=20linux-=0D=0A>=20sunxi=40lists.linux.dev;=
+=20linux-tegra=40vger.kernel.org;=20linux-=0D=0A>=20mediatek=40lists.infrad=
+ead.org=0D=0A>=20Subject:=20=5BPATCH=5D=20thermal:=20Explicitly=20include=
+=20correct=20DT=20includes=0D=0A>=20=0D=0A>=20The=20DT=20of_device.h=20and=
+=20of_platform.h=20date=20back=20to=20the=20separate=0D=0A>=20of_platform_b=
+us_type=20before=20it=20as=20merged=20into=20the=20regular=20platform=20bus=
+.=0D=0A>=20As=20part=20of=20that=20merge=20prepping=20Arm=20DT=20support=20=
+13=20years=20ago,=20they=20=22temporarily=22=0D=0A>=20include=20each=20othe=
+r.=20They=20also=20include=20platform_device.h=20and=20of.h.=20As=20a=20res=
+ult,=0D=0A>=20there's=20a=20pretty=20much=20random=20mix=20of=20those=20inc=
+lude=20files=20used=20throughout=20the=0D=0A>=20tree.=20In=20order=20to=20d=
+etangle=20these=20headers=20and=20replace=20the=20implicit=20includes=20wit=
+h=0D=0A>=20struct=20declarations,=20users=20need=20to=20explicitly=20includ=
+e=20the=20correct=20includes.=0D=0A>=20=0D=0A>=20Signed-off-by:=20Rob=20Her=
+ring=20<robh=40kernel.org>=0D=0A>=20---=0D=0A>=20=20drivers/thermal/amlogic=
+_thermal.c=20=20=20=20=20=20=20=20=20=20=20=7C=202=20--=0D=0A>=20=20drivers=
+/thermal/broadcom/bcm2711_thermal.c=20=20=7C=202=20+-=0D=0A>=20drivers/ther=
+mal/broadcom/brcmstb_thermal.c=20=20=7C=202=20+-=0D=0A>=20=20drivers/therma=
+l/hisi_thermal.c=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=202=20+-=0D=
+=0A>=20=20drivers/thermal/imx8mm_thermal.c=20=20=20=20=20=20=20=20=20=20=20=
+=20=7C=201=20-=0D=0A>=20=20drivers/thermal/imx_sc_thermal.c=20=20=20=20=20=
+=20=20=20=20=20=20=20=7C=201=20-=0D=0A>=20=20drivers/thermal/imx_thermal.c=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drive=
+rs/thermal/k3_bandgap.c=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=
+=202=20+-=0D=0A>=20=20drivers/thermal/k3_j72xx_bandgap.c=20=20=20=20=20=20=
+=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/thermal/mediatek/auxadc_therma=
+l.c=20=20=20=7C=201=20-=0D=0A>=20=20drivers/thermal/mediatek/lvts_thermal.c=
+=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/thermal/qcom/qcom-spmi-adc-=
+tm5.c=20=20=20=20=7C=201=20-=0D=0A>=20=20drivers/thermal/qcom/qcom-spmi-tem=
+p-alarm.c=20=7C=201=20-=0D=0A>=20=20drivers/thermal/rcar_gen3_thermal.c=20=
+=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/thermal/rcar_therm=
+al.c=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20driv=
+ers/thermal/rzg2l_thermal.c=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=202=
+=20+-=0D=0A>=20=20drivers/thermal/samsung/exynos_tmu.c=20=20=20=20=20=20=20=
+=20=7C=202=20+-=0D=0A=0D=0AFor=20Samsung/=20Exynos=0D=0A=0D=0AReviewed-by:=
+=20Alim=20Akhtar=20<alim.akhtar=40samsung.com>=0D=0A=0D=0A>=20=20drivers/th=
+ermal/sprd_thermal.c=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=202=20+-=
+=0D=0A>=20=20drivers/thermal/st/stm_thermal.c=20=20=20=20=20=20=20=20=20=20=
+=20=20=7C=202=20--=0D=0A>=20=20drivers/thermal/sun8i_thermal.c=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/thermal/tegra/t=
+egra30-tsensor.c=20=20=20=20=20=7C=202=20+-=0D=0A>=20=20drivers/thermal/the=
+rmal_of.c=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=203=20+--=0D=
+=0A>=20=20drivers/thermal/uniphier_thermal.c=20=20=20=20=20=20=20=20=20=20=
+=7C=201=20-=0D=0A>=20=2023=20files=20changed,=2015=20insertions(+),=2026=20=
+deletions(-)=0D=0A>=20=0D=0A>=20diff=20--git=20a/drivers/thermal/amlogic_th=
+ermal.c=0D=0A>=20b/drivers/thermal/amlogic_thermal.c=0D=0A>=20index=20756b2=
+18880a7..81ebbf6de0de=20100644=0D=0A>=20---=20a/drivers/thermal/amlogic_the=
+rmal.c=0D=0A>=20+++=20b/drivers/thermal/amlogic_thermal.c=0D=0A>=20=40=40=
+=20-22,8=20+22,6=20=40=40=0D=0A>=20=20=23include=20<linux/mfd/syscon.h>=0D=
+=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/of.=
+h>=0D=0A>=20-=23include=20<linux/of_address.h>=0D=0A>=20-=23include=20<linu=
+x/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=
+=20=23include=20<linux/regmap.h>=0D=0A>=20=20=23include=20<linux/thermal.h>=
+=0D=0A>=20diff=20--git=20a/drivers/thermal/broadcom/bcm2711_thermal.c=0D=0A=
+>=20b/drivers/thermal/broadcom/bcm2711_thermal.c=0D=0A>=20index=20c243a76a3=
+471..03ac2d02e9d4=20100644=0D=0A>=20---=20a/drivers/thermal/broadcom/bcm271=
+1_thermal.c=0D=0A>=20+++=20b/drivers/thermal/broadcom/bcm2711_thermal.c=0D=
+=0A>=20=40=40=20-15,8=20+15,8=20=40=40=0D=0A>=20=20=23include=20<linux/kern=
+el.h>=0D=0A>=20=20=23include=20<linux/mfd/syscon.h>=0D=0A>=20=20=23include=
+=20<linux/module.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=20=23incl=
+ude=20<linux/platform_device.h>=0D=0A>=20-=23include=20<linux/of_device.h>=
 =0D=0A>=20=20=23include=20<linux/regmap.h>=0D=0A>=20=20=23include=20<linux/=
-types.h>=0D=0A>=20diff=20--git=20a/drivers/watchdog/at91rm9200_wdt.c=0D=0A>=
-=20b/drivers/watchdog/at91rm9200_wdt.c=0D=0A>=20index=20d20ec27ba354..55801=
-5f08c7a=20100644=0D=0A>=20---=20a/drivers/watchdog/at91rm9200_wdt.c=0D=0A>=
-=20+++=20b/drivers/watchdog/at91rm9200_wdt.c=0D=0A>=20=40=40=20-18,6=20+18,=
-7=20=40=40=0D=0A>=20=20=23include=20<linux/mfd/syscon.h>=0D=0A>=20=20=23inc=
-lude=20<linux/mfd/syscon/atmel-st.h>=0D=0A>=20=20=23include=20<linux/miscde=
-vice.h>=0D=0A>=20+=23include=20<linux/mod_devicetable.h>=0D=0A>=20=20=23inc=
-lude=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/moduleparam.h>=0D=
-=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=40=40=20-26,8=20=
-+27,6=20=40=40=0D=0A>=20=20=23include=20<linux/types.h>=0D=0A>=20=20=23incl=
-ude=20<linux/watchdog.h>=0D=0A>=20=20=23include=20<linux/uaccess.h>=0D=0A>=
-=20-=23include=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=
-=0A>=20=0D=0A>=20=20=23define=20WDT_DEFAULT_TIME=095=09/*=20seconds=20*/=0D=
-=0A>=20=20=23define=20WDT_MAX_TIME=09=09256=09/*=20seconds=20*/=0D=0A>=20di=
-ff=20--git=20a/drivers/watchdog/cpwd.c=20b/drivers/watchdog/cpwd.c=20index=
-=0D=0A>=2047250f9b68c7..901b94d456db=20100644=0D=0A>=20---=20a/drivers/watc=
-hdog/cpwd.c=0D=0A>=20+++=20b/drivers/watchdog/cpwd.c=0D=0A>=20=40=40=20-31,=
-7=20+31,7=20=40=40=0D=0A>=20=20=23include=20<linux/mutex.h>=0D=0A>=20=20=23=
-include=20<linux/io.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23i=
-nclude=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/platform_device.=
-h>=0D=0A>=20=20=23include=20<linux/uaccess.h>=0D=0A>=20=0D=0A>=20=20=23incl=
-ude=20<asm/irq.h>=0D=0A>=20diff=20--git=20a/drivers/watchdog/ftwdt010_wdt.c=
-=0D=0A>=20b/drivers/watchdog/ftwdt010_wdt.c=20index=20442c5bf63ff4..28f5af7=
-52c10=20100644=0D=0A>=20---=20a/drivers/watchdog/ftwdt010_wdt.c=0D=0A>=20++=
-+=20b/drivers/watchdog/ftwdt010_wdt.c=0D=0A>=20=40=40=20-14,7=20+14,7=20=40=
-=40=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20=20=23include=20<linux/k=
-ernel.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20-=23include=20<=
-linux/of_device.h>=0D=0A>=20+=23include=20<linux/mod_devicetable.h>=0D=0A>=
+thermal.h>=0D=0A>=20=0D=0A>=20diff=20--git=20a/drivers/thermal/broadcom/brc=
+mstb_thermal.c=0D=0A>=20b/drivers/thermal/broadcom/brcmstb_thermal.c=0D=0A>=
+=20index=2072d1dbe60b8f..0b73abdaa792=20100644=0D=0A>=20---=20a/drivers/the=
+rmal/broadcom/brcmstb_thermal.c=0D=0A>=20+++=20b/drivers/thermal/broadcom/b=
+rcmstb_thermal.c=0D=0A>=20=40=40=20-17,8=20+17,8=20=40=40=0D=0A>=20=20=23in=
+clude=20<linux/interrupt.h>=0D=0A>=20=20=23include=20<linux/kernel.h>=0D=0A=
+>=20=20=23include=20<linux/module.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=
+=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20-=23include=20<li=
+nux/of_device.h>=0D=0A>=20=20=23include=20<linux/thermal.h>=0D=0A>=20=0D=0A=
+>=20=20=23define=20AVS_TMON_STATUS=09=09=090x00=0D=0A>=20diff=20--git=20a/d=
+rivers/thermal/hisi_thermal.c=20b/drivers/thermal/hisi_thermal.c=0D=0A>=20i=
+ndex=203f09ef8be41a..fb54ed4bf6f0=20100644=0D=0A>=20---=20a/drivers/thermal=
+/hisi_thermal.c=0D=0A>=20+++=20b/drivers/thermal/hisi_thermal.c=0D=0A>=20=
+=40=40=20-13,9=20+13,9=20=40=40=0D=0A>=20=20=23include=20<linux/delay.h>=0D=
+=0A>=20=20=23include=20<linux/interrupt.h>=0D=0A>=20=20=23include=20<linux/=
+module.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=20=23include=20<lin=
+ux/platform_device.h>=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20-=23in=
+clude=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/thermal.h>=0D=
+=0A>=20=0D=0A>=20=20=23define=20HI6220_TEMP0_LAG=09=09=09(0x0)=0D=0A>=20dif=
+f=20--git=20a/drivers/thermal/imx8mm_thermal.c=0D=0A>=20b/drivers/thermal/i=
+mx8mm_thermal.c=0D=0A>=20index=20d4b40869c7d7..e89b11b3f2b9=20100644=0D=0A>=
+=20---=20a/drivers/thermal/imx8mm_thermal.c=0D=0A>=20+++=20b/drivers/therma=
+l/imx8mm_thermal.c=0D=0A>=20=40=40=20-12,7=20+12,6=20=40=40=0D=0A>=20=20=23=
+include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/nvmem-consumer.h=
+>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_de=
+vice.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23i=
+nclude=20<linux/slab.h>=0D=0A>=20=20=23include=20<linux/thermal.h>=0D=0A>=
+=20diff=20--git=20a/drivers/thermal/imx_sc_thermal.c=0D=0A>=20b/drivers/the=
+rmal/imx_sc_thermal.c=0D=0A>=20index=208d6b4ef23746..7224f8d21db9=20100644=
+=0D=0A>=20---=20a/drivers/thermal/imx_sc_thermal.c=0D=0A>=20+++=20b/drivers=
+/thermal/imx_sc_thermal.c=0D=0A>=20=40=40=20-8,7=20+8,6=20=40=40=0D=0A>=20=
+=20=23include=20<linux/firmware/imx/sci.h>=0D=0A>=20=20=23include=20<linux/=
+module.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=20<lin=
+ux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=
+=20=20=23include=20<linux/slab.h>=0D=0A>=20=20=23include=20<linux/thermal.h=
+>=0D=0A>=20diff=20--git=20a/drivers/thermal/imx_thermal.c=20b/drivers/therm=
+al/imx_thermal.c=0D=0A>=20index=20a94ec0a0c9dd..826358cbe810=20100644=0D=0A=
+>=20---=20a/drivers/thermal/imx_thermal.c=0D=0A>=20+++=20b/drivers/thermal/=
+imx_thermal.c=0D=0A>=20=40=40=20-11,7=20+11,7=20=40=40=0D=0A>=20=20=23inclu=
+de=20<linux/mfd/syscon.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=
+=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_device.h>=
+=0D=0A>=20+=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20=
+<linux/regmap.h>=0D=0A>=20=20=23include=20<linux/thermal.h>=0D=0A>=20=20=23=
+include=20<linux/nvmem-consumer.h>=0D=0A>=20diff=20--git=20a/drivers/therma=
+l/k3_bandgap.c=20b/drivers/thermal/k3_bandgap.c=20index=0D=0A>=201c3e590157=
+ec..68f59b3735d3=20100644=0D=0A>=20---=20a/drivers/thermal/k3_bandgap.c=0D=
+=0A>=20+++=20b/drivers/thermal/k3_bandgap.c=0D=0A>=20=40=40=20-11,7=20+11,7=
+=20=40=40=0D=0A>=20=20=23include=20<linux/kernel.h>=0D=0A>=20=20=23include=
+=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23incl=
+ude=20<linux/of_platform.h>=0D=0A>=20+=23include=20<linux/platform_device.h=
+>=0D=0A>=20=20=23include=20<linux/pm_runtime.h>=0D=0A>=20=20=23include=20<l=
+inux/thermal.h>=0D=0A>=20=20=23include=20<linux/types.h>=0D=0A>=20diff=20--=
+git=20a/drivers/thermal/k3_j72xx_bandgap.c=0D=0A>=20b/drivers/thermal/k3_j7=
+2xx_bandgap.c=0D=0A>=20index=205be1f09eeb2c..a5a0fc9b9356=20100644=0D=0A>=
+=20---=20a/drivers/thermal/k3_j72xx_bandgap.c=0D=0A>=20+++=20b/drivers/ther=
+mal/k3_j72xx_bandgap.c=0D=0A>=20=40=40=20-10,10=20+10,10=20=40=40=0D=0A>=20=
+=20=23include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/init.h>=0D=
+=0A>=20=20=23include=20<linux/kernel.h>=0D=0A>=20+=23include=20<linux/platf=
+orm_device.h>=0D=0A>=20=20=23include=20<linux/pm_runtime.h>=0D=0A>=20=20=23=
+include=20<linux/err.h>=0D=0A>=20=20=23include=20<linux/types.h>=0D=0A>=20-=
+=23include=20<linux/of_platform.h>=0D=0A>=20=20=23include=20<linux/io.h>=0D=
+=0A>=20=20=23include=20<linux/thermal.h>=0D=0A>=20=20=23include=20<linux/of=
+.h>=0D=0A>=20diff=20--git=20a/drivers/thermal/mediatek/auxadc_thermal.c=0D=
+=0A>=20b/drivers/thermal/mediatek/auxadc_thermal.c=0D=0A>=20index=20f59d36d=
+e20a0..c537aed71017=20100644=0D=0A>=20---=20a/drivers/thermal/mediatek/auxa=
+dc_thermal.c=0D=0A>=20+++=20b/drivers/thermal/mediatek/auxadc_thermal.c=0D=
+=0A>=20=40=40=20-15,7=20+15,6=20=40=40=0D=0A>=20=20=23include=20<linux/nvme=
+m-consumer.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20=20=23include=
+=20<linux/of_address.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=
 =20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<linu=
-x/slab.h>=0D=0A>=20=20=23include=20<linux/watchdog.h>=0D=0A>=20=40=40=20-22=
-1,20=20+221,18=20=40=40=20static=20const=20struct=20dev_pm_ops=0D=0A>=20ftw=
-dt010_wdt_dev_pm_ops=20=3D=20=7B=0D=0A>=20=20=09=09=09=09ftwdt010_wdt_resum=
-e)=0D=0A>=20=20=7D;=0D=0A>=20=0D=0A>=20-=23ifdef=20CONFIG_OF=0D=0A>=20=20st=
-atic=20const=20struct=20of_device_id=20ftwdt010_wdt_match=5B=5D=20=3D=20=7B=
-=0D=0A>=20=20=09=7B=20.compatible=20=3D=20=22faraday,ftwdt010=22=20=7D,=0D=
-=0A>=20=20=09=7B=20.compatible=20=3D=20=22cortina,gemini-watchdog=22=20=7D,=
-=0D=0A>=20=20=09=7B=7D,=0D=0A>=20=20=7D;=0D=0A>=20=20MODULE_DEVICE_TABLE(of=
-,=20ftwdt010_wdt_match);=20-=23endif=0D=0A>=20=0D=0A>=20=20static=20struct=
-=20platform_driver=20ftwdt010_wdt_driver=20=3D=20=7B=0D=0A>=20=20=09.probe=
-=09=09=3D=20ftwdt010_wdt_probe,=0D=0A>=20=20=09.driver=09=09=3D=20=7B=0D=0A=
->=20=20=09=09.name=09=3D=20=22ftwdt010-wdt=22,=0D=0A>=20-=09=09.of_match_ta=
-ble=20=3D=20of_match_ptr(ftwdt010_wdt_match),=0D=0A>=20+=09=09.of_match_tab=
-le=20=3D=20ftwdt010_wdt_match,=0D=0A>=20=20=09=09.pm=20=3D=20&ftwdt010_wdt_=
-dev_pm_ops,=0D=0A>=20=20=09=7D,=0D=0A>=20=20=7D;=0D=0A>=20diff=20--git=20a/=
-drivers/watchdog/imx2_wdt.c=20b/drivers/watchdog/imx2_wdt.c=20index=0D=0A>=
-=206fcc3596103c..1a27665a2f53=20100644=0D=0A>=20---=20a/drivers/watchdog/im=
-x2_wdt.c=0D=0A>=20+++=20b/drivers/watchdog/imx2_wdt.c=0D=0A>=20=40=40=20-26=
-,8=20+26,7=20=40=40=0D=0A>=20=20=23include=20<linux/kernel.h>=0D=0A>=20=20=
-=23include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/moduleparam.h=
->=0D=0A>=20-=23include=20<linux/of_address.h>=0D=0A>=20-=23include=20<linux=
-/of_device.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=20=23include=20=
-<linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/regmap.h>=0D=0A>=
-=20=20=23include=20<linux/watchdog.h>=0D=0A>=20diff=20--git=20a/drivers/wat=
-chdog/imx7ulp_wdt.c=20b/drivers/watchdog/imx7ulp_wdt.c=0D=0A>=20index=207ca=
-486794ba7..c703586c6e5f=20100644=0D=0A>=20---=20a/drivers/watchdog/imx7ulp_=
-wdt.c=0D=0A>=20+++=20b/drivers/watchdog/imx7ulp_wdt.c=0D=0A>=20=40=40=20-9,=
-7=20+9,6=20=40=40=0D=0A>=20=20=23include=20<linux/kernel.h>=0D=0A>=20=20=23=
-include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=
-=23include=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_d=
-evice.h>=0D=0A>=20=20=23include=20<linux/reboot.h>=0D=0A>=20=20=23include=
-=20<linux/watchdog.h>=0D=0A>=20diff=20--git=20a/drivers/watchdog/meson_wdt.=
-c=20b/drivers/watchdog/meson_wdt.c=0D=0A>=20index=20539feaa1f904..497496f64=
-f55=20100644=0D=0A>=20---=20a/drivers/watchdog/meson_wdt.c=0D=0A>=20+++=20b=
-/drivers/watchdog/meson_wdt.c=0D=0A>=20=40=40=20-11,11=20+11,11=20=40=40=0D=
-=0A>=20=20=23include=20<linux/init.h>=0D=0A>=20=20=23include=20<linux/io.h>=
-=0D=0A>=20=20=23include=20<linux/kernel.h>=0D=0A>=20+=23include=20<linux/mo=
-d_devicetable.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=20=23i=
-nclude=20<linux/moduleparam.h>=0D=0A>=20-=23include=20<linux/of.h>=0D=0A>=
-=20-=23include=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/platfo=
-rm_device.h>=0D=0A>=20+=23include=20<linux/property.h>=0D=0A>=20=20=23inclu=
-de=20<linux/types.h>=0D=0A>=20=20=23include=20<linux/watchdog.h>=0D=0A>=20=
-=0D=0A>=20diff=20--git=20a/drivers/watchdog/mtk_wdt.c=20b/drivers/watchdog/=
-mtk_wdt.c=20index=0D=0A>=20a9c437598e7e..b2330b16b497=20100644=0D=0A>=20---=
-=20a/drivers/watchdog/mtk_wdt.c=0D=0A>=20+++=20b/drivers/watchdog/mtk_wdt.c=
-=0D=0A>=20=40=40=20-25,7=20+25,6=20=40=40=0D=0A>=20=20=23include=20<linux/m=
-odule.h>=0D=0A>=20=20=23include=20<linux/moduleparam.h>=0D=0A>=20=20=23incl=
-ude=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=20=20=
-=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/rese=
-t-controller.h>=0D=0A>=20=20=23include=20<linux/types.h>=0D=0A>=20diff=20--=
-git=20a/drivers/watchdog/of_xilinx_wdt.c=0D=0A>=20b/drivers/watchdog/of_xil=
-inx_wdt.c=0D=0A>=20index=202a079ca04aa3..05657dc1d36a=20100644=0D=0A>=20---=
-=20a/drivers/watchdog/of_xilinx_wdt.c=0D=0A>=20+++=20b/drivers/watchdog/of_=
-xilinx_wdt.c=0D=0A>=20=40=40=20-10,14=20+10,13=20=40=40=0D=0A>=20=20=23incl=
-ude=20<linux/clk.h>=0D=0A>=20=20=23include=20<linux/err.h>=0D=0A>=20=20=23i=
-nclude=20<linux/module.h>=0D=0A>=20+=23include=20<linux/platform_device.h>=
-=0D=0A>=20=20=23include=20<linux/types.h>=0D=0A>=20=20=23include=20<linux/k=
-ernel.h>=0D=0A>=20=20=23include=20<linux/ioport.h>=0D=0A>=20=20=23include=
-=20<linux/watchdog.h>=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20=20=23=
-include=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=20=
--=23include=20<linux/of_address.h>=0D=0A>=20=0D=0A>=20=20/*=20Register=20of=
-fsets=20for=20the=20Wdt=20device=20*/=0D=0A>=20=20=23define=20XWT_TWCSR0_OF=
-FSET=20=20=200x0=20/*=20Control/Status=20Register0=20*/=0D=0A>=20diff=20--g=
-it=20a/drivers/watchdog/pic32-dmt.c=20b/drivers/watchdog/pic32-dmt.c=0D=0A>=
-=20index=20bc4ccddc75a3..466b4a41411f=20100644=0D=0A>=20---=20a/drivers/wat=
-chdog/pic32-dmt.c=0D=0A>=20+++=20b/drivers/watchdog/pic32-dmt.c=0D=0A>=20=
-=40=40=20-10,9=20+10,8=20=40=40=0D=0A>=20=20=23include=20<linux/err.h>=0D=
-=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20=20=23include=20<linux/kernel.=
-h>=0D=0A>=20+=23include=20<linux/mod_devicetable.h>=0D=0A>=20=20=23include=
-=20<linux/module.h>=0D=0A>=20-=23include=20<linux/of.h>=0D=0A>=20-=23includ=
-e=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=
-=0D=0A>=20=20=23include=20<linux/pm.h>=0D=0A>=20=20=23include=20<linux/watc=
-hdog.h>=0D=0A>=20diff=20--git=20a/drivers/watchdog/pic32-wdt.c=20b/drivers/=
-watchdog/pic32-wdt.c=20index=0D=0A>=206d1a00222991..4d7eaf290e1c=20100644=
-=0D=0A>=20---=20a/drivers/watchdog/pic32-wdt.c=0D=0A>=20+++=20b/drivers/wat=
-chdog/pic32-wdt.c=0D=0A>=20=40=40=20-10,9=20+10,8=20=40=40=0D=0A>=20=20=23i=
-nclude=20<linux/err.h>=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20=20=
-=23include=20<linux/kernel.h>=0D=0A>=20+=23include=20<linux/mod_devicetable=
-.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20-=23include=20<linux=
-/of.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=20=20=23include=20=
-<linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/pm.h>=0D=0A>=20=
-=20=23include=20<linux/watchdog.h>=0D=0A>=20diff=20--git=20a/drivers/watchd=
-og/pika_wdt.c=20b/drivers/watchdog/pika_wdt.c=20index=0D=0A>=20a98abd0d3146=
-..782b8c23d99c=20100644=0D=0A>=20---=20a/drivers/watchdog/pika_wdt.c=0D=0A>=
-=20+++=20b/drivers/watchdog/pika_wdt.c=0D=0A>=20=40=40=20-23,8=20+23,8=20=
-=40=40=0D=0A>=20=20=23include=20<linux/bitops.h>=0D=0A>=20=20=23include=20<=
-linux/uaccess.h>=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20+=23include=
-=20<linux/of.h>=0D=0A>=20=20=23include=20<linux/of_address.h>=0D=0A>=20-=23=
-include=20<linux/of_platform.h>=0D=0A>=20=0D=0A>=20=20=23define=20DRV_NAME=
-=20=22PIKA-WDT=22=0D=0A>=20=0D=0A>=20diff=20--git=20a/drivers/watchdog/qcom=
--wdt.c=20b/drivers/watchdog/qcom-wdt.c=0D=0A>=20index=20d776474dcdf3..9e790=
-f0c2096=20100644=0D=0A>=20---=20a/drivers/watchdog/qcom-wdt.c=0D=0A>=20+++=
-=20b/drivers/watchdog/qcom-wdt.c=0D=0A>=20=40=40=20-11,7=20+11,6=20=40=40=
-=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20=20=23include=20<linux/plat=
-form_device.h>=0D=0A>=20=20=23include=20<linux/watchdog.h>=0D=0A>=20-=23inc=
-lude=20<linux/of_device.h>=0D=0A>=20=0D=0A>=20=20enum=20wdt_reg=20=7B=0D=0A=
->=20=20=09WDT_RST,=0D=0A>=20diff=20--git=20a/drivers/watchdog/rave-sp-wdt.c=
-=20b/drivers/watchdog/rave-sp-wdt.c=0D=0A>=20index=202c95615b6354..5d1c2176=
-d445=20100644=0D=0A>=20---=20a/drivers/watchdog/rave-sp-wdt.c=0D=0A>=20+++=
-=20b/drivers/watchdog/rave-sp-wdt.c=0D=0A>=20=40=40=20-13,7=20+13,7=20=40=
-=40=0D=0A>=20=20=23include=20<linux/mfd/rave-sp.h>=0D=0A>=20=20=23include=
-=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/nvmem-consumer.h>=0D=0A=
->=20-=23include=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/of.h>=
-=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=
-=20<linux/reboot.h>=0D=0A>=20=20=23include=20<linux/slab.h>=0D=0A>=20diff=
-=20--git=20a/drivers/watchdog/riowd.c=20b/drivers/watchdog/riowd.c=20index=
-=0D=0A>=20c04b383e1712..b293792a292a=20100644=0D=0A>=20---=20a/drivers/watc=
-hdog/riowd.c=0D=0A>=20+++=20b/drivers/watchdog/riowd.c=0D=0A>=20=40=40=20-1=
-4,7=20+14,7=20=40=40=0D=0A>=20=20=23include=20<linux/miscdevice.h>=0D=0A>=
-=20=20=23include=20<linux/watchdog.h>=0D=0A>=20=20=23include=20<linux/of.h>=
-=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/p=
-latform_device.h>=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20=20=23incl=
-ude=20<linux/uaccess.h>=0D=0A>=20=20=23include=20<linux/slab.h>=0D=0A>=20di=
-ff=20--git=20a/drivers/watchdog/rza_wdt.c=20b/drivers/watchdog/rza_wdt.c=20=
-index=0D=0A>=20fe6c2ed35e04..cb4901b3f777=20100644=0D=0A>=20---=20a/drivers=
-/watchdog/rza_wdt.c=0D=0A>=20+++=20b/drivers/watchdog/rza_wdt.c=0D=0A>=20=
-=40=40=20-9,9=20+9,9=20=40=40=0D=0A>=20=20=23include=20<linux/bitops.h>=0D=
-=0A>=20=20=23include=20<linux/clk.h>=0D=0A>=20=20=23include=20<linux/delay.=
-h>=0D=0A>=20+=23include=20<linux/io.h>=0D=0A>=20=20=23include=20<linux/modu=
-le.h>=0D=0A>=20-=23include=20<linux/of_address.h>=0D=0A>=20-=23include=20<l=
-inux/of_device.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=20=23includ=
-e=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/watchdog.h>=
-=0D=0A>=20=0D=0A>=20diff=20--git=20a/drivers/watchdog/rzg2l_wdt.c=20b/drive=
-rs/watchdog/rzg2l_wdt.c=20index=0D=0A>=20d404953d0e0f..1741f98ca67c=2010064=
-4=0D=0A>=20---=20a/drivers/watchdog/rzg2l_wdt.c=0D=0A>=20+++=20b/drivers/wa=
-tchdog/rzg2l_wdt.c=0D=0A>=20=40=40=20-11,7=20+11,7=20=40=40=0D=0A>=20=20=23=
-include=20<linux/iopoll.h>=0D=0A>=20=20=23include=20<linux/kernel.h>=0D=0A>=
-=20=20=23include=20<linux/module.h>=0D=0A>=20-=23include=20<linux/of_device=
-.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=20=23include=20<linux/pla=
-tform_device.h>=0D=0A>=20=20=23include=20<linux/pm_runtime.h>=0D=0A>=20=20=
-=23include=20<linux/reset.h>=0D=0A>=20diff=20--git=20a/drivers/watchdog/s3c=
-2410_wdt.c=0D=0A>=20b/drivers/watchdog/s3c2410_wdt.c=20index=2095416a9bdd4b=
-..2bcc8faa7fa5=20100644=0D=0A>=20---=20a/drivers/watchdog/s3c2410_wdt.c=0D=
-=0A>=20+++=20b/drivers/watchdog/s3c2410_wdt.c=0D=0A>=20=40=40=20-23,7=20+23=
-,6=20=40=40=0D=0A>=20=20=23include=20<linux/slab.h>=0D=0A>=20=20=23include=
-=20<linux/err.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=
-=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/mfd/syscon.h>=0D=0A>=
-=20=20=23include=20<linux/regmap.h>=0D=0A>=20=20=23include=20<linux/delay.h=
->=0D=0A>=20diff=20--git=20a/drivers/watchdog/sama5d4_wdt.c=0D=0A>=20b/drive=
-rs/watchdog/sama5d4_wdt.c=20index=20aeee934ca51b..71e8b5fbf51f=0D=0A>=20100=
-644=0D=0A>=20---=20a/drivers/watchdog/sama5d4_wdt.c=0D=0A>=20+++=20b/driver=
-s/watchdog/sama5d4_wdt.c=0D=0A>=20=40=40=20-11,7=20+11,6=20=40=40=0D=0A>=20=
-=20=23include=20<linux/kernel.h>=0D=0A>=20=20=23include=20<linux/module.h>=
-=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_dev=
-ice.h>=0D=0A>=20=20=23include=20<linux/of_irq.h>=0D=0A>=20=20=23include=20<=
-linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/reboot.h>=0D=0A>=
-=20diff=20--git=20a/drivers/watchdog/sbsa_gwdt.c=20b/drivers/watchdog/sbsa_=
-gwdt.c=0D=0A>=20index=20fd3cfdda4949..421ebcda62e6=20100644=0D=0A>=20---=20=
-a/drivers/watchdog/sbsa_gwdt.c=0D=0A>=20+++=20b/drivers/watchdog/sbsa_gwdt.=
-c=0D=0A>=20=40=40=20-43,10=20+43,9=20=40=40=0D=0A>=20=20=23include=20<linux=
-/io.h>=0D=0A>=20=20=23include=20<linux/io-64-nonatomic-lo-hi.h>=20=20=23inc=
-lude=20<linux/interrupt.h>=0D=0A>=20+=23include=20<linux/mod_devicetable.h>=
-=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/=
-moduleparam.h>=0D=0A>=20-=23include=20<linux/of.h>=0D=0A>=20-=23include=20<=
-linux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A=
->=20=20=23include=20<linux/uaccess.h>=0D=0A>=20=20=23include=20<linux/watch=
-dog.h>=0D=0A>=20diff=20--git=20a/drivers/watchdog/starfive-wdt.c=20b/driver=
-s/watchdog/starfive-wdt.c=0D=0A>=20index=208058fca4d05d..9e6db8e0164f=20100=
-644=0D=0A>=20---=20a/drivers/watchdog/starfive-wdt.c=0D=0A>=20+++=20b/drive=
-rs/watchdog/starfive-wdt.c=0D=0A>=20=40=40=20-8,7=20+8,8=20=40=40=0D=0A>=20=
-=20=23include=20<linux/clk.h>=0D=0A>=20=20=23include=20<linux/iopoll.h>=0D=
+x/slab.h>=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20diff=20--git=20a/d=
+rivers/thermal/mediatek/lvts_thermal.c=0D=0A>=20b/drivers/thermal/mediatek/=
+lvts_thermal.c=0D=0A>=20index=20b693fac2d677..054c965ae5e1=20100644=0D=0A>=
+=20---=20a/drivers/thermal/mediatek/lvts_thermal.c=0D=0A>=20+++=20b/drivers=
+/thermal/mediatek/lvts_thermal.c=0D=0A>=20=40=40=20-13,7=20+13,7=20=40=40=
+=0D=0A>=20=20=23include=20<linux/iopoll.h>=0D=0A>=20=20=23include=20<linux/=
+kernel.h>=0D=0A>=20=20=23include=20<linux/nvmem-consumer.h>=0D=0A>=20-=23in=
+clude=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=
+=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/r=
+eset.h>=0D=0A>=20=20=23include=20<linux/thermal.h>=0D=0A>=20diff=20--git=20=
+a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c=0D=0A>=20b/drivers/thermal/qcom/=
+qcom-spmi-adc-tm5.c=0D=0A>=20index=205ddc39b2be32..756ac6842ff9=20100644=0D=
+=0A>=20---=20a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c=0D=0A>=20+++=20b/dr=
+ivers/thermal/qcom/qcom-spmi-adc-tm5.c=0D=0A>=20=40=40=20-14,7=20+14,6=20=
+=40=40=0D=0A>=20=20=23include=20<linux/interrupt.h>=0D=0A>=20=20=23include=
+=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23incl=
+ude=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h=
+>=0D=0A>=20=20=23include=20<linux/regmap.h>=0D=0A>=20=20=23include=20<linux=
+/thermal.h>=0D=0A>=20diff=20--git=20a/drivers/thermal/qcom/qcom-spmi-temp-a=
+larm.c=0D=0A>=20b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c=0D=0A>=20inde=
+x=200e8ebfcd84c5..78c5cfe6a0c0=20100644=0D=0A>=20---=20a/drivers/thermal/qc=
+om/qcom-spmi-temp-alarm.c=0D=0A>=20+++=20b/drivers/thermal/qcom/qcom-spmi-t=
+emp-alarm.c=0D=0A>=20=40=40=20-10,7=20+10,6=20=40=40=0D=0A>=20=20=23include=
+=20<linux/interrupt.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=
+=20=23include=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=
+=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<=
+linux/regmap.h>=0D=0A>=20=20=23include=20<linux/thermal.h>=0D=0A>=20diff=20=
+--git=20a/drivers/thermal/rcar_gen3_thermal.c=0D=0A>=20b/drivers/thermal/rc=
+ar_gen3_thermal.c=0D=0A>=20index=209029d01e029b..bd2fb8c2e968=20100644=0D=
+=0A>=20---=20a/drivers/thermal/rcar_gen3_thermal.c=0D=0A>=20+++=20b/drivers=
+/thermal/rcar_gen3_thermal.c=0D=0A>=20=40=40=20-11,7=20+11,7=20=40=40=0D=0A=
+>=20=20=23include=20<linux/interrupt.h>=0D=0A>=20=20=23include=20<linux/io.=
+h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20-=23include=20<linux/=
+of_device.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=20=23include=20<=
+linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/pm_runtime.h>=0D=
+=0A>=20=20=23include=20<linux/thermal.h>=0D=0A>=20diff=20--git=20a/drivers/=
+thermal/rcar_thermal.c=20b/drivers/thermal/rcar_thermal.c=0D=0A>=20index=20=
+b8571f7090aa..293f8dd9fe0a=20100644=0D=0A>=20---=20a/drivers/thermal/rcar_t=
+hermal.c=0D=0A>=20+++=20b/drivers/thermal/rcar_thermal.c=0D=0A>=20=40=40=20=
+-11,7=20+11,7=20=40=40=0D=0A>=20=20=23include=20<linux/interrupt.h>=0D=0A>=
+=20=20=23include=20<linux/io.h>=0D=0A>=20=20=23include=20<linux/module.h>=
+=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/o=
+f.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23incl=
+ude=20<linux/pm_runtime.h>=0D=0A>=20=20=23include=20<linux/reboot.h>=0D=0A>=
+=20diff=20--git=20a/drivers/thermal/rzg2l_thermal.c=20b/drivers/thermal/rzg=
+2l_thermal.c=0D=0A>=20index=20b56981f85306..6b2bf3426f52=20100644=0D=0A>=20=
+---=20a/drivers/thermal/rzg2l_thermal.c=0D=0A>=20+++=20b/drivers/thermal/rz=
+g2l_thermal.c=0D=0A>=20=40=40=20-9,8=20+9,8=20=40=40=0D=0A>=20=20=23include=
+=20<linux/io.h>=0D=0A>=20=20=23include=20<linux/iopoll.h>=0D=0A>=20=20=23in=
+clude=20<linux/math.h>=0D=0A>=20+=23include=20<linux/mod_devicetable.h>=0D=
 =0A>=20=20=23include=20<linux/module.h>=0D=0A>=20-=23include=20<linux/of_de=
-vice.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20+=23include=20<linux/p=
-latform_device.h>=0D=0A>=20=20=23include=20<linux/pm_runtime.h>=0D=0A>=20=
-=20=23include=20<linux/reset.h>=0D=0A>=20=20=23include=20<linux/watchdog.h>=
-=0D=0A>=20diff=20--git=20a/drivers/watchdog/stm32_iwdg.c=20b/drivers/watchd=
-og/stm32_iwdg.c=0D=0A>=20index=20570a71509d2a..fa5e70c4b93a=20100644=0D=0A>=
-=20---=20a/drivers/watchdog/stm32_iwdg.c=0D=0A>=20+++=20b/drivers/watchdog/=
-stm32_iwdg.c=0D=0A>=20=40=40=20-17,7=20+17,6=20=40=40=0D=0A>=20=20=23includ=
-e=20<linux/kernel.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=20=
-=23include=20<linux/of.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=
+vice.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23i=
+nclude=20<linux/pm_runtime.h>=0D=0A>=20=20=23include=20<linux/reset.h>=0D=
+=0A>=20diff=20--git=20a/drivers/thermal/samsung/exynos_tmu.c=0D=0A>=20b/dri=
+vers/thermal/samsung/exynos_tmu.c=0D=0A>=20index=2045e5c840d130..58f4d8f7a3=
+fd=20100644=0D=0A>=20---=20a/drivers/thermal/samsung/exynos_tmu.c=0D=0A>=20=
++++=20b/drivers/thermal/samsung/exynos_tmu.c=0D=0A>=20=40=40=20-15,7=20+15,=
+7=20=40=40=0D=0A>=20=20=23include=20<linux/io.h>=0D=0A>=20=20=23include=20<=
+linux/interrupt.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20-=23i=
+nclude=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=
+=20=23include=20<linux/of_address.h>=0D=0A>=20=20=23include=20<linux/of_irq=
+.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20diff=20--gi=
+t=20a/drivers/thermal/sprd_thermal.c=20b/drivers/thermal/sprd_thermal.c=0D=
+=0A>=20index=202fb90fdad76e..e27c4bdc8912=20100644=0D=0A>=20---=20a/drivers=
+/thermal/sprd_thermal.c=0D=0A>=20+++=20b/drivers/thermal/sprd_thermal.c=0D=
+=0A>=20=40=40=20-6,7=20+6,7=20=40=40=0D=0A>=20=20=23include=20<linux/iopoll=
+.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=20=23include=20<lin=
+ux/nvmem-consumer.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=20+=
+=23include=20<linux/of.h>=0D=0A>=20=20=23include=20<linux/platform_device.h=
+>=0D=0A>=20=20=23include=20<linux/slab.h>=0D=0A>=20=20=23include=20<linux/t=
+hermal.h>=0D=0A>=20diff=20--git=20a/drivers/thermal/st/stm_thermal.c=0D=0A>=
+=20b/drivers/thermal/st/stm_thermal.c=0D=0A>=20index=20903fcf1763f1..142a7e=
+5d12f4=20100644=0D=0A>=20---=20a/drivers/thermal/st/stm_thermal.c=0D=0A>=20=
++++=20b/drivers/thermal/st/stm_thermal.c=0D=0A>=20=40=40=20-14,8=20+14,6=20=
+=40=40=0D=0A>=20=20=23include=20<linux/iopoll.h>=0D=0A>=20=20=23include=20<=
+linux/module.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=
+=20<linux/of_address.h>=0D=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=
 =20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<linu=
-x/watchdog.h>=0D=0A>=20=0D=0A>=20diff=20--git=20a/drivers/watchdog/sunxi_wd=
-t.c=20b/drivers/watchdog/sunxi_wdt.c=0D=0A>=20index=206cf82922d3fb..b85354a=
-99582=20100644=0D=0A>=20---=20a/drivers/watchdog/sunxi_wdt.c=0D=0A>=20+++=
-=20b/drivers/watchdog/sunxi_wdt.c=0D=0A>=20=40=40=20-18,7=20+18,6=20=40=40=
-=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/=
-moduleparam.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=
-=20<linux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=
-=0D=0A>=20=20=23include=20<linux/types.h>=0D=0A>=20=20=23include=20<linux/w=
-atchdog.h>=0D=0A>=20diff=20--git=20a/drivers/watchdog/xilinx_wwdt.c=20b/dri=
-vers/watchdog/xilinx_wwdt.c=0D=0A>=20index=202585038d5575..1d998db41533=201=
-00644=0D=0A>=20---=20a/drivers/watchdog/xilinx_wwdt.c=0D=0A>=20+++=20b/driv=
-ers/watchdog/xilinx_wwdt.c=0D=0A>=20=40=40=20-9,9=20+9,9=20=40=40=0D=0A>=20=
-=20=23include=20<linux/interrupt.h>=0D=0A>=20=20=23include=20<linux/io.h>=
-=0D=0A>=20=20=23include=20<linux/ioport.h>=0D=0A>=20+=23include=20<linux/mo=
-d_devicetable.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20-=23inc=
-lude=20<linux/of_device.h>=0D=0A>=20-=23include=20<linux/of_address.h>=0D=
-=0A>=20+=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<li=
-nux/watchdog.h>=0D=0A>=20=0D=0A>=20=20/*=20Max=20timeout=20is=20calculated=
-=20at=20100MHz=20source=20clock=20*/=0D=0A>=20--=0D=0A>=202.40.1=0D=0A=0D=
-=0A=0D=0A
+x/thermal.h>=0D=0A>=20=0D=0A>=20diff=20--git=20a/drivers/thermal/sun8i_ther=
+mal.c=20b/drivers/thermal/sun8i_thermal.c=0D=0A>=20index=20195f3c5d0b38..cc=
+a16d632d9f=20100644=0D=0A>=20---=20a/drivers/thermal/sun8i_thermal.c=0D=0A>=
+=20+++=20b/drivers/thermal/sun8i_thermal.c=0D=0A>=20=40=40=20-14,7=20+14,7=
+=20=40=40=0D=0A>=20=20=23include=20<linux/interrupt.h>=0D=0A>=20=20=23inclu=
+de=20<linux/module.h>=0D=0A>=20=20=23include=20<linux/nvmem-consumer.h>=0D=
+=0A>=20-=23include=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/of.h=
+>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=
+=20<linux/regmap.h>=0D=0A>=20=20=23include=20<linux/reset.h>=0D=0A>=20diff=
+=20--git=20a/drivers/thermal/tegra/tegra30-tsensor.c=0D=0A>=20b/drivers/the=
+rmal/tegra/tegra30-tsensor.c=0D=0A>=20index=20c243e9d76d3c..d911fa60f100=20=
+100644=0D=0A>=20---=20a/drivers/thermal/tegra/tegra30-tsensor.c=0D=0A>=20++=
++=20b/drivers/thermal/tegra/tegra30-tsensor.c=0D=0A>=20=40=40=20-18,7=20+18=
+,7=20=40=40=0D=0A>=20=20=23include=20<linux/iopoll.h>=0D=0A>=20=20=23includ=
+e=20<linux/math.h>=0D=0A>=20=20=23include=20<linux/module.h>=0D=0A>=20-=23i=
+nclude=20<linux/of_device.h>=0D=0A>=20+=23include=20<linux/of.h>=0D=0A>=20=
+=20=23include=20<linux/platform_device.h>=0D=0A>=20=20=23include=20<linux/p=
+m.h>=0D=0A>=20=20=23include=20<linux/reset.h>=0D=0A>=20diff=20--git=20a/dri=
+vers/thermal/thermal_of.c=20b/drivers/thermal/thermal_of.c=20index=0D=0A>=
+=206fb14e521197..c36c7d235cba=20100644=0D=0A>=20---=20a/drivers/thermal/the=
+rmal_of.c=0D=0A>=20+++=20b/drivers/thermal/thermal_of.c=0D=0A>=20=40=40=20-=
+10,8=20+10,7=20=40=40=0D=0A>=20=0D=0A>=20=20=23include=20<linux/err.h>=0D=
+=0A>=20=20=23include=20<linux/export.h>=0D=0A>=20-=23include=20<linux/of_de=
+vice.h>=0D=0A>=20-=23include=20<linux/of_platform.h>=0D=0A>=20+=23include=
+=20<linux/of.h>=0D=0A>=20=20=23include=20<linux/slab.h>=0D=0A>=20=20=23incl=
+ude=20<linux/thermal.h>=0D=0A>=20=20=23include=20<linux/types.h>=0D=0A>=20d=
+iff=20--git=20a/drivers/thermal/uniphier_thermal.c=0D=0A>=20b/drivers/therm=
+al/uniphier_thermal.c=0D=0A>=20index=20aef6119cc004..6f32ab61d174=20100644=
+=0D=0A>=20---=20a/drivers/thermal/uniphier_thermal.c=0D=0A>=20+++=20b/drive=
+rs/thermal/uniphier_thermal.c=0D=0A>=20=40=40=20-12,7=20+12,6=20=40=40=0D=
+=0A>=20=20=23include=20<linux/mfd/syscon.h>=0D=0A>=20=20=23include=20<linux=
+/module.h>=0D=0A>=20=20=23include=20<linux/of.h>=0D=0A>=20-=23include=20<li=
+nux/of_device.h>=0D=0A>=20=20=23include=20<linux/platform_device.h>=0D=0A>=
+=20=20=23include=20<linux/regmap.h>=0D=0A>=20=20=23include=20<linux/thermal=
+.h>=0D=0A>=20--=0D=0A>=202.40.1=0D=0A=0D=0A=0D=0A
