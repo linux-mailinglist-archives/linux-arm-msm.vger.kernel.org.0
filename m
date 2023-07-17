@@ -2,70 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D35C7569B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 18:56:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 919C57569DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 19:12:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbjGQQ4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 12:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56702 "EHLO
+        id S229889AbjGQRMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 13:12:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbjGQQ4j (ORCPT
+        with ESMTP id S229579AbjGQRLj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 12:56:39 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 062FDE9;
-        Mon, 17 Jul 2023 09:56:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1689612995; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=NihYKa8b35sBjXFgjiTWayBpJFu/UIUP4gKrbVhGRAKFa8EMrhSTEypcss8nCPKXh4
-    fewnNPMnkT+SdYLxAcfbQmwIxnXs2+KclDuin3rrSTJxcrDEdcGbV9c8rkoIofNAwsF1
-    Ud6ohfP1rRsbpIqcMJH2GvQjGQJQZ3d0ymk8vgOeYWcaR/Z3UbdZlCAtwCXQHDwJgaMN
-    55djRGbWrC6F0LQ1W1mDa6VE36aFRHqto4pLce2R6PEsqLaEbjn590Rqq/g0lkRPvxgk
-    TdNRtG1hlAqWA1CHZHUcrQTWCMcEReKt2CUyb8GhQwdPPn3Wbar2ooeplcE7NJB0+8Hw
-    gp/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1689612995;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=2NGVNJk9WYrSe/K1zOjn61fuTdMMU3BdhSf06SpeD3A=;
-    b=QSF+yzdPeMDsOUTlN3jpTYGLL3j5DErZufjySU+0fcamWSRDSx66NgRlnVXMMb+8Ns
-    S5vcX+moVp7pPZt0TKFuPGYW1/x2KnrPJwM9It1YIwjyEhZ3R42SeGmEw8IrXBXKeGSY
-    DI/0pbH2x5NpYstoAfFY5D0RmfpFD88+EVV+mkew1fv1LB5c1GbzCdkDsfUQKMWePJCS
-    NxERtSuX/5gavk+r2nzytLbhaRepQoDmQY1UPdA8IKOVRYvv0E2JYDPNgec0yDGgLdLB
-    CfXetdE7IbbrgRDo/Q5iXckQT1Dak/5Uwoc4K7t1IK4IgkccoBp/Y0nkLhp/M0c1wBlL
-    WvVw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1689612995;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=2NGVNJk9WYrSe/K1zOjn61fuTdMMU3BdhSf06SpeD3A=;
-    b=WZSXa/GbfsAM+H85eIiJPOnNj5v2CnkiZNdKE8i3y7yQqXiWwCguEMoiuoZ8c3s1Gi
-    U0U8fcigIxpOTgmBp2s6OvNZw3WzRBSmkHNekE3Bx++rjnkdTuW8mJz7QrnpwJ7MmQrb
-    0Usz/hPNT4TnBiBC2Wg3lw9VGUWYcDadS9pzr2zQRN8djcgw53BCxcxb/tbFHUouOq9P
-    slszsJZuVWR0gHzZr+HKyvedpptz1JS+05WbujyXJ051cUg9R6ZcQqNmW9DZ2ve4leRv
-    Nbl+ui3zjupbbdhRwUGhKAINhFWaEUAeV2tL5BWFVA9o/luyG8mEnXgj//L+YYmfax99
-    AH7g==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1689612995;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=2NGVNJk9WYrSe/K1zOjn61fuTdMMU3BdhSf06SpeD3A=;
-    b=ynQLNcM37QkX8hcOgESam8ciabA0T3kpst83IYHkK5sRMeV1cmqwkv0joiwEWj3KDN
-    rIlH3HMFPAf1uEJEwsDQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z2L1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
-    with ESMTPSA id D0d0a8z6HGuYZEo
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 17 Jul 2023 18:56:34 +0200 (CEST)
-Date:   Mon, 17 Jul 2023 18:56:28 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+        Mon, 17 Jul 2023 13:11:39 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8616EA4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 10:11:37 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b741cf99f8so71435441fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 10:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689613896; x=1692205896;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PdUy8GMTrWucV9wCoA87XadPmnzE11dEz/NCrV18J1Y=;
+        b=dJbijU/dso944TXJCQtlOA2upkp4Btsdngl31G428/moDy7XklV0Tmw5Z4DdWJuyH3
+         8pWgnV1M3XhLgfGmo3e0PEwUN6LsTcNgpuOrt0aCJpK6EmgtPR1KyPEv+9gvRm4mZ4rk
+         PZlCJ+ylonx6GqP9124mrD+ROyYHvEOrr9YiMpkEty4b4np4LzfGlEi0pa/b3zlf3BsG
+         J9BSLtmommkdEIMl6oLA/QJ+Sb74YGbyRDexOSL2m+GSoumPwd94ALZq7qmy4o7g3uS1
+         UFXJiF4OrrI/caD88uKrWdPvunjIRkZ0liM++9sHMudXjl32qjQ3MH79CKsLaoz5ONmz
+         w9Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689613896; x=1692205896;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PdUy8GMTrWucV9wCoA87XadPmnzE11dEz/NCrV18J1Y=;
+        b=h6SbrrlSUBrGyfy8ZIr/Swq8lRShvQtTqKNJmzNjBOkRbcvfsqVONFvAGfGIPlJd24
+         PdwYcpRq3j6yd/PfekNJYmFLhGLtORBv+eFh1QYdpGg1OvG0/Jh3o2tzlWFyhCOnA2X/
+         Rs2YsLv/j91KJfqPT5Tnw/JA6AWl1jMZmsKsffjGrcvPAtlBQQwo4JpnyDMyB5Smqzbl
+         mQcgIbcCepZPRSnmMnUVYoucw4S+cw2Du5NZvBKJ0wY/AqdgWEsAd6YstIMa5WsnmpDU
+         Ps/afi/+wBvQees2eqmTot3oZTmS0+V2HM0Vz8oCGu+2jX9jWD1XfXBJ++sgpRDkrO0u
+         Ephg==
+X-Gm-Message-State: ABy/qLYoVAZIhKZOsPsZq71Fa7fBuuGjeXsWzFTowgpkpDJa6HyE6s+8
+        ZsR0NjIdXAYVw4C1r+MX37b7lQ==
+X-Google-Smtp-Source: APBJJlFjLae5XLO90WMwuCjsT5AeiwDRBCFEcMfuu3f7z5JblyEioCWHbbcrKv1U59DGlGuSj9ETwQ==
+X-Received: by 2002:a2e:a410:0:b0:2b6:e7ce:4e7d with SMTP id p16-20020a2ea410000000b002b6e7ce4e7dmr8725246ljn.43.1689613895792;
+        Mon, 17 Jul 2023 10:11:35 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id a23-20020a05651c011700b002b94805a043sm452ljb.138.2023.07.17.10.11.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jul 2023 10:11:35 -0700 (PDT)
+Message-ID: <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
+Date:   Mon, 17 Jul 2023 19:11:33 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -76,20 +68,18 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
-Message-ID: <ZLVyvHnKPdOfqAck@gerhold.net>
 References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
  <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
  <ZLVsN40kYsvQm1z6@gerhold.net>
  <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
+ <ZLVyvHnKPdOfqAck@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ZLVyvHnKPdOfqAck@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,37 +87,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
-> On 17.07.2023 18:28, Stephan Gerhold wrote:
-> > On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
-> >> The GPU_CC block is powered by VDD_CX. Describe that.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
-> >>  1 file changed, 2 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> >> index 29b5b388cd94..bfaaa1801a4d 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> >> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
-> >>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> >>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-> >>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-> >> +			power-domains = <&rpmpd SM6115_VDDCX>;
-> >> +			required-opps = <&rpmpd_opp_low_svs>;
-> > 
-> > Where is this required-opp coming from? The clocks in gpucc seem to have
-> > different voltage requirements depending on the rates, but we usually
-> > handle that in the OPP tables of the consumer.
-> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
-> but quite obviously the GPU won't work then
+On 17.07.2023 18:56, Stephan Gerhold wrote:
+> On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
+>> On 17.07.2023 18:28, Stephan Gerhold wrote:
+>>> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
+>>>> The GPU_CC block is powered by VDD_CX. Describe that.
+>>>>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
+>>>>  1 file changed, 2 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>> index 29b5b388cd94..bfaaa1801a4d 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
+>>>>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+>>>>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+>>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+>>>> +			power-domains = <&rpmpd SM6115_VDDCX>;
+>>>> +			required-opps = <&rpmpd_opp_low_svs>;
+>>>
+>>> Where is this required-opp coming from? The clocks in gpucc seem to have
+>>> different voltage requirements depending on the rates, but we usually
+>>> handle that in the OPP tables of the consumer.
+>> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
+>> but quite obviously the GPU won't work then
+>>
 > 
+> The levels needed for the GPU clocks to run should be in the GPU OPP
+> table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
+> 
+> I still don't really understand why this is specified here. :)
+The GPU_CC block needs this rail to be at a certain power level for
+register access. This describes that requirement.
 
-The levels needed for the GPU clocks to run should be in the GPU OPP
-table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
-
-I still don't really understand why this is specified here. :)
-
-Stephan
+Konrad
