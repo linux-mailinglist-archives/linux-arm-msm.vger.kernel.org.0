@@ -2,160 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09E7D755ED8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 11:00:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8ADA175607A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 12:33:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbjGQJAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 05:00:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55916 "EHLO
+        id S229555AbjGQKda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 06:33:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbjGQJAI (ORCPT
+        with ESMTP id S229758AbjGQKd2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 05:00:08 -0400
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D704A1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 02:00:06 -0700 (PDT)
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 6CDA23F205
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 09:00:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1689584402;
-        bh=JHnHS0B61qcl/Td8/lm9RDjYsfSOyiiTTr5PsC3FWaA=;
-        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-         To:Cc:Content-Type;
-        b=ockpJlLya6ruB5nEaqfl5Logp3ybkSSgHV3wx5dRBSWwvJIo+ZwuH3Xt8Y7zRPiRn
-         AL5FuI9uOEy4GRL2ptZcV42uirupLZqmj6i4MxRTMXmFun/TPqfExRTLLBBAx/thHM
-         8jPKpi/z0BGZ1L06w4dAJehzjlFk64XMG93CXSgRcWiBpweQXKCR5a+07NxTyOx7Do
-         bH4Fsk2AUTG6QYzkrGEKiFi4pua3VmUbvd+6we/M8QqFpv2tnrFKUCyevk0qFZVBDU
-         w7R2uwpz2ULmGAqHnTofUIU6Ml7rgUEVYJJpIazmqTGhorOCz/OJR81FxwhcHuhgSu
-         JGPV/ZfHNl8Qw==
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-76783ba6d62so491211985a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 02:00:02 -0700 (PDT)
+        Mon, 17 Jul 2023 06:33:28 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45EAB1995
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 03:33:05 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1b852785a65so26391505ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 03:33:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689589972; x=1692181972;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YCtIw1yZ3S2uUrUX8jf3/pYkWYgNAeFdvtX0Nwm6tRo=;
+        b=OVWFBoF7A4dbxIPSQS7A1fxbtHnOZJRoHJIPdv1OcQ7EGWBfjaATm7M6LnJRf9qrZo
+         9m03NDmVfE32AcCBPT2CSgNAl4pi8/DjaM0PbQJ55V6/mZF3oolqlmu7Cg7PMI2dZhUQ
+         QuJfj9uh+bGZfUSsdGi62pEipBguS/GDj0TumMdEg0bAzSa0LK5gw5Wxx0f/hRfikqq+
+         rTvJMGxElz7BAq24EjEO0dGaE4UA82gY55w+q1hI5iWoGnQvvoALAXlNryaVUN8IY2Cy
+         Pqe/ARcsPThUmRdY2l+XqKIdBzUmeFyeit5nfhMDQSzJt1TpApKLpaGnXJQikqQR7YWT
+         Gqwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689584401; x=1692176401;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1689589972; x=1692181972;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JHnHS0B61qcl/Td8/lm9RDjYsfSOyiiTTr5PsC3FWaA=;
-        b=TEIPo0HtOyAyfEoQGnMk4pXg+ewHIeDIgDldees/XLmSya8VF/iFTL5D1m8SVmWV/M
-         8TMG/GEjCn2bOl6kD2ln9TMXnJDmeCB9PSNE+YYg25OSiNhxnkIvbO30Yqhxo0qQqjKH
-         1o7//IkjpUV8LgAddnL+GbD4cw3fXFiZLc2bkiwqc++olWziGlTZIJIGKkLk7A8qyPHc
-         5HXBvu5ZLuTN2Y1X4c0HBrRWuAm2LEbWA7KHBAmRr4e37DKOxTrqNNRPK/xbnmDcjFCT
-         JBHWS8w4kcg0dvYXjiV7v0+6tAIdNQpIV74teWTpmUb6tYLEdFXVaaBuM8hvhUSM4H0e
-         91bg==
-X-Gm-Message-State: ABy/qLbwgNYDxn70TAyxfO1+7D8A8Et+Qt35yGiPoXZGROACiYLOtZ6O
-        nAm/XYzyP3YViLsGWcca+PnAwqNx2K3F8RAcpnsWGuXYmgUph5I0cVFn6lGsjqmyb9w0ar3xvRs
-        2v25qq/4oSUUmqcz2s7weIsU1AeEMVy9JFJrVfp6EzmWsI9cudLvYzJkrH88=
-X-Received: by 2002:ac8:7c48:0:b0:403:2dfd:1fdf with SMTP id o8-20020ac87c48000000b004032dfd1fdfmr15892537qtv.23.1689584401483;
-        Mon, 17 Jul 2023 02:00:01 -0700 (PDT)
-X-Google-Smtp-Source: APBJJlEMazgMYki8IR1CHHFS4st+/s+/y1hah0oj0+nBQlO+NhXDM06BTdCzgvWJM4HcjDSd4KVriXj5Pmlo8MNpIrE=
-X-Received: by 2002:ac8:7c48:0:b0:403:2dfd:1fdf with SMTP id
- o8-20020ac87c48000000b004032dfd1fdfmr15892526qtv.23.1689584401259; Mon, 17
- Jul 2023 02:00:01 -0700 (PDT)
+        bh=YCtIw1yZ3S2uUrUX8jf3/pYkWYgNAeFdvtX0Nwm6tRo=;
+        b=gnPoFRphUnPqVQ+CmXNtpN4tkAVCocWr/25nmqg9xJw1OUy2BcGdTey3KMMVyt+EAP
+         6rayYD+92U2y70NoYDs0a5rABfyfsTEANvDAaRx1scOiHdiXmpmv4Z7GhDGppo8tgS6x
+         RZa7lAJ0XyJGZh9s/KTtIKmmY+xfNUXgHkUF1CBBgUI2SVcsGr70WYTj9sNiLBI+7RsA
+         ebGfRLH0qud39vZQ57FMXZvhfYxvfUUM5hXE3yaFd4vJCaNGEBma2nfe1tUxkosbcRH4
+         xIfgWfMswy9Wbq17Yb9K1AiqLaj3H3rhFDEfDEXaVK30ACT6NzytRvhnFAPyShl8oIiY
+         TIcw==
+X-Gm-Message-State: ABy/qLbTA4psoKmEGvyqSSYpXxG7qtg2aXzd6VZksBla0SB4THlZ1us/
+        h4O4huOO1rKWFnxZi89cb+2tRll9vHJUtmQ1bxXddg==
+X-Google-Smtp-Source: APBJJlHCIWVJTmsD5TJGSYmWrvdcLnycU/tHpgHLD9MTYD3N8SqyjfjRT9Uly8B6k60jq2IJlgVzpA==
+X-Received: by 2002:a17:902:dac2:b0:1b6:a37a:65b7 with SMTP id q2-20020a170902dac200b001b6a37a65b7mr12828808plx.23.1689589972362;
+        Mon, 17 Jul 2023 03:32:52 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.68.54])
+        by smtp.gmail.com with ESMTPSA id ij9-20020a170902ab4900b001b9de67285dsm12633616plb.156.2023.07.17.03.32.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Jul 2023 03:32:52 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
+        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org
+Subject: [PATCH v8 0/4] Add Qualcomm SM6115 / SM4250 EUD dt-bindings & driver support
+Date:   Mon, 17 Jul 2023 16:02:32 +0530
+Message-Id: <20230717103236.1246771-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <20230714174901.4062397-1-robh@kernel.org>
-In-Reply-To: <20230714174901.4062397-1-robh@kernel.org>
-From:   Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Date:   Mon, 17 Jul 2023 10:59:45 +0200
-Message-ID: <CAJM55Z_Eba-LKxKAH0i0_vDM6JO_HvWgDLCLFQDave2+UFLMzA@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: Explicitly include correct DT includes
-To:     Rob Herring <robh@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sean Wang <sean.wang@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Chester Lin <clin@suse.com>, NXP S32 Linux Team <s32@nxp.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Damien Le Moal <dlemoal@kernel.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Daniel Mack <daniel@zonque.org>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Jianlong Huang <jianlong.huang@starfivetech.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Dvorkin Dmitry <dvorkin@tibbo.com>,
-        Wells Lu <wellslutw@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-riscv@lists.infradead.org,
-        linux-oxnas@groups.io, linux-rockchip@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 14 Jul 2023 at 19:52, Rob Herring <robh@kernel.org> wrote:
->
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
+Changes since v6/v7:
+-------------------
+- v6 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230517211756.2483552-1-bhupesh.sharma@linaro.org/
+- Konrad and Krzysztof had different suggestions on how to tackle
+  different SoCs inside the eud driver which require access to secure mode
+  manager register space. While Konrad's suggestion was to use a dt property,
+  other comments suggested using optional platform data for determining
+  the same. Modified [PATCH 2/4] accordingly to use the optional
+  platform data for now.
+- Added Krzysztof's RB for [PATCH 1/4] and also addressed his review comments
+  received on v5.
+- Dropped eud cleanup patches (which were sent a v7) as they have been accepted in linux-next.
+- Rebased on latest linux-next/master.
 
->  drivers/pinctrl/starfive/pinctrl-starfive-jh7110-aon.c | 5 +----
->  drivers/pinctrl/starfive/pinctrl-starfive-jh7110-sys.c | 2 --
->  drivers/pinctrl/starfive/pinctrl-starfive-jh7110.c     | 1 -
+Changes since v5:
+----------------
+- v5 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230516213308.2432018-1-bhupesh.sharma@linaro.org/
+- Addressed Mani's comment and added Fixes tag for [PATCH 1/6].
+  Also collected his Ack for this patch.
+- Fixed [PATCH 4/6] as per Greg's comments and added a separate patch
+  for identation issues -> [PATCH 3/6].
 
-Acked-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Changes since v4:
+----------------
+- v4 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230505064039.1630025-1-bhupesh.sharma@linaro.org/
+- Addressed Konrad's review comments regarding EUD driver code.
+- Also collected his R-B for [PATCH 4/5 and 5/5].
+- Fixed the dt-bindings as per Krzysztof's comments.
 
-Thanks,
-/Emil
+Changes since v3:
+----------------
+- v3 can be viewed here: https://www.spinics.net/lists/linux-arm-msm/msg137025.html 
+- Addressed Konrad's review comments regarding mainly the driver code.
+  Also fixed the .dtsi as per his comments.
+- Also collected his R-B for [PATCH 1/5].
+
+Changes since v2:
+----------------
+- v2 can be viewed here: https://www.spinics.net/lists/linux-arm-msm/msg137025.html 
+- Addressed Bjorn and Krzysztof's comments.
+- Added [PATCH 1/5] which fixes the 'qcom_eud' sysfs path. 
+- Added [PATCH 5/5] to enable EUD for Qualcomm QRB4210-RB2 boards.
+
+Changes since v1:
+----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221231130743.3285664-1-bhupesh.sharma@linaro.org
+- Added Krzysztof in Cc list.
+- Fixed the following issue reported by kernel test bot:
+  >> ERROR: modpost: "qcom_scm_io_writel" [drivers/usb/misc/qcom_eud.ko] undefined!
+
+This series adds the dt-binding and driver support for SM6115 / SM4250
+EUD (Embedded USB Debugger) block available on Qualcomm SoCs.
+
+It also enables the same for QRB4210-RB2 boards by default (the user
+still needs to enable the same via sysfs).
+
+The EUD is a mini-USB hub implemented on chip to support the USB-based debug
+and trace capabilities.
+
+EUD driver listens to events like USB attach or detach and then
+informs the USB about these events via ROLE-SWITCH.
+
+Bhupesh Sharma (4):
+  dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 support
+  usb: misc: eud: Add driver support for SM6115 / SM4250
+  arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector
+  arm64: dts: qcom: qrb4210-rb2: Enable EUD debug peripheral
+
+ .../bindings/soc/qcom/qcom,eud.yaml           | 42 ++++++++++++-
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 27 +++++++-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 50 +++++++++++++++
+ drivers/usb/misc/Kconfig                      |  2 +-
+ drivers/usb/misc/qcom_eud.c                   | 62 +++++++++++++++++--
+ 5 files changed, 173 insertions(+), 10 deletions(-)
+
+-- 
+2.38.1
+
