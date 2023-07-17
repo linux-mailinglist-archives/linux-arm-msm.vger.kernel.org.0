@@ -2,144 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B182B756A1B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 19:23:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A629756AEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 19:46:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjGQRXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 13:23:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40298 "EHLO
+        id S231193AbjGQRq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 13:46:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbjGQRXg (ORCPT
+        with ESMTP id S229940AbjGQRq4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 13:23:36 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81917132;
-        Mon, 17 Jul 2023 10:23:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1689614610; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=lxSdN8cZdv75dHwPIwsc9WJ3RtB/RYH/eh9NW9nNJcn0kZtuFHvAYXDhkhaP2mr231
-    l/ke1FVGOFaFyeiqfqm7YhqAvKyBT3dMyTq+OR7LP+PT8qmkh0mWGNWHy3HVkGxd4iSv
-    2K76q+qsvJMi1rp4yFJzPcTA0ErrPNZHvXiJfMfwmKWdy3KyMGmGFjCZ8O6w1CHWwZLY
-    4ovG5nnSe5sjTHqEt0HDR29IoKhIVaFs5cQYS9lNlYTvvB2v/TEhdc9qA4LpcMINVNVr
-    H66zN+c9KdTOerZlklfJURRVXFCRaJs3P7ux2att6pDfswIdkLMelB/e6wdiGtQ05SKl
-    lPrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1689614610;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=6YvT8KyFmk2blzole/o44X9tAPFi2f8x7nEQPBe055U=;
-    b=iPM4ahBfm0rRT1zkckGkmSqjhNKDU2+nrUGg82BuKLzlAMqRoEb5j1i/EjgXWFBwU0
-    5CGnenYzRhqVlw3zDPkxUNLKLBImhXi5dhmzw7JOzgHCNtePyQSoq5EtveTLEAQ4cCzd
-    kKM9Ja4nRV4ixBqM8VtBKNMQBtAbnxFaxxLwyPPE2GSbWBPuFEmnWncTi/F0UOS5xNDw
-    cT42/T7Z/ftQ7LevtIMjTRjC1iBCSONvBdJFz7KGPuKK5iwIgWeR840lDuh1IWQhKsxi
-    0mZGBz7jogLwjjXJKb43OS7A/la+LeLe2+L90lT3xJccpGD7ieZlBJuOOMoYgnW0wAyu
-    oFLw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1689614610;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=6YvT8KyFmk2blzole/o44X9tAPFi2f8x7nEQPBe055U=;
-    b=CtVpT3fUBk2QRNtTvvUIfT7qVpvQymTDKDjUIIrDeJ3thZRK7MPp8jV9TPU/vTeXSQ
-    OJfYKOvpKkM885G1gJ9TClFF28BitGRYFB8nih6EEWGYquUKheAL8pzTmjBoJXPhlq9c
-    jiw61w1j7TpCrL38XnyMlGhP6A0oufYWl3ZKHlXiSUQ6lafHFfI9G0wVHPhLbLEZFay9
-    YEaX8K71oyTjwpeZV/Yafat+k12UoNxcM4/o+S5L8XjuCl6MNxLq3gbgt+MhR14vEP5V
-    +4lTC7w5oMake8rKjCyk1TITziRkHdVb53vQsRaCVnAHYfqAcm/I9LeD5cDXrVb+C+F1
-    +REg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1689614610;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=6YvT8KyFmk2blzole/o44X9tAPFi2f8x7nEQPBe055U=;
-    b=chN/WRxqZZAL1nKWT1fAdt+14nG/D71KEpm/G5wxEw8747CbPPmBwMDU/h3K+0Qqkr
-    ZgDmGWVuhsHM1hv0yRDQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z2L1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
-    with ESMTPSA id D0d0a8z6HHNTZHI
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 17 Jul 2023 19:23:29 +0200 (CEST)
-Date:   Mon, 17 Jul 2023 19:23:22 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
-Message-ID: <ZLV5CirE8CZfCjkX@gerhold.net>
-References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
- <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
- <ZLVsN40kYsvQm1z6@gerhold.net>
- <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
- <ZLVyvHnKPdOfqAck@gerhold.net>
- <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
+        Mon, 17 Jul 2023 13:46:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAA70189;
+        Mon, 17 Jul 2023 10:46:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F146611A5;
+        Mon, 17 Jul 2023 17:46:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCE7C433CB;
+        Mon, 17 Jul 2023 17:46:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689616014;
+        bh=aTPuf0Zd8OpbwoKQZ65jJYeSg9DTodI+njCE2/27PY8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=fBMcwhUNcM0V4autvJVgcKQnhFbO7brLAEesnhEzKxTvyYBZsqjwc+cojOZv8v9UC
+         C1fFtr+snZnoCQBuIjCC+uqbL1txzClbWIi6/Eqa6m+4RGip54iRnMoz47f6udL2oG
+         QgKwwUVcwaxROldmVq5NNT3ndThlYFno/GItwYo30sXRqpZ3vtfi8rmQeHUZPSZsw8
+         nBomaa0tVX346pR41e0rqob0iI2Yo27n4Om1YAlYa9235UCWZuLT6xOi/p3K5HKm5U
+         yiAaqVLPCkUZKmnHgR84LUxhUnkrP+Q15V/RcRNk1rR8kEkcW0/GgWyopYhnj8btQ/
+         HW5N4J95bcJrg==
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-992b27e1c55so627045266b.2;
+        Mon, 17 Jul 2023 10:46:54 -0700 (PDT)
+X-Gm-Message-State: ABy/qLYHsdcjkilx0BN7/t1n4Ml1FGgPfUozaQr7DJMRdOQG1eYr+Xez
+        pIFJhaGijYNxuSNKXyBT+K794cSdGc3vqW3RdQ==
+X-Google-Smtp-Source: APBJJlEaii1O/P4FM3AIiFrxrm+c2/2j2dMof6/ew372YwZ9YuuOJ20F60zHYXA1FfdAlxaKv4uhiryEoY4fwMAMSwI=
+X-Received: by 2002:a2e:7a1a:0:b0:2b5:bc27:d6eb with SMTP id
+ v26-20020a2e7a1a000000b002b5bc27d6ebmr8861286ljc.8.1689615991907; Mon, 17 Jul
+ 2023 10:46:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <20230714174745.4060260-1-robh@kernel.org>
+In-Reply-To: <20230714174745.4060260-1-robh@kernel.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Mon, 17 Jul 2023 11:46:19 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+H5jcTfuAdE=XvcWP+Td3xn9hdq1QA3HKouPJDaedwYg@mail.gmail.com>
+Message-ID: <CAL_Jsq+H5jcTfuAdE=XvcWP+Td3xn9hdq1QA3HKouPJDaedwYg@mail.gmail.com>
+Subject: Re: [PATCH] mmc: Explicitly include correct DT includes
+To:     Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Robert Richter <rric@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michal Simek <michal.simek@amd.com>,
+        Eugen Hristev <eugen.hristev@collabora.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Ben Dooks <ben-linux@fluff.org>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        linux-actions@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 17, 2023 at 07:11:33PM +0200, Konrad Dybcio wrote:
-> On 17.07.2023 18:56, Stephan Gerhold wrote:
-> > On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
-> >> On 17.07.2023 18:28, Stephan Gerhold wrote:
-> >>> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
-> >>>> The GPU_CC block is powered by VDD_CX. Describe that.
-> >>>>
-> >>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>>> ---
-> >>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
-> >>>>  1 file changed, 2 insertions(+)
-> >>>>
-> >>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> >>>> index 29b5b388cd94..bfaaa1801a4d 100644
-> >>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> >>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> >>>> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
-> >>>>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> >>>>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-> >>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-> >>>> +			power-domains = <&rpmpd SM6115_VDDCX>;
-> >>>> +			required-opps = <&rpmpd_opp_low_svs>;
-> >>>
-> >>> Where is this required-opp coming from? The clocks in gpucc seem to have
-> >>> different voltage requirements depending on the rates, but we usually
-> >>> handle that in the OPP tables of the consumer.
-> >> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
-> >> but quite obviously the GPU won't work then
-> >>
-> > 
-> > The levels needed for the GPU clocks to run should be in the GPU OPP
-> > table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
-> > 
-> > I still don't really understand why this is specified here. :)
-> The GPU_CC block needs this rail to be at a certain power level for
-> register access. This describes that requirement.
-> 
+On Fri, Jul 14, 2023 at 11:48=E2=80=AFAM Rob Herring <robh@kernel.org> wrot=
+e:
+>
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  drivers/mmc/host/atmel-mci.c                  | 1 -
+>  drivers/mmc/host/cavium-octeon.c              | 2 ++
+>  drivers/mmc/host/cavium-thunderx.c            | 1 +
+>  drivers/mmc/host/davinci_mmc.c                | 1 -
+>  drivers/mmc/host/meson-gx-mmc.c               | 2 +-
+>  drivers/mmc/host/mtk-sd.c                     | 4 +---
+>  drivers/mmc/host/mxcmmc.c                     | 1 -
+>  drivers/mmc/host/mxs-mmc.c                    | 1 -
+>  drivers/mmc/host/owl-mmc.c                    | 3 ++-
+>  drivers/mmc/host/pxamci.c                     | 1 -
+>  drivers/mmc/host/renesas_sdhi_internal_dmac.c | 3 ++-
+>  drivers/mmc/host/renesas_sdhi_sys_dmac.c      | 3 ++-
+>  drivers/mmc/host/sdhci-bcm-kona.c             | 1 -
+>  drivers/mmc/host/sdhci-cadence.c              | 2 +-
+>  drivers/mmc/host/sdhci-esdhc-imx.c            | 2 +-
+>  drivers/mmc/host/sdhci-iproc.c                | 2 +-
+>  drivers/mmc/host/sdhci-msm.c                  | 2 +-
+>  drivers/mmc/host/sdhci-of-arasan.c            | 3 ++-
 
-Can you show where this is defined downstream? On a quick look I didn't
-see something like that anywhere. Or is this from some secret
-documentation?
+Not visible in the diff, but there's a double include of of.h. v2 coming.
 
-Thanks,
-Stephan
+>  drivers/mmc/host/sdhci-of-at91.c              | 2 +-
+>  drivers/mmc/host/sdhci-of-dwcmshc.c           | 2 +-
+>  drivers/mmc/host/sdhci-of-sparx5.c            | 2 +-
+>  drivers/mmc/host/sdhci-omap.c                 | 1 -
+>  drivers/mmc/host/sdhci-pxav2.c                | 1 -
+>  drivers/mmc/host/sdhci-s3c.c                  | 1 -
+>  drivers/mmc/host/sdhci-sprd.c                 | 1 -
+>  drivers/mmc/host/sdhci-tegra.c                | 1 -
+>  drivers/mmc/host/sh_mmcif.c                   | 1 -
+>  drivers/mmc/host/uniphier-sd.c                | 1 -
+>  drivers/mmc/host/wmt-sdmmc.c                  | 1 -
+>  29 files changed, 20 insertions(+), 29 deletions(-)
