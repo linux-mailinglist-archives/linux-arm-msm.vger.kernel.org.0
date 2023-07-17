@@ -2,261 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB697756E6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 22:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6006F756E7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 22:41:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230357AbjGQUig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 16:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37618 "EHLO
+        id S229796AbjGQUlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 16:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbjGQUig (ORCPT
+        with ESMTP id S229970AbjGQUle (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 16:38:36 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9521A191;
-        Mon, 17 Jul 2023 13:38:34 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36HJPEf4024052;
-        Mon, 17 Jul 2023 20:38:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=b3r2s2v9CXAaqUoHFOKo/VJRNxVE1aoRX/gfgtbGECA=;
- b=E7yeWWgH6Dad7igAu/fMXSwADs4yEgEuonybI6lwBx2OdVwcl+kljpCPJSGBJLxxrFFQ
- pMrdpP4pkBvgqqw18PTFLO7nbTWAVeDd/hQVQuL16hdVDMVbdTew/jGwe1jF2IFPedrj
- 54W1RDk0V7wAv7ClUFnAWauVlAP/cez7n67xBHkWS8oOA+r2ya+CJAszU2w9L7/qthaU
- e8SiPWniCGyx5CRBVo6CtZVJodJbNaPCUQTS7IXYPnJlEzldXy0k7QwDh2nVjPBmG/WE
- fCbzcpq6NCx+t0EdgSAae2pL98ki9bP6zj4OGPNH9nfXpgNFMLoiQIlOZAPCiUXoeAmk QA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3run1jcfte-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Jul 2023 20:38:24 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36HKcNTk031261
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Jul 2023 20:38:23 GMT
-Received: from [10.71.108.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 17 Jul
- 2023 13:38:22 -0700
-Message-ID: <9b8a01c5-3a82-a9a0-959b-d03e40966f55@quicinc.com>
-Date:   Mon, 17 Jul 2023 13:38:22 -0700
+        Mon, 17 Jul 2023 16:41:34 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4766191
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:41:31 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-307d58b3efbso4873674f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689626490; x=1692218490;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dxs4QoOQ/zuyVwrQI4lubKrrMktOwLFYVCg8BWpDqAE=;
+        b=i94RzqOBda0we6gStVXydLDozZedYS0fpZK7pAsIMIN7IJXNvyYVF2RumNOfBFIbAl
+         WdWWZ2wsboobWEoBVfcjdQ5hYQ41X02Po46s83kFC6MmsbxflQ4mc952aTGhRbHGnKFb
+         ulthz7ivLuKDhoYyzkfR+S+03giW7cDlMeB+L53yZYdLVdG5RXcUAtBQ8a9uD16erK6q
+         wPQxWL3uGqAXZIOaaAJ5TqWhs56TkUxo8WwL8iyYILzt6UOgZuATex3R1BW25lOltVxy
+         pHcclVdPi/puXIvpgzrqhFBOdpkdA2oI/s8oCU/lCibCpuZo6mhhSsR3At3zsNbDlOje
+         2+kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689626490; x=1692218490;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Dxs4QoOQ/zuyVwrQI4lubKrrMktOwLFYVCg8BWpDqAE=;
+        b=NBg+qsP7k07g0GK6+kA6XC/BQTY08KhH9zw6yJ2dfx3EoeTBWFSeYZNvoLjfqsY4uM
+         SccW9mhR/XSUOuA9whoT/Zelv7AJLDo106erE1yyGNvRf/UUVYBzGK96dmlXLccMQuU+
+         9WTttQNk37XViHlMyrI+vNjLIoMhT8LWcTCZl3GFVUwSGOonL7o5tkj+704c0+Bha9HI
+         lQMOxdprYhtI5u3r9RS/Kmq28UfzUe3iuCUxRrgqzEqNld6VFhLM16lIJSmy4b08+zbt
+         ch/BH/Vf3F3W7Qu02wJn+Vq1lrs2ywlAuXRXPprL0VKpYJmFsooK0T2ungirRmEfQI0T
+         h0HA==
+X-Gm-Message-State: ABy/qLbRo+fFP+TmCmyax2e3V2ZnhlKmKAlXa7Cuqp49Y+5Fg+W/AwlR
+        zSLDYzomDMeMB1wtXsl7OC0tPDMfPGnA2O8ZmMgDJg==
+X-Google-Smtp-Source: APBJJlGSsV9rxiUISE+EtvohXTTyc6XC/XcPBnbdT6/SNm9+KvD19buO7D7jOsInc4V4JwLvQnwrAacAmUqhMj/w9B8=
+X-Received: by 2002:adf:ffca:0:b0:314:1f1e:3a85 with SMTP id
+ x10-20020adfffca000000b003141f1e3a85mr9589916wrs.61.1689626490362; Mon, 17
+ Jul 2023 13:41:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1 4/5] drm/msm/dp: move relevant dp initialization code
- from bind() to probe()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
- <1688773943-3887-5-git-send-email-quic_khsieh@quicinc.com>
- <121f82ad-9d5d-6d7f-b4ae-9a371ab49ef7@linaro.org>
- <9df52052-93fd-75a4-b54c-02ed9554e15f@quicinc.com>
- <3fa812d6-9222-065a-8b40-95c2f2c808a6@linaro.org>
- <8bc82b4b-b169-a11b-9f5d-eb821b680af7@quicinc.com>
- <9a9ec559-769c-d593-6eaa-45daa5966cb8@linaro.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <9a9ec559-769c-d593-6eaa-45daa5966cb8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -DEmvVULc15A4HTJMHPJ2WwEv0Rp8Yre
-X-Proofpoint-ORIG-GUID: -DEmvVULc15A4HTJMHPJ2WwEv0Rp8Yre
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-17_14,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=999
- bulkscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307170187
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20230717103236.1246771-1-bhupesh.sharma@linaro.org>
+ <20230717103236.1246771-4-bhupesh.sharma@linaro.org> <ZLUbyocjNT2bGvVt@gerhold.net>
+ <CAH=2NtzM=jaVtjeHHO0rY0_wHu9==Jpdz4zx5nCK3gBh2kpL=A@mail.gmail.com>
+ <ZLWHwnjjMkJx_ACH@gerhold.net> <CAH=2NtxHekJVvzaD5SNhZZmAHXhc=7v4Pr7RMEFNTXXH6x_AgQ@mail.gmail.com>
+ <81491f7e-bd2c-7e3c-14c4-a7547d76c307@linaro.org> <CAH=2NtxX9jC6-7=bWEWTtgO=5VqX5U_ngnC6vWFZxDJUdsdg+g@mail.gmail.com>
+ <5f415647-0cec-b4cd-f9a8-6b6690615498@linaro.org>
+In-Reply-To: <5f415647-0cec-b4cd-f9a8-6b6690615498@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 18 Jul 2023 02:11:18 +0530
+Message-ID: <CAH=2NtySyCVaxca_MVpDz6eOWvpGTSM3XHfjGUcNCeGXMXVtbQ@mail.gmail.com>
+Subject: Re: [PATCH v8 3/4] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        krzysztof.kozlowski@linaro.org, quic_schowdhu@quicinc.com,
+        gregkh@linuxfoundation.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 7/17/2023 10:22 AM, Dmitry Baryshkov wrote:
-> On 17/07/2023 20:16, Kuogee Hsieh wrote:
->>
->> On 7/10/2023 11:13 AM, Dmitry Baryshkov wrote:
->>> On 10/07/2023 19:57, Kuogee Hsieh wrote:
->>>>
->>>> On 7/7/2023 5:11 PM, Dmitry Baryshkov wrote:
->>>>> On 08/07/2023 02:52, Kuogee Hsieh wrote:
->>>>>> In preparation of moving edp of_dp_aux_populate_bus() to
->>>>>> dp_display_probe(), move dp_display_request_irq(),
->>>>>> dp->parser->parse() and dp_power_client_init() to dp_display_probe()
->>>>>> too.
->>>>>>
->>>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>>> ---
->>>>>>   drivers/gpu/drm/msm/dp/dp_display.c | 48 
->>>>>> +++++++++++++++++--------------------
->>>>>>   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
->>>>>>   2 files changed, 22 insertions(+), 27 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->>>>>> b/drivers/gpu/drm/msm/dp/dp_display.c
->>>>>> index 44580c2..185f1eb 100644
->>>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->>>>>> @@ -290,12 +290,6 @@ static int dp_display_bind(struct device 
->>>>>> *dev, struct device *master,
->>>>>>           goto end;
->>>>>>       }
->>>>>>   -    rc = dp_power_client_init(dp->power);
->>>>>> -    if (rc) {
->>>>>> -        DRM_ERROR("Power client create failed\n");
->>>>>> -        goto end;
->>>>>> -    }
->>>>>> -
->>>>>>       rc = dp_register_audio_driver(dev, dp->audio);
->>>>>>       if (rc) {
->>>>>>           DRM_ERROR("Audio registration Dp failed\n");
->>>>>> @@ -752,6 +746,12 @@ static int dp_init_sub_modules(struct 
->>>>>> dp_display_private *dp)
->>>>>>           goto error;
->>>>>>       }
->>>>>>   +    rc = dp->parser->parse(dp->parser);
->>>>>> +    if (rc) {
->>>>>> +        DRM_ERROR("device tree parsing failed\n");
->>>>>> +        goto error;
->>>>>> +    }
->>>>>> +
->>>>>>       dp->catalog = dp_catalog_get(dev, &dp->parser->io);
->>>>>>       if (IS_ERR(dp->catalog)) {
->>>>>>           rc = PTR_ERR(dp->catalog);
->>>>>> @@ -768,6 +768,12 @@ static int dp_init_sub_modules(struct 
->>>>>> dp_display_private *dp)
->>>>>>           goto error;
->>>>>>       }
->>>>>>   +    rc = dp_power_client_init(dp->power);
->>>>>> +    if (rc) {
->>>>>> +        DRM_ERROR("Power client create failed\n");
->>>>>> +        goto error;
->>>>>> +    }
->>>>>> +
->>>>>>       dp->aux = dp_aux_get(dev, dp->catalog, dp->dp_display.is_edp);
->>>>>>       if (IS_ERR(dp->aux)) {
->>>>>>           rc = PTR_ERR(dp->aux);
->>>>>> @@ -1196,26 +1202,20 @@ static irqreturn_t 
->>>>>> dp_display_irq_handler(int irq, void *dev_id)
->>>>>>       return ret;
->>>>>>   }
->>>>>>   -int dp_display_request_irq(struct msm_dp *dp_display)
->>>>>> +static int dp_display_request_irq(struct dp_display_private *dp)
->>>>>>   {
->>>>>>       int rc = 0;
->>>>>> -    struct dp_display_private *dp;
->>>>>> -
->>>>>> -    if (!dp_display) {
->>>>>> -        DRM_ERROR("invalid input\n");
->>>>>> -        return -EINVAL;
->>>>>> -    }
->>>>>> -
->>>>>> -    dp = container_of(dp_display, struct dp_display_private, 
->>>>>> dp_display);
->>>>>> +    struct device *dev = &dp->pdev->dev;
->>>>>>   -    dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
->>>>>>       if (!dp->irq) {
->>>>>> -        DRM_ERROR("failed to get irq\n");
->>>>>> -        return -EINVAL;
->>>>>> +        dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
->>>>>> +        if (!dp->irq) {
->>>>>> +            DRM_ERROR("failed to get irq\n");
->>>>>> +            return -EINVAL;
->>>>>> +        }
->>>>>>       }
->>>>>
->>>>> Use platform_get_irq() from probe() function.
->>>>>
->>>>>>   -    rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
->>>>>> -            dp_display_irq_handler,
->>>>>> +    rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
->>>>>>               IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
->>>>>
->>>>>
->>>>>>       if (rc < 0) {
->>>>>>           DRM_ERROR("failed to request IRQ%u: %d\n",
->>>>>> @@ -1290,6 +1290,8 @@ static int dp_display_probe(struct 
->>>>>> platform_device *pdev)
->>>>>>         platform_set_drvdata(pdev, &dp->dp_display);
->>>>>>   +    dp_display_request_irq(dp);
->>>>>> +
->>>>>
->>>>> Error checking?
->>>>> Are we completely ready to handle interrupts at this point?
->>>> not until dp_display_host_init() is called which will be called 
->>>> from pm_runtime_resume() later.
->>>
->>> But once you request_irq(), you should be ready for the IRQs to be 
->>> delivered right away.
->>
->> At this point, the DP controller interrupts mask bit is not enabled yet.
->>
->> Therefore interrupts will not happen until dp_bridge_hpd_enable() is 
->> called to initialize dp host controller and then enabled mask bits.
+On Tue, 18 Jul 2023 at 01:54, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
-> Are AUX and CTRL interrupts also disabled? What about any 
-> stray/pending interrupts? Just take it as a rule of thumb. Once 
-> request_irq() has been called without the IRQ_NOAUTOEN flag, the 
-> driver should be prepared to handle the incoming interrupt requests.
+> On 17.07.2023 22:22, Bhupesh Sharma wrote:
+> > On Tue, 18 Jul 2023 at 01:49, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> On 17.07.2023 22:09, Bhupesh Sharma wrote:
+> >>> On Mon, 17 Jul 2023 at 23:58, Stephan Gerhold <stephan@gerhold.net> wrote:
+> >>>>
+> >>>> On Mon, Jul 17, 2023 at 11:33:40PM +0530, Bhupesh Sharma wrote:
+> >>>>> On Mon, 17 Jul 2023 at 16:15, Stephan Gerhold <stephan@gerhold.net> wrote:
+> >>>>>>
+> >>>>>> On Mon, Jul 17, 2023 at 04:02:35PM +0530, Bhupesh Sharma wrote:
+> >>>>>>> Add the Embedded USB Debugger(EUD) device tree node for
+> >>>>>>> SM6115 / SM4250 SoC.
+> >>>>>>>
+> >>>>>>> The node contains EUD base register region, EUD mode manager
+> >>>>>>> register region and TCSR Base register region along with the
+> >>>>>>> interrupt entry.
+> >>>>>>>
+> >>>>>>> [...]
+> >>>>>>>
+> >>>>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >>>>>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> >>>>>>> ---
+> >>>>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 50 ++++++++++++++++++++++++++++
+> >>>>>>>  1 file changed, 50 insertions(+)
+> >>>>>>>
+> >>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>>> index 839c603512403..db45337c1082c 100644
+> >>>>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>>> [...]
+> >>>>>>> @@ -789,6 +801,37 @@ gcc: clock-controller@1400000 {
+> >>>>>>>                       #power-domain-cells = <1>;
+> >>>>>>>               };
+> >>>>>>>
+> >>>>>>> +             eud: eud@1610000 {
+> >>>>>>> +                     compatible = "qcom,sm6115-eud", "qcom,eud";
+> >>>>>>> +                     reg = <0x0 0x01610000 0x0 0x2000>,
+> >>>>>>> +                           <0x0 0x01612000 0x0 0x1000>,
+> >>>>>>> +                           <0x0 0x003c0000 0x0 0x40000>;
+> >>>>>>> +                     reg-names = "eud-base", "eud-mode-mgr", "tcsr-base";
+> >>>>>>
+> >>>>>> TCSR is a separate hardware block unrelated to the EUD. IMHO it
+> >>>>>> shouldn't be listed as "reg" here.
+> >>>>>>
+> >>>>>> Typically we describe it as syscon and then reference it from other
+> >>>>>> nodes. See e.g. sm8450.dtsi "tcsr: syscon@1fc0000" referenced in &scm
+> >>>>>> "qcom,dload-mode = <&tcsr 0x13000>". This is pretty much exactly the
+> >>>>>> same use case as you have. It also uses this to write something with
+> >>>>>> qcom_scm_io_writel() at the end.
+> >>>>>
+> >>>>> That was discussed a bit during v1 patchset review. Basically, if we
+> >>>>> use a tcsr syscon approach here, we will need to define a 'qcom,xx'
+> >>>>> vendor specific dt-property and use something like this in the eud
+> >>>>> node:
+> >>>>>
+> >>>>> qcom,eud-sec-reg = <&tcsr_reg yyyy>
+> >>>>>
+> >>>>> which would be then used by the eud driver (via
+> >>>>> syscon_regmap_lookup_by_phandle()).
+> >>>>>
+> >>>>> But for sm6115 / qcm2290 this would be an over complicated solution as
+> >>>>> normally the eud driver (say sc7280) doesn't need tcsr based secure
+> >>>>> mode manager access. So defining a new soc / vendor specific
+> >>>>> dt-property might be an overkill.
+> >>>>>
+> >>>>
+> >>>> IMO a vendor-specific DT property is still better than messing up the
+> >>>> device separation in the device tree. The same "tcsr-base" reg would
+> >>>> also appear on the actual tcsr syscon device tree node. Having two
+> >>>> device tree nodes with the same reg region is generally not valid.
+> >>>>
+> >>>> Something like qcom,eud-sec-reg = <&tcsr_reg yyyy> would at least make
+> >>>> clear that this points into a region that is shared between multiple
+> >>>> different devices, while adding it as reg suggests that TCSR belongs
+> >>>> exclusively to EUD.
+> >>>
+> >>> I understand your point but since for sm6115 / qcm2290 devices TCSR is
+> >>> not used for any other purpose than EUD, I still think introducing a
+> >>> new soc / vendor specific dt-property might be an overkill for this
+> >>> changeset.
+> >> Untrue, there's some mumblings around the PHY properties and PSHOLD.
+> >> I think Stephan may be correct here.
+> >
+> > Can you share the links to those discussions?
+> It just seemed off to me that TCSR was not used by anything else (even
+> from Linux, it would obviously be used by something else higher up in
+> the boot chain as it contains various configuration registers), so I
+> took a glance at the downstream device tree and I noticed there are
+> more users.
 
-yes, both AUX and CTRL are disabled.
+Ok, let me recheck the downstream code and come back.
 
-edp population do need irq to handle aux transfer during probe.
-
-it should work by checking core_initialized flag at irq handle to filter 
-out stray/pending interrupts.
-
->
->>>>>>       rc = component_add(&pdev->dev, &dp_display_comp_ops);
->>>>>>       if (rc) {
->>>>>>           DRM_ERROR("component add failed, rc=%d\n", rc);
->>>>>> @@ -1574,12 +1576,6 @@ int msm_dp_modeset_init(struct msm_dp 
->>>>>> *dp_display, struct drm_device *dev,
->>>>>>         dp_priv = container_of(dp_display, struct 
->>>>>> dp_display_private, dp_display);
->>>>>>   -    ret = dp_display_request_irq(dp_display);
->>>>>> -    if (ret) {
->>>>>> -        DRM_ERROR("request_irq failed, ret=%d\n", ret);
->>>>>> -        return ret;
->>>>>> -    }
->>>>>> -
->>>>>>       ret = dp_display_get_next_bridge(dp_display);
->>>>>>       if (ret)
->>>>>>           return ret;
->>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h 
->>>>>> b/drivers/gpu/drm/msm/dp/dp_display.h
->>>>>> index 1e9415a..b3c08de 100644
->>>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.h
->>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
->>>>>> @@ -35,7 +35,6 @@ struct msm_dp {
->>>>>>   int dp_display_set_plugged_cb(struct msm_dp *dp_display,
->>>>>>           hdmi_codec_plugged_cb fn, struct device *codec_dev);
->>>>>>   int dp_display_get_modes(struct msm_dp *dp_display);
->>>>>> -int dp_display_request_irq(struct msm_dp *dp_display);
->>>>>>   bool dp_display_check_video_test(struct msm_dp *dp_display);
->>>>>>   int dp_display_get_test_bpp(struct msm_dp *dp_display);
->>>>>>   void dp_display_signal_audio_start(struct msm_dp *dp_display);
->>>>>
->>>
->
+Thanks,
+Bhupesh
