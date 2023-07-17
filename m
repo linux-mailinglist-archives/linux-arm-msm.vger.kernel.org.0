@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72223755C28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 08:55:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9496755C2A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 08:55:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230043AbjGQGzX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 02:55:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47030 "EHLO
+        id S230053AbjGQGzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 02:55:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229961AbjGQGzQ (ORCPT
+        with ESMTP id S230011AbjGQGzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 02:55:16 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 710061B8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 23:55:14 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id 46e09a7af769-6b9cf1997c4so1225886a34.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 23:55:14 -0700 (PDT)
+        Mon, 17 Jul 2023 02:55:21 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4612E10DC
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 23:55:17 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-666ecf9a081so4253308b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jul 2023 23:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689576913; x=1692168913;
+        d=linaro.org; s=google; t=1689576916; x=1692168916;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ywAnQod/2AqwT52mE4IcwiOccI2A/vlz7fI3wixXChQ=;
-        b=COxSewSo57T9BYc2XB2RPZ4S4/p9vHVhb/9T0vJbWnE3ejosuOiGQqop/S61n/1m3J
-         gkiP8ON7pKLZ4ZVgLDBQauxT8OH/GamXdZYAaroBax+c+pJyxkwIDgHV4BvBvU9cz9gC
-         ORuA9rzT+Y+pVl7xVbwIs18jJZgMBzv68WrrTbl3zb0fVEbvL9sLnd0o7OinkY7ktJHR
-         IpPkpcEIYO0/QaLZJB1U2axaO88F7fOPuIflkBqIFtuV0HCdprTqD5/abDDBplGCj/Ux
-         w8aGmGaoDRFuS8oyYO93MLY3hceXm7PI38z7O0T9iTutiJPqwfc8HRnO4u/bLl7wJUjM
-         XbQw==
+        bh=mb9LlQcGjFjNwM13Qknh1i1JQ2UWaF+8pLaINltAQNI=;
+        b=DbjIHxX88jeFICr7g1j9fsD29rDdWOtUu2IOiOfD/bNC6WuiQrRMtIVaBgJjv7sHnE
+         zUZ79J9y91fEZuRsoi/nAN6P4NuEfG2LPGXl+SiSEykzobOtG0XNAyuV8UGrtFDLn4nT
+         Q6tgZK8O3h8/Ea2XRXAk9ESvVOaqkn7pQYRXDBDQzh91/XKTDVvEyOPqxlv8Het/dEzd
+         nDi3M2z7kLnCZmh3Hv+3DG+x+E+OsGXWWaA52UONNq6MbNjqcWM31U2zkMpD4E57sIHI
+         /x6idkHrLgIA1QgMvAaoIZkJIW7xLItLZ0UYNoLyMqtyXXJcRq1RzyTK8tdvC+tBY7Pl
+         6ryw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689576913; x=1692168913;
+        d=1e100.net; s=20221208; t=1689576916; x=1692168916;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ywAnQod/2AqwT52mE4IcwiOccI2A/vlz7fI3wixXChQ=;
-        b=B+ufxcVXd61vLRVhrtm1gC2bUU8UdtoSzkzZQtfiAttbDDwlVl6Ff0XqZx7y+uhu08
-         qbQc8u/nymQwwwxu7WgNQ8YrJOlddkqqID5kTDU33y8KvYCAMhFdjJsypuK8m0en7wfT
-         S89bFEwoX9C31/g4ABw1QKvRQdDQ0t/uDQNkccHePQt4WGo6HM5rEmpq+X3AO2wKZ66L
-         mdGwuZjx81ImLKs8Tymkx/xXHMcsJRYECse+nBPGUePGVUSLjMmJip7RSQPOysA6ES1Q
-         hqTQYASV6SMcB7JahfL0fZ95NdDXyiQFcYevcCGZ5pR25wfVYIKRl8FL7MG9ZX/scrYn
-         aXxw==
-X-Gm-Message-State: ABy/qLaQ6/t7kfwvjusfaMFWrAPps2lbOhiDybF70fVXsXjyQz7PPNxq
-        LZ4b2CC9WC6mDw5zVRtLVvh2
-X-Google-Smtp-Source: APBJJlHX3QrNZi1kF0ACqAndRyoTeRH+RwIj7l0pEb3csyqHwPIlTIViF8Yxs4dhF5BQV/6Kba6YoQ==
-X-Received: by 2002:a05:6358:9184:b0:134:c37f:4b64 with SMTP id j4-20020a056358918400b00134c37f4b64mr8163188rwa.30.1689576913646;
-        Sun, 16 Jul 2023 23:55:13 -0700 (PDT)
+        bh=mb9LlQcGjFjNwM13Qknh1i1JQ2UWaF+8pLaINltAQNI=;
+        b=j9bc2+RFXqvEyPWLM1I49/IHVCh6+MtYkDR4L5fu+aeGiAiQUE4Bs8bdw203gEuKpH
+         L5ikyjMhlXolGugRf5m5Q/38PJCxePN8yfbzyTiVWJIXp8yjacZqCgLmFH0v1KfTkke+
+         o4WnSCbU7JvRO0YWbLBJmrA8CULqisbvhx98jd2waBAqFhfBN1pnzuyV62lZnlbknhym
+         H1Uw3wIriP3X8UwwiZVkUvusvxKTXD/N6UtLVqo5cxQ4B5fZgUSbAkg2qX6Sxy0QImQJ
+         ZIFSzp10lPynx1ytGfrLoQxQJaH46h7FEK/L5tSycN8zoyyHmu86K2ICXySMPnjPKTN8
+         nvSw==
+X-Gm-Message-State: ABy/qLb05fEoX/6oEWKkQ1D/HutAvpyJ5tjha05CUqnSjByRsxgQzF7g
+        e8LocPOuLkLineRINbomWBvy
+X-Google-Smtp-Source: APBJJlHys8IijXNMKPy4AQJ4Y8zCJiG01oEkjG+qyJuN8uscZecC7frkak3ANFiQ9/ONcwiDh6D7tw==
+X-Received: by 2002:a05:6a21:585:b0:12f:382d:2a37 with SMTP id lw5-20020a056a21058500b0012f382d2a37mr10650798pzb.15.1689576916635;
+        Sun, 16 Jul 2023 23:55:16 -0700 (PDT)
 Received: from localhost.localdomain ([117.193.215.209])
-        by smtp.gmail.com with ESMTPSA id x7-20020a62fb07000000b006675c242548sm11196422pfm.182.2023.07.16.23.55.11
+        by smtp.gmail.com with ESMTPSA id x7-20020a62fb07000000b006675c242548sm11196422pfm.182.2023.07.16.23.55.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Jul 2023 23:55:13 -0700 (PDT)
+        Sun, 16 Jul 2023 23:55:16 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     lpieralisi@kernel.org, kw@linux.com
 Cc:     kishon@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 2/7] PCI: epf-mhi: Make use of the alignment restriction from EPF core
-Date:   Mon, 17 Jul 2023 12:24:54 +0530
-Message-Id: <20230717065459.14138-3-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 3/7] PCI: qcom-ep: Add eDMA support
+Date:   Mon, 17 Jul 2023 12:24:55 +0530
+Message-Id: <20230717065459.14138-4-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230717065459.14138-1-manivannan.sadhasivam@linaro.org>
 References: <20230717065459.14138-1-manivannan.sadhasivam@linaro.org>
@@ -73,71 +73,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of hardcoding the alignment restriction in the EPF_MHI driver, make
-use of the info available from the EPF core that reflects the alignment
-restriction of the endpoint controller.
+Qualcomm PCIe Endpoint controllers have the in-built Embedded DMA (eDMA)
+peripheral for offloading the data transfer between PCIe bus and memory.
 
-For this purpose, let's introduce the get_align_offset() static function.
+Let's add the support for it by enabling the eDMA IRQ in the driver.
+Rest of the functionality will be handled by the eDMA DMA Engine driver.
+
+Since the eDMA on Qualcomm platforms only uses a single IRQ for all
+channels, use 1 for edma.nr_irqs.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 9c1f5a154fbd..bb7de6884824 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -102,6 +102,11 @@ struct pci_epf_mhi {
- 	int irq;
- };
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index 736be5bee458..1baec81183b6 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -74,6 +74,7 @@
+ #define PARF_INT_ALL_PLS_ERR			BIT(15)
+ #define PARF_INT_ALL_PME_LEGACY			BIT(16)
+ #define PARF_INT_ALL_PLS_PME			BIT(17)
++#define PARF_INT_ALL_EDMA			BIT(22)
  
-+static size_t get_align_offset(struct pci_epc *epc, u64 addr)
-+{
-+	return addr % epc->mem->window.page_size;
-+}
-+
- static int __pci_epf_mhi_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
- 				 phys_addr_t *paddr, void __iomem **vaddr,
- 				 size_t offset, size_t size)
-@@ -134,7 +139,7 @@ static int pci_epf_mhi_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
- {
- 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
- 	struct pci_epc *epc = epf_mhi->epf->epc;
--	size_t offset = pci_addr & (epc->mem->window.page_size - 1);
-+	size_t offset = get_align_offset(epc, pci_addr);
+ /* PARF_BDF_TO_SID_CFG register fields */
+ #define PARF_BDF_TO_SID_BYPASS			BIT(0)
+@@ -395,7 +396,7 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+ 	writel_relaxed(0, pcie_ep->parf + PARF_INT_ALL_MASK);
+ 	val = PARF_INT_ALL_LINK_DOWN | PARF_INT_ALL_BME |
+ 	      PARF_INT_ALL_PM_TURNOFF | PARF_INT_ALL_DSTATE_CHANGE |
+-	      PARF_INT_ALL_LINK_UP;
++	      PARF_INT_ALL_LINK_UP | PARF_INT_ALL_EDMA;
+ 	writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_MASK);
  
- 	return __pci_epf_mhi_alloc_map(mhi_cntrl, pci_addr, paddr, vaddr,
- 				      offset, size);
-@@ -161,7 +166,7 @@ static void pci_epf_mhi_unmap_free(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
- 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
- 	struct pci_epf *epf = epf_mhi->epf;
- 	struct pci_epc *epc = epf->epc;
--	size_t offset = pci_addr & (epc->mem->window.page_size - 1);
-+	size_t offset = get_align_offset(epc, pci_addr);
+ 	ret = dw_pcie_ep_init_complete(&pcie_ep->pci.ep);
+@@ -744,6 +745,7 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
+ 	pcie_ep->pci.dev = dev;
+ 	pcie_ep->pci.ops = &pci_ops;
+ 	pcie_ep->pci.ep.ops = &pci_ep_ops;
++	pcie_ep->pci.edma.nr_irqs = 1;
+ 	platform_set_drvdata(pdev, pcie_ep);
  
- 	__pci_epf_mhi_unmap_free(mhi_cntrl, pci_addr, paddr, vaddr, offset,
- 				 size);
-@@ -185,7 +190,8 @@ static int pci_epf_mhi_read_from_host(struct mhi_ep_cntrl *mhi_cntrl, u64 from,
- 				      void *to, size_t size)
- {
- 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
--	size_t offset = from % SZ_4K;
-+	struct pci_epc *epc = epf_mhi->epf->epc;
-+	size_t offset = get_align_offset(epc, from);
- 	void __iomem *tre_buf;
- 	phys_addr_t tre_phys;
- 	int ret;
-@@ -213,7 +219,8 @@ static int pci_epf_mhi_write_to_host(struct mhi_ep_cntrl *mhi_cntrl,
- 				     void *from, u64 to, size_t size)
- {
- 	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
--	size_t offset = to % SZ_4K;
-+	struct pci_epc *epc = epf_mhi->epf->epc;
-+	size_t offset = get_align_offset(epc, to);
- 	void __iomem *tre_buf;
- 	phys_addr_t tre_phys;
- 	int ret;
+ 	ret = qcom_pcie_ep_get_resources(pdev, pcie_ep);
 -- 
 2.25.1
 
