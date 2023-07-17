@@ -2,139 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60B207562B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 14:26:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9931C7562BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 14:30:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbjGQM0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 08:26:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49754 "EHLO
+        id S229917AbjGQMam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 08:30:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbjGQM0d (ORCPT
+        with ESMTP id S229583AbjGQMal (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 08:26:33 -0400
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 824BDB9;
-        Mon, 17 Jul 2023 05:26:30 -0700 (PDT)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BE0D32000C;
-        Mon, 17 Jul 2023 12:26:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1689596788;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=xfIQQUGuk2YngWOS8fdrYDdOu8Z6QhNBtgynXxqIkxI=;
-        b=pu6DLejjSYrxTONDk5/XdeXoNmahir1eSWyr0IAyC5+CzV+z7kVIv0SIU1WMmF5on1CgqD
-        KQMv7HISFwBD83UgHXeIYvA6rMs4zilESREno4fIl9tHoG5j8KuMGef30GXaJomEjoNSXB
-        b27ZnZ9I2DkJ16lt7XoMqFe9mN2ip4prfSVsj2SpNBgHGroLTT9anwzmDU7ZmjHgcKavfM
-        YT6a5qXXuO8iNNI928PNokmiYbnOK1bsbfPyiXo6MfvnS5M/07LrFJlHjhELObDmMRCvQo
-        UvLPoo3HQls1bUDPug12g+YVs2SccW7y5VCvmnwJJIZUaBWuD6j/7/vLgvzENw==
-Date:   Mon, 17 Jul 2023 14:26:14 +0200
-From:   Luca Ceresoli <luca.ceresoli@bootlin.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andreas =?UTF-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Alex Helms <alexander.helms.jy@renesas.com>,
-        Abel Vesa <abelvesa@kernel.org>, Peng Fan <peng.fan@nxp.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Nishanth Menon <nm@ti.com>, Tero Kristo <kristo@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Hal Feng <hal.feng@starfivetech.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Emilio =?UTF-8?Q?L=C3=B3pez?= <emilio@elopez.com.ar>,
-        Peter De Schrijver <pdeschrijver@nvidia.com>,
-        Prashant Gaikwad <pgaikwad@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@amd.com>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, linux-oxnas@groups.io,
-        linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH] clk: Explicitly include correct DT includes
-Message-ID: <20230717142614.78db5c4e@booty>
-In-Reply-To: <20230714174342.4052882-1-robh@kernel.org>
-References: <20230714174342.4052882-1-robh@kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Mon, 17 Jul 2023 08:30:41 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77BE187
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 05:30:39 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b73564e98dso65318751fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 05:30:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689597038; x=1692189038;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gqQWmYE6mikijhb+URcDev0GUwlO46fou+/8hKL8alM=;
+        b=mWgM8gyI1LxJ1jt6p/Q+x1NKUulK53177cNhF7OyRsJsz7I93+gwnms4okO/iXydlR
+         rTvVNgxyxjBasNNzXg9KcSj21F5063ezsBs5U0OS8gU+stxomq2U81zCOUiSjPGBOPEo
+         ZrLAiSfXQlJEuVxwIC4ByBiE0pEabcdybjTcl9ITBpHF6NR02eFUUhhS6q3fcDBP5nEc
+         x2ocG2P47WWDNEHD5I9l7JxKMx1zKTzhtLv1gD8Hi/5HBTl/aNL3eDr14Dc1PnvSlvwT
+         vvmRM0aLSM2bQsqbMw3m0if2rsV/vJAGYKrPPjpj57qToM/gvKyKFhc2qp0MsPP7eWh5
+         aYBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689597038; x=1692189038;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gqQWmYE6mikijhb+URcDev0GUwlO46fou+/8hKL8alM=;
+        b=LSy1szuoT+rUrU+rmCqzeFDK+ozy7WiVfRw2Ok8/0ihqGVfhr7aM0OtUCWoqPxknhH
+         oufNuuAPXNWEEPzfcMj2rIh3tDNApzdgLW/KedEk4BxkiBTNdNSoA8Pz9pOhgW367RDm
+         xvWBn7k2QgsTulRsFE/hPas4fe6vg8MUz4GcHz22jFZjaufubMYH4serUdby05Ujcd4P
+         lgaO5ws2AJX4DSNIlj5kZSa1f6gT7ceuKnj2TRVeoQ0kgmg5duC2Y0Gb4vvTGyfwBbRB
+         mwPWJQhKW+aADqjVV88MXltQPSGLe8jIC1/ip0n0fNk+0B8F/uhzZs3EoiKybEW+fmYe
+         wP8w==
+X-Gm-Message-State: ABy/qLYJ0xkIRflK6OskpiILRTDl5g+dpFoeD/6wq3WTWEpIV6jpFT7H
+        SNiZoJFpmqZi91pyHDq9gM/Qlg==
+X-Google-Smtp-Source: APBJJlGDlL4uhDaQA6bjvwYThu/no32RAotlFuO5WDtVQINe1DbwFu1bJcmSSoEmuJ0ncS3RJ93q0w==
+X-Received: by 2002:a2e:978d:0:b0:2b6:df5d:8e08 with SMTP id y13-20020a2e978d000000b002b6df5d8e08mr8104203lji.28.1689597037933;
+        Mon, 17 Jul 2023 05:30:37 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id a26-20020a2e861a000000b002b6c9927a3csm3649783lji.37.2023.07.17.05.30.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jul 2023 05:30:37 -0700 (PDT)
+Message-ID: <f7fa82e3-ee2e-da05-f635-ba93819790ce@linaro.org>
+Date:   Mon, 17 Jul 2023 14:30:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-e2015: Add
+ accelerometer
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230715204128.12612-1-linmengbo0689@protonmail.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230715204128.12612-1-linmengbo0689@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-GND-Sasl: luca.ceresoli@bootlin.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 14 Jul 2023 11:43:29 -0600
-Rob Herring <robh@kernel.org> wrote:
+On 15.07.2023 22:41, Lin, Meng-Bo wrote:
+> E5, E7 and Grand Max have ST LIS2HH12 accelerometer.
+> Add support for it.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> ---
+Potentially missing Co-Developed-by?
 
->  drivers/clk/clk-versaclock5.c                    | 1 -
+>  .../qcom/msm8916-samsung-e2015-common.dtsi    | 21 +++++++++++++++++--
+>  1 file changed, 19 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
+> index 0cdd6af7817f..ef7c7ac40e05 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
+> @@ -42,10 +42,27 @@ reg_touch_key: regulator-touch-key {
+>  
+>  &blsp_i2c2 {
+>  	/* lis2hh12 accelerometer instead of BMC150 */
+> -	status = "disabled";
+> -
+>  	/delete-node/ accelerometer@10;
+>  	/delete-node/ magnetometer@12;
+> +
+> +	accelerometer@1d {
+> +		compatible = "st,lis2hh12";
+> +		reg = <0x1d>;
+> +
+> +		interrupt-parent = <&msmgpio>;
+> +		interrupts = <115 IRQ_TYPE_LEVEL_HIGH>;
+interrupts-extended = <&msmgpio 115 IRQ_TYPE_LEVEL_HIGH>;
 
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # versaclock5
-
--- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Konrad
+> +
+> +		vdd-supply = <&pm8916_l5>;
+> +		vddio-supply = <&pm8916_l5>;
+> +
+> +		st,drdy-int-pin = <1>;
+> +		mount-matrix = "1", "0", "0",
+> +			       "0", "-1", "0",
+> +			       "0", "0", "1";
+> +
+> +		pinctrl-0 = <&accel_int_default>;
+> +		pinctrl-names = "default";
+> +	};
+>  };
+>  
+>  &reg_motor_vdd {
