@@ -2,138 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1060C755D11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 09:36:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60FE0755D23
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 09:41:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230418AbjGQHgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 03:36:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42368 "EHLO
+        id S229714AbjGQHlp convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 03:41:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230396AbjGQHgI (ORCPT
+        with ESMTP id S229476AbjGQHlp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 03:36:08 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E0AA1A4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 00:36:06 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52176fdad9dso3132148a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 00:36:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689579365; x=1692171365;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jqT+iFyS34vkrxYBHX/puqSX/t6Fdl3YR5Gn4hTNWmk=;
-        b=DD9TPlON+krHvCo42f5dKfAAnK50pBRStg0YHIqwjxIR17RTB1W1r+09PXSyxzuP+S
-         5n1+khZgAs6+tUBhlsgNDumiheAs6SCoM/UiwUuxdH1S/pmYoDR0Lz+hvM0z69YZep8K
-         DAomM1Ec2HTKIIEbuUfvlIWI8lNIcT9Vwy1qoFdDNDxpNFHui7z+RhlBkmhdjN3u6aH5
-         48scNofXa5O52gRPKfZh55Scm8fi1yx8MWhn1psrocv13Kz/BVv6ErlUJr3Q89NGCZuO
-         qsuVrdzHVKZXz9IapFsbAlGDrNPmeXjZMz9ARy/JpW42B8WPNZccvVSSix4/G/AfTGxP
-         qzwg==
+        Mon, 17 Jul 2023 03:41:45 -0400
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB32E54;
+        Mon, 17 Jul 2023 00:41:44 -0700 (PDT)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-6687096c6ddso2508047b3a.0;
+        Mon, 17 Jul 2023 00:41:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689579365; x=1692171365;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jqT+iFyS34vkrxYBHX/puqSX/t6Fdl3YR5Gn4hTNWmk=;
-        b=UO2AJioxKaioHRyjolUE56LqtrjydUZAT45u5/pr388fBY0l6w1uIgJnV0qDGyzHX+
-         TgT0n/7KFDBMUVzv/Rq/WWzVhr7nciD8cbGSrRXbWx4U1IzybRMQw7sFw2wChWlToxGO
-         blQ8NMgGg1B4h5/eUtT6KO6qqCK0gXqHdIaudCHYiX/gq5SCNaWoPaP2mN6shzMlWCW+
-         /pIv/yGUZR4jn/fC6sHnZ84wNH4rtxWRHQCa3eFVbQAKcPQDex4itH7ieosGD4vLSKTE
-         Ev/8fi4QaMLC+Vx08KbR5LObwyxc8SKYmKYw8h0dx0XiyfqaebkBLbRbfMmK6JOdLW+d
-         bRGA==
-X-Gm-Message-State: ABy/qLaXoazJUrP6iWnxWWE6XKsZzhgE1QEcXCa+RJv6uIxSLpAcVqfO
-        PAHA+6CNAOt7Ch0xkZLrryLdIg==
-X-Google-Smtp-Source: APBJJlFHbePd2LG7loIwJ/95MB+gYsFBOZB4Cxq0f1JYSNmyiAWfvRxUQ6TzZbjKvVuxAr2d5Mya5A==
-X-Received: by 2002:aa7:d4c7:0:b0:51d:d4c3:6858 with SMTP id t7-20020aa7d4c7000000b0051dd4c36858mr11137044edr.12.1689579365024;
-        Mon, 17 Jul 2023 00:36:05 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id w24-20020aa7cb58000000b0051e0f8aac74sm9623910edt.8.2023.07.17.00.36.03
+        d=1e100.net; s=20221208; t=1689579703; x=1692171703;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EUvC4vvxIfMz+5toOkjqLhwq7X8FXptFWezRZuPzIyE=;
+        b=GS/gL5DwZ2w8qGbeNev5hfWcTsUnVFTjw2iUptvSjbU+lVraIIdQXs7VBSUWqSW9Vv
+         2NkXtuWoNOxhMH/YFUShFrzmXoTlLbUELbHqUh6yy/AZXfjU1lSVtg2GWDf6bzikC8En
+         73I3LKBt0kEup7QOk4KwViKJH5kz/Vz8DL+bE0qr556AI8x1c1g9PaLrrcCYuXOQeUZ8
+         m1ZKY7G1aU3NNz/J2c5KV75MxCbYstexCDTKnhGC6CrUdreez8wapwGT5p293pm99QgW
+         R13LuD/+a0x4qTCh6iDDwPh+kDewl6Y+cfACrMdF0xZBJelqm+a1onFGkie+uJKaXvxr
+         FS6g==
+X-Gm-Message-State: ABy/qLYIMQdmZOSyhZ9GarDw/NBspLwKPCTzMJQ1oqo4kyUFFsVDkYtl
+        d+Otf63DhrYep7KHYFm2H78igtzDgwAFTA==
+X-Google-Smtp-Source: APBJJlHMZXNoxABTd0F4E5VKOb4zcztqiJTL5j+cSpAyyEvMS7/4J+FnkuLWFqNjUi4QcmdIIsk4lw==
+X-Received: by 2002:a05:6a20:728b:b0:129:3bb4:77f1 with SMTP id o11-20020a056a20728b00b001293bb477f1mr10574878pzk.0.1689579703221;
+        Mon, 17 Jul 2023 00:41:43 -0700 (PDT)
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com. [209.85.214.180])
+        by smtp.gmail.com with ESMTPSA id v1-20020a63b641000000b0055fec4c165dsm3175315pgt.78.2023.07.17.00.41.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 00:36:04 -0700 (PDT)
-Message-ID: <2aa65957-61d5-8e06-5a50-a4750f6dd44b@linaro.org>
-Date:   Mon, 17 Jul 2023 09:36:02 +0200
+        Mon, 17 Jul 2023 00:41:42 -0700 (PDT)
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1b89d47ffb6so22195185ad.2;
+        Mon, 17 Jul 2023 00:41:42 -0700 (PDT)
+X-Received: by 2002:a81:65d6:0:b0:571:11ea:b2dd with SMTP id
+ z205-20020a8165d6000000b0057111eab2ddmr11237476ywb.32.1689579681652; Mon, 17
+ Jul 2023 00:41:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 1/7] dt-bindings: soc: qcom: Add qcom-pbs bindings
-Content-Language: en-US
-To:     Anjelique Melendez <quic_amelende@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, pavel@ucw.cz, lee@kernel.org,
-        thierry.reding@gmail.com, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-References: <20230621185949.2068-1-quic_amelende@quicinc.com>
- <20230621185949.2068-2-quic_amelende@quicinc.com>
- <20230626135857.GA3118929-robh@kernel.org>
- <2e871e21-a81d-0d7d-993b-9a9d7bd9d962@quicinc.com>
- <e7298704-5a03-0961-90a3-dab4af60c326@linaro.org>
- <32e9a512-fd74-b2f6-6b8a-fefb9ad5912d@quicinc.com>
- <431faa87-d152-5f7a-40fd-8b6fe26f0bb9@linaro.org>
- <71e1f36f-8fd8-9d61-d563-577d4fb54f10@quicinc.com>
- <69c01f0f-4eb0-bb44-a238-5c9ce5beede9@linaro.org>
- <CAA8EJppCSnEg1GjX8CavxRPiiE19JwVAOTspjWJR-OzdQMcu+g@mail.gmail.com>
- <7ecf968b-45b2-c6b7-86a7-8d8caccf5002@linaro.org>
- <511a84a8-ecb4-13bb-2eab-982b19758ba5@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <511a84a8-ecb4-13bb-2eab-982b19758ba5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230714174342.4052882-1-robh@kernel.org>
+In-Reply-To: <20230714174342.4052882-1-robh@kernel.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Mon, 17 Jul 2023 09:41:10 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUUWy3Knk6Jqao12KULam_3XpYc=cGqRXe4reH7FPVZsg@mail.gmail.com>
+Message-ID: <CAMuHMdUUWy3Knk6Jqao12KULam_3XpYc=cGqRXe4reH7FPVZsg@mail.gmail.com>
+Subject: Re: [PATCH] clk: Explicitly include correct DT includes
+To:     Rob Herring <robh@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Luca Ceresoli <luca.ceresoli@bootlin.com>,
+        Alex Helms <alexander.helms.jy@renesas.com>,
+        Abel Vesa <abelvesa@kernel.org>, Peng Fan <peng.fan@nxp.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Nishanth Menon <nm@ti.com>, Tero Kristo <kristo@kernel.org>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Hal Feng <hal.feng@starfivetech.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        =?UTF-8?Q?Emilio_L=C3=B3pez?= <emilio@elopez.com.ar>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Prashant Gaikwad <pgaikwad@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Michal Simek <michal.simek@amd.com>,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, linux-oxnas@groups.io,
+        linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/07/2023 22:32, Anjelique Melendez wrote:
-> 
-> 
-> On 7/12/2023 1:11 PM, Krzysztof Kozlowski wrote:
->> On 12/07/2023 16:35, Dmitry Baryshkov wrote:
->>>>>> Rob asked you - "Is there more than 1 instance in a PMIC?" - and you did
->>>>>> not answer positively, just mentioned something about drivers in
->>>>>> downstream, which do not matter. So is the answer for that question:
->>>>>> yes, you have two instances of the same PMIC differing by presence of
->>>>>> PBS and other features"?
->>>>>>
->>>>> Sorry that was a misunderstanding on my part.
->>>>> Yes, answer to Rob's question should have been "We have two instances of PMI632,
->>>>> where one instance holds the pbs peripheral and the other holds the lpg
->>>>> peripherals. The child node for pbs is needed so lpg client can access
->>>>> the PMI632 regmap which contains the pbs peripheral."
->>>>
->>>> I guess I miss here something. What is "LPG client"? I don't understand
->>>> why this LPG client needs existence of PBS node, to be able to get the
->>>> regmap.
->>>>
->>>> PBS is a child of PMIC, so it can get regmap from the parent. What's
->>>> more, which DT property passes the regmap from PMIC to LPG client?
->>>
->>> There are some PMICs which claim two SPMI SIDs. For such PMICs, each
->>> SID is a separate device, so it is not directly possible to get the
->>> regmap of the other SID.
->>
->> OK, maybe after implementing all the review changes - including dropping
->> that singleton pattern - this will be clearer. Please send new version
->> and we will discuss it from there.
->>
-> Sure, will work on getting that new version sent but I did just have clarifying question.
-> When you say "dropping that singleton pattern" are you referring to dropping the 
-> PBS node?
-> Want to make sure we are all on the same page with what the next version will include :)
+On Fri, Jul 14, 2023 at 7:44 PM Rob Herring <robh@kernel.org> wrote:
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-I was referring to my comments on driver, that you should not have
-file-scope variable and get_pbs_client_device() iterating over global
-list. It isn't singleton, actually, but the pattern in coding is very
-similar to singleton approach.
+>  drivers/clk/renesas/rcar-usb2-clock-sel.c        | 1 -
+>  drivers/clk/renesas/renesas-cpg-mssr.c           | 1 -
+>  drivers/clk/renesas/rzg2l-cpg.c                  | 3 +--
 
-Best regards,
-Krzysztof
+Acked-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
