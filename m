@@ -2,125 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 919C57569DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 19:12:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF1F7569F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 19:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229889AbjGQRMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 13:12:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34178 "EHLO
+        id S229872AbjGQRQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 13:16:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbjGQRLj (ORCPT
+        with ESMTP id S229798AbjGQRQB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 13:11:39 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8616EA4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 10:11:37 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b741cf99f8so71435441fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 10:11:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689613896; x=1692205896;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PdUy8GMTrWucV9wCoA87XadPmnzE11dEz/NCrV18J1Y=;
-        b=dJbijU/dso944TXJCQtlOA2upkp4Btsdngl31G428/moDy7XklV0Tmw5Z4DdWJuyH3
-         8pWgnV1M3XhLgfGmo3e0PEwUN6LsTcNgpuOrt0aCJpK6EmgtPR1KyPEv+9gvRm4mZ4rk
-         PZlCJ+ylonx6GqP9124mrD+ROyYHvEOrr9YiMpkEty4b4np4LzfGlEi0pa/b3zlf3BsG
-         J9BSLtmommkdEIMl6oLA/QJ+Sb74YGbyRDexOSL2m+GSoumPwd94ALZq7qmy4o7g3uS1
-         UFXJiF4OrrI/caD88uKrWdPvunjIRkZ0liM++9sHMudXjl32qjQ3MH79CKsLaoz5ONmz
-         w9Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689613896; x=1692205896;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PdUy8GMTrWucV9wCoA87XadPmnzE11dEz/NCrV18J1Y=;
-        b=h6SbrrlSUBrGyfy8ZIr/Swq8lRShvQtTqKNJmzNjBOkRbcvfsqVONFvAGfGIPlJd24
-         PdwYcpRq3j6yd/PfekNJYmFLhGLtORBv+eFh1QYdpGg1OvG0/Jh3o2tzlWFyhCOnA2X/
-         Rs2YsLv/j91KJfqPT5Tnw/JA6AWl1jMZmsKsffjGrcvPAtlBQQwo4JpnyDMyB5Smqzbl
-         mQcgIbcCepZPRSnmMnUVYoucw4S+cw2Du5NZvBKJ0wY/AqdgWEsAd6YstIMa5WsnmpDU
-         Ps/afi/+wBvQees2eqmTot3oZTmS0+V2HM0Vz8oCGu+2jX9jWD1XfXBJ++sgpRDkrO0u
-         Ephg==
-X-Gm-Message-State: ABy/qLYoVAZIhKZOsPsZq71Fa7fBuuGjeXsWzFTowgpkpDJa6HyE6s+8
-        ZsR0NjIdXAYVw4C1r+MX37b7lQ==
-X-Google-Smtp-Source: APBJJlFjLae5XLO90WMwuCjsT5AeiwDRBCFEcMfuu3f7z5JblyEioCWHbbcrKv1U59DGlGuSj9ETwQ==
-X-Received: by 2002:a2e:a410:0:b0:2b6:e7ce:4e7d with SMTP id p16-20020a2ea410000000b002b6e7ce4e7dmr8725246ljn.43.1689613895792;
-        Mon, 17 Jul 2023 10:11:35 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id a23-20020a05651c011700b002b94805a043sm452ljb.138.2023.07.17.10.11.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 10:11:35 -0700 (PDT)
-Message-ID: <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
-Date:   Mon, 17 Jul 2023 19:11:33 +0200
+        Mon, 17 Jul 2023 13:16:01 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6249819F;
+        Mon, 17 Jul 2023 10:16:00 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36HGvqJp030261;
+        Mon, 17 Jul 2023 17:15:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=3tPIZA9DnySEarrlQU8wHxA+hbKEZ2uIUFPiISS7alg=;
+ b=RYfKAh0zxDHpCBiTu4PdPp4rlN9EVyUJWD7fdmk9wBUiqtft/nfvr9VHibbkeecE+y3C
+ EIVWl0DC5huUe5C0mKjsRHZm7tKpPCZRjXboawfk9/Ti0cKbESKa7u020igZmL5qzK+J
+ rN4XUEFtH8vFJwGwcx4jtLBC+ZziFJiZfG/wZfolzXZSBuaSFH8hsQ6zI4GaG8N8aJah
+ e6etSzn0iIv1oUGu/OhOzViy00G3Vu1mxd/o7w0UeR8GVGuOQu05aLz3TGQPZpx8yxy5
+ 0oSQrME4QBGpchiPWBtd716BemZfw1xQ9ceKSxyaZTDO/gS6U1Su4RK9zRNtj+5Wvqer OA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rw289s82w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 17:15:50 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36HHFoNK011739
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 17:15:50 GMT
+Received: from [10.216.47.191] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 17 Jul
+ 2023 10:15:46 -0700
+Message-ID: <2fc238aa-82c1-383a-9dca-72f979ee3c07@quicinc.com>
+Date:   Mon, 17 Jul 2023 22:45:42 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V4] PCI: qcom: Fixing broken pcie bring up for 2_3_3
+ configs ops
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
- <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
- <ZLVsN40kYsvQm1z6@gerhold.net>
- <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
- <ZLVyvHnKPdOfqAck@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZLVyvHnKPdOfqAck@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+To:     Greg KH <gregkh@linuxfoundation.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <mani@kernel.org>,
+        <lpieralisi@kernel.org>, <bhelgaas@google.com>, <kw@linux.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <stable@vger.kernel.org>
+References: <20230717065535.2065582-1-quic_srichara@quicinc.com>
+ <2023071729-shamrock-evidence-b698@gregkh>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <2023071729-shamrock-evidence-b698@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zh38zpLXZ1BNI7moZ8bAuc7kOwjinL_J
+X-Proofpoint-GUID: zh38zpLXZ1BNI7moZ8bAuc7kOwjinL_J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-17_13,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
+ suspectscore=0 bulkscore=0 mlxscore=0 adultscore=0 spamscore=0
+ impostorscore=0 phishscore=0 priorityscore=1501 mlxlogscore=677
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307170159
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.07.2023 18:56, Stephan Gerhold wrote:
-> On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
->> On 17.07.2023 18:28, Stephan Gerhold wrote:
->>> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
->>>> The GPU_CC block is powered by VDD_CX. Describe that.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
->>>>  1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>> index 29b5b388cd94..bfaaa1801a4d 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
->>>>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>>>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
->>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
->>>> +			power-domains = <&rpmpd SM6115_VDDCX>;
->>>> +			required-opps = <&rpmpd_opp_low_svs>;
->>>
->>> Where is this required-opp coming from? The clocks in gpucc seem to have
->>> different voltage requirements depending on the rates, but we usually
->>> handle that in the OPP tables of the consumer.
->> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
->> but quite obviously the GPU won't work then
->>
-> 
-> The levels needed for the GPU clocks to run should be in the GPU OPP
-> table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
-> 
-> I still don't really understand why this is specified here. :)
-The GPU_CC block needs this rail to be at a certain power level for
-register access. This describes that requirement.
 
-Konrad
+
+On 7/17/2023 7:09 PM, Greg KH wrote:
+> On Mon, Jul 17, 2023 at 12:25:35PM +0530, Sricharan Ramabadhran wrote:
+>> PARF_SLV_ADDR_SPACE_SIZE_2_3_3 macro is used for IPQ8074
+>> 2_3_3 post_init ops. PCIe slave addr size was initially set
+>> to 0x358, but was wrongly changed to 0x168 as a part of
+>> commit 39171b33f652 ("PCI: qcom: Remove PCIE20_ prefix from
+>> register definitions"). Fixing it, by using the right macro
+>> PARF_SLV_ADDR_SPACE_SIZE and remove the unused
+>> PARF_SLV_ADDR_SPACE_SIZE_2_3_3.
+> 
+> Note, you do have a full 72 columns to use, no need to make it smaller.
+
+  ok sure
+
+> 
+>> Without this pcie bring up on IPQ8074 is broken now.
+> 
+> I do not understand, something that used to work now breaks, or this is
+> preventing a new chip from being "brought up"?
+> 
+
+  yes, ipq8074 pcie which was previously working is broken now.
+  This patch fixes it.
+
+
+Regards,
+  Sricharan
