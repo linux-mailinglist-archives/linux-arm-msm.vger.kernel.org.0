@@ -2,81 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23C75756DE1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 21:59:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF4DD756DF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 22:10:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjGQT7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 15:59:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50976 "EHLO
+        id S231351AbjGQUJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 16:09:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230203AbjGQT7k (ORCPT
+        with ESMTP id S230445AbjGQUJ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 15:59:40 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAE0CCC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:59:38 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b703caf344so71830051fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 12:59:38 -0700 (PDT)
+        Mon, 17 Jul 2023 16:09:58 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B132613E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:09:54 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fbca8935bfso45446505e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 13:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689623977; x=1692215977;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GvxfVjwQCk1tS/oslTGgVT+uAnXvEyTLoAROKgew5sE=;
-        b=M/3X+A8jovHdNAXQEux4zoUGZNz7ogggZLsVe7M2Nx/OFI0I9RvpFZSYOJCoFZmgGj
-         m2aKVDMFvWmWex104EZkKqM4tKCC/vg4w7GcsoHJgayGYn72cNyWUOCAJtyK/bb1Z0FP
-         CX68lfcgb/Ncncjks7En+K3Q+zM1PtT1Ka0/EkQKwsqex5Vt+AsictC4voEk5WAi3aet
-         8jMEEDf/5PCT7M2ajf8GQSN2NX/nc0q16/Zw4QTQxuLU6uHtc+HukY5QdqztFJzKjIjM
-         cfGPuSC+Ae+clZs4XUMg9/s4IgY9Se/TqkH9a71tuq+gJc2dMHjy9+10YQW3OGtACFYW
-         CV8g==
+        d=linaro.org; s=google; t=1689624593; x=1692216593;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=23dRsu8FFXKzlR7wpidba41k+oFieJdfmWOjiAaYDnw=;
+        b=Hm1a9ZNqEybhEbdbYVSWOnLddeGSSYalfJhbMYYH2HW6pML3qI5/Z6qRhRRviVKiIs
+         0Y43gN87iC2muHypgZvLaYmenOeLK9WGpTRq3gq0rsQYOO4DnR1oewY7oB9bK+8Qu2CD
+         8pS6vsxyxAGka8ifKfm9bz5fvShH/BEX0x2Jth4TqUuBlqZR32dLqInaELalW1yAn1BA
+         +eXr/O023PxrC6ZIj1y7vpoTCK2CmcL9bbSpFGxvHWam9MgjbaUjTiztUDQV3Bk7Xr1p
+         Ghg6BynZX1EzJJ+xVgnmq5xZsXMwlXBs4vhgR6OLkzbYkKKquYyvkilwN6B151TTLnb9
+         fFeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689623977; x=1692215977;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GvxfVjwQCk1tS/oslTGgVT+uAnXvEyTLoAROKgew5sE=;
-        b=ggM8qsI4H87XIvj/KjZNoWdtG3p12kX1vhj0ciDuYlM3wkjLwt7bDU84BOFTVRnIi9
-         5xhLJNQmCl3FXbLeSShNoBq7mg3xMtYM9DQJPjoU6ouJZNNwTI7fUe9MCoixntAZGXe8
-         b6T8bGcwGH2qPoK7y2SkWzg9MQcLIaH9aFbB8W2M5snOqlPHd0j8v80KP/kpXteNvj+F
-         t7LAvUSVyR11ZdhXxROnn+DzRGwu90GNQKc+zfvmhAOtIIz6GO4PY3nj71j2gM/kg0Fd
-         BqwHv+bLeH2j/IXW4/q74iQvLiwikgUj0yj+anSfdjh0pLwoGFjGk9Im/0fVFdSt++fa
-         YKpQ==
-X-Gm-Message-State: ABy/qLZGvl1JLXVy9KonOhoxH/arO5V5qAhmaVbEEw2GTkbBJk8yhtOj
-        l9Vaf+TITrXlUVhOtrxsJKKUnQ==
-X-Google-Smtp-Source: APBJJlHVBwe/J945YiJIdTO2oS6H9TlT4HIVSlpbPkVmkktYvSkLL2/0tr27q6IkeV4DOmf9+oEX3g==
-X-Received: by 2002:a05:6512:40b:b0:4fb:79b5:5512 with SMTP id u11-20020a056512040b00b004fb79b55512mr165033lfk.66.1689623976938;
-        Mon, 17 Jul 2023 12:59:36 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id j9-20020aa7c409000000b0051e362db186sm68110edq.60.2023.07.17.12.59.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 12:59:36 -0700 (PDT)
-Message-ID: <6338cc75-e3fe-ba19-3df7-727b63fec245@linaro.org>
-Date:   Mon, 17 Jul 2023 21:59:33 +0200
+        d=1e100.net; s=20221208; t=1689624593; x=1692216593;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=23dRsu8FFXKzlR7wpidba41k+oFieJdfmWOjiAaYDnw=;
+        b=SewcwMjUNvqe+pY3S7FMZIkX/wWBmoZbIm8Uhln7igRAPBZ85P7NPFVGogq5a4zczd
+         xvQkyhN5+G2siWMH7gV5VXDYC4tc8O6JCUeAeTPys2TbTZeBrI/+hQudBa6JVqVZ3Ci/
+         TKG2HT3gYVfvxz94ixMWSwe020lvkLT4f1LnhzLx1vFLHMWQoHXsoFqIq4j/AxJXXplc
+         5C/7GdTm/KeqBObrs5vxuwqLcbbe25lcffgCIsRQ7GyzH5nRnsSkDQfB2hcsQuYnWs4f
+         96jSCmvNbEFGy0AVuBOY/AKTNKSyK6MaOC44UNUES2mWi89o5AdeAy7oLH1h+XTYay83
+         2MQA==
+X-Gm-Message-State: ABy/qLaZcib9fPL8jqYl9MFEynK/j6PdXm9Oa7q4J9TT1fjp8HKLYlh0
+        4pi0F59eIuMV0zMX7hHvtJmwFNnV4X0GuUtnTVxUXw==
+X-Google-Smtp-Source: APBJJlEa9PfjirXt6bc7HlMULQG1woEKCO5ni/IRSegVAYsLM1HvtKDtOWzdVotBBR6kNmVYkQzrdhaPYNxMRApwCSQ=
+X-Received: by 2002:adf:d84e:0:b0:313:f6bb:ec2b with SMTP id
+ k14-20020adfd84e000000b00313f6bbec2bmr9945414wrl.47.1689624593023; Mon, 17
+ Jul 2023 13:09:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
- support
-Content-Language: en-US
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
-References: <20230717062547.2086869-1-quic_fenglinw@quicinc.com>
- <20230717062547.2086869-2-quic_fenglinw@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230717062547.2086869-2-quic_fenglinw@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230717103236.1246771-1-bhupesh.sharma@linaro.org>
+ <20230717103236.1246771-4-bhupesh.sharma@linaro.org> <ZLUbyocjNT2bGvVt@gerhold.net>
+ <CAH=2NtzM=jaVtjeHHO0rY0_wHu9==Jpdz4zx5nCK3gBh2kpL=A@mail.gmail.com> <ZLWHwnjjMkJx_ACH@gerhold.net>
+In-Reply-To: <ZLWHwnjjMkJx_ACH@gerhold.net>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 18 Jul 2023 01:39:41 +0530
+Message-ID: <CAH=2NtxHekJVvzaD5SNhZZmAHXhc=7v4Pr7RMEFNTXXH6x_AgQ@mail.gmail.com>
+Subject: Re: [PATCH v8 3/4] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
+        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,30 +73,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/07/2023 08:25, Fenglin Wu wrote:
-> Add support for vibrator module inside Qualcomm PMI632, PM7250B, PM7325B
-> and PM7550BA PMICs.
-> 
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-> index c8832cd0d7da..642408e2b35f 100644
-> --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-> +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-> @@ -15,6 +15,10 @@ properties:
->        - qcom,pm8058-vib
->        - qcom,pm8916-vib
->        - qcom,pm8921-vib
-> +      - qcom,pmi632-vib
-> +      - qcom,pm7250b-vib
-> +      - qcom,pm7325b-vib
-> +      - qcom,pm7550ba-vib
+On Mon, 17 Jul 2023 at 23:58, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Mon, Jul 17, 2023 at 11:33:40PM +0530, Bhupesh Sharma wrote:
+> > On Mon, 17 Jul 2023 at 16:15, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > >
+> > > On Mon, Jul 17, 2023 at 04:02:35PM +0530, Bhupesh Sharma wrote:
+> > > > Add the Embedded USB Debugger(EUD) device tree node for
+> > > > SM6115 / SM4250 SoC.
+> > > >
+> > > > The node contains EUD base register region, EUD mode manager
+> > > > register region and TCSR Base register region along with the
+> > > > interrupt entry.
+> > > >
+> > > > [...]
+> > > >
+> > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/sm6115.dtsi | 50 ++++++++++++++++++++++++++++
+> > > >  1 file changed, 50 insertions(+)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > > > index 839c603512403..db45337c1082c 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > > > +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > > > [...]
+> > > > @@ -789,6 +801,37 @@ gcc: clock-controller@1400000 {
+> > > >                       #power-domain-cells = <1>;
+> > > >               };
+> > > >
+> > > > +             eud: eud@1610000 {
+> > > > +                     compatible = "qcom,sm6115-eud", "qcom,eud";
+> > > > +                     reg = <0x0 0x01610000 0x0 0x2000>,
+> > > > +                           <0x0 0x01612000 0x0 0x1000>,
+> > > > +                           <0x0 0x003c0000 0x0 0x40000>;
+> > > > +                     reg-names = "eud-base", "eud-mode-mgr", "tcsr-base";
+> > >
+> > > TCSR is a separate hardware block unrelated to the EUD. IMHO it
+> > > shouldn't be listed as "reg" here.
+> > >
+> > > Typically we describe it as syscon and then reference it from other
+> > > nodes. See e.g. sm8450.dtsi "tcsr: syscon@1fc0000" referenced in &scm
+> > > "qcom,dload-mode = <&tcsr 0x13000>". This is pretty much exactly the
+> > > same use case as you have. It also uses this to write something with
+> > > qcom_scm_io_writel() at the end.
+> >
+> > That was discussed a bit during v1 patchset review. Basically, if we
+> > use a tcsr syscon approach here, we will need to define a 'qcom,xx'
+> > vendor specific dt-property and use something like this in the eud
+> > node:
+> >
+> > qcom,eud-sec-reg = <&tcsr_reg yyyy>
+> >
+> > which would be then used by the eud driver (via
+> > syscon_regmap_lookup_by_phandle()).
+> >
+> > But for sm6115 / qcm2290 this would be an over complicated solution as
+> > normally the eud driver (say sc7280) doesn't need tcsr based secure
+> > mode manager access. So defining a new soc / vendor specific
+> > dt-property might be an overkill.
+> >
+>
+> IMO a vendor-specific DT property is still better than messing up the
+> device separation in the device tree. The same "tcsr-base" reg would
+> also appear on the actual tcsr syscon device tree node. Having two
+> device tree nodes with the same reg region is generally not valid.
+>
+> Something like qcom,eud-sec-reg = <&tcsr_reg yyyy> would at least make
+> clear that this points into a region that is shared between multiple
+> different devices, while adding it as reg suggests that TCSR belongs
+> exclusively to EUD.
 
-Aren't the last two compatible?
+I understand your point but since for sm6115 / qcm2290 devices TCSR is
+not used for any other purpose than EUD, I still think introducing a
+new soc / vendor specific dt-property might be an overkill for this
+changeset.
 
-Best regards,
-Krzysztof
-
+Thanks,
+Bhupesh
