@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CE7775698B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 18:50:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E55F77569B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jul 2023 18:55:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbjGQQuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jul 2023 12:50:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52384 "EHLO
+        id S229525AbjGQQzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jul 2023 12:55:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbjGQQuY (ORCPT
+        with ESMTP id S229379AbjGQQzw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jul 2023 12:50:24 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ECB3D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 09:50:23 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4fba1288bbdso7579664e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 09:50:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689612621; x=1692204621;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OA9QtUTHDvXEmSCSyfC14bb0EBD3m9CHtlrpuix99a4=;
-        b=EE8CG6Sv797sDpWdfp76eg092cbpOwKYvuxPGZiC0sEyBzEGvakwKBZ+sIhE3ic6j1
-         mij2AAoDBW9LAlbfiXu4mJurTkYfgnFOWuxttIjNqp8Oj8XIsSE+RdXVo+j+i0aCuEVN
-         PNrDbu7TFdk2UuYFT2PNSnwjflFeqItRO3WhAMk0ElRcZ75et1JAZMr/opm/wvgT2ZpE
-         NTMe3H0VAXCKNAOQSMtNMWJpUiqhoEKYm+v8H3nqrdsC1AKGfPU0B6ZqrYTvibGPjlnQ
-         oBjVddzzJfU5KT9g9U56Y5gYM03UlpZSIMOHIsKg+DubuSmuLGthZDHpu4rFVCjeDEwc
-         khqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689612621; x=1692204621;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OA9QtUTHDvXEmSCSyfC14bb0EBD3m9CHtlrpuix99a4=;
-        b=YW+8tW/tC2WUHDoGvMnrmXppKfiNBqYGT0FxkI926h7NdvvMVXXFfS4kt4IJ5LDonw
-         dnPn7hLX8LXl8O88iH9lEnyM4V9Ly05E2Wi0bbUhSlPSMQVuClSIQgqKU2Ei1oPbXjRQ
-         3f2RVEcONQvhhr9wwB3c3+CJXY2WTCM0skZm1vnV7Pg+QNeevpqdlmS2o34zs4gt+eKf
-         jJfxdfy1qnOcY2xxi6Je51RiN7PwfWbMbu07kYwzcwnglFcaUY2JYdBh75FXkA1cbFzZ
-         SA5Z1uXZ36OKeNRq/Pdzl9Tm8inTrhIcQr2UP/kStL6xpxc9IYRAep7R87i8PICtIsew
-         dn9A==
-X-Gm-Message-State: ABy/qLZvDADtnhon5luZgiY7Et28xB96lxFpB06Q4lB/tOCin2pAtNuz
-        OX+L5IiciQs69DAKh73TmPXnPQcMkIv0z6qnJXX6Ww==
-X-Google-Smtp-Source: APBJJlGNzQ4o89/LEOmeUN85mKGWa1WBYa6nh8YlqrrpWkUm/nmaKlS9QbvwYyKYqhjP1FPp1uM5gg==
-X-Received: by 2002:ac2:5337:0:b0:4fb:a0f5:d88d with SMTP id f23-20020ac25337000000b004fba0f5d88dmr10510893lfh.42.1689612621474;
-        Mon, 17 Jul 2023 09:50:21 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id v10-20020ac2592a000000b004f84b36a24fsm848lfi.51.2023.07.17.09.50.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 09:50:21 -0700 (PDT)
-Message-ID: <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
-Date:   Mon, 17 Jul 2023 18:50:18 +0200
+        Mon, 17 Jul 2023 12:55:52 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19275E1;
+        Mon, 17 Jul 2023 09:55:51 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36HClk98010196;
+        Mon, 17 Jul 2023 16:55:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=N5jy5XjZt/vX6R3wNzoWbHctrUDLha8INP4r00L572E=;
+ b=YgDDmuPDpgDKQTNymteWENn6SpkOLcw5y5VFFITtWdg/cs5DTZijA3q9yJ9K4zuvdXwK
+ 7wh1ItCODt7/hJy9lYooIR3rGYfgLI2A5OhBWp1fJZ4RzfqwOafwpQbp6A62TGpsKM7w
+ x8TDGGOZ+2hZYgDpntYm37ap320ArPbi/K4mq1GljCpbEZkx0a0gkGUcU9Bvz3cAVkZU
+ n3eK1quSDNzWUN7ZsYPkkZbQPPmSIheMnpW2s5iCpRNJ6Yk0BOgKWbiqLWu9/KmJ+q8w
+ f6SmT2wDbj7zqv+aHixMIPDRECWJHGo/XLX8tSKw4m9SWEpp0nyogd0kROtl05Rs4Yjn hA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rw33mh1sy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 16:55:45 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36HGtipx001534
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Jul 2023 16:55:44 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 17 Jul 2023 09:55:44 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Sarannya S <quic_sarannya@quicinc.com>,
+        "Chris Lew" <quic_clew@quicinc.com>
+CC:     Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        kernel test robot <lkp@intel.com>,
+        "Dan Carpenter" <dan.carpenter@linaro.org>
+Subject: [PATCH] rpmsg: glink: Avoid dereferencing NULL channel
+Date:   Mon, 17 Jul 2023 09:55:38 -0700
+Message-ID: <20230717165538.1542034-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
- <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
- <ZLVsN40kYsvQm1z6@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZLVsN40kYsvQm1z6@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QjqaYd_ZTCxU-2nFODrFdgrwY9tuuKIZ
+X-Proofpoint-ORIG-GUID: QjqaYd_ZTCxU-2nFODrFdgrwY9tuuKIZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-17_13,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 clxscore=1011 lowpriorityscore=0 bulkscore=0
+ adultscore=0 phishscore=0 spamscore=0 mlxlogscore=806 suspectscore=0
+ malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307170155
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,33 +81,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17.07.2023 18:28, Stephan Gerhold wrote:
-> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
->> The GPU_CC block is powered by VDD_CX. Describe that.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->> index 29b5b388cd94..bfaaa1801a4d 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
->>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
->>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
->> +			power-domains = <&rpmpd SM6115_VDDCX>;
->> +			required-opps = <&rpmpd_opp_low_svs>;
-> 
-> Where is this required-opp coming from? The clocks in gpucc seem to have
-> different voltage requirements depending on the rates, but we usually
-> handle that in the OPP tables of the consumer.
-The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
-but quite obviously the GPU won't work then
+The newly introduced signal command handler checks for non-existing
+channel and print an error message, but then continues on to dereference
+that same channel.
 
-Konrad
-> 
-> Thanks,
-> Stephan
+Instead abort the handler when no channel is found.
+
+Fixes: a2b73aa512a4 ("rpmsg: glink: Add support to handle signals command")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202307160800.sb7gMnL6-lkp@intel.com/
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ drivers/rpmsg/qcom_glink_native.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index e10c05ed21bb..82d460ff4777 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1070,8 +1070,10 @@ static void qcom_glink_handle_signals(struct qcom_glink *glink,
+ 	spin_lock_irqsave(&glink->idr_lock, flags);
+ 	channel = idr_find(&glink->rcids, rcid);
+ 	spin_unlock_irqrestore(&glink->idr_lock, flags);
+-	if (!channel)
++	if (!channel) {
+ 		dev_err(glink->dev, "signal for non-existing channel\n");
++		return;
++	}
+ 
+ 	enable = sigs & NATIVE_DSR_SIG || sigs & NATIVE_CTS_SIG;
+ 
+-- 
+2.25.1
+
