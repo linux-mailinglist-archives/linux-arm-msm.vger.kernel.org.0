@@ -2,222 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05E8D757303
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 07:05:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E59C6757307
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 07:09:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbjGRFFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 01:05:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60162 "EHLO
+        id S229674AbjGRFJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 01:09:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjGRFFC (ORCPT
+        with ESMTP id S229449AbjGRFJM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 01:05:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6890812F;
-        Mon, 17 Jul 2023 22:05:01 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36I2pOR7019061;
-        Tue, 18 Jul 2023 05:03:30 GMT
+        Tue, 18 Jul 2023 01:09:12 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A47012F;
+        Mon, 17 Jul 2023 22:09:11 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36I3FCU2022182;
+        Tue, 18 Jul 2023 05:09:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
+ mime-version : from : subject : to : cc : references : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1flk7jxvxDsjJkwUB+uLvNS/121vaIX+FNpTZXRPiXk=;
- b=UP6yPqpr1zCIHyUAbAa/qFIpoT4d2NnugNIRIemVOmP9k76W8DuitoL+ddmfxVa92Da/
- 0Tq8BER+F1sfiV2hTVDzgr2TUREvqhi5XzKMzv1z2n0bzpZzCuzhSiEiCAGmWHFT5RfV
- FyW241X/HAyinxuLqHe32xaEXE8x8xvHqWS9rZGlHeVHFSWe9CAtUAUr3XPl0HBEtS2A
- hIP9QWQWpXWMgN31Z7HDBJkF3xjduFUzgbUesTJT96NJfQ8xksWoTQnNs8K3+2rNb+tx
- iXU2k7JvYCG+RoG04Nxon++X+WRhBSpAUZV+Ul3yn1YendLo39SIjnK45Ik3hB+yzJBG kA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rw7eeshm7-1
+ bh=I1DxiGEZyd8QbRErBmMkW95iq3qQZEgJgDYHG45ZqJk=;
+ b=DcelHJ+bHOLHzNtcztT678xFnsF61sBV0FnmR5rcOooiKmrhQJD2zDbbveKqdpbSw6Hm
+ er+GW3ZOVWnwI5uW4sjE8s5k1miZKygnFA4q1DYbePhbH1OYFOvM3e+yfI5QBIHjPclf
+ BdVxEsqDhFRBP+DHv/hQr5A75nfc/k8KJ9beyftgIPtkTZ3cn5bTOk56jGjXRZFr+7Sw
+ AH+nYwBm5GmLoeadP/sHLXftQq+Lmbi5pxeA1rlqIwsCqasce5Zu80fly/wJ3sRwlmEc
+ ilnuFCZu/xZ7r03SIq4QK4LHZm0OhFBdhkCSlKo/4f8HdKPYoAjRCkrafwSJYYvzsbdS dA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwcg6rs3d-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 05:03:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36I53Ttw006442
+        Tue, 18 Jul 2023 05:09:07 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36I596eP011767
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 05:03:29 GMT
-Received: from [10.50.3.220] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 18 Jul 2023 05:09:06 GMT
+Received: from [10.50.15.149] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 17 Jul
- 2023 22:03:25 -0700
-Message-ID: <c91e1aad-b81f-8afd-6ee1-c83ed4844b04@quicinc.com>
-Date:   Tue, 18 Jul 2023 10:33:09 +0530
+ 2023 22:09:03 -0700
+Message-ID: <760778dc-b0af-2adb-fa9e-4059a17a2cdf@quicinc.com>
+Date:   Tue, 18 Jul 2023 10:38:53 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V25 0/3] misc: Add driver support for Data Capture and
- Compare unit(DCC)
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1687945879.git.quic_schowdhu@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From:   Ninad Naik <quic_ninanaik@quicinc.com>
+Subject: Re: [PATCH] pinctrl: qcom: Add intr_target_width to define
+ intr_target_bit field width
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        <konrad.dybcio@linaro.org>, <andersson@kernel.org>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_ppareek@quicinc.com>, <psodagud@quicinc.com>,
+        <quic_kprasan@quicinc.com>
+References: <20230714061010.15817-1-quic_ninanaik@quicinc.com>
+ <20230714203802.GA3972960@hu-bjorande-lv.qualcomm.com>
 Content-Language: en-US
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <cover.1687945879.git.quic_schowdhu@quicinc.com>
+In-Reply-To: <20230714203802.GA3972960@hu-bjorande-lv.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: G646Ird-UNiDLMSC4MXcM3_Ql8xvE2Zu
-X-Proofpoint-GUID: G646Ird-UNiDLMSC4MXcM3_Ql8xvE2Zu
+X-Proofpoint-ORIG-GUID: Tkq62HP2qQF8XeHOFrjPa39bLqdJjfK7
+X-Proofpoint-GUID: Tkq62HP2qQF8XeHOFrjPa39bLqdJjfK7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-17_15,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 clxscore=1011
- mlxlogscore=999 adultscore=0 bulkscore=0 phishscore=0 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307180046
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307180047
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+Thank you all for the reviews.
 
-On 6/28/2023 3:53 PM, Souradeep Chowdhury wrote:
-> DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
-> In case of a system crash or manual software triggers by the user the DCC hardware
-> stores the value at the register addresses which can be used for debugging purposes.
-> The DCC driver provides the user with debugfs interface to configure the register
-> addresses. The options that the DCC hardware provides include reading from registers,
-> writing to registers, first reading and then writing to registers and looping
-> through the values of the same register.
+On 7/15/2023 2:08 AM, Bjorn Andersson wrote:
+> On Fri, Jul 14, 2023 at 11:40:09AM +0530, Ninad Naik wrote:
+>> SA8775 and newer target have added support for an increased number of
+>> interrupt targets. To implement this change, the intr_target field, which
+>> is used to configure the interrupt target in the interrupt configuration
+>> register is increased from 3 bits to 4 bits.
+>>
+>> In accordance to these updates, a new intr_target_width member is
+>> introduced in msm_pingroup structure. This member stores the value of
+>> width of intr_target field in the interrupt configuration register. This
+>> value is used to dynamically calculate and generate mask for setting the
+>> intr_target field. By default, this mask is set to 3 bit wide, to ensure
+>> backward compatibility with the older targets.
+>>
+>> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
 > 
-> In certain cases a register write needs to be executed for accessing the rest of the
-> registers, also the user might want to record the changing values of a register with
-> time for which he has the option to use the loop feature.
+> Very nice, Ninad.
 > 
-> The options mentioned above are exposed to the user by debugfs files once the driver
-> is probed. The details and usage of this debugfs files are documented in
-> Documentation/ABI/testing/debugfs-driver-dcc.
+> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > 
-> As an example let us consider a couple of debug scenarios where DCC has been proved to be
-> effective for debugging purposes:-
+>> ---
+>>   drivers/pinctrl/qcom/pinctrl-msm.c     | 9 ++++++---
+>>   drivers/pinctrl/qcom/pinctrl-msm.h     | 2 ++
+>>   drivers/pinctrl/qcom/pinctrl-sa8775p.c | 1 +
+>>   3 files changed, 9 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> index 2585ef2b2793..6ebcaa2220af 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> @@ -1038,6 +1038,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>>   	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+>>   	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>>   	const struct msm_pingroup *g;
+>> +	u32 intr_target_mask = 0x7;
 > 
-> i)TimeStamp Related Issue
+> I like Konrad's suggestion about making this GENMASK(2, 0).
 > 
-> On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
-> instead of proper timestamp values.
+> Please update that and include our R-b tags in v2.
 > 
-> Proper timestamp:
-> Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
-> 
-> Zero timestamp:
-> Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
-> 
-> Now this is a non-fatal issue and doesn't need a system reset, but still needs
-> to be rootcaused and fixed for those who do care about coresight etm traces.
-> Since this is a timestamp issue, we would be looking for any timestamp related
-> clocks and such.
-> 
-> We get all the clk register details from IP documentation and configure it
-> via DCC config_read debugfs node. Before that we set the current linked list.
-> 
-> /* Program the linked list with the addresses */
-> echo R 0x10c004 > /sys/kernel/debug/qcom-dcc/../3/config
-> echo R 0x10c008 > /sys/kernel/debug/qcom-dcc/../3/config
-> echo R 0x10c00c > /sys/kernel/debug/qcom-dcc/../3/config
-> echo R 0x10c010 > /sys/kernel/debug/qcom-dcc/../3/config
-> ..... and so on for other timestamp related clk registers
-> 
-> /* Other way of specifying is in "addr len" pair, in below case it
-> specifies to capture 4 words starting 0x10C004 */
-> 
-> echo R 0x10C004 4 > /sys/kernel/debug/qcom-dcc/../3/config_read
-> 
-> /* Enable DCC */
-> echo 1 > /sys/kernel/debug/qcom-dcc/../3/enable
-> 
-> /* Run the timestamp test for working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram1.bin
-> 
-> /* Run the timestamp test for non-working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram2.bin
-> 
-> Get the parser from [1] and checkout the latest branch.
-> 
-> /* Parse the SRAM bin */
-> python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
-> python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
-> 
-> Sample parsed output of dcc_sram1.bin:
-> 
-> <hwioDump version="1">
->           <timestamp>03/14/21</timestamp>
->               <generator>Linux DCC Parser</generator>
->                   <chip name="None" version="None">
->                   <register address="0x0010c004" value="0x80000000" />
->                   <register address="0x0010c008" value="0x00000008" />
->                   <register address="0x0010c00c" value="0x80004220" />
->                   <register address="0x0010c010" value="0x80000000" />
->               </chip>
->       <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
-> </hwioDump>
-> 
-> ii)NOC register errors
-> 
-> A particular class of registers called NOC which are functional registers was reporting
-> errors while logging the values.To trace these errors the DCC has been used effectively.
-> The steps followed were similar to the ones mentioned above.
-> In addition to NOC registers a few other dependent registers were configured in DCC to
-> monitor it's values during a crash. A look at the dependent register values revealed that
-> the crash was happening due to a secured access to one of these dependent registers.
-> All these debugging activity and finding the root cause was achieved using DCC.
-> 
-> DCC parser is available at the following open source location
-> 
-> https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
-> 
-> Changes in v25
-> 
-> * Updated the documentation of the structure dcc_config_entry as per the comments in V23
-> * Updated the documentation of the dcc Kconfig definition as per comment in V24
-> * Used u64 where applicable
-> * Removed the mutex locks where it is not needed
-> * Removed the use of unlikely keyword
-> * Renamed "nr_link_list" to "max_link_list"
-> 
-> Souradeep Chowdhury (3):
->    dt-bindings: misc: qcom,dcc: Add the dtschema
->    misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
->    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
->      support
-> 
->   Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
->   .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
->   MAINTAINERS                                   |    8 +
->   drivers/misc/Kconfig                          |    8 +
->   drivers/misc/Makefile                         |    1 +
->   drivers/misc/qcom-dcc.c                       | 1312 +++++++++++++++++
->   6 files changed, 1378 insertions(+), 5 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
->   create mode 100644 drivers/misc/qcom-dcc.c
-> 
+Sure, I'll change this to GENMASK and update all the relevant tags 
+(Fixes and R-b) as suggested in the review comments.
+> Regards,
+> Bjorn
 
-Gentle ping
+Thanks a lot!
+Regards,
+Ninad
