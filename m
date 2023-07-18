@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50EC5757C31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 14:49:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66294757CDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 15:09:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231764AbjGRMtr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 08:49:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33708 "EHLO
+        id S232509AbjGRNJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 09:09:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231344AbjGRMtq (ORCPT
+        with ESMTP id S232546AbjGRNJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 08:49:46 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4011194
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 05:49:44 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4fb960b7c9dso9288790e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 05:49:44 -0700 (PDT)
+        Tue, 18 Jul 2023 09:09:10 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DBE4121
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 06:09:05 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-c5e76dfcc36so5648838276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 06:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689684583; x=1692276583;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Fx88Y8ylLpGMnec9BSD55VgDeuGfnAWt7EEQ/PtHDpc=;
-        b=koqsTf9JZBAUJF7/UVBzKuGMxqH9qIu3JA4uLuPxD87jLK6y30SqI9JH5CUvO96/eA
-         px1f4wC1o8IvE/I7Few5mIzN34j1PCsZo3xIti9KbRzvsephQi37px7sde4+KuZY/+jh
-         dXDdHZ7cl7YiOeL4CZ9G4vFWro9GLDuiaZmzFt2lcjAKlbIoVM5yyHqs1XpfkqijunDl
-         NBlVRAlXaZrbhrQQ9aRNQ5jT70hAiKmr/dKiWEIY0bQmSqP0i3SHGZf3baH+I6vL3L8j
-         hKZcDyYEhZprHVX5Rdd4DFZ/oUjTcmG6kiRu1GtfAtxKhuv9yU+4sMup8lIEAEUx3d2m
-         dFNg==
+        d=linaro.org; s=google; t=1689685744; x=1690290544;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=arlaxmSPjr+t49XEWI2/MiuInUH3guP7HZZCse70XY8=;
+        b=mxJQziMe1+EUYzx/QahnAIuck+FYWaKf+SVKYZuvBv8cjOo7mfwV+1aMFfaLV39nkX
+         00VfhiSeaaTFXA2xFr4gji6QqOuOSycg/rRdgDmTu4J/eLp5wI1v/dKyWuW38F3W5HCO
+         A6RCKr1zmyX6/5EzgsiM+HU17nQaOAGt1kSFO2GTRPhwDWZYmqpLttF4RStISKpbc3ZV
+         6CxPyVQWkyua2NYR6JbuC2GfM0nWkF/TFG6sFuBfDubLJjWKgf9KFBi4/W0ZnWSe2SI7
+         14lYDcPtfxjZJbWCu2Zzn2rH23x0jGuSezFNU0HvQci/hjfZQCs0ZMJbyVZUnMee/tjo
+         iypw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689684583; x=1692276583;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fx88Y8ylLpGMnec9BSD55VgDeuGfnAWt7EEQ/PtHDpc=;
-        b=K69r+5k0oIe6Eeu83xfcJiKW+liR3qpQjHvD/pEf8yPydFlVX8gDbTMrDn5698tVOB
-         as5ZMQUUk0206eJwIFCude2HtizI2qDxUXaOnlBMWBnECSpeBWbP2DhOfSQJJZv7OvML
-         QjaPGTsr+oUDU2owFYVVrVe9pHckqYoaCN0bGjxPqQTDZByljXatXWLePzAdk2Ido0lk
-         KTSh0yLjH2UqshVgWD1R6NV25ao89eHARn1cvWUQ9ZD1azBXiC+7PedoQfdOHF5TiZJT
-         g6RJJliFwu7V393Ce5RVx6KsOr8akthVHvrXt3nbF9vsGbMv3pKkOOSgvT4BAN1Ig2Ky
-         +bgA==
-X-Gm-Message-State: ABy/qLaspWzNFP+Wwx9YsKaeWn2yYUTJhmvbI/oJf6FKKII9Qna8UU9e
-        MzxFVxVQ5TBxVJnen5zNn7MecA==
-X-Google-Smtp-Source: APBJJlFQjh+0nmNmA5FTBnkDIQZOdmKm8Oi8kw6dVTUbNrpst5WEY+YTzAEUBE4GyrQFJ7Wdjdz1Hw==
-X-Received: by 2002:ac2:4461:0:b0:4f8:75af:e917 with SMTP id y1-20020ac24461000000b004f875afe917mr9567492lfl.41.1689684583024;
-        Tue, 18 Jul 2023 05:49:43 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id d21-20020ac24c95000000b004db1a7e6decsm420016lfl.205.2023.07.18.05.49.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jul 2023 05:49:42 -0700 (PDT)
-Message-ID: <a930fa66-4ee4-88ef-6351-acbcadd2481e@linaro.org>
-Date:   Tue, 18 Jul 2023 14:49:41 +0200
+        d=1e100.net; s=20221208; t=1689685744; x=1690290544;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=arlaxmSPjr+t49XEWI2/MiuInUH3guP7HZZCse70XY8=;
+        b=T3xHLToySup9ciEi70kdXJcmNeGr71GMuIy7hOi/zWLB14BOuDFYRAPSISMpdr/D3V
+         1JpruGbvJYUA06VeZTu5XVFEco0xlO7++y4GySEyNetwA09+uxNFUyUQxcOnxw4YUJu2
+         6v8mZ9zOOp5aWLrfRcVRqdBEKLS4WoJxsV+zG7/N+qp3YQJ+0Pa0lIP6LRe+xDooxy7L
+         l3nPRLskLGFlZD4a8Py0gAaouW8XLS5B5yoHaKEpyy7Rg9RhNAfcwfQiWWwOK2FYUz4g
+         2ibKsHjxjHG6AMcdAvkzxtMi+MnRMqU12Qv9NCD7TTYSXN1f+76RWxXqBqEOUG+I0MCe
+         jt9w==
+X-Gm-Message-State: ABy/qLbSwziIZSuEdiZYYjXK8fjdFAI88M8MvUNdeLsePjfMXr8SSbyA
+        TExdDBROGyO2gzmUhBBDLhpJMitDS3RfFQmXnv7lBrzvLCpSKLs+
+X-Google-Smtp-Source: APBJJlHK6AyLaAaLUSgPySkhrZdE9+hpDzVV8P2eZl0JHEVw4D2MnsNuSQW/tb8MXm2p7mfzFFevlgeh5Hex06CshMU=
+X-Received: by 2002:a25:3446:0:b0:c6d:e3e3:5592 with SMTP id
+ b67-20020a253446000000b00c6de3e35592mr12933036yba.54.1689685744321; Tue, 18
+ Jul 2023 06:09:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 04/15] clk: qcom: gcc-sm6375: Add runtime PM
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
+ <ZLVsN40kYsvQm1z6@gerhold.net> <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
+ <ZLVyvHnKPdOfqAck@gerhold.net> <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
+ <ZLV5CirE8CZfCjkX@gerhold.net> <9b28a17a-fe9c-3ff0-fa1d-320e75e174d0@linaro.org>
+ <ZLZ94Qc6x1HyjJPQ@gerhold.net> <d087d0df-0bf6-c93a-7999-f9385ebb7a38@linaro.org>
+In-Reply-To: <d087d0df-0bf6-c93a-7999-f9385ebb7a38@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 18 Jul 2023 16:08:53 +0300
+Message-ID: <CAA8EJppFaYPm33Z-_a+AgKYcWsaPE_y=B+agYVQ8z0ncfrvUAw@mail.gmail.com>
+Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -68,17 +70,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
- <20230717-topic-branch_aon_cleanup-v1-4-27784d27a4f4@linaro.org>
- <ZLVru50N2ukdXnsW@gerhold.net>
- <pv7pcn5xc7xdjigefrwzvbjvp5lmgfziywfpvxn2nl7hjnvyre@kukniawnm5rm>
- <ZLaAcELnsldc98Uk@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZLaAcELnsldc98Uk@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,44 +81,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18.07.2023 14:07, Stephan Gerhold wrote:
-> On Mon, Jul 17, 2023 at 09:02:29PM -0700, Bjorn Andersson wrote:
->> On Mon, Jul 17, 2023 at 06:26:35PM +0200, Stephan Gerhold wrote:
->>> On Mon, Jul 17, 2023 at 05:19:11PM +0200, Konrad Dybcio wrote:
->>>> The GCC block on SM6375 is powered by the VDD_CX rail. We need to ensure
->>>> that it's enabled to prevent unwanted power collapse.
->>>>
->>>> Enable runtime PM to keep the power flowing only when necessary.
->>>>
->>>
->>> Are you sure this is necessary? If VDD_CX was really possible to fully
->>> "power collapse" then I would expect that you lose all register
->>> settings. This is not something we want or can even handle for GCC.
->>> You would need to restore all frequency settings, branch bits etc etc.
->>>
->>
->> This differ between platforms, some allow us to completely power down CX
->> while keeping registers state using MX, others require that CX stays in
->> retention at least.
->>
->> So, CX isn't the only rail powering GCC. For the most part though, we
->> have a relationship between frequencies votes for by clients and the
->> corner of CX, and hence I think the current description is ok...
->>
-> 
-> This patch is just about sending enable/disable votes for the power
-> domains though, based on runtime PM which triggers when all the clocks
-> are disabled.
-> 
-> It's unrelated to voting for CX corners required by certain clock
-> frequencies (we handle those in the OPP tables of the consumers).
-> And it's also unrelated to ensuring rentention of register contents
-> since we actually release all votes when the clocks are idle.
-> 
-> So while adding runtime PM to all the clock drivers sounds nice, I'm
-> a bit confused what problem we're actually solving with this patch. :)
-In a very specific and unfortunate situation, there could be no other
-CX votes, and trying to access (perhaps at least parts of) GCC would
-result in a failure.
+On Tue, 18 Jul 2023 at 15:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 18.07.2023 13:56, Stephan Gerhold wrote:
+> > On Mon, Jul 17, 2023 at 09:18:21PM +0200, Konrad Dybcio wrote:
+> >> On 17.07.2023 19:23, Stephan Gerhold wrote:
+> >>> On Mon, Jul 17, 2023 at 07:11:33PM +0200, Konrad Dybcio wrote:
+> >>>> On 17.07.2023 18:56, Stephan Gerhold wrote:
+> >>>>> On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
+> >>>>>> On 17.07.2023 18:28, Stephan Gerhold wrote:
+> >>>>>>> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
+> >>>>>>>> The GPU_CC block is powered by VDD_CX. Describe that.
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >>>>>>>> ---
+> >>>>>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
+> >>>>>>>>  1 file changed, 2 insertions(+)
+> >>>>>>>>
+> >>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>>>> index 29b5b388cd94..bfaaa1801a4d 100644
+> >>>>>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>>>> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
+> >>>>>>>>                        clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> >>>>>>>>                                 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> >>>>>>>>                                 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+> >>>>>>>> +                      power-domains = <&rpmpd SM6115_VDDCX>;
+> >>>>>>>> +                      required-opps = <&rpmpd_opp_low_svs>;
+> >>>>>>>
+> >>>>>>> Where is this required-opp coming from? The clocks in gpucc seem to have
+> >>>>>>> different voltage requirements depending on the rates, but we usually
+> >>>>>>> handle that in the OPP tables of the consumer.
+> >>>>>> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
+> >>>>>> but quite obviously the GPU won't work then
+> >>>>>>
+> >>>>>
+> >>>>> The levels needed for the GPU clocks to run should be in the GPU OPP
+> >>>>> table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
+> >>>>>
+> >>>>> I still don't really understand why this is specified here. :)
+> >>>> The GPU_CC block needs this rail to be at a certain power level for
+> >>>> register access. This describes that requirement.
+> >>>>
+> >>>
+> >>> Can you show where this is defined downstream? On a quick look I didn't
+> >>> see something like that anywhere. Or is this from some secret
+> >>> documentation?
+> >> As far as downstream goes, you can notice that no branch's or RCG's
+> >> vdd tables ever define a level lower than the one I mentioned.
+> >>
+> >
+> > As far as I can tell the vdd tables are only used when the clock is
+> > actually enabled though, not for writing to registers while they are
+> > disabled.
+> Maybe, but you can also notice that even XO rates require at least
+> SVS_LOW to function.
 
-Konrad
+But the vdd tables are related to clock rates, which, in the upstream
+design, should be voted by the consumers, not by the clock driver.
+
+
+-- 
+With best wishes
+Dmitry
