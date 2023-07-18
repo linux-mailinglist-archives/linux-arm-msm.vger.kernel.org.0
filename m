@@ -2,106 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 718C075835E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 19:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6812758427
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 20:07:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbjGRRV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 13:21:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50646 "EHLO
+        id S232140AbjGRSHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 14:07:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233284AbjGRRVH (ORCPT
+        with ESMTP id S229633AbjGRSHW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 13:21:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B679C199;
-        Tue, 18 Jul 2023 10:21:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 334EC614CC;
-        Tue, 18 Jul 2023 17:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FB2C433C7;
-        Tue, 18 Jul 2023 17:21:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689700863;
-        bh=y74BJup/kSru/IUlq3/SqORVbncCOStuvNbNUy0w0p4=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=jxHlP7MJEcCQjDqQ6uuC2LoOuFCY8lt2NvFu1Ya8nDJYsG+u0PiZrGKTdQREkm44k
-         Y8Hhj+eIVkKyjcRoH/liW9Of2PX6ywFq9rSma5TidPGXcQdeLfNXc7riFktmfQHrL9
-         btECcWg18DDEMC2DvtfjbAM0wuEStc6G4IZJ8PDjYjusuoRTjkbS1ZuhcZzozcrz80
-         ySKOGi8ODtI9GFmyXVM2fnVWOABxBdLL+A4M0gJWycAw3Xkor0cp7wTYKaBfP2koda
-         EIhT6YBGbakqI8K7q9aoBBPcXx4rpEQG1N1HghuUqrWkYwNkJjnPPK9h9ro1JnRM/z
-         yu4vcB/gzFFpQ==
-Received: (nullmailer pid 1409636 invoked by uid 1000);
-        Tue, 18 Jul 2023 17:21:01 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Tue, 18 Jul 2023 14:07:22 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39C47B6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 11:07:21 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so10022463e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 11:07:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689703639; x=1690308439;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IGmnpAcv9xHX2PJXznlg8lETRAbcSNyh2k36z5zq72k=;
+        b=qhDWNQSf9VGuzieTNsqIAhp3eHO3n0BFHAgI8JgV5U2WmjuOCPxahg3NobdpUJGFh3
+         BhLJoNvFzr+nPULDqN9ERcHwJehiNHaC9TGVza45fBemscwED2F0o47VX9zF0D8NExk7
+         wQfy8VWJYX0C4cq6N2mMBojUuFm9HocdYfq2LuHBJgfEod3gtK5Bwdv868ERMdZWL7xW
+         5GpHXswsTnq9VpKlVV782OW58bOaF7NRAuR+UgmM6fys8JqS2PgPGKFgm08FNhYe24fy
+         SfgWVBnimXfAxXW1l4SpVO3XP7zwDSXnU3hbUZ2bzZ7Z7KP87bVTktj0/Ek8PdYuca01
+         UPow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689703639; x=1690308439;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IGmnpAcv9xHX2PJXznlg8lETRAbcSNyh2k36z5zq72k=;
+        b=f+jOqxOCHxYmG0wFQ8qQzTCW6viH+ot4us5nEwVVUdx4FoQtFGCUS5U/Jtof/0nWGC
+         KZJei9M8xJ9P097sNb1rbSZgFDkYv5hK/0zWHJ7BW5TQgH4pTD9h2ZRzV65rJE0JoXJv
+         44xRGWeHji5fpdiFrdGbtsuO4McXYwV37ivtI4FFGRxDw5tdMel0RhAqPwiiTbpiW/XK
+         bhK9EudHuwbHasYmzaIOsq2DrIhY3b2ZeybYhKNC0eeS4bPsxRqoYbZjtEB/C07J3Ngf
+         BDI2vcs0KaTxshK8fd0b1PdpysJjpdgMuH0dQcr97GVfhst6nAhKoXmJZfNXSXwSaaM2
+         jbIw==
+X-Gm-Message-State: ABy/qLZ5N8UdCFdkVMhq+JSCqINsGgHBs3gSKTvCwTrpNHEMgC/lesdi
+        kCmdVI3dtw2u5wuA0vD6vT6ORw==
+X-Google-Smtp-Source: APBJJlFkXRFb/GrwzLVv2eKCajwpvO40w3NcsKaHKHsof8a7Jgmk/uII7LhlygPNoOdD3Hv3JMmROg==
+X-Received: by 2002:a05:6512:3b08:b0:4f5:1418:e230 with SMTP id f8-20020a0565123b0800b004f51418e230mr3099383lfv.52.1689703639226;
+        Tue, 18 Jul 2023 11:07:19 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id v25-20020a197419000000b004f858249932sm546245lfe.90.2023.07.18.11.07.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Jul 2023 11:07:18 -0700 (PDT)
+Message-ID: <01907421-1003-1041-f1bd-ad11218527e1@linaro.org>
+Date:   Tue, 18 Jul 2023 21:07:18 +0300
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Nikunj Kela <quic_nkela@quicinc.com>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, sudeep.holla@arm.com,
-        devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        andersson@kernel.org, linux-arm-msm@vger.kernel.org,
-        conor+dt@kernel.org, cristian.marussi@arm.com
-In-Reply-To: <20230718160833.36397-2-quic_nkela@quicinc.com>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230718160833.36397-2-quic_nkela@quicinc.com>
-Message-Id: <168970086141.1409620.455574714947000571.robh@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: Add qcom specific hvc transport
- for SCMI
-Date:   Tue, 18 Jul 2023 11:21:01 -0600
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 0/2] Resolve MPM register space situation
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230328-topic-msgram_mpm-v4-0-bae382dc0f92@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230328-topic-msgram_mpm-v4-0-bae382dc0f92@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 18 Jul 2023 09:08:32 -0700, Nikunj Kela wrote:
-> Introduce compatible "qcom,scmi-hvc-shmem" for SCMI
-> transport channel for Qualcomm virtual platforms.
-> The compatible mandates a shared memory channel.
+On 18/07/2023 15:19, Konrad Dybcio wrote:
+> v3 -> v4:
+> - Fix up indentation in the bindings patch
+> - Add an example glink-edge subnode to remoteproc-rpm (its bindings
+>    require that..)
 > 
-> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+> Link to v3: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v3-0-2c72f27b4706@linaro.org
+> 
+> v2 -> v3:
+> - Fix the example
+> - Pick up tags
+> - remove the outdated example from the cover letter, check bindings
+>    should you want to see one
+> 
+> The bindings for the wrapper node used in the yaml example are merged
+> in qcom/for-next
+> 
+> Link to v2: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org
+> 
+> v1 -> v2:
+> - deprecate 'reg', make qcom,rpm-msg-ram required [1/2]
+> - Use devm_ioremap() [2/2]
+> 
+> Link to v1: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org
+> 
+> Depends on resolution of https://github.com/devicetree-org/dt-schema/issues/104
+> 
+> The MPM (and some other things, irrelevant to this patchset) resides
+> (as far as the ARM cores are concerned, anyway) in a MMIO-mapped region
+> that's a portion of the RPM (low-power management core)'s RAM, known
+> as the RPM Message RAM. Representing this relation in the Device Tree
+> creates some challenges, as one would either have to treat a memory
+> region as a bus, map nodes in a way such that their reg-s would be
+> overlapping, or supply the nodes with a slice of that region.
+> 
+> This series implements the third option, by adding a qcom,rpm-msg-ram
+> property, which has been used for some drivers poking into this region
+> before. Bindings ABI compatibility is preserved through keeping the
+> "normal" (a.k.a read the reg property and map that region) way of
+> passing the register space.
+
+This almost bleeds to have some uniformity with qcom,rpm-stats (and with 
+the boot stats). All these drivers provides us with the insight into the 
+RPM memory.
+
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  .../bindings/firmware/arm,scmi.yaml           | 69 +++++++++++++++++++
->  1 file changed, 69 insertions(+)
+> Konrad Dybcio (2):
+>        dt-bindings: interrupt-controller: mpm: Pass MSG RAM slice through phandle
+>        irqchip: irq-qcom-mpm: Support passing a slice of SRAM as reg space
 > 
+>   .../bindings/interrupt-controller/qcom,mpm.yaml    | 52 +++++++++++++++-------
+>   drivers/irqchip/irq-qcom-mpm.c                     | 21 +++++++--
+>   2 files changed, 53 insertions(+), 20 deletions(-)
+> ---
+> base-commit: aeba456828b4e47d99ec8ffb01412fbed0f94806
+> change-id: 20230328-topic-msgram_mpm-c688be3bc294
+> 
+> Best regards,
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/firmware/arm,scmi.example.dts:194.31-32 syntax error
-FATAL ERROR: Unable to parse input tree
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/firmware/arm,scmi.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1500: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230718160833.36397-2-quic_nkela@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+-- 
+With best wishes
+Dmitry
 
