@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DE1F7573B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:11:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9C1E7573BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:11:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231232AbjGRGL3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 02:11:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53786 "EHLO
+        id S231240AbjGRGLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 02:11:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231267AbjGRGLU (ORCPT
+        with ESMTP id S231276AbjGRGLi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 02:11:20 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EBC71709
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:17 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-6687096c6ddso3338272b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:17 -0700 (PDT)
+        Tue, 18 Jul 2023 02:11:38 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED4371988
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:22 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-666edfc50deso3254998b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689660676; x=1692252676;
+        d=linaro.org; s=google; t=1689660681; x=1692252681;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R3U8YGGir0L/mdYZ0L+59VSzteiUJkc0KitjLit6CXs=;
-        b=asFylN+n0kUr9plq5cxM4Pwogu2AbP35sKK923oj7CnWW/DgT7MjZAsGYRthUkBd4d
-         b8Hi3b4raiSvXdLqaqVpkHASKj0XLIIetKlI7q+BvECvA1B+ANvmy6x3WLIlMKxJwiLR
-         IxeDloi3MvSFsCTk/6O4bHX6mqTJuhrN02OLk9442NPyIlMAs5SErx0oetDzzz3a4AwN
-         O6CdOWctwj3IIYCoaNLxVQE13xu0UOfPc/w1I9dSKbhSujiAP4XuDxWvj/eCxshmbUzd
-         qFddJJ/n4iZuwksLcThBDYi9hpPMxtvZOffw2AhgTx8AZm8KIwLdnAjy35lm85+QNyXH
-         TxmA==
+        bh=Cj0Kr21fyKMkxAxxSOMwsypaT2zCqEO5kfSgBNpmV4w=;
+        b=E4VIlEjB7OpiaiNfOMe49rriMI65KPRGhRjW+OuN7mBoAE1PhP8mtVQM0a1Dy2bQuX
+         rqb3C7XkjgbyiD/J6t2j/5mUba5DjjyAStOl1ljQlQ288qZboIBUMma6B+1emotmY8EQ
+         H30Q+VKbzduQhblOO0e/J1LJue45zD5H74MlO9uRKcNj5YMWQNY+9+4r/6pZH0Bk0jYy
+         ZL2/TeMnlp8zqh85xhp6ufz9gdCwDf9eHmwV3u33PBTE7mmIv2Iu0eqQxFGim0Oj7i2q
+         NkN4kCnQeBzsi+Q1Nwl091PlAkh8zEds8xPDolZdIf2crsTPbHSV4+WD5EmY48j7GX1e
+         Jzxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689660676; x=1692252676;
+        d=1e100.net; s=20221208; t=1689660681; x=1692252681;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=R3U8YGGir0L/mdYZ0L+59VSzteiUJkc0KitjLit6CXs=;
-        b=KcboUhm6I5tNJ+/3r+spbdpN1TkJLoNeKkQ+97lcB87FtsKQ8TwVYlxy/hqD5xAskc
-         b5Xjiic8KU0MxyXqjGtwOjaQQtoI7f2f9C63BK5gda42HtcUmEjrkCN7repwlu+IbGmf
-         h7J7XQakit+axL3//wAXSM+R3y5VGnfYLrMBTC6zEqFn0LOflfxqPNwAKo5MF32auNDB
-         ytEBNML0MyWBQA1CeQqIbeqIblyWDmaHZ9RV4y4Q5BC8EgvLRgekHtvu412kUS9FXaKg
-         fcJWkbn7g/m/vH8dVCykClXnjgrwqmi/g3SW17NnlX7V6zghMXO16+eiHIZmD7X+fueY
-         dRJQ==
-X-Gm-Message-State: ABy/qLZWErkT9LIBfYh86tBM983OupPW0mWs0PNTsL9HhPLLeJFWihHy
-        NfCWFJsVRrYYStSdSRZ7zuKXo+Gxv8P3m22kKBTSoQ==
-X-Google-Smtp-Source: APBJJlEbASCzBW5nny//1cmmMU2YlKnUEAb+V7SgOKcexNMZhmsXJfHXlbCrE+ldrpJWCd/Z6B0BXg==
-X-Received: by 2002:a05:6a20:12ce:b0:135:4df7:f165 with SMTP id v14-20020a056a2012ce00b001354df7f165mr2429388pzg.21.1689660675802;
-        Mon, 17 Jul 2023 23:11:15 -0700 (PDT)
+        bh=Cj0Kr21fyKMkxAxxSOMwsypaT2zCqEO5kfSgBNpmV4w=;
+        b=kZlfFxnagHhHxKX4RiIqDmQ8+KkI9/6Tc++3EJcWMf5r4EeJdbr58qs/QIvstJFEEe
+         dyEqkEo2YWqSeQfUO133TR12i0dO7WK23gF4o7SHDvTZbLKtLQhd/pwqOOU7pQNX1xAR
+         TGicMBfBySudkavPI0vbvb0Oa3TjvdjkoFvXyoi0w/RgxuLlo7281N97cW3YR+zD9t1y
+         VTMF5BsoOgLcgDWEHS2Mc/r9dJAnLew6EGTEMEFEjc76P2op2Z1dvw0EVy9JkDzMB3og
+         wEi9LQmDV8U/B0DHwGaHxMMNIfudE1r4ayyiOLSspCQgE0x/zeOkkJghER/d6g1/Ra7W
+         aXiA==
+X-Gm-Message-State: ABy/qLbYeYGFnES2spyYui03R721DBuQPLErkIB0NK1fbiS0spvNWR9K
+        JMgrE/G0nG3QM8rbVsOtfGvQMZeevGT16/b4cqlK6Q==
+X-Google-Smtp-Source: APBJJlHjtWvi6yAFKVFf93mMLqWPNaz5odCz8RCDBsF7Wt8mdjxL4BtqtmP842+6qU6d6uaRCakpwA==
+X-Received: by 2002:a05:6a00:a1f:b0:676:8fac:37 with SMTP id p31-20020a056a000a1f00b006768fac0037mr14739279pfh.4.1689660680828;
+        Mon, 17 Jul 2023 23:11:20 -0700 (PDT)
 Received: from localhost.localdomain ([223.233.68.54])
-        by smtp.gmail.com with ESMTPSA id h21-20020a62b415000000b0067db7c32419sm778106pfn.15.2023.07.17.23.11.11
+        by smtp.gmail.com with ESMTPSA id h21-20020a62b415000000b0067db7c32419sm778106pfn.15.2023.07.17.23.11.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jul 2023 23:11:15 -0700 (PDT)
+        Mon, 17 Jul 2023 23:11:20 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-usb@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
         quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org,
         stephan@gerhold.net
-Subject: [PATCH v9 2/7] dt-bindings: soc: qcom: eud: Document vendor-specific 'secure mode' property
-Date:   Tue, 18 Jul 2023 11:40:47 +0530
-Message-Id: <20230718061052.1332993-3-bhupesh.sharma@linaro.org>
+Subject: [PATCH v9 3/7] dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 support
+Date:   Tue, 18 Jul 2023 11:40:48 +0530
+Message-Id: <20230718061052.1332993-4-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
 References: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
@@ -77,37 +77,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some SoCs (like the SM6115 / SM4250 SoC), the enable bit inside
-'tcsr_check_reg' needs to be set first to 'enable' EUD mode.
+Add dt-bindings for EUD found on Qualcomm SM6115 / SM4250 SoC.
 
-So introduce a vendor-specific dt-property 'qcom,secure-eud-reg'
-which specifies the base address of the TCSR reg space and the offset
-of the 'tcsr_check_reg'.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-index f2c5ec7e6437b..ca38d219e57d5 100644
+index ca38d219e57d5..bb9b97f03585f 100644
 --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
 +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-@@ -45,6 +45,14 @@ properties:
-         $ref: /schemas/graph.yaml#/properties/port
-         description: This port is to be attached to the type C connector.
+@@ -18,6 +18,7 @@ properties:
+     items:
+       - enum:
+           - qcom,sc7280-eud
++          - qcom,sm6115-eud
+       - const: qcom,eud
  
-+  qcom,secure-eud-reg:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle to TCSR hardware block
-+          - description: offset of the secure mode manager register
-+    description: TCSR hardware block
-+
- required:
-   - compatible
-   - reg
+   reg:
 -- 
 2.38.1
 
