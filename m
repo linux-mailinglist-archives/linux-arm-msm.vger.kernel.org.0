@@ -2,171 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98EDE7586B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 23:16:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3E5B7586D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 23:24:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230164AbjGRVQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 17:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39230 "EHLO
+        id S230137AbjGRVYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 17:24:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbjGRVQ2 (ORCPT
+        with ESMTP id S229907AbjGRVYr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 17:16:28 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EF02198C;
-        Tue, 18 Jul 2023 14:16:27 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36IL7KXu015522;
-        Tue, 18 Jul 2023 21:16:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PqfrqoeAg+0b1g+Sc4EJfTTv6RRn4fSeA06NxQ7vN/E=;
- b=Onwnnv+g0Jv0RxApQWdDjRJ/jQLGzFw3a4UOipleGW5fQZeSwsC7q9i3GEGQfE8KxMYS
- 5WEseE3xiYfciHw+h9ID7DCpV3awHxgEpkaXdOIsASeoHoSb3RgrzZCCPvKJ7jW+WyI4
- zm0L4zQRgCoZsYbKziQ2ld2ljtK4mMkYZFtwpgSyJhLqVUp6+mQDS6Wpc9bc2xiVBeuk
- UzsSFikb4QvXQmOdUoxwfbvUaaNWkMKqjuGpADZY+LECcn+K311MHIVnf6a/V+4uupmI
- ERes7+WlzQLI+cduOgXnd31gVYyTBB88al07NduMIn0wnBk48kuMMyuKVgn+O0rsZqC0 iA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwpphhrr4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 21:16:06 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36ILG56L015128
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 21:16:05 GMT
-Received: from [10.110.49.60] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 18 Jul
- 2023 14:16:05 -0700
-Message-ID: <e8399fcf-e0d8-cc31-d9a7-b0f4f7cc3e71@quicinc.com>
-Date:   Tue, 18 Jul 2023 14:16:04 -0700
+        Tue, 18 Jul 2023 17:24:47 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8413C0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 14:24:45 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 1B03F3F5C7;
+        Tue, 18 Jul 2023 23:24:38 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Subject: [PATCH v3 00/15] drm/msm: Add SM6125 MDSS/DPU hardware and enable
+ Sony Xperia 10 II panel
+Date:   Tue, 18 Jul 2023 23:24:36 +0200
+Message-Id: <20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230718160833.36397-3-quic_nkela@quicinc.com>
- <d9d5ffd5-6f85-f091-5d69-12cdd8d04c99@linaro.org>
- <3ae2d618-490a-06da-b4b6-b5a24b0a9747@quicinc.com>
- <ec3d7769-8a5f-d938-7f77-351ddfe6fb45@linaro.org>
-Content-Language: en-US
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <ec3d7769-8a5f-d938-7f77-351ddfe6fb45@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KuPAXTxwQROxCiF9BTqLsOxJIvWxkS5B
-X-Proofpoint-ORIG-GUID: KuPAXTxwQROxCiF9BTqLsOxJIvWxkS5B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-18_15,2023-07-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1011
- bulkscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307180194
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIABQDt2QC/23NSw6CMBgE4KuYrq3pA1p05T2Miz5+oAm0pJVGQ
+ 7i7hZVGlzPJN7OgBNFBQpfDgiJkl1zwJfDjAZle+Q6wsyUjRhgnglU4jYKyGttpxgqsOQsuAaR
+ GBWiVAOuovOkL8fMwlHKK0Lrn/nC7l9y79AjxtR9murV/tzPFBFNbK8EbA7pl1xRG5fzgPJxC7
+ NC2ldmnl1+eFU84VJwoRmRjfvy6rm+B3UzY/gAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Bring up the SM6125 DPU now that all preliminary series (such as INTF
+TE) have been merged (for me to test the hardware properly), and most
+other conflicting work (barring ongoing catalog *improvements*) has made
+its way in as well or is still being discussed.
 
-On 7/18/2023 11:42 AM, Krzysztof Kozlowski wrote:
-> On 18/07/2023 20:25, Nikunj Kela wrote:
->>>> +
->>>> +	scmi_info = devm_kzalloc(dev, sizeof(*scmi_info), GFP_KERNEL);
->>>> +	if (!scmi_info)
->>>> +		return -ENOMEM;
->>>> +
->>>> +	np = of_parse_phandle(cdev->of_node, "shmem", 0);
->>>> +	if (!of_device_is_compatible(np, "arm,scmi-shmem"))
->>> You leak here reference.
->> Wouldn't the devm_* API take care of that implicitly? It is same in
->> smc.c as well.
-> Thanks for bringing my attention to this. I sent a fix for smc.c. Fix
-> your patch as well, please.
-Thanks, I thought you were referring to kzalloc cleanup. Will include 
-this fix. BTW, you may need to fix mailbox.c as well.
->
->>>> +		return -ENXIO;
->>>> +
->>>> +	ret = of_address_to_resource(np, 0, &res);
->>>> +	of_node_put(np);
->>>> +	if (ret) {
->>>> +		dev_err(cdev, "failed to get SCMI Tx shared memory\n");
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	size = resource_size(&res);
->>>> +
->>>> +	/* let's map 2 additional ulong since
->>>> +	 * func-id & capability-id are kept after shmem.
->>>> +	 *     +-------+
->>>> +	 *     |       |
->>>> +	 *     | shmem |
->>>> +	 *     |       |
->>>> +	 *     |       |
->>>> +	 *     +-------+ <-- size
->>>> +	 *     | funcId|
->>>> +	 *     +-------+ <-- size + sizeof(ulong)
->>>> +	 *     | capId |
->>>> +	 *     +-------+ <-- size + 2*sizeof(ulong)
->>>> +	 */
->>>> +
->>>> +	scmi_info->shmem = devm_ioremap(dev, res.start,
->>>> +					size + 2 * sizeof(unsigned long));
->>>> +	if (!scmi_info->shmem) {
->>>> +		dev_err(dev, "failed to ioremap SCMI Tx shared memory\n");
->>>> +		return -EADDRNOTAVAIL;
->>>> +	}
->>>> +
->>>> +	func_id = readl((void *)(scmi_info->shmem) + size);
->>>> +
->>>> +#ifdef CONFIG_ARM64
->>>> +	cap_id = readq((void *)(scmi_info->shmem) + size +
->>>> +		       sizeof(unsigned long));
->>>> +#else
->>>> +	cap_id = readl((void *)(scmi_info->shmem) + size +
->>>> +		       sizeof(unsigned long));
->>>> +#endif
->>>> +
->>>> +	/*
->>>> +	 * If there is an interrupt named "a2p", then the service and
->>>> +	 * completion of a message is signaled by an interrupt rather than by
->>>> +	 * the return of the hvc call.
->>>> +	 */
->>>> +	irq = of_irq_get_byname(cdev->of_node, "a2p");
->>>> +	if (irq > 0) {
->>>> +		ret = devm_request_irq(dev, irq, qcom_hvc_msg_done_isr,
->>>> +				       IRQF_NO_SUSPEND,
->>>> +				       dev_name(dev), scmi_info);
->>>> +		if (ret) {
->>>> +			dev_err(dev, "failed to setup SCMI completion irq\n");
->>> return dev_err_probe, unless this is not called in probe... but then
->>> using devm-interface raises questions.
->> This is copied as is from existing smc.c
-> I understand and I hope you understand the code you copied. If there is
-> a bug in existing code, please do not copy it to new code (like leaking
-> OF node reference).
->
-> Best regards,
-> Krzysztof
->
+The second part of the series complements that by immediately utilizing
+this hardware in DT, and even enabling the MDSS/DSI nodes complete with
+a 6.0" 1080x2520 panel for Sony's Seine PDX201 (Xperia 10 II).
+
+The last patch ("sm6125-seine: Configure MDSS, DSI and panel") depends
+on (an impending v2 of) my Sony panel collection series [1].
+
+[1]: https://lore.kernel.org/linux-arm-msm/20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org/
+
+---
+Changes in v3:
+- Drop status="disabled" from MDSS dt-bindings example;
+- Use "nom" instead of "svs" OPP for dsi-phy PD, matching downstream;
+- Add "retention" OPP to dispcc PD;
+- Reword dsi-phy required-opps documentation;
+- Rebased on latest -next and fixed conflicts in DT and DPU catalog;
+- Link to v2: https://lore.kernel.org/r/20230627-sm6125-dpu-v2-0-03e430a2078c@somainline.org
+
+Changes in v2:
+- Moved dispcc DT clock reordering to the right patch (--fixup on the
+  wrong hash) (Dmitry, Konrad multiple times);
+- Drop removal of GCC_DISP_AHB_CLK in dispcc bindings.  While it is
+  unused in the current driver, it is likely used to ensure a guaranteed
+  probe order between GCC and DISPCC downstream, as well as currently
+  relying on the fact that GCC_DISP_AHB_CLK is CLK_IS_CRITICAL and never
+  turned off (Bjorn);
+- Add GCC_DISP_GPLL0_DIV_CLK_SRC at the end of the dispcc clock list to
+  maintain some form of ABI stability (Krzysztof);
+- Use SoC-prefix format for 14nm DSI PHY qcom,sm6125-dsi-phy-14nm
+  compatible (Dmitry, Krzysztof);
+- Add patch to drop unused regulators from QCM2290 14nm DSI PHY (Konrad,
+  Dmitry);
+- Reuse QCM2290 14nm DSI PHY config struct for SM6125 compatible
+  (Konrad);
+- s/sde/mdss in pdx201.dts pinctrl node names and labels (Konrad);
+- Use MX power domain in DSI PHY with SVS OPP (Dmitry);
+- Use CX power domain with (already-existing) OPP table in DSI CTRL
+  (Konrad, Dmitry);
+- Rebased on top of DPU catalog rework [1] by inlining macro
+  invocations, and validated by diffing stripped dpu_hw_catalog.o that
+  there are no unexpected changes;
+- Unset min_llcc_ib because this platform has no LLCC (Konrad);
+- Fix UBWC comment to mention "encoding" version (Dmitry);
+- Reordered DT nodes to follow Konrad's requested sorting;
+- Add power-domains and required-opps properties to dsi-phy-14nm.yaml;
+- Link to v1: https://lore.kernel.org/r/20230624-sm6125-dpu-v1-0-1d5a638cebf2@somainline.org
+
+The discussions and this list ran quite long, apologies if I missed or
+mis-resolved anything in advance!
+
+[1]: https://lore.kernel.org/linux-arm-msm/20230619212519.875673-1-dmitry.baryshkov@linaro.org/
+
+---
+Marijn Suijten (15):
+      drm/msm/dsi: Drop unused regulators from QCM2290 14nm DSI PHY config
+      arm64: dts: qcom: sm6125: Sort spmi_bus node numerically by reg
+      dt-bindings: clock: qcom,dispcc-sm6125: Require GCC PLL0 DIV clock
+      dt-bindings: clock: qcom,dispcc-sm6125: Allow power-domains property
+      dt-bindings: display/msm: dsi-controller-main: Document SM6125
+      dt-bindings: display/msm: sc7180-dpu: Describe SM6125
+      dt-bindings: display/msm: Add SM6125 MDSS
+      drm/msm/dpu: Add SM6125 support
+      drm/msm/mdss: Add SM6125 support
+      dt-bindings: msm: dsi-phy-14nm: Document SM6125 variant
+      drm/msm/dsi: Reuse QCM2290 14nm DSI PHY configuration for SM6125
+      arm64: dts: qcom: sm6125: Switch fixed xo_board clock to RPM XO clock
+      arm64: dts: qcom: sm6125: Add dispcc node
+      arm64: dts: qcom: sm6125: Add display hardware nodes
+      arm64: dts: qcom: sm6125-seine: Configure MDSS, DSI and panel
+
+ .../bindings/clock/qcom,dispcc-sm6125.yaml         |  24 +-
+ .../bindings/display/msm/dsi-controller-main.yaml  |   2 +
+ .../bindings/display/msm/dsi-phy-14nm.yaml         |  11 +
+ .../bindings/display/msm/qcom,sc7180-dpu.yaml      |  14 ++
+ .../bindings/display/msm/qcom,sm6125-mdss.yaml     | 211 +++++++++++++++++
+ .../dts/qcom/sm6125-sony-xperia-seine-pdx201.dts   |  59 +++++
+ arch/arm64/boot/dts/qcom/sm6125.dtsi               | 255 +++++++++++++++++++--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h | 236 +++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   7 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |   2 -
+ drivers/gpu/drm/msm/msm_mdss.c                     |   8 +
+ 14 files changed, 810 insertions(+), 23 deletions(-)
+---
+base-commit: 535ce75f2d80a47ce5407681014cd5a976646e38
+change-id: 20230624-sm6125-dpu-aedc9637ee7b
+
+Best regards,
+-- 
+Marijn Suijten <marijn.suijten@somainline.org>
+
