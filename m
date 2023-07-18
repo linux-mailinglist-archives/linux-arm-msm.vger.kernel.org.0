@@ -2,94 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEC66758124
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 17:39:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C6897581BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 18:09:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233718AbjGRPju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 11:39:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39526 "EHLO
+        id S230167AbjGRQJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 12:09:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233346AbjGRPjr (ORCPT
+        with ESMTP id S232095AbjGRQJ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 11:39:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE20E52;
-        Tue, 18 Jul 2023 08:39:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 72DDE6164D;
-        Tue, 18 Jul 2023 15:39:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D56C433C8;
-        Tue, 18 Jul 2023 15:39:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689694785;
-        bh=niFUIW8RgEpvAiA6LUCdCCanWa0dt1Z+kgLKjKniI74=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=F8nqHHPzXSuaiu4yqCxVn6565ivWW36QEwkPKlE4Yfn7Y2zDQ08Tlk+6MG1k25YCY
-         jLImfir4nCohVHrD01iUvnCVkW6XrTh7ApdvGcmOZzH1/a6N9TU6KW4VO31yHNNgAx
-         Nc+TfTJgONI8Wz6uq4mJhfIDRv0VFizJRGOIkIfr2d41zu7uR3l1gwowN6C+EDZnPw
-         YaUYTMALn2uo46LI0tUUaKDB7oehgXlsLawg6to9S1yQNiDnO+LBdxcioakgMUYd0l
-         yWYJAvJinQjqIwDxupQRzyocLyfylbXKpCaPxQ+ZcaxQ6zyUSlhdlGvhWoaE/EgVvA
-         QL3pz4SaW4esg==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qLmnr-0006Bq-1J;
-        Tue, 18 Jul 2023 17:39:55 +0200
-Date:   Tue, 18 Jul 2023 17:39:55 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH 5/8] clk: qcom: lpasscc-sc7280: fix missing resume during
- probe
-Message-ID: <ZLaySwCQsgQCSRIW@hovoldconsulting.com>
-References: <20230718132902.21430-1-johan+linaro@kernel.org>
- <20230718132902.21430-6-johan+linaro@kernel.org>
- <xbek6yuldy7ck3zlux76hosn4iqt52ocydovuol7geiwapslrd@j7uyxhrkiyaw>
+        Tue, 18 Jul 2023 12:09:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D7EBE0;
+        Tue, 18 Jul 2023 09:09:27 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36IBeNPb018133;
+        Tue, 18 Jul 2023 16:08:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=NK+gRZ6OyFYwmAlmM+zt1RKS/RzKZtsNHuw7Z/F1nw0=;
+ b=lPc1njf/VebIGOoJIk3RFtn+pD2kHQVNuzaevfS/YnBUz//BYyjvksMdxgveRAQ7pQgG
+ ZJc2ba/So856ZvxOASnpI05XRytyHwtTTYzHtr6YmO6/Atl2OoASLFXBYVQ8gJdqr7PH
+ oBPx2LMvJNCqmmOhqQC/FjzUKDrZumrjcYiRW1NPu0LGEkKi3kswsv7h+va0vR4qnUQR
+ FpM98Mci1IzvI1fsiXJE7x75ZHnQobPao6hkoTZHQkeculaIwGGzZcVU05FzgXt0wdAq
+ KGhRxIAM37aPhwx+9cOuzcyvuG2534f99Sz8bx6kMd380Q5ZrVM+ETk45lwCc+rDZEbu lw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwk5bhn19-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Jul 2023 16:08:55 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36IG8sCl019301
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Jul 2023 16:08:54 GMT
+Received: from car-linux11.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 18 Jul 2023 09:08:54 -0700
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+To:     <sudeep.holla@arm.com>
+CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Nikunj Kela <quic_nkela@quicinc.com>
+Subject: [PATCH 0/2] Add qcom hvc/shmem transport
+Date:   Tue, 18 Jul 2023 09:08:31 -0700
+Message-ID: <20230718160833.36397-1-quic_nkela@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xbek6yuldy7ck3zlux76hosn4iqt52ocydovuol7geiwapslrd@j7uyxhrkiyaw>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6rmYNnerBMpV9txQAKXezA-5cByqEiE-
+X-Proofpoint-ORIG-GUID: 6rmYNnerBMpV9txQAKXezA-5cByqEiE-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-18_12,2023-07-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ spamscore=0 adultscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307180148
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 18, 2023 at 07:58:41AM -0700, Bjorn Andersson wrote:
-> On Tue, Jul 18, 2023 at 03:28:59PM +0200, Johan Hovold wrote:
-> > Drivers that enable runtime PM must make sure that the controller is
-> > runtime resumed before accessing its registers to prevent the power
-> > domain from being disabled.
-> > 
-> 
-> NB: the clock framework will runtime resume the controller surrounding
-> operations, even so during probe. But this is not done for resets and
-> gdscs - and in some clock drivers we poke registers directly from
-> probe...
-> 
-> The one time this really matters is where we associate the ahb clock
-> with the runtime state, e.g. in qcs404 turingcc. On most other platforms
-> we just mark these clocks always-on in gcc...
+This change introduce a new transport channel for Qualcomm virtual
+platforms. The transport is mechanically similar to ARM_SCMI_TRANSPORT_SMC.
+The difference between the two transports is that a parameter is passed in
+the hypervisor call to identify which doorbell to assert. This parameter is
+dynamically generated at runtime on the device and insuitable to pass via
+the devicetree.
 
-Right, I started looking at this with respect to the PM domain, but
-my initial commit message only mentioned the need to make sure the
-controller is resumed, which would have covered such interface clocks as
-well. 
+The function ID and parameter are stored by firmware in the shmem region.
 
-And while ending up with a concurrent request to disable the PM domain
-is not that likely, there is currently nothing preventing it so it still
-needs to be fixed.
+This has been tested on ARM64 virtual Qualcomm platform.
 
-Johan
+Nikunj Kela (2):
+  dt-bindings: arm: Add qcom specific hvc transport for SCMI
+  firmware: arm_scmi: Add qcom hvc/shmem transport
+
+ .../bindings/firmware/arm,scmi.yaml           |  69 +++++
+ drivers/firmware/arm_scmi/Kconfig             |  13 +
+ drivers/firmware/arm_scmi/Makefile            |   1 +
+ drivers/firmware/arm_scmi/common.h            |   3 +
+ drivers/firmware/arm_scmi/driver.c            |   4 +
+ drivers/firmware/arm_scmi/qcom_hvc.c          | 241 ++++++++++++++++++
+ 6 files changed, 331 insertions(+)
+ create mode 100644 drivers/firmware/arm_scmi/qcom_hvc.c
+
+-- 
+2.17.1
+
