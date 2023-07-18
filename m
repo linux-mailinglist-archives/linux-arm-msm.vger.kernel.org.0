@@ -2,115 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C53E17573A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:09:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3F027573AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbjGRGJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 02:09:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52996 "EHLO
+        id S231202AbjGRGLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 02:11:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231164AbjGRGJp (ORCPT
+        with ESMTP id S231189AbjGRGLI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 02:09:45 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7995F1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:09:44 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fba1288bbdso8522919e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:09:44 -0700 (PDT)
+        Tue, 18 Jul 2023 02:11:08 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E107EF1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:06 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-666eb03457cso3323327b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689660583; x=1690265383;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z5VQwVrGcXMfCfvuw2kyfpvvEbdxnp5EKgVKHPURbWM=;
-        b=HHvKaDKj0O6hNAptE4inyZOHuRF+UKZXm+WzhvsppGx6mT12Uv3s0wHix2zOZOkvkJ
-         877SnV8WdE3kc/5yorMj2oCVMEcnUrqvrqltwTn2u3Ma5XlIhQ9YjVrYtchVjFchEUVs
-         b4ns+4ukynBmrM4w9TK2edsk+MJLwwQFbmx0sdD9fvxXosHfFSPF1gAHqA55UosGsiHD
-         asr4nRLbFZLmqxAJyEVTPU4ej+5KkCtQJCfSuXXDYYgcVdwYifBoECoY7YkW7k5/iM8K
-         VPnYrIdT8Q//oCldxyRGgcLZUqFNTzskDMAuvE7hvRpARirSNs4Gfz0gRvAqXT76NsIA
-         MTSw==
+        d=linaro.org; s=google; t=1689660666; x=1692252666;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xPAaQscYyYfWa0/+4P1+lL3rpjQtoe/1gDGIsUASAgQ=;
+        b=KW1ie5FGzFjDrqMygdPl4Lj1piL5u2RpqrK7sQ8XQ01mFfxWHmNnYfSk9bBjZH491Y
+         ikeoK63NNt6MxydcJOrQzONDq57gOXSfPOYHR2EwV4VrIeDm0ip75L8ZeGKh6MnUIbSw
+         V7a6G0lCqDQykbFBVtz8k0TXxiA0+5pGpY24thKkXbLbH841r2UnBfiZc+wbCu5jC0Q6
+         8d6/l4W79/hFeVv6WnXMSGEokFsVlgBdvetMLfnl8I90tGW1vLsFnzp7LMJch8JMLF2S
+         aRvizq3H97TKTMCZEuZKx9FHblXblqrbzLtzFHfrnpmdCuZOhsHLK9av3P6Gc90UOkFO
+         BanA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689660583; x=1690265383;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z5VQwVrGcXMfCfvuw2kyfpvvEbdxnp5EKgVKHPURbWM=;
-        b=IP87ZSjnhvWvXAXP4FxKQ8X7JDWlo3HjY3XZY1hMfl96lx5EziOKmFNmm9n7BinZLy
-         77u3U+vhjsngf6JJ+Qq//TKlJ+YaS8+RiGvWCKDRmDxMtJ9dvlFGj9/4i1RbbIwK1aM1
-         dkEcRk/bMg8PdTPoYhGu00RhcrFRb5gdm62Lq080RBTMWOl8V/AFvm6UDqV5PgXMWbqL
-         DD0VvYBGaorK5NaY0cITHCVme2hVcPURAp85u/B6b6q7vxS+AId/5D9k5BFssT113dIC
-         VxMlG4PRgzQtT6hFd4vc/y9OqsDN4s/Ije2xIuSHpGJjKf2elL4o4psiH0mJaHx2wsAN
-         doeA==
-X-Gm-Message-State: ABy/qLYy0fhoXtc2/VnXK065LO6fhlKvAwkSpX1KoV6Sg/WbQ3HORrqo
-        JUU4GAAw3RaISqc46O82/vyvQg==
-X-Google-Smtp-Source: APBJJlFuWqM7VJ+TLOLnaEcliAKHtvXtVu+8Nyr2lg0mEZWLl6kglI0wuWE+sp43IVhjUCSwTxDmtg==
-X-Received: by 2002:a05:6512:3989:b0:4fd:c923:db5f with SMTP id j9-20020a056512398900b004fdc923db5fmr1976725lfu.14.1689660582991;
-        Mon, 17 Jul 2023 23:09:42 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id a28-20020a056512021c00b004fbac025223sm279081lfo.22.2023.07.17.23.09.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 23:09:42 -0700 (PDT)
-Message-ID: <0075783f-9166-89aa-a9f9-068494e468e3@linaro.org>
-Date:   Tue, 18 Jul 2023 09:09:41 +0300
+        d=1e100.net; s=20221208; t=1689660666; x=1692252666;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xPAaQscYyYfWa0/+4P1+lL3rpjQtoe/1gDGIsUASAgQ=;
+        b=S1U5PJX1CLkFnJIueoPmwK6c/XRRXuz9JAKW5sKussyBRxxrraMSOiZqjpRunipwDX
+         N5eYREEGiVaMt3oJ07i50LnFc4/IRxsU53ZL8lTUddbk3Ag7SCajTvjGaRKnTnGhwPoZ
+         xx2mJtbxUbrvU1KZd+9pNE3qexQXfdrNhomJhtOYE1vbOpHZgznfEIhn/l6GjN70Tz1F
+         2ypgCE8eJ8sRMzMLlsS3a1ZmL4qmLXB0Xo0GNm0ZuEtgJqopsSqZuiNqkzItOCe7wRSw
+         kfYrY+PYIWHAJ0A5PmF+40+2eymjk8MBKsOnovgtoP4H84lJdSxiXQzQS8qBlVYUAswp
+         5dOA==
+X-Gm-Message-State: ABy/qLYoC26CtAD90IihW5S4EiJB5ZeQZZ/f95TSJGx2bSWj0sb1Ehz1
+        L4TGFaoy3gnDqdDUy3D2ATdYe+7Z0/3pELUVecoOqw==
+X-Google-Smtp-Source: APBJJlE0Vx3+AL/QmINR2rZ0+C9ed8ADDT1oKhzLMD93Mi58PrLI956au/YOin1349SeJj7WK4s5PQ==
+X-Received: by 2002:a05:6a00:1ac8:b0:67e:e019:3a28 with SMTP id f8-20020a056a001ac800b0067ee0193a28mr11334070pfv.16.1689660665744;
+        Mon, 17 Jul 2023 23:11:05 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.68.54])
+        by smtp.gmail.com with ESMTPSA id h21-20020a62b415000000b0067db7c32419sm778106pfn.15.2023.07.17.23.11.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Jul 2023 23:11:05 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
+        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org,
+        stephan@gerhold.net
+Subject: [PATCH v9 0/7] Add Qualcomm SM6115 / SM4250 EUD dt-bindings & driver support
+Date:   Tue, 18 Jul 2023 11:40:45 +0530
+Message-Id: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 0/5] arm64: dts: qcom: qrb5165-rb5: enable DP support
-Content-Language: en-GB
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230709041926.4052245-1-dmitry.baryshkov@linaro.org>
- <yjr3i54z4ddifn7y6ls65h65su54xtuzx3gvibw6ld4x27fd7x@ganmrdp4vzx7>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <yjr3i54z4ddifn7y6ls65h65su54xtuzx3gvibw6ld4x27fd7x@ganmrdp4vzx7>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2023 07:37, Bjorn Andersson wrote:
-> On Sun, Jul 09, 2023 at 07:19:21AM +0300, Dmitry Baryshkov wrote:
->> Implement DisplayPort support for the Qualcomm RB5 platform.
->>
->> Note: while testing this, I had link training issues with several
->> dongles with DP connectors. Other DisplayPort-USB-C dongles (with HDMI
->> or VGA connectors) work perfectly.
->>
->> Dependencies: [1]
->> Soft-dependencies: [2], [3]
->>
->> [1] https://lore.kernel.org/linux-arm-msm/20230515133643.3621656-1-bryan.odonoghue@linaro.org/
-> 
-> I'm not able to find a version of this series ready to be merged, can
-> you please help me find it?
+Changes since v8:
+-------------------
+- v8 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230717103236.1246771-1-bhupesh.sharma@linaro.org/
+- Konrad and Stephan pointed that I should define 'tcsr syscon' node for sm6115.dtsi,
+  and use phandle for the same inside the EUD node, which would eventually be used
+  inside the eud driver. Added [PATCH 1/7] and [PATCH 5/7] for the same
+  in this series.
+- Rebased on latest linux-next/master.
 
-This = Bryan's? I have posted some (small) feedback regarding v8. You 
-also had issues with orientation switching bindings, etc. So there 
-should be v9.
+Changes since v6/v7:
+-------------------
+- v6 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230517211756.2483552-1-bhupesh.sharma@linaro.org/
+- Konrad and Krzysztof had different suggestions on how to tackle
+  different SoCs inside the eud driver which require access to secure mode
+  manager register space. While Konrad's suggestion was to use a dt property,
+  other comments suggested using optional platform data for determining
+  the same. Modified [PATCH 2/4] accordingly to use the optional
+  platform data for now.
+- Added Krzysztof's RB for [PATCH 1/4] and also addressed his review comments
+  received on v5.
+- Dropped eud cleanup patches (which were sent a v7) as they have been accepted in linux-next.
+- Rebased on latest linux-next/master.
 
-> 
-> Regards,
-> Bjorn
+Changes since v5:
+----------------
+- v5 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230516213308.2432018-1-bhupesh.sharma@linaro.org/
+- Addressed Mani's comment and added Fixes tag for [PATCH 1/6].
+  Also collected his Ack for this patch.
+- Fixed [PATCH 4/6] as per Greg's comments and added a separate patch
+  for identation issues -> [PATCH 3/6].
+
+Changes since v4:
+----------------
+- v4 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230505064039.1630025-1-bhupesh.sharma@linaro.org/
+- Addressed Konrad's review comments regarding EUD driver code.
+- Also collected his R-B for [PATCH 4/5 and 5/5].
+- Fixed the dt-bindings as per Krzysztof's comments.
+
+Changes since v3:
+----------------
+- v3 can be viewed here: https://www.spinics.net/lists/linux-arm-msm/msg137025.html 
+- Addressed Konrad's review comments regarding mainly the driver code.
+  Also fixed the .dtsi as per his comments.
+- Also collected his R-B for [PATCH 1/5].
+
+Changes since v2:
+----------------
+- v2 can be viewed here: https://www.spinics.net/lists/linux-arm-msm/msg137025.html 
+- Addressed Bjorn and Krzysztof's comments.
+- Added [PATCH 1/5] which fixes the 'qcom_eud' sysfs path. 
+- Added [PATCH 5/5] to enable EUD for Qualcomm QRB4210-RB2 boards.
+
+Changes since v1:
+----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221231130743.3285664-1-bhupesh.sharma@linaro.org
+- Added Krzysztof in Cc list.
+- Fixed the following issue reported by kernel test bot:
+  >> ERROR: modpost: "qcom_scm_io_writel" [drivers/usb/misc/qcom_eud.ko] undefined!
+
+This series adds the dt-binding and driver support for SM6115 / SM4250
+EUD (Embedded USB Debugger) block available on Qualcomm SoCs.
+
+It also enables the same for QRB4210-RB2 boards by default (the user
+still needs to enable the same via sysfs).
+
+The EUD is a mini-USB hub implemented on chip to support the USB-based debug
+and trace capabilities.
+
+EUD driver listens to events like USB attach or detach and then
+informs the USB about these events via ROLE-SWITCH.
+
+Bhupesh Sharma (7):
+  dt-bindings: mfd: qcom,tcsr: Add the compatible for SM6115
+  dt-bindings: soc: qcom: eud: Document vendor-specific 'secure mode'
+    property
+  dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 support
+  usb: misc: eud: Add driver support for SM6115 / SM4250
+  arm64: dts: qcom: sm6115: Add tcsr syscon node
+  arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector
+  arm64: dts: qcom: qrb4210-rb2: Enable EUD debug peripheral
+
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    |  1 +
+ .../bindings/soc/qcom/qcom,eud.yaml           |  9 +++
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 27 ++++++-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 56 ++++++++++++++
+ drivers/usb/misc/Kconfig                      |  2 +-
+ drivers/usb/misc/qcom_eud.c                   | 76 +++++++++++++++++--
+ 6 files changed, 164 insertions(+), 7 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.38.1
 
