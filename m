@@ -2,138 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4437757BAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 14:21:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68907757C08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 14:43:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230189AbjGRMVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 08:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46910 "EHLO
+        id S231162AbjGRMno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 08:43:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbjGRMVh (ORCPT
+        with ESMTP id S229953AbjGRMnn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 08:21:37 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902D5E55
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 05:21:35 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f9fdb0ef35so9397427e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 05:21:35 -0700 (PDT)
+        Tue, 18 Jul 2023 08:43:43 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552A1130
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 05:43:42 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-666ecf9a081so5648993b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 05:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689682894; x=1692274894;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PMcbYQlwObKdmoguJ/6t09m79nKWr0R7fK7izdG7yQU=;
-        b=uCUJB3qtrSsWhpK1EXCApHzjDcVw7hzhV+4mh3/wHPuqTM/yIhN5TcN+Bf5WcYjK8d
-         lVlNHcFySHY7aQ2v0oxRmpZmM8lUumlhwVuSa3bpa+L7YgGMfRejBOuYjj/nrjp0aGvB
-         xjHWLlso2u3wp6wr3IR7Kd4X9ArlbkA3jFIC97zTq/lKbJe5horolVk/N4SrqvxJos0r
-         oSBJlRaNs986ZlcqMhgCme/LkIQ72GAOZz+7DVdVMReFmhqWLB9SfnBbDsj+KKTdj51Q
-         DqIHD0+a4CebP06bsykV5auluC2opkv9ZLVkRIA3elOgxNMd4MQjDO7fPby2/2kNgjqf
-         Girw==
+        d=linaro.org; s=google; t=1689684222; x=1692276222;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gM/YgQOHeZ56BBUJtDtFJHEmngLOGV7x/3NVPgw+uwg=;
+        b=w2hgTYFo0jHGi/AdVX7TD2uUbk+BXLb+ZG2Zdw4rHJpk2T64R7srvLTU1EecmWqOqS
+         +2jICAWOFdA3n+NCVvYfHl0gbvmHFdN/TULrzU34DmJFhmBJ7HFP7kD5ELlciAE0SsxV
+         kgKsVcvw9mNvmcXpwZJ5BsgmfldRJD4EnkdtvBbHkjY7R1wkzXZqohfr1f2V2t/auNvo
+         uOLi0T3d6Ic7oVvvNRQKN86yHEsfxfjzgpmHSNnGOf0CgRVMHzyIXHqFgtUkPuw34m6B
+         abB+AOkZ+UV4Q+lnWukzd73MYDLSmt8SFGtfUhAx+cIIkzHJHWVCM1nTKlaOQTXdZ+OC
+         icaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689682894; x=1692274894;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1689684222; x=1692276222;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PMcbYQlwObKdmoguJ/6t09m79nKWr0R7fK7izdG7yQU=;
-        b=N2LhUnAfYyFesYAD7Pymni5IYS5z2rHJ4OMsT8T9CdyrnsEkA91OVJkM27MZC5qqRv
-         kxnp9ZPRtPL44TyE3H9BCHtj0bLroaj14JaubsTSDX3j0Nwb2TQaJFjIxL4fjjL/Mrfs
-         4vE80TTljyK78o+IZ0Toe+0BqT7e5XowPWtR3UtuCHiFTFC3pCJW7aQ8oXjhS5M2vsKi
-         IxvzKH9zb6982av187+Xrzi9+qSb6CP2C1uehUeagnA+2O4Swd5XOkHAlKUbi9tHFzyK
-         QnWU3K7tfHUjnY5Bmap7Lyd/Sm5cVW6/sg02DiTavs05hIvhs2m7ppvfIZN9UeVhv7Ge
-         +FzA==
-X-Gm-Message-State: ABy/qLb+SQG/e26zKKK97m3ldcplSm2g+Pd1t+tXG3f3fhC5+5LlD2zC
-        ZTCFkoWgGQ2SllHLAIYHVlWKDtgX5wQy8Sc1YBuAmw==
-X-Google-Smtp-Source: APBJJlGe4GL0krm7OOQiJm+l9w7tSgm+QxPJv7V+vEhUqcBY/HhQ/2kae1gjm9qUqzU/LneamilPMg==
-X-Received: by 2002:ac2:57ca:0:b0:4fb:97e8:bc25 with SMTP id k10-20020ac257ca000000b004fb97e8bc25mr8590146lfo.34.1689682893753;
-        Tue, 18 Jul 2023 05:21:33 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id x3-20020ac259c3000000b004fcdf89080csm416068lfn.180.2023.07.18.05.21.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jul 2023 05:21:33 -0700 (PDT)
-Message-ID: <18e192cb-eafe-3aa9-6602-b1a9dbe020d5@linaro.org>
-Date:   Tue, 18 Jul 2023 14:21:31 +0200
+        bh=gM/YgQOHeZ56BBUJtDtFJHEmngLOGV7x/3NVPgw+uwg=;
+        b=ard2NMHV75HfbORc4hZ8dqIBsVAlrWnKCqdOSmJze3JFkKVDrYuzZJOdYz7XpyIrGS
+         UtCRUSAartZhoCXD9l09nbJajMK07xcH8FBL56u+hcd2R47WtG8cNOJaQBbagryrv8QY
+         QXXefj0/iPKIEfWoBQ+2cupZnd4wSKIsDn1xlQEbqfhQvAX9hbRb0IX0/N9D+lS8eTOG
+         32TRi2AK5pyViSTuJmRZ8gRdHgsU0+P9rAxd9nM4ojlzLTMsB9bwc5G5J7HkJLt7xUAL
+         xL6YMOIdBZxUSFurI6pPaEpn+jRcVGbPiQK0KUefTbOUIq5namirAlJy+ZT7Mm1RC+d+
+         885g==
+X-Gm-Message-State: ABy/qLYNB0uaTaDF4h5nwhd2UYdWD6BzBV+BRNa/4PadLHBfOK9AWkWN
+        vcIPSi5gI29kAousXhuxBWEi
+X-Google-Smtp-Source: APBJJlGIyCLi2xXMxJXvF91GTdpgYQEGsEVobhqGEnYYRfEsOVgBWaJGpPgU4Z2/dyfXjMaz88khfw==
+X-Received: by 2002:a05:6a20:a121:b0:133:249f:2ce2 with SMTP id q33-20020a056a20a12100b00133249f2ce2mr18924689pzk.0.1689684221820;
+        Tue, 18 Jul 2023 05:43:41 -0700 (PDT)
+Received: from thinkpad ([117.217.191.149])
+        by smtp.gmail.com with ESMTPSA id u21-20020aa78395000000b0065434edd521sm1444932pfm.196.2023.07.18.05.43.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Jul 2023 05:43:41 -0700 (PDT)
+Date:   Tue, 18 Jul 2023 18:13:34 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Vivek Pernamitta <quic_vpernami@quicinc.com>
+Cc:     mhi@lists.linux.dev, mrana@quicinc.com, quic_qianyu@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
+        quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH V2] net: mhi : Add support to enable ethernet interface
+Message-ID: <20230718124334.GG4771@thinkpad>
+References: <1689660928-12092-1-git-send-email-quic_vpernami@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
- <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
- <ZLVsN40kYsvQm1z6@gerhold.net>
- <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
- <ZLVyvHnKPdOfqAck@gerhold.net>
- <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
- <zha5rmva3zhvvknnmeso6errwhkdjomk6r5d72an7moimdvymq@skow5jqtps5g>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <zha5rmva3zhvvknnmeso6errwhkdjomk6r5d72an7moimdvymq@skow5jqtps5g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1689660928-12092-1-git-send-email-quic_vpernami@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18.07.2023 06:25, Bjorn Andersson wrote:
-> On Mon, Jul 17, 2023 at 07:11:33PM +0200, Konrad Dybcio wrote:
->> On 17.07.2023 18:56, Stephan Gerhold wrote:
->>> On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
->>>> On 17.07.2023 18:28, Stephan Gerhold wrote:
->>>>> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
->>>>>> The GPU_CC block is powered by VDD_CX. Describe that.
->>>>>>
->>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>>> ---
->>>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
->>>>>>  1 file changed, 2 insertions(+)
->>>>>>
->>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>>> index 29b5b388cd94..bfaaa1801a4d 100644
->>>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>>>>> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
->>>>>>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
->>>>>>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
->>>>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
->>>>>> +			power-domains = <&rpmpd SM6115_VDDCX>;
->>>>>> +			required-opps = <&rpmpd_opp_low_svs>;
->>>>>
->>>>> Where is this required-opp coming from? The clocks in gpucc seem to have
->>>>> different voltage requirements depending on the rates, but we usually
->>>>> handle that in the OPP tables of the consumer.
->>>> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
->>>> but quite obviously the GPU won't work then
->>>>
->>>
->>> The levels needed for the GPU clocks to run should be in the GPU OPP
->>> table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
->>>
->>> I still don't really understand why this is specified here. :)
->> The GPU_CC block needs this rail to be at a certain power level for
->> register access. This describes that requirement.
->>
+On Tue, Jul 18, 2023 at 11:45:28AM +0530, Vivek Pernamitta wrote:
+> Add support to enable ethernet interface for MHI SWIP channels.
 > 
-> And that is not the lowest level reported by command db?
-> Please describe this part in the commit message as well.
-command-what? ;)
 
-RPM exports VDD_NONE (off), VDD_MIN (the lowest state before collapse)
-and then low_svs is usually the lowest "actually on" state for all
-consumers.
+Please add more info in the commit message i.e., why this interface is added and
+how it is going to benefit the users etc..
 
-Konrad
+Since you are modifying the existing mhi_swip interface, this isn't an ABI
+change?
+
+> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+> Reviewed-by: Daniele Palmas <dnlplm@gmail.com>
+> Reviewed-by: Simon Horman <simon.horman@corigine.com>
+> ---
+> 
+> changes since v1:
+> 	- Moved to net-next from linux-next	
+> 	- moved to eth_hw_addr_random() to assign Ethernet MAC address
+> 	  from eth_random_addr()
+> ---
+>  drivers/net/mhi_net.c | 53 ++++++++++++++++++++++++++++++++++++++-------------
+>  1 file changed, 40 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+> index 3d322ac..5bb8d99 100644
+> --- a/drivers/net/mhi_net.c
+> +++ b/drivers/net/mhi_net.c
+
+[...]
+
+> @@ -380,10 +405,12 @@ static void mhi_net_remove(struct mhi_device *mhi_dev)
+>  
+>  static const struct mhi_device_info mhi_hwip0 = {
+>  	.netname = "mhi_hwip%d",
+> +	.ethernet_if = false,
+>  };
+>  
+>  static const struct mhi_device_info mhi_swip0 = {
+>  	.netname = "mhi_swip%d",
+> +	.ethernet_if = false,
+
+false?
+
+- Mani
+
+>  };
+>  
+>  static const struct mhi_device_id mhi_net_id_table[] = {
+> -- 
+> 2.7.4
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
