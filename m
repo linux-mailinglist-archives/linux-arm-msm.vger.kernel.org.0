@@ -2,188 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3878C757B6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 14:08:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 018D4757B78
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 14:08:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230225AbjGRMHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 08:07:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37976 "EHLO
+        id S231747AbjGRMIx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 08:08:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232438AbjGRMHk (ORCPT
+        with ESMTP id S232500AbjGRMIu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 08:07:40 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B957719B0;
-        Tue, 18 Jul 2023 05:07:19 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36IBveuD025044;
-        Tue, 18 Jul 2023 12:06:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=y2yfVOCu3dz+8JVljQrIa6Gln3xE+C5buPtH5sGct/4=;
- b=iEF+6wWxnJTvzGrrBuOAyZTw4O1mrzLBsbi3oKWX9mMdM5Yfe7n2/bmXbe6oSib9lpMZ
- yNIcwREp4/EJ/LFnkPRz8nNn1bKCZVl30rzcZ9QloNU86WPOvktpLIpmsxyoi9oE9RAG
- 3SW1GrPPuGGo1eG8BaoWo83oWXIARo+rpryPjsgWCCyVkAh/D2+7+O53M+DT6nWHoveO
- VYfRf+tv+EvosQcou6qysmFj77XQkTbiSRUO8B6prtFY7VN9DIV10amES5/fQPw3hsq9
- qXdpEOudI33/XPA5qlRyvLOBCDr2ZzXKfqizMRB6JDp1VOvWWF5HFkzwbhNU+WDLRXRW YQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwcg6spj1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 12:06:46 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36IC6jdk011730
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 12:06:45 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Tue, 18 Jul 2023 05:06:38 -0700
-From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <quic_eberman@quicinc.com>, <kvalo@kernel.org>,
-        <quic_mmanikan@quicinc.com>, <loic.poulain@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
-Subject: [V3,11/11] arm64: dts: qcom: ipq9574: Add nodes to bring up multipd
-Date:   Tue, 18 Jul 2023 17:35:01 +0530
-Message-ID: <20230718120501.3205661-12-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
-References: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
+        Tue, 18 Jul 2023 08:08:50 -0400
+Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [85.215.255.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6891B173C;
+        Tue, 18 Jul 2023 05:08:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1689682034; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=b/CMNJeyAeLl/HC9J1VRNQaC+TB+jg+tJoy8snaTw5L4kXOCIJnFQppCP6BcphvPPM
+    OJGLPs27qZRyl5y6Kg5C/4ch+kuhp+v89/mgOf5whSeFiy1I9Sqk7QeD53DJsiIQDkHT
+    ZsuAgjiXzSZb/D6508vVCjoxkjx4wevP5iZU7eA+kY14p/SJjAyeEP8VxOC6FNuzBd4T
+    OMtD21Qp74h5gF9+HQx30V3RlVWp8sKXX40kCo0DGtIS2gbyzi7OY82mjDjRjGAOWb7y
+    tOFnLzo0eeZgpisvLwLoIru9jjhx2dYA+LxgNEICzyC55rhY3CsSLMd08ByEUMsPhT67
+    Fp1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1689682034;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=/wALjgnG3v6FP3wfvq2OkKhkeF/CVtHeLiXFqKzD+gU=;
+    b=EVK32gLErsDWBeuTmCHN4s/oSXIIeIjtMmHRMaQNytuRkqz3OlkdnMhfFQcQ2h9VnG
+    o4yztwUo+kqGBpx8oODH5iibLBkKfxZHecYi9rcxAk0fnNWjdCNLf06vdwl9NWfaN0IW
+    tuZthXUKj/068AMYPCMwBHAazRy6qI4MrotizIJ0o5mFWzf5dsYgK4OHMnWoB0isl4Jn
+    FIaQn9B3izk2mofgOezfXNndx61JqUbZoeInmtxn2xirxkHq25/YaMVs7B0t7nLLRqpW
+    kqeGMGUzO6qFcjdsPrG/U5dsbRrGISToHfAUro2ADEXuu2fzVbdfFwB64vPejOomtNy/
+    Lbug==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo03
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1689682034;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=/wALjgnG3v6FP3wfvq2OkKhkeF/CVtHeLiXFqKzD+gU=;
+    b=Aw0TqYuoyQJ//fuMce6zxtMOOO5rF51oITMW5z2HBdvey0hurOBNbJ+vS71ZlcDLn+
+    YNB+O0VnKCPszV8jX3Ts9GG2ouXlO1aLh8E0jR5O8tz76FbJcDqcGljTeVMFMTPxVMRe
+    ERFZinHoJM/lZd4QCLEEBcxNrfCe4W3X0GXKK8de0GcXnr+H7xKoZT7d3yIxFPAxtz8/
+    VGiA0z6BgRHH9BBa9yzTRaooqRjqX7B7iPZIQg0Wjd21D92VryJ5IFxV2wGOpW4Mvrne
+    ljk4dyJBQgH+N0htzUYtRQ+wFNctzYhSaRxRWQWt/SMjMlbzdayfNn3DhilZ1zMK6f/v
+    Csqw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1689682034;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=/wALjgnG3v6FP3wfvq2OkKhkeF/CVtHeLiXFqKzD+gU=;
+    b=vifbpKo/7n5doiokhWJRUe4B97SZVfEmDI4dj3V7lHR/r5EVVgSk1e4P1RTxbbCZX2
+    JJL58Kpa4JLvGq9nCIAA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA9Zfh"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.6.0 DYNA|AUTH)
+    with ESMTPSA id D0d0a8z6IC7Dbwu
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 18 Jul 2023 14:07:13 +0200 (CEST)
+Date:   Tue, 18 Jul 2023 14:07:12 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 04/15] clk: qcom: gcc-sm6375: Add runtime PM
+Message-ID: <ZLaAcELnsldc98Uk@gerhold.net>
+References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v1-4-27784d27a4f4@linaro.org>
+ <ZLVru50N2ukdXnsW@gerhold.net>
+ <pv7pcn5xc7xdjigefrwzvbjvp5lmgfziywfpvxn2nl7hjnvyre@kukniawnm5rm>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: N9eq7oiLEIc9IR4irakF4wSB2PTot4V1
-X-Proofpoint-GUID: N9eq7oiLEIc9IR4irakF4wSB2PTot4V1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-18_08,2023-07-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
- malwarescore=0 spamscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=665
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307180110
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pv7pcn5xc7xdjigefrwzvbjvp5lmgfziywfpvxn2nl7hjnvyre@kukniawnm5rm>
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable nodes required for multipd remoteproc bring up.
+On Mon, Jul 17, 2023 at 09:02:29PM -0700, Bjorn Andersson wrote:
+> On Mon, Jul 17, 2023 at 06:26:35PM +0200, Stephan Gerhold wrote:
+> > On Mon, Jul 17, 2023 at 05:19:11PM +0200, Konrad Dybcio wrote:
+> > > The GCC block on SM6375 is powered by the VDD_CX rail. We need to ensure
+> > > that it's enabled to prevent unwanted power collapse.
+> > > 
+> > > Enable runtime PM to keep the power flowing only when necessary.
+> > > 
+> > 
+> > Are you sure this is necessary? If VDD_CX was really possible to fully
+> > "power collapse" then I would expect that you lose all register
+> > settings. This is not something we want or can even handle for GCC.
+> > You would need to restore all frequency settings, branch bits etc etc.
+> > 
+> 
+> This differ between platforms, some allow us to completely power down CX
+> while keeping registers state using MX, others require that CX stays in
+> retention at least.
+> 
+> So, CX isn't the only rail powering GCC. For the most part though, we
+> have a relationship between frequencies votes for by clients and the
+> corner of CX, and hence I think the current description is ok...
+> 
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
-Changes in V3:
-	- Fixed all comments and rebased for TOT.
-	- Removed WCSS userpd nodes from dtsi file,
-	  because it vary based on no of radio's connected.
- 
-Changes in V2:
-	- Corrected syntax like alignmnet and kept nodes in sorted
-	  order.
-	- Added 'firmware-name' property.
+This patch is just about sending enable/disable votes for the power
+domains though, based on runtime PM which triggers when all the clocks
+are disabled.
 
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 59 +++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+It's unrelated to voting for CX corners required by certain clock
+frequencies (we handle those in the OPP tables of the consumers).
+And it's also unrelated to ensuring rentention of register contents
+since we actually release all votes when the clocks are idle.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index a21225007f60..f8273408f698 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -198,6 +198,11 @@ smem@4aa00000 {
- 			hwlocks = <&tcsr_mutex 0>;
- 			no-map;
- 		};
-+
-+		q6_region: wcnss@4ab00000 {
-+			reg = <0x0 0x4ab00000 0x0 0x2b00000>;
-+			no-map;
-+		};
- 	};
- 
- 	soc: soc@0 {
-@@ -714,6 +719,36 @@ frame@b128000 {
- 				status = "disabled";
- 			};
- 		};
-+
-+		q6v5_wcss: remoteproc@cd00000 {
-+			compatible = "qcom,ipq9574-q6-mpd";
-+			reg = <0x0cd00000 0x4040>;
-+			firmware-name = "ath11k/IPQ9574/hw1.0/q6_fw.mdt",
-+					"ath11k/IPQ9574/hw1.0/m3_fw.mdt";
-+			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcss_smp2p_in 0 IRQ_TYPE_NONE>,
-+					      <&wcss_smp2p_in 1 IRQ_TYPE_NONE>,
-+					      <&wcss_smp2p_in 2 IRQ_TYPE_NONE>,
-+					      <&wcss_smp2p_in 3 IRQ_TYPE_NONE>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+			memory-region = <&q6_region>;
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				label = "rtr";
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+			};
-+		};
- 	};
- 
- 	thermal-zones {
-@@ -971,4 +1006,28 @@ timer {
- 			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
- 	};
-+
-+	wcss: wcss-smp2p {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupt-parent = <&intc>;
-+		interrupts = <GIC_SPI 322 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs_glb 9>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		wcss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
- };
--- 
-2.34.1
+So while adding runtime PM to all the clock drivers sounds nice, I'm
+a bit confused what problem we're actually solving with this patch. :)
 
+Thanks,
+Stephan
