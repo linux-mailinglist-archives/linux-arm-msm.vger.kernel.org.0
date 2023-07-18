@@ -2,82 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98A96758043
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 16:58:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E677758033
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 16:55:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231543AbjGRO63 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 10:58:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41550 "EHLO
+        id S232560AbjGROzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 10:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232867AbjGRO62 (ORCPT
+        with ESMTP id S232225AbjGROzU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 10:58:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D9C5172D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 07:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1689692267;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=a9UHr3e23b92wXYao3lrSR+Cnwz7ksG5waCAvSeyw2w=;
-        b=XEnmxiG2HueEsnZadC7KFKedJmETlfd/aVSzWnIVQUxvt8Vq/pMxB1MWR2Yv/TaZ2bZJr5
-        SnV9vGabj3mSs9+XTd44KKl6XuqYbKKz9mW+CwRcTjpLbRWiFfRcSIHkHr4ISrn7xEVfoA
-        cC3AGibVtKpCexT2ipAIvhLIgAFqtes=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-I3FPp8eDOhmbg_2HNkCJqA-1; Tue, 18 Jul 2023 10:57:45 -0400
-X-MC-Unique: I3FPp8eDOhmbg_2HNkCJqA-1
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-765a1a97103so662400485a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 07:57:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689692264; x=1692284264;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a9UHr3e23b92wXYao3lrSR+Cnwz7ksG5waCAvSeyw2w=;
-        b=g0dMxH148+BAZQhTT5albv5/uAmL0JdwaijYP6zNXW33Foy2P9l2ZVDjP2l69nr8dj
-         8dmQF/XiqahZWmSuAglEnqvGJK60xgjN8CRHJbfDqQcw6SkUM+vZ+svoY1Cah4+HemOw
-         deCro21V6zatJ7W0SOBzgAbBJaRfnb1VcJVVfAFURRcupBWg7J4W1hmQv8LtfGGSh9oU
-         SGfugAF332DpbJmE5sxFdTu1ksh1TbiSTdt8lsHdD5rvWY0Aw+nzm16eSAAX+jTl0AS2
-         w2Rb0zy1AtvXhGxbvmytWvwOK3617uj3KA8aEByLdmqm+Ln2MPDSZyvVDgVXZ5zm+zVC
-         qp+A==
-X-Gm-Message-State: ABy/qLa73XZX/WGV9Y7+sk9afoPzsSzSFzppeZR187e+hYkkeCgnOyQX
-        Iu4eUGxWqvBk4PJyap4IXbrbi0AV3pAw7hzmy+93MNiBp8lnsIVcjCuwfD3GYWSrOzJ7gumbhH0
-        LLxT1E1EawHPPz50rnOZJ4NSDXw==
-X-Received: by 2002:a05:620a:2801:b0:767:1a0c:6ed8 with SMTP id f1-20020a05620a280100b007671a0c6ed8mr20676061qkp.60.1689692264105;
-        Tue, 18 Jul 2023 07:57:44 -0700 (PDT)
-X-Google-Smtp-Source: APBJJlFiKp8UBgEVLFNJc08vIC3X40UERE1dZL9GdHK5Bo8jOTs8tWCeLcLXwKGDDVlGpTU1U8k8uQ==
-X-Received: by 2002:a05:620a:2801:b0:767:1a0c:6ed8 with SMTP id f1-20020a05620a280100b007671a0c6ed8mr20676046qkp.60.1689692263888;
-        Tue, 18 Jul 2023 07:57:43 -0700 (PDT)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id g23-20020a05620a109700b00767d2870e39sm646250qkk.41.2023.07.18.07.57.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jul 2023 07:57:43 -0700 (PDT)
-Date:   Tue, 18 Jul 2023 10:57:42 -0400
-From:   Eric Chanudet <echanude@redhat.com>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
+        Tue, 18 Jul 2023 10:55:20 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B39E0;
+        Tue, 18 Jul 2023 07:55:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 701E16160E;
+        Tue, 18 Jul 2023 14:55:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BA7C433C7;
+        Tue, 18 Jul 2023 14:55:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689692117;
+        bh=min4l/bR2fEVj3vzFg5K0E/Z3Mb/vK8ghVM0zgoNXe0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Sj745agqf7fyXuF0t2aNdV9a39HVkdXPFE510iWq6ryKyoLCBuLwAvigXQ5J23FgA
+         i510E6TmRWATLgfKQ0QSXrmAWlRl8C3U6mlpsva6nALUH+Iue9+a5fxpj+xmZddTgH
+         B6nLwl4CwzMtXLplboRNjxlI7cClbW6wY0WnEtXeV1IBErksi9gBtFCSwzlR2o4/us
+         YMosMVZTS6NOB0O28g8fl3pZtFNKKeLkuo6TORAHAoqIHdG1dzjWD3HfuV2EGLaLPo
+         G2gHyH8JzzzuVR9PxiFYrUWNzXxoCgs5koa5XMLdN6XuhlNT9//8231Bsjh5ijitlW
+         7eVKh8i+cEZxw==
+Date:   Tue, 18 Jul 2023 07:58:41 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sa8540p-ride: enable rtc
-Message-ID: <t6kbp4mlqnn5fzc2covhep4hnjzgwdld6af4h5ddfwandrd6mz@zvmhgnqrm242>
-References: <20230717182351.3389252-1-echanude@redhat.com>
- <34a4a052-b76f-b49d-6703-405d65ffd597@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+Subject: Re: [PATCH 5/8] clk: qcom: lpasscc-sc7280: fix missing resume during
+ probe
+Message-ID: <xbek6yuldy7ck3zlux76hosn4iqt52ocydovuol7geiwapslrd@j7uyxhrkiyaw>
+References: <20230718132902.21430-1-johan+linaro@kernel.org>
+ <20230718132902.21430-6-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <34a4a052-b76f-b49d-6703-405d65ffd597@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <20230718132902.21430-6-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,65 +61,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 17, 2023 at 09:28:15PM +0100, Caleb Connolly wrote:
-> On 17/07/2023 19:23, Eric Chanudet wrote:
-> > SA8540P-ride is one of the Qualcomm platforms that does not have access
-> > to UEFI runtime services and on which the RTC registers are read-only,
-> > as described in:
-> > https://lore.kernel.org/all/20230202155448.6715-1-johan+linaro@kernel.org/
-> > 
-> > Reserve four bytes in one of the PMIC registers to hold the RTC offset
-> > the same way as it was done for sc8280xp-crd which has similar
-> > limitations:
-> >     commit e67b45582c5e ("arm64: dts: qcom: sc8280xp-crd: enable rtc")
-> > 
-> > One small difference on SA8540P-ride, the PMIC register bank SDAM6 is
-> > not writable, so use SDAM7 instead.
-> > 
-> > Signed-off-by: Eric Chanudet <echanude@redhat.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi | 10 +++++++++-
-> >  arch/arm64/boot/dts/qcom/sa8540p-ride.dts   | 15 +++++++++++++++
-> >  2 files changed, 24 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-> > index 1221be89b3de..9c5dcad35cce 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-> > @@ -14,7 +14,7 @@ pmm8540a: pmic@0 {
-> >  		#address-cells = <1>;
-> >  		#size-cells = <0>;
-> >  
-> > -		rtc@6000 {
-> > +		pmm8540a_rtc: rtc@6000 {
-> >  			compatible = "qcom,pm8941-rtc";
-> >  			reg = <0x6000>, <0x6100>;
-> >  			reg-names = "rtc", "alarm";
-> > @@ -22,6 +22,14 @@ rtc@6000 {
-> >  			wakeup-source;
-> >  		};
-> >  
-> > +		pmm8540a_sdam_7: nvram@b610 {
-> Johan disabled the SDAM node in their series for sc8280xp. Unless it's
-> used on all sa8540p platforms, you should probably also do that here.
+On Tue, Jul 18, 2023 at 03:28:59PM +0200, Johan Hovold wrote:
+> Drivers that enable runtime PM must make sure that the controller is
+> runtime resumed before accessing its registers to prevent the power
+> domain from being disabled.
 > 
-> 			
-> > +			compatible = "qcom,spmi-sdam";
-> > +			reg = <0xb610>;
-> > +			#address-cells = <1>;
-> > +			#size-cells = <1>;
-> > +			ranges = <0 0xb610 0xb0>;
-> 			status = "disabled";
+
+NB: the clock framework will runtime resume the controller surrounding
+operations, even so during probe. But this is not done for resets and
+gdscs - and in some clock drivers we poke registers directly from
+probe...
+
+The one time this really matters is where we associate the ahb clock
+with the runtime state, e.g. in qcs404 turingcc. On most other platforms
+we just mark these clocks always-on in gcc...
+
+Regards,
+Bjorn
+
+> Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
+> Cc: stable@vger.kernel.org      # 5.16
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/clk/qcom/lpasscc-sc7280.c | 16 ++++++++++++----
+>  1 file changed, 12 insertions(+), 4 deletions(-)
 > 
-> With that fix,
+> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+> index 0df2b29e95e3..e6b815aec46a 100644
+> --- a/drivers/clk/qcom/lpasscc-sc7280.c
+> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
+> @@ -118,9 +118,13 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
+>  	ret = pm_clk_add(&pdev->dev, "iface");
+>  	if (ret < 0) {
+>  		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+> -		goto destroy_pm_clk;
+> +		goto err_destroy_pm_clk;
+>  	}
+>  
+> +	ret = pm_runtime_resume_and_get(&pdev->dev);
+> +	if (ret)
+> +		goto err_destroy_pm_clk;
+> +
+>  	if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
+>  		lpass_regmap_config.name = "qdsp6ss";
+>  		lpass_regmap_config.max_register = 0x3f;
+> @@ -128,7 +132,7 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
+>  
+>  		ret = qcom_cc_probe_by_index(pdev, 0, desc);
+>  		if (ret)
+> -			goto destroy_pm_clk;
+> +			goto err_put_rpm;
+>  	}
+>  
+>  	lpass_regmap_config.name = "top_cc";
+> @@ -137,11 +141,15 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
+>  
+>  	ret = qcom_cc_probe_by_index(pdev, 1, desc);
+>  	if (ret)
+> -		goto destroy_pm_clk;
+> +		goto err_put_rpm;
+> +
+> +	pm_runtime_put(&pdev->dev);
+>  
+>  	return 0;
+>  
+> -destroy_pm_clk:
+> +err_put_rpm:
+> +	pm_runtime_put_sync(&pdev->dev);
+> +err_destroy_pm_clk:
+>  	pm_clk_destroy(&pdev->dev);
+>  
+>  	return ret;
+> -- 
+> 2.41.0
 > 
-> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-
-Thank you for the review. Here is the v2 with the requested change:
-https://lore.kernel.org/linux-arm-msm/20230718145105.3464105-1-echanude@redhat.com/
-
-Best,
-
--- 
-Eric Chanudet
-
