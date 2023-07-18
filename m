@@ -2,73 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 638FD7573CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:12:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A453C7573D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:13:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231241AbjGRGMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 02:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53930 "EHLO
+        id S231339AbjGRGNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 02:13:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231365AbjGRGMP (ORCPT
+        with ESMTP id S231305AbjGRGMb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 02:12:15 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D6A412A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:53 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-668711086f4so3253103b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:53 -0700 (PDT)
+        Tue, 18 Jul 2023 02:12:31 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC2C198E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:12:04 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b743161832so80164271fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689660700; x=1692252700;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aoaxiWdRTQIjlpKBPFLmbhlJ2o+zAdh4av4kyochmEo=;
-        b=sn5U4MWGxnrt7DhiV2WWKv7dD7NLNlyt1BcEtCXTkOw/Uf8oIJ6PwmKIwF6FtLKPhg
-         8TlIKNSQAyZVe1gfVbgEx2k8bk5LMX+QAuclX+KMIcO0NFJoSrIERmxT118aoGWjIzCc
-         fUmHl4YQZsx/3es7b/IVW1UOf/2CleLxq5vu/8l6FlBARVxbuw+8O7D528NGSBVVihRd
-         Pj7faOnq6na2/+UZbhmoh6Nk4yfgUZ2Qz4qtTekyyv8G6nGfu5sTfSsW2JCbSsqAzq8m
-         +1gff7MypqYM5gumiG3UP0JgnJp+awXH9VN26Zp0jgZTC4al32RLzwDOhW0f4ctfmDwr
-         okbQ==
+        d=linaro.org; s=google; t=1689660720; x=1692252720;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FuxBGExkZpHQKsmDHlV/hAGsueJeyW+J9iiwyicARBU=;
+        b=cd+AitMjVTkfMPwx8BZxeJBEHG7AUSX/qbVAy2lD5z6k5N+9n9mtRzPnYd33ihNqaX
+         xB7um66/R9Zam+YgeU1ZGU0hJw4rhqwAEJp7KJUGAU50vgE/Gcdf+FqGEZ7mhO18vCSn
+         Of6WgpGJCILKq2sQ6k77blylOsmH3xK2vF0vAMnCi2bQubSaoINEreYtbr9V35SDssxM
+         TIvq3OCrrpFOiWg1InP2ZyRvFQ+0q8neNVBv7qCp+/2Z2wg+4Wln/PcwjBVwgP++AKz0
+         a4C4y1H4ANiE97yuwYYVa/j5V10CvBl1YITanrUMqSLP86rZWHiRpzGnWrLxRrBhD38V
+         mfkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689660700; x=1692252700;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aoaxiWdRTQIjlpKBPFLmbhlJ2o+zAdh4av4kyochmEo=;
-        b=e8Qd7QyQTSvqw7GgSwNTfgSs3X16DvPl6AP3q8s2+eqXK3kh01z+dIL0DO3QgT/x6o
-         bG3yMm/Rotx5m24pB/B6s8XT8QHU3Ald1Mr75B8BF3po/Nq/7Qrqxl6irA0sifbQTYlZ
-         +mnbvS3f2lHYmY+0VXhJcj3mDGE8BSvI8nYuIx/hAbSZ4q2CHj/W05dMxwOKGY7PLLVI
-         BgGZWue7nmJ+0kmO6S1jrwrY5dbhQAxbj5FNLMAjoSZzAMi4j7eoRFNkdWjQI3njkybL
-         ieBNqNaF+6uOJ3jubFQ+5z2uM5uv0mC+1RWiCpG086wbEsA/yVRKsKpIkI27AA+8TGpo
-         bXLg==
-X-Gm-Message-State: ABy/qLbu3JZvgUzxm08nlGxZrm56Is0SDlA0EX7nJmejWrKPW1NoCc0S
-        GStdfRCCOMyivpAujGPG51q6VFA+hf+aVsGucZk=
-X-Google-Smtp-Source: APBJJlEjkKb95SZ3h4MhroX1z4Rb0wFQVD0acfPLpGOo6UMskxiuerWVpHUqtAwqOeu7rT87h9CrJw==
-X-Received: by 2002:a05:6a20:9189:b0:12f:d350:8a12 with SMTP id v9-20020a056a20918900b0012fd3508a12mr15193455pzd.21.1689660700254;
-        Mon, 17 Jul 2023 23:11:40 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.68.54])
-        by smtp.gmail.com with ESMTPSA id h21-20020a62b415000000b0067db7c32419sm778106pfn.15.2023.07.17.23.11.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jul 2023 23:11:39 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
-        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org,
-        stephan@gerhold.net
-Subject: [PATCH v9 7/7] arm64: dts: qcom: qrb4210-rb2: Enable EUD debug peripheral
-Date:   Tue, 18 Jul 2023 11:40:52 +0530
-Message-Id: <20230718061052.1332993-8-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
-References: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
+        d=1e100.net; s=20221208; t=1689660720; x=1692252720;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FuxBGExkZpHQKsmDHlV/hAGsueJeyW+J9iiwyicARBU=;
+        b=CnvMJSdRNTfUj3t3jA1wPk0N/bxT/HZv1ns6LfJmhZiAiKy54n1snbwfZ510KVDoJH
+         grTDkRbkWZbRaTeciUa3wvS5aamkSXOuPzvwdakG075t6iEPSBMBa8Keb3oaa7bUPABW
+         REwx2i9aILXbMk8u+qsuSGdtazN9DyjatRI330plQzF2SmZ0QzxSpWN0FgusA9NQ2JIx
+         bv94BIrz3yz/hggM/emRJU/TqRt8BMT4uPyAFTUlsSmsDZjhKWi26Q2FMuBqOiQcy7a7
+         k5dxAzXNc3pd+vCVo9qdmj1RHP+ZnlpUVbBbJxuojyROI5kFXHLVbEfuTbXXHIYraG4l
+         Hkpg==
+X-Gm-Message-State: ABy/qLYUcNRRxdmfruNIc/i0Eck3fkXYjN9XpU/UZr8ZFagmW5Syl4mA
+        GluSkGnsfPD8X0DLsyZvUpjdQA==
+X-Google-Smtp-Source: APBJJlF3CZLus35/mCVGby07iUVU6tk7NqzG0eJLwmxyz418tiaGubEW1E73Ysc/Ws8qP4fWSue92A==
+X-Received: by 2002:a2e:978d:0:b0:2b6:df5d:8e08 with SMTP id y13-20020a2e978d000000b002b6df5d8e08mr9748785lji.28.1689660720108;
+        Mon, 17 Jul 2023 23:12:00 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id k13-20020a17090627cd00b00997bd42d210sm540489ejc.205.2023.07.17.23.11.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jul 2023 23:11:59 -0700 (PDT)
+Message-ID: <2a215bc5-784b-4335-449e-c55faea2b750@linaro.org>
+Date:   Tue, 18 Jul 2023 08:11:56 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
+ support
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
+References: <20230717062547.2086869-1-quic_fenglinw@quicinc.com>
+ <20230717062547.2086869-2-quic_fenglinw@quicinc.com>
+ <6338cc75-e3fe-ba19-3df7-727b63fec245@linaro.org>
+ <2b1301e6-fac3-7a06-6716-a65ffd0be7c2@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <2b1301e6-fac3-7a06-6716-a65ffd0be7c2@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,66 +87,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since the USB-C type port on the Qualcomm QRB4210-RB2 board
-can be set primarily in a 'device' configuration (with the default
-DIP switch settings), it makes sense to enable the EUD debug
-peripheral on the board by default by setting the USB 'dr_mode' property
-as 'otg'.
+On 18/07/2023 04:37, Fenglin Wu wrote:
+> 
+> 
+> On 7/18/2023 3:59 AM, Krzysztof Kozlowski wrote:
+>> On 17/07/2023 08:25, Fenglin Wu wrote:
+>>> Add support for vibrator module inside Qualcomm PMI632, PM7250B, PM7325B
+>>> and PM7550BA PMICs.
+>>>
+>>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml | 4 ++++
+>>>   1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+>>> index c8832cd0d7da..642408e2b35f 100644
+>>> --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+>>> +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
+>>> @@ -15,6 +15,10 @@ properties:
+>>>         - qcom,pm8058-vib
+>>>         - qcom,pm8916-vib
+>>>         - qcom,pm8921-vib
+>>> +      - qcom,pmi632-vib
+>>> +      - qcom,pm7250b-vib
+>>> +      - qcom,pm7325b-vib
+>>> +      - qcom,pm7550ba-vib
+>>
+>> Aren't the last two compatible?
+> 
+> There are still every different PMICs even though the vibrator module in 
+> PM7325B and PM7550BA are the same and they share the same register base 
+> address as well.
 
-Now, the EUD debug peripheral can be enabled by executing:
- $ echo 1 > /sys/bus/platform/drivers/qcom_eud/1610000.eud/enable
+So the vibrator modules are compatible? Then I propose to make them
+compatible.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 27 +++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index a7278a9472ed9..640668960deb0 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -264,6 +264,10 @@ &pon_resin {
- 	status = "okay";
- };
- 
-+&eud {
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -518,7 +522,28 @@ &usb {
- 
- &usb_dwc3 {
- 	maximum-speed = "super-speed";
--	dr_mode = "peripheral";
-+
-+	/*
-+	 * There is only one USB DWC3 controller on QRB4210 board and it is connected
-+	 * via a DIP Switch:
-+	 * - to either an USB - C type connector or an USB - A type connector
-+	 *   (via a GL3590-S hub), and
-+	 * - to either an USB - A type connector (via a GL3590-S hub) or a connector
-+	 *   for further connection with a mezzanine board.
-+	 *
-+	 * All of the above hardware muxes would allow us to hook things up in
-+	 * different ways to some potential benefit for static configurations (for e.g.
-+	 * on one hand we can have two USB - A type connectors and a USB - Ethernet
-+	 * connection available and on the other we can use the USB - C type in
-+	 * peripheral mode).
-+	 *
-+	 * Note that since the USB - C type can be used only in peripehral mode,
-+	 * so hardcoding the mode to 'peripheral' here makes sense.
-+	 *
-+	 * However since we want to use the EUD debug device, we set the mode as
-+	 * 'otg' here.
-+	 */
-+	dr_mode = "otg";
- };
- 
- &usb_hsphy {
--- 
-2.38.1
+Best regards,
+Krzysztof
 
