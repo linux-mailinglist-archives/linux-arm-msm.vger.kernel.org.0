@@ -2,176 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2FD675805B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 17:05:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40DE4758054
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 17:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232778AbjGRPFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 11:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44688 "EHLO
+        id S232611AbjGRPCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 11:02:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbjGRPFa (ORCPT
+        with ESMTP id S232827AbjGRPCu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 11:05:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3483510CB;
-        Tue, 18 Jul 2023 08:05:29 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36I6REAM009677;
-        Tue, 18 Jul 2023 15:03:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=l8jXQmV2PvUFWpCgMtL+9QUJ1C8Jq0rbIFdYtG4s468=;
- b=HQ9Dgbuumrk6U3TYMHXPq+XpXX9aBMnpORf4iEOsVGRbBqub7T8X+mfRSz0DyoLXaIjn
- xkLGBiYDNLsy00U0pnVKVirunJmzSzCLpz3rp4dAHEIqpNKSlGQ19d+FUgDiJnxxGA7i
- nLBhulwd1tMkmF2XEFKUBXnAtLsOVY8ljQGFD7eM4JzaZ+y9RRs1U0N4gXLwkTuxbtDK
- ALjGS3NomUPnCVtonoSLZq2+59J3WycjQbkdM3LY/4L7I/ZVFzCbJRFUhXoqexqHtiQ4
- 0D9Q4nBsNOViMtNAXINSLB6ynVIz/koB8TI4dTE3JuAJnt+SA0str0xN8Wp62oQ1HUOA ug== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwfj79vw4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 15:03:59 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36IF3wiL010970
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 15:03:58 GMT
-Received: from [10.216.47.173] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 18 Jul
- 2023 08:03:49 -0700
-Message-ID: <c0284d98-4cb2-cb78-9123-54d83fc31101@quicinc.com>
-Date:   Tue, 18 Jul 2023 20:33:44 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
- support
-Content-Language: en-US
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Tue, 18 Jul 2023 11:02:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D44ED171A;
+        Tue, 18 Jul 2023 08:02:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7318261627;
+        Tue, 18 Jul 2023 15:02:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D706BC433C7;
+        Tue, 18 Jul 2023 15:02:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689692567;
+        bh=sy7DCojCRG8d7aqK80NuXkkijlk7Z0axQrX85V5IRrg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jnSKhCaobgOyjj4OaIVde77zX9hr/BJiYdfIQd3KHcHYfRZY/b4Kn//JZry0UGtaU
+         o8vdAOJBpAGQ4xEhieCd+t+yfrjgSIt71X5oAM2v/wu7sEaX9myytOKHGJguXzLMwZ
+         OhYkTbnj6BhHwXoicueU/T1WQgGb5L2PKGY6A7xIqLOsQ6gHEgsA6FPGW+hD8LT7lP
+         cIcZ8XqIVwHDv7dJTSnm3ihjAHZMBaXMQ3fXIe3nZX7wAwzb8MeL9IPhdYCXDW9q7f
+         kYkB0CHyyDajGAfR+omS7E6B3IZUafuxwy7uSmRHLeP6xRFSHvOHJGc6KjjCvvPNDy
+         XBBubkYth0XUg==
+Date:   Tue, 18 Jul 2023 08:06:11 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Greg KH <gregkh@linuxfoundation.org>, <corbet@lwn.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <keescook@chromium.org>,
-        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, Alex Elder <elder@linaro.org>
-References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
- <2023062814-chance-flounder-f002@gregkh>
- <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
- <cc30660f-dd72-aade-6346-a93c6ad4b695@quicinc.com>
- <29af84dc-7db8-0c43-07b6-eb743cf25e57@linaro.org>
- <957a3cdb-6091-8679-ddb0-296db2347291@quicinc.com> <ZKb3wz2eXS6h1yIW@p14s>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <ZKb3wz2eXS6h1yIW@p14s>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5wVB4_xXDRj5tnrwuwAq9UgRU4sEv_dd
-X-Proofpoint-ORIG-GUID: 5wVB4_xXDRj5tnrwuwAq9UgRU4sEv_dd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-18_11,2023-07-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- mlxlogscore=999 impostorscore=0 clxscore=1011 phishscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307180138
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CCC
+Message-ID: <yk4xiydi47e7dn3zhasmnhgjc3l23napvznioshm2xx7uf5ziw@b7htk7ixes5b>
+References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v1-15-27784d27a4f4@linaro.org>
+ <ZLVsN40kYsvQm1z6@gerhold.net>
+ <a193a4dd-0a0a-0d36-6d83-0424cd1dce80@linaro.org>
+ <ZLVyvHnKPdOfqAck@gerhold.net>
+ <8c5dc146-c305-bef9-0d97-76a91345ed1a@linaro.org>
+ <zha5rmva3zhvvknnmeso6errwhkdjomk6r5d72an7moimdvymq@skow5jqtps5g>
+ <18e192cb-eafe-3aa9-6602-b1a9dbe020d5@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <18e192cb-eafe-3aa9-6602-b1a9dbe020d5@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/6/2023 10:50 PM, Mathieu Poirier wrote:
-> On Mon, Jul 03, 2023 at 02:05:58PM -0700, Trilok Soni wrote:
->> On 7/2/2023 1:29 AM, Krzysztof Kozlowski wrote:
->>> On 30/06/2023 18:04, Mukesh Ojha wrote:
->>>>>
->>>>>> We don't add layers when they are not needed, and never when there is no
->>>>>> actual user.  If you need the extra "complexity" later, then add it
->>>>>> later when it is needed as who knows when that will ever be.
->>>>>>
->>>>>> Please redo this series based on that, thanks.
->>>>>
->>>>> My bigger issue with this whole series is what would this all look
->>>>> like if every SoC vendor upstreamed their own custom dumping
->>>>> mechanism. That would be a mess. (I have similar opinions on the
->>>>> $soc-vendor hypervisors.)
->>>
->>> Mukesh,
->>>
->>> LPC CFP is still open. There will be also Android and Kernel Debugging
->>> LPC microconference tracks. Coming with a unified solution could be a
->>> great topic for LPC. Solutions targeting only one user are quite often
->>> frowned upon.
->>
->> LPC is far out and in November. Can we not have others speak up if they have
->> the similar solution now? We can expand this to linux-kernel and ask for the
->> other SOC vendors to chime in. I am sure that we may have existing solutions
->> which came in for the one user first like Intel RDT if I remember. I am sure
->> ARM MPAM usecase was present at that time but Intel RDT based solution which
->> was x86 specific but accepted.
+On Tue, Jul 18, 2023 at 02:21:31PM +0200, Konrad Dybcio wrote:
+> On 18.07.2023 06:25, Bjorn Andersson wrote:
+> > On Mon, Jul 17, 2023 at 07:11:33PM +0200, Konrad Dybcio wrote:
+> >> On 17.07.2023 18:56, Stephan Gerhold wrote:
+> >>> On Mon, Jul 17, 2023 at 06:50:18PM +0200, Konrad Dybcio wrote:
+> >>>> On 17.07.2023 18:28, Stephan Gerhold wrote:
+> >>>>> On Mon, Jul 17, 2023 at 05:19:22PM +0200, Konrad Dybcio wrote:
+> >>>>>> The GPU_CC block is powered by VDD_CX. Describe that.
+> >>>>>>
+> >>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >>>>>> ---
+> >>>>>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
+> >>>>>>  1 file changed, 2 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>> index 29b5b388cd94..bfaaa1801a4d 100644
+> >>>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>>>>> @@ -1430,6 +1430,8 @@ gpucc: clock-controller@5990000 {
+> >>>>>>  			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> >>>>>>  				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> >>>>>>  				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+> >>>>>> +			power-domains = <&rpmpd SM6115_VDDCX>;
+> >>>>>> +			required-opps = <&rpmpd_opp_low_svs>;
+> >>>>>
+> >>>>> Where is this required-opp coming from? The clocks in gpucc seem to have
+> >>>>> different voltage requirements depending on the rates, but we usually
+> >>>>> handle that in the OPP tables of the consumer.
+> >>>> The only lower levels defined for this SoC are VDD_MIN and VDD_RET,
+> >>>> but quite obviously the GPU won't work then
+> >>>>
+> >>>
+> >>> The levels needed for the GPU clocks to run should be in the GPU OPP
+> >>> table though, just like e.g. sdhc2_opp_table for the SDCC clocks.
+> >>>
+> >>> I still don't really understand why this is specified here. :)
+> >> The GPU_CC block needs this rail to be at a certain power level for
+> >> register access. This describes that requirement.
+> >>
+> > 
+> > And that is not the lowest level reported by command db?
+> > Please describe this part in the commit message as well.
+> command-what? ;)
 > 
-> I am not familiar with Intel RDT and Arm MPAM but the community is always
-> improving on the way it does things.
+
+Apparently doesn't matter that I read that line multiple times, my brain
+really wanted a 'h' in there.
+
+> RPM exports VDD_NONE (off), VDD_MIN (the lowest state before collapse)
+> and then low_svs is usually the lowest "actually on" state for all
+> consumers.
 > 
-> LPC is indeed far out in November but it is an opportunity to cover the
-> groundwork needed to have this discussion.  It is always best to improve on
-> something then introduce something new.  Even better if something specific such
-> as Intel RDT and Arm MPAM can be made more generic.  A perfect example is
-> hwtracing Linus referred to.  The perf framework wasn't a perfect fit but it was
-> enhanced to accommodate our requirements.  I suggest to look at what is currently
-> available and come up with a strategy to be presented at LPC - event better if
-> you have a prototype.  If you can't find anything or the drawbacks inherent to
-> each avenue outweigh the benefits then we can have that conversation at LPC.
 
-I was checking hwtracing[1] and pmu interface introduction of
-address filtering[3] from analogy point of view, which i think you
-meant that perf framework was extended to accommodate this.
+In rpmhpd I changed it such that the minimal enabled state would be
+!disabled (so that the automatic enablement during probe would be
+sufficient to access registers), but talking to Ulf this is
+provider-specific.
 
-Minidump is quite different and simple in its way to address the problem
-of debugging on end user devices with minimum data captured to debug 
-crashes and this patch series is inline with similar (core + backend)
-implementation done for stm patches[1] where stm core was developed
-and intel trace hub get hooked into it and later it got reused in [2] by 
-coresight-stm driver.
-
-I am still exploring if something available we can reuse but it seems 
-unlikely at the moment to already available something in the kernel with
-similar use case.
-
--Mukesh
-
-[1]
-https://lwn.net/Articles/650245/
-
-[2]
-https://lwn.net/Articles/674201/
-
-[3]
-https://lore.kernel.org/lkml/1461771888-10409-1-git-send-email-alexander.shishkin@linux.intel.com/
+So unless you can figure out a acceptable lowest non-disabled state this
+is what has to be done...
 
 
-> 
->>
->> ---Trilok Soni
+PS. My ask for mentioning this in the commit message still stands.
+
+Regards,
+Bjorn
