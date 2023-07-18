@@ -2,79 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E59C6757307
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 07:09:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF48075733B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 07:34:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjGRFJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 01:09:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60772 "EHLO
+        id S229585AbjGRFep (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 01:34:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjGRFJM (ORCPT
+        with ESMTP id S229845AbjGRFeo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 01:09:12 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A47012F;
-        Mon, 17 Jul 2023 22:09:11 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36I3FCU2022182;
-        Tue, 18 Jul 2023 05:09:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=I1DxiGEZyd8QbRErBmMkW95iq3qQZEgJgDYHG45ZqJk=;
- b=DcelHJ+bHOLHzNtcztT678xFnsF61sBV0FnmR5rcOooiKmrhQJD2zDbbveKqdpbSw6Hm
- er+GW3ZOVWnwI5uW4sjE8s5k1miZKygnFA4q1DYbePhbH1OYFOvM3e+yfI5QBIHjPclf
- BdVxEsqDhFRBP+DHv/hQr5A75nfc/k8KJ9beyftgIPtkTZ3cn5bTOk56jGjXRZFr+7Sw
- AH+nYwBm5GmLoeadP/sHLXftQq+Lmbi5pxeA1rlqIwsCqasce5Zu80fly/wJ3sRwlmEc
- ilnuFCZu/xZ7r03SIq4QK4LHZm0OhFBdhkCSlKo/4f8HdKPYoAjRCkrafwSJYYvzsbdS dA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwcg6rs3d-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 05:09:07 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36I596eP011767
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 05:09:06 GMT
-Received: from [10.50.15.149] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 17 Jul
- 2023 22:09:03 -0700
-Message-ID: <760778dc-b0af-2adb-fa9e-4059a17a2cdf@quicinc.com>
-Date:   Tue, 18 Jul 2023 10:38:53 +0530
+        Tue, 18 Jul 2023 01:34:44 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63AB2E43;
+        Mon, 17 Jul 2023 22:34:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F3162612ED;
+        Tue, 18 Jul 2023 05:34:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6862C433C7;
+        Tue, 18 Jul 2023 05:34:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1689658481;
+        bh=M8JLZ0QR47SqxJa/J4XXXk1uEeaKLT3sFbyi7Z1T74w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AinEzFzjRMVE+ENvkGF+GrrjhXHGEbmt678SVpAy6cA017j0tDgMdEACItxBeT5HT
+         v8ntwYYBMpTpvJuaQk/XoC1x5zPEZFj+hxtSeXuJRmztHCkASVBl4dzXf2mp30dTzq
+         /Ufuu7NnwpayS/2yjnz6pjxROBuvVAOmZa2SVVCw=
+Date:   Tue, 18 Jul 2023 07:34:38 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH V25 0/3] misc: Add driver support for Data Capture and
+ Compare unit(DCC)
+Message-ID: <2023071848-blend-acquire-d7d0@gregkh>
+References: <cover.1687945879.git.quic_schowdhu@quicinc.com>
+ <c91e1aad-b81f-8afd-6ee1-c83ed4844b04@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Ninad Naik <quic_ninanaik@quicinc.com>
-Subject: Re: [PATCH] pinctrl: qcom: Add intr_target_width to define
- intr_target_bit field width
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        <konrad.dybcio@linaro.org>, <andersson@kernel.org>
-CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppareek@quicinc.com>, <psodagud@quicinc.com>,
-        <quic_kprasan@quicinc.com>
-References: <20230714061010.15817-1-quic_ninanaik@quicinc.com>
- <20230714203802.GA3972960@hu-bjorande-lv.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20230714203802.GA3972960@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Tkq62HP2qQF8XeHOFrjPa39bLqdJjfK7
-X-Proofpoint-GUID: Tkq62HP2qQF8XeHOFrjPa39bLqdJjfK7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-17_15,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
- malwarescore=0 spamscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307180047
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c91e1aad-b81f-8afd-6ee1-c83ed4844b04@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,55 +62,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Jul 18, 2023 at 10:33:09AM +0530, Souradeep Chowdhury wrote:
+> On 6/28/2023 3:53 PM, Souradeep Chowdhury wrote:
+> > Souradeep Chowdhury (3):
+> >    dt-bindings: misc: qcom,dcc: Add the dtschema
+> >    misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
+> >    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+> >      support
+> > 
+> >   Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
+> >   .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
+> >   MAINTAINERS                                   |    8 +
+> >   drivers/misc/Kconfig                          |    8 +
+> >   drivers/misc/Makefile                         |    1 +
+> >   drivers/misc/qcom-dcc.c                       | 1312 +++++++++++++++++
+> >   6 files changed, 1378 insertions(+), 5 deletions(-)
+> >   create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
+> >   create mode 100644 drivers/misc/qcom-dcc.c
+> > 
+> 
+> Gentle ping
 
-Thank you all for the reviews.
+$ mdfrm -c mail/todo/
+1480 messages in todo/
 
-On 7/15/2023 2:08 AM, Bjorn Andersson wrote:
-> On Fri, Jul 14, 2023 at 11:40:09AM +0530, Ninad Naik wrote:
->> SA8775 and newer target have added support for an increased number of
->> interrupt targets. To implement this change, the intr_target field, which
->> is used to configure the interrupt target in the interrupt configuration
->> register is increased from 3 bits to 4 bits.
->>
->> In accordance to these updates, a new intr_target_width member is
->> introduced in msm_pingroup structure. This member stores the value of
->> width of intr_target field in the interrupt configuration register. This
->> value is used to dynamically calculate and generate mask for setting the
->> intr_target field. By default, this mask is set to 3 bit wide, to ensure
->> backward compatibility with the older targets.
->>
->> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
-> 
-> Very nice, Ninad.
-> 
-> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
->> ---
->>   drivers/pinctrl/qcom/pinctrl-msm.c     | 9 ++++++---
->>   drivers/pinctrl/qcom/pinctrl-msm.h     | 2 ++
->>   drivers/pinctrl/qcom/pinctrl-sa8775p.c | 1 +
->>   3 files changed, 9 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
->> index 2585ef2b2793..6ebcaa2220af 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
->> @@ -1038,6 +1038,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->>   	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->>   	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
->>   	const struct msm_pingroup *g;
->> +	u32 intr_target_mask = 0x7;
-> 
-> I like Konrad's suggestion about making this GENMASK(2, 0).
-> 
-> Please update that and include our R-b tags in v2.
-> 
-Sure, I'll change this to GENMASK and update all the relevant tags 
-(Fixes and R-b) as suggested in the review comments.
-> Regards,
-> Bjorn
+Please relax, and help out by reviewing other patches on the mailing
+lists in order to relieve the burden of maintainers and move your
+patches higher up the list.
 
-Thanks a lot!
-Regards,
-Ninad
+thanks,
+
+greg k-h
