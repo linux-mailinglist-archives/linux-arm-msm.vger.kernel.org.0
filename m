@@ -2,217 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 805A1757F94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 16:31:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B21C9757FD3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 16:41:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232513AbjGRObj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 10:31:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51102 "EHLO
+        id S231293AbjGROl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 10:41:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232692AbjGRObg (ORCPT
+        with ESMTP id S230268AbjGROl2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 10:31:36 -0400
+        Tue, 18 Jul 2023 10:41:28 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC0101BD9;
-        Tue, 18 Jul 2023 07:31:11 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B725BEC;
+        Tue, 18 Jul 2023 07:41:27 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 26F0C615E2;
-        Tue, 18 Jul 2023 14:31:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB62C433C7;
-        Tue, 18 Jul 2023 14:31:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689690670;
-        bh=KFSOdgGe2AR4rCLx81EdF6WoCI+RZt43fQf1DLPQLYg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=clYMJlj7g8He9tuMGZ8gXMzyV1Xn9XporLTeQxR7cM5i+sjbFBFNpglXf7kgfEOYj
-         fSt3DoxGYG1koXlwohYqsHcAAEPei3NecuG5uRQjzPEphai8TtgsVLv9cBnIDmoWMP
-         yH6B6+xTsmtOX+G17kMUHMEEIQ+fJhlV+41s+ENFHxdXPJmVHobxVfD/MtR+q/5L0V
-         MEijRNwKYh8YzFf00Jzw/khWAXIJmZwERzJMtxfYCOIHQes99tWXExjbdX5/xoUCdJ
-         OuSAGcf4hySbCSH/XjKvNP3On0YXcuIx7F6ewRiUzWAWfY0XkK12xGzm76W2zVgQU0
-         Yk51ZrYmZiqxQ==
-Received: (nullmailer pid 1065624 invoked by uid 1000);
-        Tue, 18 Jul 2023 14:31:08 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Frederic Barrat <fbarrat@linux.ibm.com>,
-        Andrew Donnellan <ajd@linux.ibm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Eric Piel <eric.piel@tremplin-utc.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Derek Kiernan <derek.kiernan@amd.com>,
-        Dragan Cvetic <dragan.cvetic@amd.com>,
-        Michal Simek <michal.simek@amd.com>,
-        Appana Durga Kedareswara rao 
-        <appana.durga.kedareswara.rao@amd.com>
-Cc:     devicetree@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4C33E61600;
+        Tue, 18 Jul 2023 14:41:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E631C433C9;
+        Tue, 18 Jul 2023 14:41:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1689691286;
+        bh=D8T7AaoTVgJ/zF9HYinCPbZygZRrtcxqIDjje7WsbPI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mvR1udQqBCeJaUWDPCUNu5/EQd8aCFy0+W815lq/pHJcK82HzV2EFuJLA+UN4fDRP
+         MzCuUBkTOIACMSKbH19mHv2onbLm20hAUhwvPZPWAuy6iIqFfD3kqgXuRLMWzUXj2Z
+         a1OztjizlYDwMkjZT91+65ZEVB4WRt9mXRvrYn90=
+Date:   Tue, 18 Jul 2023 16:41:23 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, corbet@lwn.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2] misc: Explicitly include correct DT includes
-Date:   Tue, 18 Jul 2023 08:31:01 -0600
-Message-Id: <20230718143102.1065481-1-robh@kernel.org>
-X-Mailer: git-send-email 2.40.1
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
+ support
+Message-ID: <2023071844-promptly-swimwear-f6f9@gregkh>
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+ <2023062814-chance-flounder-f002@gregkh>
+ <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
+ <CACRpkda3CJ7G4-wDPkWmzg6nyCoEfG+u2cQH6KXWNjbftd90ow@mail.gmail.com>
+ <355de4c7-180d-4edd-b6fd-9c8e29e40e42@quicinc.com>
+ <52650970-de78-764f-28e2-ee0115b7d5c6@quicinc.com>
+ <e4784d1c-73da-9cda-6aef-d02625e8efd2@quicinc.com>
+ <2023071833-clamshell-drinking-188c@gregkh>
+ <c8064592-bfac-67b4-1d7e-e173355c43f8@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c8064592-bfac-67b4-1d7e-e173355c43f8@quicinc.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DT of_device.h and of_platform.h date back to the separate
-of_platform_bus_type before it as merged into the regular platform bus.
-As part of that merge prepping Arm DT support 13 years ago, they
-"temporarily" include each other. They also include platform_device.h
-and of.h. As a result, there's a pretty much random mix of those include
-files used throughout the tree. In order to detangle these headers and
-replace the implicit includes with struct declarations, users need to
-explicitly include the correct includes.
+On Tue, Jul 18, 2023 at 07:25:15PM +0530, Mukesh Ojha wrote:
+> 
+> 
+> On 7/18/2023 7:05 PM, Greg KH wrote:
+> > On Tue, Jul 18, 2023 at 11:17:12AM +0530, Mukesh Ojha wrote:
+> > > + linux-samsung-soc@vger.kernel.org
+> > > + linux-mediatek@lists.infradead.org
+> > 
+> > What does that do?
+> 
+> This is to seek their feedback, if they have something similar requirement
+> to debug end user device crashes.
 
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com> # cxl
-Signed-off-by: Rob Herring <robh@kernel.org>
----
-v2:
-- Fix double include of of.h
----
- drivers/misc/cxl/base.c            | 1 +
- drivers/misc/fastrpc.c             | 1 +
- drivers/misc/lis3lv02d/lis3lv02d.c | 2 +-
- drivers/misc/qcom-coincell.c       | 1 -
- drivers/misc/sram.c                | 2 +-
- drivers/misc/vcpu_stall_detector.c | 1 -
- drivers/misc/xilinx_sdfec.c        | 3 ++-
- drivers/misc/xilinx_tmr_inject.c   | 3 ++-
- drivers/misc/xilinx_tmr_manager.c  | 3 ++-
- 9 files changed, 10 insertions(+), 7 deletions(-)
+Feedback to what?  There is no context here and no content either at
+all.
 
-diff --git a/drivers/misc/cxl/base.c b/drivers/misc/cxl/base.c
-index cc0caf9192dc..b054562c046e 100644
---- a/drivers/misc/cxl/base.c
-+++ b/drivers/misc/cxl/base.c
-@@ -7,6 +7,7 @@
- #include <linux/rcupdate.h>
- #include <asm/errno.h>
- #include <misc/cxl-base.h>
-+#include <linux/of.h>
- #include <linux/of_platform.h>
- #include "cxl.h"
- 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 9666d28037e1..1c7c0532da6f 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/of_address.h>
- #include <linux/of.h>
-+#include <linux/platform_device.h>
- #include <linux/sort.h>
- #include <linux/of_platform.h>
- #include <linux/rpmsg.h>
-diff --git a/drivers/misc/lis3lv02d/lis3lv02d.c b/drivers/misc/lis3lv02d/lis3lv02d.c
-index 299d316f1bda..49868a45c0ad 100644
---- a/drivers/misc/lis3lv02d/lis3lv02d.c
-+++ b/drivers/misc/lis3lv02d/lis3lv02d.c
-@@ -26,7 +26,7 @@
- #include <linux/miscdevice.h>
- #include <linux/pm_runtime.h>
- #include <linux/atomic.h>
--#include <linux/of_device.h>
-+#include <linux/of.h>
- #include "lis3lv02d.h"
- 
- #define DRIVER_NAME     "lis3lv02d"
-diff --git a/drivers/misc/qcom-coincell.c b/drivers/misc/qcom-coincell.c
-index 54d4f6ee8888..3c57f7429147 100644
---- a/drivers/misc/qcom-coincell.c
-+++ b/drivers/misc/qcom-coincell.c
-@@ -8,7 +8,6 @@
- #include <linux/slab.h>
- #include <linux/of.h>
- #include <linux/regmap.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
- 
- struct qcom_coincell {
-diff --git a/drivers/misc/sram.c b/drivers/misc/sram.c
-index 5757adf418b1..a88f92cf35be 100644
---- a/drivers/misc/sram.c
-+++ b/drivers/misc/sram.c
-@@ -10,8 +10,8 @@
- #include <linux/genalloc.h>
- #include <linux/io.h>
- #include <linux/list_sort.h>
-+#include <linux/of.h>
- #include <linux/of_address.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
-diff --git a/drivers/misc/vcpu_stall_detector.c b/drivers/misc/vcpu_stall_detector.c
-index 53b5506080e1..6479c962da1a 100644
---- a/drivers/misc/vcpu_stall_detector.c
-+++ b/drivers/misc/vcpu_stall_detector.c
-@@ -13,7 +13,6 @@
- #include <linux/module.h>
- #include <linux/nmi.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/param.h>
- #include <linux/percpu.h>
- #include <linux/platform_device.h>
-diff --git a/drivers/misc/xilinx_sdfec.c b/drivers/misc/xilinx_sdfec.c
-index 270ff4c5971a..29e9c380b643 100644
---- a/drivers/misc/xilinx_sdfec.c
-+++ b/drivers/misc/xilinx_sdfec.c
-@@ -15,7 +15,8 @@
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
--#include <linux/of_platform.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
- #include <linux/poll.h>
- #include <linux/slab.h>
- #include <linux/clk.h>
-diff --git a/drivers/misc/xilinx_tmr_inject.c b/drivers/misc/xilinx_tmr_inject.c
-index d96f6d7cd109..9fc5835bfebc 100644
---- a/drivers/misc/xilinx_tmr_inject.c
-+++ b/drivers/misc/xilinx_tmr_inject.c
-@@ -11,7 +11,8 @@
- 
- #include <asm/xilinx_mb_manager.h>
- #include <linux/module.h>
--#include <linux/of_device.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
- #include <linux/fault-inject.h>
- 
- /* TMR Inject Register offsets */
-diff --git a/drivers/misc/xilinx_tmr_manager.c b/drivers/misc/xilinx_tmr_manager.c
-index 0ef55e06d3a0..3e4e40c3766f 100644
---- a/drivers/misc/xilinx_tmr_manager.c
-+++ b/drivers/misc/xilinx_tmr_manager.c
-@@ -15,7 +15,8 @@
- 
- #include <asm/xilinx_mb_manager.h>
- #include <linux/module.h>
--#include <linux/of_device.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
- 
- /* TMR Manager Register offsets */
- #define XTMR_MANAGER_CR_OFFSET		0x0
--- 
-2.40.1
+Just adding a mailing list to the top of a message doesn't actually send
+the thread there.
 
+confused,
+
+greg k-h
