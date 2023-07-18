@@ -2,101 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB55275781B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 11:33:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A966175783D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 11:40:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231404AbjGRJdE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 05:33:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38540 "EHLO
+        id S232329AbjGRJkp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 05:40:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232347AbjGRJc4 (ORCPT
+        with ESMTP id S232168AbjGRJkn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 05:32:56 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F6E1B9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 02:32:55 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-992b66e5affso757591166b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 02:32:55 -0700 (PDT)
+        Tue, 18 Jul 2023 05:40:43 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D643E60
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 02:40:40 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99454855de1so481927166b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 02:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689672774; x=1692264774;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1689673239; x=1692265239;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Pd3yVm0mrfKcfVl5M0ryz3v5rdf1EEHWpSBcZtymdlU=;
-        b=AW5DrcxtcrGGsHRQnTVQ8hX5fm0zVqO5DxuuSbzImI7RXL/vFginrgq2VlWLoPk1wL
-         4RhuvOEGMWxi9JzSmngtc378xIpK3FEtWIFnb19Ts/joDsqmVakKpdOgUyPEakkzEF0h
-         ly904FDl3r82RbcFyKIrMxAfde5y+HHh2yJ7dl1O8deQReT/RlmkEFiTaRFh5ze+4KD8
-         GnJEl4ny6ZyR69H4Sgy60nUlvVFS7Y55OSlA641H3OE+ovVfrDn33voMG6b+cwhQXNIm
-         A+3Uz1drvecJ3ylfwgqhLZv+BAyFWSADiQlsw+qRW04OLNpeE8c38diAQAfUtjxnVpw0
-         sSNA==
+        bh=M0N8btKrBEl8US0muPWkTHrV3A+jfker/XqFXbKhuNM=;
+        b=LiktnGMdMBgcrwGwBd55VnfmVE4V3+RMVccoWw1Whzak1pjDcIQtAermeh3RUAk7ol
+         Mu4FMjXKSp7ZY70SbVCPFwoKmFS51bLCwiZL1UqkrCaHMY2yunR5qSwKmcir9D0s5zCP
+         /kpXFTlhK4chBS5+jG7gYGiY6LeRuTWFVzM1f5z2t62jRSkpif4FTaXl73IlhLkHa30C
+         SdGowawyPq9EwUkJVdOXfNqk33FWSdBJK2vEL/gWDFm45BDv+kp9w8zTWqNLg3Ok6MwI
+         C/Z9p05zUD7wl5fpCZa8ay0ZmDhkjI/wXQs0nH58pjvJ/lSznudtW6WVAHx+C6J8d1mW
+         iw8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689672774; x=1692264774;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1689673239; x=1692265239;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pd3yVm0mrfKcfVl5M0ryz3v5rdf1EEHWpSBcZtymdlU=;
-        b=PoCoc/dX3etN9qXU9m1C+hyeF0m032tSoLdRazIuKOI3RkFyj8pn4VmV3X8jdYFwAv
-         Vp9vqALmft7rqwoNh1UwnFgN/4N4y3YodjIjyUj36O0TukcjlxH0PmU53PuReqaG/Wgj
-         y39bLabIbGSC9dqjYlNKDN1t7Wrdj0t5R0uZ4wHI5cMlVYg9nAmQDTVcP3MX1tL19nVN
-         6V/ZVm+bAZmyg0/a/ofgadDZUOCuAW7efTrU/o1C0D+I6Gurd9Xgy59Qt0NLz1VgwxLC
-         4Nx9P+84aGruEO4fkgIWuAmxZv4Xyr46gBGzfOdpOQWirNOpVAAnaXADs64lu5LZ3TRk
-         7qyA==
-X-Gm-Message-State: ABy/qLa5hy95KJzQQ1PiFKJwANHd1mWffF2opouMjrYXxMHnkwpB/15J
-        Hu5vouYPOe4ViXcndyqHR61CCQ==
-X-Google-Smtp-Source: APBJJlEABRDq9Db2/fxCOqE/nE3zSjxPwvBI9OkjSAHrygRFjCnMt9tZLOcDggl6TYbuPB4VQWrG+g==
-X-Received: by 2002:a17:906:10ca:b0:994:3395:942f with SMTP id v10-20020a17090610ca00b009943395942fmr12348530ejv.17.1689672773934;
-        Tue, 18 Jul 2023 02:32:53 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id ko1-20020a170907986100b00992e14af9c3sm772954ejc.143.2023.07.18.02.32.52
+        bh=M0N8btKrBEl8US0muPWkTHrV3A+jfker/XqFXbKhuNM=;
+        b=OtRAy7YcvJEDd4hv01JHStS0zlQ1uqs+eNf9mADtJ+SpKeiw1a0YJUZ571ZfXBn4/T
+         dgP8W7ZGRW9n+afFTpvth9xXKLmhDNw6U5s0aFU/lzCvh0hHc8pIGG/3KFMDKwb8Ezy9
+         YVTAdSXW7NG6zEFb44oupsSVntpX40oNMIfbUdS4WhbvTaJ3iidkHqawhNOT0FLyzE8q
+         S7tP7+fdavHpcvmx4vv4KqFqnMtZA+x87eFFf5G4KxOobh8eyGzrhykNPapUt2HKF2Ri
+         Gxk9t9reR1aVWfksxsGuFBVrtTZUo0vOCq7MKY2578OYXV1RoJnMWn6cAbo4N7Oqn9P6
+         g8EA==
+X-Gm-Message-State: ABy/qLaHdXOH456CN+rwvYHPwShU1TZhF1NbIT7rWoY+05RdwOIofMKf
+        EfRmIlVbjbpwy7YU9tN8QenmBQ==
+X-Google-Smtp-Source: APBJJlE29PdR8LOpeQCVpY3BGmHmGV2bndVirQX9jqE36YcbNr53bhsq+2ZlKH7NGxw1s1x3ODVrMg==
+X-Received: by 2002:a17:906:739e:b0:993:e752:1a71 with SMTP id f30-20020a170906739e00b00993e7521a71mr14389092ejl.9.1689673238920;
+        Tue, 18 Jul 2023 02:40:38 -0700 (PDT)
+Received: from [192.168.1.194] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id l22-20020a170906231600b00992e4d8cc89sm800293eja.57.2023.07.18.02.40.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jul 2023 02:32:53 -0700 (PDT)
-Message-ID: <d246292b-c0df-fa70-7561-9523e4db6138@linaro.org>
-Date:   Tue, 18 Jul 2023 11:32:51 +0200
+        Tue, 18 Jul 2023 02:40:38 -0700 (PDT)
+Message-ID: <76c99543-4f77-38c2-5940-517f2715060d@linaro.org>
+Date:   Tue, 18 Jul 2023 10:40:37 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1] led: flash: various minor fixes for leds-qcom-flash
- driver
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450-hdk: add other analogue
+ microphones
 Content-Language: en-US
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        lee@kernel.org, pavel@ucw.cz, ChiaEn Wu <chiaen_wu@richtek.com>,
-        Alice Chen <alice_chen@richtek.com>,
-        ChiYuan Huang <cy_huang@richtek.com>,
-        Dylan Van Assche <me@dylanvanassche.be>,
-        Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-        Tom Rix <trix@redhat.com>, linux-leds@vger.kernel.org
-Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com
-References: <20230718092439.2482320-1-quic_fenglinw@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230718092439.2482320-1-quic_fenglinw@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230717143824.203352-1-krzysztof.kozlowski@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230717143824.203352-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2023 11:24, Fenglin Wu wrote:
-> Update the driver to address following minor issues:
->  - Add a sentence in Kconfig to explain the driver can be compiled
->    as a module
->  - strobe off the LED channel before setting flash current to prevent
->    the flash LED being lit with an incorrect brightness if it was
->    already active in torch mode
->  - put the child node if register any flash LED device failed.
 
-Don't mix different fixes and changes in one commit.
 
-Also, please use scripts/get_maintainers.pl to get a list of necessary
-people and lists to CC (and consider --no-git-fallback argument). I
-really do not see a point why I am cc-ed here.
+On 17/07/2023 15:38, Krzysztof Kozlowski wrote:
+> Add proper audio routes for onboard analogue microphones: AMIC[1345].
+> Use also new DAPM input widget (TX SWR_INPUTn) for them, not the
+> deprecated ADC one.  Change is not compatible with older kernels not
+> having the new SWR_INPUTn input widget.
+> 
+> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Depends on ASoC driver changes:
+> https://lore.kernel.org/alsa-devel/20230717140138.201745-1-krzysztof.kozlowski@linaro.org/T/#t
+> This patch should wait till respective ASoC changes got merged.
+> ---
+>   arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 23 ++++++++++++++++-------
+>   1 file changed, 16 insertions(+), 7 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> index bd5e8181f2aa..9bd1ef401ca3 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> @@ -915,14 +915,23 @@ &sound {
+>   			"SpkrRight IN", "WSA_SPK2 OUT",
+>   			"IN1_HPHL", "HPHL_OUT",
+>   			"IN2_HPHR", "HPHR_OUT",
+> +			"AMIC1", "MIC BIAS1",
+>   			"AMIC2", "MIC BIAS2",
+> -			"VA DMIC0", "MIC BIAS1",
+> -			"VA DMIC1", "MIC BIAS1",
+> -			"VA DMIC2", "MIC BIAS3",
+> -			"TX DMIC0", "MIC BIAS1",
+> -			"TX DMIC1", "MIC BIAS2",
+> -			"TX DMIC2", "MIC BIAS3",
+> -			"TX SWR_ADC1", "ADC2_OUTPUT";
+> +			"AMIC3", "MIC BIAS3",
+> +			"AMIC4", "MIC BIAS3",
+> +			"AMIC5", "MIC BIAS4",
+These should reflect the board-level wiring of MIC BIAS, are you sure 
+that this is how the hdk is wired up?
 
-Best regards,
-Krzysztof
+> +			"VA DMIC0", "MIC BIAS3",
+> +			"VA DMIC1", "MIC BIAS3",
+> +			"VA DMIC2", "MIC BIAS1",
+> +			"VA DMIC3", "MIC BIAS1",
+> +			"TX DMIC0", "MIC BIAS3",
+> +			"TX DMIC1", "MIC BIAS3",
+> +			"TX DMIC2", "MIC BIAS1",
+> +			"TX DMIC3", "MIC BIAS1",
+Same here.
 
+--srini
+> +			"TX SWR_INPUT0", "ADC1_OUTPUT",
+> +			"TX SWR_INPUT1", "ADC2_OUTPUT",
+> +			"TX SWR_INPUT2", "ADC3_OUTPUT",
+> +			"TX SWR_INPUT3", "ADC4_OUTPUT";
+>   
+>   	wcd-playback-dai-link {
+>   		link-name = "WCD Playback";
