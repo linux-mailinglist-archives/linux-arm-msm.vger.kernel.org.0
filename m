@@ -2,118 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C7A0758200
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 18:23:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 202397581F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 18:20:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232118AbjGRQX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 12:23:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40616 "EHLO
+        id S230373AbjGRQUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 12:20:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232676AbjGRQXZ (ORCPT
+        with ESMTP id S229524AbjGRQUb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 12:23:25 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77760E53
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 09:23:24 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-666eec46206so5943856b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 09:23:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689697404; x=1692289404;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8btmNM4fZaWtft2y/AZfU76LwbrOpMNoLAwhQ6pc8YQ=;
-        b=cmpZJ3bTZzlfNOFXhI408nH7WPN8NVQzrqyA2LZFUAt2ZOW8NnC/8keoT7FLyr0b5f
-         t6HltMnTJ5JdbWFLLXVp4AzQlo1wPzXXQPVFFU/bYFZAEoEx65jYxw1LtXXphqZBsNup
-         Pf77k/o8WsJWGccCvRi+CCeOVQhP257vTYjEvPqkRZqahwSd8pXQdDYL+8qwNE+FHLzs
-         CwGwT8Dod9oI/ubbdtftQf7xIiJOp6xXmpbVwwOHT9ZJ+1ibx6oTsJw6O4knZRaa/GZT
-         VMC2Tq+q+htaAVAAruvwjryHXXUbWS+R2p1eXAuf2hwgCQIhCn3Y8IHjHxQJVdfl1DgX
-         0J9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689697404; x=1692289404;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8btmNM4fZaWtft2y/AZfU76LwbrOpMNoLAwhQ6pc8YQ=;
-        b=NVmRnxEQW2B/g2a9hX/u6+k8Qtx72sNGI9hb+Q9oEScW3j208BIdyLPboZywG9KUsJ
-         Ly+DQFrmMfGm1cbpjKD/8MTFM9NZDPt+Rf/rPFUj/xkmtUZE++x5hVF7EiXYE3nX9ooH
-         1q9v5fLCtW4rNTp6/0UKGf0oVF0zl0vI9BIsyYTCm0HGtRnyUuqhiTSnHR8vPKdH1EQv
-         LL38D4I2QjBM1riYtOPsyDohGQlvc5mi30CNPsYJm/FdvuN47pOYiuv3dHGUhYEZvS9C
-         X44HgxUkHIcZiOU+dIoKz+0nwsPjOgc7iIFS/BGKmAte0pCogz4HW2gf4C+jTdn2EEDt
-         QGgg==
-X-Gm-Message-State: ABy/qLZBOzRSl1ROd/fZQy7xJId/1jM8Ba9wGn+kA5DH4eJAWz2Vc+IX
-        /U4rF2s276WcnXX5AMkV1d2SYA==
-X-Google-Smtp-Source: APBJJlEmvs3NrdWOLttT+xLgm5IvnEqfm68aKPVbDjqZNLieClmsHcxjK5jE9syxd0gRUXjnXHGGwQ==
-X-Received: by 2002:a05:6a20:549f:b0:12c:fa41:3fab with SMTP id i31-20020a056a20549f00b0012cfa413fabmr19605772pzk.45.1689697403839;
-        Tue, 18 Jul 2023 09:23:23 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:181:e3fe:53e1:920])
-        by smtp.gmail.com with ESMTPSA id z1-20020aa791c1000000b006661562429fsm1769261pfa.97.2023.07.18.09.23.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jul 2023 09:23:23 -0700 (PDT)
-Date:   Tue, 18 Jul 2023 10:23:21 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Sarannya S <quic_sarannya@quicinc.com>,
-        Chris Lew <quic_clew@quicinc.com>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>,
-        Dan Carpenter <dan.carpenter@linaro.org>
-Subject: Re: [PATCH] rpmsg: glink: Avoid dereferencing NULL channel
-Message-ID: <ZLa8eRptI/21au0k@p14s>
-References: <20230717165538.1542034-1-quic_bjorande@quicinc.com>
+        Tue, 18 Jul 2023 12:20:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB73E0;
+        Tue, 18 Jul 2023 09:20:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2CAFB615E4;
+        Tue, 18 Jul 2023 16:20:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43C6C433C8;
+        Tue, 18 Jul 2023 16:20:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689697228;
+        bh=c2kq9yglTyBKkN+7oETy1EDzjSuSLPZJWdny+o8VQ/o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XOPUAa+eM/tTEsH8tdvIg98C482Th52LWsYb76BnmMIgZuSXapxbuprHsiEa/rryS
+         AhwTyreo6R6Xk556bDH47DjRdm8aj1UQ0D+hbnC+klT5lbWSIbXnUADzWuFKpf57LE
+         xvd1P1URcwAHdRt6A58V4LgmREB0wM98hjoGwpayBqihkWyjMtxjEPW70DypGJ1tmZ
+         qAGDkbOl1kbTx5hqWp0y1a26P09uBi5b4o8VdqYb5jb8JTz0tjeXrXbFsC7lyzYRQC
+         7C9LubKovEEw5jM96iJrP9Jg+IW0su5Uoj4vhppFVhdYJyoBe2mTEwOTYCAj5NB6am
+         0Z+rN207FLhvQ==
+Date:   Tue, 18 Jul 2023 09:23:52 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Johan Hovold <johan@kernel.org>, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 03/15] clk: qcom: gcc-sm6375: Unregister critical clocks
+Message-ID: <ybugl2m7o5cnzj4lv5ksit2rip6yvths5ieo3xlw6cycto2zax@2jimga475z2t>
+References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v1-3-27784d27a4f4@linaro.org>
+ <ZLaRtrH85v4kpSvb@hovoldconsulting.com>
+ <33a26241-026a-9466-5dd6-e3202b29f57c@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230717165538.1542034-1-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <33a26241-026a-9466-5dd6-e3202b29f57c@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 17, 2023 at 09:55:38AM -0700, Bjorn Andersson wrote:
-> The newly introduced signal command handler checks for non-existing
-> channel and print an error message, but then continues on to dereference
-> that same channel.
+On Tue, Jul 18, 2023 at 03:26:51PM +0200, Konrad Dybcio wrote:
+> On 18.07.2023 15:20, Johan Hovold wrote:
+> > On Mon, Jul 17, 2023 at 05:19:10PM +0200, Konrad Dybcio wrote:
+> >> Some clocks need to be always-on, but we don't really do anything
+> >> with them, other than calling enable() once and telling Linux they're
+> >> enabled.
+> >>
+> >> Unregister them to save a couple of bytes and, perhaps more
+> >> importantly, allow for runtime suspend of the clock controller device,
+> >> as CLK_IS_CRITICAL prevents the latter.
+> > 
+> > But this doesn't sound right. How can you disable a controller which
+> > still has clocks enabled?
+> > 
+> > Shouldn't instead these clocks be modelled properly so that they are
+> > only enabled when actually needed?
+> Hm.. We do have clk_branch2_aon_ops, but something still needs to
+> toggle these clocks.
 > 
-> Instead abort the handler when no channel is found.
-> 
-> Fixes: a2b73aa512a4 ("rpmsg: glink: Add support to handle signals command")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-> Closes: https://lore.kernel.org/r/202307160800.sb7gMnL6-lkp@intel.com/
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  drivers/rpmsg/qcom_glink_native.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index e10c05ed21bb..82d460ff4777 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1070,8 +1070,10 @@ static void qcom_glink_handle_signals(struct qcom_glink *glink,
->  	spin_lock_irqsave(&glink->idr_lock, flags);
->  	channel = idr_find(&glink->rcids, rcid);
->  	spin_unlock_irqrestore(&glink->idr_lock, flags);
-> -	if (!channel)
-> +	if (!channel) {
->  		dev_err(glink->dev, "signal for non-existing channel\n");
-> +		return;
-> +	}
 
-I have applied this patch.
+Before we started replacing these clocks with static votes, I handled
+exactly this problem in the turingcc-qcs404 driver by registering the
+ahb clock with a pm_clk_add(). The clock framework will then
+automagically keep the clock enabled around operations, but it will also
+keep the runtime state active as long as the clock is prepared.
 
-Thanks,
-Mathieu
+As mentioned in an earlier reply today, there's no similarity to this in
+the reset or gdsc code, so we'd need to add that in order to rely on
+such mechanism.
 
->  
->  	enable = sigs & NATIVE_DSR_SIG || sigs & NATIVE_CTS_SIG;
->  
-> -- 
-> 2.25.1
+> I *think* we could leave a permanent vote in probe() without breaking
+> runtime pm! I'll give it a spin bit later..
 > 
+
+Modelling the AHB clock in DT and putting a devm_clk_get_enabled() would
+properly connect the two, and thereby handle probe order between the two
+clock controllers.
+
+But it would prevent the power-domain of the parent provider to ever
+suspending. Using pm_clk_add() this would at least depend on client
+votes.
+
+Regards,
+Bjorn
