@@ -2,107 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB329757D9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 15:30:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DCBB757DBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 15:35:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232788AbjGRNaA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 09:30:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34256 "EHLO
+        id S232782AbjGRNf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 09:35:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232738AbjGRN3z (ORCPT
+        with ESMTP id S232706AbjGRNfx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 09:29:55 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D317126;
-        Tue, 18 Jul 2023 06:29:48 -0700 (PDT)
+        Tue, 18 Jul 2023 09:35:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1311118B;
+        Tue, 18 Jul 2023 06:35:50 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6CA156159B;
-        Tue, 18 Jul 2023 13:29:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973BBC611A4;
-        Tue, 18 Jul 2023 13:29:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689686984;
-        bh=JucSCYtIeP5pXopgua1lk2Xc676zWfRI0jmWjsoIoAA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IPt1QeLuHYln0zGpgeG6CKT9HWvuhbmHwGTpIXkbmij14VLQi1bThBx7Nxu9eUJ/m
-         mpJINpbRgLUzsCnYs0bKDViLnSDhHGidlDtm0L0A6qaJ5j2eQIw9jy/i6wvUrCpoCE
-         mfa59OWFZSxu2Rvv8urGx73xU+GNT1Y/O0LkIhRKbQrp5NfmmToXfRu4WWpiTEQJNr
-         Cu/kQXq9n9lyf5eHWp+lTLigA4QfxD56UUeD2J26IFADSUZc+ON5uo0C4v6AzBVuqi
-         8L6AD2i3TY9oZWoECc2lyVLnQyQoMHdP+fvwaXFhv6eWcfT2I8Fd7kRmEhxopTz9jQ
-         s171x5qIZUNyg==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1qLkm2-0005cH-1A;
-        Tue, 18 Jul 2023 15:29:54 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>, stable@vger.kernel.org
-Subject: [PATCH 8/8] clk: qcom: turingcc-qcs404: fix missing resume during probe
-Date:   Tue, 18 Jul 2023 15:29:02 +0200
-Message-ID: <20230718132902.21430-9-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230718132902.21430-1-johan+linaro@kernel.org>
-References: <20230718132902.21430-1-johan+linaro@kernel.org>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8593F615A1;
+        Tue, 18 Jul 2023 13:35:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77068C433B9;
+        Tue, 18 Jul 2023 13:35:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1689687349;
+        bh=B0NjEhu86N4J+fkW2NC3ZP+O5bGE7CvhT29CjHH1Mlg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=dOHlZSGFJEYqcQFBqTE6cavvulJfUotaf3OEnRe7xZ8rQvpsKexeiEpLeoUFUz3WK
+         WwCXx8kcoFZpsGnZZ/bin2CgC35AQqq0szBzq2o7xp4aG/lBft/pOS93LoMYH48+BI
+         zA5U7riVI+aSNX/c4q3y0LvVOZZ/Y88zadWH0DD4=
+Date:   Tue, 18 Jul 2023 15:35:42 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, corbet@lwn.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        andy.shevchenko@gmail.com, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Subject: Re: [PATCH v4 00/21] Add Qualcomm Minidump kernel driver related
+ support
+Message-ID: <2023071833-clamshell-drinking-188c@gregkh>
+References: <1687955688-20809-1-git-send-email-quic_mojha@quicinc.com>
+ <2023062814-chance-flounder-f002@gregkh>
+ <CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com>
+ <CACRpkda3CJ7G4-wDPkWmzg6nyCoEfG+u2cQH6KXWNjbftd90ow@mail.gmail.com>
+ <355de4c7-180d-4edd-b6fd-9c8e29e40e42@quicinc.com>
+ <52650970-de78-764f-28e2-ee0115b7d5c6@quicinc.com>
+ <e4784d1c-73da-9cda-6aef-d02625e8efd2@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e4784d1c-73da-9cda-6aef-d02625e8efd2@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drivers that enable runtime PM must make sure that the controller is
-runtime resumed before accessing its registers to prevent the power
-domain from being disabled.
+On Tue, Jul 18, 2023 at 11:17:12AM +0530, Mukesh Ojha wrote:
+> + linux-samsung-soc@vger.kernel.org
+> + linux-mediatek@lists.infradead.org
 
-Fixes: 892df0191b29 ("clk: qcom: Add QCS404 TuringCC")
-Cc: stable@vger.kernel.org      # 5.2
-Cc: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/clk/qcom/turingcc-qcs404.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+What does that do?
 
-diff --git a/drivers/clk/qcom/turingcc-qcs404.c b/drivers/clk/qcom/turingcc-qcs404.c
-index 43184459228f..2cd288d6c3e4 100644
---- a/drivers/clk/qcom/turingcc-qcs404.c
-+++ b/drivers/clk/qcom/turingcc-qcs404.c
-@@ -125,11 +125,22 @@ static int turingcc_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	ret = qcom_cc_probe(pdev, &turingcc_desc);
- 	if (ret < 0)
--		return ret;
-+		goto err_put_rpm;
-+
-+	pm_runtime_put(&pdev->dev);
- 
- 	return 0;
-+
-+err_put_rpm:
-+	pm_runtime_put_sync(&pdev->dev);
-+
-+	return ret;
- }
- 
- static const struct dev_pm_ops turingcc_pm_ops = {
--- 
-2.41.0
+confused,
 
+greg k-h
