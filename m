@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9C1E7573BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:11:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54A6A7573C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:12:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231240AbjGRGLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 02:11:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53930 "EHLO
+        id S231301AbjGRGMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 02:12:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231276AbjGRGLi (ORCPT
+        with ESMTP id S231302AbjGRGLm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 02:11:38 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED4371988
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:22 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-666edfc50deso3254998b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:22 -0700 (PDT)
+        Tue, 18 Jul 2023 02:11:42 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAAC610E3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:27 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id 46e09a7af769-6b9c57c4d12so2140573a34.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689660681; x=1692252681;
+        d=linaro.org; s=google; t=1689660686; x=1692252686;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Cj0Kr21fyKMkxAxxSOMwsypaT2zCqEO5kfSgBNpmV4w=;
-        b=E4VIlEjB7OpiaiNfOMe49rriMI65KPRGhRjW+OuN7mBoAE1PhP8mtVQM0a1Dy2bQuX
-         rqb3C7XkjgbyiD/J6t2j/5mUba5DjjyAStOl1ljQlQ288qZboIBUMma6B+1emotmY8EQ
-         H30Q+VKbzduQhblOO0e/J1LJue45zD5H74MlO9uRKcNj5YMWQNY+9+4r/6pZH0Bk0jYy
-         ZL2/TeMnlp8zqh85xhp6ufz9gdCwDf9eHmwV3u33PBTE7mmIv2Iu0eqQxFGim0Oj7i2q
-         NkN4kCnQeBzsi+Q1Nwl091PlAkh8zEds8xPDolZdIf2crsTPbHSV4+WD5EmY48j7GX1e
-         Jzxw==
+        bh=BYiFLzJcgS5ZH0B0OriyMRTUX2STtvU6MnH5HLZczGY=;
+        b=CW+vd5hwuP2riG2Y3RncYwSYFhxK2KZcb+Gb6Z0jNIhq1MULcVgSsylmQdYTC8ki7w
+         F4nDAW4nAcxLKr/WM+5K08RP/qNzDiiDDajh2OVmw+GnT1++zLAg+h5L8vYxizWizTq7
+         Ruksy/6OVq8dPKAHrzGVtYEjOEcAQdP6MOVsItGF+ebVXQRN4Hzkcttkm4+C6e16lHEw
+         H8cEWzy7oZQP0EaLVXbS+2hecYIZ288y/C3ZGVd9uVW8NQryNuWAb0ChLLPOf9DGSQ3I
+         GDP3loriMXrpeaNQfJYwAu+yp2xI3tcd0nbyr6gujc+T4b/TPIM5IfwAuXGivnvLaROD
+         Zj5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689660681; x=1692252681;
+        d=1e100.net; s=20221208; t=1689660686; x=1692252686;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Cj0Kr21fyKMkxAxxSOMwsypaT2zCqEO5kfSgBNpmV4w=;
-        b=kZlfFxnagHhHxKX4RiIqDmQ8+KkI9/6Tc++3EJcWMf5r4EeJdbr58qs/QIvstJFEEe
-         dyEqkEo2YWqSeQfUO133TR12i0dO7WK23gF4o7SHDvTZbLKtLQhd/pwqOOU7pQNX1xAR
-         TGicMBfBySudkavPI0vbvb0Oa3TjvdjkoFvXyoi0w/RgxuLlo7281N97cW3YR+zD9t1y
-         VTMF5BsoOgLcgDWEHS2Mc/r9dJAnLew6EGTEMEFEjc76P2op2Z1dvw0EVy9JkDzMB3og
-         wEi9LQmDV8U/B0DHwGaHxMMNIfudE1r4ayyiOLSspCQgE0x/zeOkkJghER/d6g1/Ra7W
-         aXiA==
-X-Gm-Message-State: ABy/qLbYeYGFnES2spyYui03R721DBuQPLErkIB0NK1fbiS0spvNWR9K
-        JMgrE/G0nG3QM8rbVsOtfGvQMZeevGT16/b4cqlK6Q==
-X-Google-Smtp-Source: APBJJlHjtWvi6yAFKVFf93mMLqWPNaz5odCz8RCDBsF7Wt8mdjxL4BtqtmP842+6qU6d6uaRCakpwA==
-X-Received: by 2002:a05:6a00:a1f:b0:676:8fac:37 with SMTP id p31-20020a056a000a1f00b006768fac0037mr14739279pfh.4.1689660680828;
-        Mon, 17 Jul 2023 23:11:20 -0700 (PDT)
+        bh=BYiFLzJcgS5ZH0B0OriyMRTUX2STtvU6MnH5HLZczGY=;
+        b=HuolLhoqa5KbgX+zRUD6wdDldm6iicQBiCH5O1EL8f5AaNv6+bNp7JCUI+kWmeM/1q
+         zDUCDGfVeHYey638yuS9Zc0j5daiZaC4Um7d6tKJ9UXRyr2tAMy94aPpampbFrY+B8G9
+         BBO00LHcs/jwFutVcJ1deffmjWNChfoLGUA/Ox3tnNskixJFIB5U+IWx2yag7d0GBnaj
+         Dt2Dvt+bT1b90KKfyD7ro3RkKV5IXcpO/+U5+Ge2ad8rKh3hg8wuEWjsu8kxv/YWwJkb
+         DbpBFTsz2whoLM+wu9zq2gVqPwGoCia2ZT0Dd4aS6PKzRuuqI566CXhZxgORU8kCN0gd
+         napQ==
+X-Gm-Message-State: ABy/qLYN75Xrv/RfN42bXkuWK2f4+gfK8+iIWXQv5ANiRN5InaDLl7jH
+        oFUAT8PbDODwr/tVMeg7cw31Ft/VmDT5J4pO3fJo4A==
+X-Google-Smtp-Source: APBJJlGitC/u99kqY0gVhuwzkq5zSgoHAKolJgtP0kHG1YRXPRGYAB8mYprBbArc/l08DTEmTKCY7A==
+X-Received: by 2002:a05:6358:280d:b0:12f:2573:45b4 with SMTP id k13-20020a056358280d00b0012f257345b4mr10617711rwb.26.1689660685783;
+        Mon, 17 Jul 2023 23:11:25 -0700 (PDT)
 Received: from localhost.localdomain ([223.233.68.54])
-        by smtp.gmail.com with ESMTPSA id h21-20020a62b415000000b0067db7c32419sm778106pfn.15.2023.07.17.23.11.16
+        by smtp.gmail.com with ESMTPSA id h21-20020a62b415000000b0067db7c32419sm778106pfn.15.2023.07.17.23.11.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jul 2023 23:11:20 -0700 (PDT)
+        Mon, 17 Jul 2023 23:11:25 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-usb@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
         quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org,
         stephan@gerhold.net
-Subject: [PATCH v9 3/7] dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 support
-Date:   Tue, 18 Jul 2023 11:40:48 +0530
-Message-Id: <20230718061052.1332993-4-bhupesh.sharma@linaro.org>
+Subject: [PATCH v9 4/7] usb: misc: eud: Add driver support for SM6115 / SM4250
+Date:   Tue, 18 Jul 2023 11:40:49 +0530
+Message-Id: <20230718061052.1332993-5-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
 References: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
@@ -70,33 +70,183 @@ Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add dt-bindings for EUD found on Qualcomm SM6115 / SM4250 SoC.
+Add SM6115 / SM4250 SoC EUD support in qcom_eud driver.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On some SoCs (like the SM6115 / SM4250 SoC), the mode manager
+needs to be accessed only via the secure world (through 'scm'
+calls).
+
+Also, the enable bit inside 'tcsr_check_reg' needs to be set
+first to set the eud in 'enable' mode on these SoCs.
+
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/misc/Kconfig    |  2 +-
+ drivers/usb/misc/qcom_eud.c | 76 ++++++++++++++++++++++++++++++++++---
+ 2 files changed, 72 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-index ca38d219e57d5..bb9b97f03585f 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-@@ -18,6 +18,7 @@ properties:
-     items:
-       - enum:
-           - qcom,sc7280-eud
-+          - qcom,sm6115-eud
-       - const: qcom,eud
+diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
+index 99b15b77dfd57..51eb5140caa14 100644
+--- a/drivers/usb/misc/Kconfig
++++ b/drivers/usb/misc/Kconfig
+@@ -146,7 +146,7 @@ config USB_APPLEDISPLAY
  
-   reg:
+ config USB_QCOM_EUD
+ 	tristate "QCOM Embedded USB Debugger(EUD) Driver"
+-	depends on ARCH_QCOM || COMPILE_TEST
++	depends on (ARCH_QCOM && QCOM_SCM) || COMPILE_TEST
+ 	select USB_ROLE_SWITCH
+ 	help
+ 	  This module enables support for Qualcomm Technologies, Inc.
+diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+index 7f371ea1248c3..a5b28fc24116a 100644
+--- a/drivers/usb/misc/qcom_eud.c
++++ b/drivers/usb/misc/qcom_eud.c
+@@ -11,9 +11,12 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <linux/of_address.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/sysfs.h>
++#include <linux/firmware/qcom/qcom_scm.h>
+ #include <linux/usb/role.h>
+ 
+ #define EUD_REG_INT1_EN_MASK	0x0024
+@@ -30,6 +33,10 @@
+ #define EUD_INT_SAFE_MODE	BIT(4)
+ #define EUD_INT_ALL		(EUD_INT_VBUS | EUD_INT_SAFE_MODE)
+ 
++#define EUD_EN2_EN		BIT(0)
++#define EUD_EN2_DISABLE		(0)
++#define TCSR_CHECK_EN		BIT(0)
++
+ struct eud_chip {
+ 	struct device			*dev;
+ 	struct usb_role_switch		*role_sw;
+@@ -39,6 +46,7 @@ struct eud_chip {
+ 	int				irq;
+ 	bool				enabled;
+ 	bool				usb_attached;
++	phys_addr_t			secure_mode_mgr;
+ };
+ 
+ static int enable_eud(struct eud_chip *priv)
+@@ -46,7 +54,11 @@ static int enable_eud(struct eud_chip *priv)
+ 	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+ 	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
+ 			priv->base + EUD_REG_INT1_EN_MASK);
+-	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
++
++	if (priv->secure_mode_mgr)
++		qcom_scm_io_writel(priv->secure_mode_mgr + EUD_REG_EUD_EN2, EUD_EN2_EN);
++	else
++		writel(EUD_EN2_EN, priv->mode_mgr + EUD_REG_EUD_EN2);
+ 
+ 	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
+ }
+@@ -54,7 +66,11 @@ static int enable_eud(struct eud_chip *priv)
+ static void disable_eud(struct eud_chip *priv)
+ {
+ 	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
+-	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
++
++	if (priv->secure_mode_mgr)
++		qcom_scm_io_writel(priv->secure_mode_mgr + EUD_REG_EUD_EN2, EUD_EN2_DISABLE);
++	else
++		writel(EUD_EN2_DISABLE, priv->mode_mgr + EUD_REG_EUD_EN2);
+ }
+ 
+ static ssize_t enable_show(struct device *dev,
+@@ -175,9 +191,37 @@ static void eud_role_switch_release(void *data)
+ 	usb_role_switch_put(chip->role_sw);
+ }
+ 
++static int eud_find_secure_reg_addr(struct device *dev, u64 *addr)
++{
++	struct device_node *tcsr;
++	struct device_node *np = dev->of_node;
++	struct resource res;
++	u32 offset;
++	int ret;
++
++	tcsr = of_parse_phandle(np, "qcom,secure-eud-reg", 0);
++	if (!tcsr)
++		return 0;
++
++	ret = of_address_to_resource(tcsr, 0, &res);
++	of_node_put(tcsr);
++	if (ret)
++		return ret;
++
++	ret = of_property_read_u32_index(np, "qcom,secure-eud-reg", 1, &offset);
++	if (ret < 0)
++		return ret;
++
++	*addr = res.start + offset;
++
++	return 0;
++}
++
+ static int eud_probe(struct platform_device *pdev)
+ {
+ 	struct eud_chip *chip;
++	struct resource *res;
++	phys_addr_t tcsr_check = 0;
+ 	int ret;
+ 
+ 	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+@@ -200,9 +244,30 @@ static int eud_probe(struct platform_device *pdev)
+ 	if (IS_ERR(chip->base))
+ 		return PTR_ERR(chip->base);
+ 
+-	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+-	if (IS_ERR(chip->mode_mgr))
+-		return PTR_ERR(chip->mode_mgr);
++	/*
++	 * EUD block on a few Qualcomm SoCs needs secure register access.
++	 * Check for the same via vendor-specific dt property.
++	 */
++	ret = eud_find_secure_reg_addr(&pdev->dev, &tcsr_check);
++	if (ret < 0)
++		return ret;
++
++	if (tcsr_check) {
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
++		if (!res)
++			return dev_err_probe(chip->dev, -ENODEV,
++					     "failed to get secure_mode_mgr reg base\n");
++
++		chip->secure_mode_mgr = res->start;
++
++		ret = qcom_scm_io_writel(tcsr_check, TCSR_CHECK_EN);
++		if (ret)
++			return dev_err_probe(chip->dev, ret, "failed to write tcsr check reg\n");
++	} else {
++		chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
++		if (IS_ERR(chip->mode_mgr))
++			return PTR_ERR(chip->mode_mgr);
++	}
+ 
+ 	chip->irq = platform_get_irq(pdev, 0);
+ 	ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
+@@ -230,6 +295,7 @@ static void eud_remove(struct platform_device *pdev)
+ 
+ static const struct of_device_id eud_dt_match[] = {
+ 	{ .compatible = "qcom,sc7280-eud" },
++	{ .compatible = "qcom,sm6115-eud" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, eud_dt_match);
 -- 
 2.38.1
 
