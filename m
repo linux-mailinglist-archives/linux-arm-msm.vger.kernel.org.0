@@ -2,217 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E234275845C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 20:17:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 585AC758462
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 20:18:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229478AbjGRSR1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 14:17:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52314 "EHLO
+        id S229528AbjGRSSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 14:18:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjGRSR0 (ORCPT
+        with ESMTP id S229499AbjGRSSw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 14:17:26 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2774A9D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 11:17:24 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51e5da802afso8549476a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 11:17:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689704242; x=1692296242;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AtdblGg5jBy/9UdjzY2MwuPaOGVdkK2ygs+jc/rHbsI=;
-        b=DQgV2zHYpUaxjuhMxzP6Oqc1LGh7YqOteKkDPGTEZzBXadvXn756Uubzfkgfjfq90X
-         qRxIKRWbdYNZit0s71pVEoEHFgMH0bIaI1QdKFyyOcxypPTE1a+s7MKmv8BsJXjVj+T2
-         NELmvM6fo6+mTf1BVawsd/BDQQuDEztFmIltRhyhkVGT2+CemLzmAj9HDAsY1bgyUeOa
-         mP+0o274YlrTwGwqMG7ly3T9/jWDe+i+GoYYEYXGaHX89/pbLON5jfM3KoumV5kDj//K
-         5AJLOi8GaeoUZqmqaQWob2EG9vfCC/URYT4Dq1XbCRTr8WLPLC/WG3m4VKR06U+yzK6P
-         eEmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689704242; x=1692296242;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AtdblGg5jBy/9UdjzY2MwuPaOGVdkK2ygs+jc/rHbsI=;
-        b=bhffWqIiY2vGdqYi38ewELEwJRlWAgl7qMEjOSP7nhr2zNIyDxIsG467leUPI8NPNE
-         O/Zc+EjK+AddxGjKSfpGupaDauVafLimKfwnZ4RLge8xj3H12lvwtJwT3Z9apf5xIwa6
-         C5nnmaUO4nzjjJ4089LZr9yUdIXz8U5BS1lgjI6teFdXPb/jwIwe0QdeT6CDc0G83AWF
-         RvvZ2Bytg59sNBUwDEeN0RtwLv5A9+4us4t++/zfhaZr9r5f3RPEWNfhDuXIvdAWqrI+
-         kIyZsBKYboIXMyL8xrNmsUKiXe6yfyVWKUnoi818UlbqcR2vpDKA56jvfXWzrFkirGhs
-         DObg==
-X-Gm-Message-State: ABy/qLYAGFi69tfui9GW0JxSwRjEp3jSDzHkTkNYZAxqJk4Wyr0b9AGo
-        IvaHvTsMPVfAvUyGlkbjVA24cw==
-X-Google-Smtp-Source: APBJJlGiWY1EKNf9FkiAT/uOh62LJK1rZHb+JAcvP2bwDKhX7gSsrFR2Dvy9OXIbKA28S2qFehsUaQ==
-X-Received: by 2002:aa7:cd47:0:b0:51f:f079:8761 with SMTP id v7-20020aa7cd47000000b0051ff0798761mr563469edw.15.1689704242657;
-        Tue, 18 Jul 2023 11:17:22 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id v15-20020aa7d80f000000b0051e2670d599sm1571865edq.4.2023.07.18.11.17.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jul 2023 11:17:22 -0700 (PDT)
-Message-ID: <d9d5ffd5-6f85-f091-5d69-12cdd8d04c99@linaro.org>
-Date:   Tue, 18 Jul 2023 20:17:20 +0200
+        Tue, 18 Jul 2023 14:18:52 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56144F7;
+        Tue, 18 Jul 2023 11:18:51 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36IGmHg7009181;
+        Tue, 18 Jul 2023 18:18:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=l4pXiPpeYymHMYShWK/s3/TFJSTWiPRwLM8s3s2kGNc=;
+ b=NF16cfC2dAJyLyz8U0D28eSR70AFuZkQnii/q64wm8vweI8uwRdHNuvb71Vzy/rNPtxv
+ HfDLWh25+vD/twWjbT8/VbF0YRuJO2S0XvepDJJjrJEaDTco+2T09bA9NBRU/rVg6NlQ
+ JXYZpoGfDQbZsJsZ2RQwXJbs+FdNSXMKeqmPSwWz0z0OTxBJTOnWigSjx2+RkaHnQpzL
+ 1cCqgiXNd1v5hDVevQfqheQhlJAk+5FNVT/n7jy8UjGhoUjaCG7gYvKKSSBANFpKvHPr
+ Eqy32wwLPaajgiLJrcTYPL3WEDrHUKOYf3vAI9eAcxpdz+rSCeB8W2JgAqmMgjb1Mdcv Cw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwqqg9ajm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Jul 2023 18:18:33 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36IIIW8c002707
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Jul 2023 18:18:32 GMT
+Received: from [10.110.49.60] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 18 Jul
+ 2023 11:18:32 -0700
+Message-ID: <4753a76c-d0ee-4371-9f70-ffc57d39ff1a@quicinc.com>
+Date:   Tue, 18 Jul 2023 11:18:31 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
-Content-Language: en-US
-To:     Nikunj Kela <quic_nkela@quicinc.com>, sudeep.holla@arm.com
-Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 1/2] dt-bindings: arm: Add qcom specific hvc transport for
+ SCMI
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <sudeep.holla@arm.com>
+CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
 References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230718160833.36397-3-quic_nkela@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230718160833.36397-3-quic_nkela@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <20230718160833.36397-2-quic_nkela@quicinc.com>
+ <d05fcac3-1054-6b52-e9d8-15baba424863@linaro.org>
+Content-Language: en-US
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <d05fcac3-1054-6b52-e9d8-15baba424863@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: f1KiiObHY6D0zZ2mdTo3imAwRGXdePbr
+X-Proofpoint-ORIG-GUID: f1KiiObHY6D0zZ2mdTo3imAwRGXdePbr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-18_13,2023-07-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ mlxscore=0 phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307180167
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2023 18:08, Nikunj Kela wrote:
-> Add a new transport channel to the SCMI firmware interface driver for
-> SCMI message exchange on Qualcomm virtual platforms.
-> 
-> The hypervisor associates an object-id also known as capability-id
-> with each hvc doorbell object. The capability-id is used to identify the
-> doorbell from the VM's capability namespace, similar to a file-descriptor.
-> 
 
-...
+On 7/18/2023 11:12 AM, Krzysztof Kozlowski wrote:
+> On 18/07/2023 18:08, Nikunj Kela wrote:
+>> Introduce compatible "qcom,scmi-hvc-shmem" for SCMI
+>> transport channel for Qualcomm virtual platforms.
+>> The compatible mandates a shared memory channel.
+>>
+>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+>> ---
+>>   .../bindings/firmware/arm,scmi.yaml           | 69 +++++++++++++++++++
+>>   1 file changed, 69 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> index b138f3d23df8..605b1e997a85 100644
+>> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> @@ -45,6 +45,9 @@ properties:
+>>         - description: SCMI compliant firmware with OP-TEE transport
+>>           items:
+>>             - const: linaro,scmi-optee
+>> +      - description: SCMI compliant firmware with Qualcomm hvc/shmem transport
+>> +        items:
+>> +          - const: qcom,scmi-hvc-shmem
+>>   
+>>     interrupts:
+>>       description:
+>> @@ -321,6 +324,16 @@ else:
+>>         required:
+>>           - linaro,optee-channel-id
+>>   
+>> +    else:
+>> +      if:
+>> +        properties:
+>> +          compatible:
+>> +            contains:
+>> +              const: qcom,scmi-hvc-shmem
+>> +      then:
+>> +        required:
+>> +          - shmem
+> Unfortunately this pattern if-else-if-else-if-else does not scale well.
+> Please convert all entries first to allOf:if:then,if:then,if:then (in
+> new patch), and then add new if:then:
+Ok!
+>
+>> +
+>>   examples:
+>>     - |
+>>       firmware {
+>> @@ -444,6 +457,62 @@ examples:
+>>           };
+>>       };
+>>   
+>> +  - |
+>> +    firmware {
+>> +        scmi_dpu {
+> No underscores in node names.
+>
+> Node names should be generic. See also an explanation and list of
+> examples (not exhaustive) in DT specification:
+> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+ACK!
+>
+>
+>
+>> +            compatible = "qcom,scmi-hvc-shmem";
+>> +            shmem = <&shmem_dpu>;
+>> +
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            scmi_pd_dpu: protocol@11 {
+>> +                reg = <0x11>;
+>> +                #power-domain-cells = <1>;
+>> +            };
+>> +        };
+>> +
+> Add only one example, but then only if it differs significantly. I see
+> no differences - except compatible - so maybe no point of examples.
+Other than the compatible, it also doesn't require smc-id, we read it 
+from shmem region.  Will remove examples.
+>
+>
+>> +        scmi_gpu {
+>> +            compatible = "qcom,scmi-hvc-shmem";
+>> +            shmem = <&shmem_gpu>;
+> This example for sure is not needed - you duplicate above.
+Right, will remove this example.
+>
+>> +
+>> +            interrupts = <GIC_SPI 931 IRQ_TYPE_EDGE_RISING>;
+>> +            interrupt-names = "a2p";
+>> +
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            scmi_pd_gpu: protocol@11 {
+>> +                reg = <0x11>;
+>> +                #power-domain-cells = <1>;
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +    soc {
+>> +        #address-cells = <1>;
+>> +        #size-cells = <1>;
+>> +
+>> +        sram@95c00000 {
+>> +            compatible = "mmio-sram";
+>> +            reg = <0x95c00000 0x10000>;
+>> +
+>> +            #address-cells = <1>;
+>> +            #size-cells = <1>;
+>> +            ranges;
+>> +
+>> +            shmem_dpu: scmi-sram-dpu@95c00000 {
+>> +                compatible = "arm,scmi-shmem";
+>> +                reg = <0x95c00000 0x3f0>;
+>> +            };
+> How does these differ from existing example?
 
-> +
-> +static bool qcom_hvc_chan_available(struct device_node *of_node, int idx)
-> +{
-> +	struct device_node *np = of_parse_phandle(of_node, "shmem", 0);
-> +
-> +	if (!np)
-> +		return false;
-> +
-> +	of_node_put(np);
-> +	return true;
-> +}
-> +
-> +static inline void qcom_hvc_channel_lock_init(struct scmi_qcom_hvc *scmi_info)
-> +{
-> +	mutex_init(&scmi_info->shmem_lock);
-> +}
-> +
-> +static inline void
-> +qcom_hvc_channel_lock_acquire(struct scmi_qcom_hvc *scmi_info,
-> +			      struct scmi_xfer *xfer __maybe_unused)
-
-Why do you pass unused arguments?
-
-> +{
-> +	mutex_lock(&scmi_info->shmem_lock);
-
-Why do you need these wrappers? Why not using mutexes directly?
-If they are needed, then add lock __acquires annotation.
+It doesn't. Will remove the example as suggested. Thanks
 
 
-> +}
-> +
-> +static inline void qcom_hvc_channel_lock_release(struct scmi_qcom_hvc
-> +						 *scmi_info)
-
-Same comments.
-
-> +{
-> +	mutex_unlock(&scmi_info->shmem_lock);
-> +}
-> +
-> +static int qcom_hvc_chan_setup(struct scmi_chan_info *cinfo,
-> +			       struct device *dev, bool tx)
-> +{
-> +	struct device *cdev = cinfo->dev;
-> +	struct scmi_qcom_hvc *scmi_info;
-> +	resource_size_t size;
-> +	struct resource res;
-> +	struct device_node *np;
-> +	unsigned long cap_id;
-> +	u32 func_id;
-> +	int ret, irq;
-> +
-> +	if (!tx)
-> +		return -ENODEV;
-> +
-> +	scmi_info = devm_kzalloc(dev, sizeof(*scmi_info), GFP_KERNEL);
-> +	if (!scmi_info)
-> +		return -ENOMEM;
-> +
-> +	np = of_parse_phandle(cdev->of_node, "shmem", 0);
-> +	if (!of_device_is_compatible(np, "arm,scmi-shmem"))
-
-You leak here reference.
-
-> +		return -ENXIO;
-> +
-> +	ret = of_address_to_resource(np, 0, &res);
-> +	of_node_put(np);
-> +	if (ret) {
-> +		dev_err(cdev, "failed to get SCMI Tx shared memory\n");
-> +		return ret;
-> +	}
-> +
-> +	size = resource_size(&res);
-> +
-> +	/* let's map 2 additional ulong since
-> +	 * func-id & capability-id are kept after shmem.
-> +	 *     +-------+
-> +	 *     |       |
-> +	 *     | shmem |
-> +	 *     |       |
-> +	 *     |       |
-> +	 *     +-------+ <-- size
-> +	 *     | funcId|
-> +	 *     +-------+ <-- size + sizeof(ulong)
-> +	 *     | capId |
-> +	 *     +-------+ <-- size + 2*sizeof(ulong)
-> +	 */
-> +
-> +	scmi_info->shmem = devm_ioremap(dev, res.start,
-> +					size + 2 * sizeof(unsigned long));
-> +	if (!scmi_info->shmem) {
-> +		dev_err(dev, "failed to ioremap SCMI Tx shared memory\n");
-> +		return -EADDRNOTAVAIL;
-> +	}
-> +
-> +	func_id = readl((void *)(scmi_info->shmem) + size);
-> +
-> +#ifdef CONFIG_ARM64
-> +	cap_id = readq((void *)(scmi_info->shmem) + size +
-> +		       sizeof(unsigned long));
-> +#else
-> +	cap_id = readl((void *)(scmi_info->shmem) + size +
-> +		       sizeof(unsigned long));
-> +#endif
-> +
-> +	/*
-> +	 * If there is an interrupt named "a2p", then the service and
-> +	 * completion of a message is signaled by an interrupt rather than by
-> +	 * the return of the hvc call.
-> +	 */
-> +	irq = of_irq_get_byname(cdev->of_node, "a2p");
-> +	if (irq > 0) {
-> +		ret = devm_request_irq(dev, irq, qcom_hvc_msg_done_isr,
-> +				       IRQF_NO_SUSPEND,
-> +				       dev_name(dev), scmi_info);
-> +		if (ret) {
-> +			dev_err(dev, "failed to setup SCMI completion irq\n");
-
-return dev_err_probe, unless this is not called in probe... but then
-using devm-interface raises questions.
-
-Best regards,
-Krzysztof
-
+>
+> Best regards,
+> Krzysztof
+>
