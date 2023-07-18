@@ -2,59 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C34E77580E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 17:31:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEC66758124
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 17:39:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230361AbjGRPbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 11:31:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60196 "EHLO
+        id S233718AbjGRPju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 11:39:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230005AbjGRPbu (ORCPT
+        with ESMTP id S233346AbjGRPjr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 11:31:50 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648F4E8;
-        Tue, 18 Jul 2023 08:31:50 -0700 (PDT)
+        Tue, 18 Jul 2023 11:39:47 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE20E52;
+        Tue, 18 Jul 2023 08:39:46 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CC2586162F;
-        Tue, 18 Jul 2023 15:31:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6A8C433C7;
-        Tue, 18 Jul 2023 15:31:48 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 72DDE6164D;
+        Tue, 18 Jul 2023 15:39:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D56C433C8;
+        Tue, 18 Jul 2023 15:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689694309;
-        bh=UvS81nynzAskHbndFRf/Rn94S9fuk1KYmPk/g/MesL8=;
+        s=k20201202; t=1689694785;
+        bh=niFUIW8RgEpvAiA6LUCdCCanWa0dt1Z+kgLKjKniI74=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=H+xmPqPNT46C/9ayWQvzmDHZv/ntnGcW8Xcdx44EDIg2wDncuMGisvPyJelAVPkz3
-         ytCNUjuWvG1hHKThZ605G6qZsJH7H/dNZwUqoyYFw4RV4jzGpwMGO47h+opj4oXIPC
-         FQ8rocsLSi3EiWJNTu7LeQXx0gdqZP3jgpkqixAV8ciBgOfHuMVADTAis8aCHgMUYi
-         V3o4LbcONlkmDGO5Sxj8ON2Fqo0x3rt56UijOxSnbkykqcC/bKH//OX2CfhXuPtTmf
-         ehVn8y3bX36Ia9HBsr7M0hp2HtujLuApk65fhkoSBStKXJ/3eAcOjNzpatT8uZlmKK
-         VDxkhLNkYD66A==
-Date:   Tue, 18 Jul 2023 08:35:12 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Vivek Pernamitta <quic_vpernami@quicinc.com>
-Cc:     mhi@lists.linux.dev, mrana@quicinc.com, quic_qianyu@quicinc.com,
-        manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
-        quic_krichai@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH V2] net: mhi : Add support to enable ethernet interface
-Message-ID: <5b4okksnlobcm7sawopaayjciz4yp4y4b7vplacecqmgv5vtnk@oc2berflgkmr>
-References: <1689660928-12092-1-git-send-email-quic_vpernami@quicinc.com>
+        b=F8nqHHPzXSuaiu4yqCxVn6565ivWW36QEwkPKlE4Yfn7Y2zDQ08Tlk+6MG1k25YCY
+         jLImfir4nCohVHrD01iUvnCVkW6XrTh7ApdvGcmOZzH1/a6N9TU6KW4VO31yHNNgAx
+         Nc+TfTJgONI8Wz6uq4mJhfIDRv0VFizJRGOIkIfr2d41zu7uR3l1gwowN6C+EDZnPw
+         YaUYTMALn2uo46LI0tUUaKDB7oehgXlsLawg6to9S1yQNiDnO+LBdxcioakgMUYd0l
+         yWYJAvJinQjqIwDxupQRzyocLyfylbXKpCaPxQ+ZcaxQ6zyUSlhdlGvhWoaE/EgVvA
+         QL3pz4SaW4esg==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qLmnr-0006Bq-1J;
+        Tue, 18 Jul 2023 17:39:55 +0200
+Date:   Tue, 18 Jul 2023 17:39:55 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+Subject: Re: [PATCH 5/8] clk: qcom: lpasscc-sc7280: fix missing resume during
+ probe
+Message-ID: <ZLaySwCQsgQCSRIW@hovoldconsulting.com>
+References: <20230718132902.21430-1-johan+linaro@kernel.org>
+ <20230718132902.21430-6-johan+linaro@kernel.org>
+ <xbek6yuldy7ck3zlux76hosn4iqt52ocydovuol7geiwapslrd@j7uyxhrkiyaw>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1689660928-12092-1-git-send-email-quic_vpernami@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <xbek6yuldy7ck3zlux76hosn4iqt52ocydovuol7geiwapslrd@j7uyxhrkiyaw>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,9 +67,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 18, 2023 at 11:45:28AM +0530, Vivek Pernamitta wrote:
+On Tue, Jul 18, 2023 at 07:58:41AM -0700, Bjorn Andersson wrote:
+> On Tue, Jul 18, 2023 at 03:28:59PM +0200, Johan Hovold wrote:
+> > Drivers that enable runtime PM must make sure that the controller is
+> > runtime resumed before accessing its registers to prevent the power
+> > domain from being disabled.
+> > 
+> 
+> NB: the clock framework will runtime resume the controller surrounding
+> operations, even so during probe. But this is not done for resets and
+> gdscs - and in some clock drivers we poke registers directly from
+> probe...
+> 
+> The one time this really matters is where we associate the ahb clock
+> with the runtime state, e.g. in qcs404 turingcc. On most other platforms
+> we just mark these clocks always-on in gcc...
 
-Please drop the extra ' ' after "mhi" in $subject as well.
+Right, I started looking at this with respect to the PM domain, but
+my initial commit message only mentioned the need to make sure the
+controller is resumed, which would have covered such interface clocks as
+well. 
 
-Thanks,
-Bjorn
+And while ending up with a concurrent request to disable the PM domain
+is not that likely, there is currently nothing preventing it so it still
+needs to be fixed.
+
+Johan
