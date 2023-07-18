@@ -2,378 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF1AD7584BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 20:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0627E7584FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 20:42:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229666AbjGRS0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 14:26:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59320 "EHLO
+        id S230396AbjGRSmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 14:42:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjGRS0Q (ORCPT
+        with ESMTP id S230390AbjGRSmr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 14:26:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4332EB6;
-        Tue, 18 Jul 2023 11:26:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B916D616AC;
-        Tue, 18 Jul 2023 18:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCB9C433C7;
-        Tue, 18 Jul 2023 18:26:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689704774;
-        bh=BmbAbORDXYDDFKcIYnrPak+MHdZuKyT1UBUK6ko9gtc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cP3E3JOJndEmXpsidCk0i1+jlQ9V5tG2WEIlI84a5fGrdAXaGkGwAOUdYqIFDnAqi
-         L2+as1W1SCf+p8Tbyuv6I6RVZotAb6RR3ot/85oWg6pOydmY34UXgJscELk877uPRn
-         EXorRxylWjORiudZtkt8E+3M/OGdeATITjpxnz3ZCZtdEYguEvBckJRGF9/x/tmbcw
-         StbW0lJx9hrjNGiQLkhKt8CA22eCPrnLbB+UXPAGcLg1yit0vvq4HjZWsqb80pDm8E
-         QOqkUuJAGV//wOcj523SmsvgkMgFiUVtx/vjVkUQZVWgPgXiWaGactFLD/KM2QVVCq
-         NFyUdoP8yc6Xg==
-Date:   Tue, 18 Jul 2023 11:29:37 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Nikunj Kela <quic_nkela@quicinc.com>
-Cc:     sudeep.holla@arm.com, cristian.marussi@arm.com, robh+dt@kernel.org,
+        Tue, 18 Jul 2023 14:42:47 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C54CF4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 11:42:45 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-986d8332f50so783697366b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 11:42:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689705764; x=1692297764;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YWDxOdiEo182qQTrdfRT1NqU4AQWgKjDTPUDJMk0vho=;
+        b=oM+zaRthwE4f1r8MkTbNFtjNtHOKecZtu+MAMEo0rp8+TxOC3AczvBqG74Wq+XGe9z
+         ayeOGgPv2iSjCSC8JS5AVBnqntVcodyk/VvMSJcBHxiwtRRRKP8HOHgSTxwGw9NsxM+m
+         5/ePv26ZjawWFhwQDjYTAvkA+/BdJCX7wz94mKhpWSUunUZJRDl68l6SlNJhOooMXDhK
+         XkRWgjaFHT5joJWlLLpy1vAFUwgB5jnxpZgcLbNQSlwYyLWOfTzekB0N8u/VAYKEXkBM
+         O2UgCYLq1kiV3oAlEcxVRALJhxZtPQPtsuXsq1zYPeIwAEO4NNkQvPK8g8kNcWcsinm3
+         3B2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689705764; x=1692297764;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YWDxOdiEo182qQTrdfRT1NqU4AQWgKjDTPUDJMk0vho=;
+        b=B0GAHwIMv/Uk8VDQaWXDr3PeYABA0+Tz2P8LWpKe99hMczH99gEVZLUB623jjRxNYZ
+         D+M7mJROH+jFg3Qak0WhtYV0AWE259D62JH9NY2XyZboF7EdeAn7F8crZtb8f2AobJEp
+         UtKssusgTrhcvOImbyBsg+GLT+Z9f2kP8Igp03/EH6m6DzeFSPvmVt95bI7OC78aiQ1Y
+         B+y24AKQK5LP9RcVH3/2btjpqCMJJ2hi9UluFBBdkFyJECUEp6lRRjkgV98j/zu7I8GS
+         HvDjRUpwHonNollLPVgVERqYj5dGFrIMNMkJN9/ejz/012OrFEXntjXCuOtVnLiJxeQO
+         fIAw==
+X-Gm-Message-State: ABy/qLaJ9JxGYBwc5wO9yTNgOyj9QDfqDFP4V838nvoAicya98tL3uk7
+        h1QuZ2hhjuCG+wG2kdvqqWiZNQ==
+X-Google-Smtp-Source: APBJJlHwuALuQ2dnZX9w3l3xk/u5CDjDpB+cpbIhy0GLp1XygrSwSlaoo21eYMhJ9yJm12JZwn9kMw==
+X-Received: by 2002:a17:907:78cf:b0:994:2fa9:7444 with SMTP id kv15-20020a17090778cf00b009942fa97444mr641821ejc.42.1689705764057;
+        Tue, 18 Jul 2023 11:42:44 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id rp25-20020a170906d97900b009786ae9ed50sm1309961ejb.194.2023.07.18.11.42.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Jul 2023 11:42:43 -0700 (PDT)
+Message-ID: <ec3d7769-8a5f-d938-7f77-351ddfe6fb45@linaro.org>
+Date:   Tue, 18 Jul 2023 20:42:41 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
+Content-Language: en-US
+To:     Nikunj Kela <quic_nkela@quicinc.com>, sudeep.holla@arm.com
+Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, konrad.dybcio@linaro.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
-Message-ID: <xkw36iwjb47q7spf6qle5x3kcmx6fv7or6cwhlpkuvihn3xmt2@qhrhtug4htp2>
 References: <20230718160833.36397-1-quic_nkela@quicinc.com>
  <20230718160833.36397-3-quic_nkela@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230718160833.36397-3-quic_nkela@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+ <d9d5ffd5-6f85-f091-5d69-12cdd8d04c99@linaro.org>
+ <3ae2d618-490a-06da-b4b6-b5a24b0a9747@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3ae2d618-490a-06da-b4b6-b5a24b0a9747@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 18, 2023 at 09:08:33AM -0700, Nikunj Kela wrote:
-> diff --git a/drivers/firmware/arm_scmi/qcom_hvc.c b/drivers/firmware/arm_scmi/qcom_hvc.c
-> new file mode 100644
-> index 000000000000..3b6096d8fe67
-> --- /dev/null
-> +++ b/drivers/firmware/arm_scmi/qcom_hvc.c
-> @@ -0,0 +1,241 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * System Control and Management Interface (SCMI) Message
-> + * Qualcomm HVC/shmem Transport driver
-> + *
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright 2020 NXP
-> + *
-> + * This is copied from drivers/firmware/arm_scmi/smc.c
+On 18/07/2023 20:25, Nikunj Kela wrote:
+>>> +
+>>> +	scmi_info = devm_kzalloc(dev, sizeof(*scmi_info), GFP_KERNEL);
+>>> +	if (!scmi_info)
+>>> +		return -ENOMEM;
+>>> +
+>>> +	np = of_parse_phandle(cdev->of_node, "shmem", 0);
+>>> +	if (!of_device_is_compatible(np, "arm,scmi-shmem"))
+>> You leak here reference.
+> Wouldn't the devm_* API take care of that implicitly? It is same in 
+> smc.c as well.
 
-s/copied from/based on/
+Thanks for bringing my attention to this. I sent a fix for smc.c. Fix
+your patch as well, please.
 
-> + */
-> +
-> +#include <linux/arm-smccc.h>
-> +#include <linux/device.h>
-> +#include <linux/err.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/mutex.h>
-> +#include <linux/of.h>
-> +#include <linux/of_address.h>
-> +#include <linux/of_irq.h>
-> +#include <linux/processor.h>
+>>> +		return -ENXIO;
+>>> +
+>>> +	ret = of_address_to_resource(np, 0, &res);
+>>> +	of_node_put(np);
+>>> +	if (ret) {
+>>> +		dev_err(cdev, "failed to get SCMI Tx shared memory\n");
+>>> +		return ret;
+>>> +	}
+>>> +
+>>> +	size = resource_size(&res);
+>>> +
+>>> +	/* let's map 2 additional ulong since
+>>> +	 * func-id & capability-id are kept after shmem.
+>>> +	 *     +-------+
+>>> +	 *     |       |
+>>> +	 *     | shmem |
+>>> +	 *     |       |
+>>> +	 *     |       |
+>>> +	 *     +-------+ <-- size
+>>> +	 *     | funcId|
+>>> +	 *     +-------+ <-- size + sizeof(ulong)
+>>> +	 *     | capId |
+>>> +	 *     +-------+ <-- size + 2*sizeof(ulong)
+>>> +	 */
+>>> +
+>>> +	scmi_info->shmem = devm_ioremap(dev, res.start,
+>>> +					size + 2 * sizeof(unsigned long));
+>>> +	if (!scmi_info->shmem) {
+>>> +		dev_err(dev, "failed to ioremap SCMI Tx shared memory\n");
+>>> +		return -EADDRNOTAVAIL;
+>>> +	}
+>>> +
+>>> +	func_id = readl((void *)(scmi_info->shmem) + size);
+>>> +
+>>> +#ifdef CONFIG_ARM64
+>>> +	cap_id = readq((void *)(scmi_info->shmem) + size +
+>>> +		       sizeof(unsigned long));
+>>> +#else
+>>> +	cap_id = readl((void *)(scmi_info->shmem) + size +
+>>> +		       sizeof(unsigned long));
+>>> +#endif
+>>> +
+>>> +	/*
+>>> +	 * If there is an interrupt named "a2p", then the service and
+>>> +	 * completion of a message is signaled by an interrupt rather than by
+>>> +	 * the return of the hvc call.
+>>> +	 */
+>>> +	irq = of_irq_get_byname(cdev->of_node, "a2p");
+>>> +	if (irq > 0) {
+>>> +		ret = devm_request_irq(dev, irq, qcom_hvc_msg_done_isr,
+>>> +				       IRQF_NO_SUSPEND,
+>>> +				       dev_name(dev), scmi_info);
+>>> +		if (ret) {
+>>> +			dev_err(dev, "failed to setup SCMI completion irq\n");
+>> return dev_err_probe, unless this is not called in probe... but then
+>> using devm-interface raises questions.
+> This is copied as is from existing smc.c
 
-This is here because the original code uses spin_until_cond().
+I understand and I hope you understand the code you copied. If there is
+a bug in existing code, please do not copy it to new code (like leaking
+OF node reference).
 
-> +#include <linux/slab.h>
-> +
-> +#include "common.h"
-> +
-> +/**
-> + * struct scmi_qcom_hvc - Structure representing a SCMI qcom hvc transport
-> + *
-> + * @cinfo: SCMI channel info
-> + * @shmem: Transmit/Receive shared memory area
-> + * @shmem_lock: Lock to protect access to Tx/Rx shared memory area.
-> + * @func_id: hvc call function-id
-> + * @cap_id: hvc doorbell's capability id
-> + */
-> +
-> +struct scmi_qcom_hvc {
-> +	struct scmi_chan_info *cinfo;
-> +	struct scmi_shared_mem __iomem *shmem;
-> +	/* Protect access to shmem area */
-> +	struct mutex shmem_lock;
-> +	u32 func_id;
-> +	unsigned long cap_id;
+Best regards,
+Krzysztof
 
-One architecture-independent and one architecture-dependent parameter,
-see below.
-
-> +};
-> +
-> +static irqreturn_t qcom_hvc_msg_done_isr(int irq, void *data)
-> +{
-> +	struct scmi_qcom_hvc *scmi_info = data;
-> +
-> +	scmi_rx_callback(scmi_info->cinfo,
-> +			 shmem_read_header(scmi_info->shmem), NULL);
-
-80-char is a nice guideline, but this would be easier to read if not
-line-wrapped.
-
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static bool qcom_hvc_chan_available(struct device_node *of_node, int idx)
-> +{
-> +	struct device_node *np = of_parse_phandle(of_node, "shmem", 0);
-> +
-> +	if (!np)
-> +		return false;
-> +
-> +	of_node_put(np);
-> +	return true;
-> +}
-> +
-> +static inline void qcom_hvc_channel_lock_init(struct scmi_qcom_hvc *scmi_info)
-> +{
-> +	mutex_init(&scmi_info->shmem_lock);
-
-Just inline these three lock-related methods, saves the reader from
-wondering what is actually locked, what a "channel" is (is a "channel"
-the same thing as a "shm region"?) etc.
-
-> +}
-> +
-> +static inline void
-> +qcom_hvc_channel_lock_acquire(struct scmi_qcom_hvc *scmi_info,
-> +			      struct scmi_xfer *xfer __maybe_unused)
-> +{
-
-You claim above that you copied smc.c, but you don't mention that you
-dropped the support for transfers from atomic mode. Please capture this
-in the commit message, so that someone looking at this in the future
-knows why you made this choice.
-
-> +	mutex_lock(&scmi_info->shmem_lock);
-> +}
-> +
-> +static inline void qcom_hvc_channel_lock_release(struct scmi_qcom_hvc
-> +						 *scmi_info)
-> +{
-> +	mutex_unlock(&scmi_info->shmem_lock);
-> +}
-> +
-> +static int qcom_hvc_chan_setup(struct scmi_chan_info *cinfo,
-> +			       struct device *dev, bool tx)
-> +{
-> +	struct device *cdev = cinfo->dev;
-> +	struct scmi_qcom_hvc *scmi_info;
-> +	resource_size_t size;
-> +	struct resource res;
-> +	struct device_node *np;
-> +	unsigned long cap_id;
-> +	u32 func_id;
-> +	int ret, irq;
-
-Please declare one variable per line, and please sort them by length, in
-descending order (i.e. reverse Christmas tree).
-
-> +
-> +	if (!tx)
-> +		return -ENODEV;
-> +
-> +	scmi_info = devm_kzalloc(dev, sizeof(*scmi_info), GFP_KERNEL);
-> +	if (!scmi_info)
-> +		return -ENOMEM;
-> +
-> +	np = of_parse_phandle(cdev->of_node, "shmem", 0);
-> +	if (!of_device_is_compatible(np, "arm,scmi-shmem"))
-> +		return -ENXIO;
-> +
-> +	ret = of_address_to_resource(np, 0, &res);
-> +	of_node_put(np);
-> +	if (ret) {
-> +		dev_err(cdev, "failed to get SCMI Tx shared memory\n");
-> +		return ret;
-> +	}
-> +
-> +	size = resource_size(&res);
-> +
-> +	/* let's map 2 additional ulong since
-> +	 * func-id & capability-id are kept after shmem.
-> +	 *     +-------+
-> +	 *     |       |
-> +	 *     | shmem |
-> +	 *     |       |
-> +	 *     |       |
-> +	 *     +-------+ <-- size
-> +	 *     | funcId|
-> +	 *     +-------+ <-- size + sizeof(ulong)
-> +	 *     | capId |
-> +	 *     +-------+ <-- size + 2*sizeof(ulong)
-
-Relying on an undocumented convention that following the region
-specified in DeviceTree are two architecture specifically sized integers
-isn't good practice.
-
-This should be covered by the DeviceTree binding, in one way or another.
-
-> +	 */
-> +
-> +	scmi_info->shmem = devm_ioremap(dev, res.start,
-> +					size + 2 * sizeof(unsigned long));
-
-I don't find any code that uses the size of the defined shm, so I don't
-think you need to do this dance.
-
-> +	if (!scmi_info->shmem) {
-> +		dev_err(dev, "failed to ioremap SCMI Tx shared memory\n");
-> +		return -EADDRNOTAVAIL;
-> +	}
-> +
-> +	func_id = readl((void *)(scmi_info->shmem) + size);
-> +
-> +#ifdef CONFIG_ARM64
-> +	cap_id = readq((void *)(scmi_info->shmem) + size +
-> +		       sizeof(unsigned long));
-> +#else
-> +	cap_id = readl((void *)(scmi_info->shmem) + size +
-> +		       sizeof(unsigned long));
-> +#endif
-
-Please don't make the in-memory representation depend on architecture
-specific data types. Quite likely you didn't compile test one of these
-variants?
-
-Just define the in-memory representation as u32 + u64.
-
-> +
-> +	/*
-> +	 * If there is an interrupt named "a2p", then the service and
-> +	 * completion of a message is signaled by an interrupt rather than by
-> +	 * the return of the hvc call.
-> +	 */
-> +	irq = of_irq_get_byname(cdev->of_node, "a2p");
-> +	if (irq > 0) {
-> +		ret = devm_request_irq(dev, irq, qcom_hvc_msg_done_isr,
-> +				       IRQF_NO_SUSPEND,
-> +				       dev_name(dev), scmi_info);
-> +		if (ret) {
-> +			dev_err(dev, "failed to setup SCMI completion irq\n");
-> +			return ret;
-> +		}
-> +	} else {
-> +		cinfo->no_completion_irq = true;
-> +	}
-> +
-> +	scmi_info->func_id = func_id;
-> +	scmi_info->cap_id = cap_id;
-> +	scmi_info->cinfo = cinfo;
-> +	qcom_hvc_channel_lock_init(scmi_info);
-> +	cinfo->transport_info = scmi_info;
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_hvc_chan_free(int id, void *p, void *data)
-> +{
-> +	struct scmi_chan_info *cinfo = p;
-> +	struct scmi_qcom_hvc *scmi_info = cinfo->transport_info;
-> +
-> +	cinfo->transport_info = NULL;
-> +	scmi_info->cinfo = NULL;
-
-Your a2p interrupt is cleaned up using devres, which will happen at a
-later point. So just setting cinfo to NULL here would cause an interrupt
-to trigger qcom_hvc_msg_done_isr() which will call scmi_rx_callback()
-which happily will dereference that NULL.
-
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_hvc_send_message(struct scmi_chan_info *cinfo,
-> +				 struct scmi_xfer *xfer)
-> +{
-> +	struct scmi_qcom_hvc *scmi_info = cinfo->transport_info;
-> +	struct arm_smccc_res res;
-> +
-> +	/*
-> +	 * Channel will be released only once response has been
-> +	 * surely fully retrieved, so after .mark_txdone()
-> +	 */
-> +	qcom_hvc_channel_lock_acquire(scmi_info, xfer);
-> +
-> +	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
-> +
-> +	arm_smccc_1_1_hvc(scmi_info->func_id, scmi_info->cap_id,
-> +			  0, 0, 0, 0, 0, 0, &res);
-> +
-> +	/* Only SMCCC_RET_NOT_SUPPORTED is valid error code */
-
-Does this hold for your implementation as well?
-
-> +	if (res.a0) {
-> +		qcom_hvc_channel_lock_release(scmi_info);
-> +		return -EOPNOTSUPP;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_hvc_fetch_response(struct scmi_chan_info *cinfo,
-> +				    struct scmi_xfer *xfer)
-> +{
-> +	struct scmi_qcom_hvc *scmi_info = cinfo->transport_info;
-> +
-> +	shmem_fetch_response(scmi_info->shmem, xfer);
-> +}
-> +
-> +static void qcom_hvc_mark_txdone(struct scmi_chan_info *cinfo, int ret,
-> +				 struct scmi_xfer *__unused)
-> +{
-> +	struct scmi_qcom_hvc *scmi_info = cinfo->transport_info;
-> +
-> +	qcom_hvc_channel_lock_release(scmi_info);
-> +}
-> +
-> +static const struct scmi_transport_ops scmi_qcom_hvc_ops = {
-> +	.chan_available = qcom_hvc_chan_available,
-> +	.chan_setup = qcom_hvc_chan_setup,
-> +	.chan_free = qcom_hvc_chan_free,
-> +	.send_message = qcom_hvc_send_message,
-> +	.mark_txdone = qcom_hvc_mark_txdone,
-> +	.fetch_response = qcom_hvc_fetch_response,
-> +};
-> +
-> +const struct scmi_desc scmi_qcom_hvc_desc = {
-> +	.ops = &scmi_qcom_hvc_ops,
-> +	.max_rx_timeout_ms = 30,
-> +	.max_msg = 20,
-
-I'm confused about the purpose of this number, it serves both as a limit
-of the number of clients that are currently allowed to prepare messages,
-and as a limit for how many outstanding transfers waiting for response.
-
-Making the prior limit too low will result in the client running into an
--ENOMEM which it likely won't recover from - the user experience after
-getting -ENOMEM on regulator_enable() will be suboptimal...
-
-The latter limit would relate to resource limitations on the firmware
-side. Please make sure that you have accounted for 2.5kB of firmware
-memory, per agent, in your design.
-
-> +	.max_msg_size = 128,
-
-Regards,
-Bjorn
