@@ -2,127 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1906875795C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 12:38:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1E0A757996
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 12:51:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbjGRKiI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 06:38:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43906 "EHLO
+        id S231220AbjGRKv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 06:51:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231580AbjGRKh7 (ORCPT
+        with ESMTP id S230302AbjGRKvz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 06:37:59 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978BCF0;
-        Tue, 18 Jul 2023 03:37:57 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36I4uRuo001695;
-        Tue, 18 Jul 2023 10:37:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LOy8dN1LMbsCPe8GwGrP+qIqVm7Ey3w4gxhyogzgpfg=;
- b=LLNZeg0JY3l6X0hKzNOnSDPaxZknClwT1ccScobiHuXLhGG4oVXB7wqCvyNYVYltZNcq
- 6czvSf/dBpI+TbidXq8TzJUBo2bSStjd7khsCSWV4tIfKCMfQAYaHip4YD7bUxtvgj7B
- qQNyMvfopOXxXShiENCm/i8YQImp/I+V0vhv5leBnNpzWwQMABbYqGekvvJnvfQrwCTe
- NFCmdGy6MKZYfCec385UWXDcdK+Rl1ALIA51HBLuxXnuHykGKVqRwG9avVv7IQhSXKLa
- XPrj+e1Nmg9pIkzU2eLxie0VbvVdpff4jmnwoHHWBXYTITGWYzGTpyqoDaa8A/UZmnuu fw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwcg6se9v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 10:37:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36IAbqOw002970
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 10:37:52 GMT
-Received: from [10.218.15.57] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 18 Jul
- 2023 03:37:48 -0700
-Message-ID: <d954ee43-d0cc-ef2b-8467-57883e9defd7@quicinc.com>
-Date:   Tue, 18 Jul 2023 16:07:45 +0530
+        Tue, 18 Jul 2023 06:51:55 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4E30CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 03:51:53 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4fdbfda94c4so3239729e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 03:51:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689677512; x=1692269512;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5nLJMm6saFLlL+Ge11MSzI9uVMi3G0/N3KISKeEvm00=;
+        b=X+L4TZlNrTXJOde1cLGusZ9SOolO7Yh+XQQQemmAkvE4UyBbyInbV4epTLiukcbJI4
+         rXAvLxxd+EvCRLzSw0ZEmgOSm73YiUGRnGGVR3Wk0NWSxD/4tOTE0sFg+N6+MLFpoTt0
+         clSIvnnPbgKZTdWMb1ss+CNOavieC8GnEWd5Y+aurzX84WZOGio5mg5FnZaAoprdcqpb
+         jh65JFZH5juwkQ2sz0kSzVRDc0v92vBfRaXOGKIGEeExap/Vx+BRFHo3EVqD6gr8Ysy5
+         MdoGNp8Anl9e9fQz9GCgBnqA/4s4uQmPW6NTuLmAOBOdrU2U8WcvRlcAeTfIxeuS5GhA
+         DkBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689677512; x=1692269512;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5nLJMm6saFLlL+Ge11MSzI9uVMi3G0/N3KISKeEvm00=;
+        b=CuNOkfQ/lcHxsTlS2oau+Ug2+wZ22gjcUGUQryHu+34sbWjGPt9XV/y1btWxdUOObh
+         rHWV9FTnFMzU7HpBTISzp3z5kFr9/cI7Sxy83TTJdl6CVgfOH9XSmji+swZz2vtVwBgt
+         tU10Xh1arJ3ztHycovS223gqC6w3e6lyKfh1bds4/7ZUdEsR7w9iTuj/Pf3zhBnFG05i
+         9F8ojO57MDm5uKXpjUtnZ7qdjGtpCrYUiyft9gjJy2cr2ws1D/6vup3gWxlY7jWQu1qc
+         JHoZYGrtsjHE51WzBtnYFhFNcAjfyri9uLJFQEZrckjZ9tClwnwIUlrTqrEyol4QXXd3
+         jNtA==
+X-Gm-Message-State: ABy/qLZPNIZZgP29TswpQ59o0Ee/bRYA4mEOXXZGIKFEQUiWblw6i5rv
+        udySS91jrANwX8/GaMTLAAv7Tg==
+X-Google-Smtp-Source: APBJJlH+Egn7YtR5IaNXT7JWh8CdFi270dMCDR0T8bgvon9AHi9F4msUsQuTQxb7V4T4XaATJsKC1Q==
+X-Received: by 2002:ac2:5f79:0:b0:4ef:ed49:fcc2 with SMTP id c25-20020ac25f79000000b004efed49fcc2mr12776783lfc.26.1689677512068;
+        Tue, 18 Jul 2023 03:51:52 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id i2-20020a056512006200b004fb9d32719fsm385579lfo.36.2023.07.18.03.51.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Jul 2023 03:51:51 -0700 (PDT)
+Message-ID: <1bf484c6-b648-a14a-8bac-4b95b3776294@linaro.org>
+Date:   Tue, 18 Jul 2023 12:51:50 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v7 0/2] spi-geni-qcom: Add SPI device mode support for
- GENI based QuPv3
-Content-Language: en-CA
-To:     Praveen Talari <quic_ptalari@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_arandive@quicinc.com>
-References: <20230714042203.14251-1-quic_ptalari@quicinc.com>
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <20230714042203.14251-1-quic_ptalari@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
+ support
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
+References: <20230718062639.2339589-1-quic_fenglinw@quicinc.com>
+ <20230718062639.2339589-2-quic_fenglinw@quicinc.com>
+ <cb534cdb-508e-b03e-4e39-50cd6654377a@linaro.org>
+ <4cb9f443-bdea-695a-f1b7-3963747e9a17@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <4cb9f443-bdea-695a-f1b7-3963747e9a17@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ygdvlzfOVDxfbv9yiESlIVTV0gpXeFW7
-X-Proofpoint-GUID: ygdvlzfOVDxfbv9yiESlIVTV0gpXeFW7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-17_15,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
- malwarescore=0 spamscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=587
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307180095
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 18.07.2023 08:38, Fenglin Wu wrote:
+> 
+> 
+> On 7/18/2023 2:33 PM, Krzysztof Kozlowski wrote:
+>> On 18/07/2023 08:26, Fenglin Wu wrote:
+>>> Add support for vibrator module inside Qualcomm PMI632, PM7250B, PM7325B
+>>> PMICs.
+>>>
+>>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>>> ---
+>>
+>> I don't see changelog. No changes then?
+>>
+> Sorry, I updated the change log in the cover letter which didn't seems to be sent to a wider audience, I will resend it by adding more receivers in the to list
+Please consider using the b4 tool which takes care of all that
 
-LGTM...
+https://b4.docs.kernel.org/en/latest/index.html
 
-
-On 7/14/2023 9:52 AM, Praveen Talari wrote:
-> This series adds spi device mode functionality to geni based Qupv3.
-> The common header file contains spi slave related registers and masks.
->
-> Praveen Talari (2):
->    soc: qcom: geni-se: Add SPI Device mode support for GENI based QuPv3
->    spi: spi-geni-qcom: Add SPI Device mode support for GENI based QuPv3
-> ---
-> v6 -> v7:
-> - Corrected author mail
->
-> v5 -> v6:
-> - Added code comments
-> - Dropped get_spi_master api
->
-> v4 -> v5:
-> - Addressed review comments in driver
->
-> v3 -> v4:
-> - Used existing property spi-slave
-> - Hence dropped dt-binding changes
->
-> v2 -> v3:
-> - Modified commit message
-> - Addressed comment on dt-binding
->
-> v1 -> v2:
-> - Added dt-binding change for spi slave
-> - Modified commit message
-> - Addressed review comments in driver
->
->   drivers/spi/spi-geni-qcom.c      | 53 ++++++++++++++++++++++++++++----
->   include/linux/soc/qcom/geni-se.h |  9 ++++++
->   2 files changed, 56 insertions(+), 6 deletions(-)
-
-
-Reviewed-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-
+Konrad
