@@ -2,126 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A453C7573D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4395E7573EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:17:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231339AbjGRGNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 02:13:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54420 "EHLO
+        id S231366AbjGRGRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 02:17:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231305AbjGRGMb (ORCPT
+        with ESMTP id S231324AbjGRGQh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 02:12:31 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC2C198E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:12:04 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b743161832so80164271fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:12:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689660720; x=1692252720;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FuxBGExkZpHQKsmDHlV/hAGsueJeyW+J9iiwyicARBU=;
-        b=cd+AitMjVTkfMPwx8BZxeJBEHG7AUSX/qbVAy2lD5z6k5N+9n9mtRzPnYd33ihNqaX
-         xB7um66/R9Zam+YgeU1ZGU0hJw4rhqwAEJp7KJUGAU50vgE/Gcdf+FqGEZ7mhO18vCSn
-         Of6WgpGJCILKq2sQ6k77blylOsmH3xK2vF0vAMnCi2bQubSaoINEreYtbr9V35SDssxM
-         TIvq3OCrrpFOiWg1InP2ZyRvFQ+0q8neNVBv7qCp+/2Z2wg+4Wln/PcwjBVwgP++AKz0
-         a4C4y1H4ANiE97yuwYYVa/j5V10CvBl1YITanrUMqSLP86rZWHiRpzGnWrLxRrBhD38V
-         mfkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689660720; x=1692252720;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FuxBGExkZpHQKsmDHlV/hAGsueJeyW+J9iiwyicARBU=;
-        b=CnvMJSdRNTfUj3t3jA1wPk0N/bxT/HZv1ns6LfJmhZiAiKy54n1snbwfZ510KVDoJH
-         grTDkRbkWZbRaTeciUa3wvS5aamkSXOuPzvwdakG075t6iEPSBMBa8Keb3oaa7bUPABW
-         REwx2i9aILXbMk8u+qsuSGdtazN9DyjatRI330plQzF2SmZ0QzxSpWN0FgusA9NQ2JIx
-         bv94BIrz3yz/hggM/emRJU/TqRt8BMT4uPyAFTUlsSmsDZjhKWi26Q2FMuBqOiQcy7a7
-         k5dxAzXNc3pd+vCVo9qdmj1RHP+ZnlpUVbBbJxuojyROI5kFXHLVbEfuTbXXHIYraG4l
-         Hkpg==
-X-Gm-Message-State: ABy/qLYUcNRRxdmfruNIc/i0Eck3fkXYjN9XpU/UZr8ZFagmW5Syl4mA
-        GluSkGnsfPD8X0DLsyZvUpjdQA==
-X-Google-Smtp-Source: APBJJlF3CZLus35/mCVGby07iUVU6tk7NqzG0eJLwmxyz418tiaGubEW1E73Ysc/Ws8qP4fWSue92A==
-X-Received: by 2002:a2e:978d:0:b0:2b6:df5d:8e08 with SMTP id y13-20020a2e978d000000b002b6df5d8e08mr9748785lji.28.1689660720108;
-        Mon, 17 Jul 2023 23:12:00 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id k13-20020a17090627cd00b00997bd42d210sm540489ejc.205.2023.07.17.23.11.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jul 2023 23:11:59 -0700 (PDT)
-Message-ID: <2a215bc5-784b-4335-449e-c55faea2b750@linaro.org>
-Date:   Tue, 18 Jul 2023 08:11:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1 1/2] dt-bindings: input: qcom,pm8xxx-vib: add more PMIC
- support
-Content-Language: en-US
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_kamalw@quicinc.com, jestar@qti.qualcomm.com
-References: <20230717062547.2086869-1-quic_fenglinw@quicinc.com>
- <20230717062547.2086869-2-quic_fenglinw@quicinc.com>
- <6338cc75-e3fe-ba19-3df7-727b63fec245@linaro.org>
- <2b1301e6-fac3-7a06-6716-a65ffd0be7c2@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2b1301e6-fac3-7a06-6716-a65ffd0be7c2@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Tue, 18 Jul 2023 02:16:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D8F1988;
+        Mon, 17 Jul 2023 23:15:53 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36I5W4OU017342;
+        Tue, 18 Jul 2023 06:15:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=FnMF/hPnhkGhQNVCRlvihoFhBZmvCK2+QcLEk0jb/Bs=;
+ b=PV0vPj80LkunkeppXTpH+hmpB1eAKDotTOc69n3zXPA7uDYzhfh7DAdq2Sdrm5fqzNSj
+ FUlG/Cw0utQFQMNvPcWUes3QkYUsrF8+XxJE79XOPoeZOSNDGa2eyAFD9dNpesDXNRZd
+ bcjcqcNH+LfdjkhxybCvSeGkHebA3Bagsd6nGvMmXOzRJFeChcsnuAAeMRdp9kP/QdNK
+ D7KAgTDz+54oCB7KVhC4ErPgSb+vzQZ5V/fjGsZ7EczALs+hywvohKNSmGq9HCeMvHA1
+ 9r/7yn0Mq4TsrubqPeH2N8HJrLhmaYrllAwpkN/7aiQHck0lFO1SID97i1Jjs0/Ll9fd Wg== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rw289thn2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Jul 2023 06:15:37 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36I6FXKc006794;
+        Tue, 18 Jul 2023 06:15:33 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3rumhk9kv1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 18 Jul 2023 06:15:33 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36I6FW2E006789;
+        Tue, 18 Jul 2023 06:15:32 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vpernami-hyd.qualcomm.com [10.213.107.240])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 36I6FW2G006788;
+        Tue, 18 Jul 2023 06:15:32 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 2370923)
+        id 640644BF5; Tue, 18 Jul 2023 11:45:31 +0530 (+0530)
+From:   Vivek Pernamitta <quic_vpernami@quicinc.com>
+To:     mhi@lists.linux.dev
+Cc:     mrana@quicinc.com, quic_qianyu@quicinc.com,
+        manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
+        quic_krichai@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org,
+        Vivek Pernamitta <quic_vpernami@quicinc.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH V2] net: mhi : Add support to enable ethernet interface
+Date:   Tue, 18 Jul 2023 11:45:28 +0530
+Message-Id: <1689660928-12092-1-git-send-email-quic_vpernami@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EVSTbR9y7PXaKywYjZxux8sKff_IZUml
+X-Proofpoint-GUID: EVSTbR9y7PXaKywYjZxux8sKff_IZUml
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-17_15,2023-07-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
+ suspectscore=0 bulkscore=0 mlxscore=0 adultscore=0 spamscore=0
+ impostorscore=0 phishscore=0 priorityscore=1501 mlxlogscore=871
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307180056
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2023 04:37, Fenglin Wu wrote:
-> 
-> 
-> On 7/18/2023 3:59 AM, Krzysztof Kozlowski wrote:
->> On 17/07/2023 08:25, Fenglin Wu wrote:
->>> Add support for vibrator module inside Qualcomm PMI632, PM7250B, PM7325B
->>> and PM7550BA PMICs.
->>>
->>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
->>> index c8832cd0d7da..642408e2b35f 100644
->>> --- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
->>> +++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
->>> @@ -15,6 +15,10 @@ properties:
->>>         - qcom,pm8058-vib
->>>         - qcom,pm8916-vib
->>>         - qcom,pm8921-vib
->>> +      - qcom,pmi632-vib
->>> +      - qcom,pm7250b-vib
->>> +      - qcom,pm7325b-vib
->>> +      - qcom,pm7550ba-vib
->>
->> Aren't the last two compatible?
-> 
-> There are still every different PMICs even though the vibrator module in 
-> PM7325B and PM7550BA are the same and they share the same register base 
-> address as well.
+Add support to enable ethernet interface for MHI SWIP channels.
 
-So the vibrator modules are compatible? Then I propose to make them
-compatible.
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+Reviewed-by: Daniele Palmas <dnlplm@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+---
 
-Best regards,
-Krzysztof
+changes since v1:
+	- Moved to net-next from linux-next	
+	- moved to eth_hw_addr_random() to assign Ethernet MAC address
+	  from eth_random_addr()
+---
+ drivers/net/mhi_net.c | 53 ++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 40 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+index 3d322ac..5bb8d99 100644
+--- a/drivers/net/mhi_net.c
++++ b/drivers/net/mhi_net.c
+@@ -11,6 +11,7 @@
+ #include <linux/netdevice.h>
+ #include <linux/skbuff.h>
+ #include <linux/u64_stats_sync.h>
++#include <linux/etherdevice.h>
+ 
+ #define MHI_NET_MIN_MTU		ETH_MIN_MTU
+ #define MHI_NET_MAX_MTU		0xffff
+@@ -38,10 +39,12 @@ struct mhi_net_dev {
+ 	u32 rx_queue_sz;
+ 	int msg_enable;
+ 	unsigned int mru;
++	bool ethernet_if;
+ };
+ 
+ struct mhi_device_info {
+ 	const char *netname;
++	bool ethernet_if;
+ };
+ 
+ static int mhi_ndo_open(struct net_device *ndev)
+@@ -140,6 +143,14 @@ static void mhi_net_setup(struct net_device *ndev)
+ 	ndev->tx_queue_len = 1000;
+ }
+ 
++static void mhi_ethernet_setup(struct net_device *ndev)
++{
++	ndev->netdev_ops = &mhi_netdev_ops;
++	ether_setup(ndev);
++	ndev->min_mtu = ETH_MIN_MTU;
++	ndev->max_mtu = ETH_MAX_MTU;
++}
++
+ static struct sk_buff *mhi_net_skb_agg(struct mhi_net_dev *mhi_netdev,
+ 				       struct sk_buff *skb)
+ {
+@@ -209,16 +220,22 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
+ 			mhi_netdev->skbagg_head = NULL;
+ 		}
+ 
+-		switch (skb->data[0] & 0xf0) {
+-		case 0x40:
+-			skb->protocol = htons(ETH_P_IP);
+-			break;
+-		case 0x60:
+-			skb->protocol = htons(ETH_P_IPV6);
+-			break;
+-		default:
+-			skb->protocol = htons(ETH_P_MAP);
+-			break;
++		if (mhi_netdev->ethernet_if) {
++			skb_copy_to_linear_data(skb, skb->data,
++						mhi_res->bytes_xferd);
++			skb->protocol = eth_type_trans(skb, mhi_netdev->ndev);
++		} else {
++			switch (skb->data[0] & 0xf0) {
++			case 0x40:
++				skb->protocol = htons(ETH_P_IP);
++				break;
++			case 0x60:
++				skb->protocol = htons(ETH_P_IPV6);
++				break;
++			default:
++				skb->protocol = htons(ETH_P_MAP);
++				break;
++			}
+ 		}
+ 
+ 		u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
+@@ -301,11 +318,17 @@ static void mhi_net_rx_refill_work(struct work_struct *work)
+ 		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
+ }
+ 
+-static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev)
++static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev, bool eth_dev)
+ {
+ 	struct mhi_net_dev *mhi_netdev;
+ 	int err;
+ 
++	if (eth_dev) {
++		eth_hw_addr_random(ndev);
++		if (!is_valid_ether_addr(ndev->dev_addr))
++			return -EADDRNOTAVAIL;
++	}
++
+ 	mhi_netdev = netdev_priv(ndev);
+ 
+ 	dev_set_drvdata(&mhi_dev->dev, mhi_netdev);
+@@ -313,6 +336,7 @@ static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev)
+ 	mhi_netdev->mdev = mhi_dev;
+ 	mhi_netdev->skbagg_head = NULL;
+ 	mhi_netdev->mru = mhi_dev->mhi_cntrl->mru;
++	mhi_netdev->ethernet_if = eth_dev;
+ 
+ 	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
+ 	u64_stats_init(&mhi_netdev->stats.rx_syncp);
+@@ -356,13 +380,14 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+ 	int err;
+ 
+ 	ndev = alloc_netdev(sizeof(struct mhi_net_dev), info->netname,
+-			    NET_NAME_PREDICTABLE, mhi_net_setup);
++			    NET_NAME_PREDICTABLE, info->ethernet_if ?
++			    mhi_ethernet_setup : mhi_net_setup);
+ 	if (!ndev)
+ 		return -ENOMEM;
+ 
+ 	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
+ 
+-	err = mhi_net_newlink(mhi_dev, ndev);
++	err = mhi_net_newlink(mhi_dev, ndev, info->ethernet_if);
+ 	if (err) {
+ 		free_netdev(ndev);
+ 		return err;
+@@ -380,10 +405,12 @@ static void mhi_net_remove(struct mhi_device *mhi_dev)
+ 
+ static const struct mhi_device_info mhi_hwip0 = {
+ 	.netname = "mhi_hwip%d",
++	.ethernet_if = false,
+ };
+ 
+ static const struct mhi_device_info mhi_swip0 = {
+ 	.netname = "mhi_swip%d",
++	.ethernet_if = false,
+ };
+ 
+ static const struct mhi_device_id mhi_net_id_table[] = {
+-- 
+2.7.4
 
