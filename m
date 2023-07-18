@@ -2,176 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD5E7757417
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:27:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7F8475740C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jul 2023 08:26:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230472AbjGRG10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 02:27:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34524 "EHLO
+        id S230512AbjGRG0w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 02:26:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230081AbjGRG1Q (ORCPT
+        with ESMTP id S230457AbjGRG0u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 02:27:16 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED40172E;
-        Mon, 17 Jul 2023 23:27:08 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36I59c7X021523;
-        Tue, 18 Jul 2023 06:27:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=0Uv4at9BAvzBcsEjqd9tVi9PFcSvrNPrjvYjLuySbXc=;
- b=XMAqwrfa5lI/NclTA6OTdCHScH+SS70wya1AqKzb2lBuctXh7PP/pyBf14E0TzVPj+Pp
- n5VBQB567oLSSVImKrirnGmG2UKctIrEj0yPejEAUn4jAveRzTub7+7sV9O3G+Ivi3/s
- OD7qtDzMCMd8BXZitrg5B3LhHHIXIrJr87th1oLvhT7HmGHvswU+aRLd1XqxJJkR7nFy
- vZlywhR4qxotf1bR+A8uA8/4MAQNlMTXdUHF+916gB2tA8M/tPVFBG03R7Ook81U2DQn
- BHwUrh0U9aNeFzRtPLxSxxnFnwXB+27oavyBupOqJ48CCh9aClwYN/bZZWaLiO387d9I bA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rw289tj7m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 06:27:04 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36I6R3Ce000737
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Jul 2023 06:27:03 GMT
-Received: from fenglinw2-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 17 Jul 2023 23:27:00 -0700
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        <linux-input@vger.kernel.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_fenglinw@quicinc.com>, <quic_kamalw@quicinc.com>,
-        <jestar@qti.qualcomm.com>
-Subject: [PATCH v2 2/2] Input: pm8xxx-vib - Add support for more PMICs
-Date:   Tue, 18 Jul 2023 14:26:39 +0800
-Message-ID: <20230718062639.2339589-3-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230718062639.2339589-1-quic_fenglinw@quicinc.com>
-References: <20230718062639.2339589-1-quic_fenglinw@quicinc.com>
+        Tue, 18 Jul 2023 02:26:50 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC9A130
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:26:49 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-992b2249d82so749656666b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jul 2023 23:26:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689661607; x=1692253607;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=szAN6NYzvhN3ASqUWafz2JxFxR4dH9afImQ7y60YO2E=;
+        b=E0JyVuFuCBb4peQQ0mT0mID1+ZZoCN1HJ8ibGl0OJDdzKRrLBdnZ6SDkFTFU+00ABU
+         tM61HPH6r1LEakPG84iwVmxvUJL/jqBD20qtHsMyJAuIEANZNBKvE4jPUe9KiY96+1na
+         J+QTDkhx9E5cb+5WZe5t0OYiolQKIW4HzUw8aVwA+fZmFImNus3bkKq9I6x9lCCCVZ/s
+         7k+MEk9FE5OBw/sgtipzGpDhync959QOqxV+v3mlsGa4hruoqiQzeFmsM/FgSTUd0LIr
+         IcDhNIbL1tGAXUVZVlTXzA5yVddUo+jCOnjuq8R7K79q/d+WTy2r3JfDXzNlhSpRmo3p
+         UbjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689661607; x=1692253607;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=szAN6NYzvhN3ASqUWafz2JxFxR4dH9afImQ7y60YO2E=;
+        b=lBKtZwwLu37CWoJuXv1r0U2FF7C5qrTFCFBeKg7uUF+enXeanlIycdX/joTqK/RHZY
+         ZDrcDrLRXd35/q8L+XsCnHtBjGVsALZ5tyJcOaDSJsjJPZ6J3q8vUV6Cm/uziV//eysF
+         zyxckwDCi+gLkxiX67OcKdwjYFfpoRbjVeBh8SGc349yT32xtNmNEOHpxUnEtiN4Bn/P
+         1oRB8sVpLD0k7Mz5ffNye2IDrFcJhANL5RvivJTw8WBIzsFp/Q+gRLoGOq8tQP2rMnLw
+         J6ZPJC2ZulhX3v2P2k8bD113hJnHJAa6lBrmLjJ6e1bOEb1dhwqhpYGf2rf74FA7Yq/3
+         6MfA==
+X-Gm-Message-State: ABy/qLbH0E2QzYCcq5kJQs2xaIqAQ62oHQCDH7Na3CoE8kZiGayvECZT
+        xGOC4nNp29Vm+Fp+LqjdJGBZ8g==
+X-Google-Smtp-Source: APBJJlGgvuKsyZAcprltA4X0+Cto4HGQ00PxjW4f9QBYWcSXBe12JZDUy0xv9GffbNJiNd41CRPnpQ==
+X-Received: by 2002:a17:906:20a:b0:98b:dc6c:b304 with SMTP id 10-20020a170906020a00b0098bdc6cb304mr13222395ejd.38.1689661607642;
+        Mon, 17 Jul 2023 23:26:47 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id m11-20020a1709062b8b00b00991bba473e1sm599800ejg.3.2023.07.17.23.26.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jul 2023 23:26:46 -0700 (PDT)
+Message-ID: <4e2b6fae-7638-ae20-9de0-c14c16577726@linaro.org>
+Date:   Tue, 18 Jul 2023 08:26:44 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PA-Wvio-RJaHgjBE8o48brQz9DhmpoA5
-X-Proofpoint-GUID: PA-Wvio-RJaHgjBE8o48brQz9DhmpoA5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-17_15,2023-07-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- suspectscore=0 bulkscore=0 mlxscore=0 adultscore=0 spamscore=0
- impostorscore=0 phishscore=0 priorityscore=1501 mlxlogscore=953
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307180058
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v9 2/7] dt-bindings: soc: qcom: eud: Document
+ vendor-specific 'secure mode' property
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org,
+        stephan@gerhold.net
+References: <20230718061052.1332993-1-bhupesh.sharma@linaro.org>
+ <20230718061052.1332993-3-bhupesh.sharma@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230718061052.1332993-3-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for vibrator module inside PMI632, PM7250B, PM7325B.
-It is very similar to vibrator inside PM8xxx but just the drive
-amplitude is controlled through 2 bytes registers.
+On 18/07/2023 08:10, Bhupesh Sharma wrote:
+> On some SoCs (like the SM6115 / SM4250 SoC), the enable bit inside
+> 'tcsr_check_reg' needs to be set first to 'enable' EUD mode.
+> 
+> So introduce a vendor-specific dt-property 'qcom,secure-eud-reg'
+> which specifies the base address of the TCSR reg space and the offset
+> of the 'tcsr_check_reg'.
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- drivers/input/misc/pm8xxx-vibrator.c | 48 ++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
-index 04cb87efd799..213fdfd47c7f 100644
---- a/drivers/input/misc/pm8xxx-vibrator.c
-+++ b/drivers/input/misc/pm8xxx-vibrator.c
-@@ -25,6 +25,9 @@ struct pm8xxx_regs {
- 	unsigned int drv_addr;
- 	unsigned int drv_mask;
- 	unsigned int drv_shift;
-+	unsigned int drv_addr2;
-+	unsigned int drv_mask2;
-+	unsigned int drv_shift2;
- 	unsigned int drv_en_manual_mask;
- };
- 
-@@ -44,6 +47,42 @@ static struct pm8xxx_regs pm8916_regs = {
- 	.drv_en_manual_mask = 0,
- };
- 
-+static struct pm8xxx_regs pmi632_regs = {
-+	.enable_addr = 0x5746,
-+	.enable_mask = BIT(7),
-+	.drv_addr = 0x5740,
-+	.drv_mask = 0xff,
-+	.drv_shift = 0,
-+	.drv_addr2 = 0x5741,
-+	.drv_mask2 = 0x0f,
-+	.drv_shift2 = 8,
-+	.drv_en_manual_mask = 0,
-+};
-+
-+static struct pm8xxx_regs pm7250b_regs = {
-+	.enable_addr = 0x5346,
-+	.enable_mask = BIT(7),
-+	.drv_addr = 0x5340,
-+	.drv_mask = 0xff,
-+	.drv_shift = 0,
-+	.drv_addr2 = 0x5341,
-+	.drv_mask2 = 0x0f,
-+	.drv_shift2 = 8,
-+	.drv_en_manual_mask = 0,
-+};
-+
-+static struct pm8xxx_regs pm7325b_regs = {
-+	.enable_addr = 0xdf46,
-+	.enable_mask = BIT(7),
-+	.drv_addr = 0xdf40,
-+	.drv_mask = 0xff,
-+	.drv_shift = 0,
-+	.drv_addr2 = 0xdf41,
-+	.drv_mask2 = 0x0f,
-+	.drv_shift2 = 8,
-+	.drv_en_manual_mask = 0,
-+};
-+
- /**
-  * struct pm8xxx_vib - structure to hold vibrator data
-  * @vib_input_dev: input device supporting force feedback
-@@ -87,6 +126,12 @@ static int pm8xxx_vib_set(struct pm8xxx_vib *vib, bool on)
- 		return rc;
- 
- 	vib->reg_vib_drv = val;
-+	if (regs->drv_addr2 != 0 && on) {
-+		val = (vib->level << regs->drv_shift2) & regs->drv_mask2;
-+		rc = regmap_write(vib->regmap, regs->drv_addr2, val);
-+		if (rc < 0)
-+			return rc;
-+	}
- 
- 	if (regs->enable_mask)
- 		rc = regmap_update_bits(vib->regmap, regs->enable_addr,
-@@ -242,6 +287,9 @@ static const struct of_device_id pm8xxx_vib_id_table[] = {
- 	{ .compatible = "qcom,pm8058-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8921-vib", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8916-vib", .data = &pm8916_regs },
-+	{ .compatible = "qcom,pmi632-vib", .data = &pmi632_regs },
-+	{ .compatible = "qcom,pm7250b-vib", .data = &pm7250b_regs },
-+	{ .compatible = "qcom,pm7325b-vib", .data = &pm7325b_regs },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, pm8xxx_vib_id_table);
--- 
-2.25.1
+Best regards,
+Krzysztof
 
