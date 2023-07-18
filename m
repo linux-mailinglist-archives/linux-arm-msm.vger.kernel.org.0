@@ -2,182 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D12F775881F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 00:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F34CC758833
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 00:06:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231454AbjGRWEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jul 2023 18:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60580 "EHLO
+        id S231524AbjGRWGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jul 2023 18:06:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbjGRWE0 (ORCPT
+        with ESMTP id S231506AbjGRWGQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jul 2023 18:04:26 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB53210B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 15:04:03 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4fb7373dd35so208826e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 15:04:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689717778; x=1690322578;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rNDKOzlYPxGuMs2KncsT0nwhwoFvuzBBjJp1G8pPnVI=;
-        b=vuZIUV0MiW49B1TR2RK+zQrigyap1MzpeYpQr5n+DE/3s2R6OB3VXg+eUeNSA2wqwu
-         dYTjRPR2v0yrtgdEhzKD5hpgEf2V5Cub4MA/Nkq/vEBwf/2dss24wWvT4aMK2kZsls1d
-         5vJfVRBtNE9MHqGHkqxv3k9wfZ0PwOXygRTOQ5JIklydupo/LhD8XiA3VK1q9hYeue6t
-         tKLjWTrl2D88zC+ihLPYVIwwHKnzx1eMR7zBKHU4MVHq+XJsO9HF5/3mGE9tRa+31Ifp
-         hIypLS+CHYwBfwj8bDXVmkoQNxZMDkZCFZRsuCfhmbBl270ihN+STJzxACCADrNlhANs
-         cT+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689717778; x=1690322578;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rNDKOzlYPxGuMs2KncsT0nwhwoFvuzBBjJp1G8pPnVI=;
-        b=j9nBPN6pcxfgm2Eu17aXhlq8LOVq97tRTQAECPTERz8Ae4D3pWJE5zkJc5ksl6bx4N
-         TnfbR1P5wBe1TcnfiBV5ixAK/hW6M/+G0zR26DeAn0EHvRsE0zPiylBE0lWc/utzlRaM
-         tGgM0Q9c/DzPame4h67rodNtui9jm7E+Vog3xqgtybkypCI4opS1w13ghMmrIHNCtJ3s
-         b00TR25zdlWJi5nkY1FzCKTF4o55ovh/6/Rgvt0v9ESa0s0nXnNpf0u6GMCQv34eVeYE
-         XmxAvvgN2UBtK04wRB+ckX0UzQfVbGvQvNnotehCskn6zeL3kjbEF6cKCxAl5+NCczli
-         N56Q==
-X-Gm-Message-State: ABy/qLY3yHCPGa/7FXiBZ5Zj7zznRfPQq8H0QdV55KnYgrVqxW8HXbCE
-        7WFKpsYyqnuaz8uPF8JT1m4srw==
-X-Google-Smtp-Source: APBJJlEzzO92pAca9uOAcmF9Oxp3Fq4quU2D8QWHbF3UNYaUO4bu8i3x2boSfuxbQYAJ/7rubYq1CA==
-X-Received: by 2002:a05:6512:3da4:b0:4fd:c8fb:eb71 with SMTP id k36-20020a0565123da400b004fdc8fbeb71mr132296lfv.11.1689717778055;
-        Tue, 18 Jul 2023 15:02:58 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id f25-20020ac251b9000000b004eb0c51780bsm636973lfk.29.2023.07.18.15.02.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jul 2023 15:02:57 -0700 (PDT)
-Message-ID: <149d15e6-4995-8ff6-5191-77783c3dedb8@linaro.org>
-Date:   Wed, 19 Jul 2023 01:02:56 +0300
+        Tue, 18 Jul 2023 18:06:16 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6327E1BFC;
+        Tue, 18 Jul 2023 15:05:48 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36IKpN5l008353;
+        Tue, 18 Jul 2023 22:05:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8rFBmX5DgEEydXEcTIyomIWP4zWEITCUOjOBSX0Y8vI=;
+ b=VrQ24uCRWyFr9t1BpscO3IXZFINEy/9H0fTfedwdDZWTWey44NeY/bisvD/ofuI9Gn7h
+ 7I3v+zeaOm74ELnUfHtdU2aZSCDYvhYuS4ujnGX9u0YuNeyscrAGESQJPKuAyS8Bm0fb
+ 4iDGYa5QkiUysjStdvXxoXG0/Gs+7zp4OmCDh9rZAy678S2QwyVfWxGllKTZusO9tDpO
+ 6RDyPwF7ii+uFsRSq1JSmgrc+Hkso8Z4zegCMxibGrBIP5jQ8Vo61xh+EpZ+PQIRZFAC
+ gw+S67n3cv0ehu3M5rSaq3DmjpwqniS/GIc1aXuajWtlM+kMrTeitrUAxF3E6XYthPhP 4w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwnrrhws2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Jul 2023 22:05:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36IM5HMJ016014
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Jul 2023 22:05:17 GMT
+Received: from [10.110.49.60] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 18 Jul
+ 2023 15:05:17 -0700
+Message-ID: <46bd234c-0b0c-0787-1824-e7cbff768393@quicinc.com>
+Date:   Tue, 18 Jul 2023 15:05:16 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 02/15] arm64: dts: qcom: sm6125: Sort spmi_bus node
- numerically by reg
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-References: <20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org>
- <20230718-sm6125-dpu-v3-2-6c5a56e99820@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230718-sm6125-dpu-v3-2-6c5a56e99820@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230718160833.36397-3-quic_nkela@quicinc.com>
+ <xkw36iwjb47q7spf6qle5x3kcmx6fv7or6cwhlpkuvihn3xmt2@qhrhtug4htp2>
+ <5c76250b-4415-950e-6aab-7ccbdc6ca83a@quicinc.com>
+ <6uelwa7fpzbw757rbb2j3u4ogagypdzyqj5mykyhlkkkvrnfin@ttonjpfn7nxc>
+ <d2d01794-ef13-07f9-7695-b56b58cc01ac@quicinc.com>
+ <rum7gnnouoz2irn57taxn4j2aajkxf6em6ft6u4w3rxwsym2su@acgczsnl2huz>
+Content-Language: en-US
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <rum7gnnouoz2irn57taxn4j2aajkxf6em6ft6u4w3rxwsym2su@acgczsnl2huz>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8zvWIFlvkw91mb8rppe_7bCZ8VFZlnlB
+X-Proofpoint-ORIG-GUID: 8zvWIFlvkw91mb8rppe_7bCZ8VFZlnlB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-18_17,2023-07-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ mlxlogscore=999 priorityscore=1501 impostorscore=0 mlxscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307180199
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/07/2023 00:24, Marijn Suijten wrote:
-> This node has always resided in the wrong spot, making it somewhat
-> harder to contribute new node entries while maintaining proper sorting
-> around it.  Move the node up to sit after hsusb_phy1 where it maintains
-> proper numerical sorting on the (first of its many) reg address
-> property.
-> 
-> Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm6125.dtsi | 38 ++++++++++++++++++------------------
->   1 file changed, 19 insertions(+), 19 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> index 6937c7ebdb81..cfd0901d4555 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> @@ -684,6 +684,24 @@ hsusb_phy1: phy@1613000 {
->   			status = "disabled";
->   		};
->   
-> +		spmi_bus: spmi@1c40000 {
-> +			compatible = "qcom,spmi-pmic-arb";
-> +			reg = <0x01c40000 0x1100>,
-> +			      <0x01e00000 0x2000000>,
-> +			      <0x03e00000 0x100000>,
-> +			      <0x03f00000 0xa0000>,
-> +			      <0x01c0a000 0x26000>;
-> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> +			interrupt-names = "periph_irq";
-> +			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
-> +			qcom,ee = <0>;
-> +			qcom,channel = <0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <4>;
-> +		};
-> +
->   		rpm_msg_ram: sram@45f0000 {
->   			compatible = "qcom,rpm-msg-ram";
->   			reg = <0x045f0000 0x7000>;
-> @@ -1189,27 +1207,9 @@ sram@4690000 {
->   			reg = <0x04690000 0x10000>;
->   		};
->   
-> -		spmi_bus: spmi@1c40000 {
-> -			compatible = "qcom,spmi-pmic-arb";
-> -			reg = <0x01c40000 0x1100>,
-> -			      <0x01e00000 0x2000000>,
-> -			      <0x03e00000 0x100000>,
-> -			      <0x03f00000 0xa0000>,
-> -			      <0x01c0a000 0x26000>;
-> -			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> -			interrupt-names = "periph_irq";
-> -			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
-> -			qcom,ee = <0>;
-> -			qcom,channel = <0>;
-> -			#address-cells = <2>;
-> -			#size-cells = <0>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <4>;
-> -		};
-> -
->   		apps_smmu: iommu@c600000 {
->   			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
-> -			reg = <0xc600000 0x80000>;
-> +			reg = <0x0c600000 0x80000>;
 
-Irrelevant, please split.
-
->   			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>,
->   				     <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
->   				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
-> 
-
--- 
-With best wishes
-Dmitry
-
+On 7/18/2023 12:30 PM, Bjorn Andersson wrote:
+> On Tue, Jul 18, 2023 at 12:10:16PM -0700, Nikunj Kela wrote:
+>> On 7/18/2023 12:07 PM, Bjorn Andersson wrote:
+>>> On Tue, Jul 18, 2023 at 11:53:24AM -0700, Nikunj Kela wrote:
+>>>> On 7/18/2023 11:29 AM, Bjorn Andersson wrote:
+>>>>> On Tue, Jul 18, 2023 at 09:08:33AM -0700, Nikunj Kela wrote:
+>>>>>> diff --git a/drivers/firmware/arm_scmi/qcom_hvc.c b/drivers/firmware/arm_scmi/qcom_hvc.c
+>>> [..]
+> [..]
+>>>>>> +#ifdef CONFIG_ARM64
+>>>>>> +	cap_id = readq((void *)(scmi_info->shmem) + size +
+>>>>>> +		       sizeof(unsigned long));
+>>>>>> +#else
+>>>>>> +	cap_id = readl((void *)(scmi_info->shmem) + size +
+>>>>>> +		       sizeof(unsigned long));
+>>>>>> +#endif
+>>>>> Please don't make the in-memory representation depend on architecture
+>>>>> specific data types. Quite likely you didn't compile test one of these
+>>>>> variants?
+>>>>>
+>>>>> Just define the in-memory representation as u32 + u64.
+>>>> I tested this for ARM64, I didn't test it for 32bit since Hypervisor doesn't
+>>>> support it currently. In future, it may add 32 bit support too.
+>>> I'd not be surprised if the capability id is 64 bit on a 32-bit machine
+>>> as well, it's not really a property of the architecture.
+>> on 32bit machine, you will have to use SMC32 convention. lt will mean that
+>> the parameters can only be 32 bit long. If you keep cap-id 64 bit in 32bit
+>> machines, then it has to be passed in two parameters. Are you suggesting, I
+>> make this driver dependent on ARM64 and only care about 64 bit for now?
+>>
+> I'm suggesting that the calling convention is one thing and the
+> in-memory format for passing the information to the driver is a
+> different thing.
+>
+> Keep the arguments passed in memory architecture-independent (i.e. make
+> it u64).
+>
+> If you're saying that the calling convention would be different on a
+> 32-bit system, then you are also saying that your driver _is_ 64-bit
+> specific. Please confirm what the size of your capability id would be in
+> such a system and make sure the Kconfig and/or the code, reflects
+> reality.
+>
+> Thanks,
+> Bjorn
+It is confirmed that cap-id will be 32 bit long on 32bit machines. That 
+said, I will make changes to use last 16bytes irrespective of the 
+architecture.
