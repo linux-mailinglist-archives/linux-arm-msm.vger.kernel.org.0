@@ -2,167 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E0F375960A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 14:58:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04D3275960E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 14:58:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbjGSM6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 08:58:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36136 "EHLO
+        id S229981AbjGSM6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 08:58:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230128AbjGSM5y (ORCPT
+        with ESMTP id S229704AbjGSM6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 08:57:54 -0400
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74C9910FE;
-        Wed, 19 Jul 2023 05:57:53 -0700 (PDT)
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36JC13Ru024043;
-        Wed, 19 Jul 2023 12:57:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=vTJllK3QIosIdkN/l1AacXcP7ML5CIMxUDU9jzrNDpA=;
- b=GHGbdYQASDxavATVPpsM1WgWPgS/2U+jpxlUluO2wbWS1BpTVRZM8xxmRTAV1D/cAVHi
- XMox148U3Y6AQV/wV2Lcv1gOs8iqwGdwFBmztXjyvLWrVAhBRti1qz6bdmzG6JuVTWJE
- iBAOYNMouQ6G9DEGC9GBTNkFBJDR5VJcMGx5nb/LMQKumQan3RxQM/+U4Al4cklaXLs0
- Gqm2kb6gA91dWbgE/RpDricOxcKG+9H4PqTxPKheRrurwtEpAD0Ps7f4yUPxjVdBNrip
- ymHqrKhWUJ5QXPGY9qF+VNtFg5s6YJ239xLilYrda5QsVmSMjGAaJITNOPaU15Bd0PLC 7Q== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3rxcen6vht-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 12:57:02 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36JBoV6T007562;
-        Wed, 19 Jul 2023 12:57:01 GMT
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3rxcen6vhc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 12:57:01 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-        by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 36JBUgeR007434;
-        Wed, 19 Jul 2023 12:57:00 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-        by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3rv80j7bq8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 12:57:00 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
-        by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 36JCuxQC61866456
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 19 Jul 2023 12:56:59 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 0697A58056;
-        Wed, 19 Jul 2023 12:56:59 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 069AB58052;
-        Wed, 19 Jul 2023 12:56:56 +0000 (GMT)
-Received: from [9.61.44.182] (unknown [9.61.44.182])
-        by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
-        Wed, 19 Jul 2023 12:56:55 +0000 (GMT)
-Message-ID: <3663c0e7-4108-c2cc-06cf-ac569f65d101@linux.ibm.com>
-Date:   Wed, 19 Jul 2023 08:56:55 -0400
+        Wed, 19 Jul 2023 08:58:46 -0400
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [IPv6:2a01:4f8:a0:821d::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B7ECE113;
+        Wed, 19 Jul 2023 05:58:45 -0700 (PDT)
+Received: from [192.168.20.2] (unknown [77.239.252.99])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id 0A721140121;
+        Wed, 19 Jul 2023 12:58:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1689771524;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=aZXaEtPJDLbqwTbE6VAkPqnP0a7nN9LNuwWiZja50Rc=;
+        b=IUtaVQh2MQEl7wAGiw3zPiZfyF6mxoLOAcK2aydcv0iU3STdR1e7Ee2L17tTA5jB3gdH9H
+        X59+lfK2nE7MFyjwrEA8xAyAhVWwHexJJRekHcgaxExo69pWEQaZMfWcMN4BcmsGWKpHr/
+        Cx08uluq9h8iRgZv7eLNvZlz6vkxf0w=
+Message-ID: <a23e7b67-877f-5fc4-754a-4fa1b54b9a1c@postmarketos.org>
+Date:   Wed, 19 Jul 2023 15:58:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH v11 4/6] iommu/s390: Force ISM devices to use
- IOMMU_DOMAIN_DMA
+Subject: Re: [PATCH v3] arm64: dts: qcom: sdm630: Add support for modem
+ remoteproc
 Content-Language: en-US
-To:     Niklas Schnelle <schnelle@linux.ibm.com>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>
-Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-References: <20230717-dma_iommu-v11-0-a7a0b83c355c@linux.ibm.com>
- <20230717-dma_iommu-v11-4-a7a0b83c355c@linux.ibm.com>
-From:   Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20230717-dma_iommu-v11-4-a7a0b83c355c@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>
+References: <20230719093458.2668842-1-alexeymin@postmarketos.org>
+ <2c1c69bf-3cd5-4d68-43db-696ce0f15197@linaro.org>
+ <1f8cbc00-9602-486d-b3c9-9c82f3b6c8df@postmarketos.org>
+ <ebc27dd7-93fe-4d8e-8b8c-4fc1d52cc275@linaro.org>
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+In-Reply-To: <ebc27dd7-93fe-4d8e-8b8c-4fc1d52cc275@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: mAn_ySuLThAyex-XKSILyYpwW2wAL_f5
-X-Proofpoint-ORIG-GUID: p_U8uENcifu8d_t15JnMCmjpsu3eYgTy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_08,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- adultscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 clxscore=1011 mlxscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307190113
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/17/23 7:00 AM, Niklas Schnelle wrote:
-> ISM devices are virtual PCI devices used for cross-LPAR communication.
-> Unlike real PCI devices ISM devices do not use the hardware IOMMU but
-> inspects IOMMU translation tables directly on IOTLB flush (s390 RPCIT
-> instruction).
+On 19.07.2023 13:18, Krzysztof Kozlowski wrote:>>           From schema:
+>> .../Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+>>     .../arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb:
+>> remoteproc@4080000: memory-region: [[45], [46]] is too short
+>>           From schema:
+>> .../Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
 > 
-> While ISM devices keep their DMA allocations static and only very rarely
-> DMA unmap at all, For each IOTLB flush that occurs after unmap the ISM
-> devices will inspect the area of the IOVA space indicated by the flush.
-> This means that for the global IOTLB flushes used by the flush queue
-> mechanism the entire IOVA space would be inspected. In principle this
-> would be fine, albeit potentially unnecessarily slow, it turns out
-> however that ISM devices are sensitive to seeing IOVA addresses that are
-> currently in use in the IOVA range being flushed. Seeing such in-use
-> IOVA addresses will cause the ISM device to enter an error state and
-> become unusable.
+> This needs fixes. The binding lists expected memory regions and you do
+> not have three of them.
 > 
-> Fix this by forcing IOMMU_DOMAIN_DMA to be used for ISM devices. This
-> makes sure IOTLB flushes only cover IOVAs that have been unmapped and
-> also restricts the range of the IOTLB flush potentially reducing latency
-> spikes.
+> Best regards,
+> Krzysztof
 > 
-> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 
-This makes sense to me.
+According to driver code, dedicated reserved metadata memory region is 
+optional. If it is not provided, it is allocated by driver itself using 
+dma_alloc_attr() and then passed to modem processor.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+I see that MSM8996 and MSM8998 (nearest sdm660 siblings) got their 
+dedicated metadata reserved regions in patchset [1]. SDM660 MSS was not 
+present at that time and I'm not sure if it is needed for this SoC, 
+because downstream device tree for my device does not have this region. 
+I can either do similar trick for sdm630.dtsi, or alternatively maybe we 
+should fix bindings to indicate that metadata region is optional?
 
+I did quick test: added dedicated reserved metadata region, and 
+everything still works fine, it seems, and one DTB check warning was gone.
 
+[1] 
+https://lore.kernel.org/all/20230117085840.32356-1-quic_sibis@quicinc.com/
+
+-- 
+Regards,
+Alexey Minnekhanov
+postmarketOS developer
