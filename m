@@ -2,54 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F056759F3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 22:04:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FD83759F57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 22:09:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbjGSUEz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 16:04:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46956 "EHLO
+        id S230144AbjGSUJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 16:09:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230368AbjGSUEz (ORCPT
+        with ESMTP id S229949AbjGSUJY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 16:04:55 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68922F0;
-        Wed, 19 Jul 2023 13:04:52 -0700 (PDT)
+        Wed, 19 Jul 2023 16:09:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A7F592;
+        Wed, 19 Jul 2023 13:09:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B0E8E61807;
-        Wed, 19 Jul 2023 20:04:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D7CC433C8;
-        Wed, 19 Jul 2023 20:04:51 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 989FF61812;
+        Wed, 19 Jul 2023 20:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F24EC433C7;
+        Wed, 19 Jul 2023 20:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689797091;
-        bh=0iKypu0kymTeD57KjtrMnZG3ybCTpOA4DfWhM2jjUOU=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=g4iAn8M9Y2zWazYP8g4VgHvj9qbowkKoguznJHd7M+5DI1D6NecNuwAsSEo2OpkSH
-         xedrocvcG6ll1IIw5g1HA7Z6zzqRggLca8gUoCIFvv0MsafwvDHpYp1Mln46w9IMAX
-         Yr5yDxfkpxY6SePMBzj0kJyjlrDa+CuabMqEWFqGWSTOybstNm0CPrz4R7Xy9mhd4v
-         +Qzhp7SP09R7IXPzkDNeQyXgU0cXVPx4hGcgv9SiRIJEsYwzLKYUVMPvqfUUTPs8++
-         lWTbCo//XArPpW0HDII69NIDvFx2kzTqHgn+DLDxp9Z8g0/GS6B8VGOCHCwF0YJKiW
-         3NNjPA9rMrioQ==
-Message-ID: <f726290fe0678217f2e17b6a68c20d42.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        s=k20201202; t=1689797363;
+        bh=klqOWFOUh1QB5odPiLwWfeNWJcVb2PU7gijJT32YqNc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=A/2dYFF4KVhoHbqExV9WPBfS6C4fOHioJbj1B0mpePbgVhxjl+2zzBPGfp70rL5Dk
+         LC0wykkcZrebfGspQLokwey+kP4xeSWCPaQO7vxVeq5rmNY8Ma0TYwI5c3G56Bdksn
+         FQcFBYnlefuUVlBkvyEcDtZWip7j1OtLXXGDst3abhqiNtPIAz7j7JmXh2FX/kVk0b
+         LqlA6yfDeEJJQmkrp4xAuI2511AJKjSBzRC63H85DyePlqWPkMmV0IF3bMMp6T9/Ns
+         4lVVS593VTU/O7DQN2AmYKl027Xxu2ccsdR73CTL6Ly/qBtPWkdEw0kL3rKywZPEe/
+         KGn90hFEjFTSw==
+Received: (nullmailer pid 687249 invoked by uid 1000);
+        Wed, 19 Jul 2023 20:09:20 -0000
+Date:   Wed, 19 Jul 2023 14:09:19 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        David Airlie <airlied@gmail.com>,
+        Bryan Donoghue <bryan.odonoghue@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dt <devicetree@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v5 1/2] dt-bindings: display/msm: mdss-common: add
+ memory-region property
+Message-ID: <168979735935.687074.3349593216589059012.robh@kernel.org>
+References: <20230713165238.2814849-1-amit.pundir@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230710093206.18894-1-quic_devipriy@quicinc.com>
-References: <20230710093206.18894-1-quic_devipriy@quicinc.com>
-Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: Use determine_rate instead of round_rate
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
-        quic_saahtoma@quicinc.com
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com
-Date:   Wed, 19 Jul 2023 13:04:48 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230713165238.2814849-1-amit.pundir@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -60,106 +77,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Devi Priya (2023-07-10 02:32:06)
-> @@ -1094,25 +1099,25 @@ static const struct clk_div_table clk_alpha_2bit_=
-div_table[] =3D {
->         { }
->  };
-> =20
-> -static long
-> -clk_alpha_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
-> -                                unsigned long *prate)
-> +static int clk_alpha_pll_postdiv_determine_rate(struct clk_hw *hw,
-> +                                               struct clk_rate_request *=
-req)
->  {
->         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
->         const struct clk_div_table *table;
-> +       unsigned long rate =3D req->rate;
-> =20
->         if (pll->width =3D=3D 2)
->                 table =3D clk_alpha_2bit_div_table;
->         else
->                 table =3D clk_alpha_div_table;
-> =20
-> -       return divider_round_rate(hw, rate, prate, table,
-> -                                 pll->width, CLK_DIVIDER_POWER_OF_TWO);
-> +       req->rate =3D divider_round_rate(hw, rate, &req->best_parent_rate=
-, table,
 
-Can you use divider_determine_rate() instead?
+On Thu, 13 Jul 2023 22:22:37 +0530, Amit Pundir wrote:
+> Add and document the reserved memory region property in the
+> mdss-common schema.
+> 
+> For now (sdm845-db845c), it points to a framebuffer memory
+> region reserved by the bootloader for splash screen.
+> 
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> ---
+> v5: Moving the dt-binding to mdss-common schema with
+>     updated commit message and property description.
+> 
+> v4: Adding this new dt-binding patch, in qcom,sdm845-mdss
+>     schema, in the v4 of the follow-up patch for
+>     sdm845-db845c.
+>     https://lore.kernel.org/lkml/20230712130215.666924-2-amit.pundir@linaro.org/
+> 
+>  .../devicetree/bindings/display/msm/mdss-common.yaml         | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
 
-> +                                      pll->width, CLK_DIVIDER_POWER_OF_T=
-WO);
-> +       return 0;
->  }
-> =20
-> -static long
-> -clk_alpha_pll_postdiv_round_ro_rate(struct clk_hw *hw, unsigned long rat=
-e,
-> -                                   unsigned long *prate)
-> +static int clk_alpha_pll_postdiv_determine_ro_rate(struct clk_hw *hw,
-> +                                                  struct clk_rate_reques=
-t *req)
->  {
->         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
->         u32 ctl, div;
-[...]
-> @@ -1452,14 +1459,16 @@ clk_trion_pll_postdiv_recalc_rate(struct clk_hw *=
-hw, unsigned long parent_rate)
->         return (parent_rate / div);
->  }
-> =20
-> -static long
-> -clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
-> -                                unsigned long *prate)
-> +static int
-> +clk_trion_pll_postdiv_determine_rate(struct clk_hw *hw,
-> +                                    struct clk_rate_request *req)
->  {
->         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
-> =20
-> -       return divider_round_rate(hw, rate, prate, pll->post_div_table,
-> -                                 pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-> +       req->rate =3D divider_round_rate(hw, req->rate, &req->best_parent=
-_rate,
+Reviewed-by: Rob Herring <robh@kernel.org>
 
-divider_determine_rate()?
-
-> +                                      pll->post_div_table, pll->width,
-> +                                      CLK_DIVIDER_ROUND_CLOSEST);
-> +       return 0;
->  };
-> =20
->  static int
-> @@ -1485,18 +1494,21 @@ clk_trion_pll_postdiv_set_rate(struct clk_hw *hw,=
- unsigned long rate,
-> =20
->  const struct clk_ops clk_alpha_pll_postdiv_trion_ops =3D {
->         .recalc_rate =3D clk_trion_pll_postdiv_recalc_rate,
-> -       .round_rate =3D clk_trion_pll_postdiv_round_rate,
-> +       .determine_rate =3D clk_trion_pll_postdiv_determine_rate,
->         .set_rate =3D clk_trion_pll_postdiv_set_rate,
->  };
->  EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_trion_ops);
-> =20
-> -static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
-> -                               unsigned long rate, unsigned long *prate)
-> +static int
-> +clk_alpha_pll_postdiv_fabia_determine_rate(struct clk_hw *hw,
-> +                                          struct clk_rate_request *req)
->  {
->         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
-);
-> =20
-> -       return divider_round_rate(hw, rate, prate, pll->post_div_table,
-> -                               pll->width, CLK_DIVIDER_ROUND_CLOSEST);
-> +       req->rate =3D divider_round_rate(hw, req->rate, &req->best_parent=
-_rate,
-> +                                      pll->post_div_table, pll->width,
-> +                                       CLK_DIVIDER_ROUND_CLOSEST);
-
-divider_determine_rate()?
