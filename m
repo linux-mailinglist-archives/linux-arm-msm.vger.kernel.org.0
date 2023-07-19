@@ -2,126 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 960B57591EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 11:47:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF467759250
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 12:03:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbjGSJrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 05:47:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50710 "EHLO
+        id S230063AbjGSKDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 06:03:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbjGSJrH (ORCPT
+        with ESMTP id S231290AbjGSKCj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 05:47:07 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D15106;
-        Wed, 19 Jul 2023 02:47:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1689760022; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=s/cqr7BUGAtP03C6t/ywoM2f4bBpLmQhEsBEcHmWpfsdbnLgNbgRJQBXG1q7GxmJCc
-    7WPBdQPpZecsw9vXD+wWNLdtZTBUx1qvN8gIcQf+yTV6sgvhlpJYogBjr0zQmNnE7mj4
-    0H86hTj/CqwUokzPN3YXW9hcIiqh1EVMIujgzqhxt0KPAd5UqSbM/0PRxXny03JpA+RC
-    LDhXGI/ssDGfAtWtqqAgVKZoVDFo7L1WSn+rnXP8WwTMEnKsHUAFfBOlXyUg5hDygrRI
-    fLr4PQ7r25FYPFmpVCPFUoBLaol149vLnrcK1TU4Gusy7jimPEECUMJMt8XWijUP2D6M
-    9Xow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1689760022;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=aWulUSFQPQrk0YhE9gD9h7Gdx/P5m2vYoLnnOUcgX0w=;
-    b=T5DmUr1xamW7aiO+hYDZA8Ht5LrJxqgZ2xIF3YZqpjr7L6hr0LJqptFdH9e0xwF3qS
-    QL9jhkM5pJN0bKGTSq4h5h86Gmk4GCsiyKlI0vu/ZtXv3kHP1YlIE1ZaNroKr3+oBRIl
-    JqB/njDN0Afl6wJid5bp98hm4ooD7w0Uu+dVc9oo41xK5ZSy3A5Bq+SgGz+lUyoAlaRh
-    pKCe2kavPxhb7522a7ENILrnAu4rIKEJ7oY4oUt0dSXuEWSxzVBN3Wqw1XowepakRVbw
-    qE/IcKpP8SzhVjEpa58oLbEuTxaR8wE0awWSdcRmcgPkxjriH1J+Bln2t/oteMsQo0Ua
-    59yg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1689760022;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=aWulUSFQPQrk0YhE9gD9h7Gdx/P5m2vYoLnnOUcgX0w=;
-    b=e36bOiV+5ZsnVxzbeB73ByEV038LTxirBS1x+1xmffIbaNad/0UmSCiLvlkTaPPRS7
-    2IV6CNpRGRmEfraapqBB8hC1gG1UJg1NkLG4fiqwDypuYzvkg4xPoorgsAR/u4IKlU9A
-    ci/n3W0WtlurhZavggmLRG20lmFTv+wKgOLj/IujRx0qErAH0U09foRyA5cDlS3EfsZq
-    LEoQHldIlzNRhfp51Ygbm2Fr4SWQIt1d9L2PleTxpnbJboJXx3CayylBBq0QAtFdtHlS
-    xrScPXBT1HheQ0m3N3UEqrGMJBm+XfAm/qmHFPDBWYjcfGFJIbSJZF9DKccTkP97peD8
-    lfMA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1689760022;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=aWulUSFQPQrk0YhE9gD9h7Gdx/P5m2vYoLnnOUcgX0w=;
-    b=1MbLBtiTo2xVLZq0VKKyVWAXc0DKKoJ6orJXJD9axsLXwsxroKHAszeeqii2oEOz7h
-    5nCQlYTAOcLD11xtnTCQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA9Zfh"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.6.4 DYNA|AUTH)
-    with ESMTPSA id Qa2b39z6J9l12Ww
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 19 Jul 2023 11:47:01 +0200 (CEST)
-Date:   Wed, 19 Jul 2023 11:46:55 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm630: remove refs to nonexistent
- clocks
-Message-ID: <ZLexD5tdjYGhTCR9@gerhold.net>
-References: <20230719073520.2644966-1-alexeymin@postmarketos.org>
- <9e38d2f5-6da4-089e-1c70-a89069708909@linaro.org>
- <b8cc0229-d663-3527-b320-51a48b4af5b5@postmarketos.org>
+        Wed, 19 Jul 2023 06:02:39 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03E1A1FCE;
+        Wed, 19 Jul 2023 03:02:09 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J6Lwo1021938;
+        Wed, 19 Jul 2023 10:02:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=TlpYzcniGhpcmz/VqmcLbzPKTjyMDNq1IIloW/lsPRQ=;
+ b=CCrsNK5KlKFKtns9jVBUAGo1kLFtZp2Uu/2+I8pOQGSfl7JGyYhn3Obj+7nakJ3Vc0ud
+ wWvvZbO55LJh5vMWSYGhrPU1lkH3Bui+KDtE2/ITyjJ+CjVdUdbATWdnNdKaamtysouZ
+ UQ1adLy5pIctJPGK0AdAA1GBRbwI5RGKgRcmsOntcp7We9O7pe38dO0pnclY1J/Tks+0
+ QYVjHpoa3/PP0WGqF7lPHifKymvDAy7k08e8HnqHOIjmeVu9mfuIXIseJqx1JrxV09zG
+ Y5kp1KRBv587TLLHhNdnMVFhV6E3+htSq/ZqM3wULZTZ3H8BszYU54zWjJQ6/A/WIldP JQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rx7rngp80-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 10:02:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36JA243M030093
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 10:02:04 GMT
+Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Wed, 19 Jul 2023 03:02:00 -0700
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+To:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
+        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH 0/5] soc: qcom: Add support for SM4450
+Date:   Wed, 19 Jul 2023 18:01:30 +0800
+Message-ID: <20230719100135.21325-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b8cc0229-d663-3527-b320-51a48b4af5b5@postmarketos.org>
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: u1tKKOVLvkxZ4AtUSQ_pWyo3CIYm86Rz
+X-Proofpoint-ORIG-GUID: u1tKKOVLvkxZ4AtUSQ_pWyo3CIYm86Rz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-19_06,2023-07-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ priorityscore=1501 mlxscore=0 clxscore=1011 suspectscore=0 mlxlogscore=486
+ impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307190091
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 19, 2023 at 11:36:46AM +0300, Alexey Minnekhanov wrote:
-> On 19.07.2023 10:39, Krzysztof Kozlowski wrote:
-> > It does not look like you tested the DTS against bindings. Please run
-> > `make dtbs_check`
-> > 
-> 
-> If DT schema for interconnect requires bus clocks to be specified, I don't
-> even know what to put there now. Can we change schema?
-> 
+This series adds CPU, SoC and board compatible support for SM4450.
 
-I think I mentioned the DT schema updates during the review of Konrad's
-interconnect changes and he mentioned he would like to clean those up
-after getting the series in. (Which would be sometime soon now I guess)
+Tengfei Fan (5):
+  arm64: dts: qcom: Add base SM4450 DTSI
+  arm64: dts: qcom: Add base SM4450 QRD DTS
+  dt-bindings: firmware: scm: Add SM4450
+  dt-bindings: arm: qcom: Document SM4450 SoC and boards
+  soc: qcom: socinfo: add SM4450 ID
 
-For now, having the &rpmcc "bus"/"bus_a"/"ipa" clocks specified on the
-interconnect@... nodes is still valid. At runtime they will just be
-ignored. Feel free to just keep them there for this initial fix.
+ .../devicetree/bindings/arm/qcom.yaml         |   6 +
+ .../bindings/firmware/qcom,scm.yaml           |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sm4450-qrd.dts       |  18 +
+ arch/arm64/boot/dts/qcom/sm4450.dtsi          | 435 ++++++++++++++++++
+ drivers/soc/qcom/socinfo.c                    |   1 +
+ include/dt-bindings/arm/qcom,ids.h            |   2 +
+ 7 files changed, 464 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4450-qrd.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4450.dtsi
 
-For the other two usages (iommu@, usb@) these votes with minimal
-frequency look a bit related to the "keep_alive" stuff Konrad added. [1]
-Maybe that could be used here instead of bypassing interconnect with the
-clock votes?
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Thanks,
-Stephan
-
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b979049c38e170286158e97290c892957c836903
