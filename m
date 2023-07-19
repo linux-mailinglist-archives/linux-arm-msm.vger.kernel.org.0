@@ -2,64 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8302D759E2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 21:05:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B167759E62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 21:21:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230383AbjGSTF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 15:05:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44240 "EHLO
+        id S229984AbjGSTVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 15:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjGSTF1 (ORCPT
+        with ESMTP id S229732AbjGSTVH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 15:05:27 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63DD4199A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:05:25 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b700e85950so107508201fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:05:25 -0700 (PDT)
+        Wed, 19 Jul 2023 15:21:07 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF6F1FC0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:21:04 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fbc656873eso76188745e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689793523; x=1692385523;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Uxzu4bTwNO5BdcIxJkw1/nWB+CP9FwcUhHLLgewCkgw=;
-        b=bhII2Uj+TkgnIjMm9sToEM5IW39MSLgMv2SVJAXa7OF8jwzzINNd/XuigFxHQKUOGi
-         PcMsH5te8ILc8UFlgsgn1LPxw76s/7v+Kwz6nRfJmqRLmByrpsBR4DXLXPfaQ9goWtGq
-         8qATDajVQY90BOwRwW0UGOLFm8OwZ/2KVRBYZv2hDKojVbQtxFvKaidB9AOORwelCPJ1
-         VkYNVU0PqX7lysKjjmRT71I/8Fux5AERdcvGlnVZKELBP89KbrGah/2JgTAZwrlmo6ed
-         Cmmdrl7XM0KOvdPco4h+qiz0C8/Wj7WoKGEiuK0Zve4LUntVjUJGnZWwtlO2cQjqtxav
-         nXsw==
+        d=linaro.org; s=google; t=1689794463; x=1692386463;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=61Vthzi+jTZc0OfRE0feJj3h8OeCFS14mJvBksaJnnI=;
+        b=pzNtRS1B2p/uIypnjPAvtXVS4EPtglILWxAokj5oph/6BExIaa+o41LOomTOziP2nx
+         7PgfS3bMXFrJ3mC2uCDTmPQ+wfUKZVJryCitgfd295rOinv3xtx+2ShzS/rVCgRbZWTR
+         lUlv9WTsLyL6Y4Pr/5kTfHlTO/5dUsX8bd+SdKsWje43p4ciOfEh1Gw9/5gU5tgkikUc
+         uz3hT0N+/4bxOW9zlKmF4jnL3k/IO/LmFG8ZjmQPLKizvkKVb5NwyN6JAoTL38EgruL9
+         uFYvlVIhsOjgHSgpEjMzKq1o/kYkDqTlXVtxmJfS6cRUh2L+aH3g3RK2/m3GVdRcEglf
+         IbxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689793523; x=1692385523;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uxzu4bTwNO5BdcIxJkw1/nWB+CP9FwcUhHLLgewCkgw=;
-        b=NEx5/jN7qWlnFQbic6bEalAawxX1oNb0VKkA7GChaMi1mSWsCi4NrmQVk3jhH+IzU0
-         9UE1qM8Uoped6qBr3DATXzVybRGNUkZXV9xJljBYgBzYsnr82AHMdlhy2zVsgKzcgoGs
-         N93YgdpMgcUFqti6z7ArSFib86XSrGZJoiHu5bUvYyk/yAvg8ks27hYzVcHBN7NQK0jW
-         jZ10qfQbpNjyc+tBifFb3/WEwTDTDYmubE1PzZkU4G0cQwwJ77hyQYscm+7Dc+P7HEt0
-         7CdHst4ISeUBvV9U3vdk8Rx4UfPtjsJUKpPXGHpiGgg1WjBet5leNrQP828yMV5eZL08
-         ZdFw==
-X-Gm-Message-State: ABy/qLZbXpVf5KpNT4O8HSPlcc5ZtG2nI1EVjRKTaColw4B2QqhZ9rcE
-        O1tL++ewOM3TOduZJRlsDc3RGw==
-X-Google-Smtp-Source: APBJJlHfDiWa6z/RIaWmCgcjPLMVIlHwrtDTsbKJH/hNfg/cg6myuLG7psXda3yupTjsCaobBA3dfw==
-X-Received: by 2002:a2e:99cd:0:b0:2b7:14d4:ce6d with SMTP id l13-20020a2e99cd000000b002b714d4ce6dmr613499ljj.48.1689793523679;
-        Wed, 19 Jul 2023 12:05:23 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id gx3-20020a170906f1c300b00993cc1242d4sm2692809ejb.151.2023.07.19.12.05.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jul 2023 12:05:23 -0700 (PDT)
-Message-ID: <74f81a77-6cba-37eb-54ed-e7570db47632@linaro.org>
-Date:   Wed, 19 Jul 2023 21:05:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
- TLMM
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        d=1e100.net; s=20221208; t=1689794463; x=1692386463;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=61Vthzi+jTZc0OfRE0feJj3h8OeCFS14mJvBksaJnnI=;
+        b=cswMcCRYRZifdJlCOzMLbXL8yLAOyqu8/AM2uPU40tRv8nkrzXmphOwZ6ioG1sDA0r
+         1ePpHWiErRnPDPPr7hS1tExonF+AjhjuB3NshRwj+Sbsq//fprf9H4Pk57jllL//3ODx
+         qUS2CB9B6xFmJ09SizagAh7i7AkmQ313GwIrx7P0uF08SKOPjAqz33YCwQUNuTo0NiPg
+         ow9VaXjIanNHDoUQgWZL8IpiZumwgMy/DdzCAPn3HL8PfhW7ZVNPL40qppIEbQtJJ4yf
+         1nZtnr/8u5fVUgGn5Ua/M4vGjQwxDMWacLCeuvWNSFVsbLrUSistmIzkzsvvERv8nP4g
+         9ODg==
+X-Gm-Message-State: ABy/qLZTN5LFEyygNd/rtC2hocq+07r1IPtp3U+S95u23IfH19p+F6yd
+        fKq+6ckyKIGTiPZb3s/6IivDVQ==
+X-Google-Smtp-Source: APBJJlFTo/F6vaMjqhpOxlJ7TqFQaLas56ehOzImE5APBRmfbUaci/1k29Wg5tu9Q96UE2KmSKH1hA==
+X-Received: by 2002:a1c:7501:0:b0:3fc:10:b25f with SMTP id o1-20020a1c7501000000b003fc0010b25fmr5620160wmc.15.1689794463153;
+        Wed, 19 Jul 2023 12:21:03 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id r17-20020adfe691000000b0031444673643sm5991086wrm.57.2023.07.19.12.21.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jul 2023 12:21:02 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -70,68 +63,194 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-References: <20230619092735.20323-1-krzysztof.kozlowski@linaro.org>
- <20230619092735.20323-2-krzysztof.kozlowski@linaro.org>
- <851790f2-f673-f754-08b8-d07cc2c809fb@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <851790f2-f673-f754-08b8-d07cc2c809fb@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v3 1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add SM8350 LPASS TLMM
+Date:   Wed, 19 Jul 2023 21:20:56 +0200
+Message-Id: <20230719192058.433517-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/06/2023 14:12, Konrad Dybcio wrote:
-> On 19.06.2023 11:27, Krzysztof Kozlowski wrote:
->> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
->> driver is similar to SM8250 LPASS pin controller, with difference in one
->> new pin (gpio14).
->>
+Add bindings for pin controller in SM8350 Low Power Audio SubSystem
+(LPASS).
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 
+---
 
-> <       LPI_MUX_swr_tx_data2,
-> 54d52
-> < static int gpio14_pins[] = { 14 };
-> 71d68
-> <       PINCTRL_PIN(14, "gpio14"),
-> 75c72
-> < static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
-> ---
->> static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
-> 111d107
-> <       LPI_PINGROUP(14, 6, swr_rx_data, _, _, _),
-> 
-> 
-> 
-> I really think adding just these pin14 entries to the 8250 driver would
-> be a good idea..
-> 
+Changes in v3:
+1. Correct subject typo biding->bindings.
+2. Add Rb tag.
+3. Not dropping the label as Rob asked for, because it is actually used
+   in the example.
 
+Changes in v2:
+1. None
+---
+ .../qcom,sm8350-lpass-lpi-pinctrl.yaml        | 143 ++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8350-lpass-lpi-pinctrl.yaml
 
-I could extend arrays with gpio14 and pass array size -1 to sm8250
-variant and full size to sm8350. However the difference will be in:
-
--static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
-+static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
-
-I cannot create here variant "swr_tx_data_groups_sm8350" because the
-name is used in macros. Using bigger (with gpio14) group for sm8250
-should work, because there is no gpio14, but produces difference in the
-controller:
-
--/sys/kernel/debug/pinctrl/33c0000.pinctrl/pinmux-functions:function 18: swr_tx_data, groups = [ gpio1 gpio2 gpio5 ]
-+/sys/kernel/debug/pinctrl/33c0000.pinctrl/pinmux-functions:function 18: swr_tx_data, groups = [ gpio1 gpio2 gpio5 gpio14 ]
-
-Therefore I will go with separate drivers.
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-lpass-lpi-pinctrl.yaml
+new file mode 100644
+index 000000000000..2e65ae08dd21
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-lpass-lpi-pinctrl.yaml
+@@ -0,0 +1,143 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sm8350-lpass-lpi-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SM8350 SoC LPASS LPI TLMM
++
++maintainers:
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
++
++description:
++  Top Level Mode Multiplexer pin controller in the Low Power Audio SubSystem
++  (LPASS) Low Power Island (LPI) of Qualcomm SM8350 SoC.
++
++properties:
++  compatible:
++    const: qcom,sm8350-lpass-lpi-pinctrl
++
++  reg:
++    items:
++      - description: LPASS LPI TLMM Control and Status registers
++      - description: LPASS LPI MCC registers
++
++  clocks:
++    items:
++      - description: LPASS Core voting clock
++      - description: LPASS Audio voting clock
++
++  clock-names:
++    items:
++      - const: core
++      - const: audio
++
++  gpio-controller: true
++
++  "#gpio-cells":
++    description: Specifying the pin number and flags, as defined in
++      include/dt-bindings/gpio/gpio.h
++    const: 2
++
++  gpio-ranges:
++    maxItems: 1
++
++patternProperties:
++  "-state$":
++    oneOf:
++      - $ref: "#/$defs/qcom-sm8350-lpass-state"
++      - patternProperties:
++          "-pins$":
++            $ref: "#/$defs/qcom-sm8350-lpass-state"
++        additionalProperties: false
++
++$defs:
++  qcom-sm8350-lpass-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: /schemas/pinctrl/pincfg-node.yaml
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          pattern: "^gpio([0-9]|1[0-9]|2[0-2])$"
++
++      function:
++        enum: [ dmic1_clk, dmic1_data, dmic2_clk, dmic2_data, dmic3_clk,
++                dmic3_data, dmic4_clk, dmic4_data, ext_mclk1_a, ext_mclk1_b,
++                ext_mclk1_c, ext_mclk1_d, ext_mclk1_e, gpio, i2s0_clk,
++                i2s0_data, i2s0_ws, i2s1_clk, i2s1_data, i2s1_ws, i2s2_clk,
++                i2s2_data, i2s2_ws, i2s3_clk, i2s3_data, i2s3_ws, i2s4_clk,
++                i2s4_data, i2s4_ws, slimbus_clk, slimbus_data, swr_rx_clk,
++                swr_rx_data, swr_tx_clk, swr_tx_data, wsa_swr_clk,
++                wsa_swr_data, wsa2_swr_clk, wsa2_swr_data ]
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++      drive-strength:
++        enum: [2, 4, 6, 8, 10, 12, 14, 16]
++        default: 2
++        description:
++          Selects the drive strength for the specified pins, in mA.
++
++      slew-rate:
++        enum: [0, 1, 2, 3]
++        default: 0
++        description: |
++          0: No adjustments
++          1: Higher Slew rate (faster edges)
++          2: Lower Slew rate (slower edges)
++          3: Reserved (No adjustments)
++
++      bias-bus-hold: true
++      bias-pull-down: true
++      bias-pull-up: true
++      bias-disable: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++allOf:
++  - $ref: pinctrl.yaml#
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - gpio-controller
++  - "#gpio-cells"
++  - gpio-ranges
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/sound/qcom,q6afe.h>
++
++    lpass_tlmm: pinctrl@33c0000 {
++        compatible = "qcom,sm8350-lpass-lpi-pinctrl";
++        reg = <0x033c0000 0x20000>,
++              <0x03550000 0x10000>;
++
++        clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++                 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
++        clock-names = "core", "audio";
++
++        gpio-controller;
++        #gpio-cells = <2>;
++        gpio-ranges = <&lpass_tlmm 0 0 15>;
++    };
+-- 
+2.34.1
 
