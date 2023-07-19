@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 344E2759CC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 19:48:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08D1A759CE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 19:56:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjGSRsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 13:48:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37500 "EHLO
+        id S230219AbjGSR4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 13:56:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjGSRsn (ORCPT
+        with ESMTP id S230123AbjGSR4I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 13:48:43 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25AE1BF6;
-        Wed, 19 Jul 2023 10:48:41 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36JHKwsd016118;
-        Wed, 19 Jul 2023 17:48:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qmfK0acunX87SRjr5i+zJqpgvPTCAPosGAy5Rg+8G2A=;
- b=PBuFrEv8hwRkL9TqRBwRkJbK0LVgEiW1ZbIxcvTQPoPi7i+5A5C2oPuxF/xBFBHPitnE
- Qjyl7ZW1CG125IDwG0JO86hz++ObYtABjtLq+mlEBmOfVgdl0fEJESDKFg8U/oKXAwIc
- nwOFMAEXOH+O1G5xxVQfo0hdVPrwreMNJU8P3NTz39bmdcnbvAL/QQxTwx5Mp/zsmA+3
- 6VqWaBv0xfm7kq4YZXapYftcoaTiPh9VEZwFaJlxYS48T540yr2+TSDUrq7+jHTu/Ve4
- 1nc3HOlzEBEpPRlPuAi1+L9G+W+rbkf9VftekGQq8GIRJn4jAi6I1Plp1/nIxxlY+0Fp IA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxg3v8pvk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 17:48:38 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36JHmb0f019294
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 17:48:37 GMT
-Received: from [10.110.1.206] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 19 Jul
- 2023 10:48:36 -0700
-Message-ID: <62207b82-92c1-e666-67e4-420a112c281f@quicinc.com>
-Date:   Wed, 19 Jul 2023 10:48:36 -0700
+        Wed, 19 Jul 2023 13:56:08 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A222119
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 10:56:02 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3fbc0609cd6so67138055e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 10:56:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689789360; x=1692381360;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=q+5oaw2J5+G3GYFPR3to60Ow5YDUAwCVY4MtrYxrWzo=;
+        b=O5tdpOzllo11N68hbvqat1rL/4izSOZ0mS/2NFq3W6QpoHAAtnacEgIE/ney42oTv2
+         baG9U7DhaLclF5umoDw473TrB85LBTE4niFhYh71kp24dX/IN8IpfpLtVSNPiSNmk0Dx
+         ELKwjMmadFYml++d7mnvFvKSqrYKNyNROBtMVaoH+dgbYgQRa4NtT2p8yv3hAfaKipVP
+         yy6b/5ssaNPZeA+Fct6luOsGclO3j1r2EQSsUwxf7NvfgxrmXZZxznrl1KpZMg4/Iu9x
+         bA8Z4+a5tUdsu+6ZBbRGVBvC749z6UrX7ZbxxkgUHeCO5P4QVhijnULOlpui+1R/d/3A
+         MUeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689789360; x=1692381360;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q+5oaw2J5+G3GYFPR3to60Ow5YDUAwCVY4MtrYxrWzo=;
+        b=HVY0aoAU83SlcYtrwoB2RuLJ3xJLUlPfhrtrwWotbhSMNrrQxTL8EbkqVJ+47QSx9M
+         jPcFK+aRbr9k/C3u6tN+BLBncF7exY//fOO4eF8dQXQnWcO9JEDGmBP8VpJ2KEOdyfPu
+         /Hdi1ZpbK9F8sqkPASwOOeAAHCwvs/xmwCld5u1AlAGxtmR+DDeMKQlpl9qti7zNkHdY
+         vONPlsTKQq2lGK1bKDHBQ113QJHCBQenRMfWHVirTD584MnDksH/JHAaJZ3KeYlWrbru
+         1uqe184+YmmuGxzeweD8ALuhoJ4Xni7VJXuKg2pCCsMOd7kjULVoOKrlrGvS+ZVIS+49
+         bY3Q==
+X-Gm-Message-State: ABy/qLbzHe2ldJcQIorJmkbTj1iG49FKd601/yN2Hjyd/CpWyT+KRyA9
+        wndoIlYf7fMaBjMbplKWlqK7sA==
+X-Google-Smtp-Source: APBJJlGJWPVncsHecZCDgmX0fdTLwFLC8Wokgg9i2konxqVAbiNqQMmWxybL1xsSOpnBwDHWUMyY6A==
+X-Received: by 2002:a05:600c:20f:b0:3fb:ab76:164b with SMTP id 15-20020a05600c020f00b003fbab76164bmr2552075wmi.13.1689789360496;
+        Wed, 19 Jul 2023 10:56:00 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id y9-20020a7bcd89000000b003fbb1a9586esm2232470wmj.15.2023.07.19.10.55.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Jul 2023 10:56:00 -0700 (PDT)
+Message-ID: <71f2c286-c205-13b8-885a-240eae4131e3@linaro.org>
+Date:   Wed, 19 Jul 2023 19:55:57 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v2 07/10] qcom_scm: scm call for create, prepare and
- import keys
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 2/3] Documentation/process: maintainer-soc: add clean
+ platforms profile
 Content-Language: en-US
-To:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <ebiggers@google.com>
-CC:     <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
-        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
-        <quic_psodagud@quicinc.com>, <avmenon@quicinc.com>,
-        <abel.vesa@linaro.org>, <quic_spuppala@quicinc.com>
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
- <20230719170423.220033-8-quic_gaurkash@quicinc.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20230719170423.220033-8-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UgsBkGTjh5i6zOiE0cC31J2HwV-7ii2c
-X-Proofpoint-ORIG-GUID: UgsBkGTjh5i6zOiE0cC31J2HwV-7ii2c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_12,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 spamscore=0 bulkscore=0 adultscore=0 mlxscore=0
- suspectscore=0 clxscore=1011 lowpriorityscore=0 priorityscore=1501
- mlxlogscore=939 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2307190160
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, workflows@vger.kernel.org,
+        linux-doc@vger.kernel.org, arm@kernel.org,
+        Conor Dooley <conor.dooley@microchip.com>
+References: <20230719143309.204766-1-krzysztof.kozlowski@linaro.org>
+ <20230719143309.204766-2-krzysztof.kozlowski@linaro.org>
+ <CAL_JsqLXanpk+cMG0b8Ze9WAfmRqcu6-5EsdKVKG3TKCOwnm7A@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAL_JsqLXanpk+cMG0b8Ze9WAfmRqcu6-5EsdKVKG3TKCOwnm7A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,187 +89,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/19/2023 10:04 AM, Gaurav Kashyap wrote:
-> Storage encryption has two IOCTLs for creating, importing
-> and preparing keys for encryption. For wrapped keys, these
-> IOCTLs need to interface with the secure environment, which
-> require these SCM calls.
+On 19/07/2023 19:40, Rob Herring wrote:
+> On Wed, Jul 19, 2023 at 8:33 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> Some SoC platforms require that commits must not bring any new
+>> dtbs_check warnings.  Maintainers of such platforms usually have some
+>> automation set, so any new warning will be spotted sooner or later.
+>> Worst case: they run the tests themselves.  Document requirements for
+>> such platforms, so contributors can expect their patches being dropped
+>> or ignored, if they bring new warnings for existing boards.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+>>
+>> ---
+>>
+>> Changes in v2:
+>> 1. Add Rb tag.
+>> 2. Implement Conor's feedback: change doc title, follow->should follow,
+>>    minor style changes.
+>> ---
+>>  .../process/maintainer-handbooks.rst          |  1 +
+>>  .../process/maintainer-soc-clean-dts.rst      | 23 +++++++++++++++++++
+>>  MAINTAINERS                                   |  2 +-
+>>  3 files changed, 25 insertions(+), 1 deletion(-)
+>>  create mode 100644 Documentation/process/maintainer-soc-clean-dts.rst
+>>
+>> diff --git a/Documentation/process/maintainer-handbooks.rst b/Documentation/process/maintainer-handbooks.rst
+>> index 9992bfd7eaa3..976391cec528 100644
+>> --- a/Documentation/process/maintainer-handbooks.rst
+>> +++ b/Documentation/process/maintainer-handbooks.rst
+>> @@ -17,5 +17,6 @@ Contents:
+>>
+>>     maintainer-netdev
+>>     maintainer-soc
+>> +   maintainer-soc-clean-dts
+>>     maintainer-tip
+>>     maintainer-kvm-x86
+>> diff --git a/Documentation/process/maintainer-soc-clean-dts.rst b/Documentation/process/maintainer-soc-clean-dts.rst
+>> new file mode 100644
+>> index 000000000000..c460923f39be
+>> --- /dev/null
+>> +++ b/Documentation/process/maintainer-soc-clean-dts.rst
+>> @@ -0,0 +1,23 @@
+>> +.. SPDX-License-Identifier: GPL-2.0
+>> +
+>> +==============================================
+>> +SoC Platforms with DTS Compliance Requirements
+>> +==============================================
+>> +
+>> +Overview
+>> +--------
+>> +
+>> +SoC platforms or subarchitectures should follow all the rules from
+>> +Documentation/process/maintainer-soc.rst.  However platforms referencing
+>> +this document impose additional requirements listed below.
 > 
-> generate_key: This is used to generate and return a longterm
->                wrapped key. Trustzone achieves this by generating
-> 	      a key and then wrapping it using hwkm, returning
-> 	      a wrapped keyblob.
-> import_key:   The functionality is similar to generate, but here,
->                a raw key is imported into hwkm and a longterm wrapped
-> 	      keyblob is returned.
-> prepare_key:  The longterm wrapped key from import or generate
->                is made further secure by rewrapping it with a per-boot
-> 	      ephemeral wrapped key before installing it to the linux
-> 	      kernel for programming to ICE.
-> 
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> ---
->   drivers/firmware/qcom_scm.c            | 222 +++++++++++++++++++++++++
->   drivers/firmware/qcom_scm.h            |   3 +
->   include/linux/firmware/qcom/qcom_scm.h |  10 ++
->   3 files changed, 235 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 51062d5c7f7b..44dd1857747b 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -1210,6 +1210,228 @@ int qcom_scm_derive_sw_secret(const u8 *wrapped_key, u32 wrapped_key_size,
->   }
->   EXPORT_SYMBOL(qcom_scm_derive_sw_secret);
->   
-> +/**
-> + * qcom_scm_generate_ice_key() - Generate a wrapped key for encryption.
-> + * @longterm_wrapped_key: the wrapped key returned after key generation
-> + * @longterm_wrapped_key_size: size of the wrapped key to be returned.
-> + *
-> + * Qualcomm wrapped keys need to be generated in a trusted environment.
-> + * A generate key  IOCTL call is used to achieve this. These are longterm
-> + * in nature as they need to be generated and wrapped only once per
-> + * requirement.
-> + *
-> + * This SCM calls adds support for the generate key IOCTL to interface
-> + * with the secure environment to generate and return a wrapped key..
-> + *
-> + * Return: 0 on success; -errno on failure.
-> + */
-> +int qcom_scm_generate_ice_key(u8 *longterm_wrapped_key,
-> +			    u32 longterm_wrapped_key_size)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_ES,
-> +		.cmd =  QCOM_SCM_ES_GENERATE_ICE_KEY,
-> +		.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_RW,
-> +					 QCOM_SCM_VAL),
-> +		.args[1] = longterm_wrapped_key_size,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +
-> +	void *longterm_wrapped_keybuf;
-> +	dma_addr_t longterm_wrapped_key_phys;
-> +	int ret;
-> +
-> +	/*
-> +	 * Like qcom_scm_ice_set_key(), we use dma_alloc_coherent() to properly
-> +	 * get a physical address, while guaranteeing that we can zeroize the
-> +	 * key material later using memzero_explicit().
-> +	 *
-> +	 */
-> +	longterm_wrapped_keybuf = dma_alloc_coherent(__scm->dev,
-> +				  longterm_wrapped_key_size,
-> +				  &longterm_wrapped_key_phys, GFP_KERNEL);
-> +	if (!longterm_wrapped_keybuf)
-> +		return -ENOMEM;
-> +
-> +	desc.args[0] = longterm_wrapped_key_phys;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
-> +	memcpy(longterm_wrapped_key, longterm_wrapped_keybuf,
-> +	       longterm_wrapped_key_size);
-> +
-> +	memzero_explicit(longterm_wrapped_keybuf, longterm_wrapped_key_size);
-> +	dma_free_coherent(__scm->dev, longterm_wrapped_key_size,
-> +			  longterm_wrapped_keybuf, longterm_wrapped_key_phys);
-> +
-> +	if (!ret)
-> +		return longterm_wrapped_key_size;
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL(qcom_scm_generate_ice_key);
-> +
-> +/**
-> + * qcom_scm_prepare_ice_key() - Get per boot ephemeral wrapped key
-> + * @longterm_wrapped_key: the wrapped key
-> + * @longterm_wrapped_key_size: size of the wrapped key
-> + * @ephemeral_wrapped_key: ephemeral wrapped key to be returned
-> + * @ephemeral_wrapped_key_size: size of the ephemeral wrapped key
-> + *
-> + * Qualcomm wrapped keys (longterm keys) are rewrapped with a per-boot
-> + * ephemeral key for added protection. These are ephemeral in nature as
-> + * they are valid only for that boot. A create key IOCTL is used to
-> + * achieve this. These are the keys that are installed into the kernel
-> + * to be then unwrapped and programmed into ICE.
-> + *
-> + * This SCM call adds support for the create key IOCTL to interface
-> + * with the secure environment to rewrap the wrapped key with an
-> + * ephemeral wrapping key.
-> + *
-> + * Return: 0 on success; -errno on failure.
-> + */
-> +int qcom_scm_prepare_ice_key(const u8 *longterm_wrapped_key,
-> +			     u32 longterm_wrapped_key_size,
-> +			     u8 *ephemeral_wrapped_key,
-> +			     u32 ephemeral_wrapped_key_size)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_ES,
-> +		.cmd =  QCOM_SCM_ES_PREPARE_ICE_KEY,
-> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RO,
-> +					 QCOM_SCM_VAL, QCOM_SCM_RW,
-> +					 QCOM_SCM_VAL),
-> +		.args[1] = longterm_wrapped_key_size,
-> +		.args[3] = ephemeral_wrapped_key_size,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +
-> +	void *longterm_wrapped_keybuf, *ephemeral_wrapped_keybuf;
-> +	dma_addr_t longterm_wrapped_key_phys, ephemeral_wrapped_key_phys;
-> +	int ret;
-> +
-> +	/*
-> +	 * Like qcom_scm_ice_set_key(), we use dma_alloc_coherent() to properly
-> +	 * get a physical address, while guaranteeing that we can zeroize the
-> +	 * key material later using memzero_explicit().
-> +	 *
-> +	 */
-> +	longterm_wrapped_keybuf = dma_alloc_coherent(__scm->dev,
-> +				  longterm_wrapped_key_size,
-> +				  &longterm_wrapped_key_phys, GFP_KERNEL);
-> +	if (!longterm_wrapped_keybuf)
-> +		return -ENOMEM;
-> +	ephemeral_wrapped_keybuf = dma_alloc_coherent(__scm->dev,
-> +				   ephemeral_wrapped_key_size,
-> +				   &ephemeral_wrapped_key_phys, GFP_KERNEL);
-> +	if (!ephemeral_wrapped_keybuf) {
-> +		ret = -ENOMEM;
-> +		goto bail_keybuf;
-> +	}
-> +
-> +	memcpy(longterm_wrapped_keybuf, longterm_wrapped_key,
-> +	       longterm_wrapped_key_size);
-> +	desc.args[0] = longterm_wrapped_key_phys;
-> +	desc.args[2] = ephemeral_wrapped_key_phys;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
-> +	if (!ret)
-> +		memcpy(ephemeral_wrapped_key, ephemeral_wrapped_keybuf,
-> +		       ephemeral_wrapped_key_size);
-> +
-> +	memzero_explicit(ephemeral_wrapped_keybuf, ephemeral_wrapped_key_size);
-> +	dma_free_coherent(__scm->dev, ephemeral_wrapped_key_size,
-> +			  ephemeral_wrapped_keybuf,
-> +			  ephemeral_wrapped_key_phys);
-> +
-> +bail_keybuf:
-> +	memzero_explicit(longterm_wrapped_keybuf, longterm_wrapped_key_size);
-> +	dma_free_coherent(__scm->dev, longterm_wrapped_key_size,
-> +			  longterm_wrapped_keybuf, longterm_wrapped_key_phys);
-> +
-> +	if (!ret)
-> +		return ephemeral_wrapped_key_size;
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL(qcom_scm_prepare_ice_key);
+> I would make it clear how platforms reference this doc:
+> this document in MAINTAINERS impose...
 
-EXPORT_SYMBOL_GPL everywhere please. I understand that other places in 
-this file uses EXPORT_SYMBOL but new additions can be _GPL. I will see 
-if someone from my team can covert other symbols to _GPL as well in this 
-file.
+Sure.
 
----Trilok Soni
+> 
+>> +
+>> +Strict DTS DT Schema Compliance
+> 
+> Schema and dtc
+Ack
+
+> 
+> 
+>> +-------------------------------
+>> +
+>> +No changes to the SoC platform Devicetree sources (DTS files) should introduce
+>> +new ``make dtbs_check W=1`` warnings.  The platform maintainers have automation
+>> +in place which should point out any new warnings.
+> 
+> If a soc.dtsi file has warnings a new board.dts will duplicate all
+> those warnings. I imagine those are okay? 
+
+This. I would assume that these were existing warnings, so new board
+does not add anything new. Different question if new board comes with
+the same warning for compatible in TXT (not DT schema).
+
+> Or are we assuming soc.dtsi
+> is warning free? Or do we need to distinguish both cases?
+
+Warning free, or at least not many warnings, should be implied,
+otherwise I don't think it is possible to spot new warnings.
+
+
+> 
+> I would like to see a build target for the warning free platforms, so
+> we can easily run it and check for no warnings. Just hasn't been
+> enough platforms yet to do that.
+> 
+Best regards,
+Krzysztof
+
