@@ -2,64 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB5E375A0C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 23:54:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF2CE75A0E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 23:59:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbjGSVyR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 17:54:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37760 "EHLO
+        id S229517AbjGSV7w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 17:59:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjGSVyQ (ORCPT
+        with ESMTP id S229477AbjGSV7w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 17:54:16 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0321FD9;
-        Wed, 19 Jul 2023 14:54:15 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        Wed, 19 Jul 2023 17:59:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A6B51FDC;
+        Wed, 19 Jul 2023 14:59:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B4DD620532;
-        Wed, 19 Jul 2023 23:54:12 +0200 (CEST)
-Date:   Wed, 19 Jul 2023 23:54:11 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B290C61852;
+        Wed, 19 Jul 2023 21:59:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EA0C433C7;
+        Wed, 19 Jul 2023 21:59:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689803990;
+        bh=NPZ2zlHWpq/Wbwqq/LXMY0mNMpyY8P8jMZ/UIlCWaBc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hnbRgyQvvOD7UpR2u3pvvqqbol+MasDVHdU0XsqNc3+0Qb/MIdj9BEGM7TxWoTGIo
+         ElZ1aeXMyOyt9TIPPYRz3wpQ+do+Kjm3fKcveIg4dQQDBvM5HG94c124SnW6RiEdMJ
+         i5PFCzZzZfK0GFZXciY19QQ33ettBE1lnfkCdtV3k5Iltpd2EsynwfgRKX/0f6gcsq
+         KoQ2B40lgCQB3zmnIcUY5uK1YEauYTdTh2mWS64acJ+L5cTbX4hiVlf4JBJGIE2PJk
+         IojtKyszvXujEso9Q8A0T5cpKqfyJaeqlranZ6vVpSMy+Kp4PsRbDRgqxWXq8K8QgO
+         eOvL7uDXqZJwA==
+Received: (nullmailer pid 852428 invoked by uid 1000);
+        Wed, 19 Jul 2023 21:59:47 -0000
+Date:   Wed, 19 Jul 2023 15:59:47 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>,
+        Andy Gross <agross@kernel.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-Subject: Re: [PATCH v3 02/15] arm64: dts: qcom: sm6125: Sort spmi_bus node
- numerically by reg
-Message-ID: <2zwj7sgsvcl7czobhokop37ycsekiivtuznwegaeybu577skcc@mqdkoolwkail>
-References: <20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org>
- <20230718-sm6125-dpu-v3-2-6c5a56e99820@somainline.org>
- <149d15e6-4995-8ff6-5191-77783c3dedb8@linaro.org>
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        alsa-devel@alsa-project.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/6] ASoC: dt-bindings: pm8916-analog-codec: Fix
+ misleading example
+Message-ID: <168980398687.852368.16225201877767633294.robh@kernel.org>
+References: <20230718-pm8916-mclk-v1-0-4b4a58b4240a@gerhold.net>
+ <20230718-pm8916-mclk-v1-1-4b4a58b4240a@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <149d15e6-4995-8ff6-5191-77783c3dedb8@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20230718-pm8916-mclk-v1-1-4b4a58b4240a@gerhold.net>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,82 +71,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-07-19 01:02:56, Dmitry Baryshkov wrote:
-> On 19/07/2023 00:24, Marijn Suijten wrote:
-> > This node has always resided in the wrong spot, making it somewhat
-> > harder to contribute new node entries while maintaining proper sorting
-> > around it.  Move the node up to sit after hsusb_phy1 where it maintains
-> > proper numerical sorting on the (first of its many) reg address
-> > property.
-> > 
-> > Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/sm6125.dtsi | 38 ++++++++++++++++++------------------
-> >   1 file changed, 19 insertions(+), 19 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> > index 6937c7ebdb81..cfd0901d4555 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> > @@ -684,6 +684,24 @@ hsusb_phy1: phy@1613000 {
-> >   			status = "disabled";
-> >   		};
-> >   
-> > +		spmi_bus: spmi@1c40000 {
-> > +			compatible = "qcom,spmi-pmic-arb";
-> > +			reg = <0x01c40000 0x1100>,
-> > +			      <0x01e00000 0x2000000>,
-> > +			      <0x03e00000 0x100000>,
-> > +			      <0x03f00000 0xa0000>,
-> > +			      <0x01c0a000 0x26000>;
-> > +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> > +			interrupt-names = "periph_irq";
-> > +			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
-> > +			qcom,ee = <0>;
-> > +			qcom,channel = <0>;
-> > +			#address-cells = <2>;
-> > +			#size-cells = <0>;
-> > +			interrupt-controller;
-> > +			#interrupt-cells = <4>;
-> > +		};
-> > +
-> >   		rpm_msg_ram: sram@45f0000 {
-> >   			compatible = "qcom,rpm-msg-ram";
-> >   			reg = <0x045f0000 0x7000>;
-> > @@ -1189,27 +1207,9 @@ sram@4690000 {
-> >   			reg = <0x04690000 0x10000>;
-> >   		};
-> >   
-> > -		spmi_bus: spmi@1c40000 {
-> > -			compatible = "qcom,spmi-pmic-arb";
-> > -			reg = <0x01c40000 0x1100>,
-> > -			      <0x01e00000 0x2000000>,
-> > -			      <0x03e00000 0x100000>,
-> > -			      <0x03f00000 0xa0000>,
-> > -			      <0x01c0a000 0x26000>;
-> > -			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> > -			interrupt-names = "periph_irq";
-> > -			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
-> > -			qcom,ee = <0>;
-> > -			qcom,channel = <0>;
-> > -			#address-cells = <2>;
-> > -			#size-cells = <0>;
-> > -			interrupt-controller;
-> > -			#interrupt-cells = <4>;
-> > -		};
-> > -
-> >   		apps_smmu: iommu@c600000 {
-> >   			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
-> > -			reg = <0xc600000 0x80000>;
-> > +			reg = <0x0c600000 0x80000>;
+
+On Tue, 18 Jul 2023 13:40:13 +0200, Stephan Gerhold wrote:
+> SPMI devices typically have a single address cell and no size cell,
+> i.e. reg = <0xf000> for the audio codec instead of reg = <0xf000 0x200>.
 > 
-> Irrelevant, please split.
+> The example is a bit misleading because it uses the latter. Copying
+> this into the device tree would be incorrect and was fixed before for
+> pm8916.dtsi in commit c2f0cbb57dba ("arm64: dts: qcom: pm8916: Remove
+> invalid reg size from wcd_codec").
+> 
+> Make the example more clear by adding the outer "pmic" node which
+> specifies the same #address/size-cells that would be used in the
+> real deivce tree.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  .../sound/qcom,pm8916-wcd-analog-codec.yaml        | 92 ++++++++++++----------
+>  1 file changed, 50 insertions(+), 42 deletions(-)
+> 
 
-This was already here in v1, and it is what likely contributed to the
-sorting mismatch in the first place.
+Reviewed-by: Rob Herring <robh@kernel.org>
 
-But will split it and send a v4 for just this...
-
-- Marijn
