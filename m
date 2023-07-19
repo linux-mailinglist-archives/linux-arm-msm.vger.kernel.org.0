@@ -2,374 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B032C758C89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 06:16:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 184AE758CA8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 06:34:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230181AbjGSEQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 00:16:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33830 "EHLO
+        id S230081AbjGSEep (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 00:34:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230113AbjGSEQc (ORCPT
+        with ESMTP id S230093AbjGSEej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 00:16:32 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C731A19B6;
-        Tue, 18 Jul 2023 21:16:07 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J14uHk031206;
-        Wed, 19 Jul 2023 04:15:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=aYsSAjonzBHaJVzKlFooiVBPz8wwLl+q/pq+lAJqTlM=;
- b=b9770t4yNliHtO6NPhWoEewdu7VVnGo5687bYgwA/NuDFNhtGzqNa2H/nwLIDqcbXszL
- NiC5/INGIoeFNalDGCFvqo+BWTgHDGh61anFMRcOQ/GHdcUJe5nS5xs3ztPCQSRpkije
- EH6VYiQ6pfjTaPUegKcj+Kfds57d27RoNJdXB86IpOyMRn/NFwqZHCXyVu5PxC+ETc3c
- R6igpRwH43Yac7dFcMJ3Y/s7/4i6TwkaRmW7KcK6apLk92aOAXvbhQrT5X5rXvdaREpd
- Hlaacn7vATFwPq5jH9ff9qzwvDDMsZgsmDWSmy1quahbjlD5Qv2w4kZUhPx9gPAUARDe gA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwpphjc87-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 04:15:57 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36J4Fuun028250
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 04:15:56 GMT
-Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Tue, 18 Jul 2023 21:15:51 -0700
-From:   Imran Shaik <quic_imrashai@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Melody Olvera" <quic_molvera@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-Subject: [PATCH V4 7/7] clk: qcom: gcc-qdu1000: Update the RCGs ops
-Date:   Wed, 19 Jul 2023 09:44:50 +0530
-Message-ID: <20230719041450.737929-8-quic_imrashai@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230719041450.737929-1-quic_imrashai@quicinc.com>
-References: <20230719041450.737929-1-quic_imrashai@quicinc.com>
+        Wed, 19 Jul 2023 00:34:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C8631B6;
+        Tue, 18 Jul 2023 21:34:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A2AC4611FB;
+        Wed, 19 Jul 2023 04:34:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD135C433C8;
+        Wed, 19 Jul 2023 04:34:31 +0000 (UTC)
+Date:   Wed, 19 Jul 2023 10:04:21 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v9 4/4] PCI: qcom-ep: Add ICC bandwidth voting support
+Message-ID: <20230719043421.GB5990@thinkpad>
+References: <1689693645-28254-1-git-send-email-quic_krichai@quicinc.com>
+ <1689693645-28254-5-git-send-email-quic_krichai@quicinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: K4U2oaBl7NUlEClkUUsHYwIaGJHVc6bC
-X-Proofpoint-ORIG-GUID: K4U2oaBl7NUlEClkUUsHYwIaGJHVc6bC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_01,2023-07-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1015
- bulkscore=0 mlxlogscore=934 malwarescore=0 mlxscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307190039
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1689693645-28254-5-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the clock RCG ops to shared_ops to park them
-at safe clock(XO) during disable.
+On Tue, Jul 18, 2023 at 08:50:45PM +0530, Krishna chaitanya chundru wrote:
+> Add support for voting interconnect (ICC) bandwidth based
+> on the link speed and width.
+> 
+> This commit is inspired from the basic interconnect support added
+> to pcie-qcom driver in commit c4860af88d0c ("PCI: qcom: Add basic
+> interconnect support").
+> 
+> The interconnect support is kept optional to be backward compatible
+> with legacy devicetrees.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
----
-Changes since v3:
- - Split the patch as per the review comments
- - Newly added
+You forgot to add my reviewed-by tag:
 
- drivers/clk/qcom/gcc-qdu1000.c | 58 +++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/drivers/clk/qcom/gcc-qdu1000.c b/drivers/clk/qcom/gcc-qdu1000.c
-index 540577ae58e4..de35cdc93732 100644
---- a/drivers/clk/qcom/gcc-qdu1000.c
-+++ b/drivers/clk/qcom/gcc-qdu1000.c
-@@ -475,7 +475,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_dma_clk_src = {
- 		.name = "gcc_aggre_noc_ecpri_dma_clk_src",
- 		.parent_data = gcc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -495,7 +495,7 @@ static struct clk_rcg2 gcc_aggre_noc_ecpri_gsi_clk_src = {
- 		.name = "gcc_aggre_noc_ecpri_gsi_clk_src",
- 		.parent_data = gcc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -514,7 +514,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
- 		.name = "gcc_gp1_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -528,7 +528,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
- 		.name = "gcc_gp2_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -542,7 +542,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
- 		.name = "gcc_gp3_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -561,7 +561,7 @@ static struct clk_rcg2 gcc_pcie_0_aux_clk_src = {
- 		.name = "gcc_pcie_0_aux_clk_src",
- 		.parent_data = gcc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -581,7 +581,7 @@ static struct clk_rcg2 gcc_pcie_0_phy_rchng_clk_src = {
- 		.name = "gcc_pcie_0_phy_rchng_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -600,7 +600,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
- 		.name = "gcc_pdm2_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -622,7 +622,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s0_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
-@@ -638,7 +638,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s1_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
-@@ -654,7 +654,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s2_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
-@@ -670,7 +670,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s3_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
-@@ -686,7 +686,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s4_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
-@@ -707,7 +707,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s5_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
-@@ -723,7 +723,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s6_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s6_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s6_clk_src = {
-@@ -739,7 +739,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s7_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s7_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s7_clk_src = {
-@@ -755,7 +755,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s0_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
-@@ -771,7 +771,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s1_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
-@@ -787,7 +787,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s2_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
-@@ -803,7 +803,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s3_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
-@@ -819,7 +819,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s4_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
-@@ -835,7 +835,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s5_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
-@@ -851,7 +851,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s6_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
-@@ -867,7 +867,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
- 	.name = "gcc_qupv3_wrap1_s7_clk_src",
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
-@@ -936,7 +936,7 @@ static struct clk_rcg2 gcc_sm_bus_xo_clk_src = {
- 		.name = "gcc_sm_bus_xo_clk_src",
- 		.parent_data = gcc_parent_data_2,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -955,7 +955,7 @@ static struct clk_rcg2 gcc_tsc_clk_src = {
- 		.name = "gcc_tsc_clk_src",
- 		.parent_data = gcc_parent_data_9,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -975,7 +975,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
- 		.name = "gcc_usb30_prim_master_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -989,7 +989,7 @@ static struct clk_rcg2 gcc_usb30_prim_mock_utmi_clk_src = {
- 		.name = "gcc_usb30_prim_mock_utmi_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1003,7 +1003,7 @@ static struct clk_rcg2 gcc_usb3_prim_phy_aux_clk_src = {
- 		.name = "gcc_usb3_prim_phy_aux_clk_src",
- 		.parent_data = gcc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
+- Mani
+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 72 +++++++++++++++++++++++++++++++
+>  1 file changed, 72 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 0fe7f06..cf9fc94 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -13,6 +13,7 @@
+>  #include <linux/debugfs.h>
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/mfd/syscon.h>
+>  #include <linux/phy/pcie.h>
+>  #include <linux/phy/phy.h>
+> @@ -28,6 +29,7 @@
+>  #define PARF_SYS_CTRL				0x00
+>  #define PARF_DB_CTRL				0x10
+>  #define PARF_PM_CTRL				0x20
+> +#define PARF_PM_STTS				0x24
+>  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+>  #define PARF_MHI_BASE_ADDR_LOWER		0x178
+>  #define PARF_MHI_BASE_ADDR_UPPER		0x17c
+> @@ -133,6 +135,11 @@
+>  #define CORE_RESET_TIME_US_MAX			1005
+>  #define WAKE_DELAY_US				2000 /* 2 ms */
+>  
+> +#define PCIE_GEN1_BW_MBPS			250
+> +#define PCIE_GEN2_BW_MBPS			500
+> +#define PCIE_GEN3_BW_MBPS			985
+> +#define PCIE_GEN4_BW_MBPS			1969
+> +
+>  #define to_pcie_ep(x)				dev_get_drvdata((x)->dev)
+>  
+>  enum qcom_pcie_ep_link_status {
+> @@ -178,6 +185,8 @@ struct qcom_pcie_ep {
+>  	struct phy *phy;
+>  	struct dentry *debugfs;
+>  
+> +	struct icc_path *icc_mem;
+> +
+>  	struct clk_bulk_data *clks;
+>  	int num_clks;
+>  
+> @@ -253,8 +262,49 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
+>  	disable_irq(pcie_ep->perst_irq);
+>  }
+>  
+> +static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
+> +{
+> +	struct dw_pcie *pci = &pcie_ep->pci;
+> +	u32 offset, status, bw;
+> +	int speed, width;
+> +	int ret;
+> +
+> +	if (!pcie_ep->icc_mem)
+> +		return;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +
+> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> +
+> +	switch (speed) {
+> +	case 1:
+> +		bw = MBps_to_icc(PCIE_GEN1_BW_MBPS);
+> +		break;
+> +	case 2:
+> +		bw = MBps_to_icc(PCIE_GEN2_BW_MBPS);
+> +		break;
+> +	case 3:
+> +		bw = MBps_to_icc(PCIE_GEN3_BW_MBPS);
+> +		break;
+> +	default:
+> +		dev_warn(pci->dev, "using default GEN4 bandwidth\n");
+> +		fallthrough;
+> +	case 4:
+> +		bw = MBps_to_icc(PCIE_GEN4_BW_MBPS);
+> +		break;
+> +	}
+> +
+> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
+> +	if (ret)
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +}
+> +
+>  static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>  {
+> +	struct dw_pcie *pci = &pcie_ep->pci;
+>  	int ret;
+>  
+>  	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
+> @@ -277,8 +327,24 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>  	if (ret)
+>  		goto err_phy_exit;
+>  
+> +	/*
+> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> +	 * to be set before enabling interconnect clocks.
+> +	 *
+> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> +	 * for the pcie-mem path.
+> +	 */
+> +	ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(PCIE_GEN1_BW_MBPS));
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +		goto err_phy_off;
+> +	}
+> +
+>  	return 0;
+>  
+> +err_phy_off:
+> +	phy_power_off(pcie_ep->phy);
+>  err_phy_exit:
+>  	phy_exit(pcie_ep->phy);
+>  err_disable_clk:
+> @@ -289,6 +355,7 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>  
+>  static void qcom_pcie_disable_resources(struct qcom_pcie_ep *pcie_ep)
+>  {
+> +	icc_set_bw(pcie_ep->icc_mem, 0, 0);
+>  	phy_power_off(pcie_ep->phy);
+>  	phy_exit(pcie_ep->phy);
+>  	clk_bulk_disable_unprepare(pcie_ep->num_clks, pcie_ep->clks);
+> @@ -550,6 +617,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
+>  	if (IS_ERR(pcie_ep->phy))
+>  		ret = PTR_ERR(pcie_ep->phy);
+>  
+> +	pcie_ep->icc_mem = devm_of_icc_get(dev, "pcie-mem");
+> +	if (IS_ERR(pcie_ep->icc_mem))
+> +		ret = PTR_ERR(pcie_ep->icc_mem);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -573,6 +644,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+>  	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
+>  		dev_dbg(dev, "Received BME event. Link is enabled!\n");
+>  		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
+> +		qcom_pcie_ep_icc_update(pcie_ep);
+>  		pci_epc_bme_notify(pci->ep.epc);
+>  	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
+>  		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
+> -- 
+> 2.7.4
+> 
+
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
