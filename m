@@ -2,113 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8695175986D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 16:33:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6542975993B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 17:12:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231640AbjGSOda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 10:33:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60546 "EHLO
+        id S230118AbjGSPMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 11:12:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231618AbjGSOd3 (ORCPT
+        with ESMTP id S229920AbjGSPL6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 10:33:29 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E02BD172A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 07:33:20 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9924ac01f98so960169066b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 07:33:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689777199; x=1692369199;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=me1tA/8BMNe18uM5MYD2lF7qBGxRDWqKn8M9Ck3Z2Ac=;
-        b=QVGAL3gwk97MJMgiDHCYJ8wjpSiVzT/mtr7lB1Q5/tvSt/KyR4gsS3WsYQTVagh2dg
-         riRAJotPhzkb+aEJMq2ZUEaSL881W1eP+plGKUKWLpwRGT6fj0CLLa5aoSAn41rdyiTB
-         kuvBO+Flz2HEQZAt9XYvK3XFuZO5E+oXxanE46xzU1h/nEYWVoYT24X30bYmihoFhf7F
-         ql9JkL19h2im+NWFI06TVvE18e+OhCNI3BAXvpbiTh+en0Fx8GOD6Kdi61NXaPoaGFkf
-         RQPa4QxYSCpCkwrBdHKofMR3sDxgjK9rMCnHWXcVC0QcQzG3x8uLiIL17TwGQzn8hSdt
-         hpQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689777199; x=1692369199;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=me1tA/8BMNe18uM5MYD2lF7qBGxRDWqKn8M9Ck3Z2Ac=;
-        b=cuuGkcasK8JhF25mTd1U3O2mRs+INcJw7FnYrS5DeQZGDqr2L0Ge4q1KXN2cwAPARR
-         BcJyG1eo6tFeqXK/Zd+KjVFB0XQVMICd/5YdkcwzxEjwdsarGxene1CkEtQkqcGCYwfr
-         80JtYR4gLhhtwNGgIe7UZUlX38KAhphxktvsBCQ+D4ySsp1tACiR+hbFwvrkO7Uy7A7I
-         93v7FD9T7RebPsxHIEcLRSKxgPXqo/7ohv2kDc27FSqixlPsWgrfO4w8p1cdG/eiWJFs
-         q7f1/QonhwAlv0QNL2LO2LUf1APhOgIqt6WoHRAMt8jk5My/xHb6mTb4k2Zl1xecvqpO
-         GhPA==
-X-Gm-Message-State: ABy/qLaYGDMovBl/qTZg/nXDgdQEooP8JwSS5Lt2uwoDXSwK+OoPGTJi
-        yoHWnDyrCLAyKiULdQUE1y/dCQ==
-X-Google-Smtp-Source: APBJJlHjqimEB9KgibSCvGrF+kWBxeRpB0ykcHOFq2/ua4YG+ANhFtH7/tsnMuNURi7d9m1BNiZeaw==
-X-Received: by 2002:a17:906:8603:b0:992:54dc:9cf2 with SMTP id o3-20020a170906860300b0099254dc9cf2mr2040726ejx.62.1689777199268;
-        Wed, 19 Jul 2023 07:33:19 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id e9-20020a170906374900b009893650453fsm2454597ejc.173.2023.07.19.07.33.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jul 2023 07:33:18 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, workflows@vger.kernel.org,
-        linux-doc@vger.kernel.org, arm@kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 3/3] MAINTAINER: samsung: document dtbs_check requirement for Samsung
-Date:   Wed, 19 Jul 2023 16:33:09 +0200
-Message-Id: <20230719143309.204766-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230719143309.204766-1-krzysztof.kozlowski@linaro.org>
-References: <20230719143309.204766-1-krzysztof.kozlowski@linaro.org>
+        Wed, 19 Jul 2023 11:11:58 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3753A2;
+        Wed, 19 Jul 2023 08:11:57 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36JAbFwL018116;
+        Wed, 19 Jul 2023 15:11:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NEljoRLZmxSC945GR/7jUU+l1FRSEid4AYsn6lQQG0g=;
+ b=SljNi75lchYbJjSOGLfuDPVip5BrNdFSLhF/HfHRyTBU5CuRNa/s+FOaUrPezVFOQk3E
+ 9QNisxeLQrwftFXER7AwtK00JkxQYEZSbfLCDuqY8OCPt99pEB4q1N/ZiMOaGpQJWeJl
+ r8tOjM/W8dp/NnYX6iMhP5IH8AdLNFfb8tHbgjHy3flc6C7+avSZU8F95/goAwfe5HtN
+ n6PTvNmWl4xAeqMy64R5Mbr2nQvrLMaVB5Hocv53Dnq/EfYoiJGOKmzTO/xv8zotb5eq
+ IpC8T8iGKjl7SmejRndoHHQ/e+MEtmA4+EVVkSoWy+yFXWpb3tMklvwixKGrWddr0wcE zQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rx7rnhfyg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 15:11:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36JFBqoU021355
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 15:11:52 GMT
+Received: from [10.201.206.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 19 Jul
+ 2023 08:11:45 -0700
+Message-ID: <ed817ba3-a424-1247-0ba8-88f1a9c23fee@quicinc.com>
+Date:   Wed, 19 Jul 2023 20:41:42 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [V3,02/11] dt-bindings: clock: qcom: gcc-ipq9574: remove q6 bring
+ up clock macros
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <quic_eberman@quicinc.com>, <kvalo@kernel.org>,
+        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
+References: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
+ <20230718120501.3205661-3-quic_mmanikan@quicinc.com>
+ <9d473f0b-bd6b-f426-3bd2-2890e8a79431@linaro.org>
+ <9c540e3b-d8d1-0807-a21e-d01a301c1972@linaro.org>
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <9c540e3b-d8d1-0807-a21e-d01a301c1972@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: htHNUGCH63xkGt4IDHmdVxTGxuKTqvWc
+X-Proofpoint-ORIG-GUID: htHNUGCH63xkGt4IDHmdVxTGxuKTqvWc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-19_10,2023-07-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ priorityscore=1501 mlxscore=0 clxscore=1015 suspectscore=0 mlxlogscore=644
+ impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307190136
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Samsung ARM/ARM64 SoCs (including legacy S3C64xx and S5PV210) are also
-expected not to bring any new dtbs_check warnings.  In fact this have
-been already enforced and tested since few release.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
----
+On 7/19/2023 12:45 PM, Krzysztof Kozlowski wrote:
+> On 19/07/2023 09:14, Krzysztof Kozlowski wrote:
+>> On 18/07/2023 14:04, Manikanta Mylavarapu wrote:
+>>> In multipd model Q6 firmware takes care of bringup clocks,
+>>> so remove them.
+>>>
+>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>> ---
+>>> Changes in V3:
+>>> 	- Rebased on TOT
+>>
+>> No clue what is TOT. We have TIP, but you should not use it as a base.
+>> Other used names are mainline and linux-next.
+>>
+>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Un-acked. I said last time that this does not compile and I do not see
+> any improvements here.
+> 
 
-Changes in v2:
-1. None
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+My bad, i missed.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a70c32790427..e7b923d2fd55 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2646,6 +2646,7 @@ R:	Alim Akhtar <alim.akhtar@samsung.com>
- L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
- L:	linux-samsung-soc@vger.kernel.org
- S:	Maintained
-+P:	Documentation/process/maintainer-soc-clean-dts.rst
- Q:	https://patchwork.kernel.org/project/linux-samsung-soc/list/
- B:	mailto:linux-samsung-soc@vger.kernel.org
- C:	irc://irc.libera.chat/linux-exynos
--- 
-2.34.1
+Is it fine to move gcc driver patch to first and then dt-bindings
+patch ?
 
+With this way dt-bindings patch will compile.
+
+Current patch order:
+-------------------
+1) Removing clock macros from dt-bindigs
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-3-quic_mmanikan@quicinc.com/
+
+2) Removing clocks from gcc driver
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-5-quic_mmanikan@quicinc.com/
+
+
+Proposed patch order:
+---------------------
+1) Removing clocks from gcc driver
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-5-quic_mmanikan@quicinc.com/
+
+2) Removing clock macros from dt-bindigs
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-3-quic_mmanikan@quicinc.com/
+
+Thanks & Regards,
+Manikanta.
+
+> Best regards,
+> Krzysztof
+> 
