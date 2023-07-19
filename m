@@ -2,156 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2975F759299
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 12:18:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B0C27592C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 12:22:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230261AbjGSKS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 06:18:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40870 "EHLO
+        id S231277AbjGSKWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 06:22:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbjGSKSd (ORCPT
+        with ESMTP id S231274AbjGSKW3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 06:18:33 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 575D926A3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 03:18:22 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-991da766865so921578666b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 03:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689761901; x=1692353901;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mKO0TJLvmVWRaDSVCf4u46x2zB0AJ6CPfOrU5hIDQ3Y=;
-        b=BR1hVXRSuD4ShJ+2shzyRVpPzUwQ2bQibyB4BYSlcbFc52vBeYKKg/3XruHheKP6DJ
-         d7j0HvFPJ4HoSsD5G/+Tom6obrMBXJJRqvU0ZmzLFp/gai2NUuPxfgFMuwgM+AyxSAR8
-         O6lEtq9tLcB8jy0kdcQU2+o4ky/YuaiOXtA1HRXi4HsmlsswiZykZ5Vuw3MI6psmBvc3
-         qe2h68ytlnA4cPfEzFxzFTzXmazg4zch4j/NFM2KYuYTyOuCAczz7tC/0UyHyNrXS1Ab
-         B6pNSW42fFtO5q/fNJEAjAa6LLCjhdt7iAHIiUpfuxmC384aMNgpY+AAJDTvo5Rebm8j
-         M8nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689761901; x=1692353901;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mKO0TJLvmVWRaDSVCf4u46x2zB0AJ6CPfOrU5hIDQ3Y=;
-        b=J0OjetU/j5bwbWlQsV7Byp8zC//9jcM2p7CGcztak7OYhbFNTpuArC3aDmjY8FFpXW
-         Ne+BhqXZftUNc8OBchTtbiR3J84p+vloh1qBpspIe/pGRyo6BNoGAEMDAIZ+NvJjwzYW
-         JVidn8Xz4O38LmYnCh9DiKrq/Mv4vWium9IZKlBtwE8ZUKu6ffVYSzGpvhKV2+ta+ryn
-         0/ptAtveWsrmrO2Na8Eho+8UrRZ//OFg8xrECUmf4bsBEeQsGCmHokzGi9pvdieEw1sD
-         iHZBwFNkM4HuBVy/8rcAa3HmXLn7JjJEtO5/ebPKrLknjTsIN3pZy/u5NWvSay2mFvLq
-         DtOg==
-X-Gm-Message-State: ABy/qLb++b+6pk8dV55sQYavx0r5S+pwRbiY4Sng7IggfZ6YyXqeFAQH
-        34eouQosmsszqO8wox3KqUmF03XGkSbKD81km7xLew==
-X-Google-Smtp-Source: APBJJlGGiRnE6u8Sqrg1Q0TQNzDkrm36pjdp1JMjTh3lj/teWT2U5GviPaKCCOUI2izgODHqGrDgbw==
-X-Received: by 2002:a17:907:3f28:b0:991:d9cb:247d with SMTP id hq40-20020a1709073f2800b00991d9cb247dmr2154650ejc.57.1689761900793;
-        Wed, 19 Jul 2023 03:18:20 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id jt1-20020a170906dfc100b00992b66e54e9sm2111063ejc.214.2023.07.19.03.18.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jul 2023 03:18:20 -0700 (PDT)
-Message-ID: <ebc27dd7-93fe-4d8e-8b8c-4fc1d52cc275@linaro.org>
-Date:   Wed, 19 Jul 2023 12:18:17 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3] arm64: dts: qcom: sdm630: Add support for modem
- remoteproc
-Content-Language: en-US
-To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230719093458.2668842-1-alexeymin@postmarketos.org>
- <2c1c69bf-3cd5-4d68-43db-696ce0f15197@linaro.org>
- <1f8cbc00-9602-486d-b3c9-9c82f3b6c8df@postmarketos.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1f8cbc00-9602-486d-b3c9-9c82f3b6c8df@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        Wed, 19 Jul 2023 06:22:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FD5530C6;
+        Wed, 19 Jul 2023 03:21:37 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J4gS0r008449;
+        Wed, 19 Jul 2023 10:21:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=H1tWmuhbuVnxEhxL5TNv7ayIR5yNwafgkSHF+1A4gYI=;
+ b=eeSbcJvx12vKU91V4jypzzaD/+nSAmDCLacmZzS6+d7y4AWLk1uHzVucAk/aYB20LMsf
+ csitA4xqSl486y+VCty0F5oxGfYxdXCfcDfh/IlvmLrPc4VmgP5os7N2+hsM+pT7s13V
+ NB29nGeII3nV4mgwnNny+bPsGWN+niQ8gTmgYCWLgYG76JwtJH5e1zjGDqoKamZsIv4y
+ LROvKZExJVvhWvgszbyuQ35Atd4L6+XWcfIC1iWeqJ1MifsO7RsehJaIoaJs+tWZFIGe
+ 6OkE8I2DVvyHh4g0h87WOYRcd3cq1jQDuB30ei6IgwHtSJlbea4UAhx2dqyD36ojiS02 kw== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwnrrk1yj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 10:21:02 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36JAKxBb008071;
+        Wed, 19 Jul 2023 10:20:59 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3rumhm2ngb-1;
+        Wed, 19 Jul 2023 10:20:59 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36JAKwlN008066;
+        Wed, 19 Jul 2023 10:20:59 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vpernami-hyd.qualcomm.com [10.213.107.240])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 36JAKwkW008065;
+        Wed, 19 Jul 2023 10:20:58 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 2370923)
+        id 8C5794BFF; Wed, 19 Jul 2023 15:50:57 +0530 (+0530)
+From:   Vivek Pernamitta <quic_vpernami@quicinc.com>
+To:     mhi@lists.linux.dev
+Cc:     mrana@quicinc.com, quic_qianyu@quicinc.com,
+        manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
+        quic_krichai@quicinc.com, quic_skananth@quicinc.com,
+        andersson@kernel.org, simon.horman@corigine.com, dnlplm@gmail.com,
+        linux-arm-msm@vger.kernel.org,
+        Vivek Pernamitta <quic_vpernami@quicinc.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH V3] net: mhi : Add support to enable ethernet interface
+Date:   Wed, 19 Jul 2023 15:50:54 +0530
+Message-Id: <1689762055-12570-1-git-send-email-quic_vpernami@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aZkQJcWMLG1M_zCuv_KJlx3G7RdfW1lV
+X-Proofpoint-ORIG-GUID: aZkQJcWMLG1M_zCuv_KJlx3G7RdfW1lV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-19_06,2023-07-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ mlxlogscore=873 priorityscore=1501 impostorscore=0 mlxscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307190093
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/07/2023 12:10, Alexey Minnekhanov wrote:
-> On 19.07.2023 12:45, Krzysztof Kozlowski wrote:
->> On 19/07/2023 11:34, Alexey Minnekhanov wrote:
->>> Modem subsystem in SDM630/660 is similar to MSM8998 and
->>> device tree node for it is based on the one from msm8998.dtsi.
->>>
->>> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
->>> ---
->>>
->>> V3: Use memory-region property to specify memory regions, instead
->>>      of using "mba" and "mpss" subnodes.
->>>
->>> V2 link: https://lore.kernel.org/lkml/20230621175046.61521-3-alexeymin@postmarketos.org/
->>>
->>>   arch/arm64/boot/dts/qcom/sdm630.dtsi | 59 ++++++++++++++++++++++++++++
->>>   1 file changed, 59 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
->>> index 2136ded22f7e..797625cf78ac 100644
->>> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
->>> @@ -1032,6 +1032,65 @@ data-pins {
->>>   			};
->>>   		};
->>>   
->>> +		remoteproc_mss: remoteproc@4080000 {
->>> +			compatible = "qcom,sdm660-mss-pil";
->>
->> Missing bindings so standard comment:
->>
->> It does not look like you tested the DTS against bindings. Please run
->> `make dtbs_check` (see
->> Documentation/devicetree/bindings/writing-schema.rst or
->> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
->> for instructions).
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> Bindings are already in linux-next/master since 
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=ed50ac266f67829d4732c8ca61ef1953c2cc63d0 
+Add support to enable ethernet network device for MHI NET driver
+currenlty we have support only NET driver.
 
-Hm, I checked a two days older next. Provide explanations or links if
-you resend DTS in such case.
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+---
+ drivers/net/mhi_net.c | 53 ++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 40 insertions(+), 13 deletions(-)
 
-> .
-> 
-> And I did check DTS against bindings, it spat 2 warnings about new 
-> remoteproc node, which do not make much sense to me:
-> 
->    DTC_CHK arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
->    .../arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb: 
-> remoteproc@4080000: qcom,halt-regs:0: [43] is too short
-
-That's ok.
-
->          From schema: 
-> .../Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
->    .../arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb: 
-> remoteproc@4080000: memory-region: [[45], [46]] is too short
->          From schema: 
-> .../Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
-
-This needs fixes. The binding lists expected memory regions and you do
-not have three of them.
-
-Best regards,
-Krzysztof
+diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+index 3d322ac..5bb8d99 100644
+--- a/drivers/net/mhi_net.c
++++ b/drivers/net/mhi_net.c
+@@ -11,6 +11,7 @@
+ #include <linux/netdevice.h>
+ #include <linux/skbuff.h>
+ #include <linux/u64_stats_sync.h>
++#include <linux/etherdevice.h>
+ 
+ #define MHI_NET_MIN_MTU		ETH_MIN_MTU
+ #define MHI_NET_MAX_MTU		0xffff
+@@ -38,10 +39,12 @@ struct mhi_net_dev {
+ 	u32 rx_queue_sz;
+ 	int msg_enable;
+ 	unsigned int mru;
++	bool ethernet_if;
+ };
+ 
+ struct mhi_device_info {
+ 	const char *netname;
++	bool ethernet_if;
+ };
+ 
+ static int mhi_ndo_open(struct net_device *ndev)
+@@ -140,6 +143,14 @@ static void mhi_net_setup(struct net_device *ndev)
+ 	ndev->tx_queue_len = 1000;
+ }
+ 
++static void mhi_ethernet_setup(struct net_device *ndev)
++{
++	ndev->netdev_ops = &mhi_netdev_ops;
++	ether_setup(ndev);
++	ndev->min_mtu = ETH_MIN_MTU;
++	ndev->max_mtu = ETH_MAX_MTU;
++}
++
+ static struct sk_buff *mhi_net_skb_agg(struct mhi_net_dev *mhi_netdev,
+ 				       struct sk_buff *skb)
+ {
+@@ -209,16 +220,22 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
+ 			mhi_netdev->skbagg_head = NULL;
+ 		}
+ 
+-		switch (skb->data[0] & 0xf0) {
+-		case 0x40:
+-			skb->protocol = htons(ETH_P_IP);
+-			break;
+-		case 0x60:
+-			skb->protocol = htons(ETH_P_IPV6);
+-			break;
+-		default:
+-			skb->protocol = htons(ETH_P_MAP);
+-			break;
++		if (mhi_netdev->ethernet_if) {
++			skb_copy_to_linear_data(skb, skb->data,
++						mhi_res->bytes_xferd);
++			skb->protocol = eth_type_trans(skb, mhi_netdev->ndev);
++		} else {
++			switch (skb->data[0] & 0xf0) {
++			case 0x40:
++				skb->protocol = htons(ETH_P_IP);
++				break;
++			case 0x60:
++				skb->protocol = htons(ETH_P_IPV6);
++				break;
++			default:
++				skb->protocol = htons(ETH_P_MAP);
++				break;
++			}
+ 		}
+ 
+ 		u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
+@@ -301,11 +318,17 @@ static void mhi_net_rx_refill_work(struct work_struct *work)
+ 		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
+ }
+ 
+-static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev)
++static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev, bool eth_dev)
+ {
+ 	struct mhi_net_dev *mhi_netdev;
+ 	int err;
+ 
++	if (eth_dev) {
++		eth_hw_addr_random(ndev);
++		if (!is_valid_ether_addr(ndev->dev_addr))
++			return -EADDRNOTAVAIL;
++	}
++
+ 	mhi_netdev = netdev_priv(ndev);
+ 
+ 	dev_set_drvdata(&mhi_dev->dev, mhi_netdev);
+@@ -313,6 +336,7 @@ static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev)
+ 	mhi_netdev->mdev = mhi_dev;
+ 	mhi_netdev->skbagg_head = NULL;
+ 	mhi_netdev->mru = mhi_dev->mhi_cntrl->mru;
++	mhi_netdev->ethernet_if = eth_dev;
+ 
+ 	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
+ 	u64_stats_init(&mhi_netdev->stats.rx_syncp);
+@@ -356,13 +380,14 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+ 	int err;
+ 
+ 	ndev = alloc_netdev(sizeof(struct mhi_net_dev), info->netname,
+-			    NET_NAME_PREDICTABLE, mhi_net_setup);
++			    NET_NAME_PREDICTABLE, info->ethernet_if ?
++			    mhi_ethernet_setup : mhi_net_setup);
+ 	if (!ndev)
+ 		return -ENOMEM;
+ 
+ 	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
+ 
+-	err = mhi_net_newlink(mhi_dev, ndev);
++	err = mhi_net_newlink(mhi_dev, ndev, info->ethernet_if);
+ 	if (err) {
+ 		free_netdev(ndev);
+ 		return err;
+@@ -380,10 +405,12 @@ static void mhi_net_remove(struct mhi_device *mhi_dev)
+ 
+ static const struct mhi_device_info mhi_hwip0 = {
+ 	.netname = "mhi_hwip%d",
++	.ethernet_if = false,
+ };
+ 
+ static const struct mhi_device_info mhi_swip0 = {
+ 	.netname = "mhi_swip%d",
++	.ethernet_if = false,
+ };
+ 
+ static const struct mhi_device_id mhi_net_id_table[] = {
+-- 
+2.7.4
 
