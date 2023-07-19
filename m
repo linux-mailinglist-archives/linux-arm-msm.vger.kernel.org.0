@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E0D175927E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 12:15:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFDC6759282
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 12:16:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbjGSKPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 06:15:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38138 "EHLO
+        id S229475AbjGSKQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 06:16:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230326AbjGSKPo (ORCPT
+        with ESMTP id S230381AbjGSKQD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 06:15:44 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40D691FD7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 03:15:40 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b743161832so103366871fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 03:15:40 -0700 (PDT)
+        Wed, 19 Jul 2023 06:16:03 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 104BE1FF1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 03:16:02 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b701dee4bfso105896941fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 03:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689761738; x=1690366538;
+        d=linaro.org; s=google; t=1689761760; x=1690366560;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bxmBvcuS8RFIbXbNjCJxgcWTObrkXgmqIrEqE0WdVjQ=;
-        b=H9h2YJ2FWD/gqcBGWUekN8TKcYYSQW5LmwxS/4NMCvhdYE31JxOrPR45jLVkBuu/dP
-         /RaJ6JeVXwigSkKgld/Vus8aElf5JbC2xJ37bZw3O/K0fwq1btRthsEqFjRwxgQ+Dv5J
-         2G54UANiCBS4Vh8WUloypq9Rg3fNrr/w7Olw6HOYJjZXH0OJHXfH5Ov9xPiQqOTfc8Zh
-         mdeOwRM6510LxkhshVuNa9zmE83Z1WqliLKzSWjA7qqLJT0zq7GX9BU3wNARL6mcE9wQ
-         +lyC+zPakyVqytg6J1GAj8fie099JUqzXgruo0xnDPOpkgWa5X8c3k1mXuLH08bUR2hO
-         fE6g==
+        bh=0A/R+Tlnm19cuiqeuEoTLUrD1KlI6hBJ7e0CeBXS09o=;
+        b=M15WeAmzbVGHPzyX+P4c6yqHp5azZ4flzRxp7F4jdFeCuQRJn0n4DR1DtJoeGzuVTl
+         nMGAMWOKZSZWIAVv5biuPs814ffih46g1Und+WfYBF4cL3LWTo3omOivwr/AfSNVVIIC
+         iV/ldpMgo/QHSx7Ammzods1dDGf1DHxvv7OX7hp04WXdkTwL7BHDbBPnx8Xwa7wKXYO4
+         4LfMFjXEgKvY3x1946yoswnf5CIfrrdiAPTbnfeqYI5i8cUySmbQBf8St0jTZ0BN33dQ
+         i6WCrDg4iSK9EzX3MuwUfopeVoqx4EYDmcC6rjJaOPh8kdfpL5WwjxqJ1+KK4JGiQBfg
+         BfHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689761738; x=1690366538;
+        d=1e100.net; s=20221208; t=1689761760; x=1690366560;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bxmBvcuS8RFIbXbNjCJxgcWTObrkXgmqIrEqE0WdVjQ=;
-        b=SO8OaeSXq/zQle1v9XvYgeGMjVbRa6g93+QX0Q2Sg9XJKIttWeelldNVvpHBvw15Nl
-         pY9Pk9uvbgsDkKvcflmz/Ubb+tkvU4TZYW954ww6CMnQ67ekGjr7Jef9R6trBDA19bS9
-         +7gvNMyK4Crd2A4EfuVOCnMQKJp5/RK7DG1UkUE+QOSFDahyAQ19mx7qxDpN0juk3d9u
-         BMs4k6UhFFQL2hEEL4P6rX0+m7V5ynlKFzrZkjPQNPo3VnBpCPSaSLDjj3JSpJtmclud
-         d/fQ91DBahUSHFNmYeDceCkBcqT7SEL2ouywlAmunNtFiBaXze2JAL9OqnRgCHa1pk7D
-         ptHQ==
-X-Gm-Message-State: ABy/qLZ3oJ3GNmXKNVocL2b8wWRbBqa4tn6uteXptSu9sFjlE5NKnLzG
-        bMWuDhmkxzSvTzDT/TSLxsB6cw==
-X-Google-Smtp-Source: APBJJlGfF7dTSA6DhQW5CKGrmbb9+zo9lTGZYZhmmmDf8BqE1l8cnv23T34jnYQfm6WveE+sJjW6zw==
-X-Received: by 2002:a2e:9cc6:0:b0:2b6:decf:5cbf with SMTP id g6-20020a2e9cc6000000b002b6decf5cbfmr1352317ljj.32.1689761738605;
-        Wed, 19 Jul 2023 03:15:38 -0700 (PDT)
+        bh=0A/R+Tlnm19cuiqeuEoTLUrD1KlI6hBJ7e0CeBXS09o=;
+        b=UBsD7k1/t1y2ixf9YBkY3TKi8f6u4BzjpOeNeu3uyvPsfphA66IPaa4vK844K2xXjU
+         rIid3VmyzFTikqH6iwQeuJdVg9SDaNx4UICjyAmKb2dwdBT4+NZTArv3p/kyCaw0O/UU
+         lUtlVryakjfIX5tfwnjOttRtum1TQ8XlC3fJmyeXu/NMFrH/abulkgbKeM0gv2zHztpn
+         1se+qEDzAh5LulbSHaYh04XVUP+4YYPvEBAM4s+lM+5VrNJBRqk7ZB/tRvdJKTHfP4kC
+         VR534ZsLkja5MHpyqlewMMd3Cq4k9lhMbPRar6DjeefWKsheMc9uknEaeP0Ev15uzPb0
+         ef3Q==
+X-Gm-Message-State: ABy/qLae+Vs+XX+WgSWkls6grrLD7P3m522K9hBq11boKgxWipfdF7ny
+        5GtiGPyFbv+evj7iMwyEl98OIA==
+X-Google-Smtp-Source: APBJJlHRZO3uzRnsaSi07Gufa61FD5mxqFZwUKhOZam1n9f8mi6/2WV6H+hAOiuyozDc3JoMUiMtlQ==
+X-Received: by 2002:a2e:9d45:0:b0:2b9:40c7:f5ed with SMTP id y5-20020a2e9d45000000b002b940c7f5edmr5527919ljj.17.1689761760056;
+        Wed, 19 Jul 2023 03:16:00 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id 6-20020a05651c00c600b002b6a163b244sm969101ljr.3.2023.07.19.03.15.37
+        by smtp.gmail.com with ESMTPSA id a14-20020a2e860e000000b002b6d7682050sm956682lji.89.2023.07.19.03.15.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jul 2023 03:15:38 -0700 (PDT)
-Message-ID: <185cb945-4c4e-1697-060e-602a3af2fe50@linaro.org>
-Date:   Wed, 19 Jul 2023 13:15:37 +0300
+        Wed, 19 Jul 2023 03:15:59 -0700 (PDT)
+Message-ID: <c7642d4e-85a1-0934-c155-6636a86ec3bc@linaro.org>
+Date:   Wed, 19 Jul 2023 13:15:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 5/5] soc: qcom: socinfo: add SM4450 ID
+Subject: Re: [PATCH 4/5] dt-bindings: arm: qcom: Document SM4450 SoC and
+ boards
 Content-Language: en-GB
 To:     Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
         konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -66,15 +67,15 @@ Cc:     quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230719100135.21325-1-quic_tengfan@quicinc.com>
- <20230719100135.21325-6-quic_tengfan@quicinc.com>
+ <20230719100135.21325-5-quic_tengfan@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230719100135.21325-6-quic_tengfan@quicinc.com>
+In-Reply-To: <20230719100135.21325-5-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,49 +83,43 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19/07/2023 13:01, Tengfei Fan wrote:
-> Add the ID for the Qualcomm SM4450 SoC.
+> Document the SM8450 SoC binding and also the boards using it.
 > 
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->   drivers/soc/qcom/socinfo.c         | 1 +
->   include/dt-bindings/arm/qcom,ids.h | 2 ++
->   2 files changed, 3 insertions(+)
+>   Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>   1 file changed, 6 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index 4d49945b3a35..fa5e4c54207a 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -415,6 +415,7 @@ static const struct soc_id soc_id[] = {
->   	{ qcom_board_id(IPQ5312) },
->   	{ qcom_board_id(IPQ5302) },
->   	{ qcom_board_id(IPQ5300) },
-> +	{ qcom_board_id(SM4450) },
->   };
->   
->   static const char *socinfo_machine(struct device *dev, unsigned int id)
-> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
-> index bcbe9ee2cdaf..6201bfb1405e 100644
-> --- a/include/dt-bindings/arm/qcom,ids.h
-> +++ b/include/dt-bindings/arm/qcom,ids.h
-> @@ -2,6 +2,7 @@
->   /*
->    * Copyright (c) 2015, The Linux Foundation. All rights reserved.
->    * Copyright (c) 2022 Linaro Ltd
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 450f616774e0..691e66612872 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -83,6 +83,7 @@ description: |
+>           sm8350
+>           sm8450
+>           sm8550
+> +        sm4450
 
-I wonder whether a single define is copyrightable.
+Please sort properly
 
->    * Author: Krzysztof Kozlowski <krzk@kernel.org> based on previous work of Kumar Gala.
->    */
->   #ifndef _DT_BINDINGS_ARM_QCOM_IDS_H
-> @@ -259,6 +260,7 @@
->   #define QCOM_ID_IPQ5312			594
->   #define QCOM_ID_IPQ5302			595
->   #define QCOM_ID_IPQ5300			624
-> +#define QCOM_ID_SM4450			568
 >   
->   /*
->    * The board type and revision information, used by Qualcomm bootloaders and
+>     The 'board' element must be one of the following strings:
+>   
+> @@ -976,6 +977,11 @@ properties:
+>                 - qcom,sm8550-qrd
+>             - const: qcom,sm8550
+>   
+> +      - items:
+> +          - enum:
+> +              - qcom,sm4450-qrd
+> +          - const: qcom,sm4450
+> +
+
+And here
+
+>     # Board compatibles go above
+>   
+>     qcom,msm-id:
 
 -- 
 With best wishes
