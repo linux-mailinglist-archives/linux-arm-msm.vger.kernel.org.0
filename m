@@ -2,108 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9543E758DF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 08:38:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 690C3758E48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 09:01:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229708AbjGSGim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 02:38:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60168 "EHLO
+        id S229540AbjGSHBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 03:01:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbjGSGil (ORCPT
+        with ESMTP id S229530AbjGSHB1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 02:38:41 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F4F1FCB;
-        Tue, 18 Jul 2023 23:38:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F09B861150;
-        Wed, 19 Jul 2023 06:38:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0B9C433C7;
-        Wed, 19 Jul 2023 06:38:33 +0000 (UTC)
-Date:   Wed, 19 Jul 2023 12:08:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>, helgaas@kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, krzysztof.kozlowski@linaro.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v9 3/4] arm: dts: qcom: sdx55: Add CPU PCIe interconnect
- path
-Message-ID: <20230719063823.GA9312@thinkpad>
-References: <1689693645-28254-1-git-send-email-quic_krichai@quicinc.com>
- <1689693645-28254-4-git-send-email-quic_krichai@quicinc.com>
- <20230719044118.GC5990@thinkpad>
- <a3bb6e88-9b0f-c504-df35-96892395f188@quicinc.com>
+        Wed, 19 Jul 2023 03:01:27 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77751FED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 00:01:24 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-992ca792065so892596166b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 00:01:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689750083; x=1692342083;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WSZrt9jeszEZGu/mKauiyWiY1HTeSRHVXWkl0PsyR+c=;
+        b=BgrP9HbHLulKJqAh3a90fRdgO4sjNLYjWboQJenzmWIzqTETCKSTkJHOpYBFwF4qQB
+         bel2zi8jpzzRW3dQgrJfvkauUOmb7SUrbmqW3vJ0B4pe+mFKjD4bWIwstIzNydVSsstR
+         2bbQc4sz1ggaszirvJ+zXsbpAtLnWPtKgofL/oAasUQ6VgRM7Y/DU3hSsY496X8gxd1d
+         nQUJxAu6Xddw1Zj4tYagBOu8vipwkKoPD3231wfqwdAIQmNU169JPK/+nopUP6nZDy5y
+         RVlbSYICm/mVexr+x6rJuJSbqnhoi9LG5r9/ScVUEKSxjBublwhXyPzh59a/z1XGj0wH
+         Em5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689750083; x=1692342083;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WSZrt9jeszEZGu/mKauiyWiY1HTeSRHVXWkl0PsyR+c=;
+        b=C3oXbsxVwAVXTqp7HHg9aElDgSdSzr4knnWv8k+xIPX+T+u/7KqCrqmxMYsczhRatA
+         2LyMK30R3o+/IdqaIDqK0L4o0UjYa3v3XuD6xn29fYdwRtotZS21cLZWjQ89pu6vZ2dl
+         CC8xRZZtnoiayA+0L/W3UJ3OwY3xaeAB3nlZqJlxnkl/9ehsx0tWw72DPCS5/hbLtbmJ
+         SdgX8ildemZHupU8IuQosZfIDUI8Hq8loRST85tgidtoFqQFTFHUwxl1zewGpxRp7KGA
+         AkyQVKd06d1hu7E4HIKCOossLZcw0824x2qA2rgAfIR4jczyGLts0b6emWnCls1b0v+0
+         M+EQ==
+X-Gm-Message-State: ABy/qLbpKtdeyUklq4QT4x2fffMuyvak+nYOZaPqHulMYW8EcW9fn6pb
+        79rSI4Nv39z7zStqI3Q0UkWVqw==
+X-Google-Smtp-Source: APBJJlGX7cx1vVoHNi6pwROqc+qSgYNgqVavnXFuzLoHzyAPHaI3G/MLulDPjwxxVA6/dpRfkZ/Ugw==
+X-Received: by 2002:a17:906:95:b0:978:928:3b99 with SMTP id 21-20020a170906009500b0097809283b99mr1479059ejc.46.1689750083436;
+        Wed, 19 Jul 2023 00:01:23 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id qn24-20020a170907211800b00993470682e5sm1920268ejb.32.2023.07.19.00.01.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Jul 2023 00:01:22 -0700 (PDT)
+Message-ID: <bf6c7433-7773-9b4d-1141-b5ceccae77ee@linaro.org>
+Date:   Wed, 19 Jul 2023 09:01:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a3bb6e88-9b0f-c504-df35-96892395f188@quicinc.com>
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [V3,00/11] Add multipd remoteproc support
+Content-Language: en-US
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mathieu.poirier@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        quic_eberman@quicinc.com, kvalo@kernel.org,
+        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com
+References: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 19, 2023 at 12:03:11PM +0530, Krishna Chaitanya Chundru wrote:
+On 18/07/2023 14:04, Manikanta Mylavarapu wrote:
+> APSS brings Q6 out of reset and then Q6 brings
+> WCSS block (wifi radio's) out of reset.
 > 
-> On 7/19/2023 10:11 AM, Manivannan Sadhasivam wrote:
-> > On Tue, Jul 18, 2023 at 08:50:44PM +0530, Krishna chaitanya chundru wrote:
-> > > Add cpu-pcie interconnect path to sdx65 platform.
-> > sdx55 and please mention "PCIe RC". Perhaps you should also add "missing"?
-> > 
-> > - Mani
+> 				   ---------------
+> 			      -->  |WiFi 2G radio|
+> 			      |	   --------------
+> 			      |
+> --------	-------	      |
+> | APSS | --->   |QDSP6|  -----|
+> ---------	-------       |
+>                               |
+>       			      |
+> 			      |   --------------
+> 			      --> |WiFi 5G radio|
+> 				  --------------
 > 
-> I will reactify it.
-> 
-> for "PCIe RC" you mean "PCIe EP" as this endpoint node
+> Problem here is if any radio crashes, subsequently other
+> radio also should crash because Q6 crashed. Let's say
+> 2G radio crashed, Q6 should pass this info to APSS. Only
+> Q6 processor interrupts registered with APSS. Obviously
+> Q6 should crash and raise fatal interrupt to APSS. Due
+> to this 5G radio also crashed. But no issue in 5G radio,
+> because of 2G radio crash 5G radio also impacted.
+
+Your patches and cover letter is unnecessarily more difficult to parse
+and filter:
+1. Please use standard email subjects, so with the PATCH keyword in the
+title. `git format-patch` helps here to create proper versioned patches.
+Another useful tool is b4. Skipping the PATCH keyword makes filtering of
+emails more difficult thus making the review process less convenient.
+
+2. Please wrap message according to Linux coding style / submission
+process (neither too early nor over the limit):
+https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+This is wrapped way too early.
 > 
 
-Oops, yeah it is PCIe EP only.
+Best regards,
+Krzysztof
 
-- Mani
-
-> -KC
-> 
-> 
-> > 
-> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > ---
-> > >   arch/arm/boot/dts/qcom/qcom-sdx55.dtsi | 5 +++--
-> > >   1 file changed, 3 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-> > > index df3cd9c..a7c0c26 100644
-> > > --- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-> > > +++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-> > > @@ -422,8 +422,9 @@
-> > >   			interrupt-names = "global",
-> > >   					  "doorbell";
-> > > -			interconnects = <&system_noc MASTER_PCIE &mc_virt SLAVE_EBI_CH0>;
-> > > -			interconnect-names = "pcie-mem";
-> > > +			interconnects = <&system_noc MASTER_PCIE &mc_virt SLAVE_EBI_CH0>,
-> > > +					<&mem_noc MASTER_AMPSS_M0 &system_noc SLAVE_PCIE_0>;
-> > > +			interconnect-names = "pcie-mem", "cpu-pcie";
-> > >   			resets = <&gcc GCC_PCIE_BCR>;
-> > >   			reset-names = "core";
-> > > -- 
-> > > 2.7.4
-> > > 
-
--- 
-மணிவண்ணன் சதாசிவம்
