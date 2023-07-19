@@ -2,118 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A6A075995E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 17:19:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 678C5759970
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 17:21:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231556AbjGSPS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 11:18:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56078 "EHLO
+        id S229974AbjGSPVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 11:21:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229977AbjGSPS6 (ORCPT
+        with ESMTP id S231626AbjGSPVm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 11:18:58 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE044210B;
-        Wed, 19 Jul 2023 08:18:33 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36JDuIcH009598;
-        Wed, 19 Jul 2023 15:18:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=9K1mMR1iHlRgY1J+lDP2ewhpZLX/fOyQb9/Z2hIWlmc=;
- b=bSmekRRqadmhYRYbf+qo6nkjTt9ZNm7iJmW1eSij1gIEaxEYunDjhuyt9v1EPVjZWfVO
- FEkhtxcq9wi4nJDtcmGrIWVEdgKxnwdCtox/sfi2AWrFLgoeSry58gl+GQWUZ3HgBYxu
- s9FKhxZSlDBmhb63vK8nnrFhXAm98XZSGxQK3/ORovlA/YRADfWjAZoTcbkY1ol7Vo02
- 5Ed/N4c2xXfi5g80GUqGZmPX0dtf1y1v8/P8SPuG+UnJBkHQ+793Ry5HBjC6Vgm4XmFu
- pc3vDnp8//PeeQbeDyPo3Ij+GXsFq7Ezl7lVxEPrMxoZOPsctUHNpM7SdZ6J++8mLeLV 4w== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxd98gum2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 15:18:19 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36JFIINS016563
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 15:18:18 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 19 Jul 2023 08:18:18 -0700
-Date:   Wed, 19 Jul 2023 08:18:17 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Chengfeng Ye <dg573847474@gmail.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] mfd: qcom-pm8xxx: Fix potential deadlock on
- &chip->pm_irq_lock
-Message-ID: <20230719151817.GB4176673@hu-bjorande-lv.qualcomm.com>
-References: <20230628072840.28587-1-dg573847474@gmail.com>
+        Wed, 19 Jul 2023 11:21:42 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4681110D2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 08:21:37 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-31454996e06so6594578f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 08:21:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689780095; x=1692372095;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hi2bMiiHu0hNddI+n5SAEb4NvrLYq2PUYLhIfyaiWGk=;
+        b=pTLis9lqJs+iAe0SRxqARJnQjwbsVRLHNuG4+51tNwQvKFmdw9c96JlNVz3cMStwsa
+         Ev6znBEP6dGK99QUSLBmJo3BZf7BU8YPUml+hRDlwaD0Up/GQoTPMcKzgi7zpIj8T9FO
+         mw5l4Wx52y1sLjGawCoj4lVCSP4Ca/Ujn60ZPXRsle4dL81fcry6/0kBgMRMqSci1npa
+         xwaZEsU/Q91dFvMKWXNXuvjjENNLrOy3gUy7TiRs3AHEEEowVPAcMbEeltllXCzAfVmO
+         Mkcg7ldvRbzEWK8f7hl5trv76mwnih/by1bAUrrgYWfUyPpiKqjg7AdGp283r6MVga14
+         IQ4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689780095; x=1692372095;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hi2bMiiHu0hNddI+n5SAEb4NvrLYq2PUYLhIfyaiWGk=;
+        b=jTXT0a2hHf4YuFGfK2k9PQw01cYbOY2hv9lgzuyHh9B4DylJDpvZj/+ep7SWxRRS3f
+         Qcvg5Z7wkuKuG7wyAFuVlBXBIm5CFD/oRerNiWBP1wRdX/KLwq9pp6IfTL3Qi+KoYS/q
+         HnWE4H5XHDC/dYd4vGoRZ9ZkUSNY46xXBiK5q/uQSyV6NE7F3OYkJFt3NsMPaSI3Tltg
+         NSQxt10s0w5/HRD7HU6LKgKnOQ6DniXU1mk2zuKq+PIWdMil4Kv7g1HBPqpuYVs+I07V
+         xPJFX+bcgV4lPHclLaRQh/vW87oR4jJkodMUK2JiJzrYZuxXzqBpqolGPRky/CYJc5jJ
+         3RMA==
+X-Gm-Message-State: ABy/qLbfMKlKT3Y4dT0kSHERtEyrUCMPHgibwXM+8qM7Tt0Re3cNFzdL
+        FF0Utc3i82A5S/V2NjeWM6Jenw==
+X-Google-Smtp-Source: APBJJlEgP/yqZ5gLlCBunwtBeJhwM/ez/4Grf9PK4Rt1MaQtriT/zXSXpM9X6wsIs+Zq3kyUQgIV/A==
+X-Received: by 2002:adf:cc86:0:b0:314:11ea:480d with SMTP id p6-20020adfcc86000000b0031411ea480dmr166543wrj.9.1689780095615;
+        Wed, 19 Jul 2023 08:21:35 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id n18-20020adffe12000000b003143be36d99sm5570241wrr.58.2023.07.19.08.21.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Jul 2023 08:21:35 -0700 (PDT)
+Message-ID: <07e376b1-f3df-7dd1-db08-99c26a7da93c@linaro.org>
+Date:   Wed, 19 Jul 2023 17:21:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230628072840.28587-1-dg573847474@gmail.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: b7TQnPUUCGAfvLvqCD3-HLdDeJwmcxS5
-X-Proofpoint-ORIG-GUID: b7TQnPUUCGAfvLvqCD3-HLdDeJwmcxS5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_10,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- mlxscore=0 malwarescore=0 bulkscore=0 mlxlogscore=731 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307190136
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [V3,02/11] dt-bindings: clock: qcom: gcc-ipq9574: remove q6 bring
+ up clock macros
+Content-Language: en-US
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mathieu.poirier@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        quic_eberman@quicinc.com, kvalo@kernel.org,
+        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com
+References: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
+ <20230718120501.3205661-3-quic_mmanikan@quicinc.com>
+ <9d473f0b-bd6b-f426-3bd2-2890e8a79431@linaro.org>
+ <9c540e3b-d8d1-0807-a21e-d01a301c1972@linaro.org>
+ <ed817ba3-a424-1247-0ba8-88f1a9c23fee@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ed817ba3-a424-1247-0ba8-88f1a9c23fee@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 28, 2023 at 07:28:40AM +0000, Chengfeng Ye wrote:
-> As &chip->pm_irq_lock is acquired by pm8xxx_irq_handler() under irq
-> context, other process context code should disable irq before acquiring
-> the lock.
+On 19/07/2023 17:11, Manikanta Mylavarapu wrote:
 > 
-> I think .irq_set_type and .irq_get_irqchip_state callbacks should be
-
-You are correct, so please drop "I think", and change "should be" to
-"are generally".
-
-> executed from process context without irq disabled by default. Thus the
-> same lock acquision should disable irq.
 > 
-> Possible deadlock scenario
-> pm8xxx_irq_set_type()
->     -> pm8xxx_config_irq()
->     -> spin_lock(&chip->pm_irq_lock)
->         <irq interrupt>
->         -> pm8xxx_irq_handler()
->         -> pm8xxx_irq_master_handler()
->         -> pm8xxx_irq_block_handler()
->         -> pm8xxx_read_block_irq()
->         -> spin_lock(&chip->pm_irq_lock) (deadlock here)
+> On 7/19/2023 12:45 PM, Krzysztof Kozlowski wrote:
+>> On 19/07/2023 09:14, Krzysztof Kozlowski wrote:
+>>> On 18/07/2023 14:04, Manikanta Mylavarapu wrote:
+>>>> In multipd model Q6 firmware takes care of bringup clocks,
+>>>> so remove them.
+>>>>
+>>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>>> ---
+>>>> Changes in V3:
+>>>> 	- Rebased on TOT
+>>>
+>>> No clue what is TOT. We have TIP, but you should not use it as a base.
+>>> Other used names are mainline and linux-next.
+>>>
+>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> Un-acked. I said last time that this does not compile and I do not see
+>> any improvements here.
+>>
 > 
-> This flaw was found using an experimental static analysis tool we are
-> developing for irq-related deadlock.
+> My bad, i missed.
 > 
-> The tentative patch fix the potential deadlock by spin_lock_irqsave().
-
-I don't think this is a "tentative patch fix", it is the patch to fix
-the issue. I think you can omit this line, because you already described
-your problem, and the solution above.
-
+> Is it fine to move gcc driver patch to first and then dt-bindings
+> patch ?
 > 
-> Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+> With this way dt-bindings patch will compile.
+> 
+> Current patch order:
+> -------------------
+> 1) Removing clock macros from dt-bindigs
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-3-quic_mmanikan@quicinc.com/
+> 
+> 2) Removing clocks from gcc driver
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-5-quic_mmanikan@quicinc.com/
+> 
+> 
+> Proposed patch order:
+> ---------------------
+> 1) Removing clocks from gcc driver
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-5-quic_mmanikan@quicinc.com/
+> 
+> 2) Removing clock macros from dt-bindigs
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20230718120501.3205661-3-quic_mmanikan@quicinc.com/
+> 
 
-Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Yes, assuming there are no DTS users.
 
-Regards,
-Bjorn
+Best regards,
+Krzysztof
+
