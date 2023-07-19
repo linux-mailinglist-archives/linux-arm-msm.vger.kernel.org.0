@@ -2,108 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C700758D8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 08:15:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03EC4758DD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 08:33:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230506AbjGSGPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 02:15:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48106 "EHLO
+        id S230354AbjGSGdg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 02:33:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230527AbjGSGPY (ORCPT
+        with ESMTP id S230086AbjGSGde (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 02:15:24 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E727D1FE0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 23:15:04 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-99342a599e9so907585866b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jul 2023 23:15:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689747302; x=1692339302;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QMvfRl+bFLnpDnr5W6RMYDLuRVuKpZRmCG+6llzz95M=;
-        b=VLTH+DOnshchuB2xlx/FFJgRWxt/YD2QgTnB0I1yKYULYkkhwdFJDLCIxORtuad49n
-         k9BU7OTaFXzCOlBQlCzUi4pkjcMk/TiLheks4ICpbHTyzEPC1HDAeChcn1Ua3aWJ4HzW
-         MjrqEg6y0cfbFoYhseMFk5lFfkK8ckfXaSLHOIA/p63zGbIMQX3wcVvE10fYWpwnFI+M
-         NCLnIGlMZr40VAHZf3B1ma+wC3NGRQNpkWScRUXpqF9jtxv9Zl3+CaA68q8I42Y8XLcG
-         A8EkQmM1lMfQ+P2OHodMKG1TKW4H1VZJTIJpZih1B6Z4rA0yXbKD1ssk1VEvDcwCY6KK
-         IBOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689747302; x=1692339302;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QMvfRl+bFLnpDnr5W6RMYDLuRVuKpZRmCG+6llzz95M=;
-        b=d7cuAWXsplKXcqWsvMzlCqrewW/rT2ebzsWmtGX4aLbuSVe+b2Q2gS4O4CspL+yrL4
-         05th4mHRjs3HJZpvJkTAWNQ8Uli2q+dvBKdMbsSZA3qzJzCjvg19XnDSaDnfeZpM2C2u
-         zGI5X1/hs4AP5zHOaAE+C08XtYuunFiYEuH9SpB+jmAfoVH/89k8KasbvpjVMiRn07lo
-         Kvd5LHinwQGGgwC+A8Z/DfbgO/r69D26E/jMXPvNPFv7xblXW1pu9oNzZoUiA+owSG21
-         XdK/zqr67TM0RvXe4LbGnrZEI1jqygp2R0an8kMHSED4BO8GMm8ntBbWyMemOWiBxu35
-         dXlQ==
-X-Gm-Message-State: ABy/qLabTesbtbYClEtEDkkuuyZ/CTyYDUegdZt7X6CCIDBoncbebULs
-        TCKHA9Ewteom9d0g7/ZDd3Navw==
-X-Google-Smtp-Source: APBJJlGRZZZmnc820slF8HKlmYeUENYJ9xkHTkllvLchrlFNSUlR/DU+Ey8nLunz22xs2vX6ELok7g==
-X-Received: by 2002:a17:906:5303:b0:992:6064:f32b with SMTP id h3-20020a170906530300b009926064f32bmr1240291ejo.46.1689747302125;
-        Tue, 18 Jul 2023 23:15:02 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id b10-20020a1709065e4a00b00992d122af63sm1858050eju.89.2023.07.18.23.15.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jul 2023 23:15:01 -0700 (PDT)
-Message-ID: <6faf3d1d-f05f-4d28-82d9-32c8e22fd29b@linaro.org>
-Date:   Wed, 19 Jul 2023 08:15:00 +0200
+        Wed, 19 Jul 2023 02:33:34 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF88E1FC0;
+        Tue, 18 Jul 2023 23:33:30 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J6JvJV015401;
+        Wed, 19 Jul 2023 06:33:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ID2LjzaUM2mPD4gOzhPYXzqyBlwYA/lCIfvD10k4Sxo=;
+ b=X/koodaJIcPByRLwKyIPNYOa3TIRVKQHlpaKcq5zYE2LJco1aF7VUjGeoElhC+bxCDeQ
+ Hn6eVVn/6kN9ECe2nxROVLF2qPCMawmrhLAKFvpnRYeT+YmjOzT9jZVkopIWwNpY7Eu5
+ UIeVIkKsqG7dn3NoFGglXwLk/W1eceCWEKRCM5FQhpEs+Zb8q5rrZZIHEl/YVMr0SQy6
+ QJLa47/dkIJDjbslhqJmjTgrfHZpNZN0P0OJ8quUW5l2SUkAvzOpl69quBWUmngp+aFc
+ Y5XBOOpo0fRx0r7Uy3qYHk0t0PY7c3yi3GQC8Sp4yvfjYABgRWwHkc4xojEEhhyYy80X Ng== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwnrrjmwe-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 06:33:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36J6XJ00024904
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 06:33:19 GMT
+Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 18 Jul
+ 2023 23:33:14 -0700
+Message-ID: <a3bb6e88-9b0f-c504-df35-96892395f188@quicinc.com>
+Date:   Wed, 19 Jul 2023 12:03:11 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 2/2] firmware: arm_scmi: Add qcom hvc/shmem transport
-To:     Nikunj Kela <quic_nkela@quicinc.com>, sudeep.holla@arm.com
-Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230718160833.36397-3-quic_nkela@quicinc.com>
- <d9d5ffd5-6f85-f091-5d69-12cdd8d04c99@linaro.org>
- <3ae2d618-490a-06da-b4b6-b5a24b0a9747@quicinc.com>
- <ec3d7769-8a5f-d938-7f77-351ddfe6fb45@linaro.org>
- <e8399fcf-e0d8-cc31-d9a7-b0f4f7cc3e71@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v9 3/4] arm: dts: qcom: sdx55: Add CPU PCIe interconnect
+ path
 Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <e8399fcf-e0d8-cc31-d9a7-b0f4f7cc3e71@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <manivannan.sadhasivam@linaro.org>, <helgaas@kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <1689693645-28254-1-git-send-email-quic_krichai@quicinc.com>
+ <1689693645-28254-4-git-send-email-quic_krichai@quicinc.com>
+ <20230719044118.GC5990@thinkpad>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20230719044118.GC5990@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: iNjrWpmRU89S4gNbLW-v7o77PXcsuYBX
+X-Proofpoint-ORIG-GUID: iNjrWpmRU89S4gNbLW-v7o77PXcsuYBX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-19_03,2023-07-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ mlxlogscore=949 priorityscore=1501 impostorscore=0 mlxscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
+ definitions=main-2307190060
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2023 23:16, Nikunj Kela wrote:
-> 
-> On 7/18/2023 11:42 AM, Krzysztof Kozlowski wrote:
->> On 18/07/2023 20:25, Nikunj Kela wrote:
->>>>> +
->>>>> +	scmi_info = devm_kzalloc(dev, sizeof(*scmi_info), GFP_KERNEL);
->>>>> +	if (!scmi_info)
->>>>> +		return -ENOMEM;
->>>>> +
->>>>> +	np = of_parse_phandle(cdev->of_node, "shmem", 0);
->>>>> +	if (!of_device_is_compatible(np, "arm,scmi-shmem"))
->>>> You leak here reference.
->>> Wouldn't the devm_* API take care of that implicitly? It is same in
->>> smc.c as well.
->> Thanks for bringing my attention to this. I sent a fix for smc.c. Fix
->> your patch as well, please.
-> Thanks, I thought you were referring to kzalloc cleanup. Will include 
-> this fix. BTW, you may need to fix mailbox.c as well.
 
-Indeed, thanks.
+On 7/19/2023 10:11 AM, Manivannan Sadhasivam wrote:
+> On Tue, Jul 18, 2023 at 08:50:44PM +0530, Krishna chaitanya chundru wrote:
+>> Add cpu-pcie interconnect path to sdx65 platform.
+> sdx55 and please mention "PCIe RC". Perhaps you should also add "missing"?
+>
+> - Mani
 
-Best regards,
-Krzysztof
+I will reactify it.
 
+for "PCIe RC" you mean "PCIe EP" as this endpoint node
+
+-KC
+
+
+>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   arch/arm/boot/dts/qcom/qcom-sdx55.dtsi | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+>> index df3cd9c..a7c0c26 100644
+>> --- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+>> +++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+>> @@ -422,8 +422,9 @@
+>>   			interrupt-names = "global",
+>>   					  "doorbell";
+>>   
+>> -			interconnects = <&system_noc MASTER_PCIE &mc_virt SLAVE_EBI_CH0>;
+>> -			interconnect-names = "pcie-mem";
+>> +			interconnects = <&system_noc MASTER_PCIE &mc_virt SLAVE_EBI_CH0>,
+>> +					<&mem_noc MASTER_AMPSS_M0 &system_noc SLAVE_PCIE_0>;
+>> +			interconnect-names = "pcie-mem", "cpu-pcie";
+>>   
+>>   			resets = <&gcc GCC_PCIE_BCR>;
+>>   			reset-names = "core";
+>> -- 
+>> 2.7.4
+>>
