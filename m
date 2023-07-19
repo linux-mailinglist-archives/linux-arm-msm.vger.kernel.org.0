@@ -2,108 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D57D758E8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 09:15:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 239F8758EB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 09:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbjGSHPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 03:15:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49238 "EHLO
+        id S230048AbjGSHVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 03:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbjGSHPi (ORCPT
+        with ESMTP id S229953AbjGSHUx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 03:15:38 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926741FF2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 00:15:30 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-98df3dea907so841343666b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 00:15:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689750928; x=1692342928;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1gggJ+ho+4kj2kjwWGJKnU62Dt5ugjbXcyEz5Qkidj0=;
-        b=YebysdanKJANlFyUHs9plVBEgFmwKf11bG4SHPl8XzI9EnEbrXcq/O+QpEcoKq9nKI
-         sakHKu75o603EjesPtcgQqaAXGfIj4pQczscyFQyfKNLPrt7WgPMVo8Lw+Z/UTE9jmfR
-         16qv8texVJsqyyGm6Ns5nF80FdvjgRrZr3Je69hUDuaGeyIoTL05q2Xh6NOG/SMZfkZw
-         uzizrSQCyzvv6Mz44mS/69zNTeXfiMMdU42bcLSvttlOd0zoXppAOuYHeKZK7eI3OD5b
-         PNbG8pS79fcWtQFzOGr7qbQ5b5r+4eAbZc/HvWoqwXDmcLNfYX5SiciCrJX4mRQdi3aS
-         78SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689750928; x=1692342928;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1gggJ+ho+4kj2kjwWGJKnU62Dt5ugjbXcyEz5Qkidj0=;
-        b=ZZIr2Hp94OaSj6bEwr9aeC2Vn7/R8IuD1hJI9st4xODDYky0OsKahuef+i/BuwNEnz
-         keunz7Zw8wmajjOcFfYqkfbrc9yI0hFDuom9LZuQyQXUhm6877LXLt4uF8cbNEJi2pOC
-         rdHmDH0SFVPhk5jSqsOMxZqv7ZYtTSovtBau5RTQqxyvVnLrWuvWgDeQoLoWxTq8+iN9
-         KMAwHpS5GQitAYvOWc/mLr6ykp0HWPr7TwC5ndY95wvZj6eljqBfKqoueUzs6AGTrTs2
-         NHCQR8ke6BQpDv9i/2VYAoLZJWmh0lxgHhkqudylv8Pe1Q+K1nzr3/IG3Jw47DOD8RTs
-         gemA==
-X-Gm-Message-State: ABy/qLZPabamuioJjE0IDT3zjypHgcsfE4gcWb+RxpZnoofqxMA+FBOE
-        WocKncKUqQSGEASnbA0L0gLkaQ==
-X-Google-Smtp-Source: APBJJlHLkdms+lG9OGE3bzJfekgpJex4DoVYe3quR18JfSewiMXO/5zW65XnL1HZbhgzDCFzhrfDJQ==
-X-Received: by 2002:a17:906:c1cd:b0:991:cf4e:a361 with SMTP id bw13-20020a170906c1cd00b00991cf4ea361mr1521535ejb.26.1689750928736;
-        Wed, 19 Jul 2023 00:15:28 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id m14-20020a170906580e00b009930308425csm1933490ejq.31.2023.07.19.00.15.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jul 2023 00:15:28 -0700 (PDT)
-Message-ID: <9c540e3b-d8d1-0807-a21e-d01a301c1972@linaro.org>
-Date:   Wed, 19 Jul 2023 09:15:26 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [V3,02/11] dt-bindings: clock: qcom: gcc-ipq9574: remove q6 bring
- up clock macros
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mathieu.poirier@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        quic_eberman@quicinc.com, kvalo@kernel.org,
-        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_anusha@quicinc.com
-References: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
- <20230718120501.3205661-3-quic_mmanikan@quicinc.com>
- <9d473f0b-bd6b-f426-3bd2-2890e8a79431@linaro.org>
-In-Reply-To: <9d473f0b-bd6b-f426-3bd2-2890e8a79431@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 19 Jul 2023 03:20:53 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5657C2D42;
+        Wed, 19 Jul 2023 00:20:37 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J5T1fQ021632;
+        Wed, 19 Jul 2023 07:20:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=gtb6gYVpTAjg2zcFSW0Orpb5Gq3mMILJPHFU0d+4I/Q=;
+ b=ZMz/OaZjiyeZ5Iq0QlKpBRJbA/tBoEYx+LuDdJVgGNQ+8JK5JAw5B+/QB+E7B1bkFUlS
+ 9ehaKExvBhYmzzw/tyMjJY+thsekmomPp1kXc2pzG5KrVyJ7IqFUHeNfg1NKu0cRLpBg
+ UZotOUWK5XC0p158c4hh38QOIjf9LNrQbv+RhLOGVKLm3m3VMmWvs5uH/ONb256oH4XS
+ IG+SeFUOJDqugeRhqEwEk3U8k/PfMSj/K3R61geAcf7LFbOjg9PpKsZF0iHlb2dkqRvZ
+ JrnzGkYBJP+LdRI+8EohotmrNregvyKLq6hq+T++VNQjGkzxXc1rSzCVc9jegaCdhJhd Nw== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rx8sk087u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Jul 2023 07:20:24 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36J7KKIq022625;
+        Wed, 19 Jul 2023 07:20:20 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3rumhm1v71-1;
+        Wed, 19 Jul 2023 07:20:20 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36J7KKdl022610;
+        Wed, 19 Jul 2023 07:20:20 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 36J7KKAn022583;
+        Wed, 19 Jul 2023 07:20:20 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id A01AC47C7; Wed, 19 Jul 2023 12:50:19 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        krzysztof.kozlowski@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v10 0/4] PCI: qcom: ep: Add basic interconnect support
+Date:   Wed, 19 Jul 2023 12:50:14 +0530
+Message-Id: <1689751218-24492-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zrZncTP3iTbsVQl7qu_YnR_jtz-V1_8W
+X-Proofpoint-ORIG-GUID: zrZncTP3iTbsVQl7qu_YnR_jtz-V1_8W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-19_04,2023-07-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 phishscore=0 mlxlogscore=517 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307190066
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/07/2023 09:14, Krzysztof Kozlowski wrote:
-> On 18/07/2023 14:04, Manikanta Mylavarapu wrote:
->> In multipd model Q6 firmware takes care of bringup clocks,
->> so remove them.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->> Changes in V3:
->> 	- Rebased on TOT
-> 
-> No clue what is TOT. We have TIP, but you should not use it as a base.
-> Other used names are mainline and linux-next.
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Add basic support for managing "pcie-mem" interconnect path by setting
+a low constraint before enabling clocks and updating it after the link
+is up based on link speed and width the device got enumerated.
 
-Un-acked. I said last time that this does not compile and I do not see
-any improvements here.
+changes from v9:
+	- addressed the comments by mani.
+changes from v8:
+        - Added cpu to pcie path in dtsi and in dtsi binding.
+changes from v7:
+        - setting icc bw to '0' in disable resources as suggested by mani.
+changes from v6:
+        - addressed the comments as suggested by mani.
+changes from v5:
+        - addressed the comments by mani.
+changes from v4:
+        - rebased with linux-next.
+        - Added comments as suggested by mani.
+        - removed the arm: dts: qcom: sdx55: Add interconnect path
+          as that patch is already applied.
+changes from v3:
+        - ran make DT_CHECKER_FLAGS=-m dt_binding_check and fixed
+         errors.
+        - Added macros in the qcom ep driver patch as suggested by Dmitry
+changes from v2:
+        - changed the logic for getting speed and width as suggested
+         by bjorn.
+        - fixed compilation errors.
 
-Best regards,
-Krzysztof
+
+Krishna chaitanya chundru (4):
+  PCI: qcom-ep: Add ICC bandwidth voting support
+  arm: dts: qcom: sdx65: Add PCIe EP interconnect path
+  arm: dts: qcom: sdx55: Add CPU PCIe EP interconnect path
+  dt-bindings: PCI: qcom: ep: Add interconnects path
+
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 15 +++++
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi             |  5 +-
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |  4 ++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          | 71 ++++++++++++++++++++++
+ 4 files changed, 93 insertions(+), 2 deletions(-)
+
+-- 
+2.7.4
 
