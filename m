@@ -2,210 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15043759E8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 21:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F056759F3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 22:04:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231199AbjGST2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 15:28:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54140 "EHLO
+        id S229706AbjGSUEz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 16:04:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbjGST2T (ORCPT
+        with ESMTP id S230368AbjGSUEz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 15:28:19 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36B5C1FCE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:28:18 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9922d6f003cso13077766b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:28:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689794896; x=1692386896;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TcNmIsuW97qQDEgueal6oZwyfTvcbga5wSv8p96tsDE=;
-        b=AeiVpxzYqw1J8CS8ahzshvssmNLZoPlbRPOo3TE+s8oOGabZx7kYQEzFJTJxvFm6NN
-         2eJOZRGqri+1pGvHfmmqo0VWoduIACmzb7LIHYfavPRma3b49mzs+G0WmXUNjbmg1F4r
-         AT9KwRb+mSAfjHETLFzacqSPXjpuby7p9V10CmYNx/I3V998/6YnTN00nAsfwPgm1G3d
-         UDFjeUynmwYCD+DE8rOmBg/FfmU63ZsYt7F0SeWkGCg8OJla7FHncHhl7AoYjyffobfz
-         qzmDc5rz/tsA8feYW6Wukpw0FLEEscGL5Lm9si/qztMPRUTaALAXFfwxb7dhKnd8T+BT
-         ia5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689794896; x=1692386896;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TcNmIsuW97qQDEgueal6oZwyfTvcbga5wSv8p96tsDE=;
-        b=T61fxLLwxptpQtFVA1mE8G1besTWKOKEjqq37UBp6svDTvnqPjIaoh7QrgpVleqKBp
-         JmDqbKx0NzL6KunRGlbyeiMGtCi4E2yxtheOqq+1NaXTwBs43WpoTupxc4MoqDxzZjQT
-         Ki1sWwqcfgCn/BOXDDrm1arr2H8dXLIVztyGy8bj+bAA1oussUF+SI6zDhjOHqAOYE3d
-         BOxA9+JDe+m9b4lTgi+8sXpCh+JWfFtxyQW7uIB0Yz2x47mau8BIfxIlFLlf9hm3Ko8A
-         JP1uOZX9zFY5sTTe3ye/4fqylBFdNI3gR0OACmyAAi3mbRWiObGnYzraKi66hZibECOu
-         4swA==
-X-Gm-Message-State: ABy/qLbbr3wSL1xecnpzJZKjwuiXZm0h4z569dfKjLIgSiW8vDtJkw4M
-        58eorh1knoo9NsihGwcqiidU0Q==
-X-Google-Smtp-Source: APBJJlEhpxysmSlsUa5KsviCsOAPYZaY2KzsGJpRjCmWaqkRbLK3f4l4BX361s9nVHpem2OwAYRbtg==
-X-Received: by 2002:a17:906:151:b0:992:ef60:aae0 with SMTP id 17-20020a170906015100b00992ef60aae0mr3392724ejh.54.1689794896644;
-        Wed, 19 Jul 2023 12:28:16 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id n26-20020a170906119a00b00991e2b5a27dsm2720966eja.37.2023.07.19.12.28.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jul 2023 12:28:16 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sm8350: add APR and LPASS TLMM
-Date:   Wed, 19 Jul 2023 21:28:09 +0200
-Message-Id: <20230719192809.434709-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230719192809.434709-1-krzysztof.kozlowski@linaro.org>
-References: <20230719192809.434709-1-krzysztof.kozlowski@linaro.org>
+        Wed, 19 Jul 2023 16:04:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68922F0;
+        Wed, 19 Jul 2023 13:04:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B0E8E61807;
+        Wed, 19 Jul 2023 20:04:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D7CC433C8;
+        Wed, 19 Jul 2023 20:04:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689797091;
+        bh=0iKypu0kymTeD57KjtrMnZG3ybCTpOA4DfWhM2jjUOU=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=g4iAn8M9Y2zWazYP8g4VgHvj9qbowkKoguznJHd7M+5DI1D6NecNuwAsSEo2OpkSH
+         xedrocvcG6ll1IIw5g1HA7Z6zzqRggLca8gUoCIFvv0MsafwvDHpYp1Mln46w9IMAX
+         Yr5yDxfkpxY6SePMBzj0kJyjlrDa+CuabMqEWFqGWSTOybstNm0CPrz4R7Xy9mhd4v
+         +Qzhp7SP09R7IXPzkDNeQyXgU0cXVPx4hGcgv9SiRIJEsYwzLKYUVMPvqfUUTPs8++
+         lWTbCo//XArPpW0HDII69NIDvFx2kzTqHgn+DLDxp9Z8g0/GS6B8VGOCHCwF0YJKiW
+         3NNjPA9rMrioQ==
+Message-ID: <f726290fe0678217f2e17b6a68c20d42.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230710093206.18894-1-quic_devipriy@quicinc.com>
+References: <20230710093206.18894-1-quic_devipriy@quicinc.com>
+Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: Use determine_rate instead of round_rate
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_saahtoma@quicinc.com
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com
+Date:   Wed, 19 Jul 2023 13:04:48 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add audio-related nodes: the APR in the ADSP (same as on SM8250) and
-LPASS TLMM pin controller.
+Quoting Devi Priya (2023-07-10 02:32:06)
+> @@ -1094,25 +1099,25 @@ static const struct clk_div_table clk_alpha_2bit_=
+div_table[] =3D {
+>         { }
+>  };
+> =20
+> -static long
+> -clk_alpha_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
+> -                                unsigned long *prate)
+> +static int clk_alpha_pll_postdiv_determine_rate(struct clk_hw *hw,
+> +                                               struct clk_rate_request *=
+req)
+>  {
+>         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
+);
+>         const struct clk_div_table *table;
+> +       unsigned long rate =3D req->rate;
+> =20
+>         if (pll->width =3D=3D 2)
+>                 table =3D clk_alpha_2bit_div_table;
+>         else
+>                 table =3D clk_alpha_div_table;
+> =20
+> -       return divider_round_rate(hw, rate, prate, table,
+> -                                 pll->width, CLK_DIVIDER_POWER_OF_TWO);
+> +       req->rate =3D divider_round_rate(hw, rate, &req->best_parent_rate=
+, table,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Can you use divider_determine_rate() instead?
 
----
+> +                                      pll->width, CLK_DIVIDER_POWER_OF_T=
+WO);
+> +       return 0;
+>  }
+> =20
+> -static long
+> -clk_alpha_pll_postdiv_round_ro_rate(struct clk_hw *hw, unsigned long rat=
+e,
+> -                                   unsigned long *prate)
+> +static int clk_alpha_pll_postdiv_determine_ro_rate(struct clk_hw *hw,
+> +                                                  struct clk_rate_reques=
+t *req)
+>  {
+>         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
+);
+>         u32 ctl, div;
+[...]
+> @@ -1452,14 +1459,16 @@ clk_trion_pll_postdiv_recalc_rate(struct clk_hw *=
+hw, unsigned long parent_rate)
+>         return (parent_rate / div);
+>  }
+> =20
+> -static long
+> -clk_trion_pll_postdiv_round_rate(struct clk_hw *hw, unsigned long rate,
+> -                                unsigned long *prate)
+> +static int
+> +clk_trion_pll_postdiv_determine_rate(struct clk_hw *hw,
+> +                                    struct clk_rate_request *req)
+>  {
+>         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
+);
+> =20
+> -       return divider_round_rate(hw, rate, prate, pll->post_div_table,
+> -                                 pll->width, CLK_DIVIDER_ROUND_CLOSEST);
+> +       req->rate =3D divider_round_rate(hw, req->rate, &req->best_parent=
+_rate,
 
-Bindings for SM8350:
-https://lore.kernel.org/linux-arm-msm/20230616185742.2250452-1-krzysztof.kozlowski@linaro.org/T/#t
+divider_determine_rate()?
 
-Changes in v2:
-1. Use "0" as size in "reg" (Konrad).
-2. Add missing blank lines between child nodes (Konrad).
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 85 ++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
+> +                                      pll->post_div_table, pll->width,
+> +                                      CLK_DIVIDER_ROUND_CLOSEST);
+> +       return 0;
+>  };
+> =20
+>  static int
+> @@ -1485,18 +1494,21 @@ clk_trion_pll_postdiv_set_rate(struct clk_hw *hw,=
+ unsigned long rate,
+> =20
+>  const struct clk_ops clk_alpha_pll_postdiv_trion_ops =3D {
+>         .recalc_rate =3D clk_trion_pll_postdiv_recalc_rate,
+> -       .round_rate =3D clk_trion_pll_postdiv_round_rate,
+> +       .determine_rate =3D clk_trion_pll_postdiv_determine_rate,
+>         .set_rate =3D clk_trion_pll_postdiv_set_rate,
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_trion_ops);
+> =20
+> -static long clk_alpha_pll_postdiv_fabia_round_rate(struct clk_hw *hw,
+> -                               unsigned long rate, unsigned long *prate)
+> +static int
+> +clk_alpha_pll_postdiv_fabia_determine_rate(struct clk_hw *hw,
+> +                                          struct clk_rate_request *req)
+>  {
+>         struct clk_alpha_pll_postdiv *pll =3D to_clk_alpha_pll_postdiv(hw=
+);
+> =20
+> -       return divider_round_rate(hw, rate, prate, pll->post_div_table,
+> -                               pll->width, CLK_DIVIDER_ROUND_CLOSEST);
+> +       req->rate =3D divider_round_rate(hw, req->rate, &req->best_parent=
+_rate,
+> +                                      pll->post_div_table, pll->width,
+> +                                       CLK_DIVIDER_ROUND_CLOSEST);
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 557a3d8e889b..84044d0610fc 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -15,7 +15,9 @@
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/phy/phy-qcom-qmp.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/soc/qcom,apr.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/thermal/thermal.h>
- #include <dt-bindings/interconnect/qcom,sm8350.h>
- 
-@@ -1814,6 +1816,20 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
- 
-+		lpass_tlmm: pinctrl@33c0000 {
-+			compatible = "qcom,sm8350-lpass-lpi-pinctrl";
-+			reg = <0 0x033c0000 0 0x20000>,
-+			      <0 0x03550000 0 0x10000>;
-+
-+			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			clock-names = "core", "audio";
-+
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			gpio-ranges = <&lpass_tlmm 0 0 15>;
-+		};
-+
- 		gpu: gpu@3d00000 {
- 			compatible = "qcom,adreno-660.1", "qcom,adreno";
- 
-@@ -3223,6 +3239,75 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 				label = "lpass";
- 				qcom,remote-pid = <2>;
- 
-+				apr {
-+					compatible = "qcom,apr-v2";
-+					qcom,glink-channels = "apr_audio_svc";
-+					qcom,domain = <APR_DOMAIN_ADSP>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					service@3 {
-+						reg = <APR_SVC_ADSP_CORE>;
-+						compatible = "qcom,q6core";
-+						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+					};
-+
-+					q6afe: service@4 {
-+						compatible = "qcom,q6afe";
-+						reg = <APR_SVC_AFE>;
-+						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+
-+						q6afedai: dais {
-+							compatible = "qcom,q6afe-dais";
-+							#address-cells = <1>;
-+							#size-cells = <0>;
-+							#sound-dai-cells = <1>;
-+						};
-+
-+						q6afecc: clock-controller {
-+							compatible = "qcom,q6afe-clocks";
-+							#clock-cells = <2>;
-+						};
-+					};
-+
-+					q6asm: service@7 {
-+						compatible = "qcom,q6asm";
-+						reg = <APR_SVC_ASM>;
-+						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+
-+						q6asmdai: dais {
-+							compatible = "qcom,q6asm-dais";
-+							#address-cells = <1>;
-+							#size-cells = <0>;
-+							#sound-dai-cells = <1>;
-+							iommus = <&apps_smmu 0x1801 0x0>;
-+
-+							dai@0 {
-+								reg = <0>;
-+							};
-+
-+							dai@1 {
-+								reg = <1>;
-+							};
-+
-+							dai@2 {
-+								reg = <2>;
-+							};
-+						};
-+					};
-+
-+					q6adm: service@8 {
-+						compatible = "qcom,q6adm";
-+						reg = <APR_SVC_ADM>;
-+						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+
-+						q6routing: routing {
-+							compatible = "qcom,q6adm-routing";
-+							#sound-dai-cells = <0>;
-+						};
-+					};
-+				};
-+
- 				fastrpc {
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
--- 
-2.34.1
-
+divider_determine_rate()?
