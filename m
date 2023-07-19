@@ -2,170 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5037E7599E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 17:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 018397599EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 17:37:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231906AbjGSPfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 11:35:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42194 "EHLO
+        id S230074AbjGSPhw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 11:37:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231895AbjGSPfp (ORCPT
+        with ESMTP id S230466AbjGSPht (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 11:35:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D8E810D4;
-        Wed, 19 Jul 2023 08:35:43 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J4nCYf031657;
-        Wed, 19 Jul 2023 15:35:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=z2kqcAiN17zcQvQvp6Cgh0t0y4GNa7KYZjk6NzUz7uo=;
- b=oiTblxt781uZ298hvVwkgu5udYZmteMF/dxVf9kW5JHebMQm2rksUwexi4fkQU/Uxlz1
- lNYjC9QUzWut8Q3uy/RsBns6la/hx0MBNaoI+2nSHax6QWfJHARgB2uDRG3kihLGVYbf
- 01VnDUIyRvDO9zVrPf029aE4dF9ilqzdXNR7RrBz2hB1OzBhVeqLTd/HQlP749+nM4gT
- bA25aiP72HD8sxu3lvC63R1Lc3/FA6ksbVxgXwSdSBnjjbswNy3hOWvZM8FC8KQ+OA0y
- 9uwzkn7rCwoTMyf4m/wgyVDTuG4nldmBQ23pk1VljGSHAaM9o0pKmHZ+7Gi9XCJOHZFu JQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rx7411jxp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 15:35:38 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36JFZbVd011697
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 15:35:37 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 19 Jul 2023 08:35:36 -0700
-Date:   Wed, 19 Jul 2023 08:35:35 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Imran Shaik <quic_imrashai@quicinc.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Wed, 19 Jul 2023 11:37:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B984BE;
+        Wed, 19 Jul 2023 08:37:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1251761740;
+        Wed, 19 Jul 2023 15:37:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E060C433C8;
+        Wed, 19 Jul 2023 15:37:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689781065;
+        bh=8vE1ot6XzFQ4H6sBrVB9YMCDiYUQPwwfTpKgGcHZcng=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=vQ6SfMBZY0QHME2fvrVuvDrOXOy58YBPTNc7A5lnuITNetabLNPEaeOM2paMu+SpH
+         5fMLvaTesCUu8r4E9urcNhjlR7E4aivQOfNQzRn1o1jn817gmOMeIa1MvStD1DfCzt
+         fBFry24AMlETBkSftX5RdTBdnz8W/t8XEOKOYCPXLw0CeV8oZa6Ui1Tt9nV996Qvya
+         kzyPIyx4lWfbOSz2EEqnGaTgNKe3K74mHGHwnrZubbMdJulY533/o/Zbzbz3kWDje2
+         cGmv3z9PZMUxUmLBOk+COJeg3K9jHOolKstg/tJLUNv/I7e0ofES8Q8fbd2oUDIzwL
+         zYMgGTrtzPBBw==
+Date:   Wed, 19 Jul 2023 21:07:27 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH V4 1/7] dt-bindings: clock: Update GCC clocks for QDU1000
- and QRU1000 SoCs
-Message-ID: <20230719153535.GC4176673@hu-bjorande-lv.qualcomm.com>
-References: <20230719041450.737929-1-quic_imrashai@quicinc.com>
- <20230719041450.737929-2-quic_imrashai@quicinc.com>
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org,
+        "linux-kernel @ vger . kernel . org Prasanna Kumar" 
+        <quic_kprasan@quicinc.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p: Add interconnect to SMMU
+Message-ID: <20230719153727.GD9312@thinkpad>
+References: <20230609054141.18938-1-quic_ppareek@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230719041450.737929-2-quic_imrashai@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uKfMfjqpW6C3An_cjq_RB26stxsET5F7
-X-Proofpoint-ORIG-GUID: uKfMfjqpW6C3An_cjq_RB26stxsET5F7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_10,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 impostorscore=0 bulkscore=0
- suspectscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307190139
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230609054141.18938-1-quic_ppareek@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 19, 2023 at 09:44:44AM +0530, Imran Shaik wrote:
-> Update the qcom GCC clock bindings for QDU1000 and QRU1000 SoCs.
+On Fri, Jun 09, 2023 at 11:11:39AM +0530, Parikshit Pareek wrote:
+> Some qcom SoCs have SMMUs, which need the interconnect bandwidth to be
+> This series introduce the due support for associated interconnect, and
+> setting of the due interconnect-bandwidth. Setting due interconnect
+> bandwidth is needed to avoid the issues like [1], caused by not having
+> due clock votes(indirectly dependent upon interconnect bandwidth).
 > 
 
-Please read [1], and as it says "Describe your problem.". This goes for
-the most of the series.
+As discussed offline, once you enable the PCIe RC driver which votes for this
+interconnect path (pcie-mem) like other platforms [1], then you do not need this
+series. This interconnect path belongs to the PCIe RC controller. So it is the
+responsibility of the PCIe RC driver to vote for this path and that's what the
+driver is already doing.
 
-There are changes in this series which could be applicable to existing
-or future platforms. Your description of the problems you're solving
-will help others solve the same problem, not make the same mistake, and
-anyone fixing adjacent issues in the future can rely on your
-documentation of why things looks the way they look.
+- Mani
 
-[1] https://www.kernel.org/doc/html/v4.17/process/submitting-patches.html#describe-your-changes
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sc8280xp.dtsi#n1767
 
-> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-
-Please don't use co-developed-by excessively. This patch is beyond
-trivial, did you really both author it?
-
-Regards,
-Bjorn
-
-> Acked-by: Rob Herring <robh@kernel.org>
-> ---
-> Changes since v3:
->  - None
-> Changes since v2:
->  - None
-> Changes since v1:
->  - Removed the v2 variant compatible string changes
->  - Updated the maintainers list
+> Parikshit Pareek (3):
+>   dt-bindings: arm-smmu: Add interconnect for qcom SMMUs
+>   arm64: dts: qcom: sa8775p: Add interconnect to PCIe SMMU
+>   iommu/arm-smmu-qcom: Add support for the interconnect
 > 
->  Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml | 3 ++-
->  include/dt-bindings/clock/qcom,qdu1000-gcc.h                  | 4 +++-
->  2 files changed, 5 insertions(+), 2 deletions(-)
+>  .../devicetree/bindings/iommu/arm,smmu.yaml   | 22 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  4 ++++
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    | 16 ++++++++++++++
+>  3 files changed, 42 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
-> index 767a9d03aa32..d712b1a87e25 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,qdu1000-gcc.yaml
-> @@ -7,7 +7,8 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
->  title: Qualcomm Global Clock & Reset Controller for QDU1000 and QRU1000
->  
->  maintainers:
-> -  - Melody Olvera <quic_molvera@quicinc.com>
-> +  - Taniya Das <quic_tdas@quicinc.com>
-> +  - Imran Shaik <quic_imrashai@quicinc.com>
->  
->  description: |
->    Qualcomm global clock control module which supports the clocks, resets and
-> diff --git a/include/dt-bindings/clock/qcom,qdu1000-gcc.h b/include/dt-bindings/clock/qcom,qdu1000-gcc.h
-> index ddbc6b825e80..2fd36cbfddbb 100644
-> --- a/include/dt-bindings/clock/qcom,qdu1000-gcc.h
-> +++ b/include/dt-bindings/clock/qcom,qdu1000-gcc.h
-> @@ -1,6 +1,6 @@
->  /* SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause */
->  /*
-> - * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2021-2023, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #ifndef _DT_BINDINGS_CLK_QCOM_GCC_QDU1000_H
-> @@ -138,6 +138,8 @@
->  #define GCC_AGGRE_NOC_ECPRI_GSI_CLK			128
->  #define GCC_PCIE_0_PIPE_CLK_SRC				129
->  #define GCC_PCIE_0_PHY_AUX_CLK_SRC			130
-> +#define GCC_GPLL1_OUT_EVEN				131
-> +#define GCC_DDRSS_ECPRI_GSI_CLK				132
->  
->  /* GCC resets */
->  #define GCC_ECPRI_CC_BCR				0
 > -- 
-> 2.25.1
+> 2.17.1
 > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
