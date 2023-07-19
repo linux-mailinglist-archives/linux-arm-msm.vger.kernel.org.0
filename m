@@ -2,100 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B97FE759062
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 10:37:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 964F2759081
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 10:43:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230405AbjGSIhA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 04:37:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37402 "EHLO
+        id S230061AbjGSIn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 04:43:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230386AbjGSIg7 (ORCPT
+        with ESMTP id S230117AbjGSIn1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 04:36:59 -0400
-X-Greylist: delayed 3655 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 19 Jul 2023 01:36:50 PDT
-Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [IPv6:2a01:4f8:a0:821d::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D34FC199D;
-        Wed, 19 Jul 2023 01:36:49 -0700 (PDT)
-Received: from [192.168.20.2] (unknown [77.239.252.99])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Wed, 19 Jul 2023 04:43:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3643419F;
+        Wed, 19 Jul 2023 01:43:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id 8635A140782;
-        Wed, 19 Jul 2023 08:36:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-        s=donut; t=1689755808;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=szebvr8rm/LIv+nRzDJ1uLoC1Kd+I0dsTf9m8x2UGQw=;
-        b=mYCe+wgRSoslw8AKoMKMQyzO2rAt4huTsmSeBr63QzwhwNN1PSx0Fxo+2ks+3gG5Bu4vYr
-        SAOBRqGO76eMcjdyp3UasMzzDEB0kt7saxp5LSJ4Vss4LgqU3gxFg7bz4QcXS4MmAX0nsk
-        w4d0RfKFhpG6wtjFEJ2d34neyhx5eV4=
-Message-ID: <b8cc0229-d663-3527-b320-51a48b4af5b5@postmarketos.org>
-Date:   Wed, 19 Jul 2023 11:36:46 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sdm630: remove refs to nonexistent
- clocks
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B84316130D;
+        Wed, 19 Jul 2023 08:43:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E45C433C7;
+        Wed, 19 Jul 2023 08:43:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689756203;
+        bh=BlGThz6noR1JWehEW08NX7EICRzWrLxkKOFSlD5SvVI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=H8fDI4LDMObASKfrxz4XlsfXVSKNkMBEGNJ65hizZvbIslddKnOVAo3wbyLAZgXhq
+         a7MUOM5Gcy+a+fdkvHG4IshEAk3sHdceXy2D2Po1JzNnjoJ6nxcrkO7QS1oZq/CsRg
+         BGcapRq5J6CffnEQFmtCgiAAJ0tsqkUWitES4n5OP5ICMN33mbznaBb4pLhe2OhGKb
+         vJLXs8VM+nltisaUxKE0c5+BX6bjOPhKq9CuNNCVM8DlfvYlepesVVjBw5qOkQW/EE
+         wq/3d/u0Sh6D62BcNYMWGDzhsy8irpP3O0Q/+O67s1MUMW61CbWj6iA85e06DMUMuh
+         fbHy873N0kLwA==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qM2mR-0002yG-1A;
+        Wed, 19 Jul 2023 10:43:32 +0200
+Date:   Wed, 19 Jul 2023 10:43:31 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230719073520.2644966-1-alexeymin@postmarketos.org>
- <9e38d2f5-6da4-089e-1c70-a89069708909@linaro.org>
-Content-Language: en-US
-From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
-In-Reply-To: <9e38d2f5-6da4-089e-1c70-a89069708909@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 03/15] clk: qcom: gcc-sm6375: Unregister critical clocks
+Message-ID: <ZLeiM6l6tu6XDzrr@hovoldconsulting.com>
+References: <20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v1-3-27784d27a4f4@linaro.org>
+ <ZLaRtrH85v4kpSvb@hovoldconsulting.com>
+ <33a26241-026a-9466-5dd6-e3202b29f57c@linaro.org>
+ <ybugl2m7o5cnzj4lv5ksit2rip6yvths5ieo3xlw6cycto2zax@2jimga475z2t>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ybugl2m7o5cnzj4lv5ksit2rip6yvths5ieo3xlw6cycto2zax@2jimga475z2t>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19.07.2023 10:39, Krzysztof Kozlowski wrote:
-> On 19/07/2023 09:35, Alexey Minnekhanov wrote:
->> Since commit d6edc31f3a68 ("clk: qcom: smd-rpm: Separate out
->> interconnect bus clocks") rpmcc-sdm660 no longer provides
->> RPM_SMD_AGGR2_NOC_CLK and RPM_SMD_AGGR2_NOC_A_CLK clocks.
->> Remove them to fix various probe failures and get devices
->> booting again.
+On Tue, Jul 18, 2023 at 09:23:52AM -0700, Bjorn Andersson wrote:
+> On Tue, Jul 18, 2023 at 03:26:51PM +0200, Konrad Dybcio wrote:
+> > On 18.07.2023 15:20, Johan Hovold wrote:
+> > > On Mon, Jul 17, 2023 at 05:19:10PM +0200, Konrad Dybcio wrote:
+> > >> Some clocks need to be always-on, but we don't really do anything
+> > >> with them, other than calling enable() once and telling Linux they're
+> > >> enabled.
+> > >>
+> > >> Unregister them to save a couple of bytes and, perhaps more
+> > >> importantly, allow for runtime suspend of the clock controller device,
+> > >> as CLK_IS_CRITICAL prevents the latter.
+> > > 
+> > > But this doesn't sound right. How can you disable a controller which
+> > > still has clocks enabled?
+> > > 
+> > > Shouldn't instead these clocks be modelled properly so that they are
+> > > only enabled when actually needed?
+> > Hm.. We do have clk_branch2_aon_ops, but something still needs to
+> > toggle these clocks.
+> > 
 > 
-> So that commit broke DTS?
+> Before we started replacing these clocks with static votes, I handled
+> exactly this problem in the turingcc-qcs404 driver by registering the
+> ahb clock with a pm_clk_add(). The clock framework will then
+> automagically keep the clock enabled around operations, but it will also
+> keep the runtime state active as long as the clock is prepared.
 > 
+> As mentioned in an earlier reply today, there's no similarity to this in
+> the reset or gdsc code, so we'd need to add that in order to rely on
+> such mechanism.
 
-Yes, this is my understanding of the situation.
-The commit in subject [1] is only in linux-next for a few days, so it 
-broke booting only on 6.5-rc (rc2 currently). Konrad said: "these clocks 
-references were API abuses; referencing the bus clocks was circumventing 
-the interconnect layer. That loophole is now gone and the abusers are 
-now apparent"
+This reminds me of:
 
+	4cc47e8add63 ("clk: qcom: gdsc: Remove direct runtime PM calls")
+
+which recently removed a broken attempt to implement this for gdscs.
+
+Just stumbled over GENPD_FLAG_PM_CLK which may provide a way forward at
+least for genpd (but see below).
+
+> > I *think* we could leave a permanent vote in probe() without breaking
+> > runtime pm! I'll give it a spin bit later..
+> > 
 > 
-> It does not look like you tested the DTS against bindings. Please run
-> `make dtbs_check`
-> 
+> Modelling the AHB clock in DT and putting a devm_clk_get_enabled() would
+> properly connect the two, and thereby handle probe order between the two
+> clock controllers.
 
-If DT schema for interconnect requires bus clocks to be specified, I 
-don't even know what to put there now. Can we change schema?
+Yeah, this dependency really should be described eventually.
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=d6edc31f3a68d8d0636e0cfcd9eced7460ad32f4
+> But it would prevent the power-domain of the parent provider to ever
+> suspending. Using pm_clk_add() this would at least depend on client
+> votes.
 
--- 
-Regards,
-Alexey Minnekhanov
-postmarketOS developer
+IIUC using pm_clk_add() would also prevent the parent from suspending
+due to that resume call in clk_prepare().
+
+And this mechanism is also used for GENPD_FLAG_PM_CLK...
+
+Johan
