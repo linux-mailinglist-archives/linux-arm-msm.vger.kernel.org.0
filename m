@@ -2,127 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E6B375924F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 12:03:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4B3D759260
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 12:10:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230343AbjGSKDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 06:03:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
+        id S229897AbjGSKKW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 06:10:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230234AbjGSKCs (ORCPT
+        with ESMTP id S229847AbjGSKKV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 06:02:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EC861FC8;
-        Wed, 19 Jul 2023 03:02:36 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J9pG60020692;
-        Wed, 19 Jul 2023 10:02:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=Mmjv+awil5Gp8qDftkfLSNylhi1e1NmMe5rzTd8WPmw=;
- b=NkPqVlhpkFEhzM+s/tIKUQmPdfklOKbfm7mWIKcCMULj+0L6EXYcY0gcxagzoxynyfIM
- beYiRIoDI0wSzyyztOGK7UeabWc+0LjQSKBKUel56ZFKbFawiJM90EDWuTCvtFr/xTrD
- xZxwiCMJ+MHpKSy7j8p5OVdYyhvuk2EN4w2FNB39z2unktqr/XqPImnCN9ybSF/LTmks
- 4GcsupM8QJT5jbDflf5AYFtwRh/VH62xqOIdHWJbKpG7kJDScST3UBCdU2dO2n+n5OCn
- rYEqn3v1YxqP3MfQngnO2jFQuTQvZdr0BtMhaxmJzJbDlX89fXyCNoAxCfQlRR5c/R5U fA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rx7rngp8v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 10:02:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36JA2VRn017577
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 10:02:32 GMT
-Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Wed, 19 Jul 2023 03:02:28 -0700
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-To:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC:     <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
-        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tengfei Fan <quic_tengfan@quicinc.com>
-Subject: [PATCH 5/5] soc: qcom: socinfo: add SM4450 ID
-Date:   Wed, 19 Jul 2023 18:01:35 +0800
-Message-ID: <20230719100135.21325-6-quic_tengfan@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230719100135.21325-1-quic_tengfan@quicinc.com>
-References: <20230719100135.21325-1-quic_tengfan@quicinc.com>
+        Wed, 19 Jul 2023 06:10:21 -0400
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C4BCD1723;
+        Wed, 19 Jul 2023 03:10:20 -0700 (PDT)
+Received: from [192.168.20.2] (unknown [77.239.252.99])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id D83DB140782;
+        Wed, 19 Jul 2023 10:10:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1689761419;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=7z7jIvUFcXoNmOObOfrGS4onALLyXZz1+AOjei4YhGg=;
+        b=S9MhZpvNJXHPmB+GsAv7qt+b3U7JgcV2uiPS45toZBoEt43rgtdy6Pcr3ExZqVaNiLoZbM
+        8Cs6DeRMfwCKYcglUGAWHnniTDXZ8cs2MCmoJMhpEiOq8E7UejqtBgLh6AWLnAXM25Kds5
+        FW9N4KBqmNJYNdNG3BspqYqPPzWzugM=
+Message-ID: <1f8cbc00-9602-486d-b3c9-9c82f3b6c8df@postmarketos.org>
+Date:   Wed, 19 Jul 2023 13:10:17 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DfQ6XY_Ahp4P0Q9-GXalqxSH3yMxovtO
-X-Proofpoint-ORIG-GUID: DfQ6XY_Ahp4P0Q9-GXalqxSH3yMxovtO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_06,2023-07-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- priorityscore=1501 mlxscore=0 clxscore=1015 suspectscore=0 mlxlogscore=818
- impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307190091
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3] arm64: dts: qcom: sdm630: Add support for modem
+ remoteproc
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230719093458.2668842-1-alexeymin@postmarketos.org>
+ <2c1c69bf-3cd5-4d68-43db-696ce0f15197@linaro.org>
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+In-Reply-To: <2c1c69bf-3cd5-4d68-43db-696ce0f15197@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the ID for the Qualcomm SM4450 SoC.
+On 19.07.2023 12:45, Krzysztof Kozlowski wrote:
+> On 19/07/2023 11:34, Alexey Minnekhanov wrote:
+>> Modem subsystem in SDM630/660 is similar to MSM8998 and
+>> device tree node for it is based on the one from msm8998.dtsi.
+>>
+>> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+>> ---
+>>
+>> V3: Use memory-region property to specify memory regions, instead
+>>      of using "mba" and "mpss" subnodes.
+>>
+>> V2 link: https://lore.kernel.org/lkml/20230621175046.61521-3-alexeymin@postmarketos.org/
+>>
+>>   arch/arm64/boot/dts/qcom/sdm630.dtsi | 59 ++++++++++++++++++++++++++++
+>>   1 file changed, 59 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>> index 2136ded22f7e..797625cf78ac 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>> @@ -1032,6 +1032,65 @@ data-pins {
+>>   			};
+>>   		};
+>>   
+>> +		remoteproc_mss: remoteproc@4080000 {
+>> +			compatible = "qcom,sdm660-mss-pil";
+> 
+> Missing bindings so standard comment:
+> 
+> It does not look like you tested the DTS against bindings. Please run
+> `make dtbs_check` (see
+> Documentation/devicetree/bindings/writing-schema.rst or
+> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+> for instructions).
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- drivers/soc/qcom/socinfo.c         | 1 +
- include/dt-bindings/arm/qcom,ids.h | 2 ++
- 2 files changed, 3 insertions(+)
+Bindings are already in linux-next/master since 
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=ed50ac266f67829d4732c8ca61ef1953c2cc63d0 
+.
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 4d49945b3a35..fa5e4c54207a 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -415,6 +415,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(IPQ5312) },
- 	{ qcom_board_id(IPQ5302) },
- 	{ qcom_board_id(IPQ5300) },
-+	{ qcom_board_id(SM4450) },
- };
- 
- static const char *socinfo_machine(struct device *dev, unsigned int id)
-diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
-index bcbe9ee2cdaf..6201bfb1405e 100644
---- a/include/dt-bindings/arm/qcom,ids.h
-+++ b/include/dt-bindings/arm/qcom,ids.h
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2022 Linaro Ltd
-+ * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-  * Author: Krzysztof Kozlowski <krzk@kernel.org> based on previous work of Kumar Gala.
-  */
- #ifndef _DT_BINDINGS_ARM_QCOM_IDS_H
-@@ -259,6 +260,7 @@
- #define QCOM_ID_IPQ5312			594
- #define QCOM_ID_IPQ5302			595
- #define QCOM_ID_IPQ5300			624
-+#define QCOM_ID_SM4450			568
- 
- /*
-  * The board type and revision information, used by Qualcomm bootloaders and
+And I did check DTS against bindings, it spat 2 warnings about new 
+remoteproc node, which do not make much sense to me:
+
+   DTC_CHK arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb
+   .../arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb: 
+remoteproc@4080000: qcom,halt-regs:0: [43] is too short
+         From schema: 
+.../Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+   .../arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dtb: 
+remoteproc@4080000: memory-region: [[45], [46]] is too short
+         From schema: 
+.../Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+
+because I do not understand where the limitation to number of items for 
+"qcom,halt-regs" or "memory-regions" come from.
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Regards,
+Alexey Minnekhanov
+postmarketOS developer
