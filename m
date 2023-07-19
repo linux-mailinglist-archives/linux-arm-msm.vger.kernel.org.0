@@ -2,81 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00A6675914D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 11:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C9367591CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 11:42:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229823AbjGSJN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 05:13:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59662 "EHLO
+        id S229820AbjGSJmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 05:42:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231232AbjGSJN1 (ORCPT
+        with ESMTP id S230379AbjGSJm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 05:13:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD02173B;
-        Wed, 19 Jul 2023 02:13:26 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36J4gSwX008449;
-        Wed, 19 Jul 2023 09:13:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Gj2yJp4znK+CIfSIZHigRVEHv6hEKNrVzDu1MeYrYWQ=;
- b=CuT8cBdTbmrwqnDifEHUr3fz9efcCSKpGn03+sYl5qWghQV5ICeiJsvuajABxVjG5S/3
- hQUdb6s2HFpSXfdAIFUT58D089d3/6bCZpL6e5W6N+j697xS6zE5QvgDmnC02XSi8iue
- +X+y7XzTLZdcEyp0T7cRDn2gIx9dKNbx1ls9nPm5sFxDM0Oc12awsEHXWNPc5A3y0beV
- 6Sso9LlObNP4PeY9PGOmGknq4J5BMZSVpczOE5jW3u0fwISc2TRwXaliYFE+kMt31ftD
- WXFT4GVJnaEmYwANZwXapnOD9k5snDcCB5/760pyM38buR8IxT+rDxRh3me0rdaD42JH DA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rwnrrjx4n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 09:13:23 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36J9DMfZ020133
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Jul 2023 09:13:22 GMT
-Received: from [10.216.47.173] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 19 Jul
- 2023 02:13:18 -0700
-Message-ID: <37ab515a-a4b1-09fa-6ec4-e2dae17fb58c@quicinc.com>
-Date:   Wed, 19 Jul 2023 14:43:15 +0530
+        Wed, 19 Jul 2023 05:42:27 -0400
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [IPv6:2a01:4f8:a0:821d::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 882C110D4;
+        Wed, 19 Jul 2023 02:42:26 -0700 (PDT)
+Received: from lexxgentoo.devos.club (unknown [77.239.252.99])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id C0D09140121;
+        Wed, 19 Jul 2023 09:42:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1689759745;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=meT+EQqITVdz8Y3mT8iZaYriOiIgKIZ/SrythyqBZfM=;
+        b=g3fQ6MVH+lALdS5cvw4i4MMYv63vT6jEulktXl0irVwxNfF2piaumqExGRhLaGR2v8XLHP
+        G9i04ioGvtwSplIICaNIUFncOeSXLnIcRLQ5oznIk+GnQ9qZnW1L5vHvSY5Mdb6snMyLXG
+        plmxYKjxXmB5kKFV3GnaqiY84L8KsgQ=
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: [PATCH v3] arm64: dts: qcom: sdm630: Add support for modem remoteproc
+Date:   Wed, 19 Jul 2023 12:34:58 +0300
+Message-ID: <20230719093458.2668842-1-alexeymin@postmarketos.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 1/2] dt-bindings: power: qcom,rpmhpd: Add Generic RPMh PD
- indexes
-Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <1689744162-9421-1-git-send-email-quic_rohiagar@quicinc.com>
- <1689744162-9421-2-git-send-email-quic_rohiagar@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1689744162-9421-2-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pV2YhOuCdK5Fn9cLY1UA0f4Kyi1_8HUZ
-X-Proofpoint-ORIG-GUID: pV2YhOuCdK5Fn9cLY1UA0f4Kyi1_8HUZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_05,2023-07-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- malwarescore=0 suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- mlxlogscore=838 priorityscore=1501 impostorscore=0 mlxscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307190083
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,59 +57,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Modem subsystem in SDM630/660 is similar to MSM8998 and
+device tree node for it is based on the one from msm8998.dtsi.
 
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+---
 
-On 7/19/2023 10:52 AM, Rohit Agarwal wrote:
-> Add Generic RPMh Power Domain indexes that can be used
-> for all the Qualcomm SoC henceforth.
-> The power domain indexes of these bindings are based on compatibility
-> with current targets like SM8[2345]50 targets.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+V3: Use memory-region property to specify memory regions, instead
+    of using "mba" and "mpss" subnodes.
 
-Signed-off-by should be followed by Suggested-by ?
+V2 link: https://lore.kernel.org/lkml/20230621175046.61521-3-alexeymin@postmarketos.org/
 
--Mukesh
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 59 ++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-> ---
->   include/dt-bindings/power/qcom,rpmhpd.h | 30 ++++++++++++++++++++++++++++++
->   1 file changed, 30 insertions(+)
->   create mode 100644 include/dt-bindings/power/qcom,rpmhpd.h
-> 
-> diff --git a/include/dt-bindings/power/qcom,rpmhpd.h b/include/dt-bindings/power/qcom,rpmhpd.h
-> new file mode 100644
-> index 0000000..7c201a6
-> --- /dev/null
-> +++ b/include/dt-bindings/power/qcom,rpmhpd.h
-> @@ -0,0 +1,30 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_POWER_QCOM_RPMHPD_H
-> +#define _DT_BINDINGS_POWER_QCOM_RPMHPD_H
-> +
-> +/* Generic RPMH Power Domain Indexes */
-> +#define RPMHPD_CX               0
-> +#define RPMHPD_CX_AO		1
-> +#define RPMHPD_EBI		2
-> +#define RPMHPD_GFX		3
-> +#define RPMHPD_LCX		4
-> +#define RPMHPD_LMX		5
-> +#define RPMHPD_MMCX		6
-> +#define RPMHPD_MMCX_AO		7
-> +#define RPMHPD_MX		8
-> +#define RPMHPD_MX_AO		9
-> +#define RPMHPD_MXC		10
-> +#define RPMHPD_MXC_AO		11
-> +#define RPMHPD_MSS              12
-> +#define RPMHPD_NSP		13
-> +#define RPMHPD_NSP0             14
-> +#define RPMHPD_NSP1             15
-> +#define RPMHPD_QPHY             16
-> +#define RPMHPD_DDR              17
-> +#define RPMHPD_XO               18
-> +
-> +#endif
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 2136ded22f7e..797625cf78ac 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1032,6 +1032,65 @@ data-pins {
+ 			};
+ 		};
+ 
++		remoteproc_mss: remoteproc@4080000 {
++			compatible = "qcom,sdm660-mss-pil";
++			reg = <0x04080000 0x100>, <0x04180000 0x40>;
++			reg-names = "qdsp6", "rmb";
++
++			interrupts-extended = <&intc GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog",
++					  "fatal",
++					  "ready",
++					  "handover",
++					  "stop-ack",
++					  "shutdown-ack";
++
++			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
++				 <&gcc GCC_BIMC_MSS_Q6_AXI_CLK>,
++				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
++				 <&gcc GPLL0_OUT_MSSCC>,
++				 <&gcc GCC_MSS_SNOC_AXI_CLK>,
++				 <&gcc GCC_MSS_MNOC_BIMC_AXI_CLK>,
++				 <&rpmcc RPM_SMD_QDSS_CLK>,
++				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
++			clock-names = "iface",
++				      "bus",
++				      "mem",
++				      "gpll0_mss",
++				      "snoc_axi",
++				      "mnoc_axi",
++				      "qdss",
++				      "xo";
++
++			qcom,smem-states = <&modem_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			resets = <&gcc GCC_MSS_RESTART>;
++			reset-names = "mss_restart";
++
++			qcom,halt-regs = <&tcsr_regs_1 0x3000 0x5000 0x4000>;
++
++			power-domains = <&rpmpd SDM660_VDDCX>,
++					<&rpmpd SDM660_VDDMX>;
++			power-domain-names = "cx", "mx";
++
++			memory-region = <&mba_region>, <&mpss_region>;
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts = <GIC_SPI 452 IRQ_TYPE_EDGE_RISING>;
++				label = "modem";
++				qcom,remote-pid = <1>;
++				mboxes = <&apcs_glb 15>;
++			};
++		};
++
+ 		adreno_gpu: gpu@5000000 {
+ 			compatible = "qcom,adreno-508.0", "qcom,adreno";
+ 
+-- 
+2.41.0
+
