@@ -2,166 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14929759DBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 20:46:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8302D759E2D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jul 2023 21:05:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbjGSSqH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jul 2023 14:46:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35170 "EHLO
+        id S230383AbjGSTF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jul 2023 15:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjGSSqF (ORCPT
+        with ESMTP id S229592AbjGSTF1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jul 2023 14:46:05 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05DD7C6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 11:46:03 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f122ff663eso11961481e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 11:46:02 -0700 (PDT)
+        Wed, 19 Jul 2023 15:05:27 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63DD4199A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:05:25 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b700e85950so107508201fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 12:05:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ragnatech-se.20221208.gappssmtp.com; s=20221208; t=1689792361; x=1692384361;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8P6p5GxD+C7LfK4xTVAmdgfr7J5QiZZmSr+c4qR0eQ4=;
-        b=PNHMPmfGkc1gL3s+kuZsOV06iS0AVcua9wceAmdSEpVaau8usQXOmlxuVajPoqahSZ
-         oXCeyXW3i7qO4gPQC3/B5Lo5Eqmi2HM4U13eYxzJby4ZFd5uR2kFc8wjOiArIEd55PBA
-         FeCJue+xZBMErbY8RHL9QpZivP+scZ+Uhv+xiPlfw+QmU/c+xu8cJYkIrMEc/MG7elAK
-         qWZ83FR4V9wLcNgcODc1mJlKxSJnwdLewAg5rcPN0PhCf2e09w5V1Bp1xL5H141MnfFQ
-         Zld3xPSZJnzYVXtM2wQmsSZTU5Qt4Z0CaW8ampG4BzUMYrnqq3UfbUoP7KRh6XWbjalG
-         17Pw==
+        d=linaro.org; s=google; t=1689793523; x=1692385523;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Uxzu4bTwNO5BdcIxJkw1/nWB+CP9FwcUhHLLgewCkgw=;
+        b=bhII2Uj+TkgnIjMm9sToEM5IW39MSLgMv2SVJAXa7OF8jwzzINNd/XuigFxHQKUOGi
+         PcMsH5te8ILc8UFlgsgn1LPxw76s/7v+Kwz6nRfJmqRLmByrpsBR4DXLXPfaQ9goWtGq
+         8qATDajVQY90BOwRwW0UGOLFm8OwZ/2KVRBYZv2hDKojVbQtxFvKaidB9AOORwelCPJ1
+         VkYNVU0PqX7lysKjjmRT71I/8Fux5AERdcvGlnVZKELBP89KbrGah/2JgTAZwrlmo6ed
+         Cmmdrl7XM0KOvdPco4h+qiz0C8/Wj7WoKGEiuK0Zve4LUntVjUJGnZWwtlO2cQjqtxav
+         nXsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689792361; x=1692384361;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1689793523; x=1692385523;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8P6p5GxD+C7LfK4xTVAmdgfr7J5QiZZmSr+c4qR0eQ4=;
-        b=CKYxOSBaWQ0CTeGYeUzXPIIK8J3bF+QUPnomCCwZ7rqM6MW8SG5b0rsOcBjThTVQoI
-         4Dhm8lbGh38XWUcCWZaFwvdjy0e/twEVaD485ujk03+/RcgjWk33p+h35P+hilGSCi9f
-         aI/LEYtHkOiLnYnPMFyi5lV/0E1KUzo5ou1tnKcBnGWFU+4t/PbL2zd78SIl4GbccUUB
-         baM4Vp7nCGRKW0URIuMD/BmnBGzfNhwsZr7RNM0tg3Vr7+bAme/sWgmrtw4SZZaavJ9H
-         cJopDBP6Q7umthnWHltOkTviSu5FVR58BwWQr9Xe6xtgIURpDRvwVdRN+HSebINvz8ha
-         /NrQ==
-X-Gm-Message-State: ABy/qLbqpbKW6SFRvUbGTJyGZIzYbTXHoMh7bcK5fKqDx21xxfV2zcIA
-        xGX3tCNTlR+BVtOy8JWcv07QeQ==
-X-Google-Smtp-Source: APBJJlFtrWyQNURr4DI24Yfx+KhHtEnbcs8mZXCEdNLSvmMP4IixrdRQLU+06NloRR7Z4XxkYEDlqQ==
-X-Received: by 2002:a05:6512:250f:b0:4fb:8de9:ac0e with SMTP id be15-20020a056512250f00b004fb8de9ac0emr607490lfb.1.1689792361237;
-        Wed, 19 Jul 2023 11:46:01 -0700 (PDT)
-Received: from localhost (h-46-59-89-207.A463.priv.bahnhof.se. [46.59.89.207])
-        by smtp.gmail.com with ESMTPSA id m8-20020ac24248000000b004fbad6bc93dsm1057209lfl.136.2023.07.19.11.46.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jul 2023 11:46:00 -0700 (PDT)
-Date:   Wed, 19 Jul 2023 20:45:59 +0200
-From:   Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Michael Riesch <michael.riesch@wolfvision.net>,
-        Rui Miguel Silva <rmfrfs@gmail.com>,
-        Steve Longerbeam <slongerbeam@gmail.com>,
-        Matt Ranostay <matt.ranostay@konsulko.com>,
-        Michael Tretter <m.tretter@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Ming Qian <ming.qian@nxp.com>, Shijie Qin <shijie.qin@nxp.com>,
-        Zhou Peng <eagle.zhou@nxp.com>,
-        Eddie James <eajames@linux.ibm.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Bin Liu <bin.liu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
-        Houlong Wei <houlong.wei@mediatek.com>,
-        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-        Tiffany Lin <tiffany.lin@mediatek.com>,
-        Yunfei Dong <yunfei.dong@mediatek.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
-        Jacopo Mondi <jacopo@jmondi.org>,
-        Dafna Hirschfeld <dafna@fastmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Krz ysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Yong Deng <yong.deng@magewell.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Benoit Parrot <bparrot@ti.com>, Sean Young <sean@mess.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Sean Wang <sean.wang@mediatek.com>, devicetree@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, openbmc@lists.ozlabs.org,
-        linux-aspeed@lists.ozlabs.org, linux-mediatek@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-amlogic@lists.infradead.org
-Subject: Re: [PATCH v2] media: Explicitly include correct DT includes
-Message-ID: <ZLgvZ2ao1tgrRlFu@oden.dyn.berto.se>
-References: <20230718143118.1065743-1-robh@kernel.org>
+        bh=Uxzu4bTwNO5BdcIxJkw1/nWB+CP9FwcUhHLLgewCkgw=;
+        b=NEx5/jN7qWlnFQbic6bEalAawxX1oNb0VKkA7GChaMi1mSWsCi4NrmQVk3jhH+IzU0
+         9UE1qM8Uoped6qBr3DATXzVybRGNUkZXV9xJljBYgBzYsnr82AHMdlhy2zVsgKzcgoGs
+         N93YgdpMgcUFqti6z7ArSFib86XSrGZJoiHu5bUvYyk/yAvg8ks27hYzVcHBN7NQK0jW
+         jZ10qfQbpNjyc+tBifFb3/WEwTDTDYmubE1PzZkU4G0cQwwJ77hyQYscm+7Dc+P7HEt0
+         7CdHst4ISeUBvV9U3vdk8Rx4UfPtjsJUKpPXGHpiGgg1WjBet5leNrQP828yMV5eZL08
+         ZdFw==
+X-Gm-Message-State: ABy/qLZbXpVf5KpNT4O8HSPlcc5ZtG2nI1EVjRKTaColw4B2QqhZ9rcE
+        O1tL++ewOM3TOduZJRlsDc3RGw==
+X-Google-Smtp-Source: APBJJlHfDiWa6z/RIaWmCgcjPLMVIlHwrtDTsbKJH/hNfg/cg6myuLG7psXda3yupTjsCaobBA3dfw==
+X-Received: by 2002:a2e:99cd:0:b0:2b7:14d4:ce6d with SMTP id l13-20020a2e99cd000000b002b714d4ce6dmr613499ljj.48.1689793523679;
+        Wed, 19 Jul 2023 12:05:23 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id gx3-20020a170906f1c300b00993cc1242d4sm2692809ejb.151.2023.07.19.12.05.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Jul 2023 12:05:23 -0700 (PDT)
+Message-ID: <74f81a77-6cba-37eb-54ed-e7570db47632@linaro.org>
+Date:   Wed, 19 Jul 2023 21:05:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230718143118.1065743-1-robh@kernel.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
+ TLMM
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230619092735.20323-1-krzysztof.kozlowski@linaro.org>
+ <20230619092735.20323-2-krzysztof.kozlowski@linaro.org>
+ <851790f2-f673-f754-08b8-d07cc2c809fb@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <851790f2-f673-f754-08b8-d07cc2c809fb@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On 24/06/2023 14:12, Konrad Dybcio wrote:
+> On 19.06.2023 11:27, Krzysztof Kozlowski wrote:
+>> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
+>> driver is similar to SM8250 LPASS pin controller, with difference in one
+>> new pin (gpio14).
+>>
 
-On 2023-07-18 08:31:14 -0600, Rob Herring wrote:
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
+
+
+> <       LPI_MUX_swr_tx_data2,
+> 54d52
+> < static int gpio14_pins[] = { 14 };
+> 71d68
+> <       PINCTRL_PIN(14, "gpio14"),
+> 75c72
+> < static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
+> ---
+>> static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
+> 111d107
+> <       LPI_PINGROUP(14, 6, swr_rx_data, _, _, _),
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
-> v2:
-> - Fix double include of of.h
-> ---
+> 
+> 
+> I really think adding just these pin14 entries to the 8250 driver would
+> be a good idea..
+> 
 
-For,
 
->  drivers/media/platform/renesas/rcar-isp.c                     | 2 +-
->  drivers/media/platform/renesas/rcar-vin/rcar-core.c           | 1 -
->  drivers/media/platform/renesas/rcar-vin/rcar-csi2.c           | 1 -
+I could extend arrays with gpio14 and pass array size -1 to sm8250
+variant and full size to sm8350. However the difference will be in:
 
-Reviewed-by: Niklas Söderlund <niklas.soderlund@ragnatech.se>
+-static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
++static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
+
+I cannot create here variant "swr_tx_data_groups_sm8350" because the
+name is used in macros. Using bigger (with gpio14) group for sm8250
+should work, because there is no gpio14, but produces difference in the
+controller:
+
+-/sys/kernel/debug/pinctrl/33c0000.pinctrl/pinmux-functions:function 18: swr_tx_data, groups = [ gpio1 gpio2 gpio5 ]
++/sys/kernel/debug/pinctrl/33c0000.pinctrl/pinmux-functions:function 18: swr_tx_data, groups = [ gpio1 gpio2 gpio5 gpio14 ]
+
+Therefore I will go with separate drivers.
+
+Best regards,
+Krzysztof
+
