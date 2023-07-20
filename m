@@ -2,203 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B24B75A8B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:09:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 371E275A8D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:13:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbjGTIJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 04:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50402 "EHLO
+        id S229574AbjGTIMw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 04:12:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229974AbjGTIJ1 (ORCPT
+        with ESMTP id S229684AbjGTIMv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 04:09:27 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9173D269F;
-        Thu, 20 Jul 2023 01:09:20 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K5cMvp025361;
-        Thu, 20 Jul 2023 08:09:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=eOHwRTYQWQHq3iWpDXYWI9GG/MjJVrzm+Hp09fXHPhc=;
- b=Z6202SkRjzpHwEF/opmAN85L1/7jiBDmWPEtAsXH/a7wedgWGWtpCewOexoBvZcyerG0
- ulHb+hBPMNAmfgOpTYdYTZvcJrGzwG2hrJCeT1AY89/Rlx3aPbJcWg780KgUew1mRUMU
- DxEWBjpV0UsaoOCMzeEwaj4g4vL9FiaEI7tYU4ksQPrFxwEhesWUbxRQEsiZ2JBU9yP5
- DeGS5UlpD/jVHojnSdzAuoGhHPrQTMV7TEBNZUE2U0awD91m3/ncji7Q6VLxahq9hJPP
- xYaDAIHGHRq58ajJeFczQnGQ/BNBvFu4b+hDeS+mkvUwd9nlSWJznKmiXzpGDS2htsMM 3A== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxxxv89pf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 08:09:16 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36K89Dad010203;
-        Thu, 20 Jul 2023 08:09:13 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3rumhm8dbv-1;
-        Thu, 20 Jul 2023 08:09:13 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36K89Cbh010150;
-        Thu, 20 Jul 2023 08:09:13 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 36K89DQM010192;
-        Thu, 20 Jul 2023 08:09:13 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id C38751586; Thu, 20 Jul 2023 13:39:12 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8550: Update the RPMHPD bindings entry
-Date:   Thu, 20 Jul 2023 13:39:05 +0530
-Message-Id: <1689840545-5094-5-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1689840545-5094-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1689840545-5094-1-git-send-email-quic_rohiagar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aErxqgzulxy6FTwh1cmaiFKtA8yNz1cd
-X-Proofpoint-ORIG-GUID: aErxqgzulxy6FTwh1cmaiFKtA8yNz1cd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-20_02,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- phishscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0
- lowpriorityscore=0 mlxscore=0 impostorscore=0 clxscore=1015 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307200066
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+        Thu, 20 Jul 2023 04:12:51 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8922684
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:12:49 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f9fdb0ef35so775173e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689840768; x=1690445568;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oH1N3VFh86yOJsuaJIj1/t7k72DUOog/5BK7UD6G/qE=;
+        b=dlsYQ84Z5oRfbA0IBmRHzjJ3Y8LrqD9z18GgLPNY6lcwXcfHTxgBkCY0JOYyKnzK07
+         kLRR4iPakywDS84JnXe1lkEItLVCp+rnHfgqOnJjrhWUae+g7W7Wdkaj/prBRQLDP7sx
+         JLTw4M6ajNu5zwQyWAwHPFGRuY1SwRTQYJDDF1puE/kfAkprdmT01DpTxLWJKB5P2VG7
+         RxhbwMR7TE7lqZSX6t9vWf8zvA5DKpMJF51Fl4qSBY8E7DkzRMIm3qqtFhh99VJaMopl
+         3q+iYUUqVP8BKLe4CeYENDPkEJKudSkB5SIkbH7QnTZmYmHDEJxXIeSzyFGFKtQsImO9
+         GX0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689840768; x=1690445568;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oH1N3VFh86yOJsuaJIj1/t7k72DUOog/5BK7UD6G/qE=;
+        b=ibGk4QOYni4NBbi4fzOKEM6fUk0uw7/0TRXq0/TZQvONMQpBgTJqc9f0paCtUkJTLB
+         Cz96TYMDGPp7SC1ONTIg9pEjfGdDldPO7dkCYH8KHx80OtUo4zeRgTQtFbhA/6n2HsEP
+         OZMONJCszAuVVCZILFu3/mtN3dVFqZkOjnBpizSAKWJ3Ott2kiSmDGW9q3eY4YA5RKPs
+         se9Tf0y0BeKBXfmaOlVmOLvvTzqlm0a6ujxwo/M8p2X1NTAGLdcPuk97IeYFBhulxFUp
+         Ccurfx4TjxKk82QtJNYliggswxch54EaYUVatGY6Dvd2WLL72J0VvKG53qNZhNYG+2/r
+         JOXQ==
+X-Gm-Message-State: ABy/qLb7/bPqCTq2VR5MFEorvgGWE3ORkHY5Xuy/gfY1aNYrRnmtYqaG
+        3bMSAvbXLf96vLDIEUTROQZk+w==
+X-Google-Smtp-Source: APBJJlF8mxDh5HmWofkpP+rQjdT2JKO99M9BFo0Om32i61UM90RIZkgZyEtn3b/5b4eHX7+9lH1IrQ==
+X-Received: by 2002:a05:6512:2346:b0:4fb:7666:3bbf with SMTP id p6-20020a056512234600b004fb76663bbfmr1172015lfu.26.1689840767552;
+        Thu, 20 Jul 2023 01:12:47 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id e12-20020ac2546c000000b004fba1278e79sm82252lfn.87.2023.07.20.01.12.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 01:12:47 -0700 (PDT)
+Message-ID: <1f2cd1ab-dac5-e8f8-bc2c-69f76d006315@linaro.org>
+Date:   Thu, 20 Jul 2023 10:12:45 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Add initial support for RDP404 of IPQ5018 family
+Content-Language: en-US
+To:     Hariharan K <quic_harihk@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com
+References: <20230720074302.13585-1-quic_harihk@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230720074302.13585-1-quic_harihk@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the RPMHPD bindings entry as per the new generic bindings defined
-in rpmhpd.h for SM8550 SoC.
+On 20.07.2023 09:43, Hariharan K wrote:
+> Add the initial device tree support for the Reference Design
+> Platform(RDP) 404 based on IPQ5018 family of SoC. This patch
+> carries the support for Console UART and eMMC.
+> 
+> This series is based on the below series,
+> https://lore.kernel.org/lkml/20230720072938.315
+> 46-1-quic_harihk@quicinc.com/
+No dependency stated, but the ipq5018 dtsi doesn't exist in -next.
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 41d60af..59bd1c7 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -15,6 +15,7 @@
- #include <dt-bindings/interconnect/qcom,sm8550-rpmh.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/power/qcom,rpmhpd.h>
- #include <dt-bindings/soc/qcom,gpr.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
-@@ -1989,8 +1990,8 @@
- 			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "xo";
- 
--			power-domains = <&rpmhpd SM8550_CX>,
--					<&rpmhpd SM8550_MSS>;
-+			power-domains = <&rpmhpd RPMHPD_CX>,
-+					<&rpmhpd RPMHPD_MSS>;
- 			power-domain-names = "cx", "mss";
- 
- 			interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
-@@ -2368,7 +2369,7 @@
- 			iommus = <&apps_smmu 0x540 0>;
- 			qcom,dll-config = <0x0007642c>;
- 			qcom,ddr-config = <0x80040868>;
--			power-domains = <&rpmhpd SM8550_CX>;
-+			power-domains = <&rpmhpd RPMHPD_CX>;
- 			operating-points-v2 = <&sdhc2_opp_table>;
- 
- 			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
-@@ -2412,7 +2413,7 @@
- 			reg = <0 0x0aaf0000 0 0x10000>;
- 			clocks = <&bi_tcxo_div2>,
- 				 <&gcc GCC_VIDEO_AHB_CLK>;
--			power-domains = <&rpmhpd SM8550_MMCX>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
- 			required-opps = <&rpmhpd_opp_low_svs>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
-@@ -2471,7 +2472,7 @@
- 					      "core",
- 					      "vsync";
- 
--				power-domains = <&rpmhpd SM8550_MMCX>;
-+				power-domains = <&rpmhpd RPMHPD_MMCX>;
- 
- 				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
- 				assigned-clock-rates = <19200000>;
-@@ -2560,7 +2561,7 @@
- 				#sound-dai-cells = <0>;
- 
- 				operating-points-v2 = <&dp_opp_table>;
--				power-domains = <&rpmhpd SM8550_MMCX>;
-+				power-domains = <&rpmhpd RPMHPD_MMCX>;
- 
- 				status = "disabled";
- 
-@@ -2628,7 +2629,7 @@
- 					      "iface",
- 					      "bus";
- 
--				power-domains = <&rpmhpd SM8550_MMCX>;
-+				power-domains = <&rpmhpd RPMHPD_MMCX>;
- 
- 				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
- 						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
-@@ -2723,7 +2724,7 @@
- 					      "iface",
- 					      "bus";
- 
--				power-domains = <&rpmhpd SM8550_MMCX>;
-+				power-domains = <&rpmhpd RPMHPD_MMCX>;
- 
- 				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
- 						  <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
-@@ -2798,7 +2799,7 @@
- 				 <0>,
- 				 <0>, /* dp3 */
- 				 <0>;
--			power-domains = <&rpmhpd SM8550_MMCX>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
- 			required-opps = <&rpmhpd_opp_low_svs>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
-@@ -3933,8 +3934,8 @@
- 			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "xo";
- 
--			power-domains = <&rpmhpd SM8550_LCX>,
--					<&rpmhpd SM8550_LMX>;
-+			power-domains = <&rpmhpd RPMHPD_LCX>,
-+					<&rpmhpd RPMHPD_LMX>;
- 			power-domain-names = "lcx", "lmx";
- 
- 			interconnects = <&lpass_lpicx_noc MASTER_LPASS_PROC 0 &mc_virt SLAVE_EBI1 0>;
-@@ -4065,9 +4066,9 @@
- 			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "xo";
- 
--			power-domains = <&rpmhpd SM8550_CX>,
--					<&rpmhpd SM8550_MXC>,
--					<&rpmhpd SM8550_NSP>;
-+			power-domains = <&rpmhpd RPMHPD_CX>,
-+					<&rpmhpd RPMHPD_MXC>,
-+					<&rpmhpd RPMHPD_NSP>;
- 			power-domain-names = "cx", "mxc", "nsp";
- 
- 			interconnects = <&nsp_noc MASTER_CDSP_PROC 0 &mc_virt SLAVE_EBI1 0>;
--- 
-2.7.4
-
+Konrad
