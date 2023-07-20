@@ -2,176 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA62D75A7F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 09:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4186675A802
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 09:43:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231621AbjGTHig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 03:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59032 "EHLO
+        id S231386AbjGTHm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 03:42:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231136AbjGTHif (ORCPT
+        with ESMTP id S231303AbjGTHm4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 03:38:35 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D0902122
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 00:38:34 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b933bbd3eeso6370591fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 00:38:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689838712; x=1690443512;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1n8N9J9B24EsiLuyq+qMu7/xWi95+D9RIHdWY4bjMlw=;
-        b=GeoUaGrgnR0h6DBy8/tSBBkVuInqNGEx92wbx22OC7UH7M1q+9hhY5Y8BMhcpovfAr
-         gbXzA2y28jDGSBLOi/7WASC624U4URepJAAw3xLUDEbq0RvtRSlX4B9DF+ZjgFO1wgAE
-         KjkBihWI/MCIQEVdwbmYj2hZ7/CrT+CKGvKNehAsnydKvCcsy9OpxN+7HJPkCfEAnFVm
-         rVNQkSKkJeGB6GEaOkFZmrOK0bnFnoDZU6G8nQenON5LagMQKHczqq6jB27YyADNsLL8
-         mJBNOe2zjbuGc5KpXqGgETujd9heIcrJHnuqarGl6A2gcsJXlU4O+oNRhztP5gBhaYMk
-         SDcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689838712; x=1690443512;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1n8N9J9B24EsiLuyq+qMu7/xWi95+D9RIHdWY4bjMlw=;
-        b=ZKFZtlCJHmnzyVGazUcPoI1bmnhf4bEsiv07jOEHYnb3jJvslZVnBy+DrZYFBRmkJT
-         zWcov2m9wz/94QfTr7S/KgqEAnRQz/tH+4ZJ5dE09M0D5Nci3c2YoojpWZx14WfItV2t
-         9IiIrGY5eaD73f6g7ju8r6/53I8oULQgMx+jqYUYYHzbuy4kKlbtdVWZZJbXfM+UpIxj
-         VRSVdkVHX6uKvALwmLHTGN4EBXVJiF+IDASdDJsWagmyAkaCK25Jt7F9LnChFRZ4CiEu
-         93i+xg9grDlAGk/utXUw1e9edWejHzwPHf44S4Us97oNEnzIVCy+INeLKjdDrObz4s8e
-         KNLw==
-X-Gm-Message-State: ABy/qLZiRE+wzBqd6k2czuiYZOf/DkimfMFBvGagY0WqdxWwjdlXnR/5
-        eapnAzpN8+2puH/SStfNdfib+Q==
-X-Google-Smtp-Source: APBJJlFj+lgK0tC3C5aVE3I2Z2W3jn+aS20PeB0Q63eFQsAZdHp7EgvN4ur9x2eS2Xh0+3VOD68efw==
-X-Received: by 2002:a2e:908b:0:b0:2b9:6181:d255 with SMTP id l11-20020a2e908b000000b002b96181d255mr1847243ljg.20.1689838712194;
-        Thu, 20 Jul 2023 00:38:32 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id t16-20020a2e9d10000000b002b6fe751b6esm103067lji.124.2023.07.20.00.38.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 00:38:31 -0700 (PDT)
-Message-ID: <852984cc-ac76-31c1-ced5-38286c450544@linaro.org>
-Date:   Thu, 20 Jul 2023 09:38:28 +0200
+        Thu, 20 Jul 2023 03:42:56 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B59C2118;
+        Thu, 20 Jul 2023 00:42:55 -0700 (PDT)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 896F6660707E;
+        Thu, 20 Jul 2023 08:42:52 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1689838973;
+        bh=qql06jpSc72dkLq4FdZfoamoL5RBmEctV2tIFgfKNAo=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=a4UkT6nTjXp2W/l2ACa0ChLRSV/AGn3QpUHSpdxfWsu67VsEa+aeF6qEQk2S+8XPo
+         DDzYFePfFmO0UXJ0V9CHzb1cX6nsNWSWxxPyNasFdT/ctXHlTsbYYtixl7GH6FK/Wm
+         1cBZJL5Aad0XCjNaMpKEMDk0AkfNIMut2g0a2Xce3ucyRsKpV252mhORhSRsLkG/66
+         oR54TKmnhhgh4T1cCh8Ww3lu4Zld3Vj5RwBfT69WJz/NYWDe4hdcthnAgW1RVDokgZ
+         lQA3VaxGRcwBXbdV1bj7qrrXET1Fv7nxRDRbcoUsvXsKVnpL3jHYWzp/h+gosVtMGT
+         EKbOankWmv9bw==
+Message-ID: <78efa42b-cf2e-bf3c-a59a-99d61225c629@collabora.com>
+Date:   Thu, 20 Jul 2023 09:42:49 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS
- TLMM
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 02/15] arm64: dts: qcom: sm6125: Sort spmi_bus node
+ numerically by reg
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230619092735.20323-1-krzysztof.kozlowski@linaro.org>
- <20230619092735.20323-2-krzysztof.kozlowski@linaro.org>
- <851790f2-f673-f754-08b8-d07cc2c809fb@linaro.org>
- <74f81a77-6cba-37eb-54ed-e7570db47632@linaro.org>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
- BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
- HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
- TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
- zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
- MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
- t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
- UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
- aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
- kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
- Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
- R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
- BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
- yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
- xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
- 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
- GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
- mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
- x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
- BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
- mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
- Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
- xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
- AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
- 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
- jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
- cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
- jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
- cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
- bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
- YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
- bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
- nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
- izWDgYvmBE8=
-In-Reply-To: <74f81a77-6cba-37eb-54ed-e7570db47632@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+References: <20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org>
+ <20230718-sm6125-dpu-v3-2-6c5a56e99820@somainline.org>
+ <149d15e6-4995-8ff6-5191-77783c3dedb8@linaro.org>
+ <2zwj7sgsvcl7czobhokop37ycsekiivtuznwegaeybu577skcc@mqdkoolwkail>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <2zwj7sgsvcl7czobhokop37ycsekiivtuznwegaeybu577skcc@mqdkoolwkail>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19.07.2023 21:05, Krzysztof Kozlowski wrote:
-> On 24/06/2023 14:12, Konrad Dybcio wrote:
->> On 19.06.2023 11:27, Krzysztof Kozlowski wrote:
->>> Add driver for pin controller in Low Power Audio SubSystem (LPASS).  The
->>> driver is similar to SM8250 LPASS pin controller, with difference in one
->>> new pin (gpio14).
+Il 19/07/23 23:54, Marijn Suijten ha scritto:
+> On 2023-07-19 01:02:56, Dmitry Baryshkov wrote:
+>> On 19/07/2023 00:24, Marijn Suijten wrote:
+>>> This node has always resided in the wrong spot, making it somewhat
+>>> harder to contribute new node entries while maintaining proper sorting
+>>> around it.  Move the node up to sit after hsusb_phy1 where it maintains
+>>> proper numerical sorting on the (first of its many) reg address
+>>> property.
 >>>
-> 
-> 
-> 
->> <       LPI_MUX_swr_tx_data2,
->> 54d52
->> < static int gpio14_pins[] = { 14 };
->> 71d68
->> <       PINCTRL_PIN(14, "gpio14"),
->> 75c72
->> < static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
->> ---
->>> static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
->> 111d107
->> <       LPI_PINGROUP(14, 6, swr_rx_data, _, _, _),
+>>> Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/sm6125.dtsi | 38 ++++++++++++++++++------------------
+>>>    1 file changed, 19 insertions(+), 19 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>>> index 6937c7ebdb81..cfd0901d4555 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+>>> @@ -684,6 +684,24 @@ hsusb_phy1: phy@1613000 {
+>>>    			status = "disabled";
+>>>    		};
+>>>    
+>>> +		spmi_bus: spmi@1c40000 {
+>>> +			compatible = "qcom,spmi-pmic-arb";
+>>> +			reg = <0x01c40000 0x1100>,
+>>> +			      <0x01e00000 0x2000000>,
+>>> +			      <0x03e00000 0x100000>,
+>>> +			      <0x03f00000 0xa0000>,
+>>> +			      <0x01c0a000 0x26000>;
+>>> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+>>> +			interrupt-names = "periph_irq";
+>>> +			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			qcom,ee = <0>;
+>>> +			qcom,channel = <0>;
+>>> +			#address-cells = <2>;
+>>> +			#size-cells = <0>;
+>>> +			interrupt-controller;
+>>> +			#interrupt-cells = <4>;
+>>> +		};
+>>> +
+>>>    		rpm_msg_ram: sram@45f0000 {
+>>>    			compatible = "qcom,rpm-msg-ram";
+>>>    			reg = <0x045f0000 0x7000>;
+>>> @@ -1189,27 +1207,9 @@ sram@4690000 {
+>>>    			reg = <0x04690000 0x10000>;
+>>>    		};
+>>>    
+>>> -		spmi_bus: spmi@1c40000 {
+>>> -			compatible = "qcom,spmi-pmic-arb";
+>>> -			reg = <0x01c40000 0x1100>,
+>>> -			      <0x01e00000 0x2000000>,
+>>> -			      <0x03e00000 0x100000>,
+>>> -			      <0x03f00000 0xa0000>,
+>>> -			      <0x01c0a000 0x26000>;
+>>> -			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+>>> -			interrupt-names = "periph_irq";
+>>> -			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
+>>> -			qcom,ee = <0>;
+>>> -			qcom,channel = <0>;
+>>> -			#address-cells = <2>;
+>>> -			#size-cells = <0>;
+>>> -			interrupt-controller;
+>>> -			#interrupt-cells = <4>;
+>>> -		};
+>>> -
+>>>    		apps_smmu: iommu@c600000 {
+>>>    			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+>>> -			reg = <0xc600000 0x80000>;
+>>> +			reg = <0x0c600000 0x80000>;
 >>
->>
->>
->> I really think adding just these pin14 entries to the 8250 driver would
->> be a good idea..
->>
+>> Irrelevant, please split.
 > 
+> This was already here in v1, and it is what likely contributed to the
+> sorting mismatch in the first place.
 > 
-> I could extend arrays with gpio14 and pass array size -1 to sm8250
-> variant and full size to sm8350. However the difference will be in:
+> But will split it and send a v4 for just this...
 > 
-> -static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
-> +static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
-> 
-> I cannot create here variant "swr_tx_data_groups_sm8350" because the
-> name is used in macros. Using bigger (with gpio14) group for sm8250
-> should work, because there is no gpio14, but produces difference in the
-> controller:
-> 
-> -/sys/kernel/debug/pinctrl/33c0000.pinctrl/pinmux-functions:function 18: swr_tx_data, groups = [ gpio1 gpio2 gpio5 ]
-> +/sys/kernel/debug/pinctrl/33c0000.pinctrl/pinmux-functions:function 18: swr_tx_data, groups = [ gpio1 gpio2 gpio5 gpio14 ]
-> 
-> Therefore I will go with separate drivers.
-Ack
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
+I agree in that it is irrelevant, but anyway, for the next time: you should at
+least mention "the other change" in your commit message ;-)
+
+Also, remember that this commit has a Fixes tag........ :-)
+
+Cheers,
+Angelo
+
+
+
