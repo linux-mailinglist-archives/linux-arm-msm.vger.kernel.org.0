@@ -2,74 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 087F975B825
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 21:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21A9D75B830
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 21:42:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230526AbjGTTjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 15:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45664 "EHLO
+        id S231146AbjGTTm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 15:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230513AbjGTTjC (ORCPT
+        with ESMTP id S229488AbjGTTmZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 15:39:02 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441C01BE2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 12:39:01 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id 46e09a7af769-6bb07d274feso708199a34.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 12:39:01 -0700 (PDT)
+        Thu, 20 Jul 2023 15:42:25 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C3091733
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 12:42:24 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-cfd4ea89978so1011371276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 12:42:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689881940; x=1690486740;
+        d=linaro.org; s=google; t=1689882143; x=1690486943;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9+940zjds4bSCgKIfbB+4h4F9JhiabKtFHTSYiorpkM=;
-        b=xau+BeGnyS2usHyzCT7o9jXEktoyvjp12ixYPPNawQWUEIL8od5FVs5CDnn4V+m+14
-         03ETb6Yu9BgA0hg5yr1GbgpLd6Z/14Cw7l8DFTxwCO68I26BO45HQ2FXM9ZkY8OcoYMZ
-         sMvj+Ocq77RIpGaVwk8NRGvSixQYqx2bIAV1knjJfDOWUQD4fhY5tz5scW3HbkrUj42A
-         bpx4qQgEW8OKH/m8WPkpAJMXOKzhDjuxfeBQjL3HwabE6t2n1eannNNzhs2TxLwsk1NQ
-         Coxd4j4se52HFavrFh+adE+QB0HS8Gzd3om1nqCv0Rtfzrl8pJsHAnVaMXm8i84nj/vA
-         THeg==
+        bh=6uboV9zE5viSPMUN9jRcO0cjpaJKLGwKotI/bN04OyY=;
+        b=Is+h2NeaSzJfFfsZ98ro8BWc2npdTi8/mAPrWVvtpsxb716Whq2DsR1nkUJ5zX14Xz
+         79qaflwC3BG2VYXCeK0ijBZtmZDQ1AwFmwaxjZDd/vn/AKdit/VHpHHNt7ZvyrLIlMK1
+         rAvvaKIi1pdCGIE6T6PamxnnJ1xdepfGuegPYvjWZ/2v5uqSbyOmvOqKrH1HZMZxxQ9u
+         TipBUYHRAcaq7G2V/lDcSoviQy3dB4LjRa8c+TMTdx5eHkXHMxyv/6aRPA0MgnDthZDb
+         /qNXdFoMB9q33L3QYVfMXu7JSq0qiwBR5arRe8VeAjZhX1/RRVS46BZipMLM8QxKUS/8
+         /7lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689881940; x=1690486740;
+        d=1e100.net; s=20221208; t=1689882143; x=1690486943;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9+940zjds4bSCgKIfbB+4h4F9JhiabKtFHTSYiorpkM=;
-        b=fQaEhfZ6LmYn6OWvg3BFONh9TFJW7IKZsbn38M01+98pNP7XhxcqfSQWc1qLZexbwy
-         eEeub/KoUUIbFILz8RRKZ5khAGZ3jOiiG5Asa+I3Ii8Ruz4x6rrDQxn6uo6fHeeknZRs
-         70B9F/TW2nq84BFygrqnuJuZlgNC2GWCElUxO54cXiG+CWuXgoysYA7BK+nY028XMnrV
-         LdYfk/iV665oaUXm5G2uGOawfVVp1B2100p6WDi69LkKNlR4f4T8l6w1vMQqgoeMi3D8
-         NGioz/5zsJAkgRaeq6kp2CD76Rb+rVSnIGjzD81/Y+3eMgTUnjrUrM1TcL3YwEvnWc1f
-         XWwA==
-X-Gm-Message-State: ABy/qLbKlu7xDSLvRC7YjgiwnJl3EDH0cpGEXCkXcIHf9M69su8JFnON
-        j4ty3usJ5dKD7D+QujIAG942vtaSc97BqjYdHCN8CQ==
-X-Google-Smtp-Source: APBJJlHxlB8o/cqiFOLqYhuTYMWBF3q2dKdZ0BspgF6BWNj8zk5Ho3Qo5xNlFK8k7e+JM/0rKSf9LuvJuG2y4pHZdaw=
-X-Received: by 2002:a05:6830:1d85:b0:6b9:6ffd:91e6 with SMTP id
- y5-20020a0568301d8500b006b96ffd91e6mr3881194oti.32.1689881940658; Thu, 20 Jul
- 2023 12:39:00 -0700 (PDT)
+        bh=6uboV9zE5viSPMUN9jRcO0cjpaJKLGwKotI/bN04OyY=;
+        b=hxSjMhSSHj+X3XNcAOBh915Eqkbg/0dnqVjiUnc0Mk3A0sX59+B+8QjB+ULzbrr8LE
+         SW08s/hsGrXFrI0PxSYGvuJfLeCnpqNbvebm15IkkioTsfvKmrn/Tasu27Xc55ncUutt
+         lAyCHN2QrW1W9uO+1evq3FWDniKsifPYItUpbXPh778hTcpCdaWysm6ac497iXKlA1V8
+         pEn7me1U5t0u69w/gWg8BUDzWpyBkAee8ZzRebHjNj2Tw1Wee1lOKGccX6Ka30FTw1d2
+         X72kCleCn4tdoPmp6NR69KtvphnGum0e9LC+yLWU3BxtW828doUkwz5etTO7i1FXU/H6
+         6WsQ==
+X-Gm-Message-State: ABy/qLYWmi4aLKIZQIOiJS3dzW/pwEoo7F+6LE6zEh/5bCPK9ZDZXV1H
+        8UmMn0ueQU0EVPFKts0vV4HaxTidGxpMC9Hmt/Szqg==
+X-Google-Smtp-Source: APBJJlE7cBabIqsDgOVse9OOZ6aTjmPoq/DJCfwfg6nCOEVEXRqRJUSYnSIJLuoYJ0UvKAptp1crbwCoFVPdkqeY7hY=
+X-Received: by 2002:a25:c50b:0:b0:cdd:6635:a1f8 with SMTP id
+ v11-20020a25c50b000000b00cdd6635a1f8mr5819173ybe.15.1689882143201; Thu, 20
+ Jul 2023 12:42:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230714-topic-lpass_lpi_cleanup-v1-0-dc18b5bd14f7@linaro.org>
-In-Reply-To: <20230714-topic-lpass_lpi_cleanup-v1-0-dc18b5bd14f7@linaro.org>
+References: <20230714174901.4062397-1-robh@kernel.org>
+In-Reply-To: <20230714174901.4062397-1-robh@kernel.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 20 Jul 2023 21:38:49 +0200
-Message-ID: <CACRpkdYBNOWC1NfBd6dXCFrP3zRK3kDeL_H=HyfFk=e1bko=eA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Clean up LPASS_LPI probe
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Date:   Thu, 20 Jul 2023 21:42:12 +0200
+Message-ID: <CACRpkdYe9b4ZpvYZqkcMq0Jjni_VD_75Zt5oKv4+v9f3pmJbVA@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: Explicitly include correct DT includes
+To:     Rob Herring <robh@kernel.org>
+Cc:     Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Sean Wang <sean.wang@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Chester Lin <clin@suse.com>, NXP S32 Linux Team <s32@nxp.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Damien Le Moal <dlemoal@kernel.org>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Tony Lindgren <tony@atomide.com>,
+        Haojian Zhuang <haojian.zhuang@linaro.org>,
+        Daniel Mack <daniel@zonque.org>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Jianlong Huang <jianlong.huang@starfivetech.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Dvorkin Dmitry <dvorkin@tibbo.com>,
+        Wells Lu <wellslutw@gmail.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-riscv@lists.infradead.org,
+        linux-oxnas@groups.io, linux-rockchip@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,20 +129,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 14, 2023 at 2:40=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
+On Fri, Jul 14, 2023 at 7:49=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
+:
 
-> Some SoCs (like SM6115 or SC7280 with various firmwares) expect a single
-> clock for the LPASS pinctrl.
+> The DT of_device.h and of_platform.h date back to the separate
+> of_platform_bus_type before it as merged into the regular platform bus.
+> As part of that merge prepping Arm DT support 13 years ago, they
+> "temporarily" include each other. They also include platform_device.h
+> and of.h. As a result, there's a pretty much random mix of those include
+> files used throughout the tree. In order to detangle these headers and
+> replace the implicit includes with struct declarations, users need to
+> explicitly include the correct includes.
 >
-> This serires addresses that by simplifying the probe code and relying
-> on bindings to sanction the correct number of clocks. That allows us to
-> shoot down another downstream-ism.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-Patch 1 & 2 applied to the pinctrl tree, please funnel patch 3 through
-the SoC tree.
+It still applied cleanly so I just applied it.
+
+Thanks for attention to detail.
 
 Yours,
 Linus Walleij
