@@ -2,84 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28E0A75B6D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 20:32:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7D2175B70A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 20:44:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbjGTScX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 14:32:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37480 "EHLO
+        id S229613AbjGTSo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 14:44:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbjGTScW (ORCPT
+        with ESMTP id S229597AbjGTSo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 14:32:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36D4D1995;
-        Thu, 20 Jul 2023 11:32:11 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36KD9b9Q025897;
-        Thu, 20 Jul 2023 18:31:59 GMT
+        Thu, 20 Jul 2023 14:44:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 953E9E47
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 11:44:24 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36KBSs0r015413;
+        Thu, 20 Jul 2023 18:44:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
  cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=kGOlMFbCflD1d7VVfE/4020T6jW+U4T4eaCd1AlVqmA=;
- b=ha5Af8x0TKpSXLVreXkjdBtv5pujoKJE6jno1MPrr3Mma1yw4sT3/rd7k1JX1CsRM1ku
- H3Z8vUGzHtV5BHjquFyHEl3DJx/Y67K3QTqLByD8AF1R6Im+Wd0Z0s77/ZDHcNqtr0bt
- diuV14vMxPsz7V2d20K0LOVZ9cYP/L82jnoAd9hEpneCPE9Oe8y49o6ZwV2WwuVOX1V+
- 4XyLmFRweOLNBLxfM5dR4C/2hIt4CqAOGx21NNY5zudVwkS16WHMrG8vZ+ZGdjOxs45O
- B0kUViWW+w4KdyxXwr/xp7+304GspF4Sl6DrVRmGNyX65E2x9khh+ebZYZ1Zf/MB5bx/ AA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxummt2j7-1
+ in-reply-to; s=qcppdkim1; bh=2sSWXxg0H8c3Z2L7YfYwbW3qyJ7YqI3rXC6g2FOqB0M=;
+ b=TDkXwpB8H6XEs9m8NKKm7rRZ+wZpg2UOyexb3uKO6fv95sJYilZh9OISOqRXOK3962Kq
+ VPmQUeMPJULynmcxKT0PEkaVrnXqLyLxG/gZBVTZSXOpNZELzcxVt6e0USXaBWFTk//8
+ r8XaPg+auTQ1CmevmojosX81ooypCtjqXzr0hszB0aA1pGPJwpmp9zRfWoQnJ75hFLuR
+ ynO+fvAFI9UCOAuxEas0Ijkje+tSMpoxlBi2pteIjf5O3vOFzMEDrNV22y2JjdFZvmMA
+ 3SN0d5BNr6cfeMHnI3VVK2AZClACs2JdPgnPMZdYrQeCnv7x93tN1tAynZuBubb1JyAo 3g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxt18a6h6-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 18:31:58 +0000
+        Thu, 20 Jul 2023 18:44:11 +0000
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36KIVvIG004689
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36KIhuca032716
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 18:31:57 GMT
+        Thu, 20 Jul 2023 18:43:56 GMT
 Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 20 Jul 2023 11:31:57 -0700
-Date:   Thu, 20 Jul 2023 11:31:56 -0700
+ 15.2.1118.30; Thu, 20 Jul 2023 11:43:55 -0700
+Date:   Thu, 20 Jul 2023 11:43:54 -0700
 From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jordan Crouse <jorcrous@amazon.com>,
-        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
-        <linux-arm-msm@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Nathan Chancellor" <nathan@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        David Airlie <airlied@gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm: Check for the GPU IOMMU during bind
-Message-ID: <20230720183156.GA2667611@hu-bjorande-lv.qualcomm.com>
-References: <20230309222049.4180579-1-jorcrous@amazon.com>
- <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
- <20230707150307.vb4otu5e6hwoadyf@amazon.com>
- <cc153fa9-b9e0-f714-ce5b-1a4a0cb55cc7@linaro.org>
- <2xnvyjlwuxft2uk2pirlbvbrg7krcb4alz7yyna72g4t2qrrfm@qtawbelv3n4l>
+To:     Yuanjun Gong <ruc_gongyuanjun@163.com>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 1/1] soc: qcom: use devm_clk_get_enabled() in gsbi_probe()
+Message-ID: <20230720184354.GB2667611@hu-bjorande-lv.qualcomm.com>
+References: <20230720140834.33557-1-ruc_gongyuanjun@163.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <2xnvyjlwuxft2uk2pirlbvbrg7krcb4alz7yyna72g4t2qrrfm@qtawbelv3n4l>
+In-Reply-To: <20230720140834.33557-1-ruc_gongyuanjun@163.com>
 X-Originating-IP: [10.49.16.6]
 X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: O4gJFukcmhiEIgTWW-UQ3xNayDMVqJ6b
-X-Proofpoint-GUID: O4gJFukcmhiEIgTWW-UQ3xNayDMVqJ6b
+X-Proofpoint-ORIG-GUID: 4IlgilIMax_YshIt1GBGbwbsNK_PLvMn
+X-Proofpoint-GUID: 4IlgilIMax_YshIt1GBGbwbsNK_PLvMn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
  definitions=2023-07-20_10,2023-07-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 lowpriorityscore=0
- clxscore=1011 adultscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307200155
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 mlxlogscore=979 adultscore=0
+ impostorscore=0 malwarescore=0 clxscore=1011 bulkscore=0 mlxscore=0
+ spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307200158
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -90,65 +77,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 10, 2023 at 03:20:44AM +0530, Akhil P Oommen wrote:
-> On Fri, Jul 07, 2023 at 08:27:18PM +0300, Dmitry Baryshkov wrote:
-> > 
-> > On 07/07/2023 18:03, Jordan Crouse wrote:
-> > > On Thu, Jul 06, 2023 at 09:55:13PM +0300, Dmitry Baryshkov wrote:
-> > > > 
-> > > > On 10/03/2023 00:20, Jordan Crouse wrote:
-> > > > > While booting with amd,imageon on a headless target the GPU probe was
-> > > > > failing with -ENOSPC in get_pages() from msm_gem.c.
-> > > > > 
-> > > > > Investigation showed that the driver was using the default 16MB VRAM
-> > > > > carveout because msm_use_mmu() was returning false since headless devices
-> > > > > use a dummy parent device. Avoid this by extending the existing is_a2xx
-> > > > > priv member to check the GPU IOMMU state on all platforms and use that
-> > > > > check in msm_use_mmu().
-> > > > > 
-> > > > > This works for memory allocations but it doesn't prevent the VRAM carveout
-> > > > > from being created because that happens before we have a chance to check
-> > > > > the GPU IOMMU state in adreno_bind.
-> > > > > 
-> > > > > There are a number of possible options to resolve this but none of them are
-> > > > > very clean. The easiest way is to likely specify vram=0 as module parameter
-> > > > > on headless devices so that the memory doesn't get wasted.
-> > > > 
-> > > > This patch was on my plate for quite a while, please excuse me for
-> > > > taking it so long.
-> > > 
-> > > No worries. I'm also chasing a bunch of other stuff too.
-> > > 
-> > > > I see the following problem with the current code. We have two different
-> > > > instances than can access memory: MDP/DPU and GPU. And each of them can
-> > > > either have or miss the MMU.
-> > > > 
-> > > > For some time I toyed with the idea of determining whether the allocated
-> > > > BO is going to be used by display or by GPU, but then I abandoned it. We
-> > > > can have display BOs being filled by GPU, so handling it this way would
-> > > > complicate things a lot.
-> > > > 
-> > > > This actually rings a tiny bell in my head with the idea of splitting
-> > > > the display and GPU parts to two different drivers, but I'm not sure
-> > > > what would be the overall impact.
-> > > 
-> > > As I now exclusively work on headless devices I would be 100% for this,
-> > > but I'm sure that our laptop friends might not agree :)
-> > 
-> > I do not know here. This is probably a question to Rob, as he better
-> > understands the interaction between GPU and display parts of the userspace.
-> 
-> I fully support this if it is feasible.
+On Thu, Jul 20, 2023 at 10:08:34PM +0800, Yuanjun Gong wrote:
+> in gsbi_probe(), the return value of function clk_prepare_enable()
+> should be checked, since it may fail. using devm_clk_get_enabled()
+> instead of devm_clk_get() and clk_prepare_enable() can avoid this
+> problem.
 > 
 
-I second this.
+Nice, thank you.
 
-> In our architecture, display and GPU are completely independent subsystems.
-> Like Jordan mentioned, there are IOT products without display. And I wouldn't
-> be surprised if there is a product with just display and uses software rendering.
+> Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+> ---
+>  drivers/soc/qcom/qcom_gsbi.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
 > 
+> diff --git a/drivers/soc/qcom/qcom_gsbi.c b/drivers/soc/qcom/qcom_gsbi.c
+> index f1742e5bddb9..de94a20d5814 100644
+> --- a/drivers/soc/qcom/qcom_gsbi.c
+> +++ b/drivers/soc/qcom/qcom_gsbi.c
+> @@ -178,12 +178,10 @@ static int gsbi_probe(struct platform_device *pdev)
+>  
+>  	dev_info(&pdev->dev, "GSBI port protocol: %d crci: %d\n",
+>  		 gsbi->mode, gsbi->crci);
+> -	gsbi->hclk = devm_clk_get(&pdev->dev, "iface");
+> +	gsbi->hclk = devm_clk_get_enabled(&pdev->dev, "iface");
+>  	if (IS_ERR(gsbi->hclk))
+>  		return PTR_ERR(gsbi->hclk);
+>  
+> -	clk_prepare_enable(gsbi->hclk);
+> -
+>  	writel_relaxed((gsbi->mode << GSBI_PROTOCOL_SHIFT) | gsbi->crci,
+>  				base + GSBI_CTRL_REG);
+>  
+> @@ -212,8 +210,6 @@ static int gsbi_probe(struct platform_device *pdev)
+>  	platform_set_drvdata(pdev, gsbi);
+>  
+>  	ret = of_platform_populate(node, NULL, NULL, &pdev->dev);
 
-And we have SA8295P/SA8540P with two MDSS instances and one GPU.
+This can be further cleaned up by return of_platform_populate()
+directly, and removing the ret variable. Can you please do that as well?
 
-Regards,
+Thanks,
 Bjorn
+
+> -	if (ret)
+> -		clk_disable_unprepare(gsbi->hclk);
+>  	return ret;
+>  }
+>  
+> -- 
+> 2.17.1
+> 
