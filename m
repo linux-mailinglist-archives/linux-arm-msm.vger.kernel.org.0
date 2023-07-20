@@ -2,240 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9086875B37E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 17:53:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D64A75B3D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 18:08:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232051AbjGTPxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 11:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55442 "EHLO
+        id S230390AbjGTQIS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 12:08:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233111AbjGTPxF (ORCPT
+        with ESMTP id S231499AbjGTQIJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 11:53:05 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F1EAE0;
-        Thu, 20 Jul 2023 08:53:04 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-56661fe27cbso617128eaf.3;
-        Thu, 20 Jul 2023 08:53:04 -0700 (PDT)
+        Thu, 20 Jul 2023 12:08:09 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA0AE74
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 09:08:07 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4fde022de07so586166e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 09:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689868383; x=1690473183;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RdiXWN9VKG2RHkdnGg3Y/QnT3CJ4DL70qJz+8ZNiP54=;
-        b=ZM5wJbg3Wn+ja0lqtno0iVgh1AmYW9DxRkviEsoD8YTZwYwMYukTSE/VS8zFwngr9X
-         YfMkvKCkJYETPkZ5Rm/N5DsfnpQ58GCwLBsrdctdufSM6U2VsO5znvhLK+VCk8Rh2mUa
-         g1rNlQvPJ98A7T5vQCjTXdIyvZ+OEZcgAUQ5ImStpu75ADYlnW0XW1L6CVQFB2gi6JFR
-         qRJ8JxRlzN2JDjIL4St/1THgLHds4XyLq2k3QBzGn2GZHyu76gYQ9Jm4uAn4BWslEKrY
-         m64dJHe2vB5hnkQDsBGbLWct/wQX7qxgKRcCVlSxMI37QxNZ8rAYy3cr1DmgFVyD94lt
-         V6Fw==
+        d=linaro.org; s=google; t=1689869285; x=1690474085;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aXvy5ZC1HOxeejpe4siA1tnVneLqwXtPQ5iB8GhYx/k=;
+        b=kwiAwKtkmCZlWdDovbreCPXgueUAsxe/nsUj9CcVLkfyhwwYzntbckVyb1SSvXcLan
+         1qW/3OFDboJ6ph77z/8EY0lQhmjtLl0Zg027tZQ7SEBqIoG4f9hII18Pv0MjTi2MTk4W
+         lXYzzCqg0Ahzl70KTIITUW9kWeBuBp4noHEg/Bq11iaYBmENnrB/ymmNM00ZXObKYhid
+         UHVXi5EpDLymAlfEXLrgbvOHLbYyQNcxv+k211YKKSDDCeGN1nS6feHoxBryHXrAzOjt
+         EpA+eBcjLFXf6t+LIWApQAMwq/ld49K0RzVBzUE+XTdU90zHB61q0Zg79Q7dy0j+NTuT
+         xizg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689868383; x=1690473183;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RdiXWN9VKG2RHkdnGg3Y/QnT3CJ4DL70qJz+8ZNiP54=;
-        b=UmNxQyWfYt844724OY2AOThlY0qua4nYjfyPghSBa8S0jL/QIwvyEyoJAf6YcqDfQO
-         j98HyGXG2zuwt+lVeHyprEpfJV3YuLSeZdFlwR5l3I+j3XvcBu6q1ZIOsmIDyJJsGyah
-         1115jSTFoPI2o37T2HfSsmTTe1ds7d2OCLlP4WWDi+4R8im1DE2eUF7KkYlnWFLQhkNp
-         wI8nKKXpmcsPZn23BniMqhWGtyokdxGsqd0/mCKGfhGFLBKd/HiHqxsBjePxR+4s7b+T
-         zK84lRa90xDD8Aq3Ou904j5L+0FCS2aRYYbJuP82x3sUp9J6gBvMTx3UlJB2BgCm/+aD
-         //bQ==
-X-Gm-Message-State: ABy/qLYki6oFpdb7EJwK0CzKh7sM7flfxkxHvG+nlhHpsUV/mEWXICv/
-        ALlZ3ZXxFhqpVmaJzL0PPx2xeA/6piahRLp8dAA=
-X-Google-Smtp-Source: APBJJlH0lI6SV0q3uzQ5wOTHpuTe0kfahtkJlagRdNlL6AL+4u/QZBZy5f1g6Q0U2mTOSQZ3x0BPwFzPGYBhIDa25kg=
-X-Received: by 2002:a05:6870:2112:b0:1b0:5218:cf07 with SMTP id
- f18-20020a056870211200b001b05218cf07mr2609444oae.5.1689868383463; Thu, 20 Jul
- 2023 08:53:03 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689869285; x=1690474085;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aXvy5ZC1HOxeejpe4siA1tnVneLqwXtPQ5iB8GhYx/k=;
+        b=PKy5vhVtxFl+3B7vSvLIcuyTyxKrzWEuI/sUS8QA4F7VBwnRUJjrdYnZNe5J4fXZJX
+         wEIerkKFtgAhusp/h6xOvB13iZAF6zEKLHkMFtrkYLAVaufp7L8z/dgw70vwuteWnQMv
+         MbPhLb5fj+373T9dxDjLPcMIiSgV7Urm/NaVGbrfHUVcUdnVOwCzZZj0iPfZfTqM1NPK
+         KQX5WuTFGfnaZAZw9ldO0xsBknbEHCRFGKTlJjLgBPN7FusApMDnEKydKRJcMc/pqPwb
+         CtZ1TIWWYfsrOyXqeYDGDOqDa0kC2mTGZxRTSbJv+txuTMAmQgfko2/V9iJcjXYBZoEY
+         TUDA==
+X-Gm-Message-State: ABy/qLYeM7T2gpriKOEZaUGA4KMwkIUEZmjNbYEYsgpLXxQr5N/0OzrV
+        UdLhPuYRJZ3n/gApMDkcIFaaKCmRng9Pn9dmr18s+A==
+X-Google-Smtp-Source: APBJJlGKvQoBcib8DKD/y9Wc/LkdvC52HopIr7MqwgHWGpSO0ksacRWg4dgb+axR47TowdRlrIldUw==
+X-Received: by 2002:a05:6512:159c:b0:4fb:89bb:ca19 with SMTP id bp28-20020a056512159c00b004fb89bbca19mr2091910lfb.66.1689869285421;
+        Thu, 20 Jul 2023 09:08:05 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id h22-20020ac25976000000b004fbb821959bsm265474lfp.303.2023.07.20.09.08.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 09:08:04 -0700 (PDT)
+Message-ID: <d68cc9a4-d4a4-17b1-c6fd-d128b82a818e@linaro.org>
+Date:   Thu, 20 Jul 2023 18:08:03 +0200
 MIME-Version: 1.0
-References: <20230309222049.4180579-1-jorcrous@amazon.com> <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
-In-Reply-To: <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 20 Jul 2023 08:52:52 -0700
-Message-ID: <CAF6AEGs89FRmFsENLkP-Dg1ZJN2LzCfxY2-+do9jH9b8L-XZxg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Check for the GPU IOMMU during bind
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jordan Crouse <jorcrous@amazon.com>,
-        freedreno@lists.freedesktop.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: clk-rcg2: Fix wrong RCG clock rate for high
+ parent frequencies
+Content-Language: en-US
+To:     Devi Priya <quic_devipriy@quicinc.com>, andersson@kernel.org,
+        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_saahtoma@quicinc.com
+References: <20230720083304.28881-1-quic_devipriy@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230720083304.28881-1-quic_devipriy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 6, 2023 at 11:55=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 10/03/2023 00:20, Jordan Crouse wrote:
-> > While booting with amd,imageon on a headless target the GPU probe was
-> > failing with -ENOSPC in get_pages() from msm_gem.c.
-> >
-> > Investigation showed that the driver was using the default 16MB VRAM
-> > carveout because msm_use_mmu() was returning false since headless devic=
-es
-> > use a dummy parent device. Avoid this by extending the existing is_a2xx
-> > priv member to check the GPU IOMMU state on all platforms and use that
-> > check in msm_use_mmu().
-> >
-> > This works for memory allocations but it doesn't prevent the VRAM carve=
-out
-> > from being created because that happens before we have a chance to chec=
-k
-> > the GPU IOMMU state in adreno_bind.
-> >
-> > There are a number of possible options to resolve this but none of them=
- are
-> > very clean. The easiest way is to likely specify vram=3D0 as module par=
-ameter
-> > on headless devices so that the memory doesn't get wasted.
->
-> This patch was on my plate for quite a while, please excuse me for
-> taking it so long.
->
-> I see the following problem with the current code. We have two different
-> instances than can access memory: MDP/DPU and GPU. And each of them can
-> either have or miss the MMU.
->
-> For some time I toyed with the idea of determining whether the allocated
-> BO is going to be used by display or by GPU, but then I abandoned it. We
-> can have display BOs being filled by GPU, so handling it this way would
-> complicate things a lot.
+On 20.07.2023 10:33, Devi Priya wrote:
+> If the parent clock rate is greater than unsigned long max/2 then
+> integer overflow happens when calculating the clock rate on 32-bit systems.
+> As RCG2 uses half integer dividers, the clock rate is first being
+> multiplied by 2 which will overflow the unsigned long max value. So, use
+> unsigned long long for rate computations to avoid overflow.
+> 
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>  drivers/clk/qcom/clk-rcg2.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> index e22baf3a7112..42d00b134975 100644
+> --- a/drivers/clk/qcom/clk-rcg2.c
+> +++ b/drivers/clk/qcom/clk-rcg2.c
+> @@ -156,18 +156,18 @@ static int clk_rcg2_set_parent(struct clk_hw *hw, u8 index)
+>   *            hid_div       n
+>   */
+>  static unsigned long
+> -calc_rate(unsigned long rate, u32 m, u32 n, u32 mode, u32 hid_div)
+> +calc_rate(unsigned long parent_rate, u32 m, u32 n, u32 mode, u32 hid_div)
+>  {
+> +	u64 rate = parent_rate;
+This should not be necessary.. You're being passed a copy of
+the original value, which you can operate on.
 
-There is MSM_BO_SCANOUT .. but it wouldn't completely surprise me if
-it isn't used in some place where it should somewhere or other.  But
-that is the hint that contiguous allocation should be used if the
-display doesn't support some sort of iommu.  (Using a GPU without some
-sort of mmu/iommu isn't something sane to do.. the only reason the
-support for that exists at all is to aid bringup.  I wouldn't call
-that a "supported" configuration.)
+Otherwise, LGTM
 
-> This actually rings a tiny bell in my head with the idea of splitting
-> the display and GPU parts to two different drivers, but I'm not sure
-> what would be the overall impact.
-
-Userspace does have better support for split display/gpu these days
-than it did when drm/msm was first merged.  It _might_ just work if
-one device only advertised DRIVER_RENDER and the other
-MODESET/ATOMIC.. but I'd be a bit concerned about breaking things.  I
-guess you could try some sort of kconfig knob to have two "msm"
-devices and see what breaks, but I'm a bit skeptical that we could
-make this the default anytime soon.
-
-For now, just addressing the only-display and only-gpu cases
-(continuing with the single device arrangement when you have both
-display and gpu), maybe split up drm_dev_alloc() and drm_dev_init() so
-that we could use drm_device::driver_features to mask out
-DRIVER_RENDER if needed.
-
-BR,
--R
-
-> More on the msm_use_mmu() below.
->
-> >
-> > Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
-> > ---
-> >
-> >   drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
-> >   drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
-> >   drivers/gpu/drm/msm/msm_drv.h              | 2 +-
-> >   3 files changed, 9 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
-rm/msm/adreno/adreno_device.c
-> > index 36f062c7582f..4f19da28f80f 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct =
-device *master, void *data)
-> >       DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
-> >               config.rev.minor, config.rev.patchid);
-> >
-> > -     priv->is_a2xx =3D config.rev.core =3D=3D 2;
-> > +     /*
-> > +      * A2xx has a built in IOMMU and all other IOMMU enabled targets =
-will
-> > +      * have an ARM IOMMU attached
-> > +      */
-> > +     priv->has_gpu_iommu =3D config.rev.core =3D=3D 2 || device_iommu_=
-mapped(dev);
-> >       priv->has_cached_coherent =3D config.rev.core >=3D 6;
-> >
-> >       gpu =3D info->init(drm);
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_dr=
-v.c
-> > index aca48c868c14..a125a351ec90 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
-> >       struct msm_drm_private *priv =3D dev->dev_private;
-> >
-> >       /*
-> > -      * a2xx comes with its own MMU
-> > -      * On other platforms IOMMU can be declared specified either for =
-the
-> > -      * MDP/DPU device or for its parent, MDSS device.
-> > +      * Return true if the GPU or the MDP/DPU or parent MDSS device ha=
-s an
-> > +      * IOMMU
-> >        */
-> > -     return priv->is_a2xx ||
-> > +     return priv->has_gpu_iommu ||
-> >               device_iommu_mapped(dev->dev) ||
-> >               device_iommu_mapped(dev->dev->parent);
->
-> I have a generic feeling that both old an new code is not fully correct.
-> Please correct me if I'm wrong:
->
-> We should be using VRAM, if either of the blocks can not use remapped
-> memory. So this should have been:
->
-> bool msm_use_mmu()
-> {
->   if (!gpu_has_iommu)
->     return false;
->
->   if (have_display_part && !display_has_mmu())
->     return false;
->
->   return true;
-> }
->
-> What do you think.
->
-> >   }
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_dr=
-v.h
-> > index 9f0c184b02a0..f33f94acd1b9 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.h
-> > +++ b/drivers/gpu/drm/msm/msm_drv.h
-> > @@ -126,7 +126,7 @@ struct msm_drm_private {
-> >       struct msm_gpu *gpu;
-> >
-> >       /* gpu is only set on open(), but we need this info earlier */
-> > -     bool is_a2xx;
-> > +     bool has_gpu_iommu;
-> >       bool has_cached_coherent;
-> >
-> >       struct drm_fb_helper *fbdev;
->
-> --
-> With best wishes
-> Dmitry
->
+Konrad
