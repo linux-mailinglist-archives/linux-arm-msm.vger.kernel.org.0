@@ -2,119 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF11F75AB0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 11:40:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49B6175AB70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 11:50:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbjGTJkA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 05:40:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39070 "EHLO
+        id S231289AbjGTJuB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 05:50:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbjGTJjo (ORCPT
+        with ESMTP id S229503AbjGTJtm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 05:39:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAED82D53;
-        Thu, 20 Jul 2023 02:35:17 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K4Eate005080;
-        Thu, 20 Jul 2023 09:34:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=rgB87VYg+qSX8naWX8H1W8jl5doCwBmeRMl7/YA3vig=;
- b=Gp6XBcf3XfzsAWPehRBsAZbjnvbjaZY+D7a9b0F48t3hh1i42G6JsdiDV6+E4n5itZ7Q
- MOA8DNp7kaPaN/8HKz17CxsmaW04aI4xy30MZkFVMQEILsjcmLMLkPrXK+KUD5Lm/wII
- /6Q/5FNQ4iE3PkcWpAKm1siX/Lgjdas6eBlnjnseJ1S7SzOkLxTetlUF9LR19FxYgp2I
- O91JMbNjuXS0q2bAAexwL8DX/KQ/FjXVrrJ78ehYJNSKqPjCNCpj4Mcul0H6J/LBQLJW
- RsnPZmmlw8GmJV8FszWW3T0ks2mWdb7g3eAc1+n93q7VQvCFCsAcV74RHDBZsNlIvzPH fQ== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxup4gru0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 09:34:54 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 36K9YpEx029166;
-        Thu, 20 Jul 2023 09:34:51 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3rumhm8sj6-1;
-        Thu, 20 Jul 2023 09:34:51 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 36K9YpiT029104;
-        Thu, 20 Jul 2023 09:34:51 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 36K9YpJh028935;
-        Thu, 20 Jul 2023 09:34:51 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-        id 6A47863F16C; Thu, 20 Jul 2023 15:04:50 +0530 (+0530)
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-To:     mani@kernel.org, quic_cang@quicinc.com, stanley.chu@mediatek.com,
-        bvanassche@acm.org, quic_asutoshd@quicinc.com, avri.altman@wdc.com,
-        martin.petersen@oracle.com, beanhuo@micron.com,
-        konrad.dybcio@linaro.org
-Cc:     linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, andersson@kernel.org, jejb@linux.ibm.com,
-        linux-arm-msm@vger.kernel.org, quic_ziqichen@quicinc.com,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V3] scsi: ufs: ufs-qcom: Change UFS devfreq timer to delayed
-Date:   Thu, 20 Jul 2023 15:04:46 +0530
-Message-Id: <20230720093446.30697-1-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6Yh8Leu9ip2O3oF0fERLemcjLrw0oAbt
-X-Proofpoint-ORIG-GUID: 6Yh8Leu9ip2O3oF0fERLemcjLrw0oAbt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-20_03,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- adultscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307200079
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+        Thu, 20 Jul 2023 05:49:42 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDF81719
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 02:48:06 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so860185e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 02:48:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689846484; x=1690451284;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m66C/vpUoNhXNL/USqnmEN/SERtYzszLXqFxfokE9/I=;
+        b=AWPzHzVbimx7mJ3OJTXHoi7CjWuZXJgAH526sIkk+eZqFQ2+MP313fRQuFSZ9Oqt18
+         TlhzEWo+V7nRwsKKpBwgEYrbvO+xl8I8WxlUETa3bCwUueNEajSMtpNFZMRrrkkFktFV
+         2UE7qWA8txGyKBrXbvC5Lp/FsPVl3QhQjjDWmMfdPQnzu02ikXlbh2gDyTKtVHp0cnAk
+         LnIwSQ9k4DngRiyjJyQqpfiLXlfnHpMdfo+62th1/gtfc15FoOljNN8fyIIMKCzO4Rfe
+         O9TZotuM+hZVB+hU31kCBmL7EKZ29DXgDMqixlBkwgWbqApz7m/bSjzprqYd0e2kOIsO
+         fW/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689846484; x=1690451284;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=m66C/vpUoNhXNL/USqnmEN/SERtYzszLXqFxfokE9/I=;
+        b=Sh/09eVn0PGyocHy1zTAMTAK+ajoE2KlHwk5eeEYeHlVNQaYn78FcZ7zda8+YXUfCB
+         IGL8Eb+6IHwGFHxu6xBYi16sC8sRPOK50gcrS87OQlP5l0hm5znIGWpNOYiUlcdZrC7M
+         28xEY4pydklHPxFdKFngfftzmHvT5yWLmF8zlMSgWHbLBbCZeK7wr/xXjYaztf6+k4M4
+         KpadG7d9UbQlXbky4MunJyazewSM4HD3l1aKsMYE5rFlQJGcgRg/roTTJdNlG5KeaIQe
+         3Vjfm94y1Lo+Xpp1Gingk0+t7zKFDq9oi1tAPRmdOcjxfegw93BHosZLJ2D/43DtP+lt
+         +Gsg==
+X-Gm-Message-State: ABy/qLYKIOSqe7H6keSe2wZUjI+2/Vt05bCUSBLO6nH5kPmU7rKQSIAW
+        j55yjuSq1Ps+rufxDJz0iRkWZw==
+X-Google-Smtp-Source: APBJJlFqoMhnweK+l5F3+WSGWFBzdrxM8oVIsbig1fVnXEChSXlao+MmrcENPeeMbW8GhoJJ+cvDnA==
+X-Received: by 2002:a05:6512:46d:b0:4f6:1779:b1c1 with SMTP id x13-20020a056512046d00b004f61779b1c1mr1902595lfd.48.1689846484327;
+        Thu, 20 Jul 2023 02:48:04 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id g12-20020a19ee0c000000b004fb8c31c8dfsm116388lfb.267.2023.07.20.02.48.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 02:48:03 -0700 (PDT)
+Message-ID: <9e401641-1334-c0bc-c49a-481a8a9af2de@linaro.org>
+Date:   Thu, 20 Jul 2023 11:48:02 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document AL02-Cx and AL03-C2
+ boards based on IPQ9574 family
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sridharan S N <quic_sridsn@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230720084534.6461-1-quic_sridsn@quicinc.com>
+ <20230720084534.6461-2-quic_sridsn@quicinc.com>
+ <87c3a3db-d172-bc98-cf83-89b874c9fee7@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <87c3a3db-d172-bc98-cf83-89b874c9fee7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Devfreq uses the default DEVFREQ_TIMER_DEFERRABLE mode which uses
-the deferred timer for scheduling the devfreq load monitor function.
-This causes the load monitoring to be done only with non-idle CPUs
-and not making use of the idle CPUs.
+On 20.07.2023 10:49, Krzysztof Kozlowski wrote:
+> On 20/07/2023 10:45, Sridharan S N wrote:
+>> Document the below listed (Reference Design Platform) RDP boards based on IPQ9574
+>> family of SoCs.
+>>
+>> AL02-C3  - rdp437
+>> AL02-C7  - rdp433-mht-phy
+>> AL02-C10 - rdp433-mht-switch
+>> AL02-C11 - rdp467
+>> AL02-C12 - rdp455
+>> AL02-C13 - rdp459
+>> AL02-C15 - rdp457
+>> AL02-C16 - rdp456
+>> AL02-C17 - rdp469
+>> AL02-C19 - rdp461
+>> AL03-C2  - rdp458
+>>
+>> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
+>> ---
+>>  .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
+>>  1 file changed, 20 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> index dd66fd872c31..d992261da691 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> @@ -89,10 +89,20 @@ description: |
+>>          adp
+>>          ap-al01-c1
+>>          ap-al02-c2
+>> +        ap-al02-c3
+>>          ap-al02-c6
+>>          ap-al02-c7
+>>          ap-al02-c8
+>>          ap-al02-c9
+>> +        ap-al02-c10
+>> +        ap-al02-c11
+>> +        ap-al02-c12
+>> +        ap-al02-c13
+>> +        ap-al02-c15
+>> +        ap-al02-c16
+>> +        ap-al02-c17
+>> +        ap-al02-c19
+> 
+> Why? I asked once, but there was no feedback from Qualcomm.
+> 
+> Why do we need to do this? What's the point?
+Another question would be, whether these boards are just one-off test
+prototypes of which there exist like 5-10 units, or are they actually
+going to be supported and useful.
 
-Hence, use the DEVFREQ_TIMER_DELAYED mode which uses the delayed
-timer thereby making use of idle CPUs as well for load monitoring.
+If it's the former, I don't think it makes sense to keep the device
+trees upstream.
 
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
-
-changes from v2:
-- Modified commit message as per mani's suggestion
-- removed threshold change
-
-Changes from v1:
-- Realigned the commit text
-
- drivers/ufs/host/ufs-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index df9161cb9825..07e5050dae77 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1619,6 +1619,7 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
- 					struct devfreq_simple_ondemand_data *d)
- {
- 	p->polling_ms = 60;
-+	p->timer = DEVFREQ_TIMER_DELAYED;
- 	d->upthreshold = 70;
- 	d->downdifferential = 5;
- }
---
-2.17.1
-
+Konrad
