@@ -2,115 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB83775B0AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 16:05:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAE5C75B0DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 16:09:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231838AbjGTOFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 10:05:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41116 "EHLO
+        id S231543AbjGTOJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 10:09:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjGTOE7 (ORCPT
+        with ESMTP id S230526AbjGTOJC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 10:04:59 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D295F1FD7;
-        Thu, 20 Jul 2023 07:04:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689861898; x=1721397898;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=jRwJIEhFunnqSNUPRBTmhjVK4I+hmWG8Zif3HjmDR94=;
-  b=cR++fv3W+MCic1Jb1Y25qvCT/8VMMtT1Vk9rvc/nxXILa2pI+0/04msM
-   2OoPgNFNzcuqkxLLup//MlPnzPAHWk2HR9xSru2Il9KlShQTUFcbozakZ
-   K5TwqyziLhywf3lyaiJyT7RWlmsc1B8XWZ/7vhMrcULBP3n8KR+yOPcmw
-   JrrVwOcoOkyTtPlXHlF+ucijDf0UQUH0M+yankT+bQA0bEVU/I/vQ/SPC
-   N+Qz6sfFA//B2N2LHcz7P29jm/R4a8NBftVwBXn82szBpXRuRb+hzsWTo
-   bLsK4wJHLGV4g1NvLz4Y3VmTSlw8tBet5Awe9itbc5TvPMwtIcCeZ7Tvx
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10777"; a="432951717"
-X-IronPort-AV: E=Sophos;i="6.01,219,1684825200"; 
-   d="scan'208";a="432951717"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2023 06:31:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10777"; a="971033124"
-X-IronPort-AV: E=Sophos;i="6.01,218,1684825200"; 
-   d="scan'208";a="971033124"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.32.109])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2023 06:31:21 -0700
-Message-ID: <9ecf44f2-7572-f3e6-9bd8-a54575588d0d@intel.com>
-Date:   Thu, 20 Jul 2023 16:31:17 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v2] mmc: Explicitly include correct DT includes
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Robert Richter <rric@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Chaotian Jing <chaotian.jing@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Florian Fainel li <florian.fainelli@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 20 Jul 2023 10:09:02 -0400
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.196])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7D13E2122
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 07:09:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id; bh=OR3n9OfZryAfzMm3Lu
+        dflsMkLzI8PGHFf8oaq0NEReE=; b=dpZCEHKJxrAFNOgZjLoOrSQDWqNvVKzuim
+        OnknZfLufZJyA1YUPvCrxCoCAHLlMBn4oebPIRIh1CuRQ3hm/nsqqGRS8v8qbFW5
+        oHYFxqNj4tQVJYY14FNxkUgnLZ4ZgW+W7u1ADUxMEwl68I6edWEPtcoQg/Qg9gtZ
+        wazPNKFm8=
+Received: from localhost.localdomain (unknown [202.112.113.212])
+        by zwqz-smtp-mta-g1-3 (Coremail) with SMTP id _____wCH_o7jP7lkM2REAw--.35248S4;
+        Thu, 20 Jul 2023 22:08:39 +0800 (CST)
+From:   Yuanjun Gong <ruc_gongyuanjun@163.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michal Simek <michal.simek@amd.com>,
-        Eugen Hristev <eugen.hristev@collabora.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Ben Dooks <ben-linux@fluff.org>,
-        Jaehoon Chung <jh80.chung@samsung.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org,
-        linux-actions@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-References: <20230718143054.1065288-1-robh@kernel.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <20230718143054.1065288-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        linux-arm-msm@vger.kernel.org
+Cc:     Yuanjun Gong <ruc_gongyuanjun@163.com>
+Subject: [PATCH 1/1] soc: qcom: use devm_clk_get_enabled() in gsbi_probe()
+Date:   Thu, 20 Jul 2023 22:08:34 +0800
+Message-Id: <20230720140834.33557-1-ruc_gongyuanjun@163.com>
+X-Mailer: git-send-email 2.17.1
+X-CM-TRANSID: _____wCH_o7jP7lkM2REAw--.35248S4
+X-Coremail-Antispam: 1Uf129KBjvJXoW7ZF4UXFy5ZFW5Gr4DGr1DGFg_yoW8Jw48pa
+        s7AFZ0k348X3y0kas8Jr48X3WYkrWxtFyI93s3C34kX3W5Ar4ktFWvqFyFvFsYqFZ5AF4r
+        Ja12qrs5A3WDu3JanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRijjfUUUUU=
+X-Originating-IP: [202.112.113.212]
+X-CM-SenderInfo: 5uxfsw5rqj53pdqm30i6rwjhhfrp/xtbBSQGy5VaEH7Y0gQABsQ
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -118,17 +51,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/23 17:30, Rob Herring wrote:
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+in gsbi_probe(), the return value of function clk_prepare_enable()
+should be checked, since it may fail. using devm_clk_get_enabled()
+instead of devm_clk_get() and clk_prepare_enable() can avoid this
+problem.
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+---
+ drivers/soc/qcom/qcom_gsbi.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/drivers/soc/qcom/qcom_gsbi.c b/drivers/soc/qcom/qcom_gsbi.c
+index f1742e5bddb9..de94a20d5814 100644
+--- a/drivers/soc/qcom/qcom_gsbi.c
++++ b/drivers/soc/qcom/qcom_gsbi.c
+@@ -178,12 +178,10 @@ static int gsbi_probe(struct platform_device *pdev)
+ 
+ 	dev_info(&pdev->dev, "GSBI port protocol: %d crci: %d\n",
+ 		 gsbi->mode, gsbi->crci);
+-	gsbi->hclk = devm_clk_get(&pdev->dev, "iface");
++	gsbi->hclk = devm_clk_get_enabled(&pdev->dev, "iface");
+ 	if (IS_ERR(gsbi->hclk))
+ 		return PTR_ERR(gsbi->hclk);
+ 
+-	clk_prepare_enable(gsbi->hclk);
+-
+ 	writel_relaxed((gsbi->mode << GSBI_PROTOCOL_SHIFT) | gsbi->crci,
+ 				base + GSBI_CTRL_REG);
+ 
+@@ -212,8 +210,6 @@ static int gsbi_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, gsbi);
+ 
+ 	ret = of_platform_populate(node, NULL, NULL, &pdev->dev);
+-	if (ret)
+-		clk_disable_unprepare(gsbi->hclk);
+ 	return ret;
+ }
+ 
+-- 
+2.17.1
 
