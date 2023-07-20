@@ -2,81 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 139C275AC2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 12:39:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1239575AC65
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 12:52:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230053AbjGTKj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 06:39:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43650 "EHLO
+        id S229680AbjGTKwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 06:52:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbjGTKj4 (ORCPT
+        with ESMTP id S229453AbjGTKwW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 06:39:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA37E10FC;
-        Thu, 20 Jul 2023 03:39:55 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 76ED9619D6;
-        Thu, 20 Jul 2023 10:39:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628BEC433C8;
-        Thu, 20 Jul 2023 10:39:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689849594;
-        bh=Ar/Gi1NpfeGPQHX9IvNG60t0nluiTW51x6QacXx+2Fo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=itESVfl4kwoeHpazFODI25Ze0/Mpw2JE1wwRTKeEpY6l2/WuEIglQJEqaZBBDgn9G
-         81ZjDN1xNM6U6lOU5IKpsoInvikT3lNMYPlf2Mc4fbJklfhGG7ZcbZe6A3fxkBtDnq
-         CLge5Hw424qwiu1mL+NxMUzR4+xHVahM3J/cxYe/iJpsCf0yzo2FM4d4R+jZyrDM5h
-         1l93xBHmhfkfp2igQPCjy3TW3h0uWjhOImxdePy2KnFv0i/P5a5EmsX5MIWawoytEZ
-         OFbqU1U4a+vkd+dex7ykkUUD5hnFA7JFDZWuwsLfRomtCCgHVX36A4MjmX2km/T+de
-         05/h+1VZXHCdQ==
-Date:   Thu, 20 Jul 2023 11:39:47 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, qperret@google.com
-Subject: Re: [PATCH v13 10/24] gunyah: vm_mgr: Add/remove user memory regions
-Message-ID: <20230720103946.GC11034@willie-the-truck>
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-11-quic_eberman@quicinc.com>
- <20230519115948.GB2637@willie-the-truck>
- <e22c31bd-10ed-f242-3e72-debf40e01e3c@quicinc.com>
- <20230605141839.GD21212@willie-the-truck>
- <3bd86221-ee2e-d157-009b-11f6ada98537@quicinc.com>
- <eae302ab-b508-cdc6-847f-dff6a6b82798@quicinc.com>
- <04605642-cad8-1701-ff41-63f2f00ba5f6@quicinc.com>
- <20230714121321.GB5597@willie-the-truck>
- <5ef4a5f7-27a0-f46c-fcbd-c3b8c93e0366@quicinc.com>
+        Thu, 20 Jul 2023 06:52:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6E54172A;
+        Thu, 20 Jul 2023 03:52:21 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36KAq3et002313;
+        Thu, 20 Jul 2023 10:52:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UwF3Q94ZQtLXCR5FqDfs3Vvs8RGFryqhI1TAbooTbSE=;
+ b=U/YIA0LlLwUgfix3dYSU80xEyQ3iF6BLZjHs4gojkOU49oXfYzKhTyRw2Qt/C4q+m8iC
+ 4y6wY1Vss2o0hlkN3mPrgLcOUYgdnMY1M3aX19l8pslkFo0DZmd06jP3rg7U+/rGy5Hz
+ 5fQvxMM/08gzeb3s8x+1LXugUvESvEzVBXf80mK5H9YJnwbx7YeBgxapKW5nWYRGyKu+
+ GDeBmYZooV9DfkNqnhLaWf1Hl6okEjcZOZkMwJcRVfH95L4epFL5Cp1Eb6nye0zi9o12
+ 5ANtHJxxUtJWyYfapcln6dvCueN4D16Zdft1ukbbb2N1n28dZkHeB2s7hJQKWhb14Swp hA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxexkjebg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 10:52:03 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36KAq2We008973
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 10:52:02 GMT
+Received: from [10.201.3.182] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 20 Jul
+ 2023 03:51:56 -0700
+Message-ID: <8e209cd1-aa52-b947-bffd-15931af58391@quicinc.com>
+Date:   Thu, 20 Jul 2023 16:21:53 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5ef4a5f7-27a0-f46c-fcbd-c3b8c93e0366@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [v11 5/6] arm64: dts: Add ipq5018 SoC and rdp432-c2 board support
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
+        <andy.shevchenko@gmail.com>
+References: <20230616101749.2083974-1-quic_srichara@quicinc.com>
+ <20230616101749.2083974-6-quic_srichara@quicinc.com>
+ <53721566-2a85-76cb-a4cf-2819f08dfc85@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <53721566-2a85-76cb-a4cf-2819f08dfc85@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2rBOnBTtDA0BKQkA2mSmcep7l7EAnhSL
+X-Proofpoint-GUID: 2rBOnBTtDA0BKQkA2mSmcep7l7EAnhSL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-20_04,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ malwarescore=0 phishscore=0 clxscore=1011 suspectscore=0 impostorscore=0
+ mlxlogscore=969 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307200091
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,56 +90,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 18, 2023 at 07:28:49PM -0700, Elliot Berman wrote:
-> On 7/14/2023 5:13 AM, Will Deacon wrote:
-> > On Thu, Jul 13, 2023 at 01:28:34PM -0700, Elliot Berman wrote:
-> > > On 6/22/2023 4:56 PM, Elliot Berman wrote:
-> > > > On 6/7/2023 8:54 AM, Elliot Berman wrote:
-> > > > > On 6/5/2023 7:18 AM, Will Deacon wrote:
-> > > > > > Right, protected guests will use the new restricted memfd ("guest mem"
-> > > > > > now, I think?), but non-protected guests should implement the existing
-> > > > > > interface *without* the need for the GUP pin on guest memory pages. Yes,
-> > > > > > that means full support for MMU notifiers so that these pages can be
-> > > > > > managed properly by the host kernel. We're working on that for pKVM, but
-> > > > > > it requires a more flexible form of memory sharing over what we
-> > > > > > currently
-> > > > > > have so that e.g. the zero page can be shared between multiple entities.
-> > > > > 
-> > > > > Gunyah doesn't support swapping pages out while the guest is running
-> > > > > and the design of Gunyah isn't made to give host kernel full control
-> > > > > over the S2 page table for its guests. As best I can tell from
-> > > > > reading the respective drivers, ACRN and Nitro Enclaves both GUP pin
-> > > > > guest memory pages prior to giving them to the guest, so I don't
-> > > > > think this requirement from Gunyah is particularly unusual.
-> > > > > 
-> > > > 
-> > > > I read/dug into mmu notifiers more and I don't think it matches with
-> > > > Gunyah's features today. We don't allow the host to freely manage VM's
-> > > > pages because it requires the guest VM to have a level of trust on the
-> > > > host. Once a page is given to the guest, it's done for the lifetime of
-> > > > the VM. Allowing the host to replace pages in the guest memory map isn't
-> > > > part of any VM's security model that we run in Gunyah. With that
-> > > > requirement, longterm pinning looks like the correct approach to me.
-> > > 
-> > > Is my approach of longterm pinning correct given that Gunyah doesn't allow
-> > > host to freely swap pages?
-> > 
-> > No, I really don't think a longterm GUP pin is the right approach for this.
-> > GUP pins in general are horrible for the mm layer, but required for cases
-> > such as DMA where I/O faults are unrecoverable. Gunyah is not a good
-> > justification for such a hack, and I don't think you get to choose which
-> > parts of the Linux mm you want and which bits you don't.
-> > 
-> > In other words, either carve out your memory and pin it that way, or
-> > implement the proper hooks for the mm to do its job.
+Hi,
+
+On 7/20/2023 2:14 PM, Krzysztof Kozlowski wrote:
+> On 16/06/2023 12:17, Sricharan Ramabadhran wrote:
+>> Add initial device tree support for the Qualcomm IPQ5018 SoC and
+>> rdp432-c2 board.
+>>
+>> Few things like 'reboot' does not work because, couple of more 'SCM'
+>> APIS are needed to clear some TrustZone settings. Those will be
+>> posted separately.
+>>
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Co-developed-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+>> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>   .../arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |  72 +++++
+>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 250 ++++++++++++++++++
+>>   3 files changed, 323 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>
 > 
-> I talked to the team about whether we can extend the Gunyah support for
-> this. We have plans to support sharing/lending individual pages when the
-> guest faults on them. The support also allows (unprotected) pages to be
-> removed from the VM. We'll need to temporarily pin the pages of the VM
-> configuration device tree blob while the VM is being created and those pages
-> can be unpinned once the VM starts. I'll work on this.
+> NAK, please do not merge.
+> 
+> It turns out there are some problems here (pointed out by Hariharan K).
 
-That's pleasantly unexpected, thanks for pursuing this!
+   The changes from Hariharan K to rename the dts compatibles is not
+   correct. So the compatibles/names in this series should be used.
+   Hariharan can fix his series and re-post.
 
-Will
+Regards,
+  Sricharan
