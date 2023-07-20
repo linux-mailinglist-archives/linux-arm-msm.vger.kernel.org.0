@@ -2,76 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8543B75B1EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 17:02:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4976375B26B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 17:24:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbjGTPCs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 11:02:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45046 "EHLO
+        id S231528AbjGTPYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 11:24:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230382AbjGTPCr (ORCPT
+        with ESMTP id S232071AbjGTPYC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 11:02:47 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A25D26B0;
-        Thu, 20 Jul 2023 08:02:41 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36KDvC0c015644;
-        Thu, 20 Jul 2023 15:02:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : to : cc : from : subject : content-type :
- content-transfer-encoding; s=qcppdkim1;
- bh=FYnhndaHLlAGmLEwmFnlF+PlGmmJDrC7zOccjmvv0Ig=;
- b=bNJZCV8km0MA3TGnvB7XAF0q4+WBwSqzYX+OxOHh1hHroP/y70LKurGGuB6/s9N7b/pr
- NeSGxgMxOqD9WCxFKisALmobilS8zbscpjlYLyjGEs0+ClXL5qUuuvGb5gLHs89xIlpC
- pP1c2651viN0x9iYYfBR7HVz21KdvVbNKxcoiYqZbeigvJzoznw+eWPlz+YplEOxNsXt
- t1N8DwVphtkBAy7I1DF/YXjfahhbRE6wwaAUiHPirwDHb6pUbIdlgh6OQHLZRCBVu01y
- 5P0UD1j3bIz/v7VoJBo9BV4BYuel5cZz1WkfUfgn2HUFo7GB/K0KX5uFQw2IIHKk4w6+ hg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxup4he6c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 15:02:31 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36KF2UZK013352
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 15:02:30 GMT
-Received: from [10.216.27.20] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 20 Jul
- 2023 08:02:28 -0700
-Message-ID: <0199db00-1b1d-0c63-58ff-03efae02cb21@quicinc.com>
-Date:   Thu, 20 Jul 2023 20:32:24 +0530
+        Thu, 20 Jul 2023 11:24:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 375E3132;
+        Thu, 20 Jul 2023 08:24:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BF4EE61B4E;
+        Thu, 20 Jul 2023 15:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70872C433C8;
+        Thu, 20 Jul 2023 15:23:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689866640;
+        bh=Ctw5hFIPSjBpTaDRLOhcVdvyPSjKTTNb0sCDJ8BLAdY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Nax8IhRWacQd40Kfnj891JTacjufb/tRvDnfaNMMgNIJfU2lc84lz6TmXZcHkZGe0
+         9dN84djSDAhEE8uVJvosuiYeqtDNQDyaOLTZiKLjWal4WkebmD2HhETQdH+1X48LOI
+         gh+bazxZocy+LEOeLBskFc3uX5qQ/nttSRwvCMsXZL/GWhMtbnpE1YAxL3LYRCofRq
+         dZZVzNpF+3b4UurQr4OBOCKp7O8/eK8NmaKUxLEeqeJXPqkUZjCFUITQk4IUsEiDzn
+         dtgF+LGWCWlaXw8qSMgK9mzhCKk/KZ60nCIrcDx3pso/U3HzMIuV7E1+siSMjVBN3y
+         wL3fl/uZW5KxQ==
+Date:   Thu, 20 Jul 2023 20:53:56 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc8180x-pmics: add missing
+ qcom,spmi-gpio fallbacks
+Message-ID: <ZLlRjLQ0bzCkwtX4@matsya>
+References: <20230720083500.73554-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Content-Language: en-US
-To:     <linux-samsung-soc@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        lkml <linux-kernel@vger.kernel.org>
-CC:     Trilok Soni <quic_tsoni@quicinc.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: Feedback on Qualcomm's minidump (debug) solution for end user device
- crash
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AxElWK3GY2mplQQdNjQr_H9fI-OmIpbb
-X-Proofpoint-ORIG-GUID: AxElWK3GY2mplQQdNjQr_H9fI-OmIpbb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-20_08,2023-07-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- adultscore=0 mlxlogscore=553 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307200126
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230720083500.73554-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,35 +62,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Samsung/MTK/Any other SOC vendors,
+On 20-07-23, 10:34, Krzysztof Kozlowski wrote:
+> The GPIO children of PMICs should use qcom,spmi-gpio fallback:
+> 
+>   sc8180x-primus.dtb: pmic@0: gpio@c000:compatible: ['qcom,pmc8180-gpio'] is too short
 
-This is to bring to your notice that, we (Qualcomm) are working on 
-upstreaming our minidump solution which is to address the problem of
-debugging on field device crashes where collecting entire ddr dump
-would not be feasible and collecting minimal data from the ddr would
-help in debug direction or even help in root causing issue.
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-We have recently posted v4 version here [1]
-
-Based on comments[2], community is more worried about, if each SOC
-vendor come up with their own dumping method today or in future and
-whether it can have a common solution to a similar problem faced by
-other SOC vendor.
-
-We wanted to take your feedback if you also encounter a similar problem
-or maintain something similar solution in downstream which can be 
-upstreamed. This will help us in a way to have a common solution in
-upstream.
-
-[1]
-https://lore.kernel.org/lkml/10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com/
-
-[2]
-https://lore.kernel.org/lkml/CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com/
-
--Mukesh
-
-
-
-
-
+-- 
+~Vinod
