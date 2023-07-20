@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E80EE75A5C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 07:44:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63F3B75A5CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 07:44:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230027AbjGTFoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 01:44:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45520 "EHLO
+        id S229960AbjGTFoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 01:44:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229846AbjGTFna (ORCPT
+        with ESMTP id S229963AbjGTFoW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 01:43:30 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305C626B1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 22:43:03 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b8ad356f03so2234905ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 22:43:03 -0700 (PDT)
+        Thu, 20 Jul 2023 01:44:22 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0812726
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 22:43:24 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-668709767b1so229216b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 22:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689831782; x=1690436582;
+        d=linaro.org; s=google; t=1689831790; x=1690436590;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=n1pcWt8K+FK2wfI9pVkhS/rPdimyJshB0C7q20l1ZU8=;
-        b=hTbAwQGQvoq90ltUGcgpTFRLiSddOhNlJPqRcLxSBdobh+X4c2foZzFwy2AFMnyjvq
-         rGQyQvDJjIeR4egbJW1hEkIjym5J5YlTD98zhwQwa1tnEIR7TNLtwgxsTz3yA3BFIfc1
-         a9PI/UghB01jaNrMg+Tg1TkUgiipnA7xuRF7378lnCPJTB1fiMesfmFlMRRWcFJFoKKa
-         1MxYCzwgA4IXrQ2fYLrMk5dkBFwJAFFKgFRpXmkRByrEAhO81roJnokfIUElhfsEq2/d
-         s1C6/KmxyJmG40FragZ9iJQrGfx7oN4rhe6wyRFfAdWaqWYB5CwQQUEN4ZTyXGqFyDeB
-         klnw==
+        bh=2mPypMCRuXClcgpL2lzvILT3JZpVsxzUSfa1w4HvazI=;
+        b=Y2E2qjmmVC8V3Tvj3PyJGakAdVUhyqLTUYoxkCJUOBFoFjv8Rk0yKQOnO9ycQov5VA
+         3zRFcFuCKy3AsKX3iiFQhWKOwuZwqwdPAyBME1CLVOalm3zwQb7J/UeHyLNkXjlV12/r
+         bdAMjlJyT3N1qMRlmLBFTbAQhRkyFPHHSVX/VPL3bRtlaWMA0UWep7IpLqjHwppLAw31
+         q/suRvfXPBpqkKB8e2qcdMMLXSqZ/J4JeM5wW9qFEUCY9QeEe8ryV33X+0oO6/q3tDGl
+         M0lS+4KwRC6WicaQix15RWqi7/PPfFtqFBufKybZHbXg+Z/hJi9Nwu9HYoGvVw3JHXdZ
+         FTIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689831782; x=1690436582;
+        d=1e100.net; s=20221208; t=1689831790; x=1690436590;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=n1pcWt8K+FK2wfI9pVkhS/rPdimyJshB0C7q20l1ZU8=;
-        b=DbdI9v8XT87fZ8ArMqVNthSQ+ESOX5CWX867dHlnPvlbbM96FS4XqC1XgA+MMBmVX+
-         KbSXPXqofKb95Q9pP6yWmoDSpiT1+ORA11Z9tQnPCFaVgtUZsramkR7xdmiDl4FUYgjR
-         v/MIhybcWwLc1rFlFfbEFoUq2sQvNerQqBHJvsvTYpNEIC26Jt3/8JyUDmFSt8dgKD51
-         DKvuu+RooRDHTEHvU+qkKK0LUL8c4wxv3LWcEEei8YXofRah04JGtaMm+PWXw8YrSN0U
-         maFZ+4U1C92xPbHPDgP2iyRVAxT4U6YOlDFUWPfdah39SZVQBuxHHL/XK9BV/i2akv/B
-         G9Eg==
-X-Gm-Message-State: ABy/qLaOKWIXKaWTGi5lJ8G4dYCT/XRNVv5hvp1/Sz2BwRvJ4PHxP7JC
-        sd3HML9L1lBF0h1OZ2HeS/mm
-X-Google-Smtp-Source: APBJJlG55HVqVD8VAAuTNsFGHB2PljWCVRcl6DGWV6zErupcqmf2bXv/gJEjCi6phx01jKOIL7/bcw==
-X-Received: by 2002:a17:902:eacb:b0:1b8:76d1:bdcf with SMTP id p11-20020a170902eacb00b001b876d1bdcfmr4001732pld.23.1689831782191;
-        Wed, 19 Jul 2023 22:43:02 -0700 (PDT)
+        bh=2mPypMCRuXClcgpL2lzvILT3JZpVsxzUSfa1w4HvazI=;
+        b=S6gdkdPnStloCxHjoHzXEHY6KbJ6AOVso0Ue58E5q2ed2BbQT+PB6kxjp9kW/e7zN6
+         QJ5iggnbRKeT7Rahh1QlgBbqM8wssLbqtVcXckeou/4z6Vap5d1ftfsI4DGwwitrCT3A
+         fhOav6oWY+OMrlDWumfs6OTGBvTKXKbtdV7fK0MEq+gk1VxxaeRUVsD4tRC9nq41kYGA
+         RWeSDKrqQPnPsOVQy53mSvaLJqF7mxUYFcxZ6kbrdcmQsrM6WhDLBGsXRDfnvY6Q8sKy
+         la90keNDei9jGUW0ZEYHgpMLcOGa0syYlym0I84RVzCO7vHSyLhN0CLS3NvHLLfe9dh6
+         E9gA==
+X-Gm-Message-State: ABy/qLau75rpfQWuSHpxAcdWBqeILqMTWILoU89DrpHaD3K/I8HbGcqK
+        lz9Tg40A8UXEI9wqiS3h3dgy
+X-Google-Smtp-Source: APBJJlEuMdN6Sloz1qGrBXi36RlA7nfygvYAdS5/5iswYB2/voMdFFiFqDM6kssl/IT25ku9K7KLDg==
+X-Received: by 2002:a05:6a21:3387:b0:137:8d4c:6b0f with SMTP id yy7-20020a056a21338700b001378d4c6b0fmr2095112pzb.42.1689831789996;
+        Wed, 19 Jul 2023 22:43:09 -0700 (PDT)
 Received: from localhost.localdomain ([117.206.119.70])
-        by smtp.gmail.com with ESMTPSA id r2-20020a170902be0200b001b85bb5fd77sm263367pls.119.2023.07.19.22.42.54
+        by smtp.gmail.com with ESMTPSA id r2-20020a170902be0200b001b85bb5fd77sm263367pls.119.2023.07.19.22.43.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jul 2023 22:43:01 -0700 (PDT)
+        Wed, 19 Jul 2023 22:43:09 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
         myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
@@ -67,9 +67,9 @@ Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
         bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
         linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 12/15] arm64: dts: qcom: sdm845: Add interconnect paths to UFSHC
-Date:   Thu, 20 Jul 2023 11:10:57 +0530
-Message-Id: <20230720054100.9940-13-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 13/15] arm64: dts: qcom: sm8250: Add interconnect paths to UFSHC
+Date:   Thu, 20 Jul 2023 11:10:58 +0530
+Message-Id: <20230720054100.9940-14-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
 References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
@@ -86,25 +86,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 UFS host controller requires interconnect path configuration for proper
-working. So let's specify them for SDM845 SoC.
+working. So let's specify them for SM8250 SoC.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index e04a3cbb1017..2ea6eb44953e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2607,6 +2607,11 @@ ufs_mem_hc: ufshc@1d84000 {
- 				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 72fd66db9c51..7a495ff7512f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2197,6 +2197,10 @@ ufs_mem_hc: ufshc@1d84000 {
  
  			operating-points-v2 = <&ufs_opp_table>;
-+
-+			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mem_noc SLAVE_EBI1 0>,
-+					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+ 
++			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI_CH0 0>,
++					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
 +			interconnect-names = "ufs-ddr", "cpu-ufs";
 +
  			status = "disabled";
