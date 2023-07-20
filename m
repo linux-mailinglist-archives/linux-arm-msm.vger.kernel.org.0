@@ -2,116 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15EE175ABF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 12:30:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 139C275AC2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 12:39:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230168AbjGTKa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 06:30:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37348 "EHLO
+        id S230053AbjGTKj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 06:39:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjGTKaz (ORCPT
+        with ESMTP id S229704AbjGTKj4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 06:30:55 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5958E10F5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 03:30:54 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-6687096c6ddso376154b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 03:30:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689849054; x=1690453854;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pX/Ty9NAcT9bYpPnRuDBO1Tp6SxCU3ljG9XRMY4bllE=;
-        b=YEjHygSXionVn78E3LIw9gY7VVbzoifbq/0xL4Hy8vefi+FIpQ/OrhbweiqbVZGW2t
-         a/Mk5zS1jQUvlYWJQNzdQVBXR2kp29aBK5Cv0JMhaSDLSoRkZcMiEyUixP9M3bo7RTdT
-         rVW633peGDgCzxJM7AGqjl6c13L5dRfNlenfMfRkoBeaKK/v59do4NNecBanveHVl0x2
-         WesSQ715grtexLTfZQe4aGPs/PWbPzqnv177lvc9ENtemsZkWkTUBgE/iB+806lMu8NI
-         Ad6FCd1eCaAgrUHr6GjtDkXJvxdbAXd4jyeV13pPEjL7cNtD3eI6lJprClc7LTszVzhp
-         iPiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689849054; x=1690453854;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pX/Ty9NAcT9bYpPnRuDBO1Tp6SxCU3ljG9XRMY4bllE=;
-        b=GMGhZ1ZUo5k+WeKkpdMSzFvhmc3TLt2nKYdmIoFY9fszOuRe7asL7zS+dEaXZm9bgS
-         BAtJ6pZ8b4Nj4MmguUNkIBgSGFLgqwKIOCD9WR6mtlHovZhVwjyHLvUan6qNcyUF884Y
-         Ix7Pg35vgMhe1xgBhfNs1MI3jksBfNJjgUTem34ZHvqvcLm0E8ayGIlSxa09BJRqVvGu
-         ka2cZ/ubO3fvFzZzxGXC5y2HNoa4h4zJzOU32xmIRrfvrtdIgjowzvE5MCJQtk3MVjmr
-         EDmh6TOPPrm4mPe0l8iAqYNSsAvmuS61tDsg4zNdV4pL3dPVxV/BXu0TDH7SVEQT7xHP
-         7jPg==
-X-Gm-Message-State: ABy/qLbWvq9zh/CZbrMQX2RIQ4N+O8EpYU5/mXW+ueJhXIN7f9UqjCBU
-        1Bh3nRNnWvWXMjepVn36jHmYAg==
-X-Google-Smtp-Source: APBJJlHQ3TBhJch4+9s7IdsXDe4mP52ispONeRhDFv3IHs7DNJoO/6dUpqV823L+edq5WpNkcQKRmA==
-X-Received: by 2002:a05:6a20:54a4:b0:12c:e3c8:8c7 with SMTP id i36-20020a056a2054a400b0012ce3c808c7mr19779825pzk.41.1689849053763;
-        Thu, 20 Jul 2023 03:30:53 -0700 (PDT)
-Received: from localhost ([122.172.87.195])
-        by smtp.gmail.com with ESMTPSA id m12-20020a170902768c00b001b8062c1db3sm977831pll.82.2023.07.20.03.30.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jul 2023 03:30:52 -0700 (PDT)
-Date:   Thu, 20 Jul 2023 16:00:50 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 20 Jul 2023 06:39:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA37E10FC;
+        Thu, 20 Jul 2023 03:39:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 76ED9619D6;
+        Thu, 20 Jul 2023 10:39:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628BEC433C8;
+        Thu, 20 Jul 2023 10:39:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689849594;
+        bh=Ar/Gi1NpfeGPQHX9IvNG60t0nluiTW51x6QacXx+2Fo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=itESVfl4kwoeHpazFODI25Ze0/Mpw2JE1wwRTKeEpY6l2/WuEIglQJEqaZBBDgn9G
+         81ZjDN1xNM6U6lOU5IKpsoInvikT3lNMYPlf2Mc4fbJklfhGG7ZcbZe6A3fxkBtDnq
+         CLge5Hw424qwiu1mL+NxMUzR4+xHVahM3J/cxYe/iJpsCf0yzo2FM4d4R+jZyrDM5h
+         1l93xBHmhfkfp2igQPCjy3TW3h0uWjhOImxdePy2KnFv0i/P5a5EmsX5MIWawoytEZ
+         OFbqU1U4a+vkd+dex7ykkUUD5hnFA7JFDZWuwsLfRomtCCgHVX36A4MjmX2km/T+de
+         05/h+1VZXHCdQ==
+Date:   Thu, 20 Jul 2023 11:39:47 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] cpufreq: Explicitly include correct DT includes
-Message-ID: <20230720103050.325y6n2zqiv5k5ku@vireshk-i7>
-References: <20230714174414.4054011-1-robh@kernel.org>
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, qperret@google.com
+Subject: Re: [PATCH v13 10/24] gunyah: vm_mgr: Add/remove user memory regions
+Message-ID: <20230720103946.GC11034@willie-the-truck>
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+ <20230509204801.2824351-11-quic_eberman@quicinc.com>
+ <20230519115948.GB2637@willie-the-truck>
+ <e22c31bd-10ed-f242-3e72-debf40e01e3c@quicinc.com>
+ <20230605141839.GD21212@willie-the-truck>
+ <3bd86221-ee2e-d157-009b-11f6ada98537@quicinc.com>
+ <eae302ab-b508-cdc6-847f-dff6a6b82798@quicinc.com>
+ <04605642-cad8-1701-ff41-63f2f00ba5f6@quicinc.com>
+ <20230714121321.GB5597@willie-the-truck>
+ <5ef4a5f7-27a0-f46c-fcbd-c3b8c93e0366@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230714174414.4054011-1-robh@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <5ef4a5f7-27a0-f46c-fcbd-c3b8c93e0366@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-07-23, 11:44, Rob Herring wrote:
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
+On Tue, Jul 18, 2023 at 07:28:49PM -0700, Elliot Berman wrote:
+> On 7/14/2023 5:13 AM, Will Deacon wrote:
+> > On Thu, Jul 13, 2023 at 01:28:34PM -0700, Elliot Berman wrote:
+> > > On 6/22/2023 4:56 PM, Elliot Berman wrote:
+> > > > On 6/7/2023 8:54 AM, Elliot Berman wrote:
+> > > > > On 6/5/2023 7:18 AM, Will Deacon wrote:
+> > > > > > Right, protected guests will use the new restricted memfd ("guest mem"
+> > > > > > now, I think?), but non-protected guests should implement the existing
+> > > > > > interface *without* the need for the GUP pin on guest memory pages. Yes,
+> > > > > > that means full support for MMU notifiers so that these pages can be
+> > > > > > managed properly by the host kernel. We're working on that for pKVM, but
+> > > > > > it requires a more flexible form of memory sharing over what we
+> > > > > > currently
+> > > > > > have so that e.g. the zero page can be shared between multiple entities.
+> > > > > 
+> > > > > Gunyah doesn't support swapping pages out while the guest is running
+> > > > > and the design of Gunyah isn't made to give host kernel full control
+> > > > > over the S2 page table for its guests. As best I can tell from
+> > > > > reading the respective drivers, ACRN and Nitro Enclaves both GUP pin
+> > > > > guest memory pages prior to giving them to the guest, so I don't
+> > > > > think this requirement from Gunyah is particularly unusual.
+> > > > > 
+> > > > 
+> > > > I read/dug into mmu notifiers more and I don't think it matches with
+> > > > Gunyah's features today. We don't allow the host to freely manage VM's
+> > > > pages because it requires the guest VM to have a level of trust on the
+> > > > host. Once a page is given to the guest, it's done for the lifetime of
+> > > > the VM. Allowing the host to replace pages in the guest memory map isn't
+> > > > part of any VM's security model that we run in Gunyah. With that
+> > > > requirement, longterm pinning looks like the correct approach to me.
+> > > 
+> > > Is my approach of longterm pinning correct given that Gunyah doesn't allow
+> > > host to freely swap pages?
+> > 
+> > No, I really don't think a longterm GUP pin is the right approach for this.
+> > GUP pins in general are horrible for the mm layer, but required for cases
+> > such as DMA where I/O faults are unrecoverable. Gunyah is not a good
+> > justification for such a hack, and I don't think you get to choose which
+> > parts of the Linux mm you want and which bits you don't.
+> > 
+> > In other words, either carve out your memory and pin it that way, or
+> > implement the proper hooks for the mm to do its job.
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  drivers/cpufreq/armada-37xx-cpufreq.c  | 4 +---
->  drivers/cpufreq/mediatek-cpufreq-hw.c  | 3 ++-
->  drivers/cpufreq/ppc_cbe_cpufreq.c      | 2 +-
->  drivers/cpufreq/ppc_cbe_cpufreq_pmi.c  | 1 -
->  drivers/cpufreq/qcom-cpufreq-nvmem.c   | 1 -
->  drivers/cpufreq/scpi-cpufreq.c         | 2 +-
->  drivers/cpufreq/sti-cpufreq.c          | 2 +-
->  drivers/cpufreq/ti-cpufreq.c           | 2 +-
->  drivers/cpufreq/vexpress-spc-cpufreq.c | 1 -
->  9 files changed, 7 insertions(+), 11 deletions(-)
+> I talked to the team about whether we can extend the Gunyah support for
+> this. We have plans to support sharing/lending individual pages when the
+> guest faults on them. The support also allows (unprotected) pages to be
+> removed from the VM. We'll need to temporarily pin the pages of the VM
+> configuration device tree blob while the VM is being created and those pages
+> can be unpinned once the VM starts. I'll work on this.
 
-Applied. Thanks.
+That's pleasantly unexpected, thanks for pursuing this!
 
--- 
-viresh
+Will
