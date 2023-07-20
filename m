@@ -2,358 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5C8D75BA80
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 00:20:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F29A75BB21
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 01:27:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbjGTWU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 18:20:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47722 "EHLO
+        id S229487AbjGTX1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 19:27:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbjGTWUW (ORCPT
+        with ESMTP id S229450AbjGTX07 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 18:20:22 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAD1630CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 15:19:54 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b961822512so19929681fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 15:19:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689891582; x=1690496382;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YJ77mz9/Y8tKmxWlrpdrpwVl9KeSTko3I5zfeCIcNwg=;
-        b=H1RqqSEXpfmwWr9zsWu/sfrpqDnL43wUbxDjjRSWhO3qZO/Li0ShCRsO65l9hp4O+f
-         u109AdnYNfG5j+QRLGPfNdGg9nikEOTnFpHq/Bonu3MXHAqse0e/UfUh4MBsSqg5swNQ
-         Vz4+JZvSwjU0k6+IiYhiCciyvWKHT7sb3M+VciLQfE+xanUSDvzQBa7edH1DzGix6PLl
-         8Ok1Ccl7DujbOPeVpUC0AnYnPjZM4X+bpqtUDt54tpjrRfTbiVPCxVfrYp35EHqjpoLj
-         O3j9oEsm2qnBDcjMTM4iCPBlk0VE0W/whSiBEI8KHwoDF1fgfjyxUwGFC8FAKRkFnpfJ
-         hY8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689891582; x=1690496382;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YJ77mz9/Y8tKmxWlrpdrpwVl9KeSTko3I5zfeCIcNwg=;
-        b=Tf+O7uWXa3oEuo+xcSUo0OfRESLheqasoSuSydC2phw7m5l473Zv8ModvUNZ1TtAHV
-         jZKJMgHir+xvgPs8EttT0TCRE5PhdLo2Ue01/BTqLD+W15hSdKxdCVipCa6vJPh/Hgyo
-         v0h8ufnnQk6hU65bal6eUQZOeAL+QBEWsrIz1/gYjfFyba3Vw6o96hQk9snaVJlgYp6N
-         RMwVUS/gJkPhbj/2NYk23CaXfR0VdB4FFqWh+JFa9hwiAmLmWcJiwNDuEF6iftLyweE5
-         +lEwBwoWPWRorXAQ8K0MkEJGCjUoN1psm9CE5pD9pHO9GX8h6rN2qhbo4TBBTFRXqk5Z
-         5c5Q==
-X-Gm-Message-State: ABy/qLZ2vP1mc5LJ7vNly2BMDICYOTI+cZqt+YlzreyY/OjJSfVslQPu
-        zMkMjTShA6nkMKNC8isbSb1J7g==
-X-Google-Smtp-Source: APBJJlHfe8khe0anpvKb7YQI01qEHZvwrEM7M95xdXi8sBLZb6EjvOpWLw5XJPSheev8ntU7DEC9qg==
-X-Received: by 2002:a05:6512:1050:b0:4fb:7381:4c69 with SMTP id c16-20020a056512105000b004fb73814c69mr38649lfb.28.1689891582542;
-        Thu, 20 Jul 2023 15:19:42 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id s3-20020a19ad43000000b004fbad09317csm403620lfd.189.2023.07.20.15.19.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 15:19:42 -0700 (PDT)
-Message-ID: <ed23b28a-d0ff-72c2-a5ee-d2f585b4ba3b@linaro.org>
-Date:   Fri, 21 Jul 2023 01:19:41 +0300
+        Thu, 20 Jul 2023 19:26:59 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BBFDEE;
+        Thu, 20 Jul 2023 16:26:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689895617; x=1721431617;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=OEyttrQsNS3SDdxsnTAl+S/zHD3VCkrMkwYfJggl0vk=;
+  b=RU8AcMoNreEFQvk4TcoSDFlKgA8lJFm8M6J1X5DinNe53Sf3AlZ6WWx+
+   mN7cY2UCxFITKtDVyCOUESmIJR1uEP1Wiv+7SKbGKt5NhOlLr+gXqdvAJ
+   ZkGR+g9LuDW/DFaVy0HlmN+XVngg+Nt1MB9wABSGcuGWiYp5klFHC9sOz
+   aibVaYHLXavHP6k6Gu4BpAtXtbcFCWnmUlAjk3yw5G1gwsy3+IuRVmAMf
+   Q6bmVz4H/SHx67vfjmMmbh+YnNoerobGfepV639LTqCFibPRsaV0W11Ox
+   ZAuVkZ1zbzAeLHykaxj8RuJSKWE9UTGZoL6iGbKlELLmFs/FhZnG9G2o2
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10777"; a="370488218"
+X-IronPort-AV: E=Sophos;i="6.01,220,1684825200"; 
+   d="scan'208";a="370488218"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2023 16:26:56 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10777"; a="724603539"
+X-IronPort-AV: E=Sophos;i="6.01,220,1684825200"; 
+   d="scan'208";a="724603539"
+Received: from lkp-server02.sh.intel.com (HELO 36946fcf73d7) ([10.239.97.151])
+  by orsmga002.jf.intel.com with ESMTP; 20 Jul 2023 16:26:49 -0700
+Received: from kbuild by 36946fcf73d7 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qMd2b-0006cp-1k;
+        Thu, 20 Jul 2023 23:26:41 +0000
+Date:   Fri, 21 Jul 2023 07:26:23 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     oe-kbuild-all@lists.linux.dev, alim.akhtar@samsung.com,
+        avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
+Subject: Re: [PATCH v2 11/15] scsi: ufs: host: Add support for parsing OPP
+Message-ID: <202307210720.G9ca0YYu-lkp@intel.com>
+References: <20230720054100.9940-12-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1 5/5] drm/msm/dp: move of_dp_aux_populate_bus() to probe
- for eDP
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        Dave Airlie <airlied@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-References: <1688773943-3887-1-git-send-email-quic_khsieh@quicinc.com>
- <1688773943-3887-6-git-send-email-quic_khsieh@quicinc.com>
- <0cac7c17-c822-927e-cc15-456b1423689c@linaro.org>
- <2278c46c-cb2c-2842-ab20-e6a334fe002b@quicinc.com>
- <CAA8EJpoJ4Tqew5oFSE44vnBrnO+nfizffLvHV3uwrvcvjZTk0A@mail.gmail.com>
- <07fe061c-6d0e-b3b7-7126-a7b014aec478@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <07fe061c-6d0e-b3b7-7126-a7b014aec478@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230720054100.9940-12-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/07/2023 23:27, Kuogee Hsieh wrote:
-> 
-> On 7/10/2023 11:24 AM, Dmitry Baryshkov wrote:
->> [Restored CC list]
->>
->> On Mon, 10 Jul 2023 at 20:08, Kuogee Hsieh <quic_khsieh@quicinc.com> 
->> wrote:
->>>
->>> On 7/7/2023 5:32 PM, Dmitry Baryshkov wrote:
->>>> On 08/07/2023 02:52, Kuogee Hsieh wrote:
->>>>> Move of_dp_aux_populate_bus() to dp_display_probe() for eDP
->>>>> from dp_display_bind() so that probe deferral cases can be
->>>>> handled effectively
->>>>>
->>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/dp/dp_aux.c     | 25 ++++++++++++
->>>>>    drivers/gpu/drm/msm/dp/dp_display.c | 79
->>>>> +++++++++++++++++++------------------
->>>>>    2 files changed, 65 insertions(+), 39 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c
->>>>> b/drivers/gpu/drm/msm/dp/dp_aux.c
->>>>> index c592064..c1baffb 100644
->>>>> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
->>>>> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
->>>>> @@ -505,6 +505,21 @@ void dp_aux_unregister(struct drm_dp_aux *dp_aux)
->>>>>        drm_dp_aux_unregister(dp_aux);
->>>>>    }
->>>>>    +static int dp_wait_hpd_asserted(struct drm_dp_aux *dp_aux,
->>>>> +                 unsigned long wait_us)
->>>>> +{
->>>>> +    int ret;
->>>>> +    struct dp_aux_private *aux;
->>>>> +
->>>>> +    aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
->>>>> +
->>>>> +    pm_runtime_get_sync(aux->dev);
->>>>> +    ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
->>>>> +    pm_runtime_put_sync(aux->dev);
->>>>> +
->>>>> +    return ret;
->>>>> +}
->>>>> +
->>>>>    struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog
->>>>> *catalog,
->>>>>                      bool is_edp)
->>>>>    {
->>>>> @@ -528,6 +543,16 @@ struct drm_dp_aux *dp_aux_get(struct device
->>>>> *dev, struct dp_catalog *catalog,
->>>>>        aux->catalog = catalog;
->>>>>        aux->retry_cnt = 0;
->>>>>    +    /*
->>>>> +     * Use the drm_dp_aux_init() to use the aux adapter
->>>>> +     * before registering aux with the DRM device.
->>>>> +     */
->>>>> +    aux->dp_aux.name = "dpu_dp_aux";
->>>>> +    aux->dp_aux.dev = dev;
->>>>> +    aux->dp_aux.transfer = dp_aux_transfer;
->>>>> +    aux->dp_aux.wait_hpd_asserted = dp_wait_hpd_asserted;
->>>>> +    drm_dp_aux_init(&aux->dp_aux);
->>>>> +
->>>>>        return &aux->dp_aux;
->>>>>    }
->>>>>    diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
->>>>> b/drivers/gpu/drm/msm/dp/dp_display.c
->>>>> index 185f1eb..7ed4bea 100644
->>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->>>>> @@ -302,10 +302,6 @@ static int dp_display_bind(struct device *dev,
->>>>> struct device *master,
->>>>>            goto end;
->>>>>        }
->>>>>    -    pm_runtime_enable(dev);
->>>>> -    pm_runtime_set_autosuspend_delay(dev, 1000);
->>>>> -    pm_runtime_use_autosuspend(dev);
->>>>> -
->>>>>        return 0;
->>>>>    end:
->>>>>        return rc;
->>>>> @@ -322,8 +318,6 @@ static void dp_display_unbind(struct device *dev,
->>>>> struct device *master,
->>>>>          kthread_stop(dp->ev_tsk);
->>>>>    -    of_dp_aux_depopulate_bus(dp->aux);
->>>>> -
->>>>>        dp_power_client_deinit(dp->power);
->>>>>        dp_unregister_audio_driver(dev, dp->audio);
->>>>>        dp_aux_unregister(dp->aux);
->>>>> @@ -1245,6 +1239,29 @@ static const struct msm_dp_desc
->>>>> *dp_display_get_desc(struct platform_device *pde
->>>>>        return NULL;
->>>>>    }
->>>>>    +static void of_dp_aux_depopulate_bus_void(void *data)
->>>>> +{
->>>>> +    of_dp_aux_depopulate_bus(data);
->>>>> +}
->>>>> +
->>>>> +static int dp_display_auxbus_emulation(struct dp_display_private *dp)
->>>> Why is it called emulation?
->>>>
->>>>> +{
->>>>> +    struct device *dev = &dp->pdev->dev;
->>>>> +    struct device_node *aux_bus;
->>>>> +    int ret = 0;
->>>>> +
->>>>> +    aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
->>>>> +
->>>>> +    if (aux_bus) {
->>>>> +        ret = devm_of_dp_aux_populate_bus(dp->aux, NULL);
->>>> And here you missed the whole point of why we have been asking for.
->>>> Please add a sensible `done_probing' callback, which will call
->>>> component_add(). This way the DP component will only be registered
->>>> when the panel has been probed. Keeping us from the component binding
->>>> retries and corresponding side effects.
->>>>
->>>>> +
->>>>> +        devm_add_action_or_reset(dev, of_dp_aux_depopulate_bus_void,
->>>>> +                     dp->aux);
->>>> Useless, it's already handled by the devm_ part of the
->>>> devm_of_dp_aux_populate_bus().
->>>>
->>>>> +    }
->>>>> +
->>>>> +    return ret;
->>>>> +}
->>>>> +
->>>>>    static int dp_display_probe(struct platform_device *pdev)
->>>>>    {
->>>>>        int rc = 0;
->>>>> @@ -1290,8 +1307,18 @@ static int dp_display_probe(struct
->>>>> platform_device *pdev)
->>>>>          platform_set_drvdata(pdev, &dp->dp_display);
->>>>>    +    pm_runtime_enable(&pdev->dev);
->>>>> +    pm_runtime_set_autosuspend_delay(&pdev->dev, 1000);
->>>>> +    pm_runtime_use_autosuspend(&pdev->dev);
->>>> Can we have this in probe right from the patch #2?
->>> no, at patch#2, devm_of_dp_aux_populate_bus() is done ta bind timing.
->>>
->>> The device used by pm_runtime_get_sync() of generic_edp_panel_probe()
->>> which is derived from devm_of_dp_aux_populate_bus() is different the
->>> &pdev->dev here.
->> Excuse me, I don't get your answer. In patch #2 you have added
->> pm_runtime_enable() / etc to dp_display_bind().
->> In this patch you are moving these calls to dp_display_probe(). I
->> think that the latter is a better place for enabling runtime PM and as
->> such I've asked you to squash this chunk into patch #2.
->> Why isn't that going to work?
->>
->> If I'm not mistaken here, the panel's call to pm_runtime_get_sync()
->> will wake up the panel and all the parent devices, including the DP.
->> That's what I meant in my comment regarding PM calls in the patch #1.
->> pm_runtime_get_sync() / resume() / etc. do not only increase the
->> runtime PM count. They do other things to parent devices, linked
->> devices, etc.
-> 
-> sorry for late response,
-> 
-> yes, pm_runtime_enable() at probe() is better and i did that original. 
-> but it is not work.
-> 
-> I found that,
-> 
-> 1) at dp_display_bind(), dev is mdss
+Hi Manivannan,
 
-If the 'dev' is the issue, you can always use dp_display_private::pdev.
+kernel test robot noticed the following build errors:
 
-> 
-> 2) at probe() dev is dp
-> 
-> 3) pm_runtime_enable(dp's dev) and generic_edp_panel_probe() --> 
-> pm_runtime_get_sync(mdss's dev)
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on mkp-scsi/for-next jejb-scsi/for-next linus/master v6.5-rc2 next-20230720]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-I might be missing something. Please describe, what exactly doesn't work.
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/dt-bindings-ufs-common-add-OPP-table/20230720-134720
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230720054100.9940-12-manivannan.sadhasivam%40linaro.org
+patch subject: [PATCH v2 11/15] scsi: ufs: host: Add support for parsing OPP
+config: arm-randconfig-r046-20230720 (https://download.01.org/0day-ci/archive/20230721/202307210720.G9ca0YYu-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.3.0
+reproduce: (https://download.01.org/0day-ci/archive/20230721/202307210720.G9ca0YYu-lkp@intel.com/reproduce)
 
-> 
-> 
-> 
->>>>> +
->>>>>        dp_display_request_irq(dp);
->>>>>    +    if (dp->dp_display.is_edp) {
->>>>> +        rc = dp_display_auxbus_emulation(dp);
->>>>> +        if (rc)
->>>>> +            DRM_ERROR("eDP aux-bus emulation failed, rc=%d\n", rc);
->>>>> +    }
->>>>> +
->>>>>        rc = component_add(&pdev->dev, &dp_display_comp_ops);
->>>>>        if (rc) {
->>>>>            DRM_ERROR("component add failed, rc=%d\n", rc);
->>>>> @@ -1306,11 +1333,14 @@ static int dp_display_remove(struct
->>>>> platform_device *pdev)
->>>>>        struct dp_display_private *dp =
->>>>> dev_get_dp_display_private(&pdev->dev);
->>>>>          component_del(&pdev->dev, &dp_display_comp_ops);
->>>>> -    dp_display_deinit_sub_modules(dp);
->>>>> -
->>>>>        platform_set_drvdata(pdev, NULL);
->>>>> +
->>>>> +    pm_runtime_dont_use_autosuspend(&pdev->dev);
->>>>> +    pm_runtime_disable(&pdev->dev);
->>>>>        pm_runtime_put_sync_suspend(&pdev->dev);
->>>>>    +    dp_display_deinit_sub_modules(dp);
->>>>> +
->>>>>        return 0;
->>>>>    }
->>>>>    @@ -1514,31 +1544,10 @@ void msm_dp_debugfs_init(struct msm_dp
->>>>> *dp_display, struct drm_minor *minor)
->>>>>      static int dp_display_get_next_bridge(struct msm_dp *dp)
->>>>>    {
->>>>> -    int rc;
->>>>> +    int rc = 0;
->>>>>        struct dp_display_private *dp_priv;
->>>>> -    struct device_node *aux_bus;
->>>>> -    struct device *dev;
->>>>>          dp_priv = container_of(dp, struct dp_display_private,
->>>>> dp_display);
->>>>> -    dev = &dp_priv->pdev->dev;
->>>>> -    aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
->>>>> -
->>>>> -    if (aux_bus && dp->is_edp) {
->>>>> -        /*
->>>>> -         * The code below assumes that the panel will finish probing
->>>>> -         * by the time devm_of_dp_aux_populate_ep_devices() returns.
->>>>> -         * This isn't a great assumption since it will fail if the
->>>>> -         * panel driver is probed asynchronously but is the best we
->>>>> -         * can do without a bigger driver reorganization.
->>>>> -         */
->>>>> -        rc = of_dp_aux_populate_bus(dp_priv->aux, NULL);
->>>>> -        of_node_put(aux_bus);
->>>>> -        if (rc)
->>>>> -            goto error;
->>>>> -    } else if (dp->is_edp) {
->>>>> -        DRM_ERROR("eDP aux_bus not found\n");
->>>>> -        return -ENODEV;
->>>>> -    }
->>>>>          /*
->>>>>         * External bridges are mandatory for eDP interfaces: one 
->>>>> has to
->>>>> @@ -1551,17 +1560,9 @@ static int dp_display_get_next_bridge(struct
->>>>> msm_dp *dp)
->>>>>        if (!dp->is_edp && rc == -ENODEV)
->>>>>            return 0;
->>>>>    -    if (!rc) {
->>>>> +    if (!rc)
->>>>>            dp->next_bridge = dp_priv->parser->next_bridge;
->>>>> -        return 0;
->>>>> -    }
->>>>>    -error:
->>>>> -    if (dp->is_edp) {
->>>>> -        of_dp_aux_depopulate_bus(dp_priv->aux);
->>>>> -        dp_display_host_phy_exit(dp_priv);
->>>>> -        dp_display_host_deinit(dp_priv);
->>>>> -    }
->>>>>        return rc;
->>>>>    }
->>
->>
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202307210720.G9ca0YYu-lkp@intel.com/
+
+All errors (new ones prefixed by >>, old ones prefixed by <<):
+
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/rc/rc-core.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/common/uvc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/platform/marvell/mcam-core.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/usb/dvb-usb/dvb-usb-dibusb-common.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/usb/dvb-usb/dvb-usb-dibusb-mc-common.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/dvb-frontends/au8522_decoder.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/v4l2-core/v4l2-async.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/v4l2-core/v4l2-fwnode.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/hardware/mISDN/hfcpci.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/hardware/mISDN/hfcmulti.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/hardware/mISDN/avmfritz.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/hardware/mISDN/w6692.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/hardware/mISDN/netjet.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/hardware/mISDN/mISDNipac.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/mISDN/mISDN_core.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/mISDN/mISDN_dsp.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/isdn/mISDN/l1oip.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mmc/core/mmc_core.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mmc/core/pwrseq_simple.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mmc/core/pwrseq_emmc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mmc/core/sdio_uart.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/platform/chrome/cros_kunit.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/devfreq/governor_performance.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/hwtracing/intel_th/intel_th_msu_sink.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/nvmem/nvmem_u-boot-env.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/parport/parport.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mtd/chips/cfi_util.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mtd/maps/map_funcs.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/uio/uio.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/uio/uio_pruss.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/uio/uio_mf624.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pcmcia/pcmcia_rsrc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/pcmcia/i82092.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/greybus/greybus.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/iio/buffer/kfifo_buf.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/fsi/fsi-core.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/fsi/fsi-master-aspeed.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/fsi/fsi-master-gpio.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/fsi/fsi-scom.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/802/fddi.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/sch_netem.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/sch_plug.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/sch_mqprio.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/sch_mqprio_lib.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/sch_taprio.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/cls_u32.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/cls_basic.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/sched/cls_cgroup.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nf_conntrack.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nf_conntrack_netlink.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nf_conntrack_broadcast.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nf_nat.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nf_tables.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nft_fib.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nft_chain_nat.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/nft_fwd_netdev.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_wrr.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_wlc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_fo.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_ovf.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_lblc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_lblcr.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/netfilter/ipvs/ip_vs_sh.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/netfilter/nf_defrag_ipv4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/netfilter/nf_reject_ipv4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/netfilter/iptable_nat.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ipip.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ip_vti.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/ah4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/esp4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/tunnel4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ipv4/udp_diag.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/xfrm/xfrm_algo.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/xfrm/xfrm_user.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ar9331.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_brcm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_dsa.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_gswip.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_hellcreek.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ksz.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_lan9303.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_mtk.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_none.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ocelot.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_ocelot_8021q.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_qca.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_rtl4_a.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_rtl8_4.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_rzn1_a5psw.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_trailer.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/dsa/tag_xrs700x.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/mptcp/mptcp_crypto_test.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/mptcp/mptcp_token_test.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/kcm/kcm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/atm/atm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/atm/lec.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/atm/mpoa.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/ieee802154/ieee802154_socket.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in net/hsr/hsr.o
+>> ERROR: modpost: "__traceiter_ufshcd_clk_scaling" [drivers/ufs/host/ufshcd-pltfrm.ko] undefined!
+>> ERROR: modpost: "__tracepoint_ufshcd_clk_scaling" [drivers/ufs/host/ufshcd-pltfrm.ko] undefined!
 
 -- 
-With best wishes
-Dmitry
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
