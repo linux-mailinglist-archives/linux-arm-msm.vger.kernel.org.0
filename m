@@ -2,237 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A10475B3E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 18:11:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05D1875B4C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 18:44:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbjGTQLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 12:11:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43178 "EHLO
+        id S230444AbjGTQow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 12:44:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbjGTQLH (ORCPT
+        with ESMTP id S231199AbjGTQoo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 12:11:07 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D5F114
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 09:11:06 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-577323ba3d5so33270987b3.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 09:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689869465; x=1690474265;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qp196USLnAy4LTAkpGzxnXfWsR6U5xBzW1Ke9Zcywm4=;
-        b=0xJVu/W/3xHLwIgQt4AdT6cR/YUtiNdLdmQJXkVP0EBEOh0s1C8pMSYPVmVX56g0qL
-         iY14aVUZXceX1+sSx47/A3Oz42zFfT6/iI72X+dHAkxW9xroRWzw6ItifadoKfASJ3u8
-         hBpU/RpuzpltTY33o0ZEKscU+ZkWmBRLI+L2oSSkqem1In1o/8kvyeLQtZwigN3E10vS
-         NgK9xlM5rN/Z00gvjRghEprD9TdNy5Vmx8iwjIOd4Y+GZ8uG8ZEDfW1U7NXUAb9hO2fz
-         tMytb0jSh5n09x1tTZWMd313KeCvKYZeX3DaeKAhaFjFGLwW9FuzHttvsRB6eaajnMdp
-         HzOw==
+        Thu, 20 Jul 2023 12:44:44 -0400
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0BD2E43;
+        Thu, 20 Jul 2023 09:44:42 -0700 (PDT)
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-262f7b67da8so540259a91.0;
+        Thu, 20 Jul 2023 09:44:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689869465; x=1690474265;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qp196USLnAy4LTAkpGzxnXfWsR6U5xBzW1Ke9Zcywm4=;
-        b=FzJa2p0IRHQ+AkolouG00thFn3X1dvc+VUryFli9D4IBWA4pQhCw6YSwZc6k2SXiHI
-         FVGSFZlUJuyyxkIw8OFtoSUOmOVA0bnFA4s4fdZAAyl0IS3Y/QcGE/1hBVxN8QzPuejm
-         sDdA+QpfI7CBdZWVlVq7goZfPBpV4x/UhULMh5ykkoudiKnj40rjTZmx+d+ihKPeYa5V
-         83Te8Xxp7hlg1hAUX+apT5sMdN/K57rNdrpziNir2Lg645U8R7dEgVSkx7HlegEUJx0M
-         SfrF3NQH0JmY//9xZE4O6nf63X4mtmM0DVkuRTXvau17ZV2Al21Dum5FdzMEZE/RSt1G
-         TcYg==
-X-Gm-Message-State: ABy/qLbhav9/0pxoEBrUrPx+c1x9eepuMnz6ppzSL52p7iMrHI0tNnsb
-        3aZUPhD0trluZDGHKvwWjY+PUx8E1Hpi+g==
-X-Google-Smtp-Source: APBJJlEiVEmuesw68z+x28qFD4ReuJRNuf+WB6wQmhi/bG4Ofb/elfxoE7pV67Grv8RRZAJJig+fwLf/UqbQFQ==
-X-Received: from tef.lon.corp.google.com ([2a00:79e0:d:209:c4c4:9486:83f9:4510])
- (user=gprocida job=sendgmr) by 2002:a5b:349:0:b0:ceb:324c:ba8e with SMTP id
- q9-20020a5b0349000000b00ceb324cba8emr77473ybp.4.1689869465517; Thu, 20 Jul
- 2023 09:11:05 -0700 (PDT)
-Date:   Thu, 20 Jul 2023 17:10:53 +0100
-In-Reply-To: <20230407203456.27141-2-quic_johmoo@quicinc.com>
-Mime-Version: 1.0
-References: <20230407203456.27141-2-quic_johmoo@quicinc.com>
-X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230720161053.1213680-1-gprocida@google.com>
-Subject: [PATCH] scripts/check-uapi.sh: add stgdiff support
-From:   Giuliano Procida <gprocida@google.com>
-To:     quic_johmoo@quicinc.com
-Cc:     masahiroy@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
-        nicolas@fjasle.eu, linux-kbuild@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org,
-        rdunlap@infradead.org, arnd@arndb.de, andersson@kernel.org,
-        tkjos@google.com, maennich@google.com, gprocida@google.com,
-        kernel-team@android.com, libabigail@sourceware.org,
-        jorcrous@amazon.com, quic_tsoni@quicinc.com,
-        quic_satyap@quicinc.com, quic_eberman@quicinc.com,
-        quic_gurus@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.6
+        d=1e100.net; s=20221208; t=1689871482; x=1690476282;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ctqaYU09ArSRwQw32H48XIaLjIzfILrKXlWnxf+Rzg8=;
+        b=LVmm2XiDs7ekH/orM9CiULtttCWH04AO3FF1rlPXHaOfp30d9gnaWrRMnT29UIu9Gb
+         rrJ+VYVUXAsyXep8VmobnFpvytPKkeD1EYdygbZzeBLUz0lrd1G/ukciS6sPxkRzu0cv
+         hNCXKZVzm+vxaLR96O0EOaj92ZsAJcGyfcZePoPFXlTxm3A5LPXoB8hfNFYlr/zoquOF
+         expOd9zIKzAIpaqusnSFuHCcmDBv1veYRXobppBZCfAUwpNcUT3JWvvTxVtM/HBSyjgc
+         aNDDM6e4+ZZLLDS0cxPjTQdmNTSQoTmjK89Ly4hiDW5iq3v0DHpoRf81lDvSSO0gL1w8
+         BB7w==
+X-Gm-Message-State: ABy/qLbUrC4n0hWYxQwhEr0UpKbSp803jV54Wf3N82jpDwOSa7HHYIJd
+        SV/Ed0S9rcxY2rf5woDTbRNf3gsitjK0IQ==
+X-Google-Smtp-Source: APBJJlHgtgbpjNMR0O6O6wWRcFlkIp0IcCyDcaCcC2tZFJGOAcGugdM7LWjtbzfr/AjZ++6ILh/EQA==
+X-Received: by 2002:a17:90b:4f84:b0:263:5c78:4b63 with SMTP id qe4-20020a17090b4f8400b002635c784b63mr2131882pjb.45.1689871482028;
+        Thu, 20 Jul 2023 09:44:42 -0700 (PDT)
+Received: from ?IPV6:2601:642:4c05:946:30b8:ec2e:fe9b:4835? ([2601:642:4c05:946:30b8:ec2e:fe9b:4835])
+        by smtp.gmail.com with ESMTPSA id h13-20020a17090a648d00b00259e553f59bsm2912247pjj.20.2023.07.20.09.44.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 09:44:41 -0700 (PDT)
+Message-ID: <e46f077f-4602-1882-bc14-e8df2a216773@acm.org>
+Date:   Thu, 20 Jul 2023 09:44:38 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 00/15] UFS: Add OPP and interconnect support
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org
+References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi John.
+On 7/19/23 22:40, Manivannan Sadhasivam wrote:
+> This series adds OPP (Operating Points) support to UFSHCD driver and
+> interconnect support to Qcom UFS driver.
+> 
+> Motivation behind adding OPP support is to scale both clocks as well as
+> regulators/performance state dynamically. Currently, UFSHCD just scales
+> clock frequency during runtime with the help of "freq-table-hz" property
+> defined in devicetree. With the addition of OPP tables in devicetree (as
+> done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+> both clocks and performance state of power domain which helps in power
+> saving.
+> 
+> For the addition of OPP support to UFSHCD, there are changes required to
+> the OPP framework and devfreq drivers which are also added in this series.
+> 
+> Finally, interconnect support is added to Qcom UFS driver for scaling the
+> interconnect path dynamically. This is required to avoid boot crash in
+> recent SoCs and also to save power during runtime. More information is
+> available in patch 13/13.
 
-I spent a few minutes adding stgdiff support to the script. It's
-really just for illustration purposes.
+How much power can OPP save? I'm asking this since I'm wondering whether
+the power saved by OPP outweighs the complexity added by this patch series.
 
-As I think you know, STG doesn't yet exist as a project outside of
-AOSP. Nevertheless, this may be useful to you as-is.
+Thanks,
 
-STG has quite a different philosophy to libabigil in terms of
-filtering out certain kinds of differences. Some of the things (like
-enum enumerator additions) are not considered harmless. The reasoning
-behind this is basically...
-https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)
-
-However, it does have --ignore interface_addition (and the related
---ignore type_definition_addition) which can be used to detect whether
-one ABI is a subset of another.
-
-I am looking at adding support for macro definitions (gcc -g3) to STG
-which will then let us cover significantly more of the UAPI surface.
-
-Unfortunately, there are some headers which use anonymous enums to
-define constants (e.g. and ironically BTF). ABI tracking these types
-would require something a bit hacky. Or we could just name them.
-
-Regards,
-Giuliano.
-
-Signed-off-by: Giuliano Procida <gprocida@google.com>
----
- scripts/check-uapi.sh | 102 ++++++++++++++++++++++++++++--------------
- 1 file changed, 69 insertions(+), 33 deletions(-)
-
-diff --git a/scripts/check-uapi.sh b/scripts/check-uapi.sh
-index 755187f27be5..982666b48f3b 100755
---- a/scripts/check-uapi.sh
-+++ b/scripts/check-uapi.sh
-@@ -32,6 +32,7 @@ Options:
-     -v             Verbose operation (print more information about each header being checked).
- 
- Environmental args:
-+    STGDIFF  Custom path to stgdiff binary - use stgdiff instead of abidiff
-     ABIDIFF  Custom path to abidiff binary
-     CC       C compiler (default is "gcc")
-     ARCH     Target architecture of C compiler (default is host arch)
-@@ -270,43 +271,78 @@ compare_abi() {
- 		exit "$FAIL_COMPILE"
- 	fi
- 
--	local ret=0
--	"$ABIDIFF" --non-reachable-types "${past_header}.bin" "${base_header}.bin" > "$log" || ret="$?"
--	if [ "$ret" -eq 0 ]; then
--		if [ "$VERBOSE" = "true" ]; then
--			printf "No ABI differences detected in %s from %s -> %s\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
-+	if [ "$STGDIFF" ]; then
-+		local ret=0
-+		"$STGDIFF" --types --ignore interface_addition --elf "${past_header}.bin" "${base_header}.bin" --format small --output "$log" || ret="$?"
-+		if [ "$ret" -eq 0 ]; then
-+			if [ "$VERBOSE" = "true" ]; then
-+				printf "No ABI differences detected in %s from %s -> %s\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
-+			fi
-+		else
-+			# stgdiff's return code can be used to determine the type of error
-+			if [ $((ret & 0x1)) -gt 0 ]; then
-+				eprintf "error - stgdiff failed\n"
-+				exit 1
-+			fi
-+
-+			{
-+				printf "!!! ABI differences detected in %s from %s -> %s !!!\n\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
-+				sed  -e 's/^/  /g' "$log"
-+
-+				if ! cmp "$past_header" "$base_header" > /dev/null 2>&1; then
-+					printf "\nHeader file diff (after headers_install):\n"
-+					diff -Naur "$past_header" "$base_header" \
-+						| sed -e "s|${past_header}|${past_ref}/${file}|g" \
-+						      -e "s|${base_header}|${base_ref:-dirty}/${file}|g"
-+					printf "\n"
-+				else
-+					printf "\n%s did not change between %s and %s...\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
-+					printf "It's possible a change to one of the headers it includes caused this error:\n"
-+					grep '^#include' "$base_header"
-+					printf "\n"
-+				fi
-+			} | tee "${base_header}.error" >&2
-+			return 1
- 		fi
- 	else
--		# Bits in abidiff's return code can be used to determine the type of error
--		if [ $((ret & 0x1)) -gt 0 ]; then
--			eprintf "error - abidiff did not run properly\n"
--			exit 1
--		fi
-+		local ret=0
-+		"$ABIDIFF" --non-reachable-types "${past_header}.bin" "${base_header}.bin" > "$log" || ret="$?"
-+		if [ "$ret" -eq 0 ]; then
-+			if [ "$VERBOSE" = "true" ]; then
-+				printf "No ABI differences detected in %s from %s -> %s\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
-+			fi
-+		else
-+			# Bits in abidiff's return code can be used to determine the type of error
-+			if [ $((ret & 0x1)) -gt 0 ]; then
-+				eprintf "error - abidiff did not run properly\n"
-+				exit 1
-+			fi
- 
--		# If the only changes were additions (not modifications to existing APIs), then
--		# there's no problem. Ignore these diffs.
--		if grep "Unreachable types summary" "$log" | grep -q "0 removed" &&
--		   grep "Unreachable types summary" "$log" | grep -q "0 changed"; then
--			return 0
--		fi
--		{
--			printf "!!! ABI differences detected in %s from %s -> %s !!!\n\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
--			sed  -e '/summary:/d' -e '/changed type/d' -e '/^$/d' -e 's/^/  /g' "$log"
--
--			if ! cmp "$past_header" "$base_header" > /dev/null 2>&1; then
--				printf "\nHeader file diff (after headers_install):\n"
--				diff -Naur "$past_header" "$base_header" \
--					| sed -e "s|${past_header}|${past_ref}/${file}|g" \
--					      -e "s|${base_header}|${base_ref:-dirty}/${file}|g"
--				printf "\n"
--			else
--				printf "\n%s did not change between %s and %s...\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
--				printf "It's possible a change to one of the headers it includes caused this error:\n"
--				grep '^#include' "$base_header"
--				printf "\n"
-+			# If the only changes were additions (not modifications to existing APIs), then
-+			# there's no problem. Ignore these diffs.
-+			if grep "Unreachable types summary" "$log" | grep -q "0 removed" &&
-+			   grep "Unreachable types summary" "$log" | grep -q "0 changed"; then
-+				return 0
- 			fi
--		} | tee "${base_header}.error" >&2
--		return 1
-+			{
-+				printf "!!! ABI differences detected in %s from %s -> %s !!!\n\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
-+				sed  -e '/summary:/d' -e '/changed type/d' -e '/^$/d' -e 's/^/  /g' "$log"
-+
-+				if ! cmp "$past_header" "$base_header" > /dev/null 2>&1; then
-+					printf "\nHeader file diff (after headers_install):\n"
-+					diff -Naur "$past_header" "$base_header" \
-+						| sed -e "s|${past_header}|${past_ref}/${file}|g" \
-+						      -e "s|${base_header}|${base_ref:-dirty}/${file}|g"
-+					printf "\n"
-+				else
-+					printf "\n%s did not change between %s and %s...\n" "$file" "$past_ref" "${base_ref:-dirty tree}"
-+					printf "It's possible a change to one of the headers it includes caused this error:\n"
-+					grep '^#include' "$base_header"
-+					printf "\n"
-+				fi
-+			} | tee "${base_header}.error" >&2
-+			return 1
-+		fi
- 	fi
- }
- 
--- 
-2.41.0.255.g8b1d071c50-goog
-
+Bart.
