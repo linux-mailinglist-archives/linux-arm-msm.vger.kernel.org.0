@@ -2,171 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49B6175AB70
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 11:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5855B75AB7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 11:55:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231289AbjGTJuB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 05:50:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49416 "EHLO
+        id S229560AbjGTJzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 05:55:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjGTJtm (ORCPT
+        with ESMTP id S229503AbjGTJzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 05:49:42 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDF81719
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 02:48:06 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so860185e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 02:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689846484; x=1690451284;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=m66C/vpUoNhXNL/USqnmEN/SERtYzszLXqFxfokE9/I=;
-        b=AWPzHzVbimx7mJ3OJTXHoi7CjWuZXJgAH526sIkk+eZqFQ2+MP313fRQuFSZ9Oqt18
-         TlhzEWo+V7nRwsKKpBwgEYrbvO+xl8I8WxlUETa3bCwUueNEajSMtpNFZMRrrkkFktFV
-         2UE7qWA8txGyKBrXbvC5Lp/FsPVl3QhQjjDWmMfdPQnzu02ikXlbh2gDyTKtVHp0cnAk
-         LnIwSQ9k4DngRiyjJyQqpfiLXlfnHpMdfo+62th1/gtfc15FoOljNN8fyIIMKCzO4Rfe
-         O9TZotuM+hZVB+hU31kCBmL7EKZ29DXgDMqixlBkwgWbqApz7m/bSjzprqYd0e2kOIsO
-         fW/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689846484; x=1690451284;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m66C/vpUoNhXNL/USqnmEN/SERtYzszLXqFxfokE9/I=;
-        b=Sh/09eVn0PGyocHy1zTAMTAK+ajoE2KlHwk5eeEYeHlVNQaYn78FcZ7zda8+YXUfCB
-         IGL8Eb+6IHwGFHxu6xBYi16sC8sRPOK50gcrS87OQlP5l0hm5znIGWpNOYiUlcdZrC7M
-         28xEY4pydklHPxFdKFngfftzmHvT5yWLmF8zlMSgWHbLBbCZeK7wr/xXjYaztf6+k4M4
-         KpadG7d9UbQlXbky4MunJyazewSM4HD3l1aKsMYE5rFlQJGcgRg/roTTJdNlG5KeaIQe
-         3Vjfm94y1Lo+Xpp1Gingk0+t7zKFDq9oi1tAPRmdOcjxfegw93BHosZLJ2D/43DtP+lt
-         +Gsg==
-X-Gm-Message-State: ABy/qLYKIOSqe7H6keSe2wZUjI+2/Vt05bCUSBLO6nH5kPmU7rKQSIAW
-        j55yjuSq1Ps+rufxDJz0iRkWZw==
-X-Google-Smtp-Source: APBJJlFqoMhnweK+l5F3+WSGWFBzdrxM8oVIsbig1fVnXEChSXlao+MmrcENPeeMbW8GhoJJ+cvDnA==
-X-Received: by 2002:a05:6512:46d:b0:4f6:1779:b1c1 with SMTP id x13-20020a056512046d00b004f61779b1c1mr1902595lfd.48.1689846484327;
-        Thu, 20 Jul 2023 02:48:04 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id g12-20020a19ee0c000000b004fb8c31c8dfsm116388lfb.267.2023.07.20.02.48.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 02:48:03 -0700 (PDT)
-Message-ID: <9e401641-1334-c0bc-c49a-481a8a9af2de@linaro.org>
-Date:   Thu, 20 Jul 2023 11:48:02 +0200
+        Thu, 20 Jul 2023 05:55:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E203EA2;
+        Thu, 20 Jul 2023 02:55:02 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K7SYIg023406;
+        Thu, 20 Jul 2023 09:54:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=cJY51DTALiME3j4X6NH/CagxAQEjwHwyhncEMLUCyT0=;
+ b=I9qofbxOyk4gpFKL7ulZRgyHo5FUt3ONFmR5xAm7iDh9C4JFU0+4aDvlQt64ZtVoaZKq
+ zz2AoiwgJLbdDNIGpqRKeB1S00TtGvf12aQZ3gdhAPXYjEfbASPSsP/I+j/l+Wby0D/2
+ 0IeM8AfOcdk6xTetQIOkEjWNB4YOYIl0e4beKsYHdM/CFhyRts5LJNww5drvTT6LvfYY
+ DkGrBfhXegKDi71sNlW1qhVIt65tX44ix7wuERk7vki8YlgsWrTEiTHQhSWHsOo3a0sX
+ I3bcgqA4LtsXeFsZGOk1NE9a5XG43QaUdB2hlKCC/2N/HkMFTivQ4kYkYYGRIP5jkgd0 oQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxg3va6tc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 09:54:57 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36K9susA002462
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 09:54:56 GMT
+Received: from [10.50.14.220] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 20 Jul
+ 2023 02:54:52 -0700
+Message-ID: <304f3664-d04b-db74-24bb-a16c3982651a@quicinc.com>
+Date:   Thu, 20 Jul 2023 15:24:49 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document AL02-Cx and AL03-C2
- boards based on IPQ9574 family
+Subject: Re: [PATCH v2] pinctrl: qcom: Add intr_target_width field to support
+ increased number of interrupt targets
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sridharan S N <quic_sridsn@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230720084534.6461-1-quic_sridsn@quicinc.com>
- <20230720084534.6461-2-quic_sridsn@quicinc.com>
- <87c3a3db-d172-bc98-cf83-89b874c9fee7@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <87c3a3db-d172-bc98-cf83-89b874c9fee7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_ppareek@quicinc.com>,
+        <psodagud@quicinc.com>, <quic_kprasan@quicinc.com>,
+        <quic_ymg@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+References: <20230718064246.12429-1-quic_ninanaik@quicinc.com>
+ <fskuol2q4wbfilrz3x3dcmikhjgfsajgnuqjnp4petxr2ne6at@zfnonisxnjh3>
+From:   Ninad Naik <quic_ninanaik@quicinc.com>
+In-Reply-To: <fskuol2q4wbfilrz3x3dcmikhjgfsajgnuqjnp4petxr2ne6at@zfnonisxnjh3>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: c1HiPTXAGjSrHTC3JqmvboXz4zMooUyX
+X-Proofpoint-ORIG-GUID: c1HiPTXAGjSrHTC3JqmvboXz4zMooUyX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-20_03,2023-07-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 spamscore=0 bulkscore=0 adultscore=0 mlxscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2307200083
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.07.2023 10:49, Krzysztof Kozlowski wrote:
-> On 20/07/2023 10:45, Sridharan S N wrote:
->> Document the below listed (Reference Design Platform) RDP boards based on IPQ9574
->> family of SoCs.
->>
->> AL02-C3  - rdp437
->> AL02-C7  - rdp433-mht-phy
->> AL02-C10 - rdp433-mht-switch
->> AL02-C11 - rdp467
->> AL02-C12 - rdp455
->> AL02-C13 - rdp459
->> AL02-C15 - rdp457
->> AL02-C16 - rdp456
->> AL02-C17 - rdp469
->> AL02-C19 - rdp461
->> AL03-C2  - rdp458
->>
->> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
->> ---
->>  .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
->>  1 file changed, 20 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index dd66fd872c31..d992261da691 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -89,10 +89,20 @@ description: |
->>          adp
->>          ap-al01-c1
->>          ap-al02-c2
->> +        ap-al02-c3
->>          ap-al02-c6
->>          ap-al02-c7
->>          ap-al02-c8
->>          ap-al02-c9
->> +        ap-al02-c10
->> +        ap-al02-c11
->> +        ap-al02-c12
->> +        ap-al02-c13
->> +        ap-al02-c15
->> +        ap-al02-c16
->> +        ap-al02-c17
->> +        ap-al02-c19
-> 
-> Why? I asked once, but there was no feedback from Qualcomm.
-> 
-> Why do we need to do this? What's the point?
-Another question would be, whether these boards are just one-off test
-prototypes of which there exist like 5-10 units, or are they actually
-going to be supported and useful.
+Hi Bjorn,
 
-If it's the former, I don't think it makes sense to keep the device
-trees upstream.
+On 7/18/2023 9:02 PM, Bjorn Andersson wrote:
+> On Tue, Jul 18, 2023 at 12:12:46PM +0530, Ninad Naik wrote:
+>> SA8775 and newer target have added support for an increased number of
+>> interrupt targets. To implement this change, the intr_target field, which
+>> is used to configure the interrupt target in the interrupt configuration
+>> register is increased from 3 bits to 4 bits.
+>>
+>> In accordance to these updates, a new intr_target_width member is
+>> introduced in msm_pingroup structure. This member stores the value of
+>> width of intr_target field in the interrupt configuration register. This
+>> value is used to dynamically calculate and generate mask for setting the
+>> intr_target field. By default, this mask is set to 3 bit wide, to ensure
+>> backward compatibility with the older targets.
+>>
+>> Changes in v2 :
+>> -----------------
+>> - Changed initial definition of intr_target_mask variable to use GENMASK().
+>> - Update commit subject appropiately.
+>> - Add Fixes tag.
+>> - v1 : https://lore.kernel.org/all/20230714061010.15817-1-quic_ninanaik@quicinc.com/
+> 
+> Thanks for adding a good changelog, very much appreciated. The changelog
+> should be added below the '---' line though, as it typically don't add
+> value to the git history (except drivers/gpu/* which wants it here...).
+> 
+Apologies for the mistake. I will make a note of this and correct going 
+forward.
+> Perhaps Linus can drop it as he applies the patch, no need to resubmit
+> unless he ask you to.
+> 
+> Thanks,
+> Bjorn
 
-Konrad
+Thanks,
+Ninad
