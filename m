@@ -2,154 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B2FA75A77C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 09:14:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D208775A7AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 09:20:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbjGTHOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 03:14:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46942 "EHLO
+        id S231150AbjGTHU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 03:20:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbjGTHNx (ORCPT
+        with ESMTP id S229746AbjGTHU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 03:13:53 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B822C270D;
-        Thu, 20 Jul 2023 00:13:47 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-579dd20b1c8so5336707b3.1;
-        Thu, 20 Jul 2023 00:13:47 -0700 (PDT)
+        Thu, 20 Jul 2023 03:20:56 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E1A519A6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 00:20:54 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-314313f127fso365583f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 00:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689837226; x=1692429226;
-        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WVKm/i8teXdZv2e5QcK5beq0yMLwsXjjM3s1QCY0LCU=;
-        b=QO6fax06CAuznD+VUdKHxKESSSYPNUQHHp2PWvLc83exnbiOTFIDIhpQuZ4+QsfuD6
-         Zb2Yo218Mc1y2ttDp2jMWSR+VxwBnUA+v1RWFbMuzNecIyGCbaIF+e9uZWxSZfaO0OcP
-         KDrbSMdxyRR+N02dScmXZrKg6prEEVz0Vu7cAcdqP69ZYsyh9C67pVfpi7WBn4qMu7Xi
-         OGq9Rnn3Ktet6Q/kC8jYq2MJ1Jo8iQ/MfAew4jba1j21sMO9DZS64m0DNFrbH5R2HORl
-         glZ0X6lTMWiSTAnsQDvWw/mDV9gvCW01CmRix3U7TAqmOC4IOilLBUlzLSrZToMDh4Z+
-         N5ZA==
+        d=linaro.org; s=google; t=1689837652; x=1692429652;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2fbCfe+Jexyxfwxcv5jmJWYFscoFzXBWfr2MIt+Bdx0=;
+        b=PRW8dbua98J5/F75JrNUCJ+pUMEcV/dyaNVQwx+0rJuN4Vvwpp6nodcpUChTlV/ezo
+         dFZ9RCQEQQX46AAfsQgSbt5VBVgEB9YFc4YFd4k0KQHlESbbo9FcBKv8sLxw/G4mpPh6
+         q6yC5mK7cBO9sNu34Gqm+SpZiDmNF21Y5fYSiacwpNrPoDeJJxQl4FtdGuUb55AFplKG
+         At/ttEohUBDkLaSZuMS/sH2v8xxJ77wynntf40GPdKwNcn95C7KqbRxPgzAZOCp/h5Va
+         6F4Gjg0SVkbnAnwlYIzUIneuRsS//2pPiJDA5roXTVgWl6R+a0r03HcQYmkrKoxrlz/U
+         ALuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689837226; x=1692429226;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WVKm/i8teXdZv2e5QcK5beq0yMLwsXjjM3s1QCY0LCU=;
-        b=LLbeMvsa7iL5sRo3fY7JkdpF6HM4GImtzPdDbJLZcIyYP0xydd6gavEXpdQHlq+aWL
-         HxfZNYA1kDG8aIlv44yvsH1x8oz7l8CsXue4evO0ZyrHpM/Jm8BJQP/j1gM8p7USmlMD
-         t7Qy407rhLuVN3/AwDX1VewyU10EHOE0WCkEqKeb1X1YR8DcugpE6VOWd0+tq8ug2alf
-         K9cUegHcg3558nq3hiB3Hhwb2dQmjUwfPyTrQ6cIiFmHz1uGsxX1XEGYtA8zWHhgLtm/
-         YKR7RIWb6ixFuY2iDON5l+7AVf0Cj6rtxGmHoEN0iT6GNdq54DLtUgz6pziRMSU7O7Rz
-         VZ7Q==
-X-Gm-Message-State: ABy/qLb6aP95dmw4yb+lfjRAODSbreqQbgKOk06k4yN1PhOUewzxOKMl
-        Xwhr+nm9ZykrsH31nwRc4L0=
-X-Google-Smtp-Source: APBJJlHi9fosF2chC/KD7ruAwz7Sue/UFzpCdeKStJeFJCKrHmDxDFm9ghx/eXpYn/rcBX99SpunSg==
-X-Received: by 2002:a0d:ea4f:0:b0:576:8d7f:d163 with SMTP id t76-20020a0dea4f000000b005768d7fd163mr1502973ywe.8.1689837226409;
-        Thu, 20 Jul 2023 00:13:46 -0700 (PDT)
-Received: from 377044c6c369.cse.ust.hk (191host097.mobilenet.cse.ust.hk. [143.89.191.97])
-        by smtp.gmail.com with ESMTPSA id j131-20020a819289000000b00570253fc3e5sm62560ywg.105.2023.07.20.00.13.43
+        d=1e100.net; s=20221208; t=1689837652; x=1692429652;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2fbCfe+Jexyxfwxcv5jmJWYFscoFzXBWfr2MIt+Bdx0=;
+        b=jUMmrGTk/EV2keUUkOnPXduaBWEAO16JOl30X93anEpyqSItZL+bw83dUt1tkt0OLG
+         O5EigGPQF2pB/s0BpcqqPN2atFBfJEC1ICx00WUkHonX4h3vHtpu42yGRMrlamY+8nMq
+         JI2Ds7aS7e1IjVovy+50ExroxyeVPohNddftF4CBBxosl8fq2JwBIBL1Dg7DitluBoSi
+         1Ucg/fTOPeylM3U65HnJu9OXeM6iMro3iMre1i3oH/6iCcOFU+GDVZl+d3cFwI54f7Rx
+         EPuLqjazZ9oJR3oM0G/eUauq1AzCCJ9GdDYqviICuKGA736koOepzxnzHZETsrMkRfmr
+         Ff9w==
+X-Gm-Message-State: ABy/qLbvVMYiQwefQ/OZ8RGwUC06iLXPN6jGoCxgNhxoSEPJn/NNZzDJ
+        JAY8Q2vXqp6lGKhjANCsZkWdug==
+X-Google-Smtp-Source: APBJJlEKt/pVw48GgiNZDrcBVhhom8ZjwJ/RpQ4cRWBf6FTiaULsbPWBd5IeXXmMuch+RQsWF5iYrQ==
+X-Received: by 2002:adf:f248:0:b0:316:e249:c285 with SMTP id b8-20020adff248000000b00316e249c285mr1299138wrp.71.1689837652478;
+        Thu, 20 Jul 2023 00:20:52 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id v1-20020a5d6781000000b0031434c08bb7sm399767wru.105.2023.07.20.00.20.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jul 2023 00:13:45 -0700 (PDT)
-From:   Chengfeng Ye <dg573847474@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lee@kernel.org
-Cc:     sboyd@codeaurora.org, srinivas.kandagatla@linaro.org,
-        quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Chengfeng Ye <dg573847474@gmail.com>
-Subject: [PATCH v2] mfd: qcom-pm8xxx: Fix potential deadlock on &chip->pm_irq_lock
-Date:   Thu, 20 Jul 2023 07:13:30 +0000
-Message-Id: <20230720071330.50382-1-dg573847474@gmail.com>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 20 Jul 2023 00:20:52 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [RESEND PATCH 1/2] arm64: dts: qcom: msm8994: fix duplicated @6c00000 reserved memory
+Date:   Thu, 20 Jul 2023 09:20:47 +0200
+Message-Id: <20230720072048.10093-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As &chip->pm_irq_lock is acquired by pm8xxx_irq_handler() under irq
-context, other process context code should disable irq before acquiring
-the lock.
+Reserved memory @6c00000 is defined in MSM8994 DTSI and few boards:
 
-Since .irq_set_type and .irq_get_irqchip_state callbacks are generally
-executed from process context without irq disabled by default, the same
-lock acquision should disable irq.
+  Warning (unique_unit_address_if_enabled): /reserved-memory/reserved@6c00000: duplicate unit-address (also used in node /reserved-memory/hole2@6c00000)
+  Warning (unique_unit_address_if_enabled): /reserved-memory/reserved@6c00000: duplicate unit-address (also used in node /reserved-memory/memory@6c00000)
 
-Possible deadlock scenario
-pm8xxx_irq_set_type()
-    -> pm8xxx_config_irq()
-    -> spin_lock(&chip->pm_irq_lock)
-        <irq interrupt>
-        -> pm8xxx_irq_handler()
-        -> pm8xxx_irq_master_handler()
-        -> pm8xxx_irq_block_handler()
-        -> pm8xxx_read_block_irq()
-        -> spin_lock(&chip->pm_irq_lock) (deadlock here)
-
-This flaw was found using an experimental static analysis tool we are
-developing for irq-related deadlock.
-
-Fix the potential deadlock by spin_lock_irqsave().
-
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Changes in v2:
-- Modified word usage in commit message as suggested by Bjorn Andersson
----
- drivers/mfd/qcom-pm8xxx.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts        | 1 +
+ arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi | 1 +
+ arch/arm64/boot/dts/qcom/msm8994.dtsi                    | 2 +-
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 9a948df8c28d..07c531bd1236 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -103,8 +103,9 @@ static int
- pm8xxx_config_irq(struct pm_irq_chip *chip, unsigned int bp, unsigned int cp)
- {
- 	int	rc;
-+	unsigned long flags;
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
+index fcca1ba94da6..501e05efbef4 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
+@@ -15,6 +15,7 @@
+ /delete-node/ &audio_mem;
+ /delete-node/ &mpss_mem;
+ /delete-node/ &peripheral_region;
++/delete-node/ &res_hyp_mem;
+ /delete-node/ &rmtfs_mem;
  
--	spin_lock(&chip->pm_irq_lock);
-+	spin_lock_irqsave(&chip->pm_irq_lock, flags);
- 	rc = regmap_write(chip->regmap, SSBI_REG_ADDR_IRQ_BLK_SEL, bp);
- 	if (rc) {
- 		pr_err("Failed Selecting Block %d rc=%d\n", bp, rc);
-@@ -116,7 +117,7 @@ pm8xxx_config_irq(struct pm_irq_chip *chip, unsigned int bp, unsigned int cp)
- 	if (rc)
- 		pr_err("Failed Configuring IRQ rc=%d\n", rc);
- bail:
--	spin_unlock(&chip->pm_irq_lock);
-+	spin_unlock_irqrestore(&chip->pm_irq_lock, flags);
- 	return rc;
- }
+ / {
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+index 2861bcdf87b7..cbc84459a5ae 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+@@ -23,6 +23,7 @@
+ /delete-node/ &mba_mem;
+ /delete-node/ &mpss_mem;
+ /delete-node/ &peripheral_region;
++/delete-node/ &res_hyp_mem;
+ /delete-node/ &rmtfs_mem;
+ /delete-node/ &smem_mem;
  
-@@ -321,6 +322,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
- 	struct pm_irq_chip *chip = irq_data_get_irq_chip_data(d);
- 	unsigned int pmirq = irqd_to_hwirq(d);
- 	unsigned int bits;
-+	unsigned long flags;
- 	int irq_bit;
- 	u8 block;
- 	int rc;
-@@ -331,7 +333,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
- 	block = pmirq / 8;
- 	irq_bit = pmirq % 8;
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index c374fba5d8f9..4324bd2bfe76 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -281,7 +281,7 @@ adsp_mem: memory@c9400000 {
+ 			no-map;
+ 		};
  
--	spin_lock(&chip->pm_irq_lock);
-+	spin_lock_irqsave(&chip->pm_irq_lock, flags);
- 	rc = regmap_write(chip->regmap, SSBI_REG_ADDR_IRQ_BLK_SEL, block);
- 	if (rc) {
- 		pr_err("Failed Selecting Block %d rc=%d\n", block, rc);
-@@ -346,7 +348,7 @@ static int pm8xxx_irq_get_irqchip_state(struct irq_data *d,
- 
- 	*state = !!(bits & BIT(irq_bit));
- bail:
--	spin_unlock(&chip->pm_irq_lock);
-+	spin_unlock_irqrestore(&chip->pm_irq_lock, flags);
- 
- 	return rc;
- }
+-		reserved@6c00000 {
++		res_hyp_mem: reserved@6c00000 {
+ 			reg = <0 0x06c00000 0 0x400000>;
+ 			no-map;
+ 		};
 -- 
-2.17.1
+2.34.1
 
