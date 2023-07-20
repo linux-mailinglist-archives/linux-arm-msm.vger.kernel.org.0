@@ -2,119 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3665775A9BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3745F75A9BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:57:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbjGTI5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 04:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35862 "EHLO
+        id S229744AbjGTI5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 04:57:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231878AbjGTId0 (ORCPT
+        with ESMTP id S232002AbjGTIfJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 04:33:26 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD11268C;
-        Thu, 20 Jul 2023 01:33:25 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K5SqqW022420;
-        Thu, 20 Jul 2023 08:33:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=MP1Bkyz5bjTyT8+WFtnsD0N1nt1uVmVkvyHsWOopleU=;
- b=lVYXiOyhqoks00qR0ZRhE9p2fL+ZqQgRfwPw6HrRDe0kHeU+tiQUMxAoCPgR3JL/EwKS
- u2fu/tYfYknaskP1+q8w7Jtotc2/cqO1JTdDwdMWxL888aoV0rb0itmWZf1hgiHDk4vV
- z2660tVT5Qd82Ods51nqUhOLrPFhdzuLfBz6h1F6tVuQysrd4de7s5pjq7dpYkX5gufS
- YMAdPkCjM0oHYEuq0qufHpxbwxI+MP7Z/dIdRj4F7zqIk4CMHjmLTINzF7Hv4kYXLyWZ
- 19I+yvVe4VILLIPF8+bb93ZlsH/BEj72rsZ4UOsZe/9iXOdlrZIcmAiA/N55uVipe3gW 4g== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rx728u853-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 08:33:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36K8XKi7022628
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 08:33:20 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 20 Jul 2023 01:33:17 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_saahtoma@quicinc.com>
-Subject: [PATCH] clk: qcom: clk-rcg2: Fix wrong RCG clock rate for high parent frequencies
-Date:   Thu, 20 Jul 2023 14:03:04 +0530
-Message-ID: <20230720083304.28881-1-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Thu, 20 Jul 2023 04:35:09 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2205C268C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:35:06 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b8392076c9so7039551fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:35:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689842104; x=1692434104;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T3n6tUCMHPsrIoxippvznzODCkM1vMvU1KRQj8ysbNg=;
+        b=GKJHHrT5+R257JzbKIpQUcwZSM3nnhOwg/kXx7H7csINJWCZsNc16aU6QZDZjtXKCk
+         ZnKUHs2CGk2mJChvzktGaVDcDG9MpIh7f/hVoPuERcetNO7giDywEtegCHhsDhWiihFl
+         2ho1IaB99jAa32y6DTUoFjTL/QeGDX1GFddwEehVT0j5KbI1+MlDOxuVzUSgSc5JGZM3
+         /gew1ITfHyczYJnyCSSqpKUhxmf/B9JYIHgnfxPR9N+EA81pZC7tojJ8v8TGz6j8K2a3
+         Qnzi0Bq72iNSnOTFICfHfF2BhFJ8eq3jmfpcoh52T0tRwPS9i/x+LiIZT1vtrwn7hSq7
+         C2cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689842104; x=1692434104;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T3n6tUCMHPsrIoxippvznzODCkM1vMvU1KRQj8ysbNg=;
+        b=YqPxhUBaJcCk92X93gA+PDNuOIGT4sYcRSpg+mvYNFKepdzVPYc3RaVd6uEvi1tV8X
+         UKSCvrSkcxnEgkXY0Hfiab2uJzQ4lkBb2LbdAwZgSp8sGLpmpHbNRaX0w25UWzBFzsTD
+         FMeysuv2bOy0DUiPalRqhNRjpWFoahQQlnFRSUi1uInpGfscIgrsT1xZlIKw6eB2Q9rN
+         86Hm0871KjHf7WBKSad9AuoV7CTyRMHTCKKPgBa+ebmAOAgYz4UGdXTqWUXrCwviPqhU
+         nNmvZIk8tcsWeuPMDDnEl0mshTz/qQYiijF9Mq8jS2e+VhOExpxyLvtZu9lynnn0kYX0
+         sSyg==
+X-Gm-Message-State: ABy/qLYCrtyvzbhdNEm2GIeuZ3OYYqLjzaAYQkAaLdk5Y9+0jOpsUIvR
+        IsZib+nzS8FUguKdQ3qvdPzQPA==
+X-Google-Smtp-Source: APBJJlH4ETSf/WdCbzMV/QgVh1git1HFd/W9lxWIIA4/y7UgWctNqsB6v3hsRfi9c0m8s5BFpxHMMQ==
+X-Received: by 2002:a2e:9901:0:b0:2b6:df6b:84c0 with SMTP id v1-20020a2e9901000000b002b6df6b84c0mr1278557lji.25.1689842104412;
+        Thu, 20 Jul 2023 01:35:04 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id h3-20020a5d4fc3000000b00314329f7d8asm627060wrw.29.2023.07.20.01.35.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jul 2023 01:35:03 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/4] arm64: dts: qcom: sc8180x-pmics: add missing qcom,spmi-gpio fallbacks
+Date:   Thu, 20 Jul 2023 10:34:57 +0200
+Message-Id: <20230720083500.73554-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IdJx1srWEX_zfV2aQWymGAF7fjq-A4I6
-X-Proofpoint-ORIG-GUID: IdJx1srWEX_zfV2aQWymGAF7fjq-A4I6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-20_02,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- bulkscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
- mlxlogscore=876 impostorscore=0 spamscore=0 clxscore=1015 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307200070
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the parent clock rate is greater than unsigned long max/2 then
-integer overflow happens when calculating the clock rate on 32-bit systems.
-As RCG2 uses half integer dividers, the clock rate is first being
-multiplied by 2 which will overflow the unsigned long max value. So, use
-unsigned long long for rate computations to avoid overflow.
+The GPIO children of PMICs should use qcom,spmi-gpio fallback:
 
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+  sc8180x-primus.dtb: pmic@0: gpio@c000:compatible: ['qcom,pmc8180-gpio'] is too short
+
+Fixes: d3302290f59e ("arm64: dts: qcom: sc8180x: Add pmics")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index e22baf3a7112..42d00b134975 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -156,18 +156,18 @@ static int clk_rcg2_set_parent(struct clk_hw *hw, u8 index)
-  *            hid_div       n
-  */
- static unsigned long
--calc_rate(unsigned long rate, u32 m, u32 n, u32 mode, u32 hid_div)
-+calc_rate(unsigned long parent_rate, u32 m, u32 n, u32 mode, u32 hid_div)
- {
-+	u64 rate = parent_rate;
-+
- 	if (hid_div) {
- 		rate *= 2;
--		rate /= hid_div + 1;
-+		do_div(rate, hid_div + 1);
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+index 4556af6cd103..ef2f8b732833 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+@@ -142,7 +142,7 @@ rtc@6000 {
+ 		};
  
- 	if (mode) {
--		u64 tmp = rate;
--		tmp *= m;
--		do_div(tmp, n);
--		rate = tmp;
-+		rate *= m;
-+		do_div(rate, n);
- 	}
+ 		pmc8180_gpios: gpio@c000 {
+-			compatible = "qcom,pmc8180-gpio";
++			compatible = "qcom,pmc8180-gpio", "qcom,spmi-gpio";
+ 			reg = <0xc000>;
+ 			gpio-controller;
+ 			#gpio-cells = <2>;
+@@ -300,7 +300,7 @@ pmc8180c_adc_tm: adc-tm@3500 {
+ 		};
  
- 	return rate;
+ 		pmc8180c_gpios: gpio@c000 {
+-			compatible = "qcom,pmc8180c-gpio";
++			compatible = "qcom,pmc8180c-gpio", "qcom,spmi-gpio";
+ 			reg = <0xc000>;
+ 			gpio-controller;
+ 			#gpio-cells = <2>;
 -- 
-2.17.1
+2.34.1
 
