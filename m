@@ -2,130 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D957A75B513
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 18:57:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB94575B542
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 19:11:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230518AbjGTQ5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 12:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46128 "EHLO
+        id S231250AbjGTRL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 13:11:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229809AbjGTQ5u (ORCPT
+        with ESMTP id S231171AbjGTRL1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 12:57:50 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE315186
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 09:57:48 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-666e6541c98so874828b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 09:57:48 -0700 (PDT)
+        Thu, 20 Jul 2023 13:11:27 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED0A173A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 10:11:25 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fdd31bf179so1660549e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 10:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689872268; x=1690477068;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/RurPK5XlwVd1iZs5pxMs+mAdNFFXdwkpgha3mP0teo=;
-        b=ZK+11CFXcgQp0bhAJ4DPBSy3hNI+ni2d97fD+tiLZlfK+8kC7YXUzs7DJRJOXkhSZp
-         4UyRPv5+kfz7Ac/vKdba21CC+S8GweNz+UfrXKDpWFB26x7cgt1UHD+IgHSL4eB47q8R
-         yHOAP3wEWpavDQuY/GqSg/FZsR5TDutY6iJrcQPjYxXTYM3gNHUkuN9Tdow1wBQRfye2
-         OZrQFJVfs+F4PtqbzduVlnA2ar7SH700LWgivpVjbsMnnJmNtIMd/jhEcUtqWLsvu7Z4
-         QpK8OLXjHHeheASlUnvBKaOmGWWACJ3Dil7F3DmuNTENKsuLDkZDC7FMENAGHF2Tui3M
-         jeHg==
+        d=linaro.org; s=google; t=1689873084; x=1690477884;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bALuSQOEaIXV7+8g1kPlEIEXPY6havyGO8belxbKINE=;
+        b=QM+Bk2/Ep503vHxFU8hlMOEKrBdsf2QJ5ANYqnZh42ITGinI8GBXKbTrrxD6zGYeu7
+         10HHp1LKK6rHEXKzoHqGBXXAWEAxt4Ql9azpLo33NnKNSX8fMH7WKRQZcyi0afkOapKl
+         Qoy7bPCufCiIvnbBN4bU82vxImNCcUOFdMJw9dlHTz92SQVN2eFmbkKJ7mSEyuQ1dss7
+         3K4KQDTdz364IpO+9GYipvo4LE7O1z/0psgrMbi5h7gHfC1DEuXsUMdJ2nbeI4Z7q5m4
+         ZqFhplW+oC9hQKkgVZerbV72KjJPuu4ZYpGT+03zFJgiZ8tbBgZGlnJ9rTSjLae473Ud
+         2WKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689872268; x=1690477068;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1689873084; x=1690477884;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/RurPK5XlwVd1iZs5pxMs+mAdNFFXdwkpgha3mP0teo=;
-        b=eGqcfzjg598fqrfwq/7uEjwH4hgC88PkyX+ylGVzdao9PTjl9uG19ssh4riwkU+iiS
-         hpOBl6Hj01fXv7L4rbYLf+SiC1Hr+2gdiSHP1uUo/W9LRWVGkfilaNNYgmV3/Xj35J8T
-         VxZqfmwc2NpfxPuf3ud0Hensv29t46qzuipXBHxEg3mZb13WAsta9HHPaFnLvMM9xbXy
-         X/Ja6VutETSKDzcX18iTUX035fxRRdaEbXg2XVBSXPOkDQmSDMly7HdrNFbIIMi08qeV
-         t/A9HGo41bRCudqX7n/TdmH/cuJKQrJ6f1EnX2xMW1pkhMg4RMuJEFoWyWCQIbQPf/z8
-         vheQ==
-X-Gm-Message-State: ABy/qLbzMFiylnQHjiMkmT1ij0nfuEJYs6DmkHUmqoMu2MIPu9w+fNsU
-        NTZpSEoV5LwSmXrZhqw4lLub
-X-Google-Smtp-Source: APBJJlHZSFRdLSBkfKlGc/lyxUmjcdtNRmstzn6Q7EmPMSzVNBtbZu5/OMJD7BMmL7VVTx2A8GmGuw==
-X-Received: by 2002:a05:6a00:21d5:b0:686:2fde:4da with SMTP id t21-20020a056a0021d500b006862fde04damr3245948pfj.15.1689872268250;
-        Thu, 20 Jul 2023 09:57:48 -0700 (PDT)
-Received: from thinkpad ([117.206.118.181])
-        by smtp.gmail.com with ESMTPSA id y8-20020a62b508000000b00663b712bfbdsm1431362pfe.57.2023.07.20.09.57.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jul 2023 09:57:47 -0700 (PDT)
-Date:   Thu, 20 Jul 2023 22:27:37 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bart Van Assche <bvanassche@acm.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        alim.akhtar@samsung.com, avri.altman@wdc.com,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/15] UFS: Add OPP and interconnect support
-Message-ID: <20230720165737.GG48270@thinkpad>
-References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
- <e46f077f-4602-1882-bc14-e8df2a216773@acm.org>
+        bh=bALuSQOEaIXV7+8g1kPlEIEXPY6havyGO8belxbKINE=;
+        b=j8QHE9e/CQHTL34nrSdIn0GTovdhE+GNZXfnuR2bVcFBU1CAyRKJ6Ij1dS5KwYefcS
+         3os65ZPRxmn/PuKgoDoWJeAH1a4O39txtt82KvQ3g4kPiRVjruJTqHBjI2lCnKi+iBbB
+         h+NK95iY1xEs5H6cZD2vfUmn0etvr0eGhk/EZF4PHPZeDWYLm+A7mtt/tZjdy15u2ijX
+         8Ls49ykhSMlw6S9L4fl40veWzQi6INGKD6chYgww7k5yzy4AT9dllUPeURQ9aryQo9Tv
+         DPh67y5rz1xDiO503uKPUevhDGb1JD1o+eSh0KUcNL6j287Ul8Bt1I1BdlvUpMtkrJ8A
+         zH4Q==
+X-Gm-Message-State: ABy/qLZNpdiG/VVdZI3UBetP+qZ4ln6hlXRilnSgiNOAZp9HE61n31Wp
+        ZKa0EusaJd4njnlvgtyOON/CFw==
+X-Google-Smtp-Source: APBJJlGOiKHsb1V0MVEKlaWuSBLsg+MjtKiZQvBXh+G+6GT0IskQ2rgyrt8zPoyO3+O22tAEZL2Zrw==
+X-Received: by 2002:a19:2d05:0:b0:4fa:5e76:7ad4 with SMTP id k5-20020a192d05000000b004fa5e767ad4mr2564840lfj.10.1689873083816;
+        Thu, 20 Jul 2023 10:11:23 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id r6-20020ac25a46000000b004fdc0023a50sm286045lfn.232.2023.07.20.10.11.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 10:11:23 -0700 (PDT)
+Message-ID: <5f903395-9e5a-d4bc-067a-91256588c661@linaro.org>
+Date:   Thu, 20 Jul 2023 20:11:22 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] drm/msm: Check for the GPU IOMMU during bind
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Jordan Crouse <jorcrous@amazon.com>,
+        freedreno@lists.freedesktop.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230309222049.4180579-1-jorcrous@amazon.com>
+ <d73f6733-e605-0cf8-7909-8cced6e3b70d@linaro.org>
+ <CAF6AEGs89FRmFsENLkP-Dg1ZJN2LzCfxY2-+do9jH9b8L-XZxg@mail.gmail.com>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAF6AEGs89FRmFsENLkP-Dg1ZJN2LzCfxY2-+do9jH9b8L-XZxg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e46f077f-4602-1882-bc14-e8df2a216773@acm.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 20, 2023 at 09:44:38AM -0700, Bart Van Assche wrote:
-> On 7/19/23 22:40, Manivannan Sadhasivam wrote:
-> > This series adds OPP (Operating Points) support to UFSHCD driver and
-> > interconnect support to Qcom UFS driver.
-> > 
-> > Motivation behind adding OPP support is to scale both clocks as well as
-> > regulators/performance state dynamically. Currently, UFSHCD just scales
-> > clock frequency during runtime with the help of "freq-table-hz" property
-> > defined in devicetree. With the addition of OPP tables in devicetree (as
-> > done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
-> > both clocks and performance state of power domain which helps in power
-> > saving.
-> > 
-> > For the addition of OPP support to UFSHCD, there are changes required to
-> > the OPP framework and devfreq drivers which are also added in this series.
-> > 
-> > Finally, interconnect support is added to Qcom UFS driver for scaling the
-> > interconnect path dynamically. This is required to avoid boot crash in
-> > recent SoCs and also to save power during runtime. More information is
-> > available in patch 13/13.
+On 20/07/2023 18:52, Rob Clark wrote:
+> On Thu, Jul 6, 2023 at 11:55 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On 10/03/2023 00:20, Jordan Crouse wrote:
+>>> While booting with amd,imageon on a headless target the GPU probe was
+>>> failing with -ENOSPC in get_pages() from msm_gem.c.
+>>>
+>>> Investigation showed that the driver was using the default 16MB VRAM
+>>> carveout because msm_use_mmu() was returning false since headless devices
+>>> use a dummy parent device. Avoid this by extending the existing is_a2xx
+>>> priv member to check the GPU IOMMU state on all platforms and use that
+>>> check in msm_use_mmu().
+>>>
+>>> This works for memory allocations but it doesn't prevent the VRAM carveout
+>>> from being created because that happens before we have a chance to check
+>>> the GPU IOMMU state in adreno_bind.
+>>>
+>>> There are a number of possible options to resolve this but none of them are
+>>> very clean. The easiest way is to likely specify vram=0 as module parameter
+>>> on headless devices so that the memory doesn't get wasted.
+>>
+>> This patch was on my plate for quite a while, please excuse me for
+>> taking it so long.
+>>
+>> I see the following problem with the current code. We have two different
+>> instances than can access memory: MDP/DPU and GPU. And each of them can
+>> either have or miss the MMU.
+>>
+>> For some time I toyed with the idea of determining whether the allocated
+>> BO is going to be used by display or by GPU, but then I abandoned it. We
+>> can have display BOs being filled by GPU, so handling it this way would
+>> complicate things a lot.
 > 
-> How much power can OPP save? I'm asking this since I'm wondering whether
-> the power saved by OPP outweighs the complexity added by this patch series.
+> There is MSM_BO_SCANOUT .. but it wouldn't completely surprise me if
+> it isn't used in some place where it should somewhere or other.  But
+> that is the hint that contiguous allocation should be used if the
+> display doesn't support some sort of iommu.  (Using a GPU without some
+> sort of mmu/iommu isn't something sane to do.. the only reason the
+> support for that exists at all is to aid bringup.  I wouldn't call
+> that a "supported" configuration.)
 > 
-
-I haven't had a chance to do proper power measurements with this series due to
-lack of access to tools. But it won't be optimal to run the clocks at high/low
-frequencies without changing the associated regulator/power domain state.
-
-Atleast on Qcom platforms, the clock frequencies are tied to RPMh (power
-management entity) performance states for the peripherals. So both have to go
-hand in hand. Till now, only UFS among the other peripherals is not doing it
-right and hence this series.
-
-- Mani
-
-> Thanks,
+>> This actually rings a tiny bell in my head with the idea of splitting
+>> the display and GPU parts to two different drivers, but I'm not sure
+>> what would be the overall impact.
 > 
-> Bart.
+> Userspace does have better support for split display/gpu these days
+> than it did when drm/msm was first merged.  It _might_ just work if
+> one device only advertised DRIVER_RENDER and the other
+> MODESET/ATOMIC.. but I'd be a bit concerned about breaking things.  I
+> guess you could try some sort of kconfig knob to have two "msm"
+> devices and see what breaks, but I'm a bit skeptical that we could
+> make this the default anytime soon.
+
+Thanks. Yes, breaking userspace would be a bad thing. I do not know if 
+we should consider a single GPU+KMS driver to be an ABI and thus set in 
+stone.
+
+> 
+> For now, just addressing the only-display and only-gpu cases
+> (continuing with the single device arrangement when you have both
+> display and gpu), maybe split up drm_dev_alloc() and drm_dev_init() so
+> that we could use drm_device::driver_features to mask out
+> DRIVER_RENDER if needed.
+
+Yep. I'll continue following that path.
+
+> 
+> BR,
+> -R
+> 
+>> More on the msm_use_mmu() below.
+>>
+>>>
+>>> Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+>>> ---
+>>>
+>>>    drivers/gpu/drm/msm/adreno/adreno_device.c | 6 +++++-
+>>>    drivers/gpu/drm/msm/msm_drv.c              | 7 +++----
+>>>    drivers/gpu/drm/msm/msm_drv.h              | 2 +-
+>>>    3 files changed, 9 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> index 36f062c7582f..4f19da28f80f 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> @@ -539,7 +539,11 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+>>>        DBG("Found GPU: %u.%u.%u.%u", config.rev.core, config.rev.major,
+>>>                config.rev.minor, config.rev.patchid);
+>>>
+>>> -     priv->is_a2xx = config.rev.core == 2;
+>>> +     /*
+>>> +      * A2xx has a built in IOMMU and all other IOMMU enabled targets will
+>>> +      * have an ARM IOMMU attached
+>>> +      */
+>>> +     priv->has_gpu_iommu = config.rev.core == 2 || device_iommu_mapped(dev);
+>>>        priv->has_cached_coherent = config.rev.core >= 6;
+>>>
+>>>        gpu = info->init(drm);
+>>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+>>> index aca48c868c14..a125a351ec90 100644
+>>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>>> @@ -318,11 +318,10 @@ bool msm_use_mmu(struct drm_device *dev)
+>>>        struct msm_drm_private *priv = dev->dev_private;
+>>>
+>>>        /*
+>>> -      * a2xx comes with its own MMU
+>>> -      * On other platforms IOMMU can be declared specified either for the
+>>> -      * MDP/DPU device or for its parent, MDSS device.
+>>> +      * Return true if the GPU or the MDP/DPU or parent MDSS device has an
+>>> +      * IOMMU
+>>>         */
+>>> -     return priv->is_a2xx ||
+>>> +     return priv->has_gpu_iommu ||
+>>>                device_iommu_mapped(dev->dev) ||
+>>>                device_iommu_mapped(dev->dev->parent);
+>>
+>> I have a generic feeling that both old an new code is not fully correct.
+>> Please correct me if I'm wrong:
+>>
+>> We should be using VRAM, if either of the blocks can not use remapped
+>> memory. So this should have been:
+>>
+>> bool msm_use_mmu()
+>> {
+>>    if (!gpu_has_iommu)
+>>      return false;
+>>
+>>    if (have_display_part && !display_has_mmu())
+>>      return false;
+>>
+>>    return true;
+>> }
+>>
+>> What do you think.
+>>
+>>>    }
+>>> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+>>> index 9f0c184b02a0..f33f94acd1b9 100644
+>>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>>> @@ -126,7 +126,7 @@ struct msm_drm_private {
+>>>        struct msm_gpu *gpu;
+>>>
+>>>        /* gpu is only set on open(), but we need this info earlier */
+>>> -     bool is_a2xx;
+>>> +     bool has_gpu_iommu;
+>>>        bool has_cached_coherent;
+>>>
+>>>        struct drm_fb_helper *fbdev;
+>>
+>> --
+>> With best wishes
+>> Dmitry
+>>
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
+
