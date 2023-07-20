@@ -2,175 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4186675A802
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 09:43:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6357C75A80F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 09:43:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231386AbjGTHm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 03:42:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60396 "EHLO
+        id S231641AbjGTHnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 03:43:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231303AbjGTHm4 (ORCPT
+        with ESMTP id S231691AbjGTHnq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 03:42:56 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B59C2118;
-        Thu, 20 Jul 2023 00:42:55 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 896F6660707E;
-        Thu, 20 Jul 2023 08:42:52 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1689838973;
-        bh=qql06jpSc72dkLq4FdZfoamoL5RBmEctV2tIFgfKNAo=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=a4UkT6nTjXp2W/l2ACa0ChLRSV/AGn3QpUHSpdxfWsu67VsEa+aeF6qEQk2S+8XPo
-         DDzYFePfFmO0UXJ0V9CHzb1cX6nsNWSWxxPyNasFdT/ctXHlTsbYYtixl7GH6FK/Wm
-         1cBZJL5Aad0XCjNaMpKEMDk0AkfNIMut2g0a2Xce3ucyRsKpV252mhORhSRsLkG/66
-         oR54TKmnhhgh4T1cCh8Ww3lu4Zld3Vj5RwBfT69WJz/NYWDe4hdcthnAgW1RVDokgZ
-         lQA3VaxGRcwBXbdV1bj7qrrXET1Fv7nxRDRbcoUsvXsKVnpL3jHYWzp/h+gosVtMGT
-         EKbOankWmv9bw==
-Message-ID: <78efa42b-cf2e-bf3c-a59a-99d61225c629@collabora.com>
-Date:   Thu, 20 Jul 2023 09:42:49 +0200
+        Thu, 20 Jul 2023 03:43:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A2312699;
+        Thu, 20 Jul 2023 00:43:28 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K6uOrd012946;
+        Thu, 20 Jul 2023 07:43:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=Eq8q5Jz/iTKpMXrgwf4Vw8JxBKKL4DTxzHKL5u7rdLo=;
+ b=f7FYMox/vNVWVJuWJH3wkOwYdtN2QV7k0rDXbIf0jpNr5vXQ1ph+Y1fScBf3yrqLxa+E
+ sdCKZxyEYsJw8HXSTlHXTHa3FqiStkfDh27aKgQ33fWg9oeOJ7yG8L8UhHaU7px6RilM
+ 9M+iqTj+STEBgvmOFeKJEo5oZnzpk8Ylez/A2mQQgGznAxzAFaIzLBWhcLqLfEXV9sHT
+ lNgc/j682zrTe6JFL6fKEKT1TpiNQSb6BYXWlxYHD513k9LYo9lHWZ3Z5kdWV2UshzcO
+ KY6HQiK7Dsf47QCUi3XS6CQYRR+OSwAS9bo6Y12gBCw1q6FQmCJV2oZV+iukfy4kfjqW LQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxpyqrycf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 07:43:24 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36K7hNbf031064
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 07:43:23 GMT
+Received: from harihk-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 20 Jul 2023 00:43:18 -0700
+From:   Hariharan K <quic_harihk@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_harihk@quicinc.com>
+Subject: [PATCH 0/2] Add initial support for RDP404 of IPQ5018 family
+Date:   Thu, 20 Jul 2023 13:13:00 +0530
+Message-ID: <20230720074302.13585-1-quic_harihk@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 02/15] arm64: dts: qcom: sm6125: Sort spmi_bus node
- numerically by reg
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
-References: <20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org>
- <20230718-sm6125-dpu-v3-2-6c5a56e99820@somainline.org>
- <149d15e6-4995-8ff6-5191-77783c3dedb8@linaro.org>
- <2zwj7sgsvcl7czobhokop37ycsekiivtuznwegaeybu577skcc@mqdkoolwkail>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <2zwj7sgsvcl7czobhokop37ycsekiivtuznwegaeybu577skcc@mqdkoolwkail>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: itIZ6nWJqlnz_lH53Po6jF_j_ROdFE3M
+X-Proofpoint-ORIG-GUID: itIZ6nWJqlnz_lH53Po6jF_j_ROdFE3M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-20_02,2023-07-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=756 malwarescore=0 phishscore=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2307200063
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 19/07/23 23:54, Marijn Suijten ha scritto:
-> On 2023-07-19 01:02:56, Dmitry Baryshkov wrote:
->> On 19/07/2023 00:24, Marijn Suijten wrote:
->>> This node has always resided in the wrong spot, making it somewhat
->>> harder to contribute new node entries while maintaining proper sorting
->>> around it.  Move the node up to sit after hsusb_phy1 where it maintains
->>> proper numerical sorting on the (first of its many) reg address
->>> property.
->>>
->>> Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
->>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>> ---
->>>    arch/arm64/boot/dts/qcom/sm6125.dtsi | 38 ++++++++++++++++++------------------
->>>    1 file changed, 19 insertions(+), 19 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> index 6937c7ebdb81..cfd0901d4555 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
->>> @@ -684,6 +684,24 @@ hsusb_phy1: phy@1613000 {
->>>    			status = "disabled";
->>>    		};
->>>    
->>> +		spmi_bus: spmi@1c40000 {
->>> +			compatible = "qcom,spmi-pmic-arb";
->>> +			reg = <0x01c40000 0x1100>,
->>> +			      <0x01e00000 0x2000000>,
->>> +			      <0x03e00000 0x100000>,
->>> +			      <0x03f00000 0xa0000>,
->>> +			      <0x01c0a000 0x26000>;
->>> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
->>> +			interrupt-names = "periph_irq";
->>> +			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
->>> +			qcom,ee = <0>;
->>> +			qcom,channel = <0>;
->>> +			#address-cells = <2>;
->>> +			#size-cells = <0>;
->>> +			interrupt-controller;
->>> +			#interrupt-cells = <4>;
->>> +		};
->>> +
->>>    		rpm_msg_ram: sram@45f0000 {
->>>    			compatible = "qcom,rpm-msg-ram";
->>>    			reg = <0x045f0000 0x7000>;
->>> @@ -1189,27 +1207,9 @@ sram@4690000 {
->>>    			reg = <0x04690000 0x10000>;
->>>    		};
->>>    
->>> -		spmi_bus: spmi@1c40000 {
->>> -			compatible = "qcom,spmi-pmic-arb";
->>> -			reg = <0x01c40000 0x1100>,
->>> -			      <0x01e00000 0x2000000>,
->>> -			      <0x03e00000 0x100000>,
->>> -			      <0x03f00000 0xa0000>,
->>> -			      <0x01c0a000 0x26000>;
->>> -			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
->>> -			interrupt-names = "periph_irq";
->>> -			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
->>> -			qcom,ee = <0>;
->>> -			qcom,channel = <0>;
->>> -			#address-cells = <2>;
->>> -			#size-cells = <0>;
->>> -			interrupt-controller;
->>> -			#interrupt-cells = <4>;
->>> -		};
->>> -
->>>    		apps_smmu: iommu@c600000 {
->>>    			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
->>> -			reg = <0xc600000 0x80000>;
->>> +			reg = <0x0c600000 0x80000>;
->>
->> Irrelevant, please split.
-> 
-> This was already here in v1, and it is what likely contributed to the
-> sorting mismatch in the first place.
-> 
-> But will split it and send a v4 for just this...
-> 
+Add the initial device tree support for the Reference Design
+Platform(RDP) 404 based on IPQ5018 family of SoC. This patch
+carries the support for Console UART and eMMC.
 
-I agree in that it is irrelevant, but anyway, for the next time: you should at
-least mention "the other change" in your commit message ;-)
+This series is based on the below series,
+https://lore.kernel.org/lkml/20230720072938.315
+46-1-quic_harihk@quicinc.com/
 
-Also, remember that this commit has a Fixes tag........ :-)
+Hariharan K (2):
+  dt-bindings: arm: qcom: Document MP03.1-C2 board based on IPQ5018
+    family
+  arm64: dts: qcom: ipq5018: add support for the RDP404 variant
 
-Cheers,
-Angelo
+ .../devicetree/bindings/arm/qcom.yaml         |  2 +
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ arch/arm64/boot/dts/qcom/ipq5018-rdp404.dts   | 49 +++++++++++++++++++
+ 3 files changed, 52 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp404.dts
 
-
+-- 
+2.17.1
 
