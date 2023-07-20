@@ -2,131 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC21475B71D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 20:50:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C58E375B72B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 20:55:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjGTSuy convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 14:50:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
+        id S229815AbjGTSzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 14:55:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbjGTSuw (ORCPT
+        with ESMTP id S229633AbjGTSzc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 14:50:52 -0400
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39EBF2D54;
-        Thu, 20 Jul 2023 11:50:31 -0700 (PDT)
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-94ea38c90ccso34165966b.1;
-        Thu, 20 Jul 2023 11:50:31 -0700 (PDT)
+        Thu, 20 Jul 2023 14:55:32 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A00510FC;
+        Thu, 20 Jul 2023 11:55:30 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3fbc0609cd6so9323045e9.1;
+        Thu, 20 Jul 2023 11:55:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689879328; x=1690484128;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IHAsFL2xFeH6dIbXrH4rs7Rw43cZEw/nHrY87+X9P8w=;
+        b=M/Hy5wjGjpYdCaV1gWP14+9QhIcwCrD8LxTFGWxQ9ul9OqFRCJgsCnE6JYX5F7WU59
+         wd2vnPhXAgtwiIrwVMYDI1Bd4OLhJCqt24GjD9nZe9Osb3usOaiJ2sM+i5+45aUJx/U6
+         eXtBJxtsl8bEM6uK5+nugkR+J+ylFlG8UjcKGFbuJ5+rprMQ03DrpeVd/dlxG34JXHgd
+         5rJZQ4bw94XXZEtBSTcu3H3om53PeP+Jea+ODKn/rhLbKBRe4lYWuEGh8cIhdOlk+6JA
+         Vr+4OxxiM7OedgVNZ1grbr1fUoDkSzf6db7haCd1YK8vkHtl6/KZzOwzVaDCwzqAhpO8
+         MyWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689879029; x=1690483829;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8Ri7fimkcHumz6u7/WZYeGYX85HXnNnQ+B/CYo4XrX0=;
-        b=PASJCP1x+y2EzoDAYUI5XcK0Z0/GmzxaQ6NyZY/o7xzT5BAJIufjy5WjFLbFOdJeh1
-         BNSavTc46dKgIChv7K3ZPZdetGzDhnAhrfh/D0mXpvxYJk8BYu6yrtTD5t9ThZK8lQom
-         YjAzMZQDIjlzSQnzjnsE2mFK7V1CL+IY1Jx8aN4GfEtQCudrJGxBpL1VIN+yKqvk3w+N
-         y3/zRYqsHkRaed25+48T/tqgPYsdCQgsFwI2Pn/d+FekGiIeYIcV07/XsDOsWOeGQYiv
-         BtXVm+8Xa9IVTK/6bH9byfomZ3WHXPTg2x+UcC4DL3sVlzQkP9kC/j0eln2e7tkr08Ju
-         C8Fw==
-X-Gm-Message-State: ABy/qLY4CmK/Gn12bX59thNFlb4of4ggQwMb7t8vexd5PfMbqluAuuJw
-        3Az+zTpWl6J9zRHzfKTo7jWredHw6fv+9/Ah5qM=
-X-Google-Smtp-Source: APBJJlHi91lqNeNV5b3NsqRozieOcqVx3nEK9H5IGaNOQgSl+w6cuVzQPslNMDSGV1xCPVo92lepZZT6y5Duc+GvbWI=
-X-Received: by 2002:a17:906:7a11:b0:993:d90e:3101 with SMTP id
- d17-20020a1709067a1100b00993d90e3101mr2893837ejo.1.1689879029584; Thu, 20 Jul
- 2023 11:50:29 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689879328; x=1690484128;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IHAsFL2xFeH6dIbXrH4rs7Rw43cZEw/nHrY87+X9P8w=;
+        b=dObL9BeaisNkbgqcYuu42gh8qfasWSqXa7Cg5f9zotDQ0LbTZkm3MZfW0lgzvl86Yg
+         LYLw/s/9MCIJyU4U/gj6I+itT32JicXxjxakIJ6Sh8dvJfyrtmy6iI8wk0C5W80dIIco
+         ReiCOqZd2YzsMvEgpHr3t0irJfWjZ+/7EIPMqVcp9QNlc2RWeGP5BVMmdvHLrjbEoC2y
+         f/8v8PhRJZdVViWro+tppt2FOH3CJiZ7LcR8nfarg4AyJwSJXqYM7ZNVeSRuI2yUhzZS
+         XjOSaTgAcCoqoEQILXLUL86PI0S1ZxLkvEMAiNgVmPCi73iPvsKBGWHwsByD/p+d0MEd
+         HHpw==
+X-Gm-Message-State: ABy/qLYTstzJP2kWgD2a4guS8b5J+UYBauENe1T79Fl7yn1lt2sys3UL
+        OtNgS0KudPyDhJSP5OCFKaQ=
+X-Google-Smtp-Source: APBJJlGOeasb3e7RZk+f4OtzpsQtOBcpuUDgw8hLHWviGL9qQrid91/Lk+MdjyHWW52L3IRFkwJQ1g==
+X-Received: by 2002:a7b:c3cd:0:b0:3fc:f9c:a3e9 with SMTP id t13-20020a7bc3cd000000b003fc0f9ca3e9mr4965128wmj.37.1689879328401;
+        Thu, 20 Jul 2023 11:55:28 -0700 (PDT)
+Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
+        by smtp.gmail.com with ESMTPSA id d15-20020a5d644f000000b003143c06135bsm2056400wrw.50.2023.07.20.11.55.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 11:55:28 -0700 (PDT)
+Message-ID: <72c0359a-eda6-30ea-0ec0-b7e9b804b87b@gmail.com>
+Date:   Thu, 20 Jul 2023 20:55:26 +0200
 MIME-Version: 1.0
-References: <20230714175008.4064592-1-robh@kernel.org> <CAJZ5v0i-OByOSjpxrj5d9S9QHRySK-MEUo+bK_J_4ihsCBmnSg@mail.gmail.com>
- <CAL_JsqLy22S5bTFu-ZKXhSMtMPPq9z1Gdb5kJMVmhui55miDsQ@mail.gmail.com>
-In-Reply-To: <CAL_JsqLy22S5bTFu-ZKXhSMtMPPq9z1Gdb5kJMVmhui55miDsQ@mail.gmail.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Thu, 20 Jul 2023 20:50:18 +0200
-Message-ID: <CAJZ5v0hM63nVphwkYK1bL4uf_dXSew2+LBuG9kuhvvLdrhLxAw@mail.gmail.com>
-Subject: Re: [PATCH] thermal: Explicitly include correct DT includes
-To:     Rob Herring <robh@kernel.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Markus Mayer <mmayer@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] firmware: qcom_scm: Clear scm pointer on probe
+ failure
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vasily Khoruzhick <anarsoul@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Ard Biesheuvel <ardb@kernel.org>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230528230351.168210-1-luzmaximilian@gmail.com>
+ <20230528230351.168210-3-luzmaximilian@gmail.com>
+ <ZJwXgqmu_zpV46lu@hovoldconsulting.com>
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <ZJwXgqmu_zpV46lu@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 14, 2023 at 9:53 PM Rob Herring <robh@kernel.org> wrote:
->
-> On Fri, Jul 14, 2023 at 12:54 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
-> >
-> > On Fri, Jul 14, 2023 at 7:51 PM Rob Herring <robh@kernel.org> wrote:
-> > >
-> > > The DT of_device.h and of_platform.h date back to the separate
-> > > of_platform_bus_type before it as merged into the regular platform bus.
-> > > As part of that merge prepping Arm DT support 13 years ago, they
-> > > "temporarily" include each other. They also include platform_device.h
-> > > and of.h. As a result, there's a pretty much random mix of those include
-> > > files used throughout the tree. In order to detangle these headers and
-> > > replace the implicit includes with struct declarations, users need to
-> > > explicitly include the correct includes.
-> > >
-> > > Signed-off-by: Rob Herring <robh@kernel.org>
-> >
-> > Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-> >
-> > or please let me know if you want me to pick this up.
->
-> Single patch in your subsystem with no dependencies. Please pick it up.
+First off, sorry again for the long delay and thanks for being patient
+with me (and for the review of course). I'm finally getting back to
+finding some time for Linux things again, so I think I've mostly settled
+in by now.
 
-Done, thanks!
+On 6/28/23 13:20, Johan Hovold wrote:
+> On Mon, May 29, 2023 at 01:03:49AM +0200, Maximilian Luz wrote:
+>> When setting-up the IRQ goes wrong, the __scm pointer currently remains
+>> set even though we fail to probe the driver successfully. Due to this,
+>> access to __scm may go wrong since associated resources (clocks, ...)
+>> have been released. Therefore, clear the __scm pointer when setting-up
+>> the IRQ fails.
+>>
+>> Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic")
+>> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+>> ---
+>>
+>> Patch introduced in v4
+>>
+>> ---
+>>   drivers/firmware/qcom_scm.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index fde33acd46b7..d0070b833889 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -1488,8 +1488,10 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>>   	} else {
+>>   		ret = devm_request_threaded_irq(__scm->dev, irq, NULL, qcom_scm_irq_handler,
+>>   						IRQF_ONESHOT, "qcom-scm", __scm);
+>> -		if (ret < 0)
+>> +		if (ret < 0) {
+>> +			__scm = NULL;
+> 
+> This looks fragile at best. Clients use qcom_scm_is_available() to see
+> if __scm is available and do not expect it to go away once it is live.
+
+Hmm, you're right. The whole situation is probably not ideal and that
+fix is really just a bad band-aid.
+
+> It looks like you can hold off on initialising __scm until you've
+> requested the interrupt, either by using IRQ_NOAUTOEN or fixing
+> qcom_scm_waitq_wakeup() so that it doesn't use __scm directly.
+> 
+> That would also take care of the previous branch which may also leave
+> __scm set after the structure itself has been released on errors.
+
+Agreed.
+
+> You'll have similar problems when registering qseecom which currently
+> depend on __scm being set, though. Clearing the pointer in that case is
+> clearly broken as you currently rely on devres for deregistering the aux
+> clients on errors (i.e. the clients using __scm are still registered
+> when you clear the pointer in patch 3/4).
+
+Oh right, I hadn't thought of that. I'll have to rework that.
+
+>>   			return dev_err_probe(scm->dev, ret, "Failed to request qcom-scm irq\n");
+>> +		}
+>>   	}
+>>   
+>>   	__get_convention();
+> 
+> Johan
