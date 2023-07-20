@@ -2,82 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D125475AD05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 13:33:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D48E75AD6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 13:53:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230369AbjGTLdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 07:33:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38990 "EHLO
+        id S229885AbjGTLxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 07:53:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbjGTLdP (ORCPT
+        with ESMTP id S229614AbjGTLxm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 07:33:15 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8CB113
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 04:33:11 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fbc59de009so5273235e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 04:33:11 -0700 (PDT)
+        Thu, 20 Jul 2023 07:53:42 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C20D0AC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 04:53:40 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-992f6d7c7fbso125729266b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 04:53:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689852790; x=1690457590;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rJCba/mmTho9umzDbT239Fiu3jvHE4pY8on7mbmL+io=;
-        b=gOAoNxhfX2kYxNlNRaNZTxC0M/gWR4kmF43LJb1my6uLNnz0T6yN4T7qTovpJ7y7QK
-         brleXaPN5xTMr+5ePcHGcCp3L6OFExUzptNYN2WT8qQsECuUH3+ZOLS0cYwHziYFYdQJ
-         +0IXJZEjz8kdXelO34mcuiw2Fndl7fhbpFM40YvKyCjJuuBgUy4FjVjLV1Ew8Dvz613G
-         1y465Vx7t7R5YAZ++l5Cn4NSvCDBt1jq+oGbcIJsF1hnfB/SPTjfC8jDoRCzG9KGZjkF
-         /LObAB6OOZuF0Nhw8pFHqF1kjIFWaNumSrzKae8csgDO3+FF6fI5ywD+MOm6R9mxyl5V
-         WjVw==
+        d=linaro.org; s=google; t=1689854019; x=1690458819;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=osOeIRkPl5bwotwbn2o0ova+vF1/doKY3VxZgsCroY4=;
+        b=CrJcEsBiDv/lK0Cxe4k5PSDjDRlH3jgQHQwnFDsOnJbhgJkeXgecYtU+hvmhEw8SHM
+         SaAtfGvI3DdvJrn+PTdMqksLGzCxf4jWhzS2bvK3u/F+V4MN/gihxXxIm4gukHLN0dJh
+         523UhuCKkSDmfmMzS7fmXEKhGxyZ4EOVAR7fozV/+XA+APgfDeIdbPriL7+rvfJSxz7v
+         GstBL+2AOiL8bwWBFtaWQ0Vx8oRWdYojDxIDyE8PT9TN37262nqlwiLC82T3yPbnRMD4
+         f78Vz+uRKGd1mqOG1XSEKuI2XPX4laRVODgZYS1jZasFYeJD96inz5R21wuHom4VKFZA
+         j5eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689852790; x=1690457590;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rJCba/mmTho9umzDbT239Fiu3jvHE4pY8on7mbmL+io=;
-        b=UNwwgHtw/ehmH86zbJpsTuZqTzkTe8a80fFYx2qIEn6jMAK9gzV1SmprXhlDSzf4x7
-         /PAj+AJqYny9BREATSWSWuXxRMAsBtlKOoTR5uoFxjX5DbWjrcjDkMTR962NDjAraZhQ
-         CxPhDs6mXEXDmG9RJ2rFdolz2vewxo9Yd6rYHBQVtmDJSzYSOwhapb+KdvJaOa2oQ77h
-         o+cHiB/MsNfIoEKkYNBWosQnodrv4wMpD9JjfhiPvDCz+IrKoxwVQYhqJRBGEEUKKWNi
-         T/UBv7bfzcy9C73OBMbdmrE61hxyVdblutTT8rr78c8XfRkFExTYLxFlWJZA6nDpukhe
-         IRXA==
-X-Gm-Message-State: ABy/qLaYO8X838je+DWPe9TpmCeZfOUnDVNnm/fX6eS5E8Rxb0hs1w1e
-        +yFMBIuz/WiZY7ukJNgENjDBoQ==
-X-Google-Smtp-Source: APBJJlFa9JHDqvo+V4hP6LGgTBGeu3mRUWETwG+/y+nC7BQ//IZ4vUBwkQgjujUC0RzHXAixD+Jf3w==
-X-Received: by 2002:a05:600c:219a:b0:3f7:e3dd:8a47 with SMTP id e26-20020a05600c219a00b003f7e3dd8a47mr3884194wme.11.1689852789922;
-        Thu, 20 Jul 2023 04:33:09 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id i13-20020a5d438d000000b003159d2dabbasm1070284wrq.94.2023.07.20.04.33.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 04:33:09 -0700 (PDT)
-Message-ID: <159e36d6-7806-0424-4e9c-2e07584450fc@linaro.org>
-Date:   Thu, 20 Jul 2023 13:33:06 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [v11 5/6] arm64: dts: Add ipq5018 SoC and rdp432-c2 board support
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, robimarko@gmail.com,
-        andy.shevchenko@gmail.com
-References: <20230616101749.2083974-1-quic_srichara@quicinc.com>
- <20230616101749.2083974-6-quic_srichara@quicinc.com>
- <53721566-2a85-76cb-a4cf-2819f08dfc85@linaro.org>
- <8e209cd1-aa52-b947-bffd-15931af58391@quicinc.com>
-Content-Language: en-US
+        d=1e100.net; s=20221208; t=1689854019; x=1690458819;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=osOeIRkPl5bwotwbn2o0ova+vF1/doKY3VxZgsCroY4=;
+        b=edIIz3KbMJ0IUmHW0BLRgPScjx+R2rN/G4qTCKHB+swC+dDhAe0iJvA3Rym3XLsl17
+         AiP/n8f8spbYJBjBV/mtNcFDlKTxBlILYlF2sLvqhu0ermWcbTA5XqZwqKevMMaVI5xY
+         R3ssx1DzZMNv7BnkBZAeXUP6Ygt2ZLssZd/KTbAmqciZd2iZIQH1VUtjEoP5QRIn7tRi
+         TwxAr7oV/ELX3YvFPmwaiIc+sf9AZONYMOgWw23oH2uFKy1uit9Cp8gFj4txnSkvtmaA
+         c2Yv2VbAFvfOWvTwwGaHOBCTLLMccU2PNT63Tz3MGf5HHZtdlI4uzhM1SKT+QW6nR4pY
+         G0Ww==
+X-Gm-Message-State: ABy/qLbAH3q+3s8UvWyevPdz9d3k5Pn9/tXfMEvS0sYXoOvVAf8Hg3SA
+        RLGmd3aocvkhwJrcdHU2vyezzQ==
+X-Google-Smtp-Source: APBJJlEjR9X1dO5vInrjyggUEFbzzVciWKz2wL5d0cDJB5Ywon2Yy3KLBgJiaRMgHMNBP/nMW5R81g==
+X-Received: by 2002:a17:906:530c:b0:992:91ce:4509 with SMTP id h12-20020a170906530c00b0099291ce4509mr4083546ejo.57.1689854019285;
+        Thu, 20 Jul 2023 04:53:39 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id qp7-20020a170907206700b00992b66e54e9sm587758ejb.214.2023.07.20.04.53.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jul 2023 04:53:38 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <8e209cd1-aa52-b947-bffd-15931af58391@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Gianluca Boiano <morf3089@gmail.com>,
+        Eugene Lepshy <fekz115@gmail.com>, Luca Weiss <luca@z3ntu.xyz>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Raffaele Tranquillini <raffaele.tranquillini@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH 1/6] arm64: dts: qcom: msm8953-vince: drop duplicated touschreen parent interrupt
+Date:   Thu, 20 Jul 2023 13:53:30 +0200
+Message-Id: <20230720115335.137354-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,26 +80,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/07/2023 12:51, Sricharan Ramabadhran wrote:
->>>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>>   .../arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |  72 +++++
->>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 250 ++++++++++++++++++
->>>   3 files changed, 323 insertions(+)
->>>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->>>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>>
->>
->> NAK, please do not merge.
->>
->> It turns out there are some problems here (pointed out by Hariharan K).
-> 
->    The changes from Hariharan K to rename the dts compatibles is not
->    correct. So the compatibles/names in this series should be used.
->    Hariharan can fix his series and re-post.
+Interrupts extended already define a parent interrupt controller:
 
-Thanks. Conflicting patches touching similar boards is however confusing
-me a bit...
+  msm8953-xiaomi-vince.dtb: touchscreen@20: Unevaluated properties are not allowed ('interrupts-parent' was unexpected)
 
-Best regards,
-Krzysztof
+Fixes: aa17e707e04a ("arm64: dts: qcom: msm8953: Add device tree for Xiaomi Redmi 5 Plus")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
+index 0956c866d6cb..1a1d3f92a511 100644
+--- a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
++++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
+@@ -132,7 +132,6 @@ &i2c_3 {
+ 	touchscreen@20 {
+ 		reg = <0x20>;
+ 		compatible = "syna,rmi4-i2c";
+-		interrupts-parent = <&tlmm>;
+ 		interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_FALLING>;
+ 
+ 		#address-cells = <1>;
+-- 
+2.34.1
 
