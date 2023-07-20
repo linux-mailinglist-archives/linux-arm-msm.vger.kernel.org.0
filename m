@@ -2,89 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0347B75B5DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 19:50:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F01D875B61E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 20:07:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231888AbjGTRuI convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 13:50:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43754 "EHLO
+        id S229691AbjGTSHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 14:07:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231635AbjGTRuH (ORCPT
+        with ESMTP id S229563AbjGTSHL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 13:50:07 -0400
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C92268F;
-        Thu, 20 Jul 2023 10:50:06 -0700 (PDT)
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2b9363d069bso3077211fa.0;
-        Thu, 20 Jul 2023 10:50:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689875405; x=1690480205;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pGc1aqPPtyxg0PRnJa5Ahk+dl05+JvzfRAEGe6SQTJY=;
-        b=Azwcdj7sKxa5DljBJ5aTk8edf8LbCuAR/NlUevsriOQgLfNAvHza8qj8H+xdRTwozM
-         GXpc8B46+vYXcWWA56jPBMWvrZQkNJWj0pVcgC0Li2++5FCZyIC9htm75mPUPhXLxNzp
-         xAnne8/1prZ0WLnBCnIVAmjKpJ1WN83QAZo0gMrNBeaVMLQwxB1wxIduyZ6/+EQSxZNy
-         ANpUnAr/wwGQ+aT9RVpvxiRVRJzD1sT7KDytyWF+6JNtrplp2E4q8MiLM9U2Psj4+Xe0
-         Bp8ZT+wXXs0e2TmgMjRVRvmsVjTPpANNafgCB8bsqsjObMr+mqPgRKH71n2UvwqL5Y2m
-         V8NA==
-X-Gm-Message-State: ABy/qLZTWSwn8R9PU3CNp2sB6MnSUES/nQrS/3Wz6jXkFb5q9jmykfqw
-        /UzcCuPPA152z9mO+HsdMp4OEncCN9WhMRviVjUPUS21
-X-Google-Smtp-Source: APBJJlHkUcpdCZU8rW/oi+Dw2XYYmLzOWcSzH1QNey2QWQ8sTjMRKS8EKZ1x/GjD10wtpEpDFaHXZurNt9/PzdUmmOY=
-X-Received: by 2002:a2e:5455:0:b0:2b9:34b6:b47a with SMTP id
- y21-20020a2e5455000000b002b934b6b47amr2202129ljd.2.1689875405029; Thu, 20 Jul
- 2023 10:50:05 -0700 (PDT)
+        Thu, 20 Jul 2023 14:07:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A162709;
+        Thu, 20 Jul 2023 11:07:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4BDBF61BBD;
+        Thu, 20 Jul 2023 18:07:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96276C433C7;
+        Thu, 20 Jul 2023 18:07:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689876429;
+        bh=/aeINl97NxHa8zhqW5FMbQyX7KyYwU/y/589H7gNfzU=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=hzZVjmeCxL5+X0yC5XjHQjafT0z6iaelXUtN1n9hqEjoWNNqkjfG6CVofTV1tFUAF
+         9p1XcCVo7OJet3cfRkkanu5SVgzZBZ6JAqTBMXPUPUvXdVuJOxzioy2/MruWlavkMk
+         3kn7Sjcrj+cIStQuiPkG4c13brszYEGSFlrpR4GEc+qns3NErw2h686goEZXjoMsEe
+         7XcdkgUSnLG4l3tBBZhpEw6o58Axu+VvhvF++E9iZ2SKpvIxcFcb88QB+0jgcbi9bn
+         JCfbDetbUjEMjXhNIfPl/jwVC8xs3pv6I1RPnr6aSsZiCBftrILFPwRDjuEVGmKZmm
+         Si6BPx4uuptew==
+Message-ID: <be0893d1082bba7c3c8c499f9eedbfa5.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20230713145741.30390-1-johan+linaro@kernel.org>
-In-Reply-To: <20230713145741.30390-1-johan+linaro@kernel.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Thu, 20 Jul 2023 19:49:54 +0200
-Message-ID: <CAJZ5v0gGPvvm-AyAb8QfZfkO5G4PL0T7NMHZ5xt_2KCC3wBB2A@mail.gmail.com>
-Subject: Re: [PATCH 0/3] PM / wakeirq: fix wake irq arming
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Tony Lindgren <tony@atomide.com>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230720083304.28881-1-quic_devipriy@quicinc.com>
+References: <20230720083304.28881-1-quic_devipriy@quicinc.com>
+Subject: Re: [PATCH] clk: qcom: clk-rcg2: Fix wrong RCG clock rate for high parent frequencies
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     quic_saahtoma@quicinc.com
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com
+Date:   Thu, 20 Jul 2023 11:07:07 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 13, 2023 at 5:01 PM Johan Hovold <johan+linaro@kernel.org> wrote:
->
-> When reviewing the Qualcomm serial-driver suspend implementation I
-> noticed the odd runtime PM state update which had snuck in. Turns out it
-> was added to work around a bug in PM core which prevented drivers not
-> implementing runtime PM from using dedicated wake irqs.
->
-> This series fixes the wake irq arming and drops the unused wake irq
-> enable helpers before dropping the bogus runtime PM state update in the
-> Qualcomm driver.
->
-> I suggest that Rafael takes all of these through his tree.
->
-> Johan
->
->
-> Johan Hovold (3):
->   PM / wakeirq: fix wake irq arming
->   PM / wakeirq: drop unused enable helpers
->   serial: qcom-geni: drop bogus runtime pm state update
+Quoting Devi Priya (2023-07-20 01:33:04)
+> If the parent clock rate is greater than unsigned long max/2 then
+> integer overflow happens when calculating the clock rate on 32-bit system=
+s.
+> As RCG2 uses half integer dividers, the clock rate is first being
+> multiplied by 2 which will overflow the unsigned long max value. So, use
+> unsigned long long for rate computations to avoid overflow.
+>=20
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
 
-All applied and I'm inclined to push them as fixed for 6.5-rc, thanks!
+Any Fixes tag?
