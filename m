@@ -2,100 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E0DD75A9D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD31575A9CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbjGTI5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 04:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37844 "EHLO
+        id S230128AbjGTI5R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 04:57:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230429AbjGTIp3 (ORCPT
+        with ESMTP id S230484AbjGTIrG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 04:45:29 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29527268F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:45:27 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9926623e367so101244866b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:45:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689842725; x=1692434725;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tSoVxWSE1cyumuS4GrQ83guaORjhmkGXCHW2lWl3ILk=;
-        b=nbv30qoPhEh2h9MZjLI6Dnw8e3nzuRNXK/oGEM4BNKmw/+pnzTuEyrf3JhtyZ0bilF
-         aDpKMcgP1LIp8uAvX6C+W7fTvUU0i6Sx7cimzXj1Q32LVvZzXGTXNVxKNx4fD5dI2RL+
-         47tFslQTfjNS66oAaoefLUCzJXNmkNY1aDgtClMa2QRnudc1CWYz/irz7podoQV8u5ro
-         ZLsVpwP0hgdo6bxkICHiAAxmMF8/rnM0/CU6A4aqP4YY2S4mIvDkgWn4ROozwSnX52Yq
-         T3ssXP/9yMo8pOaMwAxBefmw7dmlBaoTUOF9yCiTFc7a45vr5PPj7YKRjFXIEJUe4URt
-         47jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689842725; x=1692434725;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tSoVxWSE1cyumuS4GrQ83guaORjhmkGXCHW2lWl3ILk=;
-        b=W5uwVjyLrNCAA9FxClk3DRUcqYY+7nBCic9dgs5xD4DKYOkFVNv3wOE8MKtXKXBoGp
-         oQ5X4r3wuO9ux0sXwnOcEyvOKgkwbSm9ryOP2K9xCboyIoPgDJP7YxCPEAGeK5DV5O3T
-         2M82KRuBrDdWcNJq92i3NqMUcLJmJgcIydNYqi+bIjU4VR4tr50w0PUV4JLkja3AKUDz
-         CfVpEfj8rnYn9l45qW0E9m8uYqPfKuEj1TRpOC0sBvcXiKJXixWcTtwoy3uWJP2iNREm
-         rm+8+8kawuT1WJQHoW2aEuNYG4TYBg5p6H9rzhQakgfTI11VNbDuz2JVg4Q6q/izzGNA
-         /QBA==
-X-Gm-Message-State: ABy/qLbmS6LUMK+zXRgQtvfAwt0fnUrg/fq7XNS4aSi+fpD14hds+pt9
-        KREC42rfSrYKG8iGrDaaKhEy9g==
-X-Google-Smtp-Source: APBJJlF1GBIlxZpXyWvbwbFsR4lNV73jiLrstNTcD/bQex9Wl20n1MUIMq54n3qCMqEs87+A1Awr5A==
-X-Received: by 2002:a17:906:106:b0:997:aee1:74ee with SMTP id 6-20020a170906010600b00997aee174eemr4345447eje.14.1689842725596;
-        Thu, 20 Jul 2023 01:45:25 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id lo19-20020a170906fa1300b00992665694f7sm363528ejb.107.2023.07.20.01.45.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 01:45:25 -0700 (PDT)
-Message-ID: <419d4a09-84aa-7029-cd0f-556945ba0046@linaro.org>
-Date:   Thu, 20 Jul 2023 10:45:22 +0200
+        Thu, 20 Jul 2023 04:47:06 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E5E6FD;
+        Thu, 20 Jul 2023 01:47:05 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K7sBii003042;
+        Thu, 20 Jul 2023 08:47:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=EZZdbL7psQNqi1v0+ScsZG0RZwuweG3/uXhRNUg96jQ=;
+ b=gOhiPt+HwI0RpspX83Qc90HKTh3erzwbjF+2l7lHUXhF/Kmq9GytzSF7qgg856JOjZwc
+ g0Z2Xq6pWzUnf9vjRaAmW1E/wgTZym8tBLTN+ZiCCem64H+diDygIgQdO05YOLl9U5Ij
+ ySBBVLLC12YKs4DxSxV8QPwMI37L4HPyPVws3Ii+WX9H5MKDlYpxcfRsjPlf55AIP8tA
+ yYWU2/6M5fxkOixu8JcNvIpe4dVLsKJh1xq1jmaUHwkIeJLBolhWfWjlxqyZtdDPsBgP
+ CggYo3XUJULVpVeUFHCn7kTTBvGcj1enG3+DHoYtWzxwd3U49Ome7LRbOoRfQXE1/h2I rA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxup4gp8u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 08:47:01 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36K8l0Ae009040
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 08:47:00 GMT
+Received: from sridsn-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Thu, 20 Jul 2023 01:46:56 -0700
+From:   Sridharan S N <quic_sridsn@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Sridharan S N <quic_sridsn@quicinc.com>
+Subject: [PATCH 0/2] Add initial support for various RDPs of IPQ9574 family 
+Date:   Thu, 20 Jul 2023 14:15:32 +0530
+Message-ID: <20230720084534.6461-1-quic_sridsn@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [v11 1/6] dt-bindings: arm64: Add IPQ5018 clock and reset
-Content-Language: en-US
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, robimarko@gmail.com,
-        andy.shevchenko@gmail.com
-References: <20230616101749.2083974-1-quic_srichara@quicinc.com>
- <20230616101749.2083974-2-quic_srichara@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230616101749.2083974-2-quic_srichara@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DWRUmzHnQW_35f_FVb33Dyw9_xidFunY
+X-Proofpoint-ORIG-GUID: DWRUmzHnQW_35f_FVb33Dyw9_xidFunY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-20_02,2023-07-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ adultscore=0 mlxlogscore=728 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307200072
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/06/2023 12:17, Sricharan Ramabadhran wrote:
-> This patch adds support for the global clock controller found on
-> the IPQ5018 based devices.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Add the initial device tree support for the Reference Design
+Platform(RDPs) 433-mht-phy,433-mht-switch,437,455,456,457,458,459
+461,467,469 based on IPQ9574 family of SoC.
 
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching.
+This series depends on below patchset:
+https://lore.kernel.org/lkml/20230713105909.14209-2-quic_anusha@quicinc.com/
 
-Best regards,
-Krzysztof
+Sridharan S N (2):
+  dt-bindings: arm: qcom: document AL02-Cx and AL03-C2 boards based on
+    IPQ9574 family
+  arm64: dts: qcom: ipq9574: add support for various RDPs
+
+ .../devicetree/bindings/arm/qcom.yaml         | 20 ++++++
+ arch/arm64/boot/dts/qcom/Makefile             | 11 ++++
+ .../boot/dts/qcom/ipq9574-rdp433-mht-phy.dts  | 62 +++++++++++++++++++
+ .../dts/qcom/ipq9574-rdp433-mht-switch.dts    | 16 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp437.dts   | 62 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp455.dts   | 16 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp456.dts   | 16 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp457.dts   | 16 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp458.dts   | 16 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp459.dts   | 16 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp461.dts   | 15 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp467.dts   | 16 +++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp469.dts   | 16 +++++
+ 13 files changed, 298 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433-mht-phy.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433-mht-switch.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp437.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp455.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp456.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp457.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp458.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp459.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp461.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp467.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp469.dts
+
+-- 
+2.17.1
 
