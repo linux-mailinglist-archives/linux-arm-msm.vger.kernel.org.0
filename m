@@ -2,163 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68E7D75A865
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 09:58:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9909D75A8A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:05:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231846AbjGTH6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 03:58:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41636 "EHLO
+        id S231327AbjGTIFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 04:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231899AbjGTH6I (ORCPT
+        with ESMTP id S230261AbjGTIFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 03:58:08 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE604E53;
-        Thu, 20 Jul 2023 00:58:06 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K7EVPr025113;
-        Thu, 20 Jul 2023 07:58:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=gCdCk5CVDm6XlaNfkvuP2qVad0gOPMEoQdHY+IqnrgU=;
- b=HULRJDgSx02/pfDMsapsSwipzV4qHFi8M+TfNUHyDaeQg+H/xTuLxDoyZ6tJEY0K9CIQ
- iGpk8II3FxZkXHckn7nmmA/HUUJ/CIkyhFPP/A5sMDEchtf0lFziaqQ1DcJsy+s45jUK
- r8bLQd1TGiw3K+9bwiaeHzStR4sIknTp0l4fTIhC7QoqHCBcDenlg+jt6Ep+3XBYhS2o
- hdSDka7okRoiIx9PMxHyoAkjnkWW2kcSIpJnWLo/pR575j63va7X2FmVUMeOkAiODBv5
- rJ+uPe8LyGJ04vb0lH0GhlSuUImDyA2//7qQ8GinBwG5Ygc+o6bo4u8VViyoZQfgBvFU cQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxsxe8ptk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 07:58:03 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36K7w2cm018497
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 07:58:02 GMT
-Received: from harihk-linux.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Thu, 20 Jul 2023 00:57:58 -0700
-From:   Hariharan K <quic_harihk@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_harihk@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq5018: add support for the RDP434 variant
-Date:   Thu, 20 Jul 2023 13:27:31 +0530
-Message-ID: <20230720075731.20816-3-quic_harihk@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230720075731.20816-1-quic_harihk@quicinc.com>
-References: <20230720075731.20816-1-quic_harihk@quicinc.com>
+        Thu, 20 Jul 2023 04:05:52 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A4E626A3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:05:49 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b962535808so6805111fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689840347; x=1690445147;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2IcUSBCr2Loq4PRudtLWjQUKgc0wiYZCABH1HDiCskY=;
+        b=dvgczoDMgwYHkQ6EOrTagk28FT+IdOYLYiat89c/1UqSs78JZ8VVWoBI/DcUihMo1Q
+         5Sjhcxwx5W1f8QzLPIeaIfJrjyASHEolv+9eNkBLvNdxXaqydcvPhyNpv3ijdK9MiuK+
+         j3oTRZaMlpsQ6iB4uF5IVAJnJsdBI8qy4P29JIcrhdMB/hhp4bNu9YReSgpZVVINhM0J
+         tByuVConQL93J2K4of+AZ54kR9Bk2zwpWhnPhmqYiZ3kasnC687zGRm67pXtdhweGnxz
+         y1mW5yYqSSxKmaM0HH81ONHQJFgSVmG1sUuAvCFduL7budedpvoagBSjZwbDeDacGrxi
+         jiRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689840347; x=1690445147;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2IcUSBCr2Loq4PRudtLWjQUKgc0wiYZCABH1HDiCskY=;
+        b=laf4F8aiP5cQTtnOfeVOXzG38iRxAhHf0F7YuALkCkz3ozPwCesulbu6lZLp/J3Lpo
+         /J2dL9p6ICaKDGeHlxRR0vGYYU++7eG5jRt9m1dARANdmcsJXXvGraPpP2awRDbhVZmG
+         EynNR6OwdfJkMYW914CVxhfWf6nMjvyxEx3IsWRydx12t/kXkqwN2J9fs3JLZFBjCh0e
+         B5fcLDPVprt9/evoBcKhANJPTOfOL66xuDHplFgaA17Qq4psDkTM5s8VrengirFwX7cU
+         YA3GrMmWj/j4MaUSWEO+uHXT47/+0PZyNj+z2Q6wV7lfUKRJU8k0jAylAI5dZEDRqujo
+         2arA==
+X-Gm-Message-State: ABy/qLb8opqmMJ6rlgm2rrQLlKyG96q2LlyGZEcIA1IDaDo91Eb+eaC1
+        35qH3fqBXz5PTIliaCJgBl8N7A==
+X-Google-Smtp-Source: APBJJlGAELNJ/5vt9i9oMqxdlgS7sMYJv1NMK4MfH5hsf6BijM8/u4AlFV05wrBqnPrkjgxaiipGXw==
+X-Received: by 2002:a2e:86d5:0:b0:2b9:20fe:4bc4 with SMTP id n21-20020a2e86d5000000b002b920fe4bc4mr1171815ljj.40.1689840347409;
+        Thu, 20 Jul 2023 01:05:47 -0700 (PDT)
+Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
+        by smtp.gmail.com with ESMTPSA id l3-20020a2e99c3000000b002b6cc17add3sm125560ljj.25.2023.07.20.01.05.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jul 2023 01:05:47 -0700 (PDT)
+Message-ID: <56e1c9bf-7dc0-7c28-ab0c-02cf78aed7c9@linaro.org>
+Date:   Thu, 20 Jul 2023 10:05:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: A4-joGUSNiZOSWIxExGKsOdqxFOZwr-x
-X-Proofpoint-GUID: A4-joGUSNiZOSWIxExGKsOdqxFOZwr-x
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-20_02,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
- adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0 phishscore=0
- malwarescore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2306200000
- definitions=main-2307200064
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Add initial support for RDP415 of IPQ5018 family
+Content-Language: en-US
+To:     Hariharan K <quic_harihk@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com
+References: <20230720074846.20350-1-quic_harihk@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230720074846.20350-1-quic_harihk@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the initial device tree support for the Reference Design
-Platform(RDP) 434 based on IPQ5018 family of SoC. This patch
-carries the support for Console UART and eMMC.
+On 20.07.2023 09:48, Hariharan K wrote:
+> Add the initial device tree support for the Reference Design
+> Platform(RDP) 415 based on IPQ5018 family of SoC. This patch
+> carries the support for Console UART and eMMC.
+> 
+> This series is based on the below series,
+> https://lore.kernel.org/lkml/20230720072938.315
+> 46-1-quic_harihk@quicinc.com/
+> 
+You just sent 3 series doing almost the same thing.
+For v2, please bunch them all up into a single series.
 
-Signed-off-by: Hariharan K <quic_harihk@quicinc.com>
----
- arch/arm64/boot/dts/qcom/Makefile           |  1 +
- arch/arm64/boot/dts/qcom/ipq5018-rdp434.dts | 49 +++++++++++++++++++++
- 2 files changed, 50 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp434.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6334e552b7c1..8a764e37330f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -5,6 +5,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c2.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp434.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp441.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp442.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp434.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp434.dts
-new file mode 100644
-index 000000000000..1684739e40ab
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp434.dts
-@@ -0,0 +1,49 @@
-+// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
-+/*
-+ * IPQ5018 MP03.6-C2 board device tree source
-+ * Copyright (c) 2023, The Linux Foundation. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "ipq5018-rdp-common.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ5018/AP-MP03.6-C2";
-+	compatible = "qcom,ipq5018-ap-mp03.6-c2", "qcom,ipq5018";
-+};
-+
-+&sdhc_1 {
-+	pinctrl-0 = <&sdc_default_state>;
-+	pinctrl-names = "default";
-+	mmc-ddr-1_8v;
-+	mmc-hs200-1_8v;
-+	max-frequency = <192000000>;
-+	bus-width = <4>;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	sdc_default_state: sdc-default-state {
-+		clk-pins {
-+			pins = "gpio9";
-+			function = "sdc1_clk";
-+			drive-strength = <8>;
-+			bias-disable;
-+		};
-+
-+		cmd-pins {
-+			pins = "gpio8";
-+			function = "sdc1_cmd";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		data-pins {
-+			pins = "gpio4", "gpio5", "gpio6", "gpio7";
-+			function = "sdc1_data";
-+			drive-strength = <8>;
-+			bias-disable;
-+		};
-+	};
-+};
--- 
-2.17.1
-
+Konrad
