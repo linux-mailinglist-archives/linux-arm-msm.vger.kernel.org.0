@@ -2,150 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21A9D75B830
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 21:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD87D75B84C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 21:52:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231146AbjGTTm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 15:42:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46698 "EHLO
+        id S229566AbjGTTwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 15:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjGTTmZ (ORCPT
+        with ESMTP id S229453AbjGTTwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 15:42:25 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C3091733
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 12:42:24 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-cfd4ea89978so1011371276.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 12:42:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689882143; x=1690486943;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6uboV9zE5viSPMUN9jRcO0cjpaJKLGwKotI/bN04OyY=;
-        b=Is+h2NeaSzJfFfsZ98ro8BWc2npdTi8/mAPrWVvtpsxb716Whq2DsR1nkUJ5zX14Xz
-         79qaflwC3BG2VYXCeK0ijBZtmZDQ1AwFmwaxjZDd/vn/AKdit/VHpHHNt7ZvyrLIlMK1
-         rAvvaKIi1pdCGIE6T6PamxnnJ1xdepfGuegPYvjWZ/2v5uqSbyOmvOqKrH1HZMZxxQ9u
-         TipBUYHRAcaq7G2V/lDcSoviQy3dB4LjRa8c+TMTdx5eHkXHMxyv/6aRPA0MgnDthZDb
-         /qNXdFoMB9q33L3QYVfMXu7JSq0qiwBR5arRe8VeAjZhX1/RRVS46BZipMLM8QxKUS/8
-         /7lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689882143; x=1690486943;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6uboV9zE5viSPMUN9jRcO0cjpaJKLGwKotI/bN04OyY=;
-        b=hxSjMhSSHj+X3XNcAOBh915Eqkbg/0dnqVjiUnc0Mk3A0sX59+B+8QjB+ULzbrr8LE
-         SW08s/hsGrXFrI0PxSYGvuJfLeCnpqNbvebm15IkkioTsfvKmrn/Tasu27Xc55ncUutt
-         lAyCHN2QrW1W9uO+1evq3FWDniKsifPYItUpbXPh778hTcpCdaWysm6ac497iXKlA1V8
-         pEn7me1U5t0u69w/gWg8BUDzWpyBkAee8ZzRebHjNj2Tw1Wee1lOKGccX6Ka30FTw1d2
-         X72kCleCn4tdoPmp6NR69KtvphnGum0e9LC+yLWU3BxtW828doUkwz5etTO7i1FXU/H6
-         6WsQ==
-X-Gm-Message-State: ABy/qLYWmi4aLKIZQIOiJS3dzW/pwEoo7F+6LE6zEh/5bCPK9ZDZXV1H
-        8UmMn0ueQU0EVPFKts0vV4HaxTidGxpMC9Hmt/Szqg==
-X-Google-Smtp-Source: APBJJlE7cBabIqsDgOVse9OOZ6aTjmPoq/DJCfwfg6nCOEVEXRqRJUSYnSIJLuoYJ0UvKAptp1crbwCoFVPdkqeY7hY=
-X-Received: by 2002:a25:c50b:0:b0:cdd:6635:a1f8 with SMTP id
- v11-20020a25c50b000000b00cdd6635a1f8mr5819173ybe.15.1689882143201; Thu, 20
- Jul 2023 12:42:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230714174901.4062397-1-robh@kernel.org>
-In-Reply-To: <20230714174901.4062397-1-robh@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 20 Jul 2023 21:42:12 +0200
-Message-ID: <CACRpkdYe9b4ZpvYZqkcMq0Jjni_VD_75Zt5oKv4+v9f3pmJbVA@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: Explicitly include correct DT includes
-To:     Rob Herring <robh@kernel.org>
-Cc:     Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sean Wang <sean.wang@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Chester Lin <clin@suse.com>, NXP S32 Linux Team <s32@nxp.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Damien Le Moal <dlemoal@kernel.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Daniel Mack <daniel@zonque.org>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 20 Jul 2023 15:52:33 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CEDD1733;
+        Thu, 20 Jul 2023 12:52:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1689882749; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=fANkh1ARs+GD7Fi+eWLfTU5Ma6u9ffKtiwvbTjZ+eiJjjTbtEm34yrA2A7MtcnOo2N
+    YY4gSq2BWMKiZ5oWdgExV1EK/OCD+8UzZB+hbOccWKrGGNulg6kMf5ZA5/SVgxVtnt4W
+    8BlXluGusLE+sx45RSIHh6N4WAmWUNzbrHN0txsHKNXNO2y9ZO4P5xcSGID2IvISxopF
+    KYQbOBMS6ZM+GX99ECU7M2gc1H01jLPq5oIZ6gmATKjd89uaAc7ITdXw9gazgg0adKTx
+    6NzND+yq09R0PBQK0XrKGC6LdwqovQg7sdFaDgESOo2UfH64elfBdmMIYpRjvnhszthA
+    RE3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1689882749;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=YkvSR1NBpdfO6+oRs6OkZ9rZa0nqSApvjTAua18PIhI=;
+    b=i0Uix2EWgEzK1hZGXeFA44zJ5SCtlpbjeKoikhpMw8qJSaYVOUCmVtQ16azwnR7goF
+    ba4rmr5GPO0/uJWXqinfE4fd+e3G9D3XW3iG2zWyIy0uso367/PAMuuy/+h4QCHb9V6P
+    6v/g+2g7a95wW+XikakBIuEzecXIXQDsUFQyhhmrD7ZpTKqa5oNKbwkbDZPt0iHQMbOS
+    3RS7/CUJ1CGFYxYQRVHUer+tMyuclSisVH9iyUAwNHXUuE0jWp+GyN1k8ty0POq8vKfj
+    w+LRSfS1D9jKbXWooS/5wgQLyJiVD+UPQ9aM9pFO0cOpEjGJVjBUvUhx2zWs8qGwfrUl
+    QF5w==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1689882749;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=YkvSR1NBpdfO6+oRs6OkZ9rZa0nqSApvjTAua18PIhI=;
+    b=ELQaHyx7DTOl1p1prb0HYFs6+clk9YKeBbcQ6HyK0mTouTVh7P1AnUvlFK+WwybQdT
+    Rc1vh3Y9PMSuY7eIpCjPEF1fwtI5Zdkq0IQgG89dnbGcG7yws2z2rYirKy31LwgQF1Xi
+    XgKSN1fpZSoBk0P86apTYlel8oHcAaepLFkzufrBDG9W1t1IWvHTohfqvqKGdya4LS63
+    6d4zDN/KzyihRzpJQvWuD0AeGEpaHGhuItXanAnLkUBCh6MiDYBDV/lOiuDzzTNaBOBM
+    YxTz/j0Oxl2aCTlY0e7wInnv/cSzjXB0oa4gbHKI59wm1JOFrX+z9LoYOVWOubWpfqI4
+    r8kQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1689882749;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=YkvSR1NBpdfO6+oRs6OkZ9rZa0nqSApvjTAua18PIhI=;
+    b=RdwBlnFc0f/lQvrM5sQJzjTX/Py3dSVfRlgxesVFRllDdGuSn0wofhB8H+SBbjmd6Z
+    rBhwZHZoqX3Eup6gldCQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA9Zfh"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.6.4 DYNA|AUTH)
+    with ESMTPSA id V0b383z6KJqT5ow
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 20 Jul 2023 21:52:29 +0200 (CEST)
+Date:   Thu, 20 Jul 2023 21:52:22 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Jianlong Huang <jianlong.huang@starfivetech.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Dvorkin Dmitry <dvorkin@tibbo.com>,
-        Wells Lu <wellslutw@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-riscv@lists.infradead.org,
-        linux-oxnas@groups.io, linux-rockchip@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Georgi Djakov <djakov@kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] interconnect: qcom: qcm2290: Enable sync state
+Message-ID: <ZLmQdjDgIbbhyTMJ@gerhold.net>
+References: <20230720-topic-qcm2290_icc-v1-0-7f67f2e259c1@linaro.org>
+ <20230720-topic-qcm2290_icc-v1-2-7f67f2e259c1@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230720-topic-qcm2290_icc-v1-2-7f67f2e259c1@linaro.org>
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 14, 2023 at 7:49=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
-:
+On Thu, Jul 20, 2023 at 08:24:01PM +0200, Konrad Dybcio wrote:
+> Very surprisingly, qcm2290 does not seem to require any interface
+> clocks.
 
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it as merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
+What does this mean exactly? The interconnect .sync_state() is
+responsible to drop the initial maximum bandwidth votes, with the
+assumption that all active devices have voted for the bandwidth they
+need. How does this relate to "requiring interface clocks"?
 
-It still applied cleanly so I just applied it.
+> It's therefore safe to enable sync_state to park unused devices.
+> Do so.
 
-Thanks for attention to detail.
+Doesn't this make everything painfully slow? There are no interconnect
+consumers at all in qcm2290.dtsi. I would expect that all bandwidths
+end up at minimum.
 
-Yours,
-Linus Walleij
+Thanks,
+Stephan
