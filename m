@@ -2,494 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1990375A55C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 07:10:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05E8E75A587
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 07:41:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbjGTFKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 01:10:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35842 "EHLO
+        id S229682AbjGTFle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 01:41:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbjGTFKk (ORCPT
+        with ESMTP id S229604AbjGTFld (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 01:10:40 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70005EC;
-        Wed, 19 Jul 2023 22:10:39 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36K3lMPT032502;
-        Thu, 20 Jul 2023 05:10:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=mf1zKhHwrRsaeegpLZNytRKQo0loCluldkLPQC3NHqs=;
- b=jles9r46wR0ZDtQCxMK7LDmBsiHqWCA1iABxa8FyuoBSpKDPK5rpPUlt/jRZU63TLvcF
- dTVN7rAXDX401eWdLxkE7NPLvHGIZ2QXgweq8GLyp84/XdxxBbgK+1BNJazRRMQ/JHxI
- kEALG4vpZyfySthogrdAexD4MHepuuD8d8ITbWD+hzekzoLvmc7yu/v0tZh7gcn3MQCQ
- HjYPCV8fl+tHqavlmucXvTrMxUpHs93kBPSOBMhuw33p6l48zJeW0gJOmn50vqOaHzGR
- sFbN6PXrfsn4geUR0XEChlA88/6o0h/R+mBN2/IGJZyn0hWCjhiVR3Je0WtQVd3u/AVg BA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxg3v9p74-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 05:10:35 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36K5AYfF017630
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Jul 2023 05:10:34 GMT
-Received: from [10.216.4.242] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 19 Jul
- 2023 22:10:30 -0700
-Message-ID: <fbb13c2d-6d60-0e51-c980-3e79a68a1931@quicinc.com>
-Date:   Thu, 20 Jul 2023 10:40:27 +0530
+        Thu, 20 Jul 2023 01:41:33 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5624C172A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 22:41:29 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1b8ad356f03so2227975ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jul 2023 22:41:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689831689; x=1690436489;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WN6RnkgIzdaal19YY8XLdqCtBwmPCaI6lFevgwA6NkQ=;
+        b=QcYN2iEFkUyQ9vHTSJINfTdF7Du3vqHm7+OJIxMyIcPuF8wdIC66YH1vt5jWCRjYlh
+         JmwoX5r4Ob1wCA6nTd5XkFYt85qKAzVnQj7l9EuEgtjPUAtwq+glNlKsOdi0NcrE8EMc
+         bWw1W7Chzo8CtMEmzQTqJzOctMJj7KnlCXZK3l4/zZlJfaj5v2XQa0OOdjZA5QD4OhaN
+         NtOmAPtb9Evw/eRaNG1HSbHPnl2xxUJj5l657HC355NXs7jc5i8/9W/edxqDiY97snMv
+         udRbCcszreDVjxnanciO2otrhctaRybcyMfqRSHbc4TAg0mFufQ/FYJL5qvGOVh4TPS8
+         jVyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689831689; x=1690436489;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WN6RnkgIzdaal19YY8XLdqCtBwmPCaI6lFevgwA6NkQ=;
+        b=CKb3SSf4wDgVQIvxwsmjaairZeKkjl0M9tiNn6z+Cz3AjNsZJRXnVKAvYmPNZvS0V1
+         tALI8fnvo+Rh+S6b5hx2NHQRuhbdL+uV+4Imn1vSIEy6v/zyNP8TOR9tYxffGHSTol4K
+         QG4tVoYHm2MMKnTgnvghMVNiXdGEIeTih0YgrQ0H11Eu/8tXx/MtQSFR2zs1bPWD8PiB
+         pCREy8QtB+zALhJZgtwxfumhH282yiVNMAl8DJm5im7zsqkg5Zwb+HuAj0V0qDMoYXyu
+         q4vv0RYf9FvEYs1h8yHt1d3TCibrp3U7UOz+Kdy3phGW7X9siKAZIeoecnnoevZaK17k
+         OSmQ==
+X-Gm-Message-State: ABy/qLZUxkQH8uDOTn2opx6zu8tIzVF4Wm+uKMqA9LmUFkgKxYJhPJSt
+        Ofqjmc/R7/QMgCkY+xtHKM6w
+X-Google-Smtp-Source: APBJJlF1woeafM7N5JSQiQHje6/huLkPMe/UguooncmqloYSF3r+Ni7Qp6cwpNBSwGU8Fj3qkHdVZw==
+X-Received: by 2002:a17:903:26c5:b0:1b8:5735:2850 with SMTP id jg5-20020a17090326c500b001b857352850mr3799158plb.32.1689831688756;
+        Wed, 19 Jul 2023 22:41:28 -0700 (PDT)
+Received: from localhost.localdomain ([117.206.119.70])
+        by smtp.gmail.com with ESMTPSA id r2-20020a170902be0200b001b85bb5fd77sm263367pls.119.2023.07.19.22.41.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jul 2023 22:41:28 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 00/15] UFS: Add OPP and interconnect support
+Date:   Thu, 20 Jul 2023 11:10:45 +0530
+Message-Id: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V2 1/2] arm64: dts: qcom: ipq9574: Add common RDP dtsi
- file
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_saahtoma@quicinc.com>
-References: <20230713105909.14209-1-quic_anusha@quicinc.com>
- <20230713105909.14209-2-quic_anusha@quicinc.com>
- <2bf7ac6e-eeba-a082-2b0e-4fc302bef70a@linaro.org>
-From:   Anusha Canchi <quic_anusha@quicinc.com>
-In-Reply-To: <2bf7ac6e-eeba-a082-2b0e-4fc302bef70a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _H7aTQ_TUUu7vFOpbTG404qqGGw4BPly
-X-Proofpoint-ORIG-GUID: _H7aTQ_TUUu7vFOpbTG404qqGGw4BPly
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-19_16,2023-07-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 spamscore=0 bulkscore=0 adultscore=0 mlxscore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
- mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2307200041
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+This series adds OPP (Operating Points) support to UFSHCD driver and
+interconnect support to Qcom UFS driver.
 
-On 7/15/2023 7:28 PM, Konrad Dybcio wrote:
-> On 13.07.2023 12:59, Anusha Rao wrote:
->> Add a dtsi file to include interfaces that are common
->> across RDPs.
->>
->> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->> ---
-> [...]
->
->>   		data-pins {
->>   			pins = "gpio0", "gpio1", "gpio2",
->> -			       "gpio3", "gpio6", "gpio7",
->> -			       "gpio8", "gpio9";
->> +				"gpio3", "gpio6", "gpio7",
->> +				"gpio8", "gpio9";
-> This (and a similar one in the other file) change looks unrelated
-> and I think it makes the indentation worse :/
-Thanks, will fix this in next spin.
+Motivation behind adding OPP support is to scale both clocks as well as
+regulators/performance state dynamically. Currently, UFSHCD just scales
+clock frequency during runtime with the help of "freq-table-hz" property
+defined in devicetree. With the addition of OPP tables in devicetree (as
+done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+both clocks and performance state of power domain which helps in power
+saving.
+
+For the addition of OPP support to UFSHCD, there are changes required to
+the OPP framework and devfreq drivers which are also added in this series.
+
+Finally, interconnect support is added to Qcom UFS driver for scaling the
+interconnect path dynamically. This is required to avoid boot crash in
+recent SoCs and also to save power during runtime. More information is
+available in patch 13/13.
+
+Credits
+=======
+
+This series is a continuation of previous work by Krzysztof Kozlowski [1]
+and Brian Masney [2]. Ideally, this could've split into two series (OPP
+and interconnect) but since there will be a dependency in the devicetree,
+I decided to keep them in a single series.
+
+Testing
+=======
+
+This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
+development boards.
+
+Merging Strategy
+================
+
+An immutable branch might be required between OPP and SCSI trees because of
+the API dependency (devfreq too). And I leave it up to the maintainers to
+decide.
 
 Thanks,
-Anusha
-> Konrad
->>   			function = "sdc_data";
->>   			drive-strength = <8>;
->>   			bias-pull-up;
->> @@ -110,15 +60,4 @@
->>   			bias-pull-down;
->>   		};
->>   	};
->> -
->> -	spi_0_pins: spi-0-state {
->> -		pins = "gpio11", "gpio12", "gpio13", "gpio14";
->> -		function = "blsp0_spi";
->> -		drive-strength = <8>;
->> -		bias-disable;
->> -	};
->> -};
->> -
->> -&xo_board_clk {
->> -	clock-frequency = <24000000>;
->>   };
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> index 877026ccc6e2..7685176f90ef 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> @@ -8,69 +8,11 @@
->>   
->>   /dts-v1/;
->>   
->> -#include "ipq9574.dtsi"
->> +#include "ipq9574-rdp-common.dtsi"
->>   
->>   / {
->>   	model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7";
->>   	compatible = "qcom,ipq9574-ap-al02-c7", "qcom,ipq9574";
->> -
->> -	aliases {
->> -		serial0 = &blsp1_uart2;
->> -	};
->> -
->> -	chosen {
->> -		stdout-path = "serial0:115200n8";
->> -	};
->> -
->> -	regulator_fixed_3p3: s3300 {
->> -		compatible = "regulator-fixed";
->> -		regulator-min-microvolt = <3300000>;
->> -		regulator-max-microvolt = <3300000>;
->> -		regulator-boot-on;
->> -		regulator-always-on;
->> -		regulator-name = "fixed_3p3";
->> -	};
->> -
->> -	regulator_fixed_0p925: s0925 {
->> -		compatible = "regulator-fixed";
->> -		regulator-min-microvolt = <925000>;
->> -		regulator-max-microvolt = <925000>;
->> -		regulator-boot-on;
->> -		regulator-always-on;
->> -		regulator-name = "fixed_0p925";
->> -	};
->> -};
->> -
->> -&blsp1_uart2 {
->> -	pinctrl-0 = <&uart2_pins>;
->> -	pinctrl-names = "default";
->> -	status = "okay";
->> -};
->> -
->> -&rpm_requests {
->> -	regulators {
->> -		compatible = "qcom,rpm-mp5496-regulators";
->> -
->> -		ipq9574_s1: s1 {
->> -		/*
->> -		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
->> -		 * During regulator registration, kernel not knowing the initial voltage,
->> -		 * considers it as zero and brings up the regulators with minimum supported voltage.
->> -		 * Update the regulator-min-microvolt with SVS voltage of 725mV so that
->> -		 * the regulators are brought up with 725mV which is sufficient for all the
->> -		 * corner parts to operate at 800MHz
->> -		 */
->> -			regulator-min-microvolt = <725000>;
->> -			regulator-max-microvolt = <1075000>;
->> -		};
->> -
->> -		mp5496_l2: l2 {
->> -			regulator-min-microvolt = <1800000>;
->> -			regulator-max-microvolt = <1800000>;
->> -			regulator-always-on;
->> -			regulator-boot-on;
->> -		};
->> -	};
->>   };
->>   
->>   &sdhc_1 {
->> @@ -85,10 +27,6 @@
->>   	status = "okay";
->>   };
->>   
->> -&sleep_clk {
->> -	clock-frequency = <32000>;
->> -};
->> -
->>   &tlmm {
->>   	sdc_default_state: sdc-default-state {
->>   		clk-pins {
->> @@ -107,8 +45,8 @@
->>   
->>   		data-pins {
->>   			pins = "gpio0", "gpio1", "gpio2",
->> -			       "gpio3", "gpio6", "gpio7",
->> -			       "gpio8", "gpio9";
->> +				"gpio3", "gpio6", "gpio7",
->> +				"gpio8", "gpio9";
->>   			function = "sdc_data";
->>   			drive-strength = <8>;
->>   			bias-pull-up;
->> @@ -122,30 +60,3 @@
->>   		};
->>   	};
->>   };
->> -
->> -&usb_0_dwc3 {
->> -	dr_mode = "host";
->> -};
->> -
->> -&usb_0_qmpphy {
->> -	vdda-pll-supply = <&mp5496_l2>;
->> -	vdda-phy-supply = <&regulator_fixed_0p925>;
->> -
->> -	status = "okay";
->> -};
->> -
->> -&usb_0_qusbphy {
->> -	vdd-supply = <&regulator_fixed_0p925>;
->> -	vdda-pll-supply = <&mp5496_l2>;
->> -	vdda-phy-dpdm-supply = <&regulator_fixed_3p3>;
->> -
->> -	status = "okay";
->> -};
->> -
->> -&usb3 {
->> -	status = "okay";
->> -};
->> -
->> -&xo_board_clk {
->> -	clock-frequency = <24000000>;
->> -};
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts
->> index c8fa54e1a62c..d36d1078763e 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts
->> @@ -8,73 +8,10 @@
->>   
->>   /dts-v1/;
->>   
->> -#include "ipq9574.dtsi"
->> +#include "ipq9574-rdp-common.dtsi"
->>   
->>   / {
->>   	model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C6";
->>   	compatible = "qcom,ipq9574-ap-al02-c6", "qcom,ipq9574";
->>   
->> -	aliases {
->> -		serial0 = &blsp1_uart2;
->> -	};
->> -
->> -	chosen {
->> -		stdout-path = "serial0:115200n8";
->> -	};
->> -};
->> -
->> -&blsp1_spi0 {
->> -	pinctrl-0 = <&spi_0_pins>;
->> -	pinctrl-names = "default";
->> -	status = "okay";
->> -
->> -	flash@0 {
->> -		compatible = "micron,n25q128a11", "jedec,spi-nor";
->> -		reg = <0>;
->> -		#address-cells = <1>;
->> -		#size-cells = <1>;
->> -		spi-max-frequency = <50000000>;
->> -	};
->> -};
->> -
->> -&blsp1_uart2 {
->> -	pinctrl-0 = <&uart2_pins>;
->> -	pinctrl-names = "default";
->> -	status = "okay";
->> -};
->> -
->> -&rpm_requests {
->> -	regulators {
->> -		compatible = "qcom,rpm-mp5496-regulators";
->> -
->> -		ipq9574_s1: s1 {
->> -		/*
->> -		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
->> -		 * During regulator registration, kernel not knowing the initial voltage,
->> -		 * considers it as zero and brings up the regulators with minimum supported voltage.
->> -		 * Update the regulator-min-microvolt with SVS voltage of 725mV so that
->> -		 * the regulators are brought up with 725mV which is sufficient for all the
->> -		 * corner parts to operate at 800MHz
->> -		 */
->> -			regulator-min-microvolt = <725000>;
->> -			regulator-max-microvolt = <1075000>;
->> -		};
->> -	};
->> -};
->> -
->> -&sleep_clk {
->> -	clock-frequency = <32000>;
->> -};
->> -
->> -&tlmm {
->> -	spi_0_pins: spi-0-state {
->> -		pins = "gpio11", "gpio12", "gpio13", "gpio14";
->> -		function = "blsp0_spi";
->> -		drive-strength = <8>;
->> -		bias-disable;
->> -	};
->> -};
->> -
->> -&xo_board_clk {
->> -	clock-frequency = <24000000>;
->>   };
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts
->> index f01de6628c3b..c30c9fbedf26 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts
->> @@ -8,73 +8,10 @@
->>   
->>   /dts-v1/;
->>   
->> -#include "ipq9574.dtsi"
->> +#include "ipq9574-rdp-common.dtsi"
->>   
->>   / {
->>   	model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C8";
->>   	compatible = "qcom,ipq9574-ap-al02-c8", "qcom,ipq9574";
->>   
->> -	aliases {
->> -		serial0 = &blsp1_uart2;
->> -	};
->> -
->> -	chosen {
->> -		stdout-path = "serial0:115200n8";
->> -	};
->> -};
->> -
->> -&blsp1_spi0 {
->> -	pinctrl-0 = <&spi_0_pins>;
->> -	pinctrl-names = "default";
->> -	status = "okay";
->> -
->> -	flash@0 {
->> -		compatible = "micron,n25q128a11", "jedec,spi-nor";
->> -		reg = <0>;
->> -		#address-cells = <1>;
->> -		#size-cells = <1>;
->> -		spi-max-frequency = <50000000>;
->> -	};
->> -};
->> -
->> -&blsp1_uart2 {
->> -	pinctrl-0 = <&uart2_pins>;
->> -	pinctrl-names = "default";
->> -	status = "okay";
->> -};
->> -
->> -&rpm_requests {
->> -	regulators {
->> -		compatible = "qcom,rpm-mp5496-regulators";
->> -
->> -		ipq9574_s1: s1 {
->> -		/*
->> -		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
->> -		 * During regulator registration, kernel not knowing the initial voltage,
->> -		 * considers it as zero and brings up the regulators with minimum supported voltage.
->> -		 * Update the regulator-min-microvolt with SVS voltage of 725mV so that
->> -		 * the regulators are brought up with 725mV which is sufficient for all the
->> -		 * corner parts to operate at 800MHz
->> -		 */
->> -			regulator-min-microvolt = <725000>;
->> -			regulator-max-microvolt = <1075000>;
->> -		};
->> -	};
->> -};
->> -
->> -&sleep_clk {
->> -	clock-frequency = <32000>;
->> -};
->> -
->> -&tlmm {
->> -	spi_0_pins: spi-0-state {
->> -		pins = "gpio11", "gpio12", "gpio13", "gpio14";
->> -		function = "blsp0_spi";
->> -		drive-strength = <8>;
->> -		bias-disable;
->> -	};
->> -};
->> -
->> -&xo_board_clk {
->> -	clock-frequency = <24000000>;
->>   };
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts
->> index 6efae3426cb8..0dc382f5d5ec 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts
->> @@ -8,73 +8,9 @@
->>   
->>   /dts-v1/;
->>   
->> -#include "ipq9574.dtsi"
->> +#include "ipq9574-rdp-common.dtsi"
->>   
->>   / {
->>   	model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C9";
->>   	compatible = "qcom,ipq9574-ap-al02-c9", "qcom,ipq9574";
->> -
->> -	aliases {
->> -		serial0 = &blsp1_uart2;
->> -	};
->> -
->> -	chosen {
->> -		stdout-path = "serial0:115200n8";
->> -	};
->> -};
->> -
->> -&blsp1_spi0 {
->> -	pinctrl-0 = <&spi_0_pins>;
->> -	pinctrl-names = "default";
->> -	status = "okay";
->> -
->> -	flash@0 {
->> -		compatible = "micron,n25q128a11", "jedec,spi-nor";
->> -		reg = <0>;
->> -		#address-cells = <1>;
->> -		#size-cells = <1>;
->> -		spi-max-frequency = <50000000>;
->> -	};
->> -};
->> -
->> -&blsp1_uart2 {
->> -	pinctrl-0 = <&uart2_pins>;
->> -	pinctrl-names = "default";
->> -	status = "okay";
->> -};
->> -
->> -&rpm_requests {
->> -	regulators {
->> -		compatible = "qcom,rpm-mp5496-regulators";
->> -
->> -		ipq9574_s1: s1 {
->> -		/*
->> -		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
->> -		 * During regulator registration, kernel not knowing the initial voltage,
->> -		 * considers it as zero and brings up the regulators with minimum supported voltage.
->> -		 * Update the regulator-min-microvolt with SVS voltage of 725mV so that
->> -		 * the regulators are brought up with 725mV which is sufficient for all the
->> -		 * corner parts to operate at 800MHz
->> -		 */
->> -			regulator-min-microvolt = <725000>;
->> -			regulator-max-microvolt = <1075000>;
->> -		};
->> -	};
->> -};
->> -
->> -&sleep_clk {
->> -	clock-frequency = <32000>;
->> -};
->> -
->> -&tlmm {
->> -	spi_0_pins: spi-0-state {
->> -		pins = "gpio11", "gpio12", "gpio13", "gpio14";
->> -		function = "blsp0_spi";
->> -		drive-strength = <8>;
->> -		bias-disable;
->> -	};
->> -};
->> -
->> -&xo_board_clk {
->> -	clock-frequency = <24000000>;
->>   };
+Mani
+
+[1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+[2] https://lore.kernel.org/all/20221117104957.254648-1-bmasney@redhat.com/
+
+Changes in v2:
+
+* Added more description to the bindings patch 2/15
+* Fixed dev_pm_opp_put() usage in patch 10/15
+* Added a new patch for adding enums for UFS lanes 14/15
+* Changed the icc variables to mem_bw and cfg_bw and used
+  the enums for gears and lanes in bw_table
+* Collected review tags
+* Added SCSI list and folks
+* Removed duplicate patches
+
+Krzysztof Kozlowski (2):
+  dt-bindings: ufs: common: add OPP table
+  arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
+
+Manivannan Sadhasivam (13):
+  dt-bindings: opp: Increase maxItems for opp-hz property
+  arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC
+  arm64: dts: qcom: sdm845: Fix the min frequency of "ice_core_clk"
+  arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
+  OPP: Introduce dev_pm_opp_find_freq_{ceil/floor}_indexed() APIs
+  OPP: Introduce dev_pm_opp_get_freq_indexed() API
+  PM / devfreq: Switch to dev_pm_opp_find_freq_{ceil/floor}_indexed()
+    APIs
+  scsi: ufs: core: Add OPP support for scaling clocks and regulators
+  scsi: ufs: host: Add support for parsing OPP
+  arm64: dts: qcom: sdm845: Add interconnect paths to UFSHC
+  arm64: dts: qcom: sm8250: Add interconnect paths to UFSHC
+  scsi: ufs: core: Add enums for UFS lanes
+  scsi: ufs: qcom: Add support for scaling interconnects
+
+ .../devicetree/bindings/opp/opp-v2-base.yaml  |   2 +-
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  34 +++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  47 ++++--
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  43 +++--
+ drivers/devfreq/devfreq.c                     |  14 +-
+ drivers/opp/core.c                            |  76 +++++++++
+ drivers/ufs/core/ufshcd.c                     | 148 +++++++++++++-----
+ drivers/ufs/host/ufs-qcom.c                   | 131 +++++++++++++++-
+ drivers/ufs/host/ufs-qcom.h                   |   3 +
+ drivers/ufs/host/ufshcd-pltfrm.c              | 120 +++++++++++++-
+ include/linux/pm_opp.h                        |  26 +++
+ include/ufs/ufshcd.h                          |   4 +
+ include/ufs/unipro.h                          |   6 +
+ 13 files changed, 586 insertions(+), 68 deletions(-)
+
+-- 
+2.25.1
 
