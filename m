@@ -2,140 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CA4375A8EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:16:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2D4F75A932
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 10:26:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbjGTIQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 04:16:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56024 "EHLO
+        id S230123AbjGTI0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 04:26:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230414AbjGTIQp (ORCPT
+        with ESMTP id S231644AbjGTI0a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 04:16:45 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E841268E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:16:44 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fbf1f6c771so754711e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 01:16:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689841002; x=1690445802;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7XyOQDpJVVfm2vqrxvwzAIErygUb0oI9Levi9EQEtzU=;
-        b=pHd64Uh9HIqJaZloNuVrUQxpEVMxLthAeyouypZyuO7vZEQ9j5qgcCQi/Da3LcF/GT
-         SjXNfoJSC2/MtKWIkwM1RcmQGmHhm1Tf5nuOwIXcY5cI3xQYuyS3YWaiX01ILpXxxXYi
-         o9c/IIztqkY9xa9u9IDBHcST7vctOTEwJ6Ypw1uxGolpGtK5woINczQB4IKhsSTGXP7G
-         wLhHy5HCP7SLv+gaNwXPdAApaUgex2b3AYTHc3dfbdLutSCOylaNUoBFpW39qkLPOubW
-         piQuYeogZr/HhxSpjeldxyWMMLy4c44bqexXCkid2B008TnfNkA0WoUUgeJEFBiQL8bv
-         sLTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689841002; x=1690445802;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7XyOQDpJVVfm2vqrxvwzAIErygUb0oI9Levi9EQEtzU=;
-        b=ZSX0LOfvXMKdCV9agcQ7P8V/LLLTGZH0bsC9OpbF7mypOhzUAO29/F/71o9K+lKlqp
-         iNX2WgpRHEvC73Lq+oeOsPFFVf3l1/bGIz+0meLIXSMSR7P4lB2tOyMBkL705iaDHpxh
-         79ptuVEQaVXqLyxtLKpaBeJvV/inYtWXM970IKxvz68b16WEzoYbLB4cqVwLa5dNMSPK
-         GAg8S1r0X7DXORC717D53qPnpr0Wklb0RlBqiNt7LQ4TaXe20wpuRDtqjiuwi96JKPBS
-         1jGGzTi77ev61DtUPXcM3TGCRacfzpwV1CczKj3YSv1hPnIMPS1ERvGlaD/NQ4wcCJ6/
-         myXg==
-X-Gm-Message-State: ABy/qLbb7QuAdX7w3EB36p4ghFCEMQWBF2cDefVNtN6aX/quEpxd434P
-        3lCPzpeohpKkw9qcN8eXP7gC262jcdCkLb8Fqe3XgA==
-X-Google-Smtp-Source: APBJJlHWu5+IPzKxrWZtiDlXrVbECYNzGFwtTOD5wxG+qhwNidLMw5No3bP69pTIx8i3gE2MUSH+Yg==
-X-Received: by 2002:a19:e016:0:b0:4f8:596a:4bb7 with SMTP id x22-20020a19e016000000b004f8596a4bb7mr1441271lfg.57.1689841002463;
-        Thu, 20 Jul 2023 01:16:42 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05651238a400b004fbbba57ca9sm83724lft.85.2023.07.20.01.16.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 01:16:42 -0700 (PDT)
-Message-ID: <6f26ab9d-cf92-e918-866c-daa68096ee08@linaro.org>
-Date:   Thu, 20 Jul 2023 10:16:40 +0200
+        Thu, 20 Jul 2023 04:26:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD9C82D5D;
+        Thu, 20 Jul 2023 01:26:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9E7A36192A;
+        Thu, 20 Jul 2023 08:26:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FA3C433CA;
+        Thu, 20 Jul 2023 08:26:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689841577;
+        bh=8hXpYZiC5flMcBz6vQdYkhcT3AAczzerq09YWQX34Cs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hgwNTyWkIX9IAhNeqFtqPOGah7eaiV9bf+YbUC2Q2COcOrErULar1+CtssefQrxLM
+         CNJN8xf7glOlEBIZujkUMCpAwCBXxVeE0nlEGFTZrlnhyYG2rUox5DClgUbq+RgpE1
+         cOdm/3wDyvRrLzLz5OIdnHPKyU5ovFzeMvHrWRidr2dIdlAewobJlZg9QLmSCNqy4c
+         OG9Dxrvf5Lm2veAwozJtBEq9auoYsDwisSQMsyQlPm5HfYfEPueXe5JC+DI9h3mupQ
+         xCxnwOyehlTfgFtvwLCuFPwD8rFw/vwsNIl8yO0lfLba2v0qeYrXpAdT/AKKt4ZRlX
+         EPxhe9yDpIEdA==
+Date:   Thu, 20 Jul 2023 13:56:02 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc:     quic_cang@quicinc.com, stanley.chu@mediatek.com,
+        bvanassche@acm.org, quic_asutoshd@quicinc.com, avri.altman@wdc.com,
+        martin.petersen@oracle.com, beanhuo@micron.com,
+        konrad.dybcio@linaro.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, jejb@linux.ibm.com,
+        linux-arm-msm@vger.kernel.org, quic_ziqichen@quicinc.com
+Subject: Re: [PATCH V2] scsi: ufs: ufs-qcom: Update UFS devfreq Parameters
+Message-ID: <20230720082602.GA4863@thinkpad>
+References: <20230716074907.12356-1-quic_nitirawa@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5018: add support for the RDP415
- variant
-Content-Language: en-US
-To:     Hariharan K <quic_harihk@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com
-References: <20230720074846.20350-1-quic_harihk@quicinc.com>
- <20230720074846.20350-3-quic_harihk@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230720074846.20350-3-quic_harihk@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230716074907.12356-1-quic_nitirawa@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.07.2023 09:48, Hariharan K wrote:
-> Add the initial device tree support for the Reference Design
-> Platform(RDP) 415 based on IPQ5018 family of SoC. This patch
-> carries the support for Console UART and eMMC.
+On Sun, Jul 16, 2023 at 01:19:07PM +0530, Nitin Rawat wrote:
+> To support the periodic polling mode without stop caused by CPU idle
+> state, enable delayed timer as default instead of deferrable timer
+> for qualcomm platforms.
+
+How about,
+
+"Devfreq uses the default DEVFREQ_TIMER_DEFERRABLE mode which uses the deferred
+timer for scheduling the devfreq load monitor function. This causes the load
+monitoring to be done only with non-idle CPUs and not making use of the idle
+CPUs. Hence, use the DEVFREQ_TIMER_DELAYED mode which uses the delayed timer
+thereby making use of idle CPUs as well for load monitoring."
+
+> And change UFS devfreq downdifferential threshold to 65 for less
+> aggressive downscaling.
 > 
-> Signed-off-by: Hariharan K <quic_harihk@quicinc.com>
+
+This change needs to be done in a separate patch. Also please provide any
+benchmark if available to justify the patch.
+
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+
+Your signed-off-by should come last, as you are the one sending this patch.
+
+- Mani
+
 > ---
-[...]
+> 
+> Changes in v2:
+> - Realigned the commit text
+> 
+>  drivers/ufs/host/ufs-qcom.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 82d02e7f3b4f..a15815c951ca 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1388,8 +1388,9 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+>  					struct devfreq_simple_ondemand_data *d)
+>  {
+>  	p->polling_ms = 60;
+> +	p->timer = DEVFREQ_TIMER_DELAYED;
+>  	d->upthreshold = 70;
+> -	d->downdifferential = 5;
+> +	d->downdifferential = 65;
+>  }
+>  #else
+>  static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+> --
+> 2.17.1
+> 
 
-> +
-> +&sdhc_1 {
-> +	pinctrl-0 = <&sdc_default_state>;
-> +	pinctrl-names = "default";
-> +	mmc-ddr-1_8v;
-> +	mmc-hs200-1_8v;
-> +	max-frequency = <192000000>;
-> +	bus-width = <4>;
-> +	status = "okay";
-Since some (but presumably not all) SKUs have SDHCI, you can define
-the plumbing for it in the common DTSI but only enable it on ones
-that do (or disable on those that don't)
-
-Konrad
+-- 
+மணிவண்ணன் சதாசிவம்
