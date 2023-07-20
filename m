@@ -2,147 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCCAE75AF68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 15:13:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E794675B091
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 15:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbjGTNNv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 09:13:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38298 "EHLO
+        id S231426AbjGTN6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 09:58:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231736AbjGTNNq (ORCPT
+        with ESMTP id S229517AbjGTN6r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 09:13:46 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A3D269A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 06:13:43 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3fbc244d307so6682585e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 06:13:43 -0700 (PDT)
+        Thu, 20 Jul 2023 09:58:47 -0400
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA421BFC;
+        Thu, 20 Jul 2023 06:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689858821; x=1690463621;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=33+dIrV1g2li6K17tpdCbWThgnqyYELTLl4Ef0pYaFI=;
-        b=ELEG4L2qZEKgbn/CUk4mr8V+GTaYcHKX+bqevSarlForkDjOhtzRVycgEg/LiXcDPj
-         Kr96cq6sU0moXgJhufwG3kNiPbr+aZMgHMAUZw5xm16kFBHnpyyA9Fir6ZIyCfvED+44
-         KvYbUXc/L9+teUmBwhpVYHBECYBVkf7Sye90VtT3bBzajxZculITif8pd4SYa6+VwudZ
-         eEulGPDpT1jisJIjf31XmTcgugkQT91GY98ReaiMpFkXEKC3xBDMGuDyooYyPK4P5MoR
-         TY6BJQnJh0s9yYwdiOp+/vPJ2kSTQGbUAw9yEkj4Uu2YZWGvpe6UYrLulUny8imF1NYX
-         ZZxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689858821; x=1690463621;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=33+dIrV1g2li6K17tpdCbWThgnqyYELTLl4Ef0pYaFI=;
-        b=DiW2s2PvKuocfu1SDt4uBovPHGOoNqTfV70rbflOWe9pyPyIzNW/mM9cSpxm6ONX/r
-         4DdlEdPUKHM681W058O7GvkFO1KXYWSYJhoJsSwcAllYdF9SHFmFKjCYMHJWJ7+V6Xj5
-         9IooaZwesTcoicohOZxPaM73EZ8vvArBo02q/htlwo1eUDdazqj7e4qrhHTChUn9E5bp
-         qkv25vEwtBkEVRzGWhkxkS61pc3PbNVFstT8IiG13xTsB2tCi2RUcdjZvHNPEM/PBHyi
-         eszyS5dehJPgkIbAQ+C/zcInOm0pwI/7PE9LezxUKFGr2UteK55aDMqO66zlRLvkaYk4
-         aLbA==
-X-Gm-Message-State: ABy/qLYMEO+ektcBpX2SqILoqAeKx0sl4wccHWwnmOryefx5qqVeumq4
-        4R3s3DzHV7aT4gMvdvSov+0aZQ==
-X-Google-Smtp-Source: APBJJlGLbk/dGMS2u15ZxfXPZhUejqXraQAMnSt+pNwzRVCfjD/Iv62GXpdZvhsPa6mpU9rV1bHw0w==
-X-Received: by 2002:a7b:c8cd:0:b0:3f9:b748:ff3f with SMTP id f13-20020a7bc8cd000000b003f9b748ff3fmr6553704wml.1.1689858821422;
-        Thu, 20 Jul 2023 06:13:41 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id y15-20020a7bcd8f000000b003fbdd5d0758sm1166775wmj.22.2023.07.20.06.13.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 06:13:40 -0700 (PDT)
-Message-ID: <c53c8fc5-a898-df1d-4626-696ffd990796@linaro.org>
-Date:   Thu, 20 Jul 2023 15:13:38 +0200
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1689861526; x=1721397526;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=XpAMFGb/Xybkrxzme8WKAtLm3ABmr0EJ6sAi//VY/IQ=;
+  b=KtYVlZe5dZ5lJHdyJM97CyFKrDEag2s5goyFQ04+ojr4fF5GjQMAARZ1
+   f6clTwP41GXxSKh/TXGBRzz+v4rhAe29lk5v6rf5Alb+cO27+nSepvUDO
+   W0fHKWlWTgN+GKxTVgJwjk1wmKBFuumvICmhKCFFxnEebBrSO2J3iq1pl
+   5R6upGCdRjmVCcA42W0dGLkTjJqn9Gf7eXvWO7+TPy6y6o8HHjdOWFQpm
+   qyDDg53RMGU1Y757PnGN44rNuUWNLVNOR4EVR/t2zF2NVCarr81Mt3MKo
+   j8Jq4IpqBrY29b/4/GyLK+OcKL2r/h1PoVtFCpq6BaFT/rGVqGm+ezgeR
+   g==;
+X-IronPort-AV: E=Sophos;i="6.01,218,1684792800"; 
+   d="scan'208";a="32035611"
+Received: from vtuxmail01.tq-net.de ([10.115.0.20])
+  by mx1.tq-group.com with ESMTP; 20 Jul 2023 15:58:43 +0200
+Received: from steina-w.localnet (unknown [10.123.53.21])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id 4DD88280078;
+        Thu, 20 Jul 2023 15:58:43 +0200 (CEST)
+From:   Alexander Stein <alexander.stein@ew.tq-group.com>
+To:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        =?ISO-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v2 3/3] arm64: dts: Replace deprecated extcon-usb-gpio id-gpio/vbus-gpio properties
+Date:   Thu, 20 Jul 2023 15:58:41 +0200
+Message-ID: <2640608.BddDVKsqQX@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <8374cb80-749a-401d-2d88-48001ad614c2@linaro.org>
+References: <20230615145838.1526919-1-alexander.stein@ew.tq-group.com> <20230615145838.1526919-3-alexander.stein@ew.tq-group.com> <8374cb80-749a-401d-2d88-48001ad614c2@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [V3,09/11] remoteproc: qcom: Add Hexagon based multipd rproc
- driver
-Content-Language: en-US
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mathieu.poirier@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        quic_eberman@quicinc.com, kvalo@kernel.org,
-        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_anusha@quicinc.com
-References: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
- <20230718120501.3205661-10-quic_mmanikan@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230718120501.3205661-10-quic_mmanikan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2023 14:04, Manikanta Mylavarapu wrote:
-> It adds support to bring up remoteproc's on multipd model.
-> Pd means protection domain. It's similar to process in Linux.
-> Here QDSP6 processor runs each wifi radio functionality on a
-> separate process. One process can't access other process
-> resources, so this is termed as PD i.e protection domain.
+Hi Krzysztof,
 
-...
+Am Donnerstag, 20. Juli 2023, 10:07:04 CEST schrieb Krzysztof Kozlowski:
+> On 15/06/2023 16:58, Alexander Stein wrote:
+> > Use id-gpios and vbus-gpios instead.
+> >=20
+> > Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+> > Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
+> > Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com> #mediatek
+> > ---
+> > Changes in v2:
+> > * Added Heiko's A-b for rockchip
+> > * Added Matthias' R-b for mediatek
+>=20
+> Please split patches per subsystem, so this could be applied. Or send it
+> through soc tree, but you chosen the middle way - neither per subsystem
+> nor via soc tree - so it went nowhere :(
 
-> + * User pd boot-info format mentioned below
-> + * <Version> <No of elements passing over smem> <Header type> <Header Length>
-> + * <Process Id> <Load address> <firmware mem Size>
-> + *
-> + * Returns 0 on success else negative value on failure.
-> + */
-> +static int share_upd_bootinfo_to_q6(struct rproc *rproc)
-> +{
-> +	int ret;
-> +	size_t size;
-> +	u16 cnt = 0, version;
-> +	void *ptr;
-> +	struct q6_wcss *wcss = rproc->priv, *upd_wcss;
-> +	struct device_node *upd_np;
-> +	struct platform_device *upd_pdev;
-> +	struct rproc *upd_rproc;
-> +	struct userpd_boot_info upd_bootinfo = {0};
-> +	const struct firmware *fw;
-> +
-> +	ret = qcom_smem_alloc(REMOTE_PID, UPD_BOOT_INFO_SMEM_ID,
-> +			      UPD_BOOT_INFO_SMEM_SIZE);
-> +	if (ret && ret != -EEXIST) {
-> +		dev_err(wcss->dev,
-> +			"failed to allocate q6 bootinfo smem segment\n");
-> +		return ret;
-> +	}
-> +
-> +	ptr = qcom_smem_get(REMOTE_PID, UPD_BOOT_INFO_SMEM_ID, &size);
-> +	if (IS_ERR(ptr) || size != UPD_BOOT_INFO_SMEM_SIZE) {
-> +		dev_err(wcss->dev,
-> +			"Unable to acquire smp2p item(%d) ret:%ld\n",
-> +			UPD_BOOT_INFO_SMEM_ID, PTR_ERR(ptr));
-> +		return PTR_ERR(ptr);
-> +	}
-> +
-> +	/* print physical address */
-> +	dev_info(wcss->dev,
-> +		 "smem phyiscal address:0x%lX\n",
-> +		 (uintptr_t)qcom_smem_virt_to_phys(ptr));
-
-One more thought. Why do you need it? Even if this is not a kernel or
-user-space address, why would like to disclose the memory layout? I
-think this is contradictory to the kptr_restrict concept.
-
-> +
-> +	/*Version*/
-
-
+How do you distinguish that? Almost all maintainers and mailing lists from=
+=20
+get_maintainer.pl output for patch 1 are also included in the list for patc=
+h 2=20
+& 3? Do you want me to send two series (1 binding patch and 2 DT patches),=
+=20
+which you will receive both of them?
 
 Best regards,
-Krzysztof
+Alexander
+=2D-=20
+TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
+Amtsgericht M=FCnchen, HRB 105018
+Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
+http://www.tq-group.com/
+
 
