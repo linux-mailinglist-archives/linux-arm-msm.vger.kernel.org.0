@@ -2,140 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6170175B11B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 16:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8543B75B1EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jul 2023 17:02:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232171AbjGTOVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jul 2023 10:21:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52676 "EHLO
+        id S230060AbjGTPCs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jul 2023 11:02:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232125AbjGTOVe (ORCPT
+        with ESMTP id S230382AbjGTPCr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jul 2023 10:21:34 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A0A26AD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 07:21:33 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b703cbfaf5so12468631fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 07:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689862891; x=1690467691;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5bM5fwQZuavzr0KLXlSpBqYe6ZYyOnK6tAtOA/McGh0=;
-        b=spUGuRcegEQPc3fc25t8itt8SEf8ygAVohrhUn1ujEk4I9NT0xUvIMs1yqyuWqxNFr
-         fBngMP/QWUKoSJ4W5c8y5CIpFFLT2NdGs7KcRmUv/FP+F2rq6dMQaol9zCqPj/y+WTED
-         2PSRgpO+AuKpqQjbbAcTkKACjlLeF1nbuCreWEGmYWXHj2dY5nBdA3c0ybQNAqoK1TUq
-         kekBLt7Ich29WT7xHej4Hzg7GCemUc/EmRGwPy7fQEuunSvGNdqxqNwLHTK/PQwA40Dp
-         BwJdBbnoarNMLasaotpymgCSCXe725rnTO/e+1odjR+bU2WyYT4CLBrdqgOxxsPSCDk1
-         B2qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689862891; x=1690467691;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5bM5fwQZuavzr0KLXlSpBqYe6ZYyOnK6tAtOA/McGh0=;
-        b=abglcKpa2mIlVH/OFv+w2bU8I7THc3QTA/mh8Z8ahhlXeKEqkPcbIhwCdK6mMCrp3M
-         eh8v3v/LpLugOlGJVbi0sCBVerioSc1VQnW2yPLPjwqAzm65Xqh+jVC8opgsNWd5nx2r
-         fnBHD2nWNhXfwirKsqBpy+WtVV4DrXaOE+HonqmP8N6bNp3AdeYyUZYTxccGREpR8+PT
-         l84oOp8pdyki+TMEMS4Rlo2q6Abq+s9ort9Wb+yFqo6fvAFZYoPcCWwYfMgdo0MwBPtf
-         swHi/u9IuIN0O3ctEEX+8g3dZso4ygTVzLI8vFg20nyCfbcGE0rslVHat8g7HRa9z5WT
-         RdNg==
-X-Gm-Message-State: ABy/qLbGtezDm7kmEpmHRB1BvIiZ3gXX3C69E5k4j+jOoNQEZefOJWbT
-        DLQmZmczY9+FXM84zrYoIvESNg==
-X-Google-Smtp-Source: APBJJlFpdXWglTYxIM2Ehzj8JoGpf26cOv1zlpe0BemO3ScIjse7kYRRtbcG/801j62owMtgpgABCA==
-X-Received: by 2002:a2e:3310:0:b0:2b6:d137:b5a1 with SMTP id d16-20020a2e3310000000b002b6d137b5a1mr2400228ljc.43.1689862891321;
-        Thu, 20 Jul 2023 07:21:31 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id c10-20020a056000104a00b0031434cebcd8sm1490017wrx.33.2023.07.20.07.21.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jul 2023 07:21:30 -0700 (PDT)
-Message-ID: <2b5b982d-5a9f-810a-ec3f-df65e6c8b83b@linaro.org>
-Date:   Thu, 20 Jul 2023 16:21:28 +0200
+        Thu, 20 Jul 2023 11:02:47 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A25D26B0;
+        Thu, 20 Jul 2023 08:02:41 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36KDvC0c015644;
+        Thu, 20 Jul 2023 15:02:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : to : cc : from : subject : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=FYnhndaHLlAGmLEwmFnlF+PlGmmJDrC7zOccjmvv0Ig=;
+ b=bNJZCV8km0MA3TGnvB7XAF0q4+WBwSqzYX+OxOHh1hHroP/y70LKurGGuB6/s9N7b/pr
+ NeSGxgMxOqD9WCxFKisALmobilS8zbscpjlYLyjGEs0+ClXL5qUuuvGb5gLHs89xIlpC
+ pP1c2651viN0x9iYYfBR7HVz21KdvVbNKxcoiYqZbeigvJzoznw+eWPlz+YplEOxNsXt
+ t1N8DwVphtkBAy7I1DF/YXjfahhbRE6wwaAUiHPirwDHb6pUbIdlgh6OQHLZRCBVu01y
+ 5P0UD1j3bIz/v7VoJBo9BV4BYuel5cZz1WkfUfgn2HUFo7GB/K0KX5uFQw2IIHKk4w6+ hg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxup4he6c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 15:02:31 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36KF2UZK013352
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Jul 2023 15:02:30 GMT
+Received: from [10.216.27.20] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 20 Jul
+ 2023 08:02:28 -0700
+Message-ID: <0199db00-1b1d-0c63-58ff-03efae02cb21@quicinc.com>
+Date:   Thu, 20 Jul 2023 20:32:24 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v2 3/3] arm64: dts: Replace deprecated extcon-usb-gpio
- id-gpio/vbus-gpio properties
 Content-Language: en-US
-To:     Alexander Stein <alexander.stein@ew.tq-group.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        =?UTF-8?Q?Beno=c3=aet_Cousson?= <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>
-Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        devicetree@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-References: <20230615145838.1526919-1-alexander.stein@ew.tq-group.com>
- <20230615145838.1526919-3-alexander.stein@ew.tq-group.com>
- <8374cb80-749a-401d-2d88-48001ad614c2@linaro.org>
- <2640608.BddDVKsqQX@steina-w>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2640608.BddDVKsqQX@steina-w>
-Content-Type: text/plain; charset=UTF-8
+To:     <linux-samsung-soc@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        lkml <linux-kernel@vger.kernel.org>
+CC:     Trilok Soni <quic_tsoni@quicinc.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: Feedback on Qualcomm's minidump (debug) solution for end user device
+ crash
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: AxElWK3GY2mplQQdNjQr_H9fI-OmIpbb
+X-Proofpoint-ORIG-GUID: AxElWK3GY2mplQQdNjQr_H9fI-OmIpbb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-20_08,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ adultscore=0 mlxlogscore=553 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307200126
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/07/2023 15:58, Alexander Stein wrote:
-> Hi Krzysztof,
-> 
-> Am Donnerstag, 20. Juli 2023, 10:07:04 CEST schrieb Krzysztof Kozlowski:
->> On 15/06/2023 16:58, Alexander Stein wrote:
->>> Use id-gpios and vbus-gpios instead.
->>>
->>> Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
->>> Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
->>> Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com> #mediatek
->>> ---
->>> Changes in v2:
->>> * Added Heiko's A-b for rockchip
->>> * Added Matthias' R-b for mediatek
->>
->> Please split patches per subsystem, so this could be applied. Or send it
->> through soc tree, but you chosen the middle way - neither per subsystem
->> nor via soc tree - so it went nowhere :(
-> 
-> How do you distinguish that? 
+Hi Samsung/MTK/Any other SOC vendors,
 
-You create multiple patches per each DTS subdirectory. Then you send
-entire patchset to all people (might create too many Cc addresses) or
-patch-per-maintainers.
+This is to bring to your notice that, we (Qualcomm) are working on 
+upstreaming our minidump solution which is to address the problem of
+debugging on field device crashes where collecting entire ddr dump
+would not be feasible and collecting minimal data from the ddr would
+help in debug direction or even help in root causing issue.
 
-> Almost all maintainers and mailing lists from 
+We have recently posted v4 version here [1]
 
-Yes, and they can only Ack it. If you wanted it to go via SoC, you
-should have Cc Soc. Since you didn't then it was not the intention, so
-only the first option is left - split per subsystem.
+Based on comments[2], community is more worried about, if each SOC
+vendor come up with their own dumping method today or in future and
+whether it can have a common solution to a similar problem faced by
+other SOC vendor.
 
-> get_maintainer.pl output for patch 1 are also included in the list for patch 2 
-> & 3? Do you want me to send two series (1 binding patch and 2 DT patches), 
-> which you will receive both of them?
+We wanted to take your feedback if you also encounter a similar problem
+or maintain something similar solution in downstream which can be 
+upstreamed. This will help us in a way to have a common solution in
+upstream.
+
+[1]
+https://lore.kernel.org/lkml/10dd2ead-758a-89f0-cda4-70ae927269eb@quicinc.com/
+
+[2]
+https://lore.kernel.org/lkml/CAL_JsqLO9yey2-4FcWsaGxijiS6hGL0SH9VoMuiyei-u9=Cv=w@mail.gmail.com/
+
+-Mukesh
 
 
-Best regards,
-Krzysztof
+
+
 
