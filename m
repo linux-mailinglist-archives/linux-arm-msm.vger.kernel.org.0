@@ -2,139 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3104075BE0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 07:55:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BED6F75BEED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 08:33:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbjGUFzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 01:55:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S229571AbjGUGdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 02:33:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjGUFzB (ORCPT
+        with ESMTP id S229453AbjGUGdf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 01:55:01 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9F7123
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 22:54:59 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b7430bda8bso23595091fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jul 2023 22:54:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689918898; x=1690523698;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tx9jl7D+lvBMqXnZpoQLi2KuMPWDp5XwCqZnDLqYhH4=;
-        b=P+5zACJptGbFTgXVDRkqTPIryzqqm6xnTBqa144mWW3vJUlBHW3fug8z5qezx3wt1U
-         dt5bYw3bEVeG/4je9TPGsRbpQ8Mhov1V8II6azJbJDnbdJDDqbSqV1XiYHWemaz56QtB
-         JVxsgy0prKVQ/44GZLMv1ewSH9q1wFE0fZ+yQD0xhoM3W8VbFXUVXS1cbp68V1ss/3ii
-         Sa4xYlacIbLNYCdhIwtJ4he+UdTZduqbUVMZjOI8jaSQpLdQjtVdn04uCp+mtdrAqS1e
-         I+60ZNkJXtWLTaibJ9N03V4nBruOd/t2a9jvc/pRermLahFbfvPr1RLnkNeIRtKUEHrH
-         tbNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689918898; x=1690523698;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tx9jl7D+lvBMqXnZpoQLi2KuMPWDp5XwCqZnDLqYhH4=;
-        b=XlyNov0uO8XAkp8ILEuZNjVN/vbBuAHZealWASH60WRgXLo8GRI6Qhaw6kpyfndXAu
-         UPSUjPe2Eyi1JrO5/M02i+F+WE5/2eUul99oH4lGiwjTvd5r2GW5pvwRfEGGz4JT6Yvc
-         FdtQq8w2o4adgiP1MxT6Jlfjqs/04B1Wi/rsA1aKPTSWh0z64VhvMI8ylR+XY/C6137L
-         J+XN+D6CXdFpisUkOtVPPerWX/KwQcTPV4nz3WgiNjhtpMaTe0MIn0gMu3Pu5+R8yu9p
-         BlRIkJ4aMQAQC6n7j5C4BMCuJyLSKRZurQHTXDU6ocRd2mdhSOdPZlR+n63VIEpl7hUn
-         BFzQ==
-X-Gm-Message-State: ABy/qLZNnoUYbnsihIPgimtsCrgvkpV3rWAbz+EM89bw1Umf0PUFLjVi
-        TTiCTyV47PHgz3FRHpWh5hhacg==
-X-Google-Smtp-Source: APBJJlEa4kryPI3nUrwB9m9RmaeAPUjTod8HmpUxn0EKJgY2ZRTgF8NnuoRZdgKFcVWrJlzcH2Xv/w==
-X-Received: by 2002:a2e:9bd9:0:b0:2b7:3656:c594 with SMTP id w25-20020a2e9bd9000000b002b73656c594mr846381ljj.3.1689918898068;
-        Thu, 20 Jul 2023 22:54:58 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id o20-20020a5d58d4000000b0031433443265sm3170654wrf.53.2023.07.20.22.54.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jul 2023 22:54:56 -0700 (PDT)
-Date:   Fri, 21 Jul 2023 08:54:53 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     oe-kbuild@lists.linux.dev,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com
-Cc:     lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org
-Subject: Re: [PATCH v2 08/15] OPP: Introduce dev_pm_opp_get_freq_indexed() API
-Message-ID: <95878fdc-6b98-4be8-84e7-6bfdbf902a9f@kadam.mountain>
+        Fri, 21 Jul 2023 02:33:35 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78CE9113;
+        Thu, 20 Jul 2023 23:33:34 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36L5CcY2007317;
+        Fri, 21 Jul 2023 06:33:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=DC9f/AkivRyWRdBHdTX5l53MGYWeEg55d7aFIfliLU4=;
+ b=CzW6FL7kunTgHMIr/YgwnYTacjh+loh3/jLihsPvwrtFeaEzq2AV36durAbNtzL2A005
+ RVUxLy3xtwmWLMnJQqR1UeA3OmGUWJsE+lJvDll6NH5Ah3qjrvRxhVKaV69l8hcizEhm
+ B9pGDG4L5FeCV09WkjBLSqyEcviEQLHjyqNd/HZTaEnvimGaCaNePhJbARvcCw9Uh35m
+ 5IUU2MnyBmcsaK0oyCuTIb38Zr2VTMV0E7EZ0HSNJ9HSRK94X7U2vEWj5IogbW7QMcbc
+ gErC0rC6LVMnf8FuV2NEVsWL0nF3Xd9IsoZY2P5jlChTn0ZYrbLG7+IQXjVXq95edxWJ EA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ry6pv1w57-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Jul 2023 06:33:28 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36L6XRVV004827
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Jul 2023 06:33:27 GMT
+Received: from [10.216.60.229] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 20 Jul
+ 2023 23:33:20 -0700
+Message-ID: <4af1abfb-9889-af13-7460-903eb94833bf@quicinc.com>
+Date:   Fri, 21 Jul 2023 12:03:17 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230720054100.9940-9-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [V3,09/11] remoteproc: qcom: Add Hexagon based multipd rproc
+ driver
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mathieu.poirier@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <quic_eberman@quicinc.com>, <kvalo@kernel.org>,
+        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
+References: <20230718120501.3205661-1-quic_mmanikan@quicinc.com>
+ <20230718120501.3205661-10-quic_mmanikan@quicinc.com>
+ <c53c8fc5-a898-df1d-4626-696ffd990796@linaro.org>
+Content-Language: en-US
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <c53c8fc5-a898-df1d-4626-696ffd990796@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YufzpMDROCJY4mesvDq7i8qydn3kb4O9
+X-Proofpoint-ORIG-GUID: YufzpMDROCJY4mesvDq7i8qydn3kb4O9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-21_03,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 malwarescore=0 adultscore=0 mlxlogscore=727
+ impostorscore=0 clxscore=1015 priorityscore=1501 mlxscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307210058
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Manivannan,
 
-kernel test robot noticed the following build warnings:
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 7/20/2023 6:43 PM, Krzysztof Kozlowski wrote:
+> On 18/07/2023 14:04, Manikanta Mylavarapu wrote:
+>> It adds support to bring up remoteproc's on multipd model.
+>> Pd means protection domain. It's similar to process in Linux.
+>> Here QDSP6 processor runs each wifi radio functionality on a
+>> separate process. One process can't access other process
+>> resources, so this is termed as PD i.e protection domain.
+> 
+> ...
+> 
+>> + * User pd boot-info format mentioned below
+>> + * <Version> <No of elements passing over smem> <Header type> <Header Length>
+>> + * <Process Id> <Load address> <firmware mem Size>
+>> + *
+>> + * Returns 0 on success else negative value on failure.
+>> + */
+>> +static int share_upd_bootinfo_to_q6(struct rproc *rproc)
+>> +{
+>> +	int ret;
+>> +	size_t size;
+>> +	u16 cnt = 0, version;
+>> +	void *ptr;
+>> +	struct q6_wcss *wcss = rproc->priv, *upd_wcss;
+>> +	struct device_node *upd_np;
+>> +	struct platform_device *upd_pdev;
+>> +	struct rproc *upd_rproc;
+>> +	struct userpd_boot_info upd_bootinfo = {0};
+>> +	const struct firmware *fw;
+>> +
+>> +	ret = qcom_smem_alloc(REMOTE_PID, UPD_BOOT_INFO_SMEM_ID,
+>> +			      UPD_BOOT_INFO_SMEM_SIZE);
+>> +	if (ret && ret != -EEXIST) {
+>> +		dev_err(wcss->dev,
+>> +			"failed to allocate q6 bootinfo smem segment\n");
+>> +		return ret;
+>> +	}
+>> +
+>> +	ptr = qcom_smem_get(REMOTE_PID, UPD_BOOT_INFO_SMEM_ID, &size);
+>> +	if (IS_ERR(ptr) || size != UPD_BOOT_INFO_SMEM_SIZE) {
+>> +		dev_err(wcss->dev,
+>> +			"Unable to acquire smp2p item(%d) ret:%ld\n",
+>> +			UPD_BOOT_INFO_SMEM_ID, PTR_ERR(ptr));
+>> +		return PTR_ERR(ptr);
+>> +	}
+>> +
+>> +	/* print physical address */
+>> +	dev_info(wcss->dev,
+>> +		 "smem phyiscal address:0x%lX\n",
+>> +		 (uintptr_t)qcom_smem_virt_to_phys(ptr));
+> 
+> One more thought. Why do you need it? Even if this is not a kernel or
+> user-space address, why would like to disclose the memory layout? I
+> think this is contradictory to the kptr_restrict concept.
+> 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/dt-bindings-ufs-common-add-OPP-table/20230720-134720
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230720054100.9940-9-manivannan.sadhasivam%40linaro.org
-patch subject: [PATCH v2 08/15] OPP: Introduce dev_pm_opp_get_freq_indexed() API
-config: i386-randconfig-m041-20230720 (https://download.01.org/0day-ci/archive/20230721/202307210431.3S4SeXVw-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20230721/202307210431.3S4SeXVw-lkp@intel.com/reproduce)
+Sure, I will remove.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202307210431.3S4SeXVw-lkp@intel.com/
+Thanks & Regards,
+Manikanta.
 
-New smatch warnings:
-drivers/opp/core.c:213 dev_pm_opp_get_freq_indexed() warn: variable dereferenced before IS_ERR check 'opp' (see line 211)
-
-Old smatch warnings:
-drivers/opp/core.c:254 dev_pm_opp_get_required_pstate() warn: variable dereferenced before IS_ERR check 'opp' (see line 252)
-drivers/opp/core.c:2458 _opp_attach_genpd() warn: passing zero to 'PTR_ERR'
-
-vim +/opp +213 drivers/opp/core.c
-
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  209  unsigned long dev_pm_opp_get_freq_indexed(struct dev_pm_opp *opp, u32 index)
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  210  {
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20 @211  	struct opp_table *opp_table = opp->opp_table;
-                                                                                                              ^^^^^^^^^^^^^^^
-Dereference
-
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  212  
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20 @213  	if (IS_ERR_OR_NULL(opp) || index >= opp_table->clk_count) {
-                                                                                                   ^^^
-Checked too late
-
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  214  		pr_err("%s: Invalid parameters\n", __func__);
-
-This should be a dev_err(), btw.
-
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  215  		return 0;
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  216  	}
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  217  
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  218  	return opp->rates[index];
-a772c36cb3fb41 drivers/opp/core.c       Manivannan Sadhasivam 2023-07-20  219  }
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
-
+>> +
+>> +	/*Version*/
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
