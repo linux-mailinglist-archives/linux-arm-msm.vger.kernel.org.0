@@ -2,154 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DF4775D5BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 22:28:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C51075D64F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 23:16:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229534AbjGUU2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 16:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47180 "EHLO
+        id S229684AbjGUVQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 17:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbjGUU1t (ORCPT
+        with ESMTP id S229640AbjGUVQJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 16:27:49 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D4EC35B3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 13:27:18 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-1b0156a1c4bso1521578fac.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 13:27:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689971237; x=1690576037;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7xPDzzCzi/QN7xILesfa0mVBVsGJvBpLORXGzKhvY7c=;
-        b=4XmoJAYz55NB/L3U+DEUVJ9ui979+6Vz0rqBHHDkliqQXOMi6F+/ITB9aD9iN37wqO
-         BgdGLtJssmT2r2CCaMdB6vTrlXmgl7CEI5eFL8Iy5qkECyULhvyVXE0OLtlJLWTWLWVe
-         ujy4f/mAiGRut+DHYbvmdkcQlKKfluhe809jNINb8G6MffFgabAZ4L8IZbqwDIs/Dzml
-         mrPigKZ7ueMy+J2wvjE1cevFAOpAnDkQ13SDfoATpvTQsVGhjDoy67xsuJDQ95pHpt0i
-         9bZdbaLpFIDoRxE4Uk1HMABabIBI7CYqt4kN1YtFNOWaLkAec3SHAFyTZ54eD0gzUJSK
-         atNw==
+        Fri, 21 Jul 2023 17:16:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA9E5359C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 14:15:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1689974086;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=AucQCy4EnWPkoso2uzU/nf9OwRCQs6NxgaktwWeEhXE=;
+        b=Km0dWAq2eh9IRm3XR0qCCHa/rWdYWTnJa1mLVwDuS8jjqqEcQWEqUad8hxo/KPM5Nv5bqH
+        HojGtsB0sDgHVdJ24lhamyZIwyKrTE0nn388GTOTmV9L18n+qvMJ4PTrAYbnStAtoMLjxi
+        jldqPHYg29rFZzXmw0dG1Gr3BcHHd3s=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-624-q4ecLO62OKSouvpzubpnQg-1; Fri, 21 Jul 2023 17:14:44 -0400
+X-MC-Unique: q4ecLO62OKSouvpzubpnQg-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-635e91cba88so28612936d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 14:14:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689971237; x=1690576037;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7xPDzzCzi/QN7xILesfa0mVBVsGJvBpLORXGzKhvY7c=;
-        b=LRsd7LzU3W6DvWt4sWaLxlyzPfusoaH1MnH8zv/BxclevxjF7iZNXn4uX5CPOV92hp
-         Wl61cMO+hBJyde0Xdpj4kPkYxNVqOj5cMZG9u+5Mil02HI/cSDaXQpUKKFutlRqo9ugE
-         MhCBnZs+oLAsWtmDIn0TC7RRa45BqZiSlGeQIJ5VHZt0zNK2vwDKNzLX3Rsy3hPkU47w
-         FhF+vcxWGeIR09mA25H3hKxI2VwfV7F+qaEt+TvIl9pvkbNjMcg/hlMxrjxq86ZkmTlm
-         iUF8EJlX6u1Vb23qKrJxZNQCj7KDKrYzglkNvRgfIM85MBoX6k/NJgtFCrxWQ9Ic5x7K
-         6rZA==
-X-Gm-Message-State: ABy/qLZXSwGhYIA8OUS98Aypc96/uBXRTtbBpdUNja6+tU0r5mi3JE5Z
-        FE2AkSgufw01FUfHywjLnyFqq+SpWRNdyIGL10Rh0g==
-X-Google-Smtp-Source: APBJJlFV1pSwvieqS1OgnGFs6EJa3OMX3Q/AZhNSCm23Jd0179q/7NNdnOaSTeQWwXZbKc15/fFyeSnhcfBgqT1xvfc=
-X-Received: by 2002:a05:6870:ac2b:b0:1ba:c3a2:fb66 with SMTP id
- kw43-20020a056870ac2b00b001bac3a2fb66mr3041987oab.5.1689971236868; Fri, 21
- Jul 2023 13:27:16 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689974084; x=1690578884;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AucQCy4EnWPkoso2uzU/nf9OwRCQs6NxgaktwWeEhXE=;
+        b=jD7yqq+e3D7EccoB+R6tvDYQ3dEcgudArYO4jxcBZ+OFvUSeASaadHjTcmtw9jaIwY
+         5mzgi3ut6aUxf929Nk3kDEnjDGmANG9t/z4VFiuGr8hjYy6rv7m/0160XMGTaNoCq2G/
+         xZbXHcsS28Gn4Kc1HrE5nwOFZlbeDiG4rPMOnGPMl/FdfmKrLB1GNTr8/6xheH9XdAlq
+         7A7B05bvzq4M7yXEkgs3Hg6KfsTd1vYgrlK+0jbneoDcwXQEuDLbdQa6xT+F1w7/WHQU
+         5ThIzwIvGMTEHG9b5+M5PuqLTT8uA9ElQFSY11CxG1kR/guqxIm35bGawrh684NsoMhx
+         8yuw==
+X-Gm-Message-State: ABy/qLZ7YETVx8uJnS2zhzRSAkiI7nOr7HgWOHotlLvWB0XlVOQOs9ky
+        BC9R+J8gEfWHlhlQWiXvuyMOs0o6E6IkgtWcTTEH+aCgOUsFIe3ReXbFEaWoqR87lChWoTDlPid
+        3jpxSjt2TSAuThFNX3cYOk7kBfw==
+X-Received: by 2002:a0c:f907:0:b0:5f4:5af6:1304 with SMTP id v7-20020a0cf907000000b005f45af61304mr1213661qvn.16.1689974084334;
+        Fri, 21 Jul 2023 14:14:44 -0700 (PDT)
+X-Google-Smtp-Source: APBJJlGVrQNjzF4DBXjYQf8nrO32CEZALTxhI79MrPwcX2lK9z4QDzLcWJNFd+xdC4Hmp+SIWIpFuA==
+X-Received: by 2002:a0c:f907:0:b0:5f4:5af6:1304 with SMTP id v7-20020a0cf907000000b005f45af61304mr1213645qvn.16.1689974084073;
+        Fri, 21 Jul 2023 14:14:44 -0700 (PDT)
+Received: from fedora ([2600:1700:1ff0:d0e0::17])
+        by smtp.gmail.com with ESMTPSA id m6-20020a0cdb86000000b0063c7037f85fsm1565490qvk.73.2023.07.21.14.14.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jul 2023 14:14:43 -0700 (PDT)
+Date:   Fri, 21 Jul 2023 16:14:41 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soundwire: qcom: Log clk_get("iface") failures
+Message-ID: <ydy3ubtg75kzml23cowxpkmapoe2vlajm3r5sjglilffuhxr5q@t77ck5lknudy>
+References: <20230721164901.2155287-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-References: <1689934361-32642-1-git-send-email-quic_srichara@quicinc.com>
-In-Reply-To: <1689934361-32642-1-git-send-email-quic_srichara@quicinc.com>
-From:   Nick Desaulniers <ndesaulniers@google.com>
-Date:   Fri, 21 Jul 2023 13:27:05 -0700
-Message-ID: <CAKwvOdmYC6WuapBkD+s6wYCBaUdiJxiLXwayoubTF0WCpdBoMg@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: Remove the unused _groups variable build warning
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linus.walleij@linaro.org, quic_varada@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-        oe-kbuild-all@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230721164901.2155287-1-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 21, 2023 at 3:13=E2=80=AFAM Sricharan Ramabadhran
-<quic_srichara@quicinc.com> wrote:
->
-> When building with clang toolchain and arm64-randconfig-r015-20230712
-> kernel test robot reports the below warning.
->
->  drivers/pinctrl/qcom/pinctrl-ipq5018.c:244:27: warning: unused variable =
-'_groups' [-Wunused-const-variable]
->    static const char * const _groups[] =3D {
->                              ^
->    1 warning generated.
->
->      static const char * const _groups[] =3D {
->              "gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6=
-", "gpio7",
->              "gpio8", "gpio9", "gpio10", "gpio11", "gpio12", "gpio13", "g=
-pio14",
->              "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", =
-"gpio21",
->              "gpio22", "gpio23", "gpio24", "gpio25", "gpio26", "gpio27", =
-"gpio28",
->              "gpio29", "gpio30", "gpio31", "gpio32", "gpio33", "gpio34", =
-"gpio35",
->              "gpio36", "gpio37", "gpio38", "gpio39", "gpio40", "gpio41", =
-"gpio42",
->              "gpio43", "gpio44", "gpio45", "gpio46",
->    };
->
-> Fixing it by removing the variable.
->
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202307120814.vWPY6URk-lkp@i=
-ntel.com/
-> Fixes: 725d1c891658 ("pinctrl: qcom: Add IPQ5018 pinctrl driver")
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+On Fri, Jul 21, 2023 at 09:49:01AM -0700, Bjorn Andersson wrote:
+> Failing to acquire the iface clock makes probing of the Qualcomm
+> SoundWire driver fail without providing any indication to the user. Make
+> the driver log the error to aid debugging system configuration issues.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-Thanks for the patch!
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
 > ---
->  drivers/pinctrl/qcom/pinctrl-ipq5018.c | 10 ----------
->  1 file changed, 10 deletions(-)
->
-> diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qco=
-m/pinctrl-ipq5018.c
-> index ed58f75..e2951f8 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-> @@ -241,16 +241,6 @@ static const char * const atest_char_groups[] =3D {
->         "gpio0", "gpio1", "gpio2", "gpio3", "gpio37",
->  };
->
-> -static const char * const _groups[] =3D {
-> -       "gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6", "g=
-pio7",
-> -       "gpio8", "gpio9", "gpio10", "gpio11", "gpio12", "gpio13", "gpio14=
-",
-> -       "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", "gpio=
-21",
-> -       "gpio22", "gpio23", "gpio24", "gpio25", "gpio26", "gpio27", "gpio=
-28",
-> -       "gpio29", "gpio30", "gpio31", "gpio32", "gpio33", "gpio34", "gpio=
-35",
-> -       "gpio36", "gpio37", "gpio38", "gpio39", "gpio40", "gpio41", "gpio=
-42",
-> -       "gpio43", "gpio44", "gpio45", "gpio46",
-> -};
-> -
->  static const char * const wci_txd_groups[] =3D {
->         "gpio0", "gpio1", "gpio2", "gpio3",
->         "gpio42", "gpio43", "gpio44", "gpio45",
-> --
-> 2.7.4
->
->
+>  drivers/soundwire/qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index 55be9f4b8d59..e51b1dfce82d 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -1550,7 +1550,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>  
+>  	ctrl->hclk = devm_clk_get(dev, "iface");
+>  	if (IS_ERR(ctrl->hclk)) {
+> -		ret = PTR_ERR(ctrl->hclk);
+> +		ret = dev_err_probe(dev, PTR_ERR(ctrl->hclk), "unable to get iface clock\n");
+>  		goto err_init;
+>  	}
+>  
+> -- 
+> 2.25.1
+> 
 
-
---=20
-Thanks,
-~Nick Desaulniers
