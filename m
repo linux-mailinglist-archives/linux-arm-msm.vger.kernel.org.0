@@ -2,170 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E7DF75C56D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 13:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A79F975C5A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 13:12:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230108AbjGULIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 07:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53738 "EHLO
+        id S229899AbjGULMf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 07:12:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231187AbjGULHp (ORCPT
+        with ESMTP id S230038AbjGULMT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 07:07:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB7E46AD;
-        Fri, 21 Jul 2023 04:04:10 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36LB19tq012404;
-        Fri, 21 Jul 2023 11:03:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uDtElLv/5bFBcI1FU53B4erF6OinAr+ovFJRi+ia4Ws=;
- b=JSs52lgf4+vF0pK4o/TmVEIbM3x53mg86feQ7Zf/NHb020QEfUyWjlAlu3/q8hX6PLvX
- vMZxWL9EQgHWgCewub5Mm51/uCeI9fVsde+qZqOCthvrZYKZZORnIPDklhwmbcMH/JX6
- 8dPgmsdu6Fmadd+OwUKtqwcIP5q6me00Zc1eLMARbciYW77jIijr8jX9NZC0kxDLFcE1
- cUtqAzaMK2sNzh3dib5nPjD0Z4bYn9wmIuLZyxaU23Rh7GLEc0qYwfIzC5YMxRQvu6AU
- qEFusH8/m0bFgcezqLtCLiYdwWZEVkrMRl7EChMhKttAIoTn7VtomjlVUcjob/styD/M 1w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ryrsb0057-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Jul 2023 11:03:32 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36LB3UHU005977
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Jul 2023 11:03:30 GMT
-Received: from [10.217.219.237] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 21 Jul
- 2023 04:03:23 -0700
-Message-ID: <ca51b1dc-5805-5b01-01e0-a7dff535cb6c@quicinc.com>
-Date:   Fri, 21 Jul 2023 16:33:20 +0530
+        Fri, 21 Jul 2023 07:12:19 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D4E72733;
+        Fri, 21 Jul 2023 04:11:59 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 05287619B0;
+        Fri, 21 Jul 2023 11:11:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C1DC433C8;
+        Fri, 21 Jul 2023 11:11:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689937887;
+        bh=tFLhoXlT5wsyLB1eQ/FSVutf9zsEsRYZ2/zg1HSvlu8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=W4Xr02icdTMCyyfz1RziBcYB1ccaVMVxxn/LbcB+bRqClk53BmWqByIl36fs9cpJS
+         3a81sZscpSPQEqkg7k0AIfE+l6X0z0JTzhMwDIaf/fVXLBmSfhMpVQdm13YUfoJbhp
+         EQZdFvDqfdN0TitN9AFNRDxGEEGUhK/MNjOdx9e4sifAggrnDecpkQc7Zh+Ta88C2e
+         79wkUtATkpKE88PraaFZXdvF0dzqipIdE9aGyhyYaeCbXOb2n6/txVbtqG2KOievLL
+         LZGL4zvtxu5VJ4Olw7jCx9B0/k7IwnWzJdjFV5sHJRHhLwwYM5x9e9h37J3rfrWi7L
+         W5INQj1QTR7vg==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qMo2p-0003p0-0r;
+        Fri, 21 Jul 2023 13:11:36 +0200
+Date:   Fri, 21 Jul 2023 13:11:35 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v9 06/10] usb: dwc3: qcom: Add support to read IRQ's
+ related to multiport
+Message-ID: <ZLpn5xEoZRJcNYT1@hovoldconsulting.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-7-quic_kriskura@quicinc.com>
+ <ZJryrhuUrL5APh4o@hovoldconsulting.com>
+ <7e32cf95-1565-5736-cc3e-c70e8d8f3ca7@quicinc.com>
+ <ZLo-feuIr2FzCoxa@hovoldconsulting.com>
+ <f6f2456d-0067-6cd6-3282-8cae7c47a2d3@quicinc.com>
+ <ZLpOI9ZAHb_AB_Fr@hovoldconsulting.com>
+ <4b58fdfa-83a4-290b-f7e8-e82feba4586a@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,qmp: Add sa8775p QMP PCIe
- PHY
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mani@kernel.org>
-CC:     <quic_shazhuss@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nayiluri@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>
-References: <1689311319-22054-1-git-send-email-quic_msarkar@quicinc.com>
- <1689311319-22054-3-git-send-email-quic_msarkar@quicinc.com>
- <132e9514-7eb9-8915-6130-5bf656c1aaac@linaro.org>
-Content-Language: en-US
-From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
-In-Reply-To: <132e9514-7eb9-8915-6130-5bf656c1aaac@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KHLXyv7UinIewFxIhznIV_eqegdw9kAX
-X-Proofpoint-ORIG-GUID: KHLXyv7UinIewFxIhznIV_eqegdw9kAX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-21_06,2023-07-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 impostorscore=0 mlxlogscore=999 suspectscore=0
- spamscore=0 adultscore=0 mlxscore=0 bulkscore=0 clxscore=1011
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2307210099
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b58fdfa-83a4-290b-f7e8-e82feba4586a@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Jul 21, 2023 at 03:05:36PM +0530, Krishna Kurapati PSSNV wrote:
+> On 7/21/2023 2:51 PM, Johan Hovold wrote:
 
-On 7/17/2023 12:55 PM, Krzysztof Kozlowski wrote:
-> On 14/07/2023 07:08, Mrinmay Sarkar wrote:
->> Add devicetree YAML binding for Qualcomm QMP PCIe PHY
->> for SA8775p platform.
->>
->> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
->> ---
->>   .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml      | 19 ++++++++++++++++++-
->>   1 file changed, 18 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->> index a0407fc..ca55ed9 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->> @@ -16,6 +16,8 @@ description:
->>   properties:
->>     compatible:
->>       enum:
->> +      - qcom,sa8775p-qmp-gen4x2-pcie-phy
->> +      - qcom,sa8775p-qmp-gen4x4-pcie-phy
->>         - qcom,sc8280xp-qmp-gen3x1-pcie-phy
->>         - qcom,sc8280xp-qmp-gen3x2-pcie-phy
->>         - qcom,sc8280xp-qmp-gen3x4-pcie-phy
->> @@ -30,7 +32,7 @@ properties:
->>   
->>     clocks:
->>       minItems: 5
->> -    maxItems: 6
->> +    maxItems: 7
->>   
->>     clock-names:
->>       minItems: 5
->> @@ -41,6 +43,7 @@ properties:
->>         - const: rchng
->>         - const: pipe
->>         - const: pipediv2
->> +      - const: phy_aux
->>   
->>     power-domains:
->>       maxItems: 1
->> @@ -141,6 +144,20 @@ allOf:
->>           compatible:
->>             contains:
->>               enum:
->> +              - qcom,sa8775p-qmp-gen4x2-pcie-phy
->> +              - qcom,sa8775p-qmp-gen4x4-pcie-phy
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 7
->> +        clock-names:
->> +          minItems: 7
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
-> This probably works but is not obvious and easy to read. You have here
-> if:then:else: block, so else applies to your variant. Change all these
-> if clauses for clocks into separate clauses per matching variant
-> (if:then: ... if:then:... if:then:...)
->
-> Best regards,
-> Krzysztof
+> > As I wrote above, I think you should instead add a common helper for
+> > setting up all the interrupts for a port. For example, along the lines
+> > of:
+> > 
+> > 	dwc3_setup_port_irq(int index)
+> > 	{
+> > 		if (index == 0)
+> > 			try non-mp name
+> > 		else
+> > 			generate mp name
+> > 
+> > 		lookup and request hs irqs
+> > 		lookup and request ss irq
+> > 		lookup and request power irq
+> > 	}
+> > 
+> > 	dwc3_setup_irq()
+> > 	{
+> > 		determine if MP (num_ports)
+> > 
+> > 		for each port
+> > 			dwc3_setup_port_irq(port index)
+> > 	}
+> > The port irq helper can either be told using a second argument that this
+> > is a non-mp controller, or you can first try looking up one of the
+> > non-mp names.
 
-My Bad here, This patch already applied we will take care this in next 
-patch set.
+> I think I did something similar. I prepared a helper to request IRQ in 
+> the patch and the main logic would reside in setup_irq where i would try 
+> and get IRQ's.
 
-Thanks,
-Mrinmay
+No, you only added a wrapper around request_irq() but no helper to
+setup all irqs for a port, so that's not really similar.
 
->
+> Irrespective of whether we are MP capable or not, how about we read all 
+> IRQ's like in the patch attached previously. And the implementation 
+> facilitates addition of ACPI to multiport also if required. I am just 
+> trying to cover all cases like this by declaring IRQ info in global section.
+> 
+> static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, char *irq_name,
+>                                 char *disp_name, int irq)
+> {
+>         int ret;
+> 
+>         /* Keep wakeup interrupts disabled until suspend */
+>         irq_set_status_flags(irq, IRQ_NOAUTOEN);
+>         ret = devm_request_threaded_irq(/* Give inouts here*/);
+>         if (ret)
+>                dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
+> 
+>         return ret;
+> }
+> 
+> 
+> static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+> {
+>    for (DP_IRQ[ i = 0-3] {
+>       try getting dp_irq_i using MP_IRQ strings
+>       if ((ret < 0)  and (i == 0))
+> 	try getting dp_irq_i using NON_MP_IRQ strings
+> 
+>       call prep_irq accordingly.
+>    }
+> 
+>    //Run same loop for DM and SS
+> }
+
+So again, the above is not setting up all irqs for a port in one place
+which seems like the natural way to add support for multiport.
+
+It should be possible to reuse a per-port setup function also for ACPI.
+ 
+> The second patch was just enabling IRQ's for all ports to support wakeup.
+> 
+> > My mailer discarded your second patch, but you cannot assume that the
+> > devices connected to each port are of the same type (e.g. HS or SS)
+> > based on what is connected to the first port.
+> > 
+> Are you referring to enabling IRQ's for different ports before going to 
+> suspend ? Meaning get the speed of enum on each port and accordingly 
+> enable IRQ's ?
+
+Exactly. That will be needed.
+
+Johan
