@@ -2,122 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A700775BF6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 09:18:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2309775C00B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 09:44:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229820AbjGUHSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 03:18:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50712 "EHLO
+        id S231172AbjGUHoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 03:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbjGUHSH (ORCPT
+        with ESMTP id S230166AbjGUHoR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 03:18:07 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 477CEE53
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 00:18:05 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1b895a06484so10653305ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 00:18:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689923885; x=1690528685;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xgra1BbjJ2TX4LJXSTiv0VpjCyIk0jpZ//hvoXBk3V0=;
-        b=b4MYGFDLTZkoT24IR8U5mw8aCuPkq5W9pn72K+9QLHAx4bD9fuTYh7Zd6jJqTDulFi
-         Q5+UClv+pgLMRp5nq8gyjLmgoTf0RO4/Taky/8lu1VVPc4XzV47YX5/XXrBw2GblMIeZ
-         BJj7rjghVciP1AbWBdCiOfSfsDZuJW9AOAHjyiLml4BW4LjwlB2LFC32pVz0rxHQtot/
-         2bZG31h0NQcdRWgDP6skU6BVrnuoWcTv0ildGVJtsTO9nPNdIuc+0c74pcJXMk0NWdHJ
-         8J5lkgokPLJJqhLzuTHIVkH1Ti8SAF9TmzUbKJfA07iHtqgc+TmkaJEzZL8PGKmmuxDD
-         FQTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689923885; x=1690528685;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xgra1BbjJ2TX4LJXSTiv0VpjCyIk0jpZ//hvoXBk3V0=;
-        b=MPqouoWm0TIHmpLLH15t7B0AyjeKX0E6PRjPY91Z7n9Vx/5bocgn+9nPbO2zgau+6p
-         Up1cIPzzl+Ri1d5PdtIMH4NljRdDlt70Q5qN0b7hQjlryja9+NZpUiuHENbclyitFFVv
-         lQJduwmvslsSyXK0OsovaACDVBJPPJKHaohx1djVSd24QvR6tBNpE28A8BEyfSkLcX+/
-         JDdh2DNPW98Y90H55yRhLZfvdh9wQy0pyu0lmsf1A9fPKNG6eg9m+esUvuucKAk3glnC
-         +iPiNcrEVGLe3j+f7Mmp7fIGZTGttwUTcnHNj9IYeMsbGwt9UuaLlY3QUJBKZQJArzn4
-         UPtA==
-X-Gm-Message-State: ABy/qLbmGWfwrzoY7PAIEzbEP9kFeW7dYnIgDwo5kBTjVZM0CX5RCWNQ
-        LK9S3xmIKkD5t9eDS0rm1AbR2Q==
-X-Google-Smtp-Source: APBJJlGOEY7gHS/A9+kCu38TOUt7LFXF5kKuzGNRk2oieuEA63WC3YwDiKytWENvZdB/oVsM0A7/Lg==
-X-Received: by 2002:a17:902:934a:b0:1b8:af85:e959 with SMTP id g10-20020a170902934a00b001b8af85e959mr894543plp.53.1689923884709;
-        Fri, 21 Jul 2023 00:18:04 -0700 (PDT)
-Received: from localhost ([122.172.87.195])
-        by smtp.gmail.com with ESMTPSA id a17-20020a170902ecd100b001ba066c589dsm2671961plh.137.2023.07.21.00.18.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jul 2023 00:18:04 -0700 (PDT)
-Date:   Fri, 21 Jul 2023 12:48:01 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        Fri, 21 Jul 2023 03:44:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA2811D;
+        Fri, 21 Jul 2023 00:44:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7A4F161545;
+        Fri, 21 Jul 2023 07:44:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD808C433C8;
+        Fri, 21 Jul 2023 07:44:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1689925455;
+        bh=Er/BapZb3ALRPOmrjE6iHWD/lgnVLLcsK/VqJs60yPo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nCLyshxSscf0FcD2qfqnOU4ZCp5bAfqiOxoYbib7ddjVIWcaIanoCnij1MWrrDMrD
+         6fy38OH2di51feftiqQ1daVr0uVucWuCuZ8XFYmTRs76m8aoDWYRAd6QfAL5ip0PQV
+         jd7SeXp86PPDc2OOF9tuJlzCXJVTuFkwFZczU76Dsw1Hb4ATWXEIgDNCo8Ml2KhV3r
+         SBb6OX8PSipIvCC7RYiI5eST+PVw2plCZwGb/MYD3VQSVKX7vt1cTmQpy94Hu+MUnY
+         TsANyvpA+IAY2Ss63kIGn3Z9C3LzreOqLLGiqOF+OByOiCVENI+B8da2qGAwsD1oAW
+         uqDiAZS1yGwCQ==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qMkoJ-0003G1-1a;
+        Fri, 21 Jul 2023 09:44:24 +0200
+Date:   Fri, 21 Jul 2023 09:44:23 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 04/15] arm64: dts: qcom: sdm845: Fix the min frequency
- of "ice_core_clk"
-Message-ID: <20230721071801.e6ngfnkwg2ujsklg@vireshk-i7>
-References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
- <20230720054100.9940-5-manivannan.sadhasivam@linaro.org>
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v9 03/10] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+Message-ID: <ZLo3Vym_54IsO-zl@hovoldconsulting.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-4-quic_kriskura@quicinc.com>
+ <ZJrL5SXrSiYbvq2o@hovoldconsulting.com>
+ <0af6aa13-d83c-8c26-2a60-00cb3bbe4f5e@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230720054100.9940-5-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <0af6aa13-d83c-8c26-2a60-00cb3bbe4f5e@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-07-23, 11:10, Manivannan Sadhasivam wrote:
-> Minimum frequency of the "ice_core_clk" should be 75MHz as specified in the
-> downstream vendor devicetree. So fix it!
-> 
-> https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.7.3.r1-09300-sdm845.0/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> 
-> Fixes: 433f9a57298f ("arm64: dts: sdm845: add Inline Crypto Engine registers and clock")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 9ed74bf72d05..89520a9fe1e3 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2614,7 +2614,7 @@ ufs_mem_hc: ufshc@1d84000 {
->  				<0 0>,
->  				<0 0>,
->  				<0 0>,
-> -				<0 300000000>;
-> +				<75000000 300000000>;
->  
->  			status = "disabled";
->  		};
+Hi Krishna,
 
-Please keep new feature and fixes like this in separate series. This
-could be merged directly in the currently ongoing kernel rc and
-doesn't need to wait for this series.
+Please remember to trim unnecessary context from your replies (e.g. as
+it makes it easier to read your reply and later the entire thread in the
+mailing list archives).
 
-Or at least keep the commit at the top, so another maintainer can
-simply pick it.
+On Mon, Jul 03, 2023 at 12:18:14AM +0530, Krishna Kurapati PSSNV wrote:
+> On 6/27/2023 5:15 PM, Johan Hovold wrote:
+> > On Wed, Jun 21, 2023 at 10:06:21AM +0530, Krishna Kurapati wrote:
+  
+> >> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> >> index 8b1295e4dcdd..42fb17aa66fa 100644
+> >> --- a/drivers/usb/dwc3/core.h
+> >> +++ b/drivers/usb/dwc3/core.h
+> >> @@ -33,6 +33,10 @@
+> >>   
+> >>   #include <linux/power_supply.h>
+> >>   
+> >> +#define XHCI_EXT_PORT_MAJOR(x)	(((x) >> 24) & 0xff)
+> >> +#define XHCI_EXT_PORT_MINOR(x)	(((x) >> 16) & 0xff)
+> >> +#define XHCI_EXT_PORT_COUNT(x)	(((x) >> 8) & 0xff)
+> > 
+> > Again, don't copy defines from xhci.
+> > 
+> > Looks like these should be moved to the xhci-ext-caps.h header along
+> > with struct xhci_protocol_caps.
+> > 
+> Can't we just give them an exception ? Modifying xhci stuff doesn't 
+> sound good. Can I just rename them and keep them here ?
 
--- 
-viresh
+Nope. This is mainline, not Qualcomm's vendor kernel.
+
+Johan
