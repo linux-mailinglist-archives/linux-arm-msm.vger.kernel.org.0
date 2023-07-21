@@ -2,72 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46CFF75C08A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 09:56:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 662AF75C0D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 10:08:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbjGUH4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 03:56:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46440 "EHLO
+        id S231310AbjGUIIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 04:08:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbjGUH4i (ORCPT
+        with ESMTP id S231419AbjGUIID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 03:56:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D529270A;
-        Fri, 21 Jul 2023 00:56:30 -0700 (PDT)
+        Fri, 21 Jul 2023 04:08:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E19BB2706;
+        Fri, 21 Jul 2023 01:07:59 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8FCF36137B;
-        Fri, 21 Jul 2023 07:56:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB402C433C7;
-        Fri, 21 Jul 2023 07:56:28 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6DDBC616C1;
+        Fri, 21 Jul 2023 08:07:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92352C433CA;
+        Fri, 21 Jul 2023 08:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689926188;
-        bh=5CIitjjI5khTPF7RHT+gTh25uD/FQODAUJsQwUhQD5w=;
+        s=k20201202; t=1689926876;
+        bh=o1cZvieMYPYBkZJebOJ6isrBwhpPfnwvQn0FB1kHdAo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=svt1h8bTI05Eh8uMp29Ukd0mWqQ2hOFonGmcNeA9eCKIIKGkIgWhr43D7ndQR/ZBx
-         0agLf0SrMxcb1VUcZHyIXudI5yx2JNIIKF8DQm8n98Ja2/mUo2/pptnDYyEoOw0XxA
-         Z2RLAQfBrjyxK4xDB5Gw0mREQc9dMymipb0kvO/jxH7vUCe0tj7V0wmBPAlNqUQN9b
-         SCQ2oSLk/tzUYeb+XZ9pkIPIYNwvzZDe9IrHaFSjmqloE1FiK3YdMPm8WT3DpQQERa
-         IsRVi3jlAzbNEsncO2gNQz+e1HBEXQ+ejz6DYCkAjyj939dwI0uKHIIh1Amk8P3pm8
-         MRAEkH7AdawUg==
+        b=cRtnUhX26OscJYsPDIKSIA5KnE04vQQ58tmAaJfEE/H25IPTW91wAE6HgXvsOhyP0
+         AWjixPyco0ckgw8k0qpVAvbevNJSBCa6BrOPyOQjf+WdLt9fSxzKpnh73+InHfZKiO
+         cvUsYF8RwltcQ5j4qwr15MHDl3CDMCG/1AFGm1WTLhWYl101k3awGEPzIV5xAnOEDp
+         aaDHQFoybLPA6nI5lFzfB2uJdLckcWzAl1jpLhDbgnlxo4vatCeSYk0jHmscCzd85K
+         a9556tNlzTOoakK6RZNH6mj3ZEpORpW9XeTDlJlyEGDFG3oVrE1+C14UBNuavfOIa1
+         iCpvgNP6tDOTQ==
 Received: from johan by xi.lan with local (Exim 4.96)
         (envelope-from <johan@kernel.org>)
-        id 1qMl07-0003Iw-1s;
-        Fri, 21 Jul 2023 09:56:36 +0200
-Date:   Fri, 21 Jul 2023 09:56:35 +0200
+        id 1qMlBE-0003LY-1G;
+        Fri, 21 Jul 2023 10:08:05 +0200
+Date:   Fri, 21 Jul 2023 10:08:04 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Bjorn Andersson <andersson@kernel.org>,
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 05/10] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Message-ID: <ZLo6MwbuKNL5xtPE@hovoldconsulting.com>
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+        quic_harshq@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v9 08/10] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Message-ID: <ZLo85M-4ZzfTyHQ9@hovoldconsulting.com>
 References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-6-quic_kriskura@quicinc.com>
- <ZJrRe7HtMs0KbsCy@hovoldconsulting.com>
- <e3e0c4c8-1e91-caf1-c1c4-86203a7ecba0@quicinc.com>
+ <20230621043628.21485-9-quic_kriskura@quicinc.com>
+ <2eab503f-fa0d-990e-bed2-2445c5496798@linaro.org>
+ <b183a130-6237-7d15-5d5a-b56582b92b35@quicinc.com>
+ <ZJr9Xiv6_0nG0Pui@hovoldconsulting.com>
+ <622288dd-cb3c-b673-5544-46ff10106dbc@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e3e0c4c8-1e91-caf1-c1c4-86203a7ecba0@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <622288dd-cb3c-b673-5544-46ff10106dbc@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,174 +78,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 03, 2023 at 12:26:26AM +0530, Krishna Kurapati PSSNV wrote:
-> On 6/27/2023 5:39 PM, Johan Hovold wrote:
-> > On Wed, Jun 21, 2023 at 10:06:23AM +0530, Krishna Kurapati wrote:
-> >> Currently the DWC3 driver supports only single port controller
-> >> which requires at most one HS and one SS PHY.
-> >>
-> >> But the DWC3 USB controller can be connected to multiple ports and
-> >> each port can have their own PHYs. Each port of the multiport
-> >> controller can either be HS+SS capable or HS only capable
-> >> Proper quantification of them is required to modify GUSB2PHYCFG
-> >> and GUSB3PIPECTL registers appropriately.
-> >>
-> >> Add support for detecting, obtaining and configuring phy's supported
-> >> by a multiport controller and limit the max number of ports
-> >> supported to 4.
-> >>
-> >> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> >> [Krishna: Modifed logic for generic phy and rebased the patch]
-> >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > 
-> > As I already said:
-> > 
-> > 	If Harsh is the primary author you need to add a From: line at
-> > 	the beginning of the patch.
-> > 
-> > 	Either way, you need his SoB as well as your Co-developed-by tag.
-> > 
-> > 	All this is documented under Documentation/process/ somewhere.
-> > 
-> > The above is missing a From line and two Co-developed-by tags at least.
+On Mon, Jul 03, 2023 at 12:40:19AM +0530, Krishna Kurapati PSSNV wrote:
+> On 6/27/2023 8:46 PM, Johan Hovold wrote:
+> > On Sat, Jun 24, 2023 at 12:43:23PM +0530, Krishna Kurapati PSSNV wrote:
+> >>> On 21.06.2023 06:36, Krishna Kurapati wrote:
+> >>>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+> >>>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+> >>>> platforms.
+> >>>>
+> >>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 
->   I tried to follow the following commit:
-> 
-> 8030cb9a5568 ("soc: qcom: aoss: remove spurious IRQF_ONESHOT flags")
-> 
-> Let me know if that is not acceptable.
+> >> Yes wakeup is supported by all ports now, but I didn't make those
+> >> changes now as I wanted to keep driver code diff minimal and don't need
+> >> wakeup support for the product currently. But for sure, will update
+> >> driver code to handle wakeup on all ports in near future.
+> > 
+> > Why didn't you include it in v9? I thought you had a working
+> > implementation for this?
+> > 
+> > Since wakeup will be another case where glue and core need to interact,
+> > it's good to have the wakeup implementation from the start to be able to
+> > evaluate your multiport implementation properly.
+> > 
+> > Right now it looks like you only added wakeup interrupt lookup and
+> > request, but then you never actually enable them which is not very nice.
 
-I don't see how that commit relevant to the discussion at hand.
+>   As mentioned in one of my comments on earlier patches, wakeup is not a 
+> requirement I currently need to work on for the product. I added 
+> multiport IRQ support only because my pathces need to modify IRQ names. 
+> If there is a customer requirement I get in the future, I will 
+> definitely implement the wakeup part. But for now, I would like to stick 
+> to what is necessary for getting Multiport to work.
 
-Please just fix your use of Signed-off-by and Co-developed-by tags that
-I've now pointed out repeatedly.
+I think you need to implement this now as this is a basic features of
+any USB controller and one which is already supported by the driver you
+are changing. We've also had a long of history of Qualcomm pushing
+incomplete implementations upstream and then they move on to more
+pressing deadline and never actually complete the work.
 
-If you can't figure it out by yourself after the feedback I've already
-given you need to ask someone inside Qualcomm. You work for a huge
-company that should provide resources for training it's developers in
-basic process issues like this.
-
-> >> @@ -120,10 +120,11 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
-> >>   static void __dwc3_set_mode(struct work_struct *work)
-> >>   {
-> >>   	struct dwc3 *dwc = work_to_dwc(work);
-> >> +	u32 desired_dr_role;
-> >>   	unsigned long flags;
-> >>   	int ret;
-> >>   	u32 reg;
-> >> -	u32 desired_dr_role;
-> > 
-> > This is an unrelated change. Just add int i at the end.
-> > 
-> I was trying to keep the reverse xmas order of variables.
-
-That's generally good, but you should not change unrelated code as part
-of this patch. It's fine to leave this as is for now.
-
-> >> +	int i;
-> >>   
-> >>   	mutex_lock(&dwc->mutex);
-> >>   	spin_lock_irqsave(&dwc->lock, flags);
-> > 
-> >> @@ -746,23 +779,34 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
-> >>   static int dwc3_phy_init(struct dwc3 *dwc)
-> >>   {
-> >>   	int ret;
-> >> +	int i;
-> >> +	int j;
-> >>   
-> >>   	usb_phy_init(dwc->usb2_phy);
-> >>   	usb_phy_init(dwc->usb3_phy);
-> >>   
-> >> -	ret = phy_init(dwc->usb2_generic_phy);
-> >> -	if (ret < 0)
-> >> -		goto err_shutdown_usb3_phy;
-> >> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> >> +		ret = phy_init(dwc->usb2_generic_phy[i]);
-> >> +		if (ret < 0)
-> >> +			goto err_exit_usb2_phy;
-> >> +	}
-> >>   
-> >> -	ret = phy_init(dwc->usb3_generic_phy);
-> >> -	if (ret < 0)
-> >> -		goto err_exit_usb2_phy;
-> >> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> >> +		ret = phy_init(dwc->usb3_generic_phy[i]);
-> >> +		if (ret < 0)
-> >> +			goto err_exit_usb3_phy;
-> >> +	}
-> >>   
-> >>   	return 0;
-> >>   
-> >> +err_exit_usb3_phy:
-> >> +	for (j = i-1; j >= 0; j--)
-> > 
-> > Missing spaces around - here and below.
-> > 
-> >> +		phy_exit(dwc->usb3_generic_phy[j]);
-> >> +	i = dwc->num_usb2_ports;
-> >>   err_exit_usb2_phy:
-> >> -	phy_exit(dwc->usb2_generic_phy);
-> >> -err_shutdown_usb3_phy:
-> >> +	for (j = i-1; j >= 0; j--)
-> >> +		phy_exit(dwc->usb2_generic_phy[j]);
-> >> +
-> > 
-> > Again:
-> > 
-> > 	The above is probably better implemented as a *single* loop over
-> > 	num_usb2_ports where you enable each USB2 and USB3 PHY. On
-> > 	errors you use the loop index to disable the already enabled
-> > 	PHYs in reverse order below (after disabling the USB2 PHY if
-> > 	USB3 phy init fails).
-> > 
-> > with emphasis on "single" added.
-> > 
-> Oh, you mean something like this ?
-> 
-> for (loop over num_ports) {
-> 	ret = phy_init(dwc->usb3_generic_phy[i]);
-> 	if (ret != 0)
-> 		goto err_exit_phy;
-> 
-> 	ret = phy_init(dwc->usb2_generic_phy[i]);
-> 	if (ret != 0)
-> 		goto err_exit_phy;
-> }
-> 
-> err_exit_phy:
-> 	for (j = i-1; j >= 0; j--) {
-> 		phy_exit(dwc->usb3_generic_phy[j]);
-> 		phy_exit(dwc->usb2_generic_phy[j]);
-> 	}
-
-Yeah, something like that, but you need to disable the usb3[i] phy when
-usb2[2] init fail above (and I'd also keep the order of initialising
-usb2 before usb3).
-
-> >>   	usb_phy_shutdown(dwc->usb3_phy);
-> >>   	usb_phy_shutdown(dwc->usb2_phy);
-
-> >> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> >> index 42fb17aa66fa..b2bab23ca22b 100644
-> >> --- a/drivers/usb/dwc3/core.h
-> >> +++ b/drivers/usb/dwc3/core.h
-> >> @@ -37,6 +37,9 @@
-> >>   #define XHCI_EXT_PORT_MINOR(x)	(((x) >> 16) & 0xff)
-> >>   #define XHCI_EXT_PORT_COUNT(x)	(((x) >> 8) & 0xff)
-> >>   
-> >> +/* Number of ports supported by a multiport controller */
-> >> +#define DWC3_MAX_PORTS 4
-> > 
-> > You did not answer my question about whether this was an arbitrary
-> > implementation limit (i.e. just reflecting the only currently supported
-> > multiport controller)?
-> > 
-> I mentioned in commit text that it is limited to 4. Are you referring to 
-> state the reason why I chose the value 4 ?
-
-Yes, and to clarify whether this was an arbitrary limit you chose
-because it was all that was needed for the hw you care about, or if it's
-a more general limitation.
+This very wakeup support is a good example of this as parts of it was
+merged years ago and when someone later tried to get it to actually
+work, it turned into a complete hack of an implementation as no one had
+thought about the overall design.
 
 Johan
