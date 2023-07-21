@@ -2,111 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9938975C514
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 12:55:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E7DF75C56D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 13:08:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbjGUKy6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 06:54:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47582 "EHLO
+        id S230108AbjGULIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 07:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbjGUKyv (ORCPT
+        with ESMTP id S231187AbjGULHp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 06:54:51 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21FD71BC0;
-        Fri, 21 Jul 2023 03:54:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AECF7619BD;
-        Fri, 21 Jul 2023 10:54:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137D2C433CA;
-        Fri, 21 Jul 2023 10:54:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689936887;
-        bh=GqMqpNt1ykUMAT67xmcy7JW79ykixqQxUJAP3ZLHy7Y=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=H6oKC7RnJUObIQkeWee7W1FwQF/unFVJ6PUyFra3PektbsEnuWJpN3aIT9DWNHkAT
-         HE61fRsuAA1DFbxHzjKcjJ/h78pRhYedwbtyGa76cBciYQ2n6ha6+D6cLzHwxnUaBM
-         ZRZyjXTaOE5a6XwmVuIH6118nrz8wHNPz8Z4eFXwv9ezB4rZ6/IZWeR+MYfU6p6CDU
-         SI88R/eecOlzLiyiFlMiFIGTUMJ9vB9PNDSMyzwwHHgtaOxOldFtQ270YXykzba6XA
-         wNKxzYr8KKPPG0SyUzrzEyxL4M2+Qwg7hdhpNGKaKICjDQAQ8bJ74tiTG9zD46Ykcy
-         DM/Wg0FHwNwtg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-In-Reply-To: <20230718-pm8916-mclk-v1-0-4b4a58b4240a@gerhold.net>
-References: <20230718-pm8916-mclk-v1-0-4b4a58b4240a@gerhold.net>
-Subject: Re: (subset) [PATCH 0/6] ASoC: codecs: msm8916-wcd-analog: Cleanup
- DT bindings
-Message-Id: <168993688478.20527.15549284339710004321.b4-ty@kernel.org>
-Date:   Fri, 21 Jul 2023 11:54:44 +0100
+        Fri, 21 Jul 2023 07:07:45 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB7E46AD;
+        Fri, 21 Jul 2023 04:04:10 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36LB19tq012404;
+        Fri, 21 Jul 2023 11:03:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=uDtElLv/5bFBcI1FU53B4erF6OinAr+ovFJRi+ia4Ws=;
+ b=JSs52lgf4+vF0pK4o/TmVEIbM3x53mg86feQ7Zf/NHb020QEfUyWjlAlu3/q8hX6PLvX
+ vMZxWL9EQgHWgCewub5Mm51/uCeI9fVsde+qZqOCthvrZYKZZORnIPDklhwmbcMH/JX6
+ 8dPgmsdu6Fmadd+OwUKtqwcIP5q6me00Zc1eLMARbciYW77jIijr8jX9NZC0kxDLFcE1
+ cUtqAzaMK2sNzh3dib5nPjD0Z4bYn9wmIuLZyxaU23Rh7GLEc0qYwfIzC5YMxRQvu6AU
+ qEFusH8/m0bFgcezqLtCLiYdwWZEVkrMRl7EChMhKttAIoTn7VtomjlVUcjob/styD/M 1w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ryrsb0057-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Jul 2023 11:03:32 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36LB3UHU005977
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Jul 2023 11:03:30 GMT
+Received: from [10.217.219.237] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 21 Jul
+ 2023 04:03:23 -0700
+Message-ID: <ca51b1dc-5805-5b01-01e0-a7dff535cb6c@quicinc.com>
+Date:   Fri, 21 Jul 2023 16:33:20 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,qmp: Add sa8775p QMP PCIe
+ PHY
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mani@kernel.org>
+CC:     <quic_shazhuss@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nayiluri@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+References: <1689311319-22054-1-git-send-email-quic_msarkar@quicinc.com>
+ <1689311319-22054-3-git-send-email-quic_msarkar@quicinc.com>
+ <132e9514-7eb9-8915-6130-5bf656c1aaac@linaro.org>
+Content-Language: en-US
+From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
+In-Reply-To: <132e9514-7eb9-8915-6130-5bf656c1aaac@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KHLXyv7UinIewFxIhznIV_eqegdw9kAX
+X-Proofpoint-ORIG-GUID: KHLXyv7UinIewFxIhznIV_eqegdw9kAX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-21_06,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 mlxlogscore=999 suspectscore=0
+ spamscore=0 adultscore=0 mlxscore=0 bulkscore=0 clxscore=1011
+ malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2306200000 definitions=main-2307210099
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 18 Jul 2023 13:40:12 +0200, Stephan Gerhold wrote:
-> Drop the redundant reg-names and mclk from the PM8916 analog codec.
-> Having the mclk on the analog codec is incorrect because only the
-> digital codec consumes it directly.
-> 
-> 
 
-Applied to
+On 7/17/2023 12:55 PM, Krzysztof Kozlowski wrote:
+> On 14/07/2023 07:08, Mrinmay Sarkar wrote:
+>> Add devicetree YAML binding for Qualcomm QMP PCIe PHY
+>> for SA8775p platform.
+>>
+>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+>> ---
+>>   .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml      | 19 ++++++++++++++++++-
+>>   1 file changed, 18 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>> index a0407fc..ca55ed9 100644
+>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>> @@ -16,6 +16,8 @@ description:
+>>   properties:
+>>     compatible:
+>>       enum:
+>> +      - qcom,sa8775p-qmp-gen4x2-pcie-phy
+>> +      - qcom,sa8775p-qmp-gen4x4-pcie-phy
+>>         - qcom,sc8280xp-qmp-gen3x1-pcie-phy
+>>         - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+>>         - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+>> @@ -30,7 +32,7 @@ properties:
+>>   
+>>     clocks:
+>>       minItems: 5
+>> -    maxItems: 6
+>> +    maxItems: 7
+>>   
+>>     clock-names:
+>>       minItems: 5
+>> @@ -41,6 +43,7 @@ properties:
+>>         - const: rchng
+>>         - const: pipe
+>>         - const: pipediv2
+>> +      - const: phy_aux
+>>   
+>>     power-domains:
+>>       maxItems: 1
+>> @@ -141,6 +144,20 @@ allOf:
+>>           compatible:
+>>             contains:
+>>               enum:
+>> +              - qcom,sa8775p-qmp-gen4x2-pcie-phy
+>> +              - qcom,sa8775p-qmp-gen4x4-pcie-phy
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          minItems: 7
+>> +        clock-names:
+>> +          minItems: 7
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+> This probably works but is not obvious and easy to read. You have here
+> if:then:else: block, so else applies to your variant. Change all these
+> if clauses for clocks into separate clauses per matching variant
+> (if:then: ... if:then:... if:then:...)
+>
+> Best regards,
+> Krzysztof
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/6] ASoC: dt-bindings: pm8916-analog-codec: Fix misleading example
-      commit: 944b5c7146fbd0a68f501d9a8a87c3fc5767a3de
-[2/6] ASoC: dt-bindings: pm8916-analog-codec: Drop pointless reg-names
-      commit: dfc491e55255a96b2d43cdb74db10d4222890769
-[3/6] ASoC: dt-bindings: pm8916-analog-codec: Drop invalid mclk
-      commit: 469c6d9cd1cfb468f01a15f940272504a6b5d083
-[4/6] ASoC: codecs: msm8916-wcd-analog: Drop invalid mclk
-      commit: 97f29c1a6143762626f4f9bd9fc2f8a2282b9dcd
-[5/6] ASoC: codecs: msm8916-wcd-analog: Properly handle probe errors
-      commit: 5c0f9652da47061ed3f7815c1dfeb205c545ce54
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+My Bad here, This patch already applied we will take care this in next 
+patch set.
 
 Thanks,
-Mark
+Mrinmay
 
+>
