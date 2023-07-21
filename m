@@ -2,55 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D983875CA71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 16:45:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D15075CBD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 17:34:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231623AbjGUOpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 10:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57392 "EHLO
+        id S230427AbjGUPeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 11:34:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231431AbjGUOpD (ORCPT
+        with ESMTP id S229801AbjGUPeE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 10:45:03 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE2BF30D1;
-        Fri, 21 Jul 2023 07:45:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 57FDF61CE0;
-        Fri, 21 Jul 2023 14:45:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9572CC433C9;
-        Fri, 21 Jul 2023 14:44:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689950699;
-        bh=wljKIvIhCAvwUWXLNlEVuBqrMB/ZTYdEiw5PLP21L/U=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=aoVRPxTv2cZdKFwy8pruBkqJdAxrkZS1Enz4YEjXKY2vGWRrdTaOkpVi7I6deANqJ
-         IB6ihinirsNLh8KjTuk/0TQG90sEXwucqCYn6deFj1qwWaCc/vt4rrnDvBdT2zHbXw
-         VBWvut6LgIlcAkwzlgMaUslgCTCUl2Iu5Zd9uCPOz8kwfpR1iSYtOFnjBM7wWISBuh
-         WrYlMxLLKTAj+OCKEJ5cZOwm+o6CVYpzib9Sh5B67MHP0NcyqAi1uGNi3ZHvyR4z4u
-         cEn1+Gd+TyLPTqJYBXJ//jayUPoOuk9gmiag4Am9wWzpuEd9Q3bjmX8E7g5kOAvf6C
-         LJBglMnfLjYrQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <1689062414-3654-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1689062414-3654-1-git-send-email-quic_rohiagar@quicinc.com>
-Subject: Re: [PATCH v3 0/3] Add regulators support for PMX75
-Message-Id: <168995069730.110341.11733110436595300118.b4-ty@kernel.org>
-Date:   Fri, 21 Jul 2023 15:44:57 +0100
+        Fri, 21 Jul 2023 11:34:04 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B64B30DD;
+        Fri, 21 Jul 2023 08:34:03 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-521dc8ae899so2406454a12.3;
+        Fri, 21 Jul 2023 08:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689953641; x=1690558441;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e+J3maWKZDLZOHu0KMClUTkcLoWuu+H0TcJ6B1ppGIM=;
+        b=fmDH21f77I25libj1wRrEk4TILKZ1kLWnMOmbSvfilgvRDaX/q9nI0LnO6BRwwLGyw
+         g4JnW+IFQt+HznIwYpdXczSCO43cnfYgNAcCU5ljr0kBxTgU46cr6ev4SqEIZ2yHYbZl
+         /+31gkI32NDaV/JIDkwmoD/mS26kbmdXRdCJFwQ7l5ihDpRHzBRd42vr6SM2dQ+gRKoa
+         RCj0DGnoWV384OkZm/EzMt3wXooPGX9thKsillns/ckLFVKOCyzMFv5ezIDO3PxdEIpj
+         XfuuKMAWBPKVZiOXw7/6NTCYGPvW3oaqbjYUfWeoQlvX098jxbIdIyLkRjlYP7SKMuHc
+         5JEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689953641; x=1690558441;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e+J3maWKZDLZOHu0KMClUTkcLoWuu+H0TcJ6B1ppGIM=;
+        b=Ro3MFcytaO7kVIbqUU6RsW8knv9lGbWJ1shRgz5JrKzzehiJKIsGEaKx9N8QMPnLMd
+         Lq+41KIhGvAo9uOS6XyqMwJYvptga3+1zPpyzHFmg6UJy7YI9QiZjECftthexPbTWpot
+         C3zNisD0FiAZ7uhSkb366jBYQw7CHsyz7THPpSE54QCDOAI2dLx0g0jzzHUKpKO5YzMk
+         VfK9ZyypmpBZ5uhp77Ch1SiweyuTT+jsAXmISHdY91s2cI4tEZfoZ5c3XUIky4/Gq8UL
+         +nrzxKHBrlxMtcNw/kQM5ouFgKEJe5WcshdlNdGfBGsJltUNp3mWzob7yhX9IhLB7Mk8
+         lieA==
+X-Gm-Message-State: ABy/qLYKIqY3ohvdALQzwc9A4RQg9XOeOymcbssnROf9TUnIRCekP5/5
+        tLqDMXfoGImci4+iwh8LAiQ=
+X-Google-Smtp-Source: APBJJlHxHpHitpRJOlz0XvfBo0jSQ+i1+osJAXEtnMET5LtbtSRMYQN2nySPQ57QEZdfL8+yUCjgKQ==
+X-Received: by 2002:aa7:c982:0:b0:51e:404:1e6d with SMTP id c2-20020aa7c982000000b0051e04041e6dmr1981954edt.38.1689953641105;
+        Fri, 21 Jul 2023 08:34:01 -0700 (PDT)
+Received: from localhost (p200300e41f1bd600f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f1b:d600:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id u11-20020a056402064b00b0051dfa2e30b2sm2244385edx.9.2023.07.21.08.34.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jul 2023 08:34:00 -0700 (PDT)
+From:   Thierry Reding <thierry.reding@gmail.com>
+To:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Artur Weber <aweber.kernel@gmail.com>
+Cc:     Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Helge Deller <deller@gmx.de>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Luca Weiss <luca@z3ntu.xyz>,
+        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-fbdev@vger.kernel.org, linux-pwm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: (subset) [PATCH v2 0/4] video: backlight: lp855x: modernize bindings
+Date:   Fri, 21 Jul 2023 17:33:58 +0200
+Message-ID: <168995363315.3656835.14137740606773160898.b4-ty@nvidia.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230519180728.2281-1-aweber.kernel@gmail.com>
+References: <20230519180728.2281-1-aweber.kernel@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,46 +88,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 Jul 2023 13:30:11 +0530, Rohit Agarwal wrote:
-> Changes in v3:
->  - Created a separate patch for updating the entry in pmx65 bindings.
->  - Changed the subject of patches [1/3] and [2/3] according to the convention.
+From: Thierry Reding <treding@nvidia.com>
+
+
+On Fri, 19 May 2023 20:07:24 +0200, Artur Weber wrote:
+> Convert TI LP855X backlight controller bindings from TXT to YAML and,
+> while we're at it, rework some of the code related to PWM handling.
+> Also correct existing DTS files to avoid introducing new dtb_check
+> errors.
 > 
-> Changes in v2:
->  - Addressed Krzysztof to update the if:then: in bindings patch.
->  - Breaking the original series [1] into smaller series.
+> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
 > 
 > [...]
 
-Applied to
+Applied, thanks!
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+[4/4] arm64: dts: adapt to LP855X bindings changes
+      commit: faae0778fa10fa4e8909fe9164f06acab170f1e9
 
-Thanks!
-
-[1/3] regulator: dt-bindings: qcom,rpmh: Update PMX65 entry
-      commit: 4fdef8553df58953f572f1cb46d357c735c683a9
-[2/3] regulator: dt-bindings: qcom,rpmh: Add PMX75 compatible
-      commit: 0ef3d931632e3fce51ed5510935238937d644c97
-[3/3] regulator: qcom-rpmh: Add regulators support for PMX75
-      commit: 0b294ed669ead34a348d17d06b6d4d58712b14e2
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Best regards,
+-- 
+Thierry Reding <treding@nvidia.com>
