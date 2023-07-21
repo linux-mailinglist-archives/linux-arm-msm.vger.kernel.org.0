@@ -2,154 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B762C75C69A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 14:10:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 457EB75C6D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 14:22:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230354AbjGUMKP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 08:10:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34320 "EHLO
+        id S229605AbjGUMWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 08:22:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbjGUMKO (ORCPT
+        with ESMTP id S229919AbjGUMWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 08:10:14 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675BF10FE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 05:10:13 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b701e1ca63so27792351fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 05:10:13 -0700 (PDT)
+        Fri, 21 Jul 2023 08:22:13 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D976D2106
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 05:22:10 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-521dbe5e09bso2295857a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 05:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689941411; x=1690546211;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1689942129; x=1690546929;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LOz1kdlh4ILjNGmh7X4YU79iEI/gFxU7eH7XBPZ7tK0=;
-        b=sSsYTfKVSCs7S621/PEaXwe3Yu54YquDlBN/mssFF746yeHlQNyPxcdDhJvEfHgojd
-         FoRtJ4E0mbIgLO2wZg9KmiWJP9fDIk8YmhKr9rfxpPPqsyFYI/smTMo2aikK6lv6673v
-         Fc5IYuyYIETmY5ekH2qJ4JB/Noex5fiayrhxgj2WhuNoTS+8HjAJR8ZymUIwuObeHEag
-         VvtL5agoNLMKHNDQM4s8MuuQlxjuOgbPghawH1oLcZPukKknBr02F8fqAleiScSAqTkO
-         8NvusaECE+ywGiWW+QsGqL29vaSKmH8lnZdfJEp2lspji1WWcYprJYMzGURdmGDdMXq+
-         LbEw==
+        bh=BWpxgzm4YyqLL1nxw3+KtSqa8xTPS4Bh1HLxz27Ca48=;
+        b=A0cs1EZJ3USdSwmD8Zmh3BHe8ECUz3i/LDYB6rwgMenjXjzKol6h9cQafGd3mIi/N8
+         KDogdbP7gvOQK1svPbOI6mX7JR7l19JqTN97JPSpqhLrjOUlknE3puy0ugR0398ZLYo8
+         naxgj7qN3ZGNjf5lbDutUFiPL5qXCYetmt9kl5B2AWKvU4VWJ/ZZd9h5YVosYSWqiRjt
+         W8cq6p8Jyrf5Xrr+g9tereb1+qx1zhbITLmoTVBuYFWR/UOP1naRde+doexBATL0CiJj
+         TIqszl/alN3axDgU8rNVOlfgYsyyEbTRdlyyC/Wk2EnMo63bLN3ekuvj+bMT0APDQZgu
+         1btA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689941411; x=1690546211;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1689942129; x=1690546929;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LOz1kdlh4ILjNGmh7X4YU79iEI/gFxU7eH7XBPZ7tK0=;
-        b=TOBN1RexRau/OIJYqchxDHQwdVKJWjydRQXVk8wrMQAgZgawuodYq3oB7g9KKVlu40
-         oMkyEg+75du5xw09x1K2LK8IAJmfCAbrlMBKk/Qpy3slF13iyjO19PpAIb36tqRW9W8+
-         xHhboKXPGcH0vDydzqTfnDVVI7xJz8k4zk59jp5PGEzLkaVHRWtV0GEFXiySMtJiGbhU
-         MdnO2zMp/hxXdAaeheLDfALdGGJX8fFyPi4hST6MIYU+Y/P43i04HmaDotqUzzXCLxvV
-         cBFDXwrFYRtzrrmmIpa4LOsOXa/kq3A7TCwWYqAMYpVUk9nrRTieDxtkqdn5rIEe54Na
-         r5oQ==
-X-Gm-Message-State: ABy/qLZxYqAtDgsk+rnn+qPAj6pPBp0i1YUa+S23JhD5K2UCJ1ix2QPd
-        S9UIPPuZYnZgsN4qM1Nf9zZO5Q==
-X-Google-Smtp-Source: APBJJlGz43ee1fUUgXf+8b++AZ9SX5LMB8q/Ruenk6GQddakIy1Uonj/Boj77mdcBj5Q1sYlLHyJVw==
-X-Received: by 2002:a2e:9a81:0:b0:2b1:c1ae:73e3 with SMTP id p1-20020a2e9a81000000b002b1c1ae73e3mr1585842lji.15.1689941411628;
-        Fri, 21 Jul 2023 05:10:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyj181.neoplus.adsl.tpnet.pl. [83.9.29.181])
-        by smtp.gmail.com with ESMTPSA id a24-20020a2e8618000000b002b96a3a87d5sm820583lji.98.2023.07.21.05.10.08
+        bh=BWpxgzm4YyqLL1nxw3+KtSqa8xTPS4Bh1HLxz27Ca48=;
+        b=UZ7utkU1fCfd6NNNsNRKZm10rvoYovw8aAERKCvg91vW1XeMhU59/3OntymiP/AXAw
+         p/tYe+cuZiu7/G+Bm9oTX6jzRyTB8I6b67q7uQ+1yA4UmpWn/QFr34+x01HV0W0tfWI1
+         sRG+IR3NVj9iserNEmZBPN/hPOC1I+0wvec+mIXmWtPRWuc/bEcEpRX9eCCntSyX3pCn
+         cEUB+QmvZf+ROEdcn4Cw6SIkUohRvtd/kxGN0+6t6HzMjTeZLQb5qAUOd6fpWFXR6ceo
+         zwDFWtxslpr2d3ZGMdkQcQv6TQCPA9Vm/t7JOV16pTQjcT9s+tjaj000UfJb1ppQw2gi
+         oZfA==
+X-Gm-Message-State: ABy/qLa6OKN/6T+LI2ZuVsP2xHJJhz8UsqMcYgB8cbRZMv3xtlED/rMU
+        HNud4z8rcvi4WuQicivA2v9Jmw==
+X-Google-Smtp-Source: APBJJlEgrr+oqGqdLHlHtx6ewGfVXW3b8XDYFP7oP/kY1KKgiXY6CgYY6m3yXZcmQOqvbmIY53YC/Q==
+X-Received: by 2002:a05:6402:7c9:b0:51d:98d1:5337 with SMTP id u9-20020a05640207c900b0051d98d15337mr1478707edy.37.1689942129328;
+        Fri, 21 Jul 2023 05:22:09 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id u11-20020a056402064b00b0051dfa2e30b2sm2042298edx.9.2023.07.21.05.22.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jul 2023 05:10:11 -0700 (PDT)
-Message-ID: <ea41e06c-bd2a-e375-4e7c-8cff85d29627@linaro.org>
-Date:   Fri, 21 Jul 2023 14:10:07 +0200
+        Fri, 21 Jul 2023 05:22:08 -0700 (PDT)
+Message-ID: <c3ea2edb-1b3e-2c39-ccf6-333e3c8b9020@linaro.org>
+Date:   Fri, 21 Jul 2023 14:22:06 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 2/2] arm64: dts: Replace deprecated extcon-usb-gpio
+ id-gpio/vbus-gpio properties
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>,
-        Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        Jack Pham <quic_jackp@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Alexander Stein <alexander.stein@ew.tq-group.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, ahalaney@redhat.com
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
- <ZJsDpqttBYtbQ0yg@hovoldconsulting.com>
- <26ae15d1-4e13-3ab7-6844-3a7d3ed03af4@quicinc.com>
- <ZLEOk-9VImJNHYHa@hovoldconsulting.com>
- <f02104c0-d177-0e4e-dcb0-ffca589c8b00@quicinc.com>
- <ZLppB67LyWk1kD8w@hovoldconsulting.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZLppB67LyWk1kD8w@hovoldconsulting.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        =?UTF-8?Q?Beno=c3=aet_Cousson?= <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>
+Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        devicetree@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+References: <20230721081948.1185360-1-alexander.stein@ew.tq-group.com>
+ <20230721081948.1185360-2-alexander.stein@ew.tq-group.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230721081948.1185360-2-alexander.stein@ew.tq-group.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21.07.2023 13:16, Johan Hovold wrote:
-> On Fri, Jul 14, 2023 at 04:08:45PM +0530, Krishna Kurapati PSSNV wrote:
->> On 7/14/2023 2:30 PM, Johan Hovold wrote:
->>> On Mon, Jul 03, 2023 at 12:35:48AM +0530, Krishna Kurapati PSSNV wrote:
->>>> On 6/27/2023 9:13 PM, Johan Hovold wrote:
->>>>> On Wed, Jun 07, 2023 at 02:16:37PM +0200, Johan Hovold wrote:
->>>>>> On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
->>>
->>>>>>> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
->>>>>>> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
->>>>>>> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
->>>>>>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
->>>>>>> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
->>>>>>> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
->>>>>>> +			dev_err(qcom->dev, "HS-PHY%d not in L2\n", i);
->>>>>>> +	}
->>>>>
->>>>>> When testing this on the X13s I get:
->>>>>>
->>>>>> 	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
-Sidenote, I get this on any Qcom device on any platform I try
-to enter suspend on, without these MP patches.
+On 21/07/2023 10:19, Alexander Stein wrote:
+> Use id-gpios and vbus-gpios instead.
+> 
+> Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+> Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
+> Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com> #mediatek
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Acked-by: Shawn Guo <shawnguo@kernel.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+> Changes in v3:
+> * Rebased to next-20230721
+> * Split from bindings patch
 
-Konrad
+I think you wanted to split it per subsystem, right? That's why you
+resent/v3? But the split did not happen. If you decide not to split,
+then try to figure out: who should pick up this patchset?
+
+Best regards,
+Krzysztof
+
