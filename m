@@ -2,255 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A544D75D449
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 21:19:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4830F75D169
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 20:32:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231922AbjGUTTn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 15:19:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40678 "EHLO
+        id S229841AbjGUScb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 14:32:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232052AbjGUTTi (ORCPT
+        with ESMTP id S229924AbjGUSca (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 15:19:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C4E13A90;
-        Fri, 21 Jul 2023 12:19:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A843861D6D;
-        Fri, 21 Jul 2023 19:19:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F65FC433C7;
-        Fri, 21 Jul 2023 19:19:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1689967173;
-        bh=VknH39d+fypFBtbpKy9Ks9499orhFKGibNkjywSPOo8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TwfHAh4dqdvIDSnWyOrbWr4scVHbxbgthT5ieOlaqy9DMKSJDh/azXW9+8q7icfQb
-         wvRcfGgYIhspri592yY+F/y5s6+jXjcl2RfEEwIIjIoC9fx8IpiP6x9A/DEmqpzAWA
-         aLcNZXU3sch42MqttSnd6swrBUacSkcUR6j6I6js=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     stable@vger.kernel.org
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        patches@lists.linux.dev, Moritz Duge <MoritzDuge@kolahilft.de>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Torsten Krah <krah.tm@gmail.com>,
-        Paul Schyska <pschyska@gmail.com>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        =?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Inki Dae <inki.dae@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, alexandru.gagniuc@hp.com,
-        Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 069/223] drm/client: Send hotplug event after registering a client
-Date:   Fri, 21 Jul 2023 18:05:22 +0200
-Message-ID: <20230721160523.804204932@linuxfoundation.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
-References: <20230721160520.865493356@linuxfoundation.org>
-User-Agent: quilt/0.67
+        Fri, 21 Jul 2023 14:32:30 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 768063586;
+        Fri, 21 Jul 2023 11:32:28 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36LDeMA2026210;
+        Fri, 21 Jul 2023 18:32:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Dyjhnp1h/Yy8khQjX4JZ9P0lfXo0r8U3Drgt6bQPJgs=;
+ b=mYNa38TVl1taz5r6Yh0i0OZZnMuYc4/m7XA/apOLVSSdskdrMhFldfO9GpYbdvEzWBwJ
+ IOeoIb+bv906po63Y9jyIerHmsEaoEBqWOBuC6xUkdAkvDIy6JIJQ4GYSSqb1rAfsXt8
+ Sla9ITKvmv19kLFrY4HtbFKdZC/v3hQfS3tav1WkbVqqKqELJqH9ZrOaVrTNr91XiHk2
+ zXlOTUO4J+cBR9h5vAdBtBoUksQFj5jn1XJJr3CDvl/tGZaRccJL2De8KAj80DUPX+Ck
+ 6mcwZ4jNx6wU6KLPd9tdATEYBrtNm1hgDztK0YC/pRZkBPI67wmh6cftuQOS2uPX2w/G ug== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ryn5ysfuq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Jul 2023 18:32:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36LIWKnV012162
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Jul 2023 18:32:20 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 21 Jul 2023 11:32:19 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>
+CC:     <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+        <stanislaw.gruszka@linux.intel.com>, <quic_carlv@quicinc.com>,
+        <quic_ajitpals@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH] accel/qaic: Fix slicing memory leak
+Date:   Fri, 21 Jul 2023 12:32:01 -0600
+Message-ID: <20230721183201.11001-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aKgtYbZ806sIHK2tvMLhp6CJ_qd6QNYc
+X-Proofpoint-GUID: aKgtYbZ806sIHK2tvMLhp6CJ_qd6QNYc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-07-21_10,2023-07-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ impostorscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 adultscore=0
+ phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2307210162
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
-commit 27655b9bb9f0d9c32b8de8bec649b676898c52d5 upstream.
+Slicing configuration data from user is stored in a temporary buffer
+which should be freed unconditionally.
 
-Generate a hotplug event after registering a client to allow the
-client to configure its display. Remove the hotplug calls from the
-existing clients for fbdev emulation. This change fixes a concurrency
-bug between registering a client and receiving events from the DRM
-core. The bug is present in the fbdev emulation of all drivers.
-
-The fbdev emulation currently generates a hotplug event before
-registering the client to the device. For each new output, the DRM
-core sends an additional hotplug event to each registered client.
-
-If the DRM core detects first output between sending the artificial
-hotplug and registering the device, the output's hotplug event gets
-lost. If this is the first output, the fbdev console display remains
-dark. This has been observed with amdgpu and fbdev-generic.
-
-Fix this by adding hotplug generation directly to the client's
-register helper drm_client_register(). Registering the client and
-receiving events are serialized by struct drm_device.clientlist_mutex.
-So an output is either configured by the initial hotplug event, or
-the client has already been registered.
-
-The bug was originally added in commit 6e3f17ee73f7 ("drm/fb-helper:
-generic: Call drm_client_add() after setup is done"), in which adding
-a client and receiving a hotplug event switched order. It was hidden,
-as most hardware and drivers have at least on static output configured.
-Other drivers didn't use the internal DRM client or still had struct
-drm_mode_config_funcs.output_poll_changed set. That callback handled
-hotplug events as well. After not setting the callback in amdgpu in
-commit 0e3172bac3f4 ("drm/amdgpu: Don't set struct
-drm_driver.output_poll_changed"), amdgpu did not show a framebuffer
-console if output events got lost. The bug got copy-pasted from
-fbdev-generic into the other fbdev emulation.
-
-Reported-by: Moritz Duge <MoritzDuge@kolahilft.de>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2649
-Fixes: 6e3f17ee73f7 ("drm/fb-helper: generic: Call drm_client_add() after setup is done")
-Fixes: 8ab59da26bc0 ("drm/fb-helper: Move generic fbdev emulation into separate source file")
-Fixes: b79fe9abd58b ("drm/fbdev-dma: Implement fbdev emulation for GEM DMA helpers")
-Fixes: 63c381552f69 ("drm/armada: Implement fbdev emulation as in-kernel client")
-Fixes: 49953b70e7d3 ("drm/exynos: Implement fbdev emulation as in-kernel client")
-Fixes: 8f1aaccb04b7 ("drm/gma500: Implement client-based fbdev emulation")
-Fixes: 940b869c2f2f ("drm/msm: Implement fbdev emulation as in-kernel client")
-Fixes: 9e69bcd88e45 ("drm/omapdrm: Implement fbdev emulation as in-kernel client")
-Fixes: e317a69fe891 ("drm/radeon: Implement client-based fbdev emulation")
-Fixes: 71ec16f45ef8 ("drm/tegra: Implement fbdev emulation as in-kernel client")
-Fixes: 0e3172bac3f4 ("drm/amdgpu: Don't set struct drm_driver.output_poll_changed")
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Moritz Duge <MoritzDuge@kolahilft.de>
-Tested-by: Torsten Krah <krah.tm@gmail.com>
-Tested-by: Paul Schyska <pschyska@gmail.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Noralf Trønnes <noralf@tronnes.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Inki Dae <inki.dae@samsung.com>
-Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Mikko Perttunen <mperttunen@nvidia.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-samsung-soc@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Cc: amd-gfx@lists.freedesktop.org
-Cc: linux-tegra@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.2+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # msm
-Link: https://patchwork.freedesktop.org/patch/msgid/20230710091029.27503-1-tzimmermann@suse.de
-(cherry picked from commit 27655b9bb9f0d9c32b8de8bec649b676898c52d5)
-[ Dropped changes to drivers/gpu/drm/armada/armada_fbdev.c as
-  174c3c38e3a2 drm/armada: Initialize fbdev DRM client
-  was introduced in 6.5-rc1.
-
-  Dropped changes to exynos, msm, omapdrm, radeon, tegra drivers
-  as missing code these commits introduced:
-
-  99286486d674 drm/exynos: Initialize fbdev DRM client
-  841ef552b141 drm/msm: Initialize fbdev DRM client
-  9e69bcd88e45 drm/omapdrm: Implement fbdev emulation as in-kernel client
-  e317a69fe891 drm/radeon: Implement client-based fbdev emulation
-  9b926bcf2636 drm/radeon: Only build fbdev if DRM_FBDEV_EMULATION is set
-  25dda38e0b07 drm/tegra: Initialize fbdev DRM client
-  8f1aaccb04b7 drm/gma500: Implement client-based fbdev emulation
-  b79fe9abd58b drm/fbdev-dma: Implement fbdev emulation for GEM DMA helpers
-
-  Move code for drm-fbdev-generic.c to matching file in 6.1.y because
-  these commits haven't happened in 6.1.y.
-  8ab59da26bc0 drm/fb-helper: Move generic fbdev emulation into separate source file
-  b9c93f4ec737 drm/fbdev-generic: Rename symbols ]
-Cc: alexandru.gagniuc@hp.com
-Link: https://lore.kernel.org/stable/SJ0PR84MB20882EEA1ABB36F60E845E378F5AA@SJ0PR84MB2088.NAMPRD84.PROD.OUTLOOK.COM/
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 ---
- drivers/gpu/drm/drm_client.c    |   21 +++++++++++++++++++++
- drivers/gpu/drm/drm_fb_helper.c |    4 ----
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ drivers/accel/qaic/qaic_data.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/drm_client.c
-+++ b/drivers/gpu/drm/drm_client.c
-@@ -122,13 +122,34 @@ EXPORT_SYMBOL(drm_client_init);
-  * drm_client_register() it is no longer permissible to call drm_client_release()
-  * directly (outside the unregister callback), instead cleanup will happen
-  * automatically on driver unload.
-+ *
-+ * Registering a client generates a hotplug event that allows the client
-+ * to set up its display from pre-existing outputs. The client must have
-+ * initialized its state to able to handle the hotplug event successfully.
-  */
- void drm_client_register(struct drm_client_dev *client)
- {
- 	struct drm_device *dev = client->dev;
-+	int ret;
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index e9a1cb779b30..6b6d981a71be 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -1021,6 +1021,7 @@ int qaic_attach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_fi
+ 	bo->dbc = dbc;
+ 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
+ 	drm_gem_object_put(obj);
++	kfree(slice_ent);
+ 	srcu_read_unlock(&qdev->dev_lock, qdev_rcu_id);
+ 	srcu_read_unlock(&usr->qddev_lock, usr_rcu_id);
  
- 	mutex_lock(&dev->clientlist_mutex);
- 	list_add(&client->list, &dev->clientlist);
-+
-+	if (client->funcs && client->funcs->hotplug) {
-+		/*
-+		 * Perform an initial hotplug event to pick up the
-+		 * display configuration for the client. This step
-+		 * has to be performed *after* registering the client
-+		 * in the list of clients, or a concurrent hotplug
-+		 * event might be lost; leaving the display off.
-+		 *
-+		 * Hold the clientlist_mutex as for a regular hotplug
-+		 * event.
-+		 */
-+		ret = client->funcs->hotplug(client);
-+		if (ret)
-+			drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
-+	}
- 	mutex_unlock(&dev->clientlist_mutex);
- }
- EXPORT_SYMBOL(drm_client_register);
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -2634,10 +2634,6 @@ void drm_fbdev_generic_setup(struct drm_
- 		preferred_bpp = 32;
- 	fb_helper->preferred_bpp = preferred_bpp;
- 
--	ret = drm_fbdev_client_hotplug(&fb_helper->client);
--	if (ret)
--		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
--
- 	drm_client_register(&fb_helper->client);
- }
- EXPORT_SYMBOL(drm_fbdev_generic_setup);
-
+-- 
+2.40.1
 
