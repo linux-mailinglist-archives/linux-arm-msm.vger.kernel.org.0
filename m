@@ -2,195 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C809F75C324
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 11:36:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 397F975C34C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 11:43:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231215AbjGUJgU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 05:36:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51302 "EHLO
+        id S231200AbjGUJnK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 05:43:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbjGUJgS (ORCPT
+        with ESMTP id S231526AbjGUJmw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 05:36:18 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB7EE30EC;
-        Fri, 21 Jul 2023 02:36:04 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36L67sqS004103;
-        Fri, 21 Jul 2023 09:35:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hT/Hvkvkw2UyT6qEmcVlLXgM/BmaZd0oKyvjZLonQa4=;
- b=P8RYka+hNHRKTLiGkw7IQJeFOoHCXsOAk1rfECNawsxF7ZhVzqK+Ii6GDmcfkkjOtjXG
- T565kR+TPn7qmBGIKstYY884d/HUw8enKy1tT5PHLVydp0BIO0PY6Q0h0po9L/C9zl2K
- bUuXqpYIRp7IdHxcrqCaLoV2+kU4oDMp9dcy4NcMA5hzdxrX6q2rTPQH75iQsQZ4/uS9
- KNZbBc86jO7jd7YY9W1oNXhOjPkih67gh/T1qw9+s4kYB7ijAcSy43yvsx4lunul6rqi
- lMR7AbC9iWjq+yurCPSihMJOq/5d7arjfQKukltQspMxEKo4dJ42n1vNSpNpZqGZrd/w UQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3rxpyqv2ra-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Jul 2023 09:35:48 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36L9ZkWa014502
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Jul 2023 09:35:46 GMT
-Received: from [10.216.63.95] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 21 Jul
- 2023 02:35:40 -0700
-Message-ID: <4b58fdfa-83a4-290b-f7e8-e82feba4586a@quicinc.com>
-Date:   Fri, 21 Jul 2023 15:05:36 +0530
+        Fri, 21 Jul 2023 05:42:52 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C9D35B1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 02:42:29 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6686a05bc66so1234613b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 02:42:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689932529; x=1690537329;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IFcU7/ffJj4GpqTDJrXsJdgjnuOhtBeWbIDJjevNDPU=;
+        b=hiqCACW2e6ToVhtF/uGbndLMELQTUVszaKBSFRTyxHpLpZWPVTlffOehyOxsrk91e/
+         zp2RgL/2DLad18tMqmIMWvSSwonUi5XvydaEaGjZA7GuFnusqAphYfg9qVnjYuR+AR9w
+         Y2bTY/rACSniqAgu2PwGuAtmYeeusYUwnyxcaimdcRhux+6Y2ce8u4ai83/TEod5z0v5
+         m/esqcISu4CTa64qDKf90ooAXLrz+22Njc3B3AZlINViptNVeGBwJQgRoxfdV1lX4EmL
+         W5/MYUQP+m5KHhCHguV5BEPdG/N/1oL+HG/l2fzkwVcbiBFZLa9b31YA46HmosANomkQ
+         GwLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689932529; x=1690537329;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IFcU7/ffJj4GpqTDJrXsJdgjnuOhtBeWbIDJjevNDPU=;
+        b=YYKWYkUVuHn5IBrLc49tLC4+GVybAuecOlEIPu2hL3mimXwIx10kX+tP1Fg3u+jCgK
+         ETy7P8RoTf0h/GkXhFAV6i9Ypqz1rD3f9ORgQXSSxPZ5sFwm4AGEPfYDhEAlK/PvQAWJ
+         i9W0f5lTEoCUNRK4z896DVypigiBdrVssZ6w14FdMDS+fF3t2cCF0Rhodr05jyaRLD3a
+         oqZdt/iw9fMMGdxS0poafU1XnSwaJRF5RDg9SC7pdqS785fu9rR3vSsvjc4lQW1likcP
+         BbJaGapPx1eW8jPfIBxop2atUO5FtTMoKSjvIgI3ldjD3F8usdYfWnvapqAQdW4LON38
+         JVdw==
+X-Gm-Message-State: ABy/qLYDG2bf0ttN5a4g8yCHE3WuvI+G0uP+AotxKJ9XRwHqq6jAn8h7
+        rTiVeyXaVta5OUnIpF/EM5Ve5A==
+X-Google-Smtp-Source: APBJJlHkH7Uv7pWn/MP4FMrAIT/Cc7VTogZMZvc6nxyeSZL/vi3Feh7E3jJubjRUzodKuGKTOER0ag==
+X-Received: by 2002:a05:6a20:841e:b0:11f:6dc:4f38 with SMTP id c30-20020a056a20841e00b0011f06dc4f38mr1573730pzd.55.1689932529270;
+        Fri, 21 Jul 2023 02:42:09 -0700 (PDT)
+Received: from localhost ([122.172.87.195])
+        by smtp.gmail.com with ESMTPSA id e3-20020a170902b78300b001b88af04175sm2997093pls.41.2023.07.21.02.42.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jul 2023 02:42:08 -0700 (PDT)
+Date:   Fri, 21 Jul 2023 15:12:06 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/15] UFS: Add OPP and interconnect support
+Message-ID: <20230721094206.dfgnn73kmzzj6rtw@vireshk-i7>
+References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.1
-Subject: Re: [PATCH v9 06/10] usb: dwc3: qcom: Add support to read IRQ's
- related to multiport
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
-References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-7-quic_kriskura@quicinc.com>
- <ZJryrhuUrL5APh4o@hovoldconsulting.com>
- <7e32cf95-1565-5736-cc3e-c70e8d8f3ca7@quicinc.com>
- <ZLo-feuIr2FzCoxa@hovoldconsulting.com>
- <f6f2456d-0067-6cd6-3282-8cae7c47a2d3@quicinc.com>
- <ZLpOI9ZAHb_AB_Fr@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZLpOI9ZAHb_AB_Fr@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0C-ftZxKohf9FxNmafqt0CU_SvWSKlmB
-X-Proofpoint-ORIG-GUID: 0C-ftZxKohf9FxNmafqt0CU_SvWSKlmB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-21_06,2023-07-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=418 malwarescore=0 phishscore=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2306200000 definitions=main-2307210084
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/21/2023 2:51 PM, Johan Hovold wrote:
-> Again, please remember to trim your replies.
+On 20-07-23, 11:10, Manivannan Sadhasivam wrote:
+> Hi,
 > 
-> On Fri, Jul 21, 2023 at 01:49:37PM +0530, Krishna Kurapati PSSNV wrote:
->> On 7/21/2023 1:44 PM, Johan Hovold wrote:
->>> On Mon, Jul 03, 2023 at 12:29:41AM +0530, Krishna Kurapati PSSNV wrote:
->>>> On 6/27/2023 8:01 PM, Johan Hovold wrote:
+> This series adds OPP (Operating Points) support to UFSHCD driver and
+> interconnect support to Qcom UFS driver.
 > 
-> [...]
+> Motivation behind adding OPP support is to scale both clocks as well as
+> regulators/performance state dynamically. Currently, UFSHCD just scales
+> clock frequency during runtime with the help of "freq-table-hz" property
+> defined in devicetree. With the addition of OPP tables in devicetree (as
+> done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+> both clocks and performance state of power domain which helps in power
+> saving.
 > 
->>>>> So the above should all be merged in either a single helper looking up
->>>>> all the interrupts for a port and resused for the non-MP case.
+> For the addition of OPP support to UFSHCD, there are changes required to
+> the OPP framework and devfreq drivers which are also added in this series.
 > 
->>    How about the implementation in the attached patches. This way we
->> don't need to know if we are multiport capable or not.
-> 
-> As I wrote above, I think you should instead add a common helper for
-> setting up all the interrupts for a port. For example, along the lines
-> of:
-> 
-> 	dwc3_setup_port_irq(int index)
-> 	{
-> 		if (index == 0)
-> 			try non-mp name
-> 		else
-> 			generate mp name
-> 
-> 		lookup and request hs irqs
-> 		lookup and request ss irq
-> 		lookup and request power irq
-> 	}
-> 
-> 	dwc3_setup_irq()
-> 	{
-> 		determine if MP (num_ports)
-> 
-> 		for each port
-> 			dwc3_setup_port_irq(port index)
-> 	}
-> The port irq helper can either be told using a second argument that this
-> is a non-mp controller, or you can first try looking up one of the
-> non-mp names.
-> 
+> Finally, interconnect support is added to Qcom UFS driver for scaling the
+> interconnect path dynamically. This is required to avoid boot crash in
+> recent SoCs and also to save power during runtime. More information is
+> available in patch 13/13.
 
+Hi Mani,
 
-I think I did something similar. I prepared a helper to request IRQ in 
-the patch and the main logic would reside in setup_irq where i would try 
-and get IRQ's.
+I have picked the OPP related patches from here (apart from DT one)
+and sent them separately in a series, along with few changes from me.
+Also pushed them in my linux-next branch.
 
-Irrespective of whether we are MP capable or not, how about we read all 
-IRQ's like in the patch attached previously. And the implementation 
-facilitates addition of ACPI to multiport also if required. I am just 
-trying to cover all cases like this by declaring IRQ info in global section.
+Thanks.
 
-static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, char *irq_name,
-                                char *disp_name, int irq)
-{
-        int ret;
-
-        /* Keep wakeup interrupts disabled until suspend */
-        irq_set_status_flags(irq, IRQ_NOAUTOEN);
-        ret = devm_request_threaded_irq(/* Give inouts here*/);
-        if (ret)
-               dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
-
-        return ret;
-}
-
-
-static int dwc3_qcom_setup_irq(struct platform_device *pdev)
-{
-   for (DP_IRQ[ i = 0-3] {
-      try getting dp_irq_i using MP_IRQ strings
-      if ((ret < 0)  and (i == 0))
-	try getting dp_irq_i using NON_MP_IRQ strings
-
-      call prep_irq accordingly.
-   }
-
-   //Run same loop for DM and SS
-}
-
-The second patch was just enabling IRQ's for all ports to support wakeup.
-
-> My mailer discarded your second patch, but you cannot assume that the
-> devices connected to each port are of the same type (e.g. HS or SS)
-> based on what is connected to the first port.
-> 
-Are you referring to enabling IRQ's for different ports before going to 
-suspend ? Meaning get the speed of enum on each port and accordingly 
-enable IRQ's ?
-
-Regards,
-Krishna,
+-- 
+viresh
