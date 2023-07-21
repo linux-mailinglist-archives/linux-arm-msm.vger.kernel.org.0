@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 662AF75C0D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 10:08:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 316CF75C0E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 10:10:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231310AbjGUIIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 04:08:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54158 "EHLO
+        id S230427AbjGUIKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 04:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231419AbjGUIID (ORCPT
+        with ESMTP id S230100AbjGUIKd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 04:08:03 -0400
+        Fri, 21 Jul 2023 04:10:33 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E19BB2706;
-        Fri, 21 Jul 2023 01:07:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B11B2706;
+        Fri, 21 Jul 2023 01:10:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6DDBC616C1;
-        Fri, 21 Jul 2023 08:07:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92352C433CA;
-        Fri, 21 Jul 2023 08:07:56 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7142661713;
+        Fri, 21 Jul 2023 08:10:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D74C43395;
+        Fri, 21 Jul 2023 08:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689926876;
-        bh=o1cZvieMYPYBkZJebOJ6isrBwhpPfnwvQn0FB1kHdAo=;
+        s=k20201202; t=1689927030;
+        bh=JltdfULPxWz8Dlw+w3aZFp6VjNTiHDJDfEr7o9YRNs4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cRtnUhX26OscJYsPDIKSIA5KnE04vQQ58tmAaJfEE/H25IPTW91wAE6HgXvsOhyP0
-         AWjixPyco0ckgw8k0qpVAvbevNJSBCa6BrOPyOQjf+WdLt9fSxzKpnh73+InHfZKiO
-         cvUsYF8RwltcQ5j4qwr15MHDl3CDMCG/1AFGm1WTLhWYl101k3awGEPzIV5xAnOEDp
-         aaDHQFoybLPA6nI5lFzfB2uJdLckcWzAl1jpLhDbgnlxo4vatCeSYk0jHmscCzd85K
-         a9556tNlzTOoakK6RZNH6mj3ZEpORpW9XeTDlJlyEGDFG3oVrE1+C14UBNuavfOIa1
-         iCpvgNP6tDOTQ==
+        b=niUdYILFYdemwUU0w/emWHL8ztgfvInBdEat9aHRd7SwlIqHTIeGzYpF174Vi6V5L
+         n9CCNBAXoQ2aO/p0ys56jYcNJBD6A0PPXHRHEu6Na3ezoZgAEn+/JeHdqTZSyanaBC
+         dUuf/2m/ZbvUz1gulF37zc0XJIA9CtYOguQU0AqGBuXXOvoqXVDiWRio59rmzkGcAI
+         zD/SFytbZB0b9twHz38q/BkleTqEiW9Vfh0c0hb4pN5iqXVl62t7tY6CIX4odkkvzZ
+         laeC+dmsdiHQsF1Av48sXPL1cOfNCMnjzGcdDWli/IK9oQ1dD+A8AIRqZDqAmR8ie1
+         pkvdh3FvzASwA==
 Received: from johan by xi.lan with local (Exim 4.96)
         (envelope-from <johan@kernel.org>)
-        id 1qMlBE-0003LY-1G;
-        Fri, 21 Jul 2023 10:08:05 +0200
-Date:   Fri, 21 Jul 2023 10:08:04 +0200
+        id 1qMlDi-0003M5-2u;
+        Fri, 21 Jul 2023 10:10:38 +0200
+Date:   Fri, 21 Jul 2023 10:10:38 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
-        quic_harshq@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v9 08/10] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Message-ID: <ZLo85M-4ZzfTyHQ9@hovoldconsulting.com>
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v9 01/10] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SC8280 Multiport
+Message-ID: <ZLo9flzTCha5iU-K@hovoldconsulting.com>
 References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
- <20230621043628.21485-9-quic_kriskura@quicinc.com>
- <2eab503f-fa0d-990e-bed2-2445c5496798@linaro.org>
- <b183a130-6237-7d15-5d5a-b56582b92b35@quicinc.com>
- <ZJr9Xiv6_0nG0Pui@hovoldconsulting.com>
- <622288dd-cb3c-b673-5544-46ff10106dbc@quicinc.com>
+ <20230621043628.21485-2-quic_kriskura@quicinc.com>
+ <ZJrGG6FXWLacRLbg@hovoldconsulting.com>
+ <ZJsCf3nYrikF7nZc@hovoldconsulting.com>
+ <548e35a7-984d-a62f-ea4b-a5aeace8009a@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <622288dd-cb3c-b673-5544-46ff10106dbc@quicinc.com>
+In-Reply-To: <548e35a7-984d-a62f-ea4b-a5aeace8009a@quicinc.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -78,47 +77,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 03, 2023 at 12:40:19AM +0530, Krishna Kurapati PSSNV wrote:
-> On 6/27/2023 8:46 PM, Johan Hovold wrote:
-> > On Sat, Jun 24, 2023 at 12:43:23PM +0530, Krishna Kurapati PSSNV wrote:
-> >>> On 21.06.2023 06:36, Krishna Kurapati wrote:
-> >>>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
-> >>>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
-> >>>> platforms.
-> >>>>
-> >>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-
-> >> Yes wakeup is supported by all ports now, but I didn't make those
-> >> changes now as I wanted to keep driver code diff minimal and don't need
-> >> wakeup support for the product currently. But for sure, will update
-> >> driver code to handle wakeup on all ports in near future.
+On Mon, Jul 03, 2023 at 12:41:59AM +0530, Krishna Kurapati PSSNV wrote:
+> On 6/27/2023 9:08 PM, Johan Hovold wrote:
+> > On Tue, Jun 27, 2023 at 01:20:59PM +0200, Johan Hovold wrote:
+> >> On Wed, Jun 21, 2023 at 10:06:19AM +0530, Krishna Kurapati wrote:
 > > 
-> > Why didn't you include it in v9? I thought you had a working
-> > implementation for this?
+> >>> +          items:
+> >>> +            - const: dp1_hs_phy_irq
+> >>> +            - const: dm1_hs_phy_irq
+> >>> +            - const: dp2_hs_phy_irq
+> >>> +            - const: dm2_hs_phy_irq
+> >>> +            - const: dp3_hs_phy_irq
+> >>> +            - const: dm4_hs_phy_irq
+> >>> +            - const: dp4_hs_phy_irq
+> >>> +            - const: dm4_hs_phy_irq
+> >>> +            - const: ss1_phy_irq
+> >>> +            - const: ss2_phy_irq
+> >>> +            - const: pwr_event_1
+> >>> +            - const: pwr_event_2
+> >>> +            - const: pwr_event_3
+> >>> +            - const: pwr_event_4
+> >>
+> >> The naming here is inconsistent and interrupts should not have "_irq"
+> >> suffixes (even if some of the current ones do for historical reasons).
+> >>
+> >> I believe these should be named
+> >>
+> >> 	pwr_event_1
+> >> 	dp_hs_phy_1
+> >> 	dm_hs_phy_1
+> >> 	ss_phy_1
+> >>
+> >> 	pwr_event_2
+> >> 	dp_hs_phy_2
+> >> 	dm_hs_phy_2
+> >> 	ss_phy_2
+> >>
+> >> 	pwr_event_3
+> >> 	dp_hs_phy_3
+> >> 	dm_hs_phy_3
+> >>
+> >> 	pwr_event_4
+> >> 	dp_hs_phy_4
+> >> 	dm_hs_phy_4
+> >>
+> >> or similar and be grouped by port while using the the
+> >> qcom,sc8280xp-dwc ordering for the individual lines.
 > > 
-> > Since wakeup will be another case where glue and core need to interact,
-> > it's good to have the wakeup implementation from the start to be able to
-> > evaluate your multiport implementation properly.
+> > Perhaps the ordering you suggested is fine too, but I'd probably move
+> > the pwr_event ones first to match qcom,sc8280xp-dwc then, that is:
 > > 
-> > Right now it looks like you only added wakeup interrupt lookup and
-> > request, but then you never actually enable them which is not very nice.
+> >   	pwr_event_1
+> >   	pwr_event_2
+> >   	pwr_event_3
+> >   	pwr_event_4
+> >   	dp_hs_phy_1
+> >   	dm_hs_phy_1
+> >   	dp_hs_phy_2
+> >   	dm_hs_phy_2
+> >   	dp_hs_phy_3
+> >   	dm_hs_phy_3
+> >   	dp_hs_phy_4
+> >   	dm_hs_phy_4
+> >   	ss_phy_1
+> >   	ss_phy_2
+> > 
+> > so we have them grouped as pwr_event followed by HS and with SS last.
+> > 
+> >> Side note: Please note how the above interrupt properties can also be
+> >> used to infer the number of HS and SS ports.
 
->   As mentioned in one of my comments on earlier patches, wakeup is not a 
-> requirement I currently need to work on for the product. I added 
-> multiport IRQ support only because my pathces need to modify IRQ names. 
-> If there is a customer requirement I get in the future, I will 
-> definitely implement the wakeup part. But for now, I would like to stick 
-> to what is necessary for getting Multiport to work.
+> Can't we just cleanup all at once later ? Might not be a good idea for 
+> some properties in the file to have _irq and for some to not have it. I 
+> will modify the order though.
 
-I think you need to implement this now as this is a basic features of
-any USB controller and one which is already supported by the driver you
-are changing. We've also had a long of history of Qualcomm pushing
-incomplete implementations upstream and then they move on to more
-pressing deadline and never actually complete the work.
-
-This very wakeup support is a good example of this as parts of it was
-merged years ago and when someone later tried to get it to actually
-work, it turned into a complete hack of an implementation as no one had
-thought about the overall design.
+No, DT bindings generally need to be as correct as possible from the
+start as they form an ABI. So please drop the _irq suffix from all of
+the new indexed names.
 
 Johan
