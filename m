@@ -2,109 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4830F75D169
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 20:32:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DF4775D5BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 22:28:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229841AbjGUScb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 14:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39896 "EHLO
+        id S229534AbjGUU2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 16:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbjGUSca (ORCPT
+        with ESMTP id S229864AbjGUU1t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 14:32:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 768063586;
-        Fri, 21 Jul 2023 11:32:28 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36LDeMA2026210;
-        Fri, 21 Jul 2023 18:32:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=Dyjhnp1h/Yy8khQjX4JZ9P0lfXo0r8U3Drgt6bQPJgs=;
- b=mYNa38TVl1taz5r6Yh0i0OZZnMuYc4/m7XA/apOLVSSdskdrMhFldfO9GpYbdvEzWBwJ
- IOeoIb+bv906po63Y9jyIerHmsEaoEBqWOBuC6xUkdAkvDIy6JIJQ4GYSSqb1rAfsXt8
- Sla9ITKvmv19kLFrY4HtbFKdZC/v3hQfS3tav1WkbVqqKqELJqH9ZrOaVrTNr91XiHk2
- zXlOTUO4J+cBR9h5vAdBtBoUksQFj5jn1XJJr3CDvl/tGZaRccJL2De8KAj80DUPX+Ck
- 6mcwZ4jNx6wU6KLPd9tdATEYBrtNm1hgDztK0YC/pRZkBPI67wmh6cftuQOS2uPX2w/G ug== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ryn5ysfuq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Jul 2023 18:32:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 36LIWKnV012162
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Jul 2023 18:32:20 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Fri, 21 Jul 2023 11:32:19 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>
-CC:     <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
-        <stanislaw.gruszka@linux.intel.com>, <quic_carlv@quicinc.com>,
-        <quic_ajitpals@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH] accel/qaic: Fix slicing memory leak
-Date:   Fri, 21 Jul 2023 12:32:01 -0600
-Message-ID: <20230721183201.11001-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+        Fri, 21 Jul 2023 16:27:49 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D4EC35B3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 13:27:18 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-1b0156a1c4bso1521578fac.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 13:27:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1689971237; x=1690576037;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7xPDzzCzi/QN7xILesfa0mVBVsGJvBpLORXGzKhvY7c=;
+        b=4XmoJAYz55NB/L3U+DEUVJ9ui979+6Vz0rqBHHDkliqQXOMi6F+/ITB9aD9iN37wqO
+         BgdGLtJssmT2r2CCaMdB6vTrlXmgl7CEI5eFL8Iy5qkECyULhvyVXE0OLtlJLWTWLWVe
+         ujy4f/mAiGRut+DHYbvmdkcQlKKfluhe809jNINb8G6MffFgabAZ4L8IZbqwDIs/Dzml
+         mrPigKZ7ueMy+J2wvjE1cevFAOpAnDkQ13SDfoATpvTQsVGhjDoy67xsuJDQ95pHpt0i
+         9bZdbaLpFIDoRxE4Uk1HMABabIBI7CYqt4kN1YtFNOWaLkAec3SHAFyTZ54eD0gzUJSK
+         atNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689971237; x=1690576037;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7xPDzzCzi/QN7xILesfa0mVBVsGJvBpLORXGzKhvY7c=;
+        b=LRsd7LzU3W6DvWt4sWaLxlyzPfusoaH1MnH8zv/BxclevxjF7iZNXn4uX5CPOV92hp
+         Wl61cMO+hBJyde0Xdpj4kPkYxNVqOj5cMZG9u+5Mil02HI/cSDaXQpUKKFutlRqo9ugE
+         MhCBnZs+oLAsWtmDIn0TC7RRa45BqZiSlGeQIJ5VHZt0zNK2vwDKNzLX3Rsy3hPkU47w
+         FhF+vcxWGeIR09mA25H3hKxI2VwfV7F+qaEt+TvIl9pvkbNjMcg/hlMxrjxq86ZkmTlm
+         iUF8EJlX6u1Vb23qKrJxZNQCj7KDKrYzglkNvRgfIM85MBoX6k/NJgtFCrxWQ9Ic5x7K
+         6rZA==
+X-Gm-Message-State: ABy/qLZXSwGhYIA8OUS98Aypc96/uBXRTtbBpdUNja6+tU0r5mi3JE5Z
+        FE2AkSgufw01FUfHywjLnyFqq+SpWRNdyIGL10Rh0g==
+X-Google-Smtp-Source: APBJJlFV1pSwvieqS1OgnGFs6EJa3OMX3Q/AZhNSCm23Jd0179q/7NNdnOaSTeQWwXZbKc15/fFyeSnhcfBgqT1xvfc=
+X-Received: by 2002:a05:6870:ac2b:b0:1ba:c3a2:fb66 with SMTP id
+ kw43-20020a056870ac2b00b001bac3a2fb66mr3041987oab.5.1689971236868; Fri, 21
+ Jul 2023 13:27:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aKgtYbZ806sIHK2tvMLhp6CJ_qd6QNYc
-X-Proofpoint-GUID: aKgtYbZ806sIHK2tvMLhp6CJ_qd6QNYc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-21_10,2023-07-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- impostorscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 adultscore=0
- phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2307210162
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <1689934361-32642-1-git-send-email-quic_srichara@quicinc.com>
+In-Reply-To: <1689934361-32642-1-git-send-email-quic_srichara@quicinc.com>
+From:   Nick Desaulniers <ndesaulniers@google.com>
+Date:   Fri, 21 Jul 2023 13:27:05 -0700
+Message-ID: <CAKwvOdmYC6WuapBkD+s6wYCBaUdiJxiLXwayoubTF0WCpdBoMg@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Remove the unused _groups variable build warning
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, quic_varada@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        oe-kbuild-all@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+On Fri, Jul 21, 2023 at 3:13=E2=80=AFAM Sricharan Ramabadhran
+<quic_srichara@quicinc.com> wrote:
+>
+> When building with clang toolchain and arm64-randconfig-r015-20230712
+> kernel test robot reports the below warning.
+>
+>  drivers/pinctrl/qcom/pinctrl-ipq5018.c:244:27: warning: unused variable =
+'_groups' [-Wunused-const-variable]
+>    static const char * const _groups[] =3D {
+>                              ^
+>    1 warning generated.
+>
+>      static const char * const _groups[] =3D {
+>              "gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6=
+", "gpio7",
+>              "gpio8", "gpio9", "gpio10", "gpio11", "gpio12", "gpio13", "g=
+pio14",
+>              "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", =
+"gpio21",
+>              "gpio22", "gpio23", "gpio24", "gpio25", "gpio26", "gpio27", =
+"gpio28",
+>              "gpio29", "gpio30", "gpio31", "gpio32", "gpio33", "gpio34", =
+"gpio35",
+>              "gpio36", "gpio37", "gpio38", "gpio39", "gpio40", "gpio41", =
+"gpio42",
+>              "gpio43", "gpio44", "gpio45", "gpio46",
+>    };
+>
+> Fixing it by removing the variable.
+>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202307120814.vWPY6URk-lkp@i=
+ntel.com/
+> Fixes: 725d1c891658 ("pinctrl: qcom: Add IPQ5018 pinctrl driver")
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-Slicing configuration data from user is stored in a temporary buffer
-which should be freed unconditionally.
+Thanks for the patch!
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 
-Fixes: ff13be830333 ("accel/qaic: Add datapath")
-Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- drivers/accel/qaic/qaic_data.c | 1 +
- 1 file changed, 1 insertion(+)
+> ---
+>  drivers/pinctrl/qcom/pinctrl-ipq5018.c | 10 ----------
+>  1 file changed, 10 deletions(-)
+>
+> diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qco=
+m/pinctrl-ipq5018.c
+> index ed58f75..e2951f8 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+> @@ -241,16 +241,6 @@ static const char * const atest_char_groups[] =3D {
+>         "gpio0", "gpio1", "gpio2", "gpio3", "gpio37",
+>  };
+>
+> -static const char * const _groups[] =3D {
+> -       "gpio0", "gpio1", "gpio2", "gpio3", "gpio4", "gpio5", "gpio6", "g=
+pio7",
+> -       "gpio8", "gpio9", "gpio10", "gpio11", "gpio12", "gpio13", "gpio14=
+",
+> -       "gpio15", "gpio16", "gpio17", "gpio18", "gpio19", "gpio20", "gpio=
+21",
+> -       "gpio22", "gpio23", "gpio24", "gpio25", "gpio26", "gpio27", "gpio=
+28",
+> -       "gpio29", "gpio30", "gpio31", "gpio32", "gpio33", "gpio34", "gpio=
+35",
+> -       "gpio36", "gpio37", "gpio38", "gpio39", "gpio40", "gpio41", "gpio=
+42",
+> -       "gpio43", "gpio44", "gpio45", "gpio46",
+> -};
+> -
+>  static const char * const wci_txd_groups[] =3D {
+>         "gpio0", "gpio1", "gpio2", "gpio3",
+>         "gpio42", "gpio43", "gpio44", "gpio45",
+> --
+> 2.7.4
+>
+>
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index e9a1cb779b30..6b6d981a71be 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1021,6 +1021,7 @@ int qaic_attach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_fi
- 	bo->dbc = dbc;
- 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
- 	drm_gem_object_put(obj);
-+	kfree(slice_ent);
- 	srcu_read_unlock(&qdev->dev_lock, qdev_rcu_id);
- 	srcu_read_unlock(&usr->qddev_lock, usr_rcu_id);
- 
--- 
-2.40.1
 
+--=20
+Thanks,
+~Nick Desaulniers
