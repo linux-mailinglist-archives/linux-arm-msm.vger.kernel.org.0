@@ -2,75 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9399B75C5B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 13:16:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFF2C75C621
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 13:55:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229462AbjGULQR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 07:16:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34502 "EHLO
+        id S230353AbjGULzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 07:55:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjGULQQ (ORCPT
+        with ESMTP id S229707AbjGULzK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 07:16:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FE17B3;
-        Fri, 21 Jul 2023 04:16:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1D489619FD;
-        Fri, 21 Jul 2023 11:16:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49392C433C7;
-        Fri, 21 Jul 2023 11:16:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689938174;
-        bh=NWyqzz5a+wAq6c2twKmdidEBQwn5x/NSXAUIdsFwufU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Pt3dweDjmU4JyP0PLAYVWb3i2Jj/iUiWaKYGf253+T5ThrPpgVry/wVc6r6xrJqhM
-         mbxOK1gYUQf2cM5czIJQKKiCBSp+NtB76R1+qhCDbbTc5sRD1rrFNvPgOzNd2/uCCt
-         nWFJaYiAlFTLAJ37wFJR/kmUoB7DiUVM29/xm0XinxE7rNmJDrMQvHBGcbQvbf6Ffj
-         MAEiZx3dz1/LcxoIWi+1SjDSRcmgsyJ7noZ7gcVMh8qkwzVHO3AcyP0JEaesjfoyjp
-         43acpy0pWdb4zZkiXMmZ3Mw8M/dyC6alpEIvhnysnfI1u/26oA4TleouxuQ1702IRY
-         Xv4vTUeXFkZRA==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qMo7T-0003q6-1C;
-        Fri, 21 Jul 2023 13:16:23 +0200
-Date:   Fri, 21 Jul 2023 13:16:23 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        Jack Pham <quic_jackp@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, ahalaney@redhat.com
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
-Message-ID: <ZLppB67LyWk1kD8w@hovoldconsulting.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
- <ZJsDpqttBYtbQ0yg@hovoldconsulting.com>
- <26ae15d1-4e13-3ab7-6844-3a7d3ed03af4@quicinc.com>
- <ZLEOk-9VImJNHYHa@hovoldconsulting.com>
- <f02104c0-d177-0e4e-dcb0-ffca589c8b00@quicinc.com>
+        Fri, 21 Jul 2023 07:55:10 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A2402D79
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 04:55:09 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b8ad907ba4so11226065ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 04:55:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689940509; x=1690545309;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=On8b445xAkLYUxpJLOmZ0YWWWQZf3nyJOOroUboklMM=;
+        b=T3pZqcf1DO1Oj8nR4yrRDfIASwhXLhR/wRmcZyfEHEtdvRFSMpR9mLda4++5e0L4jp
+         +w1msJRSSMqo4TvG2EEMVYWGXRwbbjZCbBDRKahAOsBeng1DJE0VANDVoC1/D0p/Wsnp
+         CO9NXuSntfstKdVBC/vknWCVHuJDbdwQG5aKZHuvg4X7lCD8NNyuFe+DqA424uAnvH1p
+         iA3rL9+A1bk2S6DvC+MdSDuqsYlt3/fUMWwA3xkblOfh3VBLvcy1WhBs0/fOs93WWW8K
+         kpqZROU4xfGnj4muW9lBHYSCvJKEItGoq9pYUoiTI+b72ROx2xAGD9OuQSyG7Z8sK2hG
+         vRSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689940509; x=1690545309;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=On8b445xAkLYUxpJLOmZ0YWWWQZf3nyJOOroUboklMM=;
+        b=V4l1zqvlrSHR1+1XSJCOB7R2FuMgA2hHvHSAgHY54degX7Yyl1Cc06bwDbfbvVYywr
+         NYRkzCtaFojHgrQpr0UBwNVYiE5PqnKwieFPGqemDLuYrGoxwXsdbWw/cPyw3FOBXGvC
+         71CA1T/NIgtaJDM/NaMONspAGVxXhXRb3IlTp9uKqZ/3pfzt0KGgPHpal0hI+Jwwkuao
+         7Qjki4HIzM7pbiPDkp+/k+HndW5lZNK6tZ7h9gS2nqJq6tGM2gLdVgIUrytCC65viV3t
+         yvBMKLvZZASJabpA0VfuH8MmcyojgTUzZo5qs73igqOKkrZvJfw6IA7yWqXwn7dcF3yr
+         dGnw==
+X-Gm-Message-State: ABy/qLZTet80u8HNT8PPBb/g7Z+hc3PZAg1sL6FHxwSfFfOfehZT8Mw8
+        1XRfLDaFuB+wa5mpVOUhcJ5K
+X-Google-Smtp-Source: APBJJlFNRGbewBgg9HiacJ4fpesbUAVMolRzK2jP1QYCQXrzycHh/FWUEtZJyRIKO78u2hoKFzxzfw==
+X-Received: by 2002:a17:902:9f8f:b0:1ac:8be5:8787 with SMTP id g15-20020a1709029f8f00b001ac8be58787mr1269158plq.21.1689940508620;
+        Fri, 21 Jul 2023 04:55:08 -0700 (PDT)
+Received: from thinkpad ([117.206.118.181])
+        by smtp.gmail.com with ESMTPSA id d24-20020a170902b71800b001b9cea4e8a2sm3245155pls.293.2023.07.21.04.54.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jul 2023 04:55:08 -0700 (PDT)
+Date:   Fri, 21 Jul 2023 17:24:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/15] UFS: Add OPP and interconnect support
+Message-ID: <20230721115453.GA2536@thinkpad>
+References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
+ <20230721094206.dfgnn73kmzzj6rtw@vireshk-i7>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f02104c0-d177-0e4e-dcb0-ffca589c8b00@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230721094206.dfgnn73kmzzj6rtw@vireshk-i7>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,54 +87,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 14, 2023 at 04:08:45PM +0530, Krishna Kurapati PSSNV wrote:
-> On 7/14/2023 2:30 PM, Johan Hovold wrote:
-> > On Mon, Jul 03, 2023 at 12:35:48AM +0530, Krishna Kurapati PSSNV wrote:
-> >> On 6/27/2023 9:13 PM, Johan Hovold wrote:
-> >>> On Wed, Jun 07, 2023 at 02:16:37PM +0200, Johan Hovold wrote:
-> >>>> On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
+On Fri, Jul 21, 2023 at 03:12:06PM +0530, Viresh Kumar wrote:
+> On 20-07-23, 11:10, Manivannan Sadhasivam wrote:
+> > Hi,
 > > 
-> >>>>> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
-> >>>>> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> >>>>> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
-> >>>>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> >>>>> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
-> >>>>> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> >>>>> +			dev_err(qcom->dev, "HS-PHY%d not in L2\n", i);
-> >>>>> +	}
-> >>>
-> >>>> When testing this on the X13s I get:
-> >>>>
-> >>>> 	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
-> >>>>
-> >>>> for the third port, whose status registers always seems to return zero
-> >>>> (e.g. as if we're checking the wrong register?):
-> >>>>
-> >>>> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 0, pwr_event_stat = 38103c
-> >>>> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 1, pwr_event_stat = 38103c
-> >>>> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 2, pwr_event_stat = 00
-> >>>> dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 3, pwr_event_stat = 140030
-> >>>>
-> >>>> I verified that everything appears to work as expected on sa8295p-adp.
-> >>>>
-> >>>> Do you have any idea of what may be causing this?
-> >>>
-> >>> You never replied to this; do you have any idea why the status register
-> >>> for the second port seemingly always read back as 0 on the X13s?
+> > This series adds OPP (Operating Points) support to UFSHCD driver and
+> > interconnect support to Qcom UFS driver.
 > > 
-> >>    Missed this mail. This never popped up on my system. So no idea what
-> >> is different in Lenovo X13s. Might need to check with team internally.
+> > Motivation behind adding OPP support is to scale both clocks as well as
+> > regulators/performance state dynamically. Currently, UFSHCD just scales
+> > clock frequency during runtime with the help of "freq-table-hz" property
+> > defined in devicetree. With the addition of OPP tables in devicetree (as
+> > done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+> > both clocks and performance state of power domain which helps in power
+> > saving.
 > > 
-> > Did you hear anything back regarding the above?
+> > For the addition of OPP support to UFSHCD, there are changes required to
+> > the OPP framework and devfreq drivers which are also added in this series.
 > > 
-> > Could it even be that the register offset it not correct for sc8280xp?
-
-> No. I rechecked the register offsets and they are proper. (same as what 
-> we are using in downstream).
+> > Finally, interconnect support is added to Qcom UFS driver for scaling the
+> > interconnect path dynamically. This is required to avoid boot crash in
+> > recent SoCs and also to save power during runtime. More information is
+> > available in patch 13/13.
 > 
-> Adding Jack and Wesley to help with any suggestions here.
+> Hi Mani,
+> 
+> I have picked the OPP related patches from here (apart from DT one)
+> and sent them separately in a series, along with few changes from me.
+> Also pushed them in my linux-next branch.
+> 
 
-Still no idea as to why this appears to be broken on sc8280xp and
-triggers an error on every suspend?
+Thanks Viresh! For patch 8/15, Kbuild bot has identified one potential null ptr
+dereference issue. Could you please fix that in your branch?
 
-Johan
+You just need to remove the opp dereference in dev_pm_opp_get_freq_indexed()
+before the IS_ERR_OR_NULL() check as below:
+
+```
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index 66dc0d0cfaed..683e6e61f80b 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -208,9 +208,7 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_get_freq);
+  */
+ unsigned long dev_pm_opp_get_freq_indexed(struct dev_pm_opp *opp, u32 index)
+ {
+-       struct opp_table *opp_table = opp->opp_table;
+-
+-       if (IS_ERR_OR_NULL(opp) || index >= opp_table->clk_count) {
++       if (IS_ERR_OR_NULL(opp) || index >= opp->opp_table->clk_count) {
+                pr_err("%s: Invalid parameters\n", __func__);
+                return 0;
+        }
+```
+
+- Mani
+
+> Thanks.
+> 
+> -- 
+> viresh
+
+-- 
+மணிவண்ணன் சதாசிவம்
