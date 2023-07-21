@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFF2C75C621
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 13:55:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCB1075C636
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jul 2023 13:57:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230353AbjGULzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 07:55:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
+        id S230499AbjGUL5w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 07:57:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbjGULzK (ORCPT
+        with ESMTP id S229462AbjGUL5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 07:55:10 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A2402D79
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 04:55:09 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b8ad907ba4so11226065ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 04:55:09 -0700 (PDT)
+        Fri, 21 Jul 2023 07:57:45 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B453172D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 04:57:43 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-666e6ecb52dso1241695b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jul 2023 04:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689940509; x=1690545309;
+        d=linaro.org; s=google; t=1689940663; x=1690545463;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=On8b445xAkLYUxpJLOmZ0YWWWQZf3nyJOOroUboklMM=;
-        b=T3pZqcf1DO1Oj8nR4yrRDfIASwhXLhR/wRmcZyfEHEtdvRFSMpR9mLda4++5e0L4jp
-         +w1msJRSSMqo4TvG2EEMVYWGXRwbbjZCbBDRKahAOsBeng1DJE0VANDVoC1/D0p/Wsnp
-         CO9NXuSntfstKdVBC/vknWCVHuJDbdwQG5aKZHuvg4X7lCD8NNyuFe+DqA424uAnvH1p
-         iA3rL9+A1bk2S6DvC+MdSDuqsYlt3/fUMWwA3xkblOfh3VBLvcy1WhBs0/fOs93WWW8K
-         kpqZROU4xfGnj4muW9lBHYSCvJKEItGoq9pYUoiTI+b72ROx2xAGD9OuQSyG7Z8sK2hG
-         vRSA==
+        bh=gZeVRbN8i3RBrNfW3X1oiz7Rg1AaV6+VX/SLakSfZZA=;
+        b=iKCl353NEddqXRkMvTc4WhEeB5hqbKgT/AUtGB7CfQ3YsTpdC12YZHueB2HFGxILa4
+         2pNgMS7KN3+B/t+ZVNJ6rAciQHePdD+PGsiRPXItha92UsFbSShlGk5dC5uVq+/P85u+
+         qeEpAkebRFfP395V1y6H+WCmtXlJtlMBhyzgnjXPDV7BIZu40cDh5nZcPzfX3lxoZJxn
+         eMq8MPrY+6v0LcHnCapxqWDswAjp9tMbhbbeeT0Z60Cx8+hHLUvWQKwXzHn7Of/a1S6b
+         yEWlmQQAfuncH9J1eYTu2cQLGjm6hMskc8C65A7yzBtJN/85tWwwZvbzERH6Fk2BbCnH
+         feUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689940509; x=1690545309;
+        d=1e100.net; s=20221208; t=1689940663; x=1690545463;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=On8b445xAkLYUxpJLOmZ0YWWWQZf3nyJOOroUboklMM=;
-        b=V4l1zqvlrSHR1+1XSJCOB7R2FuMgA2hHvHSAgHY54degX7Yyl1Cc06bwDbfbvVYywr
-         NYRkzCtaFojHgrQpr0UBwNVYiE5PqnKwieFPGqemDLuYrGoxwXsdbWw/cPyw3FOBXGvC
-         71CA1T/NIgtaJDM/NaMONspAGVxXhXRb3IlTp9uKqZ/3pfzt0KGgPHpal0hI+Jwwkuao
-         7Qjki4HIzM7pbiPDkp+/k+HndW5lZNK6tZ7h9gS2nqJq6tGM2gLdVgIUrytCC65viV3t
-         yvBMKLvZZASJabpA0VfuH8MmcyojgTUzZo5qs73igqOKkrZvJfw6IA7yWqXwn7dcF3yr
-         dGnw==
-X-Gm-Message-State: ABy/qLZTet80u8HNT8PPBb/g7Z+hc3PZAg1sL6FHxwSfFfOfehZT8Mw8
-        1XRfLDaFuB+wa5mpVOUhcJ5K
-X-Google-Smtp-Source: APBJJlFNRGbewBgg9HiacJ4fpesbUAVMolRzK2jP1QYCQXrzycHh/FWUEtZJyRIKO78u2hoKFzxzfw==
-X-Received: by 2002:a17:902:9f8f:b0:1ac:8be5:8787 with SMTP id g15-20020a1709029f8f00b001ac8be58787mr1269158plq.21.1689940508620;
-        Fri, 21 Jul 2023 04:55:08 -0700 (PDT)
+        bh=gZeVRbN8i3RBrNfW3X1oiz7Rg1AaV6+VX/SLakSfZZA=;
+        b=c6QQJob9BGLoUe+0mDIECpLggxWK5ABwy5wmUpNMkQaMbHHMRGmP5fJV5mhr93bH39
+         2vSdf/HWu3et73GS1HnR6wxnmmx3olmfseU9cBGWE7v/5IRxlBYfyK6YMd0t9xG/TrH9
+         7OprFP3/eA1p8+Ax1Z5wzHXTzsx+97d1ezs8AKw8JQ95QNSgkmoLcJsIjwMUYNm8htab
+         Bx8rfhs5KAK1zR5y/fFpWlXV0dl3Z299B2PoYIv8ObFc3YcXmCt8OhjnSF4cO/a0UiRH
+         H79cz+5L8wihLUgkZIy3nzj9xTn86YFUfw2uyx1S7bvp1WQhBjoOhCfebjIAatsOsLys
+         qAjA==
+X-Gm-Message-State: ABy/qLYBgBQtZNO46n+AcNweKm6xvBmjAydUVtzz+NLrMa7cArsxqk5w
+        QELIY86ev8ad87cL6M6p6vLQ
+X-Google-Smtp-Source: APBJJlEvmEp/uWX9S9crTApKWRrgbE4M1ih0yNWyhpPGUZogOYzA/q6Zy/eF3S72X0sFN2yoWHinGA==
+X-Received: by 2002:a05:6a00:2404:b0:681:3ed2:b493 with SMTP id z4-20020a056a00240400b006813ed2b493mr1319785pfh.26.1689940662836;
+        Fri, 21 Jul 2023 04:57:42 -0700 (PDT)
 Received: from thinkpad ([117.206.118.181])
-        by smtp.gmail.com with ESMTPSA id d24-20020a170902b71800b001b9cea4e8a2sm3245155pls.293.2023.07.21.04.54.57
+        by smtp.gmail.com with ESMTPSA id ff17-20020a056a002f5100b006675c242548sm2803366pfb.182.2023.07.21.04.57.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jul 2023 04:55:08 -0700 (PDT)
-Date:   Fri, 21 Jul 2023 17:24:53 +0530
+        Fri, 21 Jul 2023 04:57:42 -0700 (PDT)
+Date:   Fri, 21 Jul 2023 17:27:31 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Viresh Kumar <viresh.kumar@linaro.org>
 Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
@@ -68,83 +68,67 @@ Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
         quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
         bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/15] UFS: Add OPP and interconnect support
-Message-ID: <20230721115453.GA2536@thinkpad>
+Subject: Re: [PATCH v2 04/15] arm64: dts: qcom: sdm845: Fix the min frequency
+ of "ice_core_clk"
+Message-ID: <20230721115731.GB2536@thinkpad>
 References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
- <20230721094206.dfgnn73kmzzj6rtw@vireshk-i7>
+ <20230720054100.9940-5-manivannan.sadhasivam@linaro.org>
+ <20230721071801.e6ngfnkwg2ujsklg@vireshk-i7>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230721094206.dfgnn73kmzzj6rtw@vireshk-i7>
+In-Reply-To: <20230721071801.e6ngfnkwg2ujsklg@vireshk-i7>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 21, 2023 at 03:12:06PM +0530, Viresh Kumar wrote:
+On Fri, Jul 21, 2023 at 12:48:01PM +0530, Viresh Kumar wrote:
 > On 20-07-23, 11:10, Manivannan Sadhasivam wrote:
-> > Hi,
+> > Minimum frequency of the "ice_core_clk" should be 75MHz as specified in the
+> > downstream vendor devicetree. So fix it!
 > > 
-> > This series adds OPP (Operating Points) support to UFSHCD driver and
-> > interconnect support to Qcom UFS driver.
+> > https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.7.3.r1-09300-sdm845.0/arch/arm64/boot/dts/qcom/sdm845.dtsi
 > > 
-> > Motivation behind adding OPP support is to scale both clocks as well as
-> > regulators/performance state dynamically. Currently, UFSHCD just scales
-> > clock frequency during runtime with the help of "freq-table-hz" property
-> > defined in devicetree. With the addition of OPP tables in devicetree (as
-> > done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
-> > both clocks and performance state of power domain which helps in power
-> > saving.
+> > Fixes: 433f9a57298f ("arm64: dts: sdm845: add Inline Crypto Engine registers and clock")
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > > 
-> > For the addition of OPP support to UFSHCD, there are changes required to
-> > the OPP framework and devfreq drivers which are also added in this series.
-> > 
-> > Finally, interconnect support is added to Qcom UFS driver for scaling the
-> > interconnect path dynamically. This is required to avoid boot crash in
-> > recent SoCs and also to save power during runtime. More information is
-> > available in patch 13/13.
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > index 9ed74bf72d05..89520a9fe1e3 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > @@ -2614,7 +2614,7 @@ ufs_mem_hc: ufshc@1d84000 {
+> >  				<0 0>,
+> >  				<0 0>,
+> >  				<0 0>,
+> > -				<0 300000000>;
+> > +				<75000000 300000000>;
+> >  
+> >  			status = "disabled";
+> >  		};
 > 
-> Hi Mani,
+> Please keep new feature and fixes like this in separate series. This
+> could be merged directly in the currently ongoing kernel rc and
+> doesn't need to wait for this series.
 > 
-> I have picked the OPP related patches from here (apart from DT one)
-> and sent them separately in a series, along with few changes from me.
-> Also pushed them in my linux-next branch.
+> Or at least keep the commit at the top, so another maintainer can
+> simply pick it.
 > 
 
-Thanks Viresh! For patch 8/15, Kbuild bot has identified one potential null ptr
-dereference issue. Could you please fix that in your branch?
-
-You just need to remove the opp dereference in dev_pm_opp_get_freq_indexed()
-before the IS_ERR_OR_NULL() check as below:
-
-```
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 66dc0d0cfaed..683e6e61f80b 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -208,9 +208,7 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_get_freq);
-  */
- unsigned long dev_pm_opp_get_freq_indexed(struct dev_pm_opp *opp, u32 index)
- {
--       struct opp_table *opp_table = opp->opp_table;
--
--       if (IS_ERR_OR_NULL(opp) || index >= opp_table->clk_count) {
-+       if (IS_ERR_OR_NULL(opp) || index >= opp->opp_table->clk_count) {
-                pr_err("%s: Invalid parameters\n", __func__);
-                return 0;
-        }
-```
+That's what I did. This patch and previous patch are the fixes patches, so they
+are posted on top of other dts patches to be merged separately if required.
 
 - Mani
 
-> Thanks.
-> 
 > -- 
 > viresh
 
