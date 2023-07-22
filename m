@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5567475D97F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 05:53:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43E1275D984
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 05:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230460AbjGVDxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 23:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43992 "EHLO
+        id S230022AbjGVD4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 23:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjGVDxN (ORCPT
+        with ESMTP id S229597AbjGVD4N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 23:53:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3815A3A97;
-        Fri, 21 Jul 2023 20:53:12 -0700 (PDT)
+        Fri, 21 Jul 2023 23:56:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1BBF0;
+        Fri, 21 Jul 2023 20:56:12 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AC2ED61D9F;
-        Sat, 22 Jul 2023 03:53:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F394C433C7;
-        Sat, 22 Jul 2023 03:53:10 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1952C61DAA;
+        Sat, 22 Jul 2023 03:56:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9D6C433C7;
+        Sat, 22 Jul 2023 03:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689997991;
-        bh=FsQ4Aty6yqS0xno9gXu4ET27J/HI6Y5a9Iv9QwNcYHs=;
+        s=k20201202; t=1689998171;
+        bh=xeB+GD2/T24xF60NZo1JJmzAvsqgxo+DoSn3WlJgCIE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZgbDSUQ5YtRmniPjJNwl0s5wASP14S7Ri2d1MF7JIP9yBYFeKvmWEPxbqf5OZr1W4
-         te8D/WqQwtjQ5RHjc/DXFtdUH7aHsU1IvbvJyKOZKm2vmseUviXcfpVyW9HVbdk9f6
-         h6h+WLbgY3X7cmI5iGhMMj9wqPKUB9Wr5oaSdV5okMRTpKeQOowHtmf2n/9YmAnMvr
-         iDLgoF+FHhX4ywN192oqNinxbXeYzRYqbjV7a/LEhSyUkLy2ZbHXIzZ/lF+4pxl0hr
-         pMWpWAC0O5VLsgUragY4dzGc0T2UlaZBFOdpngjSuxaCuXPTEtJusWTtXm9D6YjlaR
-         ANt4rJ2c7wF1w==
-Date:   Fri, 21 Jul 2023 20:56:29 -0700
+        b=faZF1KEUZg15a9P7i8vAO8suVPQbBPUuTK0vSMmEa7OlCqWmTtf7talDmAR5G/5dx
+         z+LOle+d7ZtPNFnyTyvpNxOX4LMOcwaLvz3aD7vtDeDX6ePCv2iino4cxeyOkSHs9I
+         WKqEleV+Q0O9RaQD2DuIfFtInqNguzUe7aZtIjir6JWg4Fa6uYVThFrS4eBMG+Q4bm
+         /K7UWNfsQKIdqkNQ45GptZZpPq6oGs9xl435/0jigXUpyMlm0qTxyqPpMX3VO5wHp/
+         fNhbRGVvMNivpHoJpe5l9AXTDaHG/2A5l524Ft/m+R82bfe2506cOsfHQnkiE72b3R
+         VgZj3bg27Ru5g==
+Date:   Fri, 21 Jul 2023 20:59:30 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ebiggers@google.com, linux-mmc@vger.kernel.org,
-        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        omprsing@qti.qualcomm.com, quic_psodagud@quicinc.com,
-        avmenon@quicinc.com, abel.vesa@linaro.org,
-        quic_spuppala@quicinc.com
-Subject: Re: [PATCH v2 09/10] soc: qcom: support for generate, import and
- prepare key
-Message-ID: <4v6hjakyfg4jmo2jrx7qxfphfcsagqdwoedk3tqsryqxkgssi7@h2ydsatot6ot>
-References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
- <20230719170423.220033-10-quic_gaurkash@quicinc.com>
+To:     Eric Chanudet <echanude@redhat.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8540p-ride: enable rtc
+Message-ID: <dtussvqzf7x5p633pxt3julkffhzt5rxwp3aghs4ocj5odq4la@ed6jhcv76hbk>
+References: <20230718145105.3464105-1-echanude@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230719170423.220033-10-quic_gaurkash@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+In-Reply-To: <20230718145105.3464105-1-echanude@redhat.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,57 +61,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 19, 2023 at 10:04:23AM -0700, Gaurav Kashyap wrote:
-> Implements the ICE apis for generate, prepare and import key
-> apis and hooks it up the scm calls defined for them.
-> Key management has to be done from Qualcomm Trustzone as only
-> it can interface with HWKM.
-> 
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> ---
->  drivers/soc/qcom/ice.c | 72 ++++++++++++++++++++++++++++++++++++++++++
->  include/soc/qcom/ice.h |  8 +++++
->  2 files changed, 80 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index 33f67fcfa1bc..16f7af74ddb0 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -19,6 +19,13 @@
->  
->  #define AES_256_XTS_KEY_SIZE			64
->  
-> +/*
-> + * Wrapped key sizes from HWKm is different for different versions of
-> + * HW. It is not expected to change again in the future.
-> + */
-> +#define QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(v)	\
-> +	((v) == 1 ? 68 : 100)
+On Tue, Jul 18, 2023 at 10:46:10AM -0400, Eric Chanudet wrote:
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+[..]
+> +&pmm8540a_sdam_7 {
+> +	status = "okay";
 > +
->  /* QCOM ICE registers */
->  #define QCOM_ICE_REG_VERSION			0x0008
->  #define QCOM_ICE_REG_FUSE_SETTING		0x0010
-> @@ -412,6 +419,71 @@ int qcom_ice_derive_sw_secret(struct qcom_ice *ice, const u8 wrapped_key[],
->  }
->  EXPORT_SYMBOL_GPL(qcom_ice_derive_sw_secret);
->  
-> +/**
-> + * qcom_ice_generate_key() - Generate a wrapped key for inline encryption
-> + * @longterm_wrapped_key: wrapped key that is generated, which is
-> + *                        BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE in size.
-> + *
-> + * Make a scm call into trustzone to generate a wrapped key for storage
-> + * encryption using hwkm.
-> + *
-> + * Return: 0 on success; err on failure.
-> + */
-> +int qcom_ice_generate_key(struct qcom_ice *ice,
-> +	u8 longterm_wrapped_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
+> +	rtc_offset: rtc-offset@ac {
+> +		reg = <0xac 0x4>;
 
-Please run "./scripts/checkpatch.pl --strict *" on your patches, and fix
-all relevant warnings and errors.
-
-Please consider revisiting the naming in this patch as well.
+I'm still trying to get confirmation that this is a good choice.
 
 Regards,
 Bjorn
