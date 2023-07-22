@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94A5A75DB75
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 11:40:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BD8B75DB78
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 11:42:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbjGVJkq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Jul 2023 05:40:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59754 "EHLO
+        id S229865AbjGVJmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Jul 2023 05:42:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbjGVJkp (ORCPT
+        with ESMTP id S229598AbjGVJmC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Jul 2023 05:40:45 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C219390
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:40:43 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-31427ddd3fbso2102335f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:40:43 -0700 (PDT)
+        Sat, 22 Jul 2023 05:42:02 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8752290
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:42:01 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbc244d384so23133025e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690018842; x=1690623642;
+        d=linaro.org; s=google; t=1690018920; x=1690623720;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xVvfPKzKcVpH1QI0csRcWXxVggvuQ6kRzOg+ZisbYTE=;
-        b=Q7CO1h4q8n2TRKOtekDzx5eLhCfgNlPO28K68CQZU3y8GiG6UNolrcefO64AH5kG7E
-         afp52OcpYW7EXp1ut+7fV5maT0O9zlJHqYfXTt+tkHTa0mN3oqbSD11WnOCZUKtDgZU6
-         QO7/r37xHHOMkAiXGjVw4Qd8PY6eD0iBlp0dGACwL4nlxvJAXSmCtVYgWQjsEtNJ+JWn
-         cS/Cva+Zm7QvdLFITiyCB/GCJLxPbd4WTapTR23vw5BstGx8XRlm1bozaBB3czz+gjJk
-         Lu9BKEdoG8HZkUBE9lxhQNduRRIWs6CvE/Too0X0xkZpYD0nHli5TSrJ5CGOuqF1WiDy
-         QfsQ==
+        bh=vIiKd8WhXPxz7X6XYM8LX2pk87FlZNE/jREJGMzG5bc=;
+        b=lTr70M+v01b1HK/Rs0QIfQheuBdH7tjoJmDoxRUdvtjVgBjSwBMUdItWDtUOeZOJEe
+         pTxTAh5/BNzKSBPIjWobW1QJUnmOeKQ70Ryb9g9E3sd/AT8i5hIvKS1xHQoe2jtR9MZY
+         Es6jc9JuuAqCz4BnUd3BZlEVxhq/UQx69PJgG9HprXxj6R/sJmE1cG3oX2F7q7wD6Vh/
+         JT+rw6Gb1fUyhQRa0oghXSPxF9GkRwPIPk5Fvgw15Y7O91tyJhavGnpZRrfkTU938u21
+         4ZGXF8Ejwrq9o4L81HlZYhpcV3IgsLDQ4p5yrKSVwlc939M6MBFlZ91O4Kh7HrEQmVRr
+         Kz1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690018842; x=1690623642;
+        d=1e100.net; s=20221208; t=1690018920; x=1690623720;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xVvfPKzKcVpH1QI0csRcWXxVggvuQ6kRzOg+ZisbYTE=;
-        b=BfXS7PzpQ+PqaNTumgcWpJYmTXRcGOLTmZiKgY2qeuOqoSHUCdfVM4+EWdC2+Zx+II
-         3VFp8PVuEfo819G+LlM82s6ZGO4bKN1EEi1/16RCurlErwbPbvIvDaJtaokIBApvxiYz
-         TxXhKsATuOQWRZFZvv1GGLcRtPEJxcm/Y/oErJK80lumL9rquHNhn0sy3u1zWZhfSCJe
-         AaadcU+XKv34pgYMYfYtmCi2ofC15QQHdIQKaWIPQfWdiIqPPRFFmfIRbEuC5JZEwcgV
-         jSQF0B3Ou9YSZNw5/rETeKxAEfKIu6Zl6sbdb4aSyKmxlLaulklLpDyit1VPNAbvUHM+
-         P3Kw==
-X-Gm-Message-State: ABy/qLaitoPpHljIkNSU1G0AKjLv5V6uvGMsPYreK637Fkc8OF3dRxl3
-        WsTUm55YyxViyw71IERzQWUjew==
-X-Google-Smtp-Source: APBJJlHI5yXhsp3L7DFOZwhHFHT2Jtn8D1u4C1uU1SHS2dWNL8s1Jo6yY1vVSWkoZ2N2CtQtKB04Cw==
-X-Received: by 2002:adf:e852:0:b0:313:f1a4:4112 with SMTP id d18-20020adfe852000000b00313f1a44112mr2637672wrn.33.1690018842189;
-        Sat, 22 Jul 2023 02:40:42 -0700 (PDT)
+        bh=vIiKd8WhXPxz7X6XYM8LX2pk87FlZNE/jREJGMzG5bc=;
+        b=WsE2HgIqMQdu46Bj9AsTz6aEHVDrUFIngoNsFZGsRw/xaG8m92z2gkTLIR2tzThX2J
+         i3TR91nnHdtvt2+L5TqmwqZism1EH92Lrnp1IzlqlnwXQHJJWMg4S5AMMdFqIMk6Tps3
+         0K+MzLJDPnmAZL6L1ZC2zC1yhd0G4TqbW3xG7klF8b6qp4geWRUnnQ31fmw6xH2/kNkB
+         xiFB6yZJ3Me0iuTJ3S15CY0E4lE+2+9WkFKX1RluOf4NdsyfJTbymBb/wDxXIov4FU5R
+         zFnqN1nVFaJnI4/T6FIGAr20UR+FPda8jH7e47mV12c3l566XHknbytoJ162SQ4BdYNV
+         gplQ==
+X-Gm-Message-State: ABy/qLZ68DTCxi/UKMJ9Qp6zi1oOyLgDfB9L4gQsA6kFR5r1TOkvaKoo
+        zI5HuestofIgHVhz5cNP6NDR3Q==
+X-Google-Smtp-Source: APBJJlFi9gcxEqT8Nrf3W3sLqaEiCNa3FbHoebyV+XTi/Z0TwxbzXjy2gMsN4FU1Y1OAcLSTdClcdQ==
+X-Received: by 2002:adf:fec8:0:b0:313:f86f:2851 with SMTP id q8-20020adffec8000000b00313f86f2851mr4007408wrs.3.1690018920017;
+        Sat, 22 Jul 2023 02:42:00 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id o26-20020a5d58da000000b0030ae499da59sm6436715wrf.111.2023.07.22.02.40.40
+        by smtp.gmail.com with ESMTPSA id e18-20020a5d65d2000000b00314172ba213sm6405562wrw.108.2023.07.22.02.41.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Jul 2023 02:40:41 -0700 (PDT)
-Message-ID: <3c83f4af-3512-2def-0532-1d8c34ee6fcb@linaro.org>
-Date:   Sat, 22 Jul 2023 11:40:40 +0200
+        Sat, 22 Jul 2023 02:41:59 -0700 (PDT)
+Message-ID: <b2b68cc6-1dd9-25ed-c65b-c4bf3a5a4f16@linaro.org>
+Date:   Sat, 22 Jul 2023 11:41:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 4/7] dt-bindings: interconnect: qcom: Fix and separate out
- QCS404
+Subject: Re: [PATCH 5/7] dt-bindings: interconnect: qcom: Fix and separate out
+ SDM660
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -71,15 +71,15 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230721-topic-icc_bindings-v1-0-93e2bc728fb7@linaro.org>
- <20230721-topic-icc_bindings-v1-4-93e2bc728fb7@linaro.org>
+ <20230721-topic-icc_bindings-v1-5-93e2bc728fb7@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230721-topic-icc_bindings-v1-4-93e2bc728fb7@linaro.org>
+In-Reply-To: <20230721-topic-icc_bindings-v1-5-93e2bc728fb7@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,80 +87,56 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 21/07/2023 15:54, Konrad Dybcio wrote:
-> Separate out QCS404 icc bindings from the common file and fix the
+> Separate out SDM660 icc bindings from the common file and fix the
 > clocks description by removing the wrong internal RPM bus clock
 > representation that we've been carrying for years.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../bindings/interconnect/qcom,qcs404.yaml         | 52 ++++++++++++++++++++++
->  .../devicetree/bindings/interconnect/qcom,rpm.yaml |  6 ---
->  2 files changed, 52 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml
-> new file mode 100644
-> index 000000000000..aff2daa55802
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,qcs404.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QCS404 Network-On-Chip interconnect
-> +
-> +maintainers:
-> +  - Konrad Dybcio <konradybcio@kernel.org>
-> +
-> +description: |
-> +  The Qualcomm QCS404 interconnect providers support adjusting the
-> +  bandwidth requirements between the various NoC fabrics.
-> +
-> +allOf:
-> +  - $ref: qcom,rpm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,qcs404-bimc
-> +      - qcom,qcs404-pcnoc
-> +      - qcom,qcs404-snoc
 
-I am not sure it is reasonable to keep such short bindings each in its
-own file. Maybe 8916 and qcs404 should be left in common file?
+...
 
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +unevaluatedProperties: false
 > +
 > +examples:
 > +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+> +    #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
 > +    #include <dt-bindings/clock/qcom,rpmcc.h>
 > +
-> +    snoc: interconnect@580000 {
-> +        compatible = "qcom,qcs404-snoc";
-> +        reg = <0x00580000 0x23080>;
+> +    bimc: interconnect@1008000 {
+> +        compatible = "qcom,sdm660-bimc";
+> +        reg = <0x01008000 0x78000>;
 > +        #interconnect-cells = <1>;
 > +    };
 > +
-> +    pcnoc: interconnect@500000 {
-> +        compatible = "qcom,qcs404-pcnoc";
-> +        reg = <0x00500000 0x15080>;
+> +    cnoc: interconnect@1500000 {
+> +        compatible = "qcom,sdm660-cnoc";
+> +        reg = <0x01500000 0x10000>;
 > +        #interconnect-cells = <1>;
 > +    };
 > +
-> +    bimc: interconnect@400000 {
-> +        compatible = "qcom,qcs404-bimc";
-> +        reg = <0x00400000 0x80000>;
+> +    snoc: interconnect@1626000 {
+> +        compatible = "qcom,sdm660-snoc";
+> +        reg = <0x01626000 0x7090>;
 > +        #interconnect-cells = <1>;
+> +    };
+> +
+> +    a2noc: interconnect@1704000 {
+> +        compatible = "qcom,sdm660-a2noc";
+> +        reg = <0x01704000 0xc100>;
+> +        #interconnect-cells = <1>;
+> +        clocks = <&rpmcc RPM_SMD_IPA_CLK>,
+> +                 <&gcc GCC_UFS_AXI_CLK>,
+> +                 <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+> +                 <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
+> +                 <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
+> +        clock-names = "ipa",
+> +                      "ufs_axi",
+> +                      "aggre2_ufs_axi",
+> +                      "aggre2_usb3_axi",
+> +                      "cfg_noc_usb2_axi";
 > +    };
 
-Keep only one example.
+Keep only two examples.
 
 Best regards,
 Krzysztof
