@@ -2,56 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF45C75D94A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 05:02:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 714FB75D94D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 05:06:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbjGVDCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 23:02:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36750 "EHLO
+        id S229832AbjGVDGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 23:06:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjGVDCM (ORCPT
+        with ESMTP id S229503AbjGVDGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 23:02:12 -0400
+        Fri, 21 Jul 2023 23:06:37 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 116791701;
-        Fri, 21 Jul 2023 20:02:10 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E442C1701;
+        Fri, 21 Jul 2023 20:06:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 91F7361DC9;
-        Sat, 22 Jul 2023 03:02:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E6BC433C7;
-        Sat, 22 Jul 2023 03:02:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 82C0D61DC9;
+        Sat, 22 Jul 2023 03:06:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9549C433C8;
+        Sat, 22 Jul 2023 03:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689994929;
-        bh=ITlDvtYQcaS1d63hBlqr4vtLxAMsvJkpVR/H0tFzo38=;
+        s=k20201202; t=1689995195;
+        bh=KUTKLk5UQU1eQ3o/4T29UfkmMj56iplYzd0kU3H4bdc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WNzviDvhEA0gENSUoToRW8ZhMN7x/3D+nX8kaqBQGeYPPmTe4YvQDNxUSi1B56jsd
-         ze+UQOKr1fK9fYSHzeFl/7gW0hjA6FnXPrNeM8EGmlP/7EP3K+XyAtN0uv5m5XSYPl
-         QgW4ktSbx9FORfFOpWglur83WbeGyxEZB8vIzq2YPMvkdgVVwJzNIB97K+bmkDB4d1
-         ARqj8nO9CdWGBVubdgJwdahXHLOFOEiVQezLxurn5UNs4fSid81egfe9y2gVTr6uzT
-         gtm7Cwanmw3myuwCEzvp3qZC8HK6abEoUS+1kRcLPAcs7Sow63fuFWc3HAwCqbpwwb
-         JEnLFAAvX6ryw==
-Date:   Fri, 21 Jul 2023 20:05:28 -0700
+        b=srxDZApCLCRYxXZXtnwbgCKSP1bHmf5Y046vZgL1x6wlEW/oyyCP1uFOZOT6co5sG
+         X6iY1csyuMoxV3XFbTNjgmMZZVJmePSi6mxSQVEsBC2f/SfNS1wf2ne9p6ClGYWrir
+         fY5aThnjYxoR+kdkY9/pLbNRgGbqERysM6ZAYmCbZ7ob5lSeq/jCJ9GKbbhn+byRlW
+         +UAnAM/CxHP7Yu5PUvbt+MPvdLf11I6eWKZpF/xniLXOW5Yq1i75bbLQxsieqeO94U
+         HwCD4aYEJk9aUXtVGsiKttNM8vj5Jr2sTMAnWivpex/efy0iRpwmkCg63r1NNGEoFB
+         md/JBSZUy7GyA==
+Date:   Fri, 21 Jul 2023 20:09:54 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     Pavan Kondeti <quic_pkondeti@quicinc.com>, agross@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: power: qcom,rpmhpd: Add Generic RPMh PD
- indexes
-Message-ID: <a4zztrn6jhblozdswba7psqtvjt5l765mfr3yl4llsm5gsyqef@7x6q7yabydvm>
-References: <1689744162-9421-1-git-send-email-quic_rohiagar@quicinc.com>
- <1689744162-9421-2-git-send-email-quic_rohiagar@quicinc.com>
- <e77c39fe-b7cf-49b3-9260-ecf4872e8fdf@quicinc.com>
- <7517b2ca-7d7f-dc0c-7f60-a6281b37ab40@quicinc.com>
+To:     Kathiravan T <quic_kathirav@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
+        Kalle Valo <kvalo@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_anusha@quicinc.com,
+        quic_saahtoma@quicinc.com
+Subject: Re: [PATCH V5 2/3] pinctrl: qcom: Use qcom_scm_io_update_field()
+Message-ID: <z2isxt5zqaawkfgfdgogkimsutlvem7weoaatulhq2tcqt44rk@em4fvztj3eox>
+References: <20230720070408.1093698-1-quic_kathirav@quicinc.com>
+ <20230720070408.1093698-3-quic_kathirav@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7517b2ca-7d7f-dc0c-7f60-a6281b37ab40@quicinc.com>
+In-Reply-To: <20230720070408.1093698-3-quic_kathirav@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -62,24 +65,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 21, 2023 at 06:47:42PM +0530, Rohit Agarwal wrote:
-> On 7/21/2023 11:14 AM, Pavan Kondeti wrote:
-> > On Wed, Jul 19, 2023 at 10:52:41AM +0530, Rohit Agarwal wrote:
-> > > diff --git a/include/dt-bindings/power/qcom,rpmhpd.h b/include/dt-bindings/power/qcom,rpmhpd.h
-[..]
-> > > +
-> > > +#endif
-> > > -- 
-> > I see the PD performance levels (RPMH_REGULATOR_LEVEL_xxx) are still
-> > coming from qcom-rpmpd.h. Which means Socs with RPMh also need to
-> > include the older header for these definitions along with this newly
-> > created header. something to improve for the clarity sake?
-> Agreed. I think we can move these to the new header so that the new SoC with
-> RPMH can completely
-> move to rpmhpd.h.
+On Thu, Jul 20, 2023 at 12:34:07PM +0530, Kathiravan T wrote:
+> From: Mukesh Ojha <quic_mojha@quicinc.com>
+> 
+> Use qcom_scm_io_update_field() function introduced in the commit
+> 1f899e6997bb ("firmware: qcom_scm: provide a read-modify-write function").
+> 
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
+> Changes in V5:
+> 	- Dropped the ununecessary paranthesis
+> 	- Updated the commit message to indicate the commit ID in which
+> 	  qcom_scm_io_update_field is introduced instead of simply
+> 	  mentioning the "last commit"
+> 
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 12 +++++-------
+>  1 file changed, 5 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 2585ef2b2793..5ecde5bea38b 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -1040,6 +1040,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>  	const struct msm_pingroup *g;
+>  	unsigned long flags;
+>  	bool was_enabled;
+> +	u32 mask;
+>  	u32 val;
+>  
+>  	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
+> @@ -1074,23 +1075,20 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>  	 * With intr_target_use_scm interrupts are routed to
+>  	 * application cpu using scm calls.
+>  	 */
+> +	mask = GENMASK(2, 0) << g->intr_target_bit;
+>  	if (pctrl->intr_target_use_scm) {
+>  		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
+>  		int ret;
+>  
+> -		qcom_scm_io_readl(addr, &val);
+> -
+> -		val &= ~(7 << g->intr_target_bit);
+> -		val |= g->intr_target_kpss_val << g->intr_target_bit;
+> -
+> -		ret = qcom_scm_io_writel(addr, val);
+> +		val = g->intr_target_kpss_val << g->intr_target_bit;
+> +		ret = qcom_scm_io_update_field(addr, mask, val);
 
-Sounds very reasonable, please do that in a follow up patch.
-I'm picking this as is.
+Be aware when you resubmit that this code has changed. So please base
+your changes on linux-next.
 
-Thanks,
+Regards,
 Bjorn
