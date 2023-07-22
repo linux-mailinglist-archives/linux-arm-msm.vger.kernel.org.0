@@ -2,113 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DB1775DB51
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 11:24:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A95E75DB69
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 11:37:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbjGVJY5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Jul 2023 05:24:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54294 "EHLO
+        id S230185AbjGVJhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Jul 2023 05:37:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbjGVJY4 (ORCPT
+        with ESMTP id S230194AbjGVJgf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Jul 2023 05:24:56 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42FD42D7B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:24:54 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id E10EA2014D;
-        Sat, 22 Jul 2023 11:24:48 +0200 (CEST)
-Date:   Sat, 22 Jul 2023 11:24:47 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 22 Jul 2023 05:36:35 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AE13C3D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:35:55 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-98dfb3f9af6so436972666b.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:35:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690018531; x=1690623331;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mCIS2uTebsocjvDgAv2fQsB5I/jrohTaosOQPFj6fGk=;
+        b=UYIQ093u+tNZP3ENIS84pw8eRjfe3BPmLcHuHH8yM7JniqpE0VdIl84EyFzDtW6ojs
+         G6tG9n5jqUQyWud/NT6bBpFI66fEMLpNU1SXPgssJeMO+a1cd6FBiGGXPTVGdETRSjpw
+         9WrYblC4bEqk7c0X2sVKE26GAm1VcqbnPLvMt4Cqc9ptd1vv7kBOteJTgzZhiGju33UK
+         6UMvswsZpVwkeiRfsNtFXc7ahlrPzifSNCUzQYJS0+GHtvEJp6jKiXl5pALzC6im2T/A
+         meSLNHEjV+qK0GGoY/fSSPH/U2zGjlEyi8hz1GF95374GEYkGDZSzIfpzVMVVwDQxMn0
+         W/Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690018531; x=1690623331;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mCIS2uTebsocjvDgAv2fQsB5I/jrohTaosOQPFj6fGk=;
+        b=QHKfjIGOAYNz70XNB6Kdrt0NBeP+WY4uiKCQ1PS8iDRZ+/6r75Io5agSNgwwR0q5Sy
+         gIlizrIVtS69NzobeOi39Ys1981wbZwTWC56ycazmg9lnjbiQ2gUvLOxEtCCIe8PcPNq
+         vnMKHz5Ktjui9Ryh5sYig/7bqFk9FhOiyx67PFcjE028g6TZGYMCwYErcbted9WoOQkG
+         jscFaaWmhnGs1Od3G9n0ltWBlnXyw3X3e0zPHpKCUt4sg/wYWuV0UACJVQjBMgaNm1tu
+         +kbos7UpuBQtM4Aiiui02CIgYNEuCmKESsVjcQYsqCICK9RCo0g2czGKOG806bEdlMm6
+         m2EA==
+X-Gm-Message-State: ABy/qLbjCViGCrnVQwVdyZUIyu/gaoDzgcT9WpinRFE8ZCJL5/rRavZL
+        D8hbBAw824Wiw8ZR9f+qOnKj4Q==
+X-Google-Smtp-Source: APBJJlH4IBRWY62H6Zuudk2bWPiFDp43Bc9QkHMhORCXbREh/tTDGLk+BMjOhhehABKyOOgOHx9HVA==
+X-Received: by 2002:a17:907:2715:b0:993:e691:6dd5 with SMTP id w21-20020a170907271500b00993e6916dd5mr3848491ejk.7.1690018531272;
+        Sat, 22 Jul 2023 02:35:31 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id mc13-20020a170906eb4d00b00988c0c175c6sm3272997ejb.189.2023.07.22.02.35.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 22 Jul 2023 02:35:30 -0700 (PDT)
+Message-ID: <4bb6c559-2bf4-3bcd-c154-60ec6dd2d58b@linaro.org>
+Date:   Sat, 22 Jul 2023 11:35:29 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/7] dt-bindings: interconnect: qcom: Introduce
+ qcom,rpm-common
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v3 06/15] dt-bindings: display/msm: sc7180-dpu: Describe
- SM6125
-Message-ID: <ntbi7qdmxznuof27qtbvhxct7ol3rdioabtaary4u4chprrnml@vx2d2ctq73gp>
-References: <20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org>
- <20230718-sm6125-dpu-v3-6-6c5a56e99820@somainline.org>
- <3ce19d8f-97d8-15b6-5148-78e200b112e9@linaro.org>
- <tpkiplw7l2mzdwekynkrg6dwm7svktwm2zooodb3c42btyvo3e@yjrpqem26wtx>
- <CAA8EJprHEes5T1z4-sxg_Xk+VjuyoTH0Ra-VyMnrWjTv7qG9EA@mail.gmail.com>
- <m425lafv5gvrnyhoarasqgkoumntgsxiqdpmsudcxrwspvf6ed@al5sr3t2mwec>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <m425lafv5gvrnyhoarasqgkoumntgsxiqdpmsudcxrwspvf6ed@al5sr3t2mwec>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230721-topic-icc_bindings-v1-0-93e2bc728fb7@linaro.org>
+ <20230721-topic-icc_bindings-v1-1-93e2bc728fb7@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230721-topic-icc_bindings-v1-1-93e2bc728fb7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-07-20 21:10:52, Marijn Suijten wrote:
-> On 2023-07-20 01:24:27, Dmitry Baryshkov wrote:
-> > On Thu, 20 Jul 2023 at 01:09, Marijn Suijten
-> > <marijn.suijten@somainline.org> wrote:
-> > >
-> > > On 2023-07-19 01:06:03, Dmitry Baryshkov wrote:
-> > > > On 19/07/2023 00:24, Marijn Suijten wrote:
-> > > > > SM6125 is identical to SM6375 except that while downstream also defines
-> > > > > a throttle clock, its presence results in timeouts whereas SM6375
-> > > > > requires it to not observe any timeouts.  This is represented by
-> > > > > reducing the clock array length to 6 so that it cannot be passed.  Note
-> > > > > that any SoC other than SM6375 (currently SC7180 and SM6350) are
-> > > > > unconstrained and could either pass or leave out this "throttle" clock.
-> > > >
-> > > > Could you please describe, what kind of timeouts do you observe? Is this
-> > > > the DSI underruns issue?
-> > >
-> > > Ping-pong timeouts and low(er) framerate.  However, they were previosuly
-> > > not happening on a random boot out of tens... and now I can no longer
-> > > reproduce the timeout on 4 consecutive boots after adding the throttle
-> > > clock.  Could it perhaps be the power domains and opps that we added in
-> > > v2 and v3?
-> > 
-> > Quite unlikely, but who knows. My main question is whether we should
-> > continue skipping the throttle clocks or if it should be enabled now.
+On 21/07/2023 15:54, Konrad Dybcio wrote:
+> The current RPM interconnect bindings are messy. Start cleaning them
+> up with a common include.
 > 
-> And that "main question" could ... drum roll please ... only be answered
-> by knowing if this got "accidentally" fixed by providing the right PMs
-> or some other change entirely while I changed base branch and defconfig.
-> Or if this is just a fluke that persisted multiple boots but will fall
-> apart in some time and/or when someone else runs this on their device?
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../bindings/interconnect/qcom,qcm2290.yaml        | 12 +++------
+>  .../bindings/interconnect/qcom,rpm-common.yaml     | 31 ++++++++++++++++++++++
+>  2 files changed, 35 insertions(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml b/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+> index f65a2fe846de..edee78c456b7 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+> @@ -13,19 +13,16 @@ description: |
+>    The Qualcomm QCM2290 interconnect providers support adjusting the
+>    bandwidth requirements between the various NoC fabrics.
+>  
+> -properties:
+> -  reg:
+> -    maxItems: 1
+> +allOf:
+> +  - $ref: qcom,rpm-common.yaml#
+>  
+> +properties:
+>    compatible:
+>      enum:
+>        - qcom,qcm2290-bimc
+>        - qcom,qcm2290-cnoc
+>        - qcom,qcm2290-snoc
+>  
+> -  '#interconnect-cells':
+> -    const: 1
+> -
+>    clock-names:
+>      items:
+>        - const: bus
 
-I'm going to write this off as PEBKAC from my past self.  I went back to
-an older branch where I recall adding this clock, added it to DT again,
-and observed no timeouts or inexplicable behaviour on multiple boots.
+What about the children? Aren't they also rpm-common?
 
-Since downstream passes it as well, I'll revise this series for v4 to
-require it in dt-bindings, and include it in DT.
+> @@ -75,11 +72,10 @@ patternProperties:
+>  required:
+>    - compatible
+>    - reg
+> -  - '#interconnect-cells'
+>    - clock-names
+>    - clocks
+>  
+> -additionalProperties: false
+> +unevaluatedProperties: false
+>  
+>  examples:
+>    - |
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpm-common.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpm-common.yaml
+> new file mode 100644
+> index 000000000000..87995b40a856
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpm-common.yaml
+> @@ -0,0 +1,31 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,rpm-common.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm RPMh Network-On-Chip Interconnect
+> +
+> +maintainers:
+> +  - Konrad Dybcio <konradybcio@kernel.org>
+> +
+> +description:
+> +  RPM interconnect providers support for managing system bandwidth requirements
+> +  through manual requests based on either predefined values or as indicated by
+> +  the bus monitor hardware. Each provider node represents a NoC bus master,
+> +  driven by a dedicated clock source.
+> +
+> +properties:
+> +  reg:
+> +    maxItems: 1
 
-- Marijn
+I would drop the reg from common parts because some of the children here
+don't use it.
+
+Best regards,
+Krzysztof
+
