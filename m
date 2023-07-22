@@ -2,78 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4824875D988
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 05:59:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E34F75D994
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 06:11:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230483AbjGVD7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 23:59:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44696 "EHLO
+        id S229971AbjGVELS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Jul 2023 00:11:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjGVD7m (ORCPT
+        with ESMTP id S229529AbjGVELR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 23:59:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82726E74;
-        Fri, 21 Jul 2023 20:59:41 -0700 (PDT)
+        Sat, 22 Jul 2023 00:11:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98A462D58;
+        Fri, 21 Jul 2023 21:11:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 20DD561DCF;
-        Sat, 22 Jul 2023 03:59:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ACEC433C9;
-        Sat, 22 Jul 2023 03:59:39 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2212C6093C;
+        Sat, 22 Jul 2023 04:11:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3196CC433C7;
+        Sat, 22 Jul 2023 04:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689998380;
-        bh=ZBGteabbJw7m9fJtIyroIDjaZlrkeHej14zYPb+AQZE=;
+        s=k20201202; t=1689999075;
+        bh=vEMCopt3uphHxQCeixFe3W9oElfAQnJtSfNsi9hH+28=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fkxULteX7hOXv6e8m+NVSljQVNTrWpNaidT3vW2UNHaK/jQIjS2KpEieRtrLJGczd
-         ixF9TmpCgWzxXhXj1HHKJAp3Ck2OsTj0A9K08J+/L/e/yKpsfhMjroxtlm0xkuNSSD
-         xliVWgqW/WQALEeRb9pCkWwmWCmBcPfHEbe0uxvcyZahL/++LFbSayLxylrkbCLwjp
-         +KRjc/HOdAf9o5aXmlsxcA9n3ov3zqroeQEJre+VwUYgIKg5l2+Qf19Wx+gwld2SW9
-         ++JnrSw9M7qF338RzpVQI7CnEJ7ueG0IZagbFajm4BkktDbsXcNMapZDVVY+80yp7m
-         h2XyUrVH6uAXQ==
-Date:   Fri, 21 Jul 2023 21:02:59 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Kathiravan T <quic_kathirav@quicinc.com>
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_saahtoma@quicinc.com
-Subject: Re: [PATCH V2 1/2] dt-bindings: arm: qcom,ids: drop the IPQ5019 SoC
- ID
-Message-ID: <e4fub7xxkiupbkszaxwu4x5otdi7afvyl334ybwlxafkbxfw3c@cd4gja5u6st6>
-References: <20230712041912.398724-1-quic_kathirav@quicinc.com>
- <20230712041912.398724-2-quic_kathirav@quicinc.com>
- <20230714155954.GA3919199-robh@kernel.org>
- <dba8ab0a-c17b-8660-5c5a-803e7f394547@quicinc.com>
+        b=J4fjj57UD+LMoJ+P3xBynwk/zSZ2OjmKdRpMgoDOAHDuJH3iaI9FK3HPNEtEmLiiq
+         dXNeRHwJx2mh5fVIJEgfegdnLRtN9Usc8i88k5WOUTwWw4xCkrbxbYDYKHOC7XJEXZ
+         7gxT3WUjdve71uo6IBtN3H/zCyt6OXOZrtJP+mSUGJRIQoqMsoO6/Ue3tCpE+Rvr1u
+         Tf6lK1JMdecxBY+PXNU0LrKFxVICPq32NK+e3ZvtsJ2AS8HMVgXp/HV1ZjYAPcKDeG
+         FQPvwkAaKEvp1NGJhX1SWRfuHHCEHY3Mqg943A2mkpvFnmbOg9tyHY68bGuqDIVcSR
+         eFpjnD01S2BNw==
+Date:   Fri, 21 Jul 2023 21:11:13 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
+        quic_psodagud@quicinc.com, avmenon@quicinc.com,
+        abel.vesa@linaro.org, quic_spuppala@quicinc.com
+Subject: Re: [PATCH v2 07/10] qcom_scm: scm call for create, prepare and
+ import keys
+Message-ID: <20230722041113.GA5660@sol.localdomain>
+References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
+ <20230719170423.220033-8-quic_gaurkash@quicinc.com>
+ <uezt2yq7i4msohz27g2j6apngjp6frvxlj2qt46vg7hnds5hrs@quyhskyzui4b>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <dba8ab0a-c17b-8660-5c5a-803e7f394547@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <uezt2yq7i4msohz27g2j6apngjp6frvxlj2qt46vg7hnds5hrs@quyhskyzui4b>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 15, 2023 at 08:41:56PM +0530, Kathiravan T wrote:
+On Fri, Jul 21, 2023 at 08:40:32PM -0700, Bjorn Andersson wrote:
+> On Wed, Jul 19, 2023 at 10:04:21AM -0700, Gaurav Kashyap wrote:
+> > Storage encryption has two IOCTLs for creating, importing
+> > and preparing keys for encryption. For wrapped keys, these
+> > IOCTLs need to interface with the secure environment, which
+> > require these SCM calls.
+> > 
+> > generate_key: This is used to generate and return a longterm
+> >               wrapped key. Trustzone achieves this by generating
+> > 	      a key and then wrapping it using hwkm, returning
+> > 	      a wrapped keyblob.
+> > import_key:   The functionality is similar to generate, but here,
+> >               a raw key is imported into hwkm and a longterm wrapped
+> > 	      keyblob is returned.
+> > prepare_key:  The longterm wrapped key from import or generate
+> >               is made further secure by rewrapping it with a per-boot
+> > 	      ephemeral wrapped key before installing it to the linux
+> > 	      kernel for programming to ICE.
+> > 
+> > Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+> > ---
+> >  drivers/firmware/qcom_scm.c            | 222 +++++++++++++++++++++++++
+> >  drivers/firmware/qcom_scm.h            |   3 +
+> >  include/linux/firmware/qcom/qcom_scm.h |  10 ++
+> >  3 files changed, 235 insertions(+)
+> > 
+> > diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> > index 51062d5c7f7b..44dd1857747b 100644
+> > --- a/drivers/firmware/qcom_scm.c
+> > +++ b/drivers/firmware/qcom_scm.c
+> > @@ -1210,6 +1210,228 @@ int qcom_scm_derive_sw_secret(const u8 *wrapped_key, u32 wrapped_key_size,
+> >  }
+> >  EXPORT_SYMBOL(qcom_scm_derive_sw_secret);
+> >  
+> > +/**
+> > + * qcom_scm_generate_ice_key() - Generate a wrapped key for encryption.
+> > + * @longterm_wrapped_key: the wrapped key returned after key generation
 > 
-> On 7/14/2023 9:29 PM, Rob Herring wrote:
-> > On Wed, Jul 12, 2023 at 09:49:11AM +0530, Kathiravan T wrote:
-> > > IPQ5019 SoC is never productized. So lets drop it.
-> > You need to remove the user before removing the definition.
+> "longterm" was long enough that you didn't feel it made sense in the
+> description ;)
 > 
-> Rob, Currently there are no users for this macro.
+> Jokes aside, please follow the convention described in:
+> https://www.kernel.org/doc/html/v4.10/process/coding-style.html#naming
 > 
+> "key" or "wrapped_key" sounds sufficient to me.
 
-But you're removing a user in patch 2? Or am I reading that incorrectly?
+The naming I use in my most recent patchset that adds support for
+hardware-wrapped inline encryption keys to the block layer and fscrypt
+(https://lore.kernel.org/linux-block/20221216203636.81491-1-ebiggers@kernel.org/),
+which this patchset is based on, is 'lt_key' for a longterm wrapped key and
+'eph_key' for an ephemerally-wrapped key.
 
-Regards,
-Bjorn
+> > +int qcom_scm_prepare_ice_key(const u8 *longterm_wrapped_key,
+> > +			     u32 longterm_wrapped_key_size,
+> > +			     u8 *ephemeral_wrapped_key,
+> > +			     u32 ephemeral_wrapped_key_size)
+> 
+> wrapped, wrapped_size, ephemeral, ephemeral_size perhaps?
+
+lt_key, lt_key_size, eph_key, eph_key_size.
+
+- Eric
