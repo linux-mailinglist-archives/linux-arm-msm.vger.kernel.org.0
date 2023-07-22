@@ -2,62 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 714FB75D94D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 05:06:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01DA175D95A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 05:12:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbjGVDGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jul 2023 23:06:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37696 "EHLO
+        id S230349AbjGVDM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jul 2023 23:12:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjGVDGh (ORCPT
+        with ESMTP id S230340AbjGVDM1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jul 2023 23:06:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E442C1701;
-        Fri, 21 Jul 2023 20:06:36 -0700 (PDT)
+        Fri, 21 Jul 2023 23:12:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BAB3A9D;
+        Fri, 21 Jul 2023 20:12:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 82C0D61DC9;
-        Sat, 22 Jul 2023 03:06:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9549C433C8;
-        Sat, 22 Jul 2023 03:06:34 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6E21961DCC;
+        Sat, 22 Jul 2023 03:12:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3728C433C8;
+        Sat, 22 Jul 2023 03:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1689995195;
-        bh=KUTKLk5UQU1eQ3o/4T29UfkmMj56iplYzd0kU3H4bdc=;
+        s=k20201202; t=1689995538;
+        bh=q1c9De4MZ8uHRRY3FXPMx0Q6xjMl4701oGCk+c4Jqwo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=srxDZApCLCRYxXZXtnwbgCKSP1bHmf5Y046vZgL1x6wlEW/oyyCP1uFOZOT6co5sG
-         X6iY1csyuMoxV3XFbTNjgmMZZVJmePSi6mxSQVEsBC2f/SfNS1wf2ne9p6ClGYWrir
-         fY5aThnjYxoR+kdkY9/pLbNRgGbqERysM6ZAYmCbZ7ob5lSeq/jCJ9GKbbhn+byRlW
-         +UAnAM/CxHP7Yu5PUvbt+MPvdLf11I6eWKZpF/xniLXOW5Yq1i75bbLQxsieqeO94U
-         HwCD4aYEJk9aUXtVGsiKttNM8vj5Jr2sTMAnWivpex/efy0iRpwmkCg63r1NNGEoFB
-         md/JBSZUy7GyA==
-Date:   Fri, 21 Jul 2023 20:09:54 -0700
+        b=ThsnjbhhkdJboBKAIljvSTt4F6WS4F7yVXJDvUYmZwYzpnc8ARgfaqzuR5yOE1+FR
+         b+b36ZyKB99VWSgGvSxqjtisOx1P4zfddWQZIGpYAdln+IkYsZF2qKeCozo7Kr7l6P
+         /9VK+5CgojUirOPI1vjvAWyPckb+9wqGygVTNEsptCCdzPqbgReqzERlDxHLy2ZWLG
+         om/GBJ1ROwxrlcRxvyCuswS+hcxNg0TEZq4U/WfOTi6p8ktd6/vGK/YssWoFmuNlDF
+         c+c2A5HsbJ6bWS5C01uGLt+S5RSk/bdp5fBrc9fiXgUwauEdVL31u/C2h7qkC842Fw
+         mGzao7XYgOUxA==
+Date:   Fri, 21 Jul 2023 20:15:36 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Kathiravan T <quic_kathirav@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Mukesh Ojha <quic_mojha@quicinc.com>,
-        Kalle Valo <kvalo@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_anusha@quicinc.com,
-        quic_saahtoma@quicinc.com
-Subject: Re: [PATCH V5 2/3] pinctrl: qcom: Use qcom_scm_io_update_field()
-Message-ID: <z2isxt5zqaawkfgfdgogkimsutlvem7weoaatulhq2tcqt44rk@em4fvztj3eox>
-References: <20230720070408.1093698-1-quic_kathirav@quicinc.com>
- <20230720070408.1093698-3-quic_kathirav@quicinc.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>, vireshk@kernel.org,
+        nm@ti.com, sboyd@kernel.org, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, cw00.choi@samsung.com,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 04/15] arm64: dts: qcom: sdm845: Fix the min frequency
+ of "ice_core_clk"
+Message-ID: <q36uuwhjmolgf3kjn3rrtw5fgfobatav334fez4cofzmrvge2h@cgwfhhhy6b6s>
+References: <20230720054100.9940-1-manivannan.sadhasivam@linaro.org>
+ <20230720054100.9940-5-manivannan.sadhasivam@linaro.org>
+ <20230721071801.e6ngfnkwg2ujsklg@vireshk-i7>
+ <20230721115731.GB2536@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230720070408.1093698-3-quic_kathirav@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+In-Reply-To: <20230721115731.GB2536@thinkpad>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,57 +72,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 20, 2023 at 12:34:07PM +0530, Kathiravan T wrote:
-> From: Mukesh Ojha <quic_mojha@quicinc.com>
+On Fri, Jul 21, 2023 at 05:27:31PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Jul 21, 2023 at 12:48:01PM +0530, Viresh Kumar wrote:
+> > On 20-07-23, 11:10, Manivannan Sadhasivam wrote:
+> > > Minimum frequency of the "ice_core_clk" should be 75MHz as specified in the
+> > > downstream vendor devicetree. So fix it!
+> > > 
+> > > https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.7.3.r1-09300-sdm845.0/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > 
+> > > Fixes: 433f9a57298f ("arm64: dts: sdm845: add Inline Crypto Engine registers and clock")
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > index 9ed74bf72d05..89520a9fe1e3 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > @@ -2614,7 +2614,7 @@ ufs_mem_hc: ufshc@1d84000 {
+> > >  				<0 0>,
+> > >  				<0 0>,
+> > >  				<0 0>,
+> > > -				<0 300000000>;
+> > > +				<75000000 300000000>;
+> > >  
+> > >  			status = "disabled";
+> > >  		};
+> > 
+> > Please keep new feature and fixes like this in separate series. This
+> > could be merged directly in the currently ongoing kernel rc and
+> > doesn't need to wait for this series.
+> > 
+> > Or at least keep the commit at the top, so another maintainer can
+> > simply pick it.
+> > 
 > 
-> Use qcom_scm_io_update_field() function introduced in the commit
-> 1f899e6997bb ("firmware: qcom_scm: provide a read-modify-write function").
+> That's what I did. This patch and previous patch are the fixes patches, so they
+> are posted on top of other dts patches to be merged separately if required.
 > 
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> ---
-> Changes in V5:
-> 	- Dropped the ununecessary paranthesis
-> 	- Updated the commit message to indicate the commit ID in which
-> 	  qcom_scm_io_update_field is introduced instead of simply
-> 	  mentioning the "last commit"
-> 
->  drivers/pinctrl/qcom/pinctrl-msm.c | 12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 2585ef2b2793..5ecde5bea38b 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -1040,6 +1040,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->  	const struct msm_pingroup *g;
->  	unsigned long flags;
->  	bool was_enabled;
-> +	u32 mask;
->  	u32 val;
->  
->  	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
-> @@ -1074,23 +1075,20 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->  	 * With intr_target_use_scm interrupts are routed to
->  	 * application cpu using scm calls.
->  	 */
-> +	mask = GENMASK(2, 0) << g->intr_target_bit;
->  	if (pctrl->intr_target_use_scm) {
->  		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
->  		int ret;
->  
-> -		qcom_scm_io_readl(addr, &val);
-> -
-> -		val &= ~(7 << g->intr_target_bit);
-> -		val |= g->intr_target_kpss_val << g->intr_target_bit;
-> -
-> -		ret = qcom_scm_io_writel(addr, val);
-> +		val = g->intr_target_kpss_val << g->intr_target_bit;
-> +		ret = qcom_scm_io_update_field(addr, mask, val);
 
-Be aware when you resubmit that this code has changed. So please base
-your changes on linux-next.
+I agree with Viresh, this is patch 4 in a series where 1-2, 7- are new
+things.
+
+I can pick this from here, but I think it would have been better to send
+this as 3-4 different series; 1 with DeviceTree fixes, 1 with driver
+fixes, one that adds interconnect support and one that adds opp support
+- the latter two with dts changes last...
+
+
+And, the freq-table-hz -> opp transition in dts files must be merged
+after the driver changes, so this will likely have to wait until 1
+release after the driver changes.
 
 Regards,
 Bjorn
