@@ -2,121 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C82275DB44
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 11:20:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DB1775DB51
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jul 2023 11:24:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbjGVJUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Jul 2023 05:20:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52496 "EHLO
+        id S229493AbjGVJY5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Jul 2023 05:24:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjGVJUT (ORCPT
+        with ESMTP id S229563AbjGVJY4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Jul 2023 05:20:19 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E24B62D45
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:20:17 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-316f9abf204so2368836f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:20:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690017616; x=1690622416;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RKA/fSK1OrrWeVKEuVTJol/wBIFA9VP5bSnux5wICog=;
-        b=YjZdWI+kciadukrVxFxWcFo2aGcqrVCODXUFim3vhrf3EKtCViolaPQXjj3bfTYg+G
-         yenm0FN952WoCevkNkj5surKcradV6NMXorPKO4JVkXqFQfr24at27NvQuqFt27X8gGy
-         Mqqaa8zRwS7NdwD3h/W9HPwuQEa7/KFzsT60Ldvzin1wmpo/chkg+pO46UPJBqACBf9T
-         DkGui4jpagBiLnYG9HQTouivzJcHxmybd3V9qnwJbGQs7W/Da84rF99eUoZC06OSV4Jr
-         cBrfne5M4kj7zrNDP3p8zSH9Qr5JGQvf6GnpdTytT2MuEvO1u5ZoGIZJspRa+HdXypEs
-         B+Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690017616; x=1690622416;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RKA/fSK1OrrWeVKEuVTJol/wBIFA9VP5bSnux5wICog=;
-        b=AoMwZGpcUUQ5V/rKIkmlVviTHvhYIsTtXEdip/aAUJ06olBfJaSdlNccjGS0WYDO3W
-         9xF47gb4V3Q04hgj+abaI9yRSkHgi9OwoaceMpzSubIozZKf/dDFvwATo392pXUd5V+c
-         u8qV78ULYy/wFrZiZo/HF4gvTLeJcIOONMMbWfU6CHWWjBtjgc1lgOWtVUyPBgjO9t5i
-         h779CjaQxnOFGBSEdKVJ5gc2svssb/6G/kXsPZNPKNEyqPB2tip4ms8iZgZYVdylhmN0
-         WrlI2sOYw0bqDjrAm/TSfrJf3OW1nEUxR3EVXwkCmICbI5WOF02qeltqlL07ggsJKmb9
-         W6aw==
-X-Gm-Message-State: ABy/qLYk/Dy0Fa9A5nqmBXEjh/64wGfNbE+No4kqdL9AJgCTpV4PElgM
-        uxxS3kyqymnlPbdWmO1RALgRAQ==
-X-Google-Smtp-Source: APBJJlGqGajANN85V+QyZ+Cb8nzGIbt9uqS2/bG27rvwKaRP64KNNFfMjaIp1YTbbwFeOP0JefmsCg==
-X-Received: by 2002:a5d:58da:0:b0:313:ef24:6feb with SMTP id o26-20020a5d58da000000b00313ef246febmr3872494wrf.3.1690017616419;
-        Sat, 22 Jul 2023 02:20:16 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id n8-20020adfe348000000b00315af025098sm6426333wrj.46.2023.07.22.02.20.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Jul 2023 02:20:15 -0700 (PDT)
-Message-ID: <a4b789ad-0505-1991-2005-c1825a1f3b60@linaro.org>
-Date:   Sat, 22 Jul 2023 11:20:13 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 3/3] arm64: defconfig: enable Qualcomm SM6115 LPASS
- pinctrl
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 22 Jul 2023 05:24:56 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42FD42D7B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 02:24:54 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id E10EA2014D;
+        Sat, 22 Jul 2023 11:24:48 +0200 (CEST)
+Date:   Sat, 22 Jul 2023 11:24:47 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230722-topic-6115_lpasstlmm-v1-0-32d1643d8774@linaro.org>
- <20230722-topic-6115_lpasstlmm-v1-3-32d1643d8774@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230722-topic-6115_lpasstlmm-v1-3-32d1643d8774@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v3 06/15] dt-bindings: display/msm: sc7180-dpu: Describe
+ SM6125
+Message-ID: <ntbi7qdmxznuof27qtbvhxct7ol3rdioabtaary4u4chprrnml@vx2d2ctq73gp>
+References: <20230718-sm6125-dpu-v3-0-6c5a56e99820@somainline.org>
+ <20230718-sm6125-dpu-v3-6-6c5a56e99820@somainline.org>
+ <3ce19d8f-97d8-15b6-5148-78e200b112e9@linaro.org>
+ <tpkiplw7l2mzdwekynkrg6dwm7svktwm2zooodb3c42btyvo3e@yjrpqem26wtx>
+ <CAA8EJprHEes5T1z4-sxg_Xk+VjuyoTH0Ra-VyMnrWjTv7qG9EA@mail.gmail.com>
+ <m425lafv5gvrnyhoarasqgkoumntgsxiqdpmsudcxrwspvf6ed@al5sr3t2mwec>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <m425lafv5gvrnyhoarasqgkoumntgsxiqdpmsudcxrwspvf6ed@al5sr3t2mwec>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/07/2023 10:52, Konrad Dybcio wrote:
-> Enable the Qualcomm SM6115 LPASS TLMM pin controller driver for
-> providing GPIOs/pins for audio block on SM6115 based boards (e.g.
-> QTI RB2).
+On 2023-07-20 21:10:52, Marijn Suijten wrote:
+> On 2023-07-20 01:24:27, Dmitry Baryshkov wrote:
+> > On Thu, 20 Jul 2023 at 01:09, Marijn Suijten
+> > <marijn.suijten@somainline.org> wrote:
+> > >
+> > > On 2023-07-19 01:06:03, Dmitry Baryshkov wrote:
+> > > > On 19/07/2023 00:24, Marijn Suijten wrote:
+> > > > > SM6125 is identical to SM6375 except that while downstream also defines
+> > > > > a throttle clock, its presence results in timeouts whereas SM6375
+> > > > > requires it to not observe any timeouts.  This is represented by
+> > > > > reducing the clock array length to 6 so that it cannot be passed.  Note
+> > > > > that any SoC other than SM6375 (currently SC7180 and SM6350) are
+> > > > > unconstrained and could either pass or leave out this "throttle" clock.
+> > > >
+> > > > Could you please describe, what kind of timeouts do you observe? Is this
+> > > > the DSI underruns issue?
+> > >
+> > > Ping-pong timeouts and low(er) framerate.  However, they were previosuly
+> > > not happening on a random boot out of tens... and now I can no longer
+> > > reproduce the timeout on 4 consecutive boots after adding the throttle
+> > > clock.  Could it perhaps be the power domains and opps that we added in
+> > > v2 and v3?
+> > 
+> > Quite unlikely, but who knows. My main question is whether we should
+> > continue skipping the throttle clocks or if it should be enabled now.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 6cbf6eb59378..6911101db09e 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -587,6 +587,7 @@ CONFIG_PINCTRL_SDM660=y
->  CONFIG_PINCTRL_SDM670=y
->  CONFIG_PINCTRL_SDM845=y
->  CONFIG_PINCTRL_SM6115=y
-> +CONFIG_PINCTRL_SM6115_LPASS_LPI=m
+> And that "main question" could ... drum roll please ... only be answered
+> by knowing if this got "accidentally" fixed by providing the right PMs
+> or some other change entirely while I changed base branch and defconfig.
+> Or if this is just a fluke that persisted multiple boots but will fall
+> apart in some time and/or when someone else runs this on their device?
 
-After recent re-shuffling in Kconfig, this will be placed differently
-with savedefconfig, so maybe better to find proper (new) placement for
-this now?
+I'm going to write this off as PEBKAC from my past self.  I went back to
+an older branch where I recall adding this clock, added it to DT again,
+and observed no timeouts or inexplicable behaviour on multiple boots.
 
-Anyway:
+Since downstream passes it as well, I'll revise this series for v4 to
+require it in dt-bindings, and include it in DT.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+- Marijn
