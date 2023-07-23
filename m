@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7179875E203
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 15:19:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FED775E209
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 15:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbjGWNTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 09:19:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54714 "EHLO
+        id S229866AbjGWNTk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 09:19:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229866AbjGWNTg (ORCPT
+        with ESMTP id S229972AbjGWNTj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 09:19:36 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C209B10E0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:33 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-313e742a787so2044918f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:33 -0700 (PDT)
+        Sun, 23 Jul 2023 09:19:39 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D2D510F8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:36 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-31758eb5db8so410700f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 06:19:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690118372; x=1690723172;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZxKGN5SUivNz+ligYrmWT0BW3UDY3UHFVrq/Gy6pOrM=;
-        b=TeXKvpfxHyL7htn+rjDHaupCyknovawCuk5PA1SA7Ntp1u56kIUN32nOA+OjXR5gTT
-         aRObbBarli+wBusROTpJiJ9KCfw7rk/o5+UPpjPW3PpNBO8Pmjc0CrVMmT99JBBXSjaJ
-         QJyuxUMo/UZtCdEOMlkeqP/QnyYzAGaNwKAq6f7phiRg77CA6fP8L5DXlLCOCVXW0KbP
-         5eLrrY08w6kdUWvnu/wVx9JshN+guajvNrH/NiKYd27lCEhyPjIPmhuqWcUDjBvXr7qW
-         VatjF02Ai2Y57EcOEhcToGa96XqRmahPBCc9uxMbHg4sIQnm0w0f9BX0I+kYKbrpBzgk
-         Fc9w==
+        d=linaro.org; s=google; t=1690118374; x=1690723174;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ENETnkocXZi6dl4NhjFyWgfk3+p5JzgNLDZ8yvhlSSE=;
+        b=qwj3Uno2LcoIiU1bvwWEdgC9M4R6885fys9S+g24ZVmcbMOI3G2vBvXkUjm9zozJfO
+         o/Cw9C7U70/pHY+mjkfPwtHB3srjLyrb6oMLqn0OW6bYuxpmhwDFBOjvkB7pRSUdR+4w
+         esxviqIzSvO0KNzXqTiYUUPCN1lQIk2WwESvnMOqVwDtErHvJVSl4dvAiPS+SrSNLRyn
+         aZ1ktFTN6QDhkoJED41ND4fpYliEgX94AD7LU52VSe7XVm944B+/WBci5ooRJbJQpOXF
+         fHp06Tw602sklEyo8ODwPA8NVlL8kJ0SPpi5siPg1Ew0YFffTDabX7BXkwwBrPFFWEo7
+         1k9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690118372; x=1690723172;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZxKGN5SUivNz+ligYrmWT0BW3UDY3UHFVrq/Gy6pOrM=;
-        b=QwziyHB5BSt/O79YyV63IKiwPYT/zDwiGGKYOlvOoDZIwgdpwwcZmZa9vslYUA1e1K
-         KkY930MbaiO8wxlgZfhOnVw/AStaNBxiSBAlCqd3NB+HGQlko0y2xJmYP3sToxKfZXHn
-         ud2A0fxcjVYmGoPkjxcDHrQIMOIkr+U4yQh+JOb63HBRDbbzEj5rnZTdmZfKdmKZVQzm
-         Lwb/HKJ+znrPD+HayMENbJUxLFkPfm5j8LZXoZNuVg7+tIYhSwUqW3X2QvwRrbcVpR5O
-         lvwiSPXMmQ3quknaRwi1sxQXjc1h0QQ1Ay5bdIa3Wr2pR3sqyChd17Vt2Ax4Qyhux0VT
-         UWEw==
-X-Gm-Message-State: ABy/qLbY6M3ymXLYc/8JKKSF7vaTNKYQYImTa3FJ57X/pDoAo64+sSy0
-        OyCKS0FCfFw7yfDo80DfkzgLQw==
-X-Google-Smtp-Source: APBJJlG7G2NBT/RCN58YIlYPpGzshVCKmMSd3YJ5rW+vc1J8zD/+ky6sxLp75IuhRiCGEBhUE8JiCw==
-X-Received: by 2002:a5d:4eca:0:b0:314:2736:ba3e with SMTP id s10-20020a5d4eca000000b003142736ba3emr9328519wrv.3.1690118372184;
-        Sun, 23 Jul 2023 06:19:32 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1690118374; x=1690723174;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ENETnkocXZi6dl4NhjFyWgfk3+p5JzgNLDZ8yvhlSSE=;
+        b=SkMsVED/dTzkiOsu9Qj0OxCh4pSnxcOIjFRLMGIvnxWDWlJegUxjqjO/iea/Vm+OS9
+         ONyVSavLqk3LehYhjv5xbfsQUS0LO2pFEJHtWkWFNxU0hNjDysTQQZEFEfz4Fb6bWmhi
+         GsScbHlpF8SI45TJ9a01coiJ8G2IqPIDXk/jPAPDYkvsIRZx2kiDcat6Y2lk+duJq9NK
+         gPU0NO2jLHKOtDLkEXPO8LqoqZ9s92iFuNWq/inElUiALfoCsdnMTV2HCvZv4tdpnZYt
+         o9E01ezUbAGl2CEXD/B8g7Hc8fPn4yriUA15ru/egX+kqh8t/ezEVghUWTcFgAg0RviQ
+         AMkw==
+X-Gm-Message-State: ABy/qLY25Iyn2fRD3BiaIgZqX4SYcxZcXaKYZrFO1NAFopyOi0Hus5QJ
+        XE+IOSjkLSm8t/B6j8goaol93A==
+X-Google-Smtp-Source: APBJJlE1mh/A7SHpG1M3wY7olKbn/R8UGGriuIeym+XzmrhUYQAyuTY62uc5V7JdcDXSZqRFR3uajQ==
+X-Received: by 2002:adf:e68d:0:b0:313:fe1b:f447 with SMTP id r13-20020adfe68d000000b00313fe1bf447mr5564326wrm.71.1690118374599;
+        Sun, 23 Jul 2023 06:19:34 -0700 (PDT)
 Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id t15-20020a5d49cf000000b003143765e207sm9700257wrs.49.2023.07.23.06.19.29
+        by smtp.gmail.com with ESMTPSA id t15-20020a5d49cf000000b003143765e207sm9700257wrs.49.2023.07.23.06.19.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jul 2023 06:19:31 -0700 (PDT)
+        Sun, 23 Jul 2023 06:19:34 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -64,11 +65,13 @@ To:     Rob Herring <robh+dt@kernel.org>,
         soc@kernel.org, workflows@vger.kernel.org,
         linux-doc@vger.kernel.org, arm@kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH v3 1/3] MAINTAINERS: soc: reference maintainer profile
-Date:   Sun, 23 Jul 2023 15:19:22 +0200
-Message-Id: <20230723131924.78190-1-krzysztof.kozlowski@linaro.org>
+        Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH v3 2/3] Documentation/process: maintainer-soc: add clean platforms profile
+Date:   Sun, 23 Jul 2023 15:19:23 +0200
+Message-Id: <20230723131924.78190-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230723131924.78190-1-krzysztof.kozlowski@linaro.org>
+References: <20230723131924.78190-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,34 +84,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mention the SoC maintainer profile in P: entry.
+Some SoC platforms require that commits must not bring any new
+dtbs_check warnings.  Maintainers of such platforms usually have some
+automation set, so any new warning will be spotted sooner or later.
+Worst case: they run the tests themselves.  Document requirements for
+such platforms, so contributors can expect their patches being dropped
+or ignored, if they bring new warnings for existing boards.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 
 ---
 
 Changes in v3:
-1. None
+1. Rephrase according to Rob's comments (this document when referenced
+   in maintainers, "... and dtc Compliance", existing warnings are not
+   new warnings).
 
 Changes in v2:
 1. Add Rb tag.
+2. Implement Conor's feedback: change doc title, follow->should follow,
+   minor style changes.
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ .../process/maintainer-handbooks.rst          |  1 +
+ .../process/maintainer-soc-clean-dts.rst      | 25 +++++++++++++++++++
+ MAINTAINERS                                   |  2 +-
+ 3 files changed, 27 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/process/maintainer-soc-clean-dts.rst
 
+diff --git a/Documentation/process/maintainer-handbooks.rst b/Documentation/process/maintainer-handbooks.rst
+index 9992bfd7eaa3..976391cec528 100644
+--- a/Documentation/process/maintainer-handbooks.rst
++++ b/Documentation/process/maintainer-handbooks.rst
+@@ -17,5 +17,6 @@ Contents:
+ 
+    maintainer-netdev
+    maintainer-soc
++   maintainer-soc-clean-dts
+    maintainer-tip
+    maintainer-kvm-x86
+diff --git a/Documentation/process/maintainer-soc-clean-dts.rst b/Documentation/process/maintainer-soc-clean-dts.rst
+new file mode 100644
+index 000000000000..1b32430d0cfc
+--- /dev/null
++++ b/Documentation/process/maintainer-soc-clean-dts.rst
+@@ -0,0 +1,25 @@
++.. SPDX-License-Identifier: GPL-2.0
++
++==============================================
++SoC Platforms with DTS Compliance Requirements
++==============================================
++
++Overview
++--------
++
++SoC platforms or subarchitectures should follow all the rules from
++Documentation/process/maintainer-soc.rst.  This document referenced in
++MAINTAINERS impose additional requirements listed below.
++
++Strict DTS DT Schema and dtc Compliance
++---------------------------------------
++
++No changes to the SoC platform Devicetree sources (DTS files) should introduce
++new ``make dtbs_check W=1`` warnings.  Warnings in a new board DTS, which are
++results of issues in an included DTSI file, are considered existing, not new
++warnings.  The platform maintainers have automation in place which should point
++out any new warnings.
++
++If a commit introducing new warnings gets accepted somehow, the resulting
++issues shall be fixed in reasonable time (e.g. within one release) or the
++commit reverted.
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 3dfa40abc885..7624eb231b65 100644
+index 7624eb231b65..9fe3870300f2 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1570,6 +1570,7 @@ M:	Olof Johansson <olof@lixom.net>
- M:	soc@kernel.org
- L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
- S:	Maintained
-+P:	Documentation/process/maintainer-soc.rst
+@@ -1573,7 +1573,7 @@ S:	Maintained
+ P:	Documentation/process/maintainer-soc.rst
  C:	irc://irc.libera.chat/armlinux
  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git
- F:	Documentation/process/maintainer-soc.rst
+-F:	Documentation/process/maintainer-soc.rst
++F:	Documentation/process/maintainer-soc*.rst
+ F:	arch/arm/boot/dts/Makefile
+ F:	arch/arm64/boot/dts/Makefile
+ 
 -- 
 2.34.1
 
