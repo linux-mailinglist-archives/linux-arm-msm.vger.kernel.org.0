@@ -2,92 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB37E75E025
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 08:41:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FCFE75E0F2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 11:34:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbjGWGln (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 02:41:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
+        id S229775AbjGWJeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 05:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229682AbjGWGlm (ORCPT
+        with ESMTP id S229749AbjGWJeC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 02:41:42 -0400
-Received: from smtp.smtpout.orange.fr (smtp-30.smtpout.orange.fr [80.12.242.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB3E10EC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jul 2023 23:41:40 -0700 (PDT)
-Received: from pop-os.home ([86.243.2.178])
-        by smtp.orange.fr with ESMTPA
-        id NSmdq59F14DtINSmdqfFoy; Sun, 23 Jul 2023 08:41:38 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-        s=t20230301; t=1690094498;
-        bh=Q7o0UQvRfkS/4+Mc6nSPTzH0IapT9/fEsaA6pwimGA0=;
-        h=From:To:Cc:Subject:Date;
-        b=N/o86135ANjyjKGmokuS7xBDhOlV15gvy89zRuss8Qpd7KKHc/I4AvMRy0vHpTNPP
-         CdHlSFsd+qtazyI5QGlhGEa7t2s+ezl1Wb0N6mE9oRHSoYuvUBlBdxTuuwctbFxR2A
-         9Zk5/e8z356kbKZSdmRnh2veOy8ewV5V48lDUyg0xuZHjeRIA/sxilDnSt8F7xqOnf
-         4DmDV+b4GJow+4SNILdEJP+Bla9fs59NxWl1NOK80l4LU2T6INRhrrsH+zD1gGPb4e
-         3J3PTblIWoQEMzg6a8hURf62+DuwkL5YE/vJoHpuj+ZKimoSeJBJVwoZCInRtvdcx7
-         t0prBJ/xef2wQ==
-X-ME-Helo: pop-os.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 23 Jul 2023 08:41:38 +0200
-X-ME-IP: 86.243.2.178
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm: Slightly simplify memory allocation in submit_lookup_cmds()
-Date:   Sun, 23 Jul 2023 08:41:33 +0200
-Message-Id: <9861e8b1ce385a556e0c9c4533beee9c4a92809c.1690094459.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.34.1
+        Sun, 23 Jul 2023 05:34:02 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D648E6A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 02:34:00 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fbc5d5746cso30902495e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 02:34:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1690104838; x=1690709638;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OC0hL4ajjQBun5KqVFTzcpsSj0OMP1ItjYDfFgKDcog=;
+        b=kp6dRrQUevs9NleJDIlPEeph5mcu+PXMAQug5ZzzeW6rl+pj4grKrkWk4egllNaPqg
+         7ffRnavd40Fg4Q2eOFptOwQ0B0F50hw9pyeiYksz/SKYqFG5PYtp6W5BYLJweDRxNram
+         YadqiUP3b+NTPMMzg/VM4/eoe+Y8jlmEGBU/89rrn45bFJpv2122TQ2YFHmVH6x2hKzX
+         In6erAig/Oq5d8kxUycrrr377AjnvL0JViXl8gUEoKsiRWUEEXRqL0VHcPkXkAyPkdg9
+         zP6eFmHtILztNQtEoNPMmQC26L1fdLqalNw7siSnstdYIdDNejNGhWV8H4vhA531pyVU
+         g6Dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690104838; x=1690709638;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OC0hL4ajjQBun5KqVFTzcpsSj0OMP1ItjYDfFgKDcog=;
+        b=RioQ8XCAhbP+zJB8BoO/gdkhm3kXwdUpB3sPt3CI/FLIhHFRFBMbPJGv9kXHde8IlB
+         5gb7Rb3Y20MxdvjBzq42EimRXfW/t90QtVuR+m/spPwR1m4uRnALYiGUsnhLUOnlT/Qi
+         JSCwdcl+2+I0brsxnkaBco0SY8/FTSfOB25v1Oz4QE2+qS5S+4YgRWSBhWmeMmRFZnR1
+         LcRMTlO10LIU2Ej9n1gGn8lPA7MeOToTc6oQTcHnw70TTQaZ0vp8s0zByiAM3/ylVLX8
+         +5jX51IqC5Q88dHfxtZn03MGUsfph4MkWvFoUhnHaEMctltzcbwopPjQ9QjiAqREiika
+         dPaA==
+X-Gm-Message-State: ABy/qLYD/Rmg2+iq2XUl/hMe419yawNVYhsmMZKqKSsvc/vo3NZEGPqN
+        p3fpsdWVG8ffZvHLW3DKqTbAaQ==
+X-Google-Smtp-Source: APBJJlGQYnTIzlGqoT+dviUAIa3bhjXpw2+p9F3nFx1r9W62L0Gpb/iIAmd6BIQ4N1VtH/tpbeCfgQ==
+X-Received: by 2002:a7b:c30e:0:b0:3f9:871:c2da with SMTP id k14-20020a7bc30e000000b003f90871c2damr4859726wmj.40.1690104838588;
+        Sun, 23 Jul 2023 02:33:58 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id p1-20020a05600c204100b003fc17e8a1efsm9791468wmg.45.2023.07.23.02.33.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Jul 2023 02:33:58 -0700 (PDT)
+Message-ID: <3c0f0a26-ea9a-faa6-9fe1-ffcf242b6200@linaro.org>
+Date:   Sun, 23 Jul 2023 11:33:55 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 06/11] dt-bindings: remoteproc: qcom,adsp: Remove AGGRE2
+ clock
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230721-topic-rpm_clk_cleanup-v1-0-cf6cd5c621d5@linaro.org>
+ <20230721-topic-rpm_clk_cleanup-v1-6-cf6cd5c621d5@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230721-topic-rpm_clk_cleanup-v1-6-cf6cd5c621d5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If 'sz' is SIZE_MAX, kmalloc() will fail. So there is no need to explicitly
-check for an hypothetical overflow.
+On 21/07/2023 17:36, Konrad Dybcio wrote:
+> The AGGRE2 clock is a clock for the entire AGGRE2 bus, managed from
+> within the interconnect driver. Attaching it to SLPI was a total hack.
+> Get rid of it.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 2 --
+>  1 file changed, 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> index a2b0079de039..af78f76734db 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> @@ -91,11 +91,9 @@ allOf:
+>          clocks:
+>            items:
+>              - description: XO clock
+> -            - description: AGGRE2 clock
 
-Remove the check to save a few lines of code.
+I think this entry can be squashed now with previous if:then:.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 3f1aa4de3b87..6ca8f8cbb6e2 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -211,11 +211,7 @@ static int submit_lookup_cmds(struct msm_gem_submit *submit,
- 
- 		sz = array_size(submit_cmd.nr_relocs,
- 				sizeof(struct drm_msm_gem_submit_reloc));
--		/* check for overflow: */
--		if (sz == SIZE_MAX) {
--			ret = -ENOMEM;
--			goto out;
--		}
-+
- 		submit->cmd[i].relocs = kmalloc(sz, GFP_KERNEL);
- 		if (!submit->cmd[i].relocs) {
- 			ret = -ENOMEM;
--- 
-2.34.1
+Best regards,
+Krzysztof
 
