@@ -2,75 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5190B75E28A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 16:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C232775E2AB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jul 2023 16:34:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbjGWOTS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jul 2023 10:19:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42086 "EHLO
+        id S229752AbjGWOev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jul 2023 10:34:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjGWOTP (ORCPT
+        with ESMTP id S229470AbjGWOeu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jul 2023 10:19:15 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 791401B8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:19:14 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-997c4107d62so515031566b.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:19:14 -0700 (PDT)
+        Sun, 23 Jul 2023 10:34:50 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A846E57
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:34:48 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5222a38c0a0so580247a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jul 2023 07:34:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690121953; x=1690726753;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WelP8hNAG5WCfExW1LvMkUB7mM+4xxIHYhV1sVjWa7U=;
-        b=s+H5tOZybZTIXS+JcMANPjKiGuA7QAnMu+QpNYRsMxWdNrr/z3QYK6BeSzFEPZzMiY
-         hXHTGnmpyvl6WkhvzrBTuWCK/V9lUavfQsssC83581bc+eWvqXC+/qxSVqPg5xOjf09d
-         FqmaajfsN/I9sfg/xJi7cJabJm3UDKc8t1iDeDDkzCp1epprVwiyQS9eRd7reN4Xhpha
-         sOx5WTeTh2pZJpWT7GvZ1zhOMiFFMdy9vO0i9/WSmaph7691gakBI6osLLpmMe0OFaE5
-         19K/YfDfs6VY0TMEiN3OSbvdIYbbRsNRmieMAT+SkaBQ0CO06DrRR+iP1O3ASqqSVE1U
-         wTBg==
+        d=linaro.org; s=google; t=1690122886; x=1690727686;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uXv7e6KED+JSh8uirNIwgfBSKBLwxK9076I+S0/EqU0=;
+        b=mm41k8EhAvS/ZYYDKAa3KE57KEUc4iW/FAINgc/DJ8iU5A8gXvy6pSXKMj0FtGhfWl
+         AkrP6wdIPCpdgkzrThwLn7jl3IM1/bGMNhcMsf12Xnr+a7c9uCGBBv5cYgfw1fseGb9e
+         ESuvPWgJwbouE5VbeMCkUxrnHppkNzS+p+fevwEbFAtn+VlrrSJXnpSmlmLg2Ccw0PmW
+         o+5laetR6xw4bt8smMMdK/ysdy1FcNHh89I+G+H/4KaFv2NyfszQkriJn/7a5VgbAIov
+         7YZqDX69JYEf48RKAayVhKobTemURTm9x8muhmDjYuCN0EdcoQsASMi4QBiuzS6OEdEr
+         maVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690121953; x=1690726753;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WelP8hNAG5WCfExW1LvMkUB7mM+4xxIHYhV1sVjWa7U=;
-        b=ICBTN2C31dh0s4GJGOZYOwVp/PDdlF3m1dSDTsXYuLLEjBL4Luebss7gVzgsSu2mOI
-         qSWf1ruA3H4q/ZvVjsndtPdYoq7uipZrAqnKC6ujPs5EAmoLdrlGQebLKTSYSxmtRicM
-         sanHZXehUmX7mYHCB5zmmsz517w/5PM6VOELhw/SRjBJhtD7eJjc1DjkM+7gNO7CUcrZ
-         q1xuYieBqudZNBpsRZ0VZv3n8LB8f5dG2RS2OfsW7AGfk9X1JQqtImpq4ItaL6S2RKQH
-         buUDMGa0Ejx0sP+TduJOfeeb5CIyQh1QnpKWUigkOuRTgzhln2qlz4BOtmdtkkZD7EC9
-         ZktQ==
-X-Gm-Message-State: ABy/qLaKinaiez8ZzZSa/p64iiLFkxU9GfxrId0TR3wpBLNItdtFsleL
-        KTcGha99as4fLyQ55Nd4dij6lQ==
-X-Google-Smtp-Source: APBJJlE/a/aosck8ecXsuIldK2ilXI6rqKQU8qhATRG6jPTTnMpPD/KFJcHY33va/n4sML7CZv3NiQ==
-X-Received: by 2002:a17:907:78d7:b0:994:4f4a:218c with SMTP id kv23-20020a17090778d700b009944f4a218cmr7829353ejc.8.1690121952999;
-        Sun, 23 Jul 2023 07:19:12 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id cb14-20020a170906a44e00b00992eabc0ad8sm5172438ejb.42.2023.07.23.07.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jul 2023 07:19:11 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1690122886; x=1690727686;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uXv7e6KED+JSh8uirNIwgfBSKBLwxK9076I+S0/EqU0=;
+        b=hTkU5XqM3dTgTZrcIJWcoFRfyS1tjv7wUFqlcZuNLXmt/AZ0zgu50gG6Z5/zsVbmdm
+         OSz74bbVbiZauGxgCxJKFnwsUuK0GfoGO2MBijYUFPrDb7JtkJOCCSGGxEb8L6Hz6sxM
+         wuxnnLicmDTplcNAZNyKlLtyb3yk3QSL/RwmscHaPKKjcJ8zzXMCu2pJWV8ERrwJgL3y
+         Crw5Dc8VYjSWBXjz4aWJT0LIfe2aIdfvD2EtJ0WbHr0jMA+/THtl/Ql82UAqqMVsYSxw
+         +XquCh8rIf08OmtBK2LTeGWXVPRDuc6QwJXWG9ViVLg3lItbyk3snwz+6H33xfyinkbW
+         aOsg==
+X-Gm-Message-State: ABy/qLYwWSXWc2NgHVu0V3OMtcvi39q0H7HZRDYxXcfL3sI0eNfXOZTz
+        6zj0F05vHxQm/Xu2dqv12QstSA==
+X-Google-Smtp-Source: APBJJlH3sMpku5LLO3f/un8EhhKdjrFQkRn5DLRrg76bjT7U2drDbnhYtpzs8cxuWROzaeMYtJNiOQ==
+X-Received: by 2002:aa7:d908:0:b0:522:1d23:a1f8 with SMTP id a8-20020aa7d908000000b005221d23a1f8mr3746546edr.26.1690122886749;
+        Sun, 23 Jul 2023 07:34:46 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id x5-20020aa7dac5000000b005221fd1103esm1590336eds.41.2023.07.23.07.34.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Jul 2023 07:34:46 -0700 (PDT)
+Message-ID: <df680f80-875f-b414-911e-69ab4d9bb87b@linaro.org>
+Date:   Sun, 23 Jul 2023 16:34:43 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 4/7] dt-bindings: clock: qcom,hfpll: Document MSM8976
+ compatibles
+Content-Language: en-US
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sdm630: align USB DWC3 clocks with bindings
-Date:   Sun, 23 Jul 2023 16:18:49 +0200
-Message-Id: <20230723141849.93078-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230723141849.93078-1-krzysztof.kozlowski@linaro.org>
-References: <20230723141849.93078-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230723140712.9438-1-a39.skl@gmail.com>
+ <20230723140712.9438-5-a39.skl@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230723140712.9438-5-a39.skl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,32 +89,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bindings require different order of clocks for USB DWC3 nodes (sleep
-before mock_utmi).
+On 23/07/2023 16:06, Adam Skladowski wrote:
+> Document MSM8976 HFPLL compatibles.
+> 
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,hfpll.txt | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,hfpll.txt b/Documentation/devicetree/bindings/clock/qcom,hfpll.txt
+> index ec02a024424c..855344957350 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,hfpll.txt
+> +++ b/Documentation/devicetree/bindings/clock/qcom,hfpll.txt
+> @@ -11,6 +11,9 @@ PROPERTIES
+>                          "qcom,hfpll-ipq8064", "qcom,hfpll"
+>                          "qcom,hfpll-apq8064", "qcom,hfpll"
+>                          "qcom,hfpll-msm8974", "qcom,hfpll"
+> +                        "qcom,hfpll-msm8976-a53", "qcom,hfpll"
+> +                        "qcom,hfpll-msm8976-a72", "qcom,hfpll"
+> +                        "qcom,hfpll-msm8976-cci", "qcom,hfpll"
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Let's switch to proper format, because this is not getting mess, so:
+qcom,msm8976-hfpll-a53
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 83afce56a7b0..25124acf705f 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1416,10 +1416,10 @@ usb2: usb@c2f8800 {
- 
- 			clocks = <&gcc GCC_CFG_NOC_USB2_AXI_CLK>,
- 				 <&gcc GCC_USB20_MASTER_CLK>,
--				 <&gcc GCC_USB20_MOCK_UTMI_CLK>,
--				 <&gcc GCC_USB20_SLEEP_CLK>;
-+				 <&gcc GCC_USB20_SLEEP_CLK>,
-+				 <&gcc GCC_USB20_MOCK_UTMI_CLK>;
- 			clock-names = "cfg_noc", "core",
--				      "mock_utmi", "sleep";
-+				      "sleep", "mock_utmi";
- 
- 			assigned-clocks = <&gcc GCC_USB20_MOCK_UTMI_CLK>,
- 					  <&gcc GCC_USB20_MASTER_CLK>;
--- 
-2.34.1
+Best regards,
+Krzysztof
 
